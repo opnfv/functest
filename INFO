@@ -1,0 +1,23 @@
+Project: Base System Functionality Testing (functest)
+Creation Date:
+Category: Integration & Testing
+Lifecycle State:
+Primary Contact: pals@cisco.com
+Project Lead: pals@cisco.com
+Jira Project Name: Base System Functionality Testing
+Jira Project Prefix: FUNCTEST
+Mailing list tag: [functest]
+Repo: functest
+
+Submitters:
+pals@cisco.com
+trevor.cooper@intel.com
+Prabu.Kuppuswamy@spirent.com
+iawelss@cisco.com
+fuqiao@chinamobile.com
+chitti.nimmagadda@ericsson.com
+raja.karthik@hp.com
+vivekanandan.p@hp.com
+
+Link to TSC approval of the project: http://meetbot.opnfv.org/meetings/opnfv-meeting/
+Link(s) to approval of additional submitters:
