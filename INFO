@@ -1,0 +1,31 @@
+Project: Base System Functionality Testing Project (functest)
+Project Creation Date: January 20, 2015
+Project Category: Integration & Testing
+Lifecycle State: Incubation
+Primary Contact: Morgan Richomme (morgan.richomme@orange.com)
+Project Lead: Trever Cooper (trevor.cooper@intel.com)
+Jira Project Name: Base System Functionality Testing Project
+Jira Project Prefix: FUNCTEST
+Mailing list tag: [functest]
+IRC: Server:freenode.net Channel:#opnfv-testperf
+Repository: functest
+
+Committers:
+pbandzi@cisco.com
+sama@docomolab-euro.com
+jose.lausuch@ericsson.com
+Andrew.Caldwell@metaswitch.com
+morgan.richomme@orange.com
+pals@cisco.com
+trevor.cooper@intel.com
+Prabu.Kuppuswamy@spirent.com
+iawelss@cisco.com
+fuqiao@chinamobile.com
+chitti.nimmagadda@ericsson.com
+raja.karthik@hp.com
+vivekanandan.p@hp.com
+yuyijun@huawei.com
+
+Link to TSC approval of the project: http://meetbot.opnfv.org/meetings/opnfv-meeting/2015/opnfv-meeting.2015-01-20-14.57.html
+Link(s) to approval of additional committers:
+* Addition of pbandzi@cisco.com, sama@docomolab-euro.com, jose.lausuch@ericsson.com ,Andrew.Caldwell@metaswitch.com, morgan.richomme@orange.com - Email vote: pending
