@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_b602b809",
+        "filename": "LICENSE",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 235
+      },
+      "writtenOn": "2015-04-01T18:42:16Z",
+      "side": 1,
+      "message": "These whitespaces should probably be removed",
+      "revId": "bada5c425e80f8ee4fd0f1b868957fdb7e490698",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_91ffc601",
+        "filename": "LICENSE",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 235
+      },
+      "writtenOn": "2015-04-01T18:42:16Z",
+      "side": 1,
+      "message": "These whitespaces should probably be removed",
+      "revId": "bada5c425e80f8ee4fd0f1b868957fdb7e490698",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_71043a15",
+        "filename": "LICENSE",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 235
+      },
+      "writtenOn": "2015-04-01T18:42:16Z",
+      "side": 1,
+      "message": "These whitespaces should probably be removed",
+      "revId": "bada5c425e80f8ee4fd0f1b868957fdb7e490698",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
