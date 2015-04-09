@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_26f9d7c8",
+        "filename": "testcases/Controllers/ODL/CI/libraries/Common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-04-09T09:55:59Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "07fd31290bbdf30d2fc35ee340f957a0133762d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_06f6dbd7",
+        "filename": "testcases/Controllers/ODL/CI/libraries/Common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-04-09T09:55:59Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 19
+      },
+      "revId": "07fd31290bbdf30d2fc35ee340f957a0133762d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_e602cfb3",
+        "filename": "testcases/Controllers/ODL/CI/libraries/Common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-04-09T09:55:59Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 58,
+        "startChar": 62,
+        "endLine": 58,
+        "endChar": 63
+      },
+      "revId": "07fd31290bbdf30d2fc35ee340f957a0133762d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_c6ffd3a9",
+        "filename": "testcases/Controllers/ODL/CI/libraries/Common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-04-09T09:55:59Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 64,
+        "startChar": 17,
+        "endLine": 64,
+        "endChar": 21
+      },
+      "revId": "07fd31290bbdf30d2fc35ee340f957a0133762d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_a62cc74b",
+        "filename": "testcases/Controllers/ODL/CI/libraries/Common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-04-09T09:55:59Z",
+      "side": 1,
+      "message": "space",
+      "revId": "07fd31290bbdf30d2fc35ee340f957a0133762d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
