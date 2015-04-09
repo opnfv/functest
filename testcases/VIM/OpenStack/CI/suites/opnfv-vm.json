@@ -1,0 +1,66 @@
+{
+    "VMTasks.boot_runcommand_delete": [
+        {
+            "args": {
+                "flavor": {
+                    "name": "m1.small"
+                },
+                "image": {
+                    "name": "^Ubuntu*"
+                },
+                "floating_network": "public",
+                "force_delete": false,
+                "script": "samples/tasks/support/instance_dd_test.sh",
+                "interpreter": "/bin/sh",
+                "username": "ubuntu"
+            },
+            "runner": {
+                "type": "constant",
+                "times": 10,
+                "concurrency": 2
+            },
+            "context": {
+                "users": {
+                    "tenants": 3,
+                    "users_per_tenant": 2
+                },
+                "network": {
+                }
+            }
+        }
+    ],
+    "VMTasks.boot_runcommand_delete": [
+        {
+            "args": {
+                "flavor": {
+                    "name": "m1.small"
+                },
+                "image": {
+                    "name": "^Ubuntu*"
+                },
+                "volume_args": {
+                    "size": 2
+                },
+                "fixed_network": "private",
+                "floating_network": "public",
+                "use_floatingip": true,
+                "force_delete": false,
+                "script": "samples/tasks/support/instance_dd_test.sh",
+                "interpreter": "/bin/sh",
+                "username": "ubuntu"
+            },
+            "runner": {
+                "type": "constant",
+                "times": 10,
+                "concurrency": 2
+            },
+            "context": {
+                "users": {
+                    "tenants": 3,
+                    "users_per_tenant": 2
+                }
+            }
+        }
+    ]
+}
+
