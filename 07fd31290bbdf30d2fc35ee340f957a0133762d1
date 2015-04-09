@@ -108,6 +108,29 @@
       "revId": "07fd31290bbdf30d2fc35ee340f957a0133762d1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_061dbb0f",
+        "filename": "testcases/Controllers/ODL/CI/suites/openstack/neutron/060__delete_networks.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-04-09T10:11:10Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 3,
+        "startChar": 91,
+        "endLine": 3,
+        "endChar": 95
+      },
+      "revId": "07fd31290bbdf30d2fc35ee340f957a0133762d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
