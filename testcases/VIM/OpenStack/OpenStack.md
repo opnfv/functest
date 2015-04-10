@@ -4,27 +4,38 @@ Original Rally testsuites can be found here: https://github.com/stackforge/rally
 
 ---
 ## Intro
-In order to perform functional and performance testing, we use a dedicated VM.
-
-    TODO: add test-tool VM in architecture and puppetise test-tool VM
-
-On this VM, we installed:
-* Rally: https://wiki.openstack.org/wiki/Rally
-
-    TODO RobotFramework: http://robotframework.org, SIPP http://sipp.sourceforge.net/
-
-
+In order to perform functional and performance testing, we use Rally (see https://wiki.openstack.org/wiki/Rally for details).
+Rally must be installed as jenkins user on the jumphost machine of the OPNFV solution. 
 
 ## Installation & Configuration
 
 ### Rally
 
-* Log on the test-tool VM
-* install Rally (https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html)
+* Log on jumphost machine as jenkins user
+* Create the file existing.json, adapt it to your OpenStack (until agreement on default passwords)
+```bash
+{
+    "type": "ExistingCloud",
+    "auth_url": "http://example.net:5000/v2.0/",
+    "region_name": "RegionOne",
+    "endpoint_type": "public",
+    "admin": {
+        "username": "admin",
+        "password": "myadminpass",
+        "tenant_name": "demo"
+    },
+    "https_insecure": False,
+    "https_cacert": "",
+}
+```
+* Install Rally (ref https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html)
 
-openrc file (info from OpenStack) is needed, password is required during configuration procedure
-
-* check 
+```bash
+git clone https://git.openstack.org/stackforge/rally
+./rally/install_rally.sh -v
+rally deployment create --file=existing.json --name=existing
+```
+* you can check the available OpenStack services
 ```bash
 # rally deployment check
 keystone endpoints are valid and following service are available:
@@ -40,10 +51,8 @@ keystone endpoints are valid and following service are available:
 | nova_ec2  | compute_ec2 | Available  |
 | novav3    | computev3   | Available  |
 +-----------+-------------+------------+
-
 ```
-
-* For Rally scenario, follow https://rally.readthedocs.org/en/latest/tutorial/step_1_setting_up_env_and_running_benchmark_from_samples.html
+* You can start Rally scenario manually, follow https://rally.readthedocs.org/en/latest/tutorial/step_1_setting_up_env_and_running_benchmark_from_samples.html
 ```bash
 # rally task start ./samples/tasks/scenarios/nova/my-boot-and-delete.json 
 --------------------------------------------------------------------------------
@@ -118,14 +127,8 @@ HINTS:
 Using task: f42c8aed-00a6-4715-9951-945b4fb97c32
 
 ```
-* For Tempest, follow the instructions https://www.mirantis.com/blog/rally-openstack-tempest-testing-made-simpler
-* In first step Rally scenario were fine but Tempest scenarios failed due to configuration
-Apply patch https://review.openstack.org/#/c/163330/
-```bash
-pip uninstall rally && cd ./rally && python setup.py install
-```
+* For Tempest, you can run the test manually by following the instructions https://www.mirantis.com/blog/rally-openstack-tempest-testing-made-simpler
 
-You shall be able to run Rally/Tempest towards your OpenStack
 ```bash
 root@rally:~/rally# rally verify start
 [...]
@@ -188,10 +191,6 @@ Tests:
 Rally includes a reporting tool
 https://rally.readthedocs.org/en/latest/tutorial/step_1_setting_up_env_and_running_benchmark_from_samples.html
 
-
-
-
-
 ## Test description
 
 ### Rally
@@ -207,5 +206,13 @@ ceilometer    designate  glance  keystone  neutron  quotas  requests    tempest-
 
 tempest tests can be retrieved at https://github.com/openstack/tempest
 
+tests have been grouped and are available in https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/suites
+
 
 ## Automation
+
+For automation, 2 job-templates have been created in https://git.opnfv.org/cgit/releng/tree/jjb/functest/functest.yml
+
+* functest-vim_bench-test: this template runs automatically a python script that runs the different rally scenario (except Tempest)
+* functest-vim_tempest-test: this template runs the rally command rally verify start
+
