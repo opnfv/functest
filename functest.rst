@@ -46,6 +46,22 @@ It is possible to use Rally to perform Tempest tests. See `tempest installation 
 
 OpenDaylight
 ============
+ODL wiki page describes system preparation and running tests. See `Integration Group CSIT`_.
+
+.. _`Integration Group CSIT`: https://wiki.opendaylight.org/view/CrossProject:Integration_Group:CSIT
+
+Summary: Set up python2.7 virtual environment::
+
+    mkvirtualenv robot
+    
+    pip install requests
+    pip install robotframework
+    pip install robotframework-sshlibrary
+    pip install robotframework-requests
+
+Clone test repo::
+
+    git clone https://github.com/opendaylight/integration.git
 
 vPing
 =====

@@ -23,11 +23,6 @@ vcrpy==1.0.2
 wsgiref==0.1.2
 
 ## Running tests
-
-Parameters are specified in:
-
-ODL/variables/Variables.py
-
-but can be also overidden in command line e.g.:
-
-pybot -v OPENSTACK:10.2.91.18 -v PORT:8081 -v CONTROLLER 10.2.91.18 .
+For more info:
+cd CI
+bash start_test.sh -h
