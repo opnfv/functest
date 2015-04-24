@@ -59,10 +59,6 @@ Summary: Set up python2.7 virtual environment::
     pip install robotframework-sshlibrary
     pip install robotframework-requests
 
-Clone test repo::
-
-    git clone https://github.com/opendaylight/integration.git
-
 vPing
 =====
 
@@ -115,6 +111,10 @@ If we consider running Tempest suite with Rally::
 
 OpenDaylight
 ============
+
+Tests can be executed with script *start_test.sh* from directory *functest/testcases/Controllers/ODL/CI*. For usage example see::
+
+    # bash start_test.sh -h
 
 vPing
 =====
