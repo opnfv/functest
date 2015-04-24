@@ -7,18 +7,7 @@ green='\033[0;32m'
 light_green='\033[1;32m'
 nc='\033[0m' # No Color
 
-
-echo -e "${green}Current environment parameters for ODL suite.${nc}"
-# Following vars might be also specified as CLI params
-set -x
-PATH_TO_VENV=${PATH_TO_VENV:-~/.virtualenvs/robot/bin/activate}
-OSTACK_IP=${OSTACK_IP:-'oscontrol'}
-ODL_PORT=${ODL_PORT:-8081}
-USR_NAME=${USR_NAME:-'admin'}
-PASS=${PASS:-'octopus'}
-set +x
-
-usage="Script for starting ODL tests.
+usage="Script for starting ODL tests. Tests to be executed are specified in test_list.txt file.
 
 usage:
 [var=value] bash $(basename "$0") [-h]
@@ -43,6 +32,16 @@ while getopts ':h' option; do
   esac
 done
 
+echo -e "${green}Current environment parameters for ODL suite.${nc}"
+# Following vars might be also specified as CLI params
+set -x
+PATH_TO_VENV=${PATH_TO_VENV:-~/.virtualenvs/robot/bin/activate}
+OSTACK_IP=${OSTACK_IP:-'oscontrol'}
+ODL_PORT=${ODL_PORT:-8081}
+USR_NAME=${USR_NAME:-'admin'}
+PASS=${PASS:-'octopus'}
+set +x
+
 echo -e "${green}Cloning ODL integration git repo.${nc}"
 if [ -d integration ]; then
     cd integration
@@ -61,10 +60,14 @@ source $PATH_TO_VENV
 
 # List of tests are specified in test_list.txt
 # those are relative paths to test directories from integartion suite
-# script reads each line from file so no empty lines are allowed
 echo -e "${green}Executing chosen tests.${nc}"
 while read line
 do
+    # skip comments
+    [[ ${line:0:1} == "#" ]] && continue
+    # skip empty lines
+    [[ -z "${line}" ]] && continue
+
     echo -e "${light_green}Starting test: $line ${nc}"
     pybot -v OPENSTACK:${OSTACK_IP} -v PORT:${ODL_PORT} -v CONTROLLER:${OSTACK_IP} $line
 done < test_list.txt
