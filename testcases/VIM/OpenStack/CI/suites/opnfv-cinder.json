@@ -4,7 +4,7 @@
             "args": {
                 "size": 10,
                 "image": {
-                    "name": "^Ubuntu*"
+                    "name": "^TestVM*"
                 },
                 "flavor": {
                     "name": "m1.tiny"
@@ -149,7 +149,7 @@
             "args": {
                 "size": 1,
                 "image": {
-                    "name": "^Ubuntu*"
+                    "name": "^TestVM*"
                 }
             },
             "runner": {
@@ -210,7 +210,7 @@
                 },
                 "servers": {
                     "image": {
-                        "name": "^Ubuntu*"
+                        "name": "^TestVM*"
                     },
                     "flavor": {
                         "name": "m1.tiny"
@@ -241,36 +241,7 @@
                 },
                 "servers": {
                     "image": {
-                        "name": "^Ubuntu*"
-                    },
-                    "flavor": {
-                        "name": "m1.tiny"
-                    },
-                    "servers_per_tenant": 2
-                }
-            }
-        },
-        {
-            "args": {
-                "volume_type": true,
-                "size": {
-                    "min": 1,
-                    "max": 5
-                }
-            },
-            "runner": {
-                "type": "constant",
-                "times": 4,
-                "concurrency": 2
-            },
-            "context": {
-                "users": {
-                    "tenants": 2,
-                    "users_per_tenant": 1
-                },
-                "servers": {
-                    "image": {
-                        "name": "^Ubuntu*"
+                        "name": "^TestVM*"
                     },
                     "flavor": {
                         "name": "m1.tiny"
@@ -279,7 +250,6 @@
                 }
             }
         }
-
     ],
     "CinderVolumes.create_volume": [
         {
