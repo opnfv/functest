@@ -11,12 +11,12 @@
 import re, json, os, urllib2, argparse, logging
 
 """ tests configuration """
-tests = ['authenticate', 'glance', 'heat', 'keystone', 'neutron', 'nova', 'tempest', 'vm', 'all']
+tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'tempest', 'vm', 'all']
 parser = argparse.ArgumentParser()
 parser.add_argument("test_name", help="The name of the test you want to perform with rally. "
                                       "Possible values are : "
                                       "[ {d[0]} | {d[1]} | {d[2]} | {d[3]} | {d[4]} | {d[5]} | {d[6]} "
-                                      "| {d[7]} | {d[8]} ]. The 'all' value performs all the tests scenarios "
+                                      "| {d[7]} | {d[8]} | {d[9]} ]. The 'all' value performs all the tests scenarios "
                                       "except 'tempest'".format(d=tests))
 
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
@@ -91,10 +91,10 @@ def run_task(test_name):
     if not os.path.exists(test_file_name):
         logger.debug('{} does not exists'.format(test_file_name))
         proceed_test = retrieve_test_cases_file(test_name, tests_path)
-        logger.debug('successfully downloaded to : {}'.format(test_file_name))
  
     """ we do the test only if we have a scenario test file """
     if proceed_test:
+        logger.debug('successfully downloaded to : {}'.format(test_file_name))
         cmd_line = "rally task start --abort-on-sla-failure %s" % test_file_name
         logger.debug('running command line : {}'.format(cmd_line))
         cmd = os.popen(cmd_line)
@@ -132,7 +132,7 @@ def run_task(test_name):
         else:
             print '{} KO'.format(test_date)
     else:
-        logger.error('{} test failed, unable to find a scenario test file'.format(test_name))
+        logger.error('{} test failed, unable to download a scenario test file'.format(test_name))
  
  
 def retrieve_test_cases_file(test_name, tests_path):
