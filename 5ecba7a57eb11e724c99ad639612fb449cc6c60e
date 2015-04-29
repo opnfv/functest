@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_77030074",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 723
+      },
+      "writtenOn": "2015-04-29T08:27:53Z",
+      "side": 1,
+      "message": "Morgan, there are some white spaces at lines: 5, 8, 25, 43, 48, 71, 80, 103, 115, 129, 130, 131, 138, 170, 180, 181, 188, 205, 248, 257, 263, 267, 278 \u0026 306",
+      "revId": "5ecba7a57eb11e724c99ad639612fb449cc6c60e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
