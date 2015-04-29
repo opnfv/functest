@@ -2,10 +2,10 @@
 OPNFV functional test guide
 ===========================
 
-Testing is a key challenge of OPNFV. 
+Testing is a key challenge of OPNFV.
 It shall be possible to run functional tests on any OPNFV solution.
 
-The goal of this document consists in 
+The goal of this document consists in
 * a description of functional tests for OPNFV
 * a description of the tools needed to perform these tests
 * the procedure to configure the tools and the scenarios associated with these tests
@@ -22,7 +22,7 @@ ETSI NFV defined 9 use cases (ref ETSI_):
  * VNF as a Service
  * NFV as a service
  * VNF Forwarding graphs
- * Virtual Network Platform as a Service 
+ * Virtual Network Platform as a Service
  * Virtualisation of Mobile Core and IMS
  * Virtualisation of Mobile station
  * Fixed Access NFV
@@ -40,12 +40,12 @@ For release 1 (Arno), 5 test suites have been selected:
  * vPing
  * vIMS
 
-The 3 first suites are directly inherited from upstream projects. 
+The 3 first suites are directly inherited from upstream projects.
 vPing, that is already present in Tempest suite, has been developped to provided a basic "hellow world" functional test example.
 
 .. _`Continuous Integration`: https://build.opnfv.org/ci/view/functest/
 
-vEPC, vPE, vHGW, vCDN use cases are not considered for first release. 
+vEPC, vPE, vHGW, vCDN use cases are not considered for first release.
 It does not mean that such use cases cannot be tested on OPNFV Arno.
 It means that these use cases have not been integrated in the `Continuous Integration`_ and no specific work (integration or developpment) have been done for R1.
 
@@ -68,7 +68,7 @@ For release 1, the tools are not automatically installed.
 .. _pharos: https://wiki.opnfv.org/pharos
 
 It is recommended to install the different tools on the jump host server as defined in the pharos_ project.
-The high level architecture can be described as follow: 
+The high level architecture can be described as follow:
 
 .. figure:: overall_description.png
    :scale: 50
@@ -76,9 +76,9 @@ The high level architecture can be described as follow:
 
 .. _description:
 
-------------------------------
-Description of the test cases 
-------------------------------
+-----------------------------
+Description of the test cases
+-----------------------------
 
 Rally bench test suite
 ======================
@@ -100,7 +100,7 @@ The goal of this test suite is to test the different modules of OpenStack and ge
 This test suite provides performance information on VIM (OpenStack) part.
 
 No SLA were defined for release 1, we just consider whether the tests are passed or failed.
- 
+
 In the future SLA shall be considered (e.g. accepting booting time for a given image with a given flavour).
 
 Through its integration in Continuous Integration, the evolution of the performance of these tests shall also be considered.
@@ -112,7 +112,7 @@ Tempest
 
 Tempest_ is the OpenStack Integration Test Suite. We use Rally to run Tempest suite.
 
-The goal of this test is to check the OpenStack installation (sanity checks). 
+The goal of this test is to check the OpenStack installation (sanity checks).
 
 
 OpenDaylight
@@ -126,18 +126,18 @@ The goal of this test can be described as follow:
 .. figure:: vPing.png
    :scale: 50
    :alt: vPing description
-   
-The vPing test case is already present in Tempest suite. 
- 
+
+The vPing test case is already present in Tempest suite.
+
 This example, using OpenStack python clients can be considered as an "hellow World" example and may be modified for future use.
 
 
 vIMS
 ====
 
-vIMS is one of the testcases defined by ETSI. 
+vIMS is one of the testcases defined by ETSI.
 
-.. figure:: http://fr.wikipedia.org/wiki/IP_Multimedia_Subsystem#/media/File:Ims_overview.png
+.. figure:: Ims_overview.png
    :scale: 50
    :alt: IMS (src wikipedia)
 
@@ -149,7 +149,7 @@ This functional test will verify that
  * The virtual networking component of the platform can provide working IP connectivity between and among the VMs
  * The platform as a whole is capable of supporting the running of a real virtualized network function that delivers a typical service offered by a network operator, i.e. voice telephony
 
-Functional testing of vIMS in OPNFV Release 1 will be limited to a basic, non-scalable and non-fault-tolerant deployment of IMS. 
+Functional testing of vIMS in OPNFV Release 1 will be limited to a basic, non-scalable and non-fault-tolerant deployment of IMS.
 Furthermore, in this release the vIMS will perform only control plane functions (i.e. processing of SIP signaling messages) and will not be passing RTP media streams.
 
 In future releases, the same software elements can be deployed with multiple instances of each VNF component to provide a fault tolerant and dynamically scalable deployment of IMS. With the addition of virtualized Session Border Controller software elements, the scope of vIMS functional testing can be further expanded to include the handling of RTP media. 
@@ -167,7 +167,7 @@ Tooling installation
 
 2 tools are needed for the R1 functional tests:
  * Rally
- * Robot 
+ * Robot
 
 
 Rally
@@ -177,15 +177,15 @@ Rally
 
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
 
-The Rally creation can be describe as follow (ref: `Rally installation procedure`_): 
- * Create or enter a folder where you want to check out the tool repos. 
+The Rally creation can be describe as follow (ref: `Rally installation procedure`_):
+ * Create or enter a folder where you want to check out the tool repos.
  * $ git clone https://git.openstack.org/openstack/rally
  * $ ./rally/install_rally.sh
  * configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)
  * $ source Your_OpenRC_file
  * $ rally deployment create --fromenv --name=my-opnfv-test
  * $ rally-manage tempest install
- 
+
 You can check if the configuration of rally is fine by typing 'rally deployment check', you shall see the list of available services as follow::
 
     # rally deployment check
@@ -202,7 +202,7 @@ You can check if the configuration of rally is fine by typing 'rally deployment 
     | nova_ec2  | compute_ec2 | Available  |
     | novav3    | computev3   | Available  |
     +-----------+-------------+------------+
- 
+
     # rally show images
     +--------------------------------------+----------------------------------------------+------------+
     | UUID                                 | Name                                         | Size (B)   |
@@ -245,7 +245,7 @@ Rally bench scenarios have been aggregated in json files.
 A script has been developed to simplify the management of the tests and the integration in CI, get it from git::
 
     # wget https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/run_rally.py
-    
+
 Several scenarios are available (all based on native Rally scenarios):
  * glance
  * nova
@@ -254,17 +254,17 @@ Several scenarios are available (all based on native Rally scenarios):
  * neutron
  * vm
  * quotas
- * request 
+ * request
  * tempest
  * all (every module except tempest)
 
 You can run the script as follow::
     #python run_rally.py keystone
-    
+
 The script will:
  * get the json scenario (if not already available) and put it into the scenario folder
  * run rally
- * generate the html result page into the result folder as opnfv-[module name]-[timestamp].html  
+ * generate the html result page into the result folder as opnfv-[module name]-[timestamp].html
  * generate the json result page into the result folder as opnfv-[module name]-[timestamp].json
  * generate OK or KO
 
@@ -275,7 +275,7 @@ It is possible to use Rally to perform Tempest tests (ref: `tempest installation
 You just need to run::
 
      # rally verify start
-     
+
 The different modes available are smoke, baremetal, compute, data_processing, identity, image, network, object_storage, orchestration, telemetry, and volume. By default if you do not precise anything then smoke tests be selected by default.
 
 .. _`tempest installation guide using Rally`: https://www.mirantis.com/blog/rally-openstack-tempest-testing-made-simpler/
@@ -303,7 +303,7 @@ Test results
 Rally bench suite
 =================
 
-Results are available in the result folder through a html page and a json file. 
+Results are available in the result folder through a html page and a json file.
 
 Tempest suite
 =============
