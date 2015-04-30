@@ -6,13 +6,13 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^Ubuntu*"
+                    "name": "^TestVM*"
                 },
                 "floating_network": "public",
                 "force_delete": false,
                 "script": "samples/tasks/support/instance_dd_test.sh",
                 "interpreter": "/bin/sh",
-                "username": "ubuntu"
+                "username": "cirros"
             },
             "runner": {
                 "type": "constant",
@@ -36,7 +36,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^Ubuntu*"
+                    "name": "^TestVM*"
                 },
                 "volume_args": {
                     "size": 2
@@ -47,7 +47,7 @@
                 "force_delete": false,
                 "script": "samples/tasks/support/instance_dd_test.sh",
                 "interpreter": "/bin/sh",
-                "username": "ubuntu"
+                "username": "cirros"
             },
             "runner": {
                 "type": "constant",

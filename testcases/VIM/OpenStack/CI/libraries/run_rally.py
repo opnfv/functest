@@ -11,12 +11,12 @@
 import re, json, os, urllib2, argparse, logging
 
 """ tests configuration """
-tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'tempest', 'vm', 'all']
+tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'tempest', 'vm', 'all']
 parser = argparse.ArgumentParser()
 parser.add_argument("test_name", help="The name of the test you want to perform with rally. "
                                       "Possible values are : "
                                       "[ {d[0]} | {d[1]} | {d[2]} | {d[3]} | {d[4]} | {d[5]} | {d[6]} "
-                                      "| {d[7]} | {d[8]} | {d[9]} ]. The 'all' value performs all the tests scenarios "
+                                      "| {d[7]} | {d[8]} | {d[9]} | {d[10]} | {d[11]} ]. The 'all' value performs all the tests scenarios "
                                       "except 'tempest'".format(d=tests))
 
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
@@ -83,7 +83,7 @@ def run_task(test_name):
     """ get the date """
     cmd = os.popen("date '+%d%m%Y_%H%M'")
     test_date = cmd.read().rstrip()
- 
+
     """ check directory for scenarios test files or retrieve from git otherwise"""
     proceed_test = True
     tests_path = "./scenarios"
@@ -91,7 +91,7 @@ def run_task(test_name):
     if not os.path.exists(test_file_name):
         logger.debug('{} does not exists'.format(test_file_name))
         proceed_test = retrieve_test_cases_file(test_name, tests_path)
- 
+
     """ we do the test only if we have a scenario test file """
     if proceed_test:
         logger.debug('successfully downloaded to : {}'.format(test_file_name))
@@ -100,11 +100,11 @@ def run_task(test_name):
         cmd = os.popen(cmd_line)
         task_id = get_task_id(cmd.read())
         logger.debug('task_id : {}'.format(task_id))
- 
+
         if task_id is None:
             logger.error("failed to retrieve task_id")
             exit(-1)
- 
+
         """ check for result directory and create it otherwise """
         report_path = "./results"
         if not os.path.exists(report_path):
@@ -126,7 +126,7 @@ def run_task(test_name):
             logger.debug('saving json file')
             f.write(json_results)
             logger.debug('saving json file2')
- 
+
         """ parse JSON operation result """
         if task_succeed(json_results):
             print '{} OK'.format(test_date)
@@ -134,14 +134,14 @@ def run_task(test_name):
             print '{} KO'.format(test_date)
     else:
         logger.error('{} test failed, unable to download a scenario test file'.format(test_name))
- 
- 
+
+
 def retrieve_test_cases_file(test_name, tests_path):
     """
     Retrieve from github the sample test files
     :return: Boolean that indicates the retrieval status
     """
- 
+
     """ do not add the "/" at the end """
     url_base = "https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/suites"
 
