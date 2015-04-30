@@ -11,12 +11,12 @@
 import re, json, os, urllib2, argparse, logging
 
 """ tests configuration """
-tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'tempest', 'vm', 'all']
+tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'tempest', 'vm', 'all']
 parser = argparse.ArgumentParser()
 parser.add_argument("test_name", help="The name of the test you want to perform with rally. "
                                       "Possible values are : "
                                       "[ {d[0]} | {d[1]} | {d[2]} | {d[3]} | {d[4]} | {d[5]} | {d[6]} "
-                                      "| {d[7]} | {d[8]} | {d[9]} ]. The 'all' value performs all the tests scenarios "
+                                      "| {d[7]} | {d[8]} | {d[9]} | {d[10]} | {d[11]} ]. The 'all' value performs all the tests scenarios "
                                       "except 'tempest'".format(d=tests))
 
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
