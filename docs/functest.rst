@@ -70,9 +70,53 @@ For release 1, the tools are not automatically installed.
 It is recommended to install the different tools on the jump host server as defined in the pharos_ project.
 The high level architecture can be described as follow:
 
-.. figure:: images/overall_description.png
-   :scale: 50
-   :alt: overall description
+code::
+
+ CIMC/Lights+out management                  Admin     Private   Public   Storage  
+                                              PXE          
+                                                                   +   
+ +                                             +     IP_PRIV/24    |        |           
+ |                                             |         +         +        |           
+ |                                             |         |    IP_PUB/24     |           
+ |     +-----------------+                     |         |         +        |           
+ |     |                 |                     |         |         |        |           
+ +-----+  Jumpserver     |                     |         |         |        |           
+ |     |                 +---------------------+         |         |        |           
+ |     |                 |                     |         |         |        |           
+ |     |  +----------+   |                     |         |         |        |           
+ |     |  |  Rally   |   +---- --------------------------+         |        |           
+ |     |  |          |   |                     |         |         |        |           
+ |     |  |  Robot   |   |                     |         |         |        |           
+ |     |  |          |   |                     |         |         |        |           
+ |     |  |  vPing   |   |                     |         |         |        |           
+ |     |  |          |   |                     |         |         |        |           
+ |     |  |  vIMS    |   |                     |         |         |        |           
+ |     |  +----------+   |                     |         |         |        |           
+ |     |   FuncTests     +-----------------------------------------+        |           
+ |     |                 |                     |         |         |        |           
+ |     |                 +--------------------------------------------------+           
+ |     |                 |                     |         |         |        |           
+ |     +-----------------+                     |         |         |        |           
+ |                                             |         |         |        |           
+ |    +----------------+                       |         |         |        |           
+ |    |             1  |                       |         |         |        |           
+ +----+ +--------------+-+                     |         |         |        |           
+ |    | |             2  |                     |         |         |        |           
+ |    | | +--------------+-+                   |         |         |        |           
+ |    | | |             3  |                   |         |         |        |           
+ |    | | | +--------------+-+                 |         |         |        |           
+ |    | | | |             4  |                 |         |         |        |           
+ |    +-+ | | +--------------+-+               |         |         |        |           
+ |      | | | |             5  +---------------+         |         |        |           
+ |      +-+ | |  nodes for     |               |         |         |        |           
+ |        | | |  deploying     +-------------------------+         |        |           
+ |        +-+ |  opnfv         |               |         |         |        |           
+ |          | |     SUT        +-----------------------------------+        |           
+ |          +-+                |               |         |         |        |           
+ |            |                +--------------------------------------------+           
+ |            +----------------+               |         |         |        |           
+ |                                             |         |         |        |           
+ |                                             +         +         +        +
 
 .. _description:
 
@@ -123,9 +167,29 @@ vPing
 
 The goal of this test can be described as follow:
 
-.. figure:: images/vPing.png
-   :scale: 50
-   :alt: vPing description
+code::
+
+ vPing testcase
+ +-------------+                   +-------------+
+ |             |                   |             |
+ |             |     Boot VM1      |             |
+ |             +------------------>|             |
+ |             |                   |             |
+ |             |     Get IP VM1    |             |
+ |             +------------------>|             |
+ |   Tester    |                   |   System    |
+ |             |     Boot VM2      |    Under    |
+ |             +------------------>|     Test    |
+ |             |  Including Ping   |             |
+ |             |at the end of boot |             |
+ |             |                   |             |
+ |             |                   |             |
+ |             |   Check console   |             |
+ |             |     Grep Ping     |             |
+ |             +------------------>|             |
+ |             |                   |             |
+ +-------------+                   +-------------+
+
 
 The vPing test case is already present in Tempest suite.
 
@@ -165,7 +229,7 @@ The vIMS core function is based on the clearwater_ open source solution.
 Tooling installation
 ----------------------
 
-2 tools are needed for the R1 functional tests:
+2 external tools are needed for the R1 functional tests:
  * Rally
  * Robot
 
@@ -234,6 +298,30 @@ Summary: Set up python2.7 virtual environment::
     pip install robotframework-requests
 
 
+vPing
+=====
+
+Make sure that nova services are up::
+
+    #nova service list
+    +----+----------------+--------+----------+---------+-------+
+    | Id | Binary         | Host   | Zone     | Status  | State | 
+    +----+----------------+--------+----------+---------+-------+
+    | 1  | nova-conductor | xxxxxx | internal | enabled | up    | 
+    | 3  | nova-network   | xxxxxx | internal | enabled | up    | 
+    | 4  | nova-scheduler | xxxxxx | internal | enabled | up    |
+    | 5  | nova-compute   | xxxxxx | nova     | enabled | up    | 
+    +----+----------------+--------+----------+---------+-------+
+
+
+.. _vPing.py: https://git.opnfv.org/cgit/functest/tree/testcases/vPing/CI/libraries/vPing.py
+
+Retrieve vPing.py_ script from OPNFV git repo
+ 
+Make sure you have sourced your OpenRC file::
+
+    # source Your_OpenRC_file
+
 ------------------------------
 Functional test configuration
 ------------------------------
@@ -259,7 +347,8 @@ Several scenarios are available (all based on native Rally scenarios):
  * all (every module except tempest)
 
 You can run the script as follow::
-    #python run_rally.py keystone
+
+    # python run_rally.py keystone
 
 The script will:
  * get the json scenario (if not already available) and put it into the scenario folder
@@ -290,8 +379,22 @@ ODL wiki page describes system preparation and running tests. See `Integration G
 vPing
 =====
 
+By default, the script’s is configured as follow::
+
+ * OS_USERNAME:         admin   
+ * OS_PASSWORD:         test   
+ * OS_AUTH_URL:          http://192.168.20.71:5000/v2.0  
+ * OS_TENANT_NAME: invisible_to_admin
+ * Name of VM: opnfv-vping-1 , opnfv-vping-2
+ * Flavor: m1.small
+ * Image: Ubuntu 14.04 (amd64)
+ * Network: private
+
+The script needs to be tuned to  your specific system configuration 
+
 vIMS
 ====
+
 
 
 .. _manualtest:
@@ -324,6 +427,9 @@ Tests can be executed with script *start_test.sh* from directory *functest/testc
 
 vPing
 =====
+The test can be executed with command::
+
+    #python vPing.py
 
 vIMS
 ====
