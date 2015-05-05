@@ -8,7 +8,8 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import re, json, os, urllib2, argparse, logging, shutil
+import re, json, os, urllib2, argparse, logging, shutil, subprocess
+from git import Repo
 
 actions = ['start', 'check', 'clean']
 
@@ -19,6 +20,8 @@ image_url = 'http://download.cirros-cloud.net/0.3.0/cirros-0.3.0-i386-disk.img'
 image_disk_format = 'raw'
 image_name = image_url.rsplit('/')[-1]
 image_path = functest_dir + image_name
+rally_repo_dir = functest_dir + "Rally_repo/"
+rally_installation_dir = os.environ['HOME'] + "/.rally"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("action", help="Possible actions are: '{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
@@ -56,14 +59,24 @@ def config_functest_start():
         logger.error("Please source the openrc credentials and run the script again.")
         #TODO: source the credentials in this script
         exit(-1)
-    elif not check_rally():
-        logger.error("Rally is not installed. Please follow the instructions to prepare the Rally environment.")
-        exit(-1)
     else:
+        config_functest_clean()
+
         logger.info("Starting installationg of functest environment in %s" %functest_dir)
         os.makedirs(functest_dir)
         if not os.path.exists(functest_dir):
-            logger.error("There has been a problem why creating the environment directory")
+            logger.error("There has been a problem while creating the environment directory")
+            exit(-1)
+
+
+        logger.info("Installing Rally...")
+        if not install_rally():
+            logger.error("There has been a problem while installing Rally")
+            exit(-1)
+
+        logger.info("Installing Robot...")
+        if not install_robot():
+            logger.error("There has been a problem while installing Robot")
             exit(-1)
 
         logger.info("Donwloading test scripts and scenarios...")
@@ -74,6 +87,7 @@ def config_functest_start():
 
         logger.info("Creating Glance image: %s ..." %image_name)
         create_glance_image(image_path,image_name,image_disk_format)
+        
         exit(0)
 
 
@@ -83,13 +97,12 @@ def config_functest_check():
     Check if the functest environment is installed
     """
     logger.info("Checking current functest configuration...")
-    if not os.path.exists(functest_dir):
+    if os.path.exists(functest_dir) and os.path.exists(rally_installation_dir):
+        logger.info("Functest environment directory found in %s" %functest_dir)
+        return True
+    else:
         logger.info("Functest environment directory not found")
         return False
-    else:
-        logger.info("Functest environment directory found in %s" %functest_dir)
-        #TODO: more verifications here
-        return True
 
 
 
@@ -97,22 +110,48 @@ def config_functest_clean():
     """
     Clean the existing functest environment
     """
-    if not config_functest_check():
-        logger.info("There is no functest environment installed. Nothing to clean.")
-        return 0
-    else:
-        while True:
-            print("Are you sure? [y|n]")
-            answer = raw_input("")
-            if answer == "y":
-                logger.info("Removing current functest environment...")
-                shutil.rmtree(functest_dir,ignore_errors=True)
-                exit(0)
-            elif answer == "n":
-                exit(0)
-            else:
-                print("Invalid option.")
+    logger.info("Removing current functest environment...")
+    if os.path.exists(rally_installation_dir):
+        shutil.rmtree(rally_installation_dir,ignore_errors=True)
 
+    if os.path.exists(functest_dir):
+        cmd = "sudo rm -rf " + functest_dir #need to be sudo
+        execute_command(cmd)
+
+    return True
+
+
+def install_rally():
+    if check_rally():
+        logger.info("Rally is already installed.")
+    else:
+        logger.debug("Cloning repository...")
+        url = "https://git.openstack.org/openstack/rally"
+        Repo.clone_from(url, rally_repo_dir)
+
+        logger.debug("Executing %s./install_rally.sh..." %rally_repo_dir)
+        install_script = rally_repo_dir + "./install_rally.sh"
+        subprocess.call(['sudo', install_script])
+
+        logger.debug("Creating Rally environment...")
+        cmd = "rally deployment create --fromenv --name=opnfv-arno-rally"
+        execute_command(cmd)
+
+        logger.debug("Installing tempest...")
+        cmd = "rally-manage tempest install"
+        execute_command(cmd)
+
+        cmd = "rally deployment check"
+        execute_command(cmd)
+        #TODO: check that everything is 'Available' and warn if not
+
+        cmd = "rally show images"
+        execute_command(cmd)
+
+        cmd = "rally show flavors"
+        execute_command(cmd)
+
+    return True
 
 
 
@@ -125,6 +164,20 @@ def check_rally():
         return True
     else:
         return False
+
+
+def install_robot():
+    cmd = "sudo pip install requests"
+    execute_command(cmd)
+    cmd = "sudo pip install robotframework"
+    execute_command(cmd)
+    cmd = "sudo pip install robotframework-sshlibrary"
+    execute_command(cmd)
+    cmd = "sudo pip install robotframework-requests"
+    execute_command(cmd)
+    cmd = "mkvirtualenv robot"
+    execute_command(cmd)
+    return True
 
 
 def check_credentials():
@@ -262,7 +315,7 @@ def execute_command(cmd):
     """
     logger.debug('Executing command : {}'.format(cmd))
     p = os.popen(cmd,"r")
-    print (p.read())
+    logger.debug(p.read())
 
 
 
@@ -278,7 +331,18 @@ def main():
         config_functest_check()
 
     if args.action == "clean":
-        config_functest_clean()
+        while True:
+            print("Are you sure? [y|n]")
+            answer = raw_input("")
+            if answer == "y":
+                config_functest_clean()
+                break
+            elif answer == "n":
+                break
+            else:
+                print("Invalid option.")
+    exit(0)
+
 
 if __name__ == '__main__':
     main()
