@@ -23,6 +23,8 @@ image_path = functest_dir + image_name
 rally_repo_dir = functest_dir + "Rally_repo/"
 rally_installation_dir = os.environ['HOME'] + "/.rally"
 
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument("action", help="Possible actions are: '{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
@@ -65,28 +67,39 @@ def config_functest_start():
         logger.info("Starting installationg of functest environment in %s" %functest_dir)
         os.makedirs(functest_dir)
         if not os.path.exists(functest_dir):
-            logger.error("There has been a problem while creating the environment directory")
+            logger.error("There has been a problem while creating the environment directory.")
             exit(-1)
 
 
         logger.info("Installing Rally...")
         if not install_rally():
-            logger.error("There has been a problem while installing Rally")
+            logger.error("There has been a problem while installing Rally.")
+            config_functest_clean()
             exit(-1)
 
         logger.info("Installing Robot...")
         if not install_robot():
-            logger.error("There has been a problem while installing Robot")
+            logger.error("There has been a problem while installing Robot.")
+            config_functest_clean()
             exit(-1)
 
         logger.info("Donwloading test scripts and scenarios...")
-        download_tests()
+        if not download_tests():
+            logger.error("There has been a problem while downloading the test scripts and scenarios.")
+            config_functest_clean()
+            exit(-1)
 
         logger.info("Donwloading image...")
-        download_url_with_progress(image_url, functest_dir)
+        if not download_url_with_progress(image_url, functest_dir):
+            logger.error("There has been a problem while downloading the image.")
+            config_functest_clean()
+            exit(-1)
 
         logger.info("Creating Glance image: %s ..." %image_name)
-        create_glance_image(image_path,image_name,image_disk_format)
+        if not create_glance_image(image_path,image_name,image_disk_format):
+            logger.error("There has been a problem while creating the Glance image.")
+            config_functest_clean()
+            exit(-1)
         
         exit(0)
 
@@ -112,12 +125,23 @@ def config_functest_clean():
     """
     logger.info("Removing current functest environment...")
     if os.path.exists(rally_installation_dir):
+        logger.debug("Removing rally installation directory %s" % rally_installation_dir)
         shutil.rmtree(rally_installation_dir,ignore_errors=True)
-
+        
     if os.path.exists(functest_dir):
-        cmd = "sudo rm -rf " + functest_dir #need to be sudo
+        logger.debug("Removing functest directory %s" % functest_dir)
+        cmd = "sudo rm -rf " + functest_dir #need to be sudo, not possible with rmtree
         execute_command(cmd)
-
+    
+    logger.debug("Deleting glance images")
+    cmd = "glance image-list | grep "+image_name+" | cut -c3-38"
+    p = os.popen(cmd,"r")
+    
+    #while image_id = p.readline() 
+    for image_id in p.readlines():
+        cmd = "glance image-delete " + image_id
+        execute_command(cmd)
+        
     return True
 
 
@@ -130,8 +154,10 @@ def install_rally():
         Repo.clone_from(url, rally_repo_dir)
 
         logger.debug("Executing %s./install_rally.sh..." %rally_repo_dir)
-        install_script = rally_repo_dir + "./install_rally.sh"
-        subprocess.call(['sudo', install_script])
+        install_script = rally_repo_dir + "install_rally.sh"
+        cmd = 'sudo ' + install_script
+        execute_command(cmd)
+        #subprocess.call(['sudo', install_script])
 
         logger.debug("Creating Rally environment...")
         cmd = "rally deployment create --fromenv --name=opnfv-arno-rally"
@@ -175,8 +201,8 @@ def install_robot():
     execute_command(cmd)
     cmd = "sudo pip install robotframework-requests"
     execute_command(cmd)
-    cmd = "mkvirtualenv robot"
-    execute_command(cmd)
+    #cmd = "mkvirtualenv robot"
+    #execute_command(cmd)
     return True
 
 
@@ -219,15 +245,25 @@ def download_tests():
 
     logger.info("Downloading vPing test...")
     vPing_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/vPing/CI/libraries/vPing.py'
-    download_url(vPing_url,vPing_dir)
+    if not download_url(vPing_url,vPing_dir):
+        return False
+    
+    vPing_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/vPing/CI/libraries/vPing.py'
+    if not download_url(vPing_url,vPing_dir):
+        return False
 
     logger.info("Downloading Rally bench tests...")
+    run_rally_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/libraries/run_rally.py'
+    if not download_url(run_rally_url,bench_tests_dir  ):
+        return False
+    
     rally_bench_base_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/suites/'
     bench_tests = ['authenticate', 'cinder', 'glance', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'tempest', 'vm']
     for i in bench_tests:
         rally_bench_url = rally_bench_base_url + "opnfv-" + i + ".json"
         logger.debug("Downloading %s" %rally_bench_url)
-        download_url(rally_bench_url,bench_tests_dir)
+        if not download_url(rally_bench_url,bench_tests_dir):
+            return False
 
     logger.info("Downloading OLD tests...")
     odl_base_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/Controllers/ODL/CI/'
@@ -235,7 +271,10 @@ def download_tests():
     for i in odl_tests:
         odl_url = odl_base_url + i
         logger.debug("Downloading %s" %odl_url)
-        download_url(odl_url,odl_dir)
+        if not download_url(odl_url,odl_dir):
+            return False
+        
+    return True
     #TODO: complete
 
 
@@ -246,6 +285,7 @@ def create_glance_image(path,name,disk_format):
     """
     cmd = "glance image-create --name "+name+" --is-public true --disk-format "+disk_format+" --container-format bare --file "+path
     execute_command(cmd)
+    return True
 
 
 def download_url(url, dest_path):
@@ -297,6 +337,7 @@ def download_url_with_progress(url, dest_path):
 
     f.close()
     print("\n")
+    return True
 
 
 def check_internet_connectivity(url='http://www.google.com/'):
@@ -314,8 +355,21 @@ def execute_command(cmd):
     Execute Linux command
     """
     logger.debug('Executing command : {}'.format(cmd))
-    p = os.popen(cmd,"r")
-    logger.debug(p.read())
+    #p = os.popen(cmd,"r")
+    #logger.debug(p.read())
+    output_file = "/tmp/output.txt"
+    f = open(output_file, 'w+')
+    p = subprocess.call(cmd,shell=True, stdout=f, stderr=subprocess.STDOUT)
+    f.close()
+    f = open(output_file, 'r')
+    logger.debug(f.read())
+    #p = subprocess.call(cmd,shell=True);
+    if p == 0 :
+        return True
+    else:
+        logger.error("Error when executing command %s" %cmd)
+        exit(-1)
+
 
 
 
