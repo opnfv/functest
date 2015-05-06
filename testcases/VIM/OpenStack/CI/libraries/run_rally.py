@@ -20,7 +20,13 @@ parser.add_argument("test_name", help="The name of the test you want to perform 
                                       "except 'tempest'".format(d=tests))
 
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
+parser.add_argument("test_mode", help="Tempest test mode", nargs='?', default="smoke")
 args = parser.parse_args()
+test_mode=args.test_mode
+
+if not args.test_name == "tempest":
+    if not args.test_mode == "smoke":
+        parser.error("test_mode is only used with tempest")
 
 """ logging configuration """
 logger = logging.getLogger('run_rally')
@@ -36,6 +42,21 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
+
+def get_tempest_id(cmd_raw):
+    """
+    get task id from command rally result
+    :param cmd_raw:
+    :return: task_id as string
+    """
+    taskid_re = re.compile('^Verification UUID: (.*)$')
+    for line in cmd_raw.splitlines(True):
+        line = line.strip()
+    match = taskid_re.match(line)
+
+    if match:
+		return match.group(1)
+    return None
 
 def get_task_id(cmd_raw):
     """
@@ -66,10 +87,44 @@ def task_succeed(json_raw):
         return False
 
     for result in rally_report.get('result'):
-        if len(result.get('error')) > 0:
+        if len(result.get('errors')) > 0:
             return False
 
     return True
+
+def run_tempest():
+    """
+    the function dedicated to Tempest (functional tests for OpenStack)
+    :param test_mode: Tempest mode smoke (default), full, ..
+    :return: void
+    """
+    logger.info('starting {} Tempest ...'.format(test_mode))
+
+    """ get the date """
+    cmd = os.popen("date '+%d%m%Y_%H%M'")
+    test_date = cmd.read().rstrip()
+
+    cmd_line = "rally verify start {}".format(test_mode)
+    logger.debug('running command line : {}'.format(cmd_line))
+    cmd = os.popen(cmd_line)
+    task_id = get_tempest_id(cmd.read())
+    logger.debug('task_id : {}'.format(task_id))
+
+    if task_id is None:
+		logger.error("failed to retrieve task_id")
+		exit(-1)
+
+    """ check for result directory and create it otherwise """
+    report_path = "./results"
+    if not os.path.exists(report_path):
+        logger.debug('does not exists, we create it'.format(report_path))
+        os.makedirs(report_path)
+
+    """ write log report file """
+    report_file_name = '{}/opnfv-tempest-{}.log'.format(report_path, test_date)
+    cmd_line = "rally verify detailed {} > {} ".format(task_id, report_file_name)
+    logger.debug('running command line : {}'.format(cmd_line))
+    os.popen(cmd_line)
 
 
 def run_task(test_name):
@@ -129,9 +184,9 @@ def run_task(test_name):
 
         """ parse JSON operation result """
         if task_succeed(json_results):
-            print '{} OK'.format(test_date)
+            print 'Test OK'
         else:
-            print '{} KO'.format(test_date)
+            print 'Test KO'
     else:
         logger.error('{} test failed, unable to download a scenario test file'.format(test_name))
 
@@ -175,7 +230,11 @@ def main():
                 print(test_name)
                 run_task(test_name)
     else:
-        run_task(args.test_name)
+        print(args.test_name)
+        if args.test_name == 'tempest':
+			run_tempest()
+        else:
+            run_task(args.test_name)
 
 if __name__ == '__main__':
     main()
