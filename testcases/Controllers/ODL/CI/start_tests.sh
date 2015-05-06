@@ -1,7 +1,9 @@
 #!/bin/bash
 # Script requires that test environment is created already
 # it includes python2.7 virtual env with robot packages and git
+# use create_env.sh script for creating python virtualenv
 
+BASEDIR=`dirname $0`
 # Colors
 green='\033[0;32m'
 light_green='\033[1;32m'
@@ -14,7 +16,7 @@ usage:
 
 where:
     -h     show this help text
-    var    one of the following: OSTACK_IP, ODL_PORT, USER, PASS, PATH_TO_VENV
+    var    one of the following: OSTACK_IP, ODL_PORT, USR_NAME, USR_PASSWORD
     value  new value for var
 
 example:
@@ -35,11 +37,10 @@ done
 echo -e "${green}Current environment parameters for ODL suite.${nc}"
 # Following vars might be also specified as CLI params
 set -x
-PATH_TO_VENV=${PATH_TO_VENV:-~/.virtualenvs/robot/bin/activate}
 OSTACK_IP=${OSTACK_IP:-'oscontrol'}
 ODL_PORT=${ODL_PORT:-8081}
 USR_NAME=${USR_NAME:-'admin'}
-PASS=${PASS:-'octopus'}
+USR_PASSWORD=${USR_PASSWORD:-'octopus'}
 set +x
 
 echo -e "${green}Cloning ODL integration git repo.${nc}"
@@ -53,14 +54,19 @@ else
 fi
 
 # Change openstack password for admin tenant in neutron suite
-sed -i "s/\"password\": \"admin\"/\"password\": \"${PASS}\"/" integration/test/csit/suites/openstack/neutron/__init__.robot
+sed -i "s/\"password\": \"admin\"/\"password\": \"${USR_PASSWORD}\"/" integration/test/csit/suites/openstack/neutron/__init__.robot
 
-echo -e "${green}Activate python virtual env.${nc}"
-source $PATH_TO_VENV
+if source $BASEDIR/venv/bin/activate; then
+    echo -e "${green}Python virtualenv activated.${nc}"
+else
+    echo -e "${green}ERROR${nc}"
+    exit 1
+fi
 
 # List of tests are specified in test_list.txt
 # those are relative paths to test directories from integartion suite
 echo -e "${green}Executing chosen tests.${nc}"
+test_num=1
 while read line
 do
     # skip comments
@@ -70,6 +76,11 @@ do
 
     echo -e "${light_green}Starting test: $line ${nc}"
     pybot -v OPENSTACK:${OSTACK_IP} -v PORT:${ODL_PORT} -v CONTROLLER:${OSTACK_IP} $line
+    mkdir -p $BASEDIR/logs/${test_num}
+    mv log.html $BASEDIR/logs/${test_num}/
+    mv report.html $BASEDIR/logs/${test_num}/
+    mv output.xml $BASEDIR/logs/${test_num}/
+    ((test_num++))
 done < test_list.txt
 
 echo -e "${green}Deactivate venv.${nc}"
