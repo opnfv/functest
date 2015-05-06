@@ -17,13 +17,16 @@ actions = ['start', 'check', 'clean']
 functest_dir = os.environ['HOME'] + '/.functest/'
 image_url = 'https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img'
 #image_url = 'http://download.cirros-cloud.net/0.3.0/cirros-0.3.0-i386-disk.img'
+
 image_disk_format = 'raw'
 image_name = image_url.rsplit('/')[-1]
 image_path = functest_dir + image_name
 rally_repo_dir = functest_dir + "Rally_repo/"
 rally_test_dir = functest_dir + "Rally_test/"
+bench_tests_dir = rally_test_dir + "scenarios/"
 rally_installation_dir = os.environ['HOME'] + "/.rally"
-
+vPing_dir = functest_dir + "vPing/"
+odl_dir = functest_dir + "ODL/"
 
 
 parser = argparse.ArgumentParser()
@@ -71,25 +74,24 @@ def config_functest_start():
             logger.error("There has been a problem while creating the environment directory.")
             exit(-1)
 
-
-        logger.info("Installing Rally...")
-        if not install_rally():
-            logger.error("There has been a problem while installing Rally.")
-            config_functest_clean()
-            exit(-1)
-
-        logger.info("Installing Robot...")
-        if not install_robot():
-            logger.error("There has been a problem while installing Robot.")
-            config_functest_clean()
-            exit(-1)
-
         logger.info("Donwloading test scripts and scenarios...")
         if not download_tests():
             logger.error("There has been a problem while downloading the test scripts and scenarios.")
             config_functest_clean()
             exit(-1)
-
+            
+        logger.info("Installing Rally...")
+        if not install_rally():
+            logger.error("There has been a problem while installing Rally.")
+            config_functest_clean()
+            exit(-1)
+            
+        logger.info("Installing ODL environment...")
+        if not install_odl():
+            logger.error("There has been a problem while installing Robot.")
+            config_functest_clean()
+            exit(-1)
+            
         logger.info("Donwloading image...")
         if not download_url_with_progress(image_url, functest_dir):
             logger.error("There has been a problem while downloading the image.")
@@ -193,17 +195,11 @@ def check_rally():
         return False
 
 
-def install_robot():
-    cmd = "sudo pip install requests"
+def install_odl():
+    cmd = "chmod +x " + odl_dir + "create_venv.sh"
     execute_command(cmd)
-    cmd = "sudo pip install robotframework"
+    cmd = odl_dir + "create_venv.sh"
     execute_command(cmd)
-    cmd = "sudo pip install robotframework-sshlibrary"
-    execute_command(cmd)
-    cmd = "sudo pip install robotframework-requests"
-    execute_command(cmd)
-    #cmd = "mkvirtualenv robot"
-    #execute_command(cmd)
     return True
 
 
@@ -236,26 +232,20 @@ def check_credentials():
 
 
 def download_tests():
-    vPing_dir = functest_dir + "vPing/"
-    odl_dir = functest_dir + "ODL/"
-    bench_tests_dir = rally_test_dir + "scenarios/"
-
     os.makedirs(vPing_dir)
     os.makedirs(odl_dir)
     os.makedirs(bench_tests_dir)
+    os.makedirs(rally_test_dir)
 
     logger.info("Downloading vPing test...")
     vPing_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/vPing/CI/libraries/vPing.py'
     if not download_url(vPing_url,vPing_dir):
         return False
-    
-    vPing_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/vPing/CI/libraries/vPing.py'
-    if not download_url(vPing_url,vPing_dir):
-        return False
+
 
     logger.info("Downloading Rally bench tests...")
     run_rally_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/libraries/run_rally.py'
-    if not download_url(run_rally_url,rally_test_dir  ):
+    if not download_url(run_rally_url,rally_test_dir):
         return False
     
     rally_bench_base_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/suites/'
@@ -268,7 +258,7 @@ def download_tests():
 
     logger.info("Downloading OLD tests...")
     odl_base_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/Controllers/ODL/CI/'
-    odl_tests = ['start_tests.sh', 'test_list.txt']
+    odl_tests = ['create_venv.sh', 'requirements.pip', 'start_tests.sh', 'test_list.txt']
     for i in odl_tests:
         odl_url = odl_base_url + i
         logger.debug("Downloading %s" %odl_url)
