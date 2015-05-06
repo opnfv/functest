@@ -15,13 +15,12 @@ actions = ['start', 'check', 'clean']
 
 """ global variables """
 functest_dir = os.environ['HOME'] + '/.functest/'
-image_url = 'https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img'
-#image_url = 'http://download.cirros-cloud.net/0.3.0/cirros-0.3.0-i386-disk.img'
+#image_url = 'http://mirror.us.leaseweb.net/ubuntu-releases/14.04.2/ubuntu-14.04.2-server-amd64.iso'
+image_url = 'http://download.cirros-cloud.net/0.3.0/cirros-0.3.0-i386-disk.img'
 image_disk_format = 'raw'
 image_name = image_url.rsplit('/')[-1]
 image_path = functest_dir + image_name
 rally_repo_dir = functest_dir + "Rally_repo/"
-rally_test_dir = functest_dir + "Rally_test/"
 rally_installation_dir = os.environ['HOME'] + "/.rally"
 
 
@@ -238,7 +237,7 @@ def check_credentials():
 def download_tests():
     vPing_dir = functest_dir + "vPing/"
     odl_dir = functest_dir + "ODL/"
-    bench_tests_dir = rally_test_dir + "scenarios/"
+    bench_tests_dir = functest_dir + "scenarios/"
 
     os.makedirs(vPing_dir)
     os.makedirs(odl_dir)
@@ -255,7 +254,7 @@ def download_tests():
 
     logger.info("Downloading Rally bench tests...")
     run_rally_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/libraries/run_rally.py'
-    if not download_url(run_rally_url,rally_test_dir  ):
+    if not download_url(run_rally_url,bench_tests_dir  ):
         return False
     
     rally_bench_base_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/suites/'
