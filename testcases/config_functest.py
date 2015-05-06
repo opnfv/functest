@@ -15,15 +15,18 @@ actions = ['start', 'check', 'clean']
 
 """ global variables """
 functest_dir = os.environ['HOME'] + '/.functest/'
-image_url = 'https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img'
-#image_url = 'http://download.cirros-cloud.net/0.3.0/cirros-0.3.0-i386-disk.img'
+#image_url = 'https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img'
+image_url = 'http://download.cirros-cloud.net/0.3.0/cirros-0.3.0-i386-disk.img'
+
 image_disk_format = 'raw'
 image_name = image_url.rsplit('/')[-1]
 image_path = functest_dir + image_name
 rally_repo_dir = functest_dir + "Rally_repo/"
 rally_test_dir = functest_dir + "Rally_test/"
+bench_tests_dir = rally_test_dir + "scenarios/"
 rally_installation_dir = os.environ['HOME'] + "/.rally"
-
+vPing_dir = functest_dir + "vPing/"
+odl_dir = functest_dir + "ODL/"
 
 
 parser = argparse.ArgumentParser()
@@ -71,6 +74,11 @@ def config_functest_start():
             logger.error("There has been a problem while creating the environment directory.")
             exit(-1)
 
+        logger.info("Donwloading test scripts and scenarios...")
+        if not download_tests():
+            logger.error("There has been a problem while downloading the test scripts and scenarios.")
+            config_functest_clean()
+            exit(-1)
 
         logger.info("Installing Rally...")
         if not install_rally():
@@ -78,15 +86,9 @@ def config_functest_start():
             config_functest_clean()
             exit(-1)
 
-        logger.info("Installing Robot...")
-        if not install_robot():
+        logger.info("Installing ODL environment...")
+        if not install_odl():
             logger.error("There has been a problem while installing Robot.")
-            config_functest_clean()
-            exit(-1)
-
-        logger.info("Donwloading test scripts and scenarios...")
-        if not download_tests():
-            logger.error("There has been a problem while downloading the test scripts and scenarios.")
             config_functest_clean()
             exit(-1)
 
@@ -101,22 +103,53 @@ def config_functest_start():
             logger.error("There has been a problem while creating the Glance image.")
             config_functest_clean()
             exit(-1)
-        
+
         exit(0)
 
 
 
 def config_functest_check():
     """
-    Check if the functest environment is installed
+    Check if the functest environment is properly installed
     """
     logger.info("Checking current functest configuration...")
-    if os.path.exists(functest_dir) and os.path.exists(rally_installation_dir):
-        logger.info("Functest environment directory found in %s" %functest_dir)
-        return True
-    else:
-        logger.info("Functest environment directory not found")
+
+    logger.debug("Checking directories...")
+    dirs = [functest_dir, rally_installation_dir, rally_repo_dir, rally_test_dir, bench_tests_dir, vPing_dir, odl_dir]
+    for dir in dirs:
+        if not os.path.exists(dir):
+            logger.debug("The directory %s does not exist." %dir)
+            return False
+        logger.debug("   %s found" % dir)
+
+    logger.debug("...OK")
+    logger.debug("Checking Rally deployment...")
+    if not check_rally():
+        logger.debug("Rally deployment not found.")
         return False
+    logger.debug("...OK")
+
+    logger.debug("Checking Image...")
+    if not os.path.isfile(image_path):
+        return False
+    logger.debug("   Image file found in %s" %image_path)
+
+    cmd="glance image-list | grep " + image_name
+    FNULL = open(os.devnull, 'w');
+    logger.debug('   Executing command : {}'.format(cmd))
+    p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=FNULL);
+    #if the command does not exist or there is no glance image
+    line = p.stdout.readline()
+    if line == "":
+        logger.debug("   Glance image not found")
+        return False
+    logger.debug("   Glance image found")
+    logger.debug("...OK")
+
+    #TODO: check OLD environment setup
+
+    return True
+
 
 
 
@@ -128,21 +161,21 @@ def config_functest_clean():
     if os.path.exists(rally_installation_dir):
         logger.debug("Removing rally installation directory %s" % rally_installation_dir)
         shutil.rmtree(rally_installation_dir,ignore_errors=True)
-        
+
     if os.path.exists(functest_dir):
         logger.debug("Removing functest directory %s" % functest_dir)
         cmd = "sudo rm -rf " + functest_dir #need to be sudo, not possible with rmtree
         execute_command(cmd)
-    
+
     logger.debug("Deleting glance images")
     cmd = "glance image-list | grep "+image_name+" | cut -c3-38"
     p = os.popen(cmd,"r")
-    
-    #while image_id = p.readline() 
+
+    #while image_id = p.readline()
     for image_id in p.readlines():
         cmd = "glance image-delete " + image_id
         execute_command(cmd)
-        
+
     return True
 
 
@@ -186,24 +219,29 @@ def check_rally():
     """
     Check if Rally is installed and properly configured
     """
-    if os.path.exists(os.environ['HOME']+"/.rally/"):
-        #TODO: do a more consistent check, for example running the comand rally deployment check
+    if os.path.exists(rally_installation_dir):
+        logger.debug("   Rally installation directory found in %s" % rally_installation_dir)
+        FNULL = open(os.devnull, 'w');
+        cmd="rally deployment list | grep opnfv";
+        logger.debug('   Executing command : {}'.format(cmd))
+        p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=FNULL);
+        #if the command does not exist or there is no deployment
+        line = p.stdout.readline()
+        if line == "":
+            logger.debug("   Rally deployment not found")
+            return False
+        logger.debug("   Rally deployment found")
         return True
     else:
+        logger.debug("   Rally installation directory not found")
         return False
 
 
-def install_robot():
-    cmd = "sudo pip install requests"
+def install_odl():
+    cmd = "chmod +x " + odl_dir + "create_venv.sh"
     execute_command(cmd)
-    cmd = "sudo pip install robotframework"
+    cmd = odl_dir + "create_venv.sh"
     execute_command(cmd)
-    cmd = "sudo pip install robotframework-sshlibrary"
-    execute_command(cmd)
-    cmd = "sudo pip install robotframework-requests"
-    execute_command(cmd)
-    #cmd = "mkvirtualenv robot"
-    #execute_command(cmd)
     return True
 
 
@@ -236,10 +274,6 @@ def check_credentials():
 
 
 def download_tests():
-    vPing_dir = functest_dir + "vPing/"
-    odl_dir = functest_dir + "ODL/"
-    bench_tests_dir = rally_test_dir + "scenarios/"
-
     os.makedirs(vPing_dir)
     os.makedirs(odl_dir)
     os.makedirs(bench_tests_dir)
@@ -248,16 +282,13 @@ def download_tests():
     vPing_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/vPing/CI/libraries/vPing.py'
     if not download_url(vPing_url,vPing_dir):
         return False
-    
-    vPing_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/vPing/CI/libraries/vPing.py'
-    if not download_url(vPing_url,vPing_dir):
-        return False
+
 
     logger.info("Downloading Rally bench tests...")
     run_rally_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/libraries/run_rally.py'
-    if not download_url(run_rally_url,rally_test_dir  ):
+    if not download_url(run_rally_url,rally_test_dir):
         return False
-    
+
     rally_bench_base_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/suites/'
     bench_tests = ['authenticate', 'cinder', 'glance', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'tempest', 'vm']
     for i in bench_tests:
@@ -268,15 +299,14 @@ def download_tests():
 
     logger.info("Downloading OLD tests...")
     odl_base_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/Controllers/ODL/CI/'
-    odl_tests = ['start_tests.sh', 'test_list.txt']
+    odl_tests = ['create_venv.sh', 'requirements.pip', 'start_tests.sh', 'test_list.txt']
     for i in odl_tests:
         odl_url = odl_base_url + i
         logger.debug("Downloading %s" %odl_url)
         if not download_url(odl_url,odl_dir):
             return False
-        
+
     return True
-    #TODO: complete
 
 
 
@@ -383,7 +413,10 @@ def main():
         config_functest_start()
 
     if args.action == "check":
-        config_functest_check()
+        if config_functest_check():
+            logger.info("Functest environment correctly installed")
+        else:
+            logger.info("Functest environment not found or faulty")
 
     if args.action == "clean":
         while True:
