@@ -8,7 +8,15 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-import re, json, os, urllib2, argparse, logging
+import re, json, os, urllib2, argparse, logging, yaml
+
+with open('../functest.yaml') as f:
+    functest_yaml = yaml.safe_load(f)
+f.close()
+
+HOME = os.environ['HOME']+"/"
+SCENARIOS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_scn")
+RESULTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res")
 
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'tempest', 'vm', 'all', 'smoke']
@@ -55,7 +63,7 @@ def get_tempest_id(cmd_raw):
     match = taskid_re.match(line)
 
     if match:
-		return match.group(1)
+        return match.group(1)
     return None
 
 def get_task_id(cmd_raw):
@@ -111,17 +119,16 @@ def run_tempest():
     logger.debug('task_id : {}'.format(task_id))
 
     if task_id is None:
-		logger.error("failed to retrieve task_id")
-		exit(-1)
+        logger.error("failed to retrieve task_id")
+    exit(-1)
 
     """ check for result directory and create it otherwise """
-    report_path = "./results"
-    if not os.path.exists(report_path):
-        logger.debug('does not exists, we create it'.format(report_path))
-        os.makedirs(report_path)
+    if not os.path.exists(RESULTS_DIR):
+        logger.debug('does not exists, we create it'.format(RESULTS_DIR))
+        os.makedirs(RESULTS_DIR)
 
     """ write log report file """
-    report_file_name = '{}/opnfv-tempest-{}.log'.format(report_path, test_date)
+    report_file_name = '{}opnfv-tempest-{}.log'.format(RESULTS_DIR, test_date)
     cmd_line = "rally verify detailed {} > {} ".format(task_id, report_file_name)
     logger.debug('running command line : {}'.format(cmd_line))
     os.popen(cmd_line)
@@ -141,15 +148,14 @@ def run_task(test_name):
 
     """ check directory for scenarios test files or retrieve from git otherwise"""
     proceed_test = True
-    tests_path = "./scenarios"
-    test_file_name = '{}/opnfv-{}.json'.format(tests_path, test_name)
+    test_file_name = '{}opnfv-{}.json'.format(SCENARIOS_DIR, test_name)
     if not os.path.exists(test_file_name):
         logger.debug('{} does not exists'.format(test_file_name))
-        proceed_test = retrieve_test_cases_file(test_name, tests_path)
+        proceed_test = retrieve_test_cases_file(test_name, SCENARIOS_DIR)
 
     """ we do the test only if we have a scenario test file """
     if proceed_test:
-        logger.debug('successfully downloaded to : {}'.format(test_file_name))
+        logger.debug('Scenario fetched from : {}'.format(test_file_name))
         cmd_line = "rally task start --abort-on-sla-failure %s" % test_file_name
         logger.debug('running command line : {}'.format(cmd_line))
         cmd = os.popen(cmd_line)
@@ -161,13 +167,12 @@ def run_task(test_name):
             exit(-1)
 
         """ check for result directory and create it otherwise """
-        report_path = "./results"
-        if not os.path.exists(report_path):
-            logger.debug('does not exists, we create it'.format(report_path))
-            os.makedirs(report_path)
+        if not os.path.exists(RESULTS_DIR):
+            logger.debug('does not exists, we create it'.format(RESULTS_DIR))
+            os.makedirs(RESULTS_DIR)
 
         """ write html report file """
-        report_file_name = '{}/opnfv-{}-{}.html'.format(report_path, test_name, test_date)
+        report_file_name = '{}opnfv-{}-{}.html'.format(RESULTS_DIR, test_name, test_date)
         cmd_line = "rally task report %s --out %s" % (task_id, report_file_name)
         logger.debug('running command line : {}'.format(cmd_line))
         os.popen(cmd_line)
@@ -177,7 +182,7 @@ def run_task(test_name):
         logger.debug('running command line : {}'.format(cmd_line))
         cmd = os.popen(cmd_line)
         json_results = cmd.read()
-        with open('{}/opnfv-{}-{}.json'.format(report_path, test_name, test_date), 'w') as f:
+        with open('{}opnfv-{}-{}.json'.format(RESULTS_DIR, test_name, test_date), 'w') as f:
             logger.debug('saving json file')
             f.write(json_results)
             logger.debug('saving json file2')
@@ -188,7 +193,7 @@ def run_task(test_name):
         else:
             print 'Test KO'
     else:
-        logger.error('{} test failed, unable to download a scenario test file'.format(test_name))
+        logger.error('{} test failed, unable to fetch a scenario test file'.format(test_name))
 
 
 def retrieve_test_cases_file(test_name, tests_path):
@@ -232,7 +237,7 @@ def main():
     else:
         print(args.test_name)
         if args.test_name == 'tempest':
-			run_tempest()
+            run_tempest()
         else:
             run_task(args.test_name)
 
