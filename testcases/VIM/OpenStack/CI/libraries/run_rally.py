@@ -55,7 +55,7 @@ def get_tempest_id(cmd_raw):
     match = taskid_re.match(line)
 
     if match:
-		return match.group(1)
+    return match.group(1)
     return None
 
 def get_task_id(cmd_raw):
@@ -111,8 +111,8 @@ def run_tempest():
     logger.debug('task_id : {}'.format(task_id))
 
     if task_id is None:
-		logger.error("failed to retrieve task_id")
-		exit(-1)
+    logger.error("failed to retrieve task_id")
+    exit(-1)
 
     """ check for result directory and create it otherwise """
     report_path = "./results"
@@ -232,7 +232,7 @@ def main():
     else:
         print(args.test_name)
         if args.test_name == 'tempest':
-			run_tempest()
+      run_tempest()
         else:
             run_task(args.test_name)
 
