@@ -13,26 +13,27 @@
 # Note: this is script works only with Ubuntu image, not with Cirros image
 #
 
-import os
+import os, time, subprocess, logging, argparse, yaml
 import pprint
-import subprocess
-import time
-import argparse
-import logging
 import novaclient.v2.client as novaclient
+import neutronclient.client as neutronclient
 #import novaclient.v1_1.client as novaclient
 import cinderclient.v1.client as cinderclient
 pp = pprint.PrettyPrinter(indent=4)
 
 EXIT_CODE = -1
 
-#tODO: this parameters should be taken from a conf file
-PING_TIMEOUT = 200
-NAME_VM_1 = "opnfv-vping-1"
-NAME_VM_2 = "opnfv-vping-2"
-GLANCE_IMAGE_NAME = "trusty-server-cloudimg-amd64-disk1.img"
-NEUTRON_NET_NAME = "test"
-FLAVOR = "m1.small"
+with open('../functest.yaml') as f: 
+    functest_yaml = yaml.safe_load(f)
+f.close()
+
+PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
+NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
+NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
+GLANCE_IMAGE_NAME = functest_yaml.get("general").get("openstack").get("image_name")
+NEUTRON_NET_NAME = functest_yaml.get("general").get("openstack").get("neutron_net_name")
+FLAVOR = functest_yaml.get("vping").get("vm_flavor")
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
@@ -123,7 +124,7 @@ def main():
     print_title("servers list")
     pMsg(nova.servers.list())
     """
-
+    # Check if the given image is created
     images=nova.images.list()
     image_found = False
     for image in images:
@@ -134,6 +135,19 @@ def main():
         logger.error("ERROR: Glance image %s not found." % GLANCE_IMAGE_NAME)
         logger.info("Available images are: ")
         pMsg(nova.images.list())
+        exit(-1)
+        
+    # Check if the given neutron network is created 
+    networks=nova.networks.list()
+    network_found = False
+    for net in networks:
+        if net.human_id == NEUTRON_NET_NAME:
+            logger.info("Network found '%s'" %net.human_id)
+            network_found = True
+    if not network_found:
+        logger.error("ERROR: Neutron network %s not found." % NEUTRON_NET_NAME)
+        logger.info("Available networks are: ")
+        pMsg(nova.networks.list())
         exit(-1)
 
     servers=nova.servers.list()

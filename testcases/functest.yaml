@@ -1,0 +1,25 @@
+---
+general:
+    directories:
+        dir_functest:   .functest/
+        dir_rally_repo: .functest/Rally_repo/
+        dir_rally:      .functest/Rally_test/
+        dir_rally_scn:  .functest/Rally_test/scenarios/
+        dir_vping:      .functest/vPing/
+        dir_odl:        .functest/ODL/
+        dir_rally_inst: .rally/
+    openstack:
+        image_name: Ubuntu14.04
+        image_url:  https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+        image_disk_format:  raw
+        neutron_net_name: functest-net
+        neutron_subnet_name: functest-subnet
+        neutro_subnet_range: 192.168.120.0/24
+        neutron_subnet_start: 192.168.120.2
+        neutron_subnet_end: 192.168.120.254
+        neutron_subnet_gateway: 192.168.120.254
+vping:
+    ping_timeout:   200
+    vm_flavor: m1.small #adapt to your environment
+    vm_name_1: opnfv-vping-1
+    vm_name_2: opnfv-vping-2
