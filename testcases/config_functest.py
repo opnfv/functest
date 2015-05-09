@@ -13,30 +13,7 @@ from git import Repo
 
 actions = ['start', 'check', 'clean']
 
-with open('functest.yaml') as f:
-    functest_yaml = yaml.safe_load(f)
-f.close()
 
-logger.info("Downloading functest.yaml...")
-yaml_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/functest.yaml'
-if not download_url(yaml_url,"./"):
-    logger.error("Unable to download the configuration file functest.yaml")
-    exit(-1)
-
-""" global variables """
-HOME = os.environ['HOME']+"/"
-FUNCTEST_BASE_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_functest")
-RALLY_REPO_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_repo")
-RALLY_TEST_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally")
-RALLY_INSTALLATION_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_inst")
-BENCH_TESTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_scn")
-VPING_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_vping")
-ODL_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_odl")
-IMAGE_URL = functest_yaml.get("general").get("openstack").get("image_url")
-IMAGE_DISK_FORMAT = functest_yaml.get("general").get("openstack").get("image_disk_format")
-IMAGE_NAME = functest_yaml.get("general").get("openstack").get("image_name")
-IMAGE_FILE_NAME = IMAGE_URL.rsplit('/')[-1]
-IMAGE_DOWNLOAD_PATH = FUNCTEST_BASE_DIR + IMAGE_FILE_NAME
 
 parser = argparse.ArgumentParser()
 parser.add_argument("action", help="Possible actions are: '{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
@@ -57,6 +34,45 @@ else:
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
+
+
+
+yaml_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/functest.yaml'
+name = yaml_url.rsplit('/')[-1]
+dest = "./" + name
+if not os.path.exists(dest):
+    logger.info("Downloading functest.yaml...")
+    try:
+        response = urllib2.urlopen(yaml_url)
+    except (urllib2.HTTPError, urllib2.URLError):
+        logger.error("Error in fetching %s" %yaml_url)
+        exit(-1)
+    with open(dest, 'wb') as f:
+        f.write(response.read())
+    logger.info("functest.yaml stored in %s" % dest)
+else:
+    logger.info("functest.yaml found in %s" % dest)
+    
+with open('functest.yaml') as f:
+    functest_yaml = yaml.safe_load(f)
+f.close()
+
+
+""" global variables """
+HOME = os.environ['HOME']+"/"
+FUNCTEST_BASE_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_functest")
+RALLY_REPO_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_repo")
+RALLY_TEST_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally")
+RALLY_INSTALLATION_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_inst")
+BENCH_TESTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_scn")
+VPING_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_vping")
+ODL_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_odl")
+IMAGE_URL = functest_yaml.get("general").get("openstack").get("image_url")
+IMAGE_DISK_FORMAT = functest_yaml.get("general").get("openstack").get("image_disk_format")
+IMAGE_NAME = functest_yaml.get("general").get("openstack").get("image_name")
+IMAGE_FILE_NAME = IMAGE_URL.rsplit('/')[-1]
+IMAGE_DOWNLOAD_PATH = FUNCTEST_BASE_DIR + IMAGE_FILE_NAME
+
 
 
 
