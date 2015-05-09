@@ -13,12 +13,8 @@
 # Note: this is script works only with Ubuntu image, not with Cirros image
 #
 
-import os
+import os, time, subprocess, logging, argparse, yaml
 import pprint
-import subprocess
-import time
-import argparse
-import logging
 import novaclient.v2.client as novaclient
 #import novaclient.v1_1.client as novaclient
 import cinderclient.v1.client as cinderclient
@@ -26,13 +22,17 @@ pp = pprint.PrettyPrinter(indent=4)
 
 EXIT_CODE = -1
 
-#tODO: this parameters should be taken from a conf file
-PING_TIMEOUT = 200
-NAME_VM_1 = "opnfv-vping-1"
-NAME_VM_2 = "opnfv-vping-2"
-GLANCE_IMAGE_NAME = "trusty-server-cloudimg-amd64-disk1.img"
-NEUTRON_NET_NAME = "test"
-FLAVOR = "m1.small"
+with open('../functest.yaml') as f: 
+    yaml_config = yaml.safe_load(f)
+f.close()
+
+PING_TIMEOUT = yaml_config.get("vping").get("ping_timeout")
+NAME_VM_1 = yaml_config.get("vping").get("vm_name_1")
+NAME_VM_2 = yaml_config.get("vping").get("vm_name_2")
+GLANCE_IMAGE_NAME = yaml_config.get("general").get("openstack").get("image_name")
+NEUTRON_NET_NAME = yaml_config.get("general").get("openstack").get("neutron_net")
+FLAVOR = yaml_config.get("vping").get("vm_flavor")
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
