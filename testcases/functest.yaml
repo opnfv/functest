@@ -1,7 +1,7 @@
 ---
 general:
     directories:
-        dir_functest:   .functest/
+        dir_functest:   .functest/ #DONT CHANGE
         dir_rally_repo: .functest/Rally_repo/
         dir_rally:      .functest/Rally_test/
         dir_rally_scn:  .functest/Rally_test/scenarios/
@@ -13,12 +13,16 @@ general:
         image_name: Ubuntu14.04
         image_url:  https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
         image_disk_format:  raw
+        #Public network. Must exist already.
+        neutron_public_net_name: net04_ext
+        #Private network for functest. Will be created by config_functest.py
         neutron_net_name: functest-net
         neutron_subnet_name: functest-subnet
-        neutro_subnet_range: 192.168.120.0/24
+        neutron_subnet_range: 192.168.120.0/24
         neutron_subnet_start: 192.168.120.2
         neutron_subnet_end: 192.168.120.254
         neutron_subnet_gateway: 192.168.120.254
+        neutron_router_name: functest-router
 vping:
     ping_timeout:   200
     vm_flavor: m1.small #adapt to your environment
