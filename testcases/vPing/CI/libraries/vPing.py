@@ -22,8 +22,8 @@ import cinderclient.v1.client as cinderclient
 pp = pprint.PrettyPrinter(indent=4)
 
 EXIT_CODE = -1
-
-with open('../functest.yaml') as f:
+HOME = os.environ['HOME']+"/"
+with open(HOME+'.functest/functest.yaml') as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
@@ -145,7 +145,7 @@ def main():
             logger.info("Network found '%s'" %net.human_id)
             network_found = True
     if not network_found:
-        logger.error("ERROR: Neutron network %s not found." % NEUTRON_NET_NAME)
+        logger.error("Neutron network %s not found." % NEUTRON_NET_NAME)
         logger.info("Available networks are: ")
         pMsg(nova.networks.list())
         exit(-1)
