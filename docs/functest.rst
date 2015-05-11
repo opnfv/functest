@@ -33,19 +33,18 @@ ETSI NFV defined 9 use cases (ref ETSI_):
 
 Most of the use cases are also discussed in upstream projects (e.g. `Openstack Telco Working Group`_ )
 
-For release 1 (Arno), 5 test suites have been selected:
+For release 1 (Arno), 4 test suites have been selected:
  * Rally Bench test suite for Openstack
  * Openstack Tempest test suite
  * OpenDaylight test suite
  * vPing
- * vIMS
 
 The 3 first suites are directly inherited from upstream projects.
 vPing, that is already present in Tempest suite, has been developped to provided a basic "hellow world" functional test example.
 
 .. _`Continuous Integration`: https://build.opnfv.org/ci/view/functest/
 
-vEPC, vPE, vHGW, vCDN use cases are not considered for first release.
+vIMS, vEPC, vPE, vHGW, vCDN use cases are not considered for first release.
 It does not mean that such use cases cannot be tested on OPNFV Arno.
 It means that these use cases have not been integrated in the `Continuous Integration`_ and no specific work (integration or developpment) have been done for R1.
 
@@ -68,9 +67,7 @@ For release 1, the tools are not automatically installed.
 .. _pharos: https://wiki.opnfv.org/pharos
 
 It is recommended to install the different tools on the jump host server as defined in the pharos_ project.
-The high level architecture can be described as follow:
-
-code::
+The high level architecture can be described as follow::
 
  CIMC/Lights+out management                  Admin     Private   Public   Storage
                                               PXE
@@ -90,7 +87,7 @@ code::
  |     |  |          |   |                     |         |         |        |
  |     |  |  vPing   |   |                     |         |         |        |
  |     |  |          |   |                     |         |         |        |
- |     |  |  vIMS    |   |                     |         |         |        |
+ |     |  | Tempest  |   |                     |         |         |        |
  |     |  +----------+   |                     |         |         |        |
  |     |   FuncTests     +-----------------------------------------+        |
  |     |                 |                     |         |         |        |
@@ -129,7 +126,7 @@ Rally bench test suite
 
 .. _Rally: https://wiki.openstack.org/wiki/Rally
 
-The OPNFV scenarios are based on the collection of Rally_ default scenarios:
+The OPNFV scenarios are based on the collection of Rally_ scenarios:
  * authenticate
  * cinder
  * nova
@@ -162,15 +159,18 @@ The goal of this test is to check the OpenStack installation (sanity checks).
 OpenDaylight
 ============
 
+TODO Peter
+
 vPing
 =====
 
-The goal of this test can be described as follow:
-
-code::
+The goal of this test can be described as follow::
 
  vPing testcase
  +-------------+                   +-------------+
+ |             |                   |             |
+ |             | Create Networks   |             |
+ |             +------------------>|             |
  |             |                   |             |
  |             |     Boot VM1      |             |
  |             +------------------>|             |
@@ -188,6 +188,10 @@ code::
  |             |     Grep Ping     |             |
  |             +------------------>|             |
  |             |                   |             |
+ |             |       Clean       |             |
+ |             |  Networks & VMs   |             |
+ |             +------------------>|             |
+ |             |                   |             |
  +-------------+                   +-------------+
 
 
@@ -195,60 +199,58 @@ The vPing test case is already present in Tempest suite.
 
 This example, using OpenStack python clients can be considered as an "hellow World" example and may be modified for future use.
 
-
-vIMS
-====
-
-vIMS is one of the testcases defined by ETSI.
-
-.. figure:: images/Ims_overview.png
-   :scale: 50
-   :alt: IMS (src wikipedia)
-
-the goal of this test consists in deploying a virtualized IP Multimedia Subsystem (vIMS) on OPNFV, configuring it to deliver services to a set of emulated SIP endpoints, deploying a virtualized test system that implements those emulated SIP endpoints, and performing a series of simple functional tests on the vIMS, including the ability to establish SIP sessions between emulated endpoints. 
-
-This functional test will verify that
- * The OpenStack Nova API can be called to instantiate a set of VMs that together comprise a vIMS network function
- * The OpenStack Glance service is capable of serving up the required images
- * The virtual networking component of the platform can provide working IP connectivity between and among the VMs
- * The platform as a whole is capable of supporting the running of a real virtualized network function that delivers a typical service offered by a network operator, i.e. voice telephony
-
-Functional testing of vIMS in OPNFV Release 1 will be limited to a basic, non-scalable and non-fault-tolerant deployment of IMS.
-Furthermore, in this release the vIMS will perform only control plane functions (i.e. processing of SIP signaling messages) and will not be passing RTP media streams.
-
-In future releases, the same software elements can be deployed with multiple instances of each VNF component to provide a fault tolerant and dynamically scalable deployment of IMS. With the addition of virtualized Session Border Controller software elements, the scope of vIMS functional testing can be further expanded to include the handling of RTP media. 
-
-.. _clearwater: http://www.projectclearwater.org/
-
-The vIMS core function is based on the clearwater_ open source solution.
-
-
 .. _tooling_installation:
 
 ----------------------
 Tooling installation
 ----------------------
 
-2 external tools are needed for the R1 functional tests:
+2 external tools are needed for the functional tests on Arno:
  * Rally
  * Robot
+ 
+Rally is used for benching and Tempest. Robot is used ofr OpenDaylight.
 
+A script has been created to simplify as much as possible the launch of the different suites of tests.
 
-Rally
-=====
+This script will:
+ * Check the environment
+ * Install tools
+ * Retrieve test scenarios
+ * Upload cloud images
+ * Create temporary test networks
 
-.. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
 
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
 
-The Rally creation can be describe as follow (ref: `Rally installation procedure`_):
- * Create or enter a folder where you want to check out the tool repos.
- * $ git clone https://git.openstack.org/openstack/rally
- * $ ./rally/install_rally.sh
- * configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)
- * $ source Your_OpenRC_file
- * $ rally deployment create --fromenv --name=my-opnfv-test
- * $ rally-manage tempest install
+.. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
+
+.. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
+
+This script config_test.py_ is hosted in OPNFV git and uses the configuration file functest.yaml. 
+
+3 actions are possible:
+ * clean: will clean the functional test environement used for functional testing
+ * check: will check the configuration (scenarios available, environment variables properly set,..)
+ * start: will prepare the functional testing
+
+
+The procedure to set up fonctional testing environement can be described as follow::
+
+    Log on the Jumphost server
+    $ wget https://git.opnfv.org/cgit/functest/plain/testcases/config_functest.py
+    $ wget https://git.opnfv.org/cgit/functest/plain/testcases/functest.yaml
+    Retrieve OpenStack source file (configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)
+    $ source Your_OpenRC_file
+    $ python config_functest.py start
+
+At the end of the configuration, you shall get the .functest repository::
+
+    TODO
+
+Please note that you need to install this environment only once. Until the credentials of the System Under Test are not changing, the testing environemnt shall be fine.
+
+If you need more details on Rally installation, see `Rally installation procedure`_.
 
 You can check if the configuration of rally is fine by typing 'rally deployment check', you shall see the list of available services as follow::
 
@@ -272,7 +274,6 @@ You can check if the configuration of rally is fine by typing 'rally deployment 
     | UUID                                 | Name                                         | Size (B)   |
     +--------------------------------------+----------------------------------------------+------------+
     | 0a15951f-6388-4d5d-8531-79e7205eb140 | cirros_2015_04_10_13_13_18                   | 13167616   |
-    | 67734efd-75f6-4919-991e-bba9855f3ae1 | Ubuntu 12.04 64b                             | 260637184  |
     | b1504066-045a-4f8f-8919-8c665ef3f400 | Ubuntu 14.04 64b                             | 253297152  |
     +--------------------------------------+----------------------------------------------+------------+
 
@@ -286,55 +287,14 @@ You can check if the configuration of rally is fine by typing 'rally deployment 
     | accdc28c-5e20-4859-a5cc-61cf9009e56d | m1.small            | 1     | 512      |           | 10        |
     +--------------------------------------+---------------------+-------+----------+-----------+-----------+
 
-Robot
-=====
-Summary: Set up python2.7 virtual environment::
-
-    mkvirtualenv robot
-
-    pip install requests
-    pip install robotframework
-    pip install robotframework-sshlibrary
-    pip install robotframework-requests
-
-
-vPing
-=====
-
-Make sure that nova services are up::
-
-    #nova service list
-    +----+----------------+--------+----------+---------+-------+
-    | Id | Binary         | Host   | Zone     | Status  | State |
-    +----+----------------+--------+----------+---------+-------+
-    | 1  | nova-conductor | xxxxxx | internal | enabled | up    |
-    | 3  | nova-network   | xxxxxx | internal | enabled | up    |
-    | 4  | nova-scheduler | xxxxxx | internal | enabled | up    |
-    | 5  | nova-compute   | xxxxxx | nova     | enabled | up    |
-    +----+----------------+--------+----------+---------+-------+
-
-
-.. _vPing.py: https://git.opnfv.org/cgit/functest/tree/testcases/vPing/CI/libraries/vPing.py
-
-Retrieve vPing.py_ script from OPNFV git repo
-
-Make sure you have sourced your OpenRC file::
-
-    # source Your_OpenRC_file
-
-------------------------------
-Functional test configuration
-------------------------------
+--------------
+Manual testing
+--------------
 
 Rally bench suite
 =================
 
-Rally bench scenarios have been aggregated in json files.
-A script has been developed to simplify the management of the tests and the integration in CI, get it from git::
-
-    # wget https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/run_rally.py
-
-Several scenarios are available (all based on native Rally scenarios):
+Several scenarios are available (mainly based on native Rally scenarios):
  * glance
  * nova
  * authenticate
@@ -344,7 +304,8 @@ Several scenarios are available (all based on native Rally scenarios):
  * quotas
  * request
  * tempest
- * all (every module except tempest)
+ * smoke
+ * all (every module except tempest and smoke)
 
 You can run the script as follow::
 
@@ -376,27 +337,6 @@ ODL wiki page describes system preparation and running tests. See `Integration G
 .. _`Integration Group CSIT`: https://wiki.opendaylight.org/view/CrossProject:Integration_Group:CSIT
 
 
-vPing
-=====
-
-By default, the script’s is configured as follow::
-
- * OS_USERNAME:         admin
- * OS_PASSWORD:         test
- * OS_AUTH_URL:          http://192.168.20.71:5000/v2.0
- * OS_TENANT_NAME: invisible_to_admin
- * Name of VM: opnfv-vping-1 , opnfv-vping-2
- * Flavor: m1.small
- * Image: Ubuntu 14.04 (amd64)
- * Network: private
-
-The script needs to be tuned to  your specific system configuration
-
-vIMS
-====
-
-
-
 .. _manualtest:
 
 --------------
@@ -415,24 +355,53 @@ You can get the results of tempest by typing::
 
     # rally verify list
 
+You shall see the results as follow::
 
+    Total results of verification:
+    
+    +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
+    | UUID                                 | Deployment UUID                      | Set name | Tests | Failures | Created at                 | Status   |
+    +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
+    | 0144c50f-ab03-45fb-9c36-242ad6440b46 | d9e1bb21-8e36-4d89-b137-0c852dbb308e | smoke    | 87    | 32       | 2015-05-05 16:36:00.986003 | finished |
+    +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
 
+If you run this test several times, you will see as many lines as test attempts.
 
+You can get more details on the test by typing::
+
+    # rally verify show --uuid <UUID of the test>
+    # rally verify detailed --uuid <UUID of the test>
+ 
+"show" will show you all the restults including the time needed to execute the test.
+"detailed" will display additional elements (errors)
+
+Example of test result display::
+
+    +------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
+    | name                                                                                                                                                       | time      | status |
+    +------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
+    | tempest.api.network.test_routers.RoutersTest.test_create_show_list_update_delete_router[id-f64403e2-8483-4b34-8ccd-b09a87bcc68c,smoke]                     | 0.011466  | FAIL   |
+    | tempest.api.network.test_security_groups.SecGroupIPv6Test.test_create_list_update_show_delete_security_group[id-bfd128e5-3c92-44b6-9d66-7fe29d22c802,smoke]| 1.234566  | OK     |
+    | tempest.api.network.test_security_groups.SecGroupIPv6Test.test_create_show_delete_security_group_rule[id-cfb99e0e-7410-4a3d-8a0c-959a63ee77e9,smoke]       | 1.060221  | OK     |
+    | tempest.api.network.test_security_groups.SecGroupIPv6Test.test_list_security_groups[id-e30abd17-fef9-4739-8617-dc26da88e686,smoke]                         | 0.060797  | OK     |
+    | tempest.api.network.test_security_groups.SecGroupTest.test_create_list_update_show_delete_security_group[id-bfd128e5-3c92-44b6-9d66-7fe29d22c802,smoke]    | 0.685149  | OK     |
+    | tempest.api.network.test_security_groups.SecGroupTest.test_create_show_delete_security_group_rule[id-cfb99e0e-7410-4a3d-8a0c-959a63ee77e9,smoke]           | 0.730561  | OK     |
+    | tempest.api.network.test_security_groups.SecGroupTest.test_list_security_groups[id-e30abd17-fef9-4739-8617-dc26da88e686,smoke]                             | 0.116862  | OK     |
+    | tempest.api.object_storage.test_account_quotas.AccountQuotasTest                                                                                           | 0.0       | SKIP   |
+    | ...                                                                                                                                                        |   ...     |  ...   |
+    
 OpenDaylight
 ============
 
 Tests can be executed with script *start_test.sh* from directory *functest/testcases/Controllers/ODL/CI*. For usage example see::
 
-    # bash start_test.sh -h
+    # bash ~./.functest/ODL/start_test.sh -h
 
 vPing
 =====
 The test can be executed with command::
 
-    #python vPing.py
-
-vIMS
-====
+    #python ~./.functest/vPing.py
 
 
 .. _automatictest:
