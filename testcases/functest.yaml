@@ -13,15 +13,21 @@ general:
         image_name: Ubuntu14.04
         image_url:  https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
         image_disk_format:  raw
-        #Public network. Must exist already.
+        #Public network. Will be created by config_functest.py
+        #It must be reachable from where the tests are ran
+        #For Fuel deployment, it exists already and its called net04_ext
         neutron_public_net_name: net04_ext
+        neutron_public_subnet_name: net04_ext__subnet
+        neutron_public_subnet_cidr: 172.16.9.0/24
+        neutron_public_subnet_start: 172.16.9.130
+        neutron_public_subnet_end: 172.16.9.254
         #Private network for functest. Will be created by config_functest.py
-        neutron_net_name: functest-net
-        neutron_subnet_name: functest-subnet
-        neutron_subnet_range: 192.168.120.0/24
-        neutron_subnet_start: 192.168.120.2
-        neutron_subnet_end: 192.168.120.254
-        neutron_subnet_gateway: 192.168.120.254
+        neutron_private_net_name: functest-net
+        neutron_private_subnet_name: functest-subnet
+        neutron_private_subnet_cidr: 192.168.120.0/24
+        neutron_private_subnet_start: 192.168.120.2
+        neutron_private_subnet_end: 192.168.120.254
+        neutron_private_subnet_gateway: 192.168.120.254
         neutron_router_name: functest-router
 vping:
     ping_timeout:   200

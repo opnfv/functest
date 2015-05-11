@@ -31,7 +31,7 @@ PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
 NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
 GLANCE_IMAGE_NAME = functest_yaml.get("general").get("openstack").get("image_name")
-NEUTRON_NET_NAME = functest_yaml.get("general").get("openstack").get("neutron_net_name")
+NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general").get("openstack").get("neutron_private_net_name")
 FLAVOR = functest_yaml.get("vping").get("vm_flavor")
 
 
