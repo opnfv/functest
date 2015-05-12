@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_753f7526",
+        "filename": "testcases/functest.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-12T07:27:39Z",
+      "side": 1,
+      "message": "what does that mean?\nDoes it mean that the network must be valid/exist in the DC?\nWhat if this network is a fake one? \nDo the tests will pass or not?",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 17,
+        "endChar": 58
+      },
+      "revId": "2fd26619377c18b691627d918fa29b10f1e6ec89",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
