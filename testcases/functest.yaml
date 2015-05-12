@@ -10,12 +10,10 @@ general:
         dir_odl:        .functest/ODL/
         dir_rally_inst: .rally/
     openstack:
-        image_name: Ubuntu14.04
-        image_url:  https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
-        image_disk_format:  raw
-        #Public network. Will be created by config_functest.py
-        #It must be reachable from where the tests are ran
-        #For Fuel deployment, it exists already and its called net04_ext
+        image_name: functest-img
+        image_url:  http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+        image_disk_format:  qcow2
+        #Public network. Optional
         neutron_public_net_name: net04_ext
         neutron_public_subnet_name: net04_ext__subnet
         neutron_public_subnet_cidr: 172.16.9.0/24
