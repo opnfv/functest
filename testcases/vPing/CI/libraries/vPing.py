@@ -205,9 +205,10 @@ def main():
     f = nova.flavors.find(name = FLAVOR)
     i = nova.images.find(name = GLANCE_IMAGE_NAME)
     n = nova.networks.find(label = NEUTRON_PRIVATE_NET_NAME)
-    # use base 64 format becaus bad surprises with sh script with cloud-init but script is just pinging
+    # use base 64 format because bad surprises with sh script with cloud-init but script is just pinging
     #k = "demo-key"
-    u = "#cloud-config\npassword: opnfv\nchpasswd: { expire: False }\nssh_pwauth: True\nwrite_files:\n-  encoding: b64\n   path: /tmp/vping.sh\n   permissions: '0777'\n   owner: root:root\n   content: IyEvYmluL2Jhc2gKCndoaWxlIHRydWU7IGRvCiBwaW5nIC1jIDEgJDEgMj4mMSA+L2Rldi9udWxsCiBSRVM9JD8KIGlmIFsgIlokUkVTIiA9ICJaMCIgXSA7IHRoZW4KICBlY2hvICJ2UGluZyBPSyIKICBzbGVlcCAxMAogIHN1ZG8gc2h1dGRvd24gLWggbm93CiAgYnJlYWsKIGVsc2UKICBlY2hvICJ2UGluZyBLTyIKIGZpCiBzbGVlcCAxCmRvbmUK\nruncmd:\n - [ sh, -c, %s]"%test_cmd
+    #u = "#cloud-config\npassword: opnfv\nchpasswd: { expire: False }\nssh_pwauth: True\nwrite_files:\n-  encoding: b64\n   path: /tmp/vping.sh\n   permissions: '0777'\n   owner: root:root\n   content: IyEvYmluL2Jhc2gKCndoaWxlIHRydWU7IGRvCiBwaW5nIC1jIDEgJDEgMj4mMSA+L2Rldi9udWxsCiBSRVM9JD8KIGlmIFsgIlokUkVTIiA9ICJaMCIgXSA7IHRoZW4KICBlY2hvICJ2UGluZyBPSyIKICBzbGVlcCAxMAogIHN1ZG8gc2h1dGRvd24gLWggbm93CiAgYnJlYWsKIGVsc2UKICBlY2hvICJ2UGluZyBLTyIKIGZpCiBzbGVlcCAxCmRvbmUK\nruncmd:\n - [ sh, -c, %s]"%test_cmd
+    u = "#!/bin/sh\n\nwhile true; do\n ping -c 1 %s 2>&1 >/dev/null\n RES=$?\n if [ \"Z$RES\" = \"Z0\" ] ; then\n  echo 'vPing OK'\n break\n else\n  echo 'vPing KO'\n fi\n sleep 1\ndone\n"%test_ip
     # create VM
     logger.info("Creating instance '%s'..." %m)
     logger.debug("Configuration:\n name=%s \n flavor=%s \n image=%s \n network=%s \n userdata= \n%s" %(m,f,i,n,u))
@@ -225,7 +226,7 @@ def main():
     # The console-log method is more consistent but doesn't work yet
 
     waitVmActive(nova,vm2)
-
+    """
     logger.info("Waiting for ping, timeout is %d sec..." % PING_TIMEOUT)
     sec = 0
     while True:
@@ -245,21 +246,22 @@ def main():
     # I leave this here until we fix the console-log output
     sec = 0
     console_log = vm2.get_console_output()
-    while not ("vPing" in console_log):
+    while True:
         time.sleep(1)
         console_log = vm2.get_console_output()
-        print "--"+console_log
-
+        #print "--"+console_log
         # report if the test is failed
-        if "vPing" in console_log:
-            pMsg("vPing is OK")
+        if "vPing OK" in console_log:
+            logger.info("vPing is OK")
+            EXIT_CODE = 0
             break
         else:
-            pMsg("no vPing detected....")
+            logger.info("No vPing detected...")
         sec+=1
         if sec == PING_TIMEOUT:
+            logger.info("Timeout reached.")
             break
-    """
+    
 
     # delete both VMs
     logger.debug("Deleting Instances...")
@@ -268,8 +270,11 @@ def main():
     nova.servers.delete(vm2)
     logger.debug("Instance %s terminated." % NAME_VM_2)
 
-
-    logger.debug("EXIT_CODE=%d" % EXIT_CODE)
+    if EXIT_CODE = 0 :
+        logger.info("vPing OK")
+    else :
+        logger.error("vPing FAILED")
+        
     exit(EXIT_CODE)
 
 
