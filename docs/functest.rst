@@ -178,14 +178,14 @@ The goal of this test can be described as follow::
  |   Tester    |                   |   System    |
  |             |     Boot VM2      |    Under    |
  |             +------------------>|     Test    |
- |             |  Including Ping   |             |
- |             |at the end of boot |             |
- |             |                   |             |
- |             |                   |             |
+ |             | VM2 pings VM1     |             |
+ |             | If ping:          |             |
+ |             |  shutdown VM2. OK |             |
+ |             | If timeout,  FAIL |             |
  +-------------+                   +-------------+
 
 
-This example, using OpenStack python clients can be considered as an "hellow World" example and may be modified for future use.
+This example, using OpenStack Python clients can be considered as an "Hello World" example and may be modified for future use.
 
 .. _tooling_installation:
 
@@ -197,46 +197,101 @@ Tooling installation
  * Rally
  * Robot
 
-Rally is used for benching and Tempest. Robot is used ofr OpenDaylight.
+Rally is used for benching and Tempest. Robot is used for OpenDaylight.
 
-A script has been created to simplify as much as possible the launch of the different suites of tests.
+A script (config_test.py) has been created to simplify as much as possible the installation of the different suites of tests.
+This script config_test.py_ is hosted in OPNFV git and uses the configuration file functest.yaml. 
 
+
+
+usage: config_functest.py [-h] [-d] action
+
+positional arguments:
+  action       Possible actions are: 'start|check|clean'
+
+optional arguments:
+  -h, --help   show this help message and exit
+  -d, --debug  Debug mode
+
+Actions
+ * start: will prepare the functional testing environment
+ * check: will check the configuration (scenarios available, environment variables properly set, networks,..)
+ * clean: will clean the functional test environement if existing
+ 
 This script will:
- * Check the environment
- * Install tools
+ * Install Rally environment
+ * Install Tempest 
  * Retrieve test scenarios
- * Upload cloud images
- * Create temporary test networks
+ * Setup ODL environment
+ * Create temporary neutron external network
+ * Create temporary neutron private network
+ * Create router to connect both
+ * Create Glance images
+ 
 
-
+Useful links:
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
 
 .. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
 
 .. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
-
-This script config_test.py_ is hosted in OPNFV git and uses the configuration file functest.yaml. 
-
-3 actions are possible:
- * clean: will clean the functional test environement used for functional testing
- * check: will check the configuration (scenarios available, environment variables properly set, networks,..)
- * start: will prepare the functional testing
+.. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/functest.yaml
 
 
-The procedure to set up fonctional testing environement can be described as follow::
+
+
+
+
+The procedure to set up functional testing environment can be described as follow::
 
     Log on the Jumphost server
+    Be sure you are no root
     $ wget https://git.opnfv.org/cgit/functest/plain/testcases/config_functest.py
     $ wget https://git.opnfv.org/cgit/functest/plain/testcases/functest.yaml
+    Modify and adapt needed parameters in the functest.yaml. Follow the instructions below. 
     Retrieve OpenStack source file (configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)
     $ source Your_OpenRC_file
-    $ python config_functest.py start
+    $ python config_functest.py -d start
 
-At the end of the configuration, you shall get the .functest repository::
+At the end of the executing, a new directory will be created ~/.functest with the following structure::
 
-    TODO
+ ~/.functest/ODL
+ ~/.functest/Rally_repo
+ ~/.functest/Rally_test
+ ~/.functest/vPing
+ ~/.functest/functest.yaml
+ ~/.functest/trusty-server-cloudimg-amd64-disk1.img
 
-Please note that you need to install this environment only once. Until the credentials of the System Under Test are not changing, the testing environemnt shall be fine.
+NOTE: the Rally environment will be installed under ~/.rally/
+
+
+HOWTO configure functest.yaml
+-----------------------------
+Do not change the directories structure
+    * image_name:               name of the image that will be created in Glance
+    * image_url:                URL of the image to be downloaded
+    * image_disk_format:        glance image disk format (raw, qcow2, ...)
+    
+    * neutron_public_net_name:      name of the OpenStack external network. If not existing, it will be created
+    * neutron_public_subnet_name:   external network subnet to be created if not existing
+    * neutron_public_subnet_cidr:   range of the external subnet. IMPORTANT: this subnet range must be reachable from the jumpstart server
+    * neutron_public_subnet_start:  start IP
+    * neutron_public_subnet_end:    end IP
+    
+    * neutron_private_net_name:     name of an OpenStack private network. If not existing, it will be created
+    * neutron_private_subnet_name:  private subnet network to be created if not existing
+    * neutron_private_subnet_cidr:  range of the private subnet. 
+    * neutron_private_subnet_start: start IP
+    * neutron_private_subnet_end:   end IP
+    * neutron_router_name:          name of the router between the private and the public networks
+
+    * ping_timeout: time out of the vPing test case
+    * vm_flavor:    name of the flavor used to create the VMs
+    * vm_name_1:    name of the first VM
+    * vm_name_2:    name of the second VM
+
+
+Please note that you need to install this environment only once. Until the credentials of the System Under Test are not changing, the testing environment shall be fine.
 
 If you need more details on Rally installation, see `Rally installation procedure`_.
 
