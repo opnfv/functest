@@ -72,12 +72,6 @@ BENCH_TESTS_DIR = HOME + functest_yaml.get("general").get("directories").get("di
 VPING_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_vping")
 ODL_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_odl")
 
-# NEUTRON Public Network parameters
-NEUTRON_PUBLIC_NET_NAME = functest_yaml.get("general").get("openstack").get("neutron_public_net_name")
-NEUTRON_PUBLIC_SUBNET_NAME = functest_yaml.get("general").get("openstack").get("neutron_public_subnet_name")
-NEUTRON_PUBLIC_SUBNET_CIDR = functest_yaml.get("general").get("openstack").get("neutron_public_subnet_cidr")
-NEUTRON_PUBLIC_SUBNET_START = functest_yaml.get("general").get("openstack").get("neutron_public_subnet_start")
-NEUTRON_PUBLIC_SUBNET_END = functest_yaml.get("general").get("openstack").get("neutron_public_subnet_end")
 
 # NEUTRON Private Network parameters
 NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general").get("openstack").get("neutron_private_net_name")
@@ -145,18 +139,6 @@ def config_functest_start():
         neutron_client = client.Client(**credentials)
 
         logger.info("Configuring Neutron...")
-        logger.info("Checking if public network '%s' exists..." % NEUTRON_PUBLIC_NET_NAME)
-        #Now: if exists we don't create it again (the clean command does not clean the neutron networks yet)
-        if check_neutron_net(neutron_client, NEUTRON_PUBLIC_NET_NAME):
-            logger.info("Public network '%s' found. No need to create another one." % NEUTRON_PUBLIC_NET_NAME)
-        else:
-            logger.info("Public network '%s' not found. Creating..." % NEUTRON_PUBLIC_NET_NAME)
-            if not create_public_neutron_net(neutron_client):
-                logger.error("There has been a problem while creating the Neutron network.")
-                #config_functest_clean()
-                exit(-1)
-
-
         logger.info("Checking if private network '%s' exists..." % NEUTRON_PRIVATE_NET_NAME)
         #Now: if exists we don't create it again (the clean command does not clean the neutron networks yet)
         if check_neutron_net(neutron_client, NEUTRON_PRIVATE_NET_NAME):
@@ -213,7 +195,7 @@ def config_functest_check():
 
     logger.debug("Checking Rally deployment...")
     if not check_rally():
-        logger.debug("Rally deployment NOT found.")
+        logger.debug("   Rally deployment NOT found.")
         errors_all = True
         logger.debug("...FAIL")
     else:
@@ -221,25 +203,13 @@ def config_functest_check():
 
 
     logger.debug("Checking Neutron...")
-    errors = False
     if not check_neutron_net(neutron_client, NEUTRON_PRIVATE_NET_NAME):
         logger.debug("   Private network '%s' NOT found." % NEUTRON_PRIVATE_NET_NAME)
-        errors = True
+        logger.debug("...FAIL")
         errors_all = True
     else:
         logger.debug("   Private network '%s' found." % NEUTRON_PRIVATE_NET_NAME)
-
-    if not check_neutron_net(neutron_client, NEUTRON_PUBLIC_NET_NAME):
-        logger.debug("   Public network '%s' NOT found." % NEUTRON_PUBLIC_NET_NAME)
-        errors = True
-        errors_all = True
-    else:
-        logger.debug("   Public network '%s' found." % NEUTRON_PUBLIC_NET_NAME)
-
-    if not errors:
         logger.debug("...OK")
-    else:
-        logger.debug("...FAIL")
 
 
     logger.debug("Checking Image...")
@@ -464,27 +434,7 @@ def download_tests():
 
     return True
 
-def create_public_neutron_net(neutron):
-    try:
-        neutron.format = 'json'
-        logger.debug('Creating Neutron network %s...' % NEUTRON_PUBLIC_NET_NAME)
-        json_body = {'network': {'name': NEUTRON_PUBLIC_NET_NAME, 'admin_state_up': True, 'router:external': True}}
-        netw = neutron.create_network(body=json_body)
-        net_dict = netw['network']
-        network_id = net_dict['id']
-        logger.debug("Network '%s' created successfully" % network_id)
 
-        logger.debug('Creating Subnet....')
-        json_body = {'subnets': [{'cidr': NEUTRON_PUBLIC_SUBNET_CIDR,
-                           'ip_version': 4, 'network_id': network_id}]}
-        subnet = neutron.create_subnet(body=json_body)
-        logger.debug("Subnet '%s' created successfully" % subnet)
-    except:
-        print "Error:", sys.exc_info()[0]
-        return False
-
-    logger.info("Public Neutron network created successfully.")
-    return True
 
 def create_private_neutron_net(neutron):
     try:
@@ -518,12 +468,15 @@ def create_private_neutron_net(neutron):
         }}
         response = neutron.create_port(body=json_body)
         logger.debug("Port created successfully.")
-
+            
+        """
+        #No need to set up a gateway if there is no public network
         logger.debug('Setting up gateway...')
         public_network_id = get_network_id(neutron,NEUTRON_PUBLIC_NET_NAME)
         json_body = {'network_id': public_network_id, 'enable_snat' :  True}
         gateway = neutron.add_gateway_router(router_id,body=json_body)
         logger.debug("Gateway '%s' added successfully" % gateway)
+        """
     except:
         print "Error:", sys.exc_info()[0]
         return False
