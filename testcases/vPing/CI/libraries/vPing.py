@@ -141,11 +141,11 @@ def main():
     networks=nova.networks.list()
     network_found = False
     for net in networks:
-        if net.human_id == NEUTRON_NET_NAME:
+        if net.human_id == NEUTRON_PRIVATE_NET_NAME:
             logger.info("Network found '%s'" %net.human_id)
             network_found = True
     if not network_found:
-        logger.error("Neutron network %s not found." % NEUTRON_NET_NAME)
+        logger.error("Neutron network %s not found." % NEUTRON_PRIVATE_NET_NAME)
         logger.info("Available networks are: ")
         pMsg(nova.networks.list())
         exit(-1)
@@ -164,7 +164,7 @@ def main():
     m = NAME_VM_1
     f = nova.flavors.find(name = FLAVOR)
     i = nova.images.find(name = GLANCE_IMAGE_NAME)
-    n = nova.networks.find(label = NEUTRON_NET_NAME)
+    n = nova.networks.find(label = NEUTRON_PRIVATE_NET_NAME)
     u = "#cloud-config\npassword: opnfv\nchpasswd: { expire: False }\nssh_pwauth: True"
     #k = "demo-key"
 
@@ -192,7 +192,7 @@ def main():
     #pMsg(server.networks)
     # theoretically there is only one IP address so we take the first element of the table
     # Dangerous! To be improved!
-    test_ip = server.networks.get(NEUTRON_NET_NAME)[0]
+    test_ip = server.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
     logger.debug("Instance '%s' got %s" %(m,test_ip))
     test_cmd = '/tmp/vping.sh %s'%test_ip
 
@@ -204,7 +204,7 @@ def main():
     m = NAME_VM_2
     f = nova.flavors.find(name = FLAVOR)
     i = nova.images.find(name = GLANCE_IMAGE_NAME)
-    n = nova.networks.find(label = NEUTRON_NET_NAME)
+    n = nova.networks.find(label = NEUTRON_PRIVATE_NET_NAME)
     # use base 64 format becaus bad surprises with sh script with cloud-init but script is just pinging
     #k = "demo-key"
     u = "#cloud-config\npassword: opnfv\nchpasswd: { expire: False }\nssh_pwauth: True\nwrite_files:\n-  encoding: b64\n   path: /tmp/vping.sh\n   permissions: '0777'\n   owner: root:root\n   content: IyEvYmluL2Jhc2gKCndoaWxlIHRydWU7IGRvCiBwaW5nIC1jIDEgJDEgMj4mMSA+L2Rldi9udWxsCiBSRVM9JD8KIGlmIFsgIlokUkVTIiA9ICJaMCIgXSA7IHRoZW4KICBlY2hvICJ2UGluZyBPSyIKICBzbGVlcCAxMAogIHN1ZG8gc2h1dGRvd24gLWggbm93CiAgYnJlYWsKIGVsc2UKICBlY2hvICJ2UGluZyBLTyIKIGZpCiBzbGVlcCAxCmRvbmUK\nruncmd:\n - [ sh, -c, %s]"%test_cmd
