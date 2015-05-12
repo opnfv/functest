@@ -95,7 +95,7 @@ def task_succeed(json_raw):
         return False
 
     for result in rally_report.get('result'):
-        if len(result.get('errors')) > 0:
+        if len(result.get('error')) > 0:
             return False
 
     return True
