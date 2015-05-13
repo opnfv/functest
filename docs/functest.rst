@@ -40,7 +40,7 @@ For release 1 (Arno), 4 test suites have been selected:
  * vPing
 
 The 3 first suites are directly inherited from upstream projects.
-vPing, that is already present in Tempest suite, has been developped to provided a basic "hellow world" functional test example.
+vPing, that is already present in Tempest suite, has been developped to provided a basic "hello world" functional test example.
 
 .. _`Continuous Integration`: https://build.opnfv.org/ci/view/functest/
 
@@ -205,16 +205,15 @@ Tooling installation
 Rally is used for benching and Tempest. Robot is used for OpenDaylight.
 
 A script (config_test.py) has been created to simplify as much as possible the installation of the different suites of tests.
-This script config_test.py_ is hosted in OPNFV git and uses the configuration file functest.yaml.
 
+This script config_test.py_ is hosted in OPNFV git and uses the configuration file functest.yaml_::
 
+ usage: config_functest.py [-h] [-d] action
 
-usage: config_functest.py [-h] [-d] action
-
-positional arguments:
+ positional arguments:
   action       Possible actions are: 'start|check|clean'
 
-optional arguments:
+ optional arguments:
   -h, --help   show this help message and exit
   -d, --debug  Debug mode
 
@@ -241,7 +240,7 @@ Useful links:
 
 .. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
 
-.. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/functest.yaml
+.. _`functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/functest.yaml
 
 
 
@@ -266,7 +265,7 @@ At the end of the executing, a new directory will be created ~/.functest with th
  ~/.functest/Rally_test
  ~/.functest/vPing
  ~/.functest/functest.yaml
- ~/.functest/trusty-server-cloudimg-amd64-disk1.img
+ ~/.functest/functest-img.img
 
 NOTE: the Rally environment will be installed under ~/.rally/
 
