@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_0b5254dd",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T09:12:24Z",
+      "side": 1,
+      "message": "u is not defined for this VM",
+      "range": {
+        "startLine": 160,
+        "startChar": 111,
+        "endLine": 160,
+        "endChar": 112
+      },
+      "revId": "b8dc178829903f7a04b9d93cff4cd63182f3d930",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_eb5e08e9",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T09:12:24Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 166,
+        "startChar": 30,
+        "endLine": 166,
+        "endChar": 31
+      },
+      "revId": "b8dc178829903f7a04b9d93cff4cd63182f3d930",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
