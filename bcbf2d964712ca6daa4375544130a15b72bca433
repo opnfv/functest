@@ -22,6 +22,344 @@
       "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_2b34f0dc",
+        "filename": "testcases/functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "update to 0.3.4 instead of 0.3.1",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 87
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_ab57e001",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "neutronclient is never used, this line can safely be removed",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 44
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_8b5c2427",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "same for cinder",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 45
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_0b48145a",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 41
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_2b907094",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "can you use label instead of human_id here?\nhuman_id does not work on my side (my network name is 192.168.1.0/24, human_id return 1921681024, which is not coherent with NEUTRON_PRIVATE_NET_NAME",
+      "range": {
+        "startLine": 144,
+        "startChar": 15,
+        "endLine": 144,
+        "endChar": 23
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_0b8db47b",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "see above",
+      "range": {
+        "startLine": 145,
+        "startChar": 50,
+        "endLine": 145,
+        "endChar": 58
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_8b7304b1",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "missing space",
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_0b5ff40f",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "with cirros, cloud-config script does not work anymore, this can also be removed",
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_4b65fcdf",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "demo-key is not used, so it can be removed",
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_eb9ba8c7",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "to be deleted",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 180,
+        "endChar": 31
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_cba0ecf6",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "test_cmd is not used anymore",
+      "range": {
+        "startLine": 197,
+        "startChar": 4,
+        "endLine": 197,
+        "endChar": 41
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_aba5a005",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "missing space",
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_6baf98e4",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "this comment is not relevent anymore",
+      "range": {
+        "startLine": 208,
+        "startChar": 1,
+        "endLine": 208,
+        "endChar": 104
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_0bb6d43d",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "same as for vm 1, not used anymore",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 32
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_eb828851",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "historical things, should be deleted as well",
+      "range": {
+        "startLine": 222,
+        "startChar": 7,
+        "endLine": 223,
+        "endChar": 34
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_8b81c44c",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 112
+      },
+      "writtenOn": "2015-05-13T07:47:54Z",
+      "side": 1,
+      "message": "error here, you should use double \u003d\u003d",
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
