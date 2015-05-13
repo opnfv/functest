@@ -180,10 +180,11 @@ The goal of this test can be described as follow::
  |             +------------------>|     Test    |
  |             | VM2 pings VM1     |             |
  |             |                   |             |
- |             | If ping:          |             |
- |             |  shutdown VM2, OK |             |
- |             | else (timeout)    |             |
- |             |           test KO |             |
+ |             | Check console log |             |
+ |             |    If ping:       |             |
+ |             |      exit OK      |             |
+ |             |    else (timeout) |             |
+ |             |      exit KO      |             |
  |             |                   |             |
  |             |                   |             |
  +-------------+                   +-------------+
@@ -227,18 +228,19 @@ This script will:
  * Install Tempest
  * Retrieve test scenarios
  * Setup ODL environment
- * Create temporary neutron external network
  * Create temporary neutron private network
  * Create router to connect both
  * Create Glance images
 
 
 Useful links:
+
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
 
 .. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
 
 .. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
+
 .. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/functest.yaml
 
 
@@ -275,12 +277,6 @@ Do not change the directories structure
     * image_name:               name of the image that will be created in Glance
     * image_url:                URL of the image to be downloaded
     * image_disk_format:        glance image disk format (raw, qcow2, ...)
-
-    * neutron_public_net_name:      name of the OpenStack external network. If not existing, it will be created
-    * neutron_public_subnet_name:   external network subnet to be created if not existing
-    * neutron_public_subnet_cidr:   range of the external subnet. IMPORTANT: this subnet range must be reachable from the jumpstart server
-    * neutron_public_subnet_start:  start IP
-    * neutron_public_subnet_end:    end IP
 
     * neutron_private_net_name:     name of an OpenStack private network. If not existing, it will be created
     * neutron_private_subnet_name:  private subnet network to be created if not existing
@@ -448,7 +444,7 @@ vPing
 =====
 The test can be executed with command::
 
-    #python ~./.functest/vPing.py
+    #python ~./.functest/vPing.py -d
 
 
 .. _automatictest:
