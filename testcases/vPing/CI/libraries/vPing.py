@@ -16,9 +16,6 @@
 import os, time, subprocess, logging, argparse, yaml
 import pprint
 import novaclient.v2.client as novaclient
-import neutronclient.client as neutronclient
-#import novaclient.v1_1.client as novaclient
-import cinderclient.v1.client as cinderclient
 pp = pprint.PrettyPrinter(indent=4)
 
 EXIT_CODE = -1
@@ -114,16 +111,8 @@ def get_status(nova,vm):
 def main():
     creds = get_credentials("nova")
     nova = novaclient.Client(**creds)
-    cinder = cinderclient.Client(**creds)
 
-    """
-    # print images and server resources
-    # print nova_images
-    print_title("images list")
-    pMsg(nova.images.list())
-    print_title("servers list")
-    pMsg(nova.servers.list())
-    """
+
     # Check if the given image is created
     images=nova.images.list()
     image_found = False
@@ -160,13 +149,11 @@ def main():
 
     # boot VM 1
     # basic boot
-  # tune (e.g. flavor, images, network) to your specific openstack configuration here
+    # tune (e.g. flavor, images, network) to your specific openstack configuration here
     m = NAME_VM_1
     f = nova.flavors.find(name = FLAVOR)
     i = nova.images.find(name = GLANCE_IMAGE_NAME)
     n = nova.networks.find(label = NEUTRON_PRIVATE_NET_NAME)
-    u = "#cloud-config\npassword: opnfv\nchpasswd: { expire: False }\nssh_pwauth: True"
-    #k = "demo-key"
 
     # create VM
     logger.info("Creating instance '%s'..." %m)
@@ -176,11 +163,8 @@ def main():
         flavor             = f,
         image              = i,
         nics               = [{"net-id": n.id}],
-        #key_name           = k,
         userdata           = u,
     )
-
-    #pMsg(vm1)
 
 
     #wait until VM status is active
@@ -189,7 +173,6 @@ def main():
     #retrieve IP of first VM
     logger.debug("Fetching IP...")
     server = get_server(creds, m)
-    #pMsg(server.networks)
     # theoretically there is only one IP address so we take the first element of the table
     # Dangerous! To be improved!
     test_ip = server.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
@@ -200,15 +183,13 @@ def main():
     # boot VM 2
     # we will boot then execute a ping script with cloud-init
     # the long chain corresponds to the ping procedure converted with base 64
-  # tune (e.g. flavor, images, network) to your specific openstack configuration here
+    # tune (e.g. flavor, images, network) to your specific openstack configuration here
     m = NAME_VM_2
     f = nova.flavors.find(name = FLAVOR)
     i = nova.images.find(name = GLANCE_IMAGE_NAME)
     n = nova.networks.find(label = NEUTRON_PRIVATE_NET_NAME)
-    # use base 64 format because bad surprises with sh script with cloud-init but script is just pinging
-    #k = "demo-key"
-    #u = "#cloud-config\npassword: opnfv\nchpasswd: { expire: False }\nssh_pwauth: True\nwrite_files:\n-  encoding: b64\n   path: /tmp/vping.sh\n   permissions: '0777'\n   owner: root:root\n   content: IyEvYmluL2Jhc2gKCndoaWxlIHRydWU7IGRvCiBwaW5nIC1jIDEgJDEgMj4mMSA+L2Rldi9udWxsCiBSRVM9JD8KIGlmIFsgIlokUkVTIiA9ICJaMCIgXSA7IHRoZW4KICBlY2hvICJ2UGluZyBPSyIKICBzbGVlcCAxMAogIHN1ZG8gc2h1dGRvd24gLWggbm93CiAgYnJlYWsKIGVsc2UKICBlY2hvICJ2UGluZyBLTyIKIGZpCiBzbGVlcCAxCmRvbmUK\nruncmd:\n - [ sh, -c, %s]"%test_cmd
     u = "#!/bin/sh\n\nwhile true; do\n ping -c 1 %s 2>&1 >/dev/null\n RES=$?\n if [ \"Z$RES\" = \"Z0\" ] ; then\n  echo 'vPing OK'\n break\n else\n  echo 'vPing KO'\n fi\n sleep 1\ndone\n"%test_ip
+    
     # create VM
     logger.info("Creating instance '%s'..." %m)
     logger.debug("Configuration:\n name=%s \n flavor=%s \n image=%s \n network=%s \n userdata= \n%s" %(m,f,i,n,u))
@@ -217,33 +198,11 @@ def main():
         flavor             = f,
         image              = i,
         nics               = [{"net-id": n.id}],
-        #key_name           = k,
         userdata           = u,
-        #security_groups    = s,
-        #config_drive       = v.id
     )
-    # The injected script will shutdown the VM2 when the ping works
-    # The console-log method is more consistent but doesn't work yet
 
     waitVmActive(nova,vm2)
-    """
-    logger.info("Waiting for ping, timeout is %d sec..." % PING_TIMEOUT)
-    sec = 0
-    while True:
-        status = get_status(nova, vm2)
-        #print status
-        if status == "SHUTOFF" :
-            EXIT_CODE = 0
-            logger.info("vPing SUCCESSFUL after %d sec" % sec)
-            break
-        if sec == PING_TIMEOUT:
-            logger.info("Timeout. vPing UNSUCCESSFUL.")
-            break
-        time.sleep(1)
-        sec+=1
 
-    """
-    # I leave this here until we fix the console-log output
     sec = 0
     console_log = vm2.get_console_output()
     while True:
@@ -270,9 +229,9 @@ def main():
     nova.servers.delete(vm2)
     logger.debug("Instance %s terminated." % NAME_VM_2)
 
-    if EXIT_CODE = 0 :
+    if EXIT_CODE == 0:
         logger.info("vPing OK")
-    else :
+    else:
         logger.error("vPing FAILED")
 
     exit(EXIT_CODE)
