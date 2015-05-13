@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_0b1a546e",
+        "filename": "testcases/functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-05-13T07:30:13Z",
+      "side": 1,
+      "message": "change name to avoid ambiguity (several images starting with same name) and adapt Rally scenario to use this image for the tests",
+      "range": {
+        "startLine": 13,
+        "startChar": 20,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "bcbf2d964712ca6daa4375544130a15b72bca433",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
