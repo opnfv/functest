@@ -6,13 +6,13 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "floating_network": "public",
                 "force_delete": false,
-                "script": "samples/tasks/support/instance_dd_test.sh",
+                "script": "../Rally_repo/samples/tasks/support/instance_dd_test.sh",
                 "interpreter": "/bin/sh",
-                "username": "cirros"
+                "username": "admin"
             },
             "runner": {
                 "type": "constant",
@@ -36,7 +36,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "volume_args": {
                     "size": 2
@@ -45,9 +45,9 @@
                 "floating_network": "public",
                 "use_floatingip": true,
                 "force_delete": false,
-                "script": "samples/tasks/support/instance_dd_test.sh",
+                "script": "../Rally_repo/samples/tasks/support/instance_dd_test.sh",
                 "interpreter": "/bin/sh",
-                "username": "cirros"
+                "username": "admin"
             },
             "runner": {
                 "type": "constant",
