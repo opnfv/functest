@@ -6,7 +6,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "force_delete": false
             },
@@ -30,7 +30,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 }
             },
             "runner": {
@@ -56,7 +56,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "security_group_count": 10,
                 "rules_per_security_group": 10
@@ -84,7 +84,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "detailed": true
             },
@@ -108,7 +108,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "block_migration": false
             },
@@ -132,7 +132,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 }
             },
             "runner": {
@@ -155,7 +155,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "force_delete": false,
                 "actions": [
@@ -185,7 +185,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "volume_size": 10,
                 "force_delete": false
@@ -210,7 +210,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "volume_size": 10
             },
@@ -234,7 +234,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 }
             },
             "runner": {
@@ -256,7 +256,7 @@
                 "size": 10,
                 "block_migration": false,
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "flavor": {
                     "name": "m1.small"
@@ -282,7 +282,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "block_migration": false,
                 "volume_size": 10,
@@ -308,7 +308,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "force_delete": false
             },
@@ -413,7 +413,7 @@
                         "name": "m1.small"
                     },
                     "image": {
-                        "name": "^TestVM*"
+                        "name": "^functest-img*"
                     },
                     "servers_per_tenant": 2
                 }
@@ -427,7 +427,7 @@
                     "name": "m1.small"
                 },
                 "image": {
-                    "name": "^TestVM*"
+                    "name": "^functest-img*"
                 },
                 "to_flavor": {
                     "name": "m1.small"

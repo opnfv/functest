@@ -46,7 +46,7 @@
                 "container_format": "bare",
                 "disk_format": "qcow2",
                 "flavor": {
-                    "name": "m1.nano"
+                    "name": "m1.small"
                 },
                 "number_instances": 2
             },
