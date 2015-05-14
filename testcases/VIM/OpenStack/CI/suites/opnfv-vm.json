@@ -8,7 +8,7 @@
                 "image": {
                     "name": "^functest-img*"
                 },
-                "floating_network": "public",
+                "floating_network": "net04_ext",
                 "force_delete": false,
                 "script": "../Rally_repo/samples/tasks/support/instance_dd_test.sh",
                 "interpreter": "/bin/sh",
@@ -42,7 +42,7 @@
                     "size": 2
                 },
                 "fixed_network": "private",
-                "floating_network": "public",
+                "floating_network": "net04_ext",
                 "use_floatingip": true,
                 "force_delete": false,
                 "script": "../Rally_repo/samples/tasks/support/instance_dd_test.sh",
