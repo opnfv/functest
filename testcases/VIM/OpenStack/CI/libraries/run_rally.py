@@ -14,9 +14,13 @@ with open('../functest.yaml') as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
+""" get the date """
+cmd = os.popen("date '+%d%m%Y_%H%M'")
+test_date = cmd.read().rstrip()
+
 HOME = os.environ['HOME']+"/"
 SCENARIOS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_scn")
-RESULTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res")
+RESULTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res") + test_date + "/"
 
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'tempest', 'vm', 'all', 'smoke']
@@ -108,10 +112,6 @@ def run_tempest():
     """
     logger.info('starting {} Tempest ...'.format(test_mode))
 
-    """ get the date """
-    cmd = os.popen("date '+%d%m%Y_%H%M'")
-    test_date = cmd.read().rstrip()
-
     cmd_line = "rally verify start {}".format(test_mode)
     logger.debug('running command line : {}'.format(cmd_line))
     cmd = os.popen(cmd_line)
@@ -128,7 +128,7 @@ def run_tempest():
         os.makedirs(RESULTS_DIR)
 
     """ write log report file """
-    report_file_name = '{}opnfv-tempest-{}.log'.format(RESULTS_DIR, test_date)
+    report_file_name = '{}opnfv-tempest.log'.format(RESULTS_DIR)
     cmd_line = "rally verify detailed {} > {} ".format(task_id, report_file_name)
     logger.debug('running command line : {}'.format(cmd_line))
     os.popen(cmd_line)
@@ -141,10 +141,6 @@ def run_task(test_name):
     :return: void
     """
     logger.info('starting {} test ...'.format(test_name))
-
-    """ get the date """
-    cmd = os.popen("date '+%d%m%Y_%H%M'")
-    test_date = cmd.read().rstrip()
 
     """ check directory for scenarios test files or retrieve from git otherwise"""
     proceed_test = True
@@ -172,7 +168,7 @@ def run_task(test_name):
             os.makedirs(RESULTS_DIR)
 
         """ write html report file """
-        report_file_name = '{}opnfv-{}-{}.html'.format(RESULTS_DIR, test_name, test_date)
+        report_file_name = '{}opnfv-{}.html'.format(RESULTS_DIR, test_name)
         cmd_line = "rally task report %s --out %s" % (task_id, report_file_name)
         logger.debug('running command line : {}'.format(cmd_line))
         os.popen(cmd_line)
@@ -182,7 +178,7 @@ def run_task(test_name):
         logger.debug('running command line : {}'.format(cmd_line))
         cmd = os.popen(cmd_line)
         json_results = cmd.read()
-        with open('{}opnfv-{}-{}.json'.format(RESULTS_DIR, test_name, test_date), 'w') as f:
+        with open('{}opnfv-{}.json'.format(RESULTS_DIR, test_name), 'w') as f:
             logger.debug('saving json file')
             f.write(json_results)
             logger.debug('saving json file2')
