@@ -28,7 +28,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("test_name", help="The name of the test you want to perform with rally. "
                                       "Possible values are : "
                                       "[ {d[0]} | {d[1]} | {d[2]} | {d[3]} | {d[4]} | {d[5]} | {d[6]} "
-                                      "| {d[7]} | {d[8]} | {d[9]} | {d[10]} | {d[11]} | {d[12]}]. The 'all' value performs all the tests scenarios "
+                                      "| {d[7]} | {d[8]} | {d[9]} | {d[10]} | {d[11]} | {d[12]}]. The 'all' value performs all the  possible tests scenarios"
                                       "except 'tempest'".format(d=tests))
 
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
@@ -227,7 +227,7 @@ def main():
 
     if args.test_name == "all":
         for test_name in tests:
-            if not (test_name == 'all' or test_name == 'tempest'):
+            if not (test_name == 'all' or test_name == 'tempest' or test_name == 'heat' or test_name == 'smoke' ):
                 print(test_name)
                 run_task(test_name)
     else:
