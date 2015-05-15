@@ -93,31 +93,26 @@ def config_functest_start():
     """
     Start the functest environment installation
     """
+    if not check_internet_connectivity():
+        logger.error("There is no Internet connectivity. Please check the network configuration.")
+        exit(-1)
 
     if config_functest_check():
         logger.info("Functest environment already installed in %s. Nothing to do." %FUNCTEST_BASE_DIR)
         exit(0)
 
-    if not check_internet_connectivity():
-        logger.error("There is no Internet connectivity. Please check the network configuration.")
-        exit(-1)
-    elif not check_credentials():
-        logger.error("Please source the openrc credentials and run the script again.")
-        #TODO: source the credentials in this script
-        exit(-1)
-
     else:
         # Clean in case there are left overs
-
+        logger.debug("Functest environment not found or faulty. Cleaning in case of leftovers.")
         config_functest_clean()
 
-        logger.info("Starting installationg of functest environment in %s" % FUNCTEST_BASE_DIR)
+        logger.info("Starting installation of functest environment in %s" % FUNCTEST_BASE_DIR)
         os.makedirs(FUNCTEST_BASE_DIR)
         if not os.path.exists(FUNCTEST_BASE_DIR):
             logger.error("There has been a problem while creating the environment directory.")
             exit(-1)
 
-        logger.info("Donwloading test scripts and scenarios...")
+        logger.info("Downloading test scripts and scenarios...")
         if not download_tests():
             logger.error("There has been a problem while downloading the test scripts and scenarios.")
             config_functest_clean()
@@ -448,35 +443,25 @@ def create_private_neutron_net(neutron):
         logger.debug("Network '%s' created successfully" % network_id)
 
         logger.debug('Creating Subnet....')
-        json_body = {'subnets': [{'cidr': NEUTRON_PRIVATE_SUBNET_CIDR,
+        json_body = {'subnets': [{'name': NEUTRON_PRIVATE_SUBNET_NAME, 'cidr': NEUTRON_PRIVATE_SUBNET_CIDR,
                            'ip_version': 4, 'network_id': network_id}]}
+
         subnet = neutron.create_subnet(body=json_body)
-        logger.debug("Subnet '%s' created successfully" % subnet)
+        subnet_id = subnet['subnets'][0]['id']
+        logger.debug("Subnet '%s' created successfully" % subnet_id)
+
 
         logger.debug('Creating Router...')
         json_body = {'router': {'name': ROUTER_NAME, 'admin_state_up': True}}
         router = neutron.create_router(json_body)
-        logger.debug("Router '%s' created successfully" % router)
         router_id = router['router']['id']
+        logger.debug("Router '%s' created successfully" % router_id)
 
-        logger.debug('Creating Port')
-        json_body = {'port': {
-         'admin_state_up': True,
-         'device_id': router_id,
-         'name': 'port1',
-         'network_id': network_id,
-        }}
-        response = neutron.create_port(body=json_body)
-        logger.debug("Port created successfully.")
+        logger.debug('Adding router to subnet...')
+        json_body = {"subnet_id": subnet_id}
+        neutron.add_interface_router(router=router_id, body=json_body)
+        logger.debug("Interface added successfully.")
 
-        """
-        #No need to set up a gateway if there is no public network
-        logger.debug('Setting up gateway...')
-        public_network_id = get_network_id(neutron,NEUTRON_PUBLIC_NET_NAME)
-        json_body = {'network_id': public_network_id, 'enable_snat' :  True}
-        gateway = neutron.add_gateway_router(router_id,body=json_body)
-        logger.debug("Gateway '%s' added successfully" % gateway)
-        """
     except:
         print "Error:", sys.exc_info()[0]
         return False
@@ -600,7 +585,7 @@ def execute_command(cmd):
     logger.debug('Executing command : {}'.format(cmd))
     #p = os.popen(cmd,"r")
     #logger.debug(p.read())
-    output_file = "/tmp/output.txt"
+    output_file = "output.txt"
     f = open(output_file, 'w+')
     p = subprocess.call(cmd,shell=True, stdout=f, stderr=subprocess.STDOUT)
     f.close()
@@ -619,6 +604,11 @@ def execute_command(cmd):
 def main():
     if not (args.action in actions):
         logger.error('argument not valid')
+        exit(-1)
+
+    if not check_credentials():
+        logger.error("Please source the openrc credentials and run the script again.")
+        #TODO: source the credentials in this script
         exit(-1)
 
     if args.action == "start":
