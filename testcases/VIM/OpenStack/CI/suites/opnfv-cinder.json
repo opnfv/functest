@@ -1,4 +1,4 @@
-
+{
     "CinderVolumes.create_and_attach_volume": [
         {
             "args": {
@@ -291,5 +291,4 @@
             }
         }
     ]
-/
-
+}
