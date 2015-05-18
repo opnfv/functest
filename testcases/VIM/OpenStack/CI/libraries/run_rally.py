@@ -10,7 +10,8 @@
 #
 import re, json, os, urllib2, argparse, logging, yaml
 
-with open('../functest.yaml') as f:
+HOME = os.environ['HOME']+"/"
+with open(HOME+'.functest/functest.yaml') as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
