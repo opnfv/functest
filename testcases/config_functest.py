@@ -14,12 +14,10 @@ from git import Repo
 from neutronclient.v2_0 import client
 
 actions = ['start', 'check', 'clean']
-
-
-
 parser = argparse.ArgumentParser()
 parser.add_argument("action", help="Possible actions are: '{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
+parser.add_argument("-f", "--force", help="Force",  action="store_true")
 args = parser.parse_args()
 
 
@@ -32,6 +30,7 @@ if args.debug:
     ch.setLevel(logging.DEBUG)
 else:
     ch.setLevel(logging.INFO)
+
 
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 ch.setFormatter(formatter)
@@ -621,16 +620,19 @@ def main():
             logger.info("Functest environment not found or faulty")
 
     if args.action == "clean":
-        while True:
-            print("Are you sure? [y|n]")
-            answer = raw_input("")
-            if answer == "y":
-                config_functest_clean()
-                break
-            elif answer == "n":
-                break
-            else:
-                print("Invalid option.")
+        if args.force :
+            config_functest_clean()
+        else :
+            while True:
+                print("Are you sure? [y|n]")
+                answer = raw_input("")
+                if answer == "y":
+                    config_functest_clean()
+                    break
+                elif answer == "n":
+                    break
+                else:
+                    print("Invalid option.")
     exit(0)
 
 
