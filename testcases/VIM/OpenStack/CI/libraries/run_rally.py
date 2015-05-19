@@ -24,7 +24,7 @@ SCENARIOS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_
 RESULTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res") + test_date + "/"
 
 """ tests configuration """
-tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'tempest', 'vm', 'all', 'smoke']
+tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'tempest', 'all', 'smoke']
 parser = argparse.ArgumentParser()
 parser.add_argument("test_name", help="The name of the test you want to perform with rally. "
                                       "Possible values are : "
