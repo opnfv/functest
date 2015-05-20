@@ -24,6 +24,7 @@ with open(HOME+'.functest/functest.yaml') as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
+VM_BOOT_TIMEOUT = 180
 PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
 NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
@@ -98,10 +99,18 @@ def get_server(creds, servername):
 
 def waitVmActive(nova,vm):
     # sleep and wait for VM status change
-    while get_status(nova,vm) != "ACTIVE":
-        time.sleep(3)
-        logger.debug("Status: %s" % vm.status)
-    logger.debug("Status: %s" % vm.status)
+    sleep_time = 3
+    count = VM_BOOT_TIMEOUT / sleep_time
+    while True:
+        status = get_status(nova,vm)
+        logger.debug("Status: %s" % status)
+        if status == "ACTIVE":
+            return True
+        if status == "ERROR" or count == 0:
+            return False
+            count-=1
+        time.sleep(sleep_time)
+    return False
 
 def get_status(nova,vm):
     vm = nova.servers.get(vm.id)
@@ -172,7 +181,11 @@ def main():
 
 
     #wait until VM status is active
-    waitVmActive(nova,vm1)
+    if not waitVmActive(nova,vm1):
+        logger.error("Instance '%s' cannot be booted. Status is '%s'" % (NAME_VM_1,get_status(nova,vm1)))
+        return (EXIT_CODE)
+    else:
+        logger.debug("Instance '%s' is ACTIVE." % NAME_VM_1)
 
     #retrieve IP of first VM
     logger.debug("Fetching IP...")
@@ -199,7 +212,11 @@ def main():
         userdata           = u,
     )
 
-    waitVmActive(nova,vm2)
+    if not waitVmActive(nova,vm2):
+        logger.error("Instance '%s' cannot be booted. Status is '%s'" % (NAME_VM_2,get_status(nova,vm2)))
+        return (EXIT_CODE)
+    else:
+        logger.debug("Instance '%s' is ACTIVE." % NAME_VM_2)
 
     sec = 0
     console_log = vm2.get_console_output()
