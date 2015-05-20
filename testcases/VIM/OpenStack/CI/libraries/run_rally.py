@@ -24,7 +24,7 @@ SCENARIOS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_
 RESULTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res") + test_date + "/"
 
 """ tests configuration """
-tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'tempest', 'all', 'smoke']
+tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'vm', 'tempest', 'all', 'smoke']
 parser = argparse.ArgumentParser()
 parser.add_argument("test_name", help="The name of the test you want to perform with rally. "
                                       "Possible values are : "
@@ -228,7 +228,7 @@ def main():
 
     if args.test_name == "all":
         for test_name in tests:
-            if not (test_name == 'all' or test_name == 'tempest' or test_name == 'heat' or test_name == 'smoke' ):
+            if not (test_name == 'all' or test_name == 'tempest' or test_name == 'heat' or test_name == 'smoke' or test_name == 'vm' ):
                 print(test_name)
                 run_task(test_name)
     else:
