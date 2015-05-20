@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_8449b18d",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "- in -\u003e in:\n- Missing space before *, capital letter after *",
+      "range": {
+        "startLine": 8,
+        "startChar": 37,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_645ea547",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "- NFV as a service -\u003e NFV Infrastructure as a Service",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 7
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_445ba954",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "- graphs -\u003e Graphs",
+      "range": {
+        "startLine": 24,
+        "startChar": 18,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_24589d55",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "- Core -\u003e Core Network",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_0455a11c",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "- station -\u003e Base Station",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_e431950c",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "- Virtualization -\u003e Virtualisation",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 12
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_84409157",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "Capital S",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 10
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_642585c1",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "Web link to OpenStack Telco WG Use Cases is\nhttps://wiki.openstack.org/wiki/TelcoWorkingGroup/UseCases",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 86
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_442289ba",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "Propose to reformulate as follows:\nvPing has been developed to provide a basic \"Hello World\" functional test example. vPing is a simplified version of the Tempest test case scenario.test_network_v6",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 127
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_242f7da3",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "https://build.opnfv.org/ci/",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 71
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_042c81aa",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "has",
+      "range": {
+        "startLine": 49,
+        "startChar": 139,
+        "endLine": 49,
+        "endChar": 143
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_a4126d60",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": ",",
+      "range": {
+        "startLine": 61,
+        "startChar": 27,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_640c6543",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "- \"requests\" scenario is missing.\n- Heat is not included in Arno \n   -\u003e opnfv-heat scenario shall be removed from run_rally script\n   -\u003e authenticate.validate_heat shall be removed from opnfv-authenticate scenario",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 9
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_bf527611",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2015-05-20T14:17:46Z",
+      "side": 1,
+      "message": "[-f] optional argument to be added",
+      "range": {
+        "startLine": 211,
+        "startChar": 1,
+        "endLine": 218,
+        "endChar": 25
+      },
+      "revId": "af31f282ea80790d51ead0e2d65caae583d15896",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
