@@ -13,13 +13,13 @@ function venv_install() {
     elif command -v virtualenv; then
         virtualenv $1
     else
-        echo Please make sure virtualenv package is installed.
+        echo Cannot find virtualenv command.
         return 1
     fi
 }
 
 # exit when something goes wrong during venv install
-set -e
+set -e 
 if [ ! -d "$BASEDIR/venv" ]; then
     venv_install $BASEDIR/venv
     echo "Virtualenv created."

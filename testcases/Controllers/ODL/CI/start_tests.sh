@@ -1,13 +1,11 @@
 #!/bin/bash
 # Script requires that test environment is created already
 # it includes python2.7 virtual env with robot packages and git
-# use create_env.sh script for creating python virtualenv
 
 BASEDIR=`dirname $0`
 # Colors
 green='\033[0;32m'
 light_green='\033[1;32m'
-red='\033[1;31m'
 nc='\033[0m' # No Color
 
 usage="Script for starting ODL tests. Tests to be executed are specified in test_list.txt file.
@@ -17,7 +15,7 @@ usage:
 
 where:
     -h     show this help text
-    var    one of the following: OSTACK_IP, ODL_PORT, USR_NAME, USR_PASSWORD
+    var    one of the following: ODL_IP, ODL_PORT, USR_NAME, PASS, NEUTRON_IP
     value  new value for var
 
 example:
@@ -38,10 +36,11 @@ done
 echo -e "${green}Current environment parameters for ODL suite.${nc}"
 # Following vars might be also specified as CLI params
 set -x
-OSTACK_IP=${OSTACK_IP:-'oscontrol'}
+ODL_IP=${ODL_IP:-'192.168.1.5'}
 ODL_PORT=${ODL_PORT:-8081}
-USR_NAME=${USR_NAME:-'admin'}
-USR_PASSWORD=${USR_PASSWORD:-'octopus'}
+USR_NAME=${USR_NAME:-'neutron'}
+PASS=${PASS:-'octopus'}
+NEUTRON_IP=${NEUTRON_IP:-192.168.0.68}
 set +x
 
 echo -e "${green}Cloning ODL integration git repo.${nc}"
@@ -55,14 +54,18 @@ else
 fi
 
 # Change openstack password for admin tenant in neutron suite
-sed -i "s/\"password\": \"admin\"/\"password\": \"${USR_PASSWORD}\"/" integration/test/csit/suites/openstack/neutron/__init__.robot
+sed -i "s/\"password\": \"admin\"/\"password\": \"${PASS}\"/" integration/test/csit/suites/openstack/neutron/__init__.robot
 
 if source $BASEDIR/venv/bin/activate; then
     echo -e "${green}Python virtualenv activated.${nc}"
 else
-    echo -e "${red}ERROR${nc}"
+    echo -e "${green}ERROR${nc}"
     exit 1
 fi
+
+# add custom tests to suite, if there are more custom tests needed this will be reworked
+echo -e "${green}Copy custom tests to suite.${nc}"
+cp -vf $BASEDIR/custom_tests/neutron/* $BASEDIR/integration/test/csit/suites/openstack/neutron/
 
 # List of tests are specified in test_list.txt
 # those are relative paths to test directories from integartion suite
@@ -76,7 +79,7 @@ do
     [[ -z "${line}" ]] && continue
 
     echo -e "${light_green}Starting test: $line ${nc}"
-    pybot -v OPENSTACK:${OSTACK_IP} -v PORT:${ODL_PORT} -v CONTROLLER:${OSTACK_IP} $line
+    pybot -v OPENSTACK:${NEUTRON_IP} -v PORT:${ODL_PORT} -v CONTROLLER:${ODL_IP} $line
     mkdir -p $BASEDIR/logs/${test_num}
     mv log.html $BASEDIR/logs/${test_num}/
     mv report.html $BASEDIR/logs/${test_num}/
