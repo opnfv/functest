@@ -13,7 +13,7 @@ function venv_install() {
     elif command -v virtualenv; then
         virtualenv $1
     else
-        echo Please make sure virtualenv package is installed.
+        echo Cannot find virtualenv command.
         return 1
     fi
 }
