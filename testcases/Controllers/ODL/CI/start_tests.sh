@@ -21,7 +21,7 @@ where:
     value  new value for var
 
 example:
-    OSTACK_IP=oscontro1 ODL_PORT=8080 bash $(basename "$0")"
+    ODL_IP=oscontro1 ODL_PORT=8080 bash $(basename "$0")"
 
 while getopts ':h' option; do
   case "$option" in
@@ -46,17 +46,17 @@ NEUTRON_IP=${NEUTRON_IP:-192.168.0.68}
 set +x
 
 echo -e "${green}Cloning ODL integration git repo.${nc}"
-if [ -d integration ]; then
-    cd integration
+if [ -d ${BASEDIR}/integration ]; then
+    cd ${BASEDIR}/integration
     git checkout -- .
     git pull
     cd -
 else
-    git clone https://github.com/opendaylight/integration.git
+    git clone https://github.com/opendaylight/integration.git ${BASEDIR}/integration
 fi
 
 # Change openstack password for admin tenant in neutron suite
-sed -i "s/\"password\": \"admin\"/\"password\": \"${PASS}\"/" integration/test/csit/suites/openstack/neutron/__init__.robot
+sed -i "s/\"password\": \"admin\"/\"password\": \"${PASS}\"/" ${BASEDIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
 
 if source $BASEDIR/venv/bin/activate; then
     echo -e "${green}Python virtualenv activated.${nc}"
@@ -81,7 +81,7 @@ do
     [[ -z "${line}" ]] && continue
 
     echo -e "${light_green}Starting test: $line ${nc}"
-    pybot -v OPENSTACK:${NEUTRON_IP} -v PORT:${ODL_PORT} -v CONTROLLER:${ODL_IP} $line
+    pybot -v OPENSTACK:${NEUTRON_IP} -v PORT:${ODL_PORT} -v CONTROLLER:${ODL_IP} ${BASEDIR}/$line
     mkdir -p $BASEDIR/logs/${test_num}
     mv log.html $BASEDIR/logs/${test_num}/
     mv report.html $BASEDIR/logs/${test_num}/
