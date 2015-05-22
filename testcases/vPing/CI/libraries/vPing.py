@@ -18,7 +18,6 @@ import pprint
 import novaclient.v2.client as novaclient
 pp = pprint.PrettyPrinter(indent=4)
 
-EXIT_CODE = -1
 HOME = os.environ['HOME']+"/"
 with open(HOME+'.functest/functest.yaml') as f:
     functest_yaml = yaml.safe_load(f)
@@ -120,11 +119,11 @@ def get_status(nova,vm):
 def main():
     creds = get_credentials("nova")
     nova = novaclient.Client(**creds)
-
+    EXIT_CODE = -1
     image = None
     network = None
     flavor = None
-
+    
     # Check if the given image exists
     try:
         image = nova.images.find(name = GLANCE_IMAGE_NAME)
