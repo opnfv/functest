@@ -1,14 +1,14 @@
 ---
 general:
+    # Relative paths to the path where the repo is cloned
     directories:
-        dir_functest:   .functest/ #DONT CHANGE
-        dir_rally_repo: .functest/Rally_repo/
-        dir_rally:      .functest/Rally_test/
-        dir_rally_scn:  .functest/Rally_test/scenarios/
-        dir_rally_res:  .functest/Rally_test/results/
-        dir_vping:      .functest/vPing/
-        dir_odl:        .functest/ODL/
-        dir_rally_inst: .rally/
+        dir_vping:      testcases/vPing/CI/libraries/
+        dir_odl:        testcases/Controllers/ODL/CI/
+        dir_rally:      testcases/VIM/OpenStack/CI/libraries/
+        dir_rally_scn:  testcases/VIM/OpenStack/CI/suites/
+        dir_rally_res:  functest/results/ # $HOME/functest/results
+        dir_rally_inst: .rally/  # $HOME/.rally/ usually
+
     openstack:
         image_name: functest-img
         image_url:  http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
