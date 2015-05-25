@@ -15,6 +15,7 @@ from neutronclient.v2_0 import client
 
 actions = ['start', 'check', 'clean']
 parser = argparse.ArgumentParser()
+parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("action", help="Possible actions are: '{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 parser.add_argument("-f", "--force", help="Force",  action="store_true")
@@ -31,31 +32,11 @@ if args.debug:
 else:
     ch.setLevel(logging.INFO)
 
-
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-
-
-yaml_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/functest.yaml'
-name = yaml_url.rsplit('/')[-1]
-dest = "./" + name
-if not os.path.exists(dest):
-    logger.info("Downloading functest.yaml...")
-    try:
-        response = urllib2.urlopen(yaml_url)
-    except (urllib2.HTTPError, urllib2.URLError):
-        logger.error("Error in fetching %s" %yaml_url)
-        exit(-1)
-    with open(dest, 'wb') as f:
-        f.write(response.read())
-    logger.info("functest.yaml stored in %s" % dest)
-else:
-    logger.info("functest.yaml found in %s" % dest)
-
-
-with open('./functest.yaml') as f:
+with open(args.repo_path+"config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
@@ -63,14 +44,12 @@ f.close()
 """ global variables """
 # Directories
 HOME = os.environ['HOME']+"/"
-FUNCTEST_BASE_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_functest")
-RALLY_REPO_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_repo")
-RALLY_TEST_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally")
-RALLY_INSTALLATION_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_inst")
-BENCH_TESTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_scn")
-VPING_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_vping")
-ODL_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_odl")
 
+RALLY_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally")
+#BENCH_TESTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_scn")
+RALLY_INSTALLATION_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_inst")
+VPING_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_vping")
+ODL_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_odl")        
 
 # NEUTRON Private Network parameters
 NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general").get("openstack").get("neutron_private_net_name")
@@ -88,7 +67,7 @@ IMAGE_DOWNLOAD_PATH = FUNCTEST_BASE_DIR + IMAGE_FILE_NAME
 credentials = None
 neutron_client = None
 
-def config_functest_start():
+def action_start():
     """
     Start the functest environment installation
     """
@@ -96,37 +75,26 @@ def config_functest_start():
         logger.error("There is no Internet connectivity. Please check the network configuration.")
         exit(-1)
 
-    if config_functest_check():
+    if action_check():
         logger.info("Functest environment already installed in %s. Nothing to do." %FUNCTEST_BASE_DIR)
         exit(0)
 
     else:
         # Clean in case there are left overs
-        logger.debug("Functest environment not found or faulty. Cleaning in case of leftovers.")
-        config_functest_clean()
+        logger.debug("Cleaning possible functest environment leftovers.")
+        action_clean()
 
         logger.info("Starting installation of functest environment in %s" % FUNCTEST_BASE_DIR)
-        os.makedirs(FUNCTEST_BASE_DIR)
-        if not os.path.exists(FUNCTEST_BASE_DIR):
-            logger.error("There has been a problem while creating the environment directory.")
-            exit(-1)
-
-        logger.info("Downloading test scripts and scenarios...")
-        if not download_tests():
-            logger.error("There has been a problem while downloading the test scripts and scenarios.")
-            config_functest_clean()
-            exit(-1)
-
         logger.info("Installing Rally...")
         if not install_rally():
             logger.error("There has been a problem while installing Rally.")
-            config_functest_clean()
+            action_clean()
             exit(-1)
 
         logger.info("Installing ODL environment...")
         if not install_odl():
             logger.error("There has been a problem while installing Robot.")
-            config_functest_clean()
+            action_clean()
             exit(-1)
 
         credentials = get_credentials()
@@ -141,27 +109,26 @@ def config_functest_start():
             logger.info("Private network '%s' not found. Creating..." % NEUTRON_PRIVATE_NET_NAME)
             if not create_private_neutron_net(neutron_client):
                 logger.error("There has been a problem while creating the Neutron network.")
-                #config_functest_clean()
+                #action_clean()
                 exit(-1)
 
 
         logger.info("Donwloading image...")
-        if not download_url_with_progress(IMAGE_URL, FUNCTEST_BASE_DIR):
+        if not download_url(IMAGE_URL, FUNCTEST_BASE_DIR):
             logger.error("There has been a problem while downloading the image.")
-            config_functest_clean()
+            action_clean()
             exit(-1)
 
         logger.info("Creating Glance image: %s ..." %IMAGE_NAME)
         if not create_glance_image(IMAGE_DOWNLOAD_PATH,IMAGE_NAME,IMAGE_DISK_FORMAT):
             logger.error("There has been a problem while creating the Glance image.")
-            config_functest_clean()
+            action_clean()
             exit(-1)
 
         exit(0)
 
 
-
-def config_functest_check():
+def action_check():
     """
     Check if the functest environment is properly installed
     """
@@ -173,7 +140,7 @@ def config_functest_check():
 
     logger.debug("Checking directories...")
     errors = False
-    dirs = [FUNCTEST_BASE_DIR, RALLY_INSTALLATION_DIR, RALLY_REPO_DIR, RALLY_TEST_DIR, BENCH_TESTS_DIR, VPING_DIR, ODL_DIR]
+    dirs = [RALLY_DIR, RALLY_INSTALLATION_DIR, VPING_DIR, ODL_DIR]
     for dir in dirs:
         if not os.path.exists(dir):
             logger.debug("The directory '%s' does NOT exist." % dir)
@@ -242,7 +209,7 @@ def config_functest_check():
 
 
 
-def config_functest_clean():
+def action_clean():
     """
     Clean the existing functest environment
     """
@@ -250,11 +217,6 @@ def config_functest_clean():
     if os.path.exists(RALLY_INSTALLATION_DIR):
         logger.debug("Removing rally installation directory %s" % RALLY_INSTALLATION_DIR)
         shutil.rmtree(RALLY_INSTALLATION_DIR,ignore_errors=True)
-
-    if os.path.exists(FUNCTEST_BASE_DIR):
-        logger.debug("Removing functest directory %s" % FUNCTEST_BASE_DIR)
-        cmd = "sudo rm -rf " + FUNCTEST_BASE_DIR #need to be sudo, not possible with rmtree
-        execute_command(cmd)
 
     #logger.debug("Deleting Neutron network %s" % NEUTRON_PRIVATE_NET_NAME)
     #if not delete_neutron_net() :
@@ -334,6 +296,8 @@ def check_rally():
 
 
 def install_odl():
+    cmd = "chmod +x " + ODL_DIR + "start_tests.sh"
+    execute_command(cmd)
     cmd = "chmod +x " + ODL_DIR + "create_venv.sh"
     execute_command(cmd)
     cmd = ODL_DIR + "create_venv.sh"
@@ -384,49 +348,6 @@ def get_nova_credentials():
     d['auth_url'] = os.environ['OS_AUTH_URL']
     d['project_id'] = os.environ['OS_TENANT_NAME']
     return d
-
-
-def download_tests():
-    os.makedirs(VPING_DIR)
-    os.makedirs(ODL_DIR)
-    os.makedirs(BENCH_TESTS_DIR)
-
-    logger.info("Copying functest.yaml to functest environment...")
-    try:
-        shutil.copy("./functest.yaml", FUNCTEST_BASE_DIR+"functest.yaml")
-    except:
-        print "Error copying the file:", sys.exc_info()[0]
-        return False
-
-    logger.info("Downloading vPing test...")
-    vPing_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/vPing/CI/libraries/vPing.py'
-    if not download_url(vPing_url,VPING_DIR):
-        return False
-
-
-    logger.info("Downloading Rally bench tests...")
-    run_rally_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/libraries/run_rally.py'
-    if not download_url(run_rally_url,RALLY_TEST_DIR):
-        return False
-
-    rally_bench_base_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/suites/'
-    bench_tests = ['authenticate', 'cinder', 'glance', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'tempest', 'vm']
-    for i in bench_tests:
-        rally_bench_url = rally_bench_base_url + "opnfv-" + i + ".json"
-        logger.debug("Downloading %s" %rally_bench_url)
-        if not download_url(rally_bench_url,BENCH_TESTS_DIR):
-            return False
-
-    logger.info("Downloading OLD tests...")
-    odl_base_url = 'https://git.opnfv.org/cgit/functest/plain/testcases/Controllers/ODL/CI/'
-    odl_tests = ['create_venv.sh', 'requirements.pip', 'start_tests.sh', 'test_list.txt']
-    for i in odl_tests:
-        odl_url = odl_base_url + i
-        logger.debug("Downloading %s" %odl_url)
-        if not download_url(odl_url,ODL_DIR):
-            return False
-
-    return True
 
 
 
@@ -532,40 +453,6 @@ def download_url(url, dest_path):
     return True
 
 
-def download_url_with_progress(url, dest_path):
-    """
-    Download a file to a destination path given a URL showing the progress
-    """
-    name = url.rsplit('/')[-1]
-    dest = dest_path + name
-    try:
-        response = urllib2.urlopen(url)
-    except (urllib2.HTTPError, urllib2.URLError):
-        logger.error("Error in fetching %s" %url)
-        return False
-
-    f = open(dest, 'wb')
-    meta = response.info()
-    file_size = int(meta.getheaders("Content-Length")[0])
-    logger.info("Downloading: %s Bytes: %s" %(dest, file_size))
-
-    file_size_dl = 0
-    block_sz = 8192
-    while True:
-        buffer = response.read(block_sz)
-        if not buffer:
-            break
-
-        file_size_dl += len(buffer)
-        f.write(buffer)
-        status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
-        status = status + chr(8)*(len(status)+1)
-        print status,
-
-    f.close()
-    print("\n")
-    return True
-
 
 def check_internet_connectivity(url='http://www.google.com/'):
     """
@@ -604,30 +491,31 @@ def main():
     if not (args.action in actions):
         logger.error('argument not valid')
         exit(-1)
-
+    
+    
     if not check_credentials():
         logger.error("Please source the openrc credentials and run the script again.")
         #TODO: source the credentials in this script
         exit(-1)
 
     if args.action == "start":
-        config_functest_start()
+        action_start()
 
     if args.action == "check":
-        if config_functest_check():
+        if action_check():
             logger.info("Functest environment correctly installed")
         else:
             logger.info("Functest environment not found or faulty")
 
     if args.action == "clean":
         if args.force :
-            config_functest_clean()
+            action_clean()
         else :
             while True:
                 print("Are you sure? [y|n]")
                 answer = raw_input("")
                 if answer == "y":
-                    config_functest_clean()
+                    action_clean()
                     break
                 elif answer == "n":
                     break
