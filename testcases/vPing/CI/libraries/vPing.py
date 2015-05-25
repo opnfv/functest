@@ -19,7 +19,7 @@ import novaclient.v2.client as novaclient
 pp = pprint.PrettyPrinter(indent=4)
 
 HOME = os.environ['HOME']+"/"
-with open(HOME+'.functest/functest.yaml') as f:
+with open(args.repo_path+"testcases/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
