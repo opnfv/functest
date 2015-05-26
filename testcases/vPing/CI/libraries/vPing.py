@@ -20,6 +20,7 @@ pp = pprint.PrettyPrinter(indent=4)
 
 
 parser = argparse.ArgumentParser()
+parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 args = parser.parse_args()
 

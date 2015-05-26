@@ -20,13 +20,14 @@ test_date = cmd.read().rstrip()
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'vm', 'tempest', 'all', 'smoke']
 parser = argparse.ArgumentParser()
+parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("test_name", help="The name of the test you want to perform with rally. "
                                       "Possible values are : "
                                       "[ {d[0]} | {d[1]} | {d[2]} | {d[3]} | {d[4]} | {d[5]} | {d[6]} "
                                       "| {d[7]} | {d[8]} | {d[9]} | {d[10]} | {d[11]} | {d[12]}]. The 'all' value performs all the  possible tests scenarios"
                                       "except 'tempest'".format(d=tests))
-
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
+
 parser.add_argument("test_mode", help="Tempest test mode", nargs='?', default="smoke")
 args = parser.parse_args()
 test_mode=args.test_mode
