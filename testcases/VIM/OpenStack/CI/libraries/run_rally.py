@@ -10,18 +10,12 @@
 #
 import re, json, os, urllib2, argparse, logging, yaml
 
-HOME = os.environ['HOME']+"/"
-with open(args.repo_path+"testcases/config_functest.yaml") as f:
-    functest_yaml = yaml.safe_load(f)
-f.close()
+
 
 """ get the date """
 cmd = os.popen("date '+%d%m%Y_%H%M'")
 test_date = cmd.read().rstrip()
 
-HOME = os.environ['HOME']+"/"
-SCENARIOS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_scn")
-RESULTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res") + test_date + "/"
 
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'vm', 'tempest', 'all', 'smoke']
@@ -54,6 +48,17 @@ else:
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
+
+HOME = os.environ['HOME']+"/"
+with open(args.repo_path+"testcases/config_functest.yaml") as f:
+    functest_yaml = yaml.safe_load(f)
+f.close()
+
+HOME = os.environ['HOME']+"/"
+SCENARIOS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_scn")
+RESULTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res") + test_date + "/"
+
+
 
 
 def get_tempest_id(cmd_raw):

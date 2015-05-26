@@ -8,7 +8,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import re, json, os, urllib2, argparse, logging, shutil, subprocess, yaml
+import re, json, os, urllib2, argparse, logging, shutil, subprocess, yaml, sys
 from git import Repo
 
 from neutronclient.v2_0 import client
