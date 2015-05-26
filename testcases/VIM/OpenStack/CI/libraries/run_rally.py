@@ -50,13 +50,13 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-HOME = os.environ['HOME']+"/"
 with open(args.repo_path+"testcases/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
 HOME = os.environ['HOME']+"/"
-SCENARIOS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_scn")
+REPO_PATH = args.repo_path
+SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_rally_scn")
 RESULTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res") + test_date + "/"
 
 
@@ -153,8 +153,8 @@ def run_task(test_name):
     proceed_test = True
     test_file_name = '{}opnfv-{}.json'.format(SCENARIOS_DIR, test_name)
     if not os.path.exists(test_file_name):
-        logger.debug('{} does not exists'.format(test_file_name))
-        proceed_test = retrieve_test_cases_file(test_name, SCENARIOS_DIR)
+        logger.error("The scenario '%s' does not exist." %test_file_name)
+        exit(-1)
 
     """ we do the test only if we have a scenario test file """
     if proceed_test:
@@ -198,32 +198,6 @@ def run_task(test_name):
     else:
         logger.error('{} test failed, unable to fetch a scenario test file'.format(test_name))
 
-
-def retrieve_test_cases_file(test_name, tests_path):
-    """
-    Retrieve from github the sample test files
-    :return: Boolean that indicates the retrieval status
-    """
-
-    """ do not add the "/" at the end """
-    url_base = "https://git.opnfv.org/cgit/functest/plain/testcases/VIM/OpenStack/CI/suites"
-
-    test_file_name = 'opnfv-{}.json'.format(test_name)
-    logger.info('fetching {}/{} ...'.format(url_base, test_file_name))
-
-    try:
-        response = urllib2.urlopen('{}/{}'.format(url_base, test_file_name))
-    except (urllib2.HTTPError, urllib2.URLError):
-        return False
-    file_raw = response.read()
-
-    """ check if the test path exist otherwise we create it """
-    if not os.path.exists(tests_path):
-        os.makedirs(tests_path)
-
-    with open('{}/{}'.format(tests_path, test_file_name), 'w') as f:
-        f.write(file_raw)
-    return True
 
 
 def main():
