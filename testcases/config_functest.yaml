@@ -1,13 +1,14 @@
 ---
 general:
-    # Relative paths to the path where the repo is cloned
     directories:
+        # Relative to the path where the repo is cloned:
         dir_vping:      testcases/vPing/CI/libraries/
         dir_odl:        testcases/Controllers/ODL/CI/
         dir_rally:      testcases/VIM/OpenStack/CI/libraries/
         dir_rally_scn:  testcases/VIM/OpenStack/CI/suites/
+        # Relative to $HOME:
         dir_rally_res:  functest/results/ # $HOME/functest/results
-        dir_rally_repo: functest/Rally_repo/
+        dir_rally_repo: functest/Rally_repo/ # $HOME/Rally_repo/
         dir_rally_inst: .rally/  # $HOME/.rally/ usually
 
     openstack:
