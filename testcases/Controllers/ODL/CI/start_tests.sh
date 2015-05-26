@@ -87,7 +87,7 @@ do
     mv report.html $BASEDIR/logs/${test_num}/
     mv output.xml $BASEDIR/logs/${test_num}/
     ((test_num++))
-done < test_list.txt
+done < ${BASEDIR}/test_list.txt
 
 echo -e "${green}Deactivate venv.${nc}"
 deactivate
