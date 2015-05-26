@@ -18,19 +18,6 @@ import pprint
 import novaclient.v2.client as novaclient
 pp = pprint.PrettyPrinter(indent=4)
 
-HOME = os.environ['HOME']+"/"
-with open(args.repo_path+"testcases/config_functest.yaml") as f:
-    functest_yaml = yaml.safe_load(f)
-f.close()
-
-VM_BOOT_TIMEOUT = 180
-PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
-NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
-NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
-GLANCE_IMAGE_NAME = functest_yaml.get("general").get("openstack").get("image_name")
-NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general").get("openstack").get("neutron_private_net_name")
-FLAVOR = functest_yaml.get("vping").get("vm_flavor")
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
@@ -49,6 +36,19 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
+
+HOME = os.environ['HOME']+"/"
+with open(args.repo_path+"testcases/config_functest.yaml") as f:
+    functest_yaml = yaml.safe_load(f)
+f.close()
+
+VM_BOOT_TIMEOUT = 180
+PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
+NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
+NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
+GLANCE_IMAGE_NAME = functest_yaml.get("general").get("openstack").get("image_name")
+NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general").get("openstack").get("neutron_private_net_name")
+FLAVOR = functest_yaml.get("vping").get("vm_flavor")
 
 
 def pMsg(value):
