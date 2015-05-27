@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "3a045101_e35868fc",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-05-27T14:53:37Z",
+      "side": 1,
+      "message": "*Restconf",
+      "revId": "536305836606683be6e04cc9cb5a943efce6b6b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a045101_c3468c23",
         "filename": "docs/functest.rst",
         "patchSetId": 1
@@ -42,6 +59,159 @@
         "endLine": 166,
         "endChar": 29
       },
+      "revId": "536305836606683be6e04cc9cb5a943efce6b6b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_030b54d7",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-05-27T14:53:37Z",
+      "side": 1,
+      "message": "Also:\n * Check Network created in OpenStack\n\nCheck this output of a successful test:\nhttp://pastebin.com/rgkxKeKV\n\nSuggestion:\n\n * Check OpenStack Networks :: Checking OpenStack Neutron for known networks\n * Check OpenDaylight Networks :: Checking OpenDaylight Neutron API\n * Create Network :: Create new network in OpenStack\n * Check Network :: Check Network created in OpenDaylight\n * Neutron.Networks :: Checking Network created in OpenStack are pushed",
+      "revId": "536305836606683be6e04cc9cb5a943efce6b6b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_630338b9",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-05-27T14:53:37Z",
+      "side": 1,
+      "message": "Suggestion:\n\n * Check OpenStack Subnets :: Checking OpenStack Neutron for known Subnets\n * Check OpenDaylight subnets :: Checking OpenDaylight Neutron API\n * Create New subnet :: Create new subnet in OpenStack\n * Check New subnet :: Check new subnet created in OpenDaylight\n * Neutron.Subnets :: Checking Subnets created in OpenStack are pushed",
+      "revId": "536305836606683be6e04cc9cb5a943efce6b6b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_43003caa",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-05-27T14:53:37Z",
+      "side": 1,
+      "message": "Suggestion:\n * Check OpenStack ports :: Checking OpenStack Neutron for known ports\n * Check OpenDaylight ports :: Checking OpenDaylight Neutron API\n * Create New Port :: Create new port in OpenStack\n * Check New Port :: Check new subnet created in OpenDaylight\n * Neutron.Ports :: Checking Port created in OpenStack are pushed",
+      "revId": "536305836606683be6e04cc9cb5a943efce6b6b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_232d3047",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-05-27T14:53:37Z",
+      "side": 1,
+      "message": "I would say: \"hosted in OPNFV functest repository\"",
+      "revId": "536305836606683be6e04cc9cb5a943efce6b6b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_033234a7",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-05-27T14:53:37Z",
+      "side": 1,
+      "message": "positional arguments:\n  repo_path    Path to the repository\n  action       Possible actions are: \u0027start|check|clean\u0027",
+      "revId": "536305836606683be6e04cc9cb5a943efce6b6b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_e3262868",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-05-27T14:53:37Z",
+      "side": 1,
+      "message": "* used to avoid prompting the user for confirmation when cleaning functest environment.",
+      "revId": "536305836606683be6e04cc9cb5a943efce6b6b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_c32b2c2f",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-05-27T14:53:37Z",
+      "side": 1,
+      "message": "Actually, sourcing is part of the jenkins job, retrieving is the only manual step. According to this:\nhttps://git.opnfv.org/cgit/releng/tree/jjb/functest/functest.yml\nthe rc file should be stored here:\n$HOME/functest/opnfv-openrc.sh",
+      "revId": "536305836606683be6e04cc9cb5a943efce6b6b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_a320204a",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-05-27T14:53:37Z",
+      "side": 1,
+      "message": "I would say: \u003cfunctest_repo_directory\u003e",
+      "revId": "536305836606683be6e04cc9cb5a943efce6b6b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_831d2412",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-05-27T14:53:37Z",
+      "side": 1,
+      "message": "The same: \u003cfunctest_repo_directory\u003e",
       "revId": "536305836606683be6e04cc9cb5a943efce6b6b8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
