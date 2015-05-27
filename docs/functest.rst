@@ -6,11 +6,11 @@ Testing is a key challenge of OPNFV.
 It shall be possible to run functional tests on any OPNFV solution.
 
 The goal of this document consists in
-* a description of functional tests for OPNFV
-* a description of the tools needed to perform these tests
-* the procedure to configure the tools and the scenarios associated with these tests
+ * a description of functional tests for OPNFV
+ * a description of the tools needed to perform these tests
+ * the procedure to configure the tools and the scenarios associated with these tests
 
-Functional tests shall be automated and collected results shall be used to improve the robustness and the reliability of the overall system.
+Fs much as possible) unctional tests shall be automated and collected results shall be used to improve the robustness and the reliability of the overall system.
 
 Function tests may cover any domain that could lead to improve the OPNFV solution and define "Telco Cloud" KPI.
 
@@ -46,23 +46,24 @@ vPing, that is already present in Tempest suite, has been developped to provided
 
 vIMS, vEPC, vPE, vHGW, vCDN use cases are not considered for first release.
 It does not mean that such use cases cannot be tested on OPNFV Arno.
-It means that these use cases have not been integrated in the `Continuous Integration`_ and no specific work (integration or developpment) have been done for R1.
+It means that these testcases have not been integrated in the `Continuous Integration`_ and no specific work (integration or developpment) have been done for R1.
+We may expect that new VNFs and new scenarios will be icreated and integrated in the future releases.
 
 .. _prereqs:
 
 -------------
 Prerequisites
 -------------
-We assume that an OPNFV solution has been installed.
+We assume that an OPNFV Arno solution has been installed.
 
-.. _here: TBC
+.. _here: https://wiki.opnfv.org/documentation/Arno
 
 The installation of the OPNFV solution is out of scope of this document but can be found [here_].
 In the rest of the document the OPNFV solution would be considered as the System Under Test (SUT).
 
 The installation and configuration of the tools needed to perform the tests will be described in the following sections.
 
-For release 1, the tools are not automatically installed.
+For release 1, the tools are not fully automatically installed, more details will be provided in the configuration section.
 
 .. _pharos: https://wiki.opnfv.org/pharos
 
@@ -159,7 +160,25 @@ The goal of this test is to check the OpenStack installation (sanity checks).
 OpenDaylight
 ============
 
-TODO Peter
+The ODL suite consists in a set of basic tests inherited from ODL project. The list of tests can be described as follow:
+ * Restconf.basic: Get the controller modules via Restcon
+ * Neutron.Networks
+  * Check OpenStack Networks 
+  * Check OpenDaylight Networks
+  * Create new network in OpenStack
+  * Check Network created in OpenDaylight
+ * Neutron.Subnets
+  * Check OpenStack Subnets
+  * Check OpenDaylight subnets
+  * Create new subnet in OpenStack
+  * Check new subnet created in OpenDaylight
+  * Checking Subnets created in OpenStack
+ * Neutron.Ports
+  * Check OpenStack ports
+  * Check OpenDaylight ports
+  * Create new port in OpenStack
+  * Check new subnet created in OpenDaylight
+  * Checking Port created in OpenStack
 
 vPing
 =====
@@ -202,13 +221,13 @@ Tooling installation
  * Rally
  * Robot
 
-Rally is used for benching and Tempest. Robot is used for OpenDaylight.
+Rally is used for benchmarking and running Tempest. Robot is used for OpenDaylight.
 
 A script (config_test.py) has been created to simplify as much as possible the installation of the different suites of tests.
 
-This script config_test.py_ is hosted in OPNFV git and uses the configuration file functest.yaml_::
+This script config_test.py_ is hosted in OPNFV git and uses the configuration file config_functest.yaml_::
 
- usage: config_functest.py [-h] [-d] action
+ usage: config_functest.py [-h] [-d] [-f] path action
 
  positional arguments:
   action       Possible actions are: 'start|check|clean'
@@ -216,6 +235,7 @@ This script config_test.py_ is hosted in OPNFV git and uses the configuration fi
  optional arguments:
   -h, --help   show this help message and exit
   -d, --debug  Debug mode
+  -f, --force  used to bypass check when cleaning functest environment
 
 Actions
  * start: will prepare the functional testing environment
@@ -240,37 +260,34 @@ Useful links:
 
 .. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
 
-.. _`functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/functest.yaml
+.. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.yaml
 
 
-
-
+When integrated in CI, the only prerequisite consists in retrieving and sourcing the OpenStack credentials (rc file). In this case, the script will clone the functest repository, execute environment checks and install tools.
 
 
 The procedure to set up functional testing environment can be described as follow::
 
     Log on the Jumphost server
     Be sure you are no root
-    $ wget https://git.opnfv.org/cgit/functest/plain/testcases/config_functest.py
-    $ wget https://git.opnfv.org/cgit/functest/plain/testcases/functest.yaml
-    Modify and adapt needed parameters in the functest.yaml. Follow the instructions below.
+    Modify and adapt needed parameters in the config_functest.yaml. Follow the instructions below.
     Retrieve OpenStack source file (configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)
     $ source Your_OpenRC_file
-    $ python config_functest.py -d start
+    $ python config_functest.py -d <Your_functest_directory> start
 
-At the end of the executing, a new directory will be created ~/.functest with the following structure::
+At the end of the executing, a new directory will be created <Your_functest_directory> with the following structure::
 
- ~/.functest/ODL
- ~/.functest/Rally_repo
- ~/.functest/Rally_test
- ~/.functest/vPing
- ~/.functest/functest.yaml
- ~/.functest/functest-img.img
+ <Your_functest_directory>/ODL
+ <Your_functest_directory>/Rally_repo
+ <Your_functest_directory>/Rally_test
+ <Your_functest_directory>/vPing
+ <Your_functest_directory>/config_functest.yaml
+ <Your_functest_directory>/functest-img.img
 
-NOTE: the Rally environment will be installed under ~/.rally/
+NOTE: the Rally environment will be installed under ~/.rally/ the default Tempest configuration (automatically generated by Rally based on OpenStack credentials) can be found une .rally/tempest/for-deployment-<deployment_id>/tempest.conf
 
 
-HOWTO configure functest.yaml:
+HOWTO configure config_functest.yaml:
 
 Do not change the directories structure
     * image_name:               name of the image that will be created in Glance
@@ -329,6 +346,16 @@ You can check if the configuration of rally is fine by typing 'rally deployment 
     | accdc28c-5e20-4859-a5cc-61cf9009e56d | m1.small            | 1     | 512      |           | 10        |
     +--------------------------------------+---------------------+-------+----------+-----------+-----------+
 
+    # rally show networks 
+    Networks for user `admin` in tenant `admin`:
+    +--------------------------------------+------------------------------+------+
+    | ID                                   | Label                        | CIDR |
+    +--------------------------------------+------------------------------+------+
+    | 4f43c349-956f-4073-9ef6-75bf4e62a0e7 | functest-net                 | None |
+    | faefaab1-e503-41fc-875b-5e3112be49ed | provider_network             | None |
+    +--------------------------------------+------------------------------+------+
+
+
 --------------
 Manual testing
 --------------
@@ -342,7 +369,6 @@ Several scenarios are available (mainly based on native Rally scenarios):
  * authenticate
  * keystone
  * neutron
- * vm
  * quotas
  * request
  * tempest
@@ -356,8 +382,8 @@ You can run the script as follow::
 The script will:
  * get the json scenario (if not already available) and put it into the scenario folder
  * run rally
- * generate the html result page into the result folder as opnfv-[module name]-[timestamp].html
- * generate the json result page into the result folder as opnfv-[module name]-[timestamp].json
+ * generate the html result page into <result_folder>/<timestamp>/opnfv-[module name].html
+ * generate the json result page into <result_folder>/<timestamp>/opnfv-[module name].json
  * generate OK or KO
 
 Tempest suite
@@ -368,7 +394,7 @@ You just need to run::
 
      # rally verify start
 
-The different modes available are smoke, baremetal, compute, data_processing, identity, image, network, object_storage, orchestration, telemetry, and volume. By default if you do not precise anything then smoke tests be selected by default.
+The different modes available are smoke, baremetal, compute, data_processing, identity, image, network, object_storage, orchestration, telemetry, and volume. By default if you do not precise anything then smoke tests be selected by default. For Arno, it was decided to focus on smoke tests.
 
 .. _`tempest installation guide using Rally`: https://www.mirantis.com/blog/rally-openstack-tempest-testing-made-simpler/
 
@@ -451,6 +477,15 @@ The test can be executed with command::
 ------------------
 Testing Automation
 ------------------
+
+For Arno, the CI job performs the following actions:
+ * clean and prepare functest environment
+ * run Tempest
+ * run vPing
+ * run Rally Bench
+ * run ODL tests
+ * save results
+ * clean functest environment
 
 Connection of your platform
 ===========================
