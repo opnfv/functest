@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_29ef5189",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 723
+      },
+      "writtenOn": "2015-05-28T12:54:22Z",
+      "side": 1,
+      "message": "trailing space",
+      "range": {
+        "startLine": 176,
+        "startChar": 71,
+        "endLine": 176,
+        "endChar": 72
+      },
+      "revId": "8ed7268c6f918602f390fcc771aef31575e7096d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_09f49559",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 723
+      },
+      "writtenOn": "2015-05-28T12:54:22Z",
+      "side": 1,
+      "message": "trailing space",
+      "range": {
+        "startLine": 234,
+        "startChar": 37,
+        "endLine": 234,
+        "endChar": 41
+      },
+      "revId": "8ed7268c6f918602f390fcc771aef31575e7096d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
