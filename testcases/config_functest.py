@@ -9,11 +9,11 @@
 #
 
 import re, json, os, urllib2, argparse, logging, shutil, subprocess, yaml, sys
+import functest_utils
 from git import Repo
-
 from neutronclient.v2_0 import client
 
-actions = ['start', 'check', 'clean']
+actions = ['start', 'check', 'clean'] 
 parser = argparse.ArgumentParser()
 parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("action", help="Possible actions are: '{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
@@ -104,10 +104,10 @@ def action_start():
             logger.error("There has been a problem while installing Robot.")
             action_clean()
             exit(-1)
-
+        """
         credentials = get_credentials()
         neutron_client = client.Client(**credentials)
-
+        
         logger.info("Configuring Neutron...")
         logger.info("Checking if private network '%s' exists..." % NEUTRON_PRIVATE_NET_NAME)
         #Now: if exists we don't create it again (the clean command does not clean the neutron networks yet)
@@ -119,7 +119,7 @@ def action_start():
                 logger.error("There has been a problem while creating the Neutron network.")
                 #action_clean()
                 exit(-1)
-
+        """
 
         logger.info("Donwloading image...")
         if not download_url(IMAGE_URL, IMAGE_DIR):
@@ -170,7 +170,7 @@ def action_check():
     else:
         logger.debug("...OK")
 
-
+    """
     logger.debug("Checking Neutron...")
     if not check_neutron_net(neutron_client, NEUTRON_PRIVATE_NET_NAME):
         logger.debug("   Private network '%s' NOT found." % NEUTRON_PRIVATE_NET_NAME)
@@ -179,7 +179,7 @@ def action_check():
     else:
         logger.debug("   Private network '%s' found." % NEUTRON_PRIVATE_NET_NAME)
         logger.debug("...OK")
-
+    """
 
     logger.debug("Checking Image...")
     errors = False
@@ -318,124 +318,6 @@ def install_odl():
     cmd = ODL_DIR + "create_venv.sh"
     execute_command(cmd)
     return True
-
-
-def check_credentials():
-    """
-    Check if the OpenStack credentials (openrc) are sourced
-    """
-    #TODO: there must be a short way to do this, doing if os.environ["something"] == "" throws an error
-    try:
-       os.environ['OS_AUTH_URL']
-    except KeyError:
-        return False
-    try:
-       os.environ['OS_USERNAME']
-    except KeyError:
-        return False
-    try:
-       os.environ['OS_PASSWORD']
-    except KeyError:
-        return False
-    try:
-       os.environ['OS_TENANT_NAME']
-    except KeyError:
-        return False
-    try:
-       os.environ['OS_REGION_NAME']
-    except KeyError:
-        return False
-    return True
-
-
-def get_credentials():
-    d = {}
-    d['username'] = os.environ['OS_USERNAME']
-    d['password'] = os.environ['OS_PASSWORD']
-    d['auth_url'] = os.environ['OS_AUTH_URL']
-    d['tenant_name'] = os.environ['OS_TENANT_NAME']
-    return d
-
-def get_nova_credentials():
-    d = {}
-    d['username'] = os.environ['OS_USERNAME']
-    d['api_key'] = os.environ['OS_PASSWORD']
-    d['auth_url'] = os.environ['OS_AUTH_URL']
-    d['project_id'] = os.environ['OS_TENANT_NAME']
-    return d
-
-
-
-def create_private_neutron_net(neutron):
-    try:
-        neutron.format = 'json'
-        logger.debug('Creating Neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
-        json_body = {'network': {'name': NEUTRON_PRIVATE_NET_NAME,
-                    'admin_state_up': True}}
-        netw = neutron.create_network(body=json_body)
-        net_dict = netw['network']
-        network_id = net_dict['id']
-        logger.debug("Network '%s' created successfully" % network_id)
-
-        logger.debug('Creating Subnet....')
-        json_body = {'subnets': [{'name': NEUTRON_PRIVATE_SUBNET_NAME, 'cidr': NEUTRON_PRIVATE_SUBNET_CIDR,
-                           'ip_version': 4, 'network_id': network_id}]}
-
-        subnet = neutron.create_subnet(body=json_body)
-        subnet_id = subnet['subnets'][0]['id']
-        logger.debug("Subnet '%s' created successfully" % subnet_id)
-
-
-        logger.debug('Creating Router...')
-        json_body = {'router': {'name': ROUTER_NAME, 'admin_state_up': True}}
-        router = neutron.create_router(json_body)
-        router_id = router['router']['id']
-        logger.debug("Router '%s' created successfully" % router_id)
-
-        logger.debug('Adding router to subnet...')
-        json_body = {"subnet_id": subnet_id}
-        neutron.add_interface_router(router=router_id, body=json_body)
-        logger.debug("Interface added successfully.")
-
-    except:
-        print "Error:", sys.exc_info()[0]
-        return False
-
-    logger.info("Private Neutron network created successfully.")
-    return True
-
-def get_network_id(neutron, network_name):
-    networks = neutron.list_networks()['networks']
-    id  = ''
-    for n in networks:
-        if n['name'] == network_name:
-            id = n['id']
-            break
-    return id
-
-def check_neutron_net(neutron, net_name):
-    for network in neutron.list_networks()['networks']:
-        if network['name'] == net_name :
-            for subnet in network['subnets']:
-                return True
-    return False
-
-def delete_neutron_net(neutron):
-    #TODO: remove router, ports
-    try:
-        #https://github.com/isginf/openstack_tools/blob/master/openstack_remove_tenant.py
-        for network in neutron.list_networks()['networks']:
-            if network['name'] == NEUTRON_PRIVATE_NET_NAME :
-                for subnet in network['subnets']:
-                    print "Deleting subnet " + subnet
-                    neutron.delete_subnet(subnet)
-                print "Deleting network " + network['name']
-                neutron.delete_neutron_net(network['id'])
-    finally:
-        return True
-    return False
-
-
 
 
 

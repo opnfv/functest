@@ -13,9 +13,10 @@
 # Note: this is script works only with Ubuntu image, not with Cirros image
 #
 
-import os, time, subprocess, logging, argparse, yaml
-import pprint
+import os, time, subprocess, logging, argparse, yaml, pprint
+import functest_utils
 import novaclient.v2.client as novaclient
+
 pp = pprint.PrettyPrinter(indent=4)
 
 
@@ -43,13 +44,20 @@ with open(args.repo_path+"testcases/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
+# vPing parameters
 VM_BOOT_TIMEOUT = 180
 PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
 NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
 GLANCE_IMAGE_NAME = functest_yaml.get("general").get("openstack").get("image_name")
-NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general").get("openstack").get("neutron_private_net_name")
 FLAVOR = functest_yaml.get("vping").get("vm_flavor")
+
+# NEUTRON Private Network parameters
+NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general").get("openstack").get("neutron_private_net_name")
+NEUTRON_PRIVATE_SUBNET_NAME = functest_yaml.get("general").get("openstack").get("neutron_private_subnet_name")
+NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("general").get("openstack").get("neutron_private_subnet_cidr")
+ROUTER_NAME = functest_yaml.get("general").get("openstack").get("neutron_router_name")
+
 
 
 def pMsg(value):
@@ -90,6 +98,47 @@ def get_credentials(service):
     })
 
     return creds
+
+
+def create_private_neutron_net(neutron):
+    try:
+        neutron.format = 'json'
+        logger.debug('Creating Neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
+        json_body = {'network': {'name': NEUTRON_PRIVATE_NET_NAME,
+                    'admin_state_up': True}}
+        network_id = functest_utils.create_neutron_net(neutron, json_body)
+        #netw = neutron.create_network(body=json_body)
+        #net_dict = netw['network']
+        #network_id = net_dict['id']
+        logger.debug("Network '%s' created successfully" % network_id)
+
+        logger.debug('Creating Subnet....')
+        json_body = {'subnets': [{'name': NEUTRON_PRIVATE_SUBNET_NAME, 'cidr': NEUTRON_PRIVATE_SUBNET_CIDR,
+                           'ip_version': 4, 'network_id': network_id}]}
+
+        subnet_id = functest_utils.create_neutron_net(neutron, json_body)
+        #subnet = neutron.create_subnet(body=json_body)
+        #subnet_id = subnet['subnets'][0]['id']
+        logger.debug("Subnet '%s' created successfully" % subnet_id)
+
+        logger.debug('Creating Router...')
+        json_body = {'router': {'name': ROUTER_NAME, 'admin_state_up': True}}
+        router_id = functest_utils.create_neutron_router(neutron, json_body)
+        #router = neutron.create_router(json_body)
+        #router_id = router['router']['id']
+        logger.debug("Router '%s' created successfully" % router_id)
+
+        logger.debug('Adding router to subnet...')
+        json_body = {"subnet_id": subnet_id}
+        neutron.add_interface_router(router=router_id, body=json_body)
+        logger.debug("Interface added successfully.")
+
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+    logger.info("Private Neutron network created successfully.")
+    return True
 
 
 def get_server(creds, servername):
@@ -134,7 +183,12 @@ def main():
         logger.info("Available images are: ")
         pMsg(nova.images.list())
         exit(-1)
-
+        
+        
+    if not create_private_neutron_net():
+        logger.error("There has been a problem to create the neutron network")
+        exit(-1)
+    
     # Check if the given neutron network exists
     try:
         network = nova.networks.find(label = NEUTRON_PRIVATE_NET_NAME)
