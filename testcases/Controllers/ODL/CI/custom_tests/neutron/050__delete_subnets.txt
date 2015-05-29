@@ -5,9 +5,9 @@ Suite Teardown    Delete All Sessions
 Library           SSHLibrary
 Library           Collections
 Library           OperatingSystem
-Library           ../integration/test/csit/libraries/RequestsLibrary.py
-Library           ../integration/test/csit/libraries/Common.py
-Variables         ../integration/test/csit/variables/Variables.py
+Library           ../../../libraries/RequestsLibrary.py
+Library           ../../../libraries/Common.py
+Variables         ../../../variables/Variables.py
 
 *** Variables ***
 ${ODLREST}       /controller/nb/v2/neutron/subnets
