@@ -13,7 +13,7 @@ from git import Repo
 
 from neutronclient.v2_0 import client
 
-actions = ['start', 'check', 'clean']
+actions = ['start', 'check', 'clean'] 
 parser = argparse.ArgumentParser()
 parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("action", help="Possible actions are: '{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
