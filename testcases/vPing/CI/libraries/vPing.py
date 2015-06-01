@@ -53,6 +53,8 @@ VM_DELETE_TIMEOUT = 100
 PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
 NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
+IP_1 = functest_yaml.get("vping").get("ip_1")
+IP_2 = functest_yaml.get("vping").get("ip_2")
 GLANCE_IMAGE_NAME = functest_yaml.get("general").get("openstack").get("image_name")
 FLAVOR = functest_yaml.get("vping").get("vm_flavor")
 
@@ -135,23 +137,26 @@ def create_private_neutron_net(neutron):
 
 def cleanup(nova,neutron,network_dic):
     # delete both VMs
-    logger.info("Deleting Instances...")
-    logger.debug("Deleting '%s'..." %NAME_VM_1)
-    vm1 = nova.servers.find(name=NAME_VM_1)
-    nova.servers.delete(vm1)
-    #wait until VMs are deleted
-    if not waitVmDeleted(nova,vm1):
-        logger.error("Instance '%s' with cannot be deleted. Status is '%s'" % (NAME_VM_1,functest_utils.get_instance_status(nova_client,vm1)))
-    else:
-        logger.debug("Instance %s terminated." % NAME_VM_1)
+    logger.info("Cleaning up...")
+    vm1 = functest_utils.get_instance_by_name(nova, NAME_VM_1)
+    if vm1:
+        logger.debug("Deleting '%s'..." %NAME_VM_1)
+        nova.servers.delete(vm1)
+        #wait until VMs are deleted
+        if not waitVmDeleted(nova,vm1):
+            logger.error("Instance '%s' with cannot be deleted. Status is '%s'" % (NAME_VM_1,functest_utils.get_instance_status(nova_client,vm1)))
+        else:
+            logger.debug("Instance %s terminated." % NAME_VM_1)
 
-    logger.debug("Deleting '%s'..." %NAME_VM_2)
-    vm2 = nova.servers.find(name=NAME_VM_2)
-    nova.servers.delete(vm2)
-    if not waitVmDeleted(nova,vm2):
-        logger.error("Instance '%s' with cannot be deleted. Status is '%s'" % (NAME_VM_2,functest_utils.get_instance_status(nova_client,vm2)))
-    else:
-        logger.debug("Instance %s terminated." % NAME_VM_2)
+    vm2 = functest_utils.get_instance_by_name(nova, NAME_VM_2)
+    if vm2:
+        logger.debug("Deleting '%s'..." %NAME_VM_2)
+        vm2 = nova.servers.find(name=NAME_VM_2)
+        nova.servers.delete(vm2)
+        if not waitVmDeleted(nova,vm2):
+            logger.error("Instance '%s' with cannot be deleted. Status is '%s'" % (NAME_VM_2,functest_utils.get_instance_status(nova_client,vm2)))
+        else:
+            logger.debug("Instance %s terminated." % NAME_VM_2)
 
     # delete created network
     logger.info("Deleting network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
@@ -229,16 +234,20 @@ def main():
     # tune (e.g. flavor, images, network) to your specific openstack configuration here
 
     # create VM
-    logger.info("Creating instance '%s'..." % NAME_VM_1)
+    logger.debug("Creating port 'vping-port-1' with IP %s..." %IP_1)
+    port_id=functest_utils.create_neutron_port(neutron_client, "vping-port-1", network_id, IP_1)
+    if not port_id:
+        logger.error("Unable to create port.")
+        exit(-1)
+    logger.info("Creating instance '%s' with IP %s..." %(NAME_VM_1,IP_1))
     logger.debug("Configuration:\n name=%s \n flavor=%s \n image=%s \n network=%s \n" %(NAME_VM_1,flavor,image,network_id))
     vm1 = nova_client.servers.create(
         name               = NAME_VM_1,
         flavor             = flavor,
         image              = image,
-        nics               = [{"net-id": network_id}]
+        #nics               = [{"net-id": network_id, "v4-fixed-ip": IP_1}]
+        nics               = [{"port-id": port_id}]
     )
-
-
     #wait until VM status is active
     if not waitVmActive(nova_client,vm1):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (NAME_VM_1,functest_utils.get_instance_status(nova_client,vm1)))
@@ -248,11 +257,12 @@ def main():
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
 
     #retrieve IP of first VM
-    logger.debug("Fetching IP...")
-    server = functest_utils.get_instance_by_name(nova_client, NAME_VM_1)
+    #logger.debug("Fetching IP...")
+    #server = functest_utils.get_instance_by_name(nova_client, NAME_VM_1)
     # theoretically there is only one IP address so we take the first element of the table
     # Dangerous! To be improved!
-    test_ip = server.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
+    #test_ip = server.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
+    test_ip=IP_1
     logger.debug("Instance '%s' got %s" %(NAME_VM_1,test_ip))
 
     # boot VM 2
@@ -260,16 +270,22 @@ def main():
     # the long chain corresponds to the ping procedure converted with base 64
     # tune (e.g. flavor, images, network) to your specific openstack configuration here
     u = "#!/bin/sh\n\nwhile true; do\n ping -c 1 %s 2>&1 >/dev/null\n RES=$?\n if [ \"Z$RES\" = \"Z0\" ] ; then\n  echo 'vPing OK'\n break\n else\n  echo 'vPing KO'\n fi\n sleep 1\ndone\n"%test_ip
-
     # create VM
-    logger.info("Creating instance '%s'..." % NAME_VM_2)
+
+    logger.debug("Creating port 'vping-port-2' with IP %s..." %IP_2)
+    port_id=functest_utils.create_neutron_port(neutron_client, "vping-port-2", network_id, IP_2)
+    if not port_id:
+        logger.error("Unable to create port.")
+        exit(-1)
+    logger.info("Creating instance '%s' with IP %s..." %(NAME_VM_2,IP_2))
     logger.debug("Configuration:\n name=%s \n flavor=%s \n image=%s \n network=%s \n userdata= \n%s" %(NAME_VM_2,flavor,image,network_id,u))
     vm2 = nova_client.servers.create(
         name               = NAME_VM_2,
         flavor             = flavor,
         image              = image,
-        nics               = [{"net-id": network_id}],
-        userdata           = u,
+        #nics               = [{"net-id": network_id, "v4-fixed-ip": IP_2}],
+        nics               = [{"port-id": port_id}],
+        userdata           = u
     )
 
     if not waitVmActive(nova_client,vm2):

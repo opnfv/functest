@@ -163,6 +163,20 @@ def remove_interface_router(neutron_client, router_id, subnet_id):
         print "Error:", sys.exc_info()[0]
         return False
 
+def create_neutron_port(neutron_client, name, network_id, ip):
+    json_body = {'port': {
+    'admin_state_up': True,
+    'name': name,
+    'network_id': network_id,
+    'fixed_ips': [{"ip_address": ip}]
+    }}
+    try:
+        port = neutron_client.create_port(body=json_body)
+        return port['port']['id']
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
 
 def get_network_id(neutron_client, network_name):
     networks = neutron_client.list_networks()['networks']
