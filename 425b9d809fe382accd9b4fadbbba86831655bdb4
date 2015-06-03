@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "3a045101_1a6971f9",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 334
+      },
+      "writtenOn": "2015-06-03T14:58:42Z",
+      "side": 1,
+      "message": "Rephrase for better English:\n\"For release 1, the tools are automatically installed, but the tests are not fully automated due to the requirement that sourcing of OpenStack credentials is required on at least one machine where tests are launched. More details will be provided in the configuration section.\"",
+      "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a045101_1ae3b1da",
         "filename": "docs/functest.rst",
         "patchSetId": 2
@@ -115,6 +132,23 @@
       "writtenOn": "2015-06-03T14:39:37Z",
       "side": 1,
       "message": "2 more parameters (due to fixed ips for the VMs)\n    ip_1: IP of the first VM (matching the private subnet cidr)\n    ip_2: IP of the second VM",
+      "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_5aa7f94f",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 334
+      },
+      "writtenOn": "2015-06-03T14:58:42Z",
+      "side": 1,
+      "message": "Awkward sentence.  Rephrase to be more proper:\n\"As long as the credentials of the System Under Test do not change, there is no reason to modify the testing environment.\"",
       "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
