@@ -1,3 +1,5 @@
+.. contents::
+
 ===========================
 OPNFV functional test guide
 ===========================
@@ -30,6 +32,8 @@ ETSI NFV defined 9 use cases (ref ETSI_):
  * Virtualization of the Home environment
 
 .. _`Openstack Telco Working Group`: https://wiki.openstack.org/wiki/TelcoWorkingGroup
+.. _`functest guide`: https://wiki.opnfv.org/_media/opnfv-_functest.pdf
+
 
 Most of the use cases are also discussed in upstream projects (e.g. `Openstack Telco Working Group`_ )
 
@@ -44,10 +48,10 @@ vPing, that is already present in Tempest suite, has been developped to provided
 
 .. _`Continuous Integration`: https://build.opnfv.org/ci/view/functest/
 
-vIMS, vEPC, vPE, vHGW, vCDN use cases are not considered for first release.
+vIMS, vEPC, vPE, vHGW, vCDN, vWhatever use cases are not considered for first release.
 It does not mean that such use cases cannot be tested on OPNFV Arno.
-It means that these testcases have not been integrated in the `Continuous Integration`_ and no specific work (integration or developpment) have been done for R1.
-We may expect that new VNFs and new scenarios will be created and integrated in the future releases.
+It means that these testcases have not been integrated in the `Continuous Integration`_ and no specific work (integration or developpment) have been done for the first release.
+We may expect that new VNFs and new scenarios will be created and integrated in the future releases. See `functest guide`_ for details.
 
 .. _prereqs:
 
@@ -63,7 +67,7 @@ In the rest of the document the OPNFV solution would be considered as the System
 
 The installation and configuration of the tools needed to perform the tests will be described in the following sections.
 
-For release 1, the tools are not fully automatically installed, more details will be provided in the configuration section.
+For release 1, the tools are almost fully automatically installed but the tests are not fully automated as a sourcing of OpenStack credentials is required at least once on the machine where tests are launched. More details will be provided in the configuration section.
 
 .. _pharos: https://wiki.opnfv.org/pharos
 
@@ -122,73 +126,6 @@ The high level architecture can be described as follow::
 Description of the test cases
 -----------------------------
 
-Rally bench test suite
-======================
-
-.. _Rally: https://wiki.openstack.org/wiki/Rally
-
-The OPNFV scenarios are based on the collection of Rally_ scenarios:
- * authenticate
- * cinder
- * nova
- * vm
- * glance
- * keystone
- * neutron
- * quotas
-
-The goal of this test suite is to test the different modules of OpenStack and get significant figures that could help us to define telco Cloud KPI.
-
-This test suite provides performance information on VIM (OpenStack) part.
-
-No SLA were defined for release 1, we just consider whether the tests are passed or failed.
-
-In the future SLA shall be considered (e.g. accepting booting time for a given image with a given flavour).
-
-Through its integration in Continuous Integration, the evolution of the performance of these tests shall also be considered.
-
-Tempest
-=======
-
-.. _Tempest: http://docs.openstack.org/developer/tempest/overview.html
-
-Tempest_ is the OpenStack Integration Test Suite. We use Rally to run Tempest suite.
-
-The goal of this test is to check the OpenStack installation (sanity checks).
-
-
-OpenDaylight
-============
-
-The ODL suite consists in a set of basic tests inherited from ODL project. The list of tests can be described as follow:
- * Restconf.basic: Get the controller modules via Restconf
- * Neutron.Networks
-  * Check OpenStack Networks :: Checking OpenStack Neutron for known networks
-  * Check OpenDaylight Networks :: Checking OpenDaylight Neutron API
-  * Create Network :: Create new network in OpenStack
-  * Check Network :: Check Network created in OpenDaylight
-  * Neutron.Networks :: Checking Network created in OpenStack are pushed
- * Neutron.Subnets
-  * Check OpenStack Subnets :: Checking OpenStack Neutron for known Subnets
-  * Check OpenDaylight subnets :: Checking OpenDaylight Neutron API
-  * Create New subnet :: Create new subnet in OpenStack
-  * Check New subnet :: Check new subnet created in OpenDaylight
-  * Neutron.Subnets :: Checking Subnets created in OpenStack are pushed
- * Neutron.Ports
-  * Check OpenStack ports :: Checking OpenStack Neutron for known ports
-  * Check OpenDaylight ports :: Checking OpenDaylight Neutron API
-  * Create New Port :: Create new port in OpenStack
-  * Check New Port :: Check new subnet created in OpenDaylight
-  * Neutron.Ports :: Checking Port created in OpenStack are pushed
- * Delete Ports
-  * Delete previously created subnet in OpenStack
-  * Check subnet deleted in OpenDaylight
-  * Check subnet deleted in OpenStack
- * Delete network
-  * Delete previously created network in OpenStack
-  * Check network deleted in OpenDaylight
-  * Check network deleted in OpenStack
-
 vPing
 =====
 
@@ -220,6 +157,95 @@ The goal of this test can be described as follow::
 
 This example, using OpenStack Python clients can be considered as an "Hello World" example and may be modified for future use.
 
+OpenDaylight
+============
+
+The ODL suite consists in a set of basic tests inherited from ODL project. The suite tests the creation and deletion of network, subnet, port though OpenDaylight and Neutron.
+
+The list of tests can be described as follow:
+ * Restconf.basic: Get the controller modules via Restconf
+ * Neutron.Networks
+
+   * Check OpenStack Networks :: Checking OpenStack Neutron for known networks
+   * Check OpenDaylight Networks :: Checking OpenDaylight Neutron API
+   * Create Network :: Create new network in OpenStack
+   * Check Network :: Check Network created in OpenDaylight
+   * Neutron.Networks :: Checking Network created in OpenStack are pushed
+
+ * Neutron.Subnets
+
+   * Check OpenStack Subnets :: Checking OpenStack Neutron for known Subnets
+   * Check OpenDaylight subnets :: Checking OpenDaylight Neutron API
+   * Create New subnet :: Create new subnet in OpenStack
+   * Check New subnet :: Check new subnet created in OpenDaylight
+   * Neutron.Subnets :: Checking Subnets created in OpenStack are pushed
+
+ * Neutron.Ports
+
+   * Check OpenStack ports :: Checking OpenStack Neutron for known ports
+   * Check OpenDaylight ports :: Checking OpenDaylight Neutron API
+   * Create New Port :: Create new port in OpenStack
+   * Check New Port :: Check new subnet created in OpenDaylight
+   * Neutron.Ports :: Checking Port created in OpenStack are pushed
+
+ * Delete Ports
+
+   * Delete previously created subnet in OpenStack
+   * Check subnet deleted in OpenDaylight
+   * Check subnet deleted in OpenStack
+
+ * Delete network
+
+   * Delete previously created network in OpenStack
+   * Check network deleted in OpenDaylight
+   * Check network deleted in OpenStack
+
+ *
+
+
+Rally bench test suite
+======================
+
+.. _Rally: https://wiki.openstack.org/wiki/Rally
+
+Rally bench test suite consist in a suite of light performance tests on some of the OpenStack components.
+
+The goal of this test suite is to test the different modules of OpenStack and get significant figures that could help us to define telco Cloud KPI.
+
+The OPNFV scenarios are based on the collection of the existing Rally_ scenarios:
+ * authenticate
+ * cinder
+ * nova
+ * requests
+ * glance
+ * keystone
+ * neutron
+ * quotas
+
+
+This test suite provides performance information on VIM (OpenStack) part.
+
+No SLA were defined for release 1, we just consider whether the tests are passed or failed.
+
+In the future SLA shall be defined (e.g. accepting booting time for a given image with a given flavour).
+
+Through its integration in Continuous Integration, the evolution of the performance of these tests shall also be considered.
+
+Tempest
+=======
+
+.. _Tempest: http://docs.openstack.org/developer/tempest/overview.html
+
+Tempest_ is the OpenStack Integration Test Suite. We use Rally to run Tempest suite.
+
+The Tempest.conf configuration file is automatically generated by Rally then the Tempest suite is run, each test duration is measured.
+
+We considered the smoke test suite for Arno.
+
+The goal of this test is to  to check the basic OpenStack functionality on a fresh installation.
+
+
+
 .. _tooling_installation:
 
 ----------------------
@@ -230,7 +256,7 @@ Tooling installation
  * Rally
  * Robot
 
-Rally is used for benchmarking and running Tempest. Robot is used for OpenDaylight.
+Rally is used for benchmarking and running Tempest. Robot is used for running OpenDaylight test suites.
 
 A script (config_test.py) has been created to simplify as much as possible the installation of the different suites of tests.
 
@@ -254,54 +280,99 @@ Actions
 
 This script will:
  * Install Rally environment
+ * Install Robot environment
  * Install Tempest
  * Retrieve test scenarios
- * Setup ODL environment
- * Create temporary neutron private network
- * Create router to connect both
+ * Create temporary neutron private network (if needed)
  * Create Glance images
 
 
-Useful links:
-
-.. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
-
-.. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
-
-.. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
-
-.. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.yaml
-
-
 When integrated in CI, the only prerequisite consists in retrieving the OpenStack credentials (rc file).
-This file shall be saved as $HOME/functest/opnfv-openrc.shn on the jumphost server.
-In this case, the script will clone the functest repository, execute environment checks and install tools.
+This file shall be saved on the jumphost. It must be sourced by the user (who shall have sudo rights) executing the tests. 
 
+For the Continuous Integration we store this file under $HOME/functest/opnfv-openrc.sh on the jumphost server so CI can automatically execute the suite of tests
 
-The procedure to set up functional testing environment can be described as follow::
+The procedure to set up functional testing environment can be described as follow:
 
     Log on the Jumphost server
-    Be sure you are no root
+    Be sure you are no root then execute::
+ 
+     [user@jumphost]$ mkdir <Your_functest_directory>
+     [user@jumphost]$ cd <Your_functest_directory>
+     [user@jumphost]$ git clone https://git.opnfv.org/functest
+     [user@jumphost]$ cd testcases/
+
     Modify and adapt needed parameters in the config_functest.yaml. Follow the instructions below.
-    Retrieve OpenStack source file (configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)
-    $ source Your_OpenRC_file
-    $ python <functest_repo_directory>/config_functest.py -d <Your_functest_directory> start
+    Retrieve OpenStack source file (configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)::
+ 
+     [user@jumphost]$ source Your_OpenRC_file
+     [user@jumphost]$ python <functest_repo_directory>/config_functest.py -d <Your_functest_directory> start
 
-At the end of the executing, a new directory will be created <functest_repo_directory> with the following structure::
+At the end of the git clone, the tree of <functest_repo_directory> will have the following structure::
 
- <functest_repo_directory>/ODL
- <functest_repo_directory>/Rally_repo
- <functest_repo_directory>/Rally_test
- <functest_repo_directory>/vPing
- <functest_repo_directory>/config_functest.yaml
- <functest_repo_directory>/functest-img.img
+ ├── docs
+ │   ├── functest.rst
+ │   └── images
+ │       └── Ims_overview.png
+ ├── INFO
+ ├── LICENSE
+ └── testcases
+     ├── config_functest.py
+     ├── config_functest.yaml
+     ├── Controllers
+     │   └── ODL
+     │       ├── CI
+     │       │   ├── create_venv.sh
+     │       │   ├── custom_tests
+     │       │   │   └── neutron
+     │       │   ├── integration
+     │       │   │   ├── distributions
+     │       │   │   ├── features
+     │       │   │   ├── feature-selector
+     │       │   │   ├── packaging
+     │       │   │   ├── pom.xml
+     │       │   │   ├── test
+     │       │   │   └── vm
+     │       │   ├── logs
+     │       │   ├── requirements.pip
+     │       │   ├── start_tests.sh
+     │       │   └── test_list.txt
+     │       └── ODL.md
+     ├── functest_utils.py
+     ├── VIM
+     │   └── OpenStack
+     │       ├── CI
+     │       │   ├── libraries
+     │       │   │   └── run_rally.py
+     │       │   └── suites
+     │       │       ├── opnfv-authenticate.json
+     │       │       ├── opnfv-cinder.json
+     │       │       ├── opnfv-glance.json
+     │       │       ├── opnfv-heat.json
+     │       │       ├── opnfv-keystone.json
+     │       │       ├── opnfv-neutron.json
+     │       │       ├── opnfv-nova.json
+     │       │       ├── opnfv-quotas.json
+     │       │       ├── opnfv-requests.json
+     │       │       ├── opnfv-smoke-green.json
+     │       │       ├── opnfv-smoke.json
+     │       │       ├── opnfv-tempest.json
+     │       │       └── opnfv-vm.json
+     │       └── OpenStack.md
+     └── vPing
+         └── CI
+             └── libraries
+                 └── vPing.py
 
-NOTE: the Rally environment will be installed under ~/.rally/ the default Tempest configuration (automatically generated by Rally based on OpenStack credentials) can be found une .rally/tempest/for-deployment-<deployment_id>/tempest.conf
+
+NOTE: the Rally environment will be installed under ~/.rally/ the default Tempest configuration (automatically generated by Rally based on OpenStack credentials) can be found under .rally/tempest/for-deployment-<deployment_id>/tempest.conf
 
 
-HOWTO configure config_functest.yaml:
+Configuration of config_functest.yaml
+=====================================
 
-Do not change the directories structure
+Do not change the directories structure:
+
     * image_name:               name of the image that will be created in Glance
     * image_url:                URL of the image to be downloaded
     * image_disk_format:        glance image disk format (raw, qcow2, ...)
@@ -317,9 +388,12 @@ Do not change the directories structure
     * vm_flavor:    name of the flavor used to create the VMs
     * vm_name_1:    name of the first VM
     * vm_name_2:    name of the second VM
+    * ip_1:    IP of the first VM (matching the private subnet cidr)
+    * ip_2:    IP of the second VM
 
 
-Please note that you need to install this environment only once. Until the credentials of the System Under Test are not changing, the testing environment shall be fine.
+Please note that you need to install this environment only once.
+Until the credentials of the System Under Test are not changing, the testing environment shall be fine.
 
 If you need more details on Rally installation, see `Rally installation procedure`_.
 
@@ -375,14 +449,17 @@ Manual testing
 vPing
 =====
 
-    $ python <functest_repo_directory>/vPing/vPing.py -d <Your_functest_directory>
+You can run the vPing testcase by typing::
+
+    [user@jumphost]$ python <functest_repo_directory>/vPing/vPing.py -d <Your_functest_directory>
 
 
 OpenDaylight
 ============
 
-You can run ODL suite as follow:
-    $ python <functest_repo_directory>testcases/Controllers/ODL/CI/start_tests.sh
+You can run ODL suite as follow::
+
+    [user@jumphost]$ python <functest_repo_directory>testcases/Controllers/ODL/CI/start_tests.sh
 
 ODL wiki page describes system preparation and running tests. See `Integration Group CSIT`_.
 
@@ -392,28 +469,26 @@ ODL wiki page describes system preparation and running tests. See `Integration G
 Rally bench suite
 =================
 
-Several scenarios are available (mainly based on native Rally scenarios):
- * glance
- * nova
+You can run the script as follow::
+
+    [user@jumphost]$ python <functest_repo_directory>/testcases/VIM/OpenStack/CI/libraries/run_rally.py <functest_repo_directory> <module_to_be_tested>
+
+with <module_to_be_tested> set to:
  * authenticate
+ * cinder
+ * nova
+ * requests
+ * glance
  * keystone
  * neutron
  * quotas
- * request
- * tempest
- * smoke
- * all (every module except tempest and smoke)
-
-You can run the script as follow::
-
-    # python <functest_repo_directory>/testcases/VIM/OpenStack/CI/libraries/run_rally.py <functest_repo_directory> keystone
+ * all
 
 The script will:
- * get the json scenario (if not already available) and put it into the scenario folder
- * run rally
+ * run rally with the selected scenario
  * generate the html result page into <result_folder>/<timestamp>/opnfv-[module name].html
  * generate the json result page into <result_folder>/<timestamp>/opnfv-[module name].json
- * generate OK or KO
+ * generate OK or KO per test based on json result file
 
 Tempest suite
 =============
@@ -421,9 +496,9 @@ Tempest suite
 It is possible to use Rally to perform Tempest tests (ref: `tempest installation guide using Rally`_)
 You just need to run::
 
-     # rally verify start
+     # rally verify start smoke
 
-The different modes available are smoke, baremetal, compute, data_processing, identity, image, network, object_storage, orchestration, telemetry, and volume. By default if you do not precise anything then smoke tests be selected by default. For Arno, it was decided to focus on smoke tests.
+The different modes available are smoke, baremetal, compute, data_processing, identity, image, network, object_storage, orchestration, telemetry, and volume. For Arno, it was decided to focus on smoke tests.
 
 .. _`tempest installation guide using Rally`: https://www.mirantis.com/blog/rally-openstack-tempest-testing-made-simpler/
 
@@ -436,18 +511,115 @@ Test results
 
 vPing
 =====
-vPing results are automatically displayed in the console.
+vPing result is displayed in the console::
+
+ Functest: run vPing
+ 2015-06-02 21:24:55,065 - vPing - INFO - Glance image found 'functest-img'
+ 2015-06-02 21:24:55,066 - vPing - INFO - Creating neutron network functest-net...
+ 2015-06-02 21:24:57,672 - vPing - INFO - Flavor found 'm1.small'
+ 2015-06-02 21:24:58,670 - vPing - INFO - Creating instance 'opnfv-vping-1' with IP 192.168.120.30...
+ 2015-06-02 21:25:32,098 - vPing - INFO - Instance 'opnfv-vping-1' is ACTIVE.
+ 2015-06-02 21:25:32,540 - vPing - INFO - Creating instance 'opnfv-vping-2' with IP 192.168.120.40...
+ 2015-06-02 21:25:38,614 - vPing - INFO - Instance 'opnfv-vping-2' is ACTIVE.
+ 2015-06-02 21:25:38,614 - vPing - INFO - Waiting for ping...
+ 2015-06-02 21:26:42,385 - vPing - INFO - vPing detected!
+ 2015-06-02 21:26:42,385 - vPing - INFO - Cleaning up...
+ 2015-06-02 21:26:54,127 - vPing - INFO - Deleting network 'functest-net'...
+ 2015-06-02 21:26:55,349 - vPing - INFO - vPing OK
 
 
 OpenDaylight
 ============
-ODL tests are executed in the console, and 3 result files are generated
+.. _`functest wiki (ODL section)`: https://wiki.opnfv.org/r1_odl_suite
 
+
+The results of ODL tests can be seen in the console:: 
+
+ ==============================================================================
+ Basic
+ ==============================================================================
+ Basic.010 Restconf OK :: Test suite to verify Restconf is OK
+ ==============================================================================
+ Get Controller Modules :: Get the controller modules via Restconf     | PASS |
+ ------------------------------------------------------------------------------
+ Basic.010 Restconf OK :: Test suite to verify Restconf is OK          | PASS |
+ 1 critical test, 1 passed, 0 failed
+ 1 test total, 1 passed, 0 failed
+ ==============================================================================
+ Basic                                                                 | PASS |
+ 1 critical test, 1 passed, 0 failed
+ 1 test total, 1 passed, 0 failed
+ ==============================================================================
+ Output:  /home/jenkins-ci/workspace/functest-opnfv-jump-2/output.xml
+ Log:     /home/jenkins-ci/workspace/functest-opnfv-jump-2/log.html
+ Report:  /home/jenkins-ci/workspace/functest-opnfv-jump-2/report.html
+
+ ..............................................................................
+
+ Neutron.Delete Networks :: Checking Network deleted in OpenStack a... | FAIL |
+ 2 critical tests, 1 passed, 1 failed
+ 2 tests total, 1 passed, 1 failed
+ ==============================================================================
+ Neutron :: Test suite for Neutron Plugin                              | FAIL |
+ 18 critical tests, 15 passed, 3 failed
+ 18 tests total, 15 passed, 3 failed
+ ==============================================================================
+ Output:  /home/jenkins-ci/workspace/functest-opnfv-jump-2/output.xml
+ Log:     /home/jenkins-ci/workspace/functest-opnfv-jump-2/log.html
+ Report:  /home/jenkins-ci/workspace/functest-opnfv-jump-2/report.html
+
+3 result files are generated:
+ * output.xml
+ * log.html
+ * report.html
+
+ ODL result page
+
+   :scale: 50 %
+   :align: center
+   :alt: ODL suite result page
+
+   
+Known issues
+------------
+
+Tests are expected to Fail now:
+ * Check port deleted in OpenDaylight
+ * Check subnet deleted in OpenDaylight
+ * Check Network deleted in OpenDaylight
+
+These are because of ODL bug. Network, subnet and port is not deleted from ODL, when deleted from Opestack. 
+These tests send request to ODL to get network/subnet/ports with ID which was deleted from Openstack. This Network/subnet/port should not be present in ODL, however it has not been properly cleaned and is still seen as present (see `ODL bug lists`_).
+
+
+More details on `functest wiki (ODL section)`_
 
 Rally bench suite
 =================
 
+.. _`functest wiki (Rally section)`: https://wiki.opnfv.org/r1_rally_bench
+
 Results are available in the result folder through a html page and a json file.
+
+It generates a result page per module and can be described as follow.
+
+.. figure:: ./images/functestRally2.png
+   :align: center
+   :alt: Example of Rally keystone test results
+
+
+.. figure:: ./images/functestRally1.png
+   :scale: 50 %
+   :align: center
+   :alt: Details on Glance test from Rally bench suite
+
+
+Known issues
+------------
+- some tests of Cinder suite may be failed due to time-out (timer could probably be extended in the configuration file)
+- some test of Nova & Neutron suite may fail due to network issues (previously created network not properly cleaned and/or quota exceeded because of created ressources that have not be properly cleaned) or ODL bugs (see `ODL bug lists`_).
+
+More details on `functest wiki (Rally section)`_.
 
 Tempest suite
 =============
@@ -492,6 +664,26 @@ Example of test result display::
     | ...                                                                                                                                                        |   ...     |  ...   |
 
 
+Known issues
+------------
+
+.. _`Rally patch`: https://review.openstack.org/#/c/187481/
+.. _`automatically generated tempest.conf`: https://github.com/openstack/rally/blob/master/rally/verification/tempest/config.py
+.. _`functest wiki (Tempest section)`: https://wiki.opnfv.org/r1_tempest
+.. _`ODL bug lists`: https://bugs.opendaylight.org/buglist.cgi?component=General&product=neutron&resolution=---
+
+Several tests are declared as failed. They can be divided in 3 main categories:
+ * Invalid credentials (10 errors)
+ * Multiple possible networks found, use a Network ID to be more specific.
+ * Network errors
+
+The "Invalid Credential" error is not an error. Adding "admin_domain_name=default" in the tempest.conf file generated by Rally will lead to successful tests. A `Rally patch`_ has been proposed to Rally community.
+
+The Multiple possible netwok error occurs several times and may have different origins. It indicates that the test needs a network context to be run properly. A change in the `automatically generated tempest.conf`_ file could allow to precise the network ID.
+
+The network errors are various and dealing with all the aspects of networking: create/update/delete network/subnet/port/router. Some may be due to (possible) bug in tempest when it tries to delete networks which should not be there for the following tests. Some may be caused by the ODL bugs, several bugs related to tempest are already reported in `ODL bug lists`_.
+
+The follow-up of these tests can be found on the `functest wiki (Tempest section)`_.
 
 .. _automatictest:
 
@@ -501,11 +693,10 @@ Testing Automation
 
 For Arno, the CI job performs the following actions:
  * clean and prepare functest environment
- * run Tempest
  * run vPing
- * run Rally Bench
  * run ODL tests
- * save results
+ * run Rally Bench
+ * run Tempest
  * clean functest environment
 
 Connection of your platform
@@ -536,3 +727,7 @@ IRC support chan: #opnfv-testperf
 
 .. _opnfvmain: http://www.opnfv.org
 .. _opnfvfunctest: https://wiki.opnfv.org/opnfv_functional_testing
+.. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
+.. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
+.. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
+.. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.yaml
