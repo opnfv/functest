@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_551a2a6f",
+        "filename": "docs/functest.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 334
+      },
+      "writtenOn": "2015-06-03T15:28:53Z",
+      "side": 1,
+      "message": "Please rephrase and include the bug ID:\n\"These failures to delete objects in OpenDaylight (when removed via OpenStack Neutron) are due to the following bug: https://bugs.opendaylight.org/show_bug.cgi?id\u003d3052.\"",
+      "revId": "6b7c90f4738a2df05e919184c67a1c0c7b8292f3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
