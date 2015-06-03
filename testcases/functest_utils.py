@@ -240,6 +240,6 @@ def execute_command(cmd, logger=None):
     if p == 0 :
         return True
     else:
-        if loger:
+        if logger:
             logger.error("Error when executing command %s" %cmd)
         exit(-1)
