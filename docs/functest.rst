@@ -575,6 +575,7 @@ The results of ODL tests can be seen in the console::
 
  ODL result page
 
+.. figure:: ./images/functestODL.png
    :scale: 50 %
    :align: center
    :alt: ODL suite result page
@@ -583,7 +584,7 @@ The results of ODL tests can be seen in the console::
 Known issues
 ------------
 
-Tests are expected to fFail now:
+Tests are expected to fail now:
  * Check port deleted in OpenDaylight
  * Check subnet deleted in OpenDaylight
  * Check Network deleted in OpenDaylight
