@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_ba4b9d2a",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-06-03T11:35:35Z",
+      "side": 0,
+      "message": "same with this one as well; could be removed.",
+      "revId": "bd52c692b335429df0275eeac31188fe11ecf3a6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
