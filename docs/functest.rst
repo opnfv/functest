@@ -1,8 +1,12 @@
-.. contents::
-
 ===========================
 OPNFV functional test guide
 ===========================
+
+.. contents::
+
+------------
+Introduction
+------------
 
 Testing is a key challenge of OPNFV.
 It shall be possible to run functional tests on any OPNFV solution.
