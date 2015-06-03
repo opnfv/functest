@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_bad15dfd",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-06-03T14:39:37Z",
+      "side": 1,
+      "message": "Is this the right link? Shouldnt it be just the pdf? https://wiki.opnfv.org/_media/opnfv-_functest.pdf",
+      "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_daec29ca",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-06-03T14:39:37Z",
+      "side": 1,
+      "message": "Well, it is automated, but there is a small requirement that we haven\u0027t solved yet. It is to have the credentials file in $HOME/functest/opnfv-openrc.sh\nOtherwise the Jenkins job will fail.",
+      "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_1ae3b1da",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-06-03T14:39:37Z",
+      "side": 1,
+      "message": "benched or benchmarked? both sound strange to me though.",
+      "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_fae7e5e2",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-06-03T14:39:37Z",
+      "side": 1,
+      "message": "maybe a bit confusing. The word \"sanity check\" is used by a fuel installation to verify the system. Maybe something like \"... to check the basic OpenStack functionality on a fresh installation\" ? Or something like that",
+      "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_5a1db9bc",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-06-03T14:39:37Z",
+      "side": 1,
+      "message": "Actually you dont need to be sudo to source that file.",
+      "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_3a7aedf1",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-06-03T14:39:37Z",
+      "side": 1,
+      "message": "maybe :\nmkdir \u003cYour_functest_directory\u003e  or\ncd \u003cYour_functest_directory\u003e",
+      "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_5a7499fc",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-06-03T14:39:37Z",
+      "side": 1,
+      "message": "2 more parameters (due to fixed ips for the VMs)\n    ip_1: IP of the first VM (matching the private subnet cidr)\n    ip_2: IP of the second VM",
+      "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_1a661152",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-06-03T14:39:37Z",
+      "side": 1,
+      "message": "I dont know how important is this, but lots of whitespaces :)",
+      "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a045101_7ae515a7",
+        "filename": "docs/functest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-06-03T14:39:37Z",
+      "side": 1,
+      "message": "Due to (possible) bug in tempest when it tries to delete networks which should not be there for the following tests.",
+      "revId": "425b9d809fe382accd9b4fadbbba86831655bdb4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
