@@ -180,6 +180,14 @@ The ODL suite consists in a set of basic tests inherited from ODL project. The l
   * Create New Port :: Create new port in OpenStack
   * Check New Port :: Check new subnet created in OpenDaylight
   * Neutron.Ports :: Checking Port created in OpenStack are pushed
+ * Delete Ports
+  * Delete previously created subnet in OpenStack
+  * Check subnet deleted in OpenDaylight
+  * Check subnet deleted in OpenStack
+ * Delete network
+  * Delete previously created network in OpenStack
+  * Check network deleted in OpenDaylight
+  * Check network deleted in OpenStack
 
 vPing
 =====
@@ -277,7 +285,7 @@ The procedure to set up functional testing environment can be described as follo
     Modify and adapt needed parameters in the config_functest.yaml. Follow the instructions below.
     Retrieve OpenStack source file (configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)
     $ source Your_OpenRC_file
-    $ python config_functest.py -d <Your_functest_directory> start
+    $ python <functest_repo_directory>/config_functest.py -d <Your_functest_directory> start
 
 At the end of the executing, a new directory will be created <functest_repo_directory> with the following structure::
 
@@ -364,6 +372,23 @@ You can check if the configuration of rally is fine by typing 'rally deployment 
 Manual testing
 --------------
 
+vPing
+=====
+
+    $ python <functest_repo_directory>/vPing/vPing.py -d <Your_functest_directory>
+
+
+OpenDaylight
+============
+
+You can run ODL suite as follow:
+    $ python <functest_repo_directory>testcases/Controllers/ODL/CI/start_tests.sh
+
+ODL wiki page describes system preparation and running tests. See `Integration Group CSIT`_.
+
+.. _`Integration Group CSIT`: https://wiki.opendaylight.org/view/CrossProject:Integration_Group:CSIT
+
+
 Rally bench suite
 =================
 
@@ -381,7 +406,7 @@ Several scenarios are available (mainly based on native Rally scenarios):
 
 You can run the script as follow::
 
-    # python run_rally.py keystone
+    # python <functest_repo_directory>/testcases/VIM/OpenStack/CI/libraries/run_rally.py <functest_repo_directory> keystone
 
 The script will:
  * get the json scenario (if not already available) and put it into the scenario folder
@@ -402,18 +427,22 @@ The different modes available are smoke, baremetal, compute, data_processing, id
 
 .. _`tempest installation guide using Rally`: https://www.mirantis.com/blog/rally-openstack-tempest-testing-made-simpler/
 
-OpenDaylight
-============
-ODL wiki page describes system preparation and running tests. See `Integration Group CSIT`_.
-
-.. _`Integration Group CSIT`: https://wiki.opendaylight.org/view/CrossProject:Integration_Group:CSIT
-
 
 .. _manualtest:
 
 --------------
 Test results
 --------------
+
+vPing
+=====
+vPing results are automatically displayed in the console.
+
+
+OpenDaylight
+============
+ODL tests are executed in the console, and 3 result files are generated
+
 
 Rally bench suite
 =================
@@ -462,18 +491,6 @@ Example of test result display::
     | tempest.api.object_storage.test_account_quotas.AccountQuotasTest                                                                                           | 0.0       | SKIP   |
     | ...                                                                                                                                                        |   ...     |  ...   |
 
-OpenDaylight
-============
-
-Tests can be executed with script *start_test.sh* from directory *functest/testcases/Controllers/ODL/CI*. For usage example see::
-
-    # bash ~./.functest/ODL/start_test.sh -h
-
-vPing
-=====
-The test can be executed with command::
-
-    #python ~./.functest/vPing.py -d
 
 
 .. _automatictest:
