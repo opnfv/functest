@@ -12,11 +12,6 @@ import re, json, os, urllib2, argparse, logging, yaml
 
 
 
-""" get the date """
-cmd = os.popen("date '+%d%m%Y_%H%M'")
-test_date = cmd.read().rstrip()
-
-
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'vm', 'tempest', 'all', 'smoke']
 parser = argparse.ArgumentParser()
@@ -57,7 +52,7 @@ f.close()
 HOME = os.environ['HOME']+"/"
 REPO_PATH = args.repo_path
 SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_rally_scn")
-RESULTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res") + test_date + "/"
+RESULTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res") +  "/rally/"
 
 
 
