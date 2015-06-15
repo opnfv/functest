@@ -53,6 +53,7 @@ REPO_PATH = args.repo_path
 RALLY_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_rally")
 RALLY_REPO_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_repo")
 RALLY_INSTALLATION_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_inst")
+RALLY_RESULT_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res") 
 VPING_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_vping")
 ODL_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_odl")
 
@@ -96,6 +97,9 @@ def action_start():
             action_clean()
             exit(-1)
 
+        # Create result folder under functest if necessary
+        if not os.path.exists(RALLY_RESULT_DIR):
+            os.makedirs(RALLY_RESULT_DIR)
 
         logger.info("Downloading image...")
         if not functest_utils.download_url(IMAGE_URL, IMAGE_DIR):
@@ -205,6 +209,11 @@ def action_clean():
     for image_id in p.readlines():
         cmd = "glance image-delete " + image_id
         functest_utils.execute_command(cmd,logger)
+
+    if os.path.exists(RALLY_RESULT_DIR):
+        logger.debug("Removing Result directory")
+        shutil.rmtree(RALLY_RESULT_DIR,ignore_errors=True)
+
 
     logger.info("Functest environment clean!")
 
