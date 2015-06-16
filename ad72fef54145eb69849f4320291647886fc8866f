@@ -22,6 +22,29 @@
       "revId": "ad72fef54145eb69849f4320291647886fc8866f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a014df3_7e9bedc9",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 723
+      },
+      "writtenOn": "2015-06-16T13:45:05Z",
+      "side": 1,
+      "message": "trailing space..",
+      "range": {
+        "startLine": 587,
+        "startChar": 0,
+        "endLine": 587,
+        "endChar": 3
+      },
+      "revId": "ad72fef54145eb69849f4320291647886fc8866f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
