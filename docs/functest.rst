@@ -580,7 +580,7 @@ The results of ODL tests can be seen in the console::
  ODL result page
 
 .. figure:: ./images/functestODL.png
-   :scale: 50 %
+   :width: 170mm
    :align: center
    :alt: ODL suite result page
 
