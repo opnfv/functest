@@ -298,19 +298,19 @@ For the Continuous Integration we store this file under $HOME/functest/opnfv-ope
 
 The procedure to set up functional testing environment can be described as follow:
 
-    Log on the Jumphost server
-    Be sure you are no root then execute::
+Log on the Jumphost server. Be sure you are no root then execute::
  
-     [user@jumphost]$ mkdir <Your_functest_directory>
-     [user@jumphost]$ cd <Your_functest_directory>
-     [user@jumphost]$ git clone https://git.opnfv.org/functest
-     [user@jumphost]$ cd testcases/
+    [user@jumphost]$ mkdir <Your_functest_directory>
+    [user@jumphost]$ cd <Your_functest_directory>
+    [user@jumphost]$ git clone https://git.opnfv.org/functest
+    [user@jumphost]$ cd testcases/
 
-    Modify and adapt needed parameters in the config_functest.yaml. Follow the instructions below.
-    Retrieve OpenStack source file (configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)::
+Modify and adapt needed parameters in the config_functest.yaml. Follow the instructions below.
+
+Retrieve OpenStack source file (configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)::
  
-     [user@jumphost]$ source Your_OpenRC_file
-     [user@jumphost]$ python <functest_repo_directory>/config_functest.py -d <Your_functest_directory> start
+    [user@jumphost]$ source Your_OpenRC_file
+    [user@jumphost]$ python <functest_repo_directory>/config_functest.py -d <Your_functest_directory> start
 
 At the end of the git clone, the tree of <functest_repo_directory> will have the following structure::
 
