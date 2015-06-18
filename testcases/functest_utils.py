@@ -196,7 +196,7 @@ def check_neutron_net(neutron_client, net_name):
 
 
 
-def check_internet_connectivity(url='http://www.google.com/'):
+def check_internet_connectivity(url='http://www.opnfv.org/'):
     """
     Check if there is access to the internet
     """
