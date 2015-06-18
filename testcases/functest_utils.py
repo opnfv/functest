@@ -203,7 +203,7 @@ def check_internet_connectivity(url='http://www.opnfv.org/'):
     try:
         urllib2.urlopen(url, timeout=5)
         return True
-    except urllib.request.URLError:
+    except urllib.URLError:
         return False
 
 
