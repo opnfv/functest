@@ -231,7 +231,8 @@ def install_rally():
 
         logger.debug("Executing %s./install_rally.sh..." %RALLY_REPO_DIR)
         install_script = RALLY_REPO_DIR + "install_rally.sh"
-        functest_utils.execute_command(install_script,logger)
+        cmd = 'sudo ' + install_script
+        functest_utils.execute_command(cmd,logger)
 
         logger.debug("Creating Rally environment...")
         cmd = "rally deployment create --fromenv --name=opnfv-arno-rally"
