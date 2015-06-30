@@ -76,6 +76,20 @@ For release 1, the tools are automatically installed, but the tests are not full
 .. _pharos: https://wiki.opnfv.org/pharos
 
 It is recommended to install the different tools on the jump host server as defined in the pharos_ project.
+
+For functest, the following libraries are needed. You can install them either with yum install or apt-get install, depending on your operating system:
+ * libffi-dev  (libffi-devel.x86_64)
+ * libxml2-dev (libxml2-devel.x86_64)
+ * libxslt1-dev (libxslt-devel.x86_64)
+
+You will also need some Python modules:
+ * sudo pip install GitPython
+ * sudo pip install python-novaclient
+ * sudo pip install python-neutronclient
+ * sudo pip install python-glanceclient
+ * sudo pip install python-keystoneclient
+
+
 The high level architecture can be described as follow::
 
  CIMC/Lights+out management                  Admin     Private   Public   Storage
@@ -292,7 +306,7 @@ This script will:
 
 
 When integrated in CI, the only prerequisite consists in retrieving the OpenStack credentials (rc file).
-This file shall be saved on the jumphost. It must be sourced by the user (who shall have sudo rights) executing the tests. 
+This file shall be saved on the jumphost. It must be sourced by the user (who shall have sudo rights) executing the tests.
 
 For the Continuous Integration we store this file under $HOME/functest/opnfv-openrc.sh on the jumphost server so CI can automatically execute the suite of tests
 
@@ -538,7 +552,7 @@ OpenDaylight
 .. _`functest wiki (ODL section)`: https://wiki.opnfv.org/r1_odl_suite
 
 
-The results of ODL tests can be seen in the console:: 
+The results of ODL tests can be seen in the console::
 
  ==============================================================================
  Basic
