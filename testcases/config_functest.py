@@ -8,9 +8,11 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import re, json, os, urllib2, argparse, logging, shutil, subprocess, yaml, sys
+import re, json, os, urllib2, argparse, logging, shutil, subprocess, yaml, sys, getpass
 import functest_utils
 from git import Repo
+from os import stat
+from pwd import getpwuid
 
 actions = ['start', 'check', 'clean']
 parser = argparse.ArgumentParser()
@@ -71,6 +73,10 @@ def action_start():
     """
     Start the functest environment installation
     """
+    if not check_permissions():
+        logger.error("Bad Python cache directory ownership.")
+        exit(-1)
+
     if not functest_utils.check_internet_connectivity():
         logger.error("There is no Internet connectivity. Please check the network configuration.")
         exit(-1)
@@ -219,6 +225,18 @@ def action_clean():
 
 
 
+def check_permissions():
+    current_user = getpass.getuser()
+    cache_dir = "/home/"+current_user+"/.cache/pip"
+    logger.info("Checking permissions of '%s'..." %cache_dir)
+    logger.debug("Current user is '%s'" %current_user)
+    cache_user = getpwuid(stat(cache_dir).st_uid).pw_name
+    logger.debug("Cache directory owner is '%s'" %cache_user)
+    if cache_user != current_user:
+        logger.info("The owner of '%s' is '%s'. Please run 'sudo chown -R %s %s'." %(cache_dir, cache_user, current_user, cache_dir))
+        return False
+
+    return True
 
 
 def install_rally():
