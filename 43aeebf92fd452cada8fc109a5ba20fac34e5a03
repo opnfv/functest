@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa3479d7_f50b9229",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-07-07T10:34:47Z",
+      "side": 1,
+      "message": "Can you please improve commit message?\n\n- You don\u0027t need to write filename you modified as it is visible in the commit itself.\n- Present tense is much better.\n- Leave an empty line after the first line.",
+      "revId": "43aeebf92fd452cada8fc109a5ba20fac34e5a03",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa3479d7_15173653",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-07-07T10:34:47Z",
+      "side": 1,
+      "message": "You could perhaps use expanduser.\n\nhttp://stackoverflow.com/questions/4028904/how-to-get-the-home-directory-in-python",
+      "range": {
+        "startLine": 230,
+        "startChar": 4,
+        "endLine": 230,
+        "endChar": 38
+      },
+      "revId": "43aeebf92fd452cada8fc109a5ba20fac34e5a03",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
