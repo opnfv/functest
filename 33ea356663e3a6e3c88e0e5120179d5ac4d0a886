@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a288981_d79f764f",
+        "filename": "commons/traffic-profile-guidelines.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001
+      },
+      "writtenOn": "2015-08-24T07:20:54Z",
+      "side": 0,
+      "message": "Small comments, some lines are too long",
+      "revId": "33ea356663e3a6e3c88e0e5120179d5ac4d0a886",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
