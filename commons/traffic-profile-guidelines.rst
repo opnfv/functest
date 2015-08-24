@@ -10,9 +10,13 @@ OPNFV traffic profile guidelines
 Introduction
 ------------
 
-In order to have consistent profiles for testing, it has been suggested to define and store traffic profiles based on operator representative scenario. 
+In order to have consistent testing profiles, it has been suggested to define and store traffic profiles.
+These profiles shall be based on operator representative scenario. 
 
-These reference profiles may be used by any test projects, unitary, functional or performance tests. It is possible to adapt them to specific testcases. It is recommended to use them in order to avoid getting as many profiles as tests. It should be helpful to compare the results of test scenario.
+These reference profiles may be used by any test projects, unitary, functional or performance tests. 
+It is possible to adapt them to specific testcases. 
+It is recommended to use them in order to avoid getting as many profiles as tests. 
+It should be helpful to compare the results of test scenario.
 
 .. _howto:
 
@@ -21,7 +25,7 @@ How to use these profiles
 -------------------------
 
 The directory of the traffic profiles may be described as follow::
- 
+
  ├── commons
    ├── ims
    │   └── readme.rst
