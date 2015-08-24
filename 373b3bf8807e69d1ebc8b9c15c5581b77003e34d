@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a288981_d7c65649",
+        "filename": "commons/traffic-profile-guidelines.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-08-24T07:52:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a288981_179e1e57",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 1
+      },
+      "revId": "373b3bf8807e69d1ebc8b9c15c5581b77003e34d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a288981_f7a27299",
         "filename": "commons/traffic-profile-guidelines.rst",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2015-08-24T07:20:54Z",
       "side": 1,
       "message": "change to mobility?",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "373b3bf8807e69d1ebc8b9c15c5581b77003e34d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a288981_97c0ce2b",
+        "filename": "commons/traffic-profile-guidelines.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-08-24T07:52:31Z",
+      "side": 1,
+      "message": "I reused Bryan words. As far as I can see, both can be used but Mobile Traffic seems more used than Mobility traffic.",
+      "parentUuid": "7a288981_f7a27299",
       "range": {
         "startLine": 28,
         "startChar": 7,
