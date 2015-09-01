@@ -90,16 +90,16 @@ def action_start():
         logger.debug("Cleaning possible functest environment leftovers.")
         action_clean()
 
+        logger.info("Installing ODL environment...")
+        if not install_odl():
+            logger.error("There has been a problem while installing Robot.")
+            action_clean()
+            exit(-1)
+
         logger.info("Starting installation of functest environment")
         logger.info("Installing Rally...")
         if not install_rally():
             logger.error("There has been a problem while installing Rally.")
-            action_clean()
-            exit(-1)
-
-        logger.info("Installing ODL environment...")
-        if not install_odl():
-            logger.error("There has been a problem while installing Robot.")
             action_clean()
             exit(-1)
 
