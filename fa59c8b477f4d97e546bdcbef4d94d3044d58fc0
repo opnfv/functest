@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_4dd89953",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-03T09:11:14Z",
+      "side": 1,
+      "message": "remove whitespace :)",
+      "revId": "fa59c8b477f4d97e546bdcbef4d94d3044d58fc0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
