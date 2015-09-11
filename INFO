@@ -3,7 +3,7 @@ Project Creation Date: January 20, 2015
 Project Category: Integration & Testing
 Lifecycle State: Incubation
 Primary Contact: Morgan Richomme (morgan.richomme@orange.com)
-Project Lead: Trever Cooper (trevor.cooper@intel.com)
+Project Lead: Morgan Richomme (morgan.richomme@orange.comtrevor.cooper@inte)
 Jira Project Name: Base System Functionality Testing Project
 Jira Project Prefix: FUNCTEST
 Mailing list tag: [functest]
@@ -22,7 +22,6 @@ fuqiao@chinamobile.com
 chitti.nimmagadda@ericsson.com
 raja.karthik@hp.com
 vivekanandan.p@hp.com
-yuyijun@huawei.com
 koffirodrigue@gmail.com
 dk068x@att.com
 meimei@huawei.com
