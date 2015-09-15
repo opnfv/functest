@@ -31,10 +31,6 @@ def check_credentials():
        os.environ['OS_TENANT_NAME']
     except KeyError:
         return False
-    try:
-       os.environ['OS_REGION_NAME']
-    except KeyError:
-        return False
     return True
 
 
