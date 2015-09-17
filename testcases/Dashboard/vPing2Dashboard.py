@@ -18,65 +18,41 @@ import logging
 import argparse
 import pprint
 import json
-import requests
+import dashboard_utils
+import os
+import yaml
+from dashboard_utils import TestCriteria
 
 pp = pprint.PrettyPrinter(indent=4)
 
 parser = argparse.ArgumentParser()
+parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 args = parser.parse_args()
 
 """ logging configuration """
-logger = logging.getLogger('vPing2DashBoard')
+logger = logging.getLogger('config_functest')
 logger.setLevel(logging.DEBUG)
 
-ch = logging.StreamHandler()
-if args.debug:
-    ch.setLevel(logging.DEBUG)
-else:
-    ch.setLevel(logging.INFO)
+if not os.path.exists(args.repo_path):
+    logger.error("Repo directory not found '%s'" % args.repo_path)
+    exit(-1)
 
-formatter = logging.Formatter  # retrieve info from DB
-('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+with open(args.repo_path+"testcases/config_functest.yaml") as f:
+    functest_yaml = yaml.safe_load(f)
+f.close()
+
+""" global variables """
+# Directories
+HOME = os.environ['HOME']+"/"
+REPO_PATH = args.repo_path
+TEST_DB = functest_yaml.get("results").get("test_db_url")
 
 
-def get_data(test_project, testcase, pod_id, days, version, installerType):
-    # ugly hard coding => TODO use yaml config file
-    url = "http://213.77.62.197:80/results"
-
-    # use param to filter request to result DB
-    # if not precised => no filter
-    # filter criteria:
-    # - POD
-    # - versions
-    # - installers
-    # - testcase
-    # - test projects
-    # - timeframe (last 30 days, 365 days, since beginning of the project)
-    # e.g.
-    # - vPing tests since 2 months
-    # - Tempest tests on LF POD2 fuel based / Arno stable since the beginning
-    # - yardstick tests on any POD since 30 days
-    # - Qtip tests on dell-test1 POD
-    #
-    # params = {"pod_id":pod_id, "testcase":testcase}
-    # filter_date = days # data from now - days
-
-    # TODO complete params (installer type, testcase, version )
-    params = {"pod_id": 1}
-
-    # Build headers
-    headers = {'Content-Type': 'application/json'}
-
-    # Send Request to Test DB
-    myData = requests.get(url, data=json.dumps(params), headers=headers)
-    # Get result as a json object
-    myNewData = json.loads(myData.text)
+def format_data_for_dashboard(criteria):
 
     # Get results
-    myDataResults = myNewData['test_results']
+    myDataResults = dashboard_utils.get_results(TEST_DB, criteria)
 
     # Depending on the use case, json for dashboarding is customized
     # depending on the graph you want to show
@@ -84,6 +60,7 @@ def get_data(test_project, testcase, pod_id, days, version, installerType):
     test_data = [{'description': 'vPing results for Dashboard'}]
 
     # Graph 1: Duration = f(time)
+    # ***************************
     new_element = []
     for data in myDataResults:
         new_element.append({'x': data['creation_date'],
@@ -96,6 +73,7 @@ def get_data(test_project, testcase, pod_id, days, version, installerType):
                       'data_set': new_element})
 
     # Graph 2: bar
+    # ************
     nbTest = 0
     nbTestOk = 0
 
@@ -104,24 +82,44 @@ def get_data(test_project, testcase, pod_id, days, version, installerType):
         if data['details']['status'] == "OK":
             nbTestOk += 1
 
-    # Generate json file
-    # TODO complete with other criteria
-    fileName = "result-" + test_project + "-" + testcase + "-" + str(days) + "-" + str(pod_id) + "-status.json"
-
     test_data.append({'name': "vPing status",
                       'info': {"type": "bar"},
                       'data_set': [{'Nb tests': nbTest,
                                     'Nb Success': nbTestOk}]})
 
-    fileName = "result-" + test_project + "-" + testcase + ".json"
+    # Generate json file
+
+    fileName = criteria.format()
+    logger.debug("Generate json file:" + fileName)
 
     with open(fileName, "w") as outfile:
         json.dump(test_data, outfile, indent=4)
 
 
-def main():
-    get_data('functest', 'vPing', 1, 30, 'Arno master', 'fuel')
+def generateJson():
+    # TODO create the loop to provide all the json files
+    test_name = 'functest'
+    test_case = 'vPing'
+    # pod_id = 1
+    # test_version = 'Arno master'
+    # test_installer = 'fuel'
+    # test_retention = 30
 
+    pods = dashboard_utils.get_pods(TEST_DB)
+    versions = ['ArnoR1', 'ArnoSR1', 'all']
+    installers = ['fuel', 'foreman', 'all']
+    test_durations = [90, 365, 'all']  # not available through the API yet
 
-if __name__ == '__main__':
-    main()
+    # For all the PoDs
+    for pod in pods:
+        # all the versions
+        for version in versions:
+            # all the installers
+            for installer in installers:
+                # all the retention time
+                for test_duration in test_durations:
+
+                    criteria = TestCriteria()
+                    criteria.setCriteria(test_name, test_case, pod,
+                                         test_duration, version, installer)
+                    format_data_for_dashboard(criteria)
