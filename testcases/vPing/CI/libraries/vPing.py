@@ -246,7 +246,7 @@ def cleanup(nova, neutron, network_dic):
 def push_results_to_db(payload):
 
     # TODO move DB creds into config file
-    url = TEST_DB
+    url = TEST_DB + "/results"
     params = {"project_name": "functest", "case_name": "vPing", "pod_id": 1,
               "details": payload}
     headers = {'Content-Type': 'application/json'}
