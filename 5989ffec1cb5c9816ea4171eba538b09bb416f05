@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2f8d8d_ff01273a",
+        "filename": "testcases/Dashboard/functest2Dashboard.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 423
+      },
+      "writtenOn": "2015-09-18T03:41:12Z",
+      "side": 1,
+      "message": "vPing -\u003e Tempest :)",
+      "range": {
+        "startLine": 72,
+        "startChar": 35,
+        "endLine": 72,
+        "endChar": 40
+      },
+      "revId": "5989ffec1cb5c9816ea4171eba538b09bb416f05",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_5f9a7b15",
+        "filename": "testcases/Dashboard/vPing2Dashboard.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 423
+      },
+      "writtenOn": "2015-09-18T03:41:12Z",
+      "side": 1,
+      "message": "This function is also common, i think.\nI suggest latter we can rewrite this func add some args, put it in functest2Dashboard.py or dashboard_utils.py or somewhere else, and reuse it. After that we just do test case specific format stuff in vPing2Dashboard.py.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 19
+      },
+      "revId": "5989ffec1cb5c9816ea4171eba538b09bb416f05",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_dffe6b38",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 423
+      },
+      "writtenOn": "2015-09-18T03:41:12Z",
+      "side": 1,
+      "message": "maybe we can just delete :80\n\nCommonly we only set the port number when we do not use the default 80 port.\n\ntest_db_url is also used in vPing.py, need update.",
+      "range": {
+        "startLine": 42,
+        "startChar": 37,
+        "endLine": 42,
+        "endChar": 40
+      },
+      "revId": "5989ffec1cb5c9816ea4171eba538b09bb416f05",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
