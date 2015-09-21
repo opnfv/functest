@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2f8d8d_e5d75abe",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-21T08:36:36Z",
+      "side": 1,
+      "message": "Good that you included also this function. Just one comment. Normally, the images we create are public, but in case we needed them private for any tenant/user, it would be nice to include also \"is_public\" as input parameter.\n\nMaybe it would be good to use this utils function in config_functest.py, since we are creating the image as an executable linux command.",
+      "revId": "d9bb547be665f2cfc284103028fbe912ff6c69bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
