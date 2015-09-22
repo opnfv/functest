@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2f8d8d_14c4d590",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/Readme.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-09-22T15:15:57Z",
+      "side": 1,
+      "message": "suites",
+      "range": {
+        "startLine": 2,
+        "startChar": 24,
+        "endLine": 2,
+        "endChar": 29
+      },
+      "revId": "f38566c1a774c370b64288ffbbe709a5e6af3031",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_f4c0297e",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/Readme.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-09-22T15:15:57Z",
+      "side": 1,
+      "message": "do you really want to create a new framework or using existing ones?",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 33
+      },
+      "revId": "f38566c1a774c370b64288ffbbe709a5e6af3031",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_144bb52c",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-09-22T15:15:57Z",
+      "side": 1,
+      "message": "lots of harcoded parameters, use config_functest.yaml and create an ONOS section",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "f38566c1a774c370b64288ffbbe709a5e6af3031",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_743c3994",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-09-22T15:15:57Z",
+      "side": 1,
+      "message": "you could reuse the logger used in the other functest files",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 9
+      },
+      "revId": "f38566c1a774c370b64288ffbbe709a5e6af3031",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_3446b124",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-09-22T15:15:57Z",
+      "side": 1,
+      "message": "may use the git library and import Repo (cf config_functest.py)",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 13
+      },
+      "revId": "f38566c1a774c370b64288ffbbe709a5e6af3031",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_d4540dcc",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-09-22T15:15:57Z",
+      "side": 1,
+      "message": "if executed on the jumphost it will fail\nby default jumphost are on Centos 7 (not ubuntu)",
+      "range": {
+        "startLine": 63,
+        "startChar": 15,
+        "endLine": 63,
+        "endChar": 35
+      },
+      "revId": "f38566c1a774c370b64288ffbbe709a5e6af3031",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_f447091c",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-09-22T15:15:57Z",
+      "side": 1,
+      "message": "it is curious to see an apt-get install in a cleaning section",
+      "range": {
+        "startLine": 63,
+        "startChar": 37,
+        "endLine": 63,
+        "endChar": 38
+      },
+      "revId": "f38566c1a774c370b64288ffbbe709a5e6af3031",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
