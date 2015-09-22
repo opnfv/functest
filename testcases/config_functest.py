@@ -90,6 +90,12 @@ def action_start():
         logger.debug("Cleaning possible functest environment leftovers.")
         action_clean()
 
+        logger.info("Installing needed libraries on the host")
+        cmd = "sudo yum -y install gcc libffi-devel python-devel openssl-devel gmp-devel libxml2-devel libxslt-devel postgresql-devel git wget"
+        if not functest_utils.execute_command(cmd, logger):
+            logger.error("There has been a problem while installing software packages.")
+            exit(-1)
+
         logger.info("Installing ODL environment...")
         if not install_odl():
             logger.error("There has been a problem while installing Robot.")
