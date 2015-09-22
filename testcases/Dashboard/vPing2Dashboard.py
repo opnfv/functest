@@ -9,8 +9,8 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-# This script is used to get data from test DB
-# and format them into a json format adapted for a dashboard
+# This script is used to build json files for the dashboard
+# for the vPing test case
 #
 # v0.1: basic example
 #
@@ -18,65 +18,40 @@ import logging
 import argparse
 import pprint
 import json
-import requests
+import dashboard_utils
+import os
+import yaml
 
 pp = pprint.PrettyPrinter(indent=4)
 
 parser = argparse.ArgumentParser()
+parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 args = parser.parse_args()
 
 """ logging configuration """
-logger = logging.getLogger('vPing2DashBoard')
+logger = logging.getLogger('config_functest')
 logger.setLevel(logging.DEBUG)
 
-ch = logging.StreamHandler()
-if args.debug:
-    ch.setLevel(logging.DEBUG)
-else:
-    ch.setLevel(logging.INFO)
+if not os.path.exists(args.repo_path):
+    logger.error("Repo directory not found '%s'" % args.repo_path)
+    exit(-1)
 
-formatter = logging.Formatter  # retrieve info from DB
-('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+with open(args.repo_path+"testcases/config_functest.yaml") as f:
+    functest_yaml = yaml.safe_load(f)
+f.close()
+
+""" global variables """
+# Directories
+HOME = os.environ['HOME']+"/"
+REPO_PATH = args.repo_path
+TEST_DB = functest_yaml.get("results").get("test_db_url")
 
 
-def get_data(test_project, testcase, pod_id, days, version, installerType):
-    # ugly hard coding => TODO use yaml config file
-    url = "http://213.77.62.197:80/results"
-
-    # use param to filter request to result DB
-    # if not precised => no filter
-    # filter criteria:
-    # - POD
-    # - versions
-    # - installers
-    # - testcase
-    # - test projects
-    # - timeframe (last 30 days, 365 days, since beginning of the project)
-    # e.g.
-    # - vPing tests since 2 months
-    # - Tempest tests on LF POD2 fuel based / Arno stable since the beginning
-    # - yardstick tests on any POD since 30 days
-    # - Qtip tests on dell-test1 POD
-    #
-    # params = {"pod_id":pod_id, "testcase":testcase}
-    # filter_date = days # data from now - days
-
-    # TODO complete params (installer type, testcase, version )
-    params = {"pod_id": 1}
-
-    # Build headers
-    headers = {'Content-Type': 'application/json'}
-
-    # Send Request to Test DB
-    myData = requests.get(url, data=json.dumps(params), headers=headers)
-    # Get result as a json object
-    myNewData = json.loads(myData.text)
+def format_vPing_for_dashboard(criteria):
 
     # Get results
-    myDataResults = myNewData['test_results']
+    myDataResults = dashboard_utils.get_results(TEST_DB, criteria)
 
     # Depending on the use case, json for dashboarding is customized
     # depending on the graph you want to show
@@ -84,6 +59,7 @@ def get_data(test_project, testcase, pod_id, days, version, installerType):
     test_data = [{'description': 'vPing results for Dashboard'}]
 
     # Graph 1: Duration = f(time)
+    # ***************************
     new_element = []
     for data in myDataResults:
         new_element.append({'x': data['creation_date'],
@@ -96,6 +72,7 @@ def get_data(test_project, testcase, pod_id, days, version, installerType):
                       'data_set': new_element})
 
     # Graph 2: bar
+    # ************
     nbTest = 0
     nbTestOk = 0
 
@@ -104,24 +81,14 @@ def get_data(test_project, testcase, pod_id, days, version, installerType):
         if data['details']['status'] == "OK":
             nbTestOk += 1
 
-    # Generate json file
-    # TODO complete with other criteria
-    fileName = "result-" + test_project + "-" + testcase + "-" + str(days) + "-" + str(pod_id) + "-status.json"
-
     test_data.append({'name': "vPing status",
                       'info': {"type": "bar"},
                       'data_set': [{'Nb tests': nbTest,
                                     'Nb Success': nbTestOk}]})
 
-    fileName = "result-" + test_project + "-" + testcase + ".json"
+    # Generate json file
+    fileName = criteria.format()
+    logger.debug("Generate json file:" + fileName)
 
     with open(fileName, "w") as outfile:
         json.dump(test_data, outfile, indent=4)
-
-
-def main():
-    get_data('functest', 'vPing', 1, 30, 'Arno master', 'fuel')
-
-
-if __name__ == '__main__':
-    main()
