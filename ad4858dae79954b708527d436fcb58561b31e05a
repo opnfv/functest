@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2f8d8d_1713b75d",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-23T15:53:01Z",
+      "side": 1,
+      "message": "*has",
+      "revId": "ad4858dae79954b708527d436fcb58561b31e05a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_d71c0f6d",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-23T15:53:01Z",
+      "side": 1,
+      "message": "*However",
+      "revId": "ad4858dae79954b708527d436fcb58561b31e05a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_972687b9",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-23T15:53:01Z",
+      "side": 1,
+      "message": "In general, in this types of documentation, I dont like to use \"we\" or \"I\".. I would rephrase it to:\nIn SR1, there is some code to push the results....\n\nBut maybe I am too picky :)",
+      "revId": "ad4858dae79954b708527d436fcb58561b31e05a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_772b1b83",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-23T15:53:01Z",
+      "side": 1,
+      "message": "*there are",
+      "revId": "ad4858dae79954b708527d436fcb58561b31e05a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_57201f9b",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-23T15:53:01Z",
+      "side": 1,
+      "message": "blank",
+      "revId": "ad4858dae79954b708527d436fcb58561b31e05a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_372593ab",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-23T15:53:01Z",
+      "side": 1,
+      "message": "blank",
+      "revId": "ad4858dae79954b708527d436fcb58561b31e05a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_173a97cd",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-23T15:53:01Z",
+      "side": 1,
+      "message": "thats actually the IP of the installer, not the jumphost",
+      "revId": "ad4858dae79954b708527d436fcb58561b31e05a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_f736ebe6",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-23T15:53:01Z",
+      "side": 1,
+      "message": "Let\u0027s add an example, as we do it in CI:\n\n./fetch_os_creds.sh -d ./credentials -i foreman -a 172.30.10.73\n\n./fetch_os_creds.sh -d ./credentials -i fuel -a 10.20.0.2",
+      "revId": "ad4858dae79954b708527d436fcb58561b31e05a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_d733eff4",
+        "filename": "docs/functest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-23T15:53:01Z",
+      "side": 1,
+      "message": "MAybe now in 2 categories :)",
+      "revId": "ad4858dae79954b708527d436fcb58561b31e05a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
