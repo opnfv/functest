@@ -254,7 +254,7 @@ def install_rally():
         Repo.clone_from(url, RALLY_REPO_DIR)
 
         logger.debug("Executing %s./install_rally.sh..." %RALLY_REPO_DIR)
-        install_script = RALLY_REPO_DIR + "install_rally.sh"
+        install_script = RALLY_REPO_DIR + "install_rally.sh --yes"
         cmd = 'sudo ' + install_script
         functest_utils.execute_command(cmd,logger)
 
