@@ -61,7 +61,7 @@ sed -i "s/\"password\": \".*\"/\"password\": \"${PASS}\"/" ${BASEDIR}/integratio
 # Add Start Suite and Teardown Suite
 sed -i "/^Documentation.*/a Suite Teardown     Stop Suite" ${BASEDIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
 sed -i "/^Documentation.*/a Suite Setup        Start Suite" ${BASEDIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
-exit 0
+
 if source $BASEDIR/venv/bin/activate; then
     echo -e "${green}Python virtualenv activated.${nc}"
 else
