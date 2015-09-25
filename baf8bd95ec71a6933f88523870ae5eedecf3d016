@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2f8d8d_4ab6368c",
+        "filename": "testcases/Controllers/ODL/CI/start_tests.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-25T09:11:52Z",
+      "side": 1,
+      "message": "Is it possible to use the public ips here, instead of mgmt?\ni.e. 172.30.10.67",
+      "revId": "baf8bd95ec71a6933f88523870ae5eedecf3d016",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_2abbea73",
+        "filename": "testcases/Controllers/ODL/CI/start_tests.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-09-25T09:11:52Z",
+      "side": 1,
+      "message": "same here, public ips?",
+      "revId": "baf8bd95ec71a6933f88523870ae5eedecf3d016",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
