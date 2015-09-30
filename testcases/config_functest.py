@@ -51,14 +51,14 @@ f.close()
 
 """ global variables """
 # Directories
-HOME = os.environ['HOME']+"/"
 REPO_PATH = args.repo_path
 RALLY_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_rally")
-RALLY_REPO_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_repo")
-RALLY_INSTALLATION_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_inst")
-RALLY_RESULT_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res")
+RALLY_REPO_DIR = functest_yaml.get("general").get("directories").get("dir_rally_repo")
+RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("dir_rally_inst")
+RALLY_RESULT_DIR = functest_yaml.get("general").get("directories").get("dir_rally_res")
 VPING_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_vping")
 ODL_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_odl")
+
 
 # Tempest/Rally configuration details
 DEPLOYMENT_MAME = "opnfv-rally"
@@ -68,7 +68,7 @@ IMAGE_URL = functest_yaml.get("general").get("openstack").get("image_url")
 IMAGE_DISK_FORMAT = functest_yaml.get("general").get("openstack").get("image_disk_format")
 IMAGE_NAME = functest_yaml.get("general").get("openstack").get("image_name")
 IMAGE_FILE_NAME = IMAGE_URL.rsplit('/')[-1]
-IMAGE_DIR = HOME + functest_yaml.get("general").get("openstack").get("image_download_path")
+IMAGE_DIR = functest_yaml.get("general").get("openstack").get("image_download_path")
 IMAGE_PATH = IMAGE_DIR + IMAGE_FILE_NAME
 
 
@@ -76,10 +76,6 @@ def action_start():
     """
     Start the functest environment installation
     """
-    if not check_permissions():
-        logger.error("Bad Python cache directory ownership.")
-        exit(-1)
-
     if not functest_utils.check_internet_connectivity():
         logger.error("There is no Internet connectivity. Please check the network configuration.")
         exit(-1)
@@ -93,11 +89,6 @@ def action_start():
         logger.debug("Cleaning possible functest environment leftovers.")
         action_clean()
 
-        logger.info("Installing needed libraries on the host")
-        cmd = "sudo yum -y install gcc libffi-devel python-devel openssl-devel gmp-devel libxml2-devel libxslt-devel postgresql-devel git wget crudini"
-        if not functest_utils.execute_command(cmd, logger):
-            logger.error("There has been a problem while installing software packages.")
-            exit(-1)
 
         logger.info("Installing ODL environment...")
         if not install_odl():
@@ -240,20 +231,6 @@ def action_clean():
 
 
 
-def check_permissions():
-    current_user = getpass.getuser()
-    cache_dir = HOME+".cache/pip"
-    logger.info("Checking permissions of '%s'..." %cache_dir)
-    logger.debug("Current user is '%s'" %current_user)
-    cache_user = getpwuid(stat(cache_dir).st_uid).pw_name
-    logger.debug("Cache directory owner is '%s'" %cache_user)
-    if cache_user != current_user:
-        logger.info("The owner of '%s' is '%s'. Please run 'sudo chown -R %s %s'." %(cache_dir, cache_user, current_user, cache_dir))
-        return False
-
-    return True
-
-
 def install_rally():
     if check_rally():
         logger.info("Rally is already installed.")
@@ -359,7 +336,7 @@ def create_glance_image(path,name,disk_format):
     """
     Create a glance image given the absolute path of the image, its name and the disk format
     """
-    cmd = "glance image-create --name "+name+" --is-public true --disk-format "+disk_format+" --container-format bare --file "+path
+    cmd = "glance image-create --name "+name+"  --visibility public --disk-format "+disk_format+" --container-format bare --file "+path
     functest_utils.execute_command(cmd,logger)
     return True
 
