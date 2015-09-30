@@ -229,7 +229,7 @@ def install_rally():
         functest_utils.execute_command(cmd,logger)
 
         logger.debug("Installing tempest...")
-        cmd = "rally verify install"
+        cmd = "rally-manage tempest install"
         functest_utils.execute_command(cmd,logger)
 
         cmd = "rally deployment check"
