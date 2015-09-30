@@ -6,17 +6,18 @@ general:
         dir_rally:      testcases/VIM/OpenStack/CI/libraries/
         dir_rally_scn:  testcases/VIM/OpenStack/CI/suites/
         dir_vIMS:       testcases/vIMS/CI/
-        # Relative to $HOME:
-        dir_vIMS_data: functest/vIMS_data/ # $HOME/functest/vIMS_data/
-        dir_rally_res:  functest/results/ # $HOME/functest/results
-        dir_rally_repo: functest/Rally_repo/ # $HOME/Rally_repo/
-        dir_rally_inst: .rally/  # $HOME/.rally/ usually
+        
+        # Absolute path
+        dir_vIMS_data:  /home/functest/vIMS_data/
+        dir_rally_res:  /home/functest/results/
+        dir_rally_repo: /home/repos/rally/
+        dir_rally_inst: /home/.rally/
 
     openstack:
         image_name: functest-img
         image_url:  http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
         image_disk_format:  qcow2
-        image_download_path:    functest/ # $HOME/functest/
+        image_download_path:    /home/functest/
         #Public network. Optional
         neutron_public_net_name: net04_ext
         neutron_public_subnet_name: net04_ext__subnet
