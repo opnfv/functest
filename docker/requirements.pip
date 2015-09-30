@@ -1,0 +1,6 @@
+pyyaml==3.10
+gitpython==1.0.1
+python-neutronclient==2.6.0
+python-novaclient==2.28.1
+python-keystoneclient==1.6.0
+cloudify==3.2.1
