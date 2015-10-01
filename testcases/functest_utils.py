@@ -31,10 +31,6 @@ def check_credentials():
        os.environ['OS_TENANT_NAME']
     except KeyError:
         return False
-    try:
-       os.environ['OS_REGION_NAME']
-    except KeyError:
-        return False
     return True
 
 
@@ -194,16 +190,103 @@ def check_neutron_net(neutron_client, net_name):
                 return True
     return False
 
+def get_image_id(glance_client, image_name):
+    images = glance_client.images.list()
+    id = ''
+    for i in images:
+        if i.name == image_name:
+            id = i.id
+            break
+    return id
+
+def create_glance_image(glance_client, image_name, file_path):
+    try:
+        with open(file_path) as fimage:
+            image = glance_client.images.create(name=image_name, is_public=True, disk_format="qcow2",
+                             container_format="bare", data=fimage)
+        return image.id
+    except:
+        return False
+
+def get_flavor_id(nova_client, flavor_name):
+    flavors = nova_client.flavors.list(detailed=True)
+    id = ''
+    for f in flavors:
+        if f.name == flavor_name:
+            id = f.id
+            break
+    return id
+
+def get_flavor_id_by_ram_range(nova_client, min_ram, max_ram):
+    flavors = nova_client.flavors.list(detailed=True)
+    id = ''
+    for f in flavors:
+        if min_ram <= f.ram and f.ram <= max_ram:
+            id = f.id
+            break
+    return id
 
 
-def check_internet_connectivity(url='http://www.google.com/'):
+def get_tenant_id(keystone_client, tenant_name):
+    tenants = keystone_client.tenants.list()
+    id = ''
+    for t in tenants:
+        if t.name == tenant_name:
+            id = t.id
+            break
+    return id
+
+def get_role_id(keystone_client, role_name):
+    roles = keystone_client.roles.list()
+    id = ''
+    for r in roles:
+        if r.name == role_name:
+            id = r.id
+            break
+    return id
+
+def get_user_id(keystone_client, user_name):
+    users = keystone_client.users.list()
+    id = ''
+    for u in users:
+        if u.name == user_name:
+            id = u.id
+            break
+    return id
+
+def create_tenant(keystone_client, tenant_name, tenant_description):
+    try:
+        tenant = keystone_client.tenants.create(tenant_name, tenant_description, enabled=True)
+        return tenant.id
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+def delete_tenant(keystone_client, tenant_id):
+    try:
+        tenant = keystone_client.tenants.delete(tenant_id)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+def add_role_user(keystone_client, user_id, role_id, tenant_id):
+    try:
+        keystone_client.roles.add_user_role(user_id, role_id, tenant_id)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+
+def check_internet_connectivity(url='http://www.opnfv.org/'):
     """
     Check if there is access to the internet
     """
     try:
         urllib2.urlopen(url, timeout=5)
         return True
-    except urllib.request.URLError:
+    except urllib.URLError:
         return False
 
 

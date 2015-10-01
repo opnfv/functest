@@ -8,9 +8,11 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import re, json, os, urllib2, argparse, logging, shutil, subprocess, yaml, sys
+import re, json, os, urllib2, argparse, logging, shutil, subprocess, yaml, sys, getpass
 import functest_utils
 from git import Repo
+from os import stat
+from pwd import getpwuid
 
 actions = ['start', 'check', 'clean']
 parser = argparse.ArgumentParser()
@@ -53,6 +55,7 @@ REPO_PATH = args.repo_path
 RALLY_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_rally")
 RALLY_REPO_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_repo")
 RALLY_INSTALLATION_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_inst")
+RALLY_RESULT_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res")
 VPING_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_vping")
 ODL_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_odl")
 
@@ -70,6 +73,10 @@ def action_start():
     """
     Start the functest environment installation
     """
+    if not check_permissions():
+        logger.error("Bad Python cache directory ownership.")
+        exit(-1)
+
     if not functest_utils.check_internet_connectivity():
         logger.error("There is no Internet connectivity. Please check the network configuration.")
         exit(-1)
@@ -83,11 +90,10 @@ def action_start():
         logger.debug("Cleaning possible functest environment leftovers.")
         action_clean()
 
-        logger.info("Starting installation of functest environment")
-        logger.info("Installing Rally...")
-        if not install_rally():
-            logger.error("There has been a problem while installing Rally.")
-            action_clean()
+        logger.info("Installing needed libraries on the host")
+        cmd = "sudo yum -y install gcc libffi-devel python-devel openssl-devel gmp-devel libxml2-devel libxslt-devel postgresql-devel git wget"
+        if not functest_utils.execute_command(cmd, logger):
+            logger.error("There has been a problem while installing software packages.")
             exit(-1)
 
         logger.info("Installing ODL environment...")
@@ -96,6 +102,16 @@ def action_start():
             action_clean()
             exit(-1)
 
+        logger.info("Starting installation of functest environment")
+        logger.info("Installing Rally...")
+        if not install_rally():
+            logger.error("There has been a problem while installing Rally.")
+            action_clean()
+            exit(-1)
+
+        # Create result folder under functest if necessary
+        if not os.path.exists(RALLY_RESULT_DIR):
+            os.makedirs(RALLY_RESULT_DIR)
 
         logger.info("Downloading image...")
         if not functest_utils.download_url(IMAGE_URL, IMAGE_DIR):
@@ -206,10 +222,27 @@ def action_clean():
         cmd = "glance image-delete " + image_id
         functest_utils.execute_command(cmd,logger)
 
+    if os.path.exists(RALLY_RESULT_DIR):
+        logger.debug("Removing Result directory")
+        shutil.rmtree(RALLY_RESULT_DIR,ignore_errors=True)
+
+
     logger.info("Functest environment clean!")
 
 
 
+def check_permissions():
+    current_user = getpass.getuser()
+    cache_dir = HOME+".cache/pip"
+    logger.info("Checking permissions of '%s'..." %cache_dir)
+    logger.debug("Current user is '%s'" %current_user)
+    cache_user = getpwuid(stat(cache_dir).st_uid).pw_name
+    logger.debug("Cache directory owner is '%s'" %cache_user)
+    if cache_user != current_user:
+        logger.info("The owner of '%s' is '%s'. Please run 'sudo chown -R %s %s'." %(cache_dir, cache_user, current_user, cache_dir))
+        return False
+
+    return True
 
 
 def install_rally():
@@ -221,8 +254,9 @@ def install_rally():
         Repo.clone_from(url, RALLY_REPO_DIR)
 
         logger.debug("Executing %s./install_rally.sh..." %RALLY_REPO_DIR)
-        install_script = RALLY_REPO_DIR + "install_rally.sh"
-        functest_utils.execute_command(install_script,logger)
+        install_script = RALLY_REPO_DIR + "install_rally.sh --yes"
+        cmd = 'sudo ' + install_script
+        functest_utils.execute_command(cmd,logger)
 
         logger.debug("Creating Rally environment...")
         cmd = "rally deployment create --fromenv --name=opnfv-arno-rally"

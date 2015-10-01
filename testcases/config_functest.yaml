@@ -37,3 +37,6 @@ vping:
     vm_name_2: opnfv-vping-2
     ip_1: 192.168.120.30
     ip_2: 192.168.120.40
+
+results:
+    test_db_url: http://213.77.62.197

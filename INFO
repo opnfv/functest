@@ -3,7 +3,7 @@ Project Creation Date: January 20, 2015
 Project Category: Integration & Testing
 Lifecycle State: Incubation
 Primary Contact: Morgan Richomme (morgan.richomme@orange.com)
-Project Lead: Trever Cooper (trevor.cooper@intel.com)
+Project Lead: Morgan Richomme (morgan.richomme@orange.comtrevor.cooper@inte)
 Jira Project Name: Base System Functionality Testing Project
 Jira Project Prefix: FUNCTEST
 Mailing list tag: [functest]
@@ -16,16 +16,16 @@ sama@docomolab-euro.com
 jose.lausuch@ericsson.com
 Andrew.Caldwell@metaswitch.com
 morgan.richomme@orange.com
-Palani.Chinnakannan@gmail.com
 trevor.cooper@intel.com
 Prabu.Kuppuswamy@spirent.com
 fuqiao@chinamobile.com
 chitti.nimmagadda@ericsson.com
 raja.karthik@hp.com
 vivekanandan.p@hp.com
-yuyijun@huawei.com
 koffirodrigue@gmail.com
-Peng.Li@huawei.com
+dk068x@att.com
+meimei@huawei.com
+valentin.boucher@orange.com
 
 Link to TSC approval of the project: http://meetbot.opnfv.org/meetings/opnfv-meeting/2015/opnfv-meeting.2015-01-20-14.57.html
 

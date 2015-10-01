@@ -71,11 +71,30 @@ In the rest of the document the OPNFV solution would be considered as the System
 
 The installation and configuration of the tools needed to perform the tests will be described in the following sections.
 
-For release 1, the tools are automatically installed, but the tests are not fully automated due to the requirement that sourcing of OpenStack credentials is required on at least one machine where tests are launched. More details will be provided in the configuration section.
+For Arno SR1, the tools are automatically installed. Manual sourcing of OpenStack credentials is no more required if you are fully integrated in the continuous integration.
+A script has been added to automatically retrieve the credentials.
+However, if you still install manually functest, you will need to source the rc file on the machine you are running the tests.
+More details will be provided in the configuration section.
 
 .. _pharos: https://wiki.opnfv.org/pharos
 
 It is recommended to install the different tools on the jump host server as defined in the pharos_ project.
+
+For functest, the following libraries are needed. You can install them either with yum install or apt-get install, depending on your operating system:
+ * python-pip
+ * python-dev
+ * libffi-dev
+ * libxml2-dev
+ * libxslt1-dev
+
+You will also need some Python modules:
+ * sudo pip install GitPython
+ * sudo pip install python-novaclient
+ * sudo pip install python-neutronclient
+ * sudo pip install python-glanceclient
+ * sudo pip install python-keystoneclient
+
+
 The high level architecture can be described as follow::
 
  CIMC/Lights+out management                  Admin     Private   Public   Storage
@@ -98,7 +117,7 @@ The high level architecture can be described as follow::
  |     |  |          |   |                     |         |         |        |
  |     |  | Tempest  |   |                     |         |         |        |
  |     |  +----------+   |                     |         |         |        |
- |     |   FuncTests     +-----------------------------------------+        |
+ |     |   FuncTest      +-----------------------------------------+        |
  |     |                 |                     |         |         |        |
  |     |                 +--------------------------------------------------+
  |     |                 |                     |         |         |        |
@@ -160,6 +179,8 @@ The goal of this test can be described as follow::
 
 
 This example, using OpenStack Python clients can be considered as an "Hello World" example and may be modified for future use.
+
+In SR1, some code has been added in order to push the results (status and duration) into a centralized test result database.
 
 OpenDaylight
 ============
@@ -256,6 +277,8 @@ The goal of this test is to  to check the basic OpenStack functionality on a fre
 Tooling installation
 ----------------------
 
+.. _fetch_os_creds.sh: https://git.opnfv.org/cgit/releng/tree/utils/fetch_os_creds.sh
+
 2 external tools are needed for the functional tests on Arno:
  * Rally
  * Robot
@@ -291,82 +314,99 @@ This script will:
  * Create Glance images
 
 
-When integrated in CI, the only prerequisite consists in retrieving the OpenStack credentials (rc file).
-This file shall be saved on the jumphost. It must be sourced by the user (who shall have sudo rights) executing the tests. 
+When integrated in CI, there are no additional prerequisites.
+When running functest manually, the only prerequisite consists in retrieving the OpenStack credentials (rc file).
+This file shall be saved on the jumphost. It must be sourced by the user (who shall have sudo rights) executing the tests.
 
 For the Continuous Integration we store this file under $HOME/functest/opnfv-openrc.sh on the jumphost server so CI can automatically execute the suite of tests
 
 The procedure to set up functional testing environment can be described as follow:
 
-    Log on the Jumphost server
-    Be sure you are no root then execute::
- 
-     [user@jumphost]$ mkdir <Your_functest_directory>
-     [user@jumphost]$ cd <Your_functest_directory>
-     [user@jumphost]$ git clone https://git.opnfv.org/functest
-     [user@jumphost]$ cd testcases/
+Log on the Jumphost server. Be sure you are no root then execute::
 
-    Modify and adapt needed parameters in the config_functest.yaml. Follow the instructions below.
-    Retrieve OpenStack source file (configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)::
+    [user@jumphost]$ mkdir <Your_functest_directory>
+    [user@jumphost]$ cd <Your_functest_directory>
+    [user@jumphost]$ git clone https://git.opnfv.org/functest
+    [user@jumphost]$ cd testcases/
+
+Modify and adapt needed parameters in the config_functest.yaml. Follow the instructions below.
+
+Retrieve OpenStack source file (configure your `OpenRC`_ file to let Rally access to your OpenStack, you can either export it from Horizon or build it manually (OpenStack credentials are required)::
+
+    [user@jumphost]$ source Your_OpenRC_file
+    [user@jumphost]$ python <functest_repo_directory>/config_functest.py -d <Your_functest_directory> start
+
+In SR1, a script has been created: fetch_os_creds.sh_. This script retrieves automatically the credentials of your OpenStack solution. You may run it manually::
+
+    [user@jumphost]$ /home/jenkins-ci/functest/fetch_os_creds.sh -d <destination> -i <installer_type> -a <installer_ip>
+
+with
+ * installer_type = fuel or foreman
+ * installer_ip the IP of your installer
+ * the destination shall be the full path including the file name.
  
-     [user@jumphost]$ source Your_OpenRC_file
-     [user@jumphost]$ python <functest_repo_directory>/config_functest.py -d <Your_functest_directory> start
+Examples::
+
+    [user@jumphost]$./fetch_os_creds.sh -d ./credentials -i foreman -a 172.30.10.73
+    [user@jumphost]$./fetch_os_creds.sh -d ./credentials -i fuel -a 10.20.0.2
+
 
 At the end of the git clone, the tree of <functest_repo_directory> will have the following structure::
 
- ├── docs
- │   ├── functest.rst
- │   └── images
- │       └── Ims_overview.png
- ├── INFO
- ├── LICENSE
- └── testcases
-     ├── config_functest.py
-     ├── config_functest.yaml
-     ├── Controllers
-     │   └── ODL
-     │       ├── CI
-     │       │   ├── create_venv.sh
-     │       │   ├── custom_tests
-     │       │   │   └── neutron
-     │       │   ├── integration
-     │       │   │   ├── distributions
-     │       │   │   ├── features
-     │       │   │   ├── feature-selector
-     │       │   │   ├── packaging
-     │       │   │   ├── pom.xml
-     │       │   │   ├── test
-     │       │   │   └── vm
-     │       │   ├── logs
-     │       │   ├── requirements.pip
-     │       │   ├── start_tests.sh
-     │       │   └── test_list.txt
-     │       └── ODL.md
-     ├── functest_utils.py
-     ├── VIM
-     │   └── OpenStack
-     │       ├── CI
-     │       │   ├── libraries
-     │       │   │   └── run_rally.py
-     │       │   └── suites
-     │       │       ├── opnfv-authenticate.json
-     │       │       ├── opnfv-cinder.json
-     │       │       ├── opnfv-glance.json
-     │       │       ├── opnfv-heat.json
-     │       │       ├── opnfv-keystone.json
-     │       │       ├── opnfv-neutron.json
-     │       │       ├── opnfv-nova.json
-     │       │       ├── opnfv-quotas.json
-     │       │       ├── opnfv-requests.json
-     │       │       ├── opnfv-smoke-green.json
-     │       │       ├── opnfv-smoke.json
-     │       │       ├── opnfv-tempest.json
-     │       │       └── opnfv-vm.json
-     │       └── OpenStack.md
-     └── vPing
-         └── CI
-             └── libraries
-                 └── vPing.py
+ |-- docs/
+ |   |-- functest.rst
+ |   |-- images
+ |        |-- Ims_overview.png
+ |-- INFO
+ |-- LICENSE
+ |-- testcases/
+      |-- config_functest.py
+      |-- config_functest.yaml
+      |-- functest_utils.py
+      |-- Controllers/
+      |     |-- ODL/
+      |          |-- CI/
+      |          |    |-- create_venv.sh
+      |          |    |-- custom_tests/
+      |          |    |    |-- neutron
+      |          |    |-- integration/
+      |          |    |    |-- distributions
+      |          |    |    |-- features
+      |          |    |    |-- feature-selector
+      |          |    |    |-- packaging
+      |          |    |    |-- pom.xml
+      |          |    |    |-- test
+      |          |    |    |-- vm
+      |          |    |-- logs
+      |          |    |-- requirements.pip
+      |          |    |-- start_tests.sh
+      |          |    |-- test_list.txt
+      |          |-- ODL.md
+      |-- functest_utils.py
+      |-- VIM/
+      |   |-- OpenStack/
+      |       |-- CI/
+      |       |   |-- libraries/
+      |       |   |    |-- run_rally.py
+      |       |   |-- suites/
+      |       |        |-- opnfv-authenticate.json
+      |       |        |-- opnfv-cinder.json
+      |       |        |-- opnfv-glance.json
+      |       |        |-- opnfv-heat.json
+      |       |        |-- opnfv-keystone.json
+      |       |        |-- opnfv-neutron.json
+      |       |        |-- opnfv-nova.json
+      |       |        |-- opnfv-quotas.json
+      |       |        |-- opnfv-requests.json
+      |       |        |-- opnfv-smoke-green.json
+      |       |        |-- opnfv-smoke.json
+      |       |        |-- opnfv-tempest.json
+      |       |        |-- opnfv-vm.json
+      |       |-- OpenStack.md
+      |-- vPing/
+          |-- CI/
+              |-- libraries/
+                   |-- vPing.py
 
 
 NOTE: the Rally environment will be installed under ~/.rally/ the default Tempest configuration (automatically generated by Rally based on OpenStack credentials) can be found under .rally/tempest/for-deployment-<deployment_id>/tempest.conf
@@ -492,7 +532,7 @@ The script will:
  * run rally with the selected scenario
  * generate the html result page into <result_folder>/<timestamp>/opnfv-[module name].html
  * generate the json result page into <result_folder>/<timestamp>/opnfv-[module name].json
- * generate OK or KO per test based on json result file
+ * generate OK or NOK per test based on json result file
 
 Tempest suite
 =============
@@ -518,26 +558,29 @@ vPing
 vPing result is displayed in the console::
 
  Functest: run vPing
- 2015-06-02 21:24:55,065 - vPing - INFO - Glance image found 'functest-img'
- 2015-06-02 21:24:55,066 - vPing - INFO - Creating neutron network functest-net...
- 2015-06-02 21:24:57,672 - vPing - INFO - Flavor found 'm1.small'
- 2015-06-02 21:24:58,670 - vPing - INFO - Creating instance 'opnfv-vping-1' with IP 192.168.120.30...
- 2015-06-02 21:25:32,098 - vPing - INFO - Instance 'opnfv-vping-1' is ACTIVE.
- 2015-06-02 21:25:32,540 - vPing - INFO - Creating instance 'opnfv-vping-2' with IP 192.168.120.40...
- 2015-06-02 21:25:38,614 - vPing - INFO - Instance 'opnfv-vping-2' is ACTIVE.
- 2015-06-02 21:25:38,614 - vPing - INFO - Waiting for ping...
- 2015-06-02 21:26:42,385 - vPing - INFO - vPing detected!
- 2015-06-02 21:26:42,385 - vPing - INFO - Cleaning up...
- 2015-06-02 21:26:54,127 - vPing - INFO - Deleting network 'functest-net'...
- 2015-06-02 21:26:55,349 - vPing - INFO - vPing OK
+ 2015-09-13 22:11:49,502 - vPing- INFO - Glance image found 'functest-img'
+ 2015-09-13 22:11:49,502 - vPing- INFO - Creating neutron network functest-net...
+ 2015-09-13 22:11:50,275 - vPing- INFO - Flavor found 'm1.small'
+ 2015-09-13 22:11:50,318 - vPing- INFO - vPing Start Time:'2015-09-13 22:11:50'
+ 2015-09-13 22:11:50,470 - vPing- INFO - Creating instance 'opnfv-vping-1' with IP 192.168.120.30...
+ 2015-09-13 22:11:58,803 - vPing- INFO - Instance 'opnfv-vping-1' is ACTIVE.
+ 2015-09-13 22:11:58,981 - vPing- INFO - Creating instance 'opnfv-vping-2' with IP 192.168.120.40...
+ 2015-09-13 22:12:09,169 - vPing- INFO - Instance 'opnfv-vping-2' is ACTIVE.
+ 2015-09-13 22:12:09,169 - vPing- INFO - Waiting for ping...
+ 2015-09-13 22:13:11,329 - vPing- INFO - vPing detected!
+ 2015-09-13 22:13:11,329 - vPing- INFO - vPing duration:'81.0'
+ 2015-09-13 22:13:11,329 - vPing- INFO - Cleaning up...
+ 2015-09-13 22:13:18,727 - vPing- INFO - Deleting network 'functest-net'...
+ 015-09-13 22:13:19,470 - vPing- INFO - vPing OK
 
+A json file is produced and pushed into the test result database.
 
 OpenDaylight
 ============
 .. _`functest wiki (ODL section)`: https://wiki.opnfv.org/r1_odl_suite
 
 
-The results of ODL tests can be seen in the console:: 
+The results of ODL tests can be seen in the console::
 
  ==============================================================================
  Basic
@@ -580,11 +623,11 @@ The results of ODL tests can be seen in the console::
  ODL result page
 
 .. figure:: ./images/functestODL.png
-   :scale: 50 %
+   :width: 170mm
    :align: center
    :alt: ODL suite result page
 
-   
+
 Known issues
 ------------
 
@@ -635,11 +678,11 @@ You shall see the results as follow::
 
     Total results of verification:
 
-    +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
-    | UUID                                 | Deployment UUID                      | Set name | Tests | Failures | Created at                 | Status   |
-    +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
-    | 0144c50f-ab03-45fb-9c36-242ad6440b46 | d9e1bb21-8e36-4d89-b137-0c852dbb308e | smoke    | 87    | 32       | 2015-05-05 16:36:00.986003 | finished |
-    +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
+    +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------------+----------+
+    | UUID                                 | Deployment UUID                      | Set name | Tests | Failures | Created at                 | Duration       | Status   |
+    +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------------+----------+
+    | 546c678a-19c4-4b2e-8f24-6f8c5ff20635 | 9c13dbbe-7a80-43db-8d6c-c4a61f257c7f | smoke    | 111   | 15       | 2015-09-14 06:18:54.896224 | 0:00:51.804504 | finished |
+    +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------------+----------+
 
 If you run this test several times, you will see as many lines as test attempts.
 
@@ -675,12 +718,9 @@ Known issues
 .. _`functest wiki (Tempest section)`: https://wiki.opnfv.org/r1_tempest
 .. _`ODL bug lists`: https://bugs.opendaylight.org/buglist.cgi?component=General&product=neutron&resolution=---
 
-Several tests are declared as failed. They can be divided in 3 main categories:
- * Invalid credentials (10 errors)
+Several tests are declared as failed. They can be divided in 2 main categories:
  * Multiple possible networks found, use a Network ID to be more specific.
  * Network errors
-
-The "Invalid Credential" error is not an error. Adding "admin_domain_name=default" in the tempest.conf file generated by Rally will lead to successful tests. A `Rally patch`_ has been proposed to Rally community.
 
 The Multiple possible netwok error occurs several times and may have different origins. It indicates that the test needs a network context to be run properly. A change in the `automatically generated tempest.conf`_ file could allow to precise the network ID.
 
