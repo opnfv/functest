@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_785e6deb",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-01T15:34:53Z",
+      "side": 1,
+      "message": "You are right~. I will delete this",
+      "parentUuid": "da6255ed_b81ce56b",
+      "revId": "6e0a701d043e4b554c19a0e560538ef83a8680d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_9819217c",
         "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2015-10-01T07:39:40Z",
       "side": 1,
       "message": "assword or password?",
+      "revId": "6e0a701d043e4b554c19a0e560538ef83a8680d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_18465124",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-01T15:34:53Z",
+      "side": 1,
+      "message": "assword,because p\u0026P may also be here",
+      "parentUuid": "da6255ed_9819217c",
       "revId": "6e0a701d043e4b554c19a0e560538ef83a8680d1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_985121db",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-01T15:34:53Z",
+      "side": 1,
+      "message": "ok,I will modify here to have a judgement,if sshkey is exsit,I will do not rm them",
+      "parentUuid": "da6255ed_582ba982",
+      "revId": "6e0a701d043e4b554c19a0e560538ef83a8680d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_3820f59a",
         "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2015-10-01T07:39:40Z",
       "side": 1,
       "message": "same here: assword or password?",
+      "revId": "6e0a701d043e4b554c19a0e560538ef83a8680d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_5863a9b1",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-01T15:34:53Z",
+      "side": 1,
+      "message": "P\u0026p is not fixed,so assword is right",
+      "parentUuid": "da6255ed_3820f59a",
       "revId": "6e0a701d043e4b554c19a0e560538ef83a8680d1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
