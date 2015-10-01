@@ -503,7 +503,7 @@ OpenDaylight
 
 You can run ODL suite as follow::
 
-    [user@jumphost]$ python <functest_repo_directory>testcases/Controllers/ODL/CI/start_tests.sh
+    [user@jumphost]$ <functest_repo_directory>testcases/Controllers/ODL/CI/start_tests.sh
 
 ODL wiki page describes system preparation and running tests. See `Integration Group CSIT`_.
 
