@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_b81ce56b",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-01T07:39:40Z",
+      "side": 1,
+      "message": "Sorry for my ignorance, but isn\u0027t it that if you import os, you are already importing all within the library os?",
+      "revId": "6e0a701d043e4b554c19a0e560538ef83a8680d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_9819217c",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-01T07:39:40Z",
+      "side": 1,
+      "message": "assword or password?",
+      "revId": "6e0a701d043e4b554c19a0e560538ef83a8680d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_582ba982",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-01T07:39:40Z",
+      "side": 1,
+      "message": "Is this safe? you can delete possible existing key pairs or even the ssh config if there is some in the jumphost. Anyway, soon, Fucntest will be run inside a Docker, so we can have a common way to do this within our Functest-docker.",
+      "revId": "6e0a701d043e4b554c19a0e560538ef83a8680d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_3820f59a",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-01T07:39:40Z",
+      "side": 1,
+      "message": "same here: assword or password?",
+      "revId": "6e0a701d043e4b554c19a0e560538ef83a8680d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
