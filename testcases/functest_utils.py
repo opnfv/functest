@@ -9,7 +9,7 @@
 
 import re, json, os, urllib2, shutil, subprocess, sys
 
-
+############# CREDENTIALS OPENSTACK #############
 def check_credentials():
     """
     Check if the OpenStack credentials (openrc) are sourced
@@ -66,7 +66,7 @@ def get_credentials(service):
     return creds
 
 
-
+################# NOVA #################
 def get_instance_status(nova_client,instance):
     try:
         instance = nova_client.servers.get(instance.id)
@@ -83,7 +83,27 @@ def get_instance_by_name(nova_client, instance_name):
         return None
 
 
+def get_flavor_id(nova_client, flavor_name):
+    flavors = nova_client.flavors.list(detailed=True)
+    id = ''
+    for f in flavors:
+        if f.name == flavor_name:
+            id = f.id
+            break
+    return id
 
+
+def get_flavor_id_by_ram_range(nova_client, min_ram, max_ram):
+    flavors = nova_client.flavors.list(detailed=True)
+    id = ''
+    for f in flavors:
+        if min_ram <= f.ram and f.ram <= max_ram:
+            id = f.id
+            break
+    return id
+
+
+################# NEUTRON #################
 def create_neutron_net(neutron_client, name):
     json_body = {'network': {'name': name,
                     'admin_state_up': True}}
@@ -190,6 +210,15 @@ def check_neutron_net(neutron_client, net_name):
                 return True
     return False
 
+def get_network_list(neutron_client):
+    network_list = neutron_client.list_networks()['networks']
+    if len(network_list) == 0 :
+        return None
+    else :
+        return network_list
+
+
+################# GLANCE #################
 def get_image_id(glance_client, image_name):
     images = glance_client.images.list()
     id = ''
@@ -208,25 +237,8 @@ def create_glance_image(glance_client, image_name, file_path):
     except:
         return False
 
-def get_flavor_id(nova_client, flavor_name):
-    flavors = nova_client.flavors.list(detailed=True)
-    id = ''
-    for f in flavors:
-        if f.name == flavor_name:
-            id = f.id
-            break
-    return id
 
-def get_flavor_id_by_ram_range(nova_client, min_ram, max_ram):
-    flavors = nova_client.flavors.list(detailed=True)
-    id = ''
-    for f in flavors:
-        if min_ram <= f.ram and f.ram <= max_ram:
-            id = f.id
-            break
-    return id
-
-
+################# KEYSTONE #################
 def get_tenant_id(keystone_client, tenant_name):
     tenants = keystone_client.tenants.list()
     id = ''
@@ -279,6 +291,7 @@ def add_role_user(keystone_client, user_id, role_id, tenant_id):
         return False
 
 
+################# UTILS #################
 def check_internet_connectivity(url='http://www.opnfv.org/'):
     """
     Check if there is access to the internet
