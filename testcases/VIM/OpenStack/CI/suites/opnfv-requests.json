@@ -11,6 +11,9 @@
                 "type": "constant",
                 "times": 20,
                 "concurrency": 5
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -26,6 +29,9 @@
                 "type": "constant",
                 "times": 20,
                 "concurrency": 5
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ]

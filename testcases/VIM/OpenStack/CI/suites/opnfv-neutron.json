@@ -19,6 +19,9 @@
                         "network": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -45,6 +48,9 @@
                         "port": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -74,6 +80,9 @@
                         "router": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -101,6 +110,9 @@
                         "subnet": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -124,6 +136,9 @@
                         "network": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -150,6 +165,9 @@
                         "port": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -179,6 +197,9 @@
                         "router": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -206,6 +227,9 @@
                         "subnet": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -233,6 +257,9 @@
                         "network": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -265,6 +292,9 @@
                         "port": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -298,6 +328,9 @@
                         "router": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -329,6 +362,9 @@
                         "subnet": -1
                     }
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ]

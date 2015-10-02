@@ -26,6 +26,9 @@
                 },
                 "network": {
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -59,6 +62,9 @@
                     "tenants": 3,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ]
