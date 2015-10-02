@@ -1,4 +1,3 @@
----
 general:
     directories:
         # Relative to the path where the repo is cloned:
@@ -6,7 +5,9 @@ general:
         dir_odl:        testcases/Controllers/ODL/CI/
         dir_rally:      testcases/VIM/OpenStack/CI/libraries/
         dir_rally_scn:  testcases/VIM/OpenStack/CI/suites/
+        dir_vIMS:       testcases/vIMS/CI/
         # Relative to $HOME:
+        dir_vIMS_data: functest/vIMS_data/ # $HOME/functest/vIMS_data/
         dir_rally_res:  functest/results/ # $HOME/functest/results
         dir_rally_repo: functest/Rally_repo/ # $HOME/Rally_repo/
         dir_rally_inst: .rally/  # $HOME/.rally/ usually
@@ -38,5 +39,51 @@ vping:
     ip_1: 192.168.120.30
     ip_2: 192.168.120.40
 
-results:
-    test_db_url: http://213.77.62.197
+vIMS:
+    general:
+        tenant_name: vIMS
+        tenant_description: vIMS Functionality Testing
+        base_image_url: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+        base_image_name: ubuntu_14.04
+    cloudify:
+        blueprint:
+            url: https://github.com/cloudify-cosmo/cloudify-manager-blueprints.git
+            branch: "3.2-build"
+            file_name: "openstack-manager-blueprint.yaml"
+        inputs:
+            keystone_username: ""
+            keystone_password: ""
+            keystone_tenant_name: ""
+            keystone_url: ""
+            manager_public_key_name: 'cloudify-manager'
+            agent_public_key_name: 'cloudify-agent'
+            image_id: ""
+            flavor_id: "2"
+            external_network_name: "net04_ext"
+            use_existing_manager_keypair: false
+            use_existing_agent_keypair: false
+            manager_server_name: cloudify-management-server
+            manager_server_user: ubuntu
+            manager_security_group_name: cloudify-sg-manager
+            agents_security_group_name: cloudify-sg-agents
+            manager_private_key_path: ~/.ssh/cloudify-manager-kp.pem
+            agent_private_key_path: ~/.ssh/cloudify-agent-kp.pem
+            agents_user: ubuntu
+            nova_url: ""
+            neutron_url: ""
+            resources_prefix: ""
+        inputs_path: openstack/inputs.yaml
+    clearwater:
+        blueprint:
+            file_name: 'openstack-blueprint.yaml'
+            name: "clearwater-opnfv"
+            destination_folder: "opnfv-cloudify-clearwater"
+            url: 'https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git'
+            branch: "master"
+        deployment-name: 'clearwater-opnfv'
+        inputs:
+            image_id: ''
+            flavor_id: ''
+            agent_user: 'ubuntu'
+            external_network_name: 'net04_ext'
+            public_domain: clearwater.opnfv
