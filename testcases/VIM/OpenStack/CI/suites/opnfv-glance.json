@@ -17,6 +17,9 @@
                     "image_container": "bare",
                     "images_per_tenant": 4
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -37,6 +40,9 @@
                     "tenants": 2,
                     "users_per_tenant": 3
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -57,6 +63,9 @@
                     "tenants": 1,
                     "users_per_tenant": 1
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -81,6 +90,9 @@
                     "tenants": 3,
                     "users_per_tenant": 5
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ]

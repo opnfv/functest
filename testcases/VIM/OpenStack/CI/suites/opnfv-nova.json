@@ -20,6 +20,9 @@
                     "tenants": 3,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -46,6 +49,9 @@
                 "network": {
                     "start_cidr": "100.1.0.0/26"
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -74,6 +80,9 @@
                 "network": {
                     "start_cidr": "100.1.0.0/26"
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -98,6 +107,9 @@
                     "tenants": 1,
                     "users_per_tenant": 1
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -122,6 +134,9 @@
                     "tenants": 1,
                     "users_per_tenant": 1
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -145,6 +160,9 @@
                     "tenants": 1,
                     "users_per_tenant": 1
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -175,6 +193,9 @@
                     "tenants": 3,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -200,6 +221,9 @@
                     "tenants": 3,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -224,6 +248,9 @@
                     "tenants": 3,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -247,6 +274,9 @@
                     "tenants": 3,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -272,6 +302,9 @@
                     "tenants": 2,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -298,6 +331,9 @@
                     "tenants": 1,
                     "users_per_tenant": 1
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -322,6 +358,9 @@
                     "tenants": 3,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -337,6 +376,9 @@
                     "tenants": 3,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -356,6 +398,9 @@
                     "tenants": 3,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -371,6 +416,9 @@
                     "tenants": 3,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -390,6 +438,9 @@
                     "tenants": 3,
                     "users_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -417,6 +468,9 @@
                     },
                     "servers_per_tenant": 2
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ],
@@ -445,6 +499,9 @@
                     "tenants": 1,
                     "users_per_tenant": 1
                 }
+            },
+            "sla": {
+                "failure_rate": {"max": 0}
             }
         }
     ]
