@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_d821d9b5",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-02T12:49:41Z",
+      "side": 1,
+      "message": "Done:\nhttps://gerrit.opnfv.org/gerrit/#/c/2213/\nPlease review and give a +2 if you agree.\n\nIt would be:\nfixed_network \u003d  functest_utils.get_network_list(neutron_client)[0][\u0027name\u0027]",
+      "parentUuid": "da6255ed_b8574526",
+      "revId": "d1f5aca27cf6e21334720c31ebaebe4cc2cb6d3b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_58f3a973",
         "filename": "testcases/config_functest.py",
         "patchSetId": 2
