@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_f85dbd49",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2015-10-02T12:31:44Z",
+      "side": 1,
+      "message": "OK!",
+      "parentUuid": "da6255ed_98e1219d",
+      "revId": "d1f5aca27cf6e21334720c31ebaebe4cc2cb6d3b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_78ee6d8d",
         "filename": "testcases/config_functest.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-10-02T09:41:16Z",
       "side": 1,
       "message": "This call would be:\nfixed_network \u003d functest_utils.neutron_list()[0][\u0027name\u0027] \nor something similar\nCan we use here network IDs instead of names?",
+      "revId": "d1f5aca27cf6e21334720c31ebaebe4cc2cb6d3b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_b8574526",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2015-10-02T12:31:44Z",
+      "side": 1,
+      "message": "I thought that the parameter requires name but I can check it...",
+      "parentUuid": "da6255ed_78ee6d8d",
       "revId": "d1f5aca27cf6e21334720c31ebaebe4cc2cb6d3b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
