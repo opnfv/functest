@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_1803f174",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-02T07:54:50Z",
+      "side": 1,
+      "message": "Perfect! But would it be more precise to say : if \"id_rsa\" exists?",
+      "revId": "14ce1030d3f845a95b0edcdbdf04ac31198eef00",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
