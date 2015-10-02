@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_d8fe7938",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-02T09:50:12Z",
+      "side": 1,
+      "message": "I think this is the name Fuel gives to the external network, but foreman (and other installers) will give a different name. So, we have to be careful here. Maybe the script deploying vIMS should take care of getting the name of the external network. We can solve this putting a neutron list function in functest_utils.py",
+      "revId": "e78b077f841f8e88153e6d7e2e1a12c1b47b22a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_b8fbc546",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-02T09:50:12Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "e78b077f841f8e88153e6d7e2e1a12c1b47b22a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_98f8014b",
+        "filename": "testcases/vIMS/CI/create_venv.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-02T09:50:12Z",
+      "side": 1,
+      "message": "When we move to a docker, this can be preinstalled. So I will include the pacckage cloudify\u003d\u003d3.2  in the docker container for functest.",
+      "revId": "e78b077f841f8e88153e6d7e2e1a12c1b47b22a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_78954de3",
+        "filename": "testcases/vIMS/CI/vIMS.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-02T09:50:12Z",
+      "side": 1,
+      "message": "whitespaces",
+      "revId": "e78b077f841f8e88153e6d7e2e1a12c1b47b22a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_589a8915",
+        "filename": "testcases/vIMS/CI/vIMS.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-02T09:50:12Z",
+      "side": 1,
+      "message": "whitespaces",
+      "revId": "e78b077f841f8e88153e6d7e2e1a12c1b47b22a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_f8881dc8",
+        "filename": "testcases/vIMS/CI/vIMS.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-02T09:50:12Z",
+      "side": 1,
+      "message": "whitespaces",
+      "revId": "e78b077f841f8e88153e6d7e2e1a12c1b47b22a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_389fd505",
+        "filename": "testcases/vIMS/CI/vIMS.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-02T09:50:12Z",
+      "side": 1,
+      "message": "whitespaces",
+      "revId": "e78b077f841f8e88153e6d7e2e1a12c1b47b22a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_18a41156",
+        "filename": "testcases/vIMS/CI/vIMS.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-02T09:50:12Z",
+      "side": 1,
+      "message": "whitespaces",
+      "revId": "e78b077f841f8e88153e6d7e2e1a12c1b47b22a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
