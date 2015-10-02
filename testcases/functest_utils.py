@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #
 # jose.lausuch@ericsson.com
+# valentin.boucher@orange.com
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
@@ -210,6 +211,7 @@ def check_neutron_net(neutron_client, net_name):
                 return True
     return False
 
+<<<<<<< HEAD
 def get_network_list(neutron_client):
     network_list = neutron_client.list_networks()['networks']
     if len(network_list) == 0 :
@@ -219,6 +221,27 @@ def get_network_list(neutron_client):
 
 
 ################# GLANCE #################
+=======
+def get_external_net(neutron_client):
+    for network in neutron_client.list_networks()['networks']:
+        if network['router:external']:
+            return network['name']
+    return False
+
+def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
+    json_body = {"quota": {
+        "security_group": sg_quota,
+        "security_group_rule": sg_rule_quota
+    }}
+
+    try:
+        quota = neutron_client.update_quota(tenant_id=tenant_id, body=json_body)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+>>>>>>> 5f0a7cf... vIMS deployment and cleanup
 def get_image_id(glance_client, image_name):
     images = glance_client.images.list()
     id = ''
@@ -228,10 +251,10 @@ def get_image_id(glance_client, image_name):
             break
     return id
 
-def create_glance_image(glance_client, image_name, file_path):
+def create_glance_image(glance_client, image_name, file_path, is_public=True):
     try:
         with open(file_path) as fimage:
-            image = glance_client.images.create(name=image_name, is_public=True, disk_format="qcow2",
+            image = glance_client.images.create(name=image_name, is_public=is_public, disk_format="qcow2",
                              container_format="bare", data=fimage)
         return image.id
     except:
@@ -277,6 +300,22 @@ def create_tenant(keystone_client, tenant_name, tenant_description):
 def delete_tenant(keystone_client, tenant_id):
     try:
         tenant = keystone_client.tenants.delete(tenant_id)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+def create_user(keystone_client, user_name, user_password, user_email, tenant_id):
+    try:
+        user = keystone_client.users.create(user_name, user_password, user_email, tenant_id, enabled=True)
+        return user.id
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+def delete_user(keystone_client, user_id):
+    try:
+        tenant = keystone_client.users.delete(user_id)
         return True
     except:
         print "Error:", sys.exc_info()[0]
