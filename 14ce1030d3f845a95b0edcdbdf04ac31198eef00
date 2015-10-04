@@ -16,6 +16,24 @@
       "revId": "14ce1030d3f845a95b0edcdbdf04ac31198eef00",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_c36b2a84",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-04T02:08:15Z",
+      "side": 1,
+      "message": "The algorithm may have rsa/ecdsa or some else\nso the name maybe id_ecdsa, so here only check \u0027id\u0027.Is that ok?",
+      "parentUuid": "da6255ed_1803f174",
+      "revId": "14ce1030d3f845a95b0edcdbdf04ac31198eef00",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
