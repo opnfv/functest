@@ -48,6 +48,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_fe95a588",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T17:29:11Z",
+      "side": 1,
+      "message": "Maybe I think further about this, for now I dont want that it depends on a Jenkins env variable, if people run it manually without Jenkins, then its set. \nThe idea is, when we want to take the latest commit from Rally, it will be tested and if everything is ok, this ID will be updated and pushed.",
+      "parentUuid": "da6255ed_fe3925d9",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_de3661e7",
         "filename": "docker/Dockerfile",
         "patchSetId": 11
@@ -59,6 +77,24 @@
       "writtenOn": "2015-10-05T15:55:49Z",
       "side": 1,
       "message": "now all the indentation is gone. :)",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_de92e19e",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T17:29:11Z",
+      "side": 1,
+      "message": "yep, I liked the other way though :D",
+      "parentUuid": "da6255ed_de3661e7",
       "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -82,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_be8f2d75",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T17:29:11Z",
+      "side": 1,
+      "message": "Ja, but since I also clone rally and releng, its confusing if they are also in /home/functest/repos/, right?",
+      "parentUuid": "da6255ed_9e30e9e9",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_5e527114",
         "filename": "docker/start.sh",
         "patchSetId": 11
@@ -93,6 +147,24 @@
       "writtenOn": "2015-10-05T15:55:49Z",
       "side": 1,
       "message": "same comment regarding having a separate dir.",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_1e81994a",
+        "filename": "docker/start.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T17:29:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I get what you mean. Separate dir for what?",
+      "parentUuid": "da6255ed_5e527114",
       "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -116,6 +188,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_1eaab9d4",
+        "filename": "docker/start.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T17:29:11Z",
+      "side": 1,
+      "message": "Ok. Looks good, I",
+      "parentUuid": "da6255ed_be4a8d53",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_7e4d3572",
         "filename": "docker/start.sh",
         "patchSetId": 11
@@ -127,6 +217,24 @@
       "writtenOn": "2015-10-05T15:55:49Z",
       "side": 1,
       "message": "sorry but this looks ugly as well.\n\nwhat about /home/functest/conf/openstack.creds or something like that?",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_feaec5e6",
+        "filename": "docker/start.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T17:29:11Z",
+      "side": 1,
+      "message": "Ok. That looks prettier :)",
+      "parentUuid": "da6255ed_7e4d3572",
       "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -150,6 +258,24 @@
         "endLine": 69,
         "endChar": 96
       },
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_deab01d5",
+        "filename": "docker/start.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T17:29:11Z",
+      "side": 1,
+      "message": "Ok. I",
+      "parentUuid": "da6255ed_fe400537",
       "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
