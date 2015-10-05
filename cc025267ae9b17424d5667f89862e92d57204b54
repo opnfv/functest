@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_de0f812d",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T15:08:06Z",
+      "side": 1,
+      "message": "I use \"errors\" for each single element of the check list. \"errors all\" for the overall thing. If \"errors all\" is true, then the rally is incorrect or not installed. I know its a bit confusing, but in the end is to show nice messages on the screen :)",
+      "parentUuid": "da6255ed_e3086e2f",
+      "revId": "cc025267ae9b17424d5667f89862e92d57204b54",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_a32b9693",
         "filename": "testcases/config_functest.py",
         "patchSetId": 9
@@ -42,6 +60,24 @@
         "endLine": 339,
         "endChar": 4
       },
+      "revId": "cc025267ae9b17424d5667f89862e92d57204b54",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_be1ccd6b",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T15:08:06Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "da6255ed_a32b9693",
       "revId": "cc025267ae9b17424d5667f89862e92d57204b54",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
