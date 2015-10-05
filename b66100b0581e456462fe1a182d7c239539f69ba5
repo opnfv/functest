@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_e3850eae",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T11:06:19Z",
+      "side": 1,
+      "message": "Ok. It could be, but just in case it is not set. I will use that one (I want to avoid that cloning latest commit can cause problems as we had 2 days before release, that they changed the CLI a bit)",
+      "parentUuid": "da6255ed_03db82ee",
+      "revId": "b66100b0581e456462fe1a182d7c239539f69ba5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_83c77212",
         "filename": "docker/Dockerfile",
         "patchSetId": 5
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_a37dd6b3",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T11:06:19Z",
+      "side": 1,
+      "message": "Fixed it now",
+      "parentUuid": "da6255ed_83c77212",
+      "revId": "b66100b0581e456462fe1a182d7c239539f69ba5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_63f35e74",
         "filename": "docker/Dockerfile",
         "patchSetId": 5
@@ -64,6 +100,24 @@
       "writtenOn": "2015-10-05T09:31:12Z",
       "side": 1,
       "message": "I\u0027m not sure if I miss something here.\n\nCan\u0027t you clone everything under /home/functest rather than /home/repos?",
+      "revId": "b66100b0581e456462fe1a182d7c239539f69ba5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_83bc126e",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T11:06:19Z",
+      "side": 1,
+      "message": "I use /home/repos to clone all the repositories (functest/releng/rally)\nand /home/functest to install functest framework\n\nIn the end it would be:\n- /home/repos/functest\n- /home/repos/releng\n- /home/repos/rally\n- /home/functest \n\nIs it confusing?",
+      "parentUuid": "da6255ed_63f35e74",
       "revId": "b66100b0581e456462fe1a182d7c239539f69ba5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
