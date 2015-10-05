@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_e3086e2f",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-05T14:23:59Z",
+      "side": 1,
+      "message": "Here may be errors \u003d True\u0026errors ?\nbecause there\u0027s a check after here, this may only depend the last dir",
+      "range": {
+        "startLine": 145,
+        "startChar": 12,
+        "endLine": 145,
+        "endChar": 25
+      },
+      "revId": "cc025267ae9b17424d5667f89862e92d57204b54",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_a32b9693",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-05T14:23:59Z",
+      "side": 1,
+      "message": "This line may be too long to have a good view?",
+      "range": {
+        "startLine": 338,
+        "startChar": 4,
+        "endLine": 339,
+        "endChar": 4
+      },
+      "revId": "cc025267ae9b17424d5667f89862e92d57204b54",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
