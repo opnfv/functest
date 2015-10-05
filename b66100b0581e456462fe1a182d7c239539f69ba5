@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_a34a76aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T09:31:12Z",
+      "side": 1,
+      "message": "Can you please leave an empty line between the first/subject line and the commit message body?",
+      "revId": "b66100b0581e456462fe1a182d7c239539f69ba5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_03db82ee",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T09:31:12Z",
+      "side": 1,
+      "message": "can this be an env parameter coming from Jenkins job or something rather than hardcoding in this?",
+      "revId": "b66100b0581e456462fe1a182d7c239539f69ba5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_83c77212",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T09:31:12Z",
+      "side": 1,
+      "message": "indentation looks strange.",
+      "revId": "b66100b0581e456462fe1a182d7c239539f69ba5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_63f35e74",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T09:31:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I miss something here.\n\nCan\u0027t you clone everything under /home/functest rather than /home/repos?",
+      "revId": "b66100b0581e456462fe1a182d7c239539f69ba5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
