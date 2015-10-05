@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_c3920af6",
+        "filename": "docker/start.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-10-05T09:39:13Z",
+      "side": 1,
+      "message": "Shall we had sections to give a better view?\n \n- Feature tests\n-- vPing\n-- vIMS\n\n- VIM\n-- Rally\n-- Tempest\n\n- Controllers\n-- ODL\n-- ONOS",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 1
+      },
+      "revId": "b4ae49fa265e98f4d929e64ad1cd315a645921f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_038942ca",
+        "filename": "docker/start.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-10-05T09:39:13Z",
+      "side": 1,
+      "message": "tun_tempest to be created to be homogeneous and push results into result DB",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 4
+      },
+      "revId": "b4ae49fa265e98f4d929e64ad1cd315a645921f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_639a3e16",
+        "filename": "docker/start.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-10-05T09:39:13Z",
+      "side": 1,
+      "message": "vIMS should be ready soon\nit has been integrated into CI",
+      "revId": "b4ae49fa265e98f4d929e64ad1cd315a645921f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_23a44656",
+        "filename": "docker/start.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-10-05T09:39:13Z",
+      "side": 1,
+      "message": "would be probably refactored if we use the Test collection API",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 4
+      },
+      "revId": "b4ae49fa265e98f4d929e64ad1cd315a645921f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
