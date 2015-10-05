@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_1e2519ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T15:55:49Z",
+      "side": 1,
+      "message": "My comment is still valid; please leave an empty line after first/subject line.",
+      "range": {
+        "startLine": 8,
+        "startChar": 13,
+        "endLine": 8,
+        "endChar": 14
+      },
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_fe3925d9",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T15:55:49Z",
+      "side": 1,
+      "message": "Fair enough as long as you have the check to see if the commit/tag is set or not.",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 57
+      },
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_de3661e7",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T15:55:49Z",
+      "side": 1,
+      "message": "now all the indentation is gone. :)",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_9e30e9e9",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T15:55:49Z",
+      "side": 1,
+      "message": "wouldn\u0027t it be clearer to have something like\n\n/home/functest/repos/\u003chere the repos are cloned\u003e\n\nand\n\n/home/functest/framework/\u003chere you install stuff\u003e\n\nWhy create yet another home directory?",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_5e527114",
+        "filename": "docker/start.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T15:55:49Z",
+      "side": 1,
+      "message": "same comment regarding having a separate dir.",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_be4a8d53",
+        "filename": "docker/start.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T15:55:49Z",
+      "side": 1,
+      "message": "what about\n\n    retval\u003d$?\n    if [ $retval !\u003d 0 ]; then\n        echo \"Cannot retrieve credentials file from installation. Check logs.\"\n        exit $retval\n    fi",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_7e4d3572",
+        "filename": "docker/start.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T15:55:49Z",
+      "side": 1,
+      "message": "sorry but this looks ugly as well.\n\nwhat about /home/functest/conf/openstack.creds or something like that?",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_fe400537",
+        "filename": "docker/start.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-05T15:55:49Z",
+      "side": 1,
+      "message": "what about\n\n    retval\u003d$?\n    if [ $retval !\u003d 0 ]; then\n        echo \"Error when configuring Functest environment\"\n        exit $retval\n    fi",
+      "range": {
+        "startLine": 69,
+        "startChar": 95,
+        "endLine": 69,
+        "endChar": 96
+      },
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
