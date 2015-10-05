@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_23bb2674",
+        "filename": "docker/start.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T09:47:24Z",
+      "side": 1,
+      "message": "Makes sense. We will figure out this later, when we this scripts grows :)",
+      "parentUuid": "da6255ed_c3920af6",
+      "revId": "b4ae49fa265e98f4d929e64ad1cd315a645921f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_038942ca",
         "filename": "docker/start.sh",
         "patchSetId": 8
@@ -48,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_03b0228a",
+        "filename": "docker/start.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T09:47:24Z",
+      "side": 1,
+      "message": "Ok. To be modified as soon as we have it.",
+      "parentUuid": "da6255ed_038942ca",
+      "revId": "b4ae49fa265e98f4d929e64ad1cd315a645921f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_639a3e16",
         "filename": "docker/start.sh",
         "patchSetId": 8
@@ -59,6 +95,24 @@
       "writtenOn": "2015-10-05T09:39:13Z",
       "side": 1,
       "message": "vIMS should be ready soon\nit has been integrated into CI",
+      "revId": "b4ae49fa265e98f4d929e64ad1cd315a645921f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_63c11ee4",
+        "filename": "docker/start.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T09:47:24Z",
+      "side": 1,
+      "message": "Ok. A soon as its integrated, we can include it here.",
+      "parentUuid": "da6255ed_639a3e16",
       "revId": "b4ae49fa265e98f4d929e64ad1cd315a645921f7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -82,6 +136,24 @@
         "endLine": 108,
         "endChar": 4
       },
+      "revId": "b4ae49fa265e98f4d929e64ad1cd315a645921f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_43b61a8c",
+        "filename": "docker/start.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-05T09:47:24Z",
+      "side": 1,
+      "message": "Yes, I thought about that, was not sure if putting this here.... just copied from the jenkins job, but can update it afterwards.",
+      "parentUuid": "da6255ed_23a44656",
       "revId": "b4ae49fa265e98f4d929e64ad1cd315a645921f7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
