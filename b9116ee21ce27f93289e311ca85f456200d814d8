@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_fecda587",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/environment.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-06T09:33:04Z",
+      "side": 1,
+      "message": "pxssh is a class extends pexpect.spawn to specialize setting up SSH connections. So if pexpect  can work , pxssh can work as well.\nso I think the stable version pexpect 4.0 is ok",
+      "parentUuid": "da6255ed_5ebf11d1",
+      "revId": "b9116ee21ce27f93289e311ca85f456200d814d8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_3eb45df1",
         "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/environment.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-10-06T08:41:09Z",
       "side": 1,
       "message": "the same for this one.",
+      "revId": "b9116ee21ce27f93289e311ca85f456200d814d8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_decae16d",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/environment.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-06T09:33:04Z",
+      "side": 1,
+      "message": "This is a module wrote by myself",
+      "parentUuid": "da6255ed_3eb45df1",
       "revId": "b9116ee21ce27f93289e311ca85f456200d814d8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
