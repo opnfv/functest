@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_5ebf11d1",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/environment.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-06T08:41:09Z",
+      "side": 1,
+      "message": "can you please check what is the name of this python module and also the version that you are using?  This way I will include it in the requirements.pip in the Functest docker.",
+      "revId": "b9116ee21ce27f93289e311ca85f456200d814d8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_3eb45df1",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/environment.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-06T08:41:09Z",
+      "side": 1,
+      "message": "the same for this one.",
+      "revId": "b9116ee21ce27f93289e311ca85f456200d814d8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
