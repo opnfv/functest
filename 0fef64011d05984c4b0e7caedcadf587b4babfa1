@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_3edd7d43",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-06T06:55:25Z",
+      "side": 1,
+      "message": "Anyway, I don\u0027t argue regarding this more. I\u0027m personally not too fond of having stuff hardcoded. That\u0027s all.",
+      "parentUuid": "da6255ed_fe95a588",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_de3661e7",
         "filename": "docker/Dockerfile",
         "patchSetId": 11
@@ -136,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_1ee2b903",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-06T06:55:25Z",
+      "side": 1,
+      "message": "The idea is to collect everything in one directory, the name is not significant.",
+      "parentUuid": "da6255ed_be8f2d75",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_5e527114",
         "filename": "docker/start.sh",
         "patchSetId": 11
@@ -164,6 +200,24 @@
       "writtenOn": "2015-10-05T17:29:11Z",
       "side": 1,
       "message": "I\u0027m not sure if I get what you mean. Separate dir for what?",
+      "parentUuid": "da6255ed_5e527114",
+      "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_fee6c515",
+        "filename": "docker/start.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-10-06T06:55:25Z",
+      "side": 1,
+      "message": "This comment is about having a separate /home/repos directory as in the dockerfile; /home/repos and /home/functest.",
       "parentUuid": "da6255ed_5e527114",
       "revId": "0fef64011d05984c4b0e7caedcadf587b4babfa1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
