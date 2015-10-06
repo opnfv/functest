@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_fe7b6527",
+        "filename": "docker/start.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-06T10:24:28Z",
+      "side": 1,
+      "message": "I will read this parsing the config yaml we have for functest.",
+      "revId": "e02fbec6c7918c337526c6ad9caef5f2bc3d0066",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_de78a12d",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-06T10:24:28Z",
+      "side": 1,
+      "message": "I moved the git command to reset the Rally repo to this function...I think it is cleaner this way. There is no way to pass arguments to a docker build command. So I put it in the config yaml file and do it here.",
+      "revId": "e02fbec6c7918c337526c6ad9caef5f2bc3d0066",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_be75ed33",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-06T10:24:28Z",
+      "side": 1,
+      "message": "This will be then the way to modify the rally commit.",
+      "revId": "e02fbec6c7918c337526c6ad9caef5f2bc3d0066",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
