@@ -1,7 +1,5 @@
 #!/bin/bash
-# Script requires that test environment is created already
 # it includes python2.7 virtual env with robot packages and git
-# use create_env.sh script for creating python virtualenv
 
 BASEDIR=`dirname $0`
 # Colors
@@ -62,12 +60,6 @@ sed -i "s/\"password\": \".*\"/\"password\": \"${PASS}\"/" ${BASEDIR}/integratio
 sed -i "/^Documentation.*/a Suite Teardown     Stop Suite" ${BASEDIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
 sed -i "/^Documentation.*/a Suite Setup        Start Suite" ${BASEDIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
 
-if source $BASEDIR/venv/bin/activate; then
-    echo -e "${green}Python virtualenv activated.${nc}"
-else
-    echo -e "${red}ERROR${nc}"
-    exit 1
-fi
 
 # add custom tests to suite, if there are more custom tests needed this will be reworked
 echo -e "${green}Copy custom tests to suite.${nc}"
@@ -100,7 +92,3 @@ done
 
 echo -e "${green}Final report is located:${nc}"
 rebot $rebot_params
-
-# deactivate venv
-echo -e "${green}Deactivate venv.${nc}"
-deactivate
