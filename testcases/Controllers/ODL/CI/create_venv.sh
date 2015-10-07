@@ -25,11 +25,9 @@ if [ ! -d "$BASEDIR/venv" ]; then
     echo "Virtualenv created."
 fi
 
-if [ ! -f "$BASEDIR/venv/updated" -o $BASEDIR/requirements.pip -nt $BASEDIR/venv/updated ]; then
+if [ ! -f "$BASEDIR/venv/updated" ]; then
     source $BASEDIR/venv/bin/activate
-    pip install -r $BASEDIR/requirements.pip
     touch $BASEDIR/venv/updated
-    echo "Requirements installed."
     deactivate
 fi
 set +e
