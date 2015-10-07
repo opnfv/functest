@@ -30,6 +30,8 @@ wget \
 python-dev \
 python-pip \
 postgresql \
+build-essential \
+libpq-dev \
 libxslt-dev \
 libssl-dev \
 libgmp3-dev \
