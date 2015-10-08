@@ -77,6 +77,13 @@ def get_credentials(service):
 
 
 # ################ NOVA #################
+def get_instances(nova_client):
+    try:
+        instances = nova_client.servers.list(search_opts={'all_tenants': 1})
+        return instances
+    except:
+        return None
+
 def get_instance_status(nova_client, instance):
     try:
         instance = nova_client.servers.get(instance.id)
@@ -84,13 +91,13 @@ def get_instance_status(nova_client, instance):
     except:
         return None
 
-
 def get_instance_by_name(nova_client, instance_name):
     try:
         instance = nova_client.servers.find(name=instance_name)
         return instance
     except:
         return None
+
 
 
 def get_flavor_id(nova_client, flavor_name):
@@ -111,6 +118,31 @@ def get_flavor_id_by_ram_range(nova_client, min_ram, max_ram):
             id = f.id
             break
     return id
+
+
+def delete_instance(nova_client, instance_id):
+    try:
+        nova_client.servers.force_delete(instance_id)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+
+def get_floating_ips(nova_client):
+    try:
+        floating_ips = nova_client.floating_ips.list()
+        return floating_ips
+    except:
+        return None
+
+def delete_floating_ip(nova_client, floatingip_id):
+    try:
+        nova_client.floating_ips.delete(floatingip_id)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return None
 
 
 # ################ NEUTRON #################
@@ -195,6 +227,14 @@ def remove_interface_router(neutron_client, router_id, subnet_id):
         print "Error:", sys.exc_info()[0]
         return False
 
+def remove_gateway_router(neutron_client, router_id):
+    try:
+        neutron_client.remove_gateway_router(router_id)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
 
 def create_neutron_port(neutron_client, name, network_id, ip):
     json_body = {'port': {
@@ -244,6 +284,22 @@ def get_network_list(neutron_client):
         return network_list
 
 
+def get_router_list(neutron_client):
+    router_list = neutron_client.list_routers()['routers']
+    if len(router_list) == 0:
+        return None
+    else:
+        return router_list
+
+def get_port_list(neutron_client):
+    port_list = neutron_client.list_ports()['ports']
+    if len(port_list) == 0:
+        return None
+    else:
+        return port_list
+
+
+
 def get_external_net(neutron_client):
     for network in neutron_client.list_networks()['networks']:
         if network['router:external']:
@@ -266,6 +322,12 @@ def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
         return False
 
 # ################ GLANCE #################
+def get_images(nova_client):
+    try:
+        images = nova_client.images.list()
+        return images
+    except:
+        return None
 
 
 def get_image_id(glance_client, image_name):
@@ -290,8 +352,56 @@ def create_glance_image(glance_client, image_name, file_path, is_public=True):
     except:
         return False
 
+def delete_glance_image(nova_client, image_id):
+    try:
+        nova_client.images.delete(image_id)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+# ################ CINDER #################
+def get_volumes(cinder_client):
+    try:
+        volumes = cinder_client.volumes.list(search_opts={'all_tenants': 1})
+        return volumes
+    except:
+        return None
+
+def delete_volume(cinder_client, volume_id):
+    try:
+        cinder_client.volumes.delete(volume_id)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+# ################ CINDER #################
+def get_security_groups(neutron_client):
+    try:
+        security_groups = neutron_client.list_security_groups()['security_groups']
+        return security_groups
+    except:
+        return None
+
+def delete_security_group(neutron_client, secgroup_id):
+    try:
+        neutron_client.delete_security_group(secgroup_id)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
 
 # ################ KEYSTONE #################
+def get_tenants(keystone_client):
+    try:
+        tenants = keystone_client.tenants.list()
+        return tenants
+    except:
+        return None
+
+
 def get_tenant_id(keystone_client, tenant_name):
     tenants = keystone_client.tenants.list()
     id = ''
@@ -301,6 +411,12 @@ def get_tenant_id(keystone_client, tenant_name):
             break
     return id
 
+def get_users(keystone_client):
+    try:
+        users = keystone_client.users.list()
+        return users
+    except:
+        return None
 
 def get_role_id(keystone_client, role_name):
     roles = keystone_client.roles.list()
