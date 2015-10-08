@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_75f31374",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/clean_openstack.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-08T14:00:26Z",
+      "side": 1,
+      "message": "Hehehe, I know its a fault, but I had to switch to another thing and I commited without thinking too much so that I dont lose the changes.. Yes, a lot missing here.. this is just the scheleton. Didnt think anyone would look into this yet :)",
+      "parentUuid": "da6255ed_35d6bbc6",
+      "revId": "953c2769e0edefd66a34dd71a56d2cd70925d541",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_15dbb7ee",
         "filename": "testcases/functest_utils.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-10-08T13:52:48Z",
       "side": 1,
       "message": "I hate my text editor too...",
+      "revId": "953c2769e0edefd66a34dd71a56d2cd70925d541",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_55e80f7c",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-08T14:00:26Z",
+      "side": 1,
+      "message": "My is eclipse, which has a nice quick option to remove spaces automatically...but I always forget! :)",
+      "parentUuid": "da6255ed_15dbb7ee",
       "revId": "953c2769e0edefd66a34dd71a56d2cd70925d541",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
