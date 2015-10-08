@@ -75,7 +75,13 @@ def get_instance_status(nova_client,instance):
     except:
         return None
 
-
+def get_instances(nova_client):
+    try:
+        instances = nova_client.servers.list()
+        return instances
+    except:
+        return None
+    
 def get_instance_by_name(nova_client, instance_name):
     try:
         instance = nova_client.servers.find(name=instance_name)
