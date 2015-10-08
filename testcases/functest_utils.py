@@ -77,6 +77,13 @@ def get_credentials(service):
 
 
 # ################ NOVA #################
+def get_instances(nova_client):
+    try:
+        instances = nova_client.servers.list()
+        return instances
+    except:
+        return None
+
 def get_instance_status(nova_client, instance):
     try:
         instance = nova_client.servers.get(instance.id)
@@ -84,13 +91,13 @@ def get_instance_status(nova_client, instance):
     except:
         return None
 
-
 def get_instance_by_name(nova_client, instance_name):
     try:
         instance = nova_client.servers.find(name=instance_name)
         return instance
     except:
         return None
+
 
 
 def get_flavor_id(nova_client, flavor_name):
@@ -266,6 +273,12 @@ def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
         return False
 
 # ################ GLANCE #################
+def get_images(nova_client):
+    try:
+        images = nova_client.images.list()
+        return images
+    except:
+        return None
 
 
 def get_image_id(glance_client, image_name):
@@ -290,8 +303,24 @@ def create_glance_image(glance_client, image_name, file_path, is_public=True):
     except:
         return False
 
+# ################ CINDER #################
+def get_volumes(cinder_client):
+    try:
+        volumes = cinder_client.volumes.list()
+        return volumes
+    except:
+        return None
+
 
 # ################ KEYSTONE #################
+def get_tenants(keystone_client):
+    try:
+        tenants = keystone_client.tenants.list()
+        return tenants
+    except:
+        return None
+
+
 def get_tenant_id(keystone_client, tenant_name):
     tenants = keystone_client.tenants.list()
     id = ''
@@ -301,6 +330,12 @@ def get_tenant_id(keystone_client, tenant_name):
             break
     return id
 
+def get_users(keystone_client):
+    try:
+        users = keystone_client.users.list()
+        return users
+    except:
+        return None
 
 def get_role_id(keystone_client, role_name):
     roles = keystone_client.roles.list()
