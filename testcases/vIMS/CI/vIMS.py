@@ -79,6 +79,8 @@ def pMsg(value):
 
 def download_and_add_image_on_glance(glance, image_name, image_url):
     dest_path = VIMS_DATA_DIR + "tmp/"
+    if not os.path.exists(dest_path):
+        os.makedirs(dest_path)
     file_name = image_url.rsplit('/')[-1]
     if not functest_utils.download_url(image_url, dest_path):
         logger.error("Failed to download image %s" %file_name)
