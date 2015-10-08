@@ -77,20 +77,27 @@ def get_credentials(service):
 
 
 # ################ NOVA #################
+def get_instances(nova_client):
+    try:
+        instances = nova_client.servers.list()
+        return instances
+    except:
+        return None
+
 def get_instance_status(nova_client, instance):
     try:
         instance = nova_client.servers.get(instance.id)
         return instance.status
     except:
         return None
-
-
+    
 def get_instance_by_name(nova_client, instance_name):
     try:
         instance = nova_client.servers.find(name=instance_name)
         return instance
     except:
         return None
+
 
 
 def get_flavor_id(nova_client, flavor_name):
@@ -266,6 +273,12 @@ def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
         return False
 
 # ################ GLANCE #################
+def get_images(glance_client):
+    try:
+        images = nova_client.images.list()
+        return images
+    except:
+        return None
 
 
 def get_image_id(glance_client, image_name):
