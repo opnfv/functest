@@ -134,9 +134,13 @@ rally verify list
 echo "Functest: copy results and clean Functest environment"
 
 # save ODL results
-cp -Rf ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/logs ${FUNCTEST_RESULTS_DIR}/ODL
+odl_logs="${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/logs"
+if [ -d ${tempest_conf} ]; then
+    cp -Rf  ${odl_logs} ${FUNCTEST_CONF_DIR}/ODL/
+fi
 
 # save tempest.conf for further troubleshooting
-cp $RALLY_VENV/tempest/for-deployment-*/tempest.conf ${FUNCTEST_CONF_DIR}
-
-
+tempest_conf="${RALLY_VENV}/tempest/for-deployment-*/tempest.conf"
+if [ -f ${tempest_conf} ]; then
+    cp $tempest_conf ${FUNCTEST_CONF_DIR}
+fi
