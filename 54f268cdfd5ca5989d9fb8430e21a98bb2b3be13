@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_486d1204",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/client.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-09T13:24:23Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 3,
+        "startChar": 37,
+        "endLine": 3,
+        "endChar": 38
+      },
+      "revId": "54f268cdfd5ca5989d9fb8430e21a98bb2b3be13",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_08771ad6",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-09T13:24:23Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "54f268cdfd5ca5989d9fb8430e21a98bb2b3be13",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_c880e28d",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/connection.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-09T13:24:23Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 166,
+        "startChar": 28,
+        "endLine": 166,
+        "endChar": 29
+      },
+      "revId": "54f268cdfd5ca5989d9fb8430e21a98bb2b3be13",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_884aea81",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/environment.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-09T13:24:23Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 139,
+        "startChar": 27,
+        "endLine": 139,
+        "endChar": 29
+      },
+      "revId": "54f268cdfd5ca5989d9fb8430e21a98bb2b3be13",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
