@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_eb0f202d",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-10-09T14:41:34Z",
+      "side": 1,
+      "message": "as you want either put you config here or you could use a secion in config_functest.yaml",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "54f268cdfd5ca5989d9fb8430e21a98bb2b3be13",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_a82b6e93",
         "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
         "patchSetId": 1
