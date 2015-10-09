@@ -14,12 +14,13 @@ import pexpect
 import re
 import sys
 import pxssh
-from foundation import foundation
+from connection import connection
 
-class environment:
+class environment( connection ):
 
     def __init__( self ):
-        self.loginfo = foundation( )
+        connection.__init__( self )
+        self.loginfo = connection( )
         self.masterhandle = ''
 
     def DownLoadCode( self, handle, codeurl ):
@@ -30,7 +31,7 @@ class environment:
         codeurl: clone code url
         """
         print "Now loading test codes! Please wait in patient..."
-        originalfolder = os.getcwd()
+        originalfolder = self.home
         gitclone = handle
         gitclone.sendline( "git clone " + codeurl )
         index = 0
@@ -92,16 +93,19 @@ class environment:
         Pushkeys.sendline( cmd )
         Result = 0
         while Result != 2:
-            Result = Pushkeys.expect( ["yes", "password", "#|$", pexpect.EOF, \
-                                       pexpect.TIMEOUT])
+            Result = Pushkeys.expect( ["(yes/no)", "assword:", "PEXPECT]#", \
+                                       pexpect.EOF, pexpect.TIMEOUT])
             if ( Result == 0 ):
                 Pushkeys.sendline( "yes" )
             if ( Result == 1 ):
                 Pushkeys.sendline( password )
             if ( Result == 2 ):
                 self.loginfo.log( "ONOS Push keys Success!" )
+                break
             if ( Result == 3 ):
                 self.loginfo.log( "ONOS Push keys Error!" )
+                break
+            time.sleep(2)
         Pushkeys.prompt( )
         print "Done!"
 
@@ -130,12 +134,9 @@ class environment:
         password: onos&compute node password
         """
         print "Now Changing ONOS name&password"
-        if masterusername is 'root':
-            filepath = '/root/'
-        else :
-            filepath = '/home/' +masterusername + '/'
-        line = open(filepath + "onos/tools/build/envDefaults", 'r').readlines()
-        lenall = len(line)-1
+        filepath = self.home + '/onos/tools/build/envDefaults'
+        line = open(filepath, 'r').readlines()
+        lenall = len(line)-1 
         for i in range(lenall):
            if "ONOS_USER=" in line[i]:
                line[i]=line[i].replace("sdn",user)
@@ -143,12 +144,12 @@ class environment:
                line[i]=line[i].replace("sdn",user)
            if "ONOS_PWD" in line[i]:
                line[i]=line[i].replace("rocks",password)
-        NewFile = open("onos/tools/build/envDefaults",'w')
+        NewFile = open(filepath, 'w')
         NewFile.writelines(line)
         NewFile.close
         print "Done!"
 
-    def ChangeTestCasePara(testcase,user,password):
+    def ChangeTestCasePara(self, testcase, user, password):
         """
         When running test script, there's something need \
         to change in every test folder's *.param & *.topo files
@@ -156,10 +157,10 @@ class environment:
         password: onos&compute node password
         """
         print "Now Changing " + testcase +  " name&password"
-        if masterusername is 'root':
+        if self.masterusername is 'root':
             filepath = '/root/'
         else :
-            filepath = '/home/' + masterusername + '/'
+            filepath = '/home/' + self.masterusername + '/'
         filepath = filepath +"OnosSystemTest/TestON/tests/" + testcase + "/" + \
                    testcase + ".topo"
         line = open(filepath,'r').readlines()
@@ -205,6 +206,11 @@ class environment:
         """
         Onos Environment Setup function
         """
+        self.Gensshkey( handle )
+        self.home = self.GetEnvValue( handle, 'HOME' )
+        self.AddKnownHost( handle, self.OC1, "karaf", "karaf" )
+        self.AddKnownHost( handle, self.OC2, "karaf", "karaf" )
+        self.AddKnownHost( handle, self.OC3, "karaf", "karaf" )
         self.DownLoadCode( handle, 'https://github.com/sunyulin/OnosSystemTest.git' )
         self.DownLoadCode( handle, 'https://gerrit.onosproject.org/onos' )
         self.ChangeOnosName(self.agentusername,self.agentpassword)
