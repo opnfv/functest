@@ -13,12 +13,13 @@ import re
 import sys
 from foundation import foundation
 
-class connection:
+class connection( foundation ):
 
     def __init__( self ):
+        foundation.__init__( self )
         self.loginfo = foundation()
 
-    def AddKnownHost( self, ipaddr, username, password ):
+    def AddKnownHost( self, handle, ipaddr, username, password ):
         """
         Add an user to known host,so that onos can login in with onos $ipaddr.
         parameters:
@@ -27,7 +28,8 @@ class connection:
         password: login password
         """
         print( "Now Adding an user to known hosts " + ipaddr )
-        login = pexpect.spawn( "ssh -l %s -p 8101 %s"%( username, ipaddr ) )
+        login = handle
+        login.sendline( "ssh -l %s -p 8101 %s"%( username, ipaddr ) )
         index = 0
         while index != 2:
             index = login.expect( ['assword:', 'yes/no', pexpect.EOF, \
@@ -38,38 +40,64 @@ class connection:
                 index = login.expect( ["closed", pexpect.EOF] )
                 if index == 0:
                     self.loginfo.log( "Add SSH Known Host Success!" )
+                    break
                 else:
                     self.loginfo.log( "Add SSH Known Host Failed! Please Check!" )
-                #login.interact()
+                    break
+                login.prompt( )
 
             if index == 1:
                 login.sendline('yes')
 
-    def Gensshkey( self ):
+    def GetEnvValue( self, handle, envname):
+        """
+        os.getenv only returns current user value
+        GetEnvValue returns a environment value of
+            current handle
+        eg: GetEnvValue(handle,'HOME')
+        """
+        envhandle = handle
+        envhandle.sendline( 'echo $' + envname )
+        envhandle.prompt( )
+        reg = envname + '\r\n(.*)\r'
+        envaluereg = re.compile( reg )
+        envalue = envaluereg.search( envhandle.before )
+        if envalue:
+            return envalue.groups()[0]
+        else:
+            return None
+
+    def Gensshkey( self, handle ):
         """
         Generate ssh keys, used for some server have no sshkey.
         """
         print "Now Generating SSH keys..."
         #Here file name may be id_rsa or id_ecdsa or others
         #So here will have a judgement
-        filelist = os.listdir( '~/.ssh' )
+        keysub = handle
+        filepath = self.GetEnvValue( keysub, 'HOME' ) + '/.ssh'
+        filelist = os.listdir( filepath )
         for item in filelist:
             if 'id' in item:
                 self.loginfo.log("SSH keys are exsit in ssh directory.")
                 return True
-        keysub = pexpect.spawn("ssh-keygen -t rsa")
+        keysub.sendline("ssh-keygen -t rsa")
         Result = 0
         while Result != 2:
             Result = keysub.expect( ["Overwrite", "Enter", pexpect.EOF, \
-                                     pexpect.TIMEOUT])
+                                     'PEXPECT]#', pexpect.TIMEOUT])
             if Result == 0:
                 keysub.sendline("y")
-            if Result == 1:
+            if Result == 1 or Result == 2:
                 keysub.sendline("\n")
             if Result == 3:
+                self.loginfo.log( "Generate SSH key success." )
+                keysub.prompt()
+                break
+            if Result == 4:
                 self.loginfo.log("Generate SSH key failed.")
-
-        self.loginfo.log( "Generate SSH key success." )
+                keysub.prompt()
+                break
 
     def GetRootAuth( self, password ):
         """
@@ -126,16 +154,33 @@ class connection:
             envAdd.close( )
         self.loginfo.log( "Add env to bashrc success!" )
 
+    def OnosRootPathChange( self, onospath ):
+        """
+        Change ONOS root path in file:bash_profile
+        onospath: path of onos root
+        """
+        print "Now Changing ONOS Root Path"
+        filepath = onospath + '/onos/tools/dev/bash_profile'
+        line = open(filepath, 'r').readlines()
+        lenall = len(line) - 1
+        for i in range(lenall):
+           if "export ONOS_ROOT" in line[i]:
+               line[i] = 'export ONOS_ROOT=' + onospath + 'onos\n'
+        NewFile = open(filepath, 'w')
+        NewFile.writelines(line)
+        NewFile.close
+        print "Done!"
+
     def OnosConnectionSet (self):
         """
         Intergrate for ONOS connection setup
         """
-        self.Gensshkey()
-        self.AddKnownHost( self.OC1, "karaf", "karaf" )
-        self.AddKnownHost( self.OC2, "karaf", "karaf" )
-        self.AddKnownHost( self.OC3, "karaf", "karaf" )
-        currentpath = os.getcwd()
-        filepath = os.path.join( currentpath, "onos/tools/dev/bash_profile" )
+        if self.masterusername is 'root':
+            filepath = '/root/'
+        else :
+            filepath = '/home/' + self.masterusername + '/'
+        self.OnosRootPathChange( filepath )
+        filepath = os.path.join( filepath, "onos/tools/dev/bash_profile" )
         self.AddEnvIntoBashrc("source " + filepath + "\n")
         self.AddEnvIntoBashrc("export OCT=" + self.OCT)
         self.AddEnvIntoBashrc("export OC1=" + self.OC1)
