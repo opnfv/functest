@@ -163,6 +163,30 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_cbf0dccb",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2027
+      },
+      "writtenOn": "2015-10-10T02:21:11Z",
+      "side": 1,
+      "message": "Yep, I plan to move the config out, Your suggestion is so important for me. (yaml) is new for me, so I still need time to have a study, Thank you , Morgan",
+      "parentUuid": "da6255ed_eb0f202d",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "54f268cdfd5ca5989d9fb8430e21a98bb2b3be13",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_a82b6e93",
         "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
         "patchSetId": 1
