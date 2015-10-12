@@ -245,7 +245,18 @@ def cleanup(nova, neutron, network_dic):
 
 def push_results_to_db(payload):
 
-    # TODO move DB creds into config file
+    url = TEST_DB + "/results"
+    installer = functest_utils.get_installer_type(logger)
+    git_version = functest_utils.get_git_branch(args.repo_path)
+    # TODO pod_name hardcoded, info shall come from Jenkins
+    params = {"project_name": "functest", "case_name": "vPing",
+              "pod_name": "opnfv-jump-2", "installer": installer,
+              "version": git_version, "details": payload}
+
+    headers = {'Content-Type': 'application/json'}
+    r = requests.post(url, data=json.dumps(params), headers=headers)
+    logger.debug(r)
+
     url = TEST_DB + "/results"
     params = {"project_name": "functest", "case_name": "vPing", "pod_id": 1,
               "details": payload}
