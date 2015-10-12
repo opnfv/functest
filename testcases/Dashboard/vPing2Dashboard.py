@@ -49,7 +49,6 @@ TEST_DB = functest_yaml.get("results").get("test_db_url")
 
 
 def format_vPing_for_dashboard(criteria):
-
     # Get results
     myDataResults = dashboard_utils.get_results(TEST_DB, criteria)
 
