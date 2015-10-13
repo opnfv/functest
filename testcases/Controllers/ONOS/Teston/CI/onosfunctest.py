@@ -9,7 +9,6 @@ lanqinglong@huawei.com
 """
 from adapters.client import client
 
-
 if __name__=="__main__":
 
     main = client()
@@ -24,8 +23,9 @@ if __name__=="__main__":
     main.OCN = '189.42.8.104'
     main.OCN2 = '189.42.8.105'
     main.localhost = main.OCT
-    main.onosbasic()
 
     #scripts to run
-    main.RunScript("FUNCvirNetNB")
-    main.RunScript("FUNCovsdbtest")
+    runhandle = main.onosstart()
+    main.RunScript(runhandle, "FUNCvirNetNB")
+    main.RunScript(runhandle, "FUNCovsdbtest")
+    main.onosclean( runhandle )
