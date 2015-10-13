@@ -419,8 +419,7 @@ def get_git_branch(repo_path):
     """
     repo = Repo(repo_path)
     branch = repo.active_branch
-    print branch.name
-    return branch
+    return branch.name
 
 
 def get_installer_type(logger=None):
