@@ -22,6 +22,7 @@ class environment( connection ):
         connection.__init__( self )
         self.loginfo = connection( )
         self.masterhandle = ''
+        self.home = ''
 
     def DownLoadCode( self, handle, codeurl ):
         """
@@ -70,6 +71,8 @@ class environment( connection ):
         """
         print "Now Cleaning test environment"
         handle.sendline("sudo apt-get install -y mininet")
+        handle.prompt( )
+        handle.sendline("sudo apt-get install -y python-pip")
         handle.prompt( )
         handle.sendline("sudo pip install configobj")
         handle.prompt( )
@@ -202,6 +205,12 @@ class environment( connection ):
         #Release ssh
         handle.logout()
 
+    def CopyOnostoTestbin( self ):
+        sourcefile = os.curdir + '/dependencies/onos'
+        destifile = self.home + '/onos/tools/test/bin/'
+        runcommand = 'cp ' + sourcefile + ' ' + destifile
+        os.system( runcommand )
+
     def OnosEnvSetup( self, handle ):
         """
         Onos Environment Setup function
@@ -213,6 +222,7 @@ class environment( connection ):
         self.AddKnownHost( handle, self.OC3, "karaf", "karaf" )
         self.DownLoadCode( handle, 'https://github.com/sunyulin/OnosSystemTest.git' )
         self.DownLoadCode( handle, 'https://gerrit.onosproject.org/onos' )
+        self.CopyOnostoTestbin()
         self.ChangeOnosName(self.agentusername,self.agentpassword)
         self.InstallDefaultSoftware( handle )
         self.SetOnosEnvVar(handle, self.masterpassword,self.agentpassword)
