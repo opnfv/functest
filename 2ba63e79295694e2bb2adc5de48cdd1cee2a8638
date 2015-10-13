@@ -46,6 +46,24 @@
       "revId": "2ba63e79295694e2bb2adc5de48cdd1cee2a8638",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_01da5578",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/adapters/environment.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-13T12:16:18Z",
+      "side": 1,
+      "message": "Yes, that is covered in the docker. Python-pip is already install. \n\nIf you need python modules, please tell me and I will add it here:\n\nhttps://git.opnfv.org/cgit/functest/plain/docker/requirements.pip\n\nThe same for packages (they have to be UBuntu based)",
+      "parentUuid": "da6255ed_86c1bbe6",
+      "revId": "2ba63e79295694e2bb2adc5de48cdd1cee2a8638",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
