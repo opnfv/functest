@@ -257,13 +257,6 @@ def push_results_to_db(payload):
     r = requests.post(url, data=json.dumps(params), headers=headers)
     logger.debug(r)
 
-    url = TEST_DB + "/results"
-    params = {"project_name": "functest", "case_name": "vPing", "pod_id": 1,
-              "details": payload}
-    headers = {'Content-Type': 'application/json'}
-    r = requests.post(url, data=json.dumps(params), headers=headers)
-    logger.debug(r)
-
 
 def main():
 
