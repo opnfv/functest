@@ -8,31 +8,50 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-import re, json, os, urllib2, argparse, logging, yaml
+# 0.1 (05/2015) initial commit
+# 0.2 (28/09/2015) extract Tempest, format json result, add ceilometer suite
+# and push result into test DB
+#
 
-
+import re
+import json
+import os
+import argparse
+import logging
+import yaml
+import requests
+import sys
 
 """ tests configuration """
-tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone', 'neutron', 'nova', 'quotas', 'requests', 'vm', 'tempest', 'all', 'smoke']
+tests = ['authenticate', 'glance', 'cinder', 'ceilometer', 'heat', 'keystone',
+         'neutron', 'nova', 'quotas', 'requests', 'vm', 'all', 'smoke']
 parser = argparse.ArgumentParser()
 parser.add_argument("repo_path", help="Path to the repository")
-parser.add_argument("test_name", help="The name of the test you want to perform with rally. "
-                                      "Possible values are : "
-                                      "[ {d[0]} | {d[1]} | {d[2]} | {d[3]} | {d[4]} | {d[5]} | {d[6]} "
-                                      "| {d[7]} | {d[8]} | {d[9]} | {d[10]} | {d[11]} | {d[12]}]. The 'all' value performs all the  possible tests scenarios"
-                                      "except 'tempest'".format(d=tests))
+parser.add_argument("test_name",
+                    help="Module name to be tested"
+                         "Possible values are : "
+                         "[ {d[0]} | {d[1]} | {d[2]} | {d[3]} | {d[4]} | "
+                         "{d[5]} | {d[6]} | {d[7]} | {d[8]} | {d[9]} | "
+                         "{d[10]} | {d[11]} | {d[12]}]. The 'all' value "
+                         "performs all the  possible tests scenarios"
+                         .format(d=tests))
+
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
+parser.add_argument("-r", "--report",
+                    help="Create json result file",
+                    action="store_true")
 
-parser.add_argument("test_mode", help="Tempest test mode", nargs='?', default="smoke")
+parser.add_argument("test_mode",
+                    help="Tempest test mode", nargs='?', default="smoke")
+
 args = parser.parse_args()
-test_mode=args.test_mode
+test_mode = args.test_mode
 
-if not args.test_name == "tempest":
-    if not args.test_mode == "smoke":
-        parser.error("test_mode is only used with tempest")
+sys.path.append(args.repo_path + "testcases/")
+import functest_utils
 
 """ logging configuration """
-logger = logging.getLogger('run_rally')
+logger = logging.getLogger("run_rally")
 logger.setLevel(logging.DEBUG)
 
 ch = logging.StreamHandler()
@@ -41,7 +60,8 @@ if args.debug:
 else:
     ch.setLevel(logging.INFO)
 
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - "
+                              "%(levelname)s - %(message)s")
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
@@ -51,26 +71,27 @@ f.close()
 
 HOME = os.environ['HOME']+"/"
 REPO_PATH = args.repo_path
-SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_rally_scn")
-RESULTS_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_rally_res") +  "/rally/"
+SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general"). \
+    get("directories").get("dir_rally_scn")
+RESULTS_DIR = HOME + functest_yaml.get("general").get("directories"). \
+    get("dir_rally_res") + "/rally/"
+TEST_DB = functest_yaml.get("results").get("test_db_url")
 
 
+def push_results_to_db(payload, module):
 
+    url = TEST_DB + "/results"
+    installer = functest_utils.get_installer_type(logger)
+    git_version = functest_utils.get_git_branch(args.repo_path)
+    # TODO pod_name hardcoded, info shall come from Jenkins
+    params = {"project_name": "functest", "case_name": "Rally-"+module,
+              "pod_name": "opnfv-jump-2", "installer": installer,
+              "version": git_version, "details": payload}
 
-def get_tempest_id(cmd_raw):
-    """
-    get task id from command rally result
-    :param cmd_raw:
-    :return: task_id as string
-    """
-    taskid_re = re.compile('^Verification UUID: (.*)$')
-    for line in cmd_raw.splitlines(True):
-        line = line.strip()
-    match = taskid_re.match(line)
+    headers = {'Content-Type': 'application/json'}
+    r = requests.post(url, data=json.dumps(params), headers=headers)
+    logger.debug(r)
 
-    if match:
-        return match.group(1)
-    return None
 
 def get_task_id(cmd_raw):
     """
@@ -106,55 +127,28 @@ def task_succeed(json_raw):
 
     return True
 
-def run_tempest():
-    """
-    the function dedicated to Tempest (functional tests for OpenStack)
-    :param test_mode: Tempest mode smoke (default), full, ..
-    :return: void
-    """
-    logger.info('starting {} Tempest ...'.format(test_mode))
-
-    cmd_line = "rally verify start {}".format(test_mode)
-    logger.debug('running command line : {}'.format(cmd_line))
-    cmd = os.popen(cmd_line)
-    task_id = get_tempest_id(cmd.read())
-    logger.debug('task_id : {}'.format(task_id))
-
-    if task_id is None:
-        logger.error("failed to retrieve task_id")
-    exit(-1)
-
-    """ check for result directory and create it otherwise """
-    if not os.path.exists(RESULTS_DIR):
-        logger.debug('does not exists, we create it'.format(RESULTS_DIR))
-        os.makedirs(RESULTS_DIR)
-
-    """ write log report file """
-    report_file_name = '{}opnfv-tempest.log'.format(RESULTS_DIR)
-    cmd_line = "rally verify detailed {} > {} ".format(task_id, report_file_name)
-    logger.debug('running command line : {}'.format(cmd_line))
-    os.popen(cmd_line)
-
 
 def run_task(test_name):
-    """
-    the "main" function of the script who lunch rally for a task
-    :param test_name: name for the rally test
-    :return: void
-    """
+    #
+    # the "main" function of the script who lunch rally for a task
+    # :param test_name: name for the rally test
+    # :return: void
+    #
+
     logger.info('starting {} test ...'.format(test_name))
 
-    """ check directory for scenarios test files or retrieve from git otherwise"""
+    # check directory for scenarios test files or retrieve from git otherwise
     proceed_test = True
     test_file_name = '{}opnfv-{}.json'.format(SCENARIOS_DIR, test_name)
+
     if not os.path.exists(test_file_name):
-        logger.error("The scenario '%s' does not exist." %test_file_name)
+        logger.error("The scenario '%s' does not exist." % test_file_name)
         exit(-1)
 
-    """ we do the test only if we have a scenario test file """
+    # we do the test only if we have a scenario test file
     if proceed_test:
         logger.debug('Scenario fetched from : {}'.format(test_file_name))
-        cmd_line = "rally task start --abort-on-sla-failure %s" % test_file_name
+        cmd_line = "rally task start --abort-on-sla-failure {}".format(test_file_name)
         logger.debug('running command line : {}'.format(cmd_line))
         cmd = os.popen(cmd_line)
         task_id = get_task_id(cmd.read())
@@ -164,18 +158,20 @@ def run_task(test_name):
             logger.error("failed to retrieve task_id")
             exit(-1)
 
-        """ check for result directory and create it otherwise """
+        # check for result directory and create it otherwise
         if not os.path.exists(RESULTS_DIR):
             logger.debug('does not exists, we create it'.format(RESULTS_DIR))
             os.makedirs(RESULTS_DIR)
 
-        """ write html report file """
+        # write html report file
         report_file_name = '{}opnfv-{}.html'.format(RESULTS_DIR, test_name)
-        cmd_line = "rally task report %s --out %s" % (task_id, report_file_name)
+        cmd_line = "rally task report {} --out {}".format(task_id,
+                                                          report_file_name)
+
         logger.debug('running command line : {}'.format(cmd_line))
         os.popen(cmd_line)
 
-        """ get and save rally operation JSON result """
+        # get and save rally operation JSON result
         cmd_line = "rally task results %s" % task_id
         logger.debug('running command line : {}'.format(cmd_line))
         cmd = os.popen(cmd_line)
@@ -183,7 +179,15 @@ def run_task(test_name):
         with open('{}opnfv-{}.json'.format(RESULTS_DIR, test_name), 'w') as f:
             logger.debug('saving json file')
             f.write(json_results)
-            logger.debug('saving json file2')
+
+        with open('{}opnfv-{}.json'
+                  .format(RESULTS_DIR, test_name)) as json_file:
+            json_data = json.load(json_file)
+
+        # Push results in payload of testcase
+        if args.report:
+            logger.debug("Push result into DB")
+            push_results_to_db(json_data, test_name)
 
         """ parse JSON operation result """
         if task_succeed(json_results):
@@ -191,27 +195,28 @@ def run_task(test_name):
         else:
             print 'Test KO'
     else:
-        logger.error('{} test failed, unable to fetch a scenario test file'.format(test_name))
-
+        logger.error('{} test failed, unable to fetch a scenario test file'
+                     .format(test_name))
 
 
 def main():
-    """ configure script """
+    # configure script
     if not (args.test_name in tests):
         logger.error('argument not valid')
         exit(-1)
 
     if args.test_name == "all":
         for test_name in tests:
-            if not (test_name == 'all' or test_name == 'tempest' or test_name == 'heat' or test_name == 'smoke' or test_name == 'vm' ):
+            if not (test_name == 'all' or
+                    test_name == 'heat' or
+                    test_name == 'ceilometer' or
+                    test_name == 'smoke' or
+                    test_name == 'vm'):
                 print(test_name)
                 run_task(test_name)
     else:
         print(args.test_name)
-        if args.test_name == 'tempest':
-            run_tempest()
-        else:
-            run_task(args.test_name)
+        run_task(args.test_name)
 
 if __name__ == '__main__':
     main()
