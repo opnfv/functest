@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_3c49008c",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2015-10-15T07:26:11Z",
+      "side": 1,
+      "message": "order imports alphabetically",
+      "revId": "85ca2471955f2ea23ec67916479e96ab76b26208",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_1c5e3c46",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2015-10-15T07:26:11Z",
+      "side": 1,
+      "message": "there are no ceilometer scenarios in suites?",
+      "revId": "85ca2471955f2ea23ec67916479e96ab76b26208",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_7c365805",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2015-10-15T07:26:11Z",
+      "side": 1,
+      "message": "looong line",
+      "revId": "85ca2471955f2ea23ec67916479e96ab76b26208",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_fc5a484f",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2015-10-15T07:26:11Z",
+      "side": 1,
+      "message": "would it be good to group this with other imports?",
+      "revId": "85ca2471955f2ea23ec67916479e96ab76b26208",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
