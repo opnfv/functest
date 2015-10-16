@@ -175,7 +175,7 @@ class connection( foundation ):
         """
         Intergrate for ONOS connection setup
         """
-        if self.masterusername is 'root':
+        if self.masterusername == 'root':
             filepath = '/root/'
         else :
             filepath = '/home/' + self.masterusername + '/'
