@@ -45,7 +45,6 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
-HOME = os.environ['HOME']+"/"
 # with open(args.repo_path+"config_functest.yaml") as f:
 with open(args.repo_path + "testcases/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
@@ -53,9 +52,8 @@ f.close()
 
 # Cloudify parameters
 REPO_PATH = args.repo_path
-HOME = os.environ['HOME']+"/"
 VIMS_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_vIMS")
-VIMS_DATA_DIR = HOME + functest_yaml.get("general").get("directories").get("dir_vIMS_data")+"/"
+VIMS_DATA_DIR = functest_yaml.get("general").get("directories").get("dir_vIMS_data")+"/"
 
 TENANT_NAME = functest_yaml.get("vIMS").get("general").get("tenant_name")
 TENANT_DESCRIPTION = functest_yaml.get("vIMS").get("general").get("tenant_description")
