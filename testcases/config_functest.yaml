@@ -6,6 +6,7 @@ general:
         dir_rally:      testcases/VIM/OpenStack/CI/libraries/
         dir_rally_scn:  testcases/VIM/OpenStack/CI/suites/
         dir_vIMS:       testcases/vIMS/CI/
+        dir_onos:       testcases/Controllers/ONOS/Teston/CI/
 
         # Absolute path
         dir_repos:          /home/opnfv/repos
@@ -96,5 +97,19 @@ vIMS:
             agent_user: 'ubuntu'
             external_network_name: ''
             public_domain: clearwater.opnfv
+ONOS:
+    general:
+        onosbench_username: 'root'
+        onosbench_password: 'root'
+        onoscli_username: 'root'
+        onoscli_password: 'root'
+        runtimeout: 300
+    environment:
+        OCT: '189.42.8.99'
+        OC1: '189.42.8.101'
+        OC2: '189.42.8.102'
+        OC3: '189.42.8.103'
+        OCN: '189.42.8.104'
+        OCN2: '189.42.8.105'
 results:
     test_db_url: http://213.77.62.197

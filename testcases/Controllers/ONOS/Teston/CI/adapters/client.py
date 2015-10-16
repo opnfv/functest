@@ -14,6 +14,7 @@ class client( environment ):
     def __init__( self ):
         environment.__init__( self )
         self.loginfo = environment()
+        self.testcase = ''
 
     def RunScript( self, handle, testname, timeout=300 ):
         """
@@ -23,6 +24,7 @@ class client( environment ):
         masterusername: The server username of running ONOS
         masterpassword: The server password of running ONOS
         """
+        self.testcase = testname
         self.ChangeTestCasePara( testname, self.masterusername, self.masterpassword )
         runhandle = handle
         runtest = self.home + "/OnosSystemTest/TestON/bin/cli.py run " + testname
@@ -56,3 +58,12 @@ class client( environment ):
 
     def onosclean( self, handle ):
         self.SSHRelease( handle )
+        self.loginfo.log('Release onos handle Successful')
+
+    def push_results_to_db( self, payload, pushornot = 1):
+        url = self.Result_DB + "/results"
+        params = {"project_name": "functest", "case_name": "ONOS-" + self.testcase, 
+                  "pod_name": 'huawei-build-2', "details": payload}
+        headers = {'Content-Type': 'application/json'}
+        r = requests.post(url, data=json.dumps(params), headers=headers)
+        self.loginfo.log('Pushing result via Northbound, info:' + r )
