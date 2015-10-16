@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_3a4b3f2d",
+        "filename": "utils/get_sdn_type.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-10-16T11:54:06Z",
+      "side": 1,
+      "message": "should it not be stored in releng with get_creds?",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "818b16b23266ff2a4a2c8a366a6b36a4127562f8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_5a46f324",
+        "filename": "utils/get_sdn_type.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-10-16T11:54:06Z",
+      "side": 1,
+      "message": "joid missing",
+      "range": {
+        "startLine": 115,
+        "startChar": 25,
+        "endLine": 115,
+        "endChar": 26
+      },
+      "revId": "818b16b23266ff2a4a2c8a366a6b36a4127562f8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
