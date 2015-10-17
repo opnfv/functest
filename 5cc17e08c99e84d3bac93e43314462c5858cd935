@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_3a021f3f",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_tempest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-10-17T15:36:48Z",
+      "side": 1,
+      "message": "try with Tempest..\ncase names are case sensitive and tempest has been declared as Tempest\n\nhttp://213.77.62.197/test_projects/functest/cases",
+      "range": {
+        "startLine": 84,
+        "startChar": 56,
+        "endLine": 84,
+        "endChar": 63
+      },
+      "revId": "5cc17e08c99e84d3bac93e43314462c5858cd935",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
