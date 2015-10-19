@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_1d1d1510",
+        "filename": "testcases/Controllers/ODL/CI/create_venv.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 291
+      },
+      "writtenOn": "2015-10-19T12:17:36Z",
+      "side": 1,
+      "message": "This creates python virtual env, but it will not install python modules into that environment.\n\nFollowing section will activate this env.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 2
+      },
+      "revId": "a9489ee347c965ffe743f64e20f522e915c33909",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_fd192123",
+        "filename": "testcases/Controllers/ODL/CI/create_venv.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 291
+      },
+      "writtenOn": "2015-10-19T12:17:36Z",
+      "side": 1,
+      "message": "this activates venv which was created with previous command.\nbut there are no python packages in that env.\n\nIf packages are in docker image and this script will start from that docker. then in fact we don\u0027t need to activate venv at all. so we don\u0027t need whole this file...\n\nbut I am not sure how that docker image will look like and how we want to start scripts.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 37
+      },
+      "revId": "a9489ee347c965ffe743f64e20f522e915c33909",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
