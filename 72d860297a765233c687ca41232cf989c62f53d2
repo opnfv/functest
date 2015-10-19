@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_3dafb9e5",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-19T09:27:07Z",
+      "side": 1,
+      "message": "Sorry for being too picky, can you remove Tempest also from here? :)",
+      "revId": "72d860297a765233c687ca41232cf989c62f53d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_1dacf5ec",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-19T09:27:07Z",
+      "side": 1,
+      "message": "there are 12 elements now, so, the last one d[12] is not needed.",
+      "revId": "72d860297a765233c687ca41232cf989c62f53d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
