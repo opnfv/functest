@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_9d790596",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-19T09:12:42Z",
+      "side": 1,
+      "message": "shall we also remove smoke from here? since we did it in run_tempest?",
+      "revId": "03b2b3ba2585d806c17f4242ed00d7b96d440006",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_7d6e51cb",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-19T09:12:42Z",
+      "side": 1,
+      "message": "shall we remove any tempest related things from this script?",
+      "revId": "03b2b3ba2585d806c17f4242ed00d7b96d440006",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
