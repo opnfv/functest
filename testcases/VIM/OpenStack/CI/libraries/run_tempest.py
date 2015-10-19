@@ -18,15 +18,16 @@ import subprocess
 import sys
 import yaml
 
-modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing', 'identity',
-         'image', 'network', 'object_storage', 'orchestration', 'telemetry', 'volume']
+modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
+         'identity', 'image', 'network', 'object_storage', 'orchestration',
+         'telemetry', 'volume']
 
 """ tests configuration """
 parser = argparse.ArgumentParser()
 parser.add_argument("repo_path", help="Path to the Functest repository")
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
-parser.add_argument("-m", "--mode", help="Tempest test mode [smoke, all]"
-                    , default="smoke")
+parser.add_argument("-m", "--mode", help="Tempest test mode [smoke, all]",
+                    default="smoke")
 
 args = parser.parse_args()
 
@@ -53,27 +54,31 @@ TEST_DB = functest_yaml.get("results").get("test_db_url")
 sys.path.append(args.repo_path + "/testcases/")
 import functest_utils
 
-MODE="smoke"
+MODE = "smoke"
+
 
 def get_info(file_result):
     test_run = ""
     duration = ""
     test_failed = ""
 
-    p = subprocess.Popen('cat tempest.log', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    p = subprocess.Popen('cat tempest.log',
+                         shell=True, stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
     for line in p.stdout.readlines():
         # print line,
-        if (len(test_run) < 1): test_run = re.findall("[0-9]*\.[0-9]*s", line)
-        if (len(duration) < 1): duration = re.findall("[0-9]*\ tests", line)
+        if (len(test_run) < 1):
+            test_run = re.findall("[0-9]*\.[0-9]*s", line)
+        if (len(duration) < 1):
+            duration = re.findall("[0-9]*\ tests", line)
         regexp = r"(failures=[0-9]+)"
-        if (len(test_failed) < 1): test_failed = re.findall(regexp, line)
+        if (len(test_failed) < 1):
+            test_failed = re.findall(regexp, line)
 
     retval = p.wait()
 
-    print "test_run:"
-    print test_run
-    print "duration:"
-    print duration
+    logger.debug("test_run:"+test_run)
+    logger.debug("duration:"+duration)
 
 
 def push_results_to_db(payload, module, pod_name):
@@ -82,16 +87,12 @@ def push_results_to_db(payload, module, pod_name):
     url = TEST_DB + "/results"
     installer = functest_utils.get_installer_type(logger)
     git_version = functest_utils.get_git_branch(REPO_PATH)
-    logger.info("Pushing results to DB: '%s'." %url)
+    logger.info("Pushing results to DB: '%s'." % url)
+
     params = {"project_name": "functest", "case_name": "Tempest",
               "pod_name": str(pod_name), 'installer': installer,
               "version": git_version, 'details': payload}
     headers = {'Content-Type': 'application/json'}
-
-    print url
-    print " ----- "
-    print params
-    print " ----- "
 
     r = requests.post(url, data=json.dumps(params), headers=headers)
     logger.debug(r)
@@ -103,25 +104,26 @@ def run_tempest(OPTION):
     # :param option: tempest option (smoke, ..)
     # :return: void
     #
-    logger.info("Starting Tempest test suite: '%s'." %OPTION)
+    logger.info("Starting Tempest test suite: '%s'." % OPTION)
     cmd_line = "rally verify start "+OPTION
     logger.debug('Executing command : {}'.format(cmd_line))
-    subprocess.call(cmd_line,shell=True, stderr=subprocess.STDOUT)
+    subprocess.call(cmd_line, shell=True, stderr=subprocess.STDOUT)
 
     cmd_line = "rally verify list"
     logger.debug('Executing command : {}'.format(cmd_line))
     cmd = os.popen(cmd_line)
-    output=(((cmd.read()).splitlines()[3]).replace(" ","")).split("|")
+    output = (((cmd.read()).splitlines()[3]).replace(" ", "")).split("|")
     # Format:
-    #| UUID | Deployment UUID | smoke | tests | failures | Created at | Duration | Status  |
-    num_tests=output[4]
-    num_failures=output[5]
-    time_start=output[6]
-    duration=output[7]
+    # | UUID | Deployment UUID | smoke | tests | failures | Created at |
+    # Duration | Status  |
+    num_tests = output[4]
+    num_failures = output[5]
+    time_start = output[6]
+    duration = output[7]
 
     # Generate json results for DB
-    json_results={'timestart': time_start, 'duration': duration,
-             'tests': num_tests, 'failures': num_failures}
+    json_results = {"timestart": time_start, "duration": duration,
+                    "tests": int(num_tests), "failures": int(num_failures)}
     logger.info("Results: "+str(json_results))
     push_results_to_db(json_results, MODE, "opnfv-jump-2")
 
@@ -131,13 +133,13 @@ def main():
     if not (args.mode):
         MODE = "smoke"
     elif not (args.mode in modes):
-        logger.error("Tempest mode not valid. Possible values are:\n" + str(modes))
+        logger.error("Tempest mode not valid. Possible values are:\n"
+                     + str(modes))
         exit(-1)
     else:
         MODE = args.mode
 
     run_tempest(MODE)
-
 
 
 if __name__ == '__main__':
