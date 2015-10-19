@@ -34,4 +34,4 @@ Check Port Deleted
         Set Suite Variable	${ODLResult}
         Log	${ODLResult}
 	${resp}		get	ODLSession	${ODLREST}/${PORTID}
-        Should be Equal As Strings	${resp.status_code}	204
+        Should be Equal As Strings	${resp.status_code}	404

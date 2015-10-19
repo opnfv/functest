@@ -34,4 +34,4 @@ Check New subnet deleted
         Set Suite Variable	${ODLResult}
         Log	${ODLResult}
 	${resp}		get	ODLSession	${ODLREST}/${SUBNETID}
-        Should be Equal As Strings	${resp.status_code}	204
+        Should be Equal As Strings	${resp.status_code}	404
