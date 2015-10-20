@@ -120,9 +120,15 @@ def run_tempest(OPTION):
     num_failures = output[5]
     time_start = output[6]
     duration = output[7]
+    # Compute duration (lets assume it does not take more than 60 min)
+    dur_min=int(duration.split(':')[1])
+    dur_sec_float=float(duration.split(':')[2])
+    dur_sec_int=int(round(dur_sec_float,0))
+    if dur_min > 0:
+        dur_sec_int = dur_sec_int + 60 * dur_min
 
     # Generate json results for DB
-    json_results = {"timestart": time_start, "duration": duration,
+    json_results = {"timestart": time_start, "duration": dur_sec_int,
                     "tests": int(num_tests), "failures": int(num_failures)}
     logger.info("Results: "+str(json_results))
     push_results_to_db(json_results, MODE, "opnfv-jump-2")
