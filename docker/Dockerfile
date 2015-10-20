@@ -49,4 +49,5 @@ RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
 RUN git clone https://github.com/openstack/rally.git ${repos_dir}/rally
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
-RUN chmod 744  ${repos_dir}/functest/docker/start.sh
+RUN cp ${repos_dir}/functest/docker/start.sh /home/opnfv/start.sh
+RUN chmod 744  /home/opnfv/start.sh
