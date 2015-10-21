@@ -89,13 +89,6 @@ def action_start():
         logger.debug("Cleaning possible functest environment leftovers.")
         action_clean()
 
-
-        logger.info("Installing ODL environment...")
-        if not install_odl():
-            logger.error("There has been a problem while installing Robot.")
-            action_clean()
-            exit(-1)
-
         logger.info("Starting installation of functest environment")
         logger.info("Installing Rally...")
         if not install_rally():
@@ -306,16 +299,6 @@ def check_rally():
         return True
     else:
         return False
-
-
-def install_odl():
-    cmd = "chmod +x " + ODL_DIR + "start_tests.sh"
-    functest_utils.execute_command(cmd,logger)
-    cmd = "chmod +x " + ODL_DIR + "create_venv.sh"
-    functest_utils.execute_command(cmd,logger)
-    cmd = ODL_DIR + "create_venv.sh"
-    functest_utils.execute_command(cmd,logger)
-    return True
 
 
 
