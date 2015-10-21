@@ -9,9 +9,14 @@
 #    $ docker build -t opnfv/functest:tag .
 #
 # Execution:
-#    $ docker run -t -i -e "INSTALLER_TYPE=fuel/foreman" \
-#      -e "INSTALLER_IP=10.20.0.2/172.30.10.73" opnfv/functest
+#    $ docker run -t -i \
+#      -e "INSTALLER_TYPE=fuel/foreman" \
+#      -e "INSTALLER_IP=10.20.0.2/172.30.10.73" \
+#      -v $(pwd)/config_functest.yaml:/home/opnfv/functest/conf/config_functest.yaml
+#      opnfv/functest /bin/bash
 #
+# NOTE: providing config_functest.yaml is optional. If not provided, it will
+#       use the default one located in the repo
 
 
 FROM ubuntu:14.04
@@ -49,4 +54,3 @@ RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
 RUN git clone https://github.com/openstack/rally.git ${repos_dir}/rally
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
-RUN chmod 744  ${repos_dir}/functest/docker/start.sh
