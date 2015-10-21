@@ -21,11 +21,20 @@ general:
         dir_vIMS_data:      /home/opnfv/functest/data/vIMS
         dir_rally_inst:     ~/.rally
 
+    repositories:
+        # branch and commit ID to which the repos will be reset (HEAD)
+        functest_branch:    master
+        functest_commit:    latest
+        releng_branch:  master
+        releng_commit:  latest
+        rally_branch:   master
+        rally_commit:   9a17d8490e7fb4afee2f5629e6db41eabe4bc4d4
+
     openstack:
         image_name: functest-img
         image_url:  http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
         image_disk_format:  qcow2
-        rally_stable_commit:    9a17d8490e7fb4afee2f5629e6db41eabe4bc4d4
+
 
         #Public network. Optional
         neutron_public_net_name: net04_ext
