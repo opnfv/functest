@@ -58,18 +58,17 @@ RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("di
 RALLY_RESULT_DIR = functest_yaml.get("general").get("directories").get("dir_rally_res")
 VPING_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_vping")
 ODL_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_odl")
-IMAGE_DIR = functest_yaml.get("general").get("directories").get("dir_functest_data")
+DATA_DIR = functest_yaml.get("general").get("directories").get("dir_functest_data")
 
 # Tempest/Rally configuration details
 DEPLOYMENT_MAME = "opnfv-rally"
 RALLY_COMMIT = functest_yaml.get("general").get("openstack").get("rally_stable_commit")
 
 #GLANCE image parameters
-IMAGE_URL = functest_yaml.get("general").get("openstack").get("image_url")
+IMAGE_FILE_NAME = functest_yaml.get("general").get("openstack").get("image_file_name")
 IMAGE_DISK_FORMAT = functest_yaml.get("general").get("openstack").get("image_disk_format")
 IMAGE_NAME = functest_yaml.get("general").get("openstack").get("image_name")
-IMAGE_FILE_NAME = IMAGE_URL.rsplit('/')[-1]
-IMAGE_PATH = IMAGE_DIR + "/" + IMAGE_FILE_NAME
+IMAGE_PATH = DATA_DIR + "/" + IMAGE_FILE_NAME
 
 
 def action_start():
@@ -105,12 +104,6 @@ def action_start():
         # Create result folder under functest if necessary
         if not os.path.exists(RALLY_RESULT_DIR):
             os.makedirs(RALLY_RESULT_DIR)
-
-        logger.info("Downloading image...")
-        if not functest_utils.download_url(IMAGE_URL, IMAGE_DIR):
-            logger.error("There has been a problem downloading the image '%s'." %IMAGE_URL)
-            action_clean()
-            exit(-1)
 
         logger.info("Creating Glance image: %s ..." %IMAGE_NAME)
         if not create_glance_image(IMAGE_PATH,IMAGE_NAME,IMAGE_DISK_FORMAT):
@@ -193,10 +186,6 @@ def action_clean():
     if os.path.exists(RALLY_INSTALLATION_DIR):
         logger.debug("Removing Rally installation directory %s" % RALLY_INSTALLATION_DIR)
         shutil.rmtree(RALLY_INSTALLATION_DIR,ignore_errors=True)
-
-    if os.path.exists(IMAGE_PATH):
-        logger.debug("Deleting image")
-        os.remove(IMAGE_PATH)
 
     cmd = "glance image-list | grep "+IMAGE_NAME+" | cut -c3-38"
     p = os.popen(cmd,"r")
