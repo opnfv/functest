@@ -52,5 +52,6 @@ RUN git config --global http.sslVerify false
 RUN git clone https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
 RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
 RUN git clone https://github.com/openstack/rally.git ${repos_dir}/rally
+RUN git clone https://github.com/opendaylight/integration.git ${repos_dir}/odl_integration
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
