@@ -2,6 +2,10 @@
 # it includes python2.7 virtual env with robot packages and git
 
 BASEDIR=`dirname $0`
+RESULTS_DIR='/home/opnfv/functest/results/odl/'
+REPO_DIR='/home/opnfv/repos/old_integration'
+#TODO: read this form config_functest.yaml
+
 # Colors
 green='\033[0;32m'
 light_green='\033[1;32m'
@@ -43,27 +47,18 @@ PASS=${PASS:-'octopus'}
 NEUTRON_IP=${NEUTRON_IP:-192.168.0.68}
 set +x
 
-echo -e "${green}Cloning ODL integration git repo.${nc}"
-if [ -d ${BASEDIR}/integration ]; then
-    cd ${BASEDIR}/integration
-    git checkout -- .
-    git pull
-    cd -
-else
-    git clone https://github.com/opendaylight/integration.git ${BASEDIR}/integration
-fi
 
 # Change openstack password for admin tenant in neutron suite
-sed -i "s/\"password\": \".*\"/\"password\": \"${PASS}\"/" ${BASEDIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
+sed -i "s/\"password\": \".*\"/\"password\": \"${PASS}\"/" ${REPO_DIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
 
 # Add Start Suite and Teardown Suite
-sed -i "/^Documentation.*/a Suite Teardown     Stop Suite" ${BASEDIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
-sed -i "/^Documentation.*/a Suite Setup        Start Suite" ${BASEDIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
+sed -i "/^Documentation.*/a Suite Teardown     Stop Suite" ${REPO_DIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
+sed -i "/^Documentation.*/a Suite Setup        Start Suite" ${REPO_DIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
 
 
 # add custom tests to suite, if there are more custom tests needed this will be reworked
 echo -e "${green}Copy custom tests to suite.${nc}"
-cp -vf $BASEDIR/custom_tests/neutron/* $BASEDIR/integration/test/csit/suites/openstack/neutron/
+cp -vf ${BASEDIR}/custom_tests/neutron/* ${REPO_DIR}/integration/test/csit/suites/openstack/neutron/
 
 # List of tests are specified in test_list.txt
 # those are relative paths to test directories from integartion suite
@@ -78,16 +73,16 @@ do
 
     ((test_num++))
     echo -e "${light_green}Starting test: $line ${nc}"
-    pybot -v OPENSTACK:${NEUTRON_IP} -v PORT:${ODL_PORT} -v CONTROLLER:${ODL_IP} ${BASEDIR}/$line
-    mkdir -p $BASEDIR/logs/${test_num}
-    mv log.html $BASEDIR/logs/${test_num}/
-    mv report.html $BASEDIR/logs/${test_num}/
-    mv output.xml $BASEDIR/logs/${test_num}/
+    pybot -v OPENSTACK:${NEUTRON_IP} -v PORT:${ODL_PORT} -v CONTROLLER:${ODL_IP} ${REPO_DIR}/$line
+    mkdir -p $RESULTS_DIR/logs/${test_num}
+    mv log.html $RESULTS_DIR/logs/${test_num}/
+    mv report.html $RESULTS_DIR/logs/${test_num}/
+    mv output.xml $RESULTS_DIR/logs/${test_num}/
 done < ${BASEDIR}/test_list.txt
 
 # create final report which includes all partial test reports
 for i in $(seq $test_num); do
-  rebot_params="$rebot_params $BASEDIR/logs/$i/output.xml"
+  rebot_params="$rebot_params $RESULTS_DIR/logs/$i/output.xml"
 done
 
 echo -e "${green}Final report is located:${nc}"
