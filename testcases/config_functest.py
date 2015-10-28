@@ -64,10 +64,8 @@ DATA_DIR = functest_yaml.get("general").get("directories").get("dir_functest_dat
 DEPLOYMENT_MAME = "opnfv-rally"
 RALLY_COMMIT = functest_yaml.get("general").get("openstack").get("rally_stable_commit")
 
-#GLANCE image parameters
+#Image (cirros)
 IMAGE_FILE_NAME = functest_yaml.get("general").get("openstack").get("image_file_name")
-IMAGE_DISK_FORMAT = functest_yaml.get("general").get("openstack").get("image_disk_format")
-IMAGE_NAME = functest_yaml.get("general").get("openstack").get("image_name")
 IMAGE_PATH = DATA_DIR + "/" + IMAGE_FILE_NAME
 
 
@@ -104,12 +102,6 @@ def action_start():
         # Create result folder under functest if necessary
         if not os.path.exists(RALLY_RESULT_DIR):
             os.makedirs(RALLY_RESULT_DIR)
-
-        logger.info("Creating Glance image: %s ..." %IMAGE_NAME)
-        if not create_glance_image(IMAGE_PATH,IMAGE_NAME,IMAGE_DISK_FORMAT):
-            logger.error("There has been a problem while creating the Glance image.")
-            action_clean()
-            exit(-1)
 
         exit(0)
 
@@ -155,18 +147,6 @@ def action_check():
     else:
         logger.debug("   Image file found in %s" % IMAGE_PATH)
 
-    cmd="glance image-list | grep " + IMAGE_NAME
-    FNULL = open(os.devnull, 'w');
-    logger.debug('   Executing command : {}'.format(cmd))
-    p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=FNULL);
-    #if the command does not exist or there is no glance image
-    line = p.stdout.readline()
-    if line == "":
-        logger.debug("   Glance image NOT found.")
-        errors = True
-        errors_all = True
-    else:
-        logger.debug("   Glance image found.")
 
     if not errors:
         logger.debug("...OK")
@@ -186,14 +166,6 @@ def action_clean():
     if os.path.exists(RALLY_INSTALLATION_DIR):
         logger.debug("Removing Rally installation directory %s" % RALLY_INSTALLATION_DIR)
         shutil.rmtree(RALLY_INSTALLATION_DIR,ignore_errors=True)
-
-    cmd = "glance image-list | grep "+IMAGE_NAME+" | cut -c3-38"
-    p = os.popen(cmd,"r")
-
-    #while image_id = p.readline()
-    for image_id in p.readlines():
-        cmd = "glance image-delete " + image_id
-        functest_utils.execute_command(cmd,logger)
 
     if os.path.exists(RALLY_RESULT_DIR):
         logger.debug("Removing Result directory")
@@ -288,19 +260,6 @@ def check_rally():
         return True
     else:
         return False
-
-
-
-def create_glance_image(path,name,disk_format):
-    """
-    Create a glance image given the absolute path of the image, its name and the disk format
-    """
-    cmd = ("glance image-create --name "+name+"  --visibility public "
-    "--disk-format "+disk_format+" --container-format bare --file "+path)
-    functest_utils.execute_command(cmd,logger)
-    return True
-
-
 
 
 def main():
