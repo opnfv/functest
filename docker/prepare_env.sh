@@ -108,10 +108,7 @@ if [ $offline == false ]; then
     fi
     info "Rally repo: pulling to latest..."
     git pull
-    if [ ${RALLY_COMMIT} != "latest" ]; then
-        info "Rally repo: given commit is ${RALLY_COMMIT}. Reseting..."
-        git reset --hard ${RALLY_COMMIT}
-    fi
+    # We leave the reset command for later.
 
     info "Updating vIMS test repository...."
     cd ${VIMS_REPO_DIR}
@@ -129,7 +126,9 @@ if [ $offline == false ]; then
 fi
 
 # We do this regardless if its online or offline mode.
+# Assumption: the docker image contains a newer rally repo than the given commit.
 if [ ${RALLY_COMMIT} != "latest" ]; then
+    cd ${RALLY_REPO_DIR}
     info "Rally repo: given commit is ${RALLY_COMMIT}. Reseting..."
     git reset --hard ${RALLY_COMMIT}
 fi
