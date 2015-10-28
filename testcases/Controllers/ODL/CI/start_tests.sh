@@ -3,7 +3,7 @@
 
 BASEDIR=`dirname $0`
 RESULTS_DIR='/home/opnfv/functest/results/odl/'
-REPO_DIR='/home/opnfv/repos/old_integration'
+REPO_DIR='/home/opnfv/repos/odl_integration'
 #TODO: read this form config_functest.yaml
 
 # Colors
@@ -49,16 +49,16 @@ set +x
 
 
 # Change openstack password for admin tenant in neutron suite
-sed -i "s/\"password\": \".*\"/\"password\": \"${PASS}\"/" ${REPO_DIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
+sed -i "s/\"password\": \".*\"/\"password\": \"${PASS}\"/" ${REPO_DIR}/test/csit/suites/openstack/neutron/__init__.robot
 
 # Add Start Suite and Teardown Suite
-sed -i "/^Documentation.*/a Suite Teardown     Stop Suite" ${REPO_DIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
-sed -i "/^Documentation.*/a Suite Setup        Start Suite" ${REPO_DIR}/integration/test/csit/suites/openstack/neutron/__init__.robot
+sed -i "/^Documentation.*/a Suite Teardown     Stop Suite" ${REPO_DIR}/test/csit/suites/openstack/neutron/__init__.robot
+sed -i "/^Documentation.*/a Suite Setup        Start Suite" ${REPO_DIR}/test/csit/suites/openstack/neutron/__init__.robot
 
 
 # add custom tests to suite, if there are more custom tests needed this will be reworked
 echo -e "${green}Copy custom tests to suite.${nc}"
-cp -vf ${BASEDIR}/custom_tests/neutron/* ${REPO_DIR}/integration/test/csit/suites/openstack/neutron/
+cp -vf ${BASEDIR}/custom_tests/neutron/* ${REPO_DIR}/test/csit/suites/openstack/neutron/
 
 # List of tests are specified in test_list.txt
 # those are relative paths to test directories from integartion suite
