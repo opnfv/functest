@@ -104,6 +104,10 @@ if [ $offline == false ]; then
     cd ${RALLY_REPO_DIR}
     info "Rally repo: pulling to latest..."
     git pull
+    if [ ${RALLY_COMMIT} != "latest" ]; then
+        info "Rally repo: given commit is ${RALLY_COMMIT}. Reseting..."
+        git reset --hard ${RALLY_COMMIT}
+    fi
 
     info "Updating vIMS test repository...."
     cd ${VIMS_REPO_DIR}
