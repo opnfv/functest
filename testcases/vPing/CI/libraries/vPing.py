@@ -76,8 +76,17 @@ NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
 IP_1 = functest_yaml.get("vping").get("ip_1")
 IP_2 = functest_yaml.get("vping").get("ip_2")
-GLANCE_IMAGE_NAME = functest_yaml.get("general"). \
-    get("openstack").get("image_name")
+#GLANCE_IMAGE_NAME = functest_yaml.get("general"). \
+#    get("openstack").get("image_name")
+GLANCE_IMAGE_NAME="functest-vping"
+GLANCE_IMAGE_FILENAME = functest_yaml.get("general"). \
+    get("openstack").get("image_file_name")
+GLANCE_IMAGE_FORMAT = functest_yaml.get("general"). \
+    get("openstack").get("image_disk_format")
+GLANCE_IMAGE_PATH = functest_yaml.get("general"). \
+    get("directories").get("dir_functest_data") +"/"+GLANCE_IMAGE_FILENAME
+
+
 FLAVOR = functest_yaml.get("vping").get("vm_flavor")
 
 # NEUTRON Private Network parameters
@@ -177,11 +186,28 @@ def create_private_neutron_net(neutron):
                    'router_id': router_id}
     return network_dic
 
+def create_glance_image(path,name,disk_format):
+    """
+    Create a glance image given the absolute path of the image, its name and the disk format
+    """
+    cmd = ("glance image-create --name "+name+"  --visibility public "
+    "--disk-format "+disk_format+" --container-format bare --file "+path)
+    functest_utils.execute_command(cmd,logger)
+    return True
+
+def delete_glance_image(name):
+    cmd = ("glance image-delete $(glance image-list | grep %s | awk '{print $2}' | head -1)" %name)
+    functest_utils.execute_command(cmd,logger)
+    return True
+
 
 def cleanup(nova, neutron, network_dic):
 
     # delete both VMs
     logger.info("Cleaning up...")
+    logger.debug("Deleting image...")
+    delete_glance_image(GLANCE_IMAGE_NAME)
+
     vm1 = functest_utils.get_instance_by_name(nova, NAME_VM_1)
     if vm1:
         logger.debug("Deleting '%s'..." % NAME_VM_1)
@@ -240,7 +266,9 @@ def cleanup(nova, neutron, network_dic):
 
     logger.debug(
         "Network '%s' deleted successfully" % NEUTRON_PRIVATE_NET_NAME)
+
     return True
+
 
 def main():
 
@@ -252,6 +280,9 @@ def main():
 
     image = None
     flavor = None
+
+    logger.debug("Creating image '%s' from '%s'..." %(GLANCE_IMAGE_NAME,GLANCE_IMAGE_PATH))
+    create_glance_image(GLANCE_IMAGE_PATH,GLANCE_IMAGE_NAME,GLANCE_IMAGE_FORMAT)
 
     # Check if the given image exists
     try:
