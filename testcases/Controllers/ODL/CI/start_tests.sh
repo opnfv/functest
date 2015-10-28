@@ -3,7 +3,7 @@
 
 BASEDIR=`dirname $0`
 RESULTS_DIR='/home/opnfv/functest/results/odl/'
-REPO_DIR='/home/opnfv/repos/old_integration'
+REPO_DIR='/home/opnfv/repos/odl_integration'
 #TODO: read this form config_functest.yaml
 
 # Colors
