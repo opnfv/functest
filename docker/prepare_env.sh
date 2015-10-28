@@ -104,6 +104,19 @@ if [ $offline == false ]; then
     cd ${RALLY_REPO_DIR}
     info "Rally repo: pulling to latest..."
     git pull
+
+    info "Updating vIMS test repository...."
+    cd ${VIMS_TEST_REPO_DIR}
+    if [ ${VIMS_TEST_BRANCH} != "stable" ]; then
+        info "Releng repo: checkout ${VIMS_TEST_BRANCH} branch..."
+        git checkout ${VIMS_TEST_BRANCH}
+    fi
+    info "vIMS test repo: pulling to latest..."
+    git pull
+    if [ ${VIMS_TEST_COMMIT} != "latest" ]; then
+        info "vIMS test repo: given commit is ${VIMS_TEST_COMMIT}. Reseting..."
+        git reset --hard ${VIMS_TEST_COMMIT}
+    fi
 fi
 
 # We do this regardless if its online or offline mode.

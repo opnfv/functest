@@ -13,6 +13,8 @@ import os
 import urllib2
 import subprocess
 import sys
+import requests
+import json
 from git import Repo
 
 
@@ -434,3 +436,19 @@ def get_installer_type(logger=None):
         installer = "Unkown"
 
     return installer
+
+def push_results_to_db(db_url, case_name, logger, pod_name, git_version, payload):
+    url = db_url + "/results"
+    installer = get_installer_type(logger)
+    params = {"project_name": "functest", "case_name": case_name,
+              "pod_name": pod_name, "installer": installer,
+              "version": git_version, "details": payload}
+
+    headers = {'Content-Type': 'application/json'}
+    try:
+        r = requests.post(url, data=json.dumps(params), headers=headers)
+        logger.debug(r)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
