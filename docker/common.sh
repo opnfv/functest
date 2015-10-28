@@ -33,6 +33,7 @@ REPOS_DIR=$(cat $config_file | grep -w dir_repos | awk 'END {print $NF}')
 FUNCTEST_REPO_DIR=$(cat $config_file | grep -w dir_repo_functest | awk 'END {print $NF}')
 RALLY_REPO_DIR=$(cat $config_file | grep -w dir_repo_rally | awk 'END {print $NF}')
 RELENG_REPO_DIR=$(cat $config_file | grep -w dir_repo_releng | awk 'END {print $NF}')
+VIMS_REPO_DIR=$(cat $config_file | grep -w dir_repo_vims_test | awk 'END {print $NF}')
 
 FUNCTEST_DIR=$(cat $config_file | grep -w dir_functest | awk 'END {print $NF}')
 FUNCTEST_RESULTS_DIR=$(cat $config_file | grep -w dir_results | awk 'END {print $NF}')
@@ -47,6 +48,8 @@ FUNCTEST_BRANCH=$(cat $config_file | grep -w functest_branch | awk 'END {print $
 FUNCTEST_COMMIT=$(cat $config_file | grep -w functest_commit | awk 'END {print $NF}')
 RELENG_BRANCH=$(cat $config_file | grep -w releng_branch | awk 'END {print $NF}')
 RELENG_COMMIT=$(cat $config_file | grep -w releng_commit | awk 'END {print $NF}')
+VIMS_BRANCH=$(cat $config_file | grep -w vims_test_branch | awk 'END {print $NF}')
+VIMS_COMMIT=$(cat $config_file | grep -w vims_test_commit | awk 'END {print $NF}')
 
 echo "_____Parsed needed data from ${config_file}:"
 echo "####### Directories #######"
@@ -54,6 +57,7 @@ echo "REPOS_DIR=${REPOS_DIR}"
 echo "FUNCTEST_REPO_DIR=${FUNCTEST_REPO_DIR}"
 echo "RALLY_REPO_DIR=${RALLY_REPO_DIR}"
 echo "RELENG_REPO_DIR=${RELENG_REPO_DIR}"
+echo "VIMS_REPO_DIR=${VIMS_REPO_DIR}"
 echo "FUNCTEST_DIR=${FUNCTEST_DIR}"
 echo "FUNCTEST_RESULTS_DIR=${FUNCTEST_RESULTS_DIR}"
 echo "FUNCTEST_CONF_DIR=${FUNCTEST_CONF_DIR}"
@@ -66,6 +70,8 @@ echo "RELENG_BRANCH=${RELENG_BRANCH}"
 echo "RELENG_COMMIT=${RELENG_COMMIT}"
 echo "RALLY_BRANCH=${RALLY_BRANCH}"
 echo "RALLY_COMMIT=${RALLY_COMMIT}"
+echo "VIMS_BRANCH=${VIMS_BRANCH}"
+echo "VIMS_COMMIT=${VIMS_COMMIT}"
 echo "############################"
 
 info ()  {

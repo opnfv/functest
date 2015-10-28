@@ -242,22 +242,6 @@ def cleanup(nova, neutron, network_dic):
         "Network '%s' deleted successfully" % NEUTRON_PRIVATE_NET_NAME)
     return True
 
-
-def push_results_to_db(payload):
-
-    url = TEST_DB + "/results"
-    installer = functest_utils.get_installer_type(logger)
-    git_version = functest_utils.get_git_branch(args.repo_path)
-    # TODO pod_name hardcoded, info shall come from Jenkins
-    params = {"project_name": "functest", "case_name": "vPing",
-              "pod_name": "opnfv-jump-2", "installer": installer,
-              "version": git_version, "details": payload}
-
-    headers = {'Content-Type': 'application/json'}
-    r = requests.post(url, data=json.dumps(params), headers=headers)
-    logger.debug(r)
-
-
 def main():
 
     creds_nova = functest_utils.get_credentials("nova")
@@ -437,8 +421,10 @@ def main():
         if args.report:
             logger.debug("Push result into DB")
             # TODO check path result for the file
-            push_results_to_db(
-                {'timestart': start_time_ts, 'duration': duration,
+            git_version = functest_utils.get_git_branch(args.repo_path)
+            functest_utils.push_results_to_db(db_url=TEST_DB, case_name="vPing",
+                logger=logger, pod_name="opnfv-jump-2", git_version=git_version,
+                payload={'timestart': start_time_ts, 'duration': duration,
                  'status': test_status})
             # with open("vPing-result.json", "w") as outfile:
             # json.dump({'timestart': start_time_ts, 'duration': duration,
