@@ -28,7 +28,7 @@ examples:
 # Support for Functest offline
 # NOTE: Still not 100% working when running the tests
 offline=false
-arr_test=(vping odl rally tempest)
+arr_test=(vping odl rally tempest vims)
 
 
 function run_test(){
@@ -40,6 +40,10 @@ function run_test(){
         "vping")
             info "Running vPing test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing.py --debug ${FUNCTEST_REPO_DIR}/ -r
+        ;;
+        "vims")
+            info "Running vIMS test..."
+            python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py --debug ${FUNCTEST_REPO_DIR}/
         ;;
         "odl")
             info "Running ODL test..."
