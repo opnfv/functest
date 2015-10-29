@@ -11,7 +11,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
 
-import os, time, subprocess, logging, argparse, yaml, pprint, sys, shutil
+import os, time, subprocess, logging, argparse, yaml, pprint, sys, shutil, json, datetime
 from git import Repo
 import keystoneclient.v2_0.client as ksclient
 import glanceclient.client as glclient
@@ -54,6 +54,8 @@ f.close()
 REPO_PATH = args.repo_path
 VIMS_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_vIMS")
 VIMS_DATA_DIR = functest_yaml.get("general").get("directories").get("dir_vIMS_data")+"/"
+VIMS_TEST_DIR = functest_yaml.get("general").get("directories").get("dir_repo_vims_test")+"/"
+TEST_DB = functest_yaml.get("results").get("test_db_url")
 
 TENANT_NAME = functest_yaml.get("vIMS").get("general").get("tenant_name")
 TENANT_DESCRIPTION = functest_yaml.get("vIMS").get("general").get("tenant_description")
@@ -69,6 +71,9 @@ CW_BLUEPRINT = functest_yaml.get("vIMS").get("clearwater").get("blueprint")
 CW_DEPLOYMENT_NAME = functest_yaml.get("vIMS").get("clearwater").get("deployment-name")
 CW_INPUTS =  functest_yaml.get("vIMS").get("clearwater").get("inputs")
 CW_DOMAIN_NAME =  functest_yaml.get("vIMS").get("clearwater").get("inputs").get("public_domain")
+
+CFY_DEPLOYMENT_DURATION = 0
+CW_DEPLOYMENT_DURATION = 0
 
 
 def pMsg(value):
@@ -244,6 +249,12 @@ def deploy_cloudify_manager():
         f.write(yaml.dump(CFY_INPUTS, default_style='"') )
     f.close()
 
+    start_time_ts = time.time()
+    end_time_ts = start_time_ts
+    logger.info("Cloudify deployment Start Time:'%s'" % (
+        datetime.datetime.fromtimestamp(start_time_ts).strftime(
+            '%Y-%m-%d %H:%M:%S')))
+
     logger.info("Launching the cloudify-manager deployment")
     script = "source " + VIMS_DATA_DIR + "venv_cloudify/bin/activate; "
     script += "cd " + VIMS_DATA_DIR + "; "
@@ -256,6 +267,11 @@ def deploy_cloudify_manager():
     functest_utils.execute_command(cmd, logger)
 
     logger.info("Cloudify-manager server is UP !")
+
+    global CFY_DEPLOYMENT_DURATION
+    end_time_ts = time.time()
+    CFY_DEPLOYMENT_DURATION = round(end_time_ts - start_time_ts, 1)
+    logger.info("Cloudify deployment duration:'%s'" %CFY_DEPLOYMENT_DURATION)
 
 def undeploy_cloudify_manager():
 
@@ -283,24 +299,37 @@ def deploy_clearwater():
         f.write(yaml.dump(CW_INPUTS, default_style='"') )
     f.close()
 
+    time.sleep(30)
+    
+    start_time_ts = time.time()
+    end_time_ts = start_time_ts
+    logger.info("vIMS VNF deployment Start Time:'%s'" % (
+        datetime.datetime.fromtimestamp(start_time_ts).strftime(
+            '%Y-%m-%d %H:%M:%S')))
+
     logger.info("Launching the {0} deployment".format(CW_BLUEPRINT['name']))
     script = "source " + VIMS_DATA_DIR + "venv_cloudify/bin/activate; "
     script += "cd " + VIMS_DATA_DIR + CW_BLUEPRINT['destination_folder'] + "; "
     script += "cfy blueprints upload -b " + CW_BLUEPRINT['name'] + " -p openstack-blueprint.yaml; "
     script += "cfy deployments create -b " + CW_BLUEPRINT['name'] + " -d " + CW_DEPLOYMENT_NAME + " --inputs inputs.yaml; "
-    script += "cfy executions start -w install -d " + CW_DEPLOYMENT_NAME + "; "
+    script += "cfy executions start -w install -d " + CW_DEPLOYMENT_NAME + " --timeout 1800; "
 
     cmd = "/bin/bash -c '" + script + "'"
     functest_utils.execute_command(cmd, logger)
 
     logger.info("Clearwater vIMS is UP !")
 
+    global CW_DEPLOYMENT_DURATION
+    end_time_ts = time.time()
+    CW_DEPLOYMENT_DURATION = round(end_time_ts - start_time_ts, 1)
+    logger.info("vIMS VNF deployment duration:'%s'" %CW_DEPLOYMENT_DURATION)
+
 def undeploy_clearwater():
 
     logger.info("Launching the {0} undeployment".format(CW_BLUEPRINT['name']))
     script = "source " + VIMS_DATA_DIR + "venv_cloudify/bin/activate; "
     script += "cd " + VIMS_DATA_DIR + "; "
-    script += "cfy executions start -w uninstall -d " + CW_DEPLOYMENT_NAME + "; "
+    script += "cfy executions start -w uninstall -d " + CW_DEPLOYMENT_NAME + " --timeout 1800 ; "
     script += "cfy deployments delete -d " + CW_DEPLOYMENT_NAME + "; "
 
     cmd = "/bin/bash -c '" + script + "'"
@@ -308,21 +337,73 @@ def undeploy_clearwater():
 
 def test_clearwater():
 
+    time.sleep(120)
+
     script = "source " + VIMS_DATA_DIR + "venv_cloudify/bin/activate; "
     script += "cd " + VIMS_DATA_DIR + "; "
-    script += "cfy deployments outputs -d clearwater-opnfv | grep Value: | sed \"s/ *Value: //g\";"
+    script += "cfy deployments outputs -d " + CW_DEPLOYMENT_NAME + " | grep Value: | sed \"s/ *Value: //g\";"
     cmd = "/bin/bash -c '" + script + "'"
-    dns_ip = os.popen(cmd).read()
-    dns_ip = dns_ip.splitlines()[0]
 
-    # Coming soon
+    try:
+        logger.debug("Trying to get clearwater nameserver IP ... ")
+        dns_ip = os.popen(cmd).read()
+        dns_ip = dns_ip.splitlines()[0]
+    except:
+        logger.error("Unable to retrieve the IP of the DNS server !")
+
+    start_time_ts = time.time()
+    end_time_ts = start_time_ts
+    logger.info("vIMS functional test Start Time:'%s'" % (
+        datetime.datetime.fromtimestamp(start_time_ts).strftime(
+            '%Y-%m-%d %H:%M:%S')))
+
+    if dns_ip != "":
+        script = 'echo -e "nameserver ' + dns_ip + '\nnameserver 8.8.8.8\nnameserver 8.8.4.4" > /etc/resolv.conf; '
+        script += 'source /etc/profile.d/rvm.sh; '
+        script += 'cd ' + VIMS_TEST_DIR + '; '
+        script += 'rake test[' + CW_INPUTS["public_domain"] + '] SIGNUP_CODE="secret"'
+
+        cmd = "/bin/bash -c '" + script + "'"
+        output_file = "output.txt"
+        f = open(output_file, 'w+')
+        p = subprocess.call(cmd, shell=True, stdout=f, stderr=subprocess.STDOUT)
+        f.close()
+        end_time_ts = time.time()
+        duration = round(end_time_ts - start_time_ts, 1)
+        logger.info("vIMS functional test duration:'%s'" %duration)
+        f = open(output_file, 'r')
+        result = f.read()
+        if result != "" and logger:
+            logger.debug(result)
+
+        vims_test_result=""
+        try:
+            logger.debug("Trying to load test results")
+            with open(VIMS_TEST_DIR + "temp.json") as f:
+                vims_test_result = json.load(f)
+            f.close()
+        except:
+            logger.error("Unable to retrieve test results")
+
+        if vims_test_result != "":
+            git_version = functest_utils.get_git_branch(args.repo_path)
+            functest_utils.push_results_to_db(db_url=TEST_DB, case_name="vIMS",
+                        logger=logger, pod_name="opnfv-jump-2", git_version=git_version,
+                        payload={'orchestrator_deployment_duration': CFY_DEPLOYMENT_DURATION, 
+                        'VNF_deployment_duration': CW_DEPLOYMENT_DURATION,
+                        'functional_test': {'duration': duration,
+                        'result': vims_test_result}})
+        try:
+            os.remove(VIMS_TEST_DIR + "temp.json")
+        except:
+            logger.error("Deleting file failed")
 
 def main():
     initialize_deployments()
     deploy_cloudify_manager()
     deploy_clearwater()
 
-    #test_clearwater()
+    test_clearwater()
 
     undeploy_clearwater()
     undeploy_cloudify_manager()
