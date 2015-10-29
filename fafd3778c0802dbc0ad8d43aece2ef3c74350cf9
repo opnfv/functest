@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_1b11abac",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-29T16:30:30Z",
+      "side": 1,
+      "message": "Can you move it after ODL?",
+      "revId": "fafd3778c0802dbc0ad8d43aece2ef3c74350cf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
