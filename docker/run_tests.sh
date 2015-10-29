@@ -95,7 +95,7 @@ while [[ $# > 0 ]]
         -o|--offline)
             offline=true
         ;;
-        -t|--tests)
+        -t|--test|--tests)
             TEST="$2"
             shift
         ;;
