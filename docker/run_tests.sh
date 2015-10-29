@@ -28,7 +28,7 @@ examples:
 # Support for Functest offline
 # NOTE: Still not 100% working when running the tests
 offline=false
-arr_test=(vping odl rally tempest)
+arr_test=(vping odl rally tempest vims)
 
 
 function run_test(){
@@ -64,10 +64,6 @@ function run_test(){
                 cp -Rf  ${odl_logs} ${FUNCTEST_CONF_DIR}/ODL/
             fi
         ;;
-        "rally")
-            info "Running Rally benchmark suite..."
-            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally.py --debug ${FUNCTEST_REPO_DIR}/ all
-        ;;
         "tempest")
             info "Running Tempest smoke tests..."
             rally verify start smoke
@@ -77,6 +73,14 @@ function run_test(){
             if [ -f ${tempest_conf} ]; then
                 cp $tempest_conf ${FUNCTEST_CONF_DIR}
             fi
+        ;;
+        "vims")
+            info "Running vIMS test..."
+            python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py --debug ${FUNCTEST_REPO_DIR}/
+        ;;
+        "rally")
+            info "Running Rally benchmark suite..."
+            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally.py --debug ${FUNCTEST_REPO_DIR}/ all
         ;;
     esac
 }
