@@ -202,7 +202,7 @@ def delete_glance_image(name):
     return True
 
 
-def cleanup(nova, neutron, network_dic):
+def cleanup(nova, neutron, network_dic, port_id1, port_id2):
 
     # delete both VMs
     logger.info("Cleaning up...")
@@ -240,6 +240,15 @@ def cleanup(nova, neutron, network_dic):
     net_id = network_dic["net_id"]
     subnet_id = network_dic["subnet_id"]
     router_id = network_dic["router_id"]
+
+
+    if not functest_utils.delete_neutron_port(neutron, port_id1):
+        logger.error("Unable to remove port '%s'" %port_id1)
+        return False
+
+    if not functest_utils.delete_neutron_port(neutron, port_id2):
+        logger.error("Unable to remove port '%s'" %port_id2)
+        return False
 
     if not functest_utils.remove_interface_router(neutron, router_id,
                                                   subnet_id):
@@ -336,10 +345,10 @@ def main():
 
     # create VM
     logger.debug("Creating port 'vping-port-1' with IP %s..." % IP_1)
-    port_id = functest_utils.create_neutron_port(neutron_client,
+    port_id1 = functest_utils.create_neutron_port(neutron_client,
                                                  "vping-port-1", network_id,
                                                  IP_1)
-    if not port_id:
+    if not port_id1:
         logger.error("Unable to create port.")
         exit(-1)
 
@@ -352,7 +361,7 @@ def main():
         flavor=flavor,
         image=image,
         # nics = [{"net-id": network_id, "v4-fixed-ip": IP_1}]
-        nics=[{"port-id": port_id}]
+        nics=[{"port-id": port_id1}]
     )
 
     # wait until VM status is active
@@ -386,11 +395,11 @@ def main():
 
     # create VM
     logger.debug("Creating port 'vping-port-2' with IP %s..." % IP_2)
-    port_id = functest_utils.create_neutron_port(neutron_client,
+    port_id2 = functest_utils.create_neutron_port(neutron_client,
                                                  "vping-port-2", network_id,
                                                  IP_2)
 
-    if not port_id:
+    if not port_id2:
         logger.error("Unable to create port.")
         exit(-1)
     logger.info("Creating instance '%s' with IP %s..." % (NAME_VM_2, IP_2))
@@ -403,7 +412,7 @@ def main():
         flavor=flavor,
         image=image,
         # nics = [{"net-id": network_id, "v4-fixed-ip": IP_2}],
-        nics=[{"port-id": port_id}],
+        nics=[{"port-id": port_id2}],
         userdata=u
     )
 
@@ -440,7 +449,7 @@ def main():
             logger.debug("No vPing detected...")
         sec += 1
 
-    cleanup(nova_client, neutron_client, network_dic)
+    cleanup(nova_client, neutron_client, network_dic, port_id1, port_id2)
 
     test_status = "NOK"
     if EXIT_CODE == 0:
