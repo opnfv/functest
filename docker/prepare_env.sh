@@ -133,6 +133,17 @@ if [ ${RALLY_COMMIT} != "latest" ]; then
     git reset --hard ${RALLY_COMMIT}
 fi
 
+# Ugly hack:
+# After the 'git functest pull', we move the given yaml file to the repo directory,
+# since some of the scripts will use that one, and not the one in
+# /home/opnfv/functest/conf/
+given_config_file=/home/opnfv/functest/conf/config_functest.yaml
+default_config_file=$(find /home/opnfv/repos -name config_functest.yaml)
+if [ -f ${given_config_file} ]; then
+    info "Copying given config_functest.yaml to the repository directory"
+    cp ${given_config_file} ${default_config_file}
+fi
+
 
 # Create directories
 mkdir -p ${FUNCTEST_CONF_DIR}
