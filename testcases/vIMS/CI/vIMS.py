@@ -393,7 +393,7 @@ def test_clearwater():
                         payload={'orchestrator':{'duration': CFY_DEPLOYMENT_DURATION,
                         'result': ""},
                         'vIMS': {'duration': CW_DEPLOYMENT_DURATION,
-                        'result': ""}
+                        'result': ""},
                         'sig_test': {'duration': duration,
                         'result': vims_test_result}})
         try:
