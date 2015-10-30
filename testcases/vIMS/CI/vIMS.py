@@ -337,7 +337,7 @@ def undeploy_clearwater():
 
 def test_clearwater():
 
-    time.sleep(120)
+    time.sleep(180)
 
     script = "source " + VIMS_DATA_DIR + "venv_cloudify/bin/activate; "
     script += "cd " + VIMS_DATA_DIR + "; "
@@ -386,12 +386,15 @@ def test_clearwater():
             logger.error("Unable to retrieve test results")
 
         if vims_test_result != "":
+            logger.debug("Pushing results to DB....")
             git_version = functest_utils.get_git_branch(args.repo_path)
             functest_utils.push_results_to_db(db_url=TEST_DB, case_name="vIMS",
                         logger=logger, pod_name="opnfv-jump-2", git_version=git_version,
-                        payload={'orchestrator_deployment_duration': CFY_DEPLOYMENT_DURATION,
-                        'VNF_deployment_duration': CW_DEPLOYMENT_DURATION,
-                        'functional_test': {'duration': duration,
+                        payload={'orchestrator':{'duration': CFY_DEPLOYMENT_DURATION,
+                        'result': ""},
+                        'vIMS': {'duration': CW_DEPLOYMENT_DURATION,
+                        'result': ""}
+                        'sig_test': {'duration': duration,
                         'result': vims_test_result}})
         try:
             os.remove(VIMS_TEST_DIR + "temp.json")
