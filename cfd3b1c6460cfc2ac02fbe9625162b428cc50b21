@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_d6caca6d",
+        "filename": "testcases/vIMS/CI/vIMS.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-10-30T10:27:17Z",
+      "side": 1,
+      "message": "this is empty? What is the difference between this result and the result inside \u0027vIMS\u0027  and the one in \u0027sig_test\u0027?",
+      "revId": "cfd3b1c6460cfc2ac02fbe9625162b428cc50b21",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
