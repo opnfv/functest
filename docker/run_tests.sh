@@ -28,7 +28,7 @@ examples:
 # Support for Functest offline
 # NOTE: Still not 100% working when running the tests
 offline=false
-arr_test=(vping odl rally tempest vims)
+arr_test=(vping odl tempest vims rally)
 
 
 function run_test(){
