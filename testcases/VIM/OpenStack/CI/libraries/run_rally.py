@@ -22,6 +22,7 @@ import logging
 import yaml
 import requests
 import sys
+import novaclient.v2.client as novaclient
 
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'ceilometer', 'heat', 'keystone',
@@ -74,6 +75,14 @@ RESULTS_DIR = HOME + functest_yaml.get("general").get("directories"). \
     get("dir_rally_res") + "/rally/"
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 
+GLANCE_IMAGE_NAME = "functest-img-rally"
+GLANCE_IMAGE_FILENAME = functest_yaml.get("general"). \
+    get("openstack").get("image_file_name")
+GLANCE_IMAGE_FORMAT = functest_yaml.get("general"). \
+    get("openstack").get("image_disk_format")
+GLANCE_IMAGE_PATH = functest_yaml.get("general"). \
+    get("directories").get("dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
+
 
 def push_results_to_db(payload, module):
 
@@ -103,6 +112,16 @@ def get_task_id(cmd_raw):
         if match:
             return match.group(1)
     return None
+
+
+def create_glance_image(path, name, disk_format):
+    """
+    Create a glance image given the absolute path of the image, its name and the disk format
+    """
+    cmd = ("glance image-create --name " + name + "  --visibility public "
+           "--disk-format " + disk_format + " --container-format bare --file " + path)
+    functest_utils.execute_command(cmd, logger)
+    return True
 
 
 def task_succeed(json_raw):
@@ -196,10 +215,39 @@ def run_task(test_name):
                      .format(test_name))
 
 
+def delete_glance_image(name):
+    cmd = ("glance image-delete $(glance image-list | grep %s "
+           "| awk '{print $2}' | head -1)" % name)
+    functest_utils.execute_command(cmd, logger)
+    return True
+
+
+def cleanup(nova):
+    logger.info("Cleaning up...")
+    logger.debug("Deleting image...")
+    delete_glance_image(GLANCE_IMAGE_NAME)
+    return True
+
+
 def main():
     # configure script
     if not (args.test_name in tests):
         logger.error('argument not valid')
+        exit(-1)
+
+    creds_nova = functest_utils.get_credentials("nova")
+    nova_client = novaclient.Client(**creds_nova)
+
+    logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME, GLANCE_IMAGE_PATH))
+    create_glance_image(GLANCE_IMAGE_PATH, GLANCE_IMAGE_NAME, GLANCE_IMAGE_FORMAT)
+
+    # Check if the given image exists
+    try:
+        nova_client.images.find(name=GLANCE_IMAGE_NAME)
+        logger.info("Glance image found '%s'" % GLANCE_IMAGE_NAME)
+    except:
+        logger.error("ERROR: Glance image '%s' not found." % GLANCE_IMAGE_NAME)
+        logger.info("Available images are: ")
         exit(-1)
 
     if args.test_name == "all":
@@ -214,6 +262,8 @@ def main():
     else:
         print(args.test_name)
         run_task(args.test_name)
+
+    cleanup(nova_client)
 
 if __name__ == '__main__':
     main()
