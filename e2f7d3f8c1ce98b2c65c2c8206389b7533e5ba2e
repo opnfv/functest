@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_dc92e99e",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-11-03T10:12:05Z",
+      "side": 1,
+      "message": "If we call it like this, the scenarios will fail, since they expect just \"functest-img\"\n\nYou can either change this name or change the Rally scenarios to \"functest-img-rally\"\n\nThe affected scenarios are: opnfv-cinder.json, opnfv-nova.json and opnfv-vm.json",
+      "revId": "e2f7d3f8c1ce98b2c65c2c8206389b7533e5ba2e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
