@@ -155,15 +155,17 @@ mkdir -p ${FUNCTEST_RESULTS_DIR}/ODL
 
 
 # Create Openstack credentials file
-${REPOS_DIR}/releng/utils/fetch_os_creds.sh -d ${FUNCTEST_CONF_DIR}/openstack.creds \
-    -i ${INSTALLER_TYPE} -a ${INSTALLER_IP}
-retval=$?
-if [ $retval != 0 ]; then
-    error "Cannot retrieve credentials file from installation. Check logs."
-    exit $retval
+if [ ! -f ${FUNCTEST_CONF_DIR}/openstack.creds ]; then
+    ${REPOS_DIR}/releng/utils/fetch_os_creds.sh -d ${FUNCTEST_CONF_DIR}/openstack.creds \
+        -i ${INSTALLER_TYPE} -a ${INSTALLER_IP}
+    retval=$?
+    if [ $retval != 0 ]; then
+        error "Cannot retrieve credentials file from installation. Check logs."
+        exit $retval
+    fi
+else
+    info "OpenStack credentials file given to the docker and stored in ${FUNCTEST_CONF_DIR}/openstack.creds."
 fi
-
-
 # Source credentials
 source ${FUNCTEST_CONF_DIR}/openstack.creds
 
