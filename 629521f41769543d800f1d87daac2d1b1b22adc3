@@ -34,6 +34,42 @@
       "revId": "629521f41769543d800f1d87daac2d1b1b22adc3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_3cf9fbc8",
+        "filename": "docker/prepare_env.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 306
+      },
+      "writtenOn": "2015-11-18T20:07:18Z",
+      "side": 1,
+      "message": "have submitted a new patch according to Fatih\u0027s comments, and added apex/juju",
+      "parentUuid": "9a5c5d37_39b0ed8a",
+      "revId": "629521f41769543d800f1d87daac2d1b1b22adc3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_fc0243b3",
+        "filename": "docker/prepare_env.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 306
+      },
+      "writtenOn": "2015-11-18T20:07:18Z",
+      "side": 1,
+      "message": "agree",
+      "parentUuid": "9a5c5d37_396d8d33",
+      "revId": "629521f41769543d800f1d87daac2d1b1b22adc3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
