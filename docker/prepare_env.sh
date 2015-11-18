@@ -61,10 +61,11 @@ fi
 info "Checking environment variables INSTALLER_TYPE and INSTALLER_IP"
 if [ -z ${INSTALLER_TYPE} ]; then
     error "Environment variable 'INSTALLER_TYPE' is not defined."
-elif [ "${INSTALLER_TYPE}" != "fuel" ] && [ "${INSTALLER_TYPE}" != "foreman" ]; then
+elif [[ ${INSTALLER_TYPE} =~ ^(fuel|foreman|compass|apex|juju)$ ]]; then
+    info "INSTALLER_TYPE env variable found: ${INSTALLER_TYPE}"
+else
     error "Invalid environment variable INSTALLER_TYPE=${INSTALLER_TYPE}"
 fi
-info "INSTALLER_TYPE env variable found: ${INSTALLER_TYPE}"
 
 if [ -z ${INSTALLER_IP} ]; then
     error "Environment variable 'INSTALLER_IP' is not defined."
