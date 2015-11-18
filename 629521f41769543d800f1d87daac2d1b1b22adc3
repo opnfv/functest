@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_396d8d33",
+        "filename": "docker/prepare_env.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-11-18T08:01:51Z",
+      "side": 1,
+      "message": "This could perhaps be improved and made future proof since more installers will come; apex, juju and this conditional will grow.\n\nIf I were you, I would do something like below\n\n    if [[ \"$INSTALLER_TYPE\" \u003d~ ^(fuel|foreman|compass|apex|juju)$ ]]; then\n        echo \"Installer type is valid\"\n    else\n        error \"Invalid installer type INSTALLER_TYPE\u003d${INSTALLER_TYPE}\"\n    fi\n\nThere are other ways to do this obviously and above might not be the best one.\n\nApart from improving the conditional, as a general best practice, line length can also be shorter - some say this is kind of personal preference so I\u0027m not putting my preference here. Google shell style guide says 80 characters per line.\n\nhttps://google.github.io/styleguide/shell.xml#Line_Length_and_Long_Strings",
+      "revId": "629521f41769543d800f1d87daac2d1b1b22adc3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
