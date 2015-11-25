@@ -56,21 +56,26 @@ else
     info "MODE: offline"
 fi
 
+# definition of available installer names
+INSTALLERS=(fuel foreman compass apex joid)
 
-# Check if environment variables are set
-info "Checking environment variables INSTALLER_TYPE and INSTALLER_IP"
-if [ -z ${INSTALLER_TYPE} ]; then
-    error "Environment variable 'INSTALLER_TYPE' is not defined."
-elif [[ ${INSTALLER_TYPE} =~ ^(fuel|foreman|compass|apex|joid)$ ]]; then
-    info "INSTALLER_TYPE env variable found: ${INSTALLER_TYPE}"
-else
-    error "Invalid environment variable INSTALLER_TYPE=${INSTALLER_TYPE}"
-fi
+if [ ! -f ${FUNCTEST_CONF_DIR}/openstack.creds ]; then
+    # If credentials file is not given, check if environment variables are set
+    # to get the creds using fetch_os_creds.sh later on
+    info "Checking environment variables INSTALLER_TYPE and INSTALLER_IP"
+    if [ -z ${INSTALLER_TYPE} ]; then
+        error "Environment variable 'INSTALLER_TYPE' is not defined."
+    elif [[ ${INSTALLERS[@]} =~ ${INSTALLER_TYPE} ]]; then
+        info "INSTALLER_TYPE env variable found: ${INSTALLER_TYPE}"
+    else
+        error "Invalid environment variable INSTALLER_TYPE=${INSTALLER_TYPE}"
+    fi
 
-if [ -z ${INSTALLER_IP} ]; then
-    error "Environment variable 'INSTALLER_IP' is not defined."
+    if [ -z ${INSTALLER_IP} ]; then
+        error "Environment variable 'INSTALLER_IP' is not defined."
+    fi
+    info "INSTALLER_IP env variable found: ${INSTALLER_IP}"
 fi
-info "INSTALLER_IP env variable found: ${INSTALLER_IP}"
 
 
 if [ $offline == false ]; then
