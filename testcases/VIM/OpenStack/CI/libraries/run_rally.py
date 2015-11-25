@@ -84,7 +84,7 @@ GLANCE_IMAGE_PATH = functest_yaml.get("general"). \
     get("directories").get("dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
 
 
-def push_results_to_db(payload, module):
+def push_results_to_db(payload):
 
     url = TEST_DB + "/results"
     installer = functest_utils.get_installer_type(logger)
@@ -203,7 +203,7 @@ def run_task(test_name):
         # Push results in payload of testcase
         if args.report:
             logger.debug("Push result into DB")
-            push_results_to_db(json_data, test_name)
+            push_results_to_db(json_data)
 
         """ parse JSON operation result """
         if task_succeed(json_results):
