@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_4e2511aa",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2015-11-25T10:55:39Z",
+      "side": 1,
+      "message": "\u0027module\u0027 parameter not needed anymore here",
+      "revId": "11ede7d1649dcdc33682c3f379f84161cbd57da6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
