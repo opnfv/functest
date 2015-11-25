@@ -16,6 +16,24 @@
       "revId": "11ede7d1649dcdc33682c3f379f84161cbd57da6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_ce47c14a",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-11-25T12:02:56Z",
+      "side": 1,
+      "message": "Done here : https://gerrit.opnfv.org/gerrit/#/c/3607/1",
+      "parentUuid": "9a5c5d37_4e2511aa",
+      "revId": "11ede7d1649dcdc33682c3f379f84161cbd57da6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
