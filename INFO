@@ -14,13 +14,10 @@ Committers:
 pbandzi@cisco.com
 sama@docomolab-euro.com
 jose.lausuch@ericsson.com
-Andrew.Caldwell@metaswitch.com
 morgan.richomme@orange.com
 trevor.cooper@intel.com
 Prabu.Kuppuswamy@spirent.com
 fuqiao@chinamobile.com
-raja.karthik@hp.com
-vivekanandan.p@hp.com
 koffirodrigue@gmail.com
 dk068x@att.com
 meimei@huawei.com
@@ -29,6 +26,8 @@ lanqinglong@huawei.com
 viktor.tikkanen@nokia.com
 juha.kosonen@nokia.com
 zhanghaoyu7@huawei.com
+raghavendrachari.kamsali@hpe.com
+lixiaoguang5@huawei.com
 
 Link to TSC approval of the project: http://meetbot.opnfv.org/meetings/opnfv-meeting/2015/opnfv-meeting.2015-01-20-14.57.html
 
@@ -36,5 +35,4 @@ Link(s) to approval of additional committers:
 http://lists.opnfv.org/pipermail/opnfv-tech-discuss/2015-April/001971.html
 http://ircbot.wl.linuxfoundation.org/meetings/opnfv-testperf/2015/opnfv-testperf.2015-09-29-13.00.html
 
-* Addition of the following committers was approved by majority vote of exisitng committers: pbandzi@cisco.com, sama@docomolab-euro.com, jose.lausuch@ericsson.com ,Andrew.Caldwell@metaswitch.com, morgan.richomme@orange.com, iben.rodriguez@spirent.com, koffirodrigue@gmail.com, dk068x@att.com, meimei@huawei.com, valentin.boucher@orange.com, lanqinglong@huawei.com, viktor.tikkanen@nokia.com, juha.kosonen@nokia.com, zhanghaoyu7@huawei.com
 
