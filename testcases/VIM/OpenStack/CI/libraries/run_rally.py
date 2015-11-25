@@ -90,7 +90,7 @@ def push_results_to_db(payload, module):
     installer = functest_utils.get_installer_type(logger)
     git_version = functest_utils.get_git_branch(args.repo_path)
     # TODO pod_name hardcoded, info shall come from Jenkins
-    params = {"project_name": "functest", "case_name": "Rally-"+module,
+    params = {"project_name": "functest", "case_name": "Rally",
               "pod_name": "opnfv-jump-2", "installer": installer,
               "version": git_version, "details": payload}
 
