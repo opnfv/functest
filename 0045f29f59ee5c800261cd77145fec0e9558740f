@@ -16,6 +16,24 @@
       "revId": "0045f29f59ee5c800261cd77145fec0e9558740f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_653fd326",
+        "filename": "testcases/VIM/OpenStack/CI/custom_tests/test_list.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-11-27T13:57:04Z",
+      "side": 1,
+      "message": "AGree. For further commits maybe :)\nBTW:\n\"... chosen for Functest deployment.\"\nor \"for OPNVF deployment\" ?",
+      "parentUuid": "9a5c5d37_45f5ef81",
+      "revId": "0045f29f59ee5c800261cd77145fec0e9558740f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
