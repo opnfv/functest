@@ -465,8 +465,9 @@ def main():
             logger.debug("Push result into DB")
             # TODO check path result for the file
             git_version = functest_utils.get_git_branch(args.repo_path)
+            pod_name = functest_utils.get_pod_name(logger)
             functest_utils.push_results_to_db(db_url=TEST_DB, case_name="vPing",
-                logger=logger, pod_name="opnfv-jump-2", git_version=git_version,
+                logger=logger, pod_name=pod_name, git_version=git_version,
                 payload={'timestart': start_time_ts, 'duration': duration,
                  'status': test_status})
             # with open("vPing-result.json", "w") as outfile:
