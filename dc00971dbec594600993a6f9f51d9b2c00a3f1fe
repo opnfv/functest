@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_3b6578e1",
+        "filename": "testcases/vPing/CI/libraries/vPing.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-11-30T12:33:49Z",
+      "side": 1,
+      "message": "I hope Python does not get confused with this. Do we really need to provide the name of the parameter and \"\u003d\" ?",
+      "revId": "dc00971dbec594600993a6f9f51d9b2c00a3f1fe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
