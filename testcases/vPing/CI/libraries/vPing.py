@@ -19,11 +19,9 @@ import time
 import argparse
 import pprint
 import sys
-import json
 import logging
 import yaml
 import datetime
-import requests
 import novaclient.v2.client as novaclient
 from neutronclient.v2_0 import client as neutronclient
 
@@ -76,15 +74,15 @@ NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
 IP_1 = functest_yaml.get("vping").get("ip_1")
 IP_2 = functest_yaml.get("vping").get("ip_2")
-#GLANCE_IMAGE_NAME = functest_yaml.get("general"). \
+# GLANCE_IMAGE_NAME = functest_yaml.get("general"). \
 #    get("openstack").get("image_name")
-GLANCE_IMAGE_NAME="functest-vping"
+GLANCE_IMAGE_NAME = "functest-vping"
 GLANCE_IMAGE_FILENAME = functest_yaml.get("general"). \
     get("openstack").get("image_file_name")
 GLANCE_IMAGE_FORMAT = functest_yaml.get("general"). \
     get("openstack").get("image_disk_format")
 GLANCE_IMAGE_PATH = functest_yaml.get("general"). \
-    get("directories").get("dir_functest_data") +"/"+GLANCE_IMAGE_FILENAME
+    get("directories").get("dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
 
 
 FLAVOR = functest_yaml.get("vping").get("vm_flavor")
@@ -186,19 +184,21 @@ def create_private_neutron_net(neutron):
                    'router_id': router_id}
     return network_dic
 
-def create_glance_image(path,name,disk_format):
+
+def create_glance_image(path, name, disk_format):
     """
     Create a glance image given the absolute path of the image, its name and the disk format
     """
     cmd = ("glance image-create --name "+name+"  --visibility public "
-    "--disk-format "+disk_format+" --container-format bare --file "+path)
-    functest_utils.execute_command(cmd,logger)
+           "--disk-format "+disk_format+" --container-format bare --file "+path)
+    functest_utils.execute_command(cmd, logger)
     return True
+
 
 def delete_glance_image(name):
     cmd = ("glance image-delete $(glance image-list | grep %s "
-    "| awk '{print $2}' | head -1)" %name)
-    functest_utils.execute_command(cmd,logger)
+           "| awk '{print $2}' | head -1)" % name)
+    functest_utils.execute_command(cmd, logger)
     return True
 
 
@@ -241,16 +241,15 @@ def cleanup(nova, neutron, network_dic, port_id1, port_id2):
     subnet_id = network_dic["subnet_id"]
     router_id = network_dic["router_id"]
 
-
     if not functest_utils.delete_neutron_port(neutron, port_id1):
-        logger.error("Unable to remove port '%s'" %port_id1)
+        logger.error("Unable to remove port '%s'" % port_id1)
         return False
-    logger.debug("Port '%s' removed successfully" %port_id1)
+    logger.debug("Port '%s' removed successfully" % port_id1)
 
     if not functest_utils.delete_neutron_port(neutron, port_id2):
-        logger.error("Unable to remove port '%s'" %port_id2)
+        logger.error("Unable to remove port '%s'" % port_id2)
         return False
-    logger.debug("Port '%s' removed successfully" %port_id2)
+    logger.debug("Port '%s' removed successfully" % port_id2)
 
     if not functest_utils.remove_interface_router(neutron, router_id,
                                                   subnet_id):
@@ -293,8 +292,8 @@ def main():
     image = None
     flavor = None
 
-    logger.debug("Creating image '%s' from '%s'..." %(GLANCE_IMAGE_NAME,GLANCE_IMAGE_PATH))
-    create_glance_image(GLANCE_IMAGE_PATH,GLANCE_IMAGE_NAME,GLANCE_IMAGE_FORMAT)
+    logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME, GLANCE_IMAGE_PATH))
+    create_glance_image(GLANCE_IMAGE_PATH, GLANCE_IMAGE_NAME, GLANCE_IMAGE_FORMAT)
 
     # Check if the given image exists
     try:
@@ -348,8 +347,8 @@ def main():
     # create VM
     logger.debug("Creating port 'vping-port-1' with IP %s..." % IP_1)
     port_id1 = functest_utils.create_neutron_port(neutron_client,
-                                                 "vping-port-1", network_id,
-                                                 IP_1)
+                                                  "vping-port-1", network_id,
+                                                  IP_1)
     if not port_id1:
         logger.error("Unable to create port.")
         exit(-1)
@@ -398,8 +397,8 @@ def main():
     # create VM
     logger.debug("Creating port 'vping-port-2' with IP %s..." % IP_2)
     port_id2 = functest_utils.create_neutron_port(neutron_client,
-                                                 "vping-port-2", network_id,
-                                                 IP_2)
+                                                  "vping-port-2", network_id,
+                                                  IP_2)
 
     if not port_id2:
         logger.error("Unable to create port.")
@@ -465,10 +464,13 @@ def main():
             logger.debug("Push result into DB")
             # TODO check path result for the file
             git_version = functest_utils.get_git_branch(args.repo_path)
-            functest_utils.push_results_to_db(db_url=TEST_DB, case_name="vPing",
-                logger=logger, pod_name="opnfv-jump-2", git_version=git_version,
-                payload={'timestart': start_time_ts, 'duration': duration,
-                 'status': test_status})
+            pod_name = functest_utils.get_pod_name(logger)
+            functest_utils.push_results_to_db(TEST_DB,
+                                              "vPing",
+                                              logger, pod_name, git_version,
+                                              payload={'timestart': start_time_ts,
+                                                       'duration': duration,
+                                                       'status': test_status})
             # with open("vPing-result.json", "w") as outfile:
             # json.dump({'timestart': start_time_ts, 'duration': duration,
             # 'status': test_status}, outfile, indent=4)
