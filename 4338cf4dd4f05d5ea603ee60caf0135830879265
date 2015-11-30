@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_38745ece",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-11-30T08:47:34Z",
+      "side": 1,
+      "message": "Error message can perhaps be a bit better.\n\n   Unable to retrieve the POD name from environment.",
+      "revId": "4338cf4dd4f05d5ea603ee60caf0135830879265",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_587712d5",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 254
+      },
+      "writtenOn": "2015-11-30T08:47:34Z",
+      "side": 1,
+      "message": "Should this be named to something else explicitly instead of returning an existing POD name?\n\nLike unknown-pod to state the fact so querying would be simpler and not mixed with real results coming from POD1?",
+      "revId": "4338cf4dd4f05d5ea603ee60caf0135830879265",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
