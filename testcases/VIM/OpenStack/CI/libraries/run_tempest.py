@@ -130,7 +130,8 @@ def run_tempest(OPTION):
     json_results = {"timestart": time_start, "duration": dur_sec_int,
                     "tests": int(num_tests), "failures": int(num_failures)}
     logger.info("Results: "+str(json_results))
-    push_results_to_db(json_results, MODE, "opnfv-jump-2")
+    pod_name = functest_utils.get_pod_name(logger)
+    push_results_to_db(json_results, MODE, pod_name)
 
 
 def main():

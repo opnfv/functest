@@ -210,6 +210,7 @@ def create_neutron_port(neutron_client, name, network_id, ip):
         print "Error:", sys.exc_info()[0]
         return False
 
+
 def delete_neutron_port(neutron_client, port_id):
     try:
         neutron_client.delete_port(port_id)
@@ -217,6 +218,7 @@ def delete_neutron_port(neutron_client, port_id):
     except:
         print "Error:", sys.exc_info()[0]
         return False
+
 
 def get_network_id(neutron_client, network_name):
     networks = neutron_client.list_networks()['networks']
@@ -443,6 +445,19 @@ def get_installer_type(logger=None):
         installer = "Unkown"
 
     return installer
+
+
+def get_pod_name(logger=None):
+    """
+    Get PoD Name from env variable NODE_NAME
+    """
+    try:
+        return os.environ['NODE_NAME']
+    except KeyError:
+        if logger:
+            logger.error("Unable to retrieve the POD name from environment")
+        return "unknown-pod"
+
 
 def push_results_to_db(db_url, case_name, logger, pod_name, git_version, payload):
     url = db_url + "/results"
