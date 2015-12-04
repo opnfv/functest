@@ -54,6 +54,15 @@ function run_test(){
             elif [ $INSTALLER_TYPE == "foreman" ]; then
                 #odl_port=8081
                 ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
+            elif [ $INSTALLER_TYPE == "apex" ]; then
+                # TODO
+                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
+            elif [ $INSTALLER_TYPE == "joid" ]; then
+                # TODO
+                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
+            elif [ $INSTALLER_TYPE == "compass" ]; then
+                # TODO
+                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
             else
                 error "INSTALLER_TYPE not valid."
                 exit 1
