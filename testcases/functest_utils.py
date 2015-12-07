@@ -23,25 +23,8 @@ def check_credentials():
     """
     Check if the OpenStack credentials (openrc) are sourced
     """
-    # TODO: there must be a short way to do this
-    # doing if os.environ["something"] == "" throws an error
-    try:
-        os.environ['OS_AUTH_URL']
-    except KeyError:
-        return False
-    try:
-        os.environ['OS_USERNAME']
-    except KeyError:
-        return False
-    try:
-        os.environ['OS_PASSWORD']
-    except KeyError:
-        return False
-    try:
-        os.environ['OS_TENANT_NAME']
-    except KeyError:
-        return False
-    return True
+    env_vars = ['OS_AUTH_URL','OS_USERNAME','OS_PASSWORD','OS_TENANT_NAME']
+    return all(map(lambda v: v in os.environ and os.environ[v], env_vars))
 
 
 def get_credentials(service):
