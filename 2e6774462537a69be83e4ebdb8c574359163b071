@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_6c6573e0",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-08T09:57:10Z",
+      "side": 1,
+      "message": "You combined all those lines into only 2! Great! :)",
+      "revId": "2e6774462537a69be83e4ebdb8c574359163b071",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
