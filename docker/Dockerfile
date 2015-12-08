@@ -49,6 +49,8 @@ crudini \
 
 
 RUN mkdir -p ${repos_dir}
+RUN mkdir -p /root/.ssh
+RUN chmod 700 /root/.ssh
 
 RUN git config --global http.sslVerify false
 RUN git clone https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
