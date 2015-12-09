@@ -144,47 +144,6 @@ def waitVmDeleted(nova, vm):
     return False
 
 
-def create_private_neutron_net(neutron):
-
-    neutron.format = 'json'
-    logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
-    network_id = functest_utils. \
-        create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
-
-    if not network_id:
-        return False
-    logger.debug("Network '%s' created successfully" % network_id)
-    logger.debug('Creating Subnet....')
-    subnet_id = functest_utils. \
-        create_neutron_subnet(neutron,
-                              NEUTRON_PRIVATE_SUBNET_NAME,
-                              NEUTRON_PRIVATE_SUBNET_CIDR,
-                              network_id)
-    if not subnet_id:
-        return False
-    logger.debug("Subnet '%s' created successfully" % subnet_id)
-    logger.debug('Creating Router...')
-    router_id = functest_utils. \
-        create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
-
-    if not router_id:
-        return False
-
-    logger.debug("Router '%s' created successfully" % router_id)
-    logger.debug('Adding router to subnet...')
-
-    result = functest_utils.add_interface_router(neutron, router_id, subnet_id)
-
-    if not result:
-        return False
-
-    logger.debug("Interface added successfully.")
-    network_dic = {'net_id': network_id,
-                   'subnet_id': subnet_id,
-                   'router_id': router_id}
-    return network_dic
-
-
 def create_glance_image(path, name, disk_format):
     """
     Create a glance image given the absolute path of the image, its name and the disk format
@@ -234,49 +193,6 @@ def cleanup(nova, neutron, network_dic, port_id1, port_id2):
                     NAME_VM_2, functest_utils.get_instance_status(nova, vm2)))
         else:
             logger.debug("Instance %s terminated." % NAME_VM_2)
-
-    # delete created network
-    logger.info("Deleting network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
-    net_id = network_dic["net_id"]
-    subnet_id = network_dic["subnet_id"]
-    router_id = network_dic["router_id"]
-
-    if not functest_utils.delete_neutron_port(neutron, port_id1):
-        logger.error("Unable to remove port '%s'" % port_id1)
-        return False
-    logger.debug("Port '%s' removed successfully" % port_id1)
-
-    if not functest_utils.delete_neutron_port(neutron, port_id2):
-        logger.error("Unable to remove port '%s'" % port_id2)
-        return False
-    logger.debug("Port '%s' removed successfully" % port_id2)
-
-    if not functest_utils.remove_interface_router(neutron, router_id,
-                                                  subnet_id):
-        logger.error("Unable to remove subnet '%s' from router '%s'" % (
-            subnet_id, router_id))
-        return False
-
-    logger.debug("Interface removed successfully")
-    if not functest_utils.delete_neutron_router(neutron, router_id):
-        logger.error("Unable to delete router '%s'" % router_id)
-        return False
-
-    logger.debug("Router deleted successfully")
-
-    if not functest_utils.delete_neutron_subnet(neutron, subnet_id):
-        logger.error("Unable to delete subnet '%s'" % subnet_id)
-        return False
-
-    logger.debug(
-        "Subnet '%s' deleted successfully" % NEUTRON_PRIVATE_SUBNET_NAME)
-
-    if not functest_utils.delete_neutron_net(neutron, net_id):
-        logger.error("Unable to delete network '%s'" % net_id)
-        return False
-
-    logger.debug(
-        "Network '%s' deleted successfully" % NEUTRON_PRIVATE_NET_NAME)
 
     return True
 
