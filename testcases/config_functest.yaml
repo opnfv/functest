@@ -38,7 +38,6 @@ general:
         image_file_name:  cirros-0.3.4-x86_64-disk.img
         image_disk_format:  qcow2
 
-
         #Public network. Optional
         neutron_public_net_name: net04_ext
         neutron_public_subnet_name: net04_ext__subnet
@@ -53,13 +52,18 @@ general:
         neutron_private_subnet_end: 192.168.120.254
         neutron_private_subnet_gateway: 192.168.120.254
         neutron_router_name: functest-router
+
 vping:
     ping_timeout:   200
     vm_flavor: m1.small #adapt to your environment
     vm_name_1: opnfv-vping-1
     vm_name_2: opnfv-vping-2
-    ip_1: 192.168.120.30
-    ip_2: 192.168.120.40
+    vping_private_net_name: vping-net
+    vping_private_subnet_name: vping-subnet
+    vping_private_subnet_cidr: 192.168.130.0/24
+    vping_router_name: vping-router
+    ip_1: 192.168.130.30
+    ip_2: 192.168.130.40
 
 vIMS:
     general:

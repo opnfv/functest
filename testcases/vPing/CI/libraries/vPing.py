@@ -89,17 +89,17 @@ FLAVOR = functest_yaml.get("vping").get("vm_flavor")
 
 # NEUTRON Private Network parameters
 
-NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general"). \
-    get("openstack").get("neutron_private_net_name")
+NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("vping"). \
+    get("vping_private_net_name")
 
-NEUTRON_PRIVATE_SUBNET_NAME = functest_yaml.get("general"). \
-    get("openstack").get("neutron_private_subnet_name")
+NEUTRON_PRIVATE_SUBNET_NAME = functest_yaml.get("vping"). \
+    get("vping_private_subnet_name")
 
-NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("general"). \
-    get("openstack").get("neutron_private_subnet_cidr")
+NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("vping"). \
+    get("vping_private_subnet_cidr")
 
-NEUTRON_ROUTER_NAME = functest_yaml.get("general"). \
-    get("openstack").get("neutron_router_name")
+NEUTRON_ROUTER_NAME = functest_yaml.get("vping"). \
+    get("vping_router_name")
 
 
 def pMsg(value):

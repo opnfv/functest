@@ -68,6 +68,18 @@ RALLY_COMMIT = functest_yaml.get("general").get("openstack").get("rally_stable_c
 IMAGE_FILE_NAME = functest_yaml.get("general").get("openstack").get("image_file_name")
 IMAGE_PATH = DATA_DIR + "/" + IMAGE_FILE_NAME
 
+# NEUTRON Private Network parameters
+NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general"). \
+    get("openstack").get("neutron_private_net_name")
+NEUTRON_PRIVATE_SUBNET_NAME = functest_yaml.get("general"). \
+    get("openstack").get("neutron_private_subnet_name")
+NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("general"). \
+    get("openstack").get("neutron_private_subnet_cidr")
+NEUTRON_ROUTER_NAME = functest_yaml.get("general"). \
+    get("openstack").get("neutron_router_name")
+
+creds_neutron = functest_utils.get_credentials("neutron")
+neutron_client = neutronclient.Client(**creds_neutron)
 
 def action_start():
     """
@@ -85,8 +97,20 @@ def action_start():
         # Clean in case there are left overs
         logger.debug("Cleaning possible functest environment leftovers.")
         action_clean()
-
         logger.info("Starting installation of functest environment")
+
+        private_net = functest_utils.get_private_net(neutron_client)
+        if private_net is None:
+            # If there is no private network in the deployment we create one
+            if not create_private_neutron_net(neutron_client):
+                logger.error("There has been a problem while creating the functest network.")
+                action_clean()
+                exit(-1)
+        else:
+            logger.info("Private network '%s' already existing in the deployment."
+                 % private_net['name'])
+
+
         logger.info("Installing Rally...")
         if not install_rally():
             logger.error("There has been a problem while installing Rally.")
@@ -262,6 +286,46 @@ def check_rally():
         return False
 
 
+def create_private_neutron_net(neutron):
+    neutron.format = 'json'
+    logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
+    network_id = functest_utils. \
+        create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
+
+    if not network_id:
+        return False
+    logger.debug("Network '%s' created successfully" % network_id)
+    logger.debug('Creating Subnet....')
+    subnet_id = functest_utils. \
+        create_neutron_subnet(neutron,
+                              NEUTRON_PRIVATE_SUBNET_NAME,
+                              NEUTRON_PRIVATE_SUBNET_CIDR,
+                              network_id)
+    if not subnet_id:
+        return False
+    logger.debug("Subnet '%s' created successfully" % subnet_id)
+    logger.debug('Creating Router...')
+    router_id = functest_utils. \
+        create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
+
+    if not router_id:
+        return False
+
+    logger.debug("Router '%s' created successfully" % router_id)
+    logger.debug('Adding router to subnet...')
+
+    result = functest_utils.add_interface_router(neutron, router_id, subnet_id)
+
+    if not result:
+        return False
+
+    logger.debug("Interface added successfully.")
+    network_dic = {'net_id': network_id,
+                   'subnet_id': subnet_id,
+                   'router_id': router_id}
+    return True
+
+
 def main():
     if not (args.action in actions):
         logger.error('argument not valid')
@@ -272,6 +336,7 @@ def main():
         logger.error("Please source the openrc credentials and run the script again.")
         #TODO: source the credentials in this script
         exit(-1)
+
 
     if args.action == "start":
         action_start()
