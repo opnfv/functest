@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_fdd58b43",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-09T18:51:13Z",
+      "side": 1,
+      "message": "what about odl-bgp?",
+      "revId": "e75efb7931720b3c53384856a8d5e808afc93970",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
