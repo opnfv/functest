@@ -250,6 +250,17 @@ def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
         print "Error:", sys.exc_info()[0]
         return False
 
+
+def get_private_net(neutron_client):
+    # Checks if there is an existing private network
+    networks = neutron_client.list_networks()['networks']
+    if len(networks) == 0:
+        return None
+    for net in networks:
+        if net['router:external'] == False:
+            return net
+    return None
+
 # ################ GLANCE #################
 
 
