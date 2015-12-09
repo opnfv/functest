@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_975e7044",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-09T09:31:06Z",
+      "side": 1,
+      "message": "Should this be here? It is yet another feature project, like sdnvpn, right?",
+      "revId": "ca43e9117a8078a9b1030c129b9dc6896aaa00ec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_775bfc54",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-09T09:31:06Z",
+      "side": 1,
+      "message": "what does \"all\" represent here?",
+      "revId": "ca43e9117a8078a9b1030c129b9dc6896aaa00ec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
