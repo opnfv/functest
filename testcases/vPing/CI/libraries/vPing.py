@@ -144,47 +144,6 @@ def waitVmDeleted(nova, vm):
     return False
 
 
-def create_private_neutron_net(neutron):
-
-    neutron.format = 'json'
-    logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
-    network_id = functest_utils. \
-        create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
-
-    if not network_id:
-        return False
-    logger.debug("Network '%s' created successfully" % network_id)
-    logger.debug('Creating Subnet....')
-    subnet_id = functest_utils. \
-        create_neutron_subnet(neutron,
-                              NEUTRON_PRIVATE_SUBNET_NAME,
-                              NEUTRON_PRIVATE_SUBNET_CIDR,
-                              network_id)
-    if not subnet_id:
-        return False
-    logger.debug("Subnet '%s' created successfully" % subnet_id)
-    logger.debug('Creating Router...')
-    router_id = functest_utils. \
-        create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
-
-    if not router_id:
-        return False
-
-    logger.debug("Router '%s' created successfully" % router_id)
-    logger.debug('Adding router to subnet...')
-
-    result = functest_utils.add_interface_router(neutron, router_id, subnet_id)
-
-    if not result:
-        return False
-
-    logger.debug("Interface added successfully.")
-    network_dic = {'net_id': network_id,
-                   'subnet_id': subnet_id,
-                   'router_id': router_id}
-    return network_dic
-
-
 def create_glance_image(path, name, disk_format):
     """
     Create a glance image given the absolute path of the image, its name and the disk format
@@ -235,12 +194,8 @@ def cleanup(nova, neutron, network_dic, port_id1, port_id2):
         else:
             logger.debug("Instance %s terminated." % NAME_VM_2)
 
-    # delete created network
-    logger.info("Deleting network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
-    net_id = network_dic["net_id"]
-    subnet_id = network_dic["subnet_id"]
-    router_id = network_dic["router_id"]
-
+    # delete created ports
+    logger.info("Deleting neutron ports...")
     if not functest_utils.delete_neutron_port(neutron, port_id1):
         logger.error("Unable to remove port '%s'" % port_id1)
         return False
@@ -250,33 +205,6 @@ def cleanup(nova, neutron, network_dic, port_id1, port_id2):
         logger.error("Unable to remove port '%s'" % port_id2)
         return False
     logger.debug("Port '%s' removed successfully" % port_id2)
-
-    if not functest_utils.remove_interface_router(neutron, router_id,
-                                                  subnet_id):
-        logger.error("Unable to remove subnet '%s' from router '%s'" % (
-            subnet_id, router_id))
-        return False
-
-    logger.debug("Interface removed successfully")
-    if not functest_utils.delete_neutron_router(neutron, router_id):
-        logger.error("Unable to delete router '%s'" % router_id)
-        return False
-
-    logger.debug("Router deleted successfully")
-
-    if not functest_utils.delete_neutron_subnet(neutron, subnet_id):
-        logger.error("Unable to delete subnet '%s'" % subnet_id)
-        return False
-
-    logger.debug(
-        "Subnet '%s' deleted successfully" % NEUTRON_PRIVATE_SUBNET_NAME)
-
-    if not functest_utils.delete_neutron_net(neutron, net_id):
-        logger.error("Unable to delete network '%s'" % net_id)
-        return False
-
-    logger.debug(
-        "Network '%s' deleted successfully" % NEUTRON_PRIVATE_NET_NAME)
 
     return True
 
@@ -305,17 +233,7 @@ def main():
         pMsg(nova_client.images.list())
         exit(-1)
 
-    network_dic = create_private_neutron_net(neutron_client)
-
-    if not network_dic:
-        logger.error(
-            "There has been a problem when creating the neutron network")
-        exit(-1)
-
-    network_id = network_dic["net_id"]
-
     # Check if the given flavor exists
-
     try:
         flavor = nova_client.flavors.find(name=FLAVOR)
         logger.info("Flavor found '%s'" % FLAVOR)
@@ -323,6 +241,12 @@ def main():
         logger.error("Flavor '%s' not found." % FLAVOR)
         logger.info("Available flavors are: ")
         pMsg(nova_client.flavor.list())
+        exit(-1)
+
+    # Get functest-net network ID
+    network_id = functest_utils.get_network_id(neutron_client, NEUTRON_PRIVATE_SUBNET_NAME)
+    if network_id == '':
+        logger.error("Error while getting the ID of the network '%s'" % NEUTRON_PRIVATE_SUBNET_NAME)
         exit(-1)
 
     # Deleting instances if they exist
@@ -343,6 +267,8 @@ def main():
     logger.info("vPing Start Time:'%s'" % (
         datetime.datetime.fromtimestamp(start_time_ts).strftime(
             '%Y-%m-%d %H:%M:%S')))
+
+
 
     # create VM
     logger.debug("Creating port 'vping-port-1' with IP %s..." % IP_1)
