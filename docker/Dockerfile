@@ -25,6 +25,8 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 
 ENV repos_dir /home/opnfv/repos
 
+WORKDIR /home/opnfv
+
 # Packaged dependencies
 RUN apt-get update && apt-get install -y \
 ssh \
