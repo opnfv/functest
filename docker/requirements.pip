@@ -12,3 +12,4 @@ requests==2.8.0
 robotframework==2.9.1
 robotframework-requests==0.3.8
 robotframework-sshlibrary==2.1.1
+gsutil==4.16
