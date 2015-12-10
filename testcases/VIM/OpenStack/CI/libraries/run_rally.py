@@ -71,7 +71,7 @@ HOME = os.environ['HOME']+"/"
 REPO_PATH = args.repo_path
 SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general"). \
     get("directories").get("dir_rally_scn")
-RESULTS_DIR = HOME + functest_yaml.get("general").get("directories"). \
+RESULTS_DIR = functest_yaml.get("general").get("directories"). \
     get("dir_rally_res") + "/rally/"
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 
