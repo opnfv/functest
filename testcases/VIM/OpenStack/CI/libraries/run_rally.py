@@ -72,7 +72,7 @@ REPO_PATH = args.repo_path
 SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general"). \
     get("directories").get("dir_rally_scn")
 RESULTS_DIR = functest_yaml.get("general").get("directories"). \
-    get("dir_rally_res") + "/rally/"
+    get("dir_rally_res")
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 
 GLANCE_IMAGE_NAME = "functest-img-rally"
