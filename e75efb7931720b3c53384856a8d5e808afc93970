@@ -16,6 +16,24 @@
       "revId": "e75efb7931720b3c53384856a8d5e808afc93970",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_b88841e8",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-12-10T16:48:40Z",
+      "side": 1,
+      "message": "policy-test project created ... http://213.77.62.197/test_projects/policy-test/cases",
+      "parentUuid": "9a5c5d37_fdd58b43",
+      "revId": "e75efb7931720b3c53384856a8d5e808afc93970",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
