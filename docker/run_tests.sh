@@ -16,7 +16,7 @@ where:
     -o|--offline      optional offline mode (experimental)
     -h|--help         show this help text
     -t|--test         run specific set of tests
-      <test_name>     one or more of the following: vping,odl,rally,tempest. Separated by comma.
+      <test_name>     one or more of the following: vping,odl,rally,tempest,vims. Separated by comma.
 
 
 examples:
@@ -75,8 +75,7 @@ function run_test(){
         ;;
         "tempest")
             info "Running Tempest smoke tests..."
-            rally verify start smoke
-            rally verify list
+            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py --debug ${FUNCTEST_REPO_DIR}/ -m smoke
             # save tempest.conf for further troubleshooting
             tempest_conf="${RALLY_VENV_DIR}/tempest/for-deployment-*/tempest.conf"
             if [ -f ${tempest_conf} ]; then
