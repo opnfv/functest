@@ -25,6 +25,9 @@ pp = pprint.PrettyPrinter(indent=4)
 parser = argparse.ArgumentParser()
 parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
+parser.add_argument("-r", "--report",
+                    help="Create json result file",
+                    action="store_true")
 args = parser.parse_args()
 
 sys.path.append(args.repo_path + "testcases/")
@@ -385,7 +388,8 @@ def test_clearwater():
         except:
             logger.error("Unable to retrieve test results")
 
-        if vims_test_result != "":
+        if vims_test_result != "" & args.report:
+            logger.debug("Push result into DB")
             logger.debug("Pushing results to DB....")
             git_version = functest_utils.get_git_branch(args.repo_path)
             functest_utils.push_results_to_db(db_url=TEST_DB, case_name="vIMS",

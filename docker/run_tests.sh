@@ -15,6 +15,7 @@ usage:
 where:
     -o|--offline      optional offline mode (experimental)
     -h|--help         show this help text
+    -r|--report       push results to database (false by default)
     -t|--test         run specific set of tests
       <test_name>     one or more of the following: vping,odl,rally,tempest,vims. Separated by comma.
 
@@ -28,6 +29,7 @@ examples:
 # Support for Functest offline
 # NOTE: Still not 100% working when running the tests
 offline=false
+report=""
 arr_test=(vping odl tempest vims rally)
 
 
@@ -39,7 +41,8 @@ function run_test(){
     case $test_name in
         "vping")
             info "Running vPing test..."
-            python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing.py --debug ${FUNCTEST_REPO_DIR}/ -r
+            python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing.py \
+                --debug ${FUNCTEST_REPO_DIR}/ ${report}
         ;;
         "odl")
             info "Running ODL test..."
@@ -75,7 +78,8 @@ function run_test(){
         ;;
         "tempest")
             info "Running Tempest smoke tests..."
-            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py --debug ${FUNCTEST_REPO_DIR}/ -m smoke
+            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
+                --debug ${FUNCTEST_REPO_DIR}/ -m smoke ${report}
             # save tempest.conf for further troubleshooting
             tempest_conf="${RALLY_VENV_DIR}/tempest/for-deployment-*/tempest.conf"
             if [ -f ${tempest_conf} ]; then
@@ -84,11 +88,13 @@ function run_test(){
         ;;
         "vims")
             info "Running vIMS test..."
-            python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py --debug ${FUNCTEST_REPO_DIR}/
+            python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py \
+                --debug ${FUNCTEST_REPO_DIR}/ ${report}
         ;;
         "rally")
             info "Running Rally benchmark suite..."
-            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally.py --debug ${FUNCTEST_REPO_DIR}/ all
+            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally.py \
+                --debug ${FUNCTEST_REPO_DIR}/ all ${report}
         ;;
     esac
 }
@@ -106,6 +112,9 @@ while [[ $# > 0 ]]
         ;;
         -o|--offline)
             offline=true
+        ;;
+        -r|--report)
+            report="-r"
         ;;
         -t|--test|--tests)
             TEST="$2"

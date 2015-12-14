@@ -28,6 +28,9 @@ parser.add_argument("repo_path", help="Path to the Functest repository")
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 parser.add_argument("-m", "--mode", help="Tempest test mode [smoke, all]",
                     default="smoke")
+parser.add_argument("-r", "--report",
+                    help="Create json result file",
+                    action="store_true")
 
 args = parser.parse_args()
 
@@ -131,7 +134,11 @@ def run_tempest(OPTION):
                     "tests": int(num_tests), "failures": int(num_failures)}
     logger.info("Results: "+str(json_results))
     pod_name = functest_utils.get_pod_name(logger)
-    push_results_to_db(json_results, MODE, pod_name)
+
+    # Push results in payload of testcase
+    if args.report:
+        logger.debug("Push result into DB")
+        push_results_to_db(json_results, MODE, pod_name)
 
 
 def main():
