@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "9a5c5d37_db3c0a96",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-14T16:48:12Z",
+      "side": 1,
+      "message": "Yes, that\u0027s right. It is not true/false :) Thanks for the remark :)",
+      "parentUuid": "9a5c5d37_7b687eba",
+      "revId": "824638d3e936bdb77799203d8e1ea37c95434404",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5c5d37_db52ca12",
         "filename": "docker/run_tests.sh",
         "patchSetId": 1
@@ -42,6 +60,24 @@
         "endLine": 82,
         "endChar": 16
       },
+      "revId": "824638d3e936bdb77799203d8e1ea37c95434404",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_bb41560d",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-14T16:48:12Z",
+      "side": 1,
+      "message": "If we move to customized suite, then it should be another commit, not this one.. BGPVPN suite will not be run in run_tempest.py. It will be called somehow from run_test.sh using a tempest command.\n\nhttps://gerrit.opnfv.org/gerrit/#/c/4441/1",
+      "parentUuid": "9a5c5d37_db52ca12",
       "revId": "824638d3e936bdb77799203d8e1ea37c95434404",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
