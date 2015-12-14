@@ -16,6 +16,24 @@
       "revId": "f7f763859d7cc870df5523952ef8b0053e93bdae",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_85175551",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-14T10:46:21Z",
+      "side": 1,
+      "message": "Yes, but the test cases for BGPVPN are pushed in master branch and are not available in stable/kilo. Maybe Niko can comment, since he is the one writing the tempest test cases.",
+      "parentUuid": "9a5c5d37_052c85aa",
+      "revId": "f7f763859d7cc870df5523952ef8b0053e93bdae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
