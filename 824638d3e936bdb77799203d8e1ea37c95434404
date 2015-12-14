@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_7b687eba",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-12-14T16:22:28Z",
+      "side": 1,
+      "message": "just wording, the parameter is not false by default...by default there is no reporting so it is an empty chain no a boolean set to false\nI would suggest: do nothing if not specified",
+      "range": {
+        "startLine": 18,
+        "startChar": 64,
+        "endLine": 18,
+        "endChar": 65
+      },
+      "revId": "824638d3e936bdb77799203d8e1ea37c95434404",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_db52ca12",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-12-14T16:22:28Z",
+      "side": 1,
+      "message": "we keep smoke or move to customized suite \u003d\u003c to be discussed with Viktor, but if ti can be tested, it would make sense to move to custom, all the more as, as far as I understand, BGP VPN Tempest suite will be added (and these tests will probably not included in smoke suite",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "824638d3e936bdb77799203d8e1ea37c95434404",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
