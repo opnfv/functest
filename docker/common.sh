@@ -34,6 +34,7 @@ FUNCTEST_REPO_DIR=$(cat $config_file | grep -w dir_repo_functest | awk 'END {pri
 RALLY_REPO_DIR=$(cat $config_file | grep -w dir_repo_rally | awk 'END {print $NF}')
 RELENG_REPO_DIR=$(cat $config_file | grep -w dir_repo_releng | awk 'END {print $NF}')
 VIMS_REPO_DIR=$(cat $config_file | grep -w dir_repo_vims_test | awk 'END {print $NF}')
+BGPVPN_REPO_DIR=$(cat $config_file | grep -w dir_repo_bgpvpn | awk 'END {print $NF}')
 
 FUNCTEST_DIR=$(cat $config_file | grep -w dir_functest | awk 'END {print $NF}')
 FUNCTEST_RESULTS_DIR=$(cat $config_file | grep -w dir_results | awk 'END {print $NF}')
@@ -50,6 +51,9 @@ RELENG_BRANCH=$(cat $config_file | grep -w releng_branch | awk 'END {print $NF}'
 RELENG_COMMIT=$(cat $config_file | grep -w releng_commit | awk 'END {print $NF}')
 VIMS_BRANCH=$(cat $config_file | grep -w vims_test_branch | awk 'END {print $NF}')
 VIMS_COMMIT=$(cat $config_file | grep -w vims_test_commit | awk 'END {print $NF}')
+BGPVPN_BRANCH=$(cat $config_file | grep -w bgpvpn_branch | awk 'END {print $NF}')
+BGPVPN_COMMIT=$(cat $config_file | grep -w bgpvpn_commit | awk 'END {print $NF}')
+
 
 echo "_____Parsed needed data from ${config_file}:"
 echo "####### Directories #######"
