@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_e065df45",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 2697
+      },
+      "writtenOn": "2015-12-14T14:46:46Z",
+      "side": 1,
+      "message": "Thanks for the help. Actually that is done a bit differently with plugins. they need to be installed. and then the path does not have to be copied.",
+      "range": {
+        "startLine": 102,
+        "startChar": 16,
+        "endLine": 103,
+        "endChar": 54
+      },
+      "revId": "aa5e58a58557743a868a9c218272ffd83bdd17f8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
