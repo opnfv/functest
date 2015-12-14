@@ -90,6 +90,18 @@ function run_test(){
             info "Running Rally benchmark suite..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally.py --debug ${FUNCTEST_REPO_DIR}/ all
         ;;
+        "bgpvpn_template")
+            info "Running BGPVPN Tempest test case..."
+            tempest_dir=$(find /root/.rally -type d -name for-deploy*)
+            # TODO:
+            # do the call of your test case here.
+            # the bgpvpn repo is cloned in $BGPVPN_REPO_DIR
+            # tempest is installed in $tempest_dir
+            # Suggestion:
+            #   mkdir ${tempest_dir}/tempest/api/bgpvpn/
+            #   cp ${BGPVPN_REPO_DIR}/networking_bgpvpn_tempest/<whatever you need> \
+            #       ${tempest_dir}/tempest/api/bgpvpn/
+            #   ${tempest_dir}/run_tempest.sh tempest.api.bgpvpn.<test_case_name>
     esac
 }
 
