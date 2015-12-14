@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_052c85aa",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2159
+      },
+      "writtenOn": "2015-12-14T10:36:36Z",
+      "side": 1,
+      "message": "aren\u0027t we currently assuming that Kilo is the target (until MOS releases liberty) ? if yes, the branch should be \"backport/kilo\"",
+      "revId": "f7f763859d7cc870df5523952ef8b0053e93bdae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
