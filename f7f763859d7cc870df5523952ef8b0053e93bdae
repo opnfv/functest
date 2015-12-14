@@ -34,6 +34,24 @@
       "revId": "f7f763859d7cc870df5523952ef8b0053e93bdae",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_c009bb2d",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2697
+      },
+      "writtenOn": "2015-12-14T10:56:12Z",
+      "side": 1,
+      "message": "They are in both branches. However there should be no difference. I wanted to let them point to master until we see problems. If opnfv has then still kilo as baseline we can change the branch.",
+      "parentUuid": "9a5c5d37_85175551",
+      "revId": "f7f763859d7cc870df5523952ef8b0053e93bdae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
