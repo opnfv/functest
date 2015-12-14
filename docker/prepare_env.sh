@@ -129,6 +129,18 @@ if [ $offline == false ]; then
         git reset --hard ${VIMS_COMMIT}
     fi
 
+    info "Updating BGPVPN repository...."
+    cd ${BGPVPN_REPO_DIR}
+    if [ ${BGPVPN_BRANCH} != "master" ]; then
+        info "BGPVPN repo: checkout ${BGPVPN_BRANCH} branch..."
+        git checkout ${BGPVPN_BRANCH}
+    fi
+    info "BGPVPN repo: pulling to latest..."
+    git pull
+    if [ ${BGPVPN_COMMIT} != "latest" ]; then
+        info "BGPVPN repo: given commit is ${BGPVPN_COMMIT}. Reseting..."
+        git reset --hard ${BGPVPN_COMMIT}
+    fi
 fi
 
 # We do this regardless if its online or offline mode.

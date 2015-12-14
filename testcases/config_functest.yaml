@@ -14,6 +14,7 @@ general:
         dir_repo_rally:     /home/opnfv/repos/rally
         dir_repo_releng:    /home/opnfv/repos/releng
         dir_repo_vims_test: /home/opnfv/repos/vims-test
+        dir_repo_bgpvpn:    /home/opnfv/repos/bgpvpn
         dir_functest:       /home/opnfv/functest
         dir_results:        /home/opnfv/functest/results
         dir_functest_conf:  /home/opnfv/functest/conf
@@ -32,6 +33,8 @@ general:
         rally_commit:   9a17d8490e7fb4afee2f5629e6db41eabe4bc4d4
         vims_test_branch:   stable
         vims_test_commit:   latest
+        bgpvpn_branch:   master
+        bgpvpn_commit:   latest
 
     openstack:
         image_name: functest-img
