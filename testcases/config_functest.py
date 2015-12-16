@@ -46,6 +46,8 @@ with open(args.repo_path+"testcases/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
+sys.path.append(args.repo_path + "testcases/VIM/OpenStack/CI/libraries/")
+import clean_openstack
 
 
 
@@ -195,7 +197,7 @@ def action_clean():
         logger.debug("Removing Result directory")
         shutil.rmtree(RALLY_RESULT_DIR,ignore_errors=True)
 
-
+    clean_openstack.main()
     logger.info("Functest environment clean!")
 
 
