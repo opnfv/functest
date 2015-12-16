@@ -23,6 +23,8 @@ import yaml
 import requests
 import sys
 import novaclient.v2.client as novaclient
+from keystoneclient.v2_0 import client as keystoneclient
+from glanceclient import client as glanceclient
 
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'ceilometer', 'heat', 'keystone',
@@ -216,20 +218,6 @@ def run_task(test_name):
                      .format(test_name))
 
 
-def delete_glance_image(name):
-    cmd = ("glance image-delete $(glance image-list | grep %s "
-           "| awk '{print $2}' | head -1)" % name)
-    functest_utils.execute_command(cmd, logger)
-    return True
-
-
-def cleanup(nova):
-    logger.info("Cleaning up...")
-    logger.debug("Deleting image...")
-    delete_glance_image(GLANCE_IMAGE_NAME)
-    return True
-
-
 def main():
     # configure script
     if not (args.test_name in tests):
@@ -238,10 +226,19 @@ def main():
 
     creds_nova = functest_utils.get_credentials("nova")
     nova_client = novaclient.Client(**creds_nova)
+    creds_keystone = functest_utils.get_credentials("keystone")
+    keystone_client = keystoneclient.Client(**creds_keystone)
+    glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
+                                                   endpoint_type='publicURL')
+    glance_client = glanceclient.Client(1, glance_endpoint,
+                                        token=keystone_client.auth_token)
 
     logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME, GLANCE_IMAGE_PATH))
-    create_glance_image(GLANCE_IMAGE_PATH, GLANCE_IMAGE_NAME, GLANCE_IMAGE_FORMAT)
-
+    image_id = functest_utils.create_glance_image(glance_client,
+                                            GLANCE_IMAGE_NAME,GLANCE_IMAGE_PATH)
+    if not image_id:
+        logger.error("Failed to create a Glance image...")
+        exit(-1)
     # Check if the given image exists
     try:
         nova_client.images.find(name=GLANCE_IMAGE_NAME)
@@ -264,7 +261,8 @@ def main():
         print(args.test_name)
         run_task(args.test_name)
 
-    cleanup(nova_client)
+    if not functest_utils.delete_glance_image(nova_client, image_id):
+        logger.error("Error deleting the glance image")
 
 if __name__ == '__main__':
     main()
