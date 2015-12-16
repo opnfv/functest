@@ -24,6 +24,8 @@ import yaml
 import datetime
 import novaclient.v2.client as novaclient
 from neutronclient.v2_0 import client as neutronclient
+from keystoneclient.v2_0 import client as keystoneclient
+from glanceclient import client as glanceclient
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -185,14 +187,16 @@ def create_private_neutron_net(neutron):
     return network_dic
 
 
-def create_glance_image(path, name, disk_format):
+def create_glance_image(glance_client, path, name, disk_format):
     """
     Create a glance image given the absolute path of the image, its name and the disk format
     """
-    cmd = ("glance image-create --name "+name+"  --visibility public "
-           "--disk-format "+disk_format+" --container-format bare --file "+path)
-    functest_utils.execute_command(cmd, logger)
-    return True
+    image_id = functest_utils.create_glance_image(glance_client, name, path)
+    if not image_id:
+        logger.error("Failed to create a Glance image...")
+        return False
+
+    return image_id
 
 
 def delete_glance_image(name):
@@ -287,13 +291,18 @@ def main():
     nova_client = novaclient.Client(**creds_nova)
     creds_neutron = functest_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
+    creds_keystone = functest_utils.get_credentials("keystone")
+    keystone_client = keystoneclient.Client(**creds_keystone)
+    glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
+                                                   endpoint_type='publicURL')
+    glance_client = glanceclient.Client(1, glance_endpoint, token=keystone_client.auth_token)
     EXIT_CODE = -1
 
     image = None
     flavor = None
 
     logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME, GLANCE_IMAGE_PATH))
-    create_glance_image(GLANCE_IMAGE_PATH, GLANCE_IMAGE_NAME, GLANCE_IMAGE_FORMAT)
+    create_glance_image(glance_client,GLANCE_IMAGE_PATH, GLANCE_IMAGE_NAME, GLANCE_IMAGE_FORMAT)
 
     # Check if the given image exists
     try:
