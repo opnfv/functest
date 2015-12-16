@@ -32,6 +32,10 @@ offline=false
 report=""
 arr_test=(vping odl tempest vims rally)
 
+function clean_openstack(){
+    python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py \
+        --debug ${FUNCTEST_REPO_DIR}/
+}
 
 function run_test(){
     test_name=$1
@@ -85,16 +89,19 @@ function run_test(){
             if [ -f ${tempest_conf} ]; then
                 cp $tempest_conf ${FUNCTEST_CONF_DIR}
             fi
+            clean_openstack
         ;;
         "vims")
             info "Running vIMS test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py \
                 --debug ${FUNCTEST_REPO_DIR}/ ${report}
+            clean_openstack
         ;;
         "rally")
             info "Running Rally benchmark suite..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally.py \
                 --debug ${FUNCTEST_REPO_DIR}/ all ${report}
+            clean_openstack
         ;;
         "bgpvpn_template")
             info "Running BGPVPN Tempest test case..."
