@@ -1,23 +1,22 @@
-===========================
+*************************
 OPNFV FUNCTEST user guide
-===========================
+*************************
 
-.. contents::
+.. toctree::
+   :numbered:
+   :maxdepth: 2
 
 
-.. _introduction:
-
-DOCUMENT IS IN PROGRESS FOR BRAHMAPUTRA 
-
-------------
+============
 Introduction
-------------
+============
 
-.. _description:
+DOCUMENT IS IN PROGRESS FOR BRAHMAPUTRA
 
------------------------------
+
+=============================
 Description of the test cases
------------------------------
+=============================
 
 vPing
 =====
@@ -50,7 +49,7 @@ The goal of this test can be described as follow::
 
 This example, using OpenStack Python clients can be considered as an "Hello World" example and may be modified for future use.
 
-In SR1, some code has been added in order to push the results (status and duration) into a centralized test result database.
+Since SR1, some code has been added in order to push the results (status and duration) into a centralized test result database.
 
 SDN Controllers
 ===============
@@ -58,7 +57,8 @@ SDN Controllers
 OpenDaylight
 ------------
 
-The ODL suite consists in a set of basic tests inherited from ODL project. The suite tests the creation and deletion of network, subnet, port though OpenDaylight and Neutron.
+The ODL suite consists in a set of basic tests inherited from ODL project. 
+The suite tests the creation and deletion of network, subnet, port though OpenDaylight and Neutron.
 
 The list of tests can be described as follow:
  * Restconf.basic: Get the controller modules via Restconf
@@ -108,9 +108,11 @@ OpenContrail
 
 TODO
 
+VIM
+===
 
 Tempest
-=======
+-------
 
 .. _Tempest: http://docs.openstack.org/developer/tempest/overview.html
 
@@ -122,13 +124,10 @@ We considered the smoke test suite for Arno.
 
 The goal of this test is to  to check the basic OpenStack functionality on a fresh installation.
 
-vIMS
-====
 
-TODO
 
-Rally bench test suite
-======================
+Rally bench test suites
+-----------------------
 
 .. _Rally: https://wiki.openstack.org/wiki/Rally
 
@@ -155,26 +154,37 @@ In the future SLA shall be defined (e.g. accepting booting time for a given imag
 
 Through its integration in Continuous Integration, the evolution of the performance of these tests shall also be considered.
 
+vIMS
+====
+
+TODO
+
 Feature projects
 ================
 
---------------
+TODO
+
+==============
 Manual testing
---------------
+==============
 
-------------------
+TODO
+
+=================
 Automated testing
-------------------
+=================
 
----------------
+TODO
+
+===============
 Troubleshooting
----------------
+===============
 
+TODO
 
-
-----------
+==========
 References
-----------
+==========
 
 OPNFV main site: opnfvmain_.
 
