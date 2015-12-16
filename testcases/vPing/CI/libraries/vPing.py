@@ -24,6 +24,8 @@ import yaml
 import datetime
 import novaclient.v2.client as novaclient
 from neutronclient.v2_0 import client as neutronclient
+from keystoneclient.v2_0 import client as keystoneclient
+from glanceclient import client as glanceclient
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -185,29 +187,13 @@ def create_private_neutron_net(neutron):
     return network_dic
 
 
-def create_glance_image(path, name, disk_format):
-    """
-    Create a glance image given the absolute path of the image, its name and the disk format
-    """
-    cmd = ("glance image-create --name "+name+"  --visibility public "
-           "--disk-format "+disk_format+" --container-format bare --file "+path)
-    functest_utils.execute_command(cmd, logger)
-    return True
-
-
-def delete_glance_image(name):
-    cmd = ("glance image-delete $(glance image-list | grep %s "
-           "| awk '{print $2}' | head -1)" % name)
-    functest_utils.execute_command(cmd, logger)
-    return True
-
-
-def cleanup(nova, neutron, network_dic, port_id1, port_id2):
+def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2):
 
     # delete both VMs
     logger.info("Cleaning up...")
     logger.debug("Deleting image...")
-    delete_glance_image(GLANCE_IMAGE_NAME)
+    if not functest_utils.delete_glance_image(nova, image_id):
+        logger.error("Error deleting the glance image")
 
     vm1 = functest_utils.get_instance_by_name(nova, NAME_VM_1)
     if vm1:
@@ -287,19 +273,28 @@ def main():
     nova_client = novaclient.Client(**creds_nova)
     creds_neutron = functest_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
+    creds_keystone = functest_utils.get_credentials("keystone")
+    keystone_client = keystoneclient.Client(**creds_keystone)
+    glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
+                                                   endpoint_type='publicURL')
+    glance_client = glanceclient.Client(1, glance_endpoint,
+                                        token=keystone_client.auth_token)
     EXIT_CODE = -1
 
     image = None
     flavor = None
 
-    logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME, GLANCE_IMAGE_PATH))
-    create_glance_image(GLANCE_IMAGE_PATH, GLANCE_IMAGE_NAME, GLANCE_IMAGE_FORMAT)
+    logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
+                                                       GLANCE_IMAGE_PATH))
+    image_id = functest_utils.create_glance_image(glance_client,
+                                            GLANCE_IMAGE_NAME,GLANCE_IMAGE_PATH)
+    if not image_id:
+        logger.error("Failed to create a Glance image...")
+        exit(-1)
 
     # Check if the given image exists
-    try:
-        image = nova_client.images.find(name=GLANCE_IMAGE_NAME)
-        logger.info("Glance image found '%s'" % GLANCE_IMAGE_NAME)
-    except:
+    image = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+    if image == '':
         logger.error("ERROR: Glance image '%s' not found." % GLANCE_IMAGE_NAME)
         logger.info("Available images are: ")
         pMsg(nova_client.images.list())
@@ -370,7 +365,7 @@ def main():
 
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_1, functest_utils.get_instance_status(nova_client, vm1)))
-        cleanup(nova_client, neutron_client, network_dic)
+        cleanup(nova_client, neutron_client, image_id, network_dic, port_id1)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
@@ -420,7 +415,7 @@ def main():
     if not waitVmActive(nova_client, vm2):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_2, functest_utils.get_instance_status(nova_client, vm2)))
-        cleanup(nova_client, neutron_client, network_dic)
+        cleanup(nova_client, neutron_client, image_id, network_dic, port_id1, port_id2)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_2)
@@ -450,7 +445,7 @@ def main():
             logger.debug("No vPing detected...")
         sec += 1
 
-    cleanup(nova_client, neutron_client, network_dic, port_id1, port_id2)
+    cleanup(nova_client, neutron_client, image_id, network_dic, port_id1, port_id2)
 
     test_status = "NOK"
     if EXIT_CODE == 0:
