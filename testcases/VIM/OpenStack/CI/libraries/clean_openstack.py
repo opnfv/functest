@@ -58,7 +58,7 @@ default_tenants = ["admin", "services"]
 default_security_groups = ['default']
 
 def separator():
-    print("-------------------------------------------")
+    logger.debug("-------------------------------------------")
 
 def remove_instances(nova_client):
     logger.info("Removing Nova instances...")
