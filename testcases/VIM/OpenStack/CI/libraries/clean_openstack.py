@@ -170,7 +170,13 @@ def remove_networks(neutron_client):
     for port in ports:
         if port['network_id'] in network_ids:
             port_id = port['id']
-            subnet_id = port['fixed_ips'][0]['subnet_id']
+            try:
+                subnet_id = port['fixed_ips'][0]['subnet_id']
+            except:
+                logger.info("  > ERROR: Error removing port %s." % port_id)
+                print port
+                continue
+
             router_id = port['device_id']
             if port['device_owner'] == 'network:router_interface':
                 logger.debug("Detaching port %s (subnet %s) from router %s ..."
