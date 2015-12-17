@@ -149,6 +149,10 @@ def remove_networks(neutron_client):
     logger.info("Removing Neutron objects")
     network_ids = []
     networks = functest_utils.get_network_list(neutron_client)
+    if networks == None:
+        logger.debug("There are no networks in the deployment. ")
+        return
+
     logger.debug("Existing networks:")
     for network in networks:
         net_id = network['id']
