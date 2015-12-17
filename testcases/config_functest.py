@@ -47,8 +47,6 @@ with open(args.repo_path+"testcases/config_functest.yaml") as f:
 f.close()
 
 
-
-
 """ global variables """
 # Directories
 REPO_PATH = args.repo_path
@@ -195,7 +193,11 @@ def action_clean():
         logger.debug("Removing Result directory")
         shutil.rmtree(RALLY_RESULT_DIR,ignore_errors=True)
 
-
+    logger.debug("Cleaning up the OpenStack deployment...")
+    cmd='python ' + args.repo_path + \
+        '/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py -d ' \
+        +args.repo_path
+    functest_utils.execute_command(cmd,logger)
     logger.info("Functest environment clean!")
 
 
