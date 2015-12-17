@@ -23,9 +23,9 @@ FROM ubuntu:14.04
 MAINTAINER Jose Lausuch <jose.lausuch@ericsson.com>
 LABEL version="0.1" description="OPNFV Functest Docker container"
 
-ENV repos_dir /home/opnfv/repos
 ENV HOME /home/opnfv
-
+ENV repos_dir /home/opnfv/repos
+ENV creds /home/opnfv/functest/conf/openstack.creds
 WORKDIR /home/opnfv
 
 # Packaged dependencies
