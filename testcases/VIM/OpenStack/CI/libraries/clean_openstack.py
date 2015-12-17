@@ -254,6 +254,10 @@ def remove_security_groups(neutron_client):
 def remove_users(keystone_client):
     logger.info("Removing Users...")
     users = functest_utils.get_users(keystone_client)
+    if users == None:
+        logger.debug("There are no users in the deployment. ")
+        return
+
     for user in users:
         user_name = getattr(user, 'name')
         user_id = getattr(user, 'id')
@@ -272,6 +276,10 @@ def remove_users(keystone_client):
 def remove_tenants(keystone_client):
     logger.info("Removing Tenants...")
     tenants = functest_utils.get_tenants(keystone_client)
+    if tenants == None:
+        logger.debug("There are no tenants in the deployment. ")
+        return
+
     for tenant in tenants:
         tenant_name=getattr(tenant, 'name')
         tenant_id = getattr(tenant, 'id')
