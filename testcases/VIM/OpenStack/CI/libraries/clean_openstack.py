@@ -171,19 +171,28 @@ def remove_networks(neutron_client):
         logger.debug("There are no ports in the deployment. ")
         return
 
+    #debug information (to be removed when it works many times in a row)
+    print ports
+
     for port in ports:
         if port['network_id'] in network_ids:
             port_id = port['id']
             try:
                 subnet_id = port['fixed_ips'][0]['subnet_id']
             except:
-                logger.info("  > ERROR: Error removing port %s." % port_id)
+                logger.info("  > WARNING: Port %s does not contain 'fixed_ips'" % port_id)
                 print port
-                print ports
-                continue
 
             router_id = port['device_id']
-            if port['device_owner'] == 'network:router_interface':
+            if len(port['fixed_ips']) == 0 and router_id == '':
+                logger.debug("Removing port %s ..." % port_id)
+                if functest_utils.delete_neutron_port(neutron_client, port_id):
+                    logger.debug("  > Done!")
+                else:
+                    logger.info("  > ERROR: There has been a problem removing the "
+                                "port %s ..." %port_id)
+
+            elif port['device_owner'] == 'network:router_interface':
                 logger.debug("Detaching port %s (subnet %s) from router %s ..."
                              % (port_id,subnet_id,router_id))
                 if functest_utils.remove_interface_router(neutron_client,
