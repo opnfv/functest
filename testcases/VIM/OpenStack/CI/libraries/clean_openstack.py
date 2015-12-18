@@ -63,7 +63,7 @@ def separator():
 def remove_instances(nova_client):
     logger.info("Removing Nova instances...")
     instances = functest_utils.get_instances(nova_client)
-    if len(instances) == 0:
+    if instances is None or len(instances) == 0:
         logger.debug("No instances found.")
         return
 
@@ -81,7 +81,7 @@ def remove_instances(nova_client):
 def remove_images(nova_client):
     logger.info("Removing Glance images...")
     images = functest_utils.get_images(nova_client)
-    if len(images) == 0:
+    if images is None or len(images) == 0:
         logger.debug("No images found.")
         return
 
@@ -106,7 +106,7 @@ def remove_volumes(cinder_client, nova_client):
     timeout = 50
     while timeout > 0:
         instances = functest_utils.get_instances(nova_client)
-        if len(instances) == 0:
+        if instances is None or len(instances) == 0:
             break
         else:
             logger.debug("Waiting for instances to be terminated...")
@@ -131,7 +131,7 @@ def remove_volumes(cinder_client, nova_client):
 def remove_floatingips(nova_client):
     logger.info("Removing floating IPs...")
     floatingips = functest_utils.get_floating_ips(nova_client)
-    if len(floatingips) == 0:
+    if floatings is None or len(floatingips) == 0:
         logger.debug("No floating IPs found.")
         return
 
@@ -167,6 +167,10 @@ def remove_networks(neutron_client):
 
     #remove interfaces router and delete ports
     ports = functest_utils.get_port_list(neutron_client)
+    if ports is None:
+        logger.debug("There are no ports in the deployment. ")
+        return
+
     for port in ports:
         if port['network_id'] in network_ids:
             port_id = port['id']
@@ -201,6 +205,9 @@ def remove_networks(neutron_client):
 
     #remove routers
     routers = functest_utils.get_router_list(neutron_client)
+    if routers is None:
+        logger.debug("There are no routers in the deployment. ")
+        return
     for router in routers:
         router_id = router['id']
         router_name = router['name']
@@ -238,7 +245,7 @@ def remove_networks(neutron_client):
 def remove_security_groups(neutron_client):
     logger.info("Removing Security groups...")
     secgroups = functest_utils.get_security_groups(neutron_client)
-    if len(secgroups) == 0:
+    if secgroups is None or len(secgroups) == 0:
         logger.debug("No security groups found.")
         return
 
