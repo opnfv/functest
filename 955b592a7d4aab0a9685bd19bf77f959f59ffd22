@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_9e7436d0",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-12-18T16:01:19Z",
+      "side": 1,
+      "message": "as we refactor, I can imagine that this function shall be already declared in functest_utils.py\nto be chacked",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 3
+      },
+      "revId": "955b592a7d4aab0a9685bd19bf77f959f59ffd22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_be77fad3",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-12-18T16:01:19Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 165,
+        "startChar": 30,
+        "endLine": 165,
+        "endChar": 31
+      },
+      "revId": "955b592a7d4aab0a9685bd19bf77f959f59ffd22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_7e81828e",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-12-18T16:01:19Z",
+      "side": 1,
+      "message": "idem probably available in functest_utils (function possibly used by other tests)",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 3
+      },
+      "revId": "955b592a7d4aab0a9685bd19bf77f959f59ffd22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_5e7ebeaf",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2015-12-18T16:01:19Z",
+      "side": 1,
+      "message": "jose created a wild Openstack cleanup that we call at the end of each testcase, this function is probably no more needed",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 3
+      },
+      "revId": "955b592a7d4aab0a9685bd19bf77f959f59ffd22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
