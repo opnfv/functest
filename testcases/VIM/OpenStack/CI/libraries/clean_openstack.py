@@ -115,7 +115,7 @@ def remove_volumes(cinder_client, nova_client):
             time.sleep(1)
 
     volumes = functest_utils.get_volumes(cinder_client)
-    if len(volumes) == 0:
+    if volumes is None or len(volumes) == 0:
         logger.debug("No volumes found.")
         return
 
