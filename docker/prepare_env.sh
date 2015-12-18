@@ -92,6 +92,7 @@ if [ $offline == false ]; then
         info "Functest repo: given commit is ${FUNCTEST_COMMIT}. Reseting..."
         git reset --hard ${FUNCTEST_COMMIT}
     fi
+    source ${BASEDIR}/common.sh
 
     info "Updating Releng repository...."
     cd ${RELENG_REPO_DIR}
