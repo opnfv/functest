@@ -53,7 +53,8 @@ default_images = ['TestVM']
 default_networks = ['net04', 'net04_ext']
 default_routers = ['router04']
 default_users = ["heat", "heat-cfn", "cinder", "nova", "swift", "glance",
-                 "neutron", "admin", "fuel_stats_user"]
+                 "neutron", "admin", "fuel_stats_user", "quantum", "heat-cfn_heat",
+                 "ceilometer", "cinder_cinderv2"]
 default_tenants = ["admin", "services","service"]
 default_security_groups = ['default']
 
