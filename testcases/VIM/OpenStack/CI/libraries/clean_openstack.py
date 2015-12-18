@@ -54,7 +54,7 @@ default_networks = ['net04', 'net04_ext']
 default_routers = ['router04']
 default_users = ["heat", "heat-cfn", "cinder", "nova", "swift", "glance",
                  "neutron", "admin", "fuel_stats_user"]
-default_tenants = ["admin", "services"]
+default_tenants = ["admin", "services","service"]
 default_security_groups = ['default']
 
 def separator():
