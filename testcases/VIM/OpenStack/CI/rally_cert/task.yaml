@@ -1,0 +1,59 @@
+{%- set glance_image_location = glance_image_location|default("http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img") %}
+{%- set image_name = image_name|default("functest-img-rally") %}
+{%- set flavor_name = flavor_name|default("m1.tiny") %}
+{%- set use_existing_users = use_existing_users|default(false) %}
+{%- set service_list = service_list|default(["authenticate", "cinder", "keystone", "nova", "glance", "neutron", "quotas", "requests", "heat", "vm"]) %}
+{%- set smoke = smoke|default(true) %}
+{%- set floating_network = floating_network|default("net04_ext") %}
+{%- set controllers_amount = controllers_amount|default(1) %}
+{%- if smoke %}
+{%- set users_amount = 1 %}
+{%- set tenants_amount = 1 %}
+{%- else %}
+{%- set users_amount = users_amount|default(1) %}
+{%- set tenants_amount = tenants_amount|default(1) %}
+{%- endif %}
+
+{%- from "macro/macro.yaml" import user_context, vm_params, unlimited_volumes, constant_runner, rps_runner, no_failures_sla -%}
+{%- from "macro/macro.yaml" import volumes, unlimited_nova, unlimited_neutron, glance_args -%}
+
+---
+{% if "authenticate" in service_list %}
+{%- include "scenario/opnfv-authenticate.yaml"-%}
+{% endif %}
+
+{% if "cinder" in service_list %}
+{%- include "scenario/opnfv-cinder.yaml"-%}
+{% endif %}
+
+{% if "keystone" in service_list %}
+{%- include "scenario/opnfv-keystone.yaml"-%}
+{% endif %}
+
+{% if "nova" in service_list %}
+{%- include "scenario/opnfv-nova.yaml"-%}
+{% endif %}
+
+{% if "glance" in service_list %}
+{%- include "scenario/opnfv-glance.yaml"-%}
+{% endif %}
+
+{% if "neutron" in service_list %}
+{%- include "scenario/opnfv-neutron.yaml"-%}
+{% endif %}
+
+{% if "quotas" in service_list %}
+{%- include "scenario/opnfv-quotas.yaml"-%}
+{% endif %}
+
+{% if "requests" in service_list %}
+{%- include "scenario/opnfv-requests.yaml"-%}
+{% endif %}
+
+{% if "heat" in service_list %}
+{%- include "scenario/opnfv-heat.yaml"-%}
+{% endif %}
+
+{% if "vm" in service_list %}
+{%- include "scenario/opnfv-vm.yaml"-%}
+{% endif %}
