@@ -50,30 +50,26 @@ function run_test(){
         ;;
         "odl")
             info "Running ODL test..."
+            neutron_ip=$(keystone catalog --service identity | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+            odl_ip=$(keystone catalog --service network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+            usr_name=$(env | grep OS | grep OS_USERNAME | cut -f2 -d'=')
+            password=$(env | grep OS | grep OS_PASSWORD | cut -f2 -d'=')
+            odl_port=8181
             if [ $INSTALLER_TYPE == "fuel" ]; then
-                odl_ip=$(keystone catalog --service network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
-                neutron_ip=$(keystone catalog --service identity | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
-                usr_name=$(env | grep OS | grep OS_USERNAME | cut -f2 -d'=')
-                pass=$(env | grep OS | grep OS_PASSWORD | cut -f2 -d'=')
-                odl_port=8181
-                ODL_PORT=$odl_port ODL_IP=$odl_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$pass \
-                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
-            elif [ $INSTALLER_TYPE == "foreman" ]; then
-                #odl_port=8081
-                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
+                odl_port=8282
             elif [ $INSTALLER_TYPE == "apex" ]; then
-                # TODO
-                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
+                pass
             elif [ $INSTALLER_TYPE == "joid" ]; then
-                # TODO
-                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
+                pass
             elif [ $INSTALLER_TYPE == "compass" ]; then
-                # TODO
-                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
+                pass
             else
                 error "INSTALLER_TYPE not valid."
                 exit 1
             fi
+            ODL_PORT=$odl_port ODL_IP=$odl_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$password \
+                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
+
             # save ODL results
             odl_logs="${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/logs"
             if [ -d ${odl_logs} ]; then
