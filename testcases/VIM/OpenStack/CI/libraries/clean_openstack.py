@@ -50,7 +50,7 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 default_images = ['TestVM']
-default_networks = ['net04', 'net04_ext']
+default_networks = ['net04', 'net04_ext', 'functest-net']
 default_routers = ['router04']
 default_users = ["heat", "heat-cfn", "cinder", "nova", "swift", "glance",
                  "neutron", "admin", "fuel_stats_user", "quantum", "heat-cfn_heat",
@@ -78,6 +78,16 @@ def remove_instances(nova_client):
             logger.info("  > ERROR: There has been a problem removing the "
                         "instance %s..." % instance_id)
 
+    timeout = 50
+    while timeout > 0:
+        instances = functest_utils.get_instances(nova_client)
+        if instances is None or len(instances) == 0:
+            break
+        else:
+            logger.debug("Waiting for instances to be terminated...")
+            timeout -= 1
+            time.sleep(1)
+
 
 def remove_images(nova_client):
     logger.info("Removing Glance images...")
@@ -101,19 +111,8 @@ def remove_images(nova_client):
             logger.debug("   > this is a default image and will NOT be deleted.")
 
 
-def remove_volumes(cinder_client, nova_client):
+def remove_volumes(cinder_client):
     logger.info("Removing Cinder volumes...")
-
-    timeout = 50
-    while timeout > 0:
-        instances = functest_utils.get_instances(nova_client)
-        if instances is None or len(instances) == 0:
-            break
-        else:
-            logger.debug("Waiting for instances to be terminated...")
-            timeout -= 1
-            time.sleep(1)
-
     volumes = functest_utils.get_volumes(cinder_client)
     if volumes is None or len(volumes) == 0:
         logger.debug("No volumes found.")
@@ -347,7 +346,7 @@ def main():
     separator()
     remove_images(nova_client)
     separator()
-    remove_volumes(cinder_client, nova_client)
+    remove_volumes(cinder_client)
     separator()
     remove_floatingips(nova_client)
     separator()
