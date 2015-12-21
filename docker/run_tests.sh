@@ -175,6 +175,9 @@ fi
 info "Sourcing Credentials ${FUNCTEST_CONF_DIR}/openstack.creds to run the tests.."
 source ${FUNCTEST_CONF_DIR}/openstack.creds
 
+# Check OpenStack
+info "Checking that the basic OpenStack services are functional..."
+${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/check_os.sh
 
 # Run tests
 if [ "${TEST}" != "" ]; then
