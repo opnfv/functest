@@ -108,7 +108,7 @@ vIMS:
             name: "clearwater-opnfv"
             destination_folder: "opnfv-cloudify-clearwater"
             url: 'https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git'
-            branch: "master"
+            branch: "stable"
         deployment-name: 'clearwater-opnfv'
         inputs:
             image_id: ''
