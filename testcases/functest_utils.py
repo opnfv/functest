@@ -15,7 +15,21 @@ import subprocess
 import sys
 import requests
 import json
+import yaml
 from git import Repo
+
+
+# load test dependencies once
+script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
+rel_path = "config_functest.yaml"
+abs_file_path = os.path.join(script_dir, rel_path)
+with open(abs_file_path) as f:
+    functest_yaml = yaml.safe_load(f)
+f.close()
+
+""" global variables """
+# Directories
+TEST_ENV = functest_yaml.get("test-dependencies")
 
 
 # ############ CREDENTIALS OPENSTACK #############
@@ -23,7 +37,7 @@ def check_credentials():
     """
     Check if the OpenStack credentials (openrc) are sourced
     """
-    env_vars = ['OS_AUTH_URL','OS_USERNAME','OS_PASSWORD','OS_TENANT_NAME']
+    env_vars = ['OS_AUTH_URL', 'OS_USERNAME', 'OS_PASSWORD', 'OS_TENANT_NAME']
     return all(map(lambda v: v in os.environ and os.environ[v], env_vars))
 
 
@@ -67,6 +81,7 @@ def get_instances(nova_client):
     except:
         return None
 
+
 def get_instance_status(nova_client, instance):
     try:
         instance = nova_client.servers.get(instance.id)
@@ -74,13 +89,13 @@ def get_instance_status(nova_client, instance):
     except:
         return None
 
+
 def get_instance_by_name(nova_client, instance_name):
     try:
         instance = nova_client.servers.find(name=instance_name)
         return instance
     except:
         return None
-
 
 
 def get_flavor_id(nova_client, flavor_name):
@@ -118,6 +133,7 @@ def get_floating_ips(nova_client):
         return floating_ips
     except:
         return None
+
 
 def delete_floating_ip(nova_client, floatingip_id):
     try:
@@ -210,6 +226,7 @@ def remove_interface_router(neutron_client, router_id, subnet_id):
         print "Error:", sys.exc_info()[0]
         return False
 
+
 def remove_gateway_router(neutron_client, router_id):
     try:
         neutron_client.remove_gateway_router(router_id)
@@ -276,13 +293,13 @@ def get_router_list(neutron_client):
     else:
         return router_list
 
+
 def get_port_list(neutron_client):
     port_list = neutron_client.list_ports()['ports']
     if len(port_list) == 0:
         return None
     else:
         return port_list
-
 
 
 def get_external_net(neutron_client):
@@ -313,9 +330,10 @@ def get_private_net(neutron_client):
     if len(networks) == 0:
         return None
     for net in networks:
-        if net['router:external'] == False:
+        if net['router:external'] is False:
             return net
     return None
+
 
 # ################ GLANCE #################
 def get_images(nova_client):
@@ -348,6 +366,7 @@ def create_glance_image(glance_client, image_name, file_path, is_public=True):
     except:
         return False
 
+
 def delete_glance_image(nova_client, image_id):
     try:
         nova_client.images.delete(image_id)
@@ -355,6 +374,7 @@ def delete_glance_image(nova_client, image_id):
     except:
         print "Error:", sys.exc_info()[0]
         return False
+
 
 # ################ CINDER #################
 def get_volumes(cinder_client):
@@ -364,6 +384,7 @@ def get_volumes(cinder_client):
     except:
         return None
 
+
 def delete_volume(cinder_client, volume_id):
     try:
         cinder_client.volumes.delete(volume_id)
@@ -372,6 +393,7 @@ def delete_volume(cinder_client, volume_id):
         print "Error:", sys.exc_info()[0]
         return False
 
+
 # ################ CINDER #################
 def get_security_groups(neutron_client):
     try:
@@ -379,6 +401,7 @@ def get_security_groups(neutron_client):
         return security_groups
     except:
         return None
+
 
 def delete_security_group(neutron_client, secgroup_id):
     try:
@@ -407,12 +430,14 @@ def get_tenant_id(keystone_client, tenant_name):
             break
     return id
 
+
 def get_users(keystone_client):
     try:
         users = keystone_client.users.list()
         return users
     except:
         return None
+
 
 def get_role_id(keystone_client, role_name):
     roles = keystone_client.roles.list()
@@ -565,11 +590,12 @@ def get_pod_name(logger=None):
         return os.environ['NODE_NAME']
     except KeyError:
         if logger:
-            logger.error("Unable to retrieve the POD name from environment.Using pod name 'unknown-pod'")
+            logger.error("Unable to retrieve POD name. Use 'unknown-pod'")
         return "unknown-pod"
 
 
-def push_results_to_db(db_url, case_name, logger, pod_name, git_version, payload):
+def push_results_to_db(db_url, case_name, logger, pod_name,
+                       git_version, payload):
     url = db_url + "/results"
     installer = get_installer_type(logger)
     params = {"project_name": "functest", "case_name": case_name,
@@ -584,3 +610,64 @@ def push_results_to_db(db_url, case_name, logger, pod_name, git_version, payload
     except:
         print "Error:", sys.exc_info()[0]
         return False
+
+
+def getTestEnv(test):
+    # get the config of the testcase based on functest_config.yaml
+    # 2 options
+    # - test = test project e.g; ovno
+    # - test = testcase e.g. functest/odl
+    # look for the / to see if it is a test project or a testcase
+    try:
+        # print TEST_ENV
+        if test.find("/") < 0:
+            config_test = TEST_ENV[test]
+        else:
+            test_split = test.split("/")
+            testproject = test_split[0]
+            testcase = test_split[1]
+            config_test = TEST_ENV[testproject][testcase]
+    except KeyError:
+        # if not defined in dependencies => no dependencies
+        config_test = ""
+    except:
+        print "Error getTestEnv:", sys.exc_info()[0]
+
+    return config_test
+
+
+def get_ci_envvars():
+    """
+    Get the CI env variables
+    """
+    ci_env_var = {
+        "installer": os.environ.get('INSTALLER_TYPE'),
+        "controller": os.environ.get('SDN_CONTROLLER'),
+        "options": os.environ.get("OPNFV_FEATURE")}
+    return ci_env_var
+
+
+def isTestRunnable(test):
+    # check getTestEnv(test) and CI env var
+    # check installer, controller and options
+    # e.g. if test needs onos => do not run odl suite
+    try:
+        # By default we assume that all the tests are always runnable...
+        is_runnable = True
+        # Retrieve CI environment
+        ci_env = get_ci_envvars()
+        # Retrieve test environement from config file
+        test_env = getTestEnv(test)
+
+        # if test_env not empty => dependencies to be checked
+        if len(test_env) > 0:
+            # possible criteria = ["installer", "controller", "options"]
+            # consider test criteria from config file
+            # compare towards CI env through CI en variable
+            for criteria in test_env:
+                if test_env[criteria] != ci_env[criteria]:
+                    # print "Test "+ test + " cannot be run on the environment"
+                    is_runnable = False
+    except:
+        print "Error isTestRunnable:", sys.exc_info()[0]
+    return is_runnable
