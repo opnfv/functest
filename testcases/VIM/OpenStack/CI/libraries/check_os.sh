@@ -14,7 +14,6 @@ fi
 echo "Checking OpenStack basic services:"
 
 ip=$(echo $OS_AUTH_URL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
-ip='192.168.123.123'
 echo ">>Pinging public keystone endpoint $ip..."
 timeout=5
 for i in `seq 1 $timeout`; do
