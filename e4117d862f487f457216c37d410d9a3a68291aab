@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_48d8401d",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/clean_openstack.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-22T15:59:13Z",
+      "side": 1,
+      "message": "ext-net is not created by functest. Is that a default network in compass?",
+      "revId": "e4117d862f487f457216c37d410d9a3a68291aab",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
