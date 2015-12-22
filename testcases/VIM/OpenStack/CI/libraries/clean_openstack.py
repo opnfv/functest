@@ -50,8 +50,8 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 default_images = ['TestVM']
-default_networks = ['net04', 'net04_ext', 'functest-net']
-default_routers = ['router04']
+default_networks = ['net04', 'net04_ext', 'functest-net', 'ext-net']
+default_routers = ['router04', 'functest-router']
 default_users = ["heat", "heat-cfn", "cinder", "nova", "swift", "glance",
                  "neutron", "admin", "fuel_stats_user", "quantum", "heat-cfn_heat",
                  "ceilometer", "cinder_cinderv2"]
