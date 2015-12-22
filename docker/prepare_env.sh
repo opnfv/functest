@@ -198,7 +198,7 @@ fi
 
 # Prepare Functest Environment
 info "Functest: prepare Functest environment"
-python ${FUNCTEST_REPO_DIR}/testcases/config_functest.py --debug ${FUNCTEST_REPO_DIR}/ start
+python ${FUNCTEST_REPO_DIR}/testcases/config_functest.py --debug start
 retval=$?
 if [ $retval != 0 ]; then
     error "Error when configuring Functest environment"
