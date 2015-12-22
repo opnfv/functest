@@ -144,6 +144,16 @@ def remove_floatingips(nova_client):
             logger.info("  > ERROR: There has been a problem removing the "
                         "floating IP %s..." % fip_id)
 
+    timeout = 50
+    while timeout > 0:
+        floatingips = functest_utils.get_floating_ips(nova_client)
+        if floatingips is None or len(floatingips) == 0:
+            break
+        else:
+            logger.debug("Waiting for floating ips to be released...")
+            timeout -= 1
+            time.sleep(1)
+
 
 def remove_networks(neutron_client):
     logger.info("Removing Neutron objects")
