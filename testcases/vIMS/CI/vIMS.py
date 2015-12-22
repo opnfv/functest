@@ -23,16 +23,12 @@ pp = pprint.PrettyPrinter(indent=4)
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 parser.add_argument("-r", "--report",
                     help="Create json result file",
                     action="store_true")
 args = parser.parse_args()
 
-sys.path.append(args.repo_path + "testcases/")
-
-import functest_utils
 
 """ logging configuration """
 logger = logging.getLogger('vIMS')
@@ -47,14 +43,18 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
+REPO_PATH=os.environ['repos_dir']+'/functest/'
+if not os.path.exists(REPO_PATH):
+    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
+    exit(-1)
+sys.path.append(REPO_PATH + "testcases/")
+import functest_utils
 
-# with open(args.repo_path+"config_functest.yaml") as f:
-with open(args.repo_path + "testcases/config_functest.yaml") as f:
+with open(REPO_PATH + "testcases/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
 # Cloudify parameters
-REPO_PATH = args.repo_path
 VIMS_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_vIMS")
 VIMS_DATA_DIR = functest_yaml.get("general").get("directories").get("dir_vIMS_data")+"/"
 VIMS_TEST_DIR = functest_yaml.get("general").get("directories").get("dir_repo_vims_test")+"/"
@@ -391,7 +391,7 @@ def test_clearwater():
         if vims_test_result != "" & args.report:
             logger.debug("Push result into DB")
             logger.debug("Pushing results to DB....")
-            git_version = functest_utils.get_git_branch(args.repo_path)
+            git_version = functest_utils.get_git_branch(REPO_PATH)
             functest_utils.push_results_to_db(db_url=TEST_DB, case_name="vIMS",
                         logger=logger, pod_name="opnfv-jump-2", git_version=git_version,
                         payload={'orchestrator':{'duration': CFY_DEPLOYMENT_DURATION,

@@ -27,7 +27,6 @@ from keystoneclient.v2_0 import client as keystoneclient
 from cinderclient import client as cinderclient
 
 parser = argparse.ArgumentParser()
-parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 args = parser.parse_args()
 
@@ -42,12 +41,16 @@ if args.debug:
 else:
     ch.setLevel(logging.INFO)
 
-sys.path.append(args.repo_path + "testcases/")
-import functest_utils
-
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
+
+REPO_PATH=os.environ['repos_dir']+'/functest/'
+if not os.path.exists(REPO_PATH):
+    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
+    exit(-1)
+sys.path.append(REPO_PATH + "testcases/")
+import functest_utils
 
 default_images = ['TestVM']
 default_networks = ['net04', 'net04_ext', 'functest-net']
