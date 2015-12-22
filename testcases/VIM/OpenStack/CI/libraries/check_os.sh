@@ -14,10 +14,11 @@ fi
 echo "Checking OpenStack basic services:"
 
 ip=$(echo $OS_AUTH_URL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
+port=$(echo $OS_AUTH_URL|sed 's/^.*://'|sed 's/.[^\/]*$//')
 echo ">>Pinging public keystone endpoint $ip..."
 timeout=5
 for i in `seq 1 $timeout`; do
-    ping -q -c 1 $ip &>/dev/null
+    nc -vz $ip $port
     RETVAL=$?
     if [ $RETVAL -eq 0 ]; then
         break
