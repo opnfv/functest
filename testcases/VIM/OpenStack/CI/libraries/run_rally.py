@@ -30,7 +30,6 @@ from glanceclient import client as glanceclient
 tests = ['authenticate', 'glance', 'cinder', 'ceilometer', 'heat', 'keystone',
          'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
 parser = argparse.ArgumentParser()
-parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("test_name",
                     help="Module name to be tested"
                          "Possible values are : "
@@ -47,8 +46,7 @@ parser.add_argument("-r", "--report",
 
 args = parser.parse_args()
 
-sys.path.append(args.repo_path + "testcases/")
-import functest_utils
+
 
 """ logging configuration """
 logger = logging.getLogger("run_rally")
@@ -65,12 +63,18 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - "
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-with open(args.repo_path+"testcases/config_functest.yaml") as f:
+REPO_PATH=os.environ['repos_dir']+'/functest/'
+if not os.path.exists(REPO_PATH):
+    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
+    exit(-1)
+sys.path.append(REPO_PATH + "testcases/")
+import functest_utils
+
+with open(REPO_PATH+"testcases/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
 HOME = os.environ['HOME']+"/"
-REPO_PATH = args.repo_path
 SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general"). \
     get("directories").get("dir_rally_scn")
 RESULTS_DIR = functest_yaml.get("general").get("directories"). \
@@ -90,7 +94,7 @@ def push_results_to_db(payload):
 
     url = TEST_DB + "/results"
     installer = functest_utils.get_installer_type(logger)
-    git_version = functest_utils.get_git_branch(args.repo_path)
+    git_version = functest_utils.get_git_branch(REPO_PATH)
     pod_name = functest_utils.get_pod_name(logger)
     # TODO pod_name hardcoded, info shall come from Jenkins
     params = {"project_name": "functest", "case_name": "Rally",

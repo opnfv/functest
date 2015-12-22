@@ -34,7 +34,7 @@ arr_test=(vping odl tempest vims rally)
 
 function clean_openstack(){
     python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py \
-        --debug ${FUNCTEST_REPO_DIR}/
+        --debug
 }
 
 function run_test(){
@@ -46,7 +46,7 @@ function run_test(){
         "vping")
             info "Running vPing test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing.py \
-                --debug ${FUNCTEST_REPO_DIR}/ ${report}
+                --debug ${report}
         ;;
         "odl")
             info "Running ODL test..."
@@ -79,7 +79,7 @@ function run_test(){
         "tempest")
             info "Running Tempest smoke tests..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
-                --debug ${FUNCTEST_REPO_DIR}/ -m smoke ${report}
+                --debug -m smoke ${report}
             # save tempest.conf for further troubleshooting
             tempest_conf="${RALLY_VENV_DIR}/tempest/for-deployment-*/tempest.conf"
             if [ -f ${tempest_conf} ]; then
@@ -90,13 +90,13 @@ function run_test(){
         "vims")
             info "Running vIMS test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py \
-                --debug ${FUNCTEST_REPO_DIR}/ ${report}
+                --debug ${report}
             clean_openstack
         ;;
         "rally")
             info "Running Rally benchmark suite..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally.py \
-                --debug ${FUNCTEST_REPO_DIR}/ all ${report}
+                --debug all ${report}
             clean_openstack
         ;;
         "bgpvpn_template")
