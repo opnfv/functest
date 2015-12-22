@@ -188,6 +188,13 @@ fi
 # Source credentials
 source ${FUNCTEST_CONF_DIR}/openstack.creds
 
+# Check OpenStack
+info "Checking that the basic OpenStack services are functional..."
+${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/check_os.sh
+RETVAL=$?
+if [ $RETVAL -ne 0 ]; then
+    exit 1
+fi
 
 # Prepare Functest Environment
 info "Functest: prepare Functest environment"
