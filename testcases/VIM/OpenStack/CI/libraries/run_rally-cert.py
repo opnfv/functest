@@ -23,6 +23,8 @@ import yaml
 import requests
 import sys
 import novaclient.v2.client as novaclient
+from glanceclient import client as glanceclient
+from keystoneclient.v2_0 import client as keystoneclient
 
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
@@ -130,16 +132,6 @@ def get_task_id(cmd_raw):
     return None
 
 
-def create_glance_image(path, name, disk_format):
-    """
-    Create a glance image given the absolute path of the image, its name and the disk format
-    """
-    cmd = ("glance image-create --name " + name + "  --visibility public "
-           "--disk-format " + disk_format + " --container-format bare --file " + path)
-    functest_utils.execute_command(cmd, logger)
-    return True
-
-
 def task_succeed(json_raw):
     """
     Parse JSON from rally JSON results
@@ -162,7 +154,7 @@ def task_succeed(json_raw):
 
 def build_task_args(test_file_name):
     task_args = {'service_list': [test_file_name]}
-    task_args['smoke'] = False 
+    task_args['smoke'] = False
     task_args['image_name'] = GLANCE_IMAGE_NAME
     task_args['flavor_name'] = FLAVOR_NAME
     task_args['glance_image_location'] = GLANCE_IMAGE_LOCATION
@@ -247,20 +239,6 @@ def run_task(test_name):
         print 'Test KO'
 
 
-def delete_glance_image(name):
-    cmd = ("glance image-delete $(glance image-list | grep %s "
-           "| awk '{print $2}' | head -1)" % name)
-    functest_utils.execute_command(cmd, logger)
-    return True
-
-
-def cleanup(nova):
-    logger.info("Cleaning up...")
-    logger.debug("Deleting image...")
-    delete_glance_image(GLANCE_IMAGE_NAME)
-    return True
-
-
 def main():
     # configure script
     if not (args.test_name in tests):
@@ -269,11 +247,19 @@ def main():
 
     creds_nova = functest_utils.get_credentials("nova")
     nova_client = novaclient.Client(**creds_nova)
+    creds_keystone = functest_utils.get_credentials("keystone")
+    keystone_client = keystoneclient.Client(**creds_keystone)
+    glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
+                                                   endpoint_type='publicURL')
+    glance_client = glanceclient.Client(1, glance_endpoint,
+                                        token=keystone_client.auth_token)
 
     logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME, GLANCE_IMAGE_PATH))
-    create_glance_image(GLANCE_IMAGE_PATH, GLANCE_IMAGE_NAME, GLANCE_IMAGE_FORMAT)
-
-
+    image_id = functest_utils.create_glance_image(glance_client,
+                                            GLANCE_IMAGE_NAME,GLANCE_IMAGE_PATH)
+    if not image_id:
+        logger.error("Failed to create a Glance image...")
+        exit(-1)
     # Check if the given image exists
     try:
         nova_client.images.find(name=GLANCE_IMAGE_NAME)
