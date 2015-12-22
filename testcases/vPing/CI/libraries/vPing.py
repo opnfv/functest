@@ -31,17 +31,12 @@ pp = pprint.PrettyPrinter(indent=4)
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
 parser.add_argument("-r", "--report",
                     help="Create json result file",
                     action="store_true")
 
 args = parser.parse_args()
-
-sys.path.append(args.repo_path + "testcases/")
-
-import functest_utils
 
 """ logging configuration """
 
@@ -61,12 +56,18 @@ formatter = logging.Formatter('%(asctime)s - %(name)s'
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-HOME = os.environ['HOME'] + "/"
+REPO_PATH=os.environ['repos_dir']+'/functest/'
+if not os.path.exists(REPO_PATH):
+    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
+    exit(-1)
+sys.path.append(REPO_PATH + "testcases/")
+import functest_utils
 
-with open(args.repo_path + "testcases/config_functest.yaml") as f:
+with open(REPO_PATH + "testcases/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
+HOME = os.environ['HOME'] + "/"
 # vPing parameters
 VM_BOOT_TIMEOUT = 180
 VM_DELETE_TIMEOUT = 100
@@ -458,7 +459,7 @@ def main():
         if args.report:
             logger.debug("Push result into DB")
             # TODO check path result for the file
-            git_version = functest_utils.get_git_branch(args.repo_path)
+            git_version = functest_utils.get_git_branch(REPO_PATH)
             pod_name = functest_utils.get_pod_name(logger)
             functest_utils.push_results_to_db(TEST_DB,
                                               "vPing",

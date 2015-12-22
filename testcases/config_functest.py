@@ -17,7 +17,6 @@ from neutronclient.v2_0 import client as neutronclient
 
 actions = ['start', 'check', 'clean']
 parser = argparse.ArgumentParser()
-parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("action", help="Possible actions are: '{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 parser.add_argument("-f", "--force", help="Force",  action="store_true")
@@ -38,18 +37,19 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-if not os.path.exists(args.repo_path):
-    logger.error("Repo directory not found '%s'" % args.repo_path)
+REPO_PATH=os.environ['repos_dir']+'/functest/'
+if not os.path.exists(REPO_PATH):
+    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
+sys.path.append(REPO_PATH + "testcases/")
 
-with open(args.repo_path+"testcases/config_functest.yaml") as f:
+with open(REPO_PATH+"testcases/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
 
 """ global variables """
 # Directories
-REPO_PATH = args.repo_path
 RALLY_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_rally")
 RALLY_REPO_DIR = functest_yaml.get("general").get("directories").get("dir_repo_rally")
 RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("dir_rally_inst")
@@ -194,9 +194,8 @@ def action_clean():
         shutil.rmtree(RALLY_RESULT_DIR,ignore_errors=True)
 
     logger.debug("Cleaning up the OpenStack deployment...")
-    cmd='python ' + args.repo_path + \
-        '/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py -d ' \
-        +args.repo_path
+    cmd='python ' + REPO_PATH + \
+        '/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py -d '
     functest_utils.execute_command(cmd,logger)
     logger.info("Functest environment clean!")
 

@@ -24,7 +24,6 @@ modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
 
 """ tests configuration """
 parser = argparse.ArgumentParser()
-parser.add_argument("repo_path", help="Path to the Functest repository")
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 parser.add_argument("-m", "--mode", help="Tempest test mode [smoke, all]",
                     default="smoke")
@@ -48,14 +47,17 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-with open(args.repo_path+"/testcases/config_functest.yaml") as f:
+REPO_PATH=os.environ['repos_dir']+'/functest/'
+if not os.path.exists(REPO_PATH):
+    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
+    exit(-1)
+sys.path.append(REPO_PATH + "testcases/")
+import functest_utils
+
+with open(REPO_PATH+"testcases/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
-
-REPO_PATH = args.repo_path
 TEST_DB = functest_yaml.get("results").get("test_db_url")
-sys.path.append(args.repo_path + "/testcases/")
-import functest_utils
 
 MODE = "smoke"
 
