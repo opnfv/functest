@@ -6,30 +6,52 @@
 #    jose.lausuch@ericsson.com
 #
 
+verify_connectivity() {
+    for i in $(seq 0 10); do
+        if nc -vz $1 $2 &>/dev/null; then
+            return 0
+        fi
+        sleep 1
+    done
+    return 1
+}
+
+
 if [ -z $OS_AUTH_URL ];then
     echo "ERROR: OS_AUTH_URL environment variable missing... Have you sourced the OpenStack credentials?"
     exit 1
 fi
 
-echo "Checking OpenStack basic services:"
 
-ip=$(echo $OS_AUTH_URL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
-echo ">>Pinging public keystone endpoint $ip..."
-timeout=5
-for i in `seq 1 $timeout`; do
-    ping -q -c 1 $ip &>/dev/null
-    RETVAL=$?
-    if [ $RETVAL -eq 0 ]; then
-        break
-    fi
-done
-if [ $i -eq $timeout ]; then
-    echo "ERROR: Cannot ping the endpoint $ip defined as env variable OS_AUTH_URL."
+echo "Checking OpenStack endpoints:"
+publicURL=$OS_AUTH_URL
+publicIP=$(echo $publicURL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
+publicPort=$(echo $publicURL|sed 's/^.*://'|sed 's/.[^\/]*$//')
+echo ">>Verifying connectivity to the public endpoint $publicIP:$publicPort..."
+verify_connectivity $publicIP $publicPort
+RETVAL=$?
+if [ $RETVAL -ne 0 ]; then
+    echo "ERROR: Cannot talk to the public endpoint publicIP:$publicPort ."
     echo "OS_AUTH_URL=$OS_AUTH_URL"
     exit 1
 fi
 echo "  ...OK"
 
+adminURL=$(keystone catalog --service identity 2>/dev/null|grep adminURL|awk '{print $4}')
+adminIP=$(echo $adminURL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
+adminPort=$(echo $adminURL|sed 's/^.*://'|sed 's/.[^\/]*$//')
+echo ">>Verifying connectivity to the admin endpoint $adminIP:$adminPort..."
+verify_connectivity $adminIP $adminPort
+RETVAL=$?
+if [ $RETVAL -ne 0 ]; then
+    echo "ERROR: Cannot talk to the admin endpoint adminIP:$adminPort ."
+    echo "adminURL"
+    exit 1
+fi
+echo "  ...OK"
+
+
+echo "Checking OpenStack basic services:"
 commands=('keystone endpoint-list' 'nova list' 'neutron net-list' \
             'glance image-list' 'cinder list')
 for cmd in "${commands[@]}"
