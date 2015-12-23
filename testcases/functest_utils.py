@@ -10,6 +10,7 @@
 
 
 import os
+import os.path
 import urllib2
 import subprocess
 import sys
@@ -336,16 +337,20 @@ def get_image_id(glance_client, image_name):
     return id
 
 
-def create_glance_image(glance_client, image_name, file_path, is_public=True):
+def create_glance_image(glance_client, image_name, file_path, public=True):
+    if not os.path.isfile(file_path):
+        print "Error: file "+file_path+" does not exist."
+        return False
     try:
         with open(file_path) as fimage:
             image = glance_client.images.create(name=image_name,
-                                                is_public=is_public,
+                                                is_public=public,
                                                 disk_format="qcow2",
                                                 container_format="bare",
                                                 data=fimage)
         return image.id
     except:
+        print "Error:", sys.exc_info()[0]
         return False
 
 def delete_glance_image(nova_client, image_id):
