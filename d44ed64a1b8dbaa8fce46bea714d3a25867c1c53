@@ -16,6 +16,24 @@
       "revId": "d44ed64a1b8dbaa8fce46bea714d3a25867c1c53",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_c3465323",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2015-12-23T07:11:34Z",
+      "side": 1,
+      "message": "Yes, I think it would be better to delete resources which were created by the script.\n\nAlso, something must be done to image creation also; one should not create several images with a same name: \n\nroot@85e09d021f77:~# glance image-list\n+--------------------------------------+--------------+-------------+------------------+----------+--------+\n| ID                                   | Name         | Disk Format | Container Format | Size     | Status |\n+--------------------------------------+--------------+-------------+------------------+----------+--------+\n| a91e3833-2eba-4155-9460-6d8d9c74aa40 | functest-img | qcow2       | bare             | 13287936 | active |\n+--------------------------------------+--------------+-------------+------------------+----------+--------+\nroot@85e09d021f77:~# /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py --debug /home/opnfv/repos/functest/ authenticate\n2015-12-23 06:29:33,731 - run_rally - DEBUG - Creating image \u0027functest-img\u0027 from \u0027/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img\u0027...\n2015-12-23 06:29:38,750 - run_rally - ERROR - ERROR: Glance image \u0027functest-img\u0027 not found.\n2015-12-23 06:29:38,751 - run_rally - INFO - Available images are: \nroot@85e09d021f77:~# glance image-list\n+--------------------------------------+--------------+-------------+------------------+----------+--------+\n| ID                                   | Name         | Disk Format | Container Format | Size     | Status |\n+--------------------------------------+--------------+-------------+------------------+----------+--------+\n| a91e3833-2eba-4155-9460-6d8d9c74aa40 | functest-img | qcow2       | bare             | 13287936 | active |\n| 0994376c-2695-434f-9342-4fe8ca53333f | functest-img | qcow2       | bare             | 13287936 | active |\n+--------------------------------------+--------------+-------------+------------------+----------+--------+\nroot@85e09d021f77:~#",
+      "parentUuid": "9a5c5d37_68778403",
+      "revId": "d44ed64a1b8dbaa8fce46bea714d3a25867c1c53",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
