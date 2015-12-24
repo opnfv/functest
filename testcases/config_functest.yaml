@@ -30,7 +30,7 @@ general:
         releng_branch:  master
         releng_commit:  latest
         rally_branch:   master
-        rally_commit:   3011fa6ee2de2f373afe9d17d181ad7026cd8c20
+        rally_commit:   2c34d1896a7a9f2955a2a09531a9c3eb3f88517b
         vims_test_branch:   stable
         vims_test_commit:   latest
         bgpvpn_branch:   master
