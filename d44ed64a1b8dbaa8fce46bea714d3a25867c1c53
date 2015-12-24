@@ -34,6 +34,24 @@
       "revId": "d44ed64a1b8dbaa8fce46bea714d3a25867c1c53",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_727d2e6e",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-24T09:22:47Z",
+      "side": 1,
+      "message": "The problem was that the image was not created, but that is fixed already.\nCan you add here the code to delete that image? :)",
+      "parentUuid": "9a5c5d37_c3465323",
+      "revId": "d44ed64a1b8dbaa8fce46bea714d3a25867c1c53",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
