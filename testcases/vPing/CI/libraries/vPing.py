@@ -121,9 +121,12 @@ def waitVmActive(nova, vm):
         logger.debug("Status: %s" % status)
         if status == "ACTIVE":
             return True
-        if status == "ERROR" or count == 0:
+        if status == "ERROR" or status == "error":
             return False
-            count -= 1
+        if count == 0:
+            logger.debug("Booting a VM timed out...")
+            return False
+        count -= 1
         time.sleep(sleep_time)
     return False
 
