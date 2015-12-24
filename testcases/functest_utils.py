@@ -16,6 +16,7 @@ import subprocess
 import sys
 import requests
 import json
+import shutil
 from git import Repo
 
 
@@ -513,7 +514,7 @@ def download_url(url, dest_path):
         return False
 
     with open(dest, 'wb') as f:
-        f.write(response.read())
+        shutil.copyfileobj(response, f)
     return True
 
 
