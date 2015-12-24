@@ -20,6 +20,7 @@ import os
 import re
 import sys
 import time
+import yaml
 
 import novaclient.v2.client as novaclient
 from neutronclient.v2_0 import client as neutronclient
@@ -52,14 +53,19 @@ if not os.path.exists(REPO_PATH):
 sys.path.append(REPO_PATH + "testcases/")
 import functest_utils
 
-default_images = ['TestVM']
-default_networks = ['net04', 'net04_ext', 'functest-net', 'ext-net']
-default_routers = ['router04', 'functest-router']
-default_users = ["heat", "heat-cfn", "cinder", "nova", "swift", "glance",
-                 "neutron", "admin", "fuel_stats_user", "quantum", "heat-cfn_heat",
-                 "ceilometer", "cinder_cinderv2", "demo"]
-default_tenants = ["admin", "services", "service", "demo"]
-default_security_groups = ['default']
+with open("os_defaults.yaml") as f:
+    defaults_yaml = yaml.safe_load(f)
+f.close()
+
+installer = os.environ["INSTALLER_TYPE"]
+
+default_images = defaults_yaml.get(installer).get("images")
+default_networks = defaults_yaml.get(installer).get("networks")
+default_routers = defaults_yaml.get(installer).get("routers")
+default_security_groups = defaults_yaml.get(installer).get("security_groups")
+default_users = defaults_yaml.get(installer).get("users")
+default_tenants = defaults_yaml.get(installer).get("tenants")
+
 
 def separator():
     logger.debug("-------------------------------------------")

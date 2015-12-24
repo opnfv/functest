@@ -1,0 +1,31 @@
+fuel:
+    images: ['TestVM']
+    networks: ['net04', 'net04_ext']
+    routers: ['router04']
+    security_groups: ['default']
+    tenants: ['admin', 'services']
+    users: ['heat', 'heat-cfn', 'cinder', 'nova', 'swift', 'glance', 'neutron', 'admin', 'fuel_stats_user']
+apex:
+    images: []
+    networks: ['internal', 'external']
+    routers: []
+    security_groups: ['default']
+    tenants: ['admin', 'services']
+    users: ['heat', 'heat-cfn', 'cinder', 'nova', 'swift', 'glance', 'neutron', 'admin']
+compass:
+    images: []
+    networks: ['ext-net']
+    routers: []
+    security_groups: ['default']
+    tenants: ['admin', 'service', 'demo']
+    users: ['heat', 'cinder', 'nova', 'glance', 'neutron', 'admin', 'ceilometer', 'demo', 'keystone']
+joid:
+    images: []
+    networks: []
+    routers: []
+    security_groups: []
+    tenants: []
+    users: ['admin', 'glance', 'nova', 'quantum', 'heat-cfn_heat', 'ceilometer', 'cinder_cinderv2']
+common:
+    networks: ['functest-net']
+    routers: ['functest-router']
