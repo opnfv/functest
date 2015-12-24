@@ -123,7 +123,7 @@ def waitVmActive(nova, vm):
             return True
         if status == "ERROR" or count == 0:
             return False
-            count -= 1
+        count -= 1
         time.sleep(sleep_time)
     return False
 
