@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_f2db5e19",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-24T17:26:17Z",
+      "side": 1,
+      "message": "Great! This way, it doesn\u0027t complain about the size?",
+      "revId": "5966cc5e4b1a2a1677c2edfb9a74f2275ccc45a2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_d2d61af1",
+        "filename": "testcases/vIMS/CI/clearwater.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-24T17:26:17Z",
+      "side": 1,
+      "message": "It seems you are using \"tabs\" instead of 4 spaces, as python best practices says... It doesn\u0027t harm, but up to you :)",
+      "revId": "5966cc5e4b1a2a1677c2edfb9a74f2275ccc45a2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_b205e67b",
+        "filename": "testcases/vIMS/CI/requirements.pip",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-24T17:26:17Z",
+      "side": 1,
+      "message": "Can you remove this and modify it in docker/requirements.pip?\nPlease remove that file, since the library will be there by default (preinstalled in the docker image).",
+      "revId": "5966cc5e4b1a2a1677c2edfb9a74f2275ccc45a2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
