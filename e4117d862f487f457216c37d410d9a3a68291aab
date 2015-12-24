@@ -16,6 +16,24 @@
       "revId": "e4117d862f487f457216c37d410d9a3a68291aab",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_9278a290",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/clean_openstack.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1090
+      },
+      "writtenOn": "2015-12-24T09:00:12Z",
+      "side": 1,
+      "message": "yes, vIMS asks for a external network,  i have to keep it for repeatedly test",
+      "parentUuid": "9a5c5d37_48d8401d",
+      "revId": "e4117d862f487f457216c37d410d9a3a68291aab",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
