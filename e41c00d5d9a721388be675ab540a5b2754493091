@@ -45,6 +45,24 @@
       "revId": "e41c00d5d9a721388be675ab540a5b2754493091",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_b8002502",
+        "filename": "testcases/vIMS/CI/requirements.pip",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2015-12-26T17:15:51Z",
+      "side": 1,
+      "message": "Ah, so this is just for the virtual env? Won",
+      "parentUuid": "9a5c5d37_15737ce8",
+      "revId": "e41c00d5d9a721388be675ab540a5b2754493091",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
