@@ -235,6 +235,19 @@ def create_neutron_port(neutron_client, name, network_id, ip):
         return False
 
 
+def update_neutron_port(neutron_client, port_id, device_owner):
+    json_body = {'port': {
+                 'device_owner': device_owner,
+                 }}
+    try:
+        port = neutron_client.update_port(port=port_id,
+                                          body=json_body)
+        return port['port']['id']
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+
 def delete_neutron_port(neutron_client, port_id):
     try:
         neutron_client.delete_port(port_id)
