@@ -52,6 +52,24 @@
       "revId": "d44ed64a1b8dbaa8fce46bea714d3a25867c1c53",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_f858dd57",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2015-12-28T07:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a5c5d37_727d2e6e",
+      "revId": "d44ed64a1b8dbaa8fce46bea714d3a25867c1c53",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
