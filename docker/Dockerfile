@@ -48,6 +48,7 @@ libgmp3-dev \
 libxml2-dev \
 libffi-dev \
 crudini \
+ruby1.9.1-dev \
 --no-install-recommends
 
 
@@ -71,4 +72,4 @@ ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img /home/op
 RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 RUN curl -L https://get.rvm.io | bash -s stable
 RUN bash -c 'source /etc/profile.d/rvm.sh ; rvm autolibs enable ; rvm install 1.9.3 ; rvm use 1.9.3'
-RUN bash -c 'source /etc/profile.d/rvm.sh ; cd ${repos_dir}/vims-test ; rvm use 1.9.3; bundle install'
+RUN bash -c 'source /etc/profile.d/rvm.sh ; cd ${repos_dir}/vims-test;rvm use system;bundle install'
