@@ -164,29 +164,44 @@ def remove_networks(neutron_client):
     networks = functest_utils.get_network_list(neutron_client)
     if networks == None:
         logger.debug("There are no networks in the deployment. ")
-        return
+    else:
+        logger.debug("Existing networks:")
+        for network in networks:
+            net_id = network['id']
+            net_name = network['name']
+            logger.debug(" '%s', ID=%s " %(net_name,net_id))
+            if net_name not in default_networks:
+                logger.debug("    > this is not a default network and will be deleted.")
+                network_ids.append(net_id)
+            else:
+                logger.debug("   > this is a default network and will NOT be deleted.")
 
-    logger.debug("Existing networks:")
-    for network in networks:
-        net_id = network['id']
-        net_name = network['name']
-        logger.debug(" '%s', ID=%s " %(net_name,net_id))
-        if net_name not in default_networks:
-            logger.debug("    > this is not a default network and will be deleted.")
-            network_ids.append(net_id)
-        else:
-            logger.debug("   > this is a default network and will NOT be deleted.")
-
-
-    #remove interfaces router and delete ports
+    #delete ports
     ports = functest_utils.get_port_list(neutron_client)
     if ports is None:
         logger.debug("There are no ports in the deployment. ")
-        return
+    else:
+        remove_ports(neutron_client, ports, network_ids)
 
-    #debug information (to be removed when it works many times in a row)
-    print ports
+    #remove routers
+    routers = functest_utils.get_router_list(neutron_client)
+    if routers is None:
+        logger.debug("There are no routers in the deployment. ")
+    else:
+        remove_routers(neutron_client, routers)
 
+    #remove networks
+    if network_ids != None:
+        for net_id in network_ids:
+            logger.debug("Removing network %s ..." % net_id)
+            if functest_utils.delete_neutron_net(neutron_client, net_id):
+                logger.debug("  > Done!")
+            else:
+                logger.info("  > ERROR: There has been a problem removing the "
+                            "network %s..." % net_id)
+
+
+def remove_ports(neutron_client, ports, network_ids):
     for port in ports:
         if port['network_id'] in network_ids:
             port_id = port['id']
@@ -195,7 +210,6 @@ def remove_networks(neutron_client):
             except:
                 logger.info("  > WARNING: Port %s does not contain 'fixed_ips'" % port_id)
                 print port
-
             router_id = port['device_id']
             if len(port['fixed_ips']) == 0 and router_id == '':
                 logger.debug("Removing port %s ..." % port_id)
@@ -215,21 +229,19 @@ def remove_networks(neutron_client):
                 else:
                     logger.info("  > ERROR: There has been a problem removing the "
                                 "interface %s from router %s..." %(subnet_id,router_id))
-                    #print port
             else:
+                logger.debug("Clearing device_owner for port %s ..." % port_id)
+                functest_utils.update_neutron_port(neutron_client,
+                                                   port_id,
+                                                   device_owner='clear')
                 logger.debug("Removing port %s ..." % port_id)
                 if functest_utils.delete_neutron_port(neutron_client, port_id):
                     logger.debug("  > Done!")
                 else:
-                    logger.info("  > ERROR: There has been a problem removing the "
-                                "port %s ..." %port_id)
-                    #print port
+                    logger.debug("  > Port %s could not be removed directly" % port_id)
 
-    #remove routers
-    routers = functest_utils.get_router_list(neutron_client)
-    if routers is None:
-        logger.debug("There are no routers in the deployment. ")
-        return
+
+def remove_routers(neutron_client, routers):
     for router in routers:
         router_id = router['id']
         router_name = router['name']
@@ -242,26 +254,14 @@ def remove_networks(neutron_client):
                 else:
                     logger.info("  > ERROR: There has been a problem removing "
                                 "the gateway...")
-                    #print router
-
             else:
                 logger.debug("Router is not connected to anything. Ready to remove...")
-            logger.debug("Removing router %s(%s) ..." % (router_name,router_id))
+            logger.debug("Removing router %s(%s) ..." % (router_name, router_id))
             if functest_utils.delete_neutron_router(neutron_client, router_id):
                 logger.debug("  > Done!")
             else:
                 logger.info("  > ERROR: There has been a problem removing the "
-                            "router '%s'(%s)..." % (router_name,router_id))
-
-
-    #remove networks
-    for net_id in network_ids:
-        logger.debug("Removing network %s ..." % net_id)
-        if functest_utils.delete_neutron_net(neutron_client, net_id):
-            logger.debug("  > Done!")
-        else:
-            logger.info("  > ERROR: There has been a problem removing the "
-                        "network %s..." % net_id)
+                            "router '%s'(%s)..." % (router_name, router_id))
 
 
 def remove_security_groups(neutron_client):
