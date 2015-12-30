@@ -5,7 +5,6 @@ python-novaclient==2.28.1
 python-glanceclient==1.1.0
 python-cinderclient==1.4.0
 python-keystoneclient==1.6.0
-cloudify==3.2.1
 virtualenv==1.11.4
 pexpect==4.0
 requests==2.8.0

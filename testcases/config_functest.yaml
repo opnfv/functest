@@ -72,36 +72,32 @@ vIMS:
     general:
         tenant_name: vIMS
         tenant_description: vIMS Functionality Testing
-        base_image_url: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
-        base_image_name: ubuntu_14.04
+        images:
+            ubuntu:
+                image_url: 'http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img'
+                image_name: ubuntu_14.04
+            centos:
+                image_url: 'http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1510.qcow2'
+                image_name: centos_7
     cloudify:
         blueprint:
             url: https://github.com/boucherv-orange/cloudify-manager-blueprints.git
-            branch: "3.2-build"
-            file_name: "openstack-manager-blueprint.yaml"
+            branch: "3.3-build"
+        requierments:
+            ram_min: 3000
+            os_image: centos_7
         inputs:
             keystone_username: ""
             keystone_password: ""
             keystone_tenant_name: ""
             keystone_url: ""
-            manager_public_key_name: 'cloudify-manager'
-            agent_public_key_name: 'cloudify-agent'
+            manager_public_key_name: 'manager-kp'
+            agent_public_key_name: 'agent-kp'
             image_id: ""
-            flavor_id: "2"
+            flavor_id: "3"
             external_network_name: ""
-            use_existing_manager_keypair: false
-            use_existing_agent_keypair: false
-            manager_server_name: cloudify-management-server
-            manager_server_user: ubuntu
-            manager_security_group_name: cloudify-sg-manager
-            agents_security_group_name: cloudify-sg-agents
-            manager_private_key_path: ~/.ssh/cloudify-manager-kp.pem
-            agent_private_key_path: ~/.ssh/cloudify-agent-kp.pem
+            ssh_user: centos
             agents_user: ubuntu
-            nova_url: ""
-            neutron_url: ""
-            resources_prefix: ""
-        inputs_path: openstack/inputs.yaml
     clearwater:
         blueprint:
             file_name: 'openstack-blueprint.yaml'
@@ -110,6 +106,9 @@ vIMS:
             url: 'https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git'
             branch: "stable"
         deployment-name: 'clearwater-opnfv'
+        requierments:
+            ram_min: 1700
+            os_image: ubuntu_14.04
         inputs:
             image_id: ''
             flavor_id: ''
