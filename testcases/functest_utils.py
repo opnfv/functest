@@ -321,6 +321,19 @@ def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
         print "Error:", sys.exc_info()[0]
         return False
 
+def update_cinder_quota(cinder_client, tenant_id, vols_quota, snapshots_quota,gigabytes_quota):
+    quotas_values = { 
+            "volumes": vols_quota, 
+            "snapshots": snapshots_quota, 
+            "gigabytes": gigabytes_quota
+    }
+
+    try:
+        quotas_default=cinder_client.quotas.update(tenant_id,**quotas_values)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
 
 def get_private_net(neutron_client):
     # Checks if there is an existing private network
