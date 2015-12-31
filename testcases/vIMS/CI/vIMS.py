@@ -242,6 +242,25 @@ def main():
         logger.error("Failed to update security group quota for tenant %s" %TENANT_NAME)
         exit(-1)
 
+    logger.info("Update cinder quota for this tenant")
+    from cinderclient import client as cinderclient
+
+    creds_cinder = functest_utils.get_credentials("cinder")
+    cinder_client = cinderclient.Client('1',creds_cinder['username'],
+                                        creds_cinder['api_key'],
+                                        creds_cinder['project_id'],
+                                        creds_cinder['auth_url'],
+                                        service_type="volume")
+    quotas_values = {
+            "volumes": 20,
+            "snapshots": 50,
+            "gigabytes": 1500
+        }
+    quotas_default=cinder_client.quotas.update(tenant_id,**quotas_values)
+    if not quotas_default:
+        logger.error("Failed to update cinder quota for tenant %s" % TENANT_NAME)
+        exit(-1)
+
 
     ################ CLOUDIFY INITIALISATION ################
 
