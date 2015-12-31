@@ -17,7 +17,7 @@ where:
     -h|--help         show this help text
     -r|--report       push results to database (false by default)
     -t|--test         run specific set of tests
-      <test_name>     one or more of the following: vping,odl,rally,tempest,vims. Separated by comma.
+      <test_name>     one or more of the following: vping,odl,rally,tempest,vims,teston. Separated by comma.
 
 
 examples:
@@ -30,7 +30,7 @@ examples:
 # NOTE: Still not 100% working when running the tests
 offline=false
 report=""
-arr_test=(vping odl tempest vims rally)
+arr_test=(vping odl tempest vims rally teston)
 
 function clean_openstack(){
     python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py \
@@ -111,6 +111,11 @@ function run_test(){
             #   cp ${BGPVPN_REPO_DIR}/networking_bgpvpn_tempest/<whatever you need> \
             #       ${tempest_dir}/tempest/api/bgpvpn/
             #   ${tempest_dir}/run_tempest.sh tempest.api.bgpvpn.<test_case_name>
+        ;;
+        "teston")
+            info "Running Rally Onos unitest"
+            python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py
+        ;;
     esac
 }
 
