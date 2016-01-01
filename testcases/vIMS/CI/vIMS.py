@@ -149,7 +149,7 @@ def test_clearwater():
             if args.report:
                 logger.debug("Push result into DB")
                 logger.debug("Pushing results to DB....")
-                git_version = functest_utils.get_git_branch(args.repo_path)
+                git_version = functest_utils.get_git_branch(REPO_PATH)
                 functest_utils.push_results_to_db(db_url=TEST_DB, case_name="vIMS",
                             logger=logger, pod_name="opnfv-jump-2", git_version=git_version,
                             payload={'orchestrator':{'duration': CFY_DEPLOYMENT_DURATION,
