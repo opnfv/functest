@@ -20,7 +20,7 @@ import yaml
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',
-         'telemetry', 'volume']
+         'telemetry', 'volume', 'custom']
 
 """ tests configuration """
 parser = argparse.ArgumentParser()
@@ -151,8 +151,10 @@ def main():
         logger.error("Tempest mode not valid. Possible values are:\n"
                      + str(modes))
         exit(-1)
+    elif (args.mode == 'custom'):
+        MODE = "--tests-file "+REPO_PATH+"testcases/VIM/OpenStack/CI/custom_tests/test_list.txt"
     else:
-        MODE = args.mode
+        MODE = "--set "+args.mode
 
     run_tempest(MODE)
 
