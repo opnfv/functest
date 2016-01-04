@@ -180,6 +180,10 @@ test-dependencies:
     #congress:
     #doctor:
     functest:
+        vping:
+        vims:
+        tempest:
+        rally:
         odl:
             controller: 'odl'
         onos:
@@ -192,10 +196,12 @@ test-dependencies:
     policy-test:
         controller: 'odl'
     sdnvpn:
-        options: 'ovs2.4'
         opnfv-yardstick-tc026-sdnvpn:
-            controller: 'none'
+            options: 'ovs2.4'
+            controller: 'nosdn'
         odl-vpn_service-tests:
+            options: 'ovs2.4'
             controller: 'odl'
         openstack-neutron-bgpvpn-api-extension-tests:
-            controller: 'none'
+            options: 'ovs2.4'
+            controller: 'nosdn'
