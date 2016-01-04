@@ -55,6 +55,7 @@ RALLY_REPO_DIR = functest_yaml.get("general").get("directories").get("dir_repo_r
 RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("dir_rally_inst")
 RALLY_RESULT_DIR = functest_yaml.get("general").get("directories").get("dir_rally_res")
 VPING_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_vping")
+VIMS_TEST_DIR = functest_yaml.get("general").get("directories").get("dir_repo_vims_test")
 ODL_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_odl")
 DATA_DIR = functest_yaml.get("general").get("directories").get("dir_functest_data")
 
@@ -113,6 +114,14 @@ def action_start():
             logger.error("There has been a problem while installing Rally.")
             action_clean()
             exit(-1)
+
+        # Install ruby libraries for vims test-case
+        script += 'source /etc/profile.d/rvm.sh; '
+        script += 'cd ' + VIMS_TEST_DIR + '; '
+        script += 'bundle install'
+
+        cmd = "/bin/bash -c '" + script + "'"
+        functest_utils.execute_command(cmd,logger)
 
         # Create result folder under functest if necessary
         if not os.path.exists(RALLY_RESULT_DIR):
