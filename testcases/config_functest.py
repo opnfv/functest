@@ -116,7 +116,7 @@ def action_start():
             exit(-1)
 
         # Install ruby libraries for vims test-case
-        script += 'source /etc/profile.d/rvm.sh; '
+        script = 'source /etc/profile.d/rvm.sh; '
         script += 'cd ' + VIMS_TEST_DIR + '; '
         script += 'bundle install'
 
