@@ -68,6 +68,16 @@ vping:
     ip_1: 192.168.130.30
     ip_2: 192.168.130.40
 
+tempest:
+    identity:
+        tenant_name: tempest
+        tenant_description: Tenant for Tempest test suite
+        user_name: tempest
+        user_password: tempest
+
+rally:
+    deployment_name: opnfv-rally
+
 vIMS:
     general:
         tenant_name: vIMS
