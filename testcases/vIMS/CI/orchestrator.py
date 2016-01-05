@@ -72,8 +72,17 @@ class orchestrator:
 				f.write(yaml.dump(self.config, default_style='"') )
 			f.close()
 
-			if self.logger:
+			# Ensure no ssh key file already exists
+			key_files = ["/.ssh/cloudify-manager-kp.pem", "/.ssh/cloudify-agent-kp.pem"]
+            home = os.path.expanduser("~")
+
+            for key_file in key_files:
+                if os.path.isfile(home + key_file):
+                    os.remove(home + key_file)
+
+            if self.logger:
 				self.logger.info("Launching the cloudify-manager deployment")
+
 			script = "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
 			script += "cd " + self.testcase_dir + "; "
 			script += "cfy init -r; "
@@ -97,7 +106,7 @@ class orchestrator:
 
 		script = "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
 		script += "cd " + self.testcase_dir + "; "
-		script += "cfy teardown -f; "
+		script += "cfy teardown -f --ignore-deployments=True; "
 		cmd = "/bin/bash -c '" + script + "'"
 		execute_command(cmd, self.logger)
 
@@ -144,7 +153,10 @@ class orchestrator:
 		script += "cfy deployments delete -d " + dep_name + "; "
 
 		cmd = "/bin/bash -c '" + script + "'"
-		execute_command(cmd, self.logger)
+		try:
+			execute_command(cmd, self.logger)
+		except:
+			logger.error("Clearwater undeployment failed")
 
 
 def execute_command(cmd, logger):
