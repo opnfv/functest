@@ -157,7 +157,7 @@ class orchestrator:
             execute_command(cmd, self.logger)
         except:
         	if self.logger:
-            	self.logger.error("Clearwater undeployment failed")
+                self.logger.error("Clearwater undeployment failed")
 
 
 def execute_command(cmd, logger):
