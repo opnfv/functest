@@ -10,8 +10,13 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
-import sys, subprocess, os, shutil, yaml
+import sys
+import subprocess
+import os
+import shutil
+import yaml
 from git import Repo
+
 
 class orchestrator:
 
@@ -48,11 +53,14 @@ class orchestrator:
     def download_manager_blueprint(self, manager_blueprint_url, manager_blueprint_branch):
         if self.manager_blueprint:
             if self.logger:
-                self.logger.info("cloudify manager server blueprint is already downloaded !")
+                self.logger.info(
+                    "cloudify manager server blueprint is already downloaded !")
         else:
             if self.logger:
-                self.logger.info("Downloading the cloudify manager server blueprint")
-            download_result = download_blueprints(manager_blueprint_url, manager_blueprint_branch, self.blueprint_dir)
+                self.logger.info(
+                    "Downloading the cloudify manager server blueprint")
+            download_result = download_blueprints(
+                manager_blueprint_url, manager_blueprint_branch, self.blueprint_dir)
 
             if not download_result:
                 if self.logger:
@@ -68,12 +76,13 @@ class orchestrator:
         if self.manager_blueprint:
             if self.logger:
                 self.logger.info("Writing the inputs file")
-            with open( self.blueprint_dir + "inputs.yaml", "w") as f:
-                f.write(yaml.dump(self.config, default_style='"') )
+            with open(self.blueprint_dir + "inputs.yaml", "w") as f:
+                f.write(yaml.dump(self.config, default_style='"'))
             f.close()
 
             # Ensure no ssh key file already exists
-            key_files = ["/.ssh/cloudify-manager-kp.pem", "/.ssh/cloudify-agent-kp.pem"]
+            key_files = ["/.ssh/cloudify-manager-kp.pem",
+                         "/.ssh/cloudify-agent-kp.pem"]
             home = os.path.expanduser("~")
 
             for key_file in key_files:
@@ -111,31 +120,37 @@ class orchestrator:
         execute_command(cmd, self.logger)
 
         if self.logger:
-            self.logger.info("Cloudify-manager server has been successfully removed!")
+            self.logger.info(
+                "Cloudify-manager server has been successfully removed!")
 
     def download_upload_and_deploy_blueprint(self, blueprint, config, bp_name, dep_name):
         if self.logger:
-            self.logger.info("Downloading the {0} blueprint".format(blueprint['file_name']))
+            self.logger.info("Downloading the {0} blueprint".format(
+                blueprint['file_name']))
         download_result = download_blueprints(blueprint['url'], blueprint['branch'],
-                                                  self.testcase_dir + blueprint['destination_folder'])
+                                              self.testcase_dir + blueprint['destination_folder'])
 
         if not download_result:
             if self.logger:
-                self.logger.error("Failed to download blueprint {0}".format(blueprint['file_name']))
+                self.logger.error(
+                    "Failed to download blueprint {0}".format(blueprint['file_name']))
             exit(-1)
 
         if self.logger:
             self.logger.info("Writing the inputs file")
         with open(self.testcase_dir + blueprint['destination_folder'] + "/inputs.yaml", "w") as f:
-            f.write(yaml.dump(config, default_style='"') )
+            f.write(yaml.dump(config, default_style='"'))
         f.close()
 
         if self.logger:
             self.logger.info("Launching the {0} deployment".format(bp_name))
         script = "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
-        script += "cd " + self.testcase_dir + blueprint['destination_folder'] + "; "
-        script += "cfy blueprints upload -b " + bp_name + " -p openstack-blueprint.yaml; "
-        script += "cfy deployments create -b " + bp_name  + " -d " + dep_name + " --inputs inputs.yaml; "
+        script += "cd " + self.testcase_dir + \
+            blueprint['destination_folder'] + "; "
+        script += "cfy blueprints upload -b " + \
+            bp_name + " -p openstack-blueprint.yaml; "
+        script += "cfy deployments create -b " + bp_name + \
+            " -d " + dep_name + " --inputs inputs.yaml; "
         script += "cfy executions start -w install -d " + dep_name + " --timeout 1800; "
 
         cmd = "/bin/bash -c '" + script + "'"
@@ -156,8 +171,8 @@ class orchestrator:
         try:
             execute_command(cmd, self.logger)
         except:
-        	if self.logger:
-            	self.logger.error("Clearwater undeployment failed")
+            if self.logger:
+                self.logger.error("Clearwater undeployment failed")
 
 
 def execute_command(cmd, logger):
