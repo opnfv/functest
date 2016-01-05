@@ -143,6 +143,16 @@ def create_neutron_net(neutron_client, name):
         return False
 
 
+def update_neutron_net(neutron_client, network_id, shared=False):
+    json_body = {'network': {'shared': shared}}
+    try:
+        neutron_client.update_network(network_id, body=json_body)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+
 def delete_neutron_net(neutron_client, network_id):
     try:
         neutron_client.delete_network(network_id)
