@@ -263,6 +263,13 @@ def create_private_neutron_net(neutron):
     if not network_id:
         return False
     logger.debug("Network '%s' created successfully" % network_id)
+
+    logger.info('Updating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
+    if functest_utils.update_neutron_net(neutron, network_id, shared=True):
+        logger.debug("Network '%s' updated successfully" % network_id)
+    else:
+        logger.info('Updating neutron network %s failed' % network_id)
+
     logger.debug('Creating Subnet....')
     subnet_id = functest_utils. \
         create_neutron_subnet(neutron,
