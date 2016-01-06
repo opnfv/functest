@@ -115,7 +115,7 @@ class orchestrator:
 
         script = "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
         script += "cd " + self.testcase_dir + "; "
-        script += "cfy teardown -f --ignore-deployments=True; "
+        script += "cfy teardown -f --ignore-deployments; "
         cmd = "/bin/bash -c '" + script + "'"
         execute_command(cmd, self.logger)
 
