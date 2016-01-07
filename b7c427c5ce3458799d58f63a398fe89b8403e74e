@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_15024a6f",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-01-07T15:26:36Z",
+      "side": 1,
+      "message": "Parameterized scenarios have been included to functest but not yet taken into actual use.",
+      "revId": "b7c427c5ce3458799d58f63a398fe89b8403e74e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
