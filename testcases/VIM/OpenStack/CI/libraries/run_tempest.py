@@ -18,6 +18,7 @@ import subprocess
 import sys
 import yaml
 import keystoneclient.v2_0.client as ksclient
+from neutronclient.v2_0 import client as neutronclient
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',
@@ -65,8 +66,6 @@ TENANT_NAME = functest_yaml.get("tempest").get("identity").get("tenant_name")
 TENANT_DESCRIPTION = functest_yaml.get("tempest").get("identity").get("tenant_description")
 USER_NAME = functest_yaml.get("tempest").get("identity").get("user_name")
 USER_PASSWORD = functest_yaml.get("tempest").get("identity").get("user_password")
-NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general"). \
-    get("openstack").get("neutron_private_net_name")
 DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
 RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("dir_rally_inst")
 
@@ -172,8 +171,16 @@ def configure_tempest():
         return False
 
     logger.debug("  Updating fixed_network_name...")
+    private_net_name = ""
+    creds_neutron = functest_utils.get_credentials("neutron")
+    neutron_client = neutronclient.Client(**creds_neutron)
+    private_net = functest_utils.get_private_net(neutron_client)
+    if private_net is None:
+        logger.error("No shared private networks found.")
+    else:
+        private_net_name = private_net['name']
     cmd = "crudini --set "+tempest_conf_file+" compute fixed_network_name " \
-          +NEUTRON_PRIVATE_NET_NAME
+          +private_net_name
     functest_utils.execute_command(cmd,logger)
 
     logger.debug("  Updating non-admin credentials...")

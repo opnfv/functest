@@ -346,12 +346,12 @@ def update_cinder_quota(cinder_client, tenant_id, vols_quota, snapshots_quota,gi
         return False
 
 def get_private_net(neutron_client):
-    # Checks if there is an existing private network
+    # Checks if there is an existing shared private network
     networks = neutron_client.list_networks()['networks']
     if len(networks) == 0:
         return None
     for net in networks:
-        if net['router:external'] == False:
+        if (net['router:external'] == False) and (net['shared'] == True):
             return net
     return None
 
