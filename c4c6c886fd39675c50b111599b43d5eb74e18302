@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_70007401",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 602
+      },
+      "writtenOn": "2016-01-07T18:39:24Z",
+      "side": 1,
+      "message": "no demo project created by default.",
+      "revId": "c4c6c886fd39675c50b111599b43d5eb74e18302",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_95019a08",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 602
+      },
+      "writtenOn": "2016-01-07T18:39:24Z",
+      "side": 1,
+      "message": "please add cinder_cinderv2 also",
+      "revId": "c4c6c886fd39675c50b111599b43d5eb74e18302",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
