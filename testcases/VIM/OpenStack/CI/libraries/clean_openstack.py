@@ -53,7 +53,7 @@ if not os.path.exists(REPO_PATH):
 sys.path.append(REPO_PATH + "testcases/")
 import functest_utils
 
-with open("os_defaults.yaml") as f:
+with open(REPO_PATH+"testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml") as f:
     defaults_yaml = yaml.safe_load(f)
 f.close()
 
