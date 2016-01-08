@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_9bd669f0",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2016-01-08T08:26:33Z",
+      "side": 1,
+      "message": "You forgot the R ..",
+      "range": {
+        "startLine": 111,
+        "startChar": 21,
+        "endLine": 111,
+        "endChar": 27
+      },
+      "revId": "3fb2819d7f3340548b98e35c47dd69f6b7c1c726",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_fbf8c57d",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2016-01-08T08:26:33Z",
+      "side": 1,
+      "message": "There is no reference 6 in reference part ..",
+      "range": {
+        "startLine": 224,
+        "startChar": 119,
+        "endLine": 224,
+        "endChar": 124
+      },
+      "revId": "3fb2819d7f3340548b98e35c47dd69f6b7c1c726",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
