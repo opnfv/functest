@@ -63,6 +63,7 @@ RUN git clone https://github.com/openstack/rally.git ${repos_dir}/rally
 RUN git clone https://github.com/opendaylight/integration.git ${repos_dir}/odl_integration
 RUN git clone -b stable https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
 RUN git clone https://github.com/openstack/networking-bgpvpn ${repos_dir}/bgpvpn
+RUN git clone https://gerrit.onosproject.org/OnosSystemTest  ${repos_dir}/onos
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt

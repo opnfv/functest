@@ -15,6 +15,7 @@ general:
         dir_repo_releng:    /home/opnfv/repos/releng
         dir_repo_vims_test: /home/opnfv/repos/vims-test
         dir_repo_bgpvpn:    /home/opnfv/repos/bgpvpn
+        dir_repo_onos:      /home/opnfv/repos/onos
         dir_functest:       /home/opnfv/functest
         dir_results:        /home/opnfv/functest/results
         dir_functest_conf:  /home/opnfv/functest/conf
@@ -35,6 +36,8 @@ general:
         vims_test_commit:   latest
         bgpvpn_branch:   master
         bgpvpn_commit:   latest
+        onos_branch:   master
+        onos_commit:   latest
 
     openstack:
         image_name: functest-img
