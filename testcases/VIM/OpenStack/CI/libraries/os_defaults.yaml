@@ -24,7 +24,7 @@ joid:
     networks: []
     routers: []
     security_groups: ['default']
-    tenants: ['admin', 'service']
+    tenants: ['admin', 'services']
     users: ['admin', 'glance', 'nova', 'quantum_nova', 'quantum', 'heat-cfn_heat', 'ceilometer', 'cinder_cinderv2', 'swift']
 common:
     networks: ['functest-net']
