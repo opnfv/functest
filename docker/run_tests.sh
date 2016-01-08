@@ -17,7 +17,7 @@ where:
     -h|--help         show this help text
     -r|--report       push results to database (false by default)
     -t|--test         run specific set of tests
-      <test_name>     one or more of the following: vping,odl,rally,tempest,vims. Separated by comma.
+      <test_name>     one or more of the following: vping,odl,rally,tempest,vims,onos. Separated by comma.
 
 
 examples:
@@ -111,6 +111,10 @@ function run_test(){
             #   cp ${BGPVPN_REPO_DIR}/networking_bgpvpn_tempest/<whatever you need> \
             #       ${tempest_dir}/tempest/api/bgpvpn/
             #   ${tempest_dir}/run_tempest.sh tempest.api.bgpvpn.<test_case_name>
+       ;;
+        "onos")
+            info "Running ONOS test case..."
+            python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py
     esac
 }
 
