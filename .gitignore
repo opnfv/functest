@@ -1,0 +1,5 @@
+*~
+.*.sw?
+/docs_build/
+/docs_output/
+/releng/
