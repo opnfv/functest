@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_5bcb511e",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-08T08:51:36Z",
+      "side": 1,
+      "message": "according to narinder, no demo tenant created",
+      "revId": "841d24892ff34a4180511dea0c4b06c81e25c81f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
