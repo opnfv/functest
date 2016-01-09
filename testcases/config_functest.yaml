@@ -169,36 +169,47 @@ results:
 # - installer (e.g. my test can be run only with installer Compass)
 # possible values: apex, compass, fuel, joid
 #
-# - controller (e.g. my test can be done only with controller OpenContrail)
-# possible values: none, odl, onos, opencontrail
+# - the controller (odl, onos, opencontrail) 
 #
-# - options (ovs, kvm, QEMU, proc) (my test is only possible with OVS 2.3.2)
-# possible values:
-# ovs: ovs2.4, ovsX
-# kvm:
-# qemu:
+# - the scenario (ovs, kvm, QEMU, proc) based on Fuel proposal
+# see https://git.opnfv.org/cgit/fuel/tree/deploy/scenario/scenario.yaml
+#  e.g my test is only possible with OVS 2.3.2 on odl
+# not fully clear as the controller may be included with the scenario
+#
+# In a first step, our main need is to trigger ad hox controller suite
+# In second step we may focus with scenario parameter
+# but no so far
+# - either controller suite
+# or
+# - suites that should be runnable on any conf, any scenario
 #
 #######################################################################
 test-dependencies:
-    #congress:
-    #doctor:
+    doctor:
     functest:
+        vping:
+        vims:
+        tempest:
+        rally:
         odl:
             controller: 'odl'
         onos:
             controller: 'onos'
         onos-ovsdb:
             controller: 'onos'
-    #promise:
+    promise:
     ovno:
         controller: 'opencontrail'
     policy-test:
         controller: 'odl'
     sdnvpn:
-        options: 'ovs2.4'
         opnfv-yardstick-tc026-sdnvpn:
-            controller: 'none'
+            controller: 'nosdn'
+            scenario: 'os_ovh_ha'
         odl-vpn_service-tests:
             controller: 'odl'
+            scenario: 'os_ovh_ha'
         openstack-neutron-bgpvpn-api-extension-tests:
-            controller: 'none'
+            controller: 'nosdn'
+            scenario: 'os_ovh_ha'
+ 
