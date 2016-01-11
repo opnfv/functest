@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_5e833a04",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 306
+      },
+      "writtenOn": "2016-01-11T10:38:37Z",
+      "side": 1,
+      "message": "you can add the script below to run teston:\n\npython ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+      "range": {
+        "startLine": 117,
+        "startChar": 19,
+        "endLine": 117,
+        "endChar": 24
+      },
+      "revId": "c52524bf85c5c36b40d71b3b244cfd7b8ed16dd2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_9ebbf2e4",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 306
+      },
+      "writtenOn": "2016-01-11T10:38:37Z",
+      "side": 1,
+      "message": "why we need this repo?  @xiaogang could you give an ansmer? do we need to download the test project from onos? https://gerrit.onosproject.org/OnosSystemTest",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "c52524bf85c5c36b40d71b3b244cfd7b8ed16dd2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
