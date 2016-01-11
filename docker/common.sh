@@ -55,6 +55,8 @@ BGPVPN_BRANCH=$(cat $config_file | grep -w bgpvpn_branch | awk 'END {print $NF}'
 BGPVPN_COMMIT=$(cat $config_file | grep -w bgpvpn_commit | awk 'END {print $NF}')
 ONOS_BRANCH=$(cat $config_file | grep -w onos_branch | awk 'END {print $NF}')
 ONOS_COMMIT=$(cat $config_file | grep -w onos_commit | awk 'END {print $NF}')
+PROMISE_BRANCH=$(cat $config_file | grep -w promise_branch | awk 'END {print $NF}')
+PROMISE_COMMIT=$(cat $config_file | grep -w promise_commit | awk 'END {print $NF}')
 
 
 echo "_____Parsed needed data from ${config_file}:"
@@ -80,6 +82,8 @@ echo "VIMS_BRANCH=${VIMS_BRANCH}"
 echo "VIMS_COMMIT=${VIMS_COMMIT}"
 echo "ONOS_BRANCH=${ONOS_BRANCH}"
 echo "ONOS_COMMIT=${ONOS_COMMIT}"
+echo "PROMISE_BRANCH=${PROMISE_BRANCH}"
+echo "PROMISE_COMMIT=${PROMISE_COMMIT}"
 echo "############################"
 
 info ()  {
