@@ -21,7 +21,7 @@ compass:
     users: ['heat', 'cinder', 'nova', 'glance', 'neutron', 'admin', 'ceilometer', 'demo', 'keystone']
 joid:
     images: []
-    networks: []
+    networks: ['ext-net']
     routers: []
     security_groups: []
     tenants: []
