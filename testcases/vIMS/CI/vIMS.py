@@ -216,8 +216,12 @@ def main():
         logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
         exit(-1)
 
-    role_name = "admin"
-    role_id = functest_utils.get_role_id(keystone, role_name)
+    roles_name = ["admin", "Admin"]
+    role_id = ''
+    for role_name in roles_name:
+        if role_id == '':
+            role_id = functest_utils.get_role_id(keystone, role_name)
+
     if role_id == '':
         logger.error("Error : Failed to get id for %s role" % role_name)
 
