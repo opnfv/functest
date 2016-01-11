@@ -142,6 +142,20 @@ if [ $offline == false ]; then
         info "BGPVPN repo: given commit is ${BGPVPN_COMMIT}. Reseting..."
         git reset --hard ${BGPVPN_COMMIT}
     fi
+
+    info "Updating ONOS repository...."
+    cd ${ONOS_REPO_DIR}
+    if [ ${ONOS_BRANCH} != "master" ]; then
+        info "ONOS repo: checkout ${ONOS} branch..."
+        git checkout ${ONOS_BRANCH}
+    fi
+    info "ONOS repo: pulling to latest..."
+    git pull
+    if [ ${ONOS_COMMIT} != "latest" ]; then
+        info "ONOS repo: given commit is ${ONOS_COMMIT}. Reseting..."
+        git reset --hard ${ONOS_COMMIT}
+    fi
+
 fi
 
 # We do this regardless if its online or offline mode.
