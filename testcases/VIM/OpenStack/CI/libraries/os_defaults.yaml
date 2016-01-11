@@ -10,7 +10,7 @@ apex:
     networks: ['internal', 'external']
     routers: []
     security_groups: ['default']
-    tenants: ['admin', 'services']
+    tenants: ['admin', 'services', 'service']
     users: ['heat', 'heat-cfn', 'cinder', 'nova', 'swift', 'glance', 'neutron', 'admin']
 compass:
     images: []
