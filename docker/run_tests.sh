@@ -17,7 +17,7 @@ where:
     -h|--help         show this help text
     -r|--report       push results to database (false by default)
     -t|--test         run specific set of tests
-      <test_name>     one or more of the following: vping,odl,rally,tempest,vims,onos. Separated by comma.
+      <test_name>     one or more of the following: vping,odl,rally,tempest,vims,onos, promise. Separated by comma.
 
 
 examples:
@@ -115,7 +115,11 @@ function run_test(){
         "onos")
             info "Running ONOS test case..."
             python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py
-    esac
+      ;;
+        "promise")
+            info "Running PROMISE test case..."
+            # TODO
+   esac
 }
 
 
