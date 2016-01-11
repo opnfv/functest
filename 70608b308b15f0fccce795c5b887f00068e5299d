@@ -46,6 +46,24 @@
       "revId": "70608b308b15f0fccce795c5b887f00068e5299d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_f490cf4f",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-11T17:49:58Z",
+      "side": 1,
+      "message": "Maybe you could change it to this:\n\nRUN git clone https://github.com/opnfv/promise.git ${repos_dir}/promise",
+      "parentUuid": "9a5c5d37_9483d355",
+      "revId": "70608b308b15f0fccce795c5b887f00068e5299d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
