@@ -156,6 +156,19 @@ if [ $offline == false ]; then
         git reset --hard ${ONOS_COMMIT}
     fi
 
+    info "Updating PROMISE repository...."
+    cd ${PROMISE_REPO_DIR}
+    if [ ${PROMISE_BRANCH} != "master" ]; then
+        info "PROMISE repo: checkout ${PROMISE} branch..."
+        git checkout ${PROMISE_BRANCH}
+    fi
+    info "PROMISE repo: pulling to latest..."
+    git pull
+    if [ ${PROMISE_COMMIT} != "latest" ]; then
+        info "PROMISE repo: given commit is ${PROMISE_COMMIT}. Reseting..."
+        git reset --hard ${PROMISE_COMMIT}
+    fi
+
 fi
 
 # We do this regardless if its online or offline mode.
