@@ -22,6 +22,30 @@
       "revId": "70608b308b15f0fccce795c5b887f00068e5299d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_9483d355",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-11T16:50:30Z",
+      "side": 1,
+      "message": "yep, I saw your mail on the topic\nso it is up to Promise project to modify this repos or move the unofficial to the official one and reference the official one",
+      "parentUuid": "9a5c5d37_19039c43",
+      "range": {
+        "startLine": 67,
+        "startChar": 14,
+        "endLine": 67,
+        "endChar": 53
+      },
+      "revId": "70608b308b15f0fccce795c5b887f00068e5299d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
