@@ -71,4 +71,21 @@ do
 done
 
 echo "OpenStack services are OK."
+
+echo "Checking External network..."
+networks=($(neutron net-list | tail -n +4 | head -n -1 | awk '{print $2}'))
+is_external=False
+for net in "${networks[@]}"
+do
+    is_external=$(neutron net-show $net|grep "router:external"|awk '{print $4}')
+    if [ $is_external == "True" ]; then
+        echo "External network found: $net"
+        break
+    fi
+done
+if [ $is_external == "False" ]; then
+    echo "ERROR: There are no external networks in the deployment."
+    exit 1
+fi
+
 exit 0
