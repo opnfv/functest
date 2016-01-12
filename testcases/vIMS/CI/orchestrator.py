@@ -91,14 +91,14 @@ class orchestrator:
 
             if self.logger:
                 self.logger.info("Launching the cloudify-manager deployment")
-
-            script = "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
+            script =  "set -e; "
+            script += "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
             script += "cd " + self.testcase_dir + "; "
             script += "cfy init -r; "
             script += "cd cloudify-manager-blueprint; "
             script += "cfy local create-requirements -o requirements.txt -p openstack-manager-blueprint.yaml; "
             script += "pip install -r requirements.txt; "
-            script += "cfy bootstrap --install-plugins -p openstack-manager-blueprint.yaml -i inputs.yaml; "
+            script += "timeout 1800 cfy bootstrap --install-plugins -p openstack-manager-blueprint.yaml -i inputs.yaml; "
             cmd = "/bin/bash -c '" + script + "'"
             execute_command(cmd, self.logger)
 
