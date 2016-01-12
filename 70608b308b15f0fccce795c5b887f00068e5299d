@@ -64,6 +64,24 @@
       "revId": "70608b308b15f0fccce795c5b887f00068e5299d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_cb69a9bf",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 144
+      },
+      "writtenOn": "2016-01-12T06:12:09Z",
+      "side": 1,
+      "message": "Please change to external https://github.com/opnfv/promise as suggested by Jose since that\u0027s the active repo where latest code will be stored. Since this reference is for FuncTest, I think that\u0027s appropriate even if we eventually clone/persist the repo into the OPNFV official git repo later.  The official git repo will likely be referenced for installer plugins only.",
+      "parentUuid": "9a5c5d37_f490cf4f",
+      "revId": "70608b308b15f0fccce795c5b887f00068e5299d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
