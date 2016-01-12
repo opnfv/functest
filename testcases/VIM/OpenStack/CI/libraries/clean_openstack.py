@@ -134,8 +134,14 @@ def remove_volumes(cinder_client):
         if functest_utils.delete_volume(cinder_client, volume_id):
             logger.debug("  > Done!")
         else:
-            logger.info("  > ERROR: There has been a problem removing the "
-                        "volume %s..." % volume_id)
+            logger.debug("Trying forced removal...")
+            if functest_utils.delete_volume(cinder_client,
+                                            volume_id,
+                                            forced=True):
+                logger.debug("  > Done!")
+            else:
+                logger.info("  > ERROR: There has been a problem removing the "
+                            "volume %s..." % volume_id)
 
 
 def remove_floatingips(nova_client):
@@ -177,11 +183,13 @@ def remove_networks(neutron_client):
             net_id = network['id']
             net_name = network['name']
             logger.debug(" '%s', ID=%s " %(net_name,net_id))
-            if net_name not in default_networks:
-                logger.debug("    > this is not a default network and will be deleted.")
-                network_ids.append(net_id)
-            else:
+            if net_name in default_networks:
                 logger.debug("   > this is a default network and will NOT be deleted.")
+            elif network['router:external'] == True:
+                logger.debug("   > this is an external network and will NOT be deleted.")
+            else:
+                logger.debug("   > this network will be deleted.")
+                network_ids.append(net_id)
 
     #delete ports
     ports = functest_utils.get_port_list(neutron_client)
@@ -225,6 +233,7 @@ def remove_ports(neutron_client, ports, network_ids):
                 else:
                     logger.info("  > ERROR: There has been a problem removing the "
                                 "port %s ..." %port_id)
+                    force_remove_port(neutron_client, port_id)
 
             elif port['device_owner'] == 'network:router_interface':
                 logger.debug("Detaching port %s (subnet %s) from router %s ..."
@@ -236,16 +245,21 @@ def remove_ports(neutron_client, ports, network_ids):
                 else:
                     logger.info("  > ERROR: There has been a problem removing the "
                                 "interface %s from router %s..." %(subnet_id,router_id))
+                    force_remove_port(neutron_client, port_id)
             else:
-                logger.debug("Clearing device_owner for port %s ..." % port_id)
-                functest_utils.update_neutron_port(neutron_client,
-                                                   port_id,
-                                                   device_owner='clear')
-                logger.debug("Removing port %s ..." % port_id)
-                if functest_utils.delete_neutron_port(neutron_client, port_id):
-                    logger.debug("  > Done!")
-                else:
-                    logger.debug("  > Port %s could not be removed directly" % port_id)
+                force_remove_port(neutron_client, port_id)
+
+
+def force_remove_port(neutron_client, port_id):
+    logger.debug("Clearing device_owner for port %s ..." % port_id)
+    functest_utils.update_neutron_port(neutron_client,
+                                       port_id,
+                                       device_owner='clear')
+    logger.debug("Removing port %s ..." % port_id)
+    if functest_utils.delete_neutron_port(neutron_client, port_id):
+        logger.debug("  > Done!")
+    else:
+        logger.info("  > ERROR: Deleting port %s failed" % port_id)
 
 
 def remove_routers(neutron_client, routers):
