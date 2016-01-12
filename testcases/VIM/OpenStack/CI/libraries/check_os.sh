@@ -8,7 +8,7 @@
 
 verify_connectivity() {
     for i in $(seq 0 10); do
-        if nc -vz $1 $2 &>/dev/null; then
+        if echo "test" | nc -v $1 $2 &>/dev/null; then
             return 0
         fi
         sleep 1
