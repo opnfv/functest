@@ -232,4 +232,6 @@ if [ $retval != 0 ]; then
     exit $retval
 fi
 
+ifconfig eth0 mtu 1450
+
 echo "1" > ${FUNCTEST_CONF_DIR}/env_active
