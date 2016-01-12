@@ -414,10 +414,16 @@ def get_volumes(cinder_client):
     except:
         return None
 
-
-def delete_volume(cinder_client, volume_id):
+def delete_volume(cinder_client, volume_id, forced=False):
     try:
-        cinder_client.volumes.delete(volume_id)
+        if forced:
+            try:
+                cinder_client.volumes.detach(volume_id)
+            except:
+                print "Error:", sys.exc_info()[0]
+            cinder_client.volumes.force_delete(volume_id)
+        else:
+            cinder_client.volumes.delete(volume_id)
         return True
     except:
         print "Error:", sys.exc_info()[0]
