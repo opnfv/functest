@@ -25,6 +25,7 @@ import sys
 import novaclient.v2.client as novaclient
 from glanceclient import client as glanceclient
 from keystoneclient.v2_0 import client as keystoneclient
+from neutronclient.v2_0 import client as neutronclient
 
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
@@ -32,20 +33,26 @@ tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
 parser = argparse.ArgumentParser()
 parser.add_argument("repo_path", help="Path to the repository")
 parser.add_argument("test_name",
-                    help="Module name to be tested"
+                    help="Module name to be tested. "
                          "Possible values are : "
                          "[ {d[0]} | {d[1]} | {d[2]} | {d[3]} | {d[4]} | "
-                         "{d[5]} | {d[6]} | {d[7]}] "
+                         "{d[5]} | {d[6]} | {d[7]} | {d[8]} | {d[9]} | "
+                         "{d[10]} ] "
                          "The 'all' value "
-                         "performs all the possible tests scenarios"
+                         "performs all possible test scenarios"
                          .format(d=tests))
 
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 parser.add_argument("-r", "--report",
                     help="Create json result file",
                     action="store_true")
+parser.add_argument("-s", "--smoke",
+                    help="Smoke test mode",
+                    action="store_true")
 
 args = parser.parse_args()
+
+client_dict = {}
 
 sys.path.append(args.repo_path + "testcases/")
 import functest_utils
@@ -89,6 +96,10 @@ RESULTS_DIR = functest_yaml.get("general").get("directories"). \
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 FLOATING_NETWORK = functest_yaml.get("general"). \
     get("openstack").get("neutron_public_net_name")
+FLOATING_SUBNET_CIDR = functest_yaml.get("general"). \
+    get("openstack").get("neutron_public_subnet_cidr")
+PRIVATE_NETWORK = functest_yaml.get("general"). \
+    get("openstack").get("neutron_private_net_name")
 
 GLANCE_IMAGE_NAME = functest_yaml.get("general"). \
     get("openstack").get("image_name")
@@ -98,7 +109,6 @@ GLANCE_IMAGE_FORMAT = functest_yaml.get("general"). \
     get("openstack").get("image_disk_format")
 GLANCE_IMAGE_PATH = functest_yaml.get("general"). \
     get("directories").get("dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
-GLANCE_IMAGE_LOCATION = "http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img"
 
 
 def push_results_to_db(payload):
@@ -154,11 +164,14 @@ def task_succeed(json_raw):
 
 def build_task_args(test_file_name):
     task_args = {'service_list': [test_file_name]}
-    task_args['smoke'] = False
+    task_args['smoke'] = args.smoke
     task_args['image_name'] = GLANCE_IMAGE_NAME
     task_args['flavor_name'] = FLAVOR_NAME
-    task_args['glance_image_location'] = GLANCE_IMAGE_LOCATION
+    task_args['glance_image_location'] = GLANCE_IMAGE_PATH
     task_args['floating_network'] = FLOATING_NETWORK
+    task_args['floating_subnet_cidr'] = FLOATING_SUBNET_CIDR
+    task_args['netid'] = functest_utils.get_network_id(client_dict['neutron'],
+                                    PRIVATE_NETWORK).encode('ascii', 'ignore')
     task_args['tmpl_dir'] = TEMPLATE_DIR
     task_args['sup_dir'] = SUPPORT_DIR
     task_args['users_amount'] = USERS_AMOUNT
@@ -247,12 +260,16 @@ def main():
 
     creds_nova = functest_utils.get_credentials("nova")
     nova_client = novaclient.Client(**creds_nova)
+    creds_neutron = functest_utils.get_credentials("neutron")
+    neutron_client = neutronclient.Client(**creds_neutron)
     creds_keystone = functest_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
     glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
                                                    endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
+
+    client_dict['neutron'] = neutron_client
 
     logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME, GLANCE_IMAGE_PATH))
     image_id = functest_utils.create_glance_image(glance_client,
@@ -272,8 +289,6 @@ def main():
     if args.test_name == "all":
         for test_name in tests:
             if not (test_name == 'all' or
-                    test_name == 'heat' or
-                    test_name == 'smoke' or
                     test_name == 'vm'):
                 print(test_name)
                 run_task(test_name)

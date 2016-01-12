@@ -11,6 +11,11 @@
     -
       args:
         template_path: "{{ tmpl_dir }}/server_with_ports.yaml.template"
+        parameters:
+          public_net: {{ floating_network }}
+          image: {{ image_name }}
+          flavor: {{ flavor_name }}
+          cidr: {{ floating_subnet_cidr }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
@@ -20,6 +25,10 @@
     -
       args:
         template_path: "{{ tmpl_dir }}/server_with_volume.yaml.template"
+        parameters:
+          image: {{ image_name }}
+          flavor: {{ flavor_name }}
+          network_id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
@@ -130,3 +139,4 @@
         {{ constant_runner(concurrency=2*controllers_amount,times=10*controllers_amount, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
+

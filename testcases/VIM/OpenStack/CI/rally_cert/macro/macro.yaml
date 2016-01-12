@@ -79,13 +79,15 @@
             security_groups: -1
 {%- endmacro %}
 
-{%- macro unlimited_neutron() %}
-{% if "neutron" in service_list %}
+{%- macro unlimited_neutron(secgroups=false) %}
           neutron:
             network: -1
             port: -1
             subnet: -1
-{% endif %}
+            {%- if secgroups %}
+            security_group: -1
+            security_group_rule: -1
+            {%- endif %}
 {%- endmacro %}
 
 {%- macro glance_args(location, container="bare", type="qcow2") %}

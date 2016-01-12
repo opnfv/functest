@@ -2,6 +2,9 @@
     -
       args:
         {{ vm_params(image_name, flavor_name) }}
+        server_kwargs:
+            nics:
+              - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         network:
@@ -53,6 +56,8 @@
           -
             rescue_unrescue: 1
         {{ vm_params(image_name, flavor_name) }}
+        nics:
+          - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         network:
@@ -71,6 +76,8 @@
     -
       args:
         {{ vm_params(image_name, flavor_name) }}
+        nics:
+          - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         network:
@@ -90,6 +97,8 @@
       args:
         detailed: true
         {{ vm_params(image_name, flavor_name) }}
+        nics:
+          - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         network:
@@ -112,6 +121,8 @@
           name: {{ image_name }}
         to_image:
           name: {{ image_name }}
+        nics:
+          - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         network:
@@ -131,6 +142,8 @@
       args:
         {{ vm_params(image_name, flavor_name) }}
         volume_size: 5
+        nics:
+          - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         network:
@@ -151,6 +164,8 @@
       args:
         {{ vm_params(image_name, flavor_name) }}
         force_delete: false
+        nics:
+          - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         network:
@@ -169,6 +184,8 @@
     -
       args:
         {{ vm_params(image_name, flavor_name) }}
+        nics:
+          - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         network:
@@ -189,10 +206,15 @@
         {{ vm_params(image_name, flavor_name) }}
         security_group_count: 10
         rules_per_security_group: 10
+        nics:
+          - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         network:
           start_cidr: "100.1.0.0/25"
+        quotas:
+          {{ unlimited_nova() }}
+          {{ unlimited_neutron(secgroups=true) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
@@ -203,6 +225,8 @@
     - args:
         {{ vm_params(image_name, flavor_name) }}
         block_migration: false
+        nics:
+          - net-id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
@@ -213,6 +237,8 @@
   NovaServers.boot_and_migrate_server:
     - args:
         {{ vm_params(image_name, flavor_name) }}
+        nics:
+          - net-id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
@@ -225,6 +251,8 @@
       args:
         {{ vm_params(image_name, flavor_name) }}
         volume_size: 10
+        nics:
+          - net-id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
@@ -236,6 +264,8 @@
     -
       args:
         {{ vm_params(image_name, flavor_name) }}
+        nics:
+          - net-id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
@@ -249,6 +279,9 @@
         {{ vm_params(image_name, flavor_name) }}
         size: 10
         block_migration: false
+        boot_server_kwargs:
+            nics:
+              - net-id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
@@ -262,6 +295,8 @@
         block_migration: false
         volume_size: 10
         force_delete: false
+        nics:
+          - net-id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
@@ -275,7 +310,10 @@
         security_group_count: 10
         rules_per_security_group: 10
       context:
-        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        quotas:
+          {{ unlimited_neutron(secgroups=true) }}
+        {% endcall %}
       runner:
         {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
       sla:
@@ -287,7 +325,10 @@
         security_group_count: 10
         rules_per_security_group: 10
       context:
-        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        quotas:
+          {{ unlimited_neutron(secgroups=true) }}
+        {% endcall %}
       runner:
         {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
       sla:
@@ -302,6 +343,8 @@
         servers:
           {{ vm_params(image_name,flavor_name,none)|indent(2,true) }}
           servers_per_tenant: 2
+          auto_assign_nic: true
+        network: {}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
@@ -316,6 +359,8 @@
           name: "m1.small"
         confirm: true
         force_delete: false
+        nics:
+          - net-id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
