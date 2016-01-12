@@ -18,8 +18,6 @@
 
   KeystoneBasic.create_and_list_tenants:
     -
-      args:
-        name_length: 10
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
@@ -56,8 +54,6 @@
 
   KeystoneBasic.create_update_and_delete_tenant:
     -
-      args:
-        name_length: 10
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
@@ -67,8 +63,6 @@
 
   KeystoneBasic.create_user:
     -
-      args:
-        name_length: 10
       runner:
         {{ constant_runner(concurrency=2*controllers_amount,times=10*controllers_amount, is_smoke=smoke) }}
       sla:
@@ -76,8 +70,6 @@
 
   KeystoneBasic.create_tenant:
     -
-      args:
-        name_length: 10
       runner:
         {{ constant_runner(concurrency=2*controllers_amount,times=10*controllers_amount, is_smoke=smoke) }}
       sla:
@@ -85,8 +77,6 @@
 
   KeystoneBasic.create_and_list_users:
     -
-      args:
-        name_length: 10
       runner:
         {{ constant_runner(concurrency=2*controllers_amount,times=10*controllers_amount, is_smoke=smoke) }}
       sla:
@@ -95,7 +85,6 @@
   KeystoneBasic.create_tenant_with_users:
     -
       args:
-        name_length: 10
         users_per_tenant: 10
       runner:
         {{ constant_runner(concurrency=2*controllers_amount,times=10*controllers_amount, is_smoke=smoke) }}

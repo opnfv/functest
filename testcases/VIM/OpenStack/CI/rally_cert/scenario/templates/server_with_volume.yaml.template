@@ -19,6 +19,8 @@ parameters:
     constraints:
       - range: { min: 1, max: 1024 }
         description: must be between 1 and 1024 Gb.
+  network_id:
+    type: string
 
 resources:
   server:
@@ -26,6 +28,8 @@ resources:
     properties:
       image: {get_param: image}
       flavor: {get_param: flavor}
+      networks:
+        - network: { get_param: network_id }
   cinder_volume:
     type: OS::Cinder::Volume
     properties:
