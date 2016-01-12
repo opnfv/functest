@@ -148,7 +148,6 @@ def test_clearwater():
             CW_INPUTS["public_domain"] + '] SIGNUP_CODE="secret"'
 
         cmd = "/bin/bash -c '" + script + "'"
-        print cmd
         output_file = "output.txt"
         f = open(output_file, 'w+')
         p = subprocess.call(cmd, shell=True, stdout=f,
