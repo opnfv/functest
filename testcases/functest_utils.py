@@ -606,7 +606,7 @@ def get_git_branch(repo_path):
 
 def get_installer_type(logger=None):
     """
-    Get installer type (fuel, foreman, apex, joid, compass)
+    Get installer type (fuel, apex, joid, compass)
     """
     try:
         installer = os.environ['INSTALLER_TYPE']

@@ -57,7 +57,7 @@ else
 fi
 
 # definition of available installer names
-INSTALLERS=(fuel foreman compass apex joid)
+INSTALLERS=(fuel compass apex joid)
 
 if [ ! -f ${FUNCTEST_CONF_DIR}/openstack.creds ]; then
     # If credentials file is not given, check if environment variables are set
@@ -231,7 +231,5 @@ if [ $retval != 0 ]; then
     error "Error when configuring Functest environment"
     exit $retval
 fi
-
-ifconfig eth0 mtu 1450
 
 echo "1" > ${FUNCTEST_CONF_DIR}/env_active
