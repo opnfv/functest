@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_da696dbf",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-13T14:59:47Z",
+      "side": 1,
+      "message": "shall we do the same for all the internal opnfv repos?",
+      "revId": "48af5a794b5bbe9d6cb84f02c1e314dd83adf912",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
