@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_7aee01b6",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2016-01-13T17:05:55Z",
+      "side": 1,
+      "message": "It lacks a semicolon at the end",
+      "range": {
+        "startLine": 121,
+        "startChar": 27,
+        "endLine": 121,
+        "endChar": 33
+      },
+      "revId": "38e3b9740294824a0d03d3b1156310917faf8e86",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
