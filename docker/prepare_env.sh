@@ -82,10 +82,6 @@ if [ $offline == false ]; then
     # Update repos
     info "Updating Functest repository...."
     cd ${FUNCTEST_REPO_DIR}
-    if [ ${FUNCTEST_BRANCH} != "master" ]; then
-        info "Functest repo: checkout ${FUNCTEST_BRANCH} branch..."
-        git checkout ${FUNCTEST_BRANCH}
-    fi
     info "Functest repo: pulling to latest..."
     git pull
     if [ ${FUNCTEST_COMMIT} != "latest" ]; then

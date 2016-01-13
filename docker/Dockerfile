@@ -57,7 +57,7 @@ RUN mkdir -p /root/.ssh
 RUN chmod 700 /root/.ssh
 
 RUN git config --global http.sslVerify false
-RUN git clone https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
+RUN git clone -b stable/brahmaputra https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
 RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
 RUN git clone https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
 RUN git clone https://github.com/openstack/rally.git ${repos_dir}/rally
