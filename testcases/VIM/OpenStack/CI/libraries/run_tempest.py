@@ -56,7 +56,7 @@ if not os.path.exists(REPO_PATH):
 sys.path.append(REPO_PATH + "testcases/")
 import functest_utils
 
-with open(REPO_PATH+"testcases/config_functest.yaml") as f:
+with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 TEST_DB = functest_yaml.get("results").get("test_db_url")

@@ -43,7 +43,7 @@ if not os.path.exists(REPO_PATH):
     exit(-1)
 sys.path.append(REPO_PATH + "testcases/")
 
-with open(REPO_PATH+"testcases/config_functest.yaml") as f:
+with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
