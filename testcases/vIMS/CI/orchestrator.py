@@ -47,6 +47,12 @@ class orchestrator:
     def set_ssh_user(self, ssh_user):
         self.config['ssh_user'] = ssh_user
 
+    def set_nameservers(self, nameservers):
+    	if 0<len(nameservers):
+    		self.config['dns_subnet_1'] = nameservers[0]
+    	if 1<len(nameservers):
+    		self.config['dns_subnet_2'] = nameservers[1]
+
     def set_logger(self, logger):
         self.logger = logger
 

@@ -17,6 +17,7 @@ import sys
 import requests
 import json
 import shutil
+import re
 from git import Repo
 
 
@@ -682,6 +683,17 @@ def get_ci_envvars():
         "controller": os.environ.get('SDN_CONTROLLER'),
         "options": os.environ.get("OPNFV_FEATURE")}
     return ci_env_var
+
+def get_resolvconf_ns():
+    nameservers=[]
+    rconf = open("/etc/resolv.conf","r")
+    line = rconf.readline()
+    while line:
+        ip = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b",line)
+        if ip:
+            nameservers.append(ip.group())
+        line = rconf.readline()
+    return nameservers 
 
 
 def isTestRunnable(test, functest_yaml):
