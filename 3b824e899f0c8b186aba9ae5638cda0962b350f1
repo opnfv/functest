@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_df55df50",
+        "filename": "testcases/vIMS/CI/vIMS.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-13T14:21:43Z",
+      "side": 1,
+      "message": "you are missing a \"n\".\n\n \"\\n\" for return and another \"n\" for nameserver",
+      "revId": "3b824e899f0c8b186aba9ae5638cda0962b350f1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
