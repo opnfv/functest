@@ -57,7 +57,7 @@ else
 fi
 
 # definition of available installer names
-INSTALLERS=(fuel foreman compass apex joid)
+INSTALLERS=(fuel compass apex joid)
 
 if [ ! -f ${FUNCTEST_CONF_DIR}/openstack.creds ]; then
     # If credentials file is not given, check if environment variables are set
