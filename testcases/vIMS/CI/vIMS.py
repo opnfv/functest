@@ -138,10 +138,13 @@ def test_clearwater():
     logger.info("vIMS functional test Start Time:'%s'" % (
         datetime.datetime.fromtimestamp(start_time_ts).strftime(
             '%Y-%m-%d %H:%M:%S')))
+    nameservers = functest_utils.get_resolvconf_ns()
+    resolvconf = ""
+    for ns in nameservers:
+        resolvconf += "\nnameserver " + ns
 
     if dns_ip != "":
-        script = 'echo -e "nameserver ' + dns_ip + \
-            '\nnameserver 8.8.8.8\nnameserver 8.8.4.4" > /etc/resolv.conf; '
+        script = 'echo -e "nameserver ' + dns_ip + resolvconf + '" > /etc/resolv.conf; '
         script += 'source /etc/profile.d/rvm.sh; '
         script += 'cd ' + VIMS_TEST_DIR + '; '
         script += 'rake test[' + \
@@ -342,6 +345,10 @@ def main():
         exit(-1)
 
     cfy.set_external_network_name(ext_net)
+
+    ns = functest_utils.get_resolvconf_ns()
+    if ns:
+        cfy.set_nameservers(ns)
 
     logger.info("Prepare virtualenv for cloudify-cli")
     cmd = "chmod +x " + VIMS_DIR + "create_venv.sh"
