@@ -20,6 +20,7 @@
 #
 # If it is not provided, take the existing one in the functest repo
 #
+mkdir -p /home/opnfv/functest/conf
 config_file=/home/opnfv/functest/conf/config_functest.yaml
 if [ ! -f ${config_file} ]; then
     default_config_file=$(find /home/opnfv/repos -name config_functest.yaml)
