@@ -72,7 +72,7 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - "
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-with open(args.repo_path+"testcases/config_functest.yaml") as f:
+with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
