@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_b1f5c4cc",
+        "filename": "docker/prepare_env.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-13T08:11:31Z",
+      "side": 1,
+      "message": "just a short comment to understand....and I +2 :)\n\nsounds a bit strange between 2 calls to scripts",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 8
+      },
+      "revId": "3c9dcd85e3c40a66d58c0a0c0c4d61d87144ce4d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
