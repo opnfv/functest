@@ -40,7 +40,7 @@ class foundation:
         """
         Get Default Parameters value
         """
-        with open(self.workhome + "testcases/config_functest.yaml") as f:
+        with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
             functest_yaml = yaml.safe_load(f)
         f.close()
 

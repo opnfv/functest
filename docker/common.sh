@@ -22,8 +22,11 @@
 #
 config_file=/home/opnfv/functest/conf/config_functest.yaml
 if [ ! -f ${config_file} ]; then
-    config_file=$(find / -name config_functest.yaml)
+    default_config_file=$(find /home/opnfv/repos -name config_functest.yaml)
+    cp $default_config_file $config_file
+    echo "config_functest.yaml not provided. Using default one"
 fi
+
 
 # Parse config_functest.yaml file
 # TODO: this is not the best way to parse a yaml file in bash...

@@ -16,7 +16,7 @@ class TestFunctestUtils(unittest.TestCase):
 
         global functest_yaml
 
-        with open("../config_functest.yaml") as f:
+        with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
             functest_yaml = yaml.safe_load(f)
             f.close()
 
