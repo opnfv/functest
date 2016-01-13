@@ -17,6 +17,7 @@ import sys
 import requests
 import json
 import shutil
+import re
 from git import Repo
 
 
@@ -166,7 +167,7 @@ def delete_neutron_net(neutron_client, network_id):
 
 def create_neutron_subnet(neutron_client, name, cidr, net_id):
     json_body = {'subnets': [{'name': name, 'cidr': cidr,
-                             'ip_version': 4, 'network_id': net_id}]}
+                              'ip_version': 4, 'network_id': net_id}]}
     try:
         subnet = neutron_client.create_subnet(body=json_body)
         return subnet['subnets'][0]['id']
@@ -382,7 +383,7 @@ def get_image_id(glance_client, image_name):
 
 def create_glance_image(glance_client, image_name, file_path, public=True):
     if not os.path.isfile(file_path):
-        print "Error: file "+file_path+" does not exist."
+        print "Error: file " + file_path + " does not exist."
         return False
     try:
         with open(file_path) as fimage:
@@ -414,6 +415,7 @@ def get_volumes(cinder_client):
     except:
         return None
 
+
 def delete_volume(cinder_client, volume_id, forced=False):
     try:
         if forced:
@@ -433,7 +435,8 @@ def delete_volume(cinder_client, volume_id, forced=False):
 # ################ CINDER #################
 def get_security_groups(neutron_client):
     try:
-        security_groups = neutron_client.list_security_groups()['security_groups']
+        security_groups = neutron_client.list_security_groups()[
+            'security_groups']
         return security_groups
     except:
         return None
@@ -626,7 +629,8 @@ def get_pod_name(logger=None):
         return os.environ['NODE_NAME']
     except KeyError:
         if logger:
-            logger.error("Unable to retrieve the POD name from environment.Using pod name 'unknown-pod'")
+            logger.error(
+                "Unable to retrieve the POD name from environment.Using pod name 'unknown-pod'")
         return "unknown-pod"
 
 
@@ -682,6 +686,18 @@ def get_ci_envvars():
         "controller": os.environ.get('SDN_CONTROLLER'),
         "options": os.environ.get("OPNFV_FEATURE")}
     return ci_env_var
+
+
+def get_resolvconf_ns():
+    nameservers = []
+    rconf = open("/etc/resolv.conf", "r")
+    line = rconf.readline()
+    while line:
+        ip = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
+        if ip:
+            nameservers.append(ip.group())
+        line = rconf.readline()
+    return nameservers
 
 
 def isTestRunnable(test, functest_yaml):
