@@ -129,7 +129,12 @@ function run_test(){
         "promise")
             info "Running PROMISE test case..."
             # TODO
-   esac
+        ;;
+        "doctor")
+            info "Running Doctor test..."
+            python ${FUNCTEST_REPO_DIR}/testcases/features/doctor.py
+        ;;
+    esac
 }
 
 
