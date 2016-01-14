@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_c0ace037",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-14T11:26:12Z",
+      "side": 1,
+      "message": "I think this would also work:\n\narr_test\u003d($(cat /home/opnfv/functest/conf/testcase-list.txt))",
+      "revId": "0470acda359808673c738eb23558922b06924ee4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_a0ab2c1c",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-14T11:26:12Z",
+      "side": 1,
+      "message": "This will fail. Add functest_utils.generateTestcaseList(....",
+      "revId": "0470acda359808673c738eb23558922b06924ee4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_8054a821",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-14T11:26:12Z",
+      "side": 1,
+      "message": "You do a try-except, however, in the generateTestcaseList function you don\u0027t raise any exception, so I am not sure if this will be triggered.",
+      "revId": "0470acda359808673c738eb23558922b06924ee4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_80a6e851",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-14T11:26:12Z",
+      "side": 1,
+      "message": "*manage",
+      "revId": "0470acda359808673c738eb23558922b06924ee4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_6065341d",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-14T11:26:12Z",
+      "side": 1,
+      "message": "not important, but whitespace",
+      "revId": "0470acda359808673c738eb23558922b06924ee4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_e07804c6",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-14T11:26:12Z",
+      "side": 1,
+      "message": "Just to take into consideration for later,  os.environ.get(\u0027DEPLOY_SCENARIO\u0027) will return \"None\" if DEPLOY_SCENARIO doesn\u0027t exist",
+      "revId": "0470acda359808673c738eb23558922b06924ee4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_404fd092",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-14T11:26:12Z",
+      "side": 1,
+      "message": "\"criteria\" is not part of the ci_env dictionary... only \"installer\" and \"scenario\", right?",
+      "revId": "0470acda359808673c738eb23558922b06924ee4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_a0820c92",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-14T11:26:12Z",
+      "side": 1,
+      "message": "Why do you need this call to get_ci_envvars() if you don\u0027t store the return anywhere?",
+      "revId": "0470acda359808673c738eb23558922b06924ee4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_206f3cff",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-14T11:26:12Z",
+      "side": 1,
+      "message": "I trust you here, I imagine you have tried this parsing algorithm and it works :)",
+      "revId": "0470acda359808673c738eb23558922b06924ee4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
