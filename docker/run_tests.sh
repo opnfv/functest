@@ -35,7 +35,7 @@ report=""
 if [ -n "$DEPLOY_SCENARIO" ]; then
      testcase=`cat /home/opnfv/functest/conf/testcase-list.txt`
      arr_test=("$testcase")
-elif
+else
     arr_test=(vping odl tempest vims rally)
 fi
 
