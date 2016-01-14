@@ -148,10 +148,29 @@ ONOS:
 results:
     test_db_url: http://213.77.62.197
 
+# to be maintained...
+# the execution order is important as some tests may be more destructive than others
+# and if vPing is failing is usually not needed to continue...
+test_exec_priority:
+    1: vping
+    2: tempest
+    3: odl
+    #4: onos
+    #5: ovno
+    #6: doctor
+    #7: promise
+    #8: policy-test
+    #9: odl-vpn_service-tests
+    #10: opnfv-yardstick-tc026-sdnvpn
+    #11: openstack-neutron-bgpvpn-api-extension-tests
+    12: vims
+    13: rally
+ 
+
 ########################################################################
 # This part lists the dependencies of the tests
 #
-# it is used to managed the complexity of the possible combination
+# it is used to manage the complexity of the possible combinations
 #
 # 17 projects have been declared for Brahmaputra (D Milestone)
 # 89 testcases are associated with these 17 projects
@@ -168,51 +187,55 @@ results:
 #
 # By default we consider that all the tests can be run on any configuration
 #
-# we defined 3 constraints
+# we defined 2 constraints
 # - installer (e.g. my test can be run only with installer Compass)
 # possible values: apex, compass, fuel, joid
 #
-# - the controller (odl, onos, opencontrail) 
+# - the scenario: it described a specif installation
+#    os-<controller>-<nfvfeature>-<mode>[-<extrastuff>]
+# With parameters:
+#    controller=(nosdn|odl_l3|odl_l2|onos|ocl)
+#       No odl_l3 today
+#    nfvfeature=(kvm|ovs|dpdk|nofeature)
+#       '_' list separated.
+#    mode=(ha|noha)
+#    extrastuff=(none)
+#       Optional field - Not used today#
 #
-# - the scenario (ovs, kvm, QEMU, proc) based on Fuel proposal
-# see https://git.opnfv.org/cgit/fuel/tree/deploy/scenario/scenario.yaml
+# ref:https://gerrit.opnfv.org/gerrit/#/c/6323/7/jjb/joid/joid-deploy.sh (L72-82)
 #  e.g my test is only possible with OVS 2.3.2 on odl
-# not fully clear as the controller may be included with the scenario
 #
-# In a first step, our main need is to trigger ad hox controller suite
-# In second step we may focus with scenario parameter
-# but no so far
-# - either controller suite
-# or
-# - suites that should be runnable on any conf, any scenario
+# in functest, we indicate the regex pattern to be checked towards the scenario
+# e.g. odl-vpn_service-tests can be run if and only if
+#                                - installer is fuel
+#                                - scenario contains the name ovs and odl
 #
 #######################################################################
 test-dependencies:
     doctor:
+        installer: 'fuel'
     functest:
-        vping:
         vims:
+        vping:
         tempest:
         rally:
         odl:
-            controller: 'odl'
+            scenario: 'odl'
         onos:
-            controller: 'onos'
-        onos-ovsdb:
-            controller: 'onos'
+            scenario: 'onos'
     promise:
+        installer: '(fuel)|(joid)'
     ovno:
-        controller: 'opencontrail'
+        scenario: 'ocl'
     policy-test:
-        controller: 'odl'
+        scenario: 'odl'
     sdnvpn:
         opnfv-yardstick-tc026-sdnvpn:
-            controller: 'nosdn'
-            scenario: 'os_ovh_ha'
+            installer: 'fuel'
+            scenario: '(ovs)*(nosdn)'
         odl-vpn_service-tests:
-            controller: 'odl'
-            scenario: 'os_ovh_ha'
+            installer: 'fuel'
+            scenario: '(ovs)*(odl)'
         openstack-neutron-bgpvpn-api-extension-tests:
-            controller: 'nosdn'
-            scenario: 'os_ovh_ha'
- 
+            installer: 'fuel'
+            scenario: '(ovs)*(nosdn)'
