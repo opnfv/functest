@@ -577,7 +577,7 @@ def download_url(url, dest_path):
     return True
 
 
-def execute_command(cmd, logger=None):
+def execute_command(cmd, logger=None, env=None, exit_on_error=True):
     """
     Execute Linux command
     """
@@ -585,7 +585,8 @@ def execute_command(cmd, logger=None):
         logger.debug('Executing command : {}'.format(cmd))
     output_file = "output.txt"
     f = open(output_file, 'w+')
-    p = subprocess.call(cmd, shell=True, stdout=f, stderr=subprocess.STDOUT)
+    p = subprocess.call(cmd, shell=True, stdout=f, stderr=subprocess.STDOUT,
+                        env=env)
     f.close()
     f = open(output_file, 'r')
     result = f.read()
@@ -596,7 +597,10 @@ def execute_command(cmd, logger=None):
     else:
         if logger:
             logger.error("Error when executing command %s" % cmd)
-        exit(-1)
+        if exit_on_error:
+            exit(-1)
+        else:
+            return False
 
 
 def get_git_branch(repo_path):
@@ -646,7 +650,8 @@ def push_results_to_db(db_url, case_name, logger, pod_name,
     headers = {'Content-Type': 'application/json'}
     try:
         r = requests.post(url, data=json.dumps(params), headers=headers)
-        logger.debug(r)
+        if logger:
+            logger.debug(r)
         return True
     except:
         print "Error:", sys.exc_info()[0]
