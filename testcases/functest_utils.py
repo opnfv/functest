@@ -577,7 +577,7 @@ def download_url(url, dest_path):
     return True
 
 
-def execute_command(cmd, logger=None):
+def execute_command(cmd, logger=None, exit_on_error=True):
     """
     Execute Linux command
     """
@@ -596,7 +596,9 @@ def execute_command(cmd, logger=None):
     else:
         if logger:
             logger.error("Error when executing command %s" % cmd)
-        exit(-1)
+        if exit_on_error:
+            exit(-1)
+        return False
 
 
 def get_git_branch(repo_path):
@@ -646,7 +648,8 @@ def push_results_to_db(db_url, case_name, logger, pod_name,
     headers = {'Content-Type': 'application/json'}
     try:
         r = requests.post(url, data=json.dumps(params), headers=headers)
-        logger.debug(r)
+        if logger:
+            logger.debug(r)
         return True
     except:
         print "Error:", sys.exc_info()[0]
