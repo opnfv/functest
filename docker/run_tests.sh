@@ -30,7 +30,15 @@ examples:
 # NOTE: Still not 100% working when running the tests
 offline=false
 report=""
-arr_test=(vping odl tempest vims rally)
+
+# Get the list of runnable tests
+# Check if we are in CI mode
+if [ -n "$DEPLOY_SCENARIO" ]; then
+     testcase=`cat /home/opnfv/functest/conf/testcase-list.txt`
+     arr_test=("$testcase")
+elif
+    arr_test=(vping odl tempest vims rally)
+fi  
 
 function clean_openstack(){
     python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py \
@@ -95,9 +103,12 @@ function run_test(){
         ;;
         "rally")
             info "Running Rally benchmark suite..."
+            cinder type-create volume-test #provisional
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally.py \
                 --debug all ${report}
+            cinder type-delete $(cinder type-list|grep test|awk '{print $2}')
             clean_openstack
+
         ;;
         "bgpvpn_template")
             info "Running BGPVPN Tempest test case..."

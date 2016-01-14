@@ -18,6 +18,7 @@ import requests
 import json
 import shutil
 import re
+import yaml
 from git import Repo
 
 
@@ -652,6 +653,18 @@ def push_results_to_db(db_url, case_name, logger, pod_name,
         return False
 
 
+def get_resolvconf_ns():
+    nameservers = []
+    rconf = open("/etc/resolv.conf", "r")
+    line = rconf.readline()
+    while line:
+        ip = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
+        if ip:
+            nameservers.append(ip.group())
+        line = rconf.readline()
+    return nameservers
+
+
 def getTestEnv(test, functest_yaml):
     # get the config of the testcase based on functest_config.yaml
     # 2 options
@@ -683,87 +696,70 @@ def get_ci_envvars():
     """
     ci_env_var = {
         "installer": os.environ.get('INSTALLER_TYPE'),
-        "controller": os.environ.get('SDN_CONTROLLER'),
-        "options": os.environ.get("OPNFV_FEATURE")}
+        "scenario": os.environ.get('DEPLOY_SCENARIO')}
     return ci_env_var
 
 
-def get_resolvconf_ns():
-    nameservers = []
-    rconf = open("/etc/resolv.conf", "r")
-    line = rconf.readline()
-    while line:
-        ip = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
-        if ip:
-            nameservers.append(ip.group())
-        line = rconf.readline()
-    return nameservers
-
-
 def isTestRunnable(test, functest_yaml):
-    # check getTestEnv(test) and CI env var
-    # check installer, controller and options
-    # e.g. if test needs onos => do not run odl suite
-    try:
-        # By default we assume that all the tests are always runnable...
-        is_runnable = True
-        # Retrieve CI environment
-        ci_env = get_ci_envvars()
+    # By default we assume that all the tests are always runnable...
+    is_runnable = True
+    # Retrieve CI environment
+    ci_env = get_ci_envvars()
+    # Retrieve test environement from config file
+    test_env = getTestEnv(test, functest_yaml)
 
-        # Retrieve test environement from config file
-        test_env = getTestEnv(test, functest_yaml)
-
-        # if test_env not empty => dependencies to be checked
-        if test_env is not None and len(test_env) > 0:
-            # possible criteria = ["installer", "controller", "options"]
-            # consider test criteria from config file
-            # compare towards CI env through CI en variable
-            for criteria in test_env:
-                if test_env[criteria] != ci_env[criteria]:
-                    # print "Test "+ test + " cannot be run on the environment"
-                    is_runnable = False
-    except:
-        print "Error isTestRunnable:", sys.exc_info()[0]
+    # if test_env not empty => dependencies to be checked
+    if test_env is not None and len(test_env) > 0:
+        # possible criteria = ["installer", "scenario"]
+        # consider test criteria from config file
+        # compare towards CI env through CI en variable
+        for criteria in test_env:
+            if re.search(test_env[criteria], ci_env[criteria]) is None:
+                # print "Test "+ test + " cannot be run on the environment"
+                is_runnable = False
     return is_runnable
 
 
 def generateTestcaseList(functest_yaml):
-    try:
-        test_list = ""
-        # Retrieve CI environment
-        get_ci_envvars()
+    test_list = ""
+    # Retrieve CI environment
+    get_ci_envvars()
+    # get testcases
+    testcase_list = functest_yaml.get("test-dependencies")
+    projects = testcase_list.keys()
 
-        # get testcases
-        testcase_list = functest_yaml.get("test-dependencies")
-        projects = testcase_list.keys()
-        for project in projects:
-            testcases = testcase_list[project]
-            # 1 or 2 levels for testcases project[/case]
-            # if only project name without controller or scenario
-            # => shall be runnable on any controller/scenario
-            if testcases is None:
-                test_list += project + " "
-            else:
-                for testcase in testcases:
-                    if testcase == "controller" or testcase == "scenario":
-                        # project (1 level)
-                        if isTestRunnable(project, functest_yaml):
-                            test_list += project + " "
-                    else:
-                        # project/testcase (2 levels)
-                        thetest = project + "/" + testcase
-                        if isTestRunnable(thetest, functest_yaml):
-                            test_list += testcase + " "
+    for project in projects:
+        testcases = testcase_list[project]
+        # 1 or 2 levels for testcases project[/case]
+        # if only project name without controller or scenario
+        # => shall be runnable on any controller/scenario
+        if testcases is None:
+            test_list += project + " "
+        else:
+            for testcase in testcases:
+                if testcase == "installer" or testcase == "scenario":
+                    # project (1 level)
+                    if isTestRunnable(project, functest_yaml):
+                        test_list += project + " "
+                else:
+                    # project/testcase (2 levels)
+                    thetest = project + "/" + testcase
+                    if isTestRunnable(thetest, functest_yaml):
+                        test_list += testcase + " "
 
-        # create a file that could be consumed by run-test.sh
-        file = open("testcase-list.txt", 'w')
-        file.write(test_list)
-        file.close()
+    # sort the list to execute the test in the right order
+    test_order_list = functest_yaml.get("test_exec_priority")
+    test_sorted_list = ""
+    for test in test_order_list:
+        if test_order_list[test] in test_list:
+            test_sorted_list += test_order_list[test] + " "
 
-        return test_list
+    # create a file that could be consumed by run-test.sh
+    # this method is used only for CI
+    # so it can be run only in container
+    # reuse default conf directory to store the list of runnable tests
+    file = open("/home/opnfv/functest/conf/testcase-list.txt", 'w')
+    file.write(test_sorted_list)
+    file.close()
 
-        # test for each testcase if it is runnable
-        # towards the declared configuration
-        # generate the test config file
-    except:
-        print "Error generateTestcaseList:", sys.exc_info()[0]
+    return test_sorted_list

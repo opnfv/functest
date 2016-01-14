@@ -127,6 +127,12 @@ def action_start():
         # Create result folder under functest if necessary
         if not os.path.exists(RALLY_RESULT_DIR):
             os.makedirs(RALLY_RESULT_DIR)
+        
+        # for CI ONLY, generate the list of runnable test cases
+        try:
+			generateTestcaseList(functest_yaml)
+		except:
+			logger.error("Not CI mode. Test cases list not generated.")
 
         exit(0)
 
