@@ -27,7 +27,7 @@ general:
 
     repositories:
         # branch and commit ID to which the repos will be reset (HEAD)
-        functest_branch:    master
+        functest_branch:    stable/brahmaputra
         functest_commit:    latest
         releng_branch:  master
         releng_commit:  latest
