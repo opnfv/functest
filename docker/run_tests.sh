@@ -32,7 +32,7 @@ offline=false
 report=""
 # Get the list of runnable tests
 # Check if we are in CI mode
-if [ -n "$DEPLOY_SCENARIO" ]; then
+if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]]; then
      testcase=`cat /home/opnfv/functest/conf/testcase-list.txt`
      arr_test=("$testcase")
 else
