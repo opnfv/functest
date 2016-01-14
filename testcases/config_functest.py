@@ -128,6 +128,11 @@ def action_start():
         if not os.path.exists(RALLY_RESULT_DIR):
             os.makedirs(RALLY_RESULT_DIR)
 
+        try:
+            functest_utils.generateTestcaseList(functest_yaml)
+        except:
+            logger.info("Not CI mode. Test cases list not generated.")
+
         exit(0)
 
 
