@@ -160,7 +160,7 @@ class connection( foundation ):
         onospath: path of onos root
         """
         print "Now Changing ONOS Root Path"
-        filepath = onospath + '/onos/tools/dev/bash_profile'
+        filepath = onospath + 'onos/tools/dev/bash_profile'
         line = open(filepath, 'r').readlines()
         lenall = len(line) - 1
         for i in range(lenall):
@@ -179,7 +179,6 @@ class connection( foundation ):
             filepath = '/root/'
         else :
             filepath = '/home/' + self.masterusername + '/'
-        self.OnosRootPathChange( filepath )
         filepath = os.path.join( filepath, "onos/tools/dev/bash_profile" )
         self.AddEnvIntoBashrc("source " + filepath + "\n")
         self.AddEnvIntoBashrc("export OCT=" + self.OCT)

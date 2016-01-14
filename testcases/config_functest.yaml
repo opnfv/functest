@@ -139,12 +139,15 @@ ONOS:
         onoscli_password: 'root'
         runtimeout: 300
     environment:
-        OCT: '189.42.8.99'
-        OC1: '189.42.8.101'
-        OC2: '189.42.8.102'
-        OC3: '189.42.8.103'
-        OCN: '189.42.8.104'
-        OCN2: '189.42.8.105'
+        OCT: '10.20.0.1'
+        OC1: '10.20.0.7'
+        OC2: '10.20.0.7'
+        OC3: '10.20.0.7'
+        OCN: '10.20.0.4'
+        OCN2: '10.20.0.5'
+        installer_master: '10.20.0.2'
+        installer_master_username: 'root'
+        installer_master_password: 'r00tme'
 results:
     test_db_url: http://213.77.62.197
 
