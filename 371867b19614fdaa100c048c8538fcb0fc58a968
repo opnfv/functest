@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a5c5d37_6dc9a877",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 253
+      },
+      "writtenOn": "2016-01-15T09:07:35Z",
+      "side": 1,
+      "message": "ok, that\u0027s better",
+      "parentUuid": "9a5c5d37_ed10f802",
+      "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5c5d37_0d0a2cd2",
         "filename": "testcases/features/doctor.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-01-15T08:57:51Z",
       "side": 1,
       "message": "the env var will change from one installer to the other\n\nanyway the Openstack env cariables are sources in the Functest container\nthis file is copied in the cotainer under /home/opnfv/functest/config/openstack.creds\n\nand creds are sourced before running the test\nso shouyld have access to the env variable\ne.g. on joid\nexport OS_USERNAME\u003dadmin\nexport OS_PASSWORD\u003dopnfv4dmin\nexport OS_TENANT_NAME\u003dadmin\nexport OS_AUTH_URL\u003dhttp://192.168.2.23:5000/v2.0\nexport OS_REGION_NAME\u003dCanonical",
+      "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_cdb894e7",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 253
+      },
+      "writtenOn": "2016-01-15T09:07:35Z",
+      "side": 1,
+      "message": "thanks, so it seems i can delete this env setting from here.",
+      "parentUuid": "9a5c5d37_0d0a2cd2",
       "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -153,6 +189,24 @@
       "side": 1,
       "message": "Nope, I mean after logger.error, add also return False. To make sure we get a False return code either we have logger or not.",
       "parentUuid": "9a5c5d37_cd13f40b",
+      "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_ed835802",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 253
+      },
+      "writtenOn": "2016-01-15T09:07:35Z",
+      "side": 1,
+      "message": "ah, that\u0027s should be OK, line 598 and line 600 are in the same indent that means we can get False whether logger exist or not.",
+      "parentUuid": "9a5c5d37_8de3bc04",
       "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
