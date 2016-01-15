@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_cd02d46e",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-15T09:30:50Z",
+      "side": 1,
+      "message": "Can you add this?\n\nlogger.info(\"Installing Ruby libraries for vIMS testcase...\")",
+      "revId": "201c159a61188a9bbc2227a1a053d6fae06a4356",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_6df3e89e",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-15T09:30:50Z",
+      "side": 1,
+      "message": "This clashes with the command we run in the dockerfile when building the image. \n\nRUN bash -c \u0027source /etc/profile.d/rvm.sh ; rvm autolibs enable ; rvm install 1.9.3 ; rvm use 1.9.3\u0027\n\n\nShall we remove the line from the dockerfile and do all the installation here?",
+      "revId": "201c159a61188a9bbc2227a1a053d6fae06a4356",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
