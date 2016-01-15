@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_28c15ee4",
+        "filename": "testcases/tests/TestFunctestUtils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-15T16:06:06Z",
+      "side": 1,
+      "message": "test units must follow also there as the test cases have been renamed, and constraints changed\nminor",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 16
+      },
+      "revId": "9970fecbb1a701dc7ae8ee2e49cc9fa38457972e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_48bed266",
+        "filename": "testcases/tests/TestFunctestUtils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-15T16:06:06Z",
+      "side": 1,
+      "message": "test units must follow also there as the test cases have been renamed, and constraints changed",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "9970fecbb1a701dc7ae8ee2e49cc9fa38457972e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
