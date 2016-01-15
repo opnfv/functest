@@ -46,6 +46,27 @@ function clean_openstack(){
     echo -e "\n\n"
 }
 
+function odl_tests(){
+    neutron_ip=$(keystone catalog --service identity | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+    odl_ip=$(keystone catalog --service network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+    usr_name=$(env | grep OS | grep OS_USERNAME | cut -f2 -d'=')
+    password=$(env | grep OS | grep OS_PASSWORD | cut -f2 -d'=')
+    odl_port=8181
+    if [ $INSTALLER_TYPE == "fuel" ]; then
+        odl_port=8282
+    elif [ $INSTALLER_TYPE == "apex" ]; then
+        pass
+    elif [ $INSTALLER_TYPE == "joid" ]; then
+        pass
+    elif [ $INSTALLER_TYPE == "compass" ]; then
+        pass
+    else
+        error "INSTALLER_TYPE not valid."
+        exit 1
+    fi
+    ODL_PORT=$odl_port ODL_IP=$odl_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$password \
+        ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
+}
 function run_test(){
     test_name=$1
     echo ""
@@ -61,26 +82,7 @@ function run_test(){
         ;;
         "odl")
             info "Running ODL test..."
-            neutron_ip=$(keystone catalog --service identity | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
-            odl_ip=$(keystone catalog --service network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
-            usr_name=$(env | grep OS | grep OS_USERNAME | cut -f2 -d'=')
-            password=$(env | grep OS | grep OS_PASSWORD | cut -f2 -d'=')
-            odl_port=8181
-            if [ $INSTALLER_TYPE == "fuel" ]; then
-                odl_port=8282
-            elif [ $INSTALLER_TYPE == "apex" ]; then
-                pass
-            elif [ $INSTALLER_TYPE == "joid" ]; then
-                pass
-            elif [ $INSTALLER_TYPE == "compass" ]; then
-                pass
-            else
-                error "INSTALLER_TYPE not valid."
-                exit 1
-            fi
-            ODL_PORT=$odl_port ODL_IP=$odl_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$password \
-                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
-
+            odl_tests
             # save ODL results
             odl_logs="${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/logs"
             if [ -d ${odl_logs} ]; then
@@ -113,18 +115,34 @@ function run_test(){
             clean_openstack
 
         ;;
-        "bgpvpn_template")
+        "bgpvpn")
             info "Running BGPVPN Tempest test case..."
-            tempest_dir=$(find /root/.rally -type d -name for-deploy*)
-            # TODO:
-            # do the call of your test case here.
-            # the bgpvpn repo is cloned in $BGPVPN_REPO_DIR
-            # tempest is installed in $tempest_dir
-            # Suggestion:
-            #   mkdir ${tempest_dir}/tempest/api/bgpvpn/
-            #   cp ${BGPVPN_REPO_DIR}/networking_bgpvpn_tempest/<whatever you need> \
-            #       ${tempest_dir}/tempest/api/bgpvpn/
-            #   ${tempest_dir}/run_tempest.sh tempest.api.bgpvpn.<test_case_name>
+            tempest_dir=$(ls -t /home/opnfv/.rally/tempest/ |grep for-deploy |tail -1)
+            if [[ $tempest_dir == "" ]];
+                echo "Make sure tempest was running before"
+                exit 1
+            fi
+            tempest_dir=/home/opnfv/.rally/tempest/$tempest_dir
+            pushd $tempest_dir
+              . .venv/bin/activate
+              pip install --no-deps -e ~/repos/bgpvpn/.
+              cp tempest.conf /etc/tempest/
+              echo "[service_available]
+bgpvpn = True" >> /etc/tempest/tempest.conf
+              ./run_tempest.sh -- networking_bgpvpn_tempest
+              rm -rf /etc/tempest/tempest.conf
+            popd
+        "odl-vpnservice")
+            info "Running VPNSERVICE Robot test case..."
+            cp ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt \
+                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt.bak
+            echo "
+test/csit/suites/vpnservice
+" > ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt
+            odl_tests
+            cp ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt.bak \
+                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt
+            # TODO: copy logs
        ;;
         "onos")
             info "Running ONOS test case..."
