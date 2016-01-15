@@ -32,35 +32,38 @@ class environment( connection ):
         codeurl: clone code url
         """
         print "Now loading test codes! Please wait in patient..."
-        originalfolder = self.home
+        originalfolder = sys.path[0]
+        print originalfolder
         gitclone = handle
         gitclone.sendline( "git clone " + codeurl )
         index = 0
+        increment = 0
         while index != 1 or index != 4:
-            index = gitclone.expect ( ['already exists', 'resolving deltas: 100%', \
-                                    'Receiving objects', 'Already up-to-date', \
-                                    pexpect.EOF] )
+            index = gitclone.expect ( ['already exists', 'esolving deltas: 100%', \
+                                    'eceiving objects', 'Already up-to-date', \
+                                    'npacking objects: 100%', pexpect.EOF] )
 
-            filefolder = originalfolder + '/' + codeurl.split('/')[-1].split('.')[0]
+            filefolder = self.home + '/' + codeurl.split('/')[-1].split('.')[0]
             if index == 0 :
                 os.chdir( filefolder )
                 os.system( 'git pull' )
                 os.chdir( originalfolder )
                 self.loginfo.log( 'Download code success!' )
                 break
-            elif index == 1 :
+            elif index == 1 or index == 4:
                 self.loginfo.log( 'Download code success!' )
+                gitclone.sendline( "mkdir onos" )
+                gitclone.prompt( )
+                gitclone.sendline( "cp -rf " + filefolder+ "/tools onos/" )
+                gitclone.prompt( )
                 break
             elif index == 2 :
-                increment += 1
-                if increment == 20:
-                    print '\n'
-                print '.'
+                os.write(1, gitclone.before)
+                sys.stdout.flush()
             else :
                 self.loginfo.log( 'Download code failed!' )
                 self.loginfo.log( 'Information before' + gitclone.before )
                 break
-            time.sleep(5)
         gitclone.prompt( )
 
     def InstallDefaultSoftware( self, handle ):
@@ -119,12 +122,36 @@ class environment( connection ):
         agentpass: onos cluster&compute node password
         """
         print "Now Setting test environment"
+        for host in self.hosts:
+            print "try to connect " + str(host)
+            result = self.CheckSshNoPasswd(host)
+            if not result:
+                print "ssh lgin failed,try to copy master publickey to agent " + str(host)
+                self.CopyPublicKey(host)
         self.OnosPushKeys( handle, "onos-push-keys " + self.OCT, masterpass)
         self.OnosPushKeys( handle, "onos-push-keys " + self.OC1, agentpass)
         self.OnosPushKeys( handle, "onos-push-keys " + self.OC2, agentpass)
         self.OnosPushKeys( handle, "onos-push-keys " + self.OC3, agentpass)
         self.OnosPushKeys( handle, "onos-push-keys " + self.OCN, agentpass)
         self.OnosPushKeys( handle, "onos-push-keys " + self.OCN2, agentpass)
+
+    def CheckSshNoPasswd( self, host):
+        """
+        Check master can connect agent with no password
+        """
+        login = pexpect.spawn( "ssh " + str(host))
+        index = 4
+        while index == 4:
+            index = login.expect(['(yes/no)','>|#|\$', \
+                                   pexpect.EOF, pexpect.TIMEOUT] )
+            if index == 0:
+                login.sendline( "yes" )
+                index = 4
+            if index == 1:
+                self.loginfo.log("ssh connect to " + str(host) + " success,no need to copy ssh public key" )
+                return True
+        login.interact()
+        return False
 
     def ChangeOnosName( self, user, password):
         """
@@ -204,10 +231,20 @@ class environment( connection ):
         handle.logout()
 
     def CopyOnostoTestbin( self ):
-        sourcefile = os.curdir + '/dependencies/onos'
+        sourcefile = self.cipath + '/dependencies/onos'
         destifile = self.home + '/onos/tools/test/bin/'
+        os.system( 'pwd' )
         runcommand = 'cp ' + sourcefile + ' ' + destifile
         os.system( runcommand )
+
+    def CopyPublicKey( self, host ):
+        output = os.popen( 'cat /root/.ssh/id_rsa.pub' )
+        publickey = output.read().strip('\n')
+        tmphandle = self.SSHlogin( self.installer_master, self.installer_master_username, self.installer_master_password )
+        tmphandle.sendline("ssh "+ host + " -T \'echo " + str(publickey) + ">>/root/.ssh/authorized_keys\'" )
+        tmphandle.prompt()
+        self.SSHRelease(tmphandle)
+        print "Add OCT PublicKey to " + host + " success"
 
     def OnosEnvSetup( self, handle ):
         """
@@ -219,7 +256,12 @@ class environment( connection ):
         self.AddKnownHost( handle, self.OC2, "karaf", "karaf" )
         self.AddKnownHost( handle, self.OC3, "karaf", "karaf" )
         self.DownLoadCode( handle, 'https://github.com/sunyulin/OnosSystemTest.git' )
-        self.DownLoadCode( handle, 'https://gerrit.onosproject.org/onos' )
+        #self.DownLoadCode( handle, 'https://gerrit.onosproject.org/onos' )
+        if self.masterusername == 'root':
+            filepath = '/root/'
+        else :
+            filepath = '/home/' + self.masterusername + '/'
+        self.OnosRootPathChange( filepath )
         self.CopyOnostoTestbin()
         self.ChangeOnosName(self.agentusername,self.agentpassword)
         self.InstallDefaultSoftware( handle )
