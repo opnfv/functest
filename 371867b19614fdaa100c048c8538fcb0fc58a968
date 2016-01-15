@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_4d682487",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-15T08:46:29Z",
+      "side": 1,
+      "message": "why do you hardcode this values? they might be different from pod to pod. You can take this env variables from env.. They are sourced before running the tests. Another thing you can do is get them from the rc file which is located in /home/opnfv/functest/conf/openstack.creds",
+      "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_6d6d2898",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-15T08:46:29Z",
+      "side": 1,
+      "message": "great that you expanded this function, thanks!",
+      "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_8d6e1c95",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-15T08:46:29Z",
+      "side": 1,
+      "message": "I wonder if we should also return False here..",
+      "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
