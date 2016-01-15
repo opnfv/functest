@@ -8,6 +8,8 @@ import os
 import time
 import pexpect
 import re
+import requests
+import json
 
 class client( environment ):
 
@@ -35,7 +37,7 @@ class client( environment ):
             Result = runhandle.expect(["PEXPECT]#", pexpect.EOF, pexpect.TIMEOUT])
             curshowscreeninfo = runhandle.before
             if (len(lastshowscreeninfo) != len(curshowscreeninfo)):
-                print str(curshowscreeninfo)[len(lastshowscreeninfo)::]
+                self.loginfo.log(str(curshowscreeninfo)[len(lastshowscreeninfo)::])
                 lastshowscreeninfo = curshowscreeninfo
             if Result == 0:
                 print "Done!"
@@ -61,9 +63,14 @@ class client( environment ):
         self.loginfo.log('Release onos handle Successful')
 
     def push_results_to_db( self, payload, pushornot = 1):
+        if pushornot != 1:
+            return 1
         url = self.Result_DB + "/results"
         params = {"project_name": "functest", "case_name": "ONOS-" + self.testcase,
                   "pod_name": 'huawei-build-2', "details": payload}
         headers = {'Content-Type': 'application/json'}
-        r = requests.post(url, data=json.dumps(params), headers=headers)
-        self.loginfo.log('Pushing result via Northbound, info:' + r )
+        try:
+            r = requests.post(url, data=json.dumps(params), headers=headers)
+            self.loginfo.log(r)
+        except:
+            self.loginfo.log('Error pushing results into Database')

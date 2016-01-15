@@ -36,7 +36,7 @@ if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]]; then
      testcase=`cat /home/opnfv/functest/conf/testcase-list.txt`
      arr_test=("$testcase")
 else
-    arr_test=(vping odl tempest vims rally)
+    arr_test=(vping odl tempest vims rally onos)
 fi
 
 function clean_openstack(){
