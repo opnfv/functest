@@ -291,7 +291,7 @@ def main():
                                         creds_cinder['project_id'],
                                         creds_cinder['auth_url'],
                                         service_type="volume")
-    if not functest_utils.update_cinder_quota(cinder_client, tenant_id, 20, 50, 1500):
+    if not functest_utils.update_cinder_quota(cinder_client, tenant_id, 20, 10, 150):
         logger.error("Failed to update cinder quota for tenant %s" %
                      TENANT_NAME)
         exit(-1)
