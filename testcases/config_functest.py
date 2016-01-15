@@ -115,10 +115,13 @@ def action_start():
             action_clean()
             exit(-1)
 
+        logger.info("Installing Ruby libraries for vIMS testcase...")
         # Install ruby libraries for vims test-case
         script = 'source /etc/profile.d/rvm.sh; '
         script += 'cd ' + VIMS_TEST_DIR + '; '
-        script += 'rvm use system;'
+        script += 'rvm autolibs enable ;'
+        script += 'rvm install 1.9.3; '
+        script += 'rvm use 1.9.3;'
         script += 'bundle install'
 
         cmd = "/bin/bash -c '" + script + "'"
