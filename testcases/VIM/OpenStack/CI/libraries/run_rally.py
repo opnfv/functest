@@ -22,7 +22,7 @@ import logging
 import yaml
 import requests
 import sys
-import novaclient.v2.client as novaclient
+from novaclient import client as novaclient
 from keystoneclient.v2_0 import client as keystoneclient
 from glanceclient import client as glanceclient
 
@@ -229,7 +229,7 @@ def main():
         exit(-1)
 
     creds_nova = functest_utils.get_credentials("nova")
-    nova_client = novaclient.Client(**creds_nova)
+    nova_client = novaclient.Client('2',**creds_nova)
     creds_keystone = functest_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
     glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',

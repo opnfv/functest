@@ -22,7 +22,7 @@ import sys
 import time
 import yaml
 
-import novaclient.v2.client as novaclient
+from novaclient import client as novaclient
 from neutronclient.v2_0 import client as neutronclient
 from keystoneclient.v2_0 import client as keystoneclient
 from cinderclient import client as cinderclient
@@ -355,7 +355,7 @@ def remove_tenants(keystone_client):
 
 def main():
     creds_nova = functest_utils.get_credentials("nova")
-    nova_client = novaclient.Client(**creds_nova)
+    nova_client = novaclient.Client('2',**creds_nova)
 
     creds_neutron = functest_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
