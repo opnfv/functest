@@ -86,13 +86,14 @@ class TestFunctestUtils(unittest.TestCase):
         test = isTestRunnable('functest/vims', functest_yaml)
         self.assertTrue(test)
 
-        test = isTestRunnable('sdnvpn/odl-vpn_service-tests',
-                              functest_yaml)
-        self.assertTrue(test)
-
-        test = isTestRunnable('sdnvpn/opnfv-yardstick-tc026-sdnvpn',
+        test = isTestRunnable('sdnvpn/bgpvpn',
                               functest_yaml)
         self.assertFalse(test)
+
+        test = isTestRunnable('sdnvpn/odl-vpnservice',
+                              functest_yaml)
+        self.assertFalse(test)
+
 
     def test_generateTestcaseList(self):
 

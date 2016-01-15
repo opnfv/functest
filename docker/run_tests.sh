@@ -113,18 +113,25 @@ function run_test(){
             clean_openstack
 
         ;;
-        "bgpvpn_template")
+        "bgpvpn")
             info "Running BGPVPN Tempest test case..."
-            tempest_dir=$(find /root/.rally -type d -name for-deploy*)
-            # TODO:
-            # do the call of your test case here.
-            # the bgpvpn repo is cloned in $BGPVPN_REPO_DIR
-            # tempest is installed in $tempest_dir
-            # Suggestion:
-            #   mkdir ${tempest_dir}/tempest/api/bgpvpn/
-            #   cp ${BGPVPN_REPO_DIR}/networking_bgpvpn_tempest/<whatever you need> \
-            #       ${tempest_dir}/tempest/api/bgpvpn/
-            #   ${tempest_dir}/run_tempest.sh tempest.api.bgpvpn.<test_case_name>
+            tempest_dir=$(ls -t /home/opnfv/.rally/tempest/ |grep for-deploy |tail -1)
+            if [[ $tempest_dir == "" ]];
+                echo "Make sure tempest was running before"
+                exit 1
+            fi
+            tempest_dir=/home/opnfv/.rally/tempest/$tempest_dir
+            pushd $tempest_dir
+              . .venv/bin/activate
+              pip install --no-deps -e ~/repos/bgpvpn/.
+              cp tempest.conf /etc/tempest/
+              echo "[service_available]
+bgpvpn = True" >> /etc/tempest/tempest.conf
+              ./run_tempest.sh -- networking_bgpvpn_tempest
+            popd
+        "odl-vpnservice")
+            info "Running VPNSERVICE Robot test case..."
+            #nothing is done yet
        ;;
         "onos")
             info "Running ONOS test case..."
