@@ -17,5 +17,8 @@ if __name__=="__main__":
     #scripts to run
     runhandle = main.onosstart()
     main.RunScript(runhandle, "FUNCvirNetNB")
-    main.RunScript(runhandle, "FUNCovsdbtest")
+#    main.RunScript(runhandle, "FUNCovsdbtest")
+    main.RunScript(runhandle, "FUNCvirNetNBL3")
+#    main.RunScript(runhandle, "FUNCovsdbtestL3")
     main.onosclean( runhandle )
+    main.push_results_to_db(main.GetResult())
