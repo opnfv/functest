@@ -40,15 +40,19 @@ else
 fi
 
 function clean_openstack(){
+    echo -e "\n\nCleaning Openstack environment..."
     python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py \
         --debug
+    echo -e "\n\n"
 }
 
 function run_test(){
     test_name=$1
+    echo ""
     echo "----------------------------------------------"
-    echo "------------- Running $i test case  "
+    echo "  Running test case: $i"
     echo "----------------------------------------------"
+    echo ""
     case $test_name in
         "vping")
             info "Running vPing test..."

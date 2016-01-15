@@ -125,7 +125,10 @@ def action_start():
         script += 'bundle install'
 
         cmd = "/bin/bash -c '" + script + "'"
-        functest_utils.execute_command(cmd,logger)
+        if os.environ.get("CI_DEBUG") == "false":
+            functest_utils.execute_command(cmd)
+        else:
+            functest_utils.execute_command(cmd,logger)
 
         # Create result folder under functest if necessary
         if not os.path.exists(RALLY_RESULT_DIR):
@@ -208,7 +211,7 @@ def action_clean():
 
     logger.debug("Cleaning up the OpenStack deployment...")
     cmd='python ' + REPO_PATH + \
-        '/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py -d '
+        '/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py'
     functest_utils.execute_command(cmd,logger)
     logger.info("Functest environment clean!")
 
@@ -221,7 +224,10 @@ def install_rally():
         logger.debug("Executing %s/install_rally.sh..." %RALLY_REPO_DIR)
         install_script = RALLY_REPO_DIR + "/install_rally.sh --yes"
         cmd = 'sudo ' + install_script
-        functest_utils.execute_command(cmd,logger)
+        if os.environ.get("CI_DEBUG") == "false":
+            functest_utils.execute_command(cmd)
+        else:
+            functest_utils.execute_command(cmd,logger)
 
         logger.debug("Creating Rally environment...")
         cmd = "rally deployment create --fromenv --name="+DEPLOYMENT_MAME
