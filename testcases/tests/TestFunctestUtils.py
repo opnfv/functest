@@ -45,15 +45,6 @@ class TestFunctestUtils(unittest.TestCase):
         env_test = getTestEnv('policy-test', functest_yaml)
         self.assertEqual(env_test, {'scenario': 'odl'})
 
-        env_test = getTestEnv('sdnvpn/odl-vpn_service-tests', functest_yaml)
-        self.assertEqual(env_test,
-                         {'installer': 'fuel', 'scenario': '(ovs)*(odl)'})
-
-        env_test = getTestEnv('sdnvpn/opnfv-yardstick-tc026-sdnvpn',
-                              functest_yaml)
-        self.assertEqual(env_test,
-                         {'installer': 'fuel', 'scenario': '(ovs)*(nosdn)'})
-
         env_test = getTestEnv('foo', functest_yaml)
         self.assertEqual(env_test, '')
 
@@ -86,13 +77,6 @@ class TestFunctestUtils(unittest.TestCase):
         test = isTestRunnable('functest/vims', functest_yaml)
         self.assertTrue(test)
 
-        test = isTestRunnable('sdnvpn/odl-vpn_service-tests',
-                              functest_yaml)
-        self.assertTrue(test)
-
-        test = isTestRunnable('sdnvpn/opnfv-yardstick-tc026-sdnvpn',
-                              functest_yaml)
-        self.assertFalse(test)
 
     def test_generateTestcaseList(self):
 
