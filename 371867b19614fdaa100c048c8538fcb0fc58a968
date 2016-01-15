@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a5c5d37_ed10f802",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-15T08:57:51Z",
+      "side": 1,
+      "message": "all the repos are available in config_functest.yaml\nso you can get this file \nwith open(\"/home/opnfv/functest/conf/config_functest.yaml\") as f:\n    functest_yaml \u003d yaml.safe_load(f)\nf.close()\n\nthen retrieve all the useful directories (you may add doctor there as well)\n\nyou are already using it below to retrieve the test DB url, you could also use it to retrieve all the paths",
+      "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_0d0a2cd2",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-15T08:57:51Z",
+      "side": 1,
+      "message": "the env var will change from one installer to the other\n\nanyway the Openstack env cariables are sources in the Functest container\nthis file is copied in the cotainer under /home/opnfv/functest/config/openstack.creds\n\nand creds are sourced before running the test\nso shouyld have access to the env variable\ne.g. on joid\nexport OS_USERNAME\u003dadmin\nexport OS_PASSWORD\u003dopnfv4dmin\nexport OS_TENANT_NAME\u003dadmin\nexport OS_AUTH_URL\u003dhttp://192.168.2.23:5000/v2.0\nexport OS_REGION_NAME\u003dCanonical",
+      "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5c5d37_4d682487",
         "filename": "testcases/features/doctor.py",
         "patchSetId": 3
