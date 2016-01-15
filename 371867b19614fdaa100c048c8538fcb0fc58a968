@@ -138,6 +138,24 @@
       "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_8de3bc04",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-15T08:58:16Z",
+      "side": 1,
+      "message": "Nope, I mean after logger.error, add also return False. To make sure we get a False return code either we have logger or not.",
+      "parentUuid": "9a5c5d37_cd13f40b",
+      "revId": "371867b19614fdaa100c048c8538fcb0fc58a968",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
