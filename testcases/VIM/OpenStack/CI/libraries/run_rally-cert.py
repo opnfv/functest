@@ -22,7 +22,7 @@ import logging
 import yaml
 import requests
 import sys
-import novaclient.v2.client as novaclient
+from novaclient import client as novaclient
 from glanceclient import client as glanceclient
 from keystoneclient.v2_0 import client as keystoneclient
 from neutronclient.v2_0 import client as neutronclient
@@ -261,7 +261,7 @@ def main():
         exit(-1)
 
     creds_nova = functest_utils.get_credentials("nova")
-    nova_client = novaclient.Client(**creds_nova)
+    nova_client = novaclient.Client('2',**creds_nova)
     creds_neutron = functest_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
     creds_keystone = functest_utils.get_credentials("keystone")

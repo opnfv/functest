@@ -22,7 +22,7 @@ import sys
 import logging
 import yaml
 import datetime
-import novaclient.v2.client as novaclient
+from novaclient import client as novaclient
 from neutronclient.v2_0 import client as neutronclient
 from keystoneclient.v2_0 import client as keystoneclient
 from glanceclient import client as glanceclient
@@ -274,7 +274,7 @@ def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2):
 def main():
 
     creds_nova = functest_utils.get_credentials("nova")
-    nova_client = novaclient.Client(**creds_nova)
+    nova_client = novaclient.Client('2',**creds_nova)
     creds_neutron = functest_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
     creds_keystone = functest_utils.get_credentials("keystone")
