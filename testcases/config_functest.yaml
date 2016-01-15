@@ -249,12 +249,12 @@ test-dependencies:
     policy-test:
         scenario: 'odl'
     sdnvpn:
-        opnfv-yardstick-tc026-sdnvpn:
+        odl-vpnservice:
             installer: 'fuel'
-            scenario: '(ovs)*(nosdn)'
-        odl-vpn_service-tests:
+            scenario: 'bgpvpn'
+            # this execute the tests:
+            # /home/opnfv/repos/odl_integration/test/csit/suites/vpnservice
+        bgpvpn:
             installer: 'fuel'
-            scenario: '(ovs)*(odl)'
-        openstack-neutron-bgpvpn-api-extension-tests:
-            installer: 'fuel'
-            scenario: '(ovs)*(nosdn)'
+            scenario: 'bgpvpn'
+            # this execute the tempest tests of networking-bgpvpn
