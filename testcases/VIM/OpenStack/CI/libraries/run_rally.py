@@ -21,6 +21,7 @@ import argparse
 import logging
 import yaml
 import requests
+import subprocess
 import sys
 from novaclient import client as novaclient
 from keystoneclient.v2_0 import client as keystoneclient
@@ -47,7 +48,7 @@ parser.add_argument("-r", "--report",
 args = parser.parse_args()
 
 
-
+FNULL = open(os.devnull, 'w')
 """ logging configuration """
 logger = logging.getLogger("run_rally")
 logger.setLevel(logging.DEBUG)
@@ -173,8 +174,14 @@ def run_task(test_name):
         logger.debug('Scenario fetched from : {}'.format(test_file_name))
         cmd_line = "rally task start --abort-on-sla-failure {}".format(test_file_name)
         logger.debug('running command line : {}'.format(cmd_line))
-        cmd = os.popen(cmd_line)
-        task_id = get_task_id(cmd.read())
+        p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE, stderr=FNULL, shell=True)
+        result = ""
+        while p.poll() is None:
+            l = p.stdout.readline()
+            print l.replace('\n', '')
+            result += l
+
+        task_id = get_task_id(result)
         logger.debug('task_id : {}'.format(task_id))
 
         if task_id is None:
