@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_adc5608f",
+        "filename": "testcases/config_functest.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-15T08:29:43Z",
+      "side": 1,
+      "message": "you can uncomment onos then",
+      "range": {
+        "startLine": 161,
+        "startChar": 5,
+        "endLine": 161,
+        "endChar": 6
+      },
+      "revId": "be4d2778d535272a3683cb8e518c85065af6a582",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
