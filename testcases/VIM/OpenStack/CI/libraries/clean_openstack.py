@@ -69,7 +69,7 @@ default_users = defaults_yaml.get(installer).get("users")
 default_tenants = defaults_yaml.get(installer).get("tenants")
 
 def separator():
-    logger.debug("-------------------------------------------")
+    logger.info("-------------------------------------------")
 
 def remove_instances(nova_client):
     logger.info("Removing Nova instances...")
@@ -374,7 +374,6 @@ def main():
     if not functest_utils.check_credentials():
         logger.error("Please source the openrc credentials and run the script again.")
         exit(-1)
-
 
     remove_instances(nova_client)
     separator()
