@@ -344,7 +344,7 @@ def update_cinder_quota(cinder_client, tenant_id, vols_quota,
                      "gigabytes": gigabytes_quota}
 
     try:
-        quotas_default = cinder_client. quotas.update(tenant_id,
+        quotas_default = cinder_client.quotas.update(tenant_id,
                                                       **quotas_values)
         return True
     except:
