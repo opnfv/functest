@@ -159,10 +159,10 @@ test_exec_priority:
     1: vping
     2: tempest
     3: odl
-    #4: onos
+    4: onos
     #5: ovno
     #6: doctor
-    #7: promise
+    7: promise
     #8: policy-test
     #9: odl-vpn_service-tests
     #10: opnfv-yardstick-tc026-sdnvpn
