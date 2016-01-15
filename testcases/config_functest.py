@@ -132,9 +132,11 @@ def action_start():
             os.makedirs(RALLY_RESULT_DIR)
 
         try:
-            functest_utils.generateTestcaseList(functest_yaml)
+            logger.info("CI: Generate the list of executable tests.")
+            runnable_test = functest_utils.generateTestcaseList(functest_yaml)
+            logger.info("List of runnable tests generated: %s" % runnable_test)
         except:
-            logger.info("Not CI mode. Test cases list not generated.")
+            logger.error("Impossible to generate the list of runnable tests")
 
         exit(0)
 
