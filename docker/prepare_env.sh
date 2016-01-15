@@ -80,16 +80,6 @@ fi
 
 if [ $offline == false ]; then
     # Update repos
-    info "Updating Functest repository...."
-    cd ${FUNCTEST_REPO_DIR}
-    info "Functest repo: pulling to latest..."
-    git pull
-    if [ ${FUNCTEST_COMMIT} != "latest" ]; then
-        info "Functest repo: given commit is ${FUNCTEST_COMMIT}. Reseting..."
-        git reset --hard ${FUNCTEST_COMMIT}
-    fi
-    source ${BASEDIR}/common.sh
-
     info "Updating Releng repository...."
     cd ${RELENG_REPO_DIR}
     if [ ${RELENG_BRANCH} != "master" ]; then
