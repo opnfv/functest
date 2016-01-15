@@ -20,6 +20,12 @@
 #
 # If it is not provided, take the existing one in the functest repo
 #
+
+# this pull is to be removed right before the B release, once we build
+# a release candidate docker
+cd $repos_dir/functest
+git pull
+
 mkdir -p /home/opnfv/functest/conf
 config_file=/home/opnfv/functest/conf/config_functest.yaml
 if [ ! -f ${config_file} ]; then
