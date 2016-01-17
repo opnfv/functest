@@ -55,8 +55,6 @@ RALLY_VENV_DIR=$(cat $config_file | grep -w dir_rally_inst | awk 'END {print $NF
 # Repos
 RALLY_BRANCH=$(cat $config_file | grep -w rally_branch | awk 'END {print $NF}')
 RALLY_COMMIT=$(cat $config_file | grep -w rally_commit | awk 'END {print $NF}')
-FUNCTEST_BRANCH=$(cat $config_file | grep -w functest_branch | awk 'END {print $NF}')
-FUNCTEST_COMMIT=$(cat $config_file | grep -w functest_commit | awk 'END {print $NF}')
 RELENG_BRANCH=$(cat $config_file | grep -w releng_branch | awk 'END {print $NF}')
 RELENG_COMMIT=$(cat $config_file | grep -w releng_commit | awk 'END {print $NF}')
 VIMS_BRANCH=$(cat $config_file | grep -w vims_test_branch | awk 'END {print $NF}')
@@ -82,8 +80,6 @@ echo "FUNCTEST_CONF_DIR=${FUNCTEST_CONF_DIR}"
 echo "FUNCTEST_DATA_DIR=${FUNCTEST_DATA_DIR}"
 echo "RALLY_VENV_DIR=${RALLY_VENV_DIR}"
 echo "####### Repositories #######"
-echo "FUNCTEST_BRANCH=${FUNCTEST_BRANCH}"
-echo "FUNCTEST_COMMIT=${FUNCTEST_COMMIT}"
 echo "RELENG_BRANCH=${RELENG_BRANCH}"
 echo "RELENG_COMMIT=${RELENG_COMMIT}"
 echo "RALLY_BRANCH=${RALLY_BRANCH}"
