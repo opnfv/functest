@@ -69,11 +69,11 @@ function run_test(){
             if [ $INSTALLER_TYPE == "fuel" ]; then
                 odl_port=8282
             elif [ $INSTALLER_TYPE == "apex" ]; then
-                pass
+                :
             elif [ $INSTALLER_TYPE == "joid" ]; then
-                pass
+                :
             elif [ $INSTALLER_TYPE == "compass" ]; then
-                pass
+                :
             else
                 error "INSTALLER_TYPE not valid."
                 exit 1
