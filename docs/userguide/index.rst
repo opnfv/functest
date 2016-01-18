@@ -11,7 +11,7 @@ OPNFV FUNCTEST user guide
 Introduction
 ============
 
-The goal of this document consists in describing the Functest test cases for Brahmaputra.
+The goal of this document is describing the Functest test cases for Brahmaputra.
 A presentation has been created for the first OPNFV Summit: `[4]`
 
 This guide will detail how to launch the different tests assuming that Functest container has been properly installed `[1]`_.
@@ -29,29 +29,29 @@ Some are developped within the Functest project, some in dedicated feature proje
 
 The current list of test suites can be distributed in 3 main domains:
 
-+--------------+----------------+---------------------------------------------------------+
-| Component    | Testcase       | Comments                                                |
-+--------------+----------------+---------------------------------------------------------+
-|              | vPing          | NFV Hello World                                         |
-|              +----------------+---------------------------------------------------------+
-|    VIM       | Tempest        | OpenStack reference test suite `[2]`_                   |
-|              +----------------+---------------------------------------------------------+
-|              | Rally scenario | OpenStack testing tool testing OpenStack modules `[3]`_ |
-+--------------+----------------+---------------------------------------------------------+
-|              | odl            |                                                         |
-|              +----------------+---------------------------------------------------------+
-| Controllers  | onos           |                                                         |
-|              +----------------+---------------------------------------------------------+
-|              | opencontrail   |                                                         |
-+--------------+----------------+---------------------------------------------------------+
-| Features     | vIMS           | Show the capability to deploy a real NFV testcase       |
-|              +----------------+---------------------------------------------------------+
-|              | X              |                                                         |
-+--------------+----------------+---------------------------------------------------------+
++----------------+----------------+---------------------------------------------------------+
+| Component      | Test suite     | Comments                                                |
++----------------+----------------+---------------------------------------------------------+
+|                | vPing          | NFV "Hello World"                                       |
+|    VIM         +----------------+---------------------------------------------------------+
+|(Virtualised    | Tempest        | OpenStack reference test suite `[2]`_                   |
+| Infrastructure +----------------+---------------------------------------------------------+
+| Manager)       | Rally scenario | OpenStack testing tool testing OpenStack modules `[3]`_ |
++----------------+----------------+---------------------------------------------------------+
+|                | odl            |                                                         |
+|                +----------------+---------------------------------------------------------+
+| Controllers    | onos           |                                                         |
+|                +----------------+---------------------------------------------------------+
+|                | opencontrail   |                                                         |
++----------------+----------------+---------------------------------------------------------+
+| Features       | vIMS           | Show the capability to deploy a real NFV testcase       |
+|                +----------------+---------------------------------------------------------+
+|                | X              |                                                         |
++----------------+----------------+---------------------------------------------------------+
 
 
-Most of the test suites are developped upstream, Functest is in charge of the integration in OPNFV.
-Tempest `[2]`_, for example, is the OpenStack reference test suite.
+Most of the test suites are developed upstream. For example, Tempest `[2]`_ is the OpenStack integration test suite.
+Functest is in charge of the integration of different functional test suites in OPNFV.
 
 In Functest we customized the list of tests within Tempest but do not created our own test cases.
 Some OPNFV feature projects (.e.g. SDNVPN) may create tempest scenario upstream that are integrated in our Tempest through our configuration.
@@ -110,18 +110,19 @@ Tempest `[2]`_ is the reference OpenStack Integration test suite. It is a set of
 Tempest has batteries of tests for OpenStack API validation, Scenarios, and other specific tests useful in validating an OpenStack deployment.
 
 We use Rally `[3]`_ to run Tempest suite.
-The tempest.conf configuration file is automatically generated by Rally then the Tempest suite is run, each test duration is measured.
+Rally generates automatically tempest.conf configuration file.
+Before running actual test cases Functest creates needed resources and updates needed parameters into the configuration file.
+When the Tempest suite is run, each test duration is measured and full console output is stored into tempest.log file.
 
 We considered the smoke test suite for Arno. For Brahmaputra, we decided to customize the list of test cases using the --tests-file option introduced in Rally in version 0.1.2.
 
-The custom list is available on the Functest repo `[4]`_ and contains more than 200 test cases. 
-This list contains tempest test cases chosen for Functest deployment.
-It consists of two main parts:
+The customized test list is available on the Functest repo `[4]`_ and contains more than 200 tempest test cases chosen for Functest deployment.
+The list consists of two main parts:
 
   1) Set of tempest smoke test cases
   2) Set of test cases from DefCore list (https://wiki.openstack.org/wiki/Governance/DefCoreCommittee)
 
-The goal of this test is to check the basic OpenStack functionalities on an OPNFV fresh installation.
+The goal of Tempest test suite is to check the basic functionality of different OpenStack components on an OPNFV fresh installation using corresponding REST API interfaces.
 
 
 Rally bench test suites
@@ -161,10 +162,10 @@ There are currently 3 possible controllers:
 OpenDaylight
 ------------
 
-The ODL suite consists in a set of basic tests inherited from ODL project.
-The suite tests the creation and deletion of network, subnet, port though OpenDaylight and Neutron.
+The ODL test suite consists of a set of basic tests inherited from ODL project.
+The suite verifies creation and deletion of networks, subnets and ports with OpenDaylight and Neutron.
 
-The list of tests can be described as follow::
+The list of tests can be described as follow:
 
  * Restconf.basic: Get the controller modules via Restconf
  * Neutron.Networks
@@ -253,7 +254,6 @@ The script run_tests.sh has several options::
         bash run_tests.sh [--offline] [-h|--help] [-t <test_name>]
 
     where:
-        -o|--offline      optional offline mode (experimental)
         -h|--help         show this help text
         -r|--report       push results to database (false by default)
         -t|--test         run specific set of tests
@@ -262,7 +262,7 @@ The script run_tests.sh has several options::
     examples:
         run_tests.sh
         run_tests.sh --test vping,odl
-        run_tests.sh --offline -t tempest,rally
+        run_tests.sh -t tempest,rally
 
 The -o option can be used to run the container offline (in case you are in a summit where there is no Internet connection...). It is an experimental option.
 
@@ -270,7 +270,9 @@ The -r option is used by the Continuous Integration in order to push the test re
 
 The -t option can be used to specify the list of test you want to launch, by default Functest will try to launch all its test suites in the following order vPing, odl, Tempest, vIMS, Rally. You may launch only one single test by using -t <the test you want to launch>
 
-Please note that Functest includes cleaning mechanism to remove everything except what was present after a fresh install. If you create VM, tenants, networks then launch Functest, there is a risk to remove elements. Be carefull or comment the cleaning phase in run_test.sh (comment call to clean_openstack.py). However, be aware that Tempest and rally triggers the creation of lots of components that are not always properly cleaned, this function has been set to keep the system as clean as possible after a full Functest run.
+Within Tempest test suite you can define which test cases you want to execute in your environment by editing test_list.txt file before executing run_tests.sh script.
+
+Please note that Functest includes cleaning mechanism in order to remove everything except what was present after a fresh install. If you create your own VMs, tenants, networks etc. and then launch Functest, they all will be deleted after executing the tests. Be carefull or comment the cleaning phase in run_test.sh (comment call to clean_openstack.py). However, be aware that Tempest and Rally create of lot of resources (users, tenants, networks, volumes etc.) that are not always properly cleaned, so this cleaning function has been set to keep the system as clean as possible after a full Functest run.
 
 You may also add you own test by adding a section into the function run_test()
 
@@ -354,6 +356,7 @@ The Tempest results are displayed in the console::
      - Failed: 14
     Sum of execute time for each test: 481.0934 sec.
 
+In order to check all the available test case related debug information, please inspect tempest.log file stored into related Rally deployment folder.
 
 Rally
 -----
@@ -510,9 +513,59 @@ Functest in test Dashboard
 The OPNFV testing group created a test collection database to collect the test results from CI.
 Any lab integrated in CI can push the results to this database.
 
-The idea is to centralize the resultes and created a dashboard to give a high level overview of the test activities.
+The idea is to centralize the resultes and create a dashboard to give a high level overview of the test activities.
+You can find more information about the dashboard from Testing Dashboard wiki page `[6]`_.
 
-TODO
+
+===============
+Troubleshooting
+===============
+
+VIM
+===
+
+vPing
+-----
+
+
+Tempest
+-------
+
+In the upstream OpenStack CI all the Tempest test cases are supposed to pass. If some test cases fail in an OPNFV deployment, the reason is very probably one of the following:
+
+ * Some resources required for execution test cases are missing. Such resources could be e.g. an external network and access to the management subnet (adminURL) from the Functest docker container.
+ * Some OpenStack components or services are missing or not configured properly. You can check running services in the controller and compute nodes e.g. with "systemctl" or "service" commands. Configuration parameters can be verified from related .conf files located under /etc/<component> directories. 
+ * Used tempest.conf file doesn't contain all the needed parameters or some parameters are not set properly. When using Functest, tempest.conf file is generated by Rally and updated with needed parameters automatically before executing Tempest cases. You can find the used configuration file e.g. with "find / -name tempest.conf" command. Use "rally deployment list" command in order to check UUID of current deployment.
+
+When some Tempest test case fails, captured traceback and possibly also related REST API requests/responses are output to the console.
+More detailed debug information can be found from tempest.log file stored into related Rally deployment folder.
+
+
+Rally
+-----
+
+
+Controllers
+===========
+
+odl
+---
+
+
+onos
+----
+
+
+opencontrail
+------------
+
+
+Feature
+=======
+
+vIMS
+----
+
 
 ==========
 References
@@ -523,6 +576,7 @@ References
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`[4]`: http://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
 .. _`[5]`: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/openstack-blueprint.yaml
+.. _`[6]`: https://wiki.opnfv.org/opnfv_test_dashboard
 
 
 OPNFV main site: opnfvmain_.
