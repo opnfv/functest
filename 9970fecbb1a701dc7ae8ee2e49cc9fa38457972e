@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a5c5d37_1d06d586",
+        "filename": "testcases/tests/TestFunctestUtils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2697
+      },
+      "writtenOn": "2016-01-18T06:00:50Z",
+      "side": 1,
+      "message": "I would like to exclude this from test anyhow. Do you realy think that this is a must have it in testing? the sdnvpn project?",
+      "parentUuid": "9a5c5d37_28c15ee4",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 16
+      },
+      "revId": "9970fecbb1a701dc7ae8ee2e49cc9fa38457972e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5c5d37_48bed266",
         "filename": "testcases/tests/TestFunctestUtils.py",
         "patchSetId": 2
