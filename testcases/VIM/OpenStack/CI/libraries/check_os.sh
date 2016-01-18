@@ -88,4 +88,26 @@ if [ $is_external == "False" ]; then
     exit 1
 fi
 
+
+# Temporary output information
+# To see the initial OpenStack defaults
+# in case we delete something later on.
+# This is to be removed for the release
+echo "nova list:"
+nova list
+echo "cinder list"
+cinder list
+echo "nova floating-ip-list:"
+nova floating-ip-list
+echo "neutron net-list:"
+neutron net-list
+echo "neutron router-list:"
+neutron router-list
+echo "neutron security-group-list:"
+neutron security-group-list
+echo "keystone tenant-list:"
+keystone tenant-list
+echo "keystone user-list:"
+keystone user-list
+
 exit 0
