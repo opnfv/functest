@@ -10,10 +10,9 @@
 usage="Script to trigger the tests automatically.
 
 usage:
-    bash $(basename "$0") [--offline] [-h|--help] [-t <test_name>]
+    bash $(basename "$0") [-h|--help] [-t <test_name>]
 
 where:
-    -o|--offline      optional offline mode (experimental)
     -h|--help         show this help text
     -r|--report       push results to database (false by default)
     -t|--test         run specific set of tests
@@ -23,7 +22,7 @@ where:
 examples:
     $(basename "$0")
     $(basename "$0") --test vping,odl
-    $(basename "$0") --offline -t tempest,rally"
+    $(basename "$0") -t tempest,rally"
 
 
 # Support for Functest offline
