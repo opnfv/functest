@@ -32,9 +32,10 @@ offline=false
 report=""
 # Get the list of runnable tests
 # Check if we are in CI mode
-if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]]; then
-     testcase=`cat /home/opnfv/functest/conf/testcase-list.txt`
-     arr_test=("$testcase")
+tests_file="/home/opnfv/functest/conf/testcase-list.txt"
+if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]] &&\
+   [[ -f $tests_file ]]; then
+    arr_test=($(cat $tests_file))
 else
     arr_test=(vping tempest vims rally)
 fi
