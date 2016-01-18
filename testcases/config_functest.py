@@ -211,7 +211,7 @@ def action_clean():
 
     logger.debug("Cleaning up the OpenStack deployment...")
     cmd='python ' + REPO_PATH + \
-        '/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py'
+        '/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py --debug'
     functest_utils.execute_command(cmd,logger)
     logger.info("Functest environment clean!")
 
