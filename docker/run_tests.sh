@@ -10,10 +10,9 @@
 usage="Script to trigger the tests automatically.
 
 usage:
-    bash $(basename "$0") [--offline] [-h|--help] [-t <test_name>]
+    bash $(basename "$0") [-h|--help] [-t <test_name>]
 
 where:
-    -o|--offline      optional offline mode (experimental)
     -h|--help         show this help text
     -r|--report       push results to database (false by default)
     -t|--test         run specific set of tests
@@ -23,7 +22,7 @@ where:
 examples:
     $(basename "$0")
     $(basename "$0") --test vping,odl
-    $(basename "$0") --offline -t tempest,rally"
+    $(basename "$0") -t tempest,rally"
 
 
 # Support for Functest offline
@@ -32,13 +31,7 @@ offline=false
 report=""
 # Get the list of runnable tests
 # Check if we are in CI mode
-tests_file="/home/opnfv/functest/conf/testcase-list.txt"
-if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]] &&\
-   [[ -f $tests_file ]]; then
-    arr_test=($(cat $tests_file))
-else
-    arr_test=(vping tempest vims rally)
-fi
+
 
 function clean_openstack(){
     echo -e "\n\nCleaning Openstack environment..."
@@ -175,6 +168,17 @@ while [[ $# > 0 ]]
     shift # past argument or value
 done
 
+
+tests_file="/home/opnfv/functest/conf/testcase-list.txt"
+if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]] &&\
+   [[ -f $tests_file ]]; then
+    cat $test_file; echo ""
+    arr_test=($(cat $tests_file))
+else
+    arr_test=(vping tempest vims rally)
+fi
+echo "arr_test: "${arr_test[@]}
+
 BASEDIR=`dirname $0`
 source ${BASEDIR}/common.sh
 
@@ -213,7 +217,7 @@ if [ "${TEST}" != "" ]; then
         run_test $i
     done
 else
-    info "Executing all the tests"
+    info "Executing tests..."
     for i in "${arr_test[@]}"; do
         run_test $i
     done
