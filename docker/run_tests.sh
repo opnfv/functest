@@ -17,7 +17,7 @@ where:
     -h|--help         show this help text
     -r|--report       push results to database (false by default)
     -t|--test         run specific set of tests
-      <test_name>     one or more of the following: vping,odl,rally,tempest,vims,onos, promise. Separated by comma.
+      <test_name>     one or more of the following: vping,odl,rally,tempest,vims,onos,promise,ovno. Separated by comma.
 
 
 examples:
@@ -50,7 +50,7 @@ function run_test(){
     test_name=$1
     echo ""
     echo "----------------------------------------------"
-    echo "  Running test case: $i"
+    echo "  Running test cases: $i"
     echo "----------------------------------------------"
     echo ""
     case $test_name in
@@ -137,6 +137,10 @@ function run_test(){
         "doctor")
             info "Running Doctor test..."
             python ${FUNCTEST_REPO_DIR}/testcases/features/doctor.py
+        ;;
+        "ovno")
+            info "Running OpenContrail test..."
+            # TODO
         ;;
     esac
 }
