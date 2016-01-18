@@ -56,7 +56,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s'
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-REPO_PATH=os.environ['repos_dir']+'/functest/'
+REPO_PATH = os.environ['repos_dir']+'/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
@@ -274,13 +274,13 @@ def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2):
 def main():
 
     creds_nova = functest_utils.get_credentials("nova")
-    nova_client = novaclient.Client('2',**creds_nova)
+    nova_client = novaclient.Client('2', **creds_nova)
     creds_neutron = functest_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
     creds_keystone = functest_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
     glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
-                                                   endpoint_type='publicURL')
+                                                              endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
     EXIT_CODE = -1
@@ -291,7 +291,8 @@ def main():
     logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                        GLANCE_IMAGE_PATH))
     image_id = functest_utils.create_glance_image(glance_client,
-                                            GLANCE_IMAGE_NAME,GLANCE_IMAGE_PATH)
+                                                  GLANCE_IMAGE_NAME,
+                                                  GLANCE_IMAGE_PATH)
     if not image_id:
         logger.error("Failed to create a Glance image...")
         exit(-1)
@@ -419,7 +420,8 @@ def main():
     if not waitVmActive(nova_client, vm2):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_2, functest_utils.get_instance_status(nova_client, vm2)))
-        cleanup(nova_client, neutron_client, image_id, network_dic, port_id1, port_id2)
+        cleanup(nova_client, neutron_client, image_id, network_dic,
+                port_id1, port_id2)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_2)
@@ -427,6 +429,7 @@ def main():
     logger.info("Waiting for ping...")
     sec = 0
     console_log = vm2.get_console_output()
+    duration = 0
 
     while True:
         time.sleep(1)
@@ -449,7 +452,8 @@ def main():
             logger.debug("No vPing detected...")
         sec += 1
 
-    cleanup(nova_client, neutron_client, image_id, network_dic, port_id1, port_id2)
+    cleanup(nova_client, neutron_client, image_id, network_dic,
+            port_id1, port_id2)
 
     test_status = "NOK"
     if EXIT_CODE == 0:
@@ -474,7 +478,7 @@ def main():
             # json.dump({'timestart': start_time_ts, 'duration': duration,
             # 'status': test_status}, outfile, indent=4)
     except:
-        logger.error("Error pushing results into Database")
+        logger.error("Error pushing results into Database '%s'" % sys.exc_info()[0])
 
     exit(EXIT_CODE)
 
