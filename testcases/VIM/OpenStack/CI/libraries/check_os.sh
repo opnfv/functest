@@ -31,7 +31,7 @@ echo ">>Verifying connectivity to the public endpoint $publicIP:$publicPort..."
 verify_connectivity $publicIP $publicPort
 RETVAL=$?
 if [ $RETVAL -ne 0 ]; then
-    echo "ERROR: Cannot talk to the public endpoint publicIP:$publicPort ."
+    echo "ERROR: Cannot talk to the public endpoint $publicIP:$publicPort ."
     echo "OS_AUTH_URL=$OS_AUTH_URL"
     exit 1
 fi
@@ -44,8 +44,8 @@ echo ">>Verifying connectivity to the admin endpoint $adminIP:$adminPort..."
 verify_connectivity $adminIP $adminPort
 RETVAL=$?
 if [ $RETVAL -ne 0 ]; then
-    echo "ERROR: Cannot talk to the admin endpoint adminIP:$adminPort ."
-    echo "adminURL"
+    echo "ERROR: Cannot talk to the admin endpoint $adminIP:$adminPort ."
+    echo "$adminURL"
     exit 1
 fi
 echo "  ...OK"
