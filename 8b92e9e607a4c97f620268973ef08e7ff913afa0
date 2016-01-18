@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_a0de826b",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-18T09:39:52Z",
+      "side": 1,
+      "message": "Shall we create a table to summarize each test towards installers to see the differences?",
+      "revId": "8b92e9e607a4c97f620268973ef08e7ff913afa0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_c0f736f4",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-18T09:39:52Z",
+      "side": 1,
+      "message": "Shall we create a section to troubleshooting?",
+      "revId": "8b92e9e607a4c97f620268973ef08e7ff913afa0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
