@@ -1,5 +1,11 @@
 #!/bin/bash
 # it includes python2.7 virtual env with robot packages and git
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Apache License, Version 2.0
+# which accompanies this distribution, and is available at
+# http://www.apache.org/licenses/LICENSE-2.0
+#
 
 BASEDIR=`dirname $0`
 RESULTS_DIR='/home/opnfv/functest/results/odl/'

@@ -6,6 +6,12 @@
 # Installs the Functest framework within the Docker container
 # and run the tests automatically
 #
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Apache License, Version 2.0
+# which accompanies this distribution, and is available at
+# http://www.apache.org/licenses/LICENSE-2.0
+#
 
 usage="Script to prepare the Functest environment.
 
@@ -153,6 +159,19 @@ if [ $offline == false ]; then
     if [ ${PROMISE_COMMIT} != "latest" ]; then
         info "PROMISE repo: given commit is ${PROMISE_COMMIT}. Reseting..."
         git reset --hard ${PROMISE_COMMIT}
+    fi
+
+    info "Updating OVNO repository...."
+    cd ${OVNO_REPO_DIR}
+    if [ ${OVNO_BRANCH} != "master" ]; then
+        info "OVNO repo: checkout ${OVNO} branch..."
+        git checkout ${OVNO_BRANCH}
+    fi
+    info "OVNO repo: pulling to latest..."
+    git pull
+    if [ ${OVNO_COMMIT} != "latest" ]; then
+        info "OVNO repo: given commit is ${OVNO_COMMIT}. Reseting..."
+        git reset --hard ${OVNO_COMMIT}
     fi
 
 fi
