@@ -50,7 +50,7 @@ function run_test(){
     case $test_name in
         "vping")
             info "Running vPing test..."
-            python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing.py \
+            python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing2.py \
                 --debug ${report}
         ;;
         "odl")
