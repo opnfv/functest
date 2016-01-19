@@ -21,6 +21,7 @@ import argparse
 import logging
 import yaml
 import requests
+import subprocess
 import sys
 from novaclient import client as novaclient
 from glanceclient import client as glanceclient
@@ -53,6 +54,7 @@ args = parser.parse_args()
 
 client_dict = {}
 
+FNULL = open(os.devnull, 'w')
 """ logging configuration """
 logger = logging.getLogger("run_rally")
 logger.setLevel(logging.DEBUG)
@@ -208,8 +210,15 @@ def run_task(test_name):
                "--task {} ".format(task_file) + \
                "--task-args \"{}\" ".format(build_task_args(test_name))
     logger.debug('running command line : {}'.format(cmd_line))
-    cmd = os.popen(cmd_line)
-    task_id = get_task_id(cmd.read())
+
+    p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE, stderr=FNULL, shell=True)
+    result = ""
+    while p.poll() is None:
+        l = p.stdout.readline()
+        print l.replace('\n', '')
+        result += l
+
+    task_id = get_task_id(result)
     logger.debug('task_id : {}'.format(task_id))
 
     if task_id is None:
