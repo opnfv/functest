@@ -19,6 +19,7 @@ import json
 import shutil
 import re
 import yaml
+import socket
 from git import Repo
 
 
@@ -662,8 +663,11 @@ def get_resolvconf_ns():
     line = rconf.readline()
     while line:
         ip = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         if ip:
-            nameservers.append(ip.group())
+            result = sock.connect_ex((ip.group(),53))
+            if result == 0:
+                nameservers.append(ip.group())
         line = rconf.readline()
     return nameservers
 
