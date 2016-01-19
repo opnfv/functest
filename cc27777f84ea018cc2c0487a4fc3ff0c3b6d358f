@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_2c73a916",
+        "filename": "docker/prepare_env.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-19T12:22:25Z",
+      "side": 1,
+      "message": "This should be in another commit with a different message, but ok :)",
+      "revId": "cc27777f84ea018cc2c0487a4fc3ff0c3b6d358f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_0c62253e",
+        "filename": "docker/requirements.pip",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-19T12:22:25Z",
+      "side": 1,
+      "message": "I think I dont need to be here, but thanks! :)",
+      "revId": "cc27777f84ea018cc2c0487a4fc3ff0c3b6d358f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
