@@ -355,6 +355,13 @@ def get_external_net_id(neutron_client):
     return False
 
 
+def get_external_net_id(neutron_client):
+    for network in neutron_client.list_networks()['networks']:
+        if network['router:external']:
+            return network['id']
+    return False
+
+
 def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
     json_body = {"quota": {
         "security_group": sg_quota,
