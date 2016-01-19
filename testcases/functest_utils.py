@@ -116,6 +116,15 @@ def delete_instance(nova_client, instance_id):
         print "Error:", sys.exc_info()[0]
         return False
 
+def create_floating_ip(neutron_client):
+    extnet_id = get_external_net_id(neutron_client)
+    props = {'floating_network_id': extnet_id}
+    try:
+        ip_json = neutron_client.create_floatingip({'floatingip': props})
+        floating_ip = ip_json['floatingip']['floating_ip_address']
+    except:
+        return None
+    return floating_ip
 
 def get_floating_ips(nova_client):
     try:
@@ -124,6 +133,13 @@ def get_floating_ips(nova_client):
     except:
         return None
 
+def add_floating_ip(nova_client, server_id, floatingip_id):
+    try:
+        nova_client.servers.add_floating_ip(server_id,floatingip_id)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return None
 
 def delete_floating_ip(nova_client, floatingip_id):
     try:
@@ -226,6 +242,15 @@ def remove_interface_router(neutron_client, router_id, subnet_id):
         print "Error:", sys.exc_info()[0]
         return False
 
+def add_gateway_router(neutron_client, router_id):
+    ext_net_id = get_external_net_id(neutron_client)
+    router_dict = {'network_id': ext_net_id}
+    try:
+        neutron_client.add_gateway_router(router_id,router_dict)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
 
 def remove_gateway_router(neutron_client, router_id):
     try:
@@ -319,6 +344,13 @@ def get_external_net(neutron_client):
     for network in neutron_client.list_networks()['networks']:
         if network['router:external']:
             return network['name']
+    return False
+
+
+def get_external_net_id(neutron_client):
+    for network in neutron_client.list_networks()['networks']:
+        if network['router:external']:
+            return network['id']
     return False
 
 
