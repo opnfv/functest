@@ -1,6 +1,6 @@
 fuel:
     images: ['TestVM']
-    networks: ['net04', 'net04_ext']
+    networks: ['net04', 'net04_ext', 'admin_floating']
     routers: ['router04']
     security_groups: ['default']
     tenants: ['admin', 'services']
