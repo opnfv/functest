@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_e6300da0",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-20T09:54:29Z",
+      "side": 1,
+      "message": "add description here as well",
+      "range": {
+        "startLine": 43,
+        "startChar": 35,
+        "endLine": 43,
+        "endChar": 92
+      },
+      "revId": "6a7a338199a82fc4f8bd246f2208a20e6bc54341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_c6de293f",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-20T09:54:29Z",
+      "side": 1,
+      "message": "functions.",
+      "range": {
+        "startLine": 212,
+        "startChar": 34,
+        "endLine": 212,
+        "endChar": 42
+      },
+      "revId": "6a7a338199a82fc4f8bd246f2208a20e6bc54341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_86e831e3",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-20T09:54:29Z",
+      "side": 1,
+      "message": "suggestion of rephrasing\nThese functions are configured during OPNFV installation at OpenStack level. At the end of a fresh installation, the Onos test suite is run to check these functions.",
+      "range": {
+        "startLine": 212,
+        "startChar": 46,
+        "endLine": 212,
+        "endChar": 52
+      },
+      "revId": "6a7a338199a82fc4f8bd246f2208a20e6bc54341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_a6b455d1",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-20T09:54:29Z",
+      "side": 1,
+      "message": "space to be removed",
+      "range": {
+        "startLine": 466,
+        "startChar": 30,
+        "endLine": 466,
+        "endChar": 31
+      },
+      "revId": "6a7a338199a82fc4f8bd246f2208a20e6bc54341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_86cb9152",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-20T09:54:29Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 500,
+        "startChar": 14,
+        "endLine": 500,
+        "endChar": 15
+      },
+      "revId": "6a7a338199a82fc4f8bd246f2208a20e6bc54341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_66c65d4b",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-20T09:54:29Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 506,
+        "startChar": 30,
+        "endLine": 506,
+        "endChar": 31
+      },
+      "revId": "6a7a338199a82fc4f8bd246f2208a20e6bc54341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_46c5993a",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-20T09:54:29Z",
+      "side": 1,
+      "message": "space",
+      "revId": "6a7a338199a82fc4f8bd246f2208a20e6bc54341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_26c06529",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-20T09:54:29Z",
+      "side": 1,
+      "message": "space",
+      "revId": "6a7a338199a82fc4f8bd246f2208a20e6bc54341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
