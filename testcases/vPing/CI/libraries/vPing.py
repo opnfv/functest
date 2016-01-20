@@ -469,7 +469,7 @@ def main():
             git_version = functest_utils.get_git_branch(REPO_PATH)
             pod_name = functest_utils.get_pod_name(logger)
             functest_utils.push_results_to_db(TEST_DB,
-                                              "vPing",
+                                              "vPing_userdata",
                                               logger, pod_name, git_version,
                                               payload={'timestart': start_time_ts,
                                                        'duration': duration,
