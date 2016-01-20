@@ -1,4 +1,4 @@
-*************************
+﻿*************************
 OPNFV FUNCTEST user guide
 *************************
 
@@ -207,7 +207,38 @@ The list of tests can be described as follow:
 
 ONOS
 ----
-TODO
+
+For ONOS function test,TestON Framework is being used.
+The test cases contains L2 and L3 function.We config the function by OpenStack,and then check it in ONOS.
+Following describe the test cases:
+
+ * onosfunctest: The mainly executable file,contains init the docker environment for test and function call of FUNCvirNetNB and FUNCvirNetNBL3
+ * FUNCvirNetNB
+
+   * Create Network :: Post Network data and check it in ONOS
+   * Update Network :: Update the Network and compare it in ONOS
+   * Delete Network :: Delete the Network and check if it's NULL in ONOS or not
+   * Create Subnet :: Post Subnet data and check it in ONOS
+   * Update Subnet :: Update the Subnet and compare it in ONOS
+   * Delete Subnet :: Delete the Subnet and check if it's NULL in ONOS or not
+   * Create Port :: Post Port data and check it in ONOS
+   * Update Port :: Update the Port and compare it in ONOS
+   * Delete Port :: Delete the Port and check if it's NULL in ONOS or not
+
+ * FUNCvirNetNBL3
+
+   * Create Router :: Post dataes for create Router and check it in ONOS
+   * Update Router :: Update the Router and compare it in ONOS
+   * Delete Router :: Delete the Router dataes and check it in ONOS
+   * Create RouterInterface :: Post RouterInterface data to an exist Router and check it in ONOS
+   * Delete RouterInterface :: Delete the RouterInterface and check the Router
+   * Create FloatingIp :: Post dataes for create FloatingIp and check it in ONOS
+   * Update FloatingIp :: Update the FloatingIp and compare it in ONOS
+   * Delete FloatingIp :: Delete the FloatingIp and check if it's NULL in ONOS or not
+   * Create External Gateway :: Post dataes for create External Gateway to an exit Router and check it
+   * Update External Gateway :: Update the External Gateway and compare it
+   * Delete External Gateway :: Delete the External Gateway and check if it's NULL in ONOS or not
+
 
 OpenContrail
 ------------
@@ -429,7 +460,82 @@ These failures to delete objects in OpenDaylight (when removed via OpenStack Neu
 onos
 ----
 
-TODO
+The ONOS test logs output to OnosSystemTest/TestON/logs with ONOSCI_PATH added,and also can be seen in the console::
+
+ ******************************
+  Result summary for Testcase4 
+ ******************************
+
+ 2016-01-14 05:25:40,529 - FUNCvirNetNBL3 - INFO - ONOS Router Delete test Start
+
+ [2016-01-14 05:25:40.529644] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Router
+ 2016-01-14 05:25:40,530 - FUNCvirNetNBL3 - INFO - Generate Post Data
+
+ [2016-01-14 05:25:40.530825] [FUNCvirNetNBL3] [STEP]  4.1: Post Network Data via HTTP(Post Router need post network)
+ 2016-01-14 05:25:40,531 - FUNCvirNetNBL3 - INFO - Sending request http://192.168.122.56:8181/onos/vtn/networks/ using POST method.
+ 2016-01-14 05:25:40,539 - FUNCvirNetNBL3 - INFO - Verifying the Expected is equal to the actual or not using assert_equal
+ 2016-01-14 05:25:40,539 - FUNCvirNetNBL3 - INFO - Post Network Success
+ 2016-01-14 05:25:40,539 - FUNCvirNetNBL3 - INFO - Assertion Passed
+
+ [2016-01-14 05:25:40.539687] [FUNCvirNetNBL3] [STEP]  4.2: Post Router Data via HTTP
+ 2016-01-14 05:25:40,540 - FUNCvirNetNBL3 - INFO - Sending request http://192.168.122.56:8181/onos/vtn/routers/ using POST method.
+ 2016-01-14 05:25:40,543 - FUNCvirNetNBL3 - INFO - Verifying the Expected is equal to the actual or not using assert_equal
+ 2016-01-14 05:25:40,543 - FUNCvirNetNBL3 - INFO - Post Router Success
+ 2016-01-14 05:25:40,543 - FUNCvirNetNBL3 - INFO - Assertion Passed
+
+ [2016-01-14 05:25:40.543489] [FUNCvirNetNBL3] [STEP]  4.3: Delete Router Data via HTTP
+ 2016-01-14 05:25:40,543 - FUNCvirNetNBL3 - INFO - Sending request http://192.168.122.56:8181/onos/vtn/routers/e44bd655-e22c-4aeb-b1e9-ea1606875178 using DELETE method.
+ 2016-01-14 05:25:40,546 - FUNCvirNetNBL3 - INFO - Verifying the Expected is equal to the actual or not using assert_equal
+ 2016-01-14 05:25:40,546 - FUNCvirNetNBL3 - INFO - Delete Router Success
+ 2016-01-14 05:25:40,546 - FUNCvirNetNBL3 - INFO - Assertion Passed
+
+ [2016-01-14 05:25:40.546774] [FUNCvirNetNBL3] [STEP]  4.4: Get Router Data is NULL
+ 2016-01-14 05:25:40,547 - FUNCvirNetNBL3 - INFO - Sending request http://192.168.122.56:8181/onos/vtn/routers/e44bd655-e22c-4aeb-b1e9-ea1606875178 using GET method.
+ 2016-01-14 05:25:40,550 - FUNCvirNetNBL3 - INFO - Verifying the Expected is equal to the actual or not using assert_equal
+ 2016-01-14 05:25:40,550 - FUNCvirNetNBL3 - INFO - Get Router Success
+ 2016-01-14 05:25:40,550 - FUNCvirNetNBL3 - INFO - Assertion Passed
+
+
+ *****************************
+  Result: Pass 
+ *****************************
+
+ .......................................................................................
+
+ ******************************
+  Result summary for Testcase9 
+ ******************************
+ .......................................................................................
+
+
+ [2016-01-14 05:26:42.543489] [FUNCvirNetNBL3] [STEP]  9.6: FloatingIp Clean Data via HTTP
+ 2016-01-14 05:26:42,543 - FUNCvirNetNBL3 - INFO - Sending request http://192.168.122.56:8181/onos/vtn/floatingips/e44bd655-e22c-4aeb-b1e9-ea1606875178 using DELETE method.
+ 2016-01-14 05:26:42,546 - FUNCvirNetNBL3 - INFO - Verifying the Expected is equal to the actual or not using assert_equal
+ 2016-01-14 05:26:42,546 - FUNCvirNetNBL3 - ERROR - Delete Floatingip failed
+
+ .......................................................................................
+
+ *****************************
+  Result: Failed 
+ *****************************
+
+There's a Result summary for each testcase,and a total summary for the whole test file,if any problem occured,ERROR can be seen in the testcase summary and total summary::
+
+ *************************************
+         Test Execution Summary
+
+ ************************************* 
+
+  Test Start           : 14 Jan 2016 05:25:37
+  Test End             : 14 Jan 2016 05:25:41
+  Execution Time       : 0:00:03.349087
+  Total tests planned  : 11
+  Total tests RUN      : 11
+  Total Pass           : 8
+  Total Fail           : 3
+  Total No Result      : 0
+  Success Percentage   : 72%
+  Execution Result     : 100%
 
 opencontrail
 ------------
