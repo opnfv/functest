@@ -31,18 +31,20 @@ The current list of test suites can be distributed in 3 main domains:
 
 +----------------+----------------+---------------------------------------------------------+
 | Component      | Test suite     | Comments                                                |
-+----------------+----------------+---------------------------------------------------------+
++================+================+=========================================================+
 |                | vPing          | NFV "Hello World"                                       |
-|    VIM         +----------------+---------------------------------------------------------+
+|                +----------------+---------------------------------------------------------+
+|    VIM         | vPing_userdata | Ping using userdata and cloudinit mechanism             |
+|                +----------------+---------------------------------------------------------+
 |(Virtualised    | Tempest        | OpenStack reference test suite `[2]`_                   |
 | Infrastructure +----------------+---------------------------------------------------------+
 | Manager)       | Rally scenario | OpenStack testing tool testing OpenStack modules `[3]`_ |
 +----------------+----------------+---------------------------------------------------------+
-|                | odl            |                                                         |
+|                | OpenDaylight   | Opendaylight Test suite                                 |
 |                +----------------+---------------------------------------------------------+
-| Controllers    | onos           |                                                         |
+| Controllers    | ONOS           | Test suite of ONOS L2 and L3 functions                  |
 |                +----------------+---------------------------------------------------------+
-|                | opencontrail   |                                                         |
+|                | OpenContrail   |                                                         |
 +----------------+----------------+---------------------------------------------------------+
 | Features       | vIMS           | Show the capability to deploy a real NFV testcase       |
 |                +----------------+---------------------------------------------------------+
@@ -73,6 +75,11 @@ VIM
 
 vPing
 -----
+
+TODO
+
+vPing_userdata
+--------------
 
 The goal of this test can be described as follow::
 
@@ -155,14 +162,14 @@ SDN Controllers
 Brahmaputra introduces new SDN controllers in addition of odl already integrated in Arno.
 There are currently 3 possible controllers:
 
- * odl
- * onos
- * opencontrail
+ * OpenDaylight
+ * ONOS
+ * OpenContrail
 
 OpenDaylight
 ------------
 
-The ODL test suite consists of a set of basic tests inherited from ODL project.
+The OpenDaylight (ODL) test suite consists of a set of basic tests inherited from ODL project.
 The suite verifies creation and deletion of networks, subnets and ports with OpenDaylight and Neutron.
 
 The list of tests can be described as follow:
@@ -208,11 +215,13 @@ The list of tests can be described as follow:
 ONOS
 ----
 
-For ONOS function test,TestON Framework is being used.
-The test cases contains L2 and L3 function.We config the function by OpenStack,and then check it in ONOS.
-Following describe the test cases:
+TestON Framework is used to test ONOS function.
+The test cases deal with L2 and L3 functions. ONOS is configured through OPNFV scenario. 
+The ONOS test suite can be run on any ONOS compliant scenario.
 
- * onosfunctest: The mainly executable file,contains init the docker environment for test and function call of FUNCvirNetNB and FUNCvirNetNBL3
+The test cases may be described as follow:
+
+ * onosfunctest: The mainly executable file contains the initialization of the docker environment and functions called by FUNCvirNetNB and FUNCvirNetNBL3
  * FUNCvirNetNB
 
    * Create Network :: Post Network data and check it in ONOS
@@ -263,6 +272,7 @@ The Clearwater architecture may be described as follow:
    :alt: vIMS architecture
 
 The duration of each step (orchestion deployment, VNF deployment and test), as well as test results, are stored and, in CI, pushed into the test collection database.
+The deployment of a complete functional VNF allows the test of most of the essential functions needed for a NFV system.
 
 X
 --
@@ -288,7 +298,7 @@ The script run_tests.sh has several options::
         -h|--help         show this help text
         -r|--report       push results to database (false by default)
         -t|--test         run specific set of tests
-          <test_name>     one or more of the following: vping,odl,rally,tempest,vims. Separated by comma.
+          <test_name>     one or more of the following: vping,vping_userdata,odl,rally,tempest,vims,onos,promise. Separated by comma.
 
     examples:
         run_tests.sh
@@ -312,7 +322,67 @@ You may also add you own test by adding a section into the function run_test()
 Automated testing
 =================
 
-As mentioned in `[1]`, the prepare-env.sh and run_test.sh can be executed within the container from jenkins. 2 jobs have been created, one to run all the test and one that allows testing test suite by test suite. You thus just have to launch the acurate jenkins job on the target lab, all the tests shall be automatically run.
+As mentioned in `[1]`, the prepare-env.sh and run_test.sh can be executed within the container from jenkins. 
+2 jobs have been created, one to run all the test and one that allows testing test suite by test suite. 
+You thus just have to launch the acurate jenkins job on the target lab, all the tests shall be automatically run.
+
+When the tests are automatically started from CI, a basic algorithm has been created in order to detect whether the test is runnable or not on the given scenario.
+In fact, one of the most challenging task in Brahmaputra consists in dealing with lots of scenario and installers.
+Functest test suites cannot be systematically run (e.g. run the ODL suite on an ONOS scenario).
+
+CI provides several information:
+
+ * The installer (apex|compass|fuel|joid)
+ * The scenario [controller]-[feature]-[mode] with
+
+   * controller = (odl|onos|ocl]
+   * feature = (ovs(dpdk)|kvm)
+   * mode = (ha|noha)
+
+Constraints per test case are defined in the Functest configuration file /home/opnfv/functest/config/config_functest.yaml::
+
+ test-dependencies:
+    functest:
+        vims:
+        vping:
+        vping_userdata:
+        tempest:
+        rally:
+        odl:
+            scenario: 'odl'
+        onos:
+            scenario: 'onos'
+        ....
+
+At the end of the Functest environment creation (prepare_env.sh see `[1]`_), a file (/home/opnfv/functest/conf/testcase-list.txt) is created with the list of all the runnable tests.
+We consider the static constraints as regex and compare them with the scenario.
+For instance, odl can be run only on scenario including odl in their description.
+
+The order of execution is also described in the Functest configuration file::
+
+ test_exec_priority:
+     1: vping
+     2: vping_userdata
+     3: tempest
+     4: odl
+     5: onos
+     6: ovno
+     #7: doctor
+     8: promise
+     #9: odl-vpn_service-tests
+     #10: opnfv-yardstick-tc026-sdnvpn
+     #11: openstack-neutron-bgpvpn-api-extension-tests
+     12: vims
+     13: rally
+
+The tests are executed as follow:
+ * Basic scenario (vPing, vPing_userdata, Tempest)
+ * Controller suites: ODL or ONOS or OpenContrail
+ * Feature projects
+ * vIMS
+ * Rally (benchmark scenario)
+
+At the end of an automated execution, everything is cleaned, we keep only the users/networks that have been statically declared to let the system as clean as it was just after the fresh installation.
 
 
 ============
@@ -325,7 +395,11 @@ VIM
 vPing
 -----
 
-vPing result is displayed in the console::
+
+vPing_userdata
+--------------
+
+vPing_userdata result is displayed in the console::
 
     2016-01-06 16:06:20,550 - vPing- INFO - Creating neutron network vping-net...
     2016-01-06 16:06:23,867 - vPing- INFO - Flavor found 'm1.small'
@@ -396,8 +470,8 @@ Rally
 Controllers
 ===========
 
-odl
----
+OpenDaylight
+------------
 
 The results of ODL tests can be seen in the console::
 
@@ -447,23 +521,13 @@ The results of ODL tests can be seen in the console::
    :alt: ODL suite result page
 
 
-Known issues
-------------
-
-Tests are expected to fail now:
- * Check port deleted in OpenDaylight
- * Check subnet deleted in OpenDaylight
- * Check Network deleted in OpenDaylight
-
-These failures to delete objects in OpenDaylight (when removed via OpenStack Neutron) are due to the following bug: https://bugs.opendaylight.org/show_bug.cgi?id=3052.
-
-onos
+ONOS
 ----
 
-The ONOS test logs output to OnosSystemTest/TestON/logs with ONOSCI_PATH added,and also can be seen in the console::
+The ONOS test logs can be found in OnosSystemTest/TestON/logs (ONOSCI_PATH to be added),and also can be seen in the console::
 
  ******************************
-  Result summary for Testcase4 
+ Result summary for Testcase4
  ******************************
 
  2016-01-14 05:25:40,529 - FUNCvirNetNBL3 - INFO - ONOS Router Delete test Start
@@ -497,13 +561,13 @@ The ONOS test logs output to OnosSystemTest/TestON/logs with ONOSCI_PATH added,a
 
 
  *****************************
-  Result: Pass 
+  Result: Pass
  *****************************
 
  .......................................................................................
 
  ******************************
-  Result summary for Testcase9 
+  Result summary for Testcase9
  ******************************
  .......................................................................................
 
@@ -516,15 +580,15 @@ The ONOS test logs output to OnosSystemTest/TestON/logs with ONOSCI_PATH added,a
  .......................................................................................
 
  *****************************
-  Result: Failed 
+  Result: Failed
  *****************************
 
-There's a Result summary for each testcase,and a total summary for the whole test file,if any problem occured,ERROR can be seen in the testcase summary and total summary::
+There is a result summary for each testcase, and a global summary for the whole test.
+If any problem occurs during the test, a ERROR message will be provided in the test and the the global summary::
 
  *************************************
          Test Execution Summary
-
- ************************************* 
+ *************************************
 
   Test Start           : 14 Jan 2016 05:25:37
   Test End             : 14 Jan 2016 05:25:41
@@ -537,7 +601,8 @@ There's a Result summary for each testcase,and a total summary for the whole tes
   Success Percentage   : 72%
   Execution Result     : 100%
 
-opencontrail
+
+OpenContrail
 ------------
 
 TODO
@@ -617,9 +682,9 @@ Functest in test Dashboard
 ==========================
 
 The OPNFV testing group created a test collection database to collect the test results from CI.
-Any lab integrated in CI can push the results to this database.
+Any test project running on any lab integrated in CI can push the results to this database.
+This databse can be used afterwards to see the evolution of the tests and compare the results versus the installers, the scenario or the labs.
 
-The idea is to centralize the resultes and create a dashboard to give a high level overview of the test activities.
 You can find more information about the dashboard from Testing Dashboard wiki page `[6]`_.
 
 
@@ -654,15 +719,15 @@ Rally
 Controllers
 ===========
 
-odl
+ODL
 ---
 
 
-onos
+ONOS
 ----
 
 
-opencontrail
+OpenContrail
 ------------
 
 
@@ -683,7 +748,7 @@ References
 .. _`[4]`: http://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
 .. _`[5]`: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/openstack-blueprint.yaml
 .. _`[6]`: https://wiki.opnfv.org/opnfv_test_dashboard
-
+.. _`[7]`:http://testresults.opnfv.org/testapi/test_projects/functest/cases
 
 OPNFV main site: opnfvmain_.
 
