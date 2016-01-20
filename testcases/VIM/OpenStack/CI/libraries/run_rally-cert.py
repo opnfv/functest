@@ -282,20 +282,22 @@ def main():
 
     client_dict['neutron'] = neutron_client
 
-    logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME, GLANCE_IMAGE_PATH))
-    image_id = functest_utils.create_glance_image(glance_client,
-                                            GLANCE_IMAGE_NAME,GLANCE_IMAGE_PATH)
-    if not image_id:
-        logger.error("Failed to create a Glance image...")
-        exit(-1)
-    # Check if the given image exists
-    try:
-        nova_client.images.find(name=GLANCE_IMAGE_NAME)
-        logger.info("Glance image found '%s'" % GLANCE_IMAGE_NAME)
-    except:
-        logger.error("ERROR: Glance image '%s' not found." % GLANCE_IMAGE_NAME)
-        logger.info("Available images are: ")
-        exit(-1)
+    image_id = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+
+    if image_id == '':
+        logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME, \
+                                                           GLANCE_IMAGE_PATH))
+        image_id = functest_utils.create_glance_image(glance_client,\
+                                                GLANCE_IMAGE_NAME,GLANCE_IMAGE_PATH)
+        if not image_id:
+            logger.error("Failed to create the Glance image...")
+            exit(-1)
+        else:
+            logger.debug("Image '%s' with ID '%s' created succesfully ." \
+                         % (GLANCE_IMAGE_NAME, image_id))
+    else:
+        logger.debug("Using existing image '%s' with ID '%s'..." \
+                     % (GLANCE_IMAGE_NAME,image_id))
 
     if args.test_name == "all":
         for test_name in tests:
