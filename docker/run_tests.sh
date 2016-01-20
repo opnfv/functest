@@ -59,6 +59,11 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing2.py \
                 --debug ${report}
         ;;
+        "vping-userdata")
+            info "Running vPing test using userdata/cloudinit.... "
+            python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing.py \
+                --debug ${report}
+        ;;
         "odl")
             info "Running ODL test..."
             neutron_ip=$(keystone catalog --service identity | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")

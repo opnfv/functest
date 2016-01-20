@@ -222,6 +222,9 @@ test-dependencies:
     functest:
         vims:
         vping:
+        vping-userdata:
+            installer: 'fuel'
+            scenario:'(odl)|(nosdn)'
         tempest:
         rally:
         odl:
