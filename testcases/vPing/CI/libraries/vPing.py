@@ -428,6 +428,7 @@ def main():
 
     logger.info("Waiting for ping...")
     sec = 0
+    metadata_tries = 0
     console_log = vm2.get_console_output()
     duration = 0
 
@@ -445,25 +446,37 @@ def main():
             logger.info("vPing duration:'%s'" % duration)
             EXIT_CODE = 0
             break
+        elif "failed to read iid from metadata" in console_log or \
+                metadata_tries > 5:
+            EXIT_CODE = -2
+            break
         elif sec == PING_TIMEOUT:
             logger.info("Timeout reached.")
             break
-        else:
-            logger.debug("No vPing detected...")
+        elif sec % 10 == 0:
+            if "request failed" in console_log:
+                logger.debug("It seems userdata is not supported in nova boot."+\
+                            " Waiting a bit...")
+                metadata_tries += 1
+            else:
+                logger.debug("No ping detected yet...")
         sec += 1
-
-    cleanup(nova_client, neutron_client, image_id, network_dic,
-            port_id1, port_id2)
 
     test_status = "NOK"
     if EXIT_CODE == 0:
         logger.info("vPing OK")
         test_status = "OK"
+    elif EXIT_CODE == -2:
+        logger.info("Userdata is not supported in nova boot. Aborting test...")
     else:
         logger.error("vPing FAILED")
 
+    cleanup(nova_client, neutron_client, image_id, network_dic,
+            port_id1, port_id2)
+
     try:
-        if args.report:
+        if args.report and EXIT_CODE != -2:
+            # Don't report if userdata is not supported
             logger.debug("Push result into DB")
             # TODO check path result for the file
             git_version = functest_utils.get_git_branch(REPO_PATH)
