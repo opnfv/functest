@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_a6d575ba",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-20T10:22:31Z",
+      "side": 1,
+      "message": "include here vping-userdata as well, please",
+      "revId": "7a3fed797dd77c90e4d7415ca61e4d739a458b66",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
