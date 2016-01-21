@@ -143,7 +143,8 @@ function run_test(){
       ;;
         "promise")
             info "Running PROMISE test case..."
-            # TODO
+            python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py --debug all ${report}
+            clean_openstack
         ;;
         "doctor")
             info "Running Doctor test..."
