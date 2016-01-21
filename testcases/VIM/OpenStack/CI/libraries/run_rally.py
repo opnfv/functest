@@ -44,11 +44,17 @@ parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 parser.add_argument("-r", "--report",
                     help="Create json result file",
                     action="store_true")
+parser.add_argument("-v", "--verbose",
+                    help="Print verbose info about the progress",
+                    action="store_true")
 
 args = parser.parse_args()
 
+if args.verbose:
+    RALLY_STDERR = subprocess.STDOUT
+else:
+    RALLY_STDERR = open(os.devnull, 'w')
 
-FNULL = open(os.devnull, 'w')
 """ logging configuration """
 logger = logging.getLogger("run_rally")
 logger.setLevel(logging.DEBUG)
@@ -164,7 +170,7 @@ def run_task(test_name):
         logger.debug('Scenario fetched from : {}'.format(test_file_name))
         cmd_line = "rally task start --abort-on-sla-failure {}".format(test_file_name)
         logger.debug('running command line : {}'.format(cmd_line))
-        p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE, stderr=FNULL, shell=True)
+        p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE, stderr=RALLY_STDERR, shell=True)
         result = ""
         while p.poll() is None:
             l = p.stdout.readline()
