@@ -54,6 +54,7 @@ libxml2-dev \
 libffi-dev \
 crudini \
 ruby1.9.1-dev \
+npm \
 --no-install-recommends
 
 
