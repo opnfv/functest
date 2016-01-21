@@ -145,7 +145,7 @@ function run_test(){
         ;;
         "ovno")
             info "Running OpenContrail test..."
-            # TODO
+            # /home/opnfv/ovno/Testcases/RunTests.sh
         ;;
     esac
 }
