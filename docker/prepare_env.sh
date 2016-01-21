@@ -184,6 +184,11 @@ if [ ${RALLY_COMMIT} != "latest" ]; then
     git reset --hard ${RALLY_COMMIT}
 fi
 
+# IMPORTANT: To be removed when version 0.2.1 is out
+git config --global user.email "functest@opnfv.com"
+git config --global user.name "opnfv/functest"
+git fetch https://review.openstack.org/openstack/rally refs/changes/06/270506/9 && git cherry-pick FETCH_HEAD
+
 
 # Create directories
 mkdir -p ${FUNCTEST_CONF_DIR}
