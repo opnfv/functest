@@ -49,12 +49,19 @@ parser.add_argument("-r", "--report",
 parser.add_argument("-s", "--smoke",
                     help="Smoke test mode",
                     action="store_true")
+parser.add_argument("-v", "--verbose",
+                    help="Print verbose info about the progress",
+                    action="store_true")
 
 args = parser.parse_args()
 
 client_dict = {}
 
-FNULL = open(os.devnull, 'w')
+if args.verbose:
+    RALLY_STDERR = subprocess.STDOUT
+else:
+    RALLY_STDERR = open(os.devnull, 'w')
+
 """ logging configuration """
 logger = logging.getLogger("run_rally")
 logger.setLevel(logging.DEBUG)
@@ -211,7 +218,7 @@ def run_task(test_name):
                "--task-args \"{}\" ".format(build_task_args(test_name))
     logger.debug('running command line : {}'.format(cmd_line))
 
-    p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE, stderr=FNULL, shell=True)
+    p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE, stderr=RALLY_STDERR, shell=True)
     result = ""
     while p.poll() is None:
         l = p.stdout.readline()
