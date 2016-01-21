@@ -150,6 +150,19 @@ ONOS:
         installer_master: '10.20.0.2'
         installer_master_username: 'root'
         installer_master_password: 'r00tme'
+
+promise:
+    general:
+        tenant_name: promise
+        tenant_description: promise Functionality Testing
+        user_name: promiser
+        user_pwd: test
+        image_name: promise-img
+        flavor_name: promise-flavor
+        flavor_vcpus: 1
+        flavor_ram: 512
+        flavor_disk: 0
+
 results:
     test_db_url: http://213.77.62.197
 
@@ -170,7 +183,7 @@ test_exec_priority:
     #11: openstack-neutron-bgpvpn-api-extension-tests
     12: vims
     13: rally
- 
+
 
 ########################################################################
 # This part lists the dependencies of the tests
