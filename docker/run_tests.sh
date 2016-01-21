@@ -145,7 +145,7 @@ function run_test(){
         ;;
         "ovno")
             info "Running OpenContrail test..."
-            # TODO
+            ${FUNCTEST_REPO_DIR}/testcases/Controllers/OCL/CI/RunTests.sh
         ;;
     esac
 }
