@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_6b273e13",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-21T21:02:39Z",
+      "side": 1,
+      "message": "you may directly call you script in your repo. No need to create a file bash script in functest repo that just calls another bash script in your own repo\n\nyour repo is located in /home/opnfv/repos/ovno",
+      "range": {
+        "startLine": 148,
+        "startChar": 14,
+        "endLine": 148,
+        "endChar": 31
+      },
+      "revId": "729d9782dcc0ac34e67fc78aa3e301253de27b8a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_8b1032a9",
+        "filename": "testcases/Controllers/OCL/RunTests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-21T21:02:39Z",
+      "side": 1,
+      "message": "this env var will not be known here\n\nbut within the container, the repos are always at the same place\nyou can replace it with /home/opnfv/repos/ovno\n\nthe ${OVNO_COMMIT} is defined in config_functest.py and available for python files but not bash",
+      "revId": "729d9782dcc0ac34e67fc78aa3e301253de27b8a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
