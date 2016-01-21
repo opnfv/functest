@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_90ebbfaf",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-01-21T15:50:17Z",
+      "side": 1,
+      "message": "As Peter explained this morning, we have to create a flavor with 1 vCPU and 512 MB with 0 disk. \n\nOf course, we could also modify TC-02...\nhttps://github.com/opnfv/promise/blob/master/test/promise-intents.coffee but that would be up to Promise team",
+      "range": {
+        "startLine": 158,
+        "startChar": 14,
+        "endLine": 158,
+        "endChar": 22
+      },
+      "revId": "74fcc34a5c7daa3c2d4b7920ec2b21193c448ce7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_304f73bf",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-01-21T15:50:17Z",
+      "side": 1,
+      "message": "PASSWORD",
+      "range": {
+        "startLine": 172,
+        "startChar": 19,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "74fcc34a5c7daa3c2d4b7920ec2b21193c448ce7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_f07afbef",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-01-21T15:50:17Z",
+      "side": 1,
+      "message": "-s test?",
+      "range": {
+        "startLine": 176,
+        "startChar": 34,
+        "endLine": 176,
+        "endChar": 36
+      },
+      "revId": "74fcc34a5c7daa3c2d4b7920ec2b21193c448ce7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
