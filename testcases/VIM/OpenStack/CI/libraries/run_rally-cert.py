@@ -107,8 +107,6 @@ RESULTS_DIR = functest_yaml.get("general").get("directories"). \
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 FLOATING_NETWORK = functest_yaml.get("general"). \
     get("openstack").get("neutron_public_net_name")
-FLOATING_SUBNET_CIDR = functest_yaml.get("general"). \
-    get("openstack").get("neutron_public_subnet_cidr")
 PRIVATE_NETWORK = functest_yaml.get("general"). \
     get("openstack").get("neutron_private_net_name")
 
@@ -180,7 +178,6 @@ def build_task_args(test_file_name):
     task_args['flavor_name'] = FLAVOR_NAME
     task_args['glance_image_location'] = GLANCE_IMAGE_PATH
     task_args['floating_network'] = FLOATING_NETWORK
-    task_args['floating_subnet_cidr'] = FLOATING_SUBNET_CIDR
     task_args['netid'] = functest_utils.get_network_id(client_dict['neutron'],
                                     PRIVATE_NETWORK).encode('ascii', 'ignore')
     task_args['tmpl_dir'] = TEMPLATE_DIR
