@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_a59efe61",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-01-22T09:51:57Z",
+      "side": 1,
+      "message": "Please also have a look at\nhttps://jira.opnfv.org/plugins/servlet/mobile#issue/FUNCTEST-68",
+      "revId": "170b5e7f1e5b06c6c3ef2e99a1c32f406d7c7341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_e594f645",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-01-22T09:51:57Z",
+      "side": 1,
+      "message": "For manual testing, please use the following command\ncmd \u003d \u0027DEBUG\u003d1 npm run -s test\u0027",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 45
+      },
+      "revId": "170b5e7f1e5b06c6c3ef2e99a1c32f406d7c7341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
