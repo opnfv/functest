@@ -652,9 +652,23 @@ def get_installer_type(logger=None):
     except KeyError:
         if logger:
             logger.error("Impossible to retrieve the installer type")
-        installer = "Unkown"
+        installer = "Unknown_installer"
 
     return installer
+
+
+def get_scenario(logger=None):
+    """
+    Get scenario
+    """
+    try:
+        scenario = os.environ['DEPLOY_SCENARIO']
+    except KeyError:
+        if logger:
+            logger.error("Impossible to retrieve the scenario")
+        scenario = "Unknown_scenario"
+
+    return scenario
 
 
 def get_pod_name(logger=None):
@@ -671,12 +685,12 @@ def get_pod_name(logger=None):
 
 
 def push_results_to_db(db_url, case_name, logger, pod_name,
-                       git_version, payload):
+                       version, payload):
     url = db_url + "/results"
     installer = get_installer_type(logger)
     params = {"project_name": "functest", "case_name": case_name,
               "pod_name": pod_name, "installer": installer,
-              "version": git_version, "details": payload}
+              "version": version, "details": payload}
 
     headers = {'Content-Type': 'application/json'}
     try:

@@ -104,12 +104,12 @@ def push_results_to_db(payload, module, pod_name):
     # TODO move DB creds into config file
     url = TEST_DB + "/results"
     installer = functest_utils.get_installer_type(logger)
-    git_version = functest_utils.get_git_branch(REPO_PATH)
+    scenario = functest_utils.get_scenario(logger)
     logger.info("Pushing results to DB: '%s'." % url)
 
     params = {"project_name": "functest", "case_name": "Tempest",
               "pod_name": str(pod_name), 'installer': installer,
-              "version": git_version, 'details': payload}
+              "version": scenario, 'details': payload}
     headers = {'Content-Type': 'application/json'}
 
     r = requests.post(url, data=json.dumps(params), headers=headers)
