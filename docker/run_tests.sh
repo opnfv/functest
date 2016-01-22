@@ -21,6 +21,7 @@ usage:
 where:
     -h|--help         show this help text
     -r|--report       push results to database (false by default)
+    -n|--no-clean     do not clean OpenStack resources after test run
     -t|--test         run specific set of tests
       <test_name>     one or more of the following: vping,odl,rally,tempest,vims,onos,promise,ovno. Separated by comma.
 
@@ -35,15 +36,18 @@ examples:
 # NOTE: Still not 100% working when running the tests
 offline=false
 report=""
+clean=true
 # Get the list of runnable tests
 # Check if we are in CI mode
 
 
 function clean_openstack(){
-    echo -e "\n\nCleaning Openstack environment..."
-    python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py \
-        --debug
-    echo -e "\n\n"
+    if [ $clean == true ]; then
+        echo -e "\n\nCleaning Openstack environment..."
+        python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py \
+            --debug
+        echo -e "\n\n"
+    fi
 }
 
 function run_test(){
@@ -168,6 +172,9 @@ while [[ $# > 0 ]]
         ;;
         -r|--report)
             report="-r"
+        ;;
+        -n|--no-clean)
+            clean=false
         ;;
         -t|--test|--tests)
             TEST="$2"
