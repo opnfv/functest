@@ -15,7 +15,6 @@
           public_net: {{ floating_network }}
           image: {{ image_name }}
           flavor: {{ flavor_name }}
-          cidr: {{ floating_subnet_cidr }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
