@@ -95,8 +95,7 @@ def GetResult():
     return payload
 
 def SetOnosIp():
-    onoscreds = ONOS_CONF_DIR + "/openstack.creds"
-    cmd = "cat " + onoscreds + " | grep OS_AUTH_URL"
+    cmd = "keystone catalog --service network | grep publicURL"
     cmd_output = os.popen(cmd).read()
     print cmd_output
     OC1=re.search(r"\d+\.\d+\.\d+\.\d+",cmd_output).group()
