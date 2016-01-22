@@ -508,11 +508,11 @@ def main():
         if args.report:
             logger.debug("Push result into DB")
             # TODO check path result for the file
-            git_version = functest_utils.get_git_branch(REPO_PATH)
+            scenario = functest_utils.get_scenario(logger)
             pod_name = functest_utils.get_pod_name(logger)
             functest_utils.push_results_to_db(TEST_DB,
                                               "vPing",
-                                              logger, pod_name, git_version,
+                                              logger, pod_name, scenario,
                                               payload={'timestart': start_time_ts,
                                                        'duration': duration,
                                                        'status': test_status})
