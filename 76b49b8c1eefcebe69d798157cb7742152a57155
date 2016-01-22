@@ -22,6 +22,24 @@
       "revId": "76b49b8c1eefcebe69d798157cb7742152a57155",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_a576fe04",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-22T12:03:58Z",
+      "side": 1,
+      "message": "What do you mean?",
+      "parentUuid": "5a4e6583_058832e6",
+      "revId": "76b49b8c1eefcebe69d798157cb7742152a57155",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
