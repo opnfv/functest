@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a4e6583_85d782ed",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-22T10:25:07Z",
+      "side": 1,
+      "message": "I will add it in config_functest.py",
+      "parentUuid": "5a4e6583_a59efe61",
+      "revId": "170b5e7f1e5b06c6c3ef2e99a1c32f406d7c7341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e6583_e594f645",
         "filename": "testcases/features/promise.py",
         "patchSetId": 5
@@ -36,6 +54,24 @@
         "endLine": 182,
         "endChar": 45
       },
+      "revId": "170b5e7f1e5b06c6c3ef2e99a1c32f406d7c7341",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_6504867e",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-22T10:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a4e6583_e594f645",
       "revId": "170b5e7f1e5b06c6c3ef2e99a1c32f406d7c7341",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
