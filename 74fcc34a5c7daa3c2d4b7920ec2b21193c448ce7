@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "5a4e6583_25a56e04",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-22T08:34:08Z",
+      "side": 1,
+      "message": "Ok. Openstack already provides default flavors\n\nhttp://docs.openstack.org/openstack-ops/content/flavors.html\n\nBut, even m1.tiny has 1G disk. I will create a flavor without disk for this test.",
+      "parentUuid": "9a5c5d37_90ebbfaf",
+      "revId": "74fcc34a5c7daa3c2d4b7920ec2b21193c448ce7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5c5d37_304f73bf",
         "filename": "testcases/features/promise.py",
         "patchSetId": 3
@@ -48,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5a4e6583_659b66ca",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-22T08:34:08Z",
+      "side": 1,
+      "message": "Typo... thanks. I\u0027ll correct it",
+      "parentUuid": "9a5c5d37_304f73bf",
+      "revId": "74fcc34a5c7daa3c2d4b7920ec2b21193c448ce7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5c5d37_f07afbef",
         "filename": "testcases/features/promise.py",
         "patchSetId": 3
@@ -65,6 +101,24 @@
         "endLine": 176,
         "endChar": 36
       },
+      "revId": "74fcc34a5c7daa3c2d4b7920ec2b21193c448ce7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_45a06af4",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-22T08:34:08Z",
+      "side": 1,
+      "message": "Sure. I missed it. Should I also include debug flag or export DEBUG\u003d1 ?",
+      "parentUuid": "9a5c5d37_f07afbef",
       "revId": "74fcc34a5c7daa3c2d4b7920ec2b21193c448ce7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
