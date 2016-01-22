@@ -192,7 +192,6 @@ done
 tests_file="/home/opnfv/functest/conf/testcase-list.txt"
 if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]] &&\
    [[ -f $tests_file ]]; then
-    echo "testcase-list.txt content:";cat $test_file; echo ""
     arr_test=($(cat $tests_file))
 else
     arr_test=(vping tempest vims rally)
