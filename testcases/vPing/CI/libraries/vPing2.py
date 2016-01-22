@@ -13,16 +13,17 @@
 # 0.2: measure test duration and publish results under json format
 #
 #
-
-import os
-import time
 import argparse
-import pprint
-import sys
-import logging
-import yaml
 import datetime
+import logging
+import os
+import paramiko
+import pprint
 import subprocess
+import sys
+import time
+import yaml
+from scp import SCPClient
 from novaclient import client as novaclient
 from neutronclient.v2_0 import client as neutronclient
 from keystoneclient.v2_0 import client as keystoneclient
@@ -431,51 +432,81 @@ def main():
     floatip = functest_utils.create_floating_ip(neutron_client)
     if floatip == None:
         logger.error("Cannot create floating IP.")
+        cleanup(nova_client, neutron_client, image_id, network_dic,
+            port_id1, port_id2)
         return (EXIT_CODE)
     logger.info("Floating IP created: '%s'" % floatip)
 
     logger.info("Associating floating ip: '%s' to VM2 " % floatip)
     if not functest_utils.add_floating_ip(nova_client, vm2.id, floatip):
         logger.error("Cannot associate floating IP to VM.")
+        cleanup(nova_client, neutron_client, image_id, network_dic,
+            port_id1, port_id2)
         return (EXIT_CODE)
 
-    timeout = 30
+    logger.info("Trying to stablish SSH connection to %s..." % floatip)
+    username='cirros'
+    password='cubswin:)'
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    timeout = 50
     while timeout > 0:
-        response = os.system("ping -c 1 " + floatip)
-        if response == 0:
-            logger.debug("Floating IP '%s' is reachable!" % floatip)
-            time.sleep(5) # the VM still needs to do some bootup actions
+        try:
+            ssh.connect(floatip, username=username, password=password)
+            logger.debug("Floating IP '%s' is ssh-able!" % floatip)
             break
-        timeout -= 1
-        time.sleep(2)
+        except Exception, e:
+            p#rint e
+            logger.debug("Waiting for %s..." % floatip)
+            time.sleep(6)
+            timeout -= 1
 
-    if timeout == 0:
+    if timeout == 0: # 300 sec timeout (5 min)
         logger.error("Cannot ping the floating IP '%s'." % floatip)
+        cleanup(nova_client, neutron_client, image_id, network_dic,
+            port_id1, port_id2)
         return (EXIT_CODE)
 
-    logger.info("SCP ping script to VM2...")
-    SSH_OPTS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "+\
-        "-o LogLevel=quiet"
+    scp = SCPClient(ssh.get_transport())
+
     ping_script = REPO_PATH + "testcases/vPing/CI/libraries/ping.sh"
-    cmd1 = "sshpass -p 'cubswin:)' scp " + SSH_OPTS + " " + \
-        ping_script + " cirros@"+floatip+":~/ping.sh"
-    cmd2 = "sshpass -p 'cubswin:)' ssh " + SSH_OPTS + \
-        " cirros@"+floatip+" 'chmod 755 ~/ping.sh '"
-    cmd3 = "sshpass -p 'cubswin:)' ssh " + SSH_OPTS + \
-        " cirros@"+floatip+" '~/ping.sh "+IP_1+"'"
+    try:
+        scp.put(ping_script,"~/")
+    except Exception, e:
+        logger.error("Cannot SCP the file '%s' to VM '%s'" % (ping_script,floatip))
+
+
+    #SSH_OPTS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "+\
+    #    "-o LogLevel=quiet"
+
+    #cmd1 = "sshpass -p 'cubswin:)' scp " + SSH_OPTS + " " + \
+    #    ping_script + " cirros@"+floatip+":~/ping.sh"
+    #cmd2 = "sshpass -p 'cubswin:)' ssh " + SSH_OPTS + \
+    #    " cirros@"+floatip+" 'chmod 755 ~/ping.sh '"
+    #cmd3 = "sshpass -p 'cubswin:)' ssh " + SSH_OPTS + \
+    #    " cirros@"+floatip+" '~/ping.sh "+IP_1+"'"
+
+    cmd = 'chmod 755 ~/ping.sh'
+    (stdin, stdout, stderr) = ssh.exec_command(cmd)
+    for line in stdout.readlines():
+        print line
 
     logger.info("Waiting for ping...")
     sec = 0
     duration = 0
 
+    cmd = '~/ping.sh' + IP_1
     while True:
         time.sleep(1)
         # we do the SCP every time in the loop because while testing, I observed
         # that for some strange reason, the cirros VM was deleting the file if
         # do the scp only once
-        subprocess.Popen(cmd1, shell=True, stdout=subprocess.PIPE).stdout.read()
-        subprocess.Popen(cmd2, shell=True, stdout=subprocess.PIPE).stdout.read()
-        output=subprocess.Popen(cmd3, shell=True, stdout=subprocess.PIPE).stdout.read()
+        (stdin, stdout, stderr) = ssh.exec_command(cmd)
+        output = stdout.readlines()
+        for line in output:
+            print line
+
         # print "--"+console_log
         # report if the test is failed
         if "vPing OK" in output:
