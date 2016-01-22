@@ -33,6 +33,24 @@
       "revId": "b14970ead3059449be8f168c65e04f50b6ac0708",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_c591fa53",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-22T09:51:26Z",
+      "side": 1,
+      "message": "Also, within your RunTests.sh you are declaring this:\nPATH\u003d/home/opnfv/ovno/Testcases:$PATH\ncd /home/opnfv/ovno/Testcases\n\nplease change that too :)",
+      "parentUuid": "5a4e6583_a58f1e75",
+      "revId": "b14970ead3059449be8f168c65e04f50b6ac0708",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
