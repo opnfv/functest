@@ -287,23 +287,26 @@ The script run_tests.sh has several options::
     where:
         -h|--help         show this help text
         -r|--report       push results to database (false by default)
+        -n|--no-clean     do not clean up OpenStack resources after test run
         -t|--test         run specific set of tests
           <test_name>     one or more of the following: vping,odl,rally,tempest,vims. Separated by comma.
 
     examples:
         run_tests.sh
         run_tests.sh --test vping,odl
-        run_tests.sh -t tempest,rally
+        run_tests.sh -t tempest,rally --no-clean
 
 The -o option can be used to run the container offline (in case you are in a summit where there is no Internet connection...). It is an experimental option.
 
 The -r option is used by the Continuous Integration in order to push the test results into a test collection database, see in next section for details. In manual mode, you must not use it, your try will be anyway probably rejected as your POD must be declared in the database to collect the data.
 
+The -n option is used for preserving all the existing OpenStack resources after execution test cases. 
+
 The -t option can be used to specify the list of test you want to launch, by default Functest will try to launch all its test suites in the following order vPing, odl, Tempest, vIMS, Rally. You may launch only one single test by using -t <the test you want to launch>
 
 Within Tempest test suite you can define which test cases you want to execute in your environment by editing test_list.txt file before executing run_tests.sh script.
 
-Please note that Functest includes cleaning mechanism in order to remove everything except what was present after a fresh install. If you create your own VMs, tenants, networks etc. and then launch Functest, they all will be deleted after executing the tests. Be carefull or comment the cleaning phase in run_test.sh (comment call to clean_openstack.py). However, be aware that Tempest and Rally create of lot of resources (users, tenants, networks, volumes etc.) that are not always properly cleaned, so this cleaning function has been set to keep the system as clean as possible after a full Functest run.
+Please note that Functest includes cleaning mechanism in order to remove everything except what was present after a fresh install. If you create your own VMs, tenants, networks etc. and then launch Functest, they all will be deleted after executing the tests. Use --no-clean option with run_test.sh in order to preserve all the existing resources. However, be aware that Tempest and Rally create of lot of resources (users, tenants, networks, volumes etc.) that are not always properly cleaned, so this cleaning function has been set to keep the system as clean as possible after a full Functest run.
 
 You may also add you own test by adding a section into the function run_test()
 
