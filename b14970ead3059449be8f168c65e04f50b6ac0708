@@ -16,6 +16,23 @@
       "revId": "b14970ead3059449be8f168c65e04f50b6ac0708",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_a58f1e75",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-22T08:47:29Z",
+      "side": 1,
+      "message": "That should point to the OVNO repository, which is in   /home/opnfv/repos/ovno/\n\nAnd we have a env variable, just change that line by:\n\n${repos_dir}/ovno/Testcases/RunTests.sh\n\nAnd remove the comment (#) if RunTests.sh script is ready to be executed.",
+      "revId": "b14970ead3059449be8f168c65e04f50b6ac0708",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
