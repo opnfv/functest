@@ -86,10 +86,12 @@ function run_test(){
             ODL_PORT=$odl_port ODL_IP=$odl_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$password \
                 ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
 
-            # save ODL results
-            odl_logs="${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/logs"
-            if [ -d ${odl_logs} ]; then
-                cp -Rf  ${odl_logs} ${FUNCTEST_CONF_DIR}/ODL/
+            # push results to the DB in case of CI
+            if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]]; then
+                odl_logs="/home/opnfv/functest/results/odl/logs/2"
+                odl_path="${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI"
+                node_name=$(env | grep NODE_NAME | cut -f2 -d'=')
+                python ${odl_path}/odlreport2db.py -x ${odl_logs}/output.xml -i ${INSTALLER_TYPE} -p ${node_name} -s ${DEPLOY_SCENARIO}
             fi
         ;;
         "tempest")
