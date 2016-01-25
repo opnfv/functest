@@ -124,11 +124,21 @@ def action_start():
         script += 'rvm use 1.9.3;'
         script += 'bundle install'
 
+        logger_debug = None
+        CI_DEBUG = os.environ.get("CI_DEBUG")
+        if CI_DEBUG == "true" or CI_DEBUG == "True":
+            logger_debug = logger
+
         cmd = "/bin/bash -c '" + script + "'"
-        if os.environ.get("CI_DEBUG") == "false":
-            functest_utils.execute_command(cmd)
-        else:
-            functest_utils.execute_command(cmd,logger)
+        functest_utils.execute_command(cmd, logger = logger_debug, exit_on_error=False)
+
+
+        logger.info("Installing dependencies for Promise testcase...")
+        cmd = 'npm install -g yangforge'
+        functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
+
+        cmd = 'npm install'
+        functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
 
         # Create result folder under functest if necessary
         if not os.path.exists(RALLY_RESULT_DIR):

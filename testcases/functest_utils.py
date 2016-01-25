@@ -88,6 +88,12 @@ def get_instance_by_name(nova_client, instance_name):
     except:
         return None
 
+def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
+    try:
+        flavor = nova_client.flavors.create(flavor_name,ram,vcpus,disk)
+    except:
+        return None
+    return flavor.id
 
 def get_flavor_id(nova_client, flavor_name):
     flavors = nova_client.flavors.list(detailed=True)
