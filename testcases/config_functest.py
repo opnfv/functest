@@ -37,11 +37,12 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-REPO_PATH=os.environ['repos_dir']+'/functest/'
-if not os.path.exists(REPO_PATH):
-    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
+REPOS_DIR=os.environ['repos_dir']
+FUNCTEST_REPO=REPOS_DIR+'/functest/'
+if not os.path.exists(FUNCTEST_REPO):
+    logger.error("Functest repository directory not found '%s'" % FUNCTEST_REPO)
     exit(-1)
-sys.path.append(REPO_PATH + "testcases/")
+sys.path.append(FUNCTEST_REPO + "testcases/")
 
 with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
@@ -50,13 +51,13 @@ f.close()
 
 """ global variables """
 # Directories
-RALLY_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_rally")
+RALLY_DIR = FUNCTEST_REPO + functest_yaml.get("general").get("directories").get("dir_rally")
 RALLY_REPO_DIR = functest_yaml.get("general").get("directories").get("dir_repo_rally")
 RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("dir_rally_inst")
 RALLY_RESULT_DIR = functest_yaml.get("general").get("directories").get("dir_rally_res")
-VPING_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_vping")
+VPING_DIR = FUNCTEST_REPO + functest_yaml.get("general").get("directories").get("dir_vping")
 VIMS_TEST_DIR = functest_yaml.get("general").get("directories").get("dir_repo_vims_test")
-ODL_DIR = REPO_PATH + functest_yaml.get("general").get("directories").get("dir_odl")
+ODL_DIR = FUNCTEST_REPO + functest_yaml.get("general").get("directories").get("dir_odl")
 DATA_DIR = functest_yaml.get("general").get("directories").get("dir_functest_data")
 
 # Tempest/Rally configuration details
@@ -137,6 +138,7 @@ def action_start():
         cmd = 'npm install -g yangforge'
         functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
 
+        shutil.copy2(REPOS_DIR+'/promise/package.json',FUNCTEST_REPO+'/testcases/features/package.json')
         cmd = 'npm install'
         functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
 
@@ -220,7 +222,7 @@ def action_clean():
         shutil.rmtree(RALLY_RESULT_DIR,ignore_errors=True)
 
     logger.debug("Cleaning up the OpenStack deployment...")
-    cmd='python ' + REPO_PATH + \
+    cmd='python ' + FUNCTEST_REPO + \
         '/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py --debug'
     functest_utils.execute_command(cmd,logger)
     logger.info("Functest environment clean!")
