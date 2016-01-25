@@ -179,7 +179,7 @@ def test_clearwater():
                 logger.debug("Pushing results to DB....")
                 git_version = functest_utils.get_git_branch(REPO_PATH)
                 functest_utils.push_results_to_db(db_url=TEST_DB, case_name="vIMS",
-                                                  logger=logger, pod_name=functest_utils.get_pod_name(logger), git_version=git_version,
+                                                  logger=logger, pod_name=functest_utils.get_pod_name(logger), version=git_version,
                                                   payload={'orchestrator': {'duration': CFY_DEPLOYMENT_DURATION,
                                                                             'result': ""},
                                                            'vIMS': {'duration': CW_DEPLOYMENT_DURATION,
