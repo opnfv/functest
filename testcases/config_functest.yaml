@@ -151,7 +151,7 @@ ONOS:
         installer_master_username: 'root'
         installer_master_password: 'r00tme'
 results:
-    test_db_url: http://213.77.62.197
+    test_db_url: http://testresults.opnfv.org/testapi
 
 # to be maintained...
 # the execution order is important as some tests may be more destructive than others
