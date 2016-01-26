@@ -43,6 +43,24 @@
     },
     {
       "key": {
+        "uuid": "5a4e6583_3a6ea5ca",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-01-26T10:58:40Z",
+      "side": 1,
+      "message": "As already explained, sudo apt-get install -y nodejs will install nodejs and npm",
+      "parentUuid": "5a4e6583_ba4a9553",
+      "revId": "8ed05442f4101e7679930755062724b60e2ad08a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e6583_3a57c504",
         "filename": "testcases/config_functest.py",
         "patchSetId": 4
