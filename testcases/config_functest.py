@@ -132,16 +132,9 @@ def action_start():
 
         cmd = "/bin/bash -c '" + script + "'"
         functest_utils.execute_command(cmd, logger = logger_debug, exit_on_error=False)
-
-
-        logger.info("Installing dependencies for Promise testcase...")
-        cmd = 'npm install -g yangforge'
-        functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
-
-        shutil.copy2(REPOS_DIR+'/promise/package.json',FUNCTEST_REPO+'/testcases/features/package.json')
-        cmd = 'npm install'
-        functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
-
+        
+        install_promise(logger_debug)
+        
         # Create result folder under functest if necessary
         if not os.path.exists(RALLY_RESULT_DIR):
             os.makedirs(RALLY_RESULT_DIR)
@@ -260,6 +253,25 @@ def install_rally():
         functest_utils.execute_command(cmd,logger)
 
     return True
+
+def install_promise(logger_debug):
+    logger.info("Installing dependencies for Promise testcase...")
+    cmd = 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -'
+    unctest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
+
+    cmd = 'apt-get install -y nodejs'
+    unctest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
+
+    cmd = 'npm install -g yangforge'
+    functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
+
+    cmd = 'sudo npm -g install npm@latest'
+    unctest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
+
+    shutil.copy2(REPOS_DIR+'/promise/package.json',FUNCTEST_REPO+'/testcases/features/package.json')
+    cmd = 'npm install'
+    functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
+
 
 
 def check_rally():
