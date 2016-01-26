@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_5a4f2193",
+        "filename": "testcases/vPing/CI/libraries/vPing2.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-26T15:40:30Z",
+      "side": 1,
+      "message": "establish",
+      "range": {
+        "startLine": 465,
+        "startChar": 28,
+        "endLine": 465,
+        "endChar": 29
+      },
+      "revId": "f449a1fcbfcba4d7b30d278837ec9bc2123a34e8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
