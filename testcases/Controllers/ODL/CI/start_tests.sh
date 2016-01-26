@@ -51,6 +51,7 @@ ODL_PORT=${ODL_PORT:-8081}
 USR_NAME=${USR_NAME:-'neutron'}
 PASS=${PASS:-'octopus'}
 NEUTRON_IP=${NEUTRON_IP:-192.168.0.68}
+KEYSTONE_IP=${NEUTRON_IP:-192.168.0.69}
 set +x
 
 init_file=${REPO_DIR}/test/csit/suites/openstack/neutron/__init__.robot
@@ -80,7 +81,7 @@ do
 
     ((test_num++))
     echo -e "${light_green}Starting test: $line ${nc}"
-    pybot -v OPENSTACK:${NEUTRON_IP} -v PORT:${ODL_PORT} -v CONTROLLER:${ODL_IP} ${REPO_DIR}/$line
+    pybot -v OPENSTACK:${KEYSTONE_IP} -v NEUTRON:${NEUTRON_IP} -v PORT:${ODL_PORT} -v CONTROLLER:${ODL_IP} ${REPO_DIR}/$line
     mkdir -p $RESULTS_DIR/logs/${test_num}
     mv log.html $RESULTS_DIR/logs/${test_num}/
     mv report.html $RESULTS_DIR/logs/${test_num}/
