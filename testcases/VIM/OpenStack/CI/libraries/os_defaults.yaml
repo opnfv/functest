@@ -1,10 +1,10 @@
 fuel:
     images: ['TestVM']
-    networks: ['net04', 'net04_ext', 'admin_floating']
+    networks: ['net04', 'net04_ext', 'admin_floating_net', 'admin_internal_net']
     routers: ['router04']
     security_groups: ['default']
     tenants: ['admin', 'services']
-    users: ['heat', 'heat-cfn', 'cinder', 'nova', 'swift', 'glance', 'neutron', 'admin', 'fuel_stats_user']
+    users: ['heat', 'heat-cfn', 'cinder', 'nova', 'swift', 'glance', 'neutron', 'admin', 'fuel_stats_user', 'ceilometer']
 apex:
     images: []
     networks: ['internal', 'external']
