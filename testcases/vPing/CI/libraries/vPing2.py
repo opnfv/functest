@@ -415,7 +415,6 @@ def main():
         name=NAME_VM_2,
         flavor=flavor,
         image=image,
-        # nics = [{"net-id": network_id, "v4-fixed-ip": IP_2}],
         nics=[{"port-id": port_id2}]
     )
 
@@ -522,7 +521,7 @@ def main():
             logger.info("Timeout reached.")
             break
         else:
-            logger.debug("No vPing detected...")
+            logger.debug("Pinging %s. Waiting for response..." % IP_2)
         sec += 1
 
     cleanup(nova_client, neutron_client, image_id, network_dic,
