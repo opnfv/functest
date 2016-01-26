@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_da92f19e",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-01-26T11:15:14Z",
+      "side": 1,
+      "message": "One more thing: We should not copy package.json. npm install cmd shall be executed in dir_repo_promise",
+      "range": {
+        "startLine": 268,
+        "startChar": 4,
+        "endLine": 270,
+        "endChar": 82
+      },
+      "revId": "8adfdc6c2e91aa0fc024d9ad86b22b5f075098fd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
