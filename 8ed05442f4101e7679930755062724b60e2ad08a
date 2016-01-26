@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "5a4e6583_ba4a9553",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-26T10:55:25Z",
+      "side": 1,
+      "message": "But then, the npm commands in the install_promise() function will fail, right?",
+      "parentUuid": "5a4e6583_7a4d3d72",
+      "revId": "8ed05442f4101e7679930755062724b60e2ad08a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e6583_3a57c504",
         "filename": "testcases/config_functest.py",
         "patchSetId": 4
@@ -48,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5a4e6583_9a47d94b",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-26T10:55:25Z",
+      "side": 1,
+      "message": "ok. I\u0027ll add sudo.",
+      "parentUuid": "5a4e6583_3a57c504",
+      "revId": "8ed05442f4101e7679930755062724b60e2ad08a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e6583_5a528114",
         "filename": "testcases/config_functest.py",
         "patchSetId": 4
@@ -65,6 +101,24 @@
         "endLine": 266,
         "endChar": 82
       },
+      "revId": "8ed05442f4101e7679930755062724b60e2ad08a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_7a741d9c",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-26T10:55:25Z",
+      "side": 1,
+      "message": "Ok. To be removed.",
+      "parentUuid": "5a4e6583_5a528114",
       "revId": "8ed05442f4101e7679930755062724b60e2ad08a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
