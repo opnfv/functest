@@ -178,8 +178,8 @@ test_exec_priority:
     6: ovno
     #7: doctor
     8: promise
-    #9: odl-vpn_service-tests
-    #10: opnfv-yardstick-tc026-sdnvpn
+    9: odl-vpnservice
+    10: bgpvpn
     #11: openstack-neutron-bgpvpn-api-extension-tests
     12: vims
     13: rally
