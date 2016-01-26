@@ -165,7 +165,7 @@ test/csit/suites/vpnservice
       ;;
         "promise")
             info "Running PROMISE test case..."
-            python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py --debug all ${report}
+            python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py --debug ${report}
             clean_openstack
         ;;
         "doctor")
