@@ -53,14 +53,15 @@ PASS=${PASS:-'octopus'}
 NEUTRON_IP=${NEUTRON_IP:-192.168.0.68}
 set +x
 
-
+init_file=${REPO_DIR}/test/csit/suites/openstack/neutron/__init__.robot
 # Change openstack password for admin tenant in neutron suite
-sed -i "s/\"password\": \".*\"/\"password\": \"${PASS}\"/" ${REPO_DIR}/test/csit/suites/openstack/neutron/__init__.robot
+sed -i "s/\"password\": \".*\"/\"password\": \"${PASS}\"/" $init_file
 
 # Add Start Suite and Teardown Suite
-sed -i "/^Documentation.*/a Suite Teardown     Stop Suite" ${REPO_DIR}/test/csit/suites/openstack/neutron/__init__.robot
-sed -i "/^Documentation.*/a Suite Setup        Start Suite" ${REPO_DIR}/test/csit/suites/openstack/neutron/__init__.robot
-
+if [[ ! `grep 'Suite Teardown' ${init_file}` ]]; then
+    sed -i "/^Documentation.*/a Suite Teardown     Stop Suite" $init_file
+    sed -i "/^Documentation.*/a Suite Setup        Start Suite" $init_file
+fi
 
 # add custom tests to suite, if there are more custom tests needed this will be reworked
 echo -e "${green}Copy custom tests to suite.${nc}"
