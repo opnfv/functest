@@ -496,7 +496,7 @@ def main():
     sec = 0
     duration = 0
 
-    cmd = '~/ping.sh' + IP_1
+    cmd = '~/ping.sh ' + IP_1
     while True:
         time.sleep(1)
         # we do the SCP every time in the loop because while testing, I observed
