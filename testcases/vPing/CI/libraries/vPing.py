@@ -412,7 +412,6 @@ def main():
         name=NAME_VM_2,
         flavor=flavor,
         image=image,
-        # nics = [{"net-id": network_id, "v4-fixed-ip": IP_2}],
         nics=[{"port-id": port_id2}],
         userdata=u
     )
@@ -459,7 +458,7 @@ def main():
                             " Waiting a bit...")
                 metadata_tries += 1
             else:
-                logger.debug("No ping detected yet...")
+                logger.debug("Pinging %s. Waiting for response..." % IP_2)
         sec += 1
 
     test_status = "NOK"
