@@ -51,6 +51,9 @@ RALLY_REPO_DIR=$(cat $config_file | grep -w dir_repo_rally | awk 'END {print $NF
 RELENG_REPO_DIR=$(cat $config_file | grep -w dir_repo_releng | awk 'END {print $NF}')
 VIMS_REPO_DIR=$(cat $config_file | grep -w dir_repo_vims_test | awk 'END {print $NF}')
 BGPVPN_REPO_DIR=$(cat $config_file | grep -w dir_repo_bgpvpn | awk 'END {print $NF}')
+ONOS_REPO_DIR=$(cat $config_file | grep -w dir_repo_onos | awk 'END {print $NF}')
+PROMISE_REPO_DIR=$(cat $config_file | grep -w dir_repo_promise | awk 'END {print $NF}')
+OVNO_REPO_DIR=$(cat $config_file | grep -w dir_repo_ovno | awk 'END {print $NF}')
 
 FUNCTEST_DIR=$(cat $config_file | grep -w dir_functest | awk 'END {print $NF}')
 FUNCTEST_RESULTS_DIR=$(cat $config_file | grep -w dir_results | awk 'END {print $NF}')
