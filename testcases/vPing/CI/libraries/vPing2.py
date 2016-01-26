@@ -449,16 +449,16 @@ def main():
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-    timeout = 50
+    timeout = 20
     while timeout > 0:
         try:
-            ssh.connect(floatip, username=username, password=password)
-            logger.debug("Floating IP '%s' is ssh-able!" % floatip)
+            ssh.connect(floatip, username=username, password=password, timeout=10)
+            logger.debug("SSH connection stablished to %s." % floatip)
             break
         except Exception, e:
             #print e
             logger.debug("Waiting for %s..." % floatip)
-            time.sleep(6)
+            time.sleep(2)
             timeout -= 1
 
     if timeout == 0: # 300 sec timeout (5 min)
