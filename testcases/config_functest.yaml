@@ -234,8 +234,10 @@ test-dependencies:
         installer: '(apex)|(fuel)'
     functest:
         vims:
+            scenario: '(ocl)|(odl)|(nosdn)'
         vping:
         vping_userdata:
+            scenario: '(ocl)|(odl)|(nosdn)'
         tempest:
         rally:
         odl:
