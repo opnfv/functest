@@ -51,7 +51,9 @@ function clean_openstack(){
 }
 
 function odl_tests(){
-    neutron_ip=$(keystone catalog --service identity | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+    keystone_ip=$(keystone catalog --service identity | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+    # historically most of the installers use the same IP for neutron and keystone API
+    neutron_ip=keystone_ip
     odl_ip=$(keystone catalog --service network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
     usr_name=$(env | grep OS | grep OS_USERNAME | cut -f2 -d'=')
     password=$(env | grep OS | grep OS_PASSWORD | cut -f2 -d'=')
@@ -61,6 +63,9 @@ function odl_tests(){
     elif [ $INSTALLER_TYPE == "apex" ]; then
         :
     elif [ $INSTALLER_TYPE == "joid" ]; then
+        odl_ip=$(env | grep ODL_CONTROLLER | cut -f2 -d'=')
+        neutron_ip=$(keystone catalog --service network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+        odl_port=8080
         :
     elif [ $INSTALLER_TYPE == "compass" ]; then
         :
@@ -90,7 +95,7 @@ function run_test(){
         "odl")
             info "Running ODL test..."
             odl_tests
-            ODL_PORT=$odl_port ODL_IP=$odl_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$password \
+            ODL_PORT=$odl_port ODL_IP=$odl_ip KEYSTONE_IP=$keystone_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$password \
                 ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
 
             # push results to the DB in case of CI

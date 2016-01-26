@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation     Checking Port deleted in OpenStack are deleted also in OpenDaylight
-Suite Setup	  Create Session    OSSession     http://${OPENSTACK}:9696    headers=${X-AUTH}
+Suite Setup	  Create Session    OSSession     http://${NEUTRON}:9696    headers=${X-AUTH}
 Suite Teardown    Delete All Sessions
 Library           SSHLibrary
 Library           Collections
