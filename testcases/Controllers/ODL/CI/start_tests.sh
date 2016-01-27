@@ -51,7 +51,7 @@ ODL_PORT=${ODL_PORT:-8081}
 USR_NAME=${USR_NAME:-'neutron'}
 PASS=${PASS:-'octopus'}
 NEUTRON_IP=${NEUTRON_IP:-192.168.0.68}
-KEYSTONE_IP=${NEUTRON_IP:-192.168.0.69}
+KEYSTONE_IP=${KEYSTONE_IP:-192.168.0.69}
 set +x
 
 init_file=${REPO_DIR}/test/csit/suites/openstack/neutron/__init__.robot
