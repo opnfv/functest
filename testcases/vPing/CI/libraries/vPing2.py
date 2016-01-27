@@ -57,6 +57,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s'
 
 ch.setFormatter(formatter)
 logger.addHandler(ch)
+paramiko.util.log_to_file("/var/log/paramiko.log")
 
 REPO_PATH = os.environ['repos_dir']+'/functest/'
 if not os.path.exists(REPO_PATH):
