@@ -510,7 +510,7 @@ def main():
         # print "--"+console_log
         # report if the test is failed
         for line in output:
-            if "vPing OK" in output:
+            if "vPing OK" in line:
                 logger.info("vPing detected!")
 
                 # we consider start time at VM1 booting
