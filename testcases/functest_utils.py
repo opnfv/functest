@@ -88,8 +88,8 @@ def get_instance_status(nova_client, instance):
         instance = nova_client.servers.get(instance.id)
         return instance.status
     except Exception, e:
-        print "Error [get_instance_status(nova_client, instance)]:" % \
-                                                        str(instance), e
+        print "Error [get_instance_status(nova_client, '%s')]:" % \
+            str(instance), e
         return None
 
 
@@ -98,7 +98,8 @@ def get_instance_by_name(nova_client, instance_name):
         instance = nova_client.servers.find(name=instance_name)
         return instance
     except Exception, e:
-        print "Error [get_instance_by_name(nova_client, '%s')]:" %instance_name, e
+        print "Error [get_instance_by_name(nova_client, '%s')]:" % \
+            instance_name, e
         return None
 
 
