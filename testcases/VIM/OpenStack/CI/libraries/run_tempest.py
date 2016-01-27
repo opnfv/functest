@@ -73,6 +73,8 @@ USER_NAME = functest_yaml.get("tempest").get("identity").get("user_name")
 USER_PASSWORD = functest_yaml.get("tempest").get("identity").get("user_password")
 DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
 RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("dir_rally_inst")
+RESULTS_DIR = functest_yaml.get("general").get("directories").get("dir_results")
+TEMPEST_RESULTS_DIR = RESULTS_DIR + '/tempest'
 
 
 def get_info(file_result):
@@ -210,8 +212,23 @@ def run_tempest(OPTION):
     #
     logger.info("Starting Tempest test suite: '%s'." % OPTION)
     cmd_line = "rally verify start "+OPTION
-    logger.debug('Executing command : {}'.format(cmd_line))
-    subprocess.call(cmd_line, shell=True, stderr=subprocess.STDOUT)
+
+    CI_DEBUG = os.environ.get("CI_DEBUG")
+    if CI_DEBUG == "true" or CI_DEBUG == "True":
+        subprocess.call(cmd_line, shell=True, stderr=subprocess.STDOUT)
+    else:
+        if not os.path.exists(TEMPEST_RESULTS_DIR):
+            os.makedirs(TEMPEST_RESULTS_DIR)
+
+        f = open(TEMPEST_RESULTS_DIR+"/tempest.log", 'w+')
+        FNULL = open(os.devnull, 'w')
+        logger.debug('Executing command : {}'.format(cmd_line))
+        subprocess.call(cmd_line, shell=True, stdout=FNULL, stderr=f)
+        f.close()
+        FNULL.close()
+
+        cmd_line = "rally verify show"
+        subprocess.call(cmd_line, shell=True)
 
     cmd_line = "rally verify list"
     logger.debug('Executing command : {}'.format(cmd_line))
