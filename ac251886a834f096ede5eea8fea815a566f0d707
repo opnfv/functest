@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_f1d95384",
+        "filename": "testcases/vPing/CI/libraries/vPing2.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-27T09:29:12Z",
+      "side": 1,
+      "message": "timeout\u003d2",
+      "revId": "ac251886a834f096ede5eea8fea815a566f0d707",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_b1babb08",
+        "filename": "testcases/vPing/CI/libraries/vPing2.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-27T09:29:12Z",
+      "side": 1,
+      "message": "Can you move this outside the for-loop and put it inside the while loop?",
+      "revId": "ac251886a834f096ede5eea8fea815a566f0d707",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
