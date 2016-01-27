@@ -125,10 +125,8 @@ function run_test(){
         ;;
         "rally")
             info "Running Rally benchmark suite..."
-            cinder type-create volume-test #provisional
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py \
                 --debug all ${report}
-            cinder type-delete $(cinder type-list|grep test|awk '{print $2}')
             clean_openstack
 
         ;;
