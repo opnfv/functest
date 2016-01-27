@@ -181,15 +181,15 @@ def main():
     os.environ["OS_TEST_IMAGE"] = image_id
     os.environ["OS_TEST_FLAVOR"] = flavor_id
 
+    os.chdir(PROMISE_REPO)
     results_file=open('promise-results.json','w+')
     cmd = 'DEBUG=1 npm run -s test -- --reporter json'
     start_time_ts = time.time()
 
     logger.info("Running command: %s" % cmd)
-    os.chdir(PROMISE_REPO)
     ret = subprocess.call(cmd, shell=True, stdout=results_file, \
                     stderr=subprocess.STDOUT)
-
+    results_file.close()
     end_time_ts = time.time()
     duration = round(end_time_ts - start_time_ts, 1)
 
@@ -201,6 +201,7 @@ def main():
         test_status = "Failed"
 
     # Print output of file
+    results_file=open('promise-results.json','r')
     print results_file.read()
     results_file.close()
 
