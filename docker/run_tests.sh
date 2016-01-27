@@ -53,7 +53,7 @@ function clean_openstack(){
 function odl_tests(){
     keystone_ip=$(keystone catalog --service identity | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
     # historically most of the installers use the same IP for neutron and keystone API
-    neutron_ip=keystone_ip
+    neutron_ip=$keystone_ip
     odl_ip=$(keystone catalog --service network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
     usr_name=$(env | grep OS | grep OS_USERNAME | cut -f2 -d'=')
     password=$(env | grep OS | grep OS_PASSWORD | cut -f2 -d'=')
