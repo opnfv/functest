@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "5a4e6583_e4acef37",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-27T17:17:12Z",
+      "side": 1,
+      "message": "This kind of redirection does not work if executed from python. I will use another way to redirect stdout to a file.",
+      "parentUuid": "5a4e6583_64bb5fc5",
+      "revId": "6ef80780e4450ae51630c94631bcf9ab1812025c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e6583_04a38b9f",
         "filename": "testcases/features/promise.py",
         "patchSetId": 1
@@ -42,6 +60,24 @@
         "endLine": 194,
         "endChar": 30
       },
+      "revId": "6ef80780e4450ae51630c94631bcf9ab1812025c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_04b02b8a",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-27T17:17:12Z",
+      "side": 1,
+      "message": "Ok. I will print it in any case.",
+      "parentUuid": "5a4e6583_04a38b9f",
       "revId": "6ef80780e4450ae51630c94631bcf9ab1812025c",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
