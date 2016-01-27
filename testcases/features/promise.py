@@ -12,9 +12,11 @@
 import argparse
 import logging
 import os
-import time
+import subprocess
 import sys
+import time
 import yaml
+
 import keystoneclient.v2_0.client as ksclient
 import glanceclient.client as glclient
 import novaclient.client as nvclient
@@ -179,20 +181,30 @@ def main():
     os.environ["OS_TEST_IMAGE"] = image_id
     os.environ["OS_TEST_FLAVOR"] = flavor_id
 
-    cmd = 'DEBUG=1 npm run -s test'
+    results_file=open('promise-results.json','w+')
+    cmd = 'DEBUG=1 npm run -s test -- --reporter json'
     start_time_ts = time.time()
 
     logger.info("Running command: %s" % cmd)
     os.chdir(PROMISE_REPO)
-    ret = functest_utils.execute_command(cmd, exit_on_error=False)
+    ret = subprocess.call(cmd, shell=True, stdout=results_file, \
+                    stderr=subprocess.STDOUT)
 
     end_time_ts = time.time()
     duration = round(end_time_ts - start_time_ts, 1)
-    test_status = 'Failed'
-    if ret:
-        test_status = 'OK'
 
-    logger.info("Test status: %s" % test_status)
+    if ret == 0:
+        logger.info("The test succeeded." % cmd)
+        test_status = 'OK'
+    else:
+        logger.info("The command '%s' failed." % cmd)
+        test_status = "Failed"
+
+    # Print output of file
+    print results_file.read()
+    results_file.close()
+
+
     details = {
         'timestart': start_time_ts,
         'duration': duration,
