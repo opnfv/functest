@@ -179,7 +179,7 @@ def main():
     os.environ["OS_TEST_IMAGE"] = image_id
     os.environ["OS_TEST_FLAVOR"] = flavor_id
 
-    cmd = 'DEBUG=1 npm run -s test'
+    cmd = 'DEBUG=1 npm run -s test -- --reporter json promise-results.json'
     start_time_ts = time.time()
 
     logger.info("Running command: %s" % cmd)
@@ -191,6 +191,10 @@ def main():
     test_status = 'Failed'
     if ret:
         test_status = 'OK'
+        # Print output of file
+        results_file=open('promise-results.json','r')
+        print results_file.read()
+        results_file.close()
 
     logger.info("Test status: %s" % test_status)
     details = {
