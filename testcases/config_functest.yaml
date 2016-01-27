@@ -65,7 +65,7 @@ general:
         neutron_router_name: functest-router
 
 vping:
-    ping_timeout:   300
+    ping_timeout:   200
     vm_flavor: m1.small #adapt to your environment
     vm_name_1: opnfv-vping-1
     vm_name_2: opnfv-vping-2

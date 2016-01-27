@@ -449,7 +449,7 @@ def main():
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-    timeout = 20
+    timeout = 50
     while timeout > 0:
         try:
             ssh.connect(floatip, username=username, password=password, timeout=10)
@@ -458,7 +458,7 @@ def main():
         except Exception, e:
             #print e
             logger.debug("Waiting for %s..." % floatip)
-            time.sleep(2)
+            time.sleep(6)
             timeout -= 1
 
     if timeout == 0: # 300 sec timeout (5 min)
@@ -496,6 +496,7 @@ def main():
     duration = 0
 
     cmd = '~/ping.sh ' + IP_1
+    flag = False
     while True:
         time.sleep(1)
         # we do the SCP every time in the loop because while testing, I observed
@@ -516,12 +517,16 @@ def main():
             duration = round(end_time_ts - start_time_ts, 1)
             logger.info("vPing duration:'%s'" % duration)
             EXIT_CODE = 0
+            flag = True
             break
         elif sec == PING_TIMEOUT:
             logger.info("Timeout reached.")
+            flag = True
             break
         else:
             logger.debug("Pinging %s. Waiting for response..." % IP_2)
+        if flag :
+            break
         sec += 1
 
     cleanup(nova_client, neutron_client, image_id, network_dic,
