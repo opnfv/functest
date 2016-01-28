@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_22f8b77b",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-28T08:33:33Z",
+      "side": 1,
+      "message": "Can you change the order of this functions? I have been reordering and tidying up this script to have some consistency.\nThe order should be something like 1) list/get   2) create     3) modify    4) remove/delete   for each component.",
+      "revId": "9922669c3dd92d43c6e387c8077255153c35b71e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_02f5bb82",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-28T08:33:33Z",
+      "side": 1,
+      "message": "Also, please follow the same error handling as in the other functions, since it helps much to see the exact message error.\nThis line would be:\n\nprint \"Error [create_volume_type(cinder_client, \u0027%s\u0027)]:\" % name, e",
+      "revId": "9922669c3dd92d43c6e387c8077255153c35b71e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_e2f17f96",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-28T08:33:33Z",
+      "side": 1,
+      "message": "print \"Error [delete_volume_type(cinder_client, \u0027%s\u0027)]:\" % volume_type, e",
+      "revId": "9922669c3dd92d43c6e387c8077255153c35b71e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
