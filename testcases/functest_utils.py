@@ -544,6 +544,36 @@ def delete_volume(cinder_client, volume_id, forced=False):
         return False
 
 
+def list_volume_types(cinder_client, public=True, private=True):
+    try:
+        volume_types = cinder_client.volume_types.list()
+        if not public:
+            volume_types = [vt for vt in volume_types if not vt.is_public]
+        if not private:
+            volume_types = [vt for vt in volume_types if vt.is_public]
+        return volume_types
+    except:
+        return None
+
+
+def create_volume_type(cinder_client, name):
+    try:
+        volume_type = cinder_client.volume_types.create(name)
+        return volume_type
+    except:
+        print "Error:", sys.exc_info()[0]
+        return None
+
+
+def delete_volume_type(cinder_client, volume_type):
+    try:
+        cinder_client.volume_types.delete(volume_type)
+        return True
+    except:
+        print "Error:", sys.exc_info()[0]
+        return False
+
+
 
 #*********************************************
 #   KEYSTONE

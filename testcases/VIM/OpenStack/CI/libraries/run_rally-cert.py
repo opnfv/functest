@@ -27,6 +27,7 @@ from novaclient import client as novaclient
 from glanceclient import client as glanceclient
 from keystoneclient.v2_0 import client as keystoneclient
 from neutronclient.v2_0 import client as neutronclient
+from cinderclient import client as cinderclient
 
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
@@ -118,6 +119,8 @@ GLANCE_IMAGE_FORMAT = functest_yaml.get("general"). \
     get("openstack").get("image_disk_format")
 GLANCE_IMAGE_PATH = functest_yaml.get("general"). \
     get("directories").get("dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
+
+CINDER_VOLUME_TYPE_NAME = "volume_test"
 
 
 def push_results_to_db(payload):
@@ -283,8 +286,27 @@ def main():
                                                    endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
+    creds_cinder = functest_utils.get_credentials("cinder")
+    cinder_client = cinderclient.Client('2',creds_cinder['username'],
+                                        creds_cinder['api_key'],
+                                        creds_cinder['project_id'],
+                                        creds_cinder['auth_url'],
+                                        service_type="volume")
 
     client_dict['neutron'] = neutron_client
+
+    volume_types = functest_utils.list_volume_types(cinder_client, private=False)
+    if not volume_types:
+        volume_type = functest_utils.create_volume_type(cinder_client, \
+                                                        CINDER_VOLUME_TYPE_NAME)
+        if not volume_type:
+            logger.error("Failed to create volume type...")
+            exit(-1)
+        else:
+            logger.debug("Volume type '%s' created succesfully..." \
+                         % CINDER_VOLUME_TYPE_NAME)
+    else:
+        logger.debug("Using existing volume type(s)...")
 
     image_id = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
 
@@ -317,6 +339,13 @@ def main():
                          % (GLANCE_IMAGE_NAME, image_id))
     if not functest_utils.delete_glance_image(nova_client, image_id):
         logger.error("Error deleting the glance image")
+
+    if not volume_types:
+        logger.debug("Deleting volume type '%s'..." \
+                             % CINDER_VOLUME_TYPE_NAME)
+        if not functest_utils.delete_volume_type(cinder_client, volume_type):
+            logger.error("Error in deleting volume type...")
+
 
 if __name__ == '__main__':
     main()
