@@ -181,7 +181,7 @@ test/csit/suites/vpnservice
         ;;
         "ovno")
             info "Running OpenContrail test..."
-            # TODO
+            ${repos_dir}/ovno/Testcases/RunTests.sh
         ;;
     esac
 }
