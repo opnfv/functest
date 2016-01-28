@@ -44,7 +44,7 @@ args = parser.parse_args()
 
 """ logging configuration """
 logger = logging.getLogger('vIMS')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 ch = logging.StreamHandler()
 if args.debug:
@@ -74,7 +74,7 @@ VIMS_DATA_DIR = functest_yaml.get("general").get(
     "directories").get("dir_vIMS_data") + "/"
 VIMS_TEST_DIR = functest_yaml.get("general").get(
     "directories").get("dir_repo_vims_test") + "/"
-TEST_DB = functest_yaml.get("results").get("test_db_url")
+DB_URL = functest_yaml.get("results").get("test_db_url")
 
 TENANT_NAME = functest_yaml.get("vIMS").get("general").get("tenant_name")
 TENANT_DESCRIPTION = functest_yaml.get("vIMS").get(
@@ -97,6 +97,10 @@ CW_REQUIERMENTS = functest_yaml.get("vIMS").get(
 CFY_DEPLOYMENT_DURATION = 0
 CW_DEPLOYMENT_DURATION = 0
 
+RESULTS = {'orchestrator': {'duration': 0, 'result': ''},
+           'vIMS': {'duration': 0, 'result': ''},
+           'sig_test': {'duration': 0, 'result': ''}}
+
 
 def download_and_add_image_on_glance(glance, image_name, image_url):
     dest_path = VIMS_DATA_DIR + "tmp/"
@@ -114,6 +118,30 @@ def download_and_add_image_on_glance(glance, image_name, image_url):
         return False
 
     return image
+
+
+def step_failure(step_name, error_msg):
+    logger.error(error_msg)
+    set_result(step_name, 0, error_msg)
+    push_results()
+    exit(-1)
+
+
+def push_results():
+    if args.report:
+        logger.debug("Pushing results to DB....")
+
+        scenario = functest_utils.get_scenario(self.logger)
+        pod_name = functest_utils.get_pod_name(self.logger)
+
+        functest_utils.push_results_to_db(db_url=DB_URL, case_name="vIMS",
+                                          logger=logger, pod_name=pod_name,
+                                          version=scenario,
+                                          payload=RESULTS)
+
+
+def set_result(step_name, duration=0, result=""):
+    RESULTS[step_name] = {'duration': duration, 'result': result}
 
 
 def test_clearwater():
@@ -173,20 +201,9 @@ def test_clearwater():
         except:
             logger.error("Unable to retrieve test results")
 
-        if vims_test_result != "":
-            if args.report:
-                logger.debug("Push result into DB")
-                logger.debug("Pushing results to DB....")
-                scenario = functest_utils.get_scenario(logger)
-                functest_utils.push_results_to_db(db_url=TEST_DB, case_name="vIMS",
-                                                  logger=logger, pod_name=functest_utils.get_pod_name(logger),
-                                                  version=scenario,
-                                                  payload={'orchestrator': {'duration': CFY_DEPLOYMENT_DURATION,
-                                                                            'result': ""},
-                                                           'vIMS': {'duration': CW_DEPLOYMENT_DURATION,
-                                                                    'result': ""},
-                                                           'sig_test': {'duration': duration,
-                                                                        'result': vims_test_result}})
+        set_result("sig_test", duration, vims_test_result)
+        push_results()
+
         try:
             os.remove(VIMS_TEST_DIR + "temp.json")
         except:
@@ -209,15 +226,14 @@ def main():
 
     user_id = functest_utils.get_user_id(keystone, ks_creds['username'])
     if user_id == '':
-        logger.error("Error : Failed to get id of %s user" %
+        step_failure("init", "Error : Failed to get id of " +
                      ks_creds['username'])
-        exit(-1)
 
     tenant_id = functest_utils.create_tenant(
         keystone, TENANT_NAME, TENANT_DESCRIPTION)
     if tenant_id == '':
-        logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
-        exit(-1)
+        step_failure("init", "Error : Failed to create " +
+                     TENANT_NAME + " tenant")
 
     roles_name = ["admin", "Admin"]
     role_id = ''
@@ -270,18 +286,16 @@ def main():
                 glance, image_name, image_url)
 
         if image_id == '':
-            logger.error(
-                "Error : Failed to find or upload required OS image for this deployment")
-            exit(-1)
+            step_failure(
+                "init", "Error : Failed to find or upload required OS image for this deployment")
 
     nova = nvclient.Client("2", **nv_creds)
 
     logger.info("Update security group quota for this tenant")
     neutron = ntclient.Client(**nt_creds)
     if not functest_utils.update_sg_quota(neutron, tenant_id, 50, 100):
-        logger.error(
-            "Failed to update security group quota for tenant %s" % TENANT_NAME)
-        exit(-1)
+        step_failure(
+            "init", "Failed to update security group quota for tenant " + TENANT_NAME)
 
     logger.info("Update cinder quota for this tenant")
     from cinderclient import client as cinderclient
@@ -293,9 +307,8 @@ def main():
                                         creds_cinder['auth_url'],
                                         service_type="volume")
     if not functest_utils.update_cinder_quota(cinder_client, tenant_id, 20, 10, 150):
-        logger.error("Failed to update cinder quota for tenant %s" %
-                     TENANT_NAME)
-        exit(-1)
+        step_failure(
+            "init", "Failed to update cinder quota for tenant " + TENANT_NAME)
 
     ################ CLOUDIFY INITIALISATION ################
 
@@ -320,9 +333,8 @@ def main():
         flavor_id = functest_utils.get_flavor_id_by_ram_range(nova, 4000, 8196)
 
     if flavor_id == '':
-        logger.error(
-            "Failed to find required flavor for this deployment" % flavor_name)
-        exit(-1)
+        step_failure("orchestrator",
+                     "Failed to find required flavor for this deployment")
 
     cfy.set_flavor_id(flavor_id)
 
@@ -334,16 +346,14 @@ def main():
                 glance, CFY_MANAGER_REQUIERMENTS['os_image'])
 
     if image_id == '':
-        logger.error(
-            "Error : Failed to find required OS image for cloudify manager")
-        exit(-1)
+        step_failure(
+            "orchestrator", "Error : Failed to find required OS image for cloudify manager")
 
     cfy.set_image_id(image_id)
 
     ext_net = functest_utils.get_external_net(neutron)
     if not ext_net:
-        logger.error("Failed to get external network")
-        exit(-1)
+        step_failure("orchestrator", "Failed to get external network")
 
     cfy.set_external_network_name(ext_net)
 
@@ -367,12 +377,14 @@ def main():
         datetime.datetime.fromtimestamp(start_time_ts).strftime(
             '%Y-%m-%d %H:%M:%S')))
 
-    cfy.deploy_manager()
+    error = cfy.deploy_manager()
+    if error:
+        step_failure("orchestrator", error)
 
-    global CFY_DEPLOYMENT_DURATION
     end_time_ts = time.time()
-    CFY_DEPLOYMENT_DURATION = round(end_time_ts - start_time_ts, 1)
-    logger.info("Cloudify deployment duration:'%s'" % CFY_DEPLOYMENT_DURATION)
+    duration = round(end_time_ts - start_time_ts, 1)
+    logger.info("Cloudify deployment duration:'%s'" % duration)
+    set_result("orchestrator", duration, "")
 
     ################ CLEARWATER INITIALISATION ################
 
@@ -394,9 +406,8 @@ def main():
         flavor_id = functest_utils.get_flavor_id_by_ram_range(nova, 4000, 8196)
 
     if flavor_id == '':
-        logger.error(
-            "Failed to find required flavor for this deployment" % flavor_name)
-        exit(-1)
+        step_failure(
+            "vIMS", "Failed to find required flavor for this deployment")
 
     cw.set_flavor_id(flavor_id)
 
@@ -408,16 +419,14 @@ def main():
                 glance, CW_REQUIERMENTS['os_image'])
 
     if image_id == '':
-        logger.error(
-            "Error : Failed to find required OS image for cloudify manager")
-        exit(-1)
+        step_failure(
+            "vIMS", "Error : Failed to find required OS image for cloudify manager")
 
     cw.set_image_id(image_id)
 
     ext_net = functest_utils.get_external_net(neutron)
     if not ext_net:
-        logger.error("Failed to get external network")
-        exit(-1)
+        step_failure("vIMS", "Failed to get external network")
 
     cw.set_external_network_name(ext_net)
 
@@ -429,12 +438,14 @@ def main():
         datetime.datetime.fromtimestamp(start_time_ts).strftime(
             '%Y-%m-%d %H:%M:%S')))
 
-    cw.deploy_vnf(CW_BLUEPRINT)
+    error = cw.deploy_vnf(CW_BLUEPRINT)
+    if error:
+        step_failure("vIMS", error)
 
-    global CW_DEPLOYMENT_DURATION
     end_time_ts = time.time()
-    CW_DEPLOYMENT_DURATION = round(end_time_ts - start_time_ts, 1)
-    logger.info("vIMS VNF deployment duration:'%s'" % CW_DEPLOYMENT_DURATION)
+    duration = round(end_time_ts - start_time_ts, 1)
+    logger.info("vIMS VNF deployment duration:'%s'" % duration)
+    set_result("vIMS", duration, "")
 
     ################ CLEARWATER TEST ################
 
