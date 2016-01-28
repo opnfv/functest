@@ -21,7 +21,11 @@ import logging
 import yaml
 import datetime
 import re
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument("-i", "--installer", help="Installer type")
+args = parser.parse_args()
 """ logging configuration """
 
 logger = logging.getLogger('onos')
@@ -97,7 +101,14 @@ def GetResult():
 def SetOnosIp():
     cmd = "keystone catalog --service network | grep publicURL"
     cmd_output = os.popen(cmd).read()
-    print cmd_output
+    OC1=re.search(r"\d+\.\d+\.\d+\.\d+",cmd_output).group()
+    os.environ['OC1'] = OC1
+    time.sleep(2)
+    logger.debug( "ONOS IP is " + OC1)
+
+def SetOnosIpForJoid():
+    cmd = "env | grep SDN_CONTROLLER"
+    cmd_output = os.popen(cmd).read()
     OC1=re.search(r"\d+\.\d+\.\d+\.\d+",cmd_output).group()
     os.environ['OC1'] = OC1
     time.sleep(2)
@@ -113,7 +124,11 @@ def CleanOnosTest():
 def main():
 
     DownloadCodes()
-    SetOnosIp()
+    if args.installer == "joid":
+        logger.debug( "Installer is Joid")
+        SetOnosIpForJoid()
+    else:
+        SetOnosIp()
     RunScript("FUNCvirNetNB")
     RunScript("FUNCvirNetNBL3")
 
