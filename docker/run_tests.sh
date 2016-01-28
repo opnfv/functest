@@ -164,7 +164,11 @@ test/csit/suites/vpnservice
        ;;
         "onos")
             info "Running ONOS test case..."
-            python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py
+            if [ $INSTALLER_TYPE == "joid" ]; then
+                python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py -i joid
+            else
+                python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py
+            fi
       ;;
         "promise")
             info "Running PROMISE test case..."
