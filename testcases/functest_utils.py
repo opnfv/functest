@@ -284,7 +284,7 @@ def create_neutron_router(neutron_client, name):
         router = neutron_client.create_router(json_body)
         return router['router']['id']
     except Exception, e:
-        print "Error [create_neutron_router(neutron_client, name)]:" % name, e
+        print "Error [create_neutron_router(neutron_client, '%s')]:" % name, e
         return False
 
 
@@ -435,7 +435,7 @@ def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
         return True
     except Exception, e:
         print "Error [update_sg_quota(neutron_client, '%s', '%s', "\
-            "'%s')]:" %(tenant_id,sg_quota, sg_rule_quota), e
+            "'%s')]:" %(tenant_id, sg_quota, sg_rule_quota), e
         return False
 
 
@@ -485,7 +485,7 @@ def create_glance_image(glance_client, image_name, file_path, public=True):
         return image.id
     except Exception, e:
         print "Error [create_glance_image(glance_client, '%s', '%s', "\
-            "'%s')]:" %(image_name,file_path, str(public)), e
+            "'%s')]:" %(image_name, file_path, str(public)), e
         return False
 
 
@@ -494,7 +494,7 @@ def delete_glance_image(nova_client, image_id):
         nova_client.images.delete(image_id)
         return True
     except Exception, e:
-        print "Error [delete_glance_image(nova_client, image_id)]:" % image_id, e
+        print "Error [delete_glance_image(nova_client, '%s')]:" % image_id, e
         return False
 
 
@@ -792,7 +792,8 @@ def push_results_to_db(db_url, case_name, logger, pod_name,
             logger.debug(r)
         return True
     except Exception, e:
-        print "Error []:", e
+        print "Error [push_results_to_db('%s', '%s', '%s', '%s', '%s')]:" \
+            % (db_url, case_name, pod_name, version, payload), e
         return False
 
 
@@ -836,7 +837,7 @@ def getTestEnv(test, functest_yaml):
         # if not defined in dependencies => no dependencies
         config_test = ""
     except Exception, e:
-        print "Error []:", e
+        print "Error [getTestEnv]:", e
 
     return config_test
 
