@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_18e76c14",
+        "filename": "testcases/vIMS/CI/clearwater.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-28T16:03:23Z",
+      "side": 1,
+      "message": "Do you know exactly what orchestrator.download..() returns?\n\n\"if result:\" checks that the variable \u0027result\u0027 is not None or different to 0.",
+      "revId": "1090dba46823e9c8bfaa8267f0ead80cfcb827b6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_d819d423",
+        "filename": "testcases/vIMS/CI/orchestrator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-28T16:03:23Z",
+      "side": 1,
+      "message": "result \u003d execute_command(cmd, self.logger)\n\nOtherwise, the if statement below will fail.",
+      "revId": "1090dba46823e9c8bfaa8267f0ead80cfcb827b6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
