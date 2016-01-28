@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_7dd89253",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-01-28T11:45:12Z",
+      "side": 0,
+      "message": "This is good but I\u0027d like to think about the structure in the context of the overall configguide.  If we merge it I can push another patch to fit it into the brahmaputra doc nicely.",
+      "revId": "ea4c222b385c93442a8d3cb4c5cf8747c21efdad",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_9dd34e38",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-01-28T11:45:12Z",
+      "side": 0,
+      "message": "Can we move this line down to line 83 into a seperate file called userguide.rst and import it.  The reason being this section would be useful to have in the global userguide for functest, but it needs to be in a file called userguide.rst in this folder.",
+      "revId": "ea4c222b385c93442a8d3cb4c5cf8747c21efdad",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
