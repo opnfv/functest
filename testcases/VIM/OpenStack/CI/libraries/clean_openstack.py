@@ -91,7 +91,7 @@ def remove_instances(nova_client):
         if functest_utils.delete_instance(nova_client, instance_id):
             logger.debug("  > Done!")
         else:
-            logger.info("  > ERROR: There has been a problem removing the "
+            logger.error("There has been a problem removing the "
                         "instance %s..." % instance_id)
 
     timeout = 50
@@ -121,7 +121,7 @@ def remove_images(nova_client):
             if functest_utils.delete_glance_image(nova_client, image_id):
                 logger.debug("  > Done!")
             else:
-                logger.info("  > ERROR: There has been a problem removing the"
+                logger.error("There has been a problem removing the"
                             "image %s..." % image_id)
         else:
             logger.debug("   > this is a default image and will NOT be deleted.")
@@ -146,7 +146,7 @@ def remove_volumes(cinder_client):
                                             forced=True):
                 logger.debug("  > Done!")
             else:
-                logger.info("  > ERROR: There has been a problem removing the "
+                logger.error("There has been a problem removing the "
                             "volume %s..." % volume_id)
 
 
@@ -163,7 +163,7 @@ def remove_floatingips(nova_client):
         if functest_utils.delete_floating_ip(nova_client, fip_id):
             logger.debug("  > Done!")
         else:
-            logger.info("  > ERROR: There has been a problem removing the "
+            logger.error("There has been a problem removing the "
                         "floating IP %s..." % fip_id)
 
     timeout = 50
@@ -218,7 +218,7 @@ def remove_networks(neutron_client):
             if functest_utils.delete_neutron_net(neutron_client, net_id):
                 logger.debug("  > Done!")
             else:
-                logger.info("  > ERROR: There has been a problem removing the "
+                logger.error("There has been a problem removing the "
                             "network %s..." % net_id)
 
 
@@ -237,7 +237,7 @@ def remove_ports(neutron_client, ports, network_ids):
                 if functest_utils.delete_neutron_port(neutron_client, port_id):
                     logger.debug("  > Done!")
                 else:
-                    logger.info("  > ERROR: There has been a problem removing the "
+                    logger.error("There has been a problem removing the "
                                 "port %s ..." %port_id)
                     force_remove_port(neutron_client, port_id)
 
@@ -249,7 +249,7 @@ def remove_ports(neutron_client, ports, network_ids):
                     time.sleep(5) # leave 5 seconds to detach before doing anything else
                     logger.debug("  > Done!")
                 else:
-                    logger.info("  > ERROR: There has been a problem removing the "
+                    logger.error("There has been a problem removing the "
                                 "interface %s from router %s..." %(subnet_id,router_id))
                     force_remove_port(neutron_client, port_id)
             else:
@@ -265,7 +265,8 @@ def force_remove_port(neutron_client, port_id):
     if functest_utils.delete_neutron_port(neutron_client, port_id):
         logger.debug("  > Done!")
     else:
-        logger.info("  > ERROR: Deleting port %s failed" % port_id)
+        logger.error("There has been a problem removing "
+                                "the port %s..." % port_id)
 
 
 def remove_routers(neutron_client, routers):
@@ -279,7 +280,7 @@ def remove_routers(neutron_client, routers):
                 if functest_utils.remove_gateway_router(neutron_client, router_id):
                     logger.debug("  > Done!")
                 else:
-                    logger.info("  > ERROR: There has been a problem removing "
+                    logger.error("There has been a problem removing "
                                 "the gateway...")
             else:
                 logger.debug("Router is not connected to anything. Ready to remove...")
@@ -287,7 +288,7 @@ def remove_routers(neutron_client, routers):
             if functest_utils.delete_neutron_router(neutron_client, router_id):
                 logger.debug("  > Done!")
             else:
-                logger.info("  > ERROR: There has been a problem removing the "
+                logger.error("There has been a problem removing the "
                             "router '%s'(%s)..." % (router_name, router_id))
 
 
@@ -307,7 +308,7 @@ def remove_security_groups(neutron_client):
             if functest_utils.delete_security_group(neutron_client, secgroup_id):
                 logger.debug("  > Done!")
             else:
-                logger.info("  > ERROR: There has been a problem removing the "
+                logger.error("There has been a problem removing the "
                             "security group %s..." % secgroup_id)
         else:
             logger.debug("   > this is a default security group and will NOT "
@@ -330,7 +331,7 @@ def remove_users(keystone_client):
             if functest_utils.delete_user(keystone_client,user_id):
                 logger.debug("  > Done!")
             else:
-                logger.info("  > ERROR: There has been a problem removing the "
+                logger.error("There has been a problem removing the "
                             "user '%s'(%s)..." % (user_name,user_id))
         else:
             logger.debug("   > this is a default user and will NOT be deleted.")
@@ -352,7 +353,7 @@ def remove_tenants(keystone_client):
             if functest_utils.delete_tenant(keystone_client,tenant_id):
                 logger.debug("  > Done!")
             else:
-                logger.info("  > ERROR: There has been a problem removing the "
+                logger.error("There has been a problem removing the "
                             "tenant '%s'(%s)..." % (tenant_name,tenant_id))
         else:
             logger.debug("   > this is a default tenant and will NOT be deleted.")
