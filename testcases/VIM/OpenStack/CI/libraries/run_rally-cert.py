@@ -219,8 +219,17 @@ def run_task(test_name):
     result = ""
     while p.poll() is None:
         l = p.stdout.readline()
-        print l.replace('\n', '')
-        result += l
+        line = l.replace('\n', '')
+        if "test scenario" in line or \
+            "Load duration" in line or \
+            "Full duration" in line or \
+            "started" in line or \
+            "finished" in line or \
+            " Preparing" in line or \
+            "+-" in line or \
+            "----" in line or \
+            "|" in line:
+            result += line
 
     task_id = get_task_id(result)
     logger.debug('task_id : {}'.format(task_id))
@@ -262,9 +271,9 @@ def run_task(test_name):
 
     """ parse JSON operation result """
     if task_succeed(json_results):
-        print 'Test OK'
+        logger.info("Test OK.")
     else:
-        print 'Test KO'
+        logger.info("Test Failed.")
 
 
 def main():
@@ -307,7 +316,6 @@ def main():
         for test_name in tests:
             if not (test_name == 'all' or
                     test_name == 'vm'):
-                print(test_name)
                 run_task(test_name)
     else:
         print(args.test_name)
