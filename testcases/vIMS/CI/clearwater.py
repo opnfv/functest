@@ -43,9 +43,14 @@ class clearwater:
     def deploy_vnf(self, blueprint, bp_name='clearwater', dep_name='clearwater-opnfv'):
         if self.orchestrator:
             self.dep_name = dep_name
-            self.orchestrator.download_upload_and_deploy_blueprint(
+            result = self.orchestrator.download_upload_and_deploy_blueprint(
                 blueprint, self.config, bp_name, dep_name)
+            if result:
+                return result
+
             self.deploy = True
+            return False
+
         else:
             if self.logger:
                 logger.error("Cloudify manager is down or not provide...")
