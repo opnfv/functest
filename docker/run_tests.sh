@@ -63,7 +63,7 @@ function odl_tests(){
     elif [ $INSTALLER_TYPE == "apex" ]; then
         :
     elif [ $INSTALLER_TYPE == "joid" ]; then
-        odl_ip=$(env | grep ODL_CONTROLLER | cut -f2 -d'=')
+        odl_ip=$(env | grep SDN_CONTROLLER | cut -f2 -d'=')
         neutron_ip=$(keystone catalog --service network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
         odl_port=8080
         :
