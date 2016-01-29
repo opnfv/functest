@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_62f3460b",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:15:05Z",
+      "side": 1,
+      "message": "What is the motivation for having this section in a separate file? In the built version this results in some strange output, with Revision and Build date in between all the clear text:\n\n\"...\nHowever most of the tests shall be runnable on any configuration.\n\nRevision: 168d5674fa21070f2d599a93514aa66e7ec6fcd3\n\nBuild date: January 29, 2016\n\nThe different scenarios are described in the section hereafter.\n...\n\"",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 30
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
