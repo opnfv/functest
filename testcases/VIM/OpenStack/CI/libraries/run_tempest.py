@@ -174,8 +174,8 @@ def configure_tempest():
     logger.debug("Finding tempest.conf file...")
     tempest_conf_file = RALLY_INSTALLATION_DIR+"/tempest/for-deployment-" \
                         +deployment_uuid+"/tempest.conf"
-    if tempest_conf_file == "":
-        logger.debug("   Tempest configuration file NOT found")
+    if not os.path.isfile(tempest_conf_file):
+        logger.error("   Tempest configuration file %s NOT found in" % tempest_conf_file)
         return False
 
     logger.debug("  Updating fixed_network_name...")
@@ -202,6 +202,8 @@ def configure_tempest():
           +USER_PASSWORD
     functest_utils.execute_command(cmd,logger)
 
+    # Copy tempest.conf to /home/opnfv/functest/results/tempest/
+    print shutil.copyfile(tempest_conf_file,TEMPEST_RESULTS_DIR+'/tempest.conf')
     return True
 
 
@@ -219,8 +221,6 @@ def run_tempest(OPTION):
     if CI_DEBUG == "true" or CI_DEBUG == "True":
         subprocess.call(cmd_line, shell=True, stderr=subprocess.STDOUT)
     else:
-        if not os.path.exists(TEMPEST_RESULTS_DIR):
-            os.makedirs(TEMPEST_RESULTS_DIR)
         header = "Tempest environment:\n"\
             "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" % \
             (os.getenv('INSTALLER_TYPE','Unknown'), \
@@ -283,6 +283,9 @@ def main():
         MODE = "--tests-file "+REPO_PATH+"testcases/VIM/OpenStack/CI/custom_tests/test_list.txt"
     else:
         MODE = "--set "+args.mode
+
+    if not os.path.exists(TEMPEST_RESULTS_DIR):
+        os.makedirs(TEMPEST_RESULTS_DIR)
 
     create_tempest_resources()
     configure_tempest()
