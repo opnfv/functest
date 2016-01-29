@@ -1,4 +1,4 @@
-﻿*************************
+*************************
 OPNFV FUNCTEST user guide
 *************************
 
@@ -11,10 +11,10 @@ OPNFV FUNCTEST user guide
 Introduction
 ============
 
-The goal of this documents is to describe the Functest test cases as well as 
+The goal of this documents is to describe the Functest test cases as well as
 provide a procedure about how to execute (or launch) them.
 
-A presentation has been created for the first OPNFV Summit: `[4]`
+A presentation has been created for the first OPNFV Summit `[4]`_.
 
 It is assumed that Functest container has been properly installed `[1]`_.
 
@@ -27,7 +27,7 @@ Functest is an OPNFV project dedicated to functional testing.
 In the continuous integration, it is launched after an OPNFV fresh installation.
 The Functest target is to verify the basic functions of the infrastructure.
 
-Functest includes different test suites which several test cases within. 
+Functest includes different test suites which several test cases within.
 Test cases are developed in Functest and in feature projects.
 
 The current list of test suites can be distributed in 3 main domains:
@@ -91,7 +91,7 @@ Functest considers OPNFV as a black box.
 OPNFV, since Brahmaputra, offers lots of possible combinations:
 
   * 3 controllers (OpenDayligh, ONOS, OpenContrail)
-  * 4 installers (Apex, Compass, Fuel, Joid) 
+  * 4 installers (Apex, Compass, Fuel, Joid)
 
 However most of the tests shall be runnable on any configuration.
 
@@ -372,7 +372,7 @@ TODO promise
 Manual testing
 ==============
 
-Once the Functest docker container is running and Functest environment ready 
+Once the Functest docker container is running and Functest environment ready
 (through /home/opnfv/repos/functest/docker/prepare_env.sh script), the system is
 ready to run the tests.
 
@@ -576,15 +576,15 @@ The Tempest results are displayed in the console::
   2016-01-28 07:56:59.512 23795 INFO rally.verification.tempest.tempest [-] Completed: Creating configuration file for Tempest.
   16-01-28 07:57:00,597 - run_tempest - INFO - Starting Tempest test suite: '--tests-file /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/custom_tests/test_list.txt'.
   Total results of verification:
-  
+
   +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
   | UUID                                 | Deployment UUID                      | Set name | Tests | Failures | Created at                 | Status   |
   +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
   | e0bf7770-2c0f-4c63-913c-cd51a6edd96d | 16582e1e-7b01-4d5d-9c13-a26db8567b7b |          | 144   | 30       | 2016-01-28 07:57:01.044856 | finished |
-  +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+  
-  
+  +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
+
   Tests:
-  
+
   +------------------------------------------------------------------------------------------------------------------------------------------+-----------+---------+
   | name                                                                                                                                     | time      | status  |
   +------------------------------------------------------------------------------------------------------------------------------------------+-----------+---------+
@@ -636,9 +636,9 @@ other. Tables are displayed::
   Full duration: 71.4614388943
 
 
-At the end of the module test, a message is displayed to provide a global 
+At the end of the module test, a message is displayed to provide a global
 summary (Test OK or test failed). The raw results are pushed into the Test
-Database. 
+Database.
 
 
 Controllers
@@ -689,7 +689,7 @@ The results of ODL tests can be seen in the console::
 
  ODL result page
 
-.. figure:: ./images/functestODL.png
+.. figure:: ../images/functestODL.png
    :width: 170mm
    :align: center
    :alt: ODL suite result page
@@ -881,14 +881,14 @@ Overall Architecture
 
 The Test result management in Brahmaputra can be summarized as follow::
 
-  +-------------+    +-------------+    +-------------+    
+  +-------------+    +-------------+    +-------------+
   |             |    |             |    |             |
   |   Test      |    |   Test      |    |   Test      |
-  | Project #1  |    | Project #2  |    | Project #N  |    
+  | Project #1  |    | Project #2  |    | Project #N  |
   |             |    |             |    |             |
-  +-------------+    +-------------+    +-------------+    
+  +-------------+    +-------------+    +-------------+
            |               |               |
-           ▼               ▼               ▼ 
+           ▼               ▼               ▼
        +-----------------------------------------+
        |                                         |
        |         Test Rest API front end         |
@@ -903,14 +903,14 @@ The Test result management in Brahmaputra can be summarized as follow::
            |     |         Mongo DB        |
            |     |                         |
            |     +-------------------------+
-           | 
+           |
            |
      +----------------------+
      |                      |
      |    test Dashboard    |
      |                      |
      +----------------------+
- 
+
 The Test dashboard URL is: TODO LF
 A proto Test dashboard has been realized: http://testresults.opnfv.org/proto/
 
@@ -940,7 +940,7 @@ Test project::
   {
     "id": <ID>,
     "name": <Name of the Project>,
-    "creation_date": "YYYY-MM-DD HH:MM:SS",    
+    "creation_date": "YYYY-MM-DD HH:MM:SS",
     "description": <Short description>
   },
 
@@ -953,7 +953,7 @@ Test case::
     "description": <short description>,
     "url":<URL for longer description>
   },
-  
+
 Test results::
 
   {
@@ -968,15 +968,15 @@ Test results::
     "details":{
        <- the results to be put here ->
     }
-  
+
 
 For Brahmaputra, we got:
 
  * 16 pods
  * 18 projects
  * 101 test cases
- 
-The projects and the test cases have been frozen in December. 
+
+The projects and the test cases have been frozen in December.
 But all were not ready for Brahmaputra.
 
 
@@ -1085,7 +1085,7 @@ The API can described as follow::
 |        |&case={case}              | {case} of the project {project} with     |
 |        |&version={scenario}       | version {scenario} installed by installer|
 |        |&installer={installer}    | {installer} on POD {pod} stored since    |
-|        |&pod={pod}                | {days} days                              | 
+|        |&pod={pod}                | {days} days                              |
 |        |                          | {project_name} and {case_name} are       |
 |        |&period={days}            | mandatory, the other parameters are      |
 |        |                          | optional.                                |
@@ -1113,7 +1113,7 @@ The API can described as follow::
 |        |&case={case}              | version {scenario} installed by installer|
 |        |&version={scenario}       | {installer} on POD {pod} stored since    |
 |        |&installer={installer}    | {days} days                              |
-|        |&pod={pod}                |                                          | 
+|        |&pod={pod}                |                                          |
 |        |&period={days}            | {project_name} and {case_name} are       |
 |        |                          | mandatory, the other parameters are      |
 |        |                          | optional.                                |
@@ -1128,8 +1128,8 @@ Please note that dashboard results are not stored. Only raw results are stored.
 Test Dashboard
 --------------
 
-Based on dashboard post-porcessed results, a Test dashboard is automatically 
-generated. 
+Based on dashboard post-porcessed results, a Test dashboard is automatically
+generated.
 
 TODO LF
 or http://testresults.opnfv.org/proto/
