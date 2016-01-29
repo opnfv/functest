@@ -60,13 +60,13 @@ Some of the Functest tools need to have access to the OpenStack management
 network of the controllers `[1]`_.
 
 For this reason, an interface shall be configured in the Jumphost in the
-OpenStack management network range. 
+OpenStack management network range.
 
 Example::
 
  The OPNFV Fuel installation uses VLAN tagged 300 and subnet 192.168.1.0/24 as
  Openstack Management network.
- 
+
  Supposing that eth1 is the physical interface with access to that subnet:
  $ ip link add name eth1.300 link eth1 type vlan id 300
  $ ip link set eth1.300 up
@@ -81,7 +81,7 @@ existing public network to succeed. This is needed, for example, to create
 floating IPs to access instances from the public network (i.e. Jumphost).
 
 By default, any of the four OPNFV installers provide a fresh installation with
-an external network created along with a router. 
+an external network created along with a router.
 
 
 
@@ -152,16 +152,16 @@ The high level architecture of Functest within OPNFV can be described as follow:
 
 All the libraries and dependencies needed by all the Functest tools are
 pre-installed in the Docker image.
-This allows running Functest on any platform with any Operating System. 
+This allows running Functest on any platform with any Operating System.
 
 The Docker image will:
-  
+
   * retrieve OpenStack credentials
   * prepare the environment according to the SUT
   * perform the appropriate tests
   * push the results into the OPNFV test result database
 
- 
+
 
 This Docker image can be integrated into CI or deployed **independently** of the CI.
 A description of the Brahmaputra testcases can be retrieved in the Functest user
@@ -177,7 +177,7 @@ Manual Installation
 
 Pull the Functest Docker image from the Docker hub::
 
-  $ docker pull opnfv/functest:brahmaputra.1.0  
+  $ docker pull opnfv/functest:brahmaputra.1.0
 
 
 Check that the image is available::
@@ -187,7 +187,7 @@ Check that the image is available::
 Run the docker container giving the environment variables
  - INSTALLER_TYPE. Possible values are "apex", "compass", "fuel" or "joid".
  - INSTALLER_IP. each installer has its installation strategy.
- 
+
  Functest may need to know the IP of the installer to retrieve the credentials
 (e.g. usually "10.20.0.2" for fuel, not neede for joid...)
 
@@ -381,7 +381,7 @@ Docker clean in functest-cleanup builder `[3]`_::
 Configuration
 =============
 
-Everything is preconfigured in the docker file. 
+Everything is preconfigured in the docker file.
 It is however possible to customize the list of tests, see `[2]` for details.
 
 ======
