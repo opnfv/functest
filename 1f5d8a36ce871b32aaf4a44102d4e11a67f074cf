@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_1c3e3bb9",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-29T14:09:42Z",
+      "side": 1,
+      "message": "opnfv instead of opngb",
+      "range": {
+        "startLine": 232,
+        "startChar": 13,
+        "endLine": 232,
+        "endChar": 18
+      },
+      "revId": "1f5d8a36ce871b32aaf4a44102d4e11a67f074cf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
