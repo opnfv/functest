@@ -21,6 +21,7 @@ import re
 import requests
 import subprocess
 import sys
+import time
 import yaml
 import keystoneclient.v2_0.client as ksclient
 from neutronclient.v2_0 import client as neutronclient
@@ -220,13 +221,23 @@ def run_tempest(OPTION):
     else:
         if not os.path.exists(TEMPEST_RESULTS_DIR):
             os.makedirs(TEMPEST_RESULTS_DIR)
+        header = "Tempest environment:\n"\
+            "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" % \
+            (os.getenv('INSTALLER_TYPE','Unknown'), \
+             os.getenv('DEPLOY_SCENARIO','Unknown'), \
+             os.getenv('NODE_NAME','Unknown'), \
+             time.strftime("%a %b %d %H:%M:%S %Z %Y"))
 
-        f = open(TEMPEST_RESULTS_DIR+"/tempest.log", 'w+')
-        FNULL = open(os.devnull, 'w')
+        f_stdout = open(TEMPEST_RESULTS_DIR+"/tempest.log", 'w+')
+        f_stderr = open(TEMPEST_RESULTS_DIR+"/tempest-error.log", 'w+')
+        f_env = open(TEMPEST_RESULTS_DIR+"/environment.log", 'w+')
+        f_env.write(header)
 
-        subprocess.call(cmd_line, shell=True, stdout=FNULL, stderr=f)
-        f.close()
-        FNULL.close()
+        subprocess.call(cmd_line, shell=True, stdout=f_stdout, stderr=f_stderr)
+
+        f_stdout.close()
+        f_stderr.close()
+        f_env.close()
 
         cmd_line = "rally verify show"
         subprocess.call(cmd_line, shell=True)
