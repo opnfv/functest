@@ -39,6 +39,7 @@ Functest can be described as follow::
 
 Functest deals with internal and external test cases.
 The Internal test cases in Brahmaputra are:
+
  * vPing
  * ODL
  * Tempest
@@ -214,7 +215,7 @@ The current libraries used in Functest container are::
 
 
 prepare_env.sh
-============
+==============
 
 This script can be adapted if you need to set up a specific environment before running the tests.
 
