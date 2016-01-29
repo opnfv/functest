@@ -199,7 +199,7 @@ def run_task(test_name):
     # :return: void
     #
 
-    logger.info('starting {} test ...'.format(test_name))
+    logger.info('Starting test scenario "{}" ...'.format(test_name))
 
     task_file = '{}task.yaml'.format(SCENARIOS_DIR)
     if not os.path.exists(task_file):
@@ -277,9 +277,9 @@ def run_task(test_name):
 
     """ parse JSON operation result """
     if task_succeed(json_results):
-        logger.info('{} test OK.'.format(test_name) + "\n")
+        logger.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
     else:
-        logger.info('{} test Failed.'.format(test_name) + "\n")
+        logger.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
 
 
 def main():
