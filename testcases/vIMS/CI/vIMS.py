@@ -131,8 +131,8 @@ def push_results():
     if args.report:
         logger.debug("Pushing results to DB....")
 
-        scenario = functest_utils.get_scenario(self.logger)
-        pod_name = functest_utils.get_pod_name(self.logger)
+        scenario = functest_utils.get_scenario(logger)
+        pod_name = functest_utils.get_pod_name(logger)
 
         functest_utils.push_results_to_db(db_url=DB_URL, case_name="vIMS",
                                           logger=logger, pod_name=pod_name,
