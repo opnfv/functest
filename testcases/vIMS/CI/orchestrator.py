@@ -106,7 +106,9 @@ class orchestrator:
             script += "pip install -r requirements.txt; "
             script += "timeout 1800 cfy bootstrap --install-plugins -p openstack-manager-blueprint.yaml -i inputs.yaml; "
             cmd = "/bin/bash -c '" + script + "'"
-            execute_command(cmd, self.logger)
+            error = execute_command(cmd, self.logger)
+            if error:
+                return error
 
             if self.logger:
                 self.logger.info("Cloudify-manager server is UP !")
@@ -160,8 +162,9 @@ class orchestrator:
         script += "cfy executions start -w install -d " + dep_name + " --timeout 1800; "
 
         cmd = "/bin/bash -c '" + script + "'"
-        execute_command(cmd, self.logger)
-
+        error = execute_command(cmd, self.logger)
+        if error:
+            return error
         if self.logger:
             self.logger.info("The deployment of {0} is ended".format(dep_name))
 
@@ -196,11 +199,16 @@ def execute_command(cmd, logger):
     if result != "" and logger:
         logger.debug(result)
     if p == 0:
-        return True
+        return False
     else:
         if logger:
             logger.error("Error when executing command %s" % cmd)
-        exit(-1)
+        f = open(output_file, 'r')
+        lines = f.readlines()
+        result = lines[len(lines) - 3]
+        result += lines[len(lines) - 2]
+        result += lines[len(lines) - 1]
+        return result
 
 
 def download_blueprints(blueprint_url, branch, dest_path):
