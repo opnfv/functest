@@ -1,25 +1,23 @@
-﻿*************************
+=========================
 OPNFV FUNCTEST user guide
-*************************
+=========================
 
 .. toctree::
    :numbered:
    :maxdepth: 2
 
 
-============
 Introduction
 ============
 
-The goal of this documents is to describe the Functest test cases as well as 
+The goal of this documents is to describe the Functest test cases as well as
 provide a procedure about how to execute (or launch) them.
 
-A presentation has been created for the first OPNFV Summit: `[4]`
+A presentation has been created for the first OPNFV Summit `[4]`_.
 
 It is assumed that Functest container has been properly installed `[1]`_.
 
 
-=============================
 Description of the test cases
 =============================
 
@@ -27,45 +25,45 @@ Functest is an OPNFV project dedicated to functional testing.
 In the continuous integration, it is launched after an OPNFV fresh installation.
 The Functest target is to verify the basic functions of the infrastructure.
 
-Functest includes different test suites which several test cases within. 
+Functest includes different test suites which several test cases within.
 Test cases are developed in Functest and in feature projects.
 
-The current list of test suites can be distributed in 3 main domains:
+The current list of test suites can be distributed in 3 main domains::
 
-+----------------+----------------+--------------------------------------------+
-| Method         | Test suite     | Comments                                   |
-+================+================+============================================+
-|                | vPing          | NFV "Hello World"                          |
-|                +----------------+--------------------------------------------+
-|    VIM         | vPing_userdata | Ping using userdata and cloud-init         |
-|                |                | mechanism                                  |
-|                +----------------+--------------------------------------------+
-|(Virtualised    | Tempest        | OpenStack reference test suite `[2]`_      |
-| Infrastructure +----------------+--------------------------------------------+
-| Manager)       | Rally scenario | OpenStack testing tool testing OpenStack   |
-|                |                | modules `[3]`_                             |
-+----------------+----------------+--------------------------------------------+
-|                | OpenDaylight   | Opendaylight Test suite                    |
-|                +----------------+--------------------------------------------+
-| Controllers    | ONOS           | Test suite of ONOS L2 and L3 functions     |
-|                +----------------+--------------------------------------------+
-|                | OpenContrail   |                                            |
-+----------------+----------------+--------------------------------------------+
-| Features       | vIMS           | Show the capability to deploy a real NFV   |
-|                |                | test cases.                                |
-|                |                | The IP Multimedia Subsytem is a typical    |
-|                |                | Telco test case, referenced by ETSI.       |
-|                |                | It provides a fully functional VoIP System.|
-|                +----------------+--------------------------------------------+
-|                | Promise        | Resource reservation and management project|
-|                |                | to identify NFV related requirements and   |
-|                |                | realize resource reservation for future    |
-|                |                | usage by capacity management of resource   |
-|                |                | pools regarding compute, network and       |
-|                |                | storage.                                   |
-|                +----------------+--------------------------------------------+
-|                | SDNVPN         |                                            |
-+----------------+----------------+--------------------------------------------+
+ +----------------+----------------+--------------------------------------------+
+ | Method         | Test suite     | Comments                                   |
+ +================+================+============================================+
+ |                | vPing          | NFV "Hello World"                          |
+ |                +----------------+--------------------------------------------+
+ |    VIM         | vPing_userdata | Ping using userdata and cloud-init         |
+ |                |                | mechanism                                  |
+ |                +----------------+--------------------------------------------+
+ |(Virtualised    | Tempest        | OpenStack reference test suite `[2]`_      |
+ | Infrastructure +----------------+--------------------------------------------+
+ | Manager)       | Rally scenario | OpenStack testing tool testing OpenStack   |
+ |                |                | modules `[3]`_                             |
+ +----------------+----------------+--------------------------------------------+
+ |                | OpenDaylight   | Opendaylight Test suite                    |
+ |                +----------------+--------------------------------------------+
+ | Controllers    | ONOS           | Test suite of ONOS L2 and L3 functions     |
+ |                +----------------+--------------------------------------------+
+ |                | OpenContrail   |                                            |
+ +----------------+----------------+--------------------------------------------+
+ | Features       | vIMS           | Show the capability to deploy a real NFV   |
+ |                |                | test cases.                                |
+ |                |                | The IP Multimedia Subsytem is a typical    |
+ |                |                | Telco test case, referenced by ETSI.       |
+ |                |                | It provides a fully functional VoIP System.|
+ |                +----------------+--------------------------------------------+
+ |                | Promise        | Resource reservation and management project|
+ |                |                | to identify NFV related requirements and   |
+ |                |                | realize resource reservation for future    |
+ |                |                | usage by capacity management of resource   |
+ |                |                | pools regarding compute, network and       |
+ |                |                | storage.                                   |
+ |                +----------------+--------------------------------------------+
+ |                | SDNVPN         |                                            |
+ +----------------+----------------+--------------------------------------------+
 
 
 Most of the test suites are developed upstream.
@@ -91,17 +89,17 @@ Functest considers OPNFV as a black box.
 OPNFV, since Brahmaputra, offers lots of possible combinations:
 
   * 3 controllers (OpenDayligh, ONOS, OpenContrail)
-  * 4 installers (Apex, Compass, Fuel, Joid) 
+  * 4 installers (Apex, Compass, Fuel, Joid)
 
 However most of the tests shall be runnable on any configuration.
 
 The different scenarios are described in the section hereafter.
 
 VIM
-===
+---
 
 vPing
------
+^^^^^
 
 The goal of this test can be described as follows::
 
@@ -141,7 +139,7 @@ The goal of this test can be described as follows::
 
 
 vPing_userdata
---------------
+^^^^^^^^^^^^^^
 
 The goal of this test can be described as follow::
 
@@ -171,7 +169,7 @@ This example can be considered as an "Hello World" example.
 It is the first basic example, it must work on any configuration.
 
 Tempest
--------
+^^^^^^^
 
 Tempest `[2]`_ is the reference OpenStack Integration test suite.
 It is a set of integration tests to be run against a live OpenStack cluster.
@@ -205,7 +203,7 @@ corresponding REST API interfaces.
 
 
 Rally bench test suites
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Rally `[3]`_ is a benchmarking tool that answers the question::
 
@@ -231,7 +229,7 @@ Basic SLA (stop test on errors) have been implemented.
 
 
 SDN Controllers
-===============
+---------------
 
 Brahmaputra introduces new SDN controllers.
 There are currently 3 possible controllers:
@@ -241,7 +239,7 @@ There are currently 3 possible controllers:
  * OpenContrail (OCL)
 
 OpenDaylight
-------------
+^^^^^^^^^^^^
 
 The OpenDaylight (ODL) test suite consists of a set of basic tests inherited
 from ODL project.
@@ -289,7 +287,7 @@ The list of tests can be described as follow:
 
 
 ONOS
-----
+^^^^
 
 TestON Framework is used to test ONOS function.
 The test cases deal with L2 and L3 functions.
@@ -298,54 +296,59 @@ The ONOS test suite can be run on any ONOS compliant scenario.
 
 The test cases may be described as follow:
 
- * onosfunctest: The mainly executable file contains the initialization of the
- docker environment and functions called by FUNCvirNetNB and FUNCvirNetNBL3
+ * onosfunctest: The mainly executable file contains the initialization of
+   the docker environment and functions called by FUNCvirNetNB and
+   FUNCvirNetNBL3
+
  * FUNCvirNetNB
 
-   * Create Network :: Post Network data and check it in ONOS
-   * Update Network :: Update the Network and compare it in ONOS
-   * Delete Network :: Delete the Network and check if it's NULL in ONOS or not
-   * Create Subnet :: Post Subnet data and check it in ONOS
-   * Update Subnet :: Update the Subnet and compare it in ONOS
-   * Delete Subnet :: Delete the Subnet and check if it's NULL in ONOS or not
-   * Create Port :: Post Port data and check it in ONOS
-   * Update Port :: Update the Port and compare it in ONOS
-   * Delete Port :: Delete the Port and check if it's NULL in ONOS or not
+   * Create Network: Post Network data and check it in ONOS
+   * Update Network: Update the Network and compare it in ONOS
+   * Delete Network: Delete the Network and check if it's NULL in ONOS or
+     not
+   * Create Subnet: Post Subnet data and check it in ONOS
+   * Update Subnet: Update the Subnet and compare it in ONOS
+   * Delete Subnet: Delete the Subnet and check if it's NULL in ONOS or not
+   * Create Port: Post Port data and check it in ONOS
+   * Update Port: Update the Port and compare it in ONOS
+   * Delete Port: Delete the Port and check if it's NULL in ONOS or not
 
  * FUNCvirNetNBL3
 
-   * Create Router :: Post dataes for create Router and check it in ONOS
-   * Update Router :: Update the Router and compare it in ONOS
-   * Delete Router :: Delete the Router dataes and check it in ONOS
-   * Create RouterInterface :: Post RouterInterface data to an exist Router and
-   check it in ONOS
-   * Delete RouterInterface :: Delete the RouterInterface and check the Router
-   * Create FloatingIp :: Post dataes for create FloatingIp and check it in ONOS
-   * Update FloatingIp :: Update the FloatingIp and compare it in ONOS
-   * Delete FloatingIp :: Delete the FloatingIp and check if it's NULL in ONOS
-   or not
-   * Create External Gateway :: Post dataes for create External Gateway to an
-   exit Router and check it
-   * Update External Gateway :: Update the External Gateway and compare it
-   * Delete External Gateway :: Delete the External Gateway and check if it's
-   NULL in ONOS or not
+   * Create Router: Post dataes for create Router and check it in ONOS
+   * Update Router: Update the Router and compare it in ONOS
+   * Delete Router: Delete the Router dataes and check it in ONOS
+   * Create RouterInterface: Post RouterInterface data to an exist Router
+     and check it in ONOS
+   * Delete RouterInterface: Delete the RouterInterface and check the Router
+   * Create FloatingIp: Post dataes for create FloatingIp and check it in
+     ONOS
+   * Update FloatingIp: Update the FloatingIp and compare it in ONOS
+   * Delete FloatingIp: Delete the FloatingIp and check if it's NULL in
+     ONOS  or not
+   * Create External Gateway: Post dataes for create External Gateway to an
+     exit Router and check it
+   * Update External Gateway: Update the External Gateway and compare it
+   * Delete External Gateway: Delete the External Gateway and check if it's
+     NULL in ONOS or not
 
 
 OpenContrail
-------------
+^^^^^^^^^^^^
 TODO OVNO
 
 
 
 Features
-========
+--------
 
 vIMS
-----
+^^^^
 The goal of this test suite consists of:
+
  * deploying a VNF orchestrator (cloudify)
- * deploy a Clearwater vIMS (IP Multimedia Subsystem) VNF from this orchestrator
- based on a TOSCA blueprint defined in `[5]`_
+ * deploy a Clearwater vIMS (IP Multimedia Subsystem) VNF from this
+   orchestrator based on a TOSCA blueprint defined in `[5]`_
  * run suite of signaling tests on top of this VNF
 
 The Clearwater architecture is described as follows:
@@ -363,16 +366,15 @@ The deployment of a complete functional VNF allows the test of most of the
 essential functions needed for a NFV system.
 
 Promise
--------
+^^^^^^^
 
 TODO promise
 
 
-==============
 Manual testing
 ==============
 
-Once the Functest docker container is running and Functest environment ready 
+Once the Functest docker container is running and Functest environment ready
 (through /home/opnfv/repos/functest/docker/prepare_env.sh script), the system is
 ready to run the tests.
 
@@ -427,7 +429,6 @@ full Functest run.
 You may also add you own test by adding a section into the function run_test()
 
 
-=================
 Automated testing
 =================
 
@@ -509,15 +510,14 @@ At the end of an automated execution, everything is cleaned.
 We keep only the users/networks that have been statically declared in '[9]'_
 
 
-============
 Test results
 ============
 
 VIM
-===
+---
 
 vPing
------
+^^^^^
 
 vPing results are displayed in the console::
 
@@ -544,7 +544,7 @@ vPing results are displayed in the console::
 
 
 vPing_userdata
---------------
+^^^^^^^^^^^^^^
 
 vPing_userdata results are displayed in the console::
 
@@ -566,7 +566,7 @@ A json file is produced and pushed into the test result database.
 
 
 Tempest
--------
+^^^^^^^
 
 The Tempest results are displayed in the console::
 
@@ -576,15 +576,15 @@ The Tempest results are displayed in the console::
   2016-01-28 07:56:59.512 23795 INFO rally.verification.tempest.tempest [-] Completed: Creating configuration file for Tempest.
   16-01-28 07:57:00,597 - run_tempest - INFO - Starting Tempest test suite: '--tests-file /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/custom_tests/test_list.txt'.
   Total results of verification:
-  
+  .
   +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
   | UUID                                 | Deployment UUID                      | Set name | Tests | Failures | Created at                 | Status   |
   +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
   | e0bf7770-2c0f-4c63-913c-cd51a6edd96d | 16582e1e-7b01-4d5d-9c13-a26db8567b7b |          | 144   | 30       | 2016-01-28 07:57:01.044856 | finished |
-  +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+  
-  
+  +--------------------------------------+--------------------------------------+----------+-------+----------+----------------------------+----------+
+  .
   Tests:
-  
+  .
   +------------------------------------------------------------------------------------------------------------------------------------------+-----------+---------+
   | name                                                                                                                                     | time      | status  |
   +------------------------------------------------------------------------------------------------------------------------------------------+-----------+---------+
@@ -605,7 +605,7 @@ inspect tempest.log file stored into related Rally deployment folder.
 The Tempest results are pushed to the Test Database.
 
 Rally
------
+^^^^^
 
 The Rally results are displayed in the console, each module is run one after the
 other. Tables are displayed::
@@ -636,16 +636,16 @@ other. Tables are displayed::
   Full duration: 71.4614388943
 
 
-At the end of the module test, a message is displayed to provide a global 
+At the end of the module test, a message is displayed to provide a global
 summary (Test OK or test failed). The raw results are pushed into the Test
-Database. 
+Database.
 
 
 Controllers
-===========
+-----------
 
 OpenDaylight
-------------
+^^^^^^^^^^^^
 
 The results of ODL tests can be seen in the console::
 
@@ -689,14 +689,14 @@ The results of ODL tests can be seen in the console::
 
  ODL result page
 
-.. figure:: ./images/functestODL.png
+.. figure:: ../images/functestODL.png
    :width: 170mm
    :align: center
    :alt: ODL suite result page
 
 
 ONOS
-----
+^^^^
 
 The ONOS test logs can be found in OnosSystemTest/TestON/logs
 (ONOSCI_PATH to be added),and also can be seen in the console::
@@ -778,16 +778,16 @@ If any problem occurs during the test, a ERROR message will be provided in the t
 
 
 OpenContrail
-------------
+^^^^^^^^^^^^
 
 TODO OVNO
 
 
 Feature
-=======
+-------
 
 vIMS
-----
+^^^^
 
 The results in the console are very verbose::
 
@@ -861,7 +861,12 @@ steps:
  * DEBUG - Pushing results to DB.... => tests saved
 
 
-==========================
+Promise
+^^^^^^^
+
+TODO Promise
+
+
 Functest in test Dashboard
 ==========================
 
@@ -881,45 +886,46 @@ Overall Architecture
 
 The Test result management in Brahmaputra can be summarized as follow::
 
-  +-------------+    +-------------+    +-------------+    
+  +-------------+    +-------------+    +-------------+
   |             |    |             |    |             |
   |   Test      |    |   Test      |    |   Test      |
-  | Project #1  |    | Project #2  |    | Project #N  |    
+  | Project #1  |    | Project #2  |    | Project #N  |
   |             |    |             |    |             |
-  +-------------+    +-------------+    +-------------+    
+  +-------------+    +-------------+    +-------------+
            |               |               |
-           ▼               ▼               ▼ 
+           V               V               V
        +-----------------------------------------+
        |                                         |
        |         Test Rest API front end         |
        |  http://testresults.opnfv.org/testapi   |
        |                                         |
        +-----------------------------------------+
-           ▲                |
-           |                ▼
+           A                |
+           |                V
            |     +-------------------------+
            |     |                         |
            |     |    Test Results DB      |
            |     |         Mongo DB        |
            |     |                         |
            |     +-------------------------+
-           | 
+           |
            |
      +----------------------+
      |                      |
      |    test Dashboard    |
      |                      |
      +----------------------+
- 
+
 The Test dashboard URL is: TODO LF
 A proto Test dashboard has been realized: http://testresults.opnfv.org/proto/
 
 Test API description
 --------------------
 
-The Test API is used to declare pods, projects, test cases and test results.
-An additional method dashboard has been added to post-process the raw results.
-The data model is very basic, 4 objects are created:
+The Test API is used to declare pods, projects, test cases and test results. An
+additional method dashboard has been added to post-process the raw results. The
+data model is very basic, 4 objects are created:
+
   * Pods
   * Test projects
   * Test cases
@@ -940,7 +946,7 @@ Test project::
   {
     "id": <ID>,
     "name": <Name of the Project>,
-    "creation_date": "YYYY-MM-DD HH:MM:SS",    
+    "creation_date": "YYYY-MM-DD HH:MM:SS",
     "description": <Short description>
   },
 
@@ -953,7 +959,7 @@ Test case::
     "description": <short description>,
     "url":<URL for longer description>
   },
-  
+
 Test results::
 
   {
@@ -968,156 +974,156 @@ Test results::
     "details":{
        <- the results to be put here ->
     }
-  
+
 
 For Brahmaputra, we got:
 
  * 16 pods
  * 18 projects
  * 101 test cases
- 
-The projects and the test cases have been frozen in December. 
+
+The projects and the test cases have been frozen in December.
 But all were not ready for Brahmaputra.
 
 
 
-The API can described as follow::
+The API can described as follow:
 
-**Version:**
+**Version:**::
 
-+--------+--------------------------+------------------------------------------+
-| Method | Path                     | Description                              |
-+========+==========================+==========================================+
-| GET    | /version                 | Get API version                          |
-+--------+--------------------------+------------------------------------------+
-
-
-**Pods:**
-
-+--------+--------------------------+------------------------------------------+
-| Method | Path                     | Description                              |
-+========+==========================+==========================================+
-| GET    | /pods                    | Get the list of declared Labs (PODs)     |
-+--------+--------------------------+------------------------------------------+
-| POST   | /pods                    | Declare a new POD                        |
-|        |                          | Content-Type: application/json           |
-|        |                          | {                                        |
-|        |                          |    "name": "pod_foo",                    |
-|        |                          |    "creation_date": "YYYY-MM-DD HH:MM:SS"|
-|        |                          | }                                        |
-+--------+--------------------------+------------------------------------------+
-
-**Projects:**
-
-+--------+--------------------------+------------------------------------------+
-| Method | Path                     | Description                              |
-+========+==========================+==========================================+
-| GET    | /test_projects           | Get the list of test projects            |
-+--------+--------------------------+------------------------------------------+
-| GET    |/test_projects/{project}  | Get details on {project}                 |
-|        |                          |                                          |
-+--------+--------------------------+------------------------------------------+
-| POST   | /test_projects           | Add a new test project                   |
-|        |                          | Content-Type: application/json           |
-|        |                          | {                                        |
-|        |                          |    "name": "project_foo",                |
-|        |                          |    "description": "whatever you want"    |
-|        |                          | }                                        |
-+--------+--------------------------+------------------------------------------+
-| PUT    | /test_projects/{project} | Update a test project                    |
-|        |                          |                                          |
-|        |                          | Content-Type: application/json           |
-|        |                          | {                                        |
-|        |                          |    <the field(s) you want to modify>     |
-|        |                          | }                                        |
-+--------+--------------------------+------------------------------------------+
-| DELETE | /test_projects/{project} | Delete a test project                    |
-+--------+--------------------------+------------------------------------------+
+ +--------+--------------------------+------------------------------------------+
+ | Method | Path                     | Description                              |
+ +========+==========================+==========================================+
+ | GET    | /version                 | Get API version                          |
+ +--------+--------------------------+------------------------------------------+
 
 
-**Test cases:**
+**Pods:**::
 
-+--------+--------------------------+------------------------------------------+
-| Method | Path                     | Description                              |
-+========+==========================+==========================================+
-| GET    | /test_projects/{project}/| Get the list of test cases of {project}  |
-|        | cases                    |                                          |
-+--------+--------------------------+------------------------------------------+
-| POST   | /test_projects/{project}/| Add a new test case to {project}         |
-|        | cases                    | Content-Type: application/json           |
-|        |                          | {                                        |
-|        |                          |    "name": "case_foo",                   |
-|        |                          |    "description": "whatever you want"    |
-|        |                          |    "creation_date": "YYYY-MM-DD HH:MM:SS"|
-|        |                          |    "url": "whatever you want"            |
-|        |                          | }                                        |
-+--------+--------------------------+------------------------------------------+
-| PUT    | /test_projects/{project}?| Modify a test case of {project}          |
-|        | case_name={case}          |                                         |
-|        |                          | Content-Type: application/json           |
-|        |                          | {                                        |
-|        |                          |    <the field(s) you want to modify>     |
-|        |                          | }                                        |
-+--------+--------------------------+------------------------------------------+
-| DELETE | /test_projects/{project}/| Delete a test case                       |
-|        | case_name={case}         |                                          |
-+----------------+----------------+--------------------------------------------+
+ +--------+--------------------------+------------------------------------------+
+ | Method | Path                     | Description                              |
+ +========+==========================+==========================================+
+ | GET    | /pods                    | Get the list of declared Labs (PODs)     |
+ +--------+--------------------------+------------------------------------------+
+ | POST   | /pods                    | Declare a new POD                        |
+ |        |                          | Content-Type: application/json           |
+ |        |                          | {                                        |
+ |        |                          |    "name": "pod_foo",                    |
+ |        |                          |    "creation_date": "YYYY-MM-DD HH:MM:SS"|
+ |        |                          | }                                        |
+ +--------+--------------------------+------------------------------------------+
 
-**Test Results:**
+**Projects:**::
 
-+--------+--------------------------+------------------------------------------+
-| Method | Path                     | Description                              |
-+========+==========================+==========================================+
-| GET    |/results/project={project}| Get the test results of {project}        |
-+--------+--------------------------+------------------------------------------+
-| GET    |/results/case={case}      | Get the test results of {case}           |
-+--------+--------------------------+------------------------------------------+
-| GET    |/results?pod={pod}        | get the results on pod {pod}             |
-+--------+--------------------------+------------------------------------------+
-| GET    |/results?installer={inst} | Get the test results of installer {inst} |
-+--------+--------------------------+------------------------------------------+
-| GET    |/results?version={version}| Get the test results of scenario         |
-|        |                          | {version}. Initially the version param   |
-|        |                          | was reflecting git version, in Functest  |
-|        |                          | it was decided to move to scenario       |
-+--------+--------------------------+------------------------------------------+
-| GET    |/results?project={project}| Get all the results of the test case     |
-|        |&case={case}              | {case} of the project {project} with     |
-|        |&version={scenario}       | version {scenario} installed by installer|
-|        |&installer={installer}    | {installer} on POD {pod} stored since    |
-|        |&pod={pod}                | {days} days                              | 
-|        |                          | {project_name} and {case_name} are       |
-|        |&period={days}            | mandatory, the other parameters are      |
-|        |                          | optional.                                |
-+--------+--------------------------+------------------------------------------+
-| POST   | /results                 | Add a new test results                   |
-|        |                          | Content-Type: application/json           |
-|        |                          | {                                        |
-|        |                          |    "project_name": "project_foo",        |
-|        |                          |    "case_name": "case_foo",              |
-|        |                          |    "pod_name": "pod_foo",                |
-|        |                          |    "installer": "installer_foo",         |
-|        |                          |    "version": "scenario_foo",            |
-|        |                          |    "details": <your results>             |
-|        |                          | }                                        |
-+--------+--------------------------+------------------------------------------+
+ +--------+--------------------------+------------------------------------------+
+ | Method | Path                     | Description                              |
+ +========+==========================+==========================================+
+ | GET    | /test_projects           | Get the list of test projects            |
+ +--------+--------------------------+------------------------------------------+
+ | GET    |/test_projects/{project}  | Get details on {project}                 |
+ |        |                          |                                          |
+ +--------+--------------------------+------------------------------------------+
+ | POST   | /test_projects           | Add a new test project                   |
+ |        |                          | Content-Type: application/json           |
+ |        |                          | {                                        |
+ |        |                          |    "name": "project_foo",                |
+ |        |                          |    "description": "whatever you want"    |
+ |        |                          | }                                        |
+ +--------+--------------------------+------------------------------------------+
+ | PUT    | /test_projects/{project} | Update a test project                    |
+ |        |                          |                                          |
+ |        |                          | Content-Type: application/json           |
+ |        |                          | {                                        |
+ |        |                          |    <the field(s) you want to modify>     |
+ |        |                          | }                                        |
+ +--------+--------------------------+------------------------------------------+
+ | DELETE | /test_projects/{project} | Delete a test project                    |
+ +--------+--------------------------+------------------------------------------+
 
 
-**Dashboard:**
+**Test cases:**::
 
-+--------+--------------------------+------------------------------------------+
-| Method | Path                     | Description                              |
-+========+==========================+==========================================+
-| GET    |/dashboard?               | Get all the dashboard ready results of   |
-|        |&project={project}        | {case} of the project {project}          |
-|        |&case={case}              | version {scenario} installed by installer|
-|        |&version={scenario}       | {installer} on POD {pod} stored since    |
-|        |&installer={installer}    | {days} days                              |
-|        |&pod={pod}                |                                          | 
-|        |&period={days}            | {project_name} and {case_name} are       |
-|        |                          | mandatory, the other parameters are      |
-|        |                          | optional.                                |
-+--------+--------------------------+------------------------------------------+
+ +--------+--------------------------+------------------------------------------+
+ | Method | Path                     | Description                              |
+ +========+==========================+==========================================+
+ | GET    | /test_projects/{project}/| Get the list of test cases of {project}  |
+ |        | cases                    |                                          |
+ +--------+--------------------------+------------------------------------------+
+ | POST   | /test_projects/{project}/| Add a new test case to {project}         |
+ |        | cases                    | Content-Type: application/json           |
+ |        |                          | {                                        |
+ |        |                          |    "name": "case_foo",                   |
+ |        |                          |    "description": "whatever you want"    |
+ |        |                          |    "creation_date": "YYYY-MM-DD HH:MM:SS"|
+ |        |                          |    "url": "whatever you want"            |
+ |        |                          | }                                        |
+ +--------+--------------------------+------------------------------------------+
+ | PUT    | /test_projects/{project}?| Modify a test case of {project}          |
+ |        | case_name={case}          |                                         |
+ |        |                          | Content-Type: application/json           |
+ |        |                          | {                                        |
+ |        |                          |    <the field(s) you want to modify>     |
+ |        |                          | }                                        |
+ +--------+--------------------------+------------------------------------------+
+ | DELETE | /test_projects/{project}/| Delete a test case                       |
+ |        | case_name={case}         |                                          |
+ +----------------+----------------+--------------------------------------------+
+
+**Test Results:**::
+
+ +--------+--------------------------+------------------------------------------+
+ | Method | Path                     | Description                              |
+ +========+==========================+==========================================+
+ | GET    |/results/project={project}| Get the test results of {project}        |
+ +--------+--------------------------+------------------------------------------+
+ | GET    |/results/case={case}      | Get the test results of {case}           |
+ +--------+--------------------------+------------------------------------------+
+ | GET    |/results?pod={pod}        | get the results on pod {pod}             |
+ +--------+--------------------------+------------------------------------------+
+ | GET    |/results?installer={inst} | Get the test results of installer {inst} |
+ +--------+--------------------------+------------------------------------------+
+ | GET    |/results?version={version}| Get the test results of scenario         |
+ |        |                          | {version}. Initially the version param   |
+ |        |                          | was reflecting git version, in Functest  |
+ |        |                          | it was decided to move to scenario       |
+ +--------+--------------------------+------------------------------------------+
+ | GET    |/results?project={project}| Get all the results of the test case     |
+ |        |&case={case}              | {case} of the project {project} with     |
+ |        |&version={scenario}       | version {scenario} installed by installer|
+ |        |&installer={installer}    | {installer} on POD {pod} stored since    |
+ |        |&pod={pod}                | {days} days                              |
+ |        |                          | {project_name} and {case_name} are       |
+ |        |&period={days}            | mandatory, the other parameters are      |
+ |        |                          | optional.                                |
+ +--------+--------------------------+------------------------------------------+
+ | POST   | /results                 | Add a new test results                   |
+ |        |                          | Content-Type: application/json           |
+ |        |                          | {                                        |
+ |        |                          |    "project_name": "project_foo",        |
+ |        |                          |    "case_name": "case_foo",              |
+ |        |                          |    "pod_name": "pod_foo",                |
+ |        |                          |    "installer": "installer_foo",         |
+ |        |                          |    "version": "scenario_foo",            |
+ |        |                          |    "details": <your results>             |
+ |        |                          | }                                        |
+ +--------+--------------------------+------------------------------------------+
+
+
+**Dashboard:**::
+
+ +--------+--------------------------+------------------------------------------+
+ | Method | Path                     | Description                              |
+ +========+==========================+==========================================+
+ | GET    |/dashboard?               | Get all the dashboard ready results of   |
+ |        |&project={project}        | {case} of the project {project}          |
+ |        |&case={case}              | version {scenario} installed by installer|
+ |        |&version={scenario}       | {installer} on POD {pod} stored since    |
+ |        |&installer={installer}    | {days} days                              |
+ |        |&pod={pod}                |                                          |
+ |        |&period={days}            | {project_name} and {case_name} are       |
+ |        |                          | mandatory, the other parameters are      |
+ |        |                          | optional.                                |
+ +--------+--------------------------+------------------------------------------+
 
 
 The results with dashboard method are post-processed from raw results.
@@ -1128,57 +1134,57 @@ Please note that dashboard results are not stored. Only raw results are stored.
 Test Dashboard
 --------------
 
-Based on dashboard post-porcessed results, a Test dashboard is automatically 
-generated. 
+Based on dashboard post-porcessed results, a Test dashboard is automatically
+generated.
 
 TODO LF
 or http://testresults.opnfv.org/proto/
 
-===============
+
 Troubleshooting
 ===============
 
 VIM
-===
+---
 
 vPing
------
+^^^^^
 
 
 vPing_userdata
---------------
+^^^^^^^^^^^^^^
 
 
 Tempest
--------
+^^^^^^^
 
 In the upstream OpenStack CI all the Tempest test cases are supposed to pass.
 If some test cases fail in an OPNFV deployment, the reason is very probably one
-of the following:
+of the following::
 
-+-----------------------------+------------------------------------------------+
-| Error                       | Details                                        |
-+=============================+================================================+
-| Resources required for test | Such resources could be e.g. an external       |
-| case execution are missing  | network and access to the management subnet    |
-|                             | (adminURL) from the Functest docker container. |
-+-----------------------------+------------------------------------------------+
-| OpenStack components or     | Check running services in the controller and   |
-| services are missing or not | compute nodes (e.g. with "systemctl" or        |
-| configured properly         | "service" commands). Configuration parameters  |
-|                             | can be verified from related .conf files       |
-|                             | located under /etc/<component> directories.    |
-+--------------------------------+---------------------------------------------+
-| Some resources required for | The tempest.conf file, automatically generated |
-| execution test cases are    | by Rally in Functest, does not contain all the |
-| missing                     | needed parameters or some parameters are not   |
-|                             | set properly.                                  |
-|                             | The tempest.conf file is located in /home/opnfv|
-|                             | /.rally/tempest/for-deployment-<UUID> in       |
-|                             | Functest container                             |
-|                             | Use "rally deployment list" command in order to|
-|                             | check UUID of current deployment.              |
-+-----------------------------+------------------------------------------------+
+ +-----------------------------+------------------------------------------------+
+ | Error                       | Details                                        |
+ +=============================+================================================+
+ | Resources required for test | Such resources could be e.g. an external       |
+ | case execution are missing  | network and access to the management subnet    |
+ |                             | (adminURL) from the Functest docker container. |
+ +-----------------------------+------------------------------------------------+
+ | OpenStack components or     | Check running services in the controller and   |
+ | services are missing or not | compute nodes (e.g. with "systemctl" or        |
+ | configured properly         | "service" commands). Configuration parameters  |
+ |                             | can be verified from related .conf files       |
+ |                             | located under /etc/<component> directories.    |
+ +-----------------------------+------------------------------------------------+
+ | Some resources required for | The tempest.conf file, automatically generated |
+ | execution test cases are    | by Rally in Functest, does not contain all the |
+ | missing                     | needed parameters or some parameters are not   |
+ |                             | set properly.                                  |
+ |                             | The tempest.conf file is located in /home/opnfv|
+ |                             | /.rally/tempest/for-deployment-<UUID> in       |
+ |                             | Functest container                             |
+ |                             | Use "rally deployment list" command in order to|
+ |                             | check UUID of current deployment.              |
+ +-----------------------------+------------------------------------------------+
 
 
 When some Tempest test case fails, captured traceback and possibly also related
@@ -1188,33 +1194,32 @@ related Rally deployment folder.
 
 
 Rally
------
+^^^^^
 
 Same error causes than for Tempest mentioned above may lead to error in Rally.
 
 Controllers
-===========
+-----------
 
 ODL
----
+^^^
 
 
 ONOS
-----
+^^^^
 
 
 OpenContrail
-------------
+^^^^^^^^^^^^
 
 
 Feature
-=======
+-------
 
 vIMS
-----
+^^^^
 
 
-==========
 References
 ==========
 
@@ -1227,7 +1232,7 @@ References
 .. _`[7]`: http://testresults.opnfv.org/testapi/test_projects/functest/cases
 .. _`[8]`: https://wiki.openstack.org/wiki/Governance/DefCoreCommittee
 .. _`[9]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml
-.. _`[10]`:https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/rally_cert/task.yaml
+.. _`[10]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/rally_cert/task.yaml
 
 OPNFV main site: opnfvmain_.
 
