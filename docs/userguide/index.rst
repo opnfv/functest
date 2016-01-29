@@ -1,4 +1,4 @@
-﻿*************************
+*************************
 OPNFV FUNCTEST user guide
 *************************
 
@@ -365,7 +365,54 @@ essential functions needed for a NFV system.
 Promise
 -------
 
-TODO promise
+Promise provides a basic set of test cases as part of Brahmaputra.
+
+The available 33 test cases can be grouped into 7 test suites:
+
+    #. Add a new OpenStack provider into resource pool: Registers
+       OpenStack into a new resource pool and adds more capacity associated
+       with this pool.
+
+    #. Allocation without reservation: Creates a new server in OpenStack
+       and adds a new allocation record in Promise shim-layer.
+
+    #. Allocation using reservation for immediate use: Creates a resource
+       reservation record with no start/end time and immediately creates a new
+       server in OpenStack and add a new allocation record in Promise
+       shim-layer.
+
+    #. Reservation for future use: Creates a resource reservation record
+       for a future start time, queries, modifies and cancels the newly created
+       reservation.
+
+    #. Capacity planning: Decreases and increases the available capacity
+       from a provider in the future and queries the available collections and
+       utilizations.
+
+    #. Reservation with conflict: Tries to create reservations for
+       immediate and future use with conflict.
+
+    #. Cleanup test allocations: Destroys all allocations in OpenStack.
+
+The test results are pushed into the LF test DB:
+  * Duration of the Promise test case
+  * Number of tests / failures
+
+The specific parameters for Promise can be found in config_functest.yaml and
+include::
+
+   promise:
+     general:
+         tenant_name: Name of the OpenStack tenant/project (e.g. promise)
+         tenant_description: Description of the OpenStack tenant (e.g. promise Functionality Testing)
+         user_name: Name of the user tenant (e.g. promiser)
+         user_pwd: Password of the user tenant (e.g. test)
+         image_name: Name of the software image (e.g. promise-img)
+         flavor_name: Name of the flavor (e.g. promise-flavor with 1 vCPU and 512 MB RAM)
+         flavor_vcpus: 1
+         flavor_ram: 512
+         flavor_disk: 0
+
 
 
 ==============
