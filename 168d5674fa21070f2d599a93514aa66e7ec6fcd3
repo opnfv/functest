@@ -22,6 +22,397 @@
       "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_42460a25",
+        "filename": "docs/userguide/description.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "s/Method/Domain\nIn the sentence above we talk about \"3 main domains\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 9
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_224b0e2d",
+        "filename": "docs/userguide/description.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "e.g.",
+      "range": {
+        "startLine": 55,
+        "startChar": 29,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_e254d6cb",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "Is this a separate message and also needs an arrow?",
+      "range": {
+        "startLine": 83,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 31
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_c251dad9",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "s/other/Other",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 9
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_8263e2b0",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "Proposal to make it italic:  *--test-file*",
+      "range": {
+        "startLine": 116,
+        "startChar": 31,
+        "endLine": 116,
+        "endChar": 43
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_a25edee7",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "`[4]`_.",
+      "range": {
+        "startLine": 119,
+        "startChar": 59,
+        "endLine": 119,
+        "endChar": 65
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_e26bb683",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "should this be a sub-section title? I believe indentation is wrong.",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 524,
+        "endChar": 16
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_c268ba89",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "s/,and/, and/",
+      "range": {
+        "startLine": 536,
+        "startChar": 25,
+        "endLine": 536,
+        "endChar": 29
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_a205bec3",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "40.529 vs 40,530",
+      "range": {
+        "startLine": 544,
+        "startChar": 19,
+        "endLine": 545,
+        "endChar": 24
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_820ac2d0",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "\"INFO: \" vs \"INFO - \" vs \"INFO \"",
+      "range": {
+        "startLine": 691,
+        "startChar": 0,
+        "endLine": 695,
+        "endChar": 11
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_620fc6e2",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "in the previous section we don\u0027t have those captions in bold.\n\ns/**Version:**::/Version::/\n\nor make the above titles bold.\n\nsame also for the following titles.",
+      "range": {
+        "startLine": 826,
+        "startChar": 0,
+        "endLine": 826,
+        "endChar": 14
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_4214caf4",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "s/ |/| /",
+      "range": {
+        "startLine": 896,
+        "startChar": 37,
+        "endLine": 896,
+        "endChar": 39
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_22f9cec8",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "fix this",
+      "range": {
+        "startLine": 904,
+        "startChar": 10,
+        "endLine": 904,
+        "endChar": 38
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_6258e6fa",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "*--no-clean*",
+      "range": {
+        "startLine": 52,
+        "startChar": 56,
+        "endLine": 52,
+        "endChar": 66
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_425deae8",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "run_test().",
+      "range": {
+        "startLine": 59,
+        "startChar": 68,
+        "endLine": 59,
+        "endChar": 78
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_2272ee7c",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "why \"#7\" ?",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 6
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_026ff293",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-01-29T20:58:35Z",
+      "side": 1,
+      "message": "\"#11\"?",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 7
+      },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
