@@ -39,6 +39,7 @@ Functest can be described as follow::
 
 Functest deals with internal and external test cases.
 The Internal test cases in Brahmaputra are:
+
  * vPing
  * ODL
  * Tempest
@@ -77,41 +78,41 @@ The Functest docker directories are::
             |-- releng
             `-- vims-test
 
-
-+--------------+-------------------+---------------------------------------------------------+
-| Directory    | Subdirectory      | Comments                                                |
-+--------------+-------------------+---------------------------------------------------------+
-|              | <project>/conf    | All the useful configuration file(s) for <project>      |
-|              |                   | the openstack creds are put there for CI                |
-|              |                   | It is recommended to push it there when passing the     |
-|              |                   | credentials to container through the -v option          |
-|              +-------------------+---------------------------------------------------------+
-|    opnfv     | <project>/data    | Usefull data, images for <projects>                     |
-|              |                   | By default we put an image cirros-0.3.4-x86_64-disk.img |
-|              |                   | This image can be used by any projects                  |
-|              +-------------------+---------------------------------------------------------+
-|              | <project>/results | Local result directory of project <project>             |
-+--------------+-------------------+---------------------------------------------------------+
-|              | bgpvpn            |                                                         |
-|              +-------------------+                                                         +
-| repos        | doctor            |                                                         |
-|              +-------------------+                                                         +
-|              | functest          |                                                         |
-|              +-------------------+                                                         +
-|              | odl_integration   |                                                         |
-|              +-------------------+    Clone of the useful repositories                     +
-|              | onos              |     These repositories may include:                     |
-|              +-------------------+                - tooling                                +
-|              | promise           |                - scenario                               |
-|              +-------------------+                - scripts                                +
-|              | rally             |                                                         |
-|              +-------------------+                                                         +
-|              | releng            |                                                         |
-|              +-------------------+                                                         +
-|              | vims-test         |                                                         |
-|              +-------------------+                                                         +
-|              | <your project>    |                                                         |
-+--------------+-------------------+---------------------------------------------------------+
+::
+ +--------------+-------------------+---------------------------------------------------------+
+ | Directory    | Subdirectory      | Comments                                                |
+ +--------------+-------------------+---------------------------------------------------------+
+ |              | <project>/conf    | All the useful configuration file(s) for <project>      |
+ |              |                   | the openstack creds are put there for CI                |
+ |              |                   | It is recommended to push it there when passing the     |
+ |              |                   | credentials to container through the -v option          |
+ |              +-------------------+---------------------------------------------------------+
+ |    opnfv     | <project>/data    | Usefull data, images for <projects>                     |
+ |              |                   | By default we put an image cirros-0.3.4-x86_64-disk.img |
+ |              |                   | This image can be used by any projects                  |
+ |              +-------------------+---------------------------------------------------------+
+ |              | <project>/results | Local result directory of project <project>             |
+ +--------------+-------------------+---------------------------------------------------------+
+ |              | bgpvpn            |                                                         |
+ |              +-------------------+                                                         +
+ | repos        | doctor            |                                                         |
+ |              +-------------------+                                                         +
+ |              | functest          |                                                         |
+ |              +-------------------+                                                         +
+ |              | odl_integration   |                                                         |
+ |              +-------------------+    Clone of the useful repositories                     +
+ |              | onos              |     These repositories may include:                     |
+ |              +-------------------+                - tooling                                +
+ |              | promise           |                - scenario                               |
+ |              +-------------------+                - scripts                                +
+ |              | rally             |                                                         |
+ |              +-------------------+                                                         +
+ |              | releng            |                                                         |
+ |              +-------------------+                                                         +
+ |              | vims-test         |                                                         |
+ |              +-------------------+                                                         +
+ |              | <your project>    |                                                         |
+ +--------------+-------------------+---------------------------------------------------------+
 
 Before running the test suite, you must prepare the environement by running::
 
@@ -214,7 +215,7 @@ The current libraries used in Functest container are::
 
 
 prepare_env.sh
-============
+==============
 
 This script can be adapted if you need to set up a specific environment before running the tests.
 
