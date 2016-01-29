@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_fcb8ff2b",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "docker pull opnfv/functest:brahmaputra.1.0",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_9c87cb61",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "remove foreman, it is not part of Brahmaputra.",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_7c7c0f73",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "remove foreman.",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_dcb54332",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "The minimum command to START the Functest Docker CONTAINER can be described as follow (or as follows??)::",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_5c815349",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "opnfv/functest:brahmaputra.1.0",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_3c969795",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "opnfv/functest:latest_stable:brahmaputra.1.0",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_1c93dba4",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "opnfv/functest:latest_stable:brahmaputra.1.0",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_fc8fdf73",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "\"will be paste\" sounds strange :)\n\"Will be mounted\" sounds better.\n\nAnd also, I don",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_dc8c2382",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "The begining of this sentence sound a bit strange...",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_bce9671c",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "Sorry for my ignorance, but arborescence sounds strange, I have always seen \"directory structure\", but it is ok.",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_9ceeab21",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "again \"are paste\"",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_1cdabb78",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "Can we replace the first \"$\" by a hash \"#\" for the whole document? I think it would look nicer, but it",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_fce6bf43",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "I prefer to use \"deployment\" instead of \"installation\". Why have you changed the text to the old? You needed to rebase before comiting this :). There are many changes since last doc update.",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_dce30332",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-29T14:53:22Z",
+      "side": 1,
+      "message": "Why have you removed the 5 bullets??? I guess for the same reason as above...",
+      "revId": "2e896ce4186f6be958492e14bdb1e766c29ced0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
