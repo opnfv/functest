@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_4d887be7",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-30T09:03:28Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 101,
+        "startChar": 33,
+        "endLine": 101,
+        "endChar": 34
+      },
+      "revId": "38cb5f334a2acc034b9757eba68561d134da79fa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_2d6d3f33",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-30T09:03:28Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 102,
+        "startChar": 30,
+        "endLine": 102,
+        "endChar": 31
+      },
+      "revId": "38cb5f334a2acc034b9757eba68561d134da79fa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_0d6a831a",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-01-30T09:03:28Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 105,
+        "startChar": 38,
+        "endLine": 105,
+        "endChar": 39
+      },
+      "revId": "38cb5f334a2acc034b9757eba68561d134da79fa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
