@@ -93,9 +93,29 @@ def GetResult():
     else:
         logger.debug("Testcases Success")
         Result = "Success"
-    payload={'timestart': str(starttime),
-              'duration': str(duration),
-                'status': Result}
+    #payload={'timestart': str(starttime),
+    #          'duration': str(duration),
+    #            'status': Result}
+    cmd = "grep -rnh 'Execution Time' " + LOGPATH
+    Resultbuffer = os.popen(cmd).read()
+    time1 = Resultbuffer[114:128] 
+    time2 = Resultbuffer[28:42] 
+    cmd = "grep -rnh 'Success Percentage' " + LOGPATH + "/FUNCvirNetNB_*"
+    Resultbuffer = os.popen(cmd).read()
+    if Resultbuffer.find('100%') >= 0: 
+        result1='Success'
+    else:
+        result1='Failed'
+    cmd = "grep -rnh 'Success Percentage' " + LOGPATH + "/FUNCvirNetNBL3*"
+    Resultbuffer = os.popen(cmd).read()
+    if Resultbuffer.find('100%') >= 0:
+        result2='Success'
+    else:
+        result2='Failed'
+    payload={'FUNCvirNet':{'duration': time1,
+                           'result': result1},
+             'FUNCvirNetL3':{'duration': time2,
+                           'result': result2}}
     return payload
 
 def SetOnosIp():
