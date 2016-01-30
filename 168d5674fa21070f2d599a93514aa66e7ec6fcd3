@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a4e6583_6d20d79b",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-30T00:03:25Z",
+      "side": 1,
+      "message": "I prefer: \nInside the container, there must be the following directory structure\n\nor something similar, I try to avoid \"you\" and \"your\" in official documents, but it is something that can be reviewed in depth later, as \"bugfixes\"...",
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e6583_62f3460b",
         "filename": "docs/configguide/index.rst",
         "patchSetId": 2
@@ -42,6 +59,23 @@
         "endLine": 14,
         "endChar": 9
       },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_8d043316",
+        "filename": "docs/userguide/description.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-30T00:03:25Z",
+      "side": 1,
+      "message": "The...(missing T)",
       "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -94,6 +128,24 @@
     },
     {
       "key": {
+        "uuid": "5a4e6583_6d09f72b",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-30T00:03:25Z",
+      "side": 1,
+      "message": "No, actually we check the console log outside the VMs.. no need for extra arrows I think..",
+      "parentUuid": "5a4e6583_e254d6cb",
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e6583_c251dad9",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 2
@@ -134,6 +186,24 @@
         "endLine": 116,
         "endChar": 43
       },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_4d0e3b36",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-30T00:03:25Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "5a4e6583_8263e2b0",
       "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -255,6 +325,24 @@
     },
     {
       "key": {
+        "uuid": "5a4e6583_2d13ff5d",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-30T00:03:25Z",
+      "side": 1,
+      "message": "Good point, actually the first 2 INFO\u0027s are right (they come from different loggers), however, the third one should be INFO -",
+      "parentUuid": "5a4e6583_820ac2d0",
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e6583_620fc6e2",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 2
@@ -347,6 +435,24 @@
     },
     {
       "key": {
+        "uuid": "5a4e6583_0d10434d",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-30T00:03:25Z",
+      "side": 1,
+      "message": "+1 for italic for these kind of things",
+      "parentUuid": "5a4e6583_6258e6fa",
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e6583_425deae8",
         "filename": "docs/userguide/runfunctest.rst",
         "patchSetId": 2
@@ -387,6 +493,24 @@
         "endLine": 123,
         "endChar": 6
       },
+      "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_ed1cc76c",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-01-30T00:03:25Z",
+      "side": 1,
+      "message": "This is commented out because we were not integrated when we wrote this. Please, Chris, can you remove the hashes? Let\u0027s avoid confusion. If in the end some tests are scoped out, we will remove the line.",
+      "parentUuid": "5a4e6583_2272ee7c",
       "revId": "168d5674fa21070f2d599a93514aa66e7ec6fcd3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
