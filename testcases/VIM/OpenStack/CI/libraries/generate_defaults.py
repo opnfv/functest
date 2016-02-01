@@ -86,7 +86,7 @@ def get_images(nova_client):
 
 
 def get_networks(neutron_client):
-    logger.info("Getting networks")
+    logger.debug("Getting networks")
     dic_networks = {}
     networks = functest_utils.get_network_list(neutron_client)
     if networks != None:
@@ -95,7 +95,7 @@ def get_networks(neutron_client):
     return {'networks': dic_networks}
 
 def get_routers(neutron_client):
-    logger.info("Getting routers")
+    logger.debug("Getting routers")
     dic_routers = {}
     routers = functest_utils.get_router_list(neutron_client)
     if routers != None:
@@ -105,7 +105,7 @@ def get_routers(neutron_client):
 
 
 def get_security_groups(neutron_client):
-    logger.info("Getting Security groups...")
+    logger.debug("Getting Security groups...")
     dic_secgroups = {}
     secgroups = functest_utils.get_security_groups(neutron_client)
     if not (secgroups is None or len(secgroups) == 0):
@@ -167,7 +167,10 @@ def main():
     with open(DEFAULTS_FILE, 'w+') as yaml_file:
         yaml_file.write(yaml.safe_dump(defaults, default_flow_style=False))
         yaml_file.seek(0)
+        logger.info("Openstack Defaults found in the deployment:")
         print yaml_file.read()
+        logger.debug("NOTE: These objects will NOT be deleted after "+\
+                     "running the tests.")
 
     exit(0)
 
