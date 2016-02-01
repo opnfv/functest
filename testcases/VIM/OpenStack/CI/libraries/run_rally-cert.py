@@ -192,6 +192,32 @@ def build_task_args(test_file_name):
     return task_args
 
 
+def get_output(proc):
+    result = ""
+    if args.verbose:
+        while proc.poll() is None:
+            line = proc.stdout.readline()
+            print line.replace('\n', '')
+            result += line
+    else:
+        while proc.poll() is None:
+            line = proc.stdout.readline()
+            if "Load duration" in line or \
+               "started" in line or \
+               "finished" in line or \
+               " Preparing" in line or \
+               "+-" in line or \
+               "|" in line:
+                result += line
+            elif "test scenario" in line:
+                result += "\n" + line
+            elif "Full duration" in line:
+                result += line + "\n\n"
+        logger.info("\n" + result)
+
+    return result
+
+
 def run_task(test_name):
     #
     # the "main" function of the script who launch rally for a task
@@ -219,25 +245,8 @@ def run_task(test_name):
     logger.debug('running command line : {}'.format(cmd_line))
 
     p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE, stderr=RALLY_STDERR, shell=True)
-    result = ""
-    while p.poll() is None:
-        #l = p.stdout.readline()
-        #line = l.replace('\n', '')
-        line = p.stdout.readline()
-        if "Load duration" in line or \
-            "started" in line or \
-            "finished" in line or \
-            " Preparing" in line or \
-            "+-" in line or \
-            "|" in line:
-            result += line
-        elif "test scenario" in line:
-            result += "\n" + line
-        elif "Full duration" in line:
-            result += line + "\n\n"
-
-    logger.info("\n" + result)
-    task_id = get_task_id(result)
+    output = get_output(p)
+    task_id = get_task_id(output)
     logger.debug('task_id : {}'.format(task_id))
 
     if task_id is None:
