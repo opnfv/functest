@@ -20,6 +20,7 @@ import yaml
 import keystoneclient.v2_0.client as ksclient
 import glanceclient.client as glclient
 import novaclient.client as nvclient
+from neutronclient.v2_0 import client as ntclient
 
 parser = argparse.ArgumentParser()
 
@@ -172,6 +173,13 @@ def main():
         exit(-1)
     logger.debug("Flavor '%s' with ID '%s' created successfully." % (FLAVOR_NAME,
                                                                     flavor_id))
+    neutron = ntclient.Client(**nt_creds)
+    private_net=functest_utils.get_private_net(neutron)
+    if private_net == None:
+        logger.error("There is no private network in the deployment. Aborting...")
+        exit(-1)
+    logger.debug("Using private network '%s' (%s)." % (private_net['name'],
+                                                       private_net['id']))
 
     logger.info("Exporting environment variables...")
     os.environ["NODE_ENV"] = "functest"
@@ -180,6 +188,8 @@ def main():
     os.environ["OS_PASSWORD"] = USER_PWD
     os.environ["OS_TEST_IMAGE"] = image_id
     os.environ["OS_TEST_FLAVOR"] = flavor_id
+    os.environ["OS_TEST_NETWORK"] = private_net['id']
+
 
     os.chdir(PROMISE_REPO)
     results_file=open('promise-results.json','w+')
