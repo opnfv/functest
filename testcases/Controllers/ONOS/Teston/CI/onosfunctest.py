@@ -178,12 +178,12 @@ def main():
     try:
         logger.debug("Push result into DB")
         # TODO check path result for the file
-        git_version = functest_utils.get_git_branch(REPO_PATH)
+        scenario = functest_utils.get_scenario(logger)
         pod_name = functest_utils.get_pod_name(logger)
         result = GetResult()
         functest_utils.push_results_to_db(TEST_DB,
                                           "ONOS",
-                                          logger, pod_name, git_version,
+                                          logger, pod_name, scenario,
                                           payload=result)
     except:
         logger.error("Error pushing results into Database")
