@@ -214,10 +214,6 @@ def action_clean():
         logger.debug("Removing Result directory")
         shutil.rmtree(RALLY_RESULT_DIR,ignore_errors=True)
 
-    logger.debug("Cleaning up the OpenStack deployment...")
-    cmd='python ' + FUNCTEST_REPO + \
-        '/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py --debug'
-    functest_utils.execute_command(cmd,logger)
     logger.info("Functest environment clean!")
 
 

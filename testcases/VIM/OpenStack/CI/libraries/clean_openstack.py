@@ -59,20 +59,24 @@ if not os.path.exists(REPO_PATH):
 sys.path.append(REPO_PATH + "testcases/")
 import functest_utils
 
-with open(REPO_PATH+"testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml") as f:
-    defaults_yaml = yaml.safe_load(f)
-f.close()
+DEFAULTS_FILE = '/home/opnfv/functest/conf/os_defaults.yaml'
 
-installer = os.environ["INSTALLER_TYPE"]
+try:
+    with open(DEFAULTS_FILE) as f:
+        defaults_yaml = yaml.safe_load(f)
+except Exception, e:
+    logger.info("The file %s does not exist. Please run generate_defaults.py "
+                "to create the OpenStack defaults. "
+                "Aborting cleanup..." % DEFAULTS_FILE)
+    exit(0)
 
-default_images = defaults_yaml.get(installer).get("images")
-default_networks = defaults_yaml.get(installer).get("networks") +\
-    defaults_yaml.get("common").get("networks")
-default_routers = defaults_yaml.get(installer).get("routers") +\
-    defaults_yaml.get("common").get("routers")
-default_security_groups = defaults_yaml.get(installer).get("security_groups")
-default_users = defaults_yaml.get(installer).get("users")
-default_tenants = defaults_yaml.get(installer).get("tenants")
+default_images = defaults_yaml.get('images')
+default_instances = defaults_yaml.get('instances')
+default_networks = defaults_yaml.get('networks')
+default_routers = defaults_yaml.get('routers')
+default_security_groups = defaults_yaml.get('secgroups')
+default_users = defaults_yaml.get('users')
+default_tenants = defaults_yaml.get('tenants')
 
 def separator():
     logger.info("-------------------------------------------")
@@ -116,7 +120,7 @@ def remove_images(nova_client):
         image_name = getattr(image, 'name')
         image_id = getattr(image, 'id')
         logger.debug("'%s', ID=%s " %(image_name,image_id))
-        if image_name not in default_images:
+        if image_id not in default_images:
             logger.debug("Removing image '%s', ID=%s ..." % (image_name,image_id))
             if functest_utils.delete_glance_image(nova_client, image_id):
                 logger.debug("  > Done!")
@@ -189,7 +193,7 @@ def remove_networks(neutron_client):
             net_id = network['id']
             net_name = network['name']
             logger.debug(" '%s', ID=%s " %(net_name,net_id))
-            if net_name in default_networks:
+            if net_id in default_networks:
                 logger.debug("   > this is a default network and will NOT be deleted.")
             elif network['router:external'] == True:
                 logger.debug("   > this is an external network and will NOT be deleted.")
@@ -273,7 +277,7 @@ def remove_routers(neutron_client, routers):
     for router in routers:
         router_id = router['id']
         router_name = router['name']
-        if router_name not in default_routers:
+        if router_id not in default_routers:
             logger.debug("Checking '%s' with ID=(%s) ..." % (router_name,router_id))
             if router['external_gateway_info'] != None:
                 logger.debug("Router has gateway to external network. Removing link...")
@@ -303,7 +307,7 @@ def remove_security_groups(neutron_client):
         secgroup_name = secgroup['name']
         secgroup_id = secgroup['id']
         logger.debug("'%s', ID=%s " %(secgroup_name,secgroup_id))
-        if secgroup_name not in default_security_groups:
+        if secgroup_id not in default_security_groups:
             logger.debug(" Removing '%s'..." % secgroup_name)
             if functest_utils.delete_security_group(neutron_client, secgroup_id):
                 logger.debug("  > Done!")
@@ -326,7 +330,7 @@ def remove_users(keystone_client):
         user_name = getattr(user, 'name')
         user_id = getattr(user, 'id')
         logger.debug("'%s', ID=%s " %(user_name,user_id))
-        if user_name not in default_users:
+        if user_id not in default_users:
             logger.debug(" Removing '%s'..." % user_name)
             if functest_utils.delete_user(keystone_client,user_id):
                 logger.debug("  > Done!")
@@ -348,7 +352,7 @@ def remove_tenants(keystone_client):
         tenant_name=getattr(tenant, 'name')
         tenant_id = getattr(tenant, 'id')
         logger.debug("'%s', ID=%s " %(tenant_name,tenant_id))
-        if tenant_name not in default_tenants:
+        if tenant_id not in default_tenants:
             logger.debug(" Removing '%s'..." % tenant_name)
             if functest_utils.delete_tenant(keystone_client,tenant_id):
                 logger.debug("  > Done!")
