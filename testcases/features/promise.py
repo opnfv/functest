@@ -162,17 +162,24 @@ def main():
         exit(-1)
     logger.debug("Image '%s' with ID '%s' created successfully." % (IMAGE_NAME,
                                                                     image_id))
-
-    flavor_id = functest_utils.create_flavor(nova,
-                                             FLAVOR_NAME,
-                                             FLAVOR_RAM,
-                                             FLAVOR_DISK,
-                                             FLAVOR_VCPUS)
-    if not flavor_id:
-        logger.error("Failed to create the Flavor...")
-        exit(-1)
-    logger.debug("Flavor '%s' with ID '%s' created successfully." % (FLAVOR_NAME,
+    flavor_id = functest_utils.get_flavor_id(nova, FLAVOR_NAME)
+    if flavor_id == '':
+        logger.info("Creating flavor '%s'..." % FLAVOR_NAME)
+        flavor_id = functest_utils.create_flavor(nova,
+                                                 FLAVOR_NAME,
+                                                 FLAVOR_RAM,
+                                                 FLAVOR_DISK,
+                                                 FLAVOR_VCPUS)
+        if not flavor_id:
+            logger.error("Failed to create the Flavor...")
+            exit(-1)
+        logger.debug("Flavor '%s' with ID '%s' created successfully." %
+                                            (FLAVOR_NAME, flavor_id))
+    else:
+        logger.debug("Using existing flavor '%s' with ID '%s'..." % (FLAVOR_NAME,
                                                                     flavor_id))
+
+
     neutron = ntclient.Client(**nt_creds)
     private_net=functest_utils.get_private_net(neutron)
     if private_net == None:
