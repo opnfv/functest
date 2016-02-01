@@ -11,7 +11,7 @@ apex:
     routers: []
     security_groups: ['default']
     tenants: ['admin', 'services', 'service']
-    users: ['heat', 'heat-cfn', 'cinder', 'nova', 'swift', 'glance', 'neutron', 'admin', 'ceilometer', 'cinderv2']
+    users: ['heat', 'heat-cfn', 'cinder', 'nova', 'swift', 'glance', 'neutron', 'admin', 'ceilometer', 'cinderv2', 'aodh']
 compass:
     images: []
     networks: ['ext-net']
