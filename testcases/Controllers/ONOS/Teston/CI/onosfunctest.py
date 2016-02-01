@@ -98,11 +98,11 @@ def GetResult():
     #            'status': Result}
     cmd = "grep -rnh 'Execution Time' " + LOGPATH
     Resultbuffer = os.popen(cmd).read()
-    time1 = Resultbuffer[114:128] 
-    time2 = Resultbuffer[28:42] 
+    time1 = Resultbuffer[114:128]
+    time2 = Resultbuffer[28:42]
     cmd = "grep -rnh 'Success Percentage' " + LOGPATH + "/FUNCvirNetNB_*"
     Resultbuffer = os.popen(cmd).read()
-    if Resultbuffer.find('100%') >= 0: 
+    if Resultbuffer.find('100%') >= 0:
         result1='Success'
     else:
         result1='Failed'
@@ -112,10 +112,33 @@ def GetResult():
         result2='Success'
     else:
         result2='Failed'
-    payload={'FUNCvirNet':{'duration': time1,
-                           'result': result1},
+    status1 = []
+    status2 = []
+    cmd = "grep -rnh 'h3' " + LOGPATH + "/FUNCvirNetNB_*"
+    Resultbuffer = os.popen(cmd).read()
+    pattern = re.compile("<h3>([^-]+) - ([^-]+) - (\S*)</h3>")
+    #res = pattern.search(Resultbuffer).groups()
+    res = pattern.findall(Resultbuffer)
+    i = 0
+    for index in range(len(res)):
+        status1.append({'Case name:':res[i][0] + res[i][1],'Case result':res[i][2]})
+        i=i+1
+    cmd = "grep -rnh 'h3' " + LOGPATH + "/FUNCvirNetNBL3*"
+    Resultbuffer = os.popen(cmd).read()
+    pattern = re.compile("<h3>([^-]+) - ([^-]+) - (\S*)</h3>")
+    #res = pattern.search(Resultbuffer).groups()
+    res = pattern.findall(Resultbuffer)
+    i = 0
+    for index in range(len(res)):
+        status2.append({'Case name:':res[i][0] + res[i][1],'Case result':res[i][2]})
+        i=i+1
+    payload={'timestart': str(starttime),
+             'FUNCvirNet':{'duration': time1,
+                           'result': result1,
+                           'status': status1},
              'FUNCvirNetL3':{'duration': time2,
-                           'result': result2}}
+                           'result': result2,
+                           'status': status2}}
     return payload
 
 def SetOnosIp():
