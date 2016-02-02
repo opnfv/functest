@@ -25,7 +25,7 @@ general:
         dir_rally_res:      /home/opnfv/functest/results/rally/
         dir_functest_data:  /home/opnfv/functest/data
         dir_vIMS_data:      /home/opnfv/functest/data/vIMS
-        dir_rally_inst:     ~/.rally
+        dir_rally_inst:     /home/opnfv/.rally
 
     repositories:
         # branch and commit ID to which the repos will be reset (HEAD)

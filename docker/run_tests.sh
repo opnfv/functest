@@ -226,7 +226,7 @@ if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]] &&\
 else
     arr_test=(vping tempest vims rally)
 fi
-info "Tests to be executed: "${arr_test[@]}
+info "Tests to be executed: ${arr_test[@]}"
 
 BASEDIR=`dirname $0`
 source ${BASEDIR}/common.sh
