@@ -76,9 +76,9 @@ function odl_tests(){
 }
 function run_test(){
     test_name=$1
-    echo ""
+    echo -e "\n\n\n\n"
     echo "----------------------------------------------"
-    echo "  Running test cases: $i"
+    echo "  Running test case: $i"
     echo "----------------------------------------------"
     echo ""
     case $test_name in
@@ -226,7 +226,7 @@ if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]] &&\
 else
     arr_test=(vping tempest vims rally)
 fi
-echo "arr_test: "${arr_test[@]}
+info "Tests to be executed: "${arr_test[@]}
 
 BASEDIR=`dirname $0`
 source ${BASEDIR}/common.sh
@@ -241,12 +241,6 @@ if [ "${TEST}" != "" ]; then
         fi
     done
     info "Tests to execute: ${TEST}."
-fi
-
-if [ $offline == false ]; then
-    info "MODE: online"
-else
-    info "MODE: offline"
 fi
 
 # Check that the functest environment has been installed

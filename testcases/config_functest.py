@@ -162,24 +162,16 @@ def action_check():
     dirs = [RALLY_DIR, RALLY_INSTALLATION_DIR, VPING_DIR, ODL_DIR]
     for dir in dirs:
         if not os.path.exists(dir):
-            logger.debug("The directory '%s' does NOT exist." % dir)
+            logger.debug("   %s NOT found" % dir)
             errors = True
             errors_all = True
         else:
             logger.debug("   %s found" % dir)
-    if not errors:
-        logger.debug("...OK")
-    else:
-        logger.debug("...FAIL")
-
 
     logger.debug("Checking Rally deployment...")
     if not check_rally():
         logger.debug("   Rally deployment NOT installed.")
         errors_all = True
-        logger.debug("...FAIL")
-    else:
-        logger.debug("...OK")
 
     logger.debug("Checking Image...")
     errors = False
@@ -190,11 +182,6 @@ def action_check():
     else:
         logger.debug("   Image file found in %s" % IMAGE_PATH)
 
-
-    if not errors:
-        logger.debug("...OK")
-    else:
-        logger.debug("...FAIL")
 
     #TODO: check OLD environment setup
     return not errors_all
@@ -292,21 +279,21 @@ def check_rally():
 
 def create_private_neutron_net(neutron):
     neutron.format = 'json'
-    logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
+    logger.info("Creating network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
     network_id = functest_utils. \
         create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
 
     if not network_id:
         return False
-    logger.debug("Network '%s' created successfully" % network_id)
+    logger.debug("Network '%s' created successfully." % network_id)
 
-    logger.info('Updating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
+    logger.info("Updating network '%s' with shared=True..." % NEUTRON_PRIVATE_NET_NAME)
     if functest_utils.update_neutron_net(neutron, network_id, shared=True):
-        logger.debug("Network '%s' updated successfully" % network_id)
+        logger.debug("Network '%s' updated successfully." % network_id)
     else:
-        logger.info('Updating neutron network %s failed' % network_id)
+        logger.info("Updating neutron network '%s' failed" % network_id)
 
-    logger.debug('Creating Subnet....')
+    logger.info("Creating Subnet....")
     subnet_id = functest_utils. \
         create_neutron_subnet(neutron,
                               NEUTRON_PRIVATE_SUBNET_NAME,
@@ -314,16 +301,16 @@ def create_private_neutron_net(neutron):
                               network_id)
     if not subnet_id:
         return False
-    logger.debug("Subnet '%s' created successfully" % subnet_id)
-    logger.debug('Creating Router...')
+    logger.debug("Subnet '%s' created successfully." % subnet_id)
+    logger.info("Creating Router...")
     router_id = functest_utils. \
         create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
 
     if not router_id:
         return False
 
-    logger.debug("Router '%s' created successfully" % router_id)
-    logger.debug('Adding router to subnet...')
+    logger.debug("Router '%s' created successfully." % router_id)
+    logger.info("Adding router to subnet...")
 
     result = functest_utils.add_interface_router(neutron, router_id, subnet_id)
 
