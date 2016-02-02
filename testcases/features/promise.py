@@ -21,6 +21,7 @@ import keystoneclient.v2_0.client as ksclient
 import glanceclient.client as glclient
 import novaclient.client as nvclient
 from neutronclient.v2_0 import client as ntclient
+import linecache
 
 parser = argparse.ArgumentParser()
 
@@ -219,24 +220,37 @@ def main():
 
     # Print output of file
     results_file=open('promise-results.json','r')
-    print results_file.read()
+    test_count = 0
+    errors = 0
+    for line in results_file:
+        print line.replace('\n', '')
+        if "title" in line:
+            test_count += 1
+        if 'err": {' in line and not 'err": {}' in line:
+            errors += 1
     results_file.close()
 
+    logger.info("\nPromise Results: \n     Total tests: %s\n     Failures: %s\n" \
+                % (test_count, errors))
 
-    details = {
-        'timestart': start_time_ts,
-        'duration': duration,
-        'status': test_status,
-    }
-    pod_name = functest_utils.get_pod_name()
+    pod_name = functest_utils.get_pod_name(logger)
+    installer = get_installer_type(logger)
+    scenario = functest_utils.get_scenario(logger)
     git_version = functest_utils.get_git_branch(PROMISE_REPO)
-    #functest_utils.push_results_to_db(TEST_DB_URL,
-    #                                  'promise',
-    #                                  None,
-    #                                  pod_name,
-    #                                  git_version,
-    #                                  details)
-    #
+    url = TEST_DB + "/results"
+
+    json_results = {"timestart": start_time_ts, "duration": duration,
+                    "tests": int(test_count), "failures": int(errors)}
+    logger.debug("Results json: "+str(json_results))
+
+    params = {"project_name": "promise", "case_name": "promise",
+              "pod_name": str(pod_name), 'installer': installer,
+              "version": scenario, 'details': json_results}
+    headers = {'Content-Type': 'application/json'}
+
+    r = requests.post(url, data=json.dumps(params), headers=headers)
+    logger.debug(r)
+
 
 if __name__ == '__main__':
     main()
