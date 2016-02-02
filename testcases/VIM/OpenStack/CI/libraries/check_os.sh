@@ -37,7 +37,7 @@ if [ $RETVAL -ne 0 ]; then
 fi
 echo "  ...OK"
 
-adminURL=$(keystone catalog --service identity 2>/dev/null|grep adminURL|awk '{print $4}')
+adminURL=$(openstack catalog show  identity |grep adminURL|awk '{print $4}')
 adminIP=$(echo $adminURL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
 adminPort=$(echo $adminURL|sed 's/^.*://'|sed 's/.[^\/]*$//')
 echo ">>Verifying connectivity to the admin endpoint $adminIP:$adminPort..."
@@ -52,7 +52,7 @@ echo "  ...OK"
 
 
 echo "Checking OpenStack basic services:"
-commands=('keystone endpoint-list' 'nova list' 'neutron net-list' \
+commands=('openstack endpoint list' 'nova list' 'neutron net-list' \
             'glance image-list' 'cinder list')
 for cmd in "${commands[@]}"
 do
@@ -105,9 +105,9 @@ echo "neutron router-list:"
 neutron router-list
 echo "neutron security-group-list:"
 neutron security-group-list
-echo "keystone tenant-list:"
-keystone tenant-list
-echo "keystone user-list:"
-keystone user-list
+echo "openstack project list:"
+openstack project list
+echo "openstack user list:"
+openstack user list
 
 exit 0
