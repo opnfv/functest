@@ -270,6 +270,20 @@ def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2):
 
     return True
 
+def push_results(start_time_ts, duration, test_status):
+    try:
+        logger.debug("Pushing result into DB...")
+        scenario = functest_utils.get_scenario(logger)
+        pod_name = functest_utils.get_pod_name(logger)
+        functest_utils.push_results_to_db(TEST_DB,
+                                          "vPing_userdata",
+                                          logger, pod_name, scenario,
+                                          payload={'timestart': start_time_ts,
+                                                   'duration': duration,
+                                                   'status': test_status})
+    except:
+        logger.error("Error pushing results into Database '%s'" % sys.exc_info()[0])
+
 
 def main():
 
@@ -466,31 +480,17 @@ def main():
         logger.info("vPing OK")
         test_status = "OK"
     elif EXIT_CODE == -2:
+        duration = 0
         logger.info("Userdata is not supported in nova boot. Aborting test...")
     else:
+        duration = 0
         logger.error("vPing FAILED")
 
     cleanup(nova_client, neutron_client, image_id, network_dic,
             port_id1, port_id2)
 
-    try:
-        if args.report and EXIT_CODE != -2:
-            # Don't report if userdata is not supported
-            logger.debug("Push result into DB")
-            # TODO check path result for the file
-            scenario = functest_utils.get_scenario(logger)
-            pod_name = functest_utils.get_pod_name(logger)
-            functest_utils.push_results_to_db(TEST_DB,
-                                              "vPing_userdata",
-                                              logger, pod_name, scenario,
-                                              payload={'timestart': start_time_ts,
-                                                       'duration': duration,
-                                                       'status': test_status})
-            # with open("vPing-result.json", "w") as outfile:
-            # json.dump({'timestart': start_time_ts, 'duration': duration,
-            # 'status': test_status}, outfile, indent=4)
-    except:
-        logger.error("Error pushing results into Database '%s'" % sys.exc_info()[0])
+    if args.report:
+        push_results(start_time_ts, duration, test_status)
 
     exit(EXIT_CODE)
 
