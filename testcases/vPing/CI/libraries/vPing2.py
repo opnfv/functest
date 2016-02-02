@@ -197,7 +197,7 @@ def create_private_neutron_net(neutron):
     return network_dic
 
 
-def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2):
+def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2, secgroup_id):
 
     # delete both VMs
     logger.info("Cleaning up...")
@@ -232,7 +232,7 @@ def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2):
             logger.debug("Instance %s terminated." % NAME_VM_2)
 
     # delete created network
-    logger.info("Deleting network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
+    logger.debug("Deleting network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
     net_id = network_dic["net_id"]
     subnet_id = network_dic["subnet_id"]
     router_id = network_dic["router_id"]
@@ -273,6 +273,12 @@ def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2):
 
     logger.debug(
         "Network '%s' deleted successfully" % NEUTRON_PRIVATE_NET_NAME)
+
+    if not functest_utils.delete_security_group(neutron, secgroup_id):
+        logger.error("Unable to delete security group '%s'" % secgroup_id)
+        return False
+    logger.debug(
+        "Security group '%s' deleted successfully" % secgroup_id)
 
     return True
 
@@ -316,7 +322,8 @@ def main():
     if not image_id:
         logger.error("Failed to create a Glance image...")
         return(EXIT_CODE)
-
+    logger.debug("Image '%s' with ID=%s created successfully." %\
+                  (GLANCE_IMAGE_NAME, image_id))
     # Check if the given image exists
     image = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
     if image == '':
@@ -353,6 +360,36 @@ def main():
             logger.info("Instance %s found. Deleting..." % server.name)
             server.delete()
 
+    SECGROUP_NAME = "vPing-sg"
+    SECGROUP_DESCR = "Security group for vPing test case"
+    logger.info("Creating security group  '%s'..." % SECGROUP_NAME)
+    SECGROUP = functest_utils.create_security_group(neutron_client,
+                                          SECGROUP_NAME,
+                                          SECGROUP_DESCR)
+    SECGROUP_ID = SECGROUP['id']
+    if not SECGROUP:
+        logger.error("Failed to create the security group...")
+        return(EXIT_CODE)
+    logger.debug("Security group '%s' with ID=%s created successfully." %\
+                  (SECGROUP['name'], SECGROUP_ID))
+
+    logger.debug("Adding ICMP rules in security group '%s'..." % SECGROUP_NAME)
+    if not functest_utils.create_secgroup_rule(neutron_client, SECGROUP_ID, \
+                    'ingress', 'icmp'):
+        logger.error("Failed to create the security group rule...")
+        return(EXIT_CODE)
+
+    logger.debug("Adding SSH rules in security group '%s'..." % SECGROUP_NAME)
+    if not functest_utils.create_secgroup_rule(neutron_client, SECGROUP_ID, \
+                    'ingress', 'tcp', '22', '22'):
+        logger.error("Failed to create the security group rule...")
+        return(EXIT_CODE)
+
+    if not functest_utils.create_secgroup_rule(neutron_client, SECGROUP_ID, \
+                    'egress', 'tcp', '22', '22'):
+        logger.error("Failed to create the security group rule...")
+        return(EXIT_CODE)
+
     # boot VM 1
     # basic boot
     # tune (e.g. flavor, images, network) to your specific
@@ -387,10 +424,10 @@ def main():
 
     # wait until VM status is active
     if not waitVmActive(nova_client, vm1):
-
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_1, functest_utils.get_instance_status(nova_client, vm1)))
-        cleanup(nova_client, neutron_client, image_id, network_dic, port_id1)
+        cleanup(nova_client, neutron_client, image_id, network_dic,
+                port_id1, SECGROUP_ID)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
@@ -404,6 +441,9 @@ def main():
     # test_ip = server.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
     test_ip = IP_1
     logger.debug("Instance '%s' got %s" % (NAME_VM_1, test_ip))
+
+    logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_1, SECGROUP_NAME))
+    functest_utils.add_secgroup_to_instance(nova_client, vm1.id, SECGROUP['id'])
 
     # boot VM 2
     # we will boot then execute a ping script with cloud-init
@@ -424,8 +464,8 @@ def main():
 
     logger.info("Creating instance '%s' with IP %s..." % (NAME_VM_2, IP_2))
     logger.debug(
-        "Configuration:\n name=%s \n flavor=%s \n image=%s \n network=%s "
-        "\n" % (NAME_VM_2, flavor, image, network_id))
+        "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
+        "network=%s \n" % (NAME_VM_2, flavor, image, network_id))
     vm2 = nova_client.servers.create(
         name=NAME_VM_2,
         flavor=flavor,
@@ -437,25 +477,28 @@ def main():
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_2, functest_utils.get_instance_status(nova_client, vm2)))
         cleanup(nova_client, neutron_client, image_id, network_dic,
-                port_id1, port_id2)
+                port_id1, port_id2, SECGROUP_ID)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_2)
 
-    logger.info("Creating floating IP for the second VM...")
+    logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_2, SECGROUP_NAME))
+    functest_utils.add_secgroup_to_instance(nova_client, vm2.id, SECGROUP['id'])
+
+    logger.info("Creating floating IP for VM '%s'..." % NAME_VM_2)
     floatip = functest_utils.create_floating_ip(neutron_client)
     if floatip == None:
         logger.error("Cannot create floating IP.")
         cleanup(nova_client, neutron_client, image_id, network_dic,
-            port_id1, port_id2)
+            port_id1, port_id2, SECGROUP_ID)
         return (EXIT_CODE)
     logger.info("Floating IP created: '%s'" % floatip)
 
-    logger.info("Associating floating ip: '%s' to VM2 " % floatip)
+    logger.info("Associating floating ip: '%s' to VM '%s' " % (floatip, NAME_VM_2))
     if not functest_utils.add_floating_ip(nova_client, vm2.id, floatip):
         logger.error("Cannot associate floating IP to VM.")
         cleanup(nova_client, neutron_client, image_id, network_dic,
-            port_id1, port_id2)
+            port_id1, port_id2, SECGROUP_ID)
         return (EXIT_CODE)
 
     logger.info("Trying to establish SSH connection to %s..." % floatip)
@@ -479,7 +522,7 @@ def main():
     if timeout == 0: # 300 sec timeout (5 min)
         logger.error("Cannot establish connection to IP '%s'. Aborting" % floatip)
         cleanup(nova_client, neutron_client, image_id, network_dic,
-            port_id1, port_id2)
+            port_id1, port_id2, SECGROUP_ID)
         return (EXIT_CODE)
 
     scp = SCPClient(ssh.get_transport())
@@ -531,7 +574,7 @@ def main():
                 # we consider start time at VM1 booting
                 end_time_ts = time.time()
                 duration = round(end_time_ts - start_time_ts, 1)
-                logger.info("vPing duration:'%s'" % duration)
+                logger.info("vPing duration:'%s' s." % duration)
                 EXIT_CODE = 0
                 flag = True
                 break
@@ -544,6 +587,8 @@ def main():
         logger.debug("Pinging %s. Waiting for response..." % IP_1)
         sec += 1
 
+    cleanup(nova_client, neutron_client, image_id, network_dic,
+            port_id1, port_id2, SECGROUP_ID)
 
     test_status = "NOK"
     if EXIT_CODE == 0:
@@ -552,9 +597,6 @@ def main():
     else:
         duration = 0
         logger.error("vPing FAILED")
-
-    cleanup(nova_client, neutron_client, image_id, network_dic,
-            port_id1, port_id2)
 
     if args.report:
         push_results(start_time_ts, duration, test_status)
