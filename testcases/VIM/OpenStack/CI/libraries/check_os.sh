@@ -105,9 +105,9 @@ echo "neutron router-list:"
 neutron router-list
 echo "neutron security-group-list:"
 neutron security-group-list
-echo "keystone tenant-list:"
-keystone tenant-list
-echo "keystone user-list:"
-keystone user-list
+echo "openstack project list:"
+openstack project list
+echo "openstack user list:"
+openstack user list
 
 exit 0
