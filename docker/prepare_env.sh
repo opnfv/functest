@@ -221,13 +221,19 @@ if [ $RETVAL -ne 0 ]; then
 fi
 
 # Prepare Functest Environment
-info "Functest: prepare Functest environment"
+info "Preparing Functest environment..."
 python ${FUNCTEST_REPO_DIR}/testcases/config_functest.py --debug start
 retval=$?
 if [ $retval != 0 ]; then
     error "Error when configuring Functest environment"
     exit $retval
 fi
+
+
+# Generate OpenStack defaults
+info "Generating OpenStack defaults..."
+python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/generate_defaults.py -d
+
 
 ifconfig eth0 mtu 1450
 
