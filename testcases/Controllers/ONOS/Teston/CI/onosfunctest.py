@@ -142,7 +142,7 @@ def GetResult():
     return payload
 
 def SetOnosIp():
-    cmd = "keystone catalog --service network | grep publicURL"
+    cmd = "openstack catalog show network | grep publicURL"
     cmd_output = os.popen(cmd).read()
     OC1=re.search(r"\d+\.\d+\.\d+\.\d+",cmd_output).group()
     os.environ['OC1'] = OC1

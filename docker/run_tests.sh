@@ -51,10 +51,10 @@ function clean_openstack(){
 }
 
 function odl_tests(){
-    keystone_ip=$(keystone catalog --service identity | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+    keystone_ip=$(openstack catalog show identity |grep publicURL| cut -f3 -d"/" | cut -f1 -d":")
     # historically most of the installers use the same IP for neutron and keystone API
     neutron_ip=$keystone_ip
-    odl_ip=$(keystone catalog --service network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+    odl_ip=$(openstack catalog show network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
     usr_name=$(env | grep OS | grep OS_USERNAME | cut -f2 -d'=')
     password=$(env | grep OS | grep OS_PASSWORD | cut -f2 -d'=')
     odl_port=8181
@@ -64,7 +64,7 @@ function odl_tests(){
         :
     elif [ $INSTALLER_TYPE == "joid" ]; then
         odl_ip=$(env | grep SDN_CONTROLLER | cut -f2 -d'=')
-        neutron_ip=$(keystone catalog --service network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+        neutron_ip=$(openstack catalog show network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
         odl_port=8080
         :
     elif [ $INSTALLER_TYPE == "compass" ]; then
