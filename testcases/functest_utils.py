@@ -423,6 +423,56 @@ def get_security_groups(neutron_client):
         return None
 
 
+def create_security_group(neutron_client, sg_name, sg_description):
+    json_body= {'security_group' : { 'name' : sg_name, \
+                                    'description' : sg_description }}
+    try:
+        secgroup = neutron_client.create_security_group(json_body)
+        return secgroup['security_group']
+    except Exception, e:
+        print "Error [create_security_group(neutron_client, '%s', '%s')]:" % \
+            (sg_name,sg_description), e
+        return False
+
+def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
+                         port_range_min = None, port_range_max = None):
+    if port_range_min == None and port_range_max == None:
+        json_body = { 'security_group_rule' : \
+                         { 'direction' : direction, \
+                          'security_group_id' : sg_id, \
+                          'protocol' : protocol } }
+    elif port_range_min != None and port_range_max != None:
+        json_body = { 'security_group_rule' : \
+                             { 'direction' : direction, \
+                              'security_group_id' : sg_id, \
+                              'port_range_min': port_range_min, \
+                              'port_range_max' : port_range_max, \
+                              'protocol' : protocol } }
+    else:
+        print "Error [create_secgroup_rule(neutron_client, '%s', '%s', "\
+            "'%s', '%s', '%s', '%s')]:" %(neutron_client, sg_id, direction, \
+                                port_range_min, port_range_max, protocol),\
+                                " Invalid values for port_range_min, port_range_max"
+        return False
+    try:
+        neutron_client.create_security_group_rule(json_body)
+        return True
+    except Exception, e:
+        print "Error [create_secgroup_rule(neutron_client, '%s', '%s', "\
+            "'%s', '%s', '%s', '%s')]:" %(neutron_client, sg_id, direction, \
+                                port_range_min, port_range_max, protocol), e
+        return False
+
+def add_secgroup_to_instance(nova_client, instance_id, secgroup_id):
+    try:
+        nova_client.servers.add_security_group(instance_id, secgroup_id)
+        return True
+    except Exception, e:
+        print "Error [add_secgroup_to_instance(nova_client, '%s', '%s')]: " % \
+            (instance_id, secgroup_id), e
+        return False
+
+
 def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
     json_body = {"quota": {
         "security_group": sg_quota,
@@ -446,6 +496,7 @@ def delete_security_group(neutron_client, secgroup_id):
     except Exception, e:
         print "Error [delete_security_group(neutron_client, '%s')]:" % secgroup_id, e
         return False
+
 
 
 
