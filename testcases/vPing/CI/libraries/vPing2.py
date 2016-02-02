@@ -339,6 +339,34 @@ def main():
             logger.info("Instance %s found. Deleting..." % server.name)
             server.delete()
 
+    SECGROUP_NAME = "vPing-sg"
+    SECGROUP_DESCR = "Security group for vPing test case"
+    logger.debug("Creating security group  '%s'..." % SECGROUP_NAME)
+    secgroup_id = functest_utils.create_security_group(neutron_client,
+                                          SECGROUP_NAME,
+                                          SECGROUP_DESCR)
+    if not secgroup_id:
+        logger.error("Failed to create the security group...")
+        return(EXIT_CODE)
+
+    logger.debug("Adding ICMP rules in security group '%s'..." % SECGROUP_NAME)
+    if not functest_utils.create_secgroup_rule(neutron_client, secgroup_id, \
+                    'ingress', 'icmp'):
+        logger.error("Failed to create the security group rule...")
+        return(EXIT_CODE)
+
+    logger.debug("Adding SSH rules in security group '%s'..." % SECGROUP_NAME)
+    if not functest_utils.create_secgroup_rule(neutron_client, secgroup_id, \
+                    'ingress', 'tcp', '22', '22'):
+        logger.error("Failed to create the security group rule...")
+        return(EXIT_CODE)
+
+    if not functest_utils.create_secgroup_rule(neutron_client, secgroup_id, \
+                    'egress', 'tcp', '22', '22'):
+        logger.error("Failed to create the security group rule...")
+        return(EXIT_CODE)
+
+
     # boot VM 1
     # basic boot
     # tune (e.g. flavor, images, network) to your specific
@@ -367,6 +395,7 @@ def main():
         name=NAME_VM_1,
         flavor=flavor,
         image=image,
+        security_groups = SECGROUP_NAME,
         # nics = [{"net-id": network_id, "v4-fixed-ip": IP_1}]
         nics=[{"port-id": port_id1}]
     )
@@ -416,6 +445,7 @@ def main():
         name=NAME_VM_2,
         flavor=flavor,
         image=image,
+        security_groups = SECGROUP_NAME,
         nics=[{"port-id": port_id2}]
     )
 
