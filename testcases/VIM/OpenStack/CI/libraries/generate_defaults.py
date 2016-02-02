@@ -39,7 +39,7 @@ args = parser.parse_args()
 
 
 """ logging configuration """
-logger = logging.getLogger('clean_openstack')
+logger = logging.getLogger('generate_defaults')
 logger.setLevel(logging.DEBUG)
 
 ch = logging.StreamHandler()
@@ -85,6 +85,16 @@ def get_images(nova_client):
     return {'images': dic_images}
 
 
+def get_volumes(cinder_client):
+    logger.debug("Getting volumes...")
+    dic_volumes = {}
+    volumes = functest_utils.get_volumes(cinder_client)
+    if volumes != None:
+        for volume in volumes:
+            dic_volumes.update({volume.id:volume.display_name})
+    return {'volumes': dic_volumes}
+
+
 def get_networks(neutron_client):
     logger.debug("Getting networks")
     dic_networks = {}
@@ -93,6 +103,7 @@ def get_networks(neutron_client):
         for network in networks:
             dic_networks.update({network['id']:network['name']})
     return {'networks': dic_networks}
+
 
 def get_routers(neutron_client):
     logger.debug("Getting routers")
@@ -112,6 +123,16 @@ def get_security_groups(neutron_client):
         for secgroup in secgroups:
             dic_secgroups.update({secgroup['id']:secgroup['name']})
     return {'secgroups': dic_secgroups}
+
+
+def get_floatinips(nova_client):
+    logger.debug("Getting Floating IPs...")
+    dic_floatingips = {}
+    floatingips = functest_utils.get_floating_ips(nova_client)
+    if not (floatingips is None or len(floatingips) == 0):
+        for floatingip in floatingips:
+            dic_floatingips.update({floatingip.id:floatingip.ip})
+    return {'floatingips': dic_floatingips}
 
 
 def get_users(keystone_client):
@@ -158,9 +179,11 @@ def main():
     defaults = {}
     defaults.update(get_instances(nova_client))
     defaults.update(get_images(nova_client))
+    defaults.update(get_volumes(cinder_client))
     defaults.update(get_networks(neutron_client))
     defaults.update(get_routers(neutron_client))
     defaults.update(get_security_groups(neutron_client))
+    defaults.update(get_floatinips(nova_client))
     defaults.update(get_users(keystone_client))
     defaults.update(get_tenants(keystone_client))
 

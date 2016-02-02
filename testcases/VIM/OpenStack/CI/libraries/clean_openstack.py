@@ -72,9 +72,11 @@ except Exception, e:
 
 default_images = defaults_yaml.get('images')
 default_instances = defaults_yaml.get('instances')
+default_volumes = defaults_yaml.get('volumes')
 default_networks = defaults_yaml.get('networks')
 default_routers = defaults_yaml.get('routers')
 default_security_groups = defaults_yaml.get('secgroups')
+default_floatingips = defaults_yaml.get('floatingips')
 default_users = defaults_yaml.get('users')
 default_tenants = defaults_yaml.get('tenants')
 
@@ -140,19 +142,23 @@ def remove_volumes(cinder_client):
 
     for volume in volumes:
         volume_id = getattr(volume, 'id')
-        logger.debug("Removing cinder volume %s ..." % volume_id)
-        if functest_utils.delete_volume(cinder_client, volume_id):
-            logger.debug("  > Done!")
-        else:
-            logger.debug("Trying forced removal...")
-            if functest_utils.delete_volume(cinder_client,
-                                            volume_id,
-                                            forced=True):
+        volume_name = getattr(volume, 'display_name')
+        logger.debug("'%s', ID=%s " %(volume_name,volume_id))
+        if volume_id not in default_volumes:
+            logger.debug("Removing cinder volume %s ..." % volume_id)
+            if functest_utils.delete_volume(cinder_client, volume_id):
                 logger.debug("  > Done!")
             else:
-                logger.error("There has been a problem removing the "
-                            "volume %s..." % volume_id)
-
+                logger.debug("Trying forced removal...")
+                if functest_utils.delete_volume(cinder_client,
+                                                volume_id,
+                                                forced=True):
+                    logger.debug("  > Done!")
+                else:
+                    logger.error("There has been a problem removing the "
+                                "volume %s..." % volume_id)
+        else:
+            logger.debug("   > this is a default volume and will NOT be deleted.")
 
 def remove_floatingips(nova_client):
     logger.info("Removing floating IPs...")
@@ -161,19 +167,28 @@ def remove_floatingips(nova_client):
         logger.debug("No floating IPs found.")
         return
 
+    init_len = len(floatingips)
+    deleted = 0
     for fip in floatingips:
         fip_id = getattr(fip, 'id')
-        logger.debug("Removing floating IP %s ..." % fip_id)
-        if functest_utils.delete_floating_ip(nova_client, fip_id):
-            logger.debug("  > Done!")
+        fip_ip = getattr(fip, 'ip')
+        logger.debug("'%s', ID=%s " %(fip_ip,fip_id))
+        if fip_id not in default_floatingips:
+            logger.debug("Removing floating IP %s ..." % fip_id)
+            if functest_utils.delete_floating_ip(nova_client, fip_id):
+                logger.debug("  > Done!")
+                deleted += 1
+            else:
+                logger.error("There has been a problem removing the "
+                            "floating IP %s..." % fip_id)
         else:
-            logger.error("There has been a problem removing the "
-                        "floating IP %s..." % fip_id)
+            logger.debug("   > this is a default floating IP and will NOT be deleted.")
+
 
     timeout = 50
     while timeout > 0:
         floatingips = functest_utils.get_floating_ips(nova_client)
-        if floatingips is None or len(floatingips) == 0:
+        if floatingips is None or len(floatingips) == (init_len - deleted):
             break
         else:
             logger.debug("Waiting for floating ips to be released...")
