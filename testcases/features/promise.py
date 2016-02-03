@@ -10,6 +10,7 @@
 # Maintainer : jose.lausuch@ericsson.com
 #
 import argparse
+import json
 import logging
 import os
 import subprocess
@@ -200,18 +201,12 @@ def main():
 
     os.chdir(PROMISE_REPO)
     results_file=open('promise-results.json','w+')
-    cmd = 'DEBUG=1 npm run -s test -- --reporter json'
-    start_time_ts = time.time()
-    start_time = time.strftime("%a %b %d %H:%M:%S %Z %Y")
-    #'Tue Feb 02 20:37:19 CET 2016'
+    cmd = 'npm run -s test -- --reporter json'
 
     logger.info("Running command: %s" % cmd)
     ret = subprocess.call(cmd, shell=True, stdout=results_file, \
                     stderr=subprocess.STDOUT)
     results_file.close()
-    end_time_ts = time.time()
-    end_time = time.strftime("%a %b %d %H:%M:%S %Z %Y")
-    duration = round(end_time_ts - start_time_ts, 1)
 
     if ret == 0:
         logger.info("The test succeeded.")
@@ -221,38 +216,45 @@ def main():
         test_status = "Failed"
 
     # Print output of file
-    test_count = 0
-    errors = 0
     with open('promise-results.json','r') as results_file:
-        for line in results_file:
-            print line.replace('\n', '')
-            if "title" in line:
-                test_count += 1
-            if 'err": {' in line and not 'err": {}' in line:
-                errors += 1
+        data = results_file.read()
+        logger.debug("\n%s" % data)
+        json_data = json.loads(data)
+
+        suites = json_data["stats"]["suites"]
+        tests = json_data["stats"]["tests"]
+        passes = json_data["stats"]["passes"]
+        pending = json_data["stats"]["pending"]
+        failures = json_data["stats"]["failures"]
+        start_time = json_data["stats"]["start"]
+        end_time = json_data["stats"]["end"]
+        duration = json_data["stats"]["duration"]
 
     logger.info("\n" \
     "**********************************\n"\
-    "      Promise test summary\n\n"\
+    "      Promise test report\n\n"\
+    "**********************************\n"\
+    " Suites:  \t%s\n"\
+    " Tests:   \t%s\n"\
+    " Passes:  \t%s\n"\
+    " Pending: \t%s\n"\
+    " Failures:\t%s\n"\
+    " Start:   \t%s\n"\
+    " End:     \t%s\n"\
+    " Duration:\t%s\n"\
     "**********************************\n\n"\
-    " Test start:\t\t%s\n"\
-    " Test end:\t\t%s\n"\
-    " Execution time:\t%s\n"\
-    " Total tests executed:\t%s\n"\
-    " Total tests failed:\t%s\n\n"\
-    "**********************************\n\n"\
-    % (start_time, end_time, duration, test_count, errors))
+    % (suites, tests, passes, pending, failures, start_time, end_time, duration))
 
 
     if args.report:
         pod_name = functest_utils.get_pod_name(logger)
-        installer = get_installer_type(logger)
+        installer = functest_utils.get_installer_type(logger)
         scenario = functest_utils.get_scenario(logger)
         git_version = functest_utils.get_git_branch(PROMISE_REPO)
         url = TEST_DB + "/results"
 
         json_results = {"timestart": start_time, "duration": duration,
-                        "tests": int(test_count), "failures": int(errors)}
+                        "tests": int(tests), "failures": int(failures)}
         logger.debug("Results json: "+str(json_results))
 
         params = {"project_name": "promise", "case_name": "promise",
