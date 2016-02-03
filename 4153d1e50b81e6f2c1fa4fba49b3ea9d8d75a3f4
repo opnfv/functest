@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_a665c946",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-03T16:01:57Z",
+      "side": 1,
+      "message": "can we have it in 1 line?\nif result is None or len(result.get(\u0027error\u0027)) \u003e 0:\n return False",
+      "revId": "4153d1e50b81e6f2c1fa4fba49b3ea9d8d75a3f4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
