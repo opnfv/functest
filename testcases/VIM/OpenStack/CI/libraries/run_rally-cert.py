@@ -161,15 +161,13 @@ def task_succeed(json_raw):
     :return: Bool
     """
     rally_report = json.loads(json_raw)
-    rally_report = rally_report[0]
-    if rally_report is None:
-        return False
-    if rally_report.get('result') is None:
-        return False
-
-    for result in rally_report.get('result'):
-        if len(result.get('error')) > 0:
+    for report in rally_report:
+        if report is None or report.get('result') is None:
             return False
+
+        for result in report.get('result'):
+            if result is None or len(result.get('error')) > 0:
+                return False
 
     return True
 
