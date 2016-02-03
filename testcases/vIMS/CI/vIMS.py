@@ -364,6 +364,7 @@ def main():
     logger.info("Prepare virtualenv for cloudify-cli")
     cmd = "chmod +x " + VIMS_DIR + "create_venv.sh"
     functest_utils.execute_command(cmd, logger)
+    time.sleep(3)
     cmd = VIMS_DIR + "create_venv.sh " + VIMS_DATA_DIR
     functest_utils.execute_command(cmd, logger)
 
