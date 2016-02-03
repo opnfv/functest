@@ -173,6 +173,7 @@ test/csit/suites/vpnservice
         "promise")
             info "Running PROMISE test case..."
             python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py --debug ${report}
+            sleep 10 #to let the instances terminate
             clean_openstack
         ;;
         "doctor")
