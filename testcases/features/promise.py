@@ -246,7 +246,7 @@ def main():
 
     if args.report:
         pod_name = functest_utils.get_pod_name(logger)
-        installer = get_installer_type(logger)
+        installer = functest_utils.get_installer_type(logger)
         scenario = functest_utils.get_scenario(logger)
         git_version = functest_utils.get_git_branch(PROMISE_REPO)
         url = TEST_DB + "/results"
