@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_86d1adcf",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-02-03T16:54:35Z",
+      "side": 1,
+      "message": "Please check...",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 43
+      },
+      "revId": "c6f9d6fbb31acce888340b07173d0c9d7e4806a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
