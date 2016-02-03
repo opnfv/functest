@@ -202,12 +202,15 @@ def main():
     results_file=open('promise-results.json','w+')
     cmd = 'DEBUG=1 npm run -s test -- --reporter json'
     start_time_ts = time.time()
+    start_time = time.strftime("%a %b %d %H:%M:%S %Z %Y")
+    #'Tue Feb 02 20:37:19 CET 2016'
 
     logger.info("Running command: %s" % cmd)
     ret = subprocess.call(cmd, shell=True, stdout=results_file, \
                     stderr=subprocess.STDOUT)
     results_file.close()
     end_time_ts = time.time()
+    end_time = time.strftime("%a %b %d %H:%M:%S %Z %Y")
     duration = round(end_time_ts - start_time_ts, 1)
 
     if ret == 0:
@@ -218,25 +221,49 @@ def main():
         test_status = "Failed"
 
     # Print output of file
-    results_file=open('promise-results.json','r')
-    print results_file.read()
-    results_file.close()
+    test_count = 0
+    errors = 0
+    with open('promise-results.json','r') as results_file:
+        for line in results_file:
+            print line.replace('\n', '')
+            if "title" in line:
+                test_count += 1
+            if 'err": {' in line and not 'err": {}' in line:
+                errors += 1
+
+    logger.info("\n" \
+    "**********************************\n"\
+    "      Promise test summary\n\n"\
+    "**********************************\n\n"\
+    " Test start:\t\t%s\n"\
+    " Test end:\t\t%s\n"\
+    " Execution time:\t%s\n"\
+    " Total tests executed:\t%s\n"\
+    " Total tests failed:\t%s\n\n"\
+    "**********************************\n\n"\
+    % (start_time, end_time, duration, test_count, errors))
 
 
-    details = {
-        'timestart': start_time_ts,
-        'duration': duration,
-        'status': test_status,
-    }
-    pod_name = functest_utils.get_pod_name()
-    git_version = functest_utils.get_git_branch(PROMISE_REPO)
-    #functest_utils.push_results_to_db(TEST_DB_URL,
-    #                                  'promise',
-    #                                  None,
-    #                                  pod_name,
-    #                                  git_version,
-    #                                  details)
-    #
+    if args.report:
+        pod_name = functest_utils.get_pod_name(logger)
+        installer = get_installer_type(logger)
+        scenario = functest_utils.get_scenario(logger)
+        git_version = functest_utils.get_git_branch(PROMISE_REPO)
+        url = TEST_DB + "/results"
+
+        json_results = {"timestart": start_time, "duration": duration,
+                        "tests": int(test_count), "failures": int(errors)}
+        logger.debug("Results json: "+str(json_results))
+
+        params = {"project_name": "promise", "case_name": "promise",
+                  "pod_name": str(pod_name), 'installer': installer,
+                  "version": scenario, 'details': json_results}
+        headers = {'Content-Type': 'application/json'}
+
+        logger.info("Pushing results to DB...")
+        r = requests.post(url, data=json.dumps(params), headers=headers)
+        logger.debug(r)
+
 
 if __name__ == '__main__':
     main()
