@@ -16,6 +16,24 @@
       "revId": "4153d1e50b81e6f2c1fa4fba49b3ea9d8d75a3f4",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_a1093397",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-02-04T07:36:31Z",
+      "side": 1,
+      "message": "You\u0027re right. Also the previous ifs can be combined\nif report is None or report.get(\u0027result\u0027) is None:\n    return False",
+      "parentUuid": "5a4e6583_a665c946",
+      "revId": "4153d1e50b81e6f2c1fa4fba49b3ea9d8d75a3f4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
