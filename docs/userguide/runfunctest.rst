@@ -128,13 +128,15 @@ The order of execution is also described in the Functest configuration file::
     12: vims
     13: rally
 
-The tests are executed as follow:
+The tests are executed in the following order:
 
  * Basic scenario (vPing, vPing_userdata, Tempest)
  * Controller suites: ODL or ONOS or OpenContrail
- * Feature projects
- * vIMS
+ * Feature projects (promise, vIMS)
  * Rally (benchmark scenario)
 
 At the end of an automated execution, everything is cleaned.
-We keep only the users/networks that have been statically declared in 'https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml'_
+Before running Functest, a snapshot of the OpenStack configuration (users,
+tenants, networks, ....) is performed. After Functest, a clean mechanism is
+launched to delete everything that would not have been properly deleted in order
+to restitute the system as it was prior to the tests.
