@@ -10,40 +10,41 @@ Test cases are developed in Functest and in feature projects.
 
 The current list of test suites can be distributed in 3 main domains::
 
- +----------------+----------------+--------------------------------------------+
- | Domain         | Test suite     | Comments                                   |
- +================+================+============================================+
- |                | vPing          | NFV "Hello World"                          |
- |                +----------------+--------------------------------------------+
- |    VIM         | vPing_userdata | Ping using userdata and cloud-init         |
- |                |                | mechanism                                  |
- |                +----------------+--------------------------------------------+
- |(Virtualised    | Tempest        | OpenStack reference test suite `[2]`_      |
- | Infrastructure +----------------+--------------------------------------------+
- | Manager)       | Rally scenario | OpenStack testing tool testing OpenStack   |
- |                |                | modules `[3]`_                             |
- +----------------+----------------+--------------------------------------------+
- |                | OpenDaylight   | Opendaylight Test suite                    |
- |                +----------------+--------------------------------------------+
- | Controllers    | ONOS           | Test suite of ONOS L2 and L3 functions     |
- |                +----------------+--------------------------------------------+
- |                | OpenContrail   |                                            |
- +----------------+----------------+--------------------------------------------+
- | Features       | vIMS           | Show the capability to deploy a real NFV   |
- |                |                | test cases.                                |
- |                |                | The IP Multimedia Subsytem is a typical    |
- |                |                | Telco test case, referenced by ETSI.       |
- |                |                | It provides a fully functional VoIP System.|
- |                +----------------+--------------------------------------------+
- |                | Promise        | Resource reservation and management project|
- |                |                | to identify NFV related requirements and   |
- |                |                | realize resource reservation for future    |
- |                |                | usage by capacity management of resource   |
- |                |                | pools regarding compute, network and       |
- |                |                | storage.                                   |
- |                +----------------+--------------------------------------------+
- |                | SDNVPN         |                                            |
- +----------------+----------------+--------------------------------------------+
+ +----------------+----------------+-------------------------------------------+
+ | Domain         | Test suite     | Comments                                  |
+ +================+================+===========================================+
+ |                | vPing          | NFV "Hello World" using SSH connection    |
+ |                |                | and floatting IP                          |
+ |                +----------------+-------------------------------------------+
+ |    VIM         | vPing_userdata | Ping using userdata and cloud-init        |
+ |                |                | mechanism                                 |
+ |                +----------------+-------------------------------------------+
+ |(Virtualised    | Tempest        | OpenStack reference test suite `[2]`_     |
+ | Infrastructure +----------------+-------------------------------------------+
+ | Manager)       | Rally scenario | OpenStack testing tool testing OpenStack  |
+ |                |                | modules `[3]`_                            |
+ +----------------+----------------+-------------------------------------------+
+ |                | OpenDaylight   | Opendaylight Test suite                   |
+ |                +----------------+-------------------------------------------+
+ | Controllers    | ONOS           | Test suite of ONOS L2 and L3 functions    |
+ |                +----------------+-------------------------------------------+
+ |                | OpenContrail   |                                           |
+ +----------------+----------------+-------------------------------------------+
+ | Features       | vIMS           | Show the capability to deploy a real NFV  |
+ |                |                | test cases.                               |
+ |                |                | The IP Multimedia Subsytem is a typical   |
+ |                |                | Telco test case, referenced by ETSI.      |
+ |                |                | It provides a fully functional VoIP System|
+ |                +----------------+-------------------------------------------+
+ |                | Promise        | Resource reservation and management       |
+ |                |                | project to identify NFV related           |
+ |                |                | requirements and realize resource         |
+ |                |                | reservation for future usage by capacity  |
+ |                |                | management of resource pools regarding    |
+ |                |                | compute, network and storage.             |
+ |                +----------------+-------------------------------------------+
+ |                | SDNVPN         |                                           |
+ +----------------+----------------+-------------------------------------------+
 
 
 Most of the test suites are developed upstream.
