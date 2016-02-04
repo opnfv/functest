@@ -63,6 +63,8 @@ The goal of this test can be described as follows::
  |             |                   |             |
  +-------------+                   +-------------+
 
+This example can be considered as an "Hello World" example.
+It is the first basic example, it must work on any configuration.
 
 vPing_userdata
 ^^^^^^^^^^^^^^
@@ -90,9 +92,8 @@ The goal of this test can be described as follow::
  |             |                   |             |
  +-------------+                   +-------------+
 
+This scenario looks like the previous one but it includes the use of cloud-init.
 
-This example can be considered as an "Hello World" example.
-It is the first basic example, it must work on any configuration.
 
 Tempest
 ^^^^^^^
@@ -149,7 +150,6 @@ The OPNFV scenarios are based on the collection of the existing Rally scenarios:
  * nova
  * quotas
  * requests
- * vm
 
 Basic SLA (stop test on errors) have been implemented.
 
@@ -433,10 +433,13 @@ The Tempest results are displayed in the console::
   2016-01-28 08:19:32,133 - run_tempest - INFO - Pushing results to DB: 'http://testresults.opnfv.org/testapi/results'.
   2016-01-28 08:19:32,278 - run_tempest - INFO - Deleting tenant and user for Tempest suite)
 
-In order to check all the available test case related debug information, please
+In order to check all the available test cases related debug information, please
 inspect tempest.log file stored into related Rally deployment folder.
+The Tempest log is also automatically pushed to OPNFV artifact server in
+Continuous Integration.
+The Tempest results are also pushed to the Test Database from Continuous
+Integration.
 
-The Tempest results are pushed to the Test Database.
 
 Rally
 ^^^^^
@@ -471,8 +474,11 @@ other. Tables are displayed::
 
 
 At the end of the module test, a message is displayed to provide a global
-summary (Test OK or test failed). The raw results are pushed into the Test
-Database.
+summary::
+
+  2016-02-04 12:50:18,382 - run_rally - INFO - Test scenario: "requests" OK.
+ 
+The raw results are pushed into the Test Database from Continuous Integration.
 
 
 Controllers
@@ -623,70 +629,42 @@ Feature
 vIMS
 ^^^^
 
-The results in the console are very verbose::
+The results in the console can be described as follows::
 
     FUNCTEST.info: Running vIMS test...
-    2016-01-07 12:30:24,107 - vIMS - INFO - Prepare OpenStack plateform (create tenant and user)
-    2016-01-07 12:30:24,484 - vIMS - INFO - Update OpenStack creds informations
-    2016-01-07 12:30:24,484 - vIMS - INFO - Upload some OS images if it doesn't exist
-    2016-01-07 12:30:24,917 - vIMS - INFO - centos_7 image doesn't exist on glance repository.
+    2016-02-04 13:46:25,025 - vIMS - INFO - Prepare OpenStack plateform (create tenant and user)
+    2016-02-04 13:46:25,312 - vIMS - INFO - Update OpenStack creds informations
+    2016-02-04 13:46:25,312 - vIMS - INFO - Upload some OS images if it doesn't exist
+    2016-02-04 13:46:25,566 - vIMS - INFO - centos_7 image doesn't exist on glance repository.
                                 Try downloading this image and upload on glance !
-    2016-01-07 12:31:01,268 - vIMS - INFO - ubuntu_14.04 image doesn't exist on glance repository.
+    2016-02-04 13:47:06,167 - vIMS - INFO - ubuntu_14.04 image doesn't exist on glance repository.
                                 Try downloading this image and upload on glance !
-    2016-01-07 12:31:28,670 - vIMS - INFO - Update security group quota for this tenant
-    2016-01-07 12:31:28,903 - vIMS - INFO - Update cinder quota for this tenant
-    2016-01-07 12:31:29,355 - vIMS - INFO - Collect flavor id for cloudify manager server
-    2016-01-07 12:31:30,453 - vIMS - INFO - Prepare virtualenv for cloudify-cli
-    2016-01-07 12:31:30,453 - vIMS - DEBUG - Executing command : chmod +x /home/opnfv/repos/functest/testcases/vIMS/CI/create_venv.sh
-    2016-01-07 12:31:30,460 - vIMS - DEBUG - Executing command : /home/opnfv/repos/functest/testcases/vIMS/CI/create_venv.sh /home/opnfv/functest/data/vIMS/
-    2016-01-07 12:31:30,469 - vIMS - INFO - Downloading the cloudify manager server blueprint
-    2016-01-07 12:31:46,028 - vIMS - INFO - Cloudify deployment Start Time:'2016-01-07 12:31:46'
-    2016-01-07 12:31:46,029 - vIMS - INFO - Writing the inputs file
-    2016-01-07 12:31:46,032 - vIMS - INFO - Launching the cloudify-manager deployment
-    .........................................
-    2016-01-07 12:36:51 LOG <manager> [rabbitmq_3c04e.create] INFO: preparing fabric environment...
-    2016-01-07 12:36:51 LOG <manager> [rabbitmq_3c04e.create] INFO: environment prepared successfully
-    .........................................
-    2016-01-07 12:42:51,982 - vIMS - INFO - Cloudify-manager server is UP !
-    2016-01-07 12:42:51,983 - vIMS - INFO - Cloudify deployment duration:'666.0'
-    2016-01-07 12:42:51,983 - vIMS - INFO - Collect flavor id for all clearwater vm
-    2016-01-07 12:42:53,330 - vIMS - INFO - vIMS VNF deployment Start Time:'2016-01-07 12:42:53'
-    2016-01-07 12:42:53,330 - vIMS - INFO - Downloading the openstack-blueprint.yaml blueprint
-    2016-01-07 12:43:05,798 - vIMS - INFO - Writing the inputs file
-    2016-01-07 12:43:05,801 - vIMS - INFO - Launching the clearwater deployment
-    2016-01-07 12:43:05,801 - vIMS - DEBUG - Executing command : /bin/bash -c 'source /home/opnfv/functest/data/vIMS/venv_cloudify/bin/activate; cd /home/opnfv/functest/data/vIMS/opnfv-cloudify-clearwater; cfy blueprints upload -b clearwater -p openstack-blueprint.yaml; cfy deployments create -b clearwater -d clearwater-opnfv --inputs inputs.yaml; cfy executions start -w install -d clearwater-opnfv --timeout 1800; '
-    2016-01-07 13:01:50,577 - vIMS - DEBUG - Validating openstack-blueprint.yaml
-    Blueprint validated successfully
-    Uploading blueprint openstack-blueprint.yaml to management server 172.30.10.165
-    Uploaded blueprint, blueprint's id is: clearwater
-    Creating new deployment from blueprint clearwater at management server 172.30.10.165
-    Deployment created, deployment's id is: clearwater-opnfv
-    .........................................
-    2016-01-07 13:01:50,578 - vIMS - INFO - The deployment of clearwater-opnfv is ended
-    2016-01-07 13:01:50,578 - vIMS - INFO - vIMS VNF deployment duration:'1137.2'
-    2016-01-07 13:04:50,591 - vIMS - DEBUG - Trying to get clearwater nameserver IP ...
-    2016-01-07 13:04:55,176 - vIMS - INFO - vIMS functional test Start Time:'2016-01-07 13:04:55'
-    2016-01-07 13:14:20,694 - vIMS - INFO - vIMS functional test duration:'565.5'
-    .........................................
-    Basic Call - Rejected by remote endpoint (TCP) - (6505550603, 6505550969) Passed
-    Basic Call - Rejected by remote endpoint (UDP) - (6505550095, 6505550084) Passed
-    Basic Call - Messages - Pager model (TCP) - (6505550000, 6505550520) Passed
-    Basic Call - Messages - Pager model (UDP) - (6505550742, 6505550077) Passed
-    Basic Call - Pracks (TCP) - (6505550670, 6505550304) Passed
-    Basic Call - Pracks (UDP) - (6505550990, 6505550391) Passed
-    Basic Registration (TCP) - (6505550744) Passed
-    Basic Registration (UDP) - (6505550616) Passed
-    Multiple Identities (TCP) - (6505550957, 6505550949) Passed
-    Multiple Identities (UDP) - (6505550771, 6505550675) Passed
-    .........................................
-    2016-01-07 13:14:20,695 - vIMS - DEBUG - Trying to load test results
-    2016-01-07 13:14:20,702 - vIMS - DEBUG - Push result into DB
-    2016-01-07 13:14:20,702 - vIMS - DEBUG - Pushing results to DB....
-    2016-01-07 13:14:21,396 - vIMS - DEBUG - <Response [200]>
-    2016-01-07 13:14:21,396 - vIMS - INFO - Launching the clearwater-opnfv undeployment
+    2016-02-04 13:47:26,987 - vIMS - INFO - Update security group quota for this tenant
+    2016-02-04 13:47:27,193 - vIMS - INFO - Update cinder quota for this tenant
+    2016-02-04 13:47:27,746 - vIMS - INFO - Collect flavor id for cloudify manager server
+    2016-02-04 13:47:28,326 - vIMS - INFO - Prepare virtualenv for cloudify-cli
+    2016-02-04 13:48:00,657 - vIMS - INFO - Downloading the cloudify manager server blueprint
+    2016-02-04 13:48:03,391 - vIMS - INFO - Cloudify deployment Start Time:'2016-02-04 13:48:03'
+    2016-02-04 13:48:03,391 - vIMS - INFO - Writing the inputs file
+    2016-02-04 13:48:03,395 - vIMS - INFO - Launching the cloudify-manager deployment
+    2016-02-04 13:56:03,501 - vIMS - INFO - Cloudify-manager server is UP !
+    2016-02-04 13:56:03,502 - vIMS - INFO - Cloudify deployment duration:'480.1'
+    2016-02-04 13:56:03,502 - vIMS - INFO - Collect flavor id for all clearwater vm
+    2016-02-04 13:56:04,093 - vIMS - INFO - vIMS VNF deployment Start Time:'2016-02-04 13:56:04'
+    2016-02-04 13:56:04,093 - vIMS - INFO - Downloading the openstack-blueprint.yaml blueprint
+    2016-02-04 13:56:06,265 - vIMS - INFO - Writing the inputs file
+    2016-02-04 13:56:06,268 - vIMS - INFO - Launching the clearwater deployment
+    2016-02-04 14:11:27,101 - vIMS - INFO - The deployment of clearwater-opnfv is ended
+    2016-02-04 14:11:27,103 - vIMS - INFO - vIMS VNF deployment duration:'923.0'
+    2016-02-04 14:14:31,976 - vIMS - INFO - vIMS functional test Start Time:'2016-02-04 14:14:31'
+    2016-02-04 14:15:45,880 - vIMS - INFO - vIMS functional test duration:'73.9'
+    2016-02-04 14:15:46,113 - vIMS - INFO - Launching the clearwater-opnfv undeployment
+    2016-02-04 14:18:12,604 - vIMS - INFO - Launching the cloudify-manager undeployment
+    2016-02-04 14:18:51,808 - vIMS - INFO - Cloudify-manager server has been successfully removed!
+    2016-02-04 14:18:51,870 - vIMS - INFO - Removing vIMS tenant ..
+    2016-02-04 14:18:52,131 - vIMS - INFO - Removing vIMS user ..
 
-Please note that vIMS traces are very verbose but can bee summarized in several
-steps:
+Please note that vIMS traces can bee summarized in several steps:
 
  * INFO: environment prepared successfully => environment OK
  * INFO - Cloudify-manager server is UP ! => orchestrator deployed
@@ -698,7 +676,32 @@ steps:
 Promise
 ^^^^^^^
 
-TODO Promise
+The results can be observed in the console::
+
+    Running test case: promise
+    ----------------------------------------------
+    
+    FUNCTEST.info: Running PROMISE test case...
+    2016-02-04 07:10:37,735 - Promise- INFO - Creating tenant 'promise'...
+    2016-02-04 07:10:37,893 - Promise- INFO - Adding role '59828986a9a94dfaa852548599fde628' to tenant 'promise'...
+    2016-02-04 07:10:38,005 - Promise- INFO - Creating user 'promiser'...
+    2016-02-04 07:10:38,128 - Promise- INFO - Updating OpenStack credentials...
+    2016-02-04 07:10:38,157 - Promise- INFO - Creating image 'promise-img' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
+    2016-02-04 07:10:42,016 - Promise- INFO - Creating flavor 'promise-flavor'...
+    2016-02-04 07:10:42,836 - Promise- INFO - Exporting environment variables...
+    2016-02-04 07:10:42,836 - Promise- INFO - Running command: DEBUG=1 npm run -s test -- --reporter json
+    2016-02-04 07:10:51,505 - Promise- INFO - The test succeeded.
+    ....
+    **********************************
+        Promise test summary
+    **********************************
+    Test start:		Thu Feb 04 07:10:42 UTC 2016
+    Test end:		Thu Feb 04 07:10:51 UTC 2016
+    Execution time:	8.7
+    Total tests executed:	66
+    Total tests failed:	0
+    **********************************
+    
 
 
 Functest in test Dashboard
@@ -708,7 +711,7 @@ The OPNFV testing group created a test collection database to collect the test
 results from CI.
 Any test project running on any lab integrated in CI can push the results to
 this database.
-This databse can be used afterwards to see the evolution of the tests and
+This database can be used afterwards to see the evolution of the tests and
 compare the results versus the installers, the scenario or the labs.
 
 You can find more information about the dashboard from Testing Dashboard wiki
@@ -825,139 +828,139 @@ The API can described as follow:
 
 Version:
 
- +--------+--------------------------+------------------------------------------+
- | Method | Path                     | Description                              |
- +========+==========================+==========================================+
- | GET    | /version                 | Get API version                          |
- +--------+--------------------------+------------------------------------------+
+ +--------+--------------------------+-----------------------------------------+
+ | Method | Path                     | Description                             |
+ +========+==========================+=========================================+
+ | GET    | /version                 | Get API version                         |
+ +--------+--------------------------+-----------------------------------------+
 
 
 Pods:
 
- +--------+--------------------------+------------------------------------------+
- | Method | Path                     | Description                              |
- +========+==========================+==========================================+
- | GET    | /pods                    | Get the list of declared Labs (PODs)     |
- +--------+--------------------------+------------------------------------------+
- | POST   | /pods                    | Declare a new POD                        |
- |        |                          | Content-Type: application/json           |
- |        |                          | {                                        |
- |        |                          |    "name": "pod_foo",                    |
- |        |                          |    "creation_date": "YYYY-MM-DD HH:MM:SS"|
- |        |                          | }                                        |
- +--------+--------------------------+------------------------------------------+
+ +--------+--------------------------+-----------------------------------------+
+ | Method | Path                     | Description                             |
+ +========+==========================+=========================================+
+ | GET    | /pods                    | Get the list of declared Labs (PODs)    |
+ +--------+--------------------------+-----------------------------------------+
+ | POST   | /pods                    | Declare a new POD                       |
+ |        |                          | Content-Type: application/json          |
+ |        |                          | {                                       |
+ |        |                          |   "name": "pod_foo",                    |
+ |        |                          |   "creation_date": "YYYY-MM-DD HH:MM:SS"|
+ |        |                          | }                                       |
+ +--------+--------------------------+-----------------------------------------+
 
 Projects:
 
- +--------+--------------------------+------------------------------------------+
- | Method | Path                     | Description                              |
- +========+==========================+==========================================+
- | GET    | /test_projects           | Get the list of test projects            |
- +--------+--------------------------+------------------------------------------+
- | GET    |/test_projects/{project}  | Get details on {project}                 |
- |        |                          |                                          |
- +--------+--------------------------+------------------------------------------+
- | POST   | /test_projects           | Add a new test project                   |
- |        |                          | Content-Type: application/json           |
- |        |                          | {                                        |
- |        |                          |    "name": "project_foo",                |
- |        |                          |    "description": "whatever you want"    |
- |        |                          | }                                        |
- +--------+--------------------------+------------------------------------------+
- | PUT    | /test_projects/{project} | Update a test project                    |
- |        |                          |                                          |
- |        |                          | Content-Type: application/json           |
- |        |                          | {                                        |
- |        |                          |    <the field(s) you want to modify>     |
- |        |                          | }                                        |
- +--------+--------------------------+------------------------------------------+
- | DELETE | /test_projects/{project} | Delete a test project                    |
- +--------+--------------------------+------------------------------------------+
+ +--------+--------------------------+-----------------------------------------+
+ | Method | Path                     | Description                             |
+ +========+==========================+=========================================+
+ | GET    | /test_projects           | Get the list of test projects           |
+ +--------+--------------------------+-----------------------------------------+
+ | GET    |/test_projects/{project}  | Get details on {project}                |
+ |        |                          |                                         |
+ +--------+--------------------------+-----------------------------------------+
+ | POST   | /test_projects           | Add a new test project                  |
+ |        |                          | Content-Type: application/json          |
+ |        |                          | {                                       |
+ |        |                          |    "name": "project_foo",               |
+ |        |                          |    "description": "whatever you want"   |
+ |        |                          | }                                       |
+ +--------+--------------------------+-----------------------------------------+
+ | PUT    | /test_projects/{project} | Update a test project                   |
+ |        |                          |                                         |
+ |        |                          | Content-Type: application/json          |
+ |        |                          | {                                       |
+ |        |                          |    <the field(s) you want to modify>    |
+ |        |                          | }                                       |
+ +--------+--------------------------+-----------------------------------------+
+ | DELETE | /test_projects/{project} | Delete a test project                   |
+ +--------+--------------------------+-----------------------------------------+
 
 
 Test cases:
 
- +--------+--------------------------+------------------------------------------+
- | Method | Path                     | Description                              |
- +========+==========================+==========================================+
- | GET    | /test_projects/{project}/| Get the list of test cases of {project}  |
- |        | cases                    |                                          |
- +--------+--------------------------+------------------------------------------+
- | POST   | /test_projects/{project}/| Add a new test case to {project}         |
- |        | cases                    | Content-Type: application/json           |
- |        |                          | {                                        |
- |        |                          |    "name": "case_foo",                   |
- |        |                          |    "description": "whatever you want"    |
- |        |                          |    "creation_date": "YYYY-MM-DD HH:MM:SS"|
- |        |                          |    "url": "whatever you want"            |
- |        |                          | }                                        |
- +--------+--------------------------+------------------------------------------+
- | PUT    | /test_projects/{project}?| Modify a test case of {project}          |
- |        | case_name={case}         |                                          |
- |        |                          | Content-Type: application/json           |
- |        |                          | {                                        |
- |        |                          |    <the field(s) you want to modify>     |
- |        |                          | }                                        |
- +--------+--------------------------+------------------------------------------+
- | DELETE | /test_projects/{project}/| Delete a test case                       |
- |        | case_name={case}         |                                          |
- +--------+--------------------------+------------------------------------------+
+ +--------+--------------------------+-----------------------------------------+
+ | Method | Path                     | Description                             |
+ +========+==========================+=========================================+
+ | GET    | /test_projects/{project}/| Get the list of test cases of {project} |
+ |        | cases                    |                                         |
+ +--------+--------------------------+-----------------------------------------+
+ | POST   | /test_projects/{project}/| Add a new test case to {project}        |
+ |        | cases                    | Content-Type: application/json          |
+ |        |                          | {                                       |
+ |        |                          |   "name": "case_foo",                   |
+ |        |                          |   "description": "whatever you want"    |
+ |        |                          |   "creation_date": "YYYY-MM-DD HH:MM:SS"|
+ |        |                          |   "url": "whatever you want"            |
+ |        |                          | }                                       |
+ +--------+--------------------------+-----------------------------------------+
+ | PUT    | /test_projects/{project}?| Modify a test case of {project}         |
+ |        | case_name={case}         |                                         |
+ |        |                          | Content-Type: application/json          |
+ |        |                          | {                                       |
+ |        |                          |    <the field(s) you want to modify>    |
+ |        |                          | }                                       |
+ +--------+--------------------------+-----------------------------------------+
+ | DELETE | /test_projects/{project}/| Delete a test case                      |
+ |        | case_name={case}         |                                         |
+ +--------+--------------------------+-----------------------------------------+
 
 Test Results:
 
- +--------+--------------------------+------------------------------------------+
- | Method | Path                     | Description                              |
- +========+==========================+==========================================+
- | GET    |/results/project={project}| Get the test results of {project}        |
- +--------+--------------------------+------------------------------------------+
- | GET    |/results/case={case}      | Get the test results of {case}           |
- +--------+--------------------------+------------------------------------------+
- | GET    |/results?pod={pod}        | get the results on pod {pod}             |
- +--------+--------------------------+------------------------------------------+
- | GET    |/results?installer={inst} | Get the test results of installer {inst} |
- +--------+--------------------------+------------------------------------------+
- | GET    |/results?version={version}| Get the test results of scenario         |
- |        |                          | {version}. Initially the version param   |
- |        |                          | was reflecting git version, in Functest  |
- |        |                          | it was decided to move to scenario       |
- +--------+--------------------------+------------------------------------------+
- | GET    |/results?project={project}| Get all the results of the test case     |
- |        |&case={case}              | {case} of the project {project} with     |
- |        |&version={scenario}       | version {scenario} installed by installer|
- |        |&installer={installer}    | {installer} on POD {pod} stored since    |
- |        |&pod={pod}                | {days} days                              |
- |        |                          | {project_name} and {case_name} are       |
- |        |&period={days}            | mandatory, the other parameters are      |
- |        |                          | optional.                                |
- +--------+--------------------------+------------------------------------------+
- | POST   | /results                 | Add a new test results                   |
- |        |                          | Content-Type: application/json           |
- |        |                          | {                                        |
- |        |                          |    "project_name": "project_foo",        |
- |        |                          |    "case_name": "case_foo",              |
- |        |                          |    "pod_name": "pod_foo",                |
- |        |                          |    "installer": "installer_foo",         |
- |        |                          |    "version": "scenario_foo",            |
- |        |                          |    "details": <your results>             |
- |        |                          | }                                        |
- +--------+--------------------------+------------------------------------------+
+ +--------+--------------------------+-----------------------------------------+
+ | Method | Path                     | Description                             |
+ +========+==========================+=========================================+
+ | GET    |/results/project={project}| Get the test results of {project}       |
+ +--------+--------------------------+-----------------------------------------+
+ | GET    |/results/case={case}      | Get the test results of {case}          |
+ +--------+--------------------------+-----------------------------------------+
+ | GET    |/results?pod={pod}        | get the results on pod {pod}            |
+ +--------+--------------------------+-----------------------------------------+
+ | GET    |/results?installer={inst} | Get the test results of installer {inst}|
+ +--------+--------------------------+-----------------------------------------+
+ | GET    |/results?version={version}| Get the test results of scenario        |
+ |        |                          | {version}. Initially the version param  |
+ |        |                          | was reflecting git version, in Functest |
+ |        |                          | it was decided to move to scenario      |
+ +--------+--------------------------+-----------------------------------------+
+ | GET    |/results?project={project}| Get all the results of the test case    |
+ |        |&case={case}              | {case} of the project {project} with    |
+ |        |&version={scenario}       | version {scenario} installed by         |
+ |        |&installer={installer}    | {installer} on POD {pod} stored since   |
+ |        |&pod={pod}                | {days} days                             |
+ |        |                          | {project_name} and {case_name} are      |
+ |        |&period={days}            | mandatory, the other parameters are     |
+ |        |                          | optional.                               |
+ +--------+--------------------------+-----------------------------------------+
+ | POST   | /results                 | Add a new test results                  |
+ |        |                          | Content-Type: application/json          |
+ |        |                          | {                                       |
+ |        |                          |    "project_name": "project_foo",       |
+ |        |                          |    "case_name": "case_foo",             |
+ |        |                          |    "pod_name": "pod_foo",               |
+ |        |                          |    "installer": "installer_foo",        |
+ |        |                          |    "version": "scenario_foo",           |
+ |        |                          |    "details": <your results>            |
+ |        |                          | }                                       |
+ +--------+--------------------------+-----------------------------------------+
 
 
 Dashboard:
 
- +--------+--------------------------+------------------------------------------+
- | Method | Path                     | Description                              |
- +========+==========================+==========================================+
- | GET    |/dashboard?               | Get all the dashboard ready results of   |
- |        |&project={project}        | {case} of the project {project}          |
- |        |&case={case}              | version {scenario} installed by installer|
- |        |&version={scenario}       | {installer} on POD {pod} stored since    |
- |        |&installer={installer}    | {days} days                              |
- |        |&pod={pod}                |                                          |
- |        |&period={days}            | {project_name} and {case_name} are       |
- |        |                          | mandatory, the other parameters are      |
- |        |                          | optional.                                |
- +--------+--------------------------+------------------------------------------+
+ +--------+--------------------------+-----------------------------------------+
+ | Method | Path                     | Description                             |
+ +========+==========================+=========================================+
+ | GET    |/dashboard?               | Get all the dashboard ready results of  |
+ |        |&project={project}        | {case} of the project {project}         |
+ |        |&case={case}              | version {scenario} installed by         |
+ |        |&version={scenario}       | {installer} on POD {pod} stored since   |
+ |        |&installer={installer}    | {days} days                             |
+ |        |&pod={pod}                |                                         |
+ |        |&period={days}            | {project_name} and {case_name} are      |
+ |        |                          | mandatory, the other parameters are     |
+ |        |                          | optional.                               |
+ +--------+--------------------------+-----------------------------------------+
 
 
 The results with dashboard method are post-processed from raw results.
@@ -984,10 +987,15 @@ VIM
 vPing
 ^^^^^
 
+vPing should work on all the scenario. In case of timeout, check your network
+connectivity. The test case creates its own security group to allow SSH access,
+check your technical architecture and your security rules.
+
 
 vPing_userdata
 ^^^^^^^^^^^^^^
 
+Cloud-init in not supported on scenario dealing with ONOS.
 
 Tempest
 ^^^^^^^
@@ -1037,11 +1045,18 @@ Controllers
 
 ODL
 ^^^
-
+2 versions are supported in Brahmaputra depending on the scenario:
+ * Lithium
+ * Berylium
+ 
+The upstream test suites have not been adapted, so you may get 18 or 15 tests
+passed on 18 depending on your configuration. The 3 testcases are partly failed
+due to wrong return code.
 
 ONOS
 ^^^^
 
+TODO
 
 OpenContrail
 ^^^^^^^^^^^^
@@ -1053,6 +1068,13 @@ Feature
 vIMS
 ^^^^
 
+TODO
+
+
+Promise
+^^^^^^^
+
+TODO
 
 References
 ==========

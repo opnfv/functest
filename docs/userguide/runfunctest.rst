@@ -132,9 +132,10 @@ The tests are executed as follow:
 
  * Basic scenario (vPing, vPing_userdata, Tempest)
  * Controller suites: ODL or ONOS or OpenContrail
- * Feature projects
- * vIMS
+ * Feature projects (promise, vIMS)
  * Rally (benchmark scenario)
 
 At the end of an automated execution, everything is cleaned.
-We keep only the users/networks that have been statically declared in 'https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml'_
+Before running Functest, we take a snapshot of the OpenStack configuration
+(users, tenants, networks, ....) and after Functest we removed everything
+created by Functest to restitute the system as it was prior to the tests.
