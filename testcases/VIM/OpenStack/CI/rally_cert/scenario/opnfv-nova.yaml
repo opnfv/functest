@@ -15,7 +15,7 @@
           {{ unlimited_nova(keypairs=true) }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -27,7 +27,7 @@
           {{ unlimited_nova(keypairs=true) }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -39,7 +39,7 @@
           {{ unlimited_nova(keypairs=true) }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -68,7 +68,7 @@
           {{ unlimited_nova() }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -88,7 +88,7 @@
           {{ unlimited_nova() }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -109,7 +109,7 @@
           {{ unlimited_nova() }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -133,7 +133,7 @@
           {{ unlimited_nova() }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -155,7 +155,7 @@
           {{ unlimited_nova() }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -176,7 +176,7 @@
           {{ unlimited_nova() }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -196,7 +196,7 @@
           {{ unlimited_nova() }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -217,7 +217,7 @@
           {{ unlimited_neutron(secgroups=true) }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -230,7 +230,7 @@
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -242,7 +242,7 @@
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -256,7 +256,7 @@
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -269,7 +269,7 @@
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -285,7 +285,7 @@
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -300,7 +300,7 @@
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -315,7 +315,7 @@
           {{ unlimited_neutron(secgroups=true) }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -330,7 +330,7 @@
           {{ unlimited_neutron(secgroups=true) }}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -347,7 +347,7 @@
         network: {}
         {% endcall %}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -364,6 +364,6 @@
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
