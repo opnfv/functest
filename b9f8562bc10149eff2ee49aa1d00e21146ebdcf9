@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_4f062522",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "This scenario is similar to the previous one but it uses cloud-init (nova metadata service) instead of floating IPs and SSH.",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_2f03e910",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "Change it to 33, do we still have wrong parsing in the script?",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_12005600",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "s",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_f2049a16",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "scenarioS",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_d2099e2d",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "technical architecture --\u003e network settings",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_b20e2233",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "I will add more stuff here later on, how to run the tests only and see the steps, etc...",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_7210aa4e",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "Maybe we can put here the 3 tests that fail. And I think it happens only with Lithium, right?",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_521dae65",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "Maybe here we can refer to the promise documentation...",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_321a326f",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "The tests are executed in the following order:",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_d2207e9d",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "This is ok, but I will add a section explaining what generate_defaults and clean_openstack does and how to use them.",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_122736b8",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "s/removed/remove",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_f22b7a80",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-05T11:40:07Z",
+      "side": 1,
+      "message": "s/restitute/restore",
+      "revId": "b9f8562bc10149eff2ee49aa1d00e21146ebdcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
