@@ -101,7 +101,9 @@ SUPPORT_DIR = SCENARIOS_DIR + "scenario/support"
 FLAVOR_NAME = "m1.tiny"
 USERS_AMOUNT = 2
 TENANTS_AMOUNT = 3
-CONTROLLERS_AMOUNT = 2
+ITERATIONS_AMOUNT = 10
+CONCURRENCY = 4
+
 ###
 RESULTS_DIR = functest_yaml.get("general").get("directories"). \
     get("dir_rally_res")
@@ -185,7 +187,8 @@ def build_task_args(test_file_name):
     task_args['sup_dir'] = SUPPORT_DIR
     task_args['users_amount'] = USERS_AMOUNT
     task_args['tenants_amount'] = TENANTS_AMOUNT
-    task_args['controllers_amount'] = CONTROLLERS_AMOUNT
+    task_args['iterations'] = ITERATIONS_AMOUNT
+    task_args['concurrency'] = CONCURRENCY
 
     return task_args
 
