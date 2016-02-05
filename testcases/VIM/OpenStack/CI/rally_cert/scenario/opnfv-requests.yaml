@@ -11,7 +11,7 @@
             method: "GET"
         status_code: 200
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
 
@@ -23,6 +23,6 @@
         status_code: 200
         allow_redirects: False
       runner:
-        {{ constant_runner(concurrency=2*controllers_amount, times=10*controllers_amount, is_smoke=smoke) }}
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
