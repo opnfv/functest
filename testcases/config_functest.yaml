@@ -176,7 +176,7 @@ test_exec_priority:
     4: odl
     5: onos
     6: ovno
-    #7: doctor
+    7: doctor
     8: promise
     9: odl-vpnservice
     10: bgpvpn
@@ -231,7 +231,7 @@ test_exec_priority:
 #######################################################################
 test-dependencies:
     doctor:
-        installer: '(apex)|(fuel)'
+        installer: 'apex'
     functest:
         vims:
             scenario: '(ocl)|(odl)|(nosdn)'
