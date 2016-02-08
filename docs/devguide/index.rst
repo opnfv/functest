@@ -11,7 +11,8 @@ OPNFV FUNCTEST developer guide
 Introduction
 ============
 
-This document describes how feature projects aiming to run functional tests can be integrated into FuncTest framework.
+This document describes how feature projects aiming to run functional tests can
+be integrated into FuncTest framework.
 
 
 ================================
@@ -46,16 +47,25 @@ The Internal test cases in Brahmaputra are:
  * vIMS
  * Rally
 
+The external tescases are:
+
+ * Promise
+ * Doctor
+ * Onos
+ * BGPVPN
+
 see `[2]`_ for details.
 
-Functest can also be considered as a framework that may include external OPNFV projects.
+Functest can also be considered as a framework that may include external OPNFV
+projects.
 This framework will ease the integration of the feature test suite to the CI.
 
 ==================
 How Functest works
 ==================
 
-The installation and the launch of the Functest docker image is described in `[1]`_.
+The installation and the launch of the Functest docker image is described in
+`[1]`_.
 
 The Functest docker directories are::
 
@@ -80,46 +90,50 @@ The Functest docker directories are::
 
 ::
 
- +--------------+-------------------+---------------------------------------------------------+
- | Directory    | Subdirectory      | Comments                                                |
- +--------------+-------------------+---------------------------------------------------------+
- |              | <project>/conf    | All the useful configuration file(s) for <project>      |
- |              |                   | the openstack creds are put there for CI                |
- |              |                   | It is recommended to push it there when passing the     |
- |              |                   | credentials to container through the -v option          |
- |              +-------------------+---------------------------------------------------------+
- |    opnfv     | <project>/data    | Usefull data, images for <projects>                     |
- |              |                   | By default we put an image cirros-0.3.4-x86_64-disk.img |
- |              |                   | This image can be used by any projects                  |
- |              +-------------------+---------------------------------------------------------+
- |              | <project>/results | Local result directory of project <project>             |
- +--------------+-------------------+---------------------------------------------------------+
- |              | bgpvpn            |                                                         |
- |              +-------------------+                                                         +
- | repos        | doctor            |                                                         |
- |              +-------------------+                                                         +
- |              | functest          |                                                         |
- |              +-------------------+                                                         +
- |              | odl_integration   |                                                         |
- |              +-------------------+    Clone of the useful repositories                     +
- |              | onos              |     These repositories may include:                     |
- |              +-------------------+                - tooling                                +
- |              | promise           |                - scenario                               |
- |              +-------------------+                - scripts                                +
- |              | rally             |                                                         |
- |              +-------------------+                                                         +
- |              | releng            |                                                         |
- |              +-------------------+                                                         +
- |              | vims-test         |                                                         |
- |              +-------------------+                                                         +
- |              | <your project>    |                                                         |
- +--------------+-------------------+---------------------------------------------------------+
+ +-----------+-------------------+---------------------------------------------+
+ | Directory | Subdirectory      | Comments                                    |
+ +-----------+-------------------+---------------------------------------------+
+ |           | <project>/conf    | All the useful configuration file(s) for    |
+ |           |                   | <project> the openstack creds are put there |
+ |           |                   | for CI                                      |
+ |           |                   | It is recommended to push it there when     |
+ |           |                   | passing the credentials to container through|
+ |           |                   | the -v option                               |
+ |           +-------------------+---------------------------------------------+
+ |    opnfv  | <project>/data    | Usefull data, images for <projects>         |
+ |           |                   | By default we put a cirros image:           |
+ |           |                   | cirros-0.3.4-x86_64-disk.img                |
+ |           |                   | This image can be used by any projects      |
+ |           +-------------------+---------------------------------------------+
+ |           | <project>/results | Local result directory of project <project> |
+ +-----------+-------------------+---------------------------------------------+
+ |           | bgpvpn            |                                             |
+ |           +-------------------+                                             +
+ | repos     | doctor            |                                             |
+ |           +-------------------+                                             +
+ |           | functest          |                                             |
+ |           +-------------------+                                             +
+ |           | odl_integration   |                                             |
+ |           +-------------------+    Clone of the useful repositories         +
+ |           | onos              |     These repositories may include:         |
+ |           +-------------------+                - tooling                    +
+ |           | promise           |                - scenario                   |
+ |           +-------------------+                - scripts                    +
+ |           | rally             |                                             |
+ |           +-------------------+                                             +
+ |           | releng            |                                             |
+ |           +-------------------+                                             +
+ |           | vims-test         |                                             |
+ |           +-------------------+                                             +
+ |           | <your project>    |                                             |
+ +-----------+-------------------+---------------------------------------------+
 
 Before running the test suite, you must prepare the environement by running::
 
  $ /home/opnfv/repos/functest/docker/prepare_env.sh
 
-By running prepare_env.sh, you build the test environement required by the tests including the retrieval and sourcing of OpenStack credentials.
+By running prepare_env.sh, you build the test environement required by the tests
+including the retrieval and sourcing of OpenStack credentials.
 This is an example of the env variables we have in the docker container:
 
  * HOSTNAME=373f77816eb0
@@ -134,7 +148,8 @@ This is an example of the env variables we have in the docker container:
  * creds=/home/opnfv/functest/conf/openstack.creds
  * _=/usr/bin/env
 
-The prepare_env.sh will source the credentials, so once run you should have access to the following env variables::
+The prepare_env.sh will source the credentials, so once run you should have
+access to the following env variables::
 
  root@373f77816eb0:~# env|grep OS_
  OS_REGION_NAME=RegionOne
@@ -173,7 +188,8 @@ The files of the Functest repository you must modify to integrate Functest are:
 Dockerfile
 ==========
 
-This file lists the repositories to be cloned in the Functest container. The repositories can be internal or external::
+This file lists the repositories to be cloned in the Functest container.
+The repositories can be internal or external::
 
  RUN git clone https://gerrit.opnfv.org/gerrit/<your porject> ${repos_dir}/<your project>
 
@@ -181,7 +197,8 @@ This file lists the repositories to be cloned in the Functest container. The rep
 Common.sh
 ==========
 
-This file can be used to declare the branch and commit  variables of your projects::
+This file can be used to declare the branch and commit  variables of your
+projects::
 
  <YOUR_PROJECT>_BRANCH=$(cat $config_file | grep -w <your project>_branch | awk 'END {print $NF}')
  <YOUR_PROJECT>_COMMIT=$(cat $config_file | grep -w <your project>_commit | awk 'END {print $NF}')
@@ -193,7 +210,8 @@ This file can be used to declare the branch and commit  variables of your projec
 requirements.pip
 ================
 
-This file can be used to preloaded all the needed Python libraries (and avoid that each project does it)
+This file can be used to preloaded all the needed Python libraries (and avoid
+that each project does it)
 The current libraries used in Functest container are::
 
  # cat requirements.pip
@@ -213,17 +231,22 @@ The current libraries used in Functest container are::
  robotframework-sshlibrary==2.1.1
  configObj==5.0.6
  Flask==0.10.1
+ xmltodict==0.9.2
+ scp==0.10.2
+ paramiko==1.16.0
 
 
 prepare_env.sh
 ==============
 
-This script can be adapted if you need to set up a specific environment before running the tests.
+This script can be adapted if you need to set up a specific environment before
+running the tests.
 
 run_tests.sh
 ============
 
-This script is used to run the tests. You must thus complete the cases with you own project::
+This script is used to run the tests. You must thus complete the cases with your
+own project::
 
  ;;
     "promise")
@@ -248,7 +271,8 @@ And do not forget to update also the help line::
 config_funtest.yaml
 ===================
 
-This file is the main configuration file of Functest. You must add the references to your project::
+This file is the main configuration file of Functest. You must add the
+references to your project::
 
  general:
     directories:
@@ -258,13 +282,47 @@ This file is the main configuration file of Functest. You must add the reference
         <your project>_branch:   master
         <your project>_commit:   latest
 
+===============================================
+How to push your results into the Test Database
+===============================================
+
+The test database is used to collect test results. By default it is enabled only
+in Continuous Integration.
+The architecture and associated API is described in `[2]`_.
+If you want to push your results from CI, you just have to use the API at the
+end of your script.
+
+You can also reuse a python function defined in functest_utils.py::
+
+  def push_results_to_db(db_url, case_name, logger, pod_name,version, payload):
+    """
+    POST results to the Result target DB
+    """
+    url = db_url + "/results"
+    installer = get_installer_type(logger)
+    params = {"project_name": "functest", "case_name": case_name,
+              "pod_name": pod_name, "installer": installer,
+              "version": version, "details": payload}
+
+    headers = {'Content-Type': 'application/json'}
+    try:
+        r = requests.post(url, data=json.dumps(params), headers=headers)
+        if logger:
+            logger.debug(r)
+        return True
+    except Exception, e:
+        print "Error [push_results_to_db('%s', '%s', '%s', '%s', '%s')]:" \
+            % (db_url, case_name, pod_name, version, payload), e
+        return False
+
+::
 
 ==========
 References
 ==========
 
-.. _`[1]`: Functest configuration guide URL
-.. _`[2]`: functest user guide URL
+.. _`[1]`: http://artifacts.opnfv.org/functest/docs/configguide/index.html Functest configuration guide URL
+.. _`[2]`: http://artifacts.opnfv.org/functest/docs/userguide/index.html functest user guide URL
 
 
 OPNFV main site: opnfvmain_.
