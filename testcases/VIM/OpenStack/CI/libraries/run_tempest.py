@@ -203,8 +203,7 @@ def configure_tempest():
     cmd = "crudini --set "+tempest_conf_file+" identity password " \
           +USER_PASSWORD
     functest_utils.execute_command(cmd,logger)
-    cmd = "crudini --set "+tempest_conf_file+" input-scenario ssh_user_regex " \
-          +SSH_USER_REGEX
+    cmd = "sed -i 's/.*ssh_user_regex.*/ssh_user_regex = "+SSH_USER_REGEX+"/' "+tempest_conf_file
     functest_utils.execute_command(cmd,logger)
 
 
