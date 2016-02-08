@@ -73,6 +73,7 @@ TENANT_NAME = functest_yaml.get("tempest").get("identity").get("tenant_name")
 TENANT_DESCRIPTION = functest_yaml.get("tempest").get("identity").get("tenant_description")
 USER_NAME = functest_yaml.get("tempest").get("identity").get("user_name")
 USER_PASSWORD = functest_yaml.get("tempest").get("identity").get("user_password")
+SSH_USER_REGEX = functest_yaml.get("tempest").get("input-scenario").get("ssh_user_regex")
 DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
 RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("dir_rally_inst")
 RESULTS_DIR = functest_yaml.get("general").get("directories").get("dir_results")
@@ -202,6 +203,10 @@ def configure_tempest():
     cmd = "crudini --set "+tempest_conf_file+" identity password " \
           +USER_PASSWORD
     functest_utils.execute_command(cmd,logger)
+    cmd = "crudini --set "+tempest_conf_file+" input-scenario ssh_user_regex " \
+          +SSH_USER_REGEX
+    functest_utils.execute_command(cmd,logger)
+
 
     # Copy tempest.conf to /home/opnfv/functest/results/tempest/
     print shutil.copyfile(tempest_conf_file,TEMPEST_RESULTS_DIR+'/tempest.conf')

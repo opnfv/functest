@@ -82,6 +82,8 @@ tempest:
         tenant_description: Tenant for Tempest test suite
         user_name: tempest
         user_password: tempest
+    input-scenario:
+        ssh_user_regex: [["^.*[Cc]irros.*$", "cirros"], ["^.*[Tt]est[VvMm].*$", "cirros"], ["^.*rally_verify.*$", "cirros"]]
 
 rally:
     deployment_name: opnfv-rally
