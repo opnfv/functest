@@ -11,7 +11,7 @@ Introduction
 ============
 
 The goal of this documents is to describe the Functest test cases as well as
-provide a procedure about how to execute (or launch) them.
+provide a procedure about how to execute them.
 
 A presentation has been created for the first OPNFV Summit `[4]`_.
 
@@ -21,47 +21,65 @@ It is assumed that Functest container has been properly installed `[1]`_.
 
 The different scenarios are described in the section hereafter.
 
-VIM
+VIM (Virtualized Infrastructure Manager)
 ---
 
 vPing
 ^^^^^
 
-The goal of this test can be described as follows::
+Given the script 'ping.sh'::
+
+    #!/bin/sh
+    while true; do
+        ping -c 1 $1 2>&1 >/dev/null
+        RES=$?
+        if [ "Z$RES" = "Z0" ] ; then
+            echo 'vPing OK'
+            break
+        else
+            echo 'vPing KO'
+        fi
+    sleep 1
+    done
+
+The goal of this test is described as follows::
 
  vPing test case
- +-------------+                   +-------------+
- |             |                   |             |
- |             |     Boot VM1      |             |
- |             +------------------>|             |
- |             |                   |             |
- |             |     Get IP VM1    |             |
- |             +------------------>|             |
- |   Tester    |                   |   System    |
- |             |     Boot VM2      |    Under    |
- |             +------------------>|     Test    |
- |             |                   |             |
- |             |   Create (VM2)    |             |
- |             |   floating IP     |             |
- |             +------------------>|             |
- |             |                   |             |
- |             | SCP vPing script  |             |
- |             |      to VM2       |             |
- |             +------------------>|             |
- |             |                   |             |
- |             |   SSH to VM2      |             |
- |             +------------------>|             |
- |             |                   |             |
- |             |    Ping VM1       |             |
- |             |    private IP     |             |
- |             +------------------>|             |
- |             |                   |             |
- |             |    If ping:       |             |
- |             |      exit OK      |             |
- |             |    else (timeout) |             |
- |             |      exit KO      |             |
- |             |                   |             |
- +-------------+                   +-------------+
+ +-------------+                    +-------------+
+ |             |                    |             |
+ |             | Boot VM1 with IP1  |             |
+ |             +------------------->|             |
+ |             |                    |             |
+ |   Tester    |                    |   System    |
+ |             |     Boot VM2       |    Under    |
+ |             +------------------->|     Test    |
+ |             |                    |             |
+ |             |   Create (VM2)     |             |
+ |             |   floating IP      |             |
+ |             +------------------->|             |
+ |             |                    |             |
+ |             |  Assign floating   |             |
+ |             |     IP to VM2      |             |
+ |             +------------------->|             |
+ |             |                    |             |
+ |             |    Stablish SSH    |             |
+ |             | connection to VM2  |             |
+ |             | through float. IP  |             |
+ |             +------------------->|             |
+ |             |                    |             |
+ |             | SCP ping.sh to VM2 |             |
+ |             +------------------->|             |
+ |             |                    |             |
+ |             |   VM2 executes     |             |
+ |             |   ping.sh to VM1   |             |
+ |             +------------------->|             |
+ |             |                    |             |
+ |             |    If ping:        |             |
+ |             |      exit OK       |             |
+ |             |    else (timeout)  |             |
+ |             |      exit Failed   |             |
+ |             |                    |             |
+ +-------------+                    +-------------+
 
 This example can be considered as an "Hello World" example.
 It is the first basic example, it must work on any configuration.
@@ -69,31 +87,36 @@ It is the first basic example, it must work on any configuration.
 vPing_userdata
 ^^^^^^^^^^^^^^
 
-The goal of this test can be described as follow::
+The goal of this test can be described as follows::
 
  vPing_userdata test case
- +-------------+                   +-------------+
- |             |                   |             |
- |             |     Boot VM1      |             |
- |             +------------------>|             |
- |             |                   |             |
- |             |     Get IP VM1    |             |
- |             +------------------>|             |
- |   Tester    |                   |   System    |
- |             |     Boot VM2      |    Under    |
- |             +------------------>|     Test    |
- |             | VM2 pings VM1     |             |
- |             |   (cloud-init)    |             |
- |             | Check console log |             |
- |             |    If ping:       |             |
- |             |      exit OK      |             |
- |             |    else (timeout) |             |
- |             |      exit KO      |             |
- |             |                   |             |
- +-------------+                   +-------------+
+ +-------------+                    +-------------+
+ |             |                    |             |
+ |             |  Boot VM1 with IP1 |             |
+ |             +------------------->|             |
+ |             |                    |             |
+ |             |   Boot VM2 with    |             |
+ |             | ping.sh as userdata|             |
+ |             |   with IP1 as $1.  |             |
+ |             +------------------->|             |
+ |   Tester    |                    |   System    |
+ |             | VM2 exeutes ping.sh|    Under    |
+ |             |     (ping IP1)     |     Test    |
+ |             +------------------->|             |
+ |             |                    |             |
+ |             | Monitor nova       |             |
+ |             |  console-log VM 2  |             |
+ |             |    If ping:        |             |
+ |             |      exit OK       |             |
+ |             |    else (timeout)  |             |
+ |             |      exit Failed   |             |
+ |             |                    |             |
+ +-------------+                    +-------------+
 
 This scenario is similar to the previous one but it uses cloud-init (nova
-metadata service) instead of floating IPs and SSH.
+metadata service) instead of floating IPs and SSH connection. When the second VM
+boots it will execute the script automatically and the ping will be detected
+capturing periodically the output message in the console-log.
 
 
 Tempest
@@ -107,27 +130,27 @@ Tempest has batteries of tests for:
   * Scenarios
   * Other specific tests useful in validating an OpenStack deployment
 
-We use Rally `[3]`_ to run Tempest suite.
-Rally generates automatically tempest.conf configuration file.
-Before running actual test cases Functest creates needed resources.
-Needed parameters are updated in the configuration file.
-When the Tempest suite is run, each test duration is measured.
-The full console output is stored in the tempest.log file.
+Functest uses Rally `[3]`_ to run the Tempest suite.
+Rally generates automatically the Tempest configuration file (tempest.conf).
+Before running the actual test cases, Functest creates the needed resources and 
+the needed parameters are updated in the configuration file.
+When the Tempest suite is executed, each test duration is measured and the full 
+console output is stored in the tempest.log file for further analysis.
 
 As an addition of Arno, Brahmaputra runs a customized set of Tempest test cases.
 The list is specificed through *--tests-file* when running Rally.
 This option has been introduced in Rally in version 0.1.2.
 
 The customized test list is available in the Functest repo `[4]`_.
-This list contains more than 200 Tempest test cases.
-The list can be divied into two main parts:
+This list contains more than 200 Tempest test cases and can be divided 
+into two main sections:
 
   1) Set of tempest smoke test cases
   2) Set of test cases from DefCore list `[8]`_
 
-The goal of Tempest test suite is to check the basic functionalities of
+The goal of the Tempest test suite is to check the basic functionalities of
 different OpenStack components on an OPNFV fresh installation using
-corresponding REST API interfaces.
+the corresponding REST API interfaces.
 
 
 Rally bench test suites
@@ -137,8 +160,8 @@ Rally `[3]`_ is a benchmarking tool that answers the question::
 
  “How does OpenStack work at scale?”.
 
-The goal of this test suite is to test the different modules of OpenStack and
-get significant figures that could help us to define telco Cloud KPI.
+The goal of this test suite is to benchmark the different OpenStack modules and
+get significant figures that could help to define Telco Cloud KPIs.
 
 The OPNFV scenarios are based on the collection of the existing Rally scenarios:
 
@@ -152,7 +175,7 @@ The OPNFV scenarios are based on the collection of the existing Rally scenarios:
  * quotas
  * requests
 
-Basic SLA (stop test on errors) have been implemented.
+A basic SLA (stop test on errors) have been implemented.
 
 
 SDN Controllers
@@ -169,11 +192,11 @@ OpenDaylight
 ^^^^^^^^^^^^
 
 The OpenDaylight (ODL) test suite consists of a set of basic tests inherited
-from ODL project.
+from the ODL project using the Robot `[11]`_ framework.
 The suite verifies creation and deletion of networks, subnets and ports with
 OpenDaylight and Neutron.
 
-The list of tests can be described as follow:
+The list of tests can be described as follows:
 
  * Restconf.basic: Get the controller modules via Restconf
  * Neutron.Networks
@@ -216,14 +239,13 @@ The list of tests can be described as follow:
 ONOS
 ^^^^
 
-TestON Framework is used to test ONOS function.
+TestON Framework is used to test the ONOS SDN controller functions.
 The test cases deal with L2 and L3 functions.
-ONOS is configured through OPNFV scenario.
 The ONOS test suite can be run on any ONOS compliant scenario.
 
-The test cases may be described as follow:
+The test cases may be described as follows:
 
- * onosfunctest: The mainly executable file contains the initialization of
+ * onosfunctest: The main executable file contains the initialization of
    the docker environment and functions called by FUNCvirNetNB and
    FUNCvirNetNBL3
 
@@ -273,7 +295,7 @@ vIMS
 ^^^^
 The goal of this test suite consists of:
 
- * deploying a VNF orchestrator (cloudify)
+ * deploy a VNF orchestrator (Cloudify)
  * deploy a Clearwater vIMS (IP Multimedia Subsystem) VNF from this
    orchestrator based on a TOSCA blueprint defined in `[5]`_
  * run suite of signaling tests on top of this VNF
@@ -290,7 +312,7 @@ Two types of information are stored in the Test Database:
  * the test results
 
 The deployment of a complete functional VNF allows the test of most of the
-essential functions needed for a NFV system.
+essential functions needed for a NFV platform.
 
 Promise
 ^^^^^^^
@@ -340,6 +362,9 @@ include::
          flavor_ram: 512
          flavor_disk: 0
 
+However, these parameters must not be changed, as they are the values expected
+by the Promise test suite.
+
 .. include:: ./runfunctest.rst
 
 Test results
@@ -351,7 +376,7 @@ VIM
 vPing
 ^^^^^
 
-vPing results are displayed in the console::
+vPing test case output is displayed in the console::
 
   FUNCTEST.info: Running vPing test...
   2016-01-23 03:18:20,153 - vPing- INFO - Creating neutron network vping-net...
@@ -428,8 +453,8 @@ The Tempest results are displayed in the console::
   2016-01-28 08:19:32,133 - run_tempest - INFO - Pushing results to DB: 'http://testresults.opnfv.org/testapi/results'.
   2016-01-28 08:19:32,278 - run_tempest - INFO - Deleting tenant and user for Tempest suite)
 
-In order to check all the available test cases related debug information, please
-inspect tempest.log file stored into related Rally deployment folder.
+In order to check all the available test cases related debug information, inspect 
+tempest.log file stored under */home/opnfv/functest/results/tempest/*.
 
 
 Rally
@@ -493,9 +518,9 @@ The results of ODL tests can be seen in the console::
  1 critical test, 1 passed, 0 failed
  1 test total, 1 passed, 0 failed
  ==============================================================================
- Output:  /home/jenkins-ci/workspace/functest-opnfv-jump-2/output.xml
- Log:     /home/jenkins-ci/workspace/functest-opnfv-jump-2/log.html
- Report:  /home/jenkins-ci/workspace/functest-opnfv-jump-2/report.html
+ Output:  /home/opnfv/repos/functest/output.xml
+ Log:     /home/opnfv/repos/functest/log.html
+ Report:  /home/opnfv/repos/functest/report.html
 
  ..............................................................................
 
@@ -507,9 +532,9 @@ The results of ODL tests can be seen in the console::
  18 critical tests, 18 passed, 0 failed
  18 tests total, 18 passed, 0 failed
  ==============================================================================
- Output:  /home/jenkins-ci/workspace/functest-opnfv-jump-2/output.xml
- Log:     /home/jenkins-ci/workspace/functest-opnfv-jump-2/log.html
- Report:  /home/jenkins-ci/workspace/functest-opnfv-jump-2/report.html
+ Output:  /home/opnfv/repos/functest/output.xml
+ Log:     /home/opnfv/repos/functest/log.html
+ Report:  /home/opnfv/repos/functest/report.html
 
 3 result files are generated:
  * output.xml
@@ -659,7 +684,6 @@ Please note that vIMS traces can bee summarized in several steps:
  * INFO - Cloudify-manager server is UP ! => orchestrator deployed
  * INFO - The deployment of clearwater-opnfv is ended => VNF deployed
  * Multiple Identities (UDP) - (6505550771, 6505550675) Passed => tests run
- * DEBUG - Pushing results to DB.... => tests saved
 
 
 Promise
@@ -833,6 +857,7 @@ References
 .. _`[8]`: https://wiki.openstack.org/wiki/Governance/DefCoreCommittee
 .. _`[9]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml
 .. _`[10]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/rally_cert/task.yaml
+.. _`[11]`: http://robotframework.org/
 
 OPNFV main site: opnfvmain_.
 
