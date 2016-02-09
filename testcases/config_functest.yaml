@@ -49,12 +49,6 @@ general:
         image_file_name:  cirros-0.3.4-x86_64-disk.img
         image_disk_format:  qcow2
 
-        #Public network. Optional
-        neutron_public_net_name: net04_ext
-        neutron_public_subnet_name: net04_ext__subnet
-        neutron_public_subnet_cidr: 172.16.9.0/24
-        neutron_public_subnet_start: 172.16.9.130
-        neutron_public_subnet_end: 172.16.9.254
         #Private network for functest. Will be created by config_functest.py
         neutron_private_net_name: functest-net
         neutron_private_subnet_name: functest-subnet

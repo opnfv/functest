@@ -109,8 +109,6 @@ CONCURRENCY = 4
 RESULTS_DIR = functest_yaml.get("general").get("directories"). \
     get("dir_rally_res")
 TEST_DB = functest_yaml.get("results").get("test_db_url")
-FLOATING_NETWORK = functest_yaml.get("general"). \
-    get("openstack").get("neutron_public_net_name")
 PRIVATE_NETWORK = functest_yaml.get("general"). \
     get("openstack").get("neutron_private_net_name")
 
@@ -183,15 +181,22 @@ def build_task_args(test_file_name):
     task_args['image_name'] = GLANCE_IMAGE_NAME
     task_args['flavor_name'] = FLAVOR_NAME
     task_args['glance_image_location'] = GLANCE_IMAGE_PATH
-    task_args['floating_network'] = FLOATING_NETWORK
-    task_args['netid'] = functest_utils.get_network_id(client_dict['neutron'],
-                                    PRIVATE_NETWORK).encode('ascii', 'ignore')
     task_args['tmpl_dir'] = TEMPLATE_DIR
     task_args['sup_dir'] = SUPPORT_DIR
     task_args['users_amount'] = USERS_AMOUNT
     task_args['tenants_amount'] = TENANTS_AMOUNT
     task_args['iterations'] = ITERATIONS_AMOUNT
     task_args['concurrency'] = CONCURRENCY
+
+    ext_net = functest_utils.get_external_net(client_dict['neutron'])
+    if ext_net:
+        task_args['floating_network'] = str(ext_net)
+    else:
+        task_args['floating_network'] = ''
+
+    net_id = functest_utils.get_network_id(client_dict['neutron'],
+                                           PRIVATE_NETWORK)
+    task_args['netid'] = str(net_id)
 
     return task_args
 
