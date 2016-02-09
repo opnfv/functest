@@ -126,6 +126,8 @@ CINDER_VOLUME_TYPE_NAME = "volume_test"
 
 SUMMARY = []
 
+SUMMARY = []
+
 def push_results_to_db(payload):
 
     url = TEST_DB + "/results"
