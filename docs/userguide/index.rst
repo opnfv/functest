@@ -324,9 +324,6 @@ The available 33 test cases can be grouped into 7 test suites:
 
     #. Cleanup test allocations: Destroys all allocations in OpenStack.
 
-The test results are pushed into the LF test DB:
-  * Duration of the Promise test case
-  * Number of tests / failures
 
 The specific parameters for Promise can be found in config_functest.yaml and
 include::
@@ -397,9 +394,6 @@ vPing_userdata results are displayed in the console::
     2016-01-06 16:07:12,661 - vPing- INFO - Deleting network 'vping-net'...
     2016-01-06 16:07:14,748 - vPing- INFO - vPing OK
 
-A json file is produced and pushed into the test result database.
-
-
 Tempest
 ^^^^^^^
 
@@ -436,10 +430,6 @@ The Tempest results are displayed in the console::
 
 In order to check all the available test cases related debug information, please
 inspect tempest.log file stored into related Rally deployment folder.
-The Tempest log is also automatically pushed to OPNFV artifact server in
-Continuous Integration.
-The Tempest results are also pushed to the Test Database from Continuous
-Integration.
 
 
 Rally
@@ -478,8 +468,6 @@ At the end of the module test, a message is displayed to provide a global
 summary::
 
   2016-02-04 12:50:18,382 - run_rally - INFO - Test scenario: "requests" OK.
-
-The raw results are pushed into the Test Database from Continuous Integration.
 
 
 Controllers
@@ -703,279 +691,11 @@ The results can be observed in the console::
     **********************************
 
 
-
-Functest in test Dashboard
-==========================
-
-The OPNFV testing group created a test collection database to collect the test
-results from CI.
-Any test project running on any lab integrated in CI can push the results to
-this database.
-This database can be used afterwards to see the evolution of the tests and
-compare the results versus the installers, the scenario or the labs.
-
-You can find more information about the dashboard from Testing Dashboard wiki
-page `[6]`_.
-
-
-Overall Architecture
---------------------
-
-The Test result management in Brahmaputra can be summarized as follows::
-
-  +-------------+    +-------------+    +-------------+
-  |             |    |             |    |             |
-  |   Test      |    |   Test      |    |   Test      |
-  | Project #1  |    | Project #2  |    | Project #N  |
-  |             |    |             |    |             |
-  +-------------+    +-------------+    +-------------+
-           |               |               |
-           V               V               V
-       +-----------------------------------------+
-       |                                         |
-       |         Test Rest API front end         |
-       |  http://testresults.opnfv.org/testapi   |
-       |                                         |
-       +-----------------------------------------+
-           A                |
-           |                V
-           |     +-------------------------+
-           |     |                         |
-           |     |    Test Results DB      |
-           |     |         Mongo DB        |
-           |     |                         |
-           |     +-------------------------+
-           |
-           |
-     +----------------------+
-     |                      |
-     |    test Dashboard    |
-     |                      |
-     +----------------------+
-
-The Test dashboard URL is: TODO LF
-A proto Test dashboard has been realized: http://testresults.opnfv.org/proto/
-
-Test API description
---------------------
-
-The Test API is used to declare pods, projects, test cases and test results. An
-additional method dashboard has been added to post-process the raw results. The
-data model is very basic, 4 objects are created:
-
-  * Pods
-  * Test projects
-  * Test cases
-  * Test results
-
-Pods::
-
-  {
-    "id": <ID>,
-    "details": <URL description of the POD>,
-    "creation_date": YYYY-MM-DD HH:MM:SS ,
-    "name": <The POD Name>,
-    "mode": <metal or virtual>
-  },
-
-Test project::
-
-  {
-    "id": <ID>,
-    "name": <Name of the Project>,
-    "creation_date": "YYYY-MM-DD HH:MM:SS",
-    "description": <Short description>
-  },
-
-Test case::
-
-  {
-    "id": <ID>,
-    "name":<Name of the test case>,
-    "creation_date": "YYYY-MM-DD HH:MM:SS",
-    "description": <short description>,
-    "url":<URL for longer description>
-  },
-
-Test results::
-
-  {
-    "_id": <ID,
-    "project_name": <Reference to project>,
-    "pod_name": <Reference to POD where the test was executed>,
-    "version": <Scenario on which the test was executed>,
-    "installer": <Installer Apex or Compass or Fuel or Joid>,
-    "description": <Short description>,
-    "creation_date": "YYYY-MM-DD HH:MM:SS",
-    "case_name": <Reference to the test case>
-    "details":{
-       <- the results to be put here ->
-    }
-
-
-For Brahmaputra, we got:
-
- * 16 pods
- * 18 projects
- * 101 test cases
-
-The projects and the test cases have been frozen in December.
-But all were not ready for Brahmaputra.
-
-
-
-The API can described as follows:
-
-Version:
-
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    | /version                 | Get API version                         |
- +--------+--------------------------+-----------------------------------------+
-
-
-Pods:
-
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    | /pods                    | Get the list of declared Labs (PODs)    |
- +--------+--------------------------+-----------------------------------------+
- | POST   | /pods                    | Declare a new POD                       |
- |        |                          | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          |   "name": "pod_foo",                    |
- |        |                          |   "creation_date": "YYYY-MM-DD HH:MM:SS"|
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
-
-Projects:
-
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    | /test_projects           | Get the list of test projects           |
- +--------+--------------------------+-----------------------------------------+
- | GET    |/test_projects/{project}  | Get details on {project}                |
- |        |                          |                                         |
- +--------+--------------------------+-----------------------------------------+
- | POST   | /test_projects           | Add a new test project                  |
- |        |                          | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          |    "name": "project_foo",               |
- |        |                          |    "description": "whatever you want"   |
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
- | PUT    | /test_projects/{project} | Update a test project                   |
- |        |                          |                                         |
- |        |                          | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          |    <the field(s) you want to modify>    |
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
- | DELETE | /test_projects/{project} | Delete a test project                   |
- +--------+--------------------------+-----------------------------------------+
-
-
-Test cases:
-
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    | /test_projects/{project}/| Get the list of test cases of {project} |
- |        | cases                    |                                         |
- +--------+--------------------------+-----------------------------------------+
- | POST   | /test_projects/{project}/| Add a new test case to {project}        |
- |        | cases                    | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          |   "name": "case_foo",                   |
- |        |                          |   "description": "whatever you want"    |
- |        |                          |   "creation_date": "YYYY-MM-DD HH:MM:SS"|
- |        |                          |   "url": "whatever you want"            |
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
- | PUT    | /test_projects/{project}?| Modify a test case of {project}         |
- |        | case_name={case}         |                                         |
- |        |                          | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          |    <the field(s) you want to modify>    |
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
- | DELETE | /test_projects/{project}/| Delete a test case                      |
- |        | case_name={case}         |                                         |
- +--------+--------------------------+-----------------------------------------+
-
-Test Results:
-
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    |/results/project={project}| Get the test results of {project}       |
- +--------+--------------------------+-----------------------------------------+
- | GET    |/results/case={case}      | Get the test results of {case}          |
- +--------+--------------------------+-----------------------------------------+
- | GET    |/results?pod={pod}        | get the results on pod {pod}            |
- +--------+--------------------------+-----------------------------------------+
- | GET    |/results?installer={inst} | Get the test results of installer {inst}|
- +--------+--------------------------+-----------------------------------------+
- | GET    |/results?version={version}| Get the test results of scenario        |
- |        |                          | {version}. Initially the version param  |
- |        |                          | was reflecting git version, in Functest |
- |        |                          | it was decided to move to scenario      |
- +--------+--------------------------+-----------------------------------------+
- | GET    |/results?project={project}| Get all the results of the test case    |
- |        |&case={case}              | {case} of the project {project} with    |
- |        |&version={scenario}       | version {scenario} installed by         |
- |        |&installer={installer}    | {installer} on POD {pod} stored since   |
- |        |&pod={pod}                | {days} days                             |
- |        |                          | {project_name} and {case_name} are      |
- |        |&period={days}            | mandatory, the other parameters are     |
- |        |                          | optional.                               |
- +--------+--------------------------+-----------------------------------------+
- | POST   | /results                 | Add a new test results                  |
- |        |                          | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          |    "project_name": "project_foo",       |
- |        |                          |    "case_name": "case_foo",             |
- |        |                          |    "pod_name": "pod_foo",               |
- |        |                          |    "installer": "installer_foo",        |
- |        |                          |    "version": "scenario_foo",           |
- |        |                          |    "details": <your results>            |
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
-
-
-Dashboard:
-
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    |/dashboard?               | Get all the dashboard ready results of  |
- |        |&project={project}        | {case} of the project {project}         |
- |        |&case={case}              | version {scenario} installed by         |
- |        |&version={scenario}       | {installer} on POD {pod} stored since   |
- |        |&installer={installer}    | {days} days                             |
- |        |&pod={pod}                |                                         |
- |        |&period={days}            | {project_name} and {case_name} are      |
- |        |                          | mandatory, the other parameters are     |
- |        |                          | optional.                               |
- +--------+--------------------------+-----------------------------------------+
-
-
-The results with dashboard method are post-processed from raw results.
-Please note that dashboard results are not stored. Only raw results are stored.
-
-
-
 Test Dashboard
---------------
+==============
 
-Based on dashboard post-porcessed results, a Test dashboard is automatically
-generated.
-
-TODO LF
-or http://testresults.opnfv.org/proto/
+Based on results collected in CI, a test dashboard is dynamically generated.
+The URL of this dashboard is TODO LF
 
 
 Troubleshooting
@@ -1067,8 +787,32 @@ Feature
 
 vIMS
 ^^^^
+vIMS deployment may fail for several reasons, the most frequent ones are
+described in the following table:
 
-TODO
++===================================+====================================+
+| Error                             |  Comments                          |
++-----------------------------------+------------------------------------+
+| Keystone admin API  not reachable | Impossible to create vIMS user and |
+|                                   | tenant                             |
++-----------------------------------+------------------------------------+
+| Impossible to retrieve admin role | Impossible to create vIMS user and |
+| id                                | tenant                             |
++-----------------------------------+------------------------------------+
+| Error when uploading image from   | impossible to deploy VNF           |
+| OpenStack to glance               |                                    |
++-----------------------------------+------------------------------------+
+| Cinder quota cannot be updated    | Default quotas not sufficient, they|
+|                                   | are adapted in the script          |
++-----------------------------------+------------------------------------+
+| Impossible to create a volume     | VNF cannot be deployed             |
++-----------------------------------+------------------------------------+
+| SSH connection issue between the  | if vPing test fails, vIMS test will|
+| Test container and the VM         | fail...                            |
++-----------------------------------+------------------------------------+
+| No Internet access from a VM      | the VMs of the VNF must have an    |
+|                                   | external access to Internet        |
++-----------------------------------+------------------------------------+
 
 
 Promise
