@@ -8,14 +8,19 @@ Once the Functest docker container is running and Functest environment ready
 (through /home/opnfv/repos/functest/docker/prepare_env.sh script), the system is
 ready to run the tests.
 
-The script *run_tests.sh* is located in $repos_dir/functest/docker and it has
+The script *run_tests.sh* launches the test in an automated way.
+Although it is possible to execute the different tests manually, it is
+recommended to use the previous shell script which makes the call
+to the actual scripts with the appropriate parameters.
+
+It is located in $repos_dir/functest/docker and it has
 several options::
 
     ./run_tests.sh -h
     Script to trigger the tests automatically.
 
     usage:
-        bash run_tests.sh [--offline] [-h|--help] [-t <test_name>]
+        bash run_tests.sh [-h|--help] [-t <test_name>]
 
     where:
         -h|--help         show this help text
@@ -30,9 +35,8 @@ several options::
         run_tests.sh -t tempest,rally --no-clean
 
 The *-r* option is used by the Continuous Integration in order to push the test
-results into a test collection database, see in next section for details.
-In manual mode, you must not use it, your try will be anyway probably rejected
-as your POD must be declared in the database to collect the data.
+results into a test collection database. It shall not be used since the access
+will be rejected due to missing rights.
 
 The *-n* option is used for preserving all the existing OpenStack resources after
 execution test cases.
