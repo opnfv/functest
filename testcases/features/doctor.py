@@ -14,9 +14,10 @@
 #
 #
 
+import logging
 import os
-import time
 import sys
+import time
 import yaml
 
 
@@ -31,18 +32,28 @@ TEST_DB_URL = functest_yaml.get('results').get('test_db_url')
 sys.path.append('%s/testcases' % FUNCTEST_REPO)
 import functest_utils
 
+logger = logging.getLogger('doctor')
+logger.setLevel(logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ch.setFormatter(formatter)
+logger.addHandler(ch)
+
 
 def main():
     cmd = 'cd %s/tests && ./run.sh' % DOCTOR_REPO
     start_time_ts = time.time()
 
-    ret = functest_utils.execute_command(cmd, exit_on_error=False)
+    ret = functest_utils.execute_command(cmd, logger, exit_on_error=False)
 
     end_time_ts = time.time()
     duration = round(end_time_ts - start_time_ts, 1)
     if ret:
+        logger.info("doctor OK")
         test_status = 'OK'
     else:
+        logger.info("doctor FAILED")
         test_status = 'NOK'
 
     details = {
@@ -50,13 +61,18 @@ def main():
         'duration': duration,
         'status': test_status,
     }
-    pod_name = functest_utils.get_pod_name()
-    git_version = functest_utils.get_git_branch(DOCTOR_REPO)
+    pod_name = functest_utils.get_pod_name(logger)
+    scenario = functest_utils.get_scenario(logger)
+    logger.info("Pushing result: TEST_DB_URL=%(db)s pod_name=%(pod)s "
+                "scenario=%(s)s details=%(d)s" % {
+                    'db': TEST_DB_URL,
+                    'pod': pod_name,
+                    's': scenario,
+                    'd': details,
+                })
     functest_utils.push_results_to_db(TEST_DB_URL,
                                       'doctor-notification',
-                                      None,
-                                      pod_name,
-                                      git_version,
+                                      logger, pod_name, scenario,
                                       details)
 
 
