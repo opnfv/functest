@@ -13,16 +13,17 @@
 # 0.3 (19/10/2015) remove Tempest from run_rally
 # and push result into test DB
 #
-
-import re
-import json
-import os
 import argparse
+import json
 import logging
-import yaml
+import os
+import re
 import requests
 import subprocess
 import sys
+import time
+import yaml
+
 from novaclient import client as novaclient
 from glanceclient import client as glanceclient
 from keystoneclient.v2_0 import client as keystoneclient
@@ -125,6 +126,8 @@ GLANCE_IMAGE_PATH = functest_yaml.get("general"). \
 CINDER_VOLUME_TYPE_NAME = "volume_test"
 
 
+SUMMARY = []
+
 def push_results_to_db(payload):
 
     url = TEST_DB + "/results"
@@ -193,8 +196,13 @@ def build_task_args(test_file_name):
     return task_args
 
 
-def get_output(proc):
+def get_output(proc, test_name):
+    global SUMMARY
     result = ""
+    nb_tests = 0
+    overall_duration = 0.0
+    success = 0.0
+
     if args.verbose:
         while proc.poll() is None:
             line = proc.stdout.readline()
@@ -210,12 +218,26 @@ def get_output(proc):
                "+-" in line or \
                "|" in line:
                 result += line
+                if "| " in line and \
+                   "| action" not in line and \
+                   "|   " not in line and \
+                   "| total" not in line:
+                    nb_tests += 1
+                    percentage = ((line.split('|')[8]).strip(' ')).strip('%')
+                    success += float(percentage)
+
             elif "test scenario" in line:
                 result += "\n" + line
             elif "Full duration" in line:
                 result += line + "\n\n"
+                overall_duration += float(line.split(': ')[1])
         logger.info("\n" + result)
+    overall_duration="{:10.2f}".format(overall_duration)
+    success_avg = success / nb_tests
+    scenario_summary = {'test_name': test_name, 'overall_duration':overall_duration, \
+                        'nb_tests': nb_tests, 'success': success_avg}
 
+    SUMMARY.append(scenario_summary)
     return result
 
 
@@ -225,7 +247,6 @@ def run_task(test_name):
     # :param test_name: name for the rally test
     # :return: void
     #
-
     logger.info('Starting test scenario "{}" ...'.format(test_name))
 
     task_file = '{}task.yaml'.format(SCENARIOS_DIR)
@@ -246,7 +267,7 @@ def run_task(test_name):
     logger.debug('running command line : {}'.format(cmd_line))
 
     p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE, stderr=RALLY_STDERR, shell=True)
-    output = get_output(p)
+    output = get_output(p, test_name)
     task_id = get_task_id(output)
     logger.debug('task_id : {}'.format(task_id))
 
@@ -291,13 +312,19 @@ def run_task(test_name):
     else:
         logger.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
 
+def push_results_to_db(payload):
+    # TODO
+    pass
+
 
 def main():
+    global SUMMARY
     # configure script
     if not (args.test_name in tests):
         logger.error('argument not valid')
         exit(-1)
 
+    SUMMARY = []
     creds_nova = functest_utils.get_credentials("nova")
     nova_client = novaclient.Client('2',**creds_nova)
     creds_neutron = functest_utils.get_credentials("neutron")
@@ -355,6 +382,56 @@ def main():
     else:
         print(args.test_name)
         run_task(args.test_name)
+
+    report="\n"\
+    "                                                              \n"\
+    "                     Rally Summary Report\n"\
+    "+===================+============+===============+===========+\n"\
+    "| Module            | Duration   | nb. Test Run  | Success   |\n"\
+    "+===================+============+===============+===========+\n"
+
+    #for each scenario we draw a row for the table
+    total_duration = 0.0
+    total_nb_tests = 0
+    total_success = 0.0
+    for s in SUMMARY:
+        name = "{0:<17}".format(s['test_name'])
+        duration = float(s['overall_duration'])
+        total_duration += duration
+        duration = time.strftime("%M:%S", time.gmtime(duration))
+        duration = "{0:<10}".format(duration)
+        nb_tests = "{0:<13}".format(s['nb_tests'])
+        total_nb_tests += int(s['nb_tests'])
+        success = "{0:<10}".format(s['success']+'%')
+        total_success += float(s['success'])
+        report += ""\
+        "| " + name + " | " + duration + " | " + nb_tests + " | " + success + "|\n"\
+        "+-------------------+------------+---------------+-----------+\n"
+
+
+
+    total_duration_str = time.strftime("%H:%M:%S", time.gmtime(total_duration))
+    total_duration_str2 = "{0:<10}".format(total_duration_str)
+    total_nb_tests_str = "{0:<13}".format(total_nb_tests)
+    total_success = total_success / len(SUMMARY)
+    total_success_str = "{0:<10}".format(total_success+'%')
+    report += "+===================+============+===============+===========+\n"
+    report += "| TOTAL:            | " + total_duration_str2 + " | " + \
+            total_nb_tests_str  + " | " + total_success_str + "|\n"
+    report += "+===================+============+===============+===========+\n"
+
+    logger.info("\n"+report)
+
+
+    # Generate json results for DB
+    #json_results = {"timestart": time_start, "duration": total_duration,
+    #                "tests": int(total_nb_tests), "success": int(total_success)}
+    #logger.info("Results: "+str(json_results))
+
+    #if args.report:
+    #    logger.debug("Pushing result into DB...")
+    #    push_results_to_db(json_results)
+
 
     logger.debug("Deleting image '%s' with ID '%s'..." \
                          % (GLANCE_IMAGE_NAME, image_id))
