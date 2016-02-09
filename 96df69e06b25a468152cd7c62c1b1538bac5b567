@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_3e2c39ab",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-09T09:43:27Z",
+      "side": 1,
+      "message": "trailing space",
+      "revId": "96df69e06b25a468152cd7c62c1b1538bac5b567",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_1e197d88",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-09T09:43:27Z",
+      "side": 1,
+      "message": "trailing space",
+      "revId": "96df69e06b25a468152cd7c62c1b1538bac5b567",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_5e2ff5a1",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-09T09:43:27Z",
+      "side": 1,
+      "message": "I wonder if we should explain how to push results to the DB in the userguide, if the opnfv users are not \"allowed\" to do that...",
+      "revId": "96df69e06b25a468152cd7c62c1b1538bac5b567",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
