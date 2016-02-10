@@ -85,6 +85,7 @@ function run_test(){
     clean_flag=""
     if [ $clean == "false" ]; then
         clean_flag="-n"
+    fi
 
     case $test_name in
         "vping_ssh")
