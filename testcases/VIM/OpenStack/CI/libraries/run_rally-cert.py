@@ -209,14 +209,11 @@ def get_output(proc, test_name):
     overall_duration = 0.0
     success = 0.0
 
-    if args.verbose:
-        while proc.poll() is None:
-            line = proc.stdout.readline()
-            print line.replace('\n', '')
+    while proc.poll() is None:
+        line = proc.stdout.readline()
+        if args.verbose:
             result += line
-    else:
-        while proc.poll() is None:
-            line = proc.stdout.readline()
+        else:
             if "Load duration" in line or \
                "started" in line or \
                "finished" in line or \
@@ -224,28 +221,39 @@ def get_output(proc, test_name):
                "+-" in line or \
                "|" in line:
                 result += line
-                if "| " in line and \
-                   "| action" not in line and \
-                   "|   " not in line and \
-                   "| total" not in line:
-                    nb_tests += 1
-                    percentage = ((line.split('|')[8]).strip(' ')).strip('%')
-                    success += float(percentage)
-
             elif "test scenario" in line:
                 result += "\n" + line
             elif "Full duration" in line:
                 result += line + "\n\n"
-                overall_duration += float(line.split(': ')[1])
-        logger.info("\n" + result)
-    overall_duration = "{:10.2f}".format(overall_duration)
-    success_avg = success / nb_tests
+
+        # parse output for summary report
+        if "| " in line and \
+           "| action" not in line and \
+           "| Starting" not in line and \
+           "| Completed" not in line and \
+           "| ITER" not in line and \
+           "|   " not in line and \
+           "| total" not in line:
+            nb_tests += 1
+            percentage = ((line.split('|')[8]).strip(' ')).strip('%')
+            success += float(percentage)
+        elif "Full duration" in line:
+            overall_duration += float(line.split(': ')[1])
+
+    overall_duration="{:10.2f}".format(overall_duration)
+    if nb_tests == 0:
+        success_avg = 0
+    else:
+        success_avg = "{:0.2f}".format(success / nb_tests)
+
     scenario_summary = {'test_name': test_name,
                         'overall_duration': overall_duration,
                         'nb_tests': nb_tests,
                         'success': success_avg}
-
     SUMMARY.append(scenario_summary)
+
+    logger.info("\n" + result)
+
     return result
 
 
@@ -255,6 +263,7 @@ def run_task(test_name):
     # :param test_name: name for the rally test
     # :return: void
     #
+    global SUMMARY
     logger.info('Starting test scenario "{}" ...'.format(test_name))
 
     task_file = '{}task.yaml'.format(SCENARIOS_DIR)
@@ -282,12 +291,12 @@ def run_task(test_name):
     logger.debug('task_id : {}'.format(task_id))
 
     if task_id is None:
-        logger.error("failed to retrieve task_id")
+        logger.error("Failed to retrieve task_id.")
         exit(-1)
 
     # check for result directory and create it otherwise
     if not os.path.exists(RESULTS_DIR):
-        logger.debug('does not exists, we create it'.format(RESULTS_DIR))
+        logger.debug('%s does not exist, we create it.'.format(RESULTS_DIR))
         os.makedirs(RESULTS_DIR)
 
     # write html report file
@@ -388,7 +397,7 @@ def main():
                     test_name == 'vm'):
                 run_task(test_name)
     else:
-        print(args.test_name)
+        logger.debug("Test name: " + args.test_name)
         run_task(args.test_name)
 
     report = "\n"\
@@ -422,7 +431,7 @@ def main():
     total_duration_str = time.strftime("%H:%M:%S", time.gmtime(total_duration))
     total_duration_str2 = "{0:<10}".format(total_duration_str)
     total_nb_tests_str = "{0:<13}".format(total_nb_tests)
-    total_success = total_success / len(SUMMARY)
+    total_success = "{:0.2f}".format(total_success / len(SUMMARY))
     total_success_str = "{0:<10}".format(str(total_success)+'%')
     report += "+===================+============+===============+===========+\n"
     report += "| TOTAL:            | " + total_duration_str2 + " | " + \
