@@ -54,6 +54,9 @@ parser.add_argument("-s", "--smoke",
 parser.add_argument("-v", "--verbose",
                     help="Print verbose info about the progress",
                     action="store_true")
+parser.add_argument("-n", "--noclean",
+                    help="Don't clean the created resources for this test.",
+                    action="store_true")
 
 args = parser.parse_args()
 
@@ -454,6 +457,9 @@ def main():
     if args.report:
         logger.debug("Pushing Rally summary into DB...")
         push_results_to_db("Rally", payload)
+
+    if args.noclean:
+        exit(0)
 
     logger.debug("Deleting image '%s' with ID '%s'..." \
                          % (GLANCE_IMAGE_NAME, image_id))

@@ -82,16 +82,20 @@ function run_test(){
     echo "  Running test case: $i"
     echo "----------------------------------------------"
     echo ""
+    clean_flag=""
+    if [ $clean == "false" ]; then
+        clean_flag="-n"
+
     case $test_name in
         "vping_ssh")
             info "Running vPing-SSH test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_ssh.py \
-                --debug ${report}
+                --debug $clean_flag ${report}
         ;;
         "vping_userdata")
             info "Running vPing-userdata test... "
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_userdata.py \
-                --debug ${report}
+                --debug $clean_flag ${report}
         ;;
         "odl")
             info "Running ODL test..."
@@ -110,7 +114,7 @@ function run_test(){
         "tempest")
             info "Running Tempest tests..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
-                --debug -m custom ${report}
+                --debug -m $clean_flag custom ${report}
             # save tempest.conf for further troubleshooting
             tempest_conf="${RALLY_VENV_DIR}/tempest/for-deployment-*/tempest.conf"
             if [ -f ${tempest_conf} ]; then
@@ -121,13 +125,13 @@ function run_test(){
         "vims")
             info "Running vIMS test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py \
-                --debug ${report}
+                --debug $clean_flag ${report}
             clean_openstack
         ;;
         "rally")
             info "Running Rally benchmark suite..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py \
-                --debug all ${report}
+                --debug $clean_flag all ${report}
             clean_openstack
 
         ;;

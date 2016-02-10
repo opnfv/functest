@@ -39,6 +39,9 @@ parser.add_argument("-m", "--mode", help="Tempest test mode [smoke, all]",
 parser.add_argument("-r", "--report",
                     help="Create json result file",
                     action="store_true")
+parser.add_argument("-n", "--noclean",
+                    help="Don't clean the created resources for this test.",
+                    action="store_true")
 
 args = parser.parse_args()
 
@@ -295,6 +298,10 @@ def main():
     create_tempest_resources()
     configure_tempest()
     run_tempest(MODE)
+
+    if args.noclean:
+        exit(0)
+
     free_tempest_resources()
 
 
