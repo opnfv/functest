@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_e895c2e4",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-02-10T13:55:44Z",
+      "side": 1,
+      "message": "you put it in the default list, as far as I remember we removed it because ONOS announced they do not support ir",
+      "range": {
+        "startLine": 229,
+        "startChar": 24,
+        "endLine": 229,
+        "endChar": 38
+      },
+      "revId": "514692c15b47ab4cddd08061c4d1b3660b73d2b4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
