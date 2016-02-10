@@ -16,6 +16,24 @@
       "revId": "76ee625343b28868ca7c6c6108ee974bb57dbea8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_a8f34a09",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-10T08:45:47Z",
+      "side": 1,
+      "message": "You are right. I will upload a new patch fixing this and the output of the percentages.",
+      "parentUuid": "5a4e6583_e8e9421b",
+      "revId": "76ee625343b28868ca7c6c6108ee974bb57dbea8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
