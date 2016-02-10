@@ -40,6 +40,9 @@ parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 parser.add_argument("-r", "--report",
                     help="Create json result file",
                     action="store_true")
+parser.add_argument("-n", "--noclean",
+                    help="Don't clean the created resources for this test.",
+                    action="store_true")
 args = parser.parse_args()
 
 """ logging configuration """
@@ -461,6 +464,8 @@ def main():
     cfy.undeploy_manager()
 
     ############### GENERAL CLEANUP ################
+    if args.noclean:
+        exit(0)
 
     ks_creds = functest_utils.get_credentials("keystone")
 
