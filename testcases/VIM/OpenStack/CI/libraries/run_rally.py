@@ -47,6 +47,9 @@ parser.add_argument("-r", "--report",
 parser.add_argument("-v", "--verbose",
                     help="Print verbose info about the progress",
                     action="store_true")
+parser.add_argument("-n", "--noclean",
+                    help="Don't clean the created resources for this test.",
+                    action="store_true")
 
 args = parser.parse_args()
 
@@ -271,6 +274,9 @@ def main():
         print(args.test_name)
         run_task(args.test_name)
 
+    if args.noclean:
+        exit(0)
+        
     logger.debug("Deleting image '%s' with ID '%s'..." \
                          % (GLANCE_IMAGE_NAME, image_id))
     if not functest_utils.delete_glance_image(nova_client, image_id):

@@ -37,6 +37,9 @@ parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
 parser.add_argument("-r", "--report",
                     help="Create json result file",
                     action="store_true")
+parser.add_argument("-n", "--noclean",
+                    help="Don't clean the created resources for this test.",
+                    action="store_true")
 
 args = parser.parse_args()
 
@@ -198,6 +201,9 @@ def create_private_neutron_net(neutron):
 
 
 def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2, secgroup_id):
+    if args.noclean:
+        logger.debug("The OpenStack resources are not deleted.")
+        return True
 
     # delete both VMs
     logger.info("Cleaning up...")
