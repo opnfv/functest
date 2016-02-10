@@ -238,7 +238,10 @@ def get_output(proc, test_name):
                 overall_duration += float(line.split(': ')[1])
         logger.info("\n" + result)
     overall_duration="{:10.2f}".format(overall_duration)
-    success_avg = success / nb_tests
+    if nb_tests == 0:
+        success_avg = 0
+    else:
+        success_avg = "{:0.2f}".format(success / nb_tests)
     scenario_summary = {'test_name': test_name, 'overall_duration':overall_duration, \
                         'nb_tests': nb_tests, 'success': success_avg}
 
@@ -418,7 +421,7 @@ def main():
     total_duration_str = time.strftime("%H:%M:%S", time.gmtime(total_duration))
     total_duration_str2 = "{0:<10}".format(total_duration_str)
     total_nb_tests_str = "{0:<13}".format(total_nb_tests)
-    total_success = total_success / len(SUMMARY)
+    total_success = "{:0.2f}".format(total_success / len(SUMMARY))
     total_success_str = "{0:<10}".format(str(total_success)+'%')
     report += "+===================+============+===============+===========+\n"
     report += "| TOTAL:            | " + total_duration_str2 + " | " + \
