@@ -79,7 +79,7 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - "
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-REPO_PATH=os.environ['repos_dir']+'/functest/'
+REPO_PATH = os.environ['repos_dir']+'/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
@@ -91,8 +91,8 @@ with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
 f.close()
 
 HOME = os.environ['HOME']+"/"
-####todo:
-#SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general"). \
+### todo:
+# SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general"). \
 #    get("directories").get("dir_rally_scn")
 SCENARIOS_DIR = REPO_PATH + "testcases/VIM/OpenStack/CI/rally_cert/"
 ###
@@ -126,14 +126,15 @@ CINDER_VOLUME_TYPE_NAME = "volume_test"
 
 SUMMARY = []
 
-def push_results_to_db(payload):
+
+def push_results_to_db(case, payload):
 
     url = TEST_DB + "/results"
     installer = functest_utils.get_installer_type(logger)
     scenario = functest_utils.get_scenario(logger)
     pod_name = functest_utils.get_pod_name(logger)
     # TODO pod_name hardcoded, info shall come from Jenkins
-    params = {"project_name": "functest", "case_name": "Rally",
+    params = {"project_name": "functest", "case_name": case,
               "pod_name": pod_name, "installer": installer,
               "version": scenario, "details": payload}
 
@@ -237,10 +238,12 @@ def get_output(proc, test_name):
                 result += line + "\n\n"
                 overall_duration += float(line.split(': ')[1])
         logger.info("\n" + result)
-    overall_duration="{:10.2f}".format(overall_duration)
+    overall_duration = "{:10.2f}".format(overall_duration)
     success_avg = success / nb_tests
-    scenario_summary = {'test_name': test_name, 'overall_duration':overall_duration, \
-                        'nb_tests': nb_tests, 'success': success_avg}
+    scenario_summary = {'test_name': test_name,
+                        'overall_duration': overall_duration,
+                        'nb_tests': nb_tests,
+                        'success': success_avg}
 
     SUMMARY.append(scenario_summary)
     return result
@@ -259,7 +262,8 @@ def run_task(test_name):
         logger.error("Task file '%s' does not exist." % task_file)
         exit(-1)
 
-    test_file_name = '{}opnfv-{}.yaml'.format(SCENARIOS_DIR + "scenario/", test_name)
+    test_file_name = '{}opnfv-{}.yaml'.format(SCENARIOS_DIR + "scenario/",
+                                              test_name)
     if not os.path.exists(test_file_name):
         logger.error("The scenario '%s' does not exist." % test_file_name)
         exit(-1)
@@ -271,7 +275,8 @@ def run_task(test_name):
                "--task-args \"{}\" ".format(build_task_args(test_name))
     logger.debug('running command line : {}'.format(cmd_line))
 
-    p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE, stderr=RALLY_STDERR, shell=True)
+    p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
+                         stderr=RALLY_STDERR, shell=True)
     output = get_output(p, test_name)
     task_id = get_task_id(output)
     logger.debug('task_id : {}'.format(task_id))
@@ -309,17 +314,13 @@ def run_task(test_name):
     # Push results in payload of testcase
     if args.report:
         logger.debug("Push result into DB")
-        push_results_to_db(json_data)
+        push_results_to_db("Rally_details", json_data)
 
     """ parse JSON operation result """
     if task_succeed(json_results):
         logger.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
     else:
         logger.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
-
-def push_results_to_db(payload):
-    # TODO
-    pass
 
 
 def main():
@@ -331,17 +332,17 @@ def main():
 
     SUMMARY = []
     creds_nova = functest_utils.get_credentials("nova")
-    nova_client = novaclient.Client('2',**creds_nova)
+    nova_client = novaclient.Client('2', **creds_nova)
     creds_neutron = functest_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
     creds_keystone = functest_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
     glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
-                                                   endpoint_type='publicURL')
+                                                              endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
     creds_cinder = functest_utils.get_credentials("cinder")
-    cinder_client = cinderclient.Client('2',creds_cinder['username'],
+    cinder_client = cinderclient.Client('2', creds_cinder['username'],
                                         creds_cinder['api_key'],
                                         creds_cinder['project_id'],
                                         creds_cinder['auth_url'],
@@ -349,9 +350,10 @@ def main():
 
     client_dict['neutron'] = neutron_client
 
-    volume_types = functest_utils.list_volume_types(cinder_client, private=False)
+    volume_types = functest_utils.list_volume_types(cinder_client,
+                                                    private=False)
     if not volume_types:
-        volume_type = functest_utils.create_volume_type(cinder_client, \
+        volume_type = functest_utils.create_volume_type(cinder_client,
                                                         CINDER_VOLUME_TYPE_NAME)
         if not volume_type:
             logger.error("Failed to create volume type...")
@@ -365,10 +367,11 @@ def main():
     image_id = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
 
     if image_id == '':
-        logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME, \
+        logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                            GLANCE_IMAGE_PATH))
-        image_id = functest_utils.create_glance_image(glance_client,\
-                                                GLANCE_IMAGE_NAME,GLANCE_IMAGE_PATH)
+        image_id = functest_utils.create_glance_image(glance_client,
+                                                      GLANCE_IMAGE_NAME,
+                                                      GLANCE_IMAGE_PATH)
         if not image_id:
             logger.error("Failed to create the Glance image...")
             exit(-1)
@@ -377,7 +380,7 @@ def main():
                          % (GLANCE_IMAGE_NAME, image_id))
     else:
         logger.debug("Using existing image '%s' with ID '%s'..." \
-                     % (GLANCE_IMAGE_NAME,image_id))
+                     % (GLANCE_IMAGE_NAME, image_id))
 
     if args.test_name == "all":
         for test_name in tests:
@@ -388,12 +391,13 @@ def main():
         print(args.test_name)
         run_task(args.test_name)
 
-    report="\n"\
-    "                                                              \n"\
-    "                     Rally Summary Report\n"\
-    "+===================+============+===============+===========+\n"\
-    "| Module            | Duration   | nb. Test Run  | Success   |\n"\
-    "+===================+============+===============+===========+\n"
+    report = "\n"\
+             "                                                              \n"\
+             "                     Rally Summary Report\n"\
+             "+===================+============+===============+===========+\n"\
+             "| Module            | Duration   | nb. Test Run  | Success   |\n"\
+             "+===================+============+===============+===========+\n"
+    payload = []
 
     #for each scenario we draw a row for the table
     total_duration = 0.0
@@ -412,8 +416,8 @@ def main():
         report += ""\
         "| " + name + " | " + duration + " | " + nb_tests + " | " + success + "|\n"\
         "+-------------------+------------+---------------+-----------+\n"
-
-
+        payload.append({'module': name, 'duration': duration,
+                         'nb tests': nb_tests, 'success': success})
 
     total_duration_str = time.strftime("%H:%M:%S", time.gmtime(total_duration))
     total_duration_str2 = "{0:<10}".format(total_duration_str)
@@ -426,17 +430,18 @@ def main():
     report += "+===================+============+===============+===========+\n"
 
     logger.info("\n"+report)
-
+    payload.append({'summary': {'duration': total_duration_str2,
+                               'nb tests': total_nb_tests_str,
+                               'nb success': total_success_str}})
 
     # Generate json results for DB
     #json_results = {"timestart": time_start, "duration": total_duration,
     #                "tests": int(total_nb_tests), "success": int(total_success)}
     #logger.info("Results: "+str(json_results))
 
-    #if args.report:
-    #    logger.debug("Pushing result into DB...")
-    #    push_results_to_db(json_results)
-
+    if args.report:
+        logger.debug("Pushing Rally summary into DB...")
+        push_results_to_db("Rally", payload)
 
     logger.debug("Deleting image '%s' with ID '%s'..." \
                          % (GLANCE_IMAGE_NAME, image_id))
