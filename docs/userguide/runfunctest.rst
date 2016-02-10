@@ -22,7 +22,8 @@ several options::
         -r|--report       push results to database (false by default)
         -n|--no-clean     do not clean up OpenStack resources after test run
         -t|--test         run specific set of tests
-          <test_name>     one or more of the following: vping,vping_userdata,odl,rally,tempest,vims,onos,promise. Separated by comma.
+          <test_name>     one or more of the following separated by comma: 
+                             vping_ssh,vping_userdata,odl,rally,tempest,vims,onos,promise,ovno
 
     examples:
         run_tests.sh
@@ -114,7 +115,7 @@ The order of execution is also described in the Functest configuration file::
 
  test_exec_priority:
 
-    1: vping
+    1: vping_ssh
     2: vping_userdata
     3: tempest
     4: odl
@@ -130,7 +131,7 @@ The order of execution is also described in the Functest configuration file::
 
 The tests are executed in the following order:
 
- * Basic scenario (vPing, vPing_userdata, Tempest)
+ * Basic scenario (vPing_ssh, vPing_userdata, Tempest)
  * Controller suites: ODL or ONOS or OpenContrail
  * Feature projects (promise, vIMS)
  * Rally (benchmark scenario)

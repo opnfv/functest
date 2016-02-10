@@ -41,7 +41,8 @@ Functest can be described as follow::
 Functest deals with internal and external test cases.
 The Internal test cases in Brahmaputra are:
 
- * vPing
+ * vPing_SSH
+ * vPing_userdata
  * ODL
  * Tempest
  * vIMS
@@ -265,7 +266,8 @@ own project::
 And do not forget to update also the help line::
 
  -t|--test         run specific set of tests
-      <test_name>     one or more of the following: vping,odl,rally,tempest,vims,onos, promise. Separated by comma.
+      <test_name>     one or more of the following separated by comma: 
+                         vping_ssh,vping_userdata,odl,rally,tempest,vims,onos,promise,ovno
 
 
 config_funtest.yaml
