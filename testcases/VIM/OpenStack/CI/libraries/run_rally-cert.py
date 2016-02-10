@@ -157,6 +157,36 @@ def get_task_id(cmd_raw):
     return None
 
 
+def generate_summary(output, test_name):
+    """
+    Generate a summary of the given scenario results
+    :output: output lines of the scenario test execution
+    """
+    nb_tests = 0
+    overall_duration = 0.0
+    success = 0.0
+    for line in output.readlines():
+        if "| " in line and \
+           "| action" not in line and \
+           "|   " not in line and \
+           "| total" not in line:
+            nb_tests += 1
+            percentage = ((line.split('|')[8]).strip(' ')).strip('%')
+            success += float(percentage)
+
+        elif "Full duration" in line:
+            overall_duration += float(line.split(': ')[1])
+
+    overall_duration="{:10.2f}".format(overall_duration)
+    if nb_tests == 0:
+        success_avg = 0
+    else:
+        success_avg = "{:0.2f}".format(success / nb_tests)
+    scenario_summary = {'test_name': test_name, 'overall_duration':overall_duration, \
+                        'nb_tests': nb_tests, 'success': success_avg}
+    return scenario_summary
+
+
 def task_succeed(json_raw):
     """
     Parse JSON from rally JSON results
@@ -201,12 +231,9 @@ def build_task_args(test_file_name):
     return task_args
 
 
-def get_output(proc, test_name):
+def get_output(proc):
     global SUMMARY
     result = ""
-    nb_tests = 0
-    overall_duration = 0.0
-    success = 0.0
 
     if args.verbose:
         while proc.poll() is None:
@@ -223,26 +250,11 @@ def get_output(proc, test_name):
                "+-" in line or \
                "|" in line:
                 result += line
-                if "| " in line and \
-                   "| action" not in line and \
-                   "|   " not in line and \
-                   "| total" not in line:
-                    nb_tests += 1
-                    percentage = ((line.split('|')[8]).strip(' ')).strip('%')
-                    success += float(percentage)
-
             elif "test scenario" in line:
                 result += "\n" + line
             elif "Full duration" in line:
                 result += line + "\n\n"
-                overall_duration += float(line.split(': ')[1])
         logger.info("\n" + result)
-    overall_duration="{:10.2f}".format(overall_duration)
-    success_avg = success / nb_tests
-    scenario_summary = {'test_name': test_name, 'overall_duration':overall_duration, \
-                        'nb_tests': nb_tests, 'success': success_avg}
-
-    SUMMARY.append(scenario_summary)
     return result
 
 
@@ -252,6 +264,7 @@ def run_task(test_name):
     # :param test_name: name for the rally test
     # :return: void
     #
+    global SUMMARY
     logger.info('Starting test scenario "{}" ...'.format(test_name))
 
     task_file = '{}task.yaml'.format(SCENARIOS_DIR)
@@ -272,17 +285,20 @@ def run_task(test_name):
     logger.debug('running command line : {}'.format(cmd_line))
 
     p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE, stderr=RALLY_STDERR, shell=True)
-    output = get_output(p, test_name)
+    output = get_output(p)
     task_id = get_task_id(output)
     logger.debug('task_id : {}'.format(task_id))
 
     if task_id is None:
-        logger.error("failed to retrieve task_id")
+        logger.error("Failed to retrieve task_id.")
         exit(-1)
+
+    scenario_summary =  generate_summary(output, test_name)
+    SUMMARY.append(scenario_summary)
 
     # check for result directory and create it otherwise
     if not os.path.exists(RESULTS_DIR):
-        logger.debug('does not exists, we create it'.format(RESULTS_DIR))
+        logger.debug('%s does not exist, we create it.'.format(RESULTS_DIR))
         os.makedirs(RESULTS_DIR)
 
     # write html report file
@@ -316,11 +332,6 @@ def run_task(test_name):
         logger.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
     else:
         logger.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
-
-def push_results_to_db(payload):
-    # TODO
-    pass
-
 
 def main():
     global SUMMARY
@@ -418,7 +429,7 @@ def main():
     total_duration_str = time.strftime("%H:%M:%S", time.gmtime(total_duration))
     total_duration_str2 = "{0:<10}".format(total_duration_str)
     total_nb_tests_str = "{0:<13}".format(total_nb_tests)
-    total_success = total_success / len(SUMMARY)
+    total_success = "{:0.2f}".format(total_success / len(SUMMARY))
     total_success_str = "{0:<10}".format(str(total_success)+'%')
     report += "+===================+============+===============+===========+\n"
     report += "| TOTAL:            | " + total_duration_str2 + " | " + \
