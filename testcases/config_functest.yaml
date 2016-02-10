@@ -166,7 +166,7 @@ results:
 # the execution order is important as some tests may be more destructive than others
 # and if vPing is failing is usually not needed to continue...
 test_exec_priority:
-    1: vping
+    1: vping_ssh
     2: vping_userdata
     3: tempest
     4: odl
@@ -231,7 +231,7 @@ test-dependencies:
     functest:
         vims:
             scenario: '(ocl)|(odl)|(nosdn)'
-        vping:
+        vping_ssh:
         vping_userdata:
             scenario: '(ocl)|(odl)|(nosdn)'
         tempest:

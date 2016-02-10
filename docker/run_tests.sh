@@ -23,12 +23,13 @@ where:
     -r|--report       push results to database (false by default)
     -n|--no-clean     do not clean OpenStack resources after test run
     -t|--test         run specific set of tests
-      <test_name>     one or more of the following: vping,odl,rally,tempest,vims,onos,promise,ovno. Separated by comma.
+      <test_name>     one or more of the following separated by comma:
+                            vping_ssh,vping_userdata,odl,rally,tempest,vims,onos,promise,ovno
 
 
 examples:
     $(basename "$0")
-    $(basename "$0") --test vping,odl
+    $(basename "$0") --test vping_ssh,odl
     $(basename "$0") -t tempest,rally"
 
 
@@ -82,14 +83,14 @@ function run_test(){
     echo "----------------------------------------------"
     echo ""
     case $test_name in
-        "vping")
-            info "Running vPing test..."
-            python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing2.py \
+        "vping_ssh")
+            info "Running vPing-SSH test..."
+            python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_ssh.py \
                 --debug ${report}
         ;;
         "vping_userdata")
-            info "Running vPing test using userdata/cloudinit.... "
-            python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing.py \
+            info "Running vPing-userdata test... "
+            python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_userdata.py \
                 --debug ${report}
         ;;
         "odl")
@@ -225,7 +226,7 @@ if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]] &&\
    [[ -f $tests_file ]]; then
     arr_test=($(cat $tests_file))
 else
-    arr_test=(vping tempest vims rally)
+    arr_test=(vping_ssh tempest vims rally)
 fi
 
 BASEDIR=`dirname $0`
