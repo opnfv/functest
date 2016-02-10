@@ -70,7 +70,7 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - "
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-REPO_PATH=os.environ['repos_dir']+'/functest/'
+REPO_PATH = os.environ['repos_dir']+'/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
@@ -97,14 +97,14 @@ GLANCE_IMAGE_PATH = functest_yaml.get("general"). \
     get("directories").get("dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
 
 
-def push_results_to_db(payload):
+def push_results_to_db(case, payload):
 
     url = TEST_DB + "/results"
     installer = functest_utils.get_installer_type(logger)
     scenario = functest_utils.get_scenario(logger)
     pod_name = functest_utils.get_pod_name(logger)
     # TODO pod_name hardcoded, info shall come from Jenkins
-    params = {"project_name": "functest", "case_name": "Rally",
+    params = {"project_name": "functest", "case_name": case,
               "pod_name": pod_name, "installer": installer,
               "version": scenario, "details": payload}
 
@@ -213,7 +213,7 @@ def run_task(test_name):
         # Push results in payload of testcase
         if args.report:
             logger.debug("Push result into DB")
-            push_results_to_db(json_data)
+            push_results_to_db("Rally_details", json_data)
 
         """ parse JSON operation result """
         if task_succeed(json_results):
@@ -232,22 +232,22 @@ def main():
         exit(-1)
 
     creds_nova = functest_utils.get_credentials("nova")
-    nova_client = novaclient.Client('2',**creds_nova)
+    nova_client = novaclient.Client('2', **creds_nova)
     creds_keystone = functest_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
     glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
-                                                   endpoint_type='publicURL')
+                                                              endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
-
 
     image_id = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
 
     if image_id == '':
-        logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME, \
+        logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                            GLANCE_IMAGE_PATH))
-        image_id = functest_utils.create_glance_image(glance_client,\
-                                                GLANCE_IMAGE_NAME,GLANCE_IMAGE_PATH)
+        image_id = functest_utils.create_glance_image(glance_client,
+                                                GLANCE_IMAGE_NAME,
+                                                GLANCE_IMAGE_PATH)
         if not image_id:
             logger.error("Failed to create the Glance image...")
             exit(-1)
@@ -256,8 +256,7 @@ def main():
                          % (GLANCE_IMAGE_NAME, image_id))
     else:
         logger.debug("Using existing image '%s' with ID '%s'..." \
-                     % (GLANCE_IMAGE_NAME,image_id))
-
+                     % (GLANCE_IMAGE_NAME, image_id))
 
     if args.test_name == "all":
         for test_name in tests:
