@@ -65,7 +65,10 @@ class TestFunctestUtils(unittest.TestCase):
         test = isTestRunnable('functest/odl', functest_yaml)
         self.assertTrue(test)
 
-        test = isTestRunnable('functest/vping', functest_yaml)
+        test = isTestRunnable('functest/vping_ssh', functest_yaml)
+        self.assertTrue(test)
+
+        test = isTestRunnable('functest/vping_userdata', functest_yaml)
         self.assertTrue(test)
 
         test = isTestRunnable('functest/tempest', functest_yaml)
@@ -82,7 +85,7 @@ class TestFunctestUtils(unittest.TestCase):
 
         test = generateTestcaseList(functest_yaml)
 
-        expected_list = "vping tempest odl doctor promise policy-test odl-vpn_service-tests vims rally "
+        expected_list = "vping_ssh vping_userdata tempest odl doctor promise policy-test odl-vpn_service-tests vims rally "
         self.assertEqual(test, expected_list)
 
     def tearDown(self):

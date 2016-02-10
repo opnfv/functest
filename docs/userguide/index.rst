@@ -24,8 +24,8 @@ The different scenarios are described in the section hereafter.
 VIM
 ---
 
-vPing
-^^^^^
+vPing_SSH
+^^^^^^^^^
 
 The goal of this test can be described as follows::
 
@@ -348,8 +348,8 @@ Test results
 VIM
 ---
 
-vPing
-^^^^^
+vPing_SSH
+^^^^^^^^^
 
 vPing results are displayed in the console::
 
@@ -704,8 +704,8 @@ Troubleshooting
 VIM
 ---
 
-vPing
-^^^^^
+vPing_SSH
+^^^^^^^^^
 
 vPing should work on all the scenarios. In case of timeout, check your network
 connectivity. The test case creates its own security group to allow SSH access,

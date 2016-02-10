@@ -13,17 +13,15 @@
 # 0.2: measure test duration and publish results under json format
 #
 #
-import argparse
-import datetime
-import logging
+
 import os
-import paramiko
-import pprint
-import subprocess
-import sys
 import time
+import argparse
+import pprint
+import sys
+import logging
 import yaml
-from scp import SCPClient
+import datetime
 from novaclient import client as novaclient
 from neutronclient.v2_0 import client as neutronclient
 from keystoneclient.v2_0 import client as keystoneclient
@@ -42,7 +40,7 @@ args = parser.parse_args()
 
 """ logging configuration """
 
-logger = logging.getLogger('vPing')
+logger = logging.getLogger('vPing_userdata')
 logger.setLevel(logging.DEBUG)
 
 ch = logging.StreamHandler()
@@ -57,7 +55,6 @@ formatter = logging.Formatter('%(asctime)s - %(name)s'
 
 ch.setFormatter(formatter)
 logger.addHandler(ch)
-paramiko.util.log_to_file("/var/log/paramiko.log")
 
 REPO_PATH = os.environ['repos_dir']+'/functest/'
 if not os.path.exists(REPO_PATH):
@@ -182,22 +179,19 @@ def create_private_neutron_net(neutron):
     logger.debug("Router '%s' created successfully" % router_id)
     logger.debug('Adding router to subnet...')
 
-    if not functest_utils.add_interface_router(neutron, router_id, subnet_id):
+    result = functest_utils.add_interface_router(neutron, router_id, subnet_id)
+
+    if not result:
         return False
+
     logger.debug("Interface added successfully.")
-
-    logger.debug('Adding gateway to router...')
-    if not functest_utils.add_gateway_router(neutron, router_id):
-        return False
-    logger.debug("Gateway added successfully.")
-
     network_dic = {'net_id': network_id,
                    'subnet_id': subnet_id,
                    'router_id': router_id}
     return network_dic
 
 
-def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2, secgroup_id):
+def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2):
 
     # delete both VMs
     logger.info("Cleaning up...")
@@ -232,7 +226,7 @@ def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2, secgroup_i
             logger.debug("Instance %s terminated." % NAME_VM_2)
 
     # delete created network
-    logger.debug("Deleting network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
+    logger.info("Deleting network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
     net_id = network_dic["net_id"]
     subnet_id = network_dic["subnet_id"]
     router_id = network_dic["router_id"]
@@ -274,12 +268,6 @@ def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2, secgroup_i
     logger.debug(
         "Network '%s' deleted successfully" % NEUTRON_PRIVATE_NET_NAME)
 
-    if not functest_utils.delete_security_group(neutron, secgroup_id):
-        logger.error("Unable to delete security group '%s'" % secgroup_id)
-        return False
-    logger.debug(
-        "Security group '%s' deleted successfully" % secgroup_id)
-
     return True
 
 def push_results(start_time_ts, duration, test_status):
@@ -288,7 +276,7 @@ def push_results(start_time_ts, duration, test_status):
         scenario = functest_utils.get_scenario(logger)
         pod_name = functest_utils.get_pod_name(logger)
         functest_utils.push_results_to_db(TEST_DB,
-                                          "vPing",
+                                          "vPing_userdata",
                                           logger, pod_name, scenario,
                                           payload={'timestart': start_time_ts,
                                                    'duration': duration,
@@ -321,23 +309,22 @@ def main():
                                                   GLANCE_IMAGE_PATH)
     if not image_id:
         logger.error("Failed to create a Glance image...")
-        return(EXIT_CODE)
-    logger.debug("Image '%s' with ID=%s created successfully." %\
-                  (GLANCE_IMAGE_NAME, image_id))
+        exit(-1)
+
     # Check if the given image exists
     image = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
     if image == '':
         logger.error("ERROR: Glance image '%s' not found." % GLANCE_IMAGE_NAME)
         logger.info("Available images are: ")
         pMsg(nova_client.images.list())
-        return(EXIT_CODE)
+        exit(-1)
 
     network_dic = create_private_neutron_net(neutron_client)
 
     if not network_dic:
         logger.error(
             "There has been a problem when creating the neutron network")
-        return(EXIT_CODE)
+        exit(-1)
 
     network_id = network_dic["net_id"]
 
@@ -350,7 +337,7 @@ def main():
         logger.error("Flavor '%s' not found." % FLAVOR)
         logger.info("Available flavors are: ")
         pMsg(nova_client.flavor.list())
-        return(EXIT_CODE)
+        exit(-1)
 
     # Deleting instances if they exist
 
@@ -359,36 +346,6 @@ def main():
         if server.name == NAME_VM_1 or server.name == NAME_VM_2:
             logger.info("Instance %s found. Deleting..." % server.name)
             server.delete()
-
-    SECGROUP_NAME = "vPing-sg"
-    SECGROUP_DESCR = "Security group for vPing test case"
-    logger.info("Creating security group  '%s'..." % SECGROUP_NAME)
-    SECGROUP = functest_utils.create_security_group(neutron_client,
-                                          SECGROUP_NAME,
-                                          SECGROUP_DESCR)
-    SECGROUP_ID = SECGROUP['id']
-    if not SECGROUP:
-        logger.error("Failed to create the security group...")
-        return(EXIT_CODE)
-    logger.debug("Security group '%s' with ID=%s created successfully." %\
-                  (SECGROUP['name'], SECGROUP_ID))
-
-    logger.debug("Adding ICMP rules in security group '%s'..." % SECGROUP_NAME)
-    if not functest_utils.create_secgroup_rule(neutron_client, SECGROUP_ID, \
-                    'ingress', 'icmp'):
-        logger.error("Failed to create the security group rule...")
-        return(EXIT_CODE)
-
-    logger.debug("Adding SSH rules in security group '%s'..." % SECGROUP_NAME)
-    if not functest_utils.create_secgroup_rule(neutron_client, SECGROUP_ID, \
-                    'ingress', 'tcp', '22', '22'):
-        logger.error("Failed to create the security group rule...")
-        return(EXIT_CODE)
-
-    if not functest_utils.create_secgroup_rule(neutron_client, SECGROUP_ID, \
-                    'egress', 'tcp', '22', '22'):
-        logger.error("Failed to create the security group rule...")
-        return(EXIT_CODE)
 
     # boot VM 1
     # basic boot
@@ -408,7 +365,7 @@ def main():
                                                   IP_1)
     if not port_id1:
         logger.error("Unable to create port.")
-        return(EXIT_CODE)
+        exit(-1)
 
     logger.info("Creating instance '%s' with IP %s..." % (NAME_VM_1, IP_1))
     logger.debug(
@@ -424,10 +381,10 @@ def main():
 
     # wait until VM status is active
     if not waitVmActive(nova_client, vm1):
+
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_1, functest_utils.get_instance_status(nova_client, vm1)))
-        cleanup(nova_client, neutron_client, image_id, network_dic,
-                port_id1, SECGROUP_ID)
+        cleanup(nova_client, neutron_client, image_id, network_dic, port_id1)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
@@ -442,15 +399,14 @@ def main():
     test_ip = IP_1
     logger.debug("Instance '%s' got %s" % (NAME_VM_1, test_ip))
 
-    logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_1, SECGROUP_NAME))
-    functest_utils.add_secgroup_to_instance(nova_client, vm1.id, SECGROUP['id'])
-
     # boot VM 2
     # we will boot then execute a ping script with cloud-init
     # the long chain corresponds to the ping procedure converted with base 64
     # tune (e.g. flavor, images, network) to your specific openstack
     #  configuration here
-
+    u = "#!/bin/sh\n\nwhile true; do\n ping -c 1 %s 2>&1 >/dev/null\n " \
+        "RES=$?\n if [ \"Z$RES\" = \"Z0\" ] ; then\n  echo 'vPing OK'\n " \
+        "break\n else\n  echo 'vPing KO'\n fi\n sleep 1\ndone\n" % test_ip
 
     # create VM
     logger.debug("Creating port 'vping-port-2' with IP %s..." % IP_2)
@@ -460,143 +416,78 @@ def main():
 
     if not port_id2:
         logger.error("Unable to create port.")
-        return(EXIT_CODE)
-
+        exit(-1)
     logger.info("Creating instance '%s' with IP %s..." % (NAME_VM_2, IP_2))
     logger.debug(
-        "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
-        "network=%s \n" % (NAME_VM_2, flavor, image, network_id))
+        "Configuration:\n name=%s \n flavor=%s \n image=%s \n network=%s "
+        "\n userdata= \n%s" % (
+            NAME_VM_2, flavor, image, network_id, u))
     vm2 = nova_client.servers.create(
         name=NAME_VM_2,
         flavor=flavor,
         image=image,
-        nics=[{"port-id": port_id2}]
+        nics=[{"port-id": port_id2}],
+        userdata=u
     )
 
     if not waitVmActive(nova_client, vm2):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_2, functest_utils.get_instance_status(nova_client, vm2)))
         cleanup(nova_client, neutron_client, image_id, network_dic,
-                port_id1, port_id2, SECGROUP_ID)
+                port_id1, port_id2)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_2)
 
-    logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_2, SECGROUP_NAME))
-    functest_utils.add_secgroup_to_instance(nova_client, vm2.id, SECGROUP['id'])
-
-    logger.info("Creating floating IP for VM '%s'..." % NAME_VM_2)
-    floatip = functest_utils.create_floating_ip(neutron_client)
-    if floatip == None:
-        logger.error("Cannot create floating IP.")
-        cleanup(nova_client, neutron_client, image_id, network_dic,
-            port_id1, port_id2, SECGROUP_ID)
-        return (EXIT_CODE)
-    logger.info("Floating IP created: '%s'" % floatip)
-
-    logger.info("Associating floating ip: '%s' to VM '%s' " % (floatip, NAME_VM_2))
-    if not functest_utils.add_floating_ip(nova_client, vm2.id, floatip):
-        logger.error("Cannot associate floating IP to VM.")
-        cleanup(nova_client, neutron_client, image_id, network_dic,
-            port_id1, port_id2, SECGROUP_ID)
-        return (EXIT_CODE)
-
-    logger.info("Trying to establish SSH connection to %s..." % floatip)
-    username='cirros'
-    password='cubswin:)'
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-    timeout = 50
-    while timeout > 0:
-        try:
-            ssh.connect(floatip, username=username, password=password, timeout=2)
-            logger.debug("SSH connection established to %s." % floatip)
-            break
-        except Exception, e:
-            #print e
-            logger.debug("Waiting for %s..." % floatip)
-            time.sleep(6)
-            timeout -= 1
-
-    if timeout == 0: # 300 sec timeout (5 min)
-        logger.error("Cannot establish connection to IP '%s'. Aborting" % floatip)
-        cleanup(nova_client, neutron_client, image_id, network_dic,
-            port_id1, port_id2, SECGROUP_ID)
-        return (EXIT_CODE)
-
-    scp = SCPClient(ssh.get_transport())
-
-    ping_script = REPO_PATH + "testcases/vPing/CI/libraries/ping.sh"
-    try:
-        scp.put(ping_script,"~/")
-    except Exception, e:
-        logger.error("Cannot SCP the file '%s' to VM '%s'" % (ping_script,floatip))
-
-
-    #SSH_OPTS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "+\
-    #    "-o LogLevel=quiet"
-
-    #cmd1 = "sshpass -p 'cubswin:)' scp " + SSH_OPTS + " " + \
-    #    ping_script + " cirros@"+floatip+":~/ping.sh"
-    #cmd2 = "sshpass -p 'cubswin:)' ssh " + SSH_OPTS + \
-    #    " cirros@"+floatip+" 'chmod 755 ~/ping.sh '"
-    #cmd3 = "sshpass -p 'cubswin:)' ssh " + SSH_OPTS + \
-    #    " cirros@"+floatip+" '~/ping.sh "+IP_1+"'"
-
-    cmd = 'chmod 755 ~/ping.sh'
-    (stdin, stdout, stderr) = ssh.exec_command(cmd)
-    for line in stdout.readlines():
-        print line
-
     logger.info("Waiting for ping...")
     sec = 0
+    metadata_tries = 0
+    console_log = vm2.get_console_output()
     duration = 0
 
-    cmd = '~/ping.sh ' + IP_1
-    flag = False
     while True:
         time.sleep(1)
-        # we do the SCP every time in the loop because while testing, I observed
-        # that for some strange reason, the cirros VM was deleting the file if
-        # do the scp only once
-        (stdin, stdout, stderr) = ssh.exec_command(cmd)
-        output = stdout.readlines()
-        #for line in output:
-        #    print line
-
+        console_log = vm2.get_console_output()
         # print "--"+console_log
         # report if the test is failed
-        for line in output:
-            if "vPing OK" in line:
-                logger.info("vPing detected!")
+        if "vPing OK" in console_log:
+            logger.info("vPing detected!")
 
-                # we consider start time at VM1 booting
-                end_time_ts = time.time()
-                duration = round(end_time_ts - start_time_ts, 1)
-                logger.info("vPing duration:'%s' s." % duration)
-                EXIT_CODE = 0
-                flag = True
-                break
-            elif sec == PING_TIMEOUT:
-                logger.info("Timeout reached.")
-                flag = True
-                break
-        if flag :
+            # we consider start time at VM1 booting
+            end_time_ts = time.time()
+            duration = round(end_time_ts - start_time_ts, 1)
+            logger.info("vPing duration:'%s'" % duration)
+            EXIT_CODE = 0
             break
-        logger.debug("Pinging %s. Waiting for response..." % IP_1)
+        elif "failed to read iid from metadata" in console_log or \
+                metadata_tries > 5:
+            EXIT_CODE = -2
+            break
+        elif sec == PING_TIMEOUT:
+            logger.info("Timeout reached.")
+            break
+        elif sec % 10 == 0:
+            if "request failed" in console_log:
+                logger.debug("It seems userdata is not supported in nova boot."+\
+                            " Waiting a bit...")
+                metadata_tries += 1
+            else:
+                logger.debug("Pinging %s. Waiting for response..." % IP_2)
         sec += 1
-
-    cleanup(nova_client, neutron_client, image_id, network_dic,
-            port_id1, port_id2, SECGROUP_ID)
 
     test_status = "NOK"
     if EXIT_CODE == 0:
         logger.info("vPing OK")
         test_status = "OK"
+    elif EXIT_CODE == -2:
+        duration = 0
+        logger.info("Userdata is not supported in nova boot. Aborting test...")
     else:
         duration = 0
         logger.error("vPing FAILED")
+
+    cleanup(nova_client, neutron_client, image_id, network_dic,
+            port_id1, port_id2)
 
     if args.report:
         push_results(start_time_ts, duration, test_status)
