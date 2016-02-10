@@ -16,7 +16,7 @@
 usage="Script to trigger the tests automatically.
 
 usage:
-    bash $(basename "$0") [-h|--help] [-t <test_name>]
+    bash $(basename "$0") [-h|--help] [-r|--report] [-n|--no-clean] [-t|--test <test_name>]
 
 where:
     -h|--help         show this help text
