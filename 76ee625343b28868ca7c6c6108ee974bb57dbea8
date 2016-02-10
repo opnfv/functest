@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_e8e9421b",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-02-10T08:27:16Z",
+      "side": 1,
+      "message": "Two zero division error scenarios here:\n\n- if task validation fails\n- always in verbose mode",
+      "revId": "76ee625343b28868ca7c6c6108ee974bb57dbea8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
