@@ -24,8 +24,8 @@ The different scenarios are described in the section hereafter.
 VIM (Virtualized Infrastructure Manager)
 ---
 
-vPing
-^^^^^
+vPing_SSH
+^^^^^^^^^
 
 Given the script 'ping.sh'::
 
@@ -371,8 +371,8 @@ Test results
 VIM
 ---
 
-vPing
-^^^^^
+vPing_SSH
+^^^^^^^^^
 
 vPing test case output is displayed in the console::
 
@@ -726,8 +726,8 @@ Troubleshooting
 VIM
 ---
 
-vPing
-^^^^^
+vPing_SSH
+^^^^^^^^^
 
 vPing should work on all the scenarios. In case of timeout, check your network
 connectivity. The test case creates its own security group to allow SSH access,
