@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_a6a49b57",
+        "filename": "docs/results/compass-os-onos-nofeature-ha.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-11T16:04:49Z",
+      "side": 1,
+      "message": "this is actually not executed when ONOS is deployed, but we can remove it later on.",
+      "revId": "75bfd472302483a201a48eb18c69447343f83b75",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
