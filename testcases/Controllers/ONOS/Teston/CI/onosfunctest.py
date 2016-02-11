@@ -182,6 +182,7 @@ def main():
         pod_name = functest_utils.get_pod_name(logger)
         result = GetResult()
         functest_utils.push_results_to_db(TEST_DB,
+                                          "functest",
                                           "ONOS",
                                           logger, pod_name, scenario,
                                           payload=result)
