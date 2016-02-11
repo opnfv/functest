@@ -22,6 +22,7 @@ where:
     -h|--help         show this help text
     -r|--report       push results to database (false by default)
     -n|--no-clean     do not clean OpenStack resources after test run
+    -s|--serial       run tests in one thread
     -t|--test         run specific set of tests
       <test_name>     one or more of the following separated by comma:
                             vping_ssh,vping_userdata,odl,rally,tempest,vims,onos,promise,ovno
@@ -38,6 +39,8 @@ examples:
 offline=false
 report=""
 clean=true
+serial=false
+
 # Get the list of runnable tests
 # Check if we are in CI mode
 
@@ -86,6 +89,10 @@ function run_test(){
     if [ $clean == "false" ]; then
         clean_flag="-n"
     fi
+    serial_flag=""
+    if [ $serial == "true" ]; then
+        serial_flag="-s"
+    fi
 
     case $test_name in
         "vping_ssh")
@@ -115,7 +122,7 @@ function run_test(){
         "tempest")
             info "Running Tempest tests..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
-                --debug -m $clean_flag custom ${report}
+                --debug $serial_flag $clean_flag -m custom ${report}
             # save tempest.conf for further troubleshooting
             tempest_conf="${RALLY_VENV_DIR}/tempest/for-deployment-*/tempest.conf"
             if [ -f ${tempest_conf} ]; then
@@ -212,6 +219,9 @@ while [[ $# > 0 ]]
         ;;
         -n|--no-clean)
             clean=false
+        ;;
+        -s|--serial)
+            serial=true
         ;;
         -t|--test|--tests)
             TEST="$2"

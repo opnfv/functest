@@ -33,8 +33,14 @@ modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
 
 """ tests configuration """
 parser = argparse.ArgumentParser()
-parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
-parser.add_argument("-m", "--mode", help="Tempest test mode [smoke, all]",
+parser.add_argument("-d", "--debug",
+                    help="Debug mode",
+                    action="store_true")
+parser.add_argument("-s", "--serial",
+                    help="Run tests in one thread",
+                    action="store_true")
+parser.add_argument("-m", "--mode",
+                    help="Tempest test mode [smoke, all]",
                     default="smoke")
 parser.add_argument("-r", "--report",
                     help="Create json result file",
@@ -291,6 +297,9 @@ def main():
         MODE = "--tests-file "+REPO_PATH+"testcases/VIM/OpenStack/CI/custom_tests/test_list.txt"
     else:
         MODE = "--set "+args.mode
+
+    if args.serial:
+        MODE = "--concur 1 "+MODE
 
     if not os.path.exists(TEMPEST_RESULTS_DIR):
         os.makedirs(TEMPEST_RESULTS_DIR)
