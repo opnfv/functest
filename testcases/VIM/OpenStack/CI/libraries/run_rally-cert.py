@@ -416,8 +416,10 @@ def main():
         report += ""\
         "| " + name + " | " + duration + " | " + nb_tests + " | " + success + "|\n"\
         "+-------------------+------------+---------------+-----------+\n"
-        payload.append({'module': name, 'duration': duration,
-                         'nb tests': nb_tests, 'success': success})
+        payload.append({'module': name,
+                        'details': {'duration': s['overall_duration'],
+                                    'nb tests': s['nb_tests'],
+                                    'success': s['success']}})
 
     total_duration_str = time.strftime("%H:%M:%S", time.gmtime(total_duration))
     total_duration_str2 = "{0:<10}".format(total_duration_str)
@@ -430,9 +432,9 @@ def main():
     report += "+===================+============+===============+===========+\n"
 
     logger.info("\n"+report)
-    payload.append({'summary': {'duration': total_duration_str2,
-                               'nb tests': total_nb_tests_str,
-                               'nb success': total_success_str}})
+    payload.append({'summary': {'duration': total_duration,
+                               'nb tests': total_nb_tests,
+                               'nb success': total_success}})
 
     # Generate json results for DB
     #json_results = {"timestart": time_start, "duration": total_duration,
