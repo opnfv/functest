@@ -21,13 +21,14 @@ and feature capability
 .. Include each of the scenario files as they are set to
 .. release ready and the results are available for publishing.
 
+   compass-os-nosdn-nofeature-ha.rst
+
 .. apex-os-ocl-nofeature-ha.rst
 .. apex-os-odl_l2-sfc-ha.rst
 .. apex-os-odl_l3-nofeature-ha.rst
 .. apex-os-onos-nofeature-ha.rst
 .. apex-os-odl_l2-nofeature-ha.rst
 .. compass-os-onos-nofeature-ha.rst
-.. compass-os-nosdn-nofeature-ha.rst
 .. compass-os-ocl-nofeature-ha.rst
 .. compass-os-odl_l2-nofeature-ha.rst
 .. fuel-os-nosdn-kvm-ha.rst
