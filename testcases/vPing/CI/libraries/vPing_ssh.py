@@ -410,12 +410,12 @@ def main():
 
     # create VM
     logger.debug("Creating port 'vping-port-1' with IP %s..." % IP_1)
-    port_id1 = functest_utils.create_neutron_port(neutron_client,
-                                                  "vping-port-1", network_id,
-                                                  IP_1)
-    if not port_id1:
-        logger.error("Unable to create port.")
-        return(EXIT_CODE)
+    #port_id1 = functest_utils.create_neutron_port(neutron_client,
+    #                                              "vping-port-1", network_id,
+    #                                              IP_1)
+    #if not port_id1:
+    #    logger.error("Unable to create port.")
+    #    return(EXIT_CODE)
 
     logger.info("Creating instance '%s' with IP %s..." % (NAME_VM_1, IP_1))
     logger.debug(
@@ -426,7 +426,7 @@ def main():
         flavor=flavor,
         image=image,
         # nics = [{"net-id": network_id, "v4-fixed-ip": IP_1}]
-        nics=[{"port-id": port_id1}]
+        nics=[{"net-id": network_id}]
     )
 
     # wait until VM status is active
@@ -445,8 +445,8 @@ def main():
     # theoretically there is only one IP address so we take the
     # first element of the table
     # Dangerous! To be improved!
-    # test_ip = server.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
-    test_ip = IP_1
+    test_ip = server.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
+    #test_ip = IP_1
     logger.debug("Instance '%s' got %s" % (NAME_VM_1, test_ip))
 
     logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_1, SECGROUP_NAME))
@@ -477,7 +477,7 @@ def main():
         name=NAME_VM_2,
         flavor=flavor,
         image=image,
-        nics=[{"port-id": port_id2}]
+        nics=[{"net-id": network_id}]
     )
 
     if not waitVmActive(nova_client, vm2):
