@@ -13,10 +13,10 @@ To qualify for release the scenarios must have deployed and been successfully
 tested in four consecutive installations to establish stability of deployment
 and feature capability
 
-.. Add information related to the dashboards and other useful tools for functest.
-
 .. toctree::
    :maxdepth: 2
+
+   compass-os-nosdn-nofeature-ha.rst
 
 .. Include each of the scenario files as they are set to
 .. release ready and the results are available for publishing.
@@ -27,7 +27,6 @@ and feature capability
 .. apex-os-onos-nofeature-ha.rst
 .. apex-os-odl_l2-nofeature-ha.rst
 .. compass-os-onos-nofeature-ha.rst
-.. compass-os-nosdn-nofeature-ha.rst
 .. compass-os-ocl-nofeature-ha.rst
 .. compass-os-odl_l2-nofeature-ha.rst
 .. fuel-os-nosdn-kvm-ha.rst

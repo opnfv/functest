@@ -6,7 +6,7 @@ FuncTest test results
 =====================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
 
   overview.rst
   results.rst
