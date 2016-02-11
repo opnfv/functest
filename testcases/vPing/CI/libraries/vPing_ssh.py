@@ -158,41 +158,50 @@ def waitVmDeleted(nova, vm):
 
 def create_private_neutron_net(neutron):
 
-    neutron.format = 'json'
-    logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
-    network_id = functest_utils. \
-        create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
+    # Check if the network already exists
+    network_id = functest_utils.get_network_id(neutron,NEUTRON_PRIVATE_NET_NAME)
+    subnet_id = functest_utils.get_subnet_id(neutron,NEUTRON_PRIVATE_SUBNET_NAME)
+    router_id = functest_utils.get_router_id(neutron,NEUTRON_ROUTER_NAME)
 
-    if not network_id:
-        return False
-    logger.debug("Network '%s' created successfully" % network_id)
-    logger.debug('Creating Subnet....')
-    subnet_id = functest_utils. \
-        create_neutron_subnet(neutron,
-                              NEUTRON_PRIVATE_SUBNET_NAME,
-                              NEUTRON_PRIVATE_SUBNET_CIDR,
-                              network_id)
-    if not subnet_id:
-        return False
-    logger.debug("Subnet '%s' created successfully" % subnet_id)
-    logger.debug('Creating Router...')
-    router_id = functest_utils. \
-        create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
+    if network_id != '' and subnet_id != ''  and router_id != '' :
+        logger.debug("The network %s already exists. "\
+                     "No need to create another one" % NEUTRON_PRIVATE_NET_NAME)
+    else:
+        neutron.format = 'json'
+        logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
+        network_id = functest_utils. \
+            create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
 
-    if not router_id:
-        return False
+        if not network_id:
+            return False
+        logger.debug("Network '%s' created successfully" % network_id)
+        logger.debug('Creating Subnet....')
+        subnet_id = functest_utils. \
+            create_neutron_subnet(neutron,
+                                  NEUTRON_PRIVATE_SUBNET_NAME,
+                                  NEUTRON_PRIVATE_SUBNET_CIDR,
+                                  network_id)
+        if not subnet_id:
+            return False
+        logger.debug("Subnet '%s' created successfully" % subnet_id)
+        logger.debug('Creating Router...')
+        router_id = functest_utils. \
+            create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
 
-    logger.debug("Router '%s' created successfully" % router_id)
-    logger.debug('Adding router to subnet...')
+        if not router_id:
+            return False
 
-    if not functest_utils.add_interface_router(neutron, router_id, subnet_id):
-        return False
-    logger.debug("Interface added successfully.")
+        logger.debug("Router '%s' created successfully" % router_id)
+        logger.debug('Adding router to subnet...')
 
-    logger.debug('Adding gateway to router...')
-    if not functest_utils.add_gateway_router(neutron, router_id):
-        return False
-    logger.debug("Gateway added successfully.")
+        if not functest_utils.add_interface_router(neutron, router_id, subnet_id):
+            return False
+        logger.debug("Interface added successfully.")
+
+        logger.debug('Adding gateway to router...')
+        if not functest_utils.add_gateway_router(neutron, router_id):
+            return False
+        logger.debug("Gateway added successfully.")
 
     network_dic = {'net_id': network_id,
                    'subnet_id': subnet_id,
@@ -409,13 +418,13 @@ def main():
             '%Y-%m-%d %H:%M:%S')))
 
     # create VM
-    logger.debug("Creating port 'vping-port-1' with IP %s..." % IP_1)
-    port_id1 = functest_utils.create_neutron_port(neutron_client,
-                                                  "vping-port-1", network_id,
-                                                  IP_1)
-    if not port_id1:
-        logger.error("Unable to create port.")
-        return(EXIT_CODE)
+    #logger.debug("Creating port 'vping-port-1' with IP %s..." % IP_1)
+    #port_id1 = functest_utils.create_neutron_port(neutron_client,
+    #                                              "vping-port-1", network_id,
+    #                                              IP_1)
+    #if not port_id1:
+    #    logger.error("Unable to create port.")
+    #    return(EXIT_CODE)
 
     logger.info("Creating instance '%s' with IP %s..." % (NAME_VM_1, IP_1))
     logger.debug(
@@ -426,7 +435,7 @@ def main():
         flavor=flavor,
         image=image,
         # nics = [{"net-id": network_id, "v4-fixed-ip": IP_1}]
-        nics=[{"port-id": port_id1}]
+        nics=[{"net-id": network_id}]
     )
 
     # wait until VM status is active
@@ -445,8 +454,8 @@ def main():
     # theoretically there is only one IP address so we take the
     # first element of the table
     # Dangerous! To be improved!
-    # test_ip = server.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
-    test_ip = IP_1
+    test_ip = vm1.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
+    #test_ip = IP_1
     logger.debug("Instance '%s' got %s" % (NAME_VM_1, test_ip))
 
     logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_1, SECGROUP_NAME))
@@ -460,14 +469,14 @@ def main():
 
 
     # create VM
-    logger.debug("Creating port 'vping-port-2' with IP %s..." % IP_2)
-    port_id2 = functest_utils.create_neutron_port(neutron_client,
-                                                  "vping-port-2", network_id,
-                                                  IP_2)
-
-    if not port_id2:
-        logger.error("Unable to create port.")
-        return(EXIT_CODE)
+    #logger.debug("Creating port 'vping-port-2' with IP %s..." % IP_2)
+    #port_id2 = functest_utils.create_neutron_port(neutron_client,
+    #                                              "vping-port-2", network_id,
+    #                                              IP_2)
+    #
+    #if not port_id2:
+    #    logger.error("Unable to create port.")
+    #    return(EXIT_CODE)
 
     logger.info("Creating instance '%s' with IP %s..." % (NAME_VM_2, IP_2))
     logger.debug(
@@ -477,7 +486,7 @@ def main():
         name=NAME_VM_2,
         flavor=flavor,
         image=image,
-        nics=[{"port-id": port_id2}]
+        nics=[{"net-id": network_id}]
     )
 
     if not waitVmActive(nova_client, vm2):
