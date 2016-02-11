@@ -430,9 +430,9 @@ def main():
     report += "+===================+============+===============+===========+\n"
 
     logger.info("\n"+report)
-    payload.append({'summary': {'duration': total_duration_str2,
-                               'nb tests': total_nb_tests_str,
-                               'nb success': total_success_str}})
+    payload.append({'summary': {'duration': duration,
+                               'nb tests': total_nb_tests,
+                               'nb success': total_success}})
 
     # Generate json results for DB
     #json_results = {"timestart": time_start, "duration": total_duration,
