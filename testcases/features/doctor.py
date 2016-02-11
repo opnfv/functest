@@ -71,7 +71,7 @@ def main():
                     'd': details,
                 })
     functest_utils.push_results_to_db(TEST_DB_URL,
-                                      'doctor-notification',
+                                      'doctor','doctor-notification',
                                       logger, pod_name, scenario,
                                       details)
 

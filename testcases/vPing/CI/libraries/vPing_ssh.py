@@ -294,6 +294,7 @@ def push_results(start_time_ts, duration, test_status):
         scenario = functest_utils.get_scenario(logger)
         pod_name = functest_utils.get_pod_name(logger)
         functest_utils.push_results_to_db(TEST_DB,
+                                          "functest",
                                           "vPing",
                                           logger, pod_name, scenario,
                                           payload={'timestart': start_time_ts,

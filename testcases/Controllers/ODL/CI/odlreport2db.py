@@ -130,6 +130,7 @@ def main(argv):
         #                        -p opnfv-jump-2
         #                        -s os-odl_l2-ha
         functest_utils.push_results_to_db(database,
+                                          "functest",
                                           data['case_name'],
                                           None,
                                           data['pod_name'],
