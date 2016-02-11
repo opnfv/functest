@@ -81,8 +81,6 @@ PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
-IP_1 = functest_yaml.get("vping").get("ip_1")
-IP_2 = functest_yaml.get("vping").get("ip_2")
 # GLANCE_IMAGE_NAME = functest_yaml.get("general"). \
 #    get("openstack").get("image_name")
 GLANCE_IMAGE_NAME = "functest-vping"
@@ -158,41 +156,50 @@ def waitVmDeleted(nova, vm):
 
 def create_private_neutron_net(neutron):
 
-    neutron.format = 'json'
-    logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
-    network_id = functest_utils. \
-        create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
+    # Check if the network already exists
+    network_id = functest_utils.get_network_id(neutron,NEUTRON_PRIVATE_NET_NAME)
+    subnet_id = functest_utils.get_subnet_id(neutron,NEUTRON_PRIVATE_SUBNET_NAME)
+    router_id = functest_utils.get_router_id(neutron,NEUTRON_ROUTER_NAME)
 
-    if not network_id:
-        return False
-    logger.debug("Network '%s' created successfully" % network_id)
-    logger.debug('Creating Subnet....')
-    subnet_id = functest_utils. \
-        create_neutron_subnet(neutron,
-                              NEUTRON_PRIVATE_SUBNET_NAME,
-                              NEUTRON_PRIVATE_SUBNET_CIDR,
-                              network_id)
-    if not subnet_id:
-        return False
-    logger.debug("Subnet '%s' created successfully" % subnet_id)
-    logger.debug('Creating Router...')
-    router_id = functest_utils. \
-        create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
+    if network_id != '' and subnet_id != ''  and router_id != '' :
+        logger.debug("The network '%s' already exists. "\
+                     "No need to create another one" % NEUTRON_PRIVATE_NET_NAME)
+    else:
+        neutron.format = 'json'
+        logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
+        network_id = functest_utils. \
+            create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
 
-    if not router_id:
-        return False
+        if not network_id:
+            return False
+        logger.debug("Network '%s' created successfully" % network_id)
+        logger.debug('Creating Subnet....')
+        subnet_id = functest_utils. \
+            create_neutron_subnet(neutron,
+                                  NEUTRON_PRIVATE_SUBNET_NAME,
+                                  NEUTRON_PRIVATE_SUBNET_CIDR,
+                                  network_id)
+        if not subnet_id:
+            return False
+        logger.debug("Subnet '%s' created successfully" % subnet_id)
+        logger.debug('Creating Router...')
+        router_id = functest_utils. \
+            create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
 
-    logger.debug("Router '%s' created successfully" % router_id)
-    logger.debug('Adding router to subnet...')
+        if not router_id:
+            return False
 
-    if not functest_utils.add_interface_router(neutron, router_id, subnet_id):
-        return False
-    logger.debug("Interface added successfully.")
+        logger.debug("Router '%s' created successfully" % router_id)
+        logger.debug('Adding router to subnet...')
 
-    logger.debug('Adding gateway to router...')
-    if not functest_utils.add_gateway_router(neutron, router_id):
-        return False
-    logger.debug("Gateway added successfully.")
+        if not functest_utils.add_interface_router(neutron, router_id, subnet_id):
+            return False
+        logger.debug("Interface added successfully.")
+
+        logger.debug('Adding gateway to router...')
+        if not functest_utils.add_gateway_router(neutron, router_id):
+            return False
+        logger.debug("Gateway added successfully.")
 
     network_dic = {'net_id': network_id,
                    'subnet_id': subnet_id,
@@ -321,23 +328,22 @@ def main():
     image = None
     flavor = None
 
-    logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
-                                                       GLANCE_IMAGE_PATH))
-    image_id = functest_utils.create_glance_image(glance_client,
-                                                  GLANCE_IMAGE_NAME,
-                                                  GLANCE_IMAGE_PATH)
-    if not image_id:
-        logger.error("Failed to create a Glance image...")
-        return(EXIT_CODE)
-    logger.debug("Image '%s' with ID=%s created successfully." %\
-                  (GLANCE_IMAGE_NAME, image_id))
     # Check if the given image exists
-    image = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
-    if image == '':
-        logger.error("ERROR: Glance image '%s' not found." % GLANCE_IMAGE_NAME)
-        logger.info("Available images are: ")
-        pMsg(nova_client.images.list())
-        return(EXIT_CODE)
+    image_id = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+    if image_id != '':
+        logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
+    else:
+        logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
+                                                       GLANCE_IMAGE_PATH))
+        image_id = functest_utils.create_glance_image(glance_client,
+                                                      GLANCE_IMAGE_NAME,
+                                                      GLANCE_IMAGE_PATH)
+        if not image_id:
+            logger.error("Failed to create a Glance image...")
+            return(EXIT_CODE)
+        logger.debug("Image '%s' with ID=%s created successfully." %\
+                  (GLANCE_IMAGE_NAME, image_id))
+
 
     network_dic = create_private_neutron_net(neutron_client)
 
@@ -409,15 +415,7 @@ def main():
             '%Y-%m-%d %H:%M:%S')))
 
     # create VM
-    logger.debug("Creating port 'vping-port-1' with IP %s..." % IP_1)
-    port_id1 = functest_utils.create_neutron_port(neutron_client,
-                                                  "vping-port-1", network_id,
-                                                  IP_1)
-    if not port_id1:
-        logger.error("Unable to create port.")
-        return(EXIT_CODE)
-
-    logger.info("Creating instance '%s' with IP %s..." % (NAME_VM_1, IP_1))
+    logger.info("Creating instance '%s'..." % NAME_VM_1)
     logger.debug(
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
         "network=%s \n" % (NAME_VM_1, flavor, image, network_id))
@@ -425,8 +423,7 @@ def main():
         name=NAME_VM_1,
         flavor=flavor,
         image=image,
-        # nics = [{"net-id": network_id, "v4-fixed-ip": IP_1}]
-        nics=[{"port-id": port_id1}]
+        nics=[{"net-id": network_id}]
     )
 
     # wait until VM status is active
@@ -445,8 +442,7 @@ def main():
     # theoretically there is only one IP address so we take the
     # first element of the table
     # Dangerous! To be improved!
-    # test_ip = server.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
-    test_ip = IP_1
+    test_ip = vm1.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
     logger.debug("Instance '%s' got %s" % (NAME_VM_1, test_ip))
 
     logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_1, SECGROUP_NAME))
@@ -460,16 +456,7 @@ def main():
 
 
     # create VM
-    logger.debug("Creating port 'vping-port-2' with IP %s..." % IP_2)
-    port_id2 = functest_utils.create_neutron_port(neutron_client,
-                                                  "vping-port-2", network_id,
-                                                  IP_2)
-
-    if not port_id2:
-        logger.error("Unable to create port.")
-        return(EXIT_CODE)
-
-    logger.info("Creating instance '%s' with IP %s..." % (NAME_VM_2, IP_2))
+    logger.info("Creating instance '%s' with IP %s..." % NAME_VM_2)
     logger.debug(
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
         "network=%s \n" % (NAME_VM_2, flavor, image, network_id))
@@ -477,7 +464,7 @@ def main():
         name=NAME_VM_2,
         flavor=flavor,
         image=image,
-        nics=[{"port-id": port_id2}]
+        nics=[{"net-id": network_id}]
     )
 
     if not waitVmActive(nova_client, vm2):
@@ -541,16 +528,6 @@ def main():
         logger.error("Cannot SCP the file '%s' to VM '%s'" % (ping_script,floatip))
 
 
-    #SSH_OPTS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "+\
-    #    "-o LogLevel=quiet"
-
-    #cmd1 = "sshpass -p 'cubswin:)' scp " + SSH_OPTS + " " + \
-    #    ping_script + " cirros@"+floatip+":~/ping.sh"
-    #cmd2 = "sshpass -p 'cubswin:)' ssh " + SSH_OPTS + \
-    #    " cirros@"+floatip+" 'chmod 755 ~/ping.sh '"
-    #cmd3 = "sshpass -p 'cubswin:)' ssh " + SSH_OPTS + \
-    #    " cirros@"+floatip+" '~/ping.sh "+IP_1+"'"
-
     cmd = 'chmod 755 ~/ping.sh'
     (stdin, stdout, stderr) = ssh.exec_command(cmd)
     for line in stdout.readlines():
@@ -560,7 +537,7 @@ def main():
     sec = 0
     duration = 0
 
-    cmd = '~/ping.sh ' + IP_1
+    cmd = '~/ping.sh ' + test_ip
     flag = False
     while True:
         time.sleep(1)
@@ -591,7 +568,7 @@ def main():
                 break
         if flag :
             break
-        logger.debug("Pinging %s. Waiting for response..." % IP_1)
+        logger.debug("Pinging %s. Waiting for response..." % test_ip)
         sec += 1
 
     cleanup(nova_client, neutron_client, image_id, network_dic,
