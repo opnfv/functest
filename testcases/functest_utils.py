@@ -218,6 +218,26 @@ def get_network_id(neutron_client, network_name):
     return id
 
 
+def get_subnet_id(neutron_client, subnet_name):
+    subnets = neutron_client.list_subnets()['subnets']
+    id = ''
+    for s in subnets:
+        if s['name'] == subnet_name:
+            id = s['id']
+            break
+    return id
+
+
+def get_router_id(neutron_client, router_name):
+    routers = neutron_client.list_routers()['routers']
+    id = ''
+    for r in routers:
+        if r['name'] == router_name:
+            id = r['id']
+            break
+    return id
+
+
 def get_private_net(neutron_client):
     # Checks if there is an existing shared private network
     networks = neutron_client.list_networks()['networks']
