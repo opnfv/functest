@@ -26,6 +26,7 @@ several options::
         -h|--help         show this help text
         -r|--report       push results to database (false by default)
         -n|--no-clean     do not clean up OpenStack resources after test run
+        -s|--serial       run tests in one thread
         -t|--test         run specific set of tests
           <test_name>     one or more of the following separated by comma:
                              vping_ssh,vping_userdata,odl,rally,tempest,vims,onos,promise,ovno
@@ -57,6 +58,10 @@ all the VIM resources except what was present before running any test. The scrip
 is called once by *prepare_env.sh* when setting up the Functest environment
 to snapshot all the OpenStack resources (images, networks, volumes, security groups,
 tenants, users) so that an eventual cleanup does not remove any of this defaults.
+
+The *-s* option forces execution of test cases in a single thread. Currently this
+option affects Tempest test cases only and can be used e.g. for troubleshooting
+concurrency problems.
 
 The script
 *$repos_dir/functest/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py*
