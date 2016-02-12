@@ -3,6 +3,7 @@
 {%- set flavor_name = flavor_name|default("m1.tiny") %}
 {%- set use_existing_users = use_existing_users|default(false) %}
 {%- set service_list = service_list|default(["authenticate", "cinder", "keystone", "nova", "glance", "neutron", "quotas", "requests", "heat", "vm"]) %}
+{%- set live_migration = live_migration|default(false) %}
 {%- set smoke = smoke|default(true) %}
 {%- set floating_network = floating_network|default("net04_ext") %}
 {%- set controllers_amount = controllers_amount|default(1) %}
