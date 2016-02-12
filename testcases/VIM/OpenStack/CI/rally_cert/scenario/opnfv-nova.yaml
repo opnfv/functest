@@ -221,19 +221,6 @@
       sla:
         {{ no_failures_sla() }}
 
-  NovaServers.boot_and_live_migrate_server:
-    - args:
-        {{ vm_params(image_name, flavor_name) }}
-        block_migration: false
-        nics:
-          - net-id: {{ netid }}
-      context:
-        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
-      runner:
-        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
-      sla:
-        {{ no_failures_sla() }}
-
   NovaServers.boot_and_migrate_server:
     - args:
         {{ vm_params(image_name, flavor_name) }}
@@ -264,37 +251,6 @@
     -
       args:
         {{ vm_params(image_name, flavor_name) }}
-        nics:
-          - net-id: {{ netid }}
-      context:
-        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
-      runner:
-        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
-      sla:
-        {{ no_failures_sla() }}
-
-  NovaServers.boot_server_attach_created_volume_and_live_migrate:
-    -
-      args:
-        {{ vm_params(image_name, flavor_name) }}
-        size: 10
-        block_migration: false
-        boot_server_kwargs:
-            nics:
-              - net-id: {{ netid }}
-      context:
-        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
-      runner:
-        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
-      sla:
-        {{ no_failures_sla() }}
-
-  NovaServers.boot_server_from_volume_and_live_migrate:
-    - args:
-        {{ vm_params(image_name, flavor_name) }}
-        block_migration: false
-        volume_size: 10
-        force_delete: false
         nics:
           - net-id: {{ netid }}
       context:
@@ -367,3 +323,49 @@
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
+
+{%- if live_migration %}
+  NovaServers.boot_and_live_migrate_server:
+    - args:
+        {{ vm_params(image_name, flavor_name) }}
+        block_migration: false
+        nics:
+          - net-id: {{ netid }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NovaServers.boot_server_attach_created_volume_and_live_migrate:
+    -
+      args:
+        {{ vm_params(image_name, flavor_name) }}
+        size: 10
+        block_migration: false
+        boot_server_kwargs:
+            nics:
+              - net-id: {{ netid }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NovaServers.boot_server_from_volume_and_live_migrate:
+    - args:
+        {{ vm_params(image_name, flavor_name) }}
+        block_migration: false
+        volume_size: 10
+        force_delete: false
+        nics:
+          - net-id: {{ netid }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+{% endif %}
