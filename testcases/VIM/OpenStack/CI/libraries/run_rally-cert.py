@@ -14,6 +14,7 @@
 # and push result into test DB
 #
 import argparse
+import iniparse
 import json
 import logging
 import os
@@ -111,6 +112,8 @@ CONCURRENCY = 4
 ###
 RESULTS_DIR = functest_yaml.get("general").get("directories"). \
     get("dir_rally_res")
+TEMPEST_CONF_FILE = functest_yaml.get("general").get("directories"). \
+    get("dir_results") + '/tempest/tempest.conf'
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 PRIVATE_NETWORK = functest_yaml.get("general"). \
     get("openstack").get("neutron_private_net_name")
@@ -179,6 +182,16 @@ def task_succeed(json_raw):
     return True
 
 
+def live_migration_supported():
+    config = iniparse.ConfigParser()
+    if config.read(TEMPEST_CONF_FILE) and \
+       config.has_section('compute-feature-enabled') and \
+       config.has_option('compute-feature-enabled', 'live_migration'):
+       return config.getboolean('compute-feature-enabled', 'live_migration')
+
+    return False
+
+
 def build_task_args(test_file_name):
     task_args = {'service_list': [test_file_name]}
     task_args['smoke'] = args.smoke
@@ -201,6 +214,7 @@ def build_task_args(test_file_name):
     net_id = functest_utils.get_network_id(client_dict['neutron'],
                                            PRIVATE_NETWORK)
     task_args['netid'] = str(net_id)
+    task_args['live_migration'] = live_migration_supported()
 
     return task_args
 
