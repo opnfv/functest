@@ -67,6 +67,8 @@ vping:
     vping_private_subnet_name: vping-subnet
     vping_private_subnet_cidr: 192.168.130.0/24
     vping_router_name: vping-router
+    vping_sg_name: vPing-sg
+    vping_sg_descr: Security group for vPing test case
     ip_1: 192.168.130.30
     ip_2: 192.168.130.40
 

@@ -78,8 +78,6 @@ PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
-IP_1 = functest_yaml.get("vping").get("ip_1")
-IP_2 = functest_yaml.get("vping").get("ip_2")
 # GLANCE_IMAGE_NAME = functest_yaml.get("general"). \
 #    get("openstack").get("image_name")
 GLANCE_IMAGE_NAME = "functest-vping"
@@ -97,16 +95,19 @@ FLAVOR = functest_yaml.get("vping").get("vm_flavor")
 
 NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("vping"). \
     get("vping_private_net_name")
-
 NEUTRON_PRIVATE_SUBNET_NAME = functest_yaml.get("vping"). \
     get("vping_private_subnet_name")
-
 NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("vping"). \
     get("vping_private_subnet_cidr")
-
 NEUTRON_ROUTER_NAME = functest_yaml.get("vping"). \
     get("vping_router_name")
+SECGROUP_NAME = functest_yaml.get("vping"). \
+    get("vping_sg_name")
 
+SECGROUP_NAME = functest_yaml.get("vping"). \
+    get("vping_sg_name")
+SECGROUP_DESCR = functest_yaml.get("vping"). \
+    get("vping_sg_descr")
 
 def pMsg(value):
 
@@ -155,46 +156,92 @@ def waitVmDeleted(nova, vm):
 
 def create_private_neutron_net(neutron):
 
-    neutron.format = 'json'
-    logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
-    network_id = functest_utils. \
-        create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
+    # Check if the network already exists
+    network_id = functest_utils.get_network_id(neutron,NEUTRON_PRIVATE_NET_NAME)
+    subnet_id = functest_utils.get_subnet_id(neutron,NEUTRON_PRIVATE_SUBNET_NAME)
+    router_id = functest_utils.get_router_id(neutron,NEUTRON_ROUTER_NAME)
 
-    if not network_id:
-        return False
-    logger.debug("Network '%s' created successfully" % network_id)
-    logger.debug('Creating Subnet....')
-    subnet_id = functest_utils. \
-        create_neutron_subnet(neutron,
-                              NEUTRON_PRIVATE_SUBNET_NAME,
-                              NEUTRON_PRIVATE_SUBNET_CIDR,
-                              network_id)
-    if not subnet_id:
-        return False
-    logger.debug("Subnet '%s' created successfully" % subnet_id)
-    logger.debug('Creating Router...')
-    router_id = functest_utils. \
-        create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
+    if network_id != '' and subnet_id != ''  and router_id != '' :
+        logger.info("Using existing network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
+    else:
+        neutron.format = 'json'
+        logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
+        network_id = functest_utils. \
+            create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
 
-    if not router_id:
-        return False
+        if not network_id:
+            return False
+        logger.debug("Network '%s' created successfully" % network_id)
+        logger.debug('Creating Subnet....')
+        subnet_id = functest_utils. \
+            create_neutron_subnet(neutron,
+                                  NEUTRON_PRIVATE_SUBNET_NAME,
+                                  NEUTRON_PRIVATE_SUBNET_CIDR,
+                                  network_id)
+        if not subnet_id:
+            return False
+        logger.debug("Subnet '%s' created successfully" % subnet_id)
+        logger.debug('Creating Router...')
+        router_id = functest_utils. \
+            create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
 
-    logger.debug("Router '%s' created successfully" % router_id)
-    logger.debug('Adding router to subnet...')
+        if not router_id:
+            return False
 
-    result = functest_utils.add_interface_router(neutron, router_id, subnet_id)
+        logger.debug("Router '%s' created successfully" % router_id)
+        logger.debug('Adding router to subnet...')
 
-    if not result:
-        return False
+        if not functest_utils.add_interface_router(neutron, router_id, subnet_id):
+            return False
+        logger.debug("Interface added successfully.")
 
-    logger.debug("Interface added successfully.")
+        logger.debug('Adding gateway to router...')
+        if not functest_utils.add_gateway_router(neutron, router_id):
+            return False
+        logger.debug("Gateway added successfully.")
+
     network_dic = {'net_id': network_id,
                    'subnet_id': subnet_id,
                    'router_id': router_id}
     return network_dic
 
+def create_security_group(neutron_client):
+    sg_id = functest_utils.get_security_group_id(neutron_client, SECGROUP_NAME)
+    if sg_id != '':
+        logger.info("Using existing security group '%s'..." % SECGROUP_NAME)
+    else:
+        logger.info("Creating security group  '%s'..." % SECGROUP_NAME)
+        SECGROUP = functest_utils.create_security_group(neutron_client,
+                                              SECGROUP_NAME,
+                                              SECGROUP_DESCR)
+        if not SECGROUP:
+            logger.error("Failed to create the security group...")
+            return False
 
-def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2):
+        sg_id = SECGROUP['id']
+
+        logger.debug("Security group '%s' with ID=%s created successfully." %\
+                      (SECGROUP['name'], sg_id))
+
+        logger.debug("Adding ICMP rules in security group '%s'..." % SECGROUP_NAME)
+        if not functest_utils.create_secgroup_rule(neutron_client, sg_id, \
+                        'ingress', 'icmp'):
+            logger.error("Failed to create the security group rule...")
+            return False
+
+        logger.debug("Adding SSH rules in security group '%s'..." % SECGROUP_NAME)
+        if not functest_utils.create_secgroup_rule(neutron_client, sg_id, \
+                        'ingress', 'tcp', '22', '22'):
+            logger.error("Failed to create the security group rule...")
+            return False
+
+        if not functest_utils.create_secgroup_rule(neutron_client, sg_id, \
+                        'egress', 'tcp', '22', '22'):
+            logger.error("Failed to create the security group rule...")
+            return False
+    return sg_id
+
+def cleanup(nova, neutron, image_id, network_dic):
     if args.noclean:
         logger.debug("The OpenStack resources are not deleted.")
         return True
@@ -236,16 +283,6 @@ def cleanup(nova, neutron, image_id, network_dic, port_id1, port_id2):
     net_id = network_dic["net_id"]
     subnet_id = network_dic["subnet_id"]
     router_id = network_dic["router_id"]
-
-    if not functest_utils.delete_neutron_port(neutron, port_id1):
-        logger.error("Unable to remove port '%s'" % port_id1)
-        return False
-    logger.debug("Port '%s' removed successfully" % port_id1)
-
-    if not functest_utils.delete_neutron_port(neutron, port_id2):
-        logger.error("Unable to remove port '%s'" % port_id2)
-        return False
-    logger.debug("Port '%s' removed successfully" % port_id2)
 
     if not functest_utils.remove_interface_router(neutron, router_id,
                                                   subnet_id):
@@ -309,34 +346,32 @@ def main():
     image = None
     flavor = None
 
-    logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
-                                                       GLANCE_IMAGE_PATH))
-    image_id = functest_utils.create_glance_image(glance_client,
-                                                  GLANCE_IMAGE_NAME,
-                                                  GLANCE_IMAGE_PATH)
-    if not image_id:
-        logger.error("Failed to create a Glance image...")
-        exit(-1)
-
     # Check if the given image exists
-    image = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
-    if image == '':
-        logger.error("ERROR: Glance image '%s' not found." % GLANCE_IMAGE_NAME)
-        logger.info("Available images are: ")
-        pMsg(nova_client.images.list())
-        exit(-1)
+    image_id = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+    if image_id != '':
+        logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
+    else:
+        logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
+                                                       GLANCE_IMAGE_PATH))
+        image_id = functest_utils.create_glance_image(glance_client,
+                                                      GLANCE_IMAGE_NAME,
+                                                      GLANCE_IMAGE_PATH)
+        if not image_id:
+            logger.error("Failed to create a Glance image...")
+            return(EXIT_CODE)
+        logger.debug("Image '%s' with ID=%s created successfully." %\
+                  (GLANCE_IMAGE_NAME, image_id))
 
     network_dic = create_private_neutron_net(neutron_client)
-
     if not network_dic:
         logger.error(
             "There has been a problem when creating the neutron network")
-        exit(-1)
-
+        return(EXIT_CODE)
     network_id = network_dic["net_id"]
 
-    # Check if the given flavor exists
+    sg_id = create_security_group(neutron_client)
 
+    # Check if the given flavor exists
     try:
         flavor = nova_client.flavors.find(name=FLAVOR)
         logger.info("Flavor found '%s'" % FLAVOR)
@@ -347,7 +382,6 @@ def main():
         exit(-1)
 
     # Deleting instances if they exist
-
     servers = nova_client.servers.list()
     for server in servers:
         if server.name == NAME_VM_1 or server.name == NAME_VM_2:
@@ -366,15 +400,7 @@ def main():
             '%Y-%m-%d %H:%M:%S')))
 
     # create VM
-    logger.debug("Creating port 'vping-port-1' with IP %s..." % IP_1)
-    port_id1 = functest_utils.create_neutron_port(neutron_client,
-                                                  "vping-port-1", network_id,
-                                                  IP_1)
-    if not port_id1:
-        logger.error("Unable to create port.")
-        exit(-1)
-
-    logger.info("Creating instance '%s' with IP %s..." % (NAME_VM_1, IP_1))
+    logger.info("Creating instance '%s' with IP %s..." % NAME_VM_1)
     logger.debug(
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
         "network=%s \n" % (NAME_VM_1, flavor, image, network_id))
@@ -382,8 +408,7 @@ def main():
         name=NAME_VM_1,
         flavor=flavor,
         image=image,
-        # nics = [{"net-id": network_id, "v4-fixed-ip": IP_1}]
-        nics=[{"port-id": port_id1}]
+        nics=[{"net-id": network_id}]
     )
 
     # wait until VM status is active
@@ -391,19 +416,13 @@ def main():
 
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_1, functest_utils.get_instance_status(nova_client, vm1)))
-        cleanup(nova_client, neutron_client, image_id, network_dic, port_id1)
+        cleanup(nova_client, neutron_client, image_id, network_dic)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
 
     # Retrieve IP of first VM
-    # logger.debug("Fetching IP...")
-    # server = functest_utils.get_instance_by_name(nova_client, NAME_VM_1)
-    # theoretically there is only one IP address so we take the
-    # first element of the table
-    # Dangerous! To be improved!
-    # test_ip = server.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
-    test_ip = IP_1
+    test_ip = vm1.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
     logger.debug("Instance '%s' got %s" % (NAME_VM_1, test_ip))
 
     # boot VM 2
@@ -416,15 +435,7 @@ def main():
         "break\n else\n  echo 'vPing KO'\n fi\n sleep 1\ndone\n" % test_ip
 
     # create VM
-    logger.debug("Creating port 'vping-port-2' with IP %s..." % IP_2)
-    port_id2 = functest_utils.create_neutron_port(neutron_client,
-                                                  "vping-port-2", network_id,
-                                                  IP_2)
-
-    if not port_id2:
-        logger.error("Unable to create port.")
-        exit(-1)
-    logger.info("Creating instance '%s' with IP %s..." % (NAME_VM_2, IP_2))
+    logger.info("Creating instance '%s'..." % NAME_VM_2)
     logger.debug(
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n network=%s "
         "\n userdata= \n%s" % (
@@ -433,7 +444,7 @@ def main():
         name=NAME_VM_2,
         flavor=flavor,
         image=image,
-        nics=[{"port-id": port_id2}],
+        nics=[{"net-id": network_id}],
         userdata=u
     )
 
@@ -479,7 +490,7 @@ def main():
                             " Waiting a bit...")
                 metadata_tries += 1
             else:
-                logger.debug("Pinging %s. Waiting for response..." % IP_2)
+                logger.debug("Pinging %s. Waiting for response..." % test_ip)
         sec += 1
 
     test_status = "NOK"
@@ -493,8 +504,7 @@ def main():
         duration = 0
         logger.error("vPing FAILED")
 
-    cleanup(nova_client, neutron_client, image_id, network_dic,
-            port_id1, port_id2)
+    cleanup(nova_client, neutron_client, image_id, network_dic)
 
     if args.report:
         push_results(start_time_ts, duration, test_status)
