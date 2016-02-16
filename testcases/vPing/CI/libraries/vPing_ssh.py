@@ -98,18 +98,18 @@ FLAVOR = functest_yaml.get("vping").get("vm_flavor")
 
 NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("vping"). \
     get("vping_private_net_name")
-
 NEUTRON_PRIVATE_SUBNET_NAME = functest_yaml.get("vping"). \
     get("vping_private_subnet_name")
-
 NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("vping"). \
     get("vping_private_subnet_cidr")
-
 NEUTRON_ROUTER_NAME = functest_yaml.get("vping"). \
     get("vping_router_name")
 
-SECGROUP_NAME = "vPing-sg"
-SECGROUP_DESCR = "Security group for vPing test case"
+SECGROUP_NAME = functest_yaml.get("vping"). \
+    get("vping_sg_name")
+SECGROUP_DESCR = functest_yaml.get("vping"). \
+    get("vping_sg_descr")
+
 
 def pMsg(value):
 
@@ -372,8 +372,6 @@ def main():
 
 
     network_dic = create_private_neutron_net(neutron_client)
-
-
     if not network_dic:
         logger.error(
             "There has been a problem when creating the neutron network")
@@ -394,7 +392,6 @@ def main():
         return(EXIT_CODE)
 
     # Deleting instances if they exist
-
     servers = nova_client.servers.list()
     for server in servers:
         if server.name == NAME_VM_1 or server.name == NAME_VM_2:
