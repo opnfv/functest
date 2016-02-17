@@ -61,6 +61,9 @@ RUN mkdir -p ${repos_dir}
 RUN mkdir -p /root/.ssh
 RUN chmod 700 /root/.ssh
 
+RUN echo -e "set nocompatible\nset backspace=2" >> /home/opnfv/.vimrc
+echo "alias ll='ls -lh'" >> /home/opnfv/.bash_aliases
+
 RUN git config --global http.sslVerify false
 RUN git clone -b stable/brahmaputra https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
 RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
@@ -80,3 +83,5 @@ ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img /home/op
 
 RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 RUN curl -L https://get.rvm.io | bash -s stable
+
+
