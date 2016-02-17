@@ -243,7 +243,7 @@ def create_security_group(neutron_client):
             return False
     return sg_id
 
-def cleanup(nova, neutron, image_id, network_dic, sg_id):
+def cleanup(nova, neutron, image_id, network_dic, sg_id, floatingip):
     if args.noclean:
         logger.debug("The OpenStack resources are not deleted.")
         return True
@@ -319,7 +319,14 @@ def cleanup(nova, neutron, image_id, network_dic, sg_id):
     logger.debug(
         "Security group '%s' deleted successfully" % sg_id)
 
+    logger.debug("Releasing floating ip '%s'..." % floatingip['fip_addr'])
+    if not functest_utils.delete_floating_ip(nova, floatingip['fip_id']):
+        logger.error("Unable to delete floatingip '%s'" % floatingip['fip_addr'])
+        return False
+    logger.debug(
+        "Floating IP '%s' deleted successfully" % floatingip['fip_addr'])
     return True
+
 
 def push_results(start_time_ts, duration, test_status):
     try:
@@ -384,7 +391,7 @@ def main():
     # Check if the given flavor exists
     try:
         flavor = nova_client.flavors.find(name=FLAVOR)
-        logger.info("Using existing Flavor '%s'" % FLAVOR)
+        logger.info("Using existing Flavor '%s'..." % FLAVOR)
     except:
         logger.error("Flavor '%s' not found." % FLAVOR)
         logger.info("Available flavors are: ")
@@ -400,17 +407,12 @@ def main():
 
 
     # boot VM 1
-    # basic boot
-    # tune (e.g. flavor, images, network) to your specific
-    # openstack configuration here
-    # we consider start time at VM1 booting
     start_time_ts = time.time()
     end_time_ts = start_time_ts
     logger.info("vPing Start Time:'%s'" % (
         datetime.datetime.fromtimestamp(start_time_ts).strftime(
             '%Y-%m-%d %H:%M:%S')))
 
-    # create VM
     logger.info("Creating instance '%s'..." % NAME_VM_1)
     logger.debug(
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
@@ -426,31 +428,19 @@ def main():
     if not waitVmActive(nova_client, vm1):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_1, functest_utils.get_instance_status(nova_client, vm1)))
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id)
+        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatingip)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
 
     # Retrieve IP of first VM
-    # logger.debug("Fetching IP...")
-    # server = functest_utils.get_instance_by_name(nova_client, NAME_VM_1)
-    # theoretically there is only one IP address so we take the
-    # first element of the table
-    # Dangerous! To be improved!
     test_ip = vm1.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
-    logger.debug("Instance '%s' got %s" % (NAME_VM_1, test_ip))
+    logger.debug("Instance '%s' got private ip '%s'." % (NAME_VM_1, test_ip))
 
     logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_1, SECGROUP_NAME))
     functest_utils.add_secgroup_to_instance(nova_client, vm1.id, sg_id)
 
     # boot VM 2
-    # we will boot then execute a ping script with cloud-init
-    # the long chain corresponds to the ping procedure converted with base 64
-    # tune (e.g. flavor, images, network) to your specific openstack
-    #  configuration here
-
-
-    # create VM
     logger.info("Creating instance '%s'..." % NAME_VM_2)
     logger.debug(
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
@@ -465,7 +455,7 @@ def main():
     if not waitVmActive(nova_client, vm2):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_2, functest_utils.get_instance_status(nova_client, vm2)))
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id)
+        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_2)
@@ -474,17 +464,20 @@ def main():
     functest_utils.add_secgroup_to_instance(nova_client, vm2.id, sg_id)
 
     logger.info("Creating floating IP for VM '%s'..." % NAME_VM_2)
-    floatip = functest_utils.create_floating_ip(neutron_client)
+    floatip_dic = functest_utils.create_floating_ip(neutron_client)
+    floatip = floatip_dic['fip_addr']
+    floatip_id = floatip_dic['fip_id']
+
     if floatip == None:
         logger.error("Cannot create floating IP.")
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id)
+        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
         return (EXIT_CODE)
     logger.info("Floating IP created: '%s'" % floatip)
 
     logger.info("Associating floating ip: '%s' to VM '%s' " % (floatip, NAME_VM_2))
     if not functest_utils.add_floating_ip(nova_client, vm2.id, floatip):
         logger.error("Cannot associate floating IP to VM.")
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id)
+        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
         return (EXIT_CODE)
 
     logger.info("Trying to establish SSH connection to %s..." % floatip)
@@ -494,20 +487,32 @@ def main():
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
     timeout = 50
+    nolease = False
+    discover_count = 0
     while timeout > 0:
         try:
             ssh.connect(floatip, username=username, password=password, timeout=2)
             logger.debug("SSH connection established to %s." % floatip)
             break
         except Exception, e:
-            #print e
             logger.debug("Waiting for %s..." % floatip)
             time.sleep(6)
             timeout -= 1
+        console_log = vm2.get_console_output()
+        if "Sending discover" in console_log and \
+            discover_count % 4 == 0 and not nolease :
+            logger.debug("Console-log '%s': Sending discover..." % NAME_VM_2)
+        elif "No lease, failing" in console_log and\
+                "network failed" in console_log and not nolease:
+                nolease = True
+                logger.info("The instance failed to get the ip from "\
+                            "the DHCP agent. Console-log: 'No lease, failing'. "\
+                            "The test will probably timeout...")
+        discover_count += 1
 
     if timeout == 0: # 300 sec timeout (5 min)
         logger.error("Cannot establish connection to IP '%s'. Aborting" % floatip)
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id)
+        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
         return (EXIT_CODE)
 
     scp = SCPClient(ssh.get_transport())
@@ -532,16 +537,10 @@ def main():
     flag = False
     while True:
         time.sleep(1)
-        # we do the SCP every time in the loop because while testing, I observed
-        # that for some strange reason, the cirros VM was deleting the file if
-        # do the scp only once
         (stdin, stdout, stderr) = ssh.exec_command(cmd)
         output = stdout.readlines()
-        #for line in output:
-        #    print line
 
-        # print "--"+console_log
-        # report if the test is failed
+
         for line in output:
             if "vPing OK" in line:
                 logger.info("vPing detected!")
@@ -562,7 +561,7 @@ def main():
         logger.debug("Pinging %s. Waiting for response..." % test_ip)
         sec += 1
 
-    cleanup(nova_client, neutron_client, image_id, network_dic, sg_id)
+    cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
 
     test_status = "NOK"
     if EXIT_CODE == 0:
