@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_51759a96",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-17T15:41:56Z",
+      "side": 1,
+      "message": "However, the DEL key still doesn\u0027t behave good. Instead of deleting, it changes the case of the letter..",
+      "revId": "f254cb179fc34e1514eefbcb99217fef2722b179",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
