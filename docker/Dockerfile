@@ -31,6 +31,8 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 ENV HOME /home/opnfv
 ENV repos_dir /home/opnfv/repos
 ENV creds /home/opnfv/functest/conf/openstack.creds
+ENV TERM xterm
+ENV COLORTERM gnome-terminal
 WORKDIR /home/opnfv
 
 # Packaged dependencies
@@ -80,3 +82,7 @@ ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img /home/op
 
 RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 RUN curl -L https://get.rvm.io | bash -s stable
+
+RUN echo -e "set nocompatible\nset backspace=2" >> /home/opnfv/.vimrc
+RUN echo "set nocompatible" >> /home/opnfv/.exrc
+RUN echo "alias ll='ls -lh'" >> /home/opnfv/.bash_aliases
