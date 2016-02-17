@@ -146,11 +146,12 @@ def create_floating_ip(neutron_client):
     props = {'floating_network_id': extnet_id}
     try:
         ip_json = neutron_client.create_floatingip({'floatingip': props})
-        floating_ip = ip_json['floatingip']['floating_ip_address']
+        fip_addr = ip_json['floatingip']['floating_ip_address']
+        fip_id = ip_json['floatingip']['id']
     except Exception, e:
         print "Error [create_floating_ip(neutron_client)]:", e
         return None
-    return floating_ip
+    return {'fip_addr': fip_addr, 'fip_id': fip_id}
 
 
 def add_floating_ip(nova_client, server_id, floatingip_id):
