@@ -502,8 +502,7 @@ def main():
         if "Sending discover" in console_log and \
             discover_count % 4 == 0 and not nolease :
             logger.debug("Console-log '%s': Sending discover..." % NAME_VM_2)
-        elif "No lease, failing" in console_log and\
-                "network failed" in console_log and not nolease:
+        elif "No lease, failing" in console_log and not nolease:
                 nolease = True
                 logger.debug("Console-log '%s': No lease, failing..." % NAME_VM_2)
                 logger.info("The instance failed to get an IP from "\
