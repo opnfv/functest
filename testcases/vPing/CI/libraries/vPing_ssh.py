@@ -19,6 +19,7 @@ import logging
 import os
 import paramiko
 import pprint
+import re
 import subprocess
 import sys
 import time
@@ -488,7 +489,9 @@ def main():
 
     timeout = 50
     nolease = False
+    got_ip = False
     discover_count = 0
+    cidr_first_octet = NEUTRON_PRIVATE_SUBNET_CIDR.split('.')[0]
     while timeout > 0:
         try:
             ssh.connect(floatip, username=username, password=password, timeout=2)
@@ -498,16 +501,27 @@ def main():
             logger.debug("Waiting for %s..." % floatip)
             time.sleep(6)
             timeout -= 1
+
         console_log = vm2.get_console_output()
-        if "Sending discover" in console_log and \
-            discover_count % 4 == 0 and not nolease :
+
+        # print each "Sending discover" captured on the console log
+        if len(re.findall("Sending discover",console_log)) > discover_count and not got_ip:
+            discover_count += 1
             logger.debug("Console-log '%s': Sending discover..." % NAME_VM_2)
-        elif "No lease, failing" in console_log and not nolease:
+
+        # check if eth0 got an ip, the line looks like this: "inet addr:192.168."....
+        # if the dhcp agent fails to assing ip, this line will not appear
+        if "inet addr:"+cidr_first_octet in console_log and not got_ip:
+            got_ip = True
+            logger.debug("The instance '%s' succeeded to get the IP from the dhcp agent.")
+
+        # if dhcp doesn't work, it shows "No lease, failing". The test will fail...
+        if "No lease, failing" in console_log and not nolease and not got_ip:
                 nolease = True
                 logger.debug("Console-log '%s': No lease, failing..." % NAME_VM_2)
                 logger.info("The instance failed to get an IP from "\
                             "the DHCP agent. The test will probably timeout...")
-        discover_count += 1
+
 
     if timeout == 0: # 300 sec timeout (5 min)
         logger.error("Cannot establish connection to IP '%s'. Aborting" % floatip)
