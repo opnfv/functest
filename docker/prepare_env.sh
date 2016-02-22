@@ -174,6 +174,18 @@ if [ $offline == false ]; then
         git reset --hard ${OVNO_COMMIT}
     fi
 
+    info "Updating DOCTOR repository...."
+    cd ${DOCTOR_REPO_DIR}
+    if [ ${DOCTOR_BRANCH} != "master" ]; then
+        info "DOCTOR repo: checkout ${DOCTOR} branch..."
+        git checkout ${DOCTOR_BRANCH}
+    fi
+    info "DOCTOR repo: pulling to latest..."
+    git pull
+    if [ ${DOCTOR_COMMIT} != "latest" ]; then
+        info "DOCTOR repo: given commit is ${DOCTOR_COMMIT}. Reseting..."
+        git reset --hard ${DOCTOR_COMMIT}
+    fi
 fi
 
 # We do this regardless if its online or offline mode.

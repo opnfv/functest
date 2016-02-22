@@ -29,8 +29,6 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-cd $repos_dir/functest
-git pull
 
 mkdir -p /home/opnfv/functest/conf
 config_file=/home/opnfv/functest/conf/config_functest.yaml
@@ -54,6 +52,8 @@ BGPVPN_REPO_DIR=$(cat $config_file | grep -w dir_repo_bgpvpn | awk 'END {print $
 ONOS_REPO_DIR=$(cat $config_file | grep -w dir_repo_onos | awk 'END {print $NF}')
 PROMISE_REPO_DIR=$(cat $config_file | grep -w dir_repo_promise | awk 'END {print $NF}')
 OVNO_REPO_DIR=$(cat $config_file | grep -w dir_repo_ovno | awk 'END {print $NF}')
+DOCTOR_REPO_DIR=$(cat $config_file | grep -w dir_repo_doctor | awk 'END {print $NF}')
+
 
 FUNCTEST_DIR=$(cat $config_file | grep -w dir_functest | awk 'END {print $NF}')
 FUNCTEST_RESULTS_DIR=$(cat $config_file | grep -w dir_results | awk 'END {print $NF}')
@@ -76,7 +76,8 @@ PROMISE_BRANCH=$(cat $config_file | grep -w promise_branch | awk 'END {print $NF
 PROMISE_COMMIT=$(cat $config_file | grep -w promise_commit | awk 'END {print $NF}')
 OVNO_BRANCH=$(cat $config_file | grep -w ovno_branch | awk 'END {print $NF}')
 OVNO_COMMIT=$(cat $config_file | grep -w ovno_commit | awk 'END {print $NF}')
-
+DOCTOR_BRANCH=$(cat $config_file | grep -w doctor_branch | awk 'END {print $NF}')
+DOCTOR_COMMIT=$(cat $config_file | grep -w doctor_commit | awk 'END {print $NF}')
 
 echo "_____Parsed needed data from ${config_file}:"
 echo "####### Directories #######"
@@ -103,6 +104,8 @@ echo "PROMISE_BRANCH=${PROMISE_BRANCH}"
 echo "PROMISE_COMMIT=${PROMISE_COMMIT}"
 echo "OVNO_BRANCH=${OVNO_BRANCH}"
 echo "OVNO_COMMIT=${OVNO_COMMIT}"
+echo "DOCTOR_BRANCH=${DOCTOR_BRANCH}"
+echo "DOCTOR_COMMIT=${DOCTOR_COMMIT}"
 echo "############################"
 
 info ()  {

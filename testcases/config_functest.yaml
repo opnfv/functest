@@ -43,6 +43,8 @@ general:
         promise_commit:   latest
         ovno_branch:   master
         ovno_commit:   latest
+        doctor_branch: stable/brahmaputra
+        doctor_commit: latest
 
     openstack:
         image_name: functest-img
