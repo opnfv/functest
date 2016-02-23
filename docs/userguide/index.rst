@@ -17,7 +17,7 @@ A presentation has been created for the first OPNFV Summit `[4]`_.
 
 It is assumed that Functest container has been properly installed `[1]`_.
 
-.. include:: ./testusage.rst
+.. include:: ./introduction.rst
 
 The different scenarios are described in the section hereafter.
 

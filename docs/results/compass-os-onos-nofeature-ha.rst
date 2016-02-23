@@ -30,10 +30,10 @@ Running test case: vping_ssh
   2016-02-12 19:05:44,008 - vPing_ssh- DEBUG - Creating port 'vping-port-1' with IP 192.168.130.30...
   2016-02-12 19:05:44,510 - vPing_ssh- INFO - Creating instance 'opnfv-vping-1' with IP 192.168.130.30...
   2016-02-12 19:05:44,510 - vPing_ssh- DEBUG - Configuration:
-   name=opnfv-vping-1 
-   flavor=<Flavor: m1.small> 
-   image=60da5df9-daa1-47de-816f-b9886ab67d71 
-   network=d45d7f71-10bf-45b1-9d86-94425f8fe21c 
+   name=opnfv-vping-1
+   flavor=<Flavor: m1.small>
+   image=60da5df9-daa1-47de-816f-b9886ab67d71
+   network=d45d7f71-10bf-45b1-9d86-94425f8fe21c
 
   2016-02-12 19:05:46,752 - vPing_ssh- DEBUG - Status: BUILD
   2016-02-12 19:05:49,993 - vPing_ssh- DEBUG - Status: BUILD
@@ -44,10 +44,10 @@ Running test case: vping_ssh
   2016-02-12 19:05:53,924 - vPing_ssh- DEBUG - Creating port 'vping-port-2' with IP 192.168.130.40...
   2016-02-12 19:05:54,241 - vPing_ssh- INFO - Creating instance 'opnfv-vping-2' with IP 192.168.130.40...
   2016-02-12 19:05:54,241 - vPing_ssh- DEBUG - Configuration:
-   name=opnfv-vping-2 
-   flavor=<Flavor: m1.small> 
-   image=60da5df9-daa1-47de-816f-b9886ab67d71 
-   network=d45d7f71-10bf-45b1-9d86-94425f8fe21c 
+   name=opnfv-vping-2
+   flavor=<Flavor: m1.small>
+   image=60da5df9-daa1-47de-816f-b9886ab67d71
+   network=d45d7f71-10bf-45b1-9d86-94425f8fe21c
 
   2016-02-12 19:05:56,816 - vPing_ssh- DEBUG - Status: BUILD
   2016-02-12 19:06:00,048 - vPing_ssh- DEBUG - Status: ACTIVE
@@ -55,7 +55,7 @@ Running test case: vping_ssh
   2016-02-12 19:06:00,048 - vPing_ssh- INFO - Adding 'opnfv-vping-2' to security group 'vPing-sg'...
   2016-02-12 19:06:00,391 - vPing_ssh- INFO - Creating floating IP for VM 'opnfv-vping-2'...
   2016-02-12 19:06:00,625 - vPing_ssh- INFO - Floating IP created: '192.168.10.102'
-  2016-02-12 19:06:00,625 - vPing_ssh- INFO - Associating floating ip: '192.168.10.102' to VM 'opnfv-vping-2' 
+  2016-02-12 19:06:00,625 - vPing_ssh- INFO - Associating floating ip: '192.168.10.102' to VM 'opnfv-vping-2'
   2016-02-12 19:06:01,848 - vPing_ssh- INFO - Trying to establish SSH connection to 192.168.10.102...
   2016-02-12 19:06:01,850 - vPing_ssh- DEBUG - Waiting for 192.168.10.102...
   2016-02-12 19:06:07,856 - vPing_ssh- DEBUG - Waiting for 192.168.10.102...
@@ -391,72 +391,72 @@ Running test case: onos
   ------------------------------ { Script And Files }  ------------------------------
                                   +----------------+
 
-  	Script Log File : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNB_12_Feb_2016_19_28_53/FUNCvirNetNB_12_Feb_2016_19_28_53.log
-  	Report Log File : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNB_12_Feb_2016_19_28_53/FUNCvirNetNB_12_Feb_2016_19_28_53.rpt
-  	ONOSrest Session Log : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNB_12_Feb_2016_19_28_53/ONOSrest.session
-  	Test Script :/home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNB.py
-  	Test Params : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNB.params
-  	Topology : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNB.topo
+  Script Log File : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNB_12_Feb_2016_19_28_53/FUNCvirNetNB_12_Feb_2016_19_28_53.log
+  Report Log File : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNB_12_Feb_2016_19_28_53/FUNCvirNetNB_12_Feb_2016_19_28_53.rpt
+  ONOSrest Session Log : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNB_12_Feb_2016_19_28_53/ONOSrest.session
+  Test Script :/home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNB.py
+  Test Params : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNB.params
+  Topology : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNB.topo
                                 +------------------+
   ---------------------------  { Script Exec Params }  ---------------------------
                                 +------------------+
 
-  	'MININET': 
-  	'switch': '7'
-  	 'links': '20'
+  'MININET':
+  'switch': '7'
+   'links': '20'
 
-  	 'GIT': 
-  	'pull': 'False'
-  	 'branch': 'master'
+   'GIT':
+   'pull': 'False'
+   'branch': 'master'
 
-  	 'HTTP': 
-  	'path': '/onos/vtn/'
-  	 'port': '8181'
+   'HTTP':
+   'path': '/onos/vtn/'
+   'port': '8181'
 
-  	 'CTRL': 
-  	'ip1': 'OC1'
-  	 'port1': '6633'
+   'CTRL':
+   'ip1': 'OC1'
+   'port1': '6633'
 
-  	 'testcases': '2
-  	3
-  	4
-  	5
-  	6
-  	7
-  	8
-  	9
-  	10'
-  	 'SLEEP': 
-  	'startup': '15'
+   'testcases': '2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  10'
+   'SLEEP':
+   'startup': '15'
 
-  	 'ENV': 
-  	'cellApps': 'drivers
-  	openflow
-  	proxyarp
-  	mobility'
-  	 'cellName': 'singlenode'
+   'ENV':
+  'cellApps': 'drivers
+  openflow
+  proxyarp
+  mobility'
+   'cellName': 'singlenode'
 
                                  +---------------+
   ----------------------------- { Components Used }  -----------------------------
                                  +---------------+
-  	ONOSrest
+  ONOSrest
 
                                 +--------+
   ---------------------------- { Topology }  ----------------------------
                                 +--------+
 
-  	'ONOSrest': 
-  	'connect_order': '4'
-  	 'host': 'OC1'
-  	 'user': 'root'
-  	 'COMPONENTS': ''
-  	 'password': 'r00tme'
-  	 'type': 'OnosRestDriver'
+  'ONOSrest':
+  'connect_order': '4'
+   'host': 'OC1'
+   'user': 'root'
+   'COMPONENTS': ''
+   'password': 'r00tme'
+   'type': 'OnosRestDriver'
 
   ------------------------------------------------------------
 
   ******************************
-   CASE INIT 
+   CASE INIT
   ******************************
 
   ['ONOSrest']
@@ -472,7 +472,7 @@ Running test case: onos
   [2016-02-12 19:28:53.681088] [FUNCvirNetNB] [STEP]  2.4: Compare Send Id and Get Id
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -487,7 +487,7 @@ Running test case: onos
   [2016-02-12 19:28:53.709109] [FUNCvirNetNB] [STEP]  3.5: Compare Update data.
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -501,7 +501,7 @@ Running test case: onos
   [2016-02-12 19:28:53.731614] [FUNCvirNetNB] [STEP]  4.4: Get Data is NULL
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -516,7 +516,7 @@ Running test case: onos
   [2016-02-12 19:28:58.806663] [FUNCvirNetNB] [STEP]  5.5: Compare Post Subnet Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -533,7 +533,7 @@ Running test case: onos
   [2016-02-12 19:28:58.859965] [FUNCvirNetNB] [STEP]  6.7: Delete Subnet via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -548,7 +548,7 @@ Running test case: onos
   [2016-02-12 19:28:58.884603] [FUNCvirNetNB] [STEP]  7.5: Get Subnet Data is NULL
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -565,7 +565,7 @@ Running test case: onos
   [2016-02-12 19:29:03.958632] [FUNCvirNetNB] [STEP]  8.7: Clean Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -583,7 +583,7 @@ Running test case: onos
   [2016-02-12 19:29:03.993978] [FUNCvirNetNB] [STEP]  9.8: Clean Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -600,13 +600,13 @@ Running test case: onos
   [2016-02-12 19:29:09.043011] [FUNCvirNetNB] [STEP]  10.7: Clean Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   *************************************
-  	Test Execution Summary
+  Test Execution Summary
 
-  ************************************* 
+  *************************************
 
    Test Start           : 12 Feb 2016 19:28:53
    Test End             : 12 Feb 2016 19:29:09
@@ -626,74 +626,74 @@ Running test case: onos
   ------------------------------ { Script And Files }  ------------------------------
                                   +----------------+
 
-  	Script Log File : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNBL3_12_Feb_2016_19_29_09/FUNCvirNetNBL3_12_Feb_2016_19_29_09.log
-  	Report Log File : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNBL3_12_Feb_2016_19_29_09/FUNCvirNetNBL3_12_Feb_2016_19_29_09.rpt
-  	ONOSrest Session Log : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNBL3_12_Feb_2016_19_29_09/ONOSrest.session
-  	Test Script :/home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNBL3.py
-  	Test Params : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNBL3.params
-  	Topology : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNBL3.topo
+  Script Log File : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNBL3_12_Feb_2016_19_29_09/FUNCvirNetNBL3_12_Feb_2016_19_29_09.log
+  Report Log File : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNBL3_12_Feb_2016_19_29_09/FUNCvirNetNBL3_12_Feb_2016_19_29_09.rpt
+  ONOSrest Session Log : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/logs/FUNCvirNetNBL3_12_Feb_2016_19_29_09/ONOSrest.session
+  Test Script :/home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNBL3.py
+  Test Params : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNBL3.params
+  Topology : /home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest/TestON/Tests/FUNCvirNetNBL3.topo
                                 +------------------+
   ---------------------------  { Script Exec Params }  ---------------------------
                                 +------------------+
 
-  	'MININET': 
-  	'switch': '7'
-  	 'links': '20'
+  'MININET':
+  'switch': '7'
+   'links': '20'
 
-  	 'GIT': 
-  	'pull': 'False'
-  	 'branch': 'master'
+   'GIT':
+  'pull': 'False'
+   'branch': 'master'
 
-  	 'HTTP': 
-  	'path': '/onos/vtn/'
-  	 'port': '8181'
+   'HTTP':
+  'path': '/onos/vtn/'
+   'port': '8181'
 
-  	 'CTRL': 
-  	'ip1': 'OC1'
-  	 'port1': '6653'
+   'CTRL':
+  'ip1': 'OC1'
+   'port1': '6653'
 
-  	 'testcases': '2
-  	3
-  	4
-  	5
-  	6
-  	7
-  	8
-  	9
-  	10
-  	11
-  	12'
-  	 'SLEEP': 
-  	'startup': '15'
+   'testcases': '2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  10
+  11
+  12'
+   'SLEEP':
+  'startup': '15'
 
-  	 'ENV': 
-  	'cellApps': 'drivers
-  	openflow
-  	proxyarp
-  	mobility'
-  	 'cellName': 'singlenode'
+   'ENV':
+  'cellApps': 'drivers
+  openflow
+  proxyarp
+  mobility'
+   'cellName': 'singlenode'
 
                                  +---------------+
   ----------------------------- { Components Used }  -----------------------------
                                  +---------------+
-  	ONOSrest
+  ONOSrest
 
                                 +--------+
   ---------------------------- { Topology }  ----------------------------
                                 +--------+
 
-  	'ONOSrest': 
-  	'connect_order': '4'
-  	 'host': 'OC1'
-  	 'user': 'root'
-  	 'COMPONENTS': ''
-  	 'password': 'root'
-  	 'type': 'OnosRestDriver'
+  'ONOSrest':
+  'connect_order': '4'
+   'host': 'OC1'
+   'user': 'root'
+   'COMPONENTS': ''
+   'password': 'root'
+   'type': 'OnosRestDriver'
 
   ------------------------------------------------------------
 
   ******************************
-   CASE INIT 
+   CASE INIT
   ******************************
 
   ['ONOSrest']
@@ -709,7 +709,7 @@ Running test case: onos
   [2016-02-12 19:29:09.292011] [FUNCvirNetNBL3] [STEP]  2.4: Compare Post Router Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -725,7 +725,7 @@ Running test case: onos
   [2016-02-12 19:29:09.322160] [FUNCvirNetNBL3] [STEP]  3.6: Delete Router via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -740,7 +740,7 @@ Running test case: onos
   Verify the Router status
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -759,7 +759,7 @@ Running test case: onos
   [2016-02-12 19:29:14.402504] [FUNCvirNetNBL3] [STEP]  5.9: Clean Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -778,7 +778,7 @@ Running test case: onos
   [2016-02-12 19:29:19.470955] [FUNCvirNetNBL3] [STEP]  6.9: Clean Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -800,7 +800,7 @@ Running test case: onos
   [2016-02-12 19:29:19.554862] [FUNCvirNetNBL3] [STEP]  7.12: Clean Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -822,7 +822,7 @@ Running test case: onos
   [2016-02-12 19:29:19.616988] [FUNCvirNetNBL3] [STEP]  8.12: Clean Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -840,7 +840,7 @@ Running test case: onos
   [2016-02-12 19:29:24.671790] [FUNCvirNetNBL3] [STEP]  9.8: Clean Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -857,7 +857,7 @@ Running test case: onos
   [2016-02-12 19:29:24.719529] [FUNCvirNetNBL3] [STEP]  10.7: Clean Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -875,7 +875,7 @@ Running test case: onos
   [2016-02-12 19:29:24.756959] [FUNCvirNetNBL3] [STEP]  11.8: Clean Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   ******************************
@@ -893,13 +893,13 @@ Running test case: onos
   [2016-02-12 19:29:29.800513] [FUNCvirNetNBL3] [STEP]  12.8: Clean Data via HTTP
 
   *****************************
-   Result: Pass 
+   Result: Pass
   *****************************
 
   *************************************
-  	Test Execution Summary
+  Test Execution Summary
 
-  ************************************* 
+  *************************************
 
    Test Start           : 12 Feb 2016 19:29:09
    Test End             : 12 Feb 2016 19:29:29
@@ -928,8 +928,8 @@ Running test case: rally
   2016-02-12 19:29:36,257 - run_rally - DEBUG - Image 'functest-img' with ID '0c74bd9e-0ac2-4332-8e03-e00c266752ad' created succesfully .
   2016-02-12 19:29:36,257 - run_rally - INFO - Starting test scenario "authenticate" ...
   2016-02-12 19:29:36,257 - run_rally - DEBUG - Scenario fetched from : /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/opnfv-authenticate.yaml
-  2016-02-12 19:29:36,561 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['authenticate'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}" 
-  2016-02-12 19:30:03,978 - run_rally - INFO - 
+  2016-02-12 19:29:36,561 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['authenticate'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}"
+  2016-02-12 19:30:03,978 - run_rally - INFO -
    Preparing input task
    Task  12233c47-6a06-4a69-9fda-761eae3e8dbd: started
   Task 12233c47-6a06-4a69-9fda-761eae3e8dbd: finished
@@ -1020,8 +1020,8 @@ Running test case: rally
 
   2016-02-12 19:30:06,229 - run_rally - INFO - Starting test scenario "glance" ...
   2016-02-12 19:30:06,229 - run_rally - DEBUG - Scenario fetched from : /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/opnfv-glance.yaml
-  2016-02-12 19:30:06,294 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['glance'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}" 
-  2016-02-12 19:31:37,895 - run_rally - INFO - 
+  2016-02-12 19:30:06,294 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['glance'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}"
+  2016-02-12 19:31:37,895 - run_rally - INFO -
    Preparing input task
    Task  a6ff81f3-d30b-42ca-afc7-a782a1b0ab87: started
   Task a6ff81f3-d30b-42ca-afc7-a782a1b0ab87: finished
@@ -1087,8 +1087,8 @@ Running test case: rally
 
   2016-02-12 19:31:39,821 - run_rally - INFO - Starting test scenario "cinder" ...
   2016-02-12 19:31:39,821 - run_rally - DEBUG - Scenario fetched from : /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/opnfv-cinder.yaml
-  2016-02-12 19:31:40,044 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['cinder'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}" 
-  2016-02-12 19:48:49,804 - run_rally - INFO - 
+  2016-02-12 19:31:40,044 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['cinder'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}"
+  2016-02-12 19:48:49,804 - run_rally - INFO -
    Preparing input task
    Task  a9edf9cf-40a7-49be-8eb6-a24ec3b12338: started
   Task a9edf9cf-40a7-49be-8eb6-a24ec3b12338: finished
@@ -1340,8 +1340,8 @@ Running test case: rally
 
   2016-02-12 19:48:52,772 - run_rally - INFO - Starting test scenario "heat" ...
   2016-02-12 19:48:52,772 - run_rally - DEBUG - Scenario fetched from : /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/opnfv-heat.yaml
-  2016-02-12 19:48:52,982 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['heat'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}" 
-  2016-02-12 19:55:40,270 - run_rally - INFO - 
+  2016-02-12 19:48:52,982 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['heat'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}"
+  2016-02-12 19:55:40,270 - run_rally - INFO -
    Preparing input task
    Task  797423eb-9306-44f7-ac18-2f292a59a933: started
   Task 797423eb-9306-44f7-ac18-2f292a59a933: finished
@@ -1531,8 +1531,8 @@ Running test case: rally
 
   2016-02-12 19:55:43,178 - run_rally - INFO - Starting test scenario "keystone" ...
   2016-02-12 19:55:43,178 - run_rally - DEBUG - Scenario fetched from : /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/opnfv-keystone.yaml
-  2016-02-12 19:55:43,626 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['keystone'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}" 
-  2016-02-12 19:57:11,993 - run_rally - INFO - 
+  2016-02-12 19:55:43,626 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['keystone'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}"
+  2016-02-12 19:57:11,993 - run_rally - INFO -
    Preparing input task
    Task  57d9692e-4def-4ee3-9b86-bfff622dc8d6: started
   Task 57d9692e-4def-4ee3-9b86-bfff622dc8d6: finished
@@ -1697,8 +1697,8 @@ Running test case: rally
 
   2016-02-12 19:57:14,457 - run_rally - INFO - Starting test scenario "neutron" ...
   2016-02-12 19:57:14,457 - run_rally - DEBUG - Scenario fetched from : /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/opnfv-neutron.yaml
-  2016-02-12 19:57:14,836 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['neutron'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}" 
-  2016-02-12 20:02:28,457 - run_rally - INFO - 
+  2016-02-12 19:57:14,836 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['neutron'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}"
+  2016-02-12 20:02:28,457 - run_rally - INFO -
    Preparing input task
    Task  e48913d0-c413-4744-83ec-2b67e8f0ed62: started
   Task e48913d0-c413-4744-83ec-2b67e8f0ed62: finished
@@ -1876,8 +1876,8 @@ Running test case: rally
 
   2016-02-12 20:02:31,479 - run_rally - INFO - Starting test scenario "nova" ...
   2016-02-12 20:02:31,479 - run_rally - DEBUG - Scenario fetched from : /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/opnfv-nova.yaml
-  2016-02-12 20:02:31,983 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['nova'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}" 
-  2016-02-12 20:28:19,817 - run_rally - INFO - 
+  2016-02-12 20:02:31,983 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['nova'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}"
+  2016-02-12 20:28:19,817 - run_rally - INFO -
    Preparing input task
    Task  86ea3837-f2e0-40c9-94c4-4716ca177f60: started
   Task 86ea3837-f2e0-40c9-94c4-4716ca177f60: finished
@@ -2151,8 +2151,8 @@ Running test case: rally
 
   2016-02-12 20:28:22,769 - run_rally - INFO - Starting test scenario "quotas" ...
   2016-02-12 20:28:22,769 - run_rally - DEBUG - Scenario fetched from : /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/opnfv-quotas.yaml
-  2016-02-12 20:28:23,212 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['quotas'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}" 
-  2016-02-12 20:29:11,586 - run_rally - INFO - 
+  2016-02-12 20:28:23,212 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['quotas'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}"
+  2016-02-12 20:29:11,586 - run_rally - INFO -
    Preparing input task
    Task  41e42442-c6ae-405a-9194-f4fc4f499859: started
   Task 41e42442-c6ae-405a-9194-f4fc4f499859: finished
@@ -2229,8 +2229,8 @@ Running test case: rally
 
   2016-02-12 20:29:14,149 - run_rally - INFO - Starting test scenario "requests" ...
   2016-02-12 20:29:14,149 - run_rally - DEBUG - Scenario fetched from : /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/opnfv-requests.yaml
-  2016-02-12 20:29:14,227 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['requests'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}" 
-  2016-02-12 20:29:28,298 - run_rally - INFO - 
+  2016-02-12 20:29:14,227 - run_rally - DEBUG - running command line : rally task start --abort-on-sla-failure --task /home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/task.yaml --task-args "{'floating_network': 'ext-net', 'iterations': 10, 'tmpl_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/templates', 'netid': 'daf5424b-3efa-4514-8ece-af4597ba0ad2', 'service_list': ['requests'], 'concurrency': 4, 'tenants_amount': 3, 'image_name': 'functest-img', 'glance_image_location': '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img', 'flavor_name': 'm1.tiny', 'smoke': False, 'users_amount': 2, 'live_migration': False, 'sup_dir': '/home/opnfv/repos/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario/support'}"
+  2016-02-12 20:29:28,298 - run_rally - INFO -
    Preparing input task
    Task  69b780f0-daca-4fbe-b9d6-45abe7cd9985: started
   Task 69b780f0-daca-4fbe-b9d6-45abe7cd9985: finished
@@ -2267,7 +2267,7 @@ Running test case: rally
   2016-02-12 20:29:30,190 - run_rally - DEBUG - <Response [200]>
   2016-02-12 20:29:30,190 - run_rally - INFO - Test scenario: "requests" OK.
 
-  2016-02-12 20:29:30,191 - run_rally - INFO - 
+  2016-02-12 20:29:30,191 - run_rally - INFO -
 
                        Rally Summary Report
   +===================+============+===============+===========+
