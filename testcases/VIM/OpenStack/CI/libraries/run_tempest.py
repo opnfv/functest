@@ -217,7 +217,7 @@ def configure_tempest():
 
 
     # Copy tempest.conf to /home/opnfv/functest/results/tempest/
-    print shutil.copyfile(tempest_conf_file,TEMPEST_RESULTS_DIR+'/tempest.conf')
+    shutil.copyfile(tempest_conf_file,TEMPEST_RESULTS_DIR+'/tempest.conf')
     return True
 
 
