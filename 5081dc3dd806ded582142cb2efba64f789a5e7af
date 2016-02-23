@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_f7af082a",
+        "filename": "docs/results/fuel-os-nosdn-nofeature-ha.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-02-23T17:06:18Z",
+      "side": 1,
+      "message": "not compass",
+      "range": {
+        "startLine": 8,
+        "startChar": 51,
+        "endLine": 8,
+        "endChar": 58
+      },
+      "revId": "5081dc3dd806ded582142cb2efba64f789a5e7af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_37b6c08b",
+        "filename": "docs/results/fuel-os-nosdn-nofeature-ha.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-02-23T17:06:18Z",
+      "side": 1,
+      "message": "we shoudl document it in troubleshooting section",
+      "range": {
+        "startLine": 345,
+        "startChar": 11,
+        "endLine": 345,
+        "endChar": 16
+      },
+      "revId": "5081dc3dd806ded582142cb2efba64f789a5e7af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_57c13ce3",
+        "filename": "docs/results/fuel-os-nosdn-nofeature-ha.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-02-23T17:06:18Z",
+      "side": 1,
+      "message": "in My version I let the details to know the tests like in tempest...otherwise a summary does not provide lots of information",
+      "revId": "5081dc3dd806ded582142cb2efba64f789a5e7af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_17bbc473",
+        "filename": "docs/results/fuel-os-nosdn-ovs-ha.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-02-23T17:06:18Z",
+      "side": 1,
+      "message": "not compass",
+      "range": {
+        "startLine": 8,
+        "startChar": 51,
+        "endLine": 8,
+        "endChar": 58
+      },
+      "revId": "5081dc3dd806ded582142cb2efba64f789a5e7af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_d7ac0c38",
+        "filename": "docs/results/fuel-os-odl_l2-nofeature-ha.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-02-23T17:06:18Z",
+      "side": 1,
+      "message": "fuel",
+      "range": {
+        "startLine": 8,
+        "startChar": 51,
+        "endLine": 8,
+        "endChar": 58
+      },
+      "revId": "5081dc3dd806ded582142cb2efba64f789a5e7af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_97a69452",
+        "filename": "docs/results/fuel-os-odl_l2-nofeature-ha.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-02-23T17:06:18Z",
+      "side": 1,
+      "message": "I removed this part, which is like setup and kept only the table\nno strong opinion...",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 317,
+        "endChar": 9
+      },
+      "revId": "5081dc3dd806ded582142cb2efba64f789a5e7af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_7763181b",
+        "filename": "docs/results/fuel-os-onos-nofeature-ha.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-02-23T17:06:18Z",
+      "side": 1,
+      "message": "fuel",
+      "range": {
+        "startLine": 8,
+        "startChar": 51,
+        "endLine": 8,
+        "endChar": 58
+      },
+      "revId": "5081dc3dd806ded582142cb2efba64f789a5e7af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
