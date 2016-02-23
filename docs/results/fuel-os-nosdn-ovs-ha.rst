@@ -1,10 +1,43 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International Licence.
 .. http://creativecommons.org/licenses/by/4.0
 
-Test results for fuel-os-nosdn-ovs-ha
-=====================================
+Detailed test results for fuel-os-nosdn-ovs-ha
+-------------------------------------------------------
 
-.. Add any text in here that could be useful for a reader.
+The following section outlines the detailed Functest results for the Brahmaputra scenario
+deploying OpenStack in a Pharos environment by the Compass installer.
 
-.. Add the test results in a consistent format.
+vPing_SSH
+^^^^^^^^^
+::
 
+::
+
+
+vPing_userdata
+^^^^^^^^^^^^^^
+::
+
+::
+
+
+Tempest
+^^^^^^^
+::
+
+::
+
+
+vIMS
+^^^^
+::
+
+::
+
+
+Rally
+^^^^^
+::
+
+
+::
