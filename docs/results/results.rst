@@ -17,6 +17,14 @@ and feature capability
    :maxdepth: 2
 
 .. include:: ./compass-os-nosdn-nofeature-ha.rst
+.. include:: ./compass-os-odl_l2-nofeature-ha.rst
+.. include:: ./compass-os-onos-nofeature-ha.rst
+.. include:: ./fuel-os-nosdn-nofeature-ha.rst
+.. include:: ./fuel-os-nosdn-ovs-ha.rst
+.. include:: ./fuel-os-odl_l2-nofeature-ha.rst
+.. include:: ./fuel-os-onos-nofeature-ha.rst
+.. include:: ./apex-os-odl_l2-nofeature-ha.rst
+.. include:: ./joid-os-odl_l2-nofeature-ha.rst
 
 .. Add each of the scenario files as they are set to
 .. release ready and the results are available for publishing.
