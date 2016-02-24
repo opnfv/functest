@@ -8,43 +8,50 @@ Functest is the OPNFV project primarily targeting function testing.
 In the Continuous Integration pipeline, it is launched after an OPNFV fresh
 installation to validate and verify the basic functions of the infrastructure.
 
-The current list of test suites can be distributed in 3 main domains::
+The current list of test suites can be distributed in 3 main domains VIM,
+Controllers and Features.
 
- +----------------+----------------+-------------------------------------------+
- | Domain         | Test suite     | Comments                                  |
- +================+================+===========================================+
- |                | vPing          | NFV "Hello World" using SSH connection    |
- |                |                | and floatting IP                          |
- |                +----------------+-------------------------------------------+
- |    VIM         | vPing_userdata | Ping using userdata and cloud-init        |
- |                |                | mechanism                                 |
- |                +----------------+-------------------------------------------+
- |(Virtualised    | Tempest        | OpenStack reference test suite `[2]`_     |
- | Infrastructure +----------------+-------------------------------------------+
- | Manager)       | Rally bench    | OpenStack testing tool benchmarking       |
- |                |                | OpenStack modules `[3]`_                  |
- +----------------+----------------+-------------------------------------------+
- |                | OpenDaylight   | Opendaylight Test suite                   |
- |                +----------------+-------------------------------------------+
- | Controllers    | ONOS           | Test suite of ONOS L2 and L3 functions    |
- |                +----------------+-------------------------------------------+
- |                | OpenContrail   |                                           |
- +----------------+----------------+-------------------------------------------+
- | Features       | vIMS           | Example of a real VNF deployment to show  |
- |                |                | the NFV capabilities of the platform.     |
- |                |                | The IP Multimedia Subsytem is a typical   |
- |                |                | Telco test case, referenced by ETSI.      |
- |                |                | It provides a fully functional VoIP System|
- |                +----------------+-------------------------------------------+
- |                | Promise        | Resource reservation and management       |
- |                |                | project to identify NFV related           |
- |                |                | requirements and realize resource         |
- |                |                | reservation for future usage by capacity  |
- |                |                | management of resource pools regarding    |
- |                |                | compute, network and storage.             |
- |                +----------------+-------------------------------------------+
- |                | SDNVPN         |                                           |
- +----------------+----------------+-------------------------------------------+
++----------------+----------------+-------------------------------------------+
+| Domain         | Test suite     | Comments                                  |
++================+================+===========================================+
+|                | vPing          | NFV "Hello World" using SSH connection    |
+|                |                | and floatting IP                          |
+|                +----------------+-------------------------------------------+
+|    VIM         | vPing_userdata | Ping using userdata and cloud-init        |
+|                |                | mechanism                                 |
+|                +----------------+-------------------------------------------+
+|(Virtualised    | Tempest        | OpenStack reference test suite `[2]`_     |
+| Infrastructure +----------------+-------------------------------------------+
+| Manager)       | Rally bench    | OpenStack testing tool benchmarking       |
+|                |                | OpenStack modules `[3]`_                  |
++----------------+----------------+-------------------------------------------+
+|                | OpenDaylight   | Opendaylight Test suite                   |
+|                +----------------+-------------------------------------------+
+| Controllers    | ONOS           | Test suite of ONOS L2 and L3 functions    |
+|                |                | See `ONOSFW User Guide`_ for details      |
++----------------+----------------+-------------------------------------------+
+| Features       | vIMS           | Example of a real VNF deployment to show  |
+|                |                | the NFV capabilities of the platform.     |
+|                |                | The IP Multimedia Subsytem is a typical   |
+|                |                | Telco test case, referenced by ETSI.      |
+|                |                | It provides a fully functional VoIP System|
+|                +----------------+-------------------------------------------+
+|                | Promise        | Resource reservation and management       |
+|                |                | project to identify NFV related           |
+|                |                | requirements and realize resource         |
+|                |                | reservation for future usage by capacity  |
+|                |                | management of resource pools regarding    |
+|                |                | compute, network and storage.             |
+|                |                | See `Promise User Guide`_ for details     |
+|                +----------------+-------------------------------------------+
+|                | Doctor         | Doctor platform, as of Brahmaputra release|
+|                |                | , provides the two features:              |
+|                |                | * Immediate Notification                  |
+|                |                | * Consistent resource state awareness     |
+|                |                | (compute), see `Doctor User Guide`_ for   |
+|                |                | details                                   |
++----------------+----------------+-------------------------------------------+
+
 
 Functest includes different test suites with several test cases within. Some
 of the tests are developed by Functest team members whereas others are integrated
@@ -54,8 +61,6 @@ OpenStack integration test suite and Functest is in charge of the selection,
 integration and automation of the tests that fit in OPNFV.
 
 The Tempest suite has been customized but no new test cases have been created.
-Some OPNFV feature projects (e.g. SDNVPN) have written some Tempest tests cases
-and pushed upstream to be used by Functest.
 
 The results produced by the tests run from CI are pushed and collected in a NoSQL
 database. The goal is to populate the database with results from different sources
@@ -71,7 +76,7 @@ relatively complex NFV scenario on top of the OPNFV infrastructure.
 Functest considers OPNFV as a black box.
 OPNFV, since the Brahmaputra release, offers lots of potential combinations:
 
-  * 3 controllers (OpenDayligh, ONOS, OpenContrail)
+  * 2 controllers (OpenDayligh, ONOS)
   * 4 installers (Apex, Compass, Fuel, Joid)
 
 Most of the tests are runnable on any combination, but some others might have
@@ -79,4 +84,8 @@ restrictions imposed by the installers or the available deployed features.
 
 Details on working with the functest suites can be found at
 http://artifacts.opnfv.org/functest/brahmaputra/userguide/index.html
+
+.. _`Doctor User Guide`: http://artifacts.opnfv.org/doctor/brahmaputra/docs/userguide/userguide.html
+.. _`Promise User Guide`: http://artifacts.opnfv.org/promise/brahmaputra/docs/userguide/index.html
+.. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/brahmaputra/docs/userguide/index.html
 
