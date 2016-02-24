@@ -7,11 +7,16 @@ Executing the functest suites
 Manual testing
 --------------
 
-Once the Functest docker container is running and Functest environment ready
-(through */home/opnfv/repos/functest/docker/prepare_env.sh* script), the system is
-ready to run the tests.
+This section assumes the following:
+ * The Functest Docker container is running
+ * The docker prompt is shown
+ * The Functest environment is ready (prepare_env.sh has been executed)
 
-The script *run_tests.sh* launches the test in an automated way.
+If any of the above steps is missing please refer to the Functest Config Guide `[1]`_
+as they are a prerequisite and all the commands explained in this section **must** be
+performed **inside the container**.
+
+The script **run_tests.sh** launches the test in an automated way.
 Although it is possible to execute the different tests manually, it is
 recommended to use the previous shell script which makes the call
 to the actual scripts with the appropriate parameters.
@@ -32,7 +37,7 @@ several options::
         -s|--serial       run tests in one thread
         -t|--test         run specific set of tests
           <test_name>     one or more of the following separated by comma:
-                             vping_ssh,vping_userdata,odl,rally,tempest,vims,onos,promise,ovno
+                             vping_ssh,vping_userdata,odl,onos,tempest,rally,vims,promise,doctor
 
     examples:
         run_tests.sh
@@ -46,28 +51,37 @@ and special conditions to push data.
 
 The *-t* option can be used to specify the list of a desired test to be launched,
 by default Functest will launch all the test suites in the following order:
-vPing, Tempest, vIMS, Rally.
+    1) vPing test cases
+    2) Tempest suite
+    3) SDN controller suites
+    4) Feature project tests cases (Promise, Doctor, ...)
+    5) vIMS suite
+    6) Rally suite
+
+Please note that for some scenarios some test cases might not be launched.
+Functest calculates automatically which test can be executed and which cannot given
+the environment variable **DEPLOY_SCENARIO** to the docker container.
 
 A single or set of test may be launched at once using *-t <test_name>* specifying
 the test name or names separated by commas in the following list:
-*[vping,vping_userdata,odl,rally,tempest,vims,onos,promise]*.
+*[vping_ssh,vping_userdata,odl,onos,rally,tempest,vims,promise,doctor]*.
 
-The *-n* option is used for preserving all the possible OpenStack resources created
-by the tests after their execution.
-
-Please note that Functest includes cleaning mechanism in order to remove
-all the VIM resources except what was present before running any test. The script
+Functest includes cleaning mechanism in order to remove
+all the OpenStack resources except what was present before running any test. The script
 *$repos_dir/functest/testcases/VIM/OpenStack/CI/libraries/generate_defaults.py*
 is called once by *prepare_env.sh* when setting up the Functest environment
 to snapshot all the OpenStack resources (images, networks, volumes, security groups,
 tenants, users) so that an eventual cleanup does not remove any of this defaults.
 
+The *-n* option is used for preserving all the possible OpenStack resources created
+by the tests after their execution.
+
 The *-s* option forces execution of test cases in a single thread. Currently this
 option affects Tempest test cases only and can be used e.g. for troubleshooting
 concurrency problems.
 
-The script
-*$repos_dir/functest/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py*
+The script **clean_openstack.py** which is located in
+*$repos_dir/functest/testcases/VIM/OpenStack/CI/libraries/*
 is normally called after a test execution if the *-n* is not specified. It
 is in charge of cleaning the OpenStack resources that are not specified
 in the defaults file generated previously which is stored in
@@ -80,22 +94,22 @@ flag is not specified in the *run_tests.sh* command.
 The reason to include this cleanup meachanism in Functest is because some
 test suites such as Tempest or Rally create a lot of resources (users,
 tenants, networks, volumes etc.) that are not always properly cleaned, so this
-cleaning function has been set to keep the system as clean as it was before a
+function has been set to keep the system as clean as it was before a
 full Functest execution.
 
 Within the Tempest test suite it is possible to define which test cases to execute
-by editing *test_list.txt* file before executing *run_tests.sh* script. This file
+by editing **test_list.txt** file before executing **run_tests.sh** script. This file
 is located in *$repos_dir/functest/testcases/VIM/OpenStack/CI/custom_tests/test_list.txt*
 
-Although *run_tests.sh* provides an easy way to run any test, it is possible to
+Although **run_tests.sh** provides an easy way to run any test, it is possible to
 do a direct call to the desired test script. For example:
 
-    python $repos_dir/functest/testcases/vPing/vPing.py -d
+    python $repos_dir/functest/testcases/vPing/vPing_ssh.py -d
 
 Automated testing
 -----------------
 
-As mentioned in `[1]`, the *prepare-env.sh* and *run_test.sh* can be called within
+As mentioned previously, the **prepare-env.sh** and **run_test.sh** can be called within
 the container from Jenkins. There are 2 jobs that automate all the manual steps
 explained in the previous section. One job runs all the tests and the other one allows testing
 test suite by test suite specifying the test name. The user might use one or
@@ -107,8 +121,6 @@ automatically started from CI, a basic algorithm has been created in order to
 detect whether a given test is runnable or not on the given scenario.
 Some Functest test suites cannot be systematically run (e.g. ODL suite can not
 be run on an ONOS scenario).
-
-
 
 CI provides some useful information passed to the container as environment
 variables:
@@ -166,10 +178,12 @@ The order of execution is also described in the Functest configuration file::
 
 The tests are executed in the following order:
 
- * Basic scenario (vPing_ssh, vPing_userdata, Tempest)
- * Controller suites: ODL or ONOS or OpenContrail
- * Feature projects (promise, vIMS)
- * Rally (benchmark scenario)
+  1) vPing test cases
+  2) Tempest suite
+  3) SDN controller suites
+  4) Feature project tests cases (Promise, Doctor, ...)
+  5) vIMS suite
+  6) Rally suite
 
 As explained before, at the end of an automated execution, the OpenStack resources
 might be eventually removed.
