@@ -1,5 +1,9 @@
+.. This work is licensed under a Creative Commons Attribution 4.0 International License.
+.. http://creativecommons.org/licenses/by/4.0
+
 Executing the functest suites
 =============================
+
 
 Manual testing
 --------------
@@ -85,8 +89,10 @@ by editing *test_list.txt* file before executing *run_tests.sh* script. This fil
 is located in *$repos_dir/functest/testcases/VIM/OpenStack/CI/custom_tests/test_list.txt*
 
 Although *run_tests.sh* provides an easy way to run any test, it is possible to
-do a direct call to the desired test script. For example::
-   python $repos_dir/functest/testcases/vPing/vPing.py -d
+do a direct call to the desired test script. For example:
+
+    python $repos_dir/functest/testcases/vPing/vPing.py -d
+
 
 Automated testing
 -----------------
@@ -135,8 +141,8 @@ The constraints per test case are defined in the Functest configuration file
             scenario: 'onos'
         ....
 
-At the end of the Functest environment creation (prepare_env.sh see `[1]`_), a
-file */home/opnfv/functest/conf/testcase-list.txt* is created with the list of
+At the end of the Functest environment creation, a file
+*/home/opnfv/functest/conf/testcase-list.txt* is created with the list of
 all the runnable tests.
 Functest considers the static constraints as regular expressions and compare them
 with the given scenario name.
