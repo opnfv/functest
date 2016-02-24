@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_7218c684",
+        "filename": "docs/results/apex-os-odl_l2-nofeature-ha.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-02-24T09:15:58Z",
+      "side": 1,
+      "message": "IMHO, this \"::\" should be removed.",
+      "range": {
+        "startLine": 1624,
+        "startChar": 0,
+        "endLine": 1624,
+        "endChar": 2
+      },
+      "revId": "ed57473581ac18006aa5d82de05ca84898857738",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_521dca72",
+        "filename": "docs/results/apex-os-odl_l2-nofeature-ha.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-02-24T09:15:58Z",
+      "side": 1,
+      "message": "You may need to add a blank line after the \"::\".",
+      "range": {
+        "startLine": 1630,
+        "startChar": 0,
+        "endLine": 1630,
+        "endChar": 2
+      },
+      "revId": "ed57473581ac18006aa5d82de05ca84898857738",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
