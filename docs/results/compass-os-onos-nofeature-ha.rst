@@ -2,7 +2,7 @@
 .. http://creativecommons.org/licenses/by/4.0
 
 Detailed test results for compass-os-onos-nofeature-ha
-======================================================
+------------------------------------------------------
 
 VIM
 ---

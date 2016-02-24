@@ -1,8 +1,8 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International Licence.
 .. http://creativecommons.org/licenses/by/4.0
 
-Test results for joid-os-odl_l2-nofeature-ha
-============================================
+Detailed test results for joid-os-odl_l2-nofeature-ha
+-----------------------------------------------------
 
 VIM
 ---
