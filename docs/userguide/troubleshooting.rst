@@ -233,6 +233,51 @@ Rally
 
 Same error causes than for Tempest mentioned above may lead to error in Rally.
 
+It is possible to run only one Rally scenario, instead of the whole suite.
+To do that, call the python script (instead of *run_tests.sh*) as follows::
+
+    python $repos_dir/functest/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py -h
+    usage: run_rally-cert.py [-h] [-d] [-r] [-s] [-v] [-n] test_name
+
+    positional arguments:
+      test_name      Module name to be tested. Possible values are : [
+                     authenticate | glance | cinder | heat | keystone | neutron |
+                     nova | quotas | requests | vm | all ] The 'all' value
+                     performs all possible test scenarios
+
+    optional arguments:
+      -h, --help     show this help message and exit
+      -d, --debug    Debug mode
+      -r, --report   Create json result file
+      -s, --smoke    Smoke test mode
+      -v, --verbose  Print verbose info about the progress
+      -n, --noclean  Don't clean the created resources for this test.
+
+For example, to run the Glance scenario with debug information::
+
+    python $repos_dir/functest/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py -d glance
+
+Possible scenarios are:
+ * authenticate
+ * glance
+ * cinder
+ * heat
+ * keystone
+ * neutron
+ * nova
+ * quotas
+ * requests
+ * vm
+
+To know more about what those scenarios are doing, they are defined in:
+*$repos_dir/functest/testcases/VIM/OpenStack/CI/suites*. For more info about
+Rally scenario definition please refer to the Rally official documentation.
+
+If the flag *all* is specified, it will run all the scenarios one by one. Please
+note that this might take some time (~1,5hr), taking around 1 hour to complete the
+Nova scenario.
+
+
 Controllers
 -----------
 
