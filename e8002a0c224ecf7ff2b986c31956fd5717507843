@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "1a486d77_4cdd2e42",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-02-24T16:58:49Z",
+      "side": 1,
+      "message": "Please remove the second test case",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 367,
+        "endChar": 70
+      },
+      "revId": "e8002a0c224ecf7ff2b986c31956fd5717507843",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a486d77_2c2b1232",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 4
