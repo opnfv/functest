@@ -4,7 +4,6 @@
 Executing the functest suites
 =============================
 
-
 Manual testing
 --------------
 
@@ -92,7 +91,6 @@ Although *run_tests.sh* provides an easy way to run any test, it is possible to
 do a direct call to the desired test script. For example:
 
     python $repos_dir/functest/testcases/vPing/vPing.py -d
-
 
 Automated testing
 -----------------

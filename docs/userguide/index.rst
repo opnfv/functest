@@ -24,12 +24,12 @@ It is assumed that Functest container has been properly installed `[1]`_.
 The different scenarios are described in the section hereafter.
 
 VIM (Virtualized Infrastructure Manager)
----
+----------------------------------------
 
 vPing_SSH
 ^^^^^^^^^
 
-Given the script 'ping.sh'::
+Given the script **ping.sh**::
 
     #!/bin/sh
     while true; do
