@@ -86,7 +86,7 @@ is located in *$repos_dir/functest/testcases/VIM/OpenStack/CI/custom_tests/test_
 
 Although *run_tests.sh* provides an easy way to run any test, it is possible to
 do a direct call to the desired test script. For example::
-   python $repos_dir/functest/testcases/vPing/vPing.py -d
+    python $repos_dir/functest/testcases/vPing/vPing.py -d
 
 Automated testing
 -----------------
@@ -169,3 +169,7 @@ The tests are executed in the following order:
 
 As explained before, at the end of an automated execution, the OpenStack resources
 might be eventually removed.
+
+References
+==========
+.. _`[1]`: http://artifacts.opnfv.org/functest/docs/configguide/#functional-testing-installation

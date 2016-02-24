@@ -302,7 +302,6 @@ page `[3]`_.
 
 Overall Architecture
 --------------------
-
 The Test result management in Brahmaputra can be summarized as follows::
 
   +-------------+    +-------------+    +-------------+
@@ -345,7 +344,6 @@ This Dashboard consumes the results retrieved thanks to the Test API.
 
 Test API description
 --------------------
-
 The Test API is used to declare pods, projects, test cases and test results. An
 additional method dashboard has been added to post-process the raw results. The
 data model is very basic, 4 objects are created:
@@ -432,8 +430,8 @@ Pods:
  | POST   | /pods                    | Declare a new POD                       |
  |        |                          | Content-Type: application/json          |
  |        |                          | {                                       |
- |        |                          |   "name": "pod_foo",                    |
- |        |                          |   "creation_date": "YYYY-MM-DD HH:MM:SS"|
+ |        |                          | "name": "pod_foo",                      |
+ |        |                          | "creation_date": "YYYY-MM-DD HH:MM:SS"  |
  |        |                          | }                                       |
  +--------+--------------------------+-----------------------------------------+
 
@@ -450,15 +448,15 @@ Projects:
  | POST   | /test_projects           | Add a new test project                  |
  |        |                          | Content-Type: application/json          |
  |        |                          | {                                       |
- |        |                          |    "name": "project_foo",               |
- |        |                          |    "description": "whatever you want"   |
+ |        |                          | "name": "project_foo",                  |
+ |        |                          | "description": "whatever you want"      |
  |        |                          | }                                       |
  +--------+--------------------------+-----------------------------------------+
  | PUT    | /test_projects/{project} | Update a test project                   |
  |        |                          |                                         |
  |        |                          | Content-Type: application/json          |
  |        |                          | {                                       |
- |        |                          |    <the field(s) you want to modify>    |
+ |        |                          | <the field(s) you want to modify>       |
  |        |                          | }                                       |
  +--------+--------------------------+-----------------------------------------+
  | DELETE | /test_projects/{project} | Delete a test project                   |
@@ -476,17 +474,17 @@ Test cases:
  | POST   | /test_projects/{project}/| Add a new test case to {project}        |
  |        | cases                    | Content-Type: application/json          |
  |        |                          | {                                       |
- |        |                          |   "name": "case_foo",                   |
- |        |                          |   "description": "whatever you want"    |
- |        |                          |   "creation_date": "YYYY-MM-DD HH:MM:SS"|
- |        |                          |   "url": "whatever you want"            |
+ |        |                          | "name": "case_foo",                     |
+ |        |                          | "description": "whatever you want"      |
+ |        |                          | "creation_date": "YYYY-MM-DD HH:MM:SS"  |
+ |        |                          | "url": "whatever you want"              |
  |        |                          | }                                       |
  +--------+--------------------------+-----------------------------------------+
  | PUT    | /test_projects/{project}?| Modify a test case of {project}         |
  |        | case_name={case}         |                                         |
  |        |                          | Content-Type: application/json          |
  |        |                          | {                                       |
- |        |                          |    <the field(s) you want to modify>    |
+ |        |                          | <the field(s) you want to modify>       |
  |        |                          | }                                       |
  +--------+--------------------------+-----------------------------------------+
  | DELETE | /test_projects/{project}/| Delete a test case                      |
@@ -523,12 +521,12 @@ Test Results:
  | POST   | /results                 | Add a new test results                  |
  |        |                          | Content-Type: application/json          |
  |        |                          | {                                       |
- |        |                          |    "project_name": "project_foo",       |
- |        |                          |    "case_name": "case_foo",             |
- |        |                          |    "pod_name": "pod_foo",               |
- |        |                          |    "installer": "installer_foo",        |
- |        |                          |    "version": "scenario_foo",           |
- |        |                          |    "details": <your results>            |
+ |        |                          | "project_name": "project_foo",          |
+ |        |                          | "case_name": "case_foo",                |
+ |        |                          | "pod_name": "pod_foo",                  |
+ |        |                          | "installer": "installer_foo",           |
+ |        |                          | "version": "scenario_foo",              |
+ |        |                          | "details": <your results>               |
  |        |                          | }                                       |
  +--------+--------------------------+-----------------------------------------+
 
@@ -587,7 +585,6 @@ You can also reuse a python function defined in functest_utils.py::
             % (db_url, case_name, pod_name, version, payload), e
         return False
 
-::
 
 ==========
 References

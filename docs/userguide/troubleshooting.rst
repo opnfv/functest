@@ -4,7 +4,6 @@ Troubleshooting
 
 VIM
 ---
-
 vPing_SSH
 ^^^^^^^^^
 
