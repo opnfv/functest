@@ -14,16 +14,39 @@ tested in four consecutive installations to establish stability of deployment
 and feature capability
 
 .. toctree::
-   :maxdepth: 2
 
 .. include:: ./compass-os-nosdn-nofeature-ha.rst
+
+.. toctree::
+
 .. include:: ./compass-os-odl_l2-nofeature-ha.rst
+
+.. toctree::
+
 .. include:: ./compass-os-onos-nofeature-ha.rst
+
+.. toctree::
+
 .. include:: ./fuel-os-nosdn-nofeature-ha.rst
+
+.. toctree::
+
 .. include:: ./fuel-os-nosdn-ovs-ha.rst
+
+.. toctree::
+
 .. include:: ./fuel-os-odl_l2-nofeature-ha.rst
+
+.. toctree::
+
 .. include:: ./fuel-os-onos-nofeature-ha.rst
+
+.. toctree::
+
 .. include:: ./apex-os-odl_l2-nofeature-ha.rst
+
+.. toctree::
+
 .. include:: ./joid-os-odl_l2-nofeature-ha.rst
 
 .. Add each of the scenario files as they are set to
