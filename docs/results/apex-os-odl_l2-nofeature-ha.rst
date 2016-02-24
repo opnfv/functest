@@ -10,6 +10,7 @@ VIM
 vping_ssh
 ^^^^^^^^^
 ::
+
   FUNCTEST.info: Running vPing-SSH test...
   vPing_ssh- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
   vPing_ssh- INFO - Creating neutron network vping-net...
@@ -39,12 +40,13 @@ vping_ssh
   vPing_ssh- INFO - vPing duration:'82.0' s.
   vPing_ssh- INFO - Cleaning up...
   vPing_ssh- INFO - vPing OK
-::
+
 
 vping_userdata
 ^^^^^^^^^^^^^^
 
 ::
+
   FUNCTEST.info: Running vPing-userdata test...
   vPing_userdata- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
   vPing_userdata- INFO - Creating neutron network vping-net...
@@ -84,11 +86,12 @@ vping_userdata
   vPing_userdata- INFO - vPing OK
   vPing_userdata- INFO - Cleaning up...
   vPing_userdata- INFO - Deleting network 'vping-net'...
-::
+
 
 Tempest
 ^^^^^^^
 ::
+
   FUNCTEST.info: Running Tempest tests...
   run_tempest - INFO - Creating tenant and user for Tempest suite
   INFO rally.verification.tempest.tempest [-] Starting: Creating configuration file for Tempest.
@@ -181,11 +184,12 @@ Tempest
   run_tempest - INFO - Results: {'timestart': '2016-02-2307:46:13.668289', 'duration': 695, 'tests': 70, 'failures': 8}
   run_tempest - INFO - Pushing results to DB: 'http://testresults.opnfv.org/testapi/results'.
   run_tempest - INFO - Deleting tenant and user for Tempest suite)
-::
+
 
 Rally
 ^^^^^
 ::
+
   FUNCTEST.info: Running Rally benchmark suite...
   run_rally - INFO - Starting test scenario "authenticate" ...
 
@@ -1465,7 +1469,7 @@ Rally
   | TOTAL:            | 01:26:02   | 220           | 97.91%    |
   +===================+============+===============+===========+
 
-::
+
 
 SDN Controller
 --------------
@@ -1473,6 +1477,7 @@ SDN Controller
 ODL
 ^^^
 ::
+
   FUNCTEST.info: Running ODL test...
   ==============================================================================
   Basic
@@ -1579,7 +1584,7 @@ ODL
   Report:  /home/opnfv/report.html
   Log:     /home/opnfv/log.html
   Report:  /home/opnfv/report.html
-::
+
 
 Feature tests
 -------------
@@ -1588,6 +1593,7 @@ vIMS
 ^^^^
 
 ::
+
   FUNCTEST.info: Running vIMS test...
   vIMS - INFO - Prepare OpenStack plateform (create tenant and user)
   vIMS - INFO - Update OpenStack creds informations
@@ -1621,4 +1627,124 @@ vIMS
   vIMS - INFO - Cloudify-manager server has been successfully removed!
   vIMS - INFO - Removing vIMS tenant ..
   vIMS - INFO - Removing vIMS user ..
+
+
+Doctor
+^^^^^^
+
 ::
+
+    FUNCTEST.info: Running Doctor test...
+    doctor - DEBUG - Executing command : cd /home/opnfv/repos/doctor/tests && ./run.sh
+    doctor - DEBUG - + IMAGE_URL=https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img
+    Note: doctor/tests/run.sh has been executed.
+    PING 192.30.9.7 (192.30.9.7) 56(84) bytes of data.
+    64 bytes from 192.30.9.7: icmp_seq=1 ttl=63 time=0.753 ms
+
+    --- 192.30.9.7 ping statistics ---
+    1 packets transmitted, 1 received, 0% packet loss, time 0ms
+    rtt min/avg/max/mdev = 0.753/0.753/0.753/0.000 ms
+    preparing VM image...
+    +------------------+--------------------------------------+
+    | Property         | Value                                |
+    +------------------+--------------------------------------+
+    | checksum         | 11834a548b5f6fa25d331353b139cb1a     |
+    | container_format | bare                                 |
+    | created_at       | 2016-02-24T07:59:46Z                 |
+    | disk_format      | qcow2                                |
+    | id               | 0074bf80-807e-4cb7-b904-bf4347c2a668 |
+    | min_disk         | 0                                    |
+    | min_ram          | 0                                    |
+    | name             | cirros                               |
+    | owner            | 3d15a63c2519439f839df6785236b0e1     |
+    | protected        | False                                |
+    | size             | 15482                                |
+    | status           | active                               |
+    | tags             | []                                   |
+    | updated_at       | 2016-02-24T07:59:47Z                 |
+    | virtual_size     | None                                 |
+    | visibility       | public                               |
+    +------------------+--------------------------------------+
+    starting doctor sample components...
+    creating VM and alarm...
+    +--------------------------------------+-----------------------------------------------+
+    | Property                             | Value                                         |
+    +--------------------------------------+-----------------------------------------------+
+    | OS-DCF:diskConfig                    | MANUAL                                        |
+    | OS-EXT-AZ:availability_zone          |                                               |
+    | OS-EXT-SRV-ATTR:host                 | -                                             |
+    | OS-EXT-SRV-ATTR:hypervisor_hostname  | -                                             |
+    | OS-EXT-SRV-ATTR:instance_name        | instance-00000048                             |
+    | OS-EXT-STS:power_state               | 0                                             |
+    | OS-EXT-STS:task_state                | scheduling                                    |
+    | OS-EXT-STS:vm_state                  | building                                      |
+    | OS-SRV-USG:launched_at               | -                                             |
+    | OS-SRV-USG:terminated_at             | -                                             |
+    | accessIPv4                           |                                               |
+    | accessIPv6                           |                                               |
+    | adminPass                            | AaUNZaoqw74Q                                  |
+    | config_drive                         |                                               |
+    | created                              | 2016-02-24T07:59:49Z                          |
+    | flavor                               | m1.tiny (1)                                   |
+    | hostId                               |                                               |
+    | id                                   | 1ab94214-1d8c-46b5-8467-3d3e3b602f04          |
+    | image                                | cirros (0074bf80-807e-4cb7-b904-bf4347c2a668) |
+    | key_name                             | -                                             |
+    | metadata                             | {}                                            |
+    | name                                 | doctor_vm1                                    |
+    | os-extended-volumes:volumes_attached | []                                            |
+    | progress                             | 0                                             |
+    | security_groups                      | default                                       |
+    | status                               | BUILD                                         |
+    | tenant_id                            | 3d15a63c2519439f839df6785236b0e1              |
+    | updated                              | 2016-02-24T07:59:49Z                          |
+    | user_id                              | 0cfa3d72e33b490880278ff6676aa961              |
+    +--------------------------------------+-----------------------------------------------+
+
+    +---------------------------+----------------------------------------------------------------------+
+    | Property                  | Value                                                                |
+    +---------------------------+----------------------------------------------------------------------+
+    | alarm_actions             | ["http://localhost:12346/failure"]                                   |
+    | alarm_id                  | 739ca887-1a9d-4fb4-ad77-17793de1db16                                 |
+    | description               | VM failure                                                           |
+    | enabled                   | True                                                                 |
+    | event_type                | compute.instance.update                                              |
+    | insufficient_data_actions | []                                                                   |
+    | name                      | doctor_alarm1                                                        |
+    | ok_actions                | []                                                                   |
+    | project_id                | 3d15a63c2519439f839df6785236b0e1                                     |
+    | query                     | [{"field": "traits.state", "type": "string", "value": "error", "op": |
+    |                           | "eq"}, {"field": "traits.instance_id", "type": "string", "value":    |
+    |                           | "1ab94214-1d8c-46b5-8467-3d3e3b602f04", "op": "eq"}]                 |
+    | repeat_actions            | False                                                                |
+    | severity                  | moderate                                                             |
+    | state                     | insufficient data                                                    |
+    | type                      | event                                                                |
+    | user_id                   | 0cfa3d72e33b490880278ff6676aa961                                     |
+    +---------------------------+----------------------------------------------------------------------+
+    waiting for vm launch...
+    injecting host failure...
+    disabling network of comupte host [overcloud-novacompute-0] for 3 mins...
+    Warning: Permanently added '192.30.9.7' (ECDSA) to the list of known hosts.
+    Warning: Permanently added '192.30.9.7' (ECDSA) to the list of known hosts.
+    0 OK
+    done
+    cleanup...
+    24120
+    24124
+    24122
+    24144
+    Your request was processed by a Nova API which does not support microversions (X-OpenStack-Nova-API-Version header is missing from response). Warning: Response may be incorrect.
+    Your request was processed by a Nova API which does not support microversions (X-OpenStack-Nova-API-Version header is missing from response). Warning: Response may be incorrect.
+    Your request was processed by a Nova API which does not support microversions (X-OpenStack-Nova-API-Version header is missing from response). Warning: Response may be incorrect.
+    Your request was processed by a Nova API which does not support microversions (X-OpenStack-Nova-API-Version header is missing from response). Warning: Response may be incorrect.
+    24125
+    24136
+    + ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i instack_key heat-admin@192.30.9.7 '[ -e disable_network.log ] && cat disable_network.log'
+    Warning: Permanently added '192.30.9.7' (ECDSA) to the list of known hosts.
+    sudo ip link set enp8s0 down
+    <Response [200]>
+    Request to delete server doctor_vm1 has been accepted.
+    waiting disabled compute host back to be enabled...
+
+    doctor - INFO - doctor OK
