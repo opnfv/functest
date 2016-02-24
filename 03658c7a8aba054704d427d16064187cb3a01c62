@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_f8cdb587",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 933
+      },
+      "writtenOn": "2016-02-24T14:07:52Z",
+      "side": 1,
+      "message": "keep the blank line after this line \"------\"",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 14
+      },
+      "revId": "03658c7a8aba054704d427d16064187cb3a01c62",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
