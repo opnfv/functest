@@ -1,9 +1,11 @@
+.. This work is licensed under a Creative Commons Attribution 4.0 International License.
+.. http://creativecommons.org/licenses/by/4.0
+
 =========================
 OPNFV FUNCTEST user guide
 =========================
 
 .. toctree::
-   :numbered:
    :maxdepth: 2
 
 
@@ -385,7 +387,7 @@ The URL of this dashboard is TODO LF
 References
 ==========
 
-.. _`[1]`: Functest configuration guide URL
+.. _`[1]`: http://artifacts.opnfv.org/functest/docs/configguide/#functional-testing-installation
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`[4]`: http://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
