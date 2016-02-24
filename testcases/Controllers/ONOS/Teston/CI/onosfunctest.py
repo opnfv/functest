@@ -180,12 +180,13 @@ def main():
         # TODO check path result for the file
         scenario = functest_utils.get_scenario(logger)
         pod_name = functest_utils.get_pod_name(logger)
+        build_tag = functest_utils.get_build_tag(logger)
         result = GetResult()
         functest_utils.push_results_to_db(TEST_DB,
                                           "functest",
                                           "ONOS",
                                           logger, pod_name, scenario,
-                                          payload=result)
+                                          build_tag, payload=result)
     except:
         logger.error("Error pushing results into Database")
 

@@ -122,6 +122,7 @@ def main(argv):
         f.close()
 
     database = functest_yaml.get("results").get("test_db_url")
+    build_tag = functest_utils.get_build_tag()
 
     try:
         # example:
@@ -135,6 +136,7 @@ def main(argv):
                                           None,
                                           data['pod_name'],
                                           scenario,
+                                          build_tag,
                                           data)
     except:
         print("Error pushing results into Database '%s'" % sys.exc_info()[0])
