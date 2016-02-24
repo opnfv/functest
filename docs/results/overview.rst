@@ -2,7 +2,7 @@
 .. http://creativecommons.org/licenses/by/4.0
 
 FuncTest test result document overview
-======================================
+--------------------------------------
 
 Functest project is described in `Functest user guide`_.
 The user guide details the different test cases as well as the possible errors.
@@ -16,20 +16,20 @@ scenario to another.
 
 The list of scenario supported by installer can be described as follows::
 
- +================+=========+=========+=========+=========+
+ +----------------+---------+---------+---------+---------+
  |    Scenario    |  Apex   | Compass |  Fuel   |   Joid  |
- +================+=========+=========+=========+=========+
+ +----------------+---------+---------+---------+---------+
  |   odl_l2       |    X    |    X    |    X    |     X   |
  +----------------+---------+---------+---------+---------+
- |   odl_l3       |    X    |         |    X    |         |
+ |   odl_l3       |         |         |         |         |
  +----------------+---------+---------+---------+---------+
- |   onos         |    X    |    X    |    X    |     X   |
+ |   onos         |         |    X    |         |         |
  +----------------+---------+---------+---------+---------+
- |   nosdn        |         |    X    |    X    |     X   |
+ |   nosdn        |         |    X    |    X    |         |
  +----------------+---------+---------+---------+---------+
- |   odl_l2-sfc   |    X    |         |         |         |
+ |   odl_l2-sfc   |         |         |         |         |
  +----------------+---------+---------+---------+---------+
- |  odl_l2-bgpvpn |         |         |    X    |         |
+ |  odl_l2-bgpvpn |         |         |         |         |
  +----------------+---------+---------+---------+---------+
  |   ovs (dpdk)   |         |         |    X    |         |
  +----------------+---------+---------+---------+---------+
@@ -37,10 +37,10 @@ The list of scenario supported by installer can be described as follows::
 The matrix below details the Functest runnable tests versus the installer and
 the scenario::
 
- +================+=============+=============+=============+=============+
+ +----------------+-------------+-------------+-------------+-------------+
  |  Test cases    |    Apex     |   Compass   |    Fuel     |     Joid    |
- +================+=============+=============+=============+=============+
- |   vPing        |all scenario |     all     |     all     |     all     |
+ +----------------+-------------+-------------+-------------+-------------+
+ |   vPing SSH    |     all     |     all     |     all     |     all     |
  +----------------+-------------+-------------+-------------+-------------+
  | vPing userdata | all except  | all except  | all except  | all except  |
  |                |   ONOS      |    ONOS     |    ONOS     |    ONOS     |
@@ -58,10 +58,13 @@ the scenario::
  |     vIMS       | all except  | all except  | all except  | all except  |
  |                |   ONOS      |    ONOS     |    ONOS     |    ONOS     |
  +----------------+-------------+-------------+-------------+-------------+
- |   Doctor       |     all     |     no      |    no       |   no        |
+ |   Doctor       |     all     |     no      |    no       |     no      |
  +----------------+-------------+-------------+-------------+-------------+
- |   SDNVPN       |     no      |     no      |   bgpvpn    |   no        |
+ |   SDNVPN       |     no      |     no      |   bgpvpn    |     no      |
  +----------------+-------------+-------------+-------------+-------------+
+
+all means that the test case is run on all the scenario related to the
+installer.
 
 Functest results from continuous integration can be found in:
  * jenkins logs: https://build.opnfv.org/ci/view/functest/
@@ -69,7 +72,7 @@ Functest results from continuous integration can be found in:
  Rally html pages
 
 Additional test result assests and information
-==============================================
+----------------------------------------------
 
 The Functest deals with 2 dashboards:
  * The `Test Dashboard`_ provides an overview of all the projects
