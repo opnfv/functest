@@ -2,14 +2,15 @@
 .. http://creativecommons.org/licenses/by/4.0
 
 Detailed test results for fuel-os-odl_l2-nofeature-ha
--------------------------------------------------------
+-----------------------------------------------------
 
-The following section outlines the detailed Functest results for the Brahmaputra scenario
-deploying OpenStack in a Pharos environment by the Fuel installer.
+VIM
+---
 
-vPing_SSH
+vping_ssh
 ^^^^^^^^^
 ::
+
     FUNCTEST.info: Running vPing-SSH test...
     vPing_ssh- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
     vPing_ssh- INFO - Creating neutron network vping-net...
@@ -41,12 +42,12 @@ vPing_SSH
     vPing_ssh- INFO - vPing duration:'42.1' s.
     vPing_ssh- INFO - Cleaning up...
     vPing_ssh- INFO - vPing OK
-::
 
 
-vPing_userdata
+vping_userdata
 ^^^^^^^^^^^^^^
 ::
+
     FUNCTEST.info: Running vPing-userdata test...
     vPing_userdata- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
     vPing_userdata- INFO - Creating neutron network vping-net...
@@ -87,12 +88,12 @@ vPing_userdata
     vPing_userdata- INFO - vPing OK
     vPing_userdata- INFO - Cleaning up...
     vPing_userdata- INFO - Deleting network 'vping-net'...
-::
 
 
 Tempest
 ^^^^^^^
 ::
+
     +------------------------------------------------------------------------------------------------------------------------------------------+-----------+---------+
     | name                                                                                                                                     | time      | status  |
     +------------------------------------------------------------------------------------------------------------------------------------------+-----------+---------+
@@ -308,604 +309,11 @@ Tempest
     | tempest.scenario.test_volume_boot_pattern.TestVolumeBootPatternV2.test_volume_boot_pattern                                               | 356.71394 | fail    |
     +------------------------------------------------------------------------------------------------------------------------------------------+-----------+---------+
     run_tempest - INFO - Results: {'timestart': '2016-02-1905:28:37.031139', 'duration': 730, 'tests': 210, 'failures': 40}
-::
-
-
-ODL
-^^^^
-::
-    ==============================================================================
-    Basic
-    ==============================================================================
-    Basic.010 Restconf OK :: Test suite to verify Restconf is OK
-    ==============================================================================
-    Get Controller Modules :: Get the controller modules via Restconf     | PASS |
-    ------------------------------------------------------------------------------
-    Basic.010 Restconf OK :: Test suite to verify Restconf is OK          | PASS |
-    1 critical test, 1 passed, 0 failed
-    1 test total, 1 passed, 0 failed
-    ==============================================================================
-    Basic                                                                 | PASS |
-    1 critical test, 1 passed, 0 failed
-    1 test total, 1 passed, 0 failed
-    ==============================================================================
-    Output:  /home/opnfv/repos/functest/output.xml
-    Log:     /home/opnfv/repos/functest/log.html
-    Report:  /home/opnfv/repos/functest/report.html
-    [1;32mStarting test: test/csit/suites/openstack/neutron/ [0m
-    ==============================================================================
-    Neutron :: Test suite for Neutron Plugin
-    ==============================================================================
-    Neutron.Networks :: Checking Network created in OpenStack are pushed to Ope...
-    ==============================================================================
-    Check OpenStack Networks :: Checking OpenStack Neutron for known n... | PASS |
-    ------------------------------------------------------------------------------
-    Check OpenDaylight Networks :: Checking OpenDaylight Neutron API f... | PASS |
-    ------------------------------------------------------------------------------
-    Create Network :: Create new network in OpenStack                     | PASS |
-    ------------------------------------------------------------------------------
-    Check Network :: Check Network created in OpenDaylight                | PASS |
-    ------------------------------------------------------------------------------
-    Neutron.Networks :: Checking Network created in OpenStack are push... | PASS |
-    4 critical tests, 4 passed, 0 failed
-    4 tests total, 4 passed, 0 failed
-    ==============================================================================
-    Neutron.Subnets :: Checking Subnets created in OpenStack are pushed to Open...
-    ==============================================================================
-    Check OpenStack Subnets :: Checking OpenStack Neutron for known Su... | PASS |
-    ------------------------------------------------------------------------------
-    Check OpenDaylight subnets :: Checking OpenDaylight Neutron API fo... | PASS |
-    ------------------------------------------------------------------------------
-    Create New subnet :: Create new subnet in OpenStack                   | PASS |
-    ------------------------------------------------------------------------------
-    Check New subnet :: Check new subnet created in OpenDaylight          | PASS |
-    ------------------------------------------------------------------------------
-    Neutron.Subnets :: Checking Subnets created in OpenStack are pushe... | PASS |
-    4 critical tests, 4 passed, 0 failed
-    4 tests total, 4 passed, 0 failed
-    ==============================================================================
-    Neutron.Ports :: Checking Port created in OpenStack are pushed to OpenDaylight
-    ==============================================================================
-    Check OpenStack ports :: Checking OpenStack Neutron for known ports   | PASS |
-    ------------------------------------------------------------------------------
-    Check OpenDaylight ports :: Checking OpenDaylight Neutron API for ... | PASS |
-    ------------------------------------------------------------------------------
-    Create New Port :: Create new port in OpenStack                       | PASS |
-    ------------------------------------------------------------------------------
-    Check New Port :: Check new subnet created in OpenDaylight            | PASS |
-    ------------------------------------------------------------------------------
-    Neutron.Ports :: Checking Port created in OpenStack are pushed to ... | PASS |
-    4 critical tests, 4 passed, 0 failed
-    4 tests total, 4 passed, 0 failed
-    ==============================================================================
-    Neutron.Delete Ports :: Checking Port deleted in OpenStack are deleted also...
-    ==============================================================================
-    Delete New Port :: Delete previously created port in OpenStack        | PASS |
-    ------------------------------------------------------------------------------
-    Check Port Deleted :: Check port deleted in OpenDaylight              | PASS |
-    ------------------------------------------------------------------------------
-    Neutron.Delete Ports :: Checking Port deleted in OpenStack are del... | PASS |
-    2 critical tests, 2 passed, 0 failed
-    2 tests total, 2 passed, 0 failed
-    ==============================================================================
-    Neutron.Delete Subnets :: Checking Subnets deleted in OpenStack are deleted...
-    ==============================================================================
-    Delete New subnet :: Delete previously created subnet in OpenStack    | PASS |
-    ------------------------------------------------------------------------------
-    Check New subnet deleted :: Check subnet deleted in OpenDaylight      | PASS |
-    ------------------------------------------------------------------------------
-    Neutron.Delete Subnets :: Checking Subnets deleted in OpenStack ar... | PASS |
-    2 critical tests, 2 passed, 0 failed
-    2 tests total, 2 passed, 0 failed
-    ==============================================================================
-    Neutron.Delete Networks :: Checking Network deleted in OpenStack are delete...
-    ==============================================================================
-    Delete Network :: Delete network in OpenStack                         | PASS |
-    ------------------------------------------------------------------------------
-    Check Network deleted :: Check Network deleted in OpenDaylight        | PASS |
-    ------------------------------------------------------------------------------
-    Neutron.Delete Networks :: Checking Network deleted in OpenStack a... | PASS |
-    2 critical tests, 2 passed, 0 failed
-    2 tests total, 2 passed, 0 failed
-    ==============================================================================
-    Neutron :: Test suite for Neutron Plugin                              | PASS |
-    18 critical tests, 18 passed, 0 failed
-    18 tests total, 18 passed, 0 failed
-    ==============================================================================
-    Output:  /home/opnfv/repos/functest/output.xml
-    Log:     /home/opnfv/repos/functest/log.html
-    Report:  /home/opnfv/repos/functest/report.html
-    [0;32mFinal report is located:[0m
-    Log:     /home/opnfv/repos/functest/log.html
-    Report:  /home/opnfv/repos/functest/report.html
-::
-
-vIMS
-^^^^
-::
-    FUNCTEST.info: Running vIMS test...
-    vIMS - INFO - Prepare OpenStack plateform (create tenant and user)
-    vIMS - INFO - Update OpenStack creds informations
-    vIMS - INFO - Upload some OS images if it doesn't exist
-    vIMS - INFO - centos_7 image doesn't exist on glance repository.
-                                Try downloading this image and upload on glance !
-    vIMS - INFO - ubuntu_14.04 image doesn't exist on glance repository.
-                                Try downloading this image and upload on glance !
-    vIMS - INFO - Update security group quota for this tenant
-    vIMS - INFO - Update cinder quota for this tenant
-    vIMS - INFO - Collect flavor id for cloudify manager server
-    vIMS - INFO - Prepare virtualenv for cloudify-cli
-    vIMS - INFO - Downloading the cloudify manager server blueprint
-    vIMS - INFO - Cloudify deployment Start Time:'2016-02-19 05:44:47'
-    vIMS - INFO - Writing the inputs file
-    vIMS - INFO - Launching the cloudify-manager deployment
-    vIMS - INFO - Cloudify-manager server is UP !
-    vIMS - INFO - Cloudify deployment duration:'1149.9'
-    vIMS - INFO - Collect flavor id for all clearwater vm
-    vIMS - INFO - vIMS VNF deployment Start Time:'2016-02-19 06:04:00'
-    vIMS - INFO - Downloading the openstack-blueprint.yaml blueprint
-    vIMS - INFO - Writing the inputs file
-    vIMS - INFO - Launching the clearwater deployment
-    vIMS - INFO - The deployment of clearwater-opnfv is ended
-    vIMS - INFO - vIMS VNF deployment duration:'1133.8'
-    vIMS - INFO - vIMS functional test Start Time:'2016-02-19 06:25:59'
-    vIMS - INFO - vIMS functional test duration:'2.9'
-    vIMS - INFO - Launching the clearwater-opnfv undeployment
-    vIMS - ERROR - Error when executing command /bin/bash -c 'source /home/opnfv/functest/data/vIMS/venv_cloudify/bin/activate; cd /home/opnfv/functest/data/vIMS/; cfy executions start -w uninstall -d clearwater-opnfv --timeout 1800 ; cfy deployments delete -d clearwater-opnfv; '
-    vIMS - INFO - Launching the cloudify-manager undeployment
-    vIMS - INFO - Cloudify-manager server has been successfully removed!
-    vIMS - INFO - Removing vIMS tenant ..
-    vIMS - INFO - Removing vIMS user ..
-::
-
-Promise
-^^^^^^^
-::
-    FUNCTEST.info: Running PROMISE test case...
-    Promise- INFO - Creating tenant 'promise'...
-    Promise- INFO - Adding role '9d0a0a36d3d54cdcb4cd3c29c5f79a28' to tenant 'promise'...
-    Promise- INFO - Creating user 'promiser'...
-    Promise- INFO - Updating OpenStack credentials...
-    Promise- INFO - Creating image 'promise-img' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
-    Promise- INFO - Creating flavor 'promise-flavor'...
-    Promise- INFO - Exporting environment variables...
-    Promise- INFO - Running command: npm run -s test -- --reporter json
-    Promise- INFO - The test succeeded.
-    Promise- DEBUG -
-    {
-      "stats": {
-        "suites": 23,
-        "tests": 33,
-        "passes": 33,
-        "pending": 0,
-        "failures": 0,
-        "start": "2016-02-19T05:41:25.739Z",
-        "end": "2016-02-19T05:41:31.140Z",
-        "duration": 5524
-      },
-      "tests": [
-        {
-          "title": "should add a new OpenStack provider without error",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should add a new OpenStack provider without error",
-          "duration": 1217,
-          "err": {}
-        },
-        {
-          "title": "should update promise.providers with a new entry",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should update promise.providers with a new entry",
-          "duration": 10,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceProvider record in the store",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should contain a new ResourceProvider record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should add more capacity to the reservation service without error",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should add more capacity to the reservation service without error",
-          "duration": 25,
-          "err": {}
-        },
-        {
-          "title": "should update promise.pools with a new entry",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should update promise.pools with a new entry",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should contain a ResourcePool record in the store",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should contain a ResourcePool record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should report total collections and utilizations",
-          "fullTitle": "promise register OpenStack into resource pool query-capacity should report total collections and utilizations",
-          "duration": 18,
-          "err": {}
-        },
-        {
-          "title": "should contain newly added capacity pool",
-          "fullTitle": "promise register OpenStack into resource pool query-capacity should contain newly added capacity pool",
-          "duration": 8,
-          "err": {}
-        },
-        {
-          "title": "should create a new server in target provider without error",
-          "fullTitle": "promise allocation without reservation create-instance should create a new server in target provider without error",
-          "duration": 1768,
-          "err": {}
-        },
-        {
-          "title": "should update promise.allocations with a new entry",
-          "fullTitle": "promise allocation without reservation create-instance should update promise.allocations with a new entry",
-          "duration": 2,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceAllocation record in the store",
-          "fullTitle": "promise allocation without reservation create-instance should contain a new ResourceAllocation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should reference the created server ID from the provider",
-          "fullTitle": "promise allocation without reservation create-instance should reference the created server ID from the provider",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should have low priority state",
-          "fullTitle": "promise allocation without reservation create-instance should have low priority state",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create reservation record (no start/end) without error",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should create reservation record (no start/end) without error",
-          "duration": 41,
-          "err": {}
-        },
-        {
-          "title": "should update promise.reservations with a new entry",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should update promise.reservations with a new entry",
-          "duration": 7,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceReservation record in the store",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should contain a new ResourceReservation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create a new server in target provider (with reservation) without error",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should create a new server in target provider (with reservation) without error",
-          "duration": 1617,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceAllocation record in the store",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should contain a new ResourceAllocation record in the store",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should be referenced in the reservation record",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should be referenced in the reservation record",
-          "duration": 7,
-          "err": {}
-        },
-        {
-          "title": "should have high priority state",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should have high priority state",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create reservation record (for future) without error",
-          "fullTitle": "promise reservation for future use create-reservation should create reservation record (for future) without error",
-          "duration": 75,
-          "err": {}
-        },
-        {
-          "title": "should update promise.reservations with a new entry",
-          "fullTitle": "promise reservation for future use create-reservation should update promise.reservations with a new entry",
-          "duration": 17,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceReservation record in the store",
-          "fullTitle": "promise reservation for future use create-reservation should contain a new ResourceReservation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should contain newly created future reservation",
-          "fullTitle": "promise reservation for future use query-reservation should contain newly created future reservation",
-          "duration": 61,
-          "err": {}
-        },
-        {
-          "title": "should modify existing reservation without error",
-          "fullTitle": "promise reservation for future use update-reservation should modify existing reservation without error",
-          "duration": 65,
-          "err": {}
-        },
-        {
-          "title": "should modify existing reservation without error",
-          "fullTitle": "promise reservation for future use cancel-reservation should modify existing reservation without error",
-          "duration": 17,
-          "err": {}
-        },
-        {
-          "title": "should no longer contain record of the deleted reservation",
-          "fullTitle": "promise reservation for future use cancel-reservation should no longer contain record of the deleted reservation",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should decrease available capacity from a provider in the future",
-          "fullTitle": "promise capacity planning decrease-capacity should decrease available capacity from a provider in the future",
-          "duration": 15,
-          "err": {}
-        },
-        {
-          "title": "should increase available capacity from a provider in the future",
-          "fullTitle": "promise capacity planning increase-capacity should increase available capacity from a provider in the future",
-          "duration": 11,
-          "err": {}
-        },
-        {
-          "title": "should report available collections and utilizations",
-          "fullTitle": "promise capacity planning query-capacity should report available collections and utilizations",
-          "duration": 56,
-          "err": {}
-        },
-        {
-          "title": "should fail to create immediate reservation record with proper error",
-          "fullTitle": "promise reservation with conflict create-reservation should fail to create immediate reservation record with proper error",
-          "duration": 60,
-          "err": {}
-        },
-        {
-          "title": "should fail to create future reservation record with proper error",
-          "fullTitle": "promise reservation with conflict create-reservation should fail to create future reservation record with proper error",
-          "duration": 38,
-          "err": {}
-        },
-        {
-          "title": "should successfully destroy all allocations",
-          "fullTitle": "promise cleanup test allocations destroy-instance should successfully destroy all allocations",
-          "duration": 361,
-          "err": {}
-        }
-      ],
-      "pending": [],
-      "failures": [],
-      "passes": [
-        {
-          "title": "should add a new OpenStack provider without error",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should add a new OpenStack provider without error",
-          "duration": 1217,
-          "err": {}
-        },
-        {
-          "title": "should update promise.providers with a new entry",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should update promise.providers with a new entry",
-          "duration": 10,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceProvider record in the store",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should contain a new ResourceProvider record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should add more capacity to the reservation service without error",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should add more capacity to the reservation service without error",
-          "duration": 25,
-          "err": {}
-        },
-        {
-          "title": "should update promise.pools with a new entry",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should update promise.pools with a new entry",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should contain a ResourcePool record in the store",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should contain a ResourcePool record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should report total collections and utilizations",
-          "fullTitle": "promise register OpenStack into resource pool query-capacity should report total collections and utilizations",
-          "duration": 18,
-          "err": {}
-        },
-        {
-          "title": "should contain newly added capacity pool",
-          "fullTitle": "promise register OpenStack into resource pool query-capacity should contain newly added capacity pool",
-          "duration": 8,
-          "err": {}
-        },
-        {
-          "title": "should create a new server in target provider without error",
-          "fullTitle": "promise allocation without reservation create-instance should create a new server in target provider without error",
-          "duration": 1768,
-          "err": {}
-        },
-        {
-          "title": "should update promise.allocations with a new entry",
-          "fullTitle": "promise allocation without reservation create-instance should update promise.allocations with a new entry",
-          "duration": 2,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceAllocation record in the store",
-          "fullTitle": "promise allocation without reservation create-instance should contain a new ResourceAllocation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should reference the created server ID from the provider",
-          "fullTitle": "promise allocation without reservation create-instance should reference the created server ID from the provider",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should have low priority state",
-          "fullTitle": "promise allocation without reservation create-instance should have low priority state",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create reservation record (no start/end) without error",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should create reservation record (no start/end) without error",
-          "duration": 41,
-          "err": {}
-        },
-        {
-          "title": "should update promise.reservations with a new entry",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should update promise.reservations with a new entry",
-          "duration": 7,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceReservation record in the store",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should contain a new ResourceReservation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create a new server in target provider (with reservation) without error",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should create a new server in target provider (with reservation) without error",
-          "duration": 1617,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceAllocation record in the store",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should contain a new ResourceAllocation record in the store",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should be referenced in the reservation record",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should be referenced in the reservation record",
-          "duration": 7,
-          "err": {}
-        },
-        {
-          "title": "should have high priority state",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should have high priority state",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create reservation record (for future) without error",
-          "fullTitle": "promise reservation for future use create-reservation should create reservation record (for future) without error",
-          "duration": 75,
-          "err": {}
-        },
-        {
-          "title": "should update promise.reservations with a new entry",
-          "fullTitle": "promise reservation for future use create-reservation should update promise.reservations with a new entry",
-          "duration": 17,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceReservation record in the store",
-          "fullTitle": "promise reservation for future use create-reservation should contain a new ResourceReservation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should contain newly created future reservation",
-          "fullTitle": "promise reservation for future use query-reservation should contain newly created future reservation",
-          "duration": 61,
-          "err": {}
-        },
-        {
-          "title": "should modify existing reservation without error",
-          "fullTitle": "promise reservation for future use update-reservation should modify existing reservation without error",
-          "duration": 65,
-          "err": {}
-        },
-        {
-          "title": "should modify existing reservation without error",
-          "fullTitle": "promise reservation for future use cancel-reservation should modify existing reservation without error",
-          "duration": 17,
-          "err": {}
-        },
-        {
-          "title": "should no longer contain record of the deleted reservation",
-          "fullTitle": "promise reservation for future use cancel-reservation should no longer contain record of the deleted reservation",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should decrease available capacity from a provider in the future",
-          "fullTitle": "promise capacity planning decrease-capacity should decrease available capacity from a provider in the future",
-          "duration": 15,
-          "err": {}
-        },
-        {
-          "title": "should increase available capacity from a provider in the future",
-          "fullTitle": "promise capacity planning increase-capacity should increase available capacity from a provider in the future",
-          "duration": 11,
-          "err": {}
-        },
-        {
-          "title": "should report available collections and utilizations",
-          "fullTitle": "promise capacity planning query-capacity should report available collections and utilizations",
-          "duration": 56,
-          "err": {}
-        },
-        {
-          "title": "should fail to create immediate reservation record with proper error",
-          "fullTitle": "promise reservation with conflict create-reservation should fail to create immediate reservation record with proper error",
-          "duration": 60,
-          "err": {}
-        },
-        {
-          "title": "should fail to create future reservation record with proper error",
-          "fullTitle": "promise reservation with conflict create-reservation should fail to create future reservation record with proper error",
-          "duration": 38,
-          "err": {}
-        },
-        {
-          "title": "should successfully destroy all allocations",
-          "fullTitle": "promise cleanup test allocations destroy-instance should successfully destroy all allocations",
-          "duration": 361,
-          "err": {}
-        }
-      ]
-    }
-    Promise- INFO -
-    ****************************************
-              Promise test report
-
-    ****************************************
-     Suites:    23
-     Tests:     33
-     Passes:    33
-     Pending:   0
-     Failures:  0
-     Start:     2016-02-19T05:41:25.739Z
-     End:       2016-02-19T05:41:31.140Z
-     Duration:  6.301
-    ****************************************
-::
-
 
 Rally
 ^^^^^
 ::
+
     FUNCTEST.info: Running Rally benchmark suite...
     run_rally - INFO - Starting test scenario "authenticate" ...
     run_rally - INFO -
@@ -2384,4 +1792,606 @@ Rally
     | TOTAL:            | 01:35:01   | 232           | 100.00%   |
     +===================+============+===============+===========+
 
+
+
+SDN Controller
+--------------
+
+ODL
+^^^^
 ::
+
+    ==============================================================================
+    Basic
+    ==============================================================================
+    Basic.010 Restconf OK :: Test suite to verify Restconf is OK
+    ==============================================================================
+    Get Controller Modules :: Get the controller modules via Restconf     | PASS |
+    ------------------------------------------------------------------------------
+    Basic.010 Restconf OK :: Test suite to verify Restconf is OK          | PASS |
+    1 critical test, 1 passed, 0 failed
+    1 test total, 1 passed, 0 failed
+    ==============================================================================
+    Basic                                                                 | PASS |
+    1 critical test, 1 passed, 0 failed
+    1 test total, 1 passed, 0 failed
+    ==============================================================================
+    Output:  /home/opnfv/repos/functest/output.xml
+    Log:     /home/opnfv/repos/functest/log.html
+    Report:  /home/opnfv/repos/functest/report.html
+    [1;32mStarting test: test/csit/suites/openstack/neutron/ [0m
+    ==============================================================================
+    Neutron :: Test suite for Neutron Plugin
+    ==============================================================================
+    Neutron.Networks :: Checking Network created in OpenStack are pushed to Ope...
+    ==============================================================================
+    Check OpenStack Networks :: Checking OpenStack Neutron for known n... | PASS |
+    ------------------------------------------------------------------------------
+    Check OpenDaylight Networks :: Checking OpenDaylight Neutron API f... | PASS |
+    ------------------------------------------------------------------------------
+    Create Network :: Create new network in OpenStack                     | PASS |
+    ------------------------------------------------------------------------------
+    Check Network :: Check Network created in OpenDaylight                | PASS |
+    ------------------------------------------------------------------------------
+    Neutron.Networks :: Checking Network created in OpenStack are push... | PASS |
+    4 critical tests, 4 passed, 0 failed
+    4 tests total, 4 passed, 0 failed
+    ==============================================================================
+    Neutron.Subnets :: Checking Subnets created in OpenStack are pushed to Open...
+    ==============================================================================
+    Check OpenStack Subnets :: Checking OpenStack Neutron for known Su... | PASS |
+    ------------------------------------------------------------------------------
+    Check OpenDaylight subnets :: Checking OpenDaylight Neutron API fo... | PASS |
+    ------------------------------------------------------------------------------
+    Create New subnet :: Create new subnet in OpenStack                   | PASS |
+    ------------------------------------------------------------------------------
+    Check New subnet :: Check new subnet created in OpenDaylight          | PASS |
+    ------------------------------------------------------------------------------
+    Neutron.Subnets :: Checking Subnets created in OpenStack are pushe... | PASS |
+    4 critical tests, 4 passed, 0 failed
+    4 tests total, 4 passed, 0 failed
+    ==============================================================================
+    Neutron.Ports :: Checking Port created in OpenStack are pushed to OpenDaylight
+    ==============================================================================
+    Check OpenStack ports :: Checking OpenStack Neutron for known ports   | PASS |
+    ------------------------------------------------------------------------------
+    Check OpenDaylight ports :: Checking OpenDaylight Neutron API for ... | PASS |
+    ------------------------------------------------------------------------------
+    Create New Port :: Create new port in OpenStack                       | PASS |
+    ------------------------------------------------------------------------------
+    Check New Port :: Check new subnet created in OpenDaylight            | PASS |
+    ------------------------------------------------------------------------------
+    Neutron.Ports :: Checking Port created in OpenStack are pushed to ... | PASS |
+    4 critical tests, 4 passed, 0 failed
+    4 tests total, 4 passed, 0 failed
+    ==============================================================================
+    Neutron.Delete Ports :: Checking Port deleted in OpenStack are deleted also...
+    ==============================================================================
+    Delete New Port :: Delete previously created port in OpenStack        | PASS |
+    ------------------------------------------------------------------------------
+    Check Port Deleted :: Check port deleted in OpenDaylight              | PASS |
+    ------------------------------------------------------------------------------
+    Neutron.Delete Ports :: Checking Port deleted in OpenStack are del... | PASS |
+    2 critical tests, 2 passed, 0 failed
+    2 tests total, 2 passed, 0 failed
+    ==============================================================================
+    Neutron.Delete Subnets :: Checking Subnets deleted in OpenStack are deleted...
+    ==============================================================================
+    Delete New subnet :: Delete previously created subnet in OpenStack    | PASS |
+    ------------------------------------------------------------------------------
+    Check New subnet deleted :: Check subnet deleted in OpenDaylight      | PASS |
+    ------------------------------------------------------------------------------
+    Neutron.Delete Subnets :: Checking Subnets deleted in OpenStack ar... | PASS |
+    2 critical tests, 2 passed, 0 failed
+    2 tests total, 2 passed, 0 failed
+    ==============================================================================
+    Neutron.Delete Networks :: Checking Network deleted in OpenStack are delete...
+    ==============================================================================
+    Delete Network :: Delete network in OpenStack                         | PASS |
+    ------------------------------------------------------------------------------
+    Check Network deleted :: Check Network deleted in OpenDaylight        | PASS |
+    ------------------------------------------------------------------------------
+    Neutron.Delete Networks :: Checking Network deleted in OpenStack a... | PASS |
+    2 critical tests, 2 passed, 0 failed
+    2 tests total, 2 passed, 0 failed
+    ==============================================================================
+    Neutron :: Test suite for Neutron Plugin                              | PASS |
+    18 critical tests, 18 passed, 0 failed
+    18 tests total, 18 passed, 0 failed
+    ==============================================================================
+    Output:  /home/opnfv/repos/functest/output.xml
+    Log:     /home/opnfv/repos/functest/log.html
+    Report:  /home/opnfv/repos/functest/report.html
+    [0;32mFinal report is located:[0m
+    Log:     /home/opnfv/repos/functest/log.html
+    Report:  /home/opnfv/repos/functest/report.html
+
+
+
+Feature tests
+-------------
+
+vIMS
+^^^^
+::
+
+    FUNCTEST.info: Running vIMS test...
+    vIMS - INFO - Prepare OpenStack plateform (create tenant and user)
+    vIMS - INFO - Update OpenStack creds informations
+    vIMS - INFO - Upload some OS images if it doesn't exist
+    vIMS - INFO - centos_7 image doesn't exist on glance repository.
+                                Try downloading this image and upload on glance !
+    vIMS - INFO - ubuntu_14.04 image doesn't exist on glance repository.
+                                Try downloading this image and upload on glance !
+    vIMS - INFO - Update security group quota for this tenant
+    vIMS - INFO - Update cinder quota for this tenant
+    vIMS - INFO - Collect flavor id for cloudify manager server
+    vIMS - INFO - Prepare virtualenv for cloudify-cli
+    vIMS - INFO - Downloading the cloudify manager server blueprint
+    vIMS - INFO - Cloudify deployment Start Time:'2016-02-19 05:44:47'
+    vIMS - INFO - Writing the inputs file
+    vIMS - INFO - Launching the cloudify-manager deployment
+    vIMS - INFO - Cloudify-manager server is UP !
+    vIMS - INFO - Cloudify deployment duration:'1149.9'
+    vIMS - INFO - Collect flavor id for all clearwater vm
+    vIMS - INFO - vIMS VNF deployment Start Time:'2016-02-19 06:04:00'
+    vIMS - INFO - Downloading the openstack-blueprint.yaml blueprint
+    vIMS - INFO - Writing the inputs file
+    vIMS - INFO - Launching the clearwater deployment
+    vIMS - INFO - The deployment of clearwater-opnfv is ended
+    vIMS - INFO - vIMS VNF deployment duration:'1133.8'
+    vIMS - INFO - vIMS functional test Start Time:'2016-02-19 06:25:59'
+    vIMS - INFO - vIMS functional test duration:'2.9'
+    vIMS - INFO - Launching the clearwater-opnfv undeployment
+    vIMS - ERROR - Error when executing command /bin/bash -c 'source /home/opnfv/functest/data/vIMS/venv_cloudify/bin/activate; cd /home/opnfv/functest/data/vIMS/; cfy executions start -w uninstall -d clearwater-opnfv --timeout 1800 ; cfy deployments delete -d clearwater-opnfv; '
+    vIMS - INFO - Launching the cloudify-manager undeployment
+    vIMS - INFO - Cloudify-manager server has been successfully removed!
+    vIMS - INFO - Removing vIMS tenant ..
+    vIMS - INFO - Removing vIMS user ..
+
+
+Promise
+^^^^^^^
+::
+
+    FUNCTEST.info: Running PROMISE test case...
+    Promise- INFO - Creating tenant 'promise'...
+    Promise- INFO - Adding role '9d0a0a36d3d54cdcb4cd3c29c5f79a28' to tenant 'promise'...
+    Promise- INFO - Creating user 'promiser'...
+    Promise- INFO - Updating OpenStack credentials...
+    Promise- INFO - Creating image 'promise-img' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
+    Promise- INFO - Creating flavor 'promise-flavor'...
+    Promise- INFO - Exporting environment variables...
+    Promise- INFO - Running command: npm run -s test -- --reporter json
+    Promise- INFO - The test succeeded.
+    Promise- DEBUG -
+    {
+      "stats": {
+        "suites": 23,
+        "tests": 33,
+        "passes": 33,
+        "pending": 0,
+        "failures": 0,
+        "start": "2016-02-19T05:41:25.739Z",
+        "end": "2016-02-19T05:41:31.140Z",
+        "duration": 5524
+      },
+      "tests": [
+        {
+          "title": "should add a new OpenStack provider without error",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should add a new OpenStack provider without error",
+          "duration": 1217,
+          "err": {}
+        },
+        {
+          "title": "should update promise.providers with a new entry",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should update promise.providers with a new entry",
+          "duration": 10,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceProvider record in the store",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should contain a new ResourceProvider record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should add more capacity to the reservation service without error",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should add more capacity to the reservation service without error",
+          "duration": 25,
+          "err": {}
+        },
+        {
+          "title": "should update promise.pools with a new entry",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should update promise.pools with a new entry",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should contain a ResourcePool record in the store",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should contain a ResourcePool record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should report total collections and utilizations",
+          "fullTitle": "promise register OpenStack into resource pool query-capacity should report total collections and utilizations",
+          "duration": 18,
+          "err": {}
+        },
+        {
+          "title": "should contain newly added capacity pool",
+          "fullTitle": "promise register OpenStack into resource pool query-capacity should contain newly added capacity pool",
+          "duration": 8,
+          "err": {}
+        },
+        {
+          "title": "should create a new server in target provider without error",
+          "fullTitle": "promise allocation without reservation create-instance should create a new server in target provider without error",
+          "duration": 1768,
+          "err": {}
+        },
+        {
+          "title": "should update promise.allocations with a new entry",
+          "fullTitle": "promise allocation without reservation create-instance should update promise.allocations with a new entry",
+          "duration": 2,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceAllocation record in the store",
+          "fullTitle": "promise allocation without reservation create-instance should contain a new ResourceAllocation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should reference the created server ID from the provider",
+          "fullTitle": "promise allocation without reservation create-instance should reference the created server ID from the provider",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should have low priority state",
+          "fullTitle": "promise allocation without reservation create-instance should have low priority state",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create reservation record (no start/end) without error",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should create reservation record (no start/end) without error",
+          "duration": 41,
+          "err": {}
+        },
+        {
+          "title": "should update promise.reservations with a new entry",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should update promise.reservations with a new entry",
+          "duration": 7,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceReservation record in the store",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should contain a new ResourceReservation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create a new server in target provider (with reservation) without error",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should create a new server in target provider (with reservation) without error",
+          "duration": 1617,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceAllocation record in the store",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should contain a new ResourceAllocation record in the store",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should be referenced in the reservation record",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should be referenced in the reservation record",
+          "duration": 7,
+          "err": {}
+        },
+        {
+          "title": "should have high priority state",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should have high priority state",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create reservation record (for future) without error",
+          "fullTitle": "promise reservation for future use create-reservation should create reservation record (for future) without error",
+          "duration": 75,
+          "err": {}
+        },
+        {
+          "title": "should update promise.reservations with a new entry",
+          "fullTitle": "promise reservation for future use create-reservation should update promise.reservations with a new entry",
+          "duration": 17,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceReservation record in the store",
+          "fullTitle": "promise reservation for future use create-reservation should contain a new ResourceReservation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should contain newly created future reservation",
+          "fullTitle": "promise reservation for future use query-reservation should contain newly created future reservation",
+          "duration": 61,
+          "err": {}
+        },
+        {
+          "title": "should modify existing reservation without error",
+          "fullTitle": "promise reservation for future use update-reservation should modify existing reservation without error",
+          "duration": 65,
+          "err": {}
+        },
+        {
+          "title": "should modify existing reservation without error",
+          "fullTitle": "promise reservation for future use cancel-reservation should modify existing reservation without error",
+          "duration": 17,
+          "err": {}
+        },
+        {
+          "title": "should no longer contain record of the deleted reservation",
+          "fullTitle": "promise reservation for future use cancel-reservation should no longer contain record of the deleted reservation",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should decrease available capacity from a provider in the future",
+          "fullTitle": "promise capacity planning decrease-capacity should decrease available capacity from a provider in the future",
+          "duration": 15,
+          "err": {}
+        },
+        {
+          "title": "should increase available capacity from a provider in the future",
+          "fullTitle": "promise capacity planning increase-capacity should increase available capacity from a provider in the future",
+          "duration": 11,
+          "err": {}
+        },
+        {
+          "title": "should report available collections and utilizations",
+          "fullTitle": "promise capacity planning query-capacity should report available collections and utilizations",
+          "duration": 56,
+          "err": {}
+        },
+        {
+          "title": "should fail to create immediate reservation record with proper error",
+          "fullTitle": "promise reservation with conflict create-reservation should fail to create immediate reservation record with proper error",
+          "duration": 60,
+          "err": {}
+        },
+        {
+          "title": "should fail to create future reservation record with proper error",
+          "fullTitle": "promise reservation with conflict create-reservation should fail to create future reservation record with proper error",
+          "duration": 38,
+          "err": {}
+        },
+        {
+          "title": "should successfully destroy all allocations",
+          "fullTitle": "promise cleanup test allocations destroy-instance should successfully destroy all allocations",
+          "duration": 361,
+          "err": {}
+        }
+      ],
+      "pending": [],
+      "failures": [],
+      "passes": [
+        {
+          "title": "should add a new OpenStack provider without error",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should add a new OpenStack provider without error",
+          "duration": 1217,
+          "err": {}
+        },
+        {
+          "title": "should update promise.providers with a new entry",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should update promise.providers with a new entry",
+          "duration": 10,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceProvider record in the store",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should contain a new ResourceProvider record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should add more capacity to the reservation service without error",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should add more capacity to the reservation service without error",
+          "duration": 25,
+          "err": {}
+        },
+        {
+          "title": "should update promise.pools with a new entry",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should update promise.pools with a new entry",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should contain a ResourcePool record in the store",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should contain a ResourcePool record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should report total collections and utilizations",
+          "fullTitle": "promise register OpenStack into resource pool query-capacity should report total collections and utilizations",
+          "duration": 18,
+          "err": {}
+        },
+        {
+          "title": "should contain newly added capacity pool",
+          "fullTitle": "promise register OpenStack into resource pool query-capacity should contain newly added capacity pool",
+          "duration": 8,
+          "err": {}
+        },
+        {
+          "title": "should create a new server in target provider without error",
+          "fullTitle": "promise allocation without reservation create-instance should create a new server in target provider without error",
+          "duration": 1768,
+          "err": {}
+        },
+        {
+          "title": "should update promise.allocations with a new entry",
+          "fullTitle": "promise allocation without reservation create-instance should update promise.allocations with a new entry",
+          "duration": 2,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceAllocation record in the store",
+          "fullTitle": "promise allocation without reservation create-instance should contain a new ResourceAllocation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should reference the created server ID from the provider",
+          "fullTitle": "promise allocation without reservation create-instance should reference the created server ID from the provider",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should have low priority state",
+          "fullTitle": "promise allocation without reservation create-instance should have low priority state",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create reservation record (no start/end) without error",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should create reservation record (no start/end) without error",
+          "duration": 41,
+          "err": {}
+        },
+        {
+          "title": "should update promise.reservations with a new entry",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should update promise.reservations with a new entry",
+          "duration": 7,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceReservation record in the store",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should contain a new ResourceReservation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create a new server in target provider (with reservation) without error",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should create a new server in target provider (with reservation) without error",
+          "duration": 1617,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceAllocation record in the store",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should contain a new ResourceAllocation record in the store",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should be referenced in the reservation record",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should be referenced in the reservation record",
+          "duration": 7,
+          "err": {}
+        },
+        {
+          "title": "should have high priority state",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should have high priority state",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create reservation record (for future) without error",
+          "fullTitle": "promise reservation for future use create-reservation should create reservation record (for future) without error",
+          "duration": 75,
+          "err": {}
+        },
+        {
+          "title": "should update promise.reservations with a new entry",
+          "fullTitle": "promise reservation for future use create-reservation should update promise.reservations with a new entry",
+          "duration": 17,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceReservation record in the store",
+          "fullTitle": "promise reservation for future use create-reservation should contain a new ResourceReservation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should contain newly created future reservation",
+          "fullTitle": "promise reservation for future use query-reservation should contain newly created future reservation",
+          "duration": 61,
+          "err": {}
+        },
+        {
+          "title": "should modify existing reservation without error",
+          "fullTitle": "promise reservation for future use update-reservation should modify existing reservation without error",
+          "duration": 65,
+          "err": {}
+        },
+        {
+          "title": "should modify existing reservation without error",
+          "fullTitle": "promise reservation for future use cancel-reservation should modify existing reservation without error",
+          "duration": 17,
+          "err": {}
+        },
+        {
+          "title": "should no longer contain record of the deleted reservation",
+          "fullTitle": "promise reservation for future use cancel-reservation should no longer contain record of the deleted reservation",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should decrease available capacity from a provider in the future",
+          "fullTitle": "promise capacity planning decrease-capacity should decrease available capacity from a provider in the future",
+          "duration": 15,
+          "err": {}
+        },
+        {
+          "title": "should increase available capacity from a provider in the future",
+          "fullTitle": "promise capacity planning increase-capacity should increase available capacity from a provider in the future",
+          "duration": 11,
+          "err": {}
+        },
+        {
+          "title": "should report available collections and utilizations",
+          "fullTitle": "promise capacity planning query-capacity should report available collections and utilizations",
+          "duration": 56,
+          "err": {}
+        },
+        {
+          "title": "should fail to create immediate reservation record with proper error",
+          "fullTitle": "promise reservation with conflict create-reservation should fail to create immediate reservation record with proper error",
+          "duration": 60,
+          "err": {}
+        },
+        {
+          "title": "should fail to create future reservation record with proper error",
+          "fullTitle": "promise reservation with conflict create-reservation should fail to create future reservation record with proper error",
+          "duration": 38,
+          "err": {}
+        },
+        {
+          "title": "should successfully destroy all allocations",
+          "fullTitle": "promise cleanup test allocations destroy-instance should successfully destroy all allocations",
+          "duration": 361,
+          "err": {}
+        }
+      ]
+    }
+    Promise- INFO -
+    ****************************************
+              Promise test report
+
+    ****************************************
+     Suites:    23
+     Tests:     33
+     Passes:    33
+     Pending:   0
+     Failures:  0
+     Start:     2016-02-19T05:41:25.739Z
+     End:       2016-02-19T05:41:31.140Z
+     Duration:  6.301
+    ****************************************
+
+

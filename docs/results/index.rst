@@ -8,5 +8,5 @@ FuncTest test results
 .. toctree::
    :maxdepth: 4
 
-  overview.rst
-  results.rst
+.. include:: ./overview.rst
+.. include:: ./results.rst
