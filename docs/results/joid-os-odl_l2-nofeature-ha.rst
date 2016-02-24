@@ -10,6 +10,7 @@ VIM
 vping_ssh
 ^^^^^^^^^
 ::
+
   FUNCTEST.info: Running vPing-SSH test...
   vPing_ssh- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
   vPing_ssh- INFO - Creating neutron network vping-net...
@@ -41,12 +42,12 @@ vping_ssh
   vPing_ssh- INFO - vPing duration:'33.5' s.
   vPing_ssh- INFO - Cleaning up...
   vPing_ssh- INFO - vPing OK
-::
+
 
 vping_userdata
 ^^^^^^^^^^^^^^
-
 ::
+
   FUNCTEST.info: Running vPing-userdata test...
   vPing_userdata- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
   vPing_userdata- INFO - Creating neutron network vping-net...
@@ -87,11 +88,12 @@ vping_userdata
   vPing_userdata- INFO - vPing OK
   vPing_userdata- INFO - Cleaning up...
   vPing_userdata- INFO - Deleting network 'vping-net'...
-::
+
 
 Tempest
 ^^^^^^^
 ::
+
   FUNCTEST.info: Running Tempest tests...
   run_tempest - INFO - Creating tenant and user for Tempest suite
   2016-02-23 10:28:17.615 23826 INFO rally.verification.tempest.tempest [-] Starting: Creating configuration file for Tempest.
@@ -325,11 +327,12 @@ Tempest
   run_tempest - INFO - Results: {'timestart': '2016-02-2310:28:27.307831', 'duration': 931, 'tests': 210, 'failures': 5}
   run_tempest - INFO - Pushing results to DB: 'http://testresults.opnfv.org/testapi/results'.
   run_tempest - INFO - Deleting tenant and user for Tempest suite)
-::
+
 
 Rally
 ^^^^^
 ::
+
   FUNCTEST.info: Running Rally benchmark suite...
   run_rally - INFO - Starting test scenario "authenticate" ...
   run_rally - INFO -
@@ -1630,7 +1633,7 @@ Rally
   +===================+============+===============+===========+
   | TOTAL:            | 01:25:53   | 232           | 100.00%   |
   +===================+============+===============+===========+
-::
+
 
 SDN Controller
 --------------
@@ -1638,6 +1641,7 @@ SDN Controller
 ODL
 ^^^
 ::
+
   ==============================================================================
   Basic
   ==============================================================================
@@ -1734,7 +1738,7 @@ ODL
   Neutron :: Test suite for Neutron Plugin                              | PASS |
   18 critical tests, 18 passed, 0 failed
   18 tests total, 18 passed, 0 failed
-::
+
 
 Feature tests
 -------------
@@ -1742,6 +1746,7 @@ Feature tests
 Promise
 ^^^^^^^
 ::
+
   FUNCTEST.info: Running PROMISE test case...
   Promise- INFO - Creating tenant 'promise'...
   Promise- INFO - Adding role 'eed9b04b536646c994679496e7b653cc' to tenant 'promise'...
@@ -2182,4 +2187,3 @@ Promise
   ****************************************
 
   Promise- INFO - Pushing results to DB...
-::

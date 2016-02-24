@@ -10,6 +10,7 @@ VIM
 vping_ssh
 ^^^^^^^^^
 ::
+
   FUNCTEST.info: Running vPing-SSH test...
   vPing_ssh- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
   vPing_ssh- INFO - Creating neutron network vping-net...
@@ -41,11 +42,11 @@ vping_ssh
   vPing_ssh- INFO - vPing duration:'262.5' s.
   vPing_ssh- INFO - Cleaning up...
   vPing_ssh- INFO - vPing OK
-::
 
 Tempest
 ^^^^^^^
 ::
+
   FUNCTEST.info: Running Tempest tests...
   run_tempest - INFO - Creating tenant and user for Tempest suite
   2016-02-22 16:28:55.743 23855 INFO rally.verification.tempest.tempest [-] Starting: Creating configuration file for Tempest.
@@ -279,11 +280,12 @@ Tempest
   run_tempest - INFO - Results: {'timestart': '2016-02-2216:29:01.778060', 'duration': 1082, 'tests': 210, 'failures': 11}
   run_tempest - INFO - Pushing results to DB: 'http://testresults.opnfv.org/testapi/results'.
   run_tempest - INFO - Deleting tenant and user for Tempest suite)
-::
+
 
 Rally
 ^^^^^
 ::
+
   FUNCTEST.info: Running Rally benchmark suite...
   run_rally - INFO - Starting test scenario "authenticate" ...
   run_rally - INFO -
@@ -1581,7 +1583,7 @@ Rally
   +===================+============+===============+===========+
   | TOTAL:            | 00:55:38   | 229           | 99.15%    |
   +===================+============+===============+===========+
-::
+
 
 SDN Controller
 --------------
@@ -1589,6 +1591,7 @@ SDN Controller
 ONOS
 ^^^^
 ::
+
   FUNCTEST.info: Running ONOS test case...
   Cloning into '/home/opnfv/repos/functest/testcases/Controllers/ONOS/Teston/CI/OnosSystemTest'...
   FUNCvirNetNB - INFO - Creating component Handle: ONOSrest
@@ -2113,4 +2116,3 @@ ONOS
    Success Percentage   : 100%
    Execution Result     : 100%
   Disconnecting from ONOSrest: <drivers.common.api.controller.onosrestdriver.OnosRestDriver object at 0x7fcc82fc7ad0>
-::
