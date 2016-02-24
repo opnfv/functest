@@ -106,10 +106,12 @@ def push_results_to_db(case, payload):
     installer = functest_utils.get_installer_type(logger)
     scenario = functest_utils.get_scenario(logger)
     pod_name = functest_utils.get_pod_name(logger)
+    build_tag = functest_utils.get_build_tag(logger)
     # TODO pod_name hardcoded, info shall come from Jenkins
     params = {"project_name": "functest", "case_name": case,
               "pod_name": pod_name, "installer": installer,
-              "version": scenario, "details": payload}
+              "version": scenario, "build_tag": build_tag, 
+              "details": payload}
 
     headers = {'Content-Type': 'application/json'}
     r = requests.post(url, data=json.dumps(params), headers=headers)

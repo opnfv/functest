@@ -63,17 +63,19 @@ def main():
     }
     pod_name = functest_utils.get_pod_name(logger)
     scenario = functest_utils.get_scenario(logger)
+    build_tag = functest_utils.get_build_tag(logger)
     logger.info("Pushing result: TEST_DB_URL=%(db)s pod_name=%(pod)s "
                 "scenario=%(s)s details=%(d)s" % {
                     'db': TEST_DB_URL,
                     'pod': pod_name,
                     's': scenario,
+                    'b': build_tag,
                     'd': details,
                 })
     functest_utils.push_results_to_db(TEST_DB_URL,
                                       'doctor','doctor-notification',
-                                      logger, pod_name, scenario,
-                                      details)
+                                      logger, pod_name, scenario, 
+                                      build_tag, details)
 
 
 if __name__ == '__main__':
