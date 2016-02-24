@@ -2,7 +2,7 @@
 .. http://creativecommons.org/licenses/by/4.0
 
 FuncTest test result document overview
-======================================
+--------------------------------------
 
 Functest project is described in `Functest user guide`_.
 The user guide details the different test cases as well as the possible errors.
@@ -14,54 +14,49 @@ considered to evaluate whether the test case can be run or not. That is why all
 the number of test cases may vary from 1 installer to another and from 1
 scenario to another.
 
-The list of scenario supported by installer can be described as follows::
+The list of scenario supported by installer can be described as follows:
 
- +================+=========+=========+=========+=========+
- |    Scenario    |  Apex   | Compass |  Fuel   |   Joid  |
- +================+=========+=========+=========+=========+
- |   odl_l2       |    X    |    X    |    X    |     X   |
- +----------------+---------+---------+---------+---------+
- |   odl_l3       |    X    |         |    X    |         |
- +----------------+---------+---------+---------+---------+
- |   onos         |    X    |    X    |    X    |     X   |
- +----------------+---------+---------+---------+---------+
- |   nosdn        |         |    X    |    X    |     X   |
- +----------------+---------+---------+---------+---------+
- |   odl_l2-sfc   |    X    |         |         |         |
- +----------------+---------+---------+---------+---------+
- |  odl_l2-bgpvpn |         |         |    X    |         |
- +----------------+---------+---------+---------+---------+
- |   ovs (dpdk)   |         |         |    X    |         |
- +----------------+---------+---------+---------+---------+
++----------------+---------+---------+---------+---------+
+|    Scenario    |  Apex   | Compass |  Fuel   |   Joid  |
++================+=========+=========+=========+=========+
+|   odl_l2       |    X    |    X    |    X    |    X    |
++----------------+---------+---------+---------+---------+
+|   onos         |         |    X    |         |         |
++----------------+---------+---------+---------+---------+
+|   nosdn        |         |    X    |    X    |         |
++----------------+---------+---------+---------+---------+
+|   ovs (dpdk)   |         |         |    X    |         |
++----------------+---------+---------+---------+---------+
 
 The matrix below details the Functest runnable tests versus the installer and
-the scenario::
+the scenario:
 
- +================+=============+=============+=============+=============+
- |  Test cases    |    Apex     |   Compass   |    Fuel     |     Joid    |
- +================+=============+=============+=============+=============+
- |   vPing        |all scenario |     all     |     all     |     all     |
- +----------------+-------------+-------------+-------------+-------------+
- | vPing userdata | all except  | all except  | all except  | all except  |
- |                |   ONOS      |    ONOS     |    ONOS     |    ONOS     |
- +----------------+-------------+-------------+-------------+-------------+
- |   Tempest      |     all     |     all     |     all     |     all     |
- +----------------+-------------+-------------+-------------+-------------+
- |   Rally        |     all     |     all     |     all     |     all     |
- +----------------+-------------+-------------+-------------+-------------+
- |   ODL          |    all ODL  |  all ODL    |  all ODL    |  all ODL    |
- +----------------+-------------+-------------+-------------+-------------+
- |   ONOS         |    ONOS     |    ONOS     |  ONOS       |     ONOS    |
- +----------------+-------------+-------------+-------------+-------------+
- |   Promise      |     no      |     no      |    all      |   all       |
- +----------------+-------------+-------------+-------------+-------------+
- |     vIMS       | all except  | all except  | all except  | all except  |
- |                |   ONOS      |    ONOS     |    ONOS     |    ONOS     |
- +----------------+-------------+-------------+-------------+-------------+
- |   Doctor       |     all     |     no      |    no       |   no        |
- +----------------+-------------+-------------+-------------+-------------+
- |   SDNVPN       |     no      |     no      |   bgpvpn    |   no        |
- +----------------+-------------+-------------+-------------+-------------+
++----------------+-------------+-------------+-------------+-------------+
+|  Test cases    |    Apex     |   Compass   |    Fuel     |     Joid    |
++================+=============+=============+=============+=============+
+|   vPing SSH    | all         | all         | all         | all         |
++----------------+-------------+-------------+-------------+-------------+
+| vPing userdata | all except  | all except  | all except  | all except  |
+|                | ONOS        | ONOS        | ONOS        | ONOS        |
++----------------+-------------+-------------+-------------+-------------+
+| Tempest        | all         | all         | all         | all         |
++----------------+-------------+-------------+-------------+-------------+
+| Rally          | all         | all         | all         | all         |
++----------------+-------------+-------------+-------------+-------------+
+| ODL            | all ODL     | all ODL     | all ODL     | all ODL     |
++----------------+-------------+-------------+-------------+-------------+
+| ONOS           | ONOS        | ONOS        | ONOS        | ONOS        |
++----------------+-------------+-------------+-------------+-------------+
+| Promise        | no          | no          | all         | all         |
++----------------+-------------+-------------+-------------+-------------+
+| vIMS           | all except  | all except  | all except  | all except  |
+|                | ONOS        | ONOS        | ONOS        | ONOS        |
++----------------+-------------+-------------+-------------+-------------+
+| Doctor         | all         | no          | no          | no          |
++----------------+-------------+-------------+-------------+-------------+
+
+all means that the test case is run on all the scenarios related to the
+installer.
 
 Functest results from continuous integration can be found in:
  * jenkins logs: https://build.opnfv.org/ci/view/functest/
@@ -69,7 +64,7 @@ Functest results from continuous integration can be found in:
  Rally html pages
 
 Additional test result assests and information
-==============================================
+----------------------------------------------
 
 The Functest deals with 2 dashboards:
  * The `Test Dashboard`_ provides an overview of all the projects
