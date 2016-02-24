@@ -1,5 +1,11 @@
+.. This work is licensed under a Creative Commons Attribution 4.0 International License.
+.. http://creativecommons.org/licenses/by/4.0
+
 Executing the functest suites
 =============================
+
+.. toctree::
+   :maxdepth: 2
 
 Manual testing
 --------------
@@ -85,7 +91,8 @@ by editing *test_list.txt* file before executing *run_tests.sh* script. This fil
 is located in *$repos_dir/functest/testcases/VIM/OpenStack/CI/custom_tests/test_list.txt*
 
 Although *run_tests.sh* provides an easy way to run any test, it is possible to
-do a direct call to the desired test script. For example::
+do a direct call to the desired test script. For example:
+
    python $repos_dir/functest/testcases/vPing/vPing.py -d
 
 Automated testing
