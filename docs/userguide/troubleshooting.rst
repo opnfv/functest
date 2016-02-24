@@ -1,7 +1,10 @@
+.. This work is licensed under a Creative Commons Attribution 4.0 International License.
+.. http://creativecommons.org/licenses/by/4.0
 
 Troubleshooting
 ===============
 
+---
 VIM
 ---
 
@@ -61,6 +64,7 @@ Rally
 
 Same error causes than for Tempest mentioned above may lead to error in Rally.
 
+-----------
 Controllers
 -----------
 
@@ -82,7 +86,7 @@ TODO
 OpenContrail
 ^^^^^^^^^^^^
 
-
+-------
 Feature
 -------
 
