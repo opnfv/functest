@@ -195,31 +195,31 @@ Tempest
 
 In the upstream OpenStack CI all the Tempest test cases are supposed to pass.
 If some test cases fail in an OPNFV deployment, the reason is very probably one
-of the following::
+of the following
 
- +-----------------------------+------------------------------------------------+
- | Error                       | Details                                        |
- +=============================+================================================+
- | Resources required for test | Such resources could be e.g. an external       |
- | case execution are missing  | network and access to the management subnet    |
- |                             | (adminURL) from the Functest docker container. |
- +-----------------------------+------------------------------------------------+
- | OpenStack components or     | Check running services in the controller and   |
- | services are missing or not | compute nodes (e.g. with "systemctl" or        |
- | configured properly         | "service" commands). Configuration parameters  |
- |                             | can be verified from related .conf files       |
- |                             | located under /etc/<component> directories.    |
- +-----------------------------+------------------------------------------------+
- | Some resources required for | The tempest.conf file, automatically generated |
- | execution test cases are    | by Rally in Functest, does not contain all the |
- | missing                     | needed parameters or some parameters are not   |
- |                             | set properly.                                  |
- |                             | The tempest.conf file is located in /home/opnfv|
- |                             | /.rally/tempest/for-deployment-<UUID> in       |
- |                             | Functest container                             |
- |                             | Use "rally deployment list" command in order to|
- |                             | check UUID of current deployment.              |
- +-----------------------------+------------------------------------------------+
++-----------------------------+------------------------------------------------+
+| Error                       | Details                                        |
++=============================+================================================+
+| Resources required for test | Such resources could be e.g. an external       |
+| case execution are missing  | network and access to the management subnet    |
+|                             | (adminURL) from the Functest docker container. |
++-----------------------------+------------------------------------------------+
+| OpenStack components or     | Check running services in the controller and   |
+| services are missing or not | compute nodes (e.g. with "systemctl" or        |
+| configured properly         | "service" commands). Configuration parameters  |
+|                             | can be verified from related .conf files       |
+|                             | located under /etc/<component> directories.    |
++-----------------------------+------------------------------------------------+
+| Some resources required for | The tempest.conf file, automatically generated |
+| execution test cases are    | by Rally in Functest, does not contain all the |
+| missing                     | needed parameters or some parameters are not   |
+|                             | set properly.                                  |
+|                             | The tempest.conf file is located in /home/opnfv|
+|                             | /.rally/tempest/for-deployment-<UUID> in       |
+|                             | Functest container                             |
+|                             | Use "rally deployment list" command in order to|
+|                             | check UUID of current deployment.              |
++-----------------------------+------------------------------------------------+
 
 
 When some Tempest test case fails, captured traceback and possibly also related
@@ -310,9 +310,9 @@ vIMS
 vIMS deployment may fail for several reasons, the most frequent ones are
 described in the following table:
 
-+===================================+====================================+
-| Error                             |  Comments                          |
 +-----------------------------------+------------------------------------+
+| Error                             |  Comments                          |
++===================================+====================================+
 | Keystone admin API  not reachable | Impossible to create vIMS user and |
 |                                   | tenant                             |
 +-----------------------------------+------------------------------------+
