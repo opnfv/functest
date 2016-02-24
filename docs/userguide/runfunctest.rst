@@ -86,11 +86,11 @@ is located in *$repos_dir/functest/testcases/VIM/OpenStack/CI/custom_tests/test_
 
 Although *run_tests.sh* provides an easy way to run any test, it is possible to
 do a direct call to the desired test script. For example::
-   python $repos_dir/functest/testcases/vPing/vPing.py -d
+
+    python $repos_dir/functest/testcases/vPing/vPing.py -d
 
 Automated testing
 -----------------
-
 As mentioned in `[1]`, the *prepare-env.sh* and *run_test.sh* can be called within
 the container from Jenkins. There are 2 jobs that automate all the manual steps
 explained in the previous section. One job runs all the tests and the other one allows testing
