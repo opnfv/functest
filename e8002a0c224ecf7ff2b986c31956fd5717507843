@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_4c264e6a",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-02-24T16:55:33Z",
+      "side": 1,
+      "message": "Both test cases have been merged into one",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 363,
+        "endChar": 20
+      },
+      "revId": "e8002a0c224ecf7ff2b986c31956fd5717507843",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_2c2b1232",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-02-24T16:55:33Z",
+      "side": 1,
+      "message": "Please check link",
+      "range": {
+        "startLine": 369,
+        "startChar": 4,
+        "endLine": 369,
+        "endChar": 79
+      },
+      "revId": "e8002a0c224ecf7ff2b986c31956fd5717507843",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_ec1cda15",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-02-24T16:55:33Z",
+      "side": 1,
+      "message": "What about adding: The Doctor test is successful if the notification time is below 1 second",
+      "revId": "e8002a0c224ecf7ff2b986c31956fd5717507843",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_6c310aa2",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-02-24T16:55:33Z",
+      "side": 1,
+      "message": "http://artifacts.opnfv.org/opnfvdocs/brahmaputra/docs/userguide/featureusage-doctor.html",
+      "range": {
+        "startLine": 88,
+        "startChar": 25,
+        "endLine": 88,
+        "endChar": 100
+      },
+      "revId": "e8002a0c224ecf7ff2b986c31956fd5717507843",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
