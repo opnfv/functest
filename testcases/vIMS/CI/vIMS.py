@@ -136,12 +136,14 @@ def push_results():
 
         scenario = functest_utils.get_scenario(logger)
         pod_name = functest_utils.get_pod_name(logger)
+        build_tag = functest_utils.get_build_tag(logger)
 
-        functest_utils.push_results_to_db(db_url=DB_URL, 
+        functest_utils.push_results_to_db(db_url=DB_URL,
                                           project="functest",
                                           case_name="vIMS",
                                           logger=logger, pod_name=pod_name,
                                           version=scenario,
+                                          build_tag=build_tag,
                                           payload=RESULTS)
 
 
