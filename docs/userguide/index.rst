@@ -182,11 +182,10 @@ SDN Controllers
 ---------------
 
 Brahmaputra introduces new SDN controllers.
-There are currently 3 possible controllers:
+There are currently 2 possible controllers:
 
  * OpenDaylight (ODL)
  * ONOS
- * OpenContrail (OCL)
 
 OpenDaylight
 ^^^^^^^^^^^^
@@ -282,12 +281,6 @@ The test cases may be described as follows:
      NULL in ONOS or not
 
 
-OpenContrail
-^^^^^^^^^^^^
-TODO OVNO
-
-
-
 Features
 --------
 
@@ -365,6 +358,12 @@ include::
 However, these parameters must not be changed, as they are the values expected
 by the Promise test suite.
 
+Doctor
+^^^^^^
+Doctor test case: Doctor-notification: immediate notification for fault
+management.
+The Doctor test is successful if the notification time is below 1 second.
+
 .. include:: ./runfunctest.rst
 
 Test results
@@ -377,9 +376,11 @@ http://artifacts.opnfv.org/functest/brahmaputra/docs/results/index.html
 Test Dashboard
 ==============
 
-Based on results collected in CI, a test dashboard is dynamically generated.
-The URL of this dashboard is TODO LF
+Based on results collected in CI, a test dashboard is dynamically generated:
+https://www.opnfv.org/opnfvtestgraphs/per-test-projects/default
 
+A specific dashboard has been created for functest:
+http://testresults.opnfv.org/dashboard/
 
 .. include:: ./troubleshooting.rst
 
