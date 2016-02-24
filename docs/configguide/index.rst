@@ -187,7 +187,7 @@ provide them to Functest:
 
 Once the credentials are there, they shall be sourced before running the tests::
 
-  source /home/opnfv/functest/conf/openstack.creds
+    source /home/opnfv/functest/conf/openstack.creds
 
 Additional Options
 ------------------
@@ -196,12 +196,12 @@ In case you need to provide different configuration parameters to Functest (e.g.
  commit IDs or branches for the repositories, ...) copy the config_functest.yaml
  from the repository to your current directory and run docker with a volume::
 
- $ wget https://git.opnfv.org/cgit/functest/plain/testcases/config_functest.yaml
- $ cmd1 = "/home/opnfv/repos/functest/docker/prepare_env.sh"
- $ cmd2 = "/home/opnfv/repos/functest/docker/run_tests.sh"
- $ docker run -t -e "INSTALLER_TYPE=fuel" -e "INSTALLER_IP=10.20.0.2" opnfv/functest \
-   -v $(pwd)/config_functest.yaml:/home/opnfv/functest/conf/config_functest.yaml \
-   "${cmd1} && ${cmd2}"
+    $ wget https://git.opnfv.org/cgit/functest/plain/testcases/config_functest.yaml
+    $ cmd1 = "/home/opnfv/repos/functest/docker/prepare_env.sh"
+    $ cmd2 = "/home/opnfv/repos/functest/docker/run_tests.sh"
+    $ docker run -t -e "INSTALLER_TYPE=fuel" -e "INSTALLER_IP=10.20.0.2" opnfv/functest \
+        -v $(pwd)/config_functest.yaml:/home/opnfv/functest/conf/config_functest.yaml \
+        "${cmd1} && ${cmd2}"
 
 
 Integration in CI
