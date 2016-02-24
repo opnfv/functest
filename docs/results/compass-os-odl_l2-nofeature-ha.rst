@@ -10,6 +10,7 @@ VIM
 vping_ssh
 ^^^^^^^^^
 ::
+
   FUNCTEST.info: Running vPing-SSH test...
   vPing_ssh- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
   vPing_ssh- INFO - Creating neutron network vping-net...
@@ -41,12 +42,12 @@ vping_ssh
   vPing_ssh- INFO - vPing duration:'26.0' s.
   vPing_ssh- INFO - Cleaning up...
   vPing_ssh- INFO - vPing OK
-::
+
 
 vping_userdata
 ^^^^^^^^^^^^^^
-
 ::
+
   FUNCTEST.info: Running vPing-userdata test...
   vPing_userdata- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
   vPing_userdata- INFO - Creating neutron network vping-net...
@@ -87,11 +88,12 @@ vping_userdata
   vPing_userdata- INFO - vPing OK
   vPing_userdata- INFO - Cleaning up...
   vPing_userdata- INFO - Deleting network 'vping-net'...
-::
+
 
 Tempest
 ^^^^^^^
 ::
+
   FUNCTEST.info: Running Tempest tests...
   run_tempest - INFO - Creating tenant and user for Tempest suite
   INFO rally.verification.tempest.tempest [-] Starting: Creating configuration file for Tempest.
@@ -324,11 +326,12 @@ Tempest
   run_tempest - INFO - Results: {'timestart': '2016-02-2222:27:42.722872', 'duration': 171, 'tests': 210, 'failures': 1}
   run_tempest - INFO - Pushing results to DB: 'http://testresults.opnfv.org/testapi/results'.
   run_tempest - INFO - Deleting tenant and user for Tempest suite)
-::
+
 
 Rally
 ^^^^^
 ::
+
   FUNCTEST.info: Running Rally benchmark suite...
   run_rally - INFO - Starting test scenario "authenticate" ...
   run_rally - INFO -
@@ -1617,7 +1620,7 @@ Rally
   +===================+============+===============+===========+
   | TOTAL:            | 00:57:39   | 229           | 98.51%    |
   +===================+============+===============+===========+
-::
+
 
 SDN Controller
 --------------
@@ -1625,6 +1628,7 @@ SDN Controller
 ODL
 ^^^
 ::
+
   ==============================================================================
   Basic
   ==============================================================================
@@ -1721,15 +1725,15 @@ ODL
   Neutron :: Test suite for Neutron Plugin                              | PASS |
   18 critical tests, 18 passed, 0 failed
   18 tests total, 18 passed, 0 failed
-::
+
 
 Feature tests
 -------------
 
 vIMS
 ^^^^
-
 ::
+
   FUNCTEST.info: Running vIMS test...
   vIMS - INFO - Prepare OpenStack plateform (create tenant and user)
   vIMS - INFO - Update OpenStack creds informations
@@ -1763,4 +1767,3 @@ vIMS
   vIMS - INFO - Cloudify-manager server has been successfully removed!
   vIMS - INFO - Removing vIMS tenant ..
   vIMS - INFO - Removing vIMS user ..
-::

@@ -4,15 +4,13 @@
 Detailed test results for compass-os-nosdn-nofeature-ha
 -------------------------------------------------------
 
-The following section outlines the detailed functest results for the Brahmaputra scenario
-deploying OpenStack in a Pharos environment by the Compass installer.
-
 VIM
 ---
 
 vping_ssh
 ^^^^^^^^^
 ::
+
   FUNCTEST.info: Running vPing-SSH test...
   vPing_ssh- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
   vPing_ssh- INFO - Creating neutron network vping-net...
@@ -44,12 +42,12 @@ vping_ssh
   vPing_ssh- INFO - vPing duration:'43.2' s.
   vPing_ssh- INFO - Cleaning up...
   vPing_ssh- INFO - vPing OK
-::
+
 
 vping_userdata
 ^^^^^^^^^^^^^^
-
 ::
+
   FUNCTEST.info: Running vPing-userdata test...
   vPing_userdata- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
   vPing_userdata- INFO - Creating neutron network vping-net...
@@ -90,11 +88,12 @@ vping_userdata
   vPing_userdata- INFO - vPing OK
   vPing_userdata- INFO - Cleaning up...
   vPing_userdata- INFO - Deleting network 'vping-net'...
-::
+
 
 Tempest
 ^^^^^^^
 ::
+
   FUNCTEST.info: Running Tempest tests...
   run_tempest - INFO - Creating tenant and user for Tempest suite
   2016-02-23 04:37:19.865 23855 INFO rally.verification.tempest.tempest [-] Starting: Creating configuration file for Tempest.
@@ -328,11 +327,12 @@ Tempest
   run_tempest - INFO - Results: {'timestart': '2016-02-2304:37:25.793306', 'duration': 261, 'tests': 210, 'failures': 0}
   run_tempest - INFO - Pushing results to DB: 'http://testresults.opnfv.org/testapi/results'.
   run_tempest - INFO - Deleting tenant and user for Tempest suite)
-::
+
 
 Rally
 ^^^^^
 ::
+
   FUNCTEST.info: Running Rally benchmark suite...
   run_rally - INFO - Starting test scenario "authenticate" ...
   run_rally - INFO -
@@ -1622,15 +1622,16 @@ Rally
   +===================+============+===============+===========+
   | TOTAL:            | 01:03:52   | 229           | 98.59%    |
   +===================+============+===============+===========+
-::
+
+
 
 Feature tests
 -------------
 
 vIMS
 ^^^^
-
 ::
+
   FUNCTEST.info: Running vIMS test...
   vIMS - INFO - Prepare OpenStack plateform (create tenant and user)
   vIMS - INFO - Update OpenStack creds informations
@@ -1664,4 +1665,3 @@ vIMS
   vIMS - INFO - Cloudify-manager server has been successfully removed!
   vIMS - INFO - Removing vIMS tenant ..
   vIMS - INFO - Removing vIMS user ..
-::
