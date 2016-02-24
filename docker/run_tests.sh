@@ -25,7 +25,7 @@ where:
     -s|--serial       run tests in one thread
     -t|--test         run specific set of tests
       <test_name>     one or more of the following separated by comma:
-                            vping_ssh,vping_userdata,odl,rally,tempest,vims,onos,promise,ovno
+                            vping_ssh,vping_userdata,odl,onos,tempest,rally,vims,promise,doctor
 
 
 examples:
