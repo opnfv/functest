@@ -4,21 +4,191 @@
 Troubleshooting
 ===============
 
+This section gives some guidelines about how to troubleshoot the test cases
+owned by Functest.
+
+IMPORTANT: The steps defined below must be executed inside the Functest Docker
+container and after sourcing the OpenStack credentials::
+
+    . $creds
+
+or::
+
+    source /home/opnfv/functest/conf/openstack.creds
+
+
+
 VIM
 ---
 
+vPing common
+^^^^^^^^^^^^
+For both vPing test cases (vPing_SSH, and vPing_userdata), the first steps are
+similar:
+ * Create Glance image
+ * Create Network
+ * Create Security Group
+ * Create instances
+
+After these actions, the test cases differ and will be explained in their section.
+
+This test cases can be run inside the container as follows::
+
+    $repos_dir/functest/docker/run_tests.sh -t vping_ssh
+    $repos_dir/functest/docker/run_tests.sh -t vping_userdata
+
+The *run_tests.sh* script is calling internally the vPing scripts, located in
+*$repos_dir/functest/testcases/vPing/CI/libraries/vPing_ssh.py* or
+*$repos_dir/functest/testcases/vPing/CI/libraries/vPing_userdata.py* with the
+appropriate flags.
+
+After finishing the test execution, the corresponding script will remove all
+created resources in OpenStack (image, instances, network and security group).
+When troubleshooting, it is handy sometimes to keep those resources in case the
+test fails and a manual testing is needed. This can be achieved by adding the flag *-n*::
+
+    $repos_dir/functest/docker/run_tests.sh -n -t vping_ssh
+    $repos_dir/functest/docker/run_tests.sh -n -t vping_userdata
+
+
+Some of the common errors that can appear in this test case are::
+
+    vPing_ssh- ERROR - There has been a problem when creating the neutron network....
+
+This means that there has been some problems with Neutron, even before creating the
+instances. Try to create manually a Neutron network and a Subnet to see if that works.
+The debug messages will also help to see when it failed (subnet and router creation).
+Example of Neutron commands (using 10.6.0.0/24 range for example)::
+
+    neutron net-create net-test
+    neutron subnet-create --name subnet-test --allocation-pool start=10.6.0.2,end=10.6.0.100 --gateway 10.6.0.254 net-test 10.6.0.0/24
+    neutron router-create test_router
+    neutron router-interface-add <ROUTER_ID> test_subnet
+    neutron router-gateway-set <ROUTER_ID> <EXT_NET_NAME>
+
+Another related error can occur while creating the Security Groups for the instances::
+
+    vPing_ssh- ERROR - Failed to create the security group...
+
+In this case, proceed to create it manually. These are some hints::
+
+    neutron security-group-create sg-test
+    neutron security-group-rule-create sg-test --direction ingress --protocol icmp --remote-ip-prefix 0.0.0.0/0
+    neutron security-group-rule-create sg-test --direction ingress --ethertype IPv4 --protocol tcp --port-range-min 80 --port-range-max 80 --remote-ip-prefix 0.0.0.0/0
+    neutron security-group-rule-create sg-test --direction egress --ethertype IPv4 --protocol tcp --port-range-min 80 --port-range-max 80 --remote-ip-prefix 0.0.0.0/0
+
+The next step is to create the instances. The image used is located in
+*/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img* and a glance image is created
+with the name *functest-vping*. If booting the instances fails (i.e. the status
+is not **ACTIVE**), you can check why it failed by doing::
+
+    nova list
+    nova show <INSTANCE_ID>
+
+It might show some messages about the booting failure. To try that manually::
+
+    net_id=$(neutron net-list | grep net-test | awk '{print $2}')
+    nova boot --flavor 2 --image functest-vping --nic net-id=$net_id nova-test
+
+This will spawn a VM using the network created previously manually. If you want to use
+the existing vPing network, just replace *net-test* by *vping-net*.
+In all the OPNFV tested scenarios from CI, it never has been a problem with the
+previous actions. Further possible problems are explained in the following sections.
+
+
 vPing_SSH
 ^^^^^^^^^
+This test case creates a floating IP on the external network and assigns it to
+the second instance with name *opnfv-vping-2*. The purpose of this is to establish
+a SSH connection to that instance to SCP a script that will ping the first insntace.
+This script is located in the repository under
+*$repos_dir/functest/testcases/vPing/CI/libraries/ping.sh* and takes an IP as
+a parameter. When the SCP is completed, the test will do an SSH call to that script
+inside the second instance. Some problems can happen here::
 
-vPing should work on all the scenarios. In case of timeout, check your network
-connectivity. The test case creates its own security group to allow SSH access,
-check your network settings and your security rules.
+    vPing_ssh- ERROR - Cannot establish connection to IP xxx.xxx.xxx.xxx. Aborting
+
+If this is displayed, stop the test or wait for it to finish (if you have used the flag
+*-n* in *run_tests.sh* explained previously) so that the test does not clean
+the OpenStack resources. It means that the Container can not reach the public
+IP assigned to the instance *opnfv-vping-2*. There are many possible reasons, and
+they really depend on the chosen scenario. For most of the ODL-L3 and ONOS scenarios
+this has been noticed and it is a known limitation.
+
+First, make sure that the instance *opnfv-vping-2* managed to get an IP from
+the DHCP agent. It can be checked by doing::
+
+    nova console-log opnfv-vping-2
+
+If the message *Sending discover* and *No lease, failing* is shown, it probably
+means that the Neutron dhcp-agent failed to assign an IP or even that it was not
+responding. At this point it does not make sense to try to ping the floating IP.
+
+If the instance got an IP properly, try to ping manually the VM from the container::
+
+    nova list
+    <grab the public IP>
+    ping <public IP>
+
+If the ping does not return anything, try to ping from the Host where the Docker
+container is running. If that solves the problem, check the iptable rules because
+there might be some rules rejecting ICMP or TCP traffic coming/going from/to the container.
+
+At this point, if the ping does not work either, try to reproduce the test
+manually with the steps described above in the vPing common section with the addition::
+
+    neutron floatingip-create <EXT_NET_NAME>
+    nova floating-ip-associate nova-test <FLOATING_IP>
+
+
+Further troubleshooting is out of scope of this document, as it might be due to
+problems with the SDN controller. Contact the installer team members.
+
 
 
 vPing_userdata
 ^^^^^^^^^^^^^^
+This test case does not create any floating IP neither establishes an SSH
+connection. Instead, it uses nova-metadata service when creating an instance
+to pass the same script as before (ping.sh) but as 1-line text. This script
+will be executed automatically when the second instance *opnfv-vping-2* is booted.
 
-Cloud-init in not supported on scenario dealing with ONOS.
+The only known problem here for this test to fail is mainly the lack of support
+of cloud-init (nova-metadata service). Check the console of the instance::
+
+    nova console-log opnfv-vping-2
+
+If this text or similar is showed::
+
+    checking http://169.254.169.254/2009-04-04/instance-id
+    failed 1/20: up 1.13. request failed
+    failed 2/20: up 13.18. request failed
+    failed 3/20: up 25.20. request failed
+    failed 4/20: up 37.23. request failed
+    failed 5/20: up 49.25. request failed
+    failed 6/20: up 61.27. request failed
+    failed 7/20: up 73.29. request failed
+    failed 8/20: up 85.32. request failed
+    failed 9/20: up 97.34. request failed
+    failed 10/20: up 109.36. request failed
+    failed 11/20: up 121.38. request failed
+    failed 12/20: up 133.40. request failed
+    failed 13/20: up 145.43. request failed
+    failed 14/20: up 157.45. request failed
+    failed 15/20: up 169.48. request failed
+    failed 16/20: up 181.50. request failed
+    failed 17/20: up 193.52. request failed
+    failed 18/20: up 205.54. request failed
+    failed 19/20: up 217.56. request failed
+    failed 20/20: up 229.58. request failed
+    failed to read iid from metadata. tried 20
+
+it means that the instance failed to read from the metadata service. Contact
+the installer team members for more information.
+
+Cloud-init in not supported on scenario dealing with ONOS and the tests have been
+excluded from CI in those scenarios.
+
 
 Tempest
 ^^^^^^^
