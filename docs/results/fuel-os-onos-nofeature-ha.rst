@@ -1,15 +1,16 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International Licence.
 .. http://creativecommons.org/licenses/by/4.0
 
-Detailed test results for fuel-os-onos-nofeature-ha
+Test results for fuel-os-onos-nofeature-ha
 -------------------------------------------------------
 
-The following section outlines the detailed Functest results for the Brahmaputra scenario
-deploying OpenStack in a Pharos environment by the Fuel installer.
+VIM
+---
 
-vPing_SSH
+vping_ssh
 ^^^^^^^^^
 ::
+
     FUNCTEST.info: Running vPing-SSH test...
     vPing_ssh- INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
     vPing_ssh- INFO - Creating neutron network vping-net...
@@ -41,7 +42,6 @@ vPing_SSH
     vPing_ssh- INFO - vPing duration:'267.2' s.
     vPing_ssh- INFO - Cleaning up...
     vPing_ssh- INFO - vPing OK
-::
 
 
 
@@ -49,6 +49,7 @@ vPing_SSH
 Tempest
 ^^^^^^^
 ::
+
     +------------------------------------------------------------------------------------------------------------------------------------------+-----------+---------+
     | name                                                                                                                                     | time      | status  |
     +------------------------------------------------------------------------------------------------------------------------------------------+-----------+---------+
@@ -264,872 +265,11 @@ Tempest
     | tempest.scenario.test_volume_boot_pattern.TestVolumeBootPatternV2.test_volume_boot_pattern                                               | 338.91569 | fail    |
     +------------------------------------------------------------------------------------------------------------------------------------------+-----------+---------+
     run_tempest - INFO - Results: {'timestart': '2016-02-2109:47:08.529077', 'duration': 512, 'tests': 210, 'failures': 31}
-::
-
-ONOS
-^^^^
-::
-    FUNCTEST.info: Running ONOS test case...
-    FUNCvirNetNB - INFO - Creating component Handle: ONOSrest
-    ******************************
-     CASE INIT
-    ******************************
-
-    ['ONOSrest']
-
-    ******************************
-     Result summary for Testcase2
-    ******************************
-
-    [2016-02-21 09:55:56.965174] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Network Post
-    [2016-02-21 09:55:56.965727] [FUNCvirNetNB] [STEP]  2.1: Generate Post Data
-    [2016-02-21 09:55:56.966454] [FUNCvirNetNB] [STEP]  2.2: Post Data via HTTP
-    [2016-02-21 09:55:57.006264] [FUNCvirNetNB] [STEP]  2.3: Get Data via HTTP
-    [2016-02-21 09:55:57.037745] [FUNCvirNetNB] [STEP]  2.4: Compare Send Id and Get Id
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase3
-    ******************************
-
-    [2016-02-21 09:55:57.048240] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Network Update
-    [2016-02-21 09:55:57.048783] [FUNCvirNetNB] [STEP]  3.1: Generate Post Data
-    [2016-02-21 09:55:57.049571] [FUNCvirNetNB] [STEP]  3.2: Post Data via HTTP
-    [2016-02-21 09:55:57.056744] [FUNCvirNetNB] [STEP]  3.3: Update Data via HTTP
-    [2016-02-21 09:55:57.064248] [FUNCvirNetNB] [STEP]  3.4: Get Data via HTTP
-    [2016-02-21 09:55:57.072845] [FUNCvirNetNB] [STEP]  3.5: Compare Update data.
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase4
-    ******************************
-
-    [2016-02-21 09:55:57.084363] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Network Delete
-    [2016-02-21 09:55:57.084882] [FUNCvirNetNB] [STEP]  4.1: Generate Post Data
-    [2016-02-21 09:55:57.085617] [FUNCvirNetNB] [STEP]  4.2: Post Data via HTTP
-    [2016-02-21 09:55:57.093018] [FUNCvirNetNB] [STEP]  4.3: Delete Data via HTTP
-    [2016-02-21 09:55:57.099770] [FUNCvirNetNB] [STEP]  4.4: Get Data is NULL
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase5
-    ******************************
-
-    [2016-02-21 09:56:02.115745] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Subnet Post
-    [2016-02-21 09:56:02.116339] [FUNCvirNetNB] [STEP]  5.1: Generate Post Data
-    [2016-02-21 09:56:02.117459] [FUNCvirNetNB] [STEP]  5.2: Post Network Data via HTTP(Post Subnet need post network)
-    [2016-02-21 09:56:02.126052] [FUNCvirNetNB] [STEP]  5.3: Post Subnet Data via HTTP
-    [2016-02-21 09:56:02.159577] [FUNCvirNetNB] [STEP]  5.4: Get Subnet Data via HTTP
-    [2016-02-21 09:56:02.172655] [FUNCvirNetNB] [STEP]  5.5: Compare Post Subnet Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase6
-    ******************************
-
-    [2016-02-21 09:56:02.183187] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Subnet Update
-    [2016-02-21 09:56:02.183876] [FUNCvirNetNB] [STEP]  6.1: Generate Post Data
-    [2016-02-21 09:56:02.184887] [FUNCvirNetNB] [STEP]  6.2: Post Network Data via HTTP(Post Subnet need post network)
-    [2016-02-21 09:56:02.192777] [FUNCvirNetNB] [STEP]  6.3: Post Subnet Data via HTTP
-    [2016-02-21 09:56:02.201349] [FUNCvirNetNB] [STEP]  6.4: Update Subnet Data via HTTP
-    [2016-02-21 09:56:02.209629] [FUNCvirNetNB] [STEP]  6.5: Get Subnet Data via HTTP
-    [2016-02-21 09:56:02.216700] [FUNCvirNetNB] [STEP]  6.6: Compare Subnet Data
-    [2016-02-21 09:56:02.217492] [FUNCvirNetNB] [STEP]  6.7: Delete Subnet via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase7
-    ******************************
-
-    [2016-02-21 09:56:02.227738] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Subnet Delete
-    [2016-02-21 09:56:02.228309] [FUNCvirNetNB] [STEP]  7.1: Generate Post Data
-    [2016-02-21 09:56:02.229188] [FUNCvirNetNB] [STEP]  7.2: Post Network Data via HTTP(Post Subnet need post network)
-    [2016-02-21 09:56:02.237036] [FUNCvirNetNB] [STEP]  7.3: Post Subnet Data via HTTP
-    [2016-02-21 09:56:02.245482] [FUNCvirNetNB] [STEP]  7.4: Delete Subnet Data via HTTP
-    [2016-02-21 09:56:02.253076] [FUNCvirNetNB] [STEP]  7.5: Get Subnet Data is NULL
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase8
-    ******************************
-
-    [2016-02-21 09:56:07.269037] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Port Post
-    [2016-02-21 09:56:07.269689] [FUNCvirNetNB] [STEP]  8.1: Generate Post Data
-    [2016-02-21 09:56:07.270772] [FUNCvirNetNB] [STEP]  8.2: Post Network Data via HTTP(Post port need post network)
-    [2016-02-21 09:56:07.279440] [FUNCvirNetNB] [STEP]  8.3: Post Subnet Data via HTTP(Post port need post subnet)
-    [2016-02-21 09:56:07.287800] [FUNCvirNetNB] [STEP]  8.4: Post Port Data via HTTP
-    [2016-02-21 09:56:07.296863] [FUNCvirNetNB] [STEP]  8.5: Get Port Data via HTTP
-    [2016-02-21 09:56:07.306388] [FUNCvirNetNB] [STEP]  8.6: Compare Post Port Data
-    [2016-02-21 09:56:07.307677] [FUNCvirNetNB] [STEP]  8.7: Clean Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase9
-    ******************************
-
-    [2016-02-21 09:56:07.318023] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Port Update
-    [2016-02-21 09:56:07.318708] [FUNCvirNetNB] [STEP]  9.1: Generate Post Data
-    [2016-02-21 09:56:07.320149] [FUNCvirNetNB] [STEP]  9.2: Post Network Data via HTTP(Post port need post network)
-    [2016-02-21 09:56:07.327326] [FUNCvirNetNB] [STEP]  9.3: Post Subnet Data via HTTP(Post port need post subnet)
-    [2016-02-21 09:56:07.336517] [FUNCvirNetNB] [STEP]  9.4: Post Port Data via HTTP
-    [2016-02-21 09:56:07.345702] [FUNCvirNetNB] [STEP]  9.5: Update Port Data via HTTP
-    [2016-02-21 09:56:07.354021] [FUNCvirNetNB] [STEP]  9.6: Get Port Data via HTTP
-    [2016-02-21 09:56:07.360429] [FUNCvirNetNB] [STEP]  9.7: Compare Update Port Data
-    [2016-02-21 09:56:07.361666] [FUNCvirNetNB] [STEP]  9.8: Clean Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase10
-    ******************************
-
-    [2016-02-21 09:56:07.372086] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Port Delete
-    [2016-02-21 09:56:07.372739] [FUNCvirNetNB] [STEP]  10.1: Generate Post Data
-    [2016-02-21 09:56:07.373778] [FUNCvirNetNB] [STEP]  10.2: Post Network Data via HTTP(Post port need post network)
-    [2016-02-21 09:56:07.380739] [FUNCvirNetNB] [STEP]  10.3: Post Subnet Data via HTTP(Post port need post subnet)
-    [2016-02-21 09:56:07.388862] [FUNCvirNetNB] [STEP]  10.4: Post Port Data via HTTP
-    [2016-02-21 09:56:07.396014] [FUNCvirNetNB] [STEP]  10.5: Delete Port Data via HTTP
-    [2016-02-21 09:56:07.417621] [FUNCvirNetNB] [STEP]  10.6: Get Port Data is NULL
-    [2016-02-21 09:56:12.430407] [FUNCvirNetNB] [STEP]  10.7: Clean Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-
-    *************************************
-        Test Execution Summary
-
-    *************************************
-
-     Test Start           : 21 Feb 2016 09:55:56
-     Test End             : 21 Feb 2016 09:56:12
-     Execution Time       : 0:00:15.628718
-     Total tests planned  : 9
-     Total tests RUN      : 9
-     Total Pass           : 9
-     Total Fail           : 0
-     Total No Result      : 0
-     Success Percentage   : 100%
-     Execution Result     : 100%
-
-
-
-    ******************************
-     CASE INIT
-    ******************************
-
-    ['ONOSrest']
-
-    ******************************
-     Result summary for Testcase2
-    ******************************
-
-    [2016-02-21 09:56:12.836955] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Router Post
-    [2016-02-21 09:56:12.838221] [FUNCvirNetNBL3] [STEP]  2.1: Post Network Data via HTTP(Post Router need post network)
-    [2016-02-21 09:56:12.873649] [FUNCvirNetNBL3] [STEP]  2.2: Post Router Data via HTTP
-    [2016-02-21 09:56:12.881751] [FUNCvirNetNBL3] [STEP]  2.3: Get Router Data via HTTP
-    [2016-02-21 09:56:12.914578] [FUNCvirNetNBL3] [STEP]  2.4: Compare Post Router Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase3
-    ******************************
-
-    [2016-02-21 09:56:12.930658] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Router Update
-    [2016-02-21 09:56:12.931841] [FUNCvirNetNBL3] [STEP]  3.1: Post Network Data via HTTP(Post Router need post network)
-    [2016-02-21 09:56:12.939584] [FUNCvirNetNBL3] [STEP]  3.2: Post Router Data via HTTP
-    [2016-02-21 09:56:12.946895] [FUNCvirNetNBL3] [STEP]  3.3: Update Router Data via HTTP
-    [2016-02-21 09:56:12.953601] [FUNCvirNetNBL3] [STEP]  3.4: Get Router Data via HTTP
-    [2016-02-21 09:56:12.959887] [FUNCvirNetNBL3] [STEP]  3.5: Compare Router Data
-    [2016-02-21 09:56:12.961048] [FUNCvirNetNBL3] [STEP]  3.6: Delete Router via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase4
-    ******************************
-
-    [2016-02-21 09:56:12.970433] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Router Delete
-    [2016-02-21 09:56:12.971622] [FUNCvirNetNBL3] [STEP]  4.1: Post Network Data via HTTP(Post Router need post network)
-    [2016-02-21 09:56:12.979473] [FUNCvirNetNBL3] [STEP]  4.2: Post Router Data via HTTP
-    [2016-02-21 09:56:12.986263] [FUNCvirNetNBL3] [STEP]  4.3: Delete Router Data via HTTP
-    [2016-02-21 09:56:12.992190] [FUNCvirNetNBL3] [STEP]  4.4: Get Router Data is NULL
-    Verify the Router status
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase5
-    ******************************
-
-    [2016-02-21 09:56:18.008957] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - RouterInterface Post
-    [2016-02-21 09:56:18.010175] [FUNCvirNetNBL3] [STEP]  5.1: Post Network Data via HTTP(Post port need post network)
-    [2016-02-21 09:56:18.018296] [FUNCvirNetNBL3] [STEP]  5.2: Post Subnet Data via HTTP(Post port need post subnet)
-    [2016-02-21 09:56:18.026382] [FUNCvirNetNBL3] [STEP]  5.3: Post Port Data via HTTP
-    [2016-02-21 09:56:18.034099] [FUNCvirNetNBL3] [STEP]  5.4: Post Router Data via HTTP
-    [2016-02-21 09:56:18.040193] [FUNCvirNetNBL3] [STEP]  5.5: Put RouterInterface Data via HTTP
-    [2016-02-21 09:56:18.047317] [FUNCvirNetNBL3] [STEP]  5.6: Get RouterInterface Data via HTTP
-    [2016-02-21 09:56:18.053592] [FUNCvirNetNBL3] [STEP]  5.7: Compare Post Port Data
-    [2016-02-21 09:56:18.055253] [FUNCvirNetNBL3] [STEP]  5.8: Del RouterInterface Data via HTTP
-    [2016-02-21 09:56:18.062038] [FUNCvirNetNBL3] [STEP]  5.9: Clean Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase6
-    ******************************
-
-    [2016-02-21 09:56:18.078391] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - RouterInterface Delete
-    [2016-02-21 09:56:18.079883] [FUNCvirNetNBL3] [STEP]  6.1: Post Network Data via HTTP(Post port need post network)
-    [2016-02-21 09:56:18.087420] [FUNCvirNetNBL3] [STEP]  6.2: Post Subnet Data via HTTP(Post port need post subnet)
-    [2016-02-21 09:56:18.095337] [FUNCvirNetNBL3] [STEP]  6.3: Post Port Data via HTTP
-    [2016-02-21 09:56:18.103345] [FUNCvirNetNBL3] [STEP]  6.4: Post Router Data via HTTP
-    [2016-02-21 09:56:18.109767] [FUNCvirNetNBL3] [STEP]  6.5: Post RouterInterface Data via HTTP
-    [2016-02-21 09:56:18.116024] [FUNCvirNetNBL3] [STEP]  6.6: Del RouterInterface Data via HTTP
-    [2016-02-21 09:56:18.122686] [FUNCvirNetNBL3] [STEP]  6.7: Delete Port Data via HTTP
-    [2016-02-21 09:56:18.129655] [FUNCvirNetNBL3] [STEP]  6.8: Get Port Data is NULL
-    [2016-02-21 09:56:23.145559] [FUNCvirNetNBL3] [STEP]  6.9: Clean Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase7
-    ******************************
-
-    [2016-02-21 09:56:23.164294] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - FloatingIp Post
-    [2016-02-21 09:56:23.165631] [FUNCvirNetNBL3] [STEP]  7.1: Post Network Data via HTTP(Post port need post network)
-    [2016-02-21 09:56:23.173909] [FUNCvirNetNBL3] [STEP]  7.2: Post Subnet Data via HTTP(Post port need post subnet)
-    [2016-02-21 09:56:23.182105] [FUNCvirNetNBL3] [STEP]  7.3: Post Port Data via HTTP
-    [2016-02-21 09:56:23.189623] [FUNCvirNetNBL3] [STEP]  7.4: Post Router Data via HTTP
-    [2016-02-21 09:56:23.196108] [FUNCvirNetNBL3] [STEP]  7.5: Get Port Data via HTTP
-    [2016-02-21 09:56:23.204332] [FUNCvirNetNBL3] [STEP]  7.6: Post FloatingIp Data via HTTP
-    [2016-02-21 09:56:23.211580] [FUNCvirNetNBL3] [STEP]  7.7: Get Port Data via HTTP
-    [2016-02-21 09:56:23.218993] [FUNCvirNetNBL3] [STEP]  7.8: Get FloatingIp Data via HTTP
-    [2016-02-21 09:56:23.251318] [FUNCvirNetNBL3] [STEP]  7.9: Get FloatingIp Data via HTTP
-    [2016-02-21 09:56:23.259068] [FUNCvirNetNBL3] [STEP]  7.10: Compare Post FloatingIp Data
-    [2016-02-21 09:56:23.260001] [FUNCvirNetNBL3] [STEP]  7.11: Post FloatingIp Clean Data via HTTP
-    [2016-02-21 09:56:23.266784] [FUNCvirNetNBL3] [STEP]  7.12: Clean Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase8
-    ******************************
-
-    [2016-02-21 09:56:23.289110] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - FloatingIp Update
-    [2016-02-21 09:56:23.291300] [FUNCvirNetNBL3] [STEP]  8.1: Post Network Data via HTTP(Post port need post network)
-    [2016-02-21 09:56:23.299318] [FUNCvirNetNBL3] [STEP]  8.2: Post Subnet Data via HTTP(Post port need post subnet)
-    [2016-02-21 09:56:23.307738] [FUNCvirNetNBL3] [STEP]  8.3: Post Port Data via HTTP
-    [2016-02-21 09:56:23.315822] [FUNCvirNetNBL3] [STEP]  8.4: Post Router Data via HTTP
-    [2016-02-21 09:56:23.322853] [FUNCvirNetNBL3] [STEP]  8.5: Post FloatingIp Data via HTTP
-    [2016-02-21 09:56:23.329316] [FUNCvirNetNBL3] [STEP]  8.6: Post Delete Data via HTTP
-    [2016-02-21 09:56:23.337183] [FUNCvirNetNBL3] [STEP]  8.7: Post NewPort Data via HTTP
-    [2016-02-21 09:56:23.345756] [FUNCvirNetNBL3] [STEP]  8.8: Post NewFloatingIp Data via HTTP
-    [2016-02-21 09:56:23.353311] [FUNCvirNetNBL3] [STEP]  8.9: Get NewFloatingIp Data via HTTP
-    [2016-02-21 09:56:23.384949] [FUNCvirNetNBL3] [STEP]  8.10: Compare Post FloatingIp Data
-    [2016-02-21 09:56:23.385934] [FUNCvirNetNBL3] [STEP]  8.11: Post FloatingIp Clean Data via HTTP
-    [2016-02-21 09:56:23.392515] [FUNCvirNetNBL3] [STEP]  8.12: Clean Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase9
-    ******************************
-
-    [2016-02-21 09:56:23.416898] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - FloatingIp Delete
-    [2016-02-21 09:56:23.418399] [FUNCvirNetNBL3] [STEP]  9.1: Post Network Data via HTTP(Post port need post network)
-    [2016-02-21 09:56:23.425551] [FUNCvirNetNBL3] [STEP]  9.2: Post Subnet Data via HTTP(Post port need post subnet)
-    [2016-02-21 09:56:23.433217] [FUNCvirNetNBL3] [STEP]  9.3: Post Port Data via HTTP
-    [2016-02-21 09:56:23.440717] [FUNCvirNetNBL3] [STEP]  9.4: Post Router Data via HTTP
-    [2016-02-21 09:56:23.447116] [FUNCvirNetNBL3] [STEP]  9.5: Post FloatingIp Data via HTTP
-    [2016-02-21 09:56:23.454356] [FUNCvirNetNBL3] [STEP]  9.6: Post FloatingIp Clean Data via HTTP
-    [2016-02-21 09:56:23.465800] [FUNCvirNetNBL3] [STEP]  9.7: Get FloatingIp Data is NULL
-    [2016-02-21 09:56:28.479269] [FUNCvirNetNBL3] [STEP]  9.8: Clean Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase10
-    ******************************
-
-    [2016-02-21 09:56:28.496538] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Gateway Post
-    [2016-02-21 09:56:28.498465] [FUNCvirNetNBL3] [STEP]  10.1: Post Network Data via HTTP(Post port need post network)
-    [2016-02-21 09:56:28.507466] [FUNCvirNetNBL3] [STEP]  10.2: Post Subnet Data via HTTP(Post port need post subnet)
-    [2016-02-21 09:56:28.515564] [FUNCvirNetNBL3] [STEP]  10.3: Post Port Data via HTTP
-    [2016-02-21 09:56:28.522598] [FUNCvirNetNBL3] [STEP]  10.4: Post Router Data via HTTP
-    [2016-02-21 09:56:28.528755] [FUNCvirNetNBL3] [STEP]  10.5: Get Gateway Data via HTTP
-    [2016-02-21 09:56:28.536142] [FUNCvirNetNBL3] [STEP]  10.6: Compare Post Gateway Data
-    [2016-02-21 09:56:28.537198] [FUNCvirNetNBL3] [STEP]  10.7: Clean Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase11
-    ******************************
-
-    [2016-02-21 09:56:28.553805] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Gateway Update
-    [2016-02-21 09:56:28.555461] [FUNCvirNetNBL3] [STEP]  11.1: Post Network Data via HTTP(Post port need post network)
-    [2016-02-21 09:56:28.562664] [FUNCvirNetNBL3] [STEP]  11.2: Post Subnet Data via HTTP(Post port need post subnet)
-    [2016-02-21 09:56:28.570094] [FUNCvirNetNBL3] [STEP]  11.3: Post Port Data via HTTP
-    [2016-02-21 09:56:28.577203] [FUNCvirNetNBL3] [STEP]  11.4: Post Router Data via HTTP
-    [2016-02-21 09:56:28.583265] [FUNCvirNetNBL3] [STEP]  11.5: Post New Router Data via HTTP
-    [2016-02-21 09:56:28.589203] [FUNCvirNetNBL3] [STEP]  11.6: Get Gateway Data via HTTP
-    [2016-02-21 09:56:28.594700] [FUNCvirNetNBL3] [STEP]  11.7: Compare Post Gateway Data
-    [2016-02-21 09:56:28.595799] [FUNCvirNetNBL3] [STEP]  11.8: Clean Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-    ******************************
-     Result summary for Testcase12
-    ******************************
-
-    [2016-02-21 09:56:28.611322] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Gateway Delete
-    [2016-02-21 09:56:28.612734] [FUNCvirNetNBL3] [STEP]  12.1: Post Network Data via HTTP(Post port need post network)
-    [2016-02-21 09:56:28.620160] [FUNCvirNetNBL3] [STEP]  12.2: Post Subnet Data via HTTP(Post port need post subnet)
-    [2016-02-21 09:56:28.628079] [FUNCvirNetNBL3] [STEP]  12.3: Post Port Data via HTTP
-    [2016-02-21 09:56:28.635761] [FUNCvirNetNBL3] [STEP]  12.4: Post Router Data via HTTP
-    [2016-02-21 09:56:28.642664] [FUNCvirNetNBL3] [STEP]  12.5: Post Del Gateway Data via HTTP
-    [2016-02-21 09:56:28.648775] [FUNCvirNetNBL3] [STEP]  12.6: Get Gateway Data via HTTP
-    [2016-02-21 09:56:28.654590] [FUNCvirNetNBL3] [STEP]  12.7: If Gateway Data is NULL
-    [2016-02-21 09:56:33.660980] [FUNCvirNetNBL3] [STEP]  12.8: Clean Data via HTTP
-
-    *****************************
-     Result: Pass
-    *****************************
-
-
-
-    *************************************
-        Test Execution Summary
-
-    *************************************
-
-     Test Start           : 21 Feb 2016 09:56:12
-     Test End             : 21 Feb 2016 09:56:33
-     Execution Time       : 0:00:20.999784
-     Total tests planned  : 11
-     Total tests RUN      : 11
-     Total Pass           : 11
-     Total Fail           : 0
-     Total No Result      : 0
-     Success Percentage   : 100%
-     Execution Result     : 100%
-::
-
-
-
-Promise
-^^^^^^^
-::
-    FUNCTEST.info: Running PROMISE test case...
-    Promise- INFO - Creating tenant 'promise'...
-    Promise- INFO - Adding role '9d0a0a36d3d54cdcb4cd3c29c5f79a28' to tenant 'promise'...
-    Promise- INFO - Creating user 'promiser'...
-    Promise- INFO - Updating OpenStack credentials...
-    Promise- INFO - Creating image 'promise-img' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
-    Promise- INFO - Creating flavor 'promise-flavor'...
-    Promise- INFO - Exporting environment variables...
-    Promise- INFO - Running command: npm run -s test -- --reporter json
-    Promise- INFO - The test succeeded.
-    Promise- DEBUG -
-    {
-      "stats": {
-        "suites": 23,
-        "tests": 33,
-        "passes": 33,
-        "pending": 0,
-        "failures": 0,
-        "start": "2016-02-21T09:56:46.846Z",
-        "end": "2016-02-21T09:56:51.847Z",
-        "duration": 5524
-      },
-      "tests": [
-        {
-          "title": "should add a new OpenStack provider without error",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should add a new OpenStack provider without error",
-          "duration": 1217,
-          "err": {}
-        },
-        {
-          "title": "should update promise.providers with a new entry",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should update promise.providers with a new entry",
-          "duration": 10,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceProvider record in the store",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should contain a new ResourceProvider record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should add more capacity to the reservation service without error",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should add more capacity to the reservation service without error",
-          "duration": 25,
-          "err": {}
-        },
-        {
-          "title": "should update promise.pools with a new entry",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should update promise.pools with a new entry",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should contain a ResourcePool record in the store",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should contain a ResourcePool record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should report total collections and utilizations",
-          "fullTitle": "promise register OpenStack into resource pool query-capacity should report total collections and utilizations",
-          "duration": 18,
-          "err": {}
-        },
-        {
-          "title": "should contain newly added capacity pool",
-          "fullTitle": "promise register OpenStack into resource pool query-capacity should contain newly added capacity pool",
-          "duration": 8,
-          "err": {}
-        },
-        {
-          "title": "should create a new server in target provider without error",
-          "fullTitle": "promise allocation without reservation create-instance should create a new server in target provider without error",
-          "duration": 1768,
-          "err": {}
-        },
-        {
-          "title": "should update promise.allocations with a new entry",
-          "fullTitle": "promise allocation without reservation create-instance should update promise.allocations with a new entry",
-          "duration": 2,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceAllocation record in the store",
-          "fullTitle": "promise allocation without reservation create-instance should contain a new ResourceAllocation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should reference the created server ID from the provider",
-          "fullTitle": "promise allocation without reservation create-instance should reference the created server ID from the provider",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should have low priority state",
-          "fullTitle": "promise allocation without reservation create-instance should have low priority state",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create reservation record (no start/end) without error",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should create reservation record (no start/end) without error",
-          "duration": 41,
-          "err": {}
-        },
-        {
-          "title": "should update promise.reservations with a new entry",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should update promise.reservations with a new entry",
-          "duration": 7,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceReservation record in the store",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should contain a new ResourceReservation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create a new server in target provider (with reservation) without error",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should create a new server in target provider (with reservation) without error",
-          "duration": 1617,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceAllocation record in the store",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should contain a new ResourceAllocation record in the store",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should be referenced in the reservation record",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should be referenced in the reservation record",
-          "duration": 7,
-          "err": {}
-        },
-        {
-          "title": "should have high priority state",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should have high priority state",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create reservation record (for future) without error",
-          "fullTitle": "promise reservation for future use create-reservation should create reservation record (for future) without error",
-          "duration": 75,
-          "err": {}
-        },
-        {
-          "title": "should update promise.reservations with a new entry",
-          "fullTitle": "promise reservation for future use create-reservation should update promise.reservations with a new entry",
-          "duration": 17,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceReservation record in the store",
-          "fullTitle": "promise reservation for future use create-reservation should contain a new ResourceReservation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should contain newly created future reservation",
-          "fullTitle": "promise reservation for future use query-reservation should contain newly created future reservation",
-          "duration": 61,
-          "err": {}
-        },
-        {
-          "title": "should modify existing reservation without error",
-          "fullTitle": "promise reservation for future use update-reservation should modify existing reservation without error",
-          "duration": 65,
-          "err": {}
-        },
-        {
-          "title": "should modify existing reservation without error",
-          "fullTitle": "promise reservation for future use cancel-reservation should modify existing reservation without error",
-          "duration": 17,
-          "err": {}
-        },
-        {
-          "title": "should no longer contain record of the deleted reservation",
-          "fullTitle": "promise reservation for future use cancel-reservation should no longer contain record of the deleted reservation",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should decrease available capacity from a provider in the future",
-          "fullTitle": "promise capacity planning decrease-capacity should decrease available capacity from a provider in the future",
-          "duration": 15,
-          "err": {}
-        },
-        {
-          "title": "should increase available capacity from a provider in the future",
-          "fullTitle": "promise capacity planning increase-capacity should increase available capacity from a provider in the future",
-          "duration": 11,
-          "err": {}
-        },
-        {
-          "title": "should report available collections and utilizations",
-          "fullTitle": "promise capacity planning query-capacity should report available collections and utilizations",
-          "duration": 56,
-          "err": {}
-        },
-        {
-          "title": "should fail to create immediate reservation record with proper error",
-          "fullTitle": "promise reservation with conflict create-reservation should fail to create immediate reservation record with proper error",
-          "duration": 60,
-          "err": {}
-        },
-        {
-          "title": "should fail to create future reservation record with proper error",
-          "fullTitle": "promise reservation with conflict create-reservation should fail to create future reservation record with proper error",
-          "duration": 38,
-          "err": {}
-        },
-        {
-          "title": "should successfully destroy all allocations",
-          "fullTitle": "promise cleanup test allocations destroy-instance should successfully destroy all allocations",
-          "duration": 361,
-          "err": {}
-        }
-      ],
-      "pending": [],
-      "failures": [],
-      "passes": [
-        {
-          "title": "should add a new OpenStack provider without error",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should add a new OpenStack provider without error",
-          "duration": 1217,
-          "err": {}
-        },
-        {
-          "title": "should update promise.providers with a new entry",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should update promise.providers with a new entry",
-          "duration": 10,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceProvider record in the store",
-          "fullTitle": "promise register OpenStack into resource pool add-provider should contain a new ResourceProvider record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should add more capacity to the reservation service without error",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should add more capacity to the reservation service without error",
-          "duration": 25,
-          "err": {}
-        },
-        {
-          "title": "should update promise.pools with a new entry",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should update promise.pools with a new entry",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should contain a ResourcePool record in the store",
-          "fullTitle": "promise register OpenStack into resource pool increase-capacity should contain a ResourcePool record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should report total collections and utilizations",
-          "fullTitle": "promise register OpenStack into resource pool query-capacity should report total collections and utilizations",
-          "duration": 18,
-          "err": {}
-        },
-        {
-          "title": "should contain newly added capacity pool",
-          "fullTitle": "promise register OpenStack into resource pool query-capacity should contain newly added capacity pool",
-          "duration": 8,
-          "err": {}
-        },
-        {
-          "title": "should create a new server in target provider without error",
-          "fullTitle": "promise allocation without reservation create-instance should create a new server in target provider without error",
-          "duration": 1768,
-          "err": {}
-        },
-        {
-          "title": "should update promise.allocations with a new entry",
-          "fullTitle": "promise allocation without reservation create-instance should update promise.allocations with a new entry",
-          "duration": 2,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceAllocation record in the store",
-          "fullTitle": "promise allocation without reservation create-instance should contain a new ResourceAllocation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should reference the created server ID from the provider",
-          "fullTitle": "promise allocation without reservation create-instance should reference the created server ID from the provider",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should have low priority state",
-          "fullTitle": "promise allocation without reservation create-instance should have low priority state",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create reservation record (no start/end) without error",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should create reservation record (no start/end) without error",
-          "duration": 41,
-          "err": {}
-        },
-        {
-          "title": "should update promise.reservations with a new entry",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should update promise.reservations with a new entry",
-          "duration": 7,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceReservation record in the store",
-          "fullTitle": "promise allocation using reservation for immediate use create-reservation should contain a new ResourceReservation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create a new server in target provider (with reservation) without error",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should create a new server in target provider (with reservation) without error",
-          "duration": 1617,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceAllocation record in the store",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should contain a new ResourceAllocation record in the store",
-          "duration": 1,
-          "err": {}
-        },
-        {
-          "title": "should be referenced in the reservation record",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should be referenced in the reservation record",
-          "duration": 7,
-          "err": {}
-        },
-        {
-          "title": "should have high priority state",
-          "fullTitle": "promise allocation using reservation for immediate use create-instance should have high priority state",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should create reservation record (for future) without error",
-          "fullTitle": "promise reservation for future use create-reservation should create reservation record (for future) without error",
-          "duration": 75,
-          "err": {}
-        },
-        {
-          "title": "should update promise.reservations with a new entry",
-          "fullTitle": "promise reservation for future use create-reservation should update promise.reservations with a new entry",
-          "duration": 17,
-          "err": {}
-        },
-        {
-          "title": "should contain a new ResourceReservation record in the store",
-          "fullTitle": "promise reservation for future use create-reservation should contain a new ResourceReservation record in the store",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should contain newly created future reservation",
-          "fullTitle": "promise reservation for future use query-reservation should contain newly created future reservation",
-          "duration": 61,
-          "err": {}
-        },
-        {
-          "title": "should modify existing reservation without error",
-          "fullTitle": "promise reservation for future use update-reservation should modify existing reservation without error",
-          "duration": 65,
-          "err": {}
-        },
-        {
-          "title": "should modify existing reservation without error",
-          "fullTitle": "promise reservation for future use cancel-reservation should modify existing reservation without error",
-          "duration": 17,
-          "err": {}
-        },
-        {
-          "title": "should no longer contain record of the deleted reservation",
-          "fullTitle": "promise reservation for future use cancel-reservation should no longer contain record of the deleted reservation",
-          "duration": 0,
-          "err": {}
-        },
-        {
-          "title": "should decrease available capacity from a provider in the future",
-          "fullTitle": "promise capacity planning decrease-capacity should decrease available capacity from a provider in the future",
-          "duration": 15,
-          "err": {}
-        },
-        {
-          "title": "should increase available capacity from a provider in the future",
-          "fullTitle": "promise capacity planning increase-capacity should increase available capacity from a provider in the future",
-          "duration": 11,
-          "err": {}
-        },
-        {
-          "title": "should report available collections and utilizations",
-          "fullTitle": "promise capacity planning query-capacity should report available collections and utilizations",
-          "duration": 56,
-          "err": {}
-        },
-        {
-          "title": "should fail to create immediate reservation record with proper error",
-          "fullTitle": "promise reservation with conflict create-reservation should fail to create immediate reservation record with proper error",
-          "duration": 60,
-          "err": {}
-        },
-        {
-          "title": "should fail to create future reservation record with proper error",
-          "fullTitle": "promise reservation with conflict create-reservation should fail to create future reservation record with proper error",
-          "duration": 38,
-          "err": {}
-        },
-        {
-          "title": "should successfully destroy all allocations",
-          "fullTitle": "promise cleanup test allocations destroy-instance should successfully destroy all allocations",
-          "duration": 361,
-          "err": {}
-        }
-      ]
-    }
-    Promise- INFO -
-    ****************************************
-              Promise test report
-
-    ****************************************
-     Suites:    23
-     Tests:     33
-     Passes:    33
-     Pending:   0
-     Failures:  0
-     Start:     2016-02-21T09:56:46.846Z
-     End:       2016-02-21T09:56:51.847Z
-     Duration:  6.301
-    ****************************************
-::
-
 
 Rally
 ^^^^^
 ::
+
     FUNCTEST.info: Running Rally benchmark suite...
     run_rally - INFO - Starting test scenario "authenticate" ...
     run_rally - INFO -
@@ -2607,4 +1747,872 @@ Rally
     +===================+============+===============+===========+
     | TOTAL:            | 01:36:57   | 232           | 100.00%   |
     +===================+============+===============+===========+
+
+
+
+SDN Controller
+--------------
+
+ONOS
+^^^^
 ::
+
+    FUNCTEST.info: Running ONOS test case...
+    FUNCvirNetNB - INFO - Creating component Handle: ONOSrest
+    ******************************
+     CASE INIT
+    ******************************
+
+    ['ONOSrest']
+
+    ******************************
+     Result summary for Testcase2
+    ******************************
+
+    [2016-02-21 09:55:56.965174] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Network Post
+    [2016-02-21 09:55:56.965727] [FUNCvirNetNB] [STEP]  2.1: Generate Post Data
+    [2016-02-21 09:55:56.966454] [FUNCvirNetNB] [STEP]  2.2: Post Data via HTTP
+    [2016-02-21 09:55:57.006264] [FUNCvirNetNB] [STEP]  2.3: Get Data via HTTP
+    [2016-02-21 09:55:57.037745] [FUNCvirNetNB] [STEP]  2.4: Compare Send Id and Get Id
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase3
+    ******************************
+
+    [2016-02-21 09:55:57.048240] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Network Update
+    [2016-02-21 09:55:57.048783] [FUNCvirNetNB] [STEP]  3.1: Generate Post Data
+    [2016-02-21 09:55:57.049571] [FUNCvirNetNB] [STEP]  3.2: Post Data via HTTP
+    [2016-02-21 09:55:57.056744] [FUNCvirNetNB] [STEP]  3.3: Update Data via HTTP
+    [2016-02-21 09:55:57.064248] [FUNCvirNetNB] [STEP]  3.4: Get Data via HTTP
+    [2016-02-21 09:55:57.072845] [FUNCvirNetNB] [STEP]  3.5: Compare Update data.
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase4
+    ******************************
+
+    [2016-02-21 09:55:57.084363] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Network Delete
+    [2016-02-21 09:55:57.084882] [FUNCvirNetNB] [STEP]  4.1: Generate Post Data
+    [2016-02-21 09:55:57.085617] [FUNCvirNetNB] [STEP]  4.2: Post Data via HTTP
+    [2016-02-21 09:55:57.093018] [FUNCvirNetNB] [STEP]  4.3: Delete Data via HTTP
+    [2016-02-21 09:55:57.099770] [FUNCvirNetNB] [STEP]  4.4: Get Data is NULL
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase5
+    ******************************
+
+    [2016-02-21 09:56:02.115745] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Subnet Post
+    [2016-02-21 09:56:02.116339] [FUNCvirNetNB] [STEP]  5.1: Generate Post Data
+    [2016-02-21 09:56:02.117459] [FUNCvirNetNB] [STEP]  5.2: Post Network Data via HTTP(Post Subnet need post network)
+    [2016-02-21 09:56:02.126052] [FUNCvirNetNB] [STEP]  5.3: Post Subnet Data via HTTP
+    [2016-02-21 09:56:02.159577] [FUNCvirNetNB] [STEP]  5.4: Get Subnet Data via HTTP
+    [2016-02-21 09:56:02.172655] [FUNCvirNetNB] [STEP]  5.5: Compare Post Subnet Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase6
+    ******************************
+
+    [2016-02-21 09:56:02.183187] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Subnet Update
+    [2016-02-21 09:56:02.183876] [FUNCvirNetNB] [STEP]  6.1: Generate Post Data
+    [2016-02-21 09:56:02.184887] [FUNCvirNetNB] [STEP]  6.2: Post Network Data via HTTP(Post Subnet need post network)
+    [2016-02-21 09:56:02.192777] [FUNCvirNetNB] [STEP]  6.3: Post Subnet Data via HTTP
+    [2016-02-21 09:56:02.201349] [FUNCvirNetNB] [STEP]  6.4: Update Subnet Data via HTTP
+    [2016-02-21 09:56:02.209629] [FUNCvirNetNB] [STEP]  6.5: Get Subnet Data via HTTP
+    [2016-02-21 09:56:02.216700] [FUNCvirNetNB] [STEP]  6.6: Compare Subnet Data
+    [2016-02-21 09:56:02.217492] [FUNCvirNetNB] [STEP]  6.7: Delete Subnet via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase7
+    ******************************
+
+    [2016-02-21 09:56:02.227738] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Subnet Delete
+    [2016-02-21 09:56:02.228309] [FUNCvirNetNB] [STEP]  7.1: Generate Post Data
+    [2016-02-21 09:56:02.229188] [FUNCvirNetNB] [STEP]  7.2: Post Network Data via HTTP(Post Subnet need post network)
+    [2016-02-21 09:56:02.237036] [FUNCvirNetNB] [STEP]  7.3: Post Subnet Data via HTTP
+    [2016-02-21 09:56:02.245482] [FUNCvirNetNB] [STEP]  7.4: Delete Subnet Data via HTTP
+    [2016-02-21 09:56:02.253076] [FUNCvirNetNB] [STEP]  7.5: Get Subnet Data is NULL
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase8
+    ******************************
+
+    [2016-02-21 09:56:07.269037] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Port Post
+    [2016-02-21 09:56:07.269689] [FUNCvirNetNB] [STEP]  8.1: Generate Post Data
+    [2016-02-21 09:56:07.270772] [FUNCvirNetNB] [STEP]  8.2: Post Network Data via HTTP(Post port need post network)
+    [2016-02-21 09:56:07.279440] [FUNCvirNetNB] [STEP]  8.3: Post Subnet Data via HTTP(Post port need post subnet)
+    [2016-02-21 09:56:07.287800] [FUNCvirNetNB] [STEP]  8.4: Post Port Data via HTTP
+    [2016-02-21 09:56:07.296863] [FUNCvirNetNB] [STEP]  8.5: Get Port Data via HTTP
+    [2016-02-21 09:56:07.306388] [FUNCvirNetNB] [STEP]  8.6: Compare Post Port Data
+    [2016-02-21 09:56:07.307677] [FUNCvirNetNB] [STEP]  8.7: Clean Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase9
+    ******************************
+
+    [2016-02-21 09:56:07.318023] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Port Update
+    [2016-02-21 09:56:07.318708] [FUNCvirNetNB] [STEP]  9.1: Generate Post Data
+    [2016-02-21 09:56:07.320149] [FUNCvirNetNB] [STEP]  9.2: Post Network Data via HTTP(Post port need post network)
+    [2016-02-21 09:56:07.327326] [FUNCvirNetNB] [STEP]  9.3: Post Subnet Data via HTTP(Post port need post subnet)
+    [2016-02-21 09:56:07.336517] [FUNCvirNetNB] [STEP]  9.4: Post Port Data via HTTP
+    [2016-02-21 09:56:07.345702] [FUNCvirNetNB] [STEP]  9.5: Update Port Data via HTTP
+    [2016-02-21 09:56:07.354021] [FUNCvirNetNB] [STEP]  9.6: Get Port Data via HTTP
+    [2016-02-21 09:56:07.360429] [FUNCvirNetNB] [STEP]  9.7: Compare Update Port Data
+    [2016-02-21 09:56:07.361666] [FUNCvirNetNB] [STEP]  9.8: Clean Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase10
+    ******************************
+
+    [2016-02-21 09:56:07.372086] [FUNCvirNetNB] [CASE]  Virtual Network NBI Test - Port Delete
+    [2016-02-21 09:56:07.372739] [FUNCvirNetNB] [STEP]  10.1: Generate Post Data
+    [2016-02-21 09:56:07.373778] [FUNCvirNetNB] [STEP]  10.2: Post Network Data via HTTP(Post port need post network)
+    [2016-02-21 09:56:07.380739] [FUNCvirNetNB] [STEP]  10.3: Post Subnet Data via HTTP(Post port need post subnet)
+    [2016-02-21 09:56:07.388862] [FUNCvirNetNB] [STEP]  10.4: Post Port Data via HTTP
+    [2016-02-21 09:56:07.396014] [FUNCvirNetNB] [STEP]  10.5: Delete Port Data via HTTP
+    [2016-02-21 09:56:07.417621] [FUNCvirNetNB] [STEP]  10.6: Get Port Data is NULL
+    [2016-02-21 09:56:12.430407] [FUNCvirNetNB] [STEP]  10.7: Clean Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+
+    *************************************
+        Test Execution Summary
+
+    *************************************
+
+     Test Start           : 21 Feb 2016 09:55:56
+     Test End             : 21 Feb 2016 09:56:12
+     Execution Time       : 0:00:15.628718
+     Total tests planned  : 9
+     Total tests RUN      : 9
+     Total Pass           : 9
+     Total Fail           : 0
+     Total No Result      : 0
+     Success Percentage   : 100%
+     Execution Result     : 100%
+
+
+
+    ******************************
+     CASE INIT
+    ******************************
+
+    ['ONOSrest']
+
+    ******************************
+     Result summary for Testcase2
+    ******************************
+
+    [2016-02-21 09:56:12.836955] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Router Post
+    [2016-02-21 09:56:12.838221] [FUNCvirNetNBL3] [STEP]  2.1: Post Network Data via HTTP(Post Router need post network)
+    [2016-02-21 09:56:12.873649] [FUNCvirNetNBL3] [STEP]  2.2: Post Router Data via HTTP
+    [2016-02-21 09:56:12.881751] [FUNCvirNetNBL3] [STEP]  2.3: Get Router Data via HTTP
+    [2016-02-21 09:56:12.914578] [FUNCvirNetNBL3] [STEP]  2.4: Compare Post Router Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase3
+    ******************************
+
+    [2016-02-21 09:56:12.930658] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Router Update
+    [2016-02-21 09:56:12.931841] [FUNCvirNetNBL3] [STEP]  3.1: Post Network Data via HTTP(Post Router need post network)
+    [2016-02-21 09:56:12.939584] [FUNCvirNetNBL3] [STEP]  3.2: Post Router Data via HTTP
+    [2016-02-21 09:56:12.946895] [FUNCvirNetNBL3] [STEP]  3.3: Update Router Data via HTTP
+    [2016-02-21 09:56:12.953601] [FUNCvirNetNBL3] [STEP]  3.4: Get Router Data via HTTP
+    [2016-02-21 09:56:12.959887] [FUNCvirNetNBL3] [STEP]  3.5: Compare Router Data
+    [2016-02-21 09:56:12.961048] [FUNCvirNetNBL3] [STEP]  3.6: Delete Router via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase4
+    ******************************
+
+    [2016-02-21 09:56:12.970433] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Router Delete
+    [2016-02-21 09:56:12.971622] [FUNCvirNetNBL3] [STEP]  4.1: Post Network Data via HTTP(Post Router need post network)
+    [2016-02-21 09:56:12.979473] [FUNCvirNetNBL3] [STEP]  4.2: Post Router Data via HTTP
+    [2016-02-21 09:56:12.986263] [FUNCvirNetNBL3] [STEP]  4.3: Delete Router Data via HTTP
+    [2016-02-21 09:56:12.992190] [FUNCvirNetNBL3] [STEP]  4.4: Get Router Data is NULL
+    Verify the Router status
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase5
+    ******************************
+
+    [2016-02-21 09:56:18.008957] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - RouterInterface Post
+    [2016-02-21 09:56:18.010175] [FUNCvirNetNBL3] [STEP]  5.1: Post Network Data via HTTP(Post port need post network)
+    [2016-02-21 09:56:18.018296] [FUNCvirNetNBL3] [STEP]  5.2: Post Subnet Data via HTTP(Post port need post subnet)
+    [2016-02-21 09:56:18.026382] [FUNCvirNetNBL3] [STEP]  5.3: Post Port Data via HTTP
+    [2016-02-21 09:56:18.034099] [FUNCvirNetNBL3] [STEP]  5.4: Post Router Data via HTTP
+    [2016-02-21 09:56:18.040193] [FUNCvirNetNBL3] [STEP]  5.5: Put RouterInterface Data via HTTP
+    [2016-02-21 09:56:18.047317] [FUNCvirNetNBL3] [STEP]  5.6: Get RouterInterface Data via HTTP
+    [2016-02-21 09:56:18.053592] [FUNCvirNetNBL3] [STEP]  5.7: Compare Post Port Data
+    [2016-02-21 09:56:18.055253] [FUNCvirNetNBL3] [STEP]  5.8: Del RouterInterface Data via HTTP
+    [2016-02-21 09:56:18.062038] [FUNCvirNetNBL3] [STEP]  5.9: Clean Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase6
+    ******************************
+
+    [2016-02-21 09:56:18.078391] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - RouterInterface Delete
+    [2016-02-21 09:56:18.079883] [FUNCvirNetNBL3] [STEP]  6.1: Post Network Data via HTTP(Post port need post network)
+    [2016-02-21 09:56:18.087420] [FUNCvirNetNBL3] [STEP]  6.2: Post Subnet Data via HTTP(Post port need post subnet)
+    [2016-02-21 09:56:18.095337] [FUNCvirNetNBL3] [STEP]  6.3: Post Port Data via HTTP
+    [2016-02-21 09:56:18.103345] [FUNCvirNetNBL3] [STEP]  6.4: Post Router Data via HTTP
+    [2016-02-21 09:56:18.109767] [FUNCvirNetNBL3] [STEP]  6.5: Post RouterInterface Data via HTTP
+    [2016-02-21 09:56:18.116024] [FUNCvirNetNBL3] [STEP]  6.6: Del RouterInterface Data via HTTP
+    [2016-02-21 09:56:18.122686] [FUNCvirNetNBL3] [STEP]  6.7: Delete Port Data via HTTP
+    [2016-02-21 09:56:18.129655] [FUNCvirNetNBL3] [STEP]  6.8: Get Port Data is NULL
+    [2016-02-21 09:56:23.145559] [FUNCvirNetNBL3] [STEP]  6.9: Clean Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase7
+    ******************************
+
+    [2016-02-21 09:56:23.164294] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - FloatingIp Post
+    [2016-02-21 09:56:23.165631] [FUNCvirNetNBL3] [STEP]  7.1: Post Network Data via HTTP(Post port need post network)
+    [2016-02-21 09:56:23.173909] [FUNCvirNetNBL3] [STEP]  7.2: Post Subnet Data via HTTP(Post port need post subnet)
+    [2016-02-21 09:56:23.182105] [FUNCvirNetNBL3] [STEP]  7.3: Post Port Data via HTTP
+    [2016-02-21 09:56:23.189623] [FUNCvirNetNBL3] [STEP]  7.4: Post Router Data via HTTP
+    [2016-02-21 09:56:23.196108] [FUNCvirNetNBL3] [STEP]  7.5: Get Port Data via HTTP
+    [2016-02-21 09:56:23.204332] [FUNCvirNetNBL3] [STEP]  7.6: Post FloatingIp Data via HTTP
+    [2016-02-21 09:56:23.211580] [FUNCvirNetNBL3] [STEP]  7.7: Get Port Data via HTTP
+    [2016-02-21 09:56:23.218993] [FUNCvirNetNBL3] [STEP]  7.8: Get FloatingIp Data via HTTP
+    [2016-02-21 09:56:23.251318] [FUNCvirNetNBL3] [STEP]  7.9: Get FloatingIp Data via HTTP
+    [2016-02-21 09:56:23.259068] [FUNCvirNetNBL3] [STEP]  7.10: Compare Post FloatingIp Data
+    [2016-02-21 09:56:23.260001] [FUNCvirNetNBL3] [STEP]  7.11: Post FloatingIp Clean Data via HTTP
+    [2016-02-21 09:56:23.266784] [FUNCvirNetNBL3] [STEP]  7.12: Clean Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase8
+    ******************************
+
+    [2016-02-21 09:56:23.289110] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - FloatingIp Update
+    [2016-02-21 09:56:23.291300] [FUNCvirNetNBL3] [STEP]  8.1: Post Network Data via HTTP(Post port need post network)
+    [2016-02-21 09:56:23.299318] [FUNCvirNetNBL3] [STEP]  8.2: Post Subnet Data via HTTP(Post port need post subnet)
+    [2016-02-21 09:56:23.307738] [FUNCvirNetNBL3] [STEP]  8.3: Post Port Data via HTTP
+    [2016-02-21 09:56:23.315822] [FUNCvirNetNBL3] [STEP]  8.4: Post Router Data via HTTP
+    [2016-02-21 09:56:23.322853] [FUNCvirNetNBL3] [STEP]  8.5: Post FloatingIp Data via HTTP
+    [2016-02-21 09:56:23.329316] [FUNCvirNetNBL3] [STEP]  8.6: Post Delete Data via HTTP
+    [2016-02-21 09:56:23.337183] [FUNCvirNetNBL3] [STEP]  8.7: Post NewPort Data via HTTP
+    [2016-02-21 09:56:23.345756] [FUNCvirNetNBL3] [STEP]  8.8: Post NewFloatingIp Data via HTTP
+    [2016-02-21 09:56:23.353311] [FUNCvirNetNBL3] [STEP]  8.9: Get NewFloatingIp Data via HTTP
+    [2016-02-21 09:56:23.384949] [FUNCvirNetNBL3] [STEP]  8.10: Compare Post FloatingIp Data
+    [2016-02-21 09:56:23.385934] [FUNCvirNetNBL3] [STEP]  8.11: Post FloatingIp Clean Data via HTTP
+    [2016-02-21 09:56:23.392515] [FUNCvirNetNBL3] [STEP]  8.12: Clean Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase9
+    ******************************
+
+    [2016-02-21 09:56:23.416898] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - FloatingIp Delete
+    [2016-02-21 09:56:23.418399] [FUNCvirNetNBL3] [STEP]  9.1: Post Network Data via HTTP(Post port need post network)
+    [2016-02-21 09:56:23.425551] [FUNCvirNetNBL3] [STEP]  9.2: Post Subnet Data via HTTP(Post port need post subnet)
+    [2016-02-21 09:56:23.433217] [FUNCvirNetNBL3] [STEP]  9.3: Post Port Data via HTTP
+    [2016-02-21 09:56:23.440717] [FUNCvirNetNBL3] [STEP]  9.4: Post Router Data via HTTP
+    [2016-02-21 09:56:23.447116] [FUNCvirNetNBL3] [STEP]  9.5: Post FloatingIp Data via HTTP
+    [2016-02-21 09:56:23.454356] [FUNCvirNetNBL3] [STEP]  9.6: Post FloatingIp Clean Data via HTTP
+    [2016-02-21 09:56:23.465800] [FUNCvirNetNBL3] [STEP]  9.7: Get FloatingIp Data is NULL
+    [2016-02-21 09:56:28.479269] [FUNCvirNetNBL3] [STEP]  9.8: Clean Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase10
+    ******************************
+
+    [2016-02-21 09:56:28.496538] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Gateway Post
+    [2016-02-21 09:56:28.498465] [FUNCvirNetNBL3] [STEP]  10.1: Post Network Data via HTTP(Post port need post network)
+    [2016-02-21 09:56:28.507466] [FUNCvirNetNBL3] [STEP]  10.2: Post Subnet Data via HTTP(Post port need post subnet)
+    [2016-02-21 09:56:28.515564] [FUNCvirNetNBL3] [STEP]  10.3: Post Port Data via HTTP
+    [2016-02-21 09:56:28.522598] [FUNCvirNetNBL3] [STEP]  10.4: Post Router Data via HTTP
+    [2016-02-21 09:56:28.528755] [FUNCvirNetNBL3] [STEP]  10.5: Get Gateway Data via HTTP
+    [2016-02-21 09:56:28.536142] [FUNCvirNetNBL3] [STEP]  10.6: Compare Post Gateway Data
+    [2016-02-21 09:56:28.537198] [FUNCvirNetNBL3] [STEP]  10.7: Clean Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase11
+    ******************************
+
+    [2016-02-21 09:56:28.553805] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Gateway Update
+    [2016-02-21 09:56:28.555461] [FUNCvirNetNBL3] [STEP]  11.1: Post Network Data via HTTP(Post port need post network)
+    [2016-02-21 09:56:28.562664] [FUNCvirNetNBL3] [STEP]  11.2: Post Subnet Data via HTTP(Post port need post subnet)
+    [2016-02-21 09:56:28.570094] [FUNCvirNetNBL3] [STEP]  11.3: Post Port Data via HTTP
+    [2016-02-21 09:56:28.577203] [FUNCvirNetNBL3] [STEP]  11.4: Post Router Data via HTTP
+    [2016-02-21 09:56:28.583265] [FUNCvirNetNBL3] [STEP]  11.5: Post New Router Data via HTTP
+    [2016-02-21 09:56:28.589203] [FUNCvirNetNBL3] [STEP]  11.6: Get Gateway Data via HTTP
+    [2016-02-21 09:56:28.594700] [FUNCvirNetNBL3] [STEP]  11.7: Compare Post Gateway Data
+    [2016-02-21 09:56:28.595799] [FUNCvirNetNBL3] [STEP]  11.8: Clean Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+    ******************************
+     Result summary for Testcase12
+    ******************************
+
+    [2016-02-21 09:56:28.611322] [FUNCvirNetNBL3] [CASE]  Virtual Network NBI Test - Gateway Delete
+    [2016-02-21 09:56:28.612734] [FUNCvirNetNBL3] [STEP]  12.1: Post Network Data via HTTP(Post port need post network)
+    [2016-02-21 09:56:28.620160] [FUNCvirNetNBL3] [STEP]  12.2: Post Subnet Data via HTTP(Post port need post subnet)
+    [2016-02-21 09:56:28.628079] [FUNCvirNetNBL3] [STEP]  12.3: Post Port Data via HTTP
+    [2016-02-21 09:56:28.635761] [FUNCvirNetNBL3] [STEP]  12.4: Post Router Data via HTTP
+    [2016-02-21 09:56:28.642664] [FUNCvirNetNBL3] [STEP]  12.5: Post Del Gateway Data via HTTP
+    [2016-02-21 09:56:28.648775] [FUNCvirNetNBL3] [STEP]  12.6: Get Gateway Data via HTTP
+    [2016-02-21 09:56:28.654590] [FUNCvirNetNBL3] [STEP]  12.7: If Gateway Data is NULL
+    [2016-02-21 09:56:33.660980] [FUNCvirNetNBL3] [STEP]  12.8: Clean Data via HTTP
+
+    *****************************
+     Result: Pass
+    *****************************
+
+
+
+    *************************************
+        Test Execution Summary
+
+    *************************************
+
+     Test Start           : 21 Feb 2016 09:56:12
+     Test End             : 21 Feb 2016 09:56:33
+     Execution Time       : 0:00:20.999784
+     Total tests planned  : 11
+     Total tests RUN      : 11
+     Total Pass           : 11
+     Total Fail           : 0
+     Total No Result      : 0
+     Success Percentage   : 100%
+     Execution Result     : 100%
+
+
+Feature tests
+-------------
+
+Promise
+^^^^^^^
+::
+
+    FUNCTEST.info: Running PROMISE test case...
+    Promise- INFO - Creating tenant 'promise'...
+    Promise- INFO - Adding role '9d0a0a36d3d54cdcb4cd3c29c5f79a28' to tenant 'promise'...
+    Promise- INFO - Creating user 'promiser'...
+    Promise- INFO - Updating OpenStack credentials...
+    Promise- INFO - Creating image 'promise-img' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
+    Promise- INFO - Creating flavor 'promise-flavor'...
+    Promise- INFO - Exporting environment variables...
+    Promise- INFO - Running command: npm run -s test -- --reporter json
+    Promise- INFO - The test succeeded.
+    Promise- DEBUG -
+    {
+      "stats": {
+        "suites": 23,
+        "tests": 33,
+        "passes": 33,
+        "pending": 0,
+        "failures": 0,
+        "start": "2016-02-21T09:56:46.846Z",
+        "end": "2016-02-21T09:56:51.847Z",
+        "duration": 5524
+      },
+      "tests": [
+        {
+          "title": "should add a new OpenStack provider without error",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should add a new OpenStack provider without error",
+          "duration": 1217,
+          "err": {}
+        },
+        {
+          "title": "should update promise.providers with a new entry",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should update promise.providers with a new entry",
+          "duration": 10,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceProvider record in the store",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should contain a new ResourceProvider record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should add more capacity to the reservation service without error",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should add more capacity to the reservation service without error",
+          "duration": 25,
+          "err": {}
+        },
+        {
+          "title": "should update promise.pools with a new entry",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should update promise.pools with a new entry",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should contain a ResourcePool record in the store",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should contain a ResourcePool record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should report total collections and utilizations",
+          "fullTitle": "promise register OpenStack into resource pool query-capacity should report total collections and utilizations",
+          "duration": 18,
+          "err": {}
+        },
+        {
+          "title": "should contain newly added capacity pool",
+          "fullTitle": "promise register OpenStack into resource pool query-capacity should contain newly added capacity pool",
+          "duration": 8,
+          "err": {}
+        },
+        {
+          "title": "should create a new server in target provider without error",
+          "fullTitle": "promise allocation without reservation create-instance should create a new server in target provider without error",
+          "duration": 1768,
+          "err": {}
+        },
+        {
+          "title": "should update promise.allocations with a new entry",
+          "fullTitle": "promise allocation without reservation create-instance should update promise.allocations with a new entry",
+          "duration": 2,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceAllocation record in the store",
+          "fullTitle": "promise allocation without reservation create-instance should contain a new ResourceAllocation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should reference the created server ID from the provider",
+          "fullTitle": "promise allocation without reservation create-instance should reference the created server ID from the provider",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should have low priority state",
+          "fullTitle": "promise allocation without reservation create-instance should have low priority state",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create reservation record (no start/end) without error",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should create reservation record (no start/end) without error",
+          "duration": 41,
+          "err": {}
+        },
+        {
+          "title": "should update promise.reservations with a new entry",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should update promise.reservations with a new entry",
+          "duration": 7,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceReservation record in the store",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should contain a new ResourceReservation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create a new server in target provider (with reservation) without error",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should create a new server in target provider (with reservation) without error",
+          "duration": 1617,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceAllocation record in the store",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should contain a new ResourceAllocation record in the store",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should be referenced in the reservation record",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should be referenced in the reservation record",
+          "duration": 7,
+          "err": {}
+        },
+        {
+          "title": "should have high priority state",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should have high priority state",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create reservation record (for future) without error",
+          "fullTitle": "promise reservation for future use create-reservation should create reservation record (for future) without error",
+          "duration": 75,
+          "err": {}
+        },
+        {
+          "title": "should update promise.reservations with a new entry",
+          "fullTitle": "promise reservation for future use create-reservation should update promise.reservations with a new entry",
+          "duration": 17,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceReservation record in the store",
+          "fullTitle": "promise reservation for future use create-reservation should contain a new ResourceReservation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should contain newly created future reservation",
+          "fullTitle": "promise reservation for future use query-reservation should contain newly created future reservation",
+          "duration": 61,
+          "err": {}
+        },
+        {
+          "title": "should modify existing reservation without error",
+          "fullTitle": "promise reservation for future use update-reservation should modify existing reservation without error",
+          "duration": 65,
+          "err": {}
+        },
+        {
+          "title": "should modify existing reservation without error",
+          "fullTitle": "promise reservation for future use cancel-reservation should modify existing reservation without error",
+          "duration": 17,
+          "err": {}
+        },
+        {
+          "title": "should no longer contain record of the deleted reservation",
+          "fullTitle": "promise reservation for future use cancel-reservation should no longer contain record of the deleted reservation",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should decrease available capacity from a provider in the future",
+          "fullTitle": "promise capacity planning decrease-capacity should decrease available capacity from a provider in the future",
+          "duration": 15,
+          "err": {}
+        },
+        {
+          "title": "should increase available capacity from a provider in the future",
+          "fullTitle": "promise capacity planning increase-capacity should increase available capacity from a provider in the future",
+          "duration": 11,
+          "err": {}
+        },
+        {
+          "title": "should report available collections and utilizations",
+          "fullTitle": "promise capacity planning query-capacity should report available collections and utilizations",
+          "duration": 56,
+          "err": {}
+        },
+        {
+          "title": "should fail to create immediate reservation record with proper error",
+          "fullTitle": "promise reservation with conflict create-reservation should fail to create immediate reservation record with proper error",
+          "duration": 60,
+          "err": {}
+        },
+        {
+          "title": "should fail to create future reservation record with proper error",
+          "fullTitle": "promise reservation with conflict create-reservation should fail to create future reservation record with proper error",
+          "duration": 38,
+          "err": {}
+        },
+        {
+          "title": "should successfully destroy all allocations",
+          "fullTitle": "promise cleanup test allocations destroy-instance should successfully destroy all allocations",
+          "duration": 361,
+          "err": {}
+        }
+      ],
+      "pending": [],
+      "failures": [],
+      "passes": [
+        {
+          "title": "should add a new OpenStack provider without error",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should add a new OpenStack provider without error",
+          "duration": 1217,
+          "err": {}
+        },
+        {
+          "title": "should update promise.providers with a new entry",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should update promise.providers with a new entry",
+          "duration": 10,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceProvider record in the store",
+          "fullTitle": "promise register OpenStack into resource pool add-provider should contain a new ResourceProvider record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should add more capacity to the reservation service without error",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should add more capacity to the reservation service without error",
+          "duration": 25,
+          "err": {}
+        },
+        {
+          "title": "should update promise.pools with a new entry",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should update promise.pools with a new entry",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should contain a ResourcePool record in the store",
+          "fullTitle": "promise register OpenStack into resource pool increase-capacity should contain a ResourcePool record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should report total collections and utilizations",
+          "fullTitle": "promise register OpenStack into resource pool query-capacity should report total collections and utilizations",
+          "duration": 18,
+          "err": {}
+        },
+        {
+          "title": "should contain newly added capacity pool",
+          "fullTitle": "promise register OpenStack into resource pool query-capacity should contain newly added capacity pool",
+          "duration": 8,
+          "err": {}
+        },
+        {
+          "title": "should create a new server in target provider without error",
+          "fullTitle": "promise allocation without reservation create-instance should create a new server in target provider without error",
+          "duration": 1768,
+          "err": {}
+        },
+        {
+          "title": "should update promise.allocations with a new entry",
+          "fullTitle": "promise allocation without reservation create-instance should update promise.allocations with a new entry",
+          "duration": 2,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceAllocation record in the store",
+          "fullTitle": "promise allocation without reservation create-instance should contain a new ResourceAllocation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should reference the created server ID from the provider",
+          "fullTitle": "promise allocation without reservation create-instance should reference the created server ID from the provider",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should have low priority state",
+          "fullTitle": "promise allocation without reservation create-instance should have low priority state",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create reservation record (no start/end) without error",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should create reservation record (no start/end) without error",
+          "duration": 41,
+          "err": {}
+        },
+        {
+          "title": "should update promise.reservations with a new entry",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should update promise.reservations with a new entry",
+          "duration": 7,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceReservation record in the store",
+          "fullTitle": "promise allocation using reservation for immediate use create-reservation should contain a new ResourceReservation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create a new server in target provider (with reservation) without error",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should create a new server in target provider (with reservation) without error",
+          "duration": 1617,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceAllocation record in the store",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should contain a new ResourceAllocation record in the store",
+          "duration": 1,
+          "err": {}
+        },
+        {
+          "title": "should be referenced in the reservation record",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should be referenced in the reservation record",
+          "duration": 7,
+          "err": {}
+        },
+        {
+          "title": "should have high priority state",
+          "fullTitle": "promise allocation using reservation for immediate use create-instance should have high priority state",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should create reservation record (for future) without error",
+          "fullTitle": "promise reservation for future use create-reservation should create reservation record (for future) without error",
+          "duration": 75,
+          "err": {}
+        },
+        {
+          "title": "should update promise.reservations with a new entry",
+          "fullTitle": "promise reservation for future use create-reservation should update promise.reservations with a new entry",
+          "duration": 17,
+          "err": {}
+        },
+        {
+          "title": "should contain a new ResourceReservation record in the store",
+          "fullTitle": "promise reservation for future use create-reservation should contain a new ResourceReservation record in the store",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should contain newly created future reservation",
+          "fullTitle": "promise reservation for future use query-reservation should contain newly created future reservation",
+          "duration": 61,
+          "err": {}
+        },
+        {
+          "title": "should modify existing reservation without error",
+          "fullTitle": "promise reservation for future use update-reservation should modify existing reservation without error",
+          "duration": 65,
+          "err": {}
+        },
+        {
+          "title": "should modify existing reservation without error",
+          "fullTitle": "promise reservation for future use cancel-reservation should modify existing reservation without error",
+          "duration": 17,
+          "err": {}
+        },
+        {
+          "title": "should no longer contain record of the deleted reservation",
+          "fullTitle": "promise reservation for future use cancel-reservation should no longer contain record of the deleted reservation",
+          "duration": 0,
+          "err": {}
+        },
+        {
+          "title": "should decrease available capacity from a provider in the future",
+          "fullTitle": "promise capacity planning decrease-capacity should decrease available capacity from a provider in the future",
+          "duration": 15,
+          "err": {}
+        },
+        {
+          "title": "should increase available capacity from a provider in the future",
+          "fullTitle": "promise capacity planning increase-capacity should increase available capacity from a provider in the future",
+          "duration": 11,
+          "err": {}
+        },
+        {
+          "title": "should report available collections and utilizations",
+          "fullTitle": "promise capacity planning query-capacity should report available collections and utilizations",
+          "duration": 56,
+          "err": {}
+        },
+        {
+          "title": "should fail to create immediate reservation record with proper error",
+          "fullTitle": "promise reservation with conflict create-reservation should fail to create immediate reservation record with proper error",
+          "duration": 60,
+          "err": {}
+        },
+        {
+          "title": "should fail to create future reservation record with proper error",
+          "fullTitle": "promise reservation with conflict create-reservation should fail to create future reservation record with proper error",
+          "duration": 38,
+          "err": {}
+        },
+        {
+          "title": "should successfully destroy all allocations",
+          "fullTitle": "promise cleanup test allocations destroy-instance should successfully destroy all allocations",
+          "duration": 361,
+          "err": {}
+        }
+      ]
+    }
+    Promise- INFO -
+    ****************************************
+              Promise test report
+
+    ****************************************
+     Suites:    23
+     Tests:     33
+     Passes:    33
+     Pending:   0
+     Failures:  0
+     Start:     2016-02-21T09:56:46.846Z
+     End:       2016-02-21T09:56:51.847Z
+     Duration:  6.301
+    ****************************************
+
+
