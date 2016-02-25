@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_651d9d73",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "s/onosfw/Functest",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_4512a163",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "s/developped/developed",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_2517a553",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "in other OPNFV projects and other upstream communities.",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_050ca941",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "s/OLD/ODL",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_a0ff0301",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "s/docker/Docker\n\ns/container/image",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_60090b2c",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "s/scenario/scenarios",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_400e0f36",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "s/scenario/test case",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_c019df7a",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "this is ok, but I would say: For Brahmaputra, Functest supports the following scenarios:",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_a074a39c",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "let\u0027s talk in present tense: Functest defines the success criteria when having at least 4 consecutive successful runs of a given scenario from the CI.",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_606eabcb",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "suggestion: The success criteria is defined as follows:",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_8079a795",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "shall we add promise here as well?",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_4073afb1",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "s/match/meet  (did not meet the success crit....)",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_2068b3b9",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "s/would/might",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_0065b7e0",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "we need to ask Chris if we can link a wiki in the official docs..",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_20af93e5",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "I would say \"limitations\" instead of \"restrictions\"",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_e0617bd4",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "s/IP/IP range, ...",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_c0b55f32",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "None of the odl_l3 scenarios have been suc....",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_80ee4721",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "s/scenario/scenarios",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_20dd5371",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "what about \u0027the following table details\u0027 ..?",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_c0e31f32",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "shall we add a reference here to http://artifacts.opnfv.org/functest/docs/results/index.html ?",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_20c43391",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "if we do the above, we can add also a reference here: https://build.opnfv.org/ci/view/functest/",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_00c13780",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "s/known/Known",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_e0bdfb03",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "nova metadata service not supported...",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_00da5778",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-02-25T09:25:52Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
