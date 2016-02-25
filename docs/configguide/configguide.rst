@@ -251,5 +251,33 @@ from the repository to your current directory and run the container with a volum
 However, this is not recommended since most of the test cases rely on static
 parameters read from this file, and changing them might cause problems.
 
+
+Proxy support
+-------------
+
+Functest needs internet access to download some resources for some test cases.
+For example to install the Rally environment. This might not work properly if
+the Jumphost is running through a Proxy.
+
+If that is the case, make sure the resolv.conf and the needed proxy environment
+variables are properly set::
+
+    export http_proxy=<your http proxy settings>
+    export https_proxy=<your https proxy settings>
+
+Or refer to the official Docker documentation for Proxy_ settings.
+
+Before running **prepare_env.sh** make sure you can ping http and https sites
+inside the container. For example::
+
+    nc -v google.com 80
+    Connection to google.com 80 port [tcp/http] succeeded!
+
+    nc -v google.com 443
+    Connection to google.com 443 port [tcp/https] succeeded!
+
+
+
 .. _dockerdocs: https://docs.docker.com/
 .. _dockerhub: https://hub.docker.com/r/opnfv/functest/
+.. _Proxy: https://docs.docker.com/engine/admin/systemd/#http-proxy
