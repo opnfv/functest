@@ -8,7 +8,7 @@ Functest is the OPNFV project primarily targeting function testing.
 In the Continuous Integration pipeline, it is launched after an OPNFV fresh
 installation to validate and verify the basic functions of the infrastructure.
 
-The current list of test suites can be distributed in 3 main domains VIM
+The current list of test suites can be distributed in 3 main domains: VIM
 (Virtualised Infrastructure Manager), Controllers and Features.
 
 +----------------+----------------+-------------------------------------------+
@@ -81,9 +81,6 @@ OPNFV, since the Brahmaputra release, offers lots of potential combinations:
 
 Most of the tests are runnable on any combination, but some others might have
 restrictions imposed by the installers or the available deployed features.
-
-Details on working with the functest suites can be found at
-http://artifacts.opnfv.org/functest/brahmaputra/userguide/index.html
 
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html

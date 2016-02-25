@@ -12,21 +12,25 @@ OPNFV FUNCTEST user guide
 Introduction
 ============
 
-The goal of this documents is to describe the Functest test cases as well as
-provide a procedure about how to execute them.
+The goal of this document is to describe the Functest test cases as well as
+provide a procedure to execute them.
 
 A presentation has been created for the first OPNFV Summit `[4]`_.
 
-It is assumed that Functest container has been properly installed `[1]`_.
+This document is a continuation of the Functest Configuration Guide`[1]`_ and it
+is assumed that the Functest Docker container is properly deployed.
+
+**IMPORTANT**: All the instructions described in this guide must be performed
+inside the container.
 
 .. include:: ./introduction.rst
 
-The different scenarios are described in the section hereafter.
+The different test cases are described in the section hereafter.
 
 VIM (Virtualized Infrastructure Manager)
 ----------------------------------------
 
-vPing_SSH
+vPing_ssh
 ^^^^^^^^^
 
 Given the script **ping.sh**::
@@ -44,9 +48,11 @@ Given the script **ping.sh**::
     sleep 1
     done
 
-The goal of this test is described as follows::
 
- vPing test case
+The goal of this test is to establish an SSH connection using a floating IP
+on the public network and verify that 2 instances can talk on a private network::
+
+ vPing_ssh test case
  +-------------+                    +-------------+
  |             |                    |             |
  |             | Boot VM1 with IP1  |             |
@@ -76,7 +82,7 @@ The goal of this test is described as follows::
  |             |                    |             |
  |             |    If ping:        |             |
  |             |      exit OK       |             |
- |             |    else (timeout)  |             |
+ |             |    else (timeout): |             |
  |             |      exit Failed   |             |
  |             |                    |             |
  +-------------+                    +-------------+
@@ -87,7 +93,10 @@ It is the first basic use case which shall work on any deployment.
 vPing_userdata
 ^^^^^^^^^^^^^^
 
-The goal of this test can be described as follows::
+This test case is similar to vPing_ssh but without the use of floating ips
+and the public network. It only checks that 2 instances can talk to each other
+on a private network but it also verifies that the Nova metadata service is
+properly working::
 
  vPing_userdata test case
  +-------------+                    +-------------+
@@ -113,10 +122,9 @@ The goal of this test can be described as follows::
  |             |                    |             |
  +-------------+                    +-------------+
 
-This scenario is similar to the previous one but it uses cloud-init (nova
-metadata service) instead of floating IPs and SSH connection. When the second VM
-boots it will execute the script automatically and the ping will be detected
-capturing periodically the output in the console-log of the second VM.
+When the second VM boots it will execute the script passed as userdata
+automatically and the ping will be detected capturing periodically the output
+in the console-log of the second VM.
 
 
 Tempest
@@ -131,24 +139,24 @@ Tempest has batteries of tests for:
   * Other specific tests useful in validating an OpenStack deployment
 
 Functest uses Rally `[3]`_ to run the Tempest suite.
-Rally generates automatically the Tempest configuration file (tempest.conf).
-Before running the actual test cases, Functest creates the needed resources and
-updates the appropriate parameters to the configuration file.
+Rally generates automatically the Tempest configuration file **tempest.conf**.
+Before running the actual test cases,
+Functest creates the needed resources (user, tenant) and
+updates the appropriate parameters into the configuration file.
 When the Tempest suite is executed, each test duration is measured and the full
-console output is stored in the tempest.log file for further analysis.
+console output is stored in a *log* file for further analysis.
 
 As an addition of Arno, Brahmaputra runs a customized set of Tempest test cases.
-The list is specificed through *--tests-file* when running Rally.
-This option has been introduced in Rally in version 0.1.2.
+The list is specificed through *--tests-file* when executing the Rally command.
+This option has been introduced in the version 0.1.2 of the Rally framework.
 
-The customized test list is available in the Functest repo `[4]`_.
-This list contains more than 200 Tempest test cases and can be divided
+This customized list contains more than 200 Tempest test cases and can be divided
 into two main sections:
 
-  1) Set of tempest smoke test cases
+  1) Set of Tempest smoke test cases
   2) Set of test cases from DefCore list `[8]`_
 
-The goal of the Tempest test suite is to check the basic functionalities of
+The goal of the Tempest test suite is to check the basic functionalities of the
 different OpenStack components on an OPNFV fresh installation using
 the corresponding REST API interfaces.
 
@@ -156,14 +164,14 @@ the corresponding REST API interfaces.
 Rally bench test suites
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Rally `[3]`_ is a benchmarking tool that answers the question::
+Rally `[3]`_ is a benchmarking tool that answers the question:
 
- “How does OpenStack work at scale?”.
+*How does OpenStack work at scale?*
 
-The goal of this test suite is to benchmark the different OpenStack modules and
+The goal of this test suite is to benchmark all the different OpenStack modules and
 get significant figures that could help to define Telco Cloud KPIs.
 
-The OPNFV scenarios are based on the collection of the existing Rally scenarios:
+The OPNFV Rally scenarios are based on the collection of the actual Rally scenarios:
 
  * authenticate
  * cinder
@@ -182,7 +190,7 @@ SDN Controllers
 ---------------
 
 Brahmaputra introduces new SDN controllers.
-There are currently 2 possible controllers:
+There are currently 2 available controllers:
 
  * OpenDaylight (ODL)
  * ONOS
@@ -242,7 +250,7 @@ TestON Framework is used to test the ONOS SDN controller functions.
 The test cases deal with L2 and L3 functions.
 The ONOS test suite can be run on any ONOS compliant scenario.
 
-The test cases may be described as follows:
+The test cases are described as follows:
 
  * onosfunctest: The main executable file contains the initialization of
    the docker environment and functions called by FUNCvirNetNB and
@@ -286,6 +294,14 @@ Features
 
 vIMS
 ^^^^
+The IP Multimedia Subsystem or IP Multimedia Core Network Subsystem (IMS) is an
+architectural framework for delivering IP multimedia services.
+
+vIMS has been integrated in Functest to demonstrate the capability to deploy a
+relatively complex NFV scenario on the OPNFV platform. The deployment of a complete
+functional VNF allows the test of most of the
+essential functions needed for a NFV platform.
+
 The goal of this test suite consists of:
 
  * deploy a VNF orchestrator (Cloudify)
@@ -299,13 +315,7 @@ The Clearwater architecture is described as follows:
    :align: center
    :alt: vIMS architecture
 
-Two types of information are stored in the Test Database:
 
- * the duration of each step (orchestion deployment, VNF deployment and test)
- * the test results
-
-The deployment of a complete functional VNF allows the test of most of the
-essential functions needed for a NFV platform.
 
 Promise
 ^^^^^^^
@@ -340,47 +350,27 @@ The available 33 test cases can be grouped into 7 test suites:
     #. Cleanup test allocations: Destroys all allocations in OpenStack.
 
 
-The specific parameters for Promise can be found in config_functest.yaml and
-include::
 
-   promise:
-     general:
-         tenant_name: Name of the OpenStack tenant/project (e.g. promise)
-         tenant_description: Description of the OpenStack tenant (e.g. promise Functionality Testing)
-         user_name: Name of the user tenant (e.g. promiser)
-         user_pwd: Password of the user tenant (e.g. test)
-         image_name: Name of the software image (e.g. promise-img)
-         flavor_name: Name of the flavor (e.g. promise-flavor with 1 vCPU and 512 MB RAM)
-         flavor_vcpus: 1
-         flavor_ram: 512
-         flavor_disk: 0
-
-However, these parameters must not be changed, as they are the values expected
-by the Promise test suite.
-
-Doctor
-^^^^^^
-Doctor test case: Doctor-notification: immediate notification for fault
-management.
-The Doctor test is successful if the notification time is below 1 second.
 
 .. include:: ./runfunctest.rst
 
 Test results
 ============
 
-For Brahmaputra test results, see the functest results document at:
-http://artifacts.opnfv.org/functest/brahmaputra/docs/results/index.html
+For Brahmaputra test results, see the functest results document at `[12]`_
+
+Note that the results are documented per scenario basis. Although most of the test
+cases might show the same output, some of them are not supported by
+certain scenario. Please select the appropriate scenario and compare the results
+to the referenced in the documentation.
 
 
 Test Dashboard
 ==============
 
-Based on results collected in CI, a test dashboard is dynamically generated:
-https://www.opnfv.org/opnfvtestgraphs/per-test-projects/default
+Based on results collected in CI, a test dashboard is dynamically generated.
+The URL of this dashboard is TODO LF
 
-A specific dashboard has been created for functest:
-http://testresults.opnfv.org/dashboard/
 
 .. include:: ./troubleshooting.rst
 
@@ -399,6 +389,7 @@ References
 .. _`[9]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml
 .. _`[10]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/rally_cert/task.yaml
 .. _`[11]`: http://robotframework.org/
+.. _`[12]`: http://artifacts.opnfv.org/functest/brahmaputra/docs/results/index.html
 
 OPNFV main site: opnfvmain_.
 
