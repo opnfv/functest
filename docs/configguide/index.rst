@@ -1,9 +1,9 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. http://creativecommons.org/licenses/by/4.0
 
-===============================================
-OPNFV FUNCTEST configuration/installation guide
-===============================================
+==================================
+OPNFV FUNCTEST Configuration Guide
+==================================
 
 .. toctree::
    :numbered:
@@ -80,7 +80,7 @@ The high level architecture of Functest within OPNFV can be described as follows
 
 All the libraries and dependencies needed by all the Functest tools are
 pre-installed in the Docker image.
-This allows running Functest on any platform with any Operating System.
+This allows running Functest on any platform on any Operating System.
 
 The automated mechanisms inside the Functest Docker container will:
 
@@ -90,7 +90,7 @@ The automated mechanisms inside the Functest Docker container will:
   * push the results into the OPNFV test result database
 
 
-This Docker image can be integrated into CI or deployed **independently** of the CI.
+This Docker image can be integrated into CI or deployed independently.
 
 Please note that the Functest container has been designed for OPNFV, however, it
 would be possible to adapt it to any VIM+controller environment since most of the
@@ -116,7 +116,7 @@ Several prerequisites are needed for Functest:
 
 NOTE: “Jumphost” refers to any server which meets the previous requirements.
 Normally it is the same server from where the OPNFV deployment has been
-triggered.
+triggered previously.
 
 Docker installation
 -------------------
@@ -143,7 +143,7 @@ External network on SUT
 
 Some of the tests against the VIM (Virtual Infrastructure Manager) need an
 existing public network to succeed. This is needed, for example, to create
-floating IPs to access instances from the public network (i.e. Jumphost).
+floating IPs to access instances from the public network (i.e. Docker container).
 
 By default, the four OPNFV installers provide a fresh installation with
 an external network created along with a router. Make sure that subnet
@@ -162,12 +162,12 @@ OpenStack management network range.
 For example, if the management network is on VLAN 300 and subnet 192.168.1.0/24
 and assuming that eth1 is the physical interface with access to that subnet::
 
- $ ip link add name eth1.300 link eth1 type vlan id 300
- $ ip link set eth1.300 up
- $ ip addr add 192.168.1.66/24 dev eth1.300
+    ip link add name eth1.300 link eth1 type vlan id 300
+    ip link set eth1.300 up
+    ip addr add 192.168.1.66/24 dev eth1.300
 
 This is just an example about how to configure an interface with vlan, but it might
-defer depending on the deployment settings on each installer. Check the
+differ depending on the deployment settings on each installer. Check the
 corresponding installer instructions for more info.
 
 
