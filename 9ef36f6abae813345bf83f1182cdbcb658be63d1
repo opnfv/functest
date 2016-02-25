@@ -291,6 +291,40 @@
     },
     {
       "key": {
+        "uuid": "1a486d77_8063e7b0",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-02-25T09:30:02Z",
+      "side": 1,
+      "message": "combine this text on one line, it does not render when split in a bullet list",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_405defe8",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-02-25T09:30:02Z",
+      "side": 1,
+      "message": "don\u0027t split lines in bullet lists",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a486d77_80ee4721",
         "filename": "docs/release/functest-release.rst",
         "patchSetId": 2
@@ -393,6 +427,40 @@
     },
     {
       "key": {
+        "uuid": "1a486d77_006ff793",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-02-25T09:30:02Z",
+      "side": 1,
+      "message": "break this into sub-bullets.  it does not render.",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_e06bbb83",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-02-25T09:30:02Z",
+      "side": 1,
+      "message": "sub-bullets",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a486d77_00da5778",
         "filename": "docs/release/functest-release.rst",
         "patchSetId": 2
@@ -404,6 +472,57 @@
       "writtenOn": "2016-02-25T09:25:52Z",
       "side": 1,
       "message": "trailing whitespace",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_600fcbe2",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-02-25T09:30:02Z",
+      "side": 1,
+      "message": "sub-bullets",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_4014cff4",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-02-25T09:30:02Z",
+      "side": 1,
+      "message": "one line",
+      "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_00f6d7d7",
+        "filename": "docs/release/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-02-25T09:30:02Z",
+      "side": 1,
+      "message": "sub-bullets",
       "revId": "9ef36f6abae813345bf83f1182cdbcb658be63d1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
