@@ -85,4 +85,4 @@ RUN curl -L https://get.rvm.io | bash -s stable
 
 RUN /bin/echo -e "set nocompatible\nset backspace=2" >> /home/opnfv/.vimrc
 RUN echo "set nocompatible" >> /home/opnfv/.exrc
-RUN echo "alias ll='ls -lh'" >> /home/opnfv/.bash_aliases
+RUN echo "alias ll='ls -lh'" >> /home/opnfv/.bashrc
