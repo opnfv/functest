@@ -300,9 +300,6 @@ ONOS
 
 Please refer to the ONOS documentation.
 
-OpenContrail
-^^^^^^^^^^^^
-
 Feature
 -------
 
@@ -331,8 +328,11 @@ described in the following table:
 | SSH connection issue between the  | if vPing test fails, vIMS test will|
 | Test container and the VM         | fail...                            |
 +-----------------------------------+------------------------------------+
-| No Internet access from a VM      | the VMs of the VNF must have an    |
+| No Internet access from the VM    | the VMs of the VNF must have an    |
 |                                   | external access to Internet        |
++-----------------------------------+------------------------------------+
+| No access to OpenStack API from   | Orchestrator can be installed but  |
+| the VM                            | the vIMS VNF installation fails    |
 +-----------------------------------+------------------------------------+
 
 
