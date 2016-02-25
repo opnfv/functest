@@ -8,7 +8,7 @@ Functest is the OPNFV project primarily targeting function testing.
 In the Continuous Integration pipeline, it is launched after an OPNFV fresh
 installation to validate and verify the basic functions of the infrastructure.
 
-The current list of test suites can be distributed in 3 main domains VIM
+The current list of test suites can be distributed in 3 main domains: VIM
 (Virtualised Infrastructure Manager), Controllers and Features.
 
 +----------------+----------------+-------------------------------------------+
@@ -28,7 +28,8 @@ The current list of test suites can be distributed in 3 main domains VIM
 |                | OpenDaylight   | Opendaylight Test suite                   |
 |                +----------------+-------------------------------------------+
 | Controllers    | ONOS           | Test suite of ONOS L2 and L3 functions    |
-|                |                | See `ONOSFW User Guide`_ for details      |
+|                +----------------+-------------------------------------------+
+|                | OpenContrail   |                                           |
 +----------------+----------------+-------------------------------------------+
 | Features       | vIMS           | Example of a real VNF deployment to show  |
 |                |                | the NFV capabilities of the platform.     |
@@ -42,25 +43,20 @@ The current list of test suites can be distributed in 3 main domains VIM
 |                |                | reservation for future usage by capacity  |
 |                |                | management of resource pools regarding    |
 |                |                | compute, network and storage.             |
-|                |                | See `Promise User Guide`_ for details     |
 |                +----------------+-------------------------------------------+
-|                | Doctor         | Doctor platform, as of Brahmaputra release|
-|                |                | , provides the two features:              |
-|                |                | * Immediate Notification                  |
-|                |                | * Consistent resource state awareness     |
-|                |                | (compute), see `Doctor User Guide`_ for   |
-|                |                | details                                   |
+|                | SDNVPN         |                                           |
 +----------------+----------------+-------------------------------------------+
 
-
 Functest includes different test suites with several test cases within. Some
-of the tests are developed by Functest team members whereas others are
-integrated from upstream communities or other OPNFV projects. For example,
+of the tests are developed by Functest contributors whereas others are integrated
+from upstream communities or other OPNFV projects. For example,
 `Tempest <http://docs.openstack.org/developer/tempest/overview.html>`_ is the
 OpenStack integration test suite and Functest is in charge of the selection,
-integration and automation of the tests that fit in OPNFV.
+integration and automation of the appropriate tests cases for OPNFV.
 
 The Tempest suite has been customized but no new test cases have been created.
+Some OPNFV feature projects (e.g. SDNVPN) have written some Tempest tests cases
+and pushed upstream to be used by Functest.
 
 The results produced by the tests run from CI are pushed and collected in a NoSQL
 database. The goal is to populate the database with results from different sources
@@ -70,20 +66,14 @@ There is no real notion of Test domain or Test coverage. Basic components
 (VIM, controllers) are tested through their own suites. Feature projects also
 provide their own test suites with different ways of running their tests.
 
-vIMS test case was integrated to demonstrate the capability to deploy a
-relatively complex NFV scenario on top of the OPNFV infrastructure.
+Functest considers OPNFV as a black box and, since the Brahmaputra release,
+it offers lots of potential combinations:
 
-Functest considers OPNFV as a black box.
-OPNFV, since the Brahmaputra release, offers lots of potential combinations:
-
-  * 2 controllers (OpenDayligh, ONOS)
+  * 3 controllers (OpenDayligh, ONOS, OpenContrail)
   * 4 installers (Apex, Compass, Fuel, Joid)
 
 Most of the tests are runnable on any combination, but some others might have
 restrictions imposed by the installers or the available deployed features.
-
-Details on working with the functest suites can be found at
-http://artifacts.opnfv.org/functest/brahmaputra/userguide/index.html
 
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
