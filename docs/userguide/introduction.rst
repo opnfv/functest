@@ -14,15 +14,15 @@ Controllers and Features.
 +----------------+----------------+-------------------------------------------+
 | Domain         | Test suite     | Comments                                  |
 +================+================+===========================================+
-|                | vPing          | NFV "Hello World" using SSH connection    |
+| VIM            | vPing          | NFV "Hello World" using SSH connection    |
 |                |                | and floatting IP                          |
+| (Virtualised   +----------------+-------------------------------------------+
+| Infrastructure | vPing_userdata | Ping using userdata and cloud-init        |
+| Manager)       |                | mechanism                                 |
 |                +----------------+-------------------------------------------+
-|    VIM         | vPing_userdata | Ping using userdata and cloud-init        |
-|                |                | mechanism                                 |
+|                | Tempest        | OpenStack reference test suite `[2]`_     |
 |                +----------------+-------------------------------------------+
-|(Virtualised    | Tempest        | OpenStack reference test suite `[2]`_     |
-| Infrastructure +----------------+-------------------------------------------+
-| Manager)       | Rally bench    | OpenStack testing tool benchmarking       |
+|                | Rally bench    | OpenStack testing tool benchmarking       |
 |                |                | OpenStack modules `[3]`_                  |
 +----------------+----------------+-------------------------------------------+
 |                | OpenDaylight   | Opendaylight Test suite                   |
@@ -85,7 +85,8 @@ restrictions imposed by the installers or the available deployed features.
 Details on working with the functest suites can be found at
 http://artifacts.opnfv.org/functest/brahmaputra/userguide/index.html
 
+.. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
+.. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`Doctor User Guide`: http://artifacts.opnfv.org/opnfvdocs/brahmaputra/docs/userguide/featureusage-doctor.html
 .. _`Promise User Guide`: http://artifacts.opnfv.org/promise/brahmaputra/docs/userguide/index.html
 .. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/brahmaputra/docs/userguide/index.html
-
