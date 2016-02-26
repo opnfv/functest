@@ -87,7 +87,7 @@ def get_instance_status(nova_client, instance):
         instance = nova_client.servers.get(instance.id)
         return instance.status
     except Exception, e:
-        #print "Error [get_instance_status(nova_client, '%s')]:" % \
+        # print "Error [get_instance_status(nova_client, '%s')]:" % \
         #    str(instance), e
         return None
 
@@ -440,6 +440,7 @@ def get_security_groups(neutron_client):
         print "Error [get_security_groups(neutron_client)]:", e
         return None
 
+
 def get_security_group_id(neutron_client, sg_name):
     security_groups = get_security_groups(neutron_client)
     id = ''
@@ -476,7 +477,7 @@ def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
                                              'protocol': protocol}}
     else:
         print "Error [create_secgroup_rule(neutron_client, '%s', '%s', "\
-              "'%s', '%s', '%s', '%s')]:" % (neutron_client, sg_id, direction, \
+              "'%s', '%s', '%s', '%s')]:" % (neutron_client, sg_id, direction,
                                              port_range_min, port_range_max, protocol),\
               " Invalid values for port_range_min, port_range_max"
         return False
@@ -621,7 +622,8 @@ def update_cinder_quota(cinder_client, tenant_id, vols_quota,
         return True
     except Exception, e:
         print "Error [update_cinder_quota(cinder_client, '%s', '%s', '%s'" \
-            "'%s')]:" % (tenant_id, vols_quota, snapshots_quota, gigabytes_quota), e
+            "'%s')]:" % (tenant_id, vols_quota,
+                         snapshots_quota, gigabytes_quota), e
         return False
 
 
@@ -755,11 +757,6 @@ def delete_user(keystone_client, user_id):
         return False
 
 
-
-
-
-
-
 # ----------------------------------------------------------
 #
 #               INTERNET UTILS
@@ -790,8 +787,6 @@ def download_url(url, dest_path):
     with open(dest, 'wb') as f:
         shutil.copyfileobj(response, f)
     return True
-
-
 
 
 # ----------------------------------------------------------
@@ -849,8 +844,22 @@ def get_pod_name(logger=None):
         return "unknown-pod"
 
 
+def get_build_tag(logger=None):
+    """
+    Get build tag of jenkins jobs
+    """
+    try:
+        build_tag = os.environ['BUILD_TAG']
+    except KeyError:
+        if logger:
+            logger.error("Impossible to retrieve the build tag")
+        build_tag = "unknown_build_tag"
+
+    return build_tag
+
+
 def push_results_to_db(db_url, project, case_name, logger, pod_name,
-                       version, payload):
+                       version, build_tag="unknown_build_tag", payload):
     """
     POST results to the Result target DB
     """
@@ -858,7 +867,7 @@ def push_results_to_db(db_url, project, case_name, logger, pod_name,
     installer = get_installer_type(logger)
     params = {"project_name": project, "case_name": case_name,
               "pod_name": pod_name, "installer": installer,
-              "version": version, "details": payload}
+              "version": version, "build_tag": build_tag, "details": payload}
 
     headers = {'Content-Type': 'application/json'}
     try:
@@ -867,8 +876,8 @@ def push_results_to_db(db_url, project, case_name, logger, pod_name,
             logger.debug(r)
         return True
     except Exception, e:
-        print "Error [push_results_to_db('%s', '%s', '%s', '%s', '%s', '%s')]:" \
-            % (db_url, project, case_name, pod_name, version, payload), e
+        print "Error [push_results_to_db('%s', '%s', '%s', '%s', '%s', '%s', '%s')]:" \
+            % (db_url, project, case_name, pod_name, version, build_tag, payload), e
         return False
 
 

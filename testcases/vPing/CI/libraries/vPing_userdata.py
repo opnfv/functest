@@ -316,10 +316,11 @@ def push_results(start_time_ts, duration, test_status):
         logger.debug("Pushing result into DB...")
         scenario = functest_utils.get_scenario(logger)
         pod_name = functest_utils.get_pod_name(logger)
+        build_tag = functest_utils.get_build_tag(logger)
         functest_utils.push_results_to_db(TEST_DB,
                                           "functest",
                                           "vPing_userdata",
-                                          logger, pod_name, scenario,
+                                          logger, pod_name, scenario, build_tag,
                                           payload={'timestart': start_time_ts,
                                                    'duration': duration,
                                                    'status': test_status})
