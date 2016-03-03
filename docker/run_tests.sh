@@ -146,15 +146,18 @@ function run_test(){
         "bgpvpn")
             info "Running BGPVPN Tempest test case..."
             tempest_dir=$(ls -t /home/opnfv/.rally/tempest/ |grep for-deploy |tail -1)
+            tempest_dir=/home/opnfv/.rally/tempest/$tempest_dir
             if [[ $tempest_dir == "" ]]; then
                 echo "Make sure tempest was running before"
                 exit 1
             fi
-            tempest_dir=/home/opnfv/.rally/tempest/$tempest_dir
+
+            tempest_conf=$(find $tempest_dir -name tempest.conf)
             pushd $tempest_dir
               . .venv/bin/activate
               pip install --no-deps -e ~/repos/bgpvpn/.
-              cp tempest.conf /etc/tempest/
+              mkdir -p /etc/tempest/
+              cp $tempest_conf /etc/tempest/tempest.conf
               echo "[service_available]
 bgpvpn = True" >> /etc/tempest/tempest.conf
               ./run_tempest.sh -- networking_bgpvpn_tempest
@@ -166,10 +169,8 @@ bgpvpn = True" >> /etc/tempest/tempest.conf
             odl_tests
             cp ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt \
                 ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt.bak
-            echo "
-test/csit/suites/vpnservice
-" > ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt
-            ODL_PORT=$odl_port ODL_IP=$odl_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$password \
+            echo "test/csit/suites/vpnservice" > ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt
+            ODL_PORT=$odl_port ODL_IP=$odl_ip KEYSTONE_IP=$keystone_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$password \
                 ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
             cp ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt.bak \
                 ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt
