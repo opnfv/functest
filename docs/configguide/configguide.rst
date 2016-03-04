@@ -231,6 +231,29 @@ If still the OpenStack command does not show anything or complains about
 connectivity issues, it could be due to an incorrect url given to the OS_AUTH_URL
 environment variable. Check the deployment settings.
 
+SSL Support
+-----------
+
+If your OpenStack deployment is defined to use HTTPS endpoints, a certificate 
+will be needed in the container in order to launch any command.
+
+The OS variable will point to that file. For example::
+
+    echo $OS_CACERT
+    /etc/ssl/certs/ca.crt
+
+However, this certificate does not exist in the container by default. It has to
+be copied manually from the OpenStack deployment. This can be done in 2 ways:
+
+    #. Create manually that file and copy the contents from the OpenStack controller.
+
+    #. Add the file using a Docker volume when starting the container::
+
+        -v <path_to_your_cert_file>:/etc/ssl/certs/ca.cert
+
+
+
+
 Additional Options
 ------------------
 
