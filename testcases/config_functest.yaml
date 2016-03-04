@@ -12,6 +12,7 @@ general:
         dir_repos:          /home/opnfv/repos
         dir_repo_functest:  /home/opnfv/repos/functest
         dir_repo_rally:     /home/opnfv/repos/rally
+        dir_repo_tempest:   /home/opnfv/repos/tempest
         dir_repo_releng:    /home/opnfv/repos/releng
         dir_repo_vims_test: /home/opnfv/repos/vims-test
         dir_repo_bgpvpn:    /home/opnfv/repos/bgpvpn
