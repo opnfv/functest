@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_bed03b54",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-03-04T14:13:56Z",
+      "side": 1,
+      "message": "arghhh trailing space",
+      "range": {
+        "startLine": 237,
+        "startChar": 76,
+        "endLine": 237,
+        "endChar": 77
+      },
+      "revId": "628c3b90d2e11b187acdbd01ada95463cfa1b2af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_9ed57f45",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-03-04T14:13:56Z",
+      "side": 1,
+      "message": "Shall we recommend one method?",
+      "revId": "628c3b90d2e11b187acdbd01ada95463cfa1b2af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_7ecac3a2",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-03-04T14:13:56Z",
+      "side": 1,
+      "message": "to be sure to follow\nyou test is the OS_CACERT is set or not\nif set you create the var\nif not you do nothing right (current behavior)\n\nin which case do we have these https endpoints?",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 4
+      },
+      "revId": "628c3b90d2e11b187acdbd01ada95463cfa1b2af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
