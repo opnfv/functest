@@ -12,6 +12,7 @@ general:
         dir_repos:          /home/opnfv/repos
         dir_repo_functest:  /home/opnfv/repos/functest
         dir_repo_rally:     /home/opnfv/repos/rally
+        dir_repo_tempest:   /home/opnfv/repos/tempest
         dir_repo_releng:    /home/opnfv/repos/releng
         dir_repo_vims_test: /home/opnfv/repos/vims-test
         dir_repo_bgpvpn:    /home/opnfv/repos/bgpvpn
@@ -32,7 +33,7 @@ general:
         releng_branch:  master
         releng_commit:  latest
         rally_branch:   master
-        rally_commit:   57efc5327530a34d139b5a1fd1f480195de0aadb
+        rally_commit:   1b6e9e9219b143c685a2af134ab025dddd72ed27
         vims_test_branch:   stable
         vims_test_commit:   latest
         bgpvpn_branch:   master
