@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "1a486d77_1ec18f80",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-03-04T14:49:53Z",
+      "side": 1,
+      "message": "arrrrgggg!",
+      "parentUuid": "1a486d77_bed03b54",
+      "revId": "628c3b90d2e11b187acdbd01ada95463cfa1b2af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a486d77_9ed57f45",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 4
@@ -36,6 +54,24 @@
       "writtenOn": "2016-03-04T14:13:56Z",
       "side": 1,
       "message": "Shall we recommend one method?",
+      "revId": "628c3b90d2e11b187acdbd01ada95463cfa1b2af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_febd9303",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-03-04T14:49:53Z",
+      "side": 1,
+      "message": "ok, I\u0027ll recommend 2",
+      "parentUuid": "1a486d77_9ed57f45",
       "revId": "628c3b90d2e11b187acdbd01ada95463cfa1b2af",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -59,6 +95,24 @@
         "endLine": 71,
         "endChar": 4
       },
+      "revId": "628c3b90d2e11b187acdbd01ada95463cfa1b2af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_3ec44b91",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-03-04T14:49:53Z",
+      "side": 1,
+      "message": "I am not sure if I understand the question....\n\nI think we get the https endpoints when you select the option in the installation, at least in Fuel. Having TLS protection:\nhttp://picpaste.com/Fuel_GUI_TLS-AfwI9xZ9.JPG\n\nbasically, \nif OS_CACERT is set: \n    I create the var and return in as part of \"creds\" dictionary\nif not:\n   do nothing..",
+      "parentUuid": "1a486d77_7ecac3a2",
       "revId": "628c3b90d2e11b187acdbd01ada95463cfa1b2af",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
