@@ -55,6 +55,7 @@ RALLY_DIR = FUNCTEST_REPO + functest_yaml.get("general").get("directories").get(
 RALLY_REPO_DIR = functest_yaml.get("general").get("directories").get("dir_repo_rally")
 RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("dir_rally_inst")
 RALLY_RESULT_DIR = functest_yaml.get("general").get("directories").get("dir_rally_res")
+TEMPEST_REPO_DIR = functest_yaml.get("general").get("directories").get("dir_repo_tempest")
 VPING_DIR = FUNCTEST_REPO + functest_yaml.get("general").get("directories").get("dir_vping")
 VIMS_TEST_DIR = functest_yaml.get("general").get("directories").get("dir_repo_vims_test")
 ODL_DIR = FUNCTEST_REPO + functest_yaml.get("general").get("directories").get("dir_odl")
@@ -209,20 +210,12 @@ def install_rally():
     if check_rally():
         logger.info("Rally is already installed.")
     else:
-        logger.debug("Executing %s/install_rally.sh..." %RALLY_REPO_DIR)
-        install_script = RALLY_REPO_DIR + "/install_rally.sh --yes"
-        cmd = 'sudo ' + install_script
-        if os.environ.get("CI_DEBUG") == "false":
-            functest_utils.execute_command(cmd)
-        else:
-            functest_utils.execute_command(cmd,logger)
-
         logger.debug("Creating Rally environment...")
         cmd = "rally deployment create --fromenv --name="+DEPLOYMENT_MAME
         functest_utils.execute_command(cmd,logger)
 
-        logger.debug("Installing tempest...")
-        cmd = "rally verify install"
+        logger.debug("Installing tempest from existing repo...")
+        cmd = "rally verify install --source " + TEMPEST_REPO_DIR + " --system-wide"
         functest_utils.execute_command(cmd,logger)
 
         cmd = "rally deployment check"

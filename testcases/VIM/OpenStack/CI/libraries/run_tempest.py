@@ -228,7 +228,7 @@ def run_tempest(OPTION):
     # :return: void
     #
     logger.info("Starting Tempest test suite: '%s'." % OPTION)
-    cmd_line = "rally verify start "+OPTION
+    cmd_line = "rally verify start " + OPTION + " --system-wide"
     logger.debug('Executing command : {}'.format(cmd_line))
 
     CI_DEBUG = os.environ.get("CI_DEBUG")
