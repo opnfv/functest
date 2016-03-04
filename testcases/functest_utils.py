@@ -67,6 +67,10 @@ def get_credentials(service):
                                    "http://192.168.20.71:5000/v2.0"),
         tenant: os.environ.get("OS_TENANT_NAME", "admin"),
     })
+    ssl = os.environ.get("OS_CACERT")
+    if ssl != None:
+        creds.update({"ca_cert":ssl})
+
     return creds
 
 
