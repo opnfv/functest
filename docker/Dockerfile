@@ -64,7 +64,7 @@ RUN mkdir -p /root/.ssh
 RUN chmod 700 /root/.ssh
 
 RUN git config --global http.sslVerify false
-RUN git clone -b stable/brahmaputra https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
+RUN git clone https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
 RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
 RUN git clone https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
 RUN git clone https://github.com/openstack/rally.git ${repos_dir}/rally
@@ -78,7 +78,7 @@ RUN git clone https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt
-RUN pip install -r ${repos_dir}/tempest/pip install -r requirements.txt
+RUN pip install -r ${repos_dir}/tempest/requirements.txt
 
 RUN ${repos_dir}/rally/install_rally.sh --yes
 
@@ -86,6 +86,24 @@ ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img /home/op
 
 RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 RUN curl -L https://get.rvm.io | bash -s stable
+
+RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
+    && cd /home/opnfv/repos/vims-test \
+    && rvm autolibs enable"
+RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
+    && cd /home/opnfv/repos/vims-test \
+    && rvm install 1.9.3"
+RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
+    && cd /home/opnfv/repos/vims-test \
+    && rvm use 1.9.3"
+RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
+    && cd /home/opnfv/repos/vims-test \
+    && bundle install"
+
+RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -'
+RUN sudo apt-get install -y nodejs
+RUN cd ${repos_dir}/promise && sudo npm -g install npm@latest
+RUN cd ${repos_dir}/promise && npm install
 
 RUN /bin/echo -e "set nocompatible\nset backspace=2" >> /home/opnfv/.vimrc
 RUN echo "set nocompatible" >> /home/opnfv/.exrc
