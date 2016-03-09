@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_c44a0aac",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 144
+      },
+      "writtenOn": "2016-03-09T15:19:40Z",
+      "side": 1,
+      "message": "This step is unnecessary since this will install older incompatible version of nodejs. \n\nThe nodesource steps below will grab the latest nodejs",
+      "revId": "7fed7af58d1ec61a342c916dbe90c4abc0c5e2fe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_e44d06c6",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 144
+      },
+      "writtenOn": "2016-03-09T15:19:40Z",
+      "side": 1,
+      "message": "Before we can issue \"npm install\" on Promise repo, we need to first \"npm install -g yangforge\"",
+      "revId": "7fed7af58d1ec61a342c916dbe90c4abc0c5e2fe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
