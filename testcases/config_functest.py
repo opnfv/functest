@@ -57,7 +57,6 @@ RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("di
 RALLY_RESULT_DIR = functest_yaml.get("general").get("directories").get("dir_rally_res")
 TEMPEST_REPO_DIR = functest_yaml.get("general").get("directories").get("dir_repo_tempest")
 VPING_DIR = FUNCTEST_REPO + functest_yaml.get("general").get("directories").get("dir_vping")
-VIMS_TEST_DIR = functest_yaml.get("general").get("directories").get("dir_repo_vims_test")
 ODL_DIR = FUNCTEST_REPO + functest_yaml.get("general").get("directories").get("dir_odl")
 DATA_DIR = functest_yaml.get("general").get("directories").get("dir_functest_data")
 
@@ -116,25 +115,6 @@ def action_start():
             logger.error("There has been a problem while installing Rally.")
             action_clean()
             exit(-1)
-
-        logger.info("Installing Ruby libraries for vIMS testcase...")
-        # Install ruby libraries for vims test-case
-        script = 'source /etc/profile.d/rvm.sh; '
-        script += 'cd ' + VIMS_TEST_DIR + '; '
-        script += 'rvm autolibs enable ;'
-        script += 'rvm install 1.9.3; '
-        script += 'rvm use 1.9.3;'
-        script += 'bundle install'
-
-        logger_debug = None
-        CI_DEBUG = os.environ.get("CI_DEBUG")
-        if CI_DEBUG == "true" or CI_DEBUG == "True":
-            logger_debug = logger
-
-        cmd = "/bin/bash -c '" + script + "'"
-        functest_utils.execute_command(cmd, logger = logger_debug, exit_on_error=False)
-
-        install_promise(logger_debug)
 
         # Create result folder under functest if necessary
         if not os.path.exists(RALLY_RESULT_DIR):
@@ -229,25 +209,6 @@ def install_rally():
         functest_utils.execute_command(cmd,logger)
 
     return True
-
-def install_promise(logger_debug):
-    logger.info("Installing dependencies for Promise testcase...")
-    current_dir = os.getcwd()
-    os.chdir(REPOS_DIR+'/promise/')
-
-    cmd = 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -'
-    functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
-
-    cmd = 'sudo apt-get install -y nodejs'
-    functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
-
-    cmd = 'sudo npm -g install npm@latest'
-    functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
-
-    cmd = 'npm install'
-    functest_utils.execute_command(cmd,logger = logger_debug, exit_on_error=False)
-    os.chdir(current_dir)
-
 
 def check_rally():
     """

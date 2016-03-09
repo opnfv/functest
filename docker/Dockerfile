@@ -56,6 +56,7 @@ libxml2-dev \
 libffi-dev \
 crudini \
 ruby1.9.1-dev \
+nodejs \
 --no-install-recommends
 
 
@@ -78,7 +79,7 @@ RUN git clone https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt
-RUN pip install -r ${repos_dir}/tempest/pip install -r requirements.txt
+RUN pip install -r ${repos_dir}/tempest/requirements.txt
 
 RUN ${repos_dir}/rally/install_rally.sh --yes
 
@@ -86,6 +87,15 @@ ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img /home/op
 
 RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 RUN curl -L https://get.rvm.io | bash -s stable
+
+RUN source /etc/profile.d/rvm.sh && cd /home/opnfv/repos/vims-test && rvm autolibs enable
+RUN source /etc/profile.d/rvm.sh && cd /home/opnfv/repos/vims-test && rvm install 1.9.3
+RUN source /etc/profile.d/rvm.sh && cd /home/opnfv/repos/vims-test && rvm use 1.9.3
+RUN source /etc/profile.d/rvm.sh && cd /home/opnfv/repos/vims-test && bundle install
+
+RUN ${repos_dir}/promise && curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+RUN ${repos_dir}/promise && sudo npm -g install npm@latest
+RUN ${repos_dir}/promise && npm install
 
 RUN /bin/echo -e "set nocompatible\nset backspace=2" >> /home/opnfv/.vimrc
 RUN echo "set nocompatible" >> /home/opnfv/.exrc
