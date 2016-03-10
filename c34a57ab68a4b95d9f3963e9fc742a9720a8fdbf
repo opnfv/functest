@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a486d77_0fc71b47",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-03-10T09:19:30Z",
+      "side": 1,
+      "message": "Actually, when I have run the curl command command, at the end it says:\n \u0027Run `apt-get install nodejs` (as root) to install Node.js 4.x LTS Argon and npm\u0027\n\nand effectively,  nodejs was not installed, that\u0027s why I included it as well.\nAlso, if you have a look at that script, https://deb.nodesource.com/setup_4.x\nit only prepares the needed keys and repositories to install nodejs, but it doesn\u0027t do it itself",
+      "parentUuid": "1a486d77_af37e7af",
+      "revId": "c34a57ab68a4b95d9f3963e9fc742a9720a8fdbf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a486d77_6f41ef0a",
         "filename": "docker/Dockerfile",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-03-09T19:20:24Z",
       "side": 1,
       "message": "This should be:\n\nRUN sudo npm install -g npm:latest",
+      "revId": "c34a57ab68a4b95d9f3963e9fc742a9720a8fdbf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_cfc0e32c",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-03-10T09:19:30Z",
+      "side": 1,
+      "message": "I tried that and didn\u0027t work\nhttp://pastebin.com/yFUM6vRD\n\nPlease note that the only thing I have done is moving the already existing commands in config_functest.py to here. And we had the \"@\" already there :)",
+      "parentUuid": "1a486d77_6f41ef0a",
       "revId": "c34a57ab68a4b95d9f3963e9fc742a9720a8fdbf",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -65,6 +101,24 @@
       "side": 1,
       "message": "Sorry scratch this comment, since in functest we are using GIT clone version of promise, running npm install will automatically fetch yangforge as a dev dependency.",
       "parentUuid": "1a486d77_0f483b2c",
+      "revId": "c34a57ab68a4b95d9f3963e9fc742a9720a8fdbf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_afdda716",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-03-10T09:19:30Z",
+      "side": 1,
+      "message": "Ok, actually we didn\u0027t run it before in config_functest.py and promise was ok :)",
+      "parentUuid": "1a486d77_2fe77714",
       "revId": "c34a57ab68a4b95d9f3963e9fc742a9720a8fdbf",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
