@@ -865,7 +865,7 @@ def get_build_tag(logger=None):
 
 
 def push_results_to_db(db_url, project, case_name, logger, pod_name,
-                       version, build_tag="unknown_build_tag", payload):
+                       version, build_tag, payload):
     """
     POST results to the Result target DB
     """
