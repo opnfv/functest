@@ -22,6 +22,7 @@ import sys
 import shutil
 import json
 import datetime
+import requests
 from git import Repo
 import keystoneclient.v2_0.client as ksclient
 import glanceclient.client as glclient
@@ -153,20 +154,54 @@ def set_result(step_name, duration=0, result=""):
 
 def test_clearwater():
 
-    time.sleep(180)
-
     script = "source " + VIMS_DATA_DIR + "venv_cloudify/bin/activate; "
     script += "cd " + VIMS_DATA_DIR + "; "
-    script += "cfy deployments outputs -d " + CW_DEPLOYMENT_NAME + \
-        " | grep Value: | sed \"s/ *Value: //g\";"
+    script += "cfy status | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}'"
     cmd = "/bin/bash -c '" + script + "'"
 
     try:
-        logger.debug("Trying to get clearwater nameserver IP ... ")
-        dns_ip = os.popen(cmd).read()
-        dns_ip = dns_ip.splitlines()[0]
+        logger.debug("Trying to get clearwater manager IP ... ")
+        mgr_ip = os.popen(cmd).read()
+        mgr_ip = mgr_ip.splitlines()[0]
     except:
-        logger.error("Unable to retrieve the IP of the DNS server !")
+        logger.error("Unable to retrieve the IP of the cloudify manager server !")
+
+    api_url = "http://" + mgr_ip + "/api/v2"
+    dep_outputs = requests.get(api_url + "/deployments/" + CW_DEPLOYMENT_NAME + "/outputs")
+    dns_ip = dep_outputs.json()['outputs']['dns_ip']
+    ellis_ip = dep_outputs.json()['outputs']['ellis_ip']
+
+    ellis_url = "http://" + ellis_ip + "/"
+    url = ellis_url + "accounts"
+
+    params = {"password": "functest",
+            "full_name": "opnfv functest user",
+            "email": "functest@opnfv.fr",
+            "signup_code": "secret"
+            }
+    rq = requests.post(url, data=params)
+    i = 20
+    while rq.status_code != 201 and i>0 :
+        rq = requests.post(url, data=params)
+        i = i-1
+        time.sleep(10)
+
+    if rq.status_code == 201:
+        url = ellis_url + "session"
+        rq = requests.post(url, data=params)
+        cookies = rq.cookies
+
+    url = ellis_url + "accounts/" + params['email'] + "/numbers"
+    if cookies != "":
+        rq = requests.post(url, cookies=cookies)
+        i = 24
+        while rq.status_code != 200 and i>0:
+            rq = requests.post(url, cookies=cookies)
+            i = i-1
+            time.sleep(25)
+
+    if rq.status_code != 200:
+        step_failure("sig_test", "Unable to create a number: %s" % rq.json()['reason'])
 
     start_time_ts = time.time()
     end_time_ts = start_time_ts
