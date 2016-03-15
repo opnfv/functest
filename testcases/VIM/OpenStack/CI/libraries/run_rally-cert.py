@@ -255,10 +255,17 @@ def get_output(proc, test_name):
             nb_tests += 1
         elif "| total" in line:
             percentage = ((line.split('|')[8]).strip(' ')).strip('%')
-            success += float(percentage)
+            try:
+                success += float(percentage)
+            except ValueError:
+                logger.info('Percentage error: %s, %s' % (percentage, line))
             nb_totals += 1
         elif "Full duration" in line:
-            overall_duration += float(line.split(': ')[1])
+            duration = line.split(': ')[1]
+            try:
+                overall_duration += float(duration)
+            except ValueError:
+                logger.info('Duration error: %s, %s' % (duration, line))
 
     overall_duration="{:10.2f}".format(overall_duration)
     if nb_totals == 0:
