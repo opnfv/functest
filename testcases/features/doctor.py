@@ -15,7 +15,6 @@
 #
 
 import logging
-import os
 import sys
 import time
 import yaml
@@ -63,19 +62,27 @@ def main():
     }
     pod_name = functest_utils.get_pod_name(logger)
     scenario = functest_utils.get_scenario(logger)
+    version = scenario
     build_tag = functest_utils.get_build_tag(logger)
+
+    status = "failed"
+    if details['status'] == "OK":
+        status = "passed"
+
     logger.info("Pushing result: TEST_DB_URL=%(db)s pod_name=%(pod)s "
-                "scenario=%(s)s details=%(d)s" % {
+                "version=%(v)s scenario=%(s)s criteria=%(c)s details=%(d)s" % {
                     'db': TEST_DB_URL,
                     'pod': pod_name,
+                    'v': version,
                     's': scenario,
+                    'c': status,
                     'b': build_tag,
                     'd': details,
                 })
     functest_utils.push_results_to_db(TEST_DB_URL,
-                                      'doctor','doctor-notification',
-                                      logger, pod_name, scenario,
-                                      build_tag, details)
+                                      'doctor', 'doctor-notification',
+                                      logger, pod_name, version, scenario,
+                                      status, build_tag, details)
 
 
 if __name__ == '__main__':

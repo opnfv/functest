@@ -55,10 +55,11 @@ if not os.path.exists(REPO_PATH):
 sys.path.append(REPO_PATH + "testcases/")
 import functest_utils
 
-ONOSCI_PATH= REPO_PATH+'testcases/Controllers/ONOS/Teston/CI/'
+ONOSCI_PATH = REPO_PATH + 'testcases/Controllers/ONOS/Teston/CI/'
 starttime = datetime.datetime.now()
 
 HOME = os.environ['HOME'] + "/"
+
 
 def RunScript(testname):
     """
@@ -67,8 +68,9 @@ def RunScript(testname):
     testname: ONOS Testcase Name
     """
     runtest = ONOSCI_PATH + "OnosSystemTest/TestON/bin/cli.py run " + testname
-    logger.debug( "Run script " + testname )
+    logger.debug("Run script " + testname)
     os.system(runtest)
+
 
 def DownloadCodes(url="https://github.com/sunyulin/OnosSystemTest.git"):
     """
@@ -77,8 +79,9 @@ def DownloadCodes(url="https://github.com/sunyulin/OnosSystemTest.git"):
     url: github url
     """
     downloadcode = "git clone " + url + " " + ONOSCI_PATH + "OnosSystemTest"
-    logger.debug( "Download Onos Teston codes " + url)
+    logger.debug("Download Onos Teston codes " + url)
     os.system(downloadcode)
+
 
 def GetResult():
     LOGPATH = ONOSCI_PATH + "OnosSystemTest/TestON/logs"
@@ -93,7 +96,7 @@ def GetResult():
     else:
         logger.debug("Testcases Success")
         Result = "Success"
-    #payload={'timestart': str(starttime),
+    # payload={'timestart': str(starttime),
     #          'duration': str(duration),
     #            'status': Result}
     cmd = "grep -rnh 'Execution Time' " + LOGPATH
@@ -103,72 +106,78 @@ def GetResult():
     cmd = "grep -rnh 'Success Percentage' " + LOGPATH + "/FUNCvirNetNB_*"
     Resultbuffer = os.popen(cmd).read()
     if Resultbuffer.find('100%') >= 0:
-        result1='Success'
+        result1 = 'Success'
     else:
-        result1='Failed'
+        result1 = 'Failed'
     cmd = "grep -rnh 'Success Percentage' " + LOGPATH + "/FUNCvirNetNBL3*"
     Resultbuffer = os.popen(cmd).read()
     if Resultbuffer.find('100%') >= 0:
-        result2='Success'
+        result2 = 'Success'
     else:
-        result2='Failed'
+        result2 = 'Failed'
     status1 = []
     status2 = []
     cmd = "grep -rnh 'h3' " + LOGPATH + "/FUNCvirNetNB_*"
     Resultbuffer = os.popen(cmd).read()
     pattern = re.compile("<h3>([^-]+) - ([^-]+) - (\S*)</h3>")
-    #res = pattern.search(Resultbuffer).groups()
+    # res = pattern.search(Resultbuffer).groups()
     res = pattern.findall(Resultbuffer)
     i = 0
     for index in range(len(res)):
-        status1.append({'Case name:':res[i][0] + res[i][1],'Case result':res[i][2]})
-        i=i+1
+        status1.append({'Case name:': res[i][0] + res[i][1],
+                        'Case result': res[i][2]})
+        i = i + 1
     cmd = "grep -rnh 'h3' " + LOGPATH + "/FUNCvirNetNBL3*"
     Resultbuffer = os.popen(cmd).read()
     pattern = re.compile("<h3>([^-]+) - ([^-]+) - (\S*)</h3>")
-    #res = pattern.search(Resultbuffer).groups()
+    # res = pattern.search(Resultbuffer).groups()
     res = pattern.findall(Resultbuffer)
     i = 0
     for index in range(len(res)):
-        status2.append({'Case name:':res[i][0] + res[i][1],'Case result':res[i][2]})
-        i=i+1
-    payload={'timestart': str(starttime),
-             'FUNCvirNet':{'duration': time1,
-                           'result': result1,
-                           'status': status1},
-             'FUNCvirNetL3':{'duration': time2,
-                           'result': result2,
-                           'status': status2}}
+        status2.append({'Case name:': res[i][0] + res[i][1],
+                        'Case result': res[i][2]})
+        i = i + 1
+    payload = {'timestart': str(starttime),
+               'FUNCvirNet': {'duration': time1,
+                              'result': result1,
+                              'status': status1},
+               'FUNCvirNetL3': {'duration': time2,
+                                'result': result2,
+                                'status': status2}}
     return payload
+
 
 def SetOnosIp():
     cmd = "openstack catalog show network | grep publicURL"
     cmd_output = os.popen(cmd).read()
-    OC1=re.search(r"\d+\.\d+\.\d+\.\d+",cmd_output).group()
+    OC1 = re.search(r"\d+\.\d+\.\d+\.\d+", cmd_output).group()
     os.environ['OC1'] = OC1
     time.sleep(2)
-    logger.debug( "ONOS IP is " + OC1)
+    logger.debug("ONOS IP is " + OC1)
+
 
 def SetOnosIpForJoid():
     cmd = "env | grep SDN_CONTROLLER"
     cmd_output = os.popen(cmd).read()
-    OC1=re.search(r"\d+\.\d+\.\d+\.\d+",cmd_output).group()
+    OC1 = re.search(r"\d+\.\d+\.\d+\.\d+", cmd_output).group()
     os.environ['OC1'] = OC1
     time.sleep(2)
-    logger.debug( "ONOS IP is " + OC1)
+    logger.debug("ONOS IP is " + OC1)
+
 
 def CleanOnosTest():
     TESTONPATH = ONOSCI_PATH + "OnosSystemTest/"
     cmd = "rm -rf " + TESTONPATH
     os.system(cmd)
     time.sleep(2)
-    logger.debug( "Clean ONOS Teston" )
+    logger.debug("Clean ONOS Teston")
+
 
 def main():
 
     DownloadCodes()
     if args.installer == "joid":
-        logger.debug( "Installer is Joid")
+        logger.debug("Installer is Joid")
         SetOnosIpForJoid()
     else:
         SetOnosIp()
@@ -179,14 +188,25 @@ def main():
         logger.debug("Push result into DB")
         # TODO check path result for the file
         scenario = functest_utils.get_scenario(logger)
+        version = scenario
+        result = GetResult()
+
+        # ONOS success criteria = all tests OK
+        # i.e. FUNCvirNet & FUNCvirNetL3
+        status = "failed"
+        try:
+            if result['FUNCvirNet']['result'] == "Success" and result['FUNCvirNetL3']['result'] == "Success":
+                status = "passed"
+        except:
+            logger.error("Unable to set ONOS criteria")
+
         pod_name = functest_utils.get_pod_name(logger)
         build_tag = functest_utils.get_build_tag(logger)
-        result = GetResult()
         functest_utils.push_results_to_db(TEST_DB,
                                           "functest",
                                           "ONOS",
-                                          logger, pod_name, scenario,
-                                          build_tag, payload=result)
+                                          logger, pod_name, version, scenario,
+                                          status, build_tag, payload=result)
     except:
         logger.error("Error pushing results into Database")
 

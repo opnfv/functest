@@ -28,9 +28,9 @@ from git import Repo
 # -----------------------------------------------------------
 
 
-#*********************************************
+# *********************************************
 #   CREDENTIALS
-#*********************************************
+# *********************************************
 def check_credentials():
     """
     Check if the OpenStack credentials (openrc) are sourced
@@ -68,17 +68,17 @@ def get_credentials(service):
         tenant: os.environ.get("OS_TENANT_NAME", "admin"),
     })
     ssl = os.environ.get("OS_CACERT")
-    if ssl != None:
-        creds.update({"ca_cert":ssl})
+    if ssl is not None:
+        creds.update({"ca_cert": ssl})
         if not os.path.isfile(ssl):
             print "WARNING: The 'OS_CACERT' environment variable is set to %s "\
                 "but the file does not exist." % ssl
     return creds
 
 
-#*********************************************
+# *********************************************
 #   NOVA
-#*********************************************
+# *********************************************
 def get_instances(nova_client):
     try:
         instances = nova_client.servers.list(search_opts={'all_tenants': 1})
@@ -92,7 +92,7 @@ def get_instance_status(nova_client, instance):
     try:
         instance = nova_client.servers.get(instance.id)
         return instance.status
-    except Exception, e:
+    except:
         # print "Error [get_instance_status(nova_client, '%s')]:" % \
         #    str(instance), e
         return None
@@ -188,9 +188,9 @@ def delete_floating_ip(nova_client, floatingip_id):
         return False
 
 
-#*********************************************
+# *********************************************
 #   NEUTRON
-#*********************************************
+# *********************************************
 def get_network_list(neutron_client):
     network_list = neutron_client.list_networks()['networks']
     if len(network_list) == 0:
@@ -434,9 +434,9 @@ def remove_gateway_router(neutron_client, router_id):
         return False
 
 
-#*********************************************
+# *********************************************
 #   SEC GROUPS
-#*********************************************
+# *********************************************
 def get_security_groups(neutron_client):
     try:
         security_groups = neutron_client.list_security_groups()[
@@ -533,9 +533,9 @@ def delete_security_group(neutron_client, secgroup_id):
         return False
 
 
-#*********************************************
+# *********************************************
 #   GLANCE
-#*********************************************
+# *********************************************
 def get_images(nova_client):
     try:
         images = nova_client.images.list()
@@ -582,9 +582,9 @@ def delete_glance_image(nova_client, image_id):
         return False
 
 
-#*********************************************
+# *********************************************
 #   CINDER
-#*********************************************
+# *********************************************
 def get_volumes(cinder_client):
     try:
         volumes = cinder_client.volumes.list(search_opts={'all_tenants': 1})
@@ -659,9 +659,9 @@ def delete_volume_type(cinder_client, volume_type):
         return False
 
 
-#*********************************************
+# *********************************************
 #   KEYSTONE
-#*********************************************
+# *********************************************
 def get_tenants(keystone_client):
     try:
         tenants = keystone_client.tenants.list()
@@ -837,6 +837,15 @@ def get_scenario(logger=None):
     return scenario
 
 
+def get_version(logger=None):
+    """
+    Get version
+    """
+    # TODO
+
+    return ""
+
+
 def get_pod_name(logger=None):
     """
     Get PoD Name from env variable NODE_NAME
@@ -865,7 +874,7 @@ def get_build_tag(logger=None):
 
 
 def push_results_to_db(db_url, project, case_name, logger, pod_name,
-                       version, build_tag, payload):
+                       version, scenario, criteria, build_tag, payload):
     """
     POST results to the Result target DB
     """
@@ -873,7 +882,8 @@ def push_results_to_db(db_url, project, case_name, logger, pod_name,
     installer = get_installer_type(logger)
     params = {"project_name": project, "case_name": case_name,
               "pod_name": pod_name, "installer": installer,
-              "version": version, "build_tag": build_tag, "details": payload}
+              "version": version, "scenario": scenario, "criteria": criteria,
+              "build_tag": build_tag, "details": payload}
 
     headers = {'Content-Type': 'application/json'}
     try:
@@ -882,8 +892,8 @@ def push_results_to_db(db_url, project, case_name, logger, pod_name,
             logger.debug(r)
         return True
     except Exception, e:
-        print "Error [push_results_to_db('%s', '%s', '%s', '%s', '%s', '%s', '%s')]:" \
-            % (db_url, project, case_name, pod_name, version, build_tag, payload), e
+        print "Error [push_results_to_db('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')]:" \
+            % (db_url, project, case_name, pod_name, version, scenario, criteria, build_tag, payload), e
         return False
 
 
