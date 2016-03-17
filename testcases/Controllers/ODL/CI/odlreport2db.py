@@ -130,12 +130,31 @@ def main(argv):
         #                        -i fuel
         #                        -p opnfv-jump-2
         #                        -s os-odl_l2-ha
+        version = scenario
+
+        # success criteria for ODL = 100% of tests OK
+        status = "failed"
+        try:
+            tests_passed = 0
+            tests_failed = 0
+            for v in data['details']:
+                if v['test_status']['@status'] == "PASS":
+                    tests_passed += 1
+                else:
+                    tests_failed += 1
+
+            if (tests_failed < 1):
+                status = "passed"
+        except:
+            print("Unable to set criteria" % sys.exc_info()[0])
         functest_utils.push_results_to_db(database,
                                           "functest",
                                           data['case_name'],
                                           None,
                                           data['pod_name'],
+                                          version,
                                           scenario,
+                                          status,
                                           build_tag,
                                           data)
     except:

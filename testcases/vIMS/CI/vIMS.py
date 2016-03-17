@@ -19,11 +19,9 @@ import argparse
 import yaml
 import pprint
 import sys
-import shutil
 import json
 import datetime
 import requests
-from git import Repo
 import keystoneclient.v2_0.client as ksclient
 import glanceclient.client as glclient
 import novaclient.client as nvclient
@@ -32,7 +30,6 @@ from neutronclient.v2_0 import client as ntclient
 from orchestrator import *
 from clearwater import *
 
-import urllib
 pp = pprint.PrettyPrinter(indent=4)
 
 
@@ -131,11 +128,12 @@ def step_failure(step_name, error_msg):
     exit(-1)
 
 
-def push_results():
+def push_results(status):
     if args.report:
         logger.debug("Pushing results to DB....")
 
         scenario = functest_utils.get_scenario(logger)
+        version = scenario
         pod_name = functest_utils.get_pod_name(logger)
         build_tag = functest_utils.get_build_tag(logger)
 
@@ -143,7 +141,9 @@ def push_results():
                                           project="functest",
                                           case_name="vIMS",
                                           logger=logger, pod_name=pod_name,
-                                          version=scenario,
+                                          version=version,
+                                          scenario=scenario,
+                                          criteria=status,
                                           build_tag=build_tag,
                                           payload=RESULTS)
 
@@ -175,13 +175,13 @@ def test_clearwater():
     url = ellis_url + "accounts"
 
     params = {"password": "functest",
-            "full_name": "opnfv functest user",
-            "email": "functest@opnfv.fr",
-            "signup_code": "secret"
-            }
+              "full_name": "opnfv functest user",
+              "email": "functest@opnfv.fr",
+              "signup_code": "secret"}
+
     rq = requests.post(url, data=params)
     i = 20
-    while rq.status_code != 201 and i>0 :
+    while rq.status_code != 201 and i > 0:
         rq = requests.post(url, data=params)
         i = i-1
         time.sleep(10)
@@ -195,7 +195,7 @@ def test_clearwater():
     if cookies != "":
         rq = requests.post(url, cookies=cookies)
         i = 24
-        while rq.status_code != 200 and i>0:
+        while rq.status_code != 200 and i > 0:
             rq = requests.post(url, cookies=cookies)
             i = i-1
             time.sleep(25)
@@ -244,7 +244,19 @@ def test_clearwater():
             logger.error("Unable to retrieve test results")
 
         set_result("sig_test", duration, vims_test_result)
-        push_results()
+
+        # success criteria for vIMS (for Brahmaputra)
+        # - orchestrator deployed
+        # - VNF deployed
+        status = "failed"
+        try:
+            # TODO precise condition, for the moment if duration > 3m,
+            # => I consider it is good..
+            if RESULTS['orchestrator']['duration'] > 180 and RESULT['vIMS']['duration'] > 180:
+                status = "passed"
+        except:
+            logger.error("Unable to set test status")
+        push_results(status)
 
         try:
             os.remove(VIMS_TEST_DIR + "temp.json")
@@ -254,7 +266,7 @@ def test_clearwater():
 
 def main():
 
-    ################ GENERAL INITIALISATION ################
+    # ############### GENERAL INITIALISATION ################
 
     if not os.path.exists(VIMS_DATA_DIR):
         os.makedirs(VIMS_DATA_DIR)
@@ -352,7 +364,7 @@ def main():
         step_failure(
             "init", "Failed to update cinder quota for tenant " + TENANT_NAME)
 
-    ################ CLOUDIFY INITIALISATION ################
+    # ############### CLOUDIFY INITIALISATION ################
 
     cfy = orchestrator(VIMS_DATA_DIR, CFY_INPUTS, logger)
 
@@ -413,7 +425,7 @@ def main():
     cfy.download_manager_blueprint(
         CFY_MANAGER_BLUEPRINT['url'], CFY_MANAGER_BLUEPRINT['branch'])
 
-    ################ CLOUDIFY DEPLOYMENT ################
+    # ############### CLOUDIFY DEPLOYMENT ################
     start_time_ts = time.time()
     end_time_ts = start_time_ts
     logger.info("Cloudify deployment Start Time:'%s'" % (
@@ -429,7 +441,7 @@ def main():
     logger.info("Cloudify deployment duration:'%s'" % duration)
     set_result("orchestrator", duration, "")
 
-    ################ CLEARWATER INITIALISATION ################
+    # ############### CLEARWATER INITIALISATION ################
 
     cw = clearwater(CW_INPUTS, cfy, logger)
 
@@ -473,7 +485,7 @@ def main():
 
     cw.set_external_network_name(ext_net)
 
-    ################ CLEARWATER DEPLOYMENT ################
+    # ############### CLEARWATER DEPLOYMENT ################
 
     start_time_ts = time.time()
     end_time_ts = start_time_ts
@@ -490,19 +502,19 @@ def main():
     logger.info("vIMS VNF deployment duration:'%s'" % duration)
     set_result("vIMS", duration, "")
 
-    ################ CLEARWATER TEST ################
+    # ############### CLEARWATER TEST ################
 
     test_clearwater()
 
-    ########### CLEARWATER UNDEPLOYMENT ############
+    # ########## CLEARWATER UNDEPLOYMENT ############
 
     cw.undeploy_vnf()
 
-    ############ CLOUDIFY UNDEPLOYMENT #############
+    # ########### CLOUDIFY UNDEPLOYMENT #############
 
     cfy.undeploy_manager()
 
-    ############### GENERAL CLEANUP ################
+    # ############## GENERAL CLEANUP ################
     if args.noclean:
         exit(0)
 
