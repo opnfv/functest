@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_0d9f1e61",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-03-18T09:28:32Z",
+      "side": 1,
+      "message": "tab",
+      "revId": "cd5bdb27a7da1d2af4fd068ed87becf38283da9c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_2d92da57",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-03-18T09:28:32Z",
+      "side": 1,
+      "message": ":)",
+      "revId": "cd5bdb27a7da1d2af4fd068ed87becf38283da9c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_ed9ba270",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-03-18T09:28:32Z",
+      "side": 1,
+      "message": "why \u003e20? Promise has 33 tests.",
+      "revId": "cd5bdb27a7da1d2af4fd068ed87becf38283da9c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
