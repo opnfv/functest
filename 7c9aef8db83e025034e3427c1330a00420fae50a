@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_6d9e9258",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-03-18T10:01:48Z",
+      "side": 1,
+      "message": "this would be also valid   \"... and int(failures) \u003d\u003d 0\" . But ok.",
+      "revId": "7c9aef8db83e025034e3427c1330a00420fae50a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
