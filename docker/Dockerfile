@@ -78,7 +78,7 @@ RUN git clone https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt
-RUN pip install -r ${repos_dir}/tempest/pip install -r requirements.txt
+RUN pip install -r ${repos_dir}/tempest/requirements.txt
 
 RUN ${repos_dir}/rally/install_rally.sh --yes
 
