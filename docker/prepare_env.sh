@@ -210,8 +210,10 @@ mkdir -p ${FUNCTEST_RESULTS_DIR}/ODL
 
 
 # Create Openstack credentials file
-if [ ! -f ${FUNCTEST_CONF_DIR}/openstack.creds ]; then
-    ${REPOS_DIR}/releng/utils/fetch_os_creds.sh -d ${FUNCTEST_CONF_DIR}/openstack.creds \
+# $creds is an env varialbe in the docker container pointing to
+# /home/opnfv/functest/conf/openstack.creds
+if [ ! -f ${creds} ]; then
+    ${REPOS_DIR}/releng/utils/fetch_os_creds.sh -d ${creds} \
         -i ${INSTALLER_TYPE} -a ${INSTALLER_IP}
     retval=$?
     if [ $retval != 0 ]; then
@@ -221,8 +223,15 @@ if [ ! -f ${FUNCTEST_CONF_DIR}/openstack.creds ]; then
 else
     info "OpenStack credentials file given to the docker and stored in ${FUNCTEST_CONF_DIR}/openstack.creds."
 fi
+
+# If we use SSL, by default use option OS_INSECURE=true which means that
+# the cacert will be self-signed
+if grep -Fq "OS_CACERT" ${creds}; then
+    echo "OS_INSECURE=true">>${creds};
+fi
+
 # Source credentials
-source ${FUNCTEST_CONF_DIR}/openstack.creds
+source ${creds}
 
 # Check OpenStack
 info "Checking that the basic OpenStack services are functional..."
