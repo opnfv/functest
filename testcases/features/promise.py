@@ -16,7 +16,6 @@ import os
 import requests
 import subprocess
 import sys
-import time
 import yaml
 
 import keystoneclient.v2_0.client as ksclient
@@ -80,7 +79,6 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
-
 def create_image(glance_client, name):
 
     return image_id
@@ -117,10 +115,10 @@ def main():
         logger.error("Error : Failed to get id for %s role" % role_name)
         exit(-1)
 
-    logger.info("Adding role '%s' to tenant '%s'..." % (role_id,TENANT_NAME))
+    logger.info("Adding role '%s' to tenant '%s'..." % (role_id, TENANT_NAME))
     if not functest_utils.add_role_user(keystone, user_id, role_id, tenant_id):
         logger.error("Error : Failed to add %s on tenant %s" %
-                     (ks_creds['username'],TENANT_NAME))
+                     (ks_creds['username'], TENANT_NAME))
         exit(-1)
     logger.debug("Role added successfully.")
 
@@ -153,9 +151,8 @@ def main():
     glance = glclient.Client(1, glance_endpoint, token=keystone.auth_token)
     nova = nvclient.Client("2", **nv_creds)
 
-
     logger.info("Creating image '%s' from '%s'..." % (IMAGE_NAME,
-                                                       GLANCE_IMAGE_PATH))
+                                                      GLANCE_IMAGE_PATH))
     image_id = functest_utils.create_glance_image(glance,
                                                   IMAGE_NAME,
                                                   GLANCE_IMAGE_PATH)
@@ -176,15 +173,14 @@ def main():
             logger.error("Failed to create the Flavor...")
             exit(-1)
         logger.debug("Flavor '%s' with ID '%s' created successfully." %
-                                            (FLAVOR_NAME, flavor_id))
+                     (FLAVOR_NAME, flavor_id))
     else:
         logger.debug("Using existing flavor '%s' with ID '%s'..." % (FLAVOR_NAME,
-                                                                    flavor_id))
-
+                                                                     flavor_id))
 
     neutron = ntclient.Client(**nt_creds)
-    private_net=functest_utils.get_private_net(neutron)
-    if private_net == None:
+    private_net = functest_utils.get_private_net(neutron)
+    if private_net is None:
         logger.error("There is no private network in the deployment. Aborting...")
         exit(-1)
     logger.debug("Using private network '%s' (%s)." % (private_net['name'],
@@ -199,15 +195,14 @@ def main():
     os.environ["OS_TEST_FLAVOR"] = flavor_id
     os.environ["OS_TEST_NETWORK"] = private_net['id']
 
-
     os.chdir(PROMISE_REPO)
-    results_file_name='promise-results.json'
-    results_file=open(results_file_name,'w+')
+    results_file_name = 'promise-results.json'
+    results_file = open(results_file_name, 'w+')
     cmd = 'npm run -s test -- --reporter json'
 
     logger.info("Running command: %s" % cmd)
     ret = subprocess.call(cmd, shell=True, stdout=results_file, \
-                    stderr=subprocess.STDOUT)
+                          stderr=subprocess.STDOUT)
     results_file.close()
 
     if ret == 0:
@@ -218,7 +213,7 @@ def main():
         test_status = "Failed"
 
     # Print output of file
-    with open(results_file_name,'r') as results_file:
+    with open(results_file_name, 'r') as results_file:
         data = results_file.read()
         logger.debug("\n%s" % data)
         json_data = json.loads(data)
@@ -233,20 +228,19 @@ def main():
         duration = float(json_data["stats"]["duration"])/float(1000)
 
     logger.info("\n" \
-    "****************************************\n"\
-    "          Promise test report\n\n"\
-    "****************************************\n"\
-    " Suites:  \t%s\n"\
-    " Tests:   \t%s\n"\
-    " Passes:  \t%s\n"\
-    " Pending: \t%s\n"\
-    " Failures:\t%s\n"\
-    " Start:   \t%s\n"\
-    " End:     \t%s\n"\
-    " Duration:\t%s\n"\
-    "****************************************\n\n"\
-    % (suites, tests, passes, pending, failures, start_time, end_time, duration))
-
+                "****************************************\n"\
+                "          Promise test report\n\n"\
+                "****************************************\n"\
+                " Suites:  \t%s\n"\
+                " Tests:   \t%s\n"\
+                " Passes:  \t%s\n"\
+                " Pending: \t%s\n"\
+                " Failures:\t%s\n"\
+                " Start:   \t%s\n"\
+                " End:     \t%s\n"\
+                " Duration:\t%s\n"\
+                "****************************************\n\n"\
+                % (suites, tests, passes, pending, failures, start_time, end_time, duration))
 
     if args.report:
         pod_name = functest_utils.get_pod_name(logger)
@@ -260,9 +254,16 @@ def main():
                         "tests": int(tests), "failures": int(failures)}
         logger.debug("Results json: "+str(json_results))
 
+        # criteria for Promise in Release B was 100% of tests OK
+        status = "failed"
+        if int(tests) > 32 and int(failures) < 1:
+            status = "passed"
+
         params = {"project_name": "promise", "case_name": "promise",
                   "pod_name": str(pod_name), 'installer': installer,
-                  "version": scenario, "build_tag": build_tag, 'details': json_results}
+                  "version": scenario, "scenario": scenario,
+                  "criteria": status, "build_tag": build_tag,
+                  'details': json_results}
         headers = {'Content-Type': 'application/json'}
 
         logger.info("Pushing results to DB...")

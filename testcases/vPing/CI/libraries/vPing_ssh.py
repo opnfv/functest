@@ -20,7 +20,6 @@ import os
 import paramiko
 import pprint
 import re
-import subprocess
 import sys
 import time
 import yaml
@@ -160,11 +159,11 @@ def waitVmDeleted(nova, vm):
 def create_private_neutron_net(neutron):
 
     # Check if the network already exists
-    network_id = functest_utils.get_network_id(neutron,NEUTRON_PRIVATE_NET_NAME)
-    subnet_id = functest_utils.get_subnet_id(neutron,NEUTRON_PRIVATE_SUBNET_NAME)
-    router_id = functest_utils.get_router_id(neutron,NEUTRON_ROUTER_NAME)
+    network_id = functest_utils.get_network_id(neutron, NEUTRON_PRIVATE_NET_NAME)
+    subnet_id = functest_utils.get_subnet_id(neutron, NEUTRON_PRIVATE_SUBNET_NAME)
+    router_id = functest_utils.get_router_id(neutron, NEUTRON_ROUTER_NAME)
 
-    if network_id != '' and subnet_id != ''  and router_id != '' :
+    if network_id != '' and subnet_id != '' and router_id != '':
         logger.info("Using existing network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
     else:
         neutron.format = 'json'
@@ -208,6 +207,7 @@ def create_private_neutron_net(neutron):
                    'router_id': router_id}
     return network_dic
 
+
 def create_security_group(neutron_client):
     sg_id = functest_utils.get_security_group_id(neutron_client, SECGROUP_NAME)
     if sg_id != '':
@@ -215,8 +215,8 @@ def create_security_group(neutron_client):
     else:
         logger.info("Creating security group  '%s'..." % SECGROUP_NAME)
         SECGROUP = functest_utils.create_security_group(neutron_client,
-                                              SECGROUP_NAME,
-                                              SECGROUP_DESCR)
+                                                        SECGROUP_NAME,
+                                                        SECGROUP_DESCR)
         if not SECGROUP:
             logger.error("Failed to create the security group...")
             return False
@@ -224,25 +224,26 @@ def create_security_group(neutron_client):
         sg_id = SECGROUP['id']
 
         logger.debug("Security group '%s' with ID=%s created successfully." %\
-                      (SECGROUP['name'], sg_id))
+                     (SECGROUP['name'], sg_id))
 
         logger.debug("Adding ICMP rules in security group '%s'..." % SECGROUP_NAME)
         if not functest_utils.create_secgroup_rule(neutron_client, sg_id, \
-                        'ingress', 'icmp'):
+                                                   'ingress', 'icmp'):
             logger.error("Failed to create the security group rule...")
             return False
 
         logger.debug("Adding SSH rules in security group '%s'..." % SECGROUP_NAME)
         if not functest_utils.create_secgroup_rule(neutron_client, sg_id, \
-                        'ingress', 'tcp', '22', '22'):
+                                                   'ingress', 'tcp', '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
 
         if not functest_utils.create_secgroup_rule(neutron_client, sg_id, \
-                        'egress', 'tcp', '22', '22'):
+                                                   'egress', 'tcp', '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
     return sg_id
+
 
 def cleanup(nova, neutron, image_id, network_dic, sg_id, floatingip):
     if args.noclean:
@@ -333,12 +334,17 @@ def push_results(start_time_ts, duration, test_status):
     try:
         logger.debug("Pushing result into DB...")
         scenario = functest_utils.get_scenario(logger)
+        version = scenario
+        criteria = "failed"
+        if test_status == "OK":
+            criteria = "passed"
         pod_name = functest_utils.get_pod_name(logger)
         build_tag = functest_utils.get_build_tag(logger)
         functest_utils.push_results_to_db(TEST_DB,
                                           "functest",
                                           "vPing",
-                                          logger, pod_name, scenario, build_tag,
+                                          logger, pod_name, version, scenario,
+                                          criteria, build_tag,
                                           payload={'timestart': start_time_ts,
                                                    'duration': duration,
                                                    'status': test_status})
@@ -369,7 +375,7 @@ def main():
         logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
     else:
         logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
-                                                       GLANCE_IMAGE_PATH))
+                                                          GLANCE_IMAGE_PATH))
         image_id = functest_utils.create_glance_image(glance_client,
                                                       GLANCE_IMAGE_NAME,
                                                       GLANCE_IMAGE_PATH)
@@ -377,8 +383,7 @@ def main():
             logger.error("Failed to create a Glance image...")
             return(EXIT_CODE)
         logger.debug("Image '%s' with ID=%s created successfully." %\
-                  (GLANCE_IMAGE_NAME, image_id))
-
+                     (GLANCE_IMAGE_NAME, image_id))
 
     network_dic = create_private_neutron_net(neutron_client)
     if not network_dic:
@@ -406,7 +411,6 @@ def main():
         if server.name == NAME_VM_1 or server.name == NAME_VM_2:
             logger.info("Instance %s found. Deleting..." % server.name)
             server.delete()
-
 
     # boot VM 1
     start_time_ts = time.time()
@@ -470,7 +474,7 @@ def main():
     floatip = floatip_dic['fip_addr']
     floatip_id = floatip_dic['fip_id']
 
-    if floatip == None:
+    if floatip is None:
         logger.error("Cannot create floating IP.")
         cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
         return (EXIT_CODE)
@@ -483,8 +487,8 @@ def main():
         return (EXIT_CODE)
 
     logger.info("Trying to establish SSH connection to %s..." % floatip)
-    username='cirros'
-    password='cubswin:)'
+    username = 'cirros'
+    password = 'cubswin:)'
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
@@ -498,7 +502,7 @@ def main():
             ssh.connect(floatip, username=username, password=password, timeout=2)
             logger.debug("SSH connection established to %s." % floatip)
             break
-        except Exception, e:
+        except:
             logger.debug("Waiting for %s..." % floatip)
             time.sleep(6)
             timeout -= 1
@@ -506,7 +510,7 @@ def main():
         console_log = vm2.get_console_output()
 
         # print each "Sending discover" captured on the console log
-        if len(re.findall("Sending discover",console_log)) > discover_count and not got_ip:
+        if len(re.findall("Sending discover", console_log)) > discover_count and not got_ip:
             discover_count += 1
             logger.debug("Console-log '%s': Sending discover..." % NAME_VM_2)
 
@@ -523,8 +527,7 @@ def main():
                 logger.info("The instance failed to get an IP from "\
                             "the DHCP agent. The test will probably timeout...")
 
-
-    if timeout == 0: # 300 sec timeout (5 min)
+    if timeout == 0:  # 300 sec timeout (5 min)
         logger.error("Cannot establish connection to IP '%s'. Aborting" % floatip)
         cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
         return (EXIT_CODE)
@@ -533,10 +536,9 @@ def main():
 
     ping_script = REPO_PATH + "testcases/vPing/CI/libraries/ping.sh"
     try:
-        scp.put(ping_script,"~/")
-    except Exception, e:
-        logger.error("Cannot SCP the file '%s' to VM '%s'" % (ping_script,floatip))
-
+        scp.put(ping_script, "~/")
+    except:
+        logger.error("Cannot SCP the file '%s' to VM '%s'" % (ping_script, floatip))
 
     cmd = 'chmod 755 ~/ping.sh'
     (stdin, stdout, stderr) = ssh.exec_command(cmd)
@@ -554,7 +556,6 @@ def main():
         (stdin, stdout, stderr) = ssh.exec_command(cmd)
         output = stdout.readlines()
 
-
         for line in output:
             if "vPing OK" in line:
                 logger.info("vPing detected!")
@@ -570,7 +571,7 @@ def main():
                 logger.info("Timeout reached.")
                 flag = True
                 break
-        if flag :
+        if flag:
             break
         logger.debug("Pinging %s. Waiting for response..." % test_ip)
         sec += 1

@@ -133,16 +133,21 @@ CINDER_VOLUME_TYPE_NAME = "volume_test"
 SUMMARY = []
 
 
-def push_results_to_db(case, payload):
+def push_results_to_db(case, payload, criteria):
 
     url = TEST_DB + "/results"
     installer = functest_utils.get_installer_type(logger)
     scenario = functest_utils.get_scenario(logger)
+    # Until we found a way to manage version, use scenario
+    version = scenario
     pod_name = functest_utils.get_pod_name(logger)
-    # TODO pod_name hardcoded, info shall come from Jenkins
+
+    # evalutate success criteria
+
     params = {"project_name": "functest", "case_name": case,
               "pod_name": pod_name, "installer": installer,
-              "version": scenario, "details": payload}
+              "version": version, "scenario": scenario,
+              "criteria": criteria, "details": payload}
 
     headers = {'Content-Type': 'application/json'}
     r = requests.post(url, data=json.dumps(params), headers=headers)
@@ -187,7 +192,7 @@ def live_migration_supported():
     if config.read(TEMPEST_CONF_FILE) and \
        config.has_section('compute-feature-enabled') and \
        config.has_option('compute-feature-enabled', 'live_migration'):
-       return config.getboolean('compute-feature-enabled', 'live_migration')
+        return config.getboolean('compute-feature-enabled', 'live_migration')
 
     return False
 
@@ -347,16 +352,18 @@ def run_task(test_name):
               .format(RESULTS_DIR, test_name)) as json_file:
         json_data = json.load(json_file)
 
+    """ parse JSON operation result """
+    status = "failed"
+    if task_succeed(json_results):
+        logger.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
+        status = "passed"
+    else:
+        logger.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
+
     # Push results in payload of testcase
     if args.report:
         logger.debug("Push result into DB")
-        push_results_to_db("Rally_details", json_data)
-
-    """ parse JSON operation result """
-    if task_succeed(json_results):
-        logger.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
-    else:
-        logger.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
+        push_results_to_db("Rally_details", json_data, status)
 
 
 def main():
@@ -477,21 +484,27 @@ def main():
     #                "tests": int(total_nb_tests), "success": int(total_success)}
     #logger.info("Results: "+str(json_results))
 
+    # Evaluation of the success criteria
+    status = "failed"
+    # for Rally we decided that the overall success rate must be above 90%
+    if total_success >= 90:
+        status = "passed"
+
     if args.report:
         logger.debug("Pushing Rally summary into DB...")
-        push_results_to_db("Rally", payload)
+        push_results_to_db("Rally", payload, status)
 
     if args.noclean:
         exit(0)
 
     logger.debug("Deleting image '%s' with ID '%s'..." \
-                         % (GLANCE_IMAGE_NAME, image_id))
+                 % (GLANCE_IMAGE_NAME, image_id))
     if not functest_utils.delete_glance_image(nova_client, image_id):
         logger.error("Error deleting the glance image")
 
     if not volume_types:
         logger.debug("Deleting volume type '%s'..." \
-                             % CINDER_VOLUME_TYPE_NAME)
+                     % CINDER_VOLUME_TYPE_NAME)
         if not functest_utils.delete_volume_type(cinder_client, volume_type):
             logger.error("Error in deleting volume type...")
 

@@ -107,6 +107,7 @@ SECGROUP_NAME = functest_yaml.get("vping"). \
 SECGROUP_DESCR = functest_yaml.get("vping"). \
     get("vping_sg_descr")
 
+
 def pMsg(value):
 
     """pretty printing"""
@@ -155,15 +156,15 @@ def waitVmDeleted(nova, vm):
 def create_private_neutron_net(neutron):
 
     # Check if the network already exists
-    network_id = functest_utils.get_network_id(neutron,NEUTRON_PRIVATE_NET_NAME)
-    subnet_id = functest_utils.get_subnet_id(neutron,NEUTRON_PRIVATE_SUBNET_NAME)
-    router_id = functest_utils.get_router_id(neutron,NEUTRON_ROUTER_NAME)
+    network_id = functest_utils.get_network_id(neutron, NEUTRON_PRIVATE_NET_NAME)
+    subnet_id = functest_utils.get_subnet_id(neutron, NEUTRON_PRIVATE_SUBNET_NAME)
+    router_id = functest_utils.get_router_id(neutron, NEUTRON_ROUTER_NAME)
 
-    if network_id != '' and subnet_id != ''  and router_id != '' :
-        logger.info("Using existing network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
+    if network_id != '' and subnet_id != '' and router_id != '':
+        logger.info("Using existing network '%s'.." % NEUTRON_PRIVATE_NET_NAME)
     else:
         neutron.format = 'json'
-        logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
+        logger.info('Creating neutron network %s..' % NEUTRON_PRIVATE_NET_NAME)
         network_id = functest_utils. \
             create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
 
@@ -203,6 +204,7 @@ def create_private_neutron_net(neutron):
                    'router_id': router_id}
     return network_dic
 
+
 def create_security_group(neutron_client):
     sg_id = functest_utils.get_security_group_id(neutron_client, SECGROUP_NAME)
     if sg_id != '':
@@ -210,8 +212,8 @@ def create_security_group(neutron_client):
     else:
         logger.info("Creating security group  '%s'..." % SECGROUP_NAME)
         SECGROUP = functest_utils.create_security_group(neutron_client,
-                                              SECGROUP_NAME,
-                                              SECGROUP_DESCR)
+                                                        SECGROUP_NAME,
+                                                        SECGROUP_DESCR)
         if not SECGROUP:
             logger.error("Failed to create the security group...")
             return False
@@ -219,17 +221,18 @@ def create_security_group(neutron_client):
         sg_id = SECGROUP['id']
 
         logger.debug("Security group '%s' with ID=%s created successfully." %\
-                      (SECGROUP['name'], sg_id))
+                     (SECGROUP['name'], sg_id))
 
         logger.debug("Adding ICMP rules in security group '%s'..." % SECGROUP_NAME)
         if not functest_utils.create_secgroup_rule(neutron_client, sg_id, \
-                        'ingress', 'icmp'):
+                                                   'ingress', 'icmp'):
             logger.error("Failed to create the security group rule...")
             return False
 
         logger.debug("Adding SSH rules in security group '%s'..." % SECGROUP_NAME)
         if not functest_utils.create_secgroup_rule(neutron_client, sg_id, \
-                        'ingress', 'tcp', '22', '22'):
+                                                   'ingress', 'tcp',
+                                                   '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
 
@@ -238,6 +241,7 @@ def create_security_group(neutron_client):
             logger.error("Failed to create the security group rule...")
             return False
     return sg_id
+
 
 def cleanup(nova, neutron, image_id, network_dic):
     if args.noclean:
@@ -311,16 +315,22 @@ def cleanup(nova, neutron, image_id, network_dic):
 
     return True
 
+
 def push_results(start_time_ts, duration, test_status):
     try:
         logger.debug("Pushing result into DB...")
         scenario = functest_utils.get_scenario(logger)
+        version = scenario
+        criteria = "failed"
+        if test_status == "OK":
+            criteria = "passed"
         pod_name = functest_utils.get_pod_name(logger)
         build_tag = functest_utils.get_build_tag(logger)
         functest_utils.push_results_to_db(TEST_DB,
                                           "functest",
                                           "vPing_userdata",
-                                          logger, pod_name, scenario, build_tag,
+                                          logger, pod_name, version, scenario,
+                                          criteria, build_tag,
                                           payload={'timestart': start_time_ts,
                                                    'duration': duration,
                                                    'status': test_status})
@@ -351,7 +361,7 @@ def main():
         logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
     else:
         logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
-                                                       GLANCE_IMAGE_PATH))
+                                                          GLANCE_IMAGE_PATH))
         image_id = functest_utils.create_glance_image(glance_client,
                                                       GLANCE_IMAGE_NAME,
                                                       GLANCE_IMAGE_PATH)
@@ -359,7 +369,7 @@ def main():
             logger.error("Failed to create a Glance image...")
             return(EXIT_CODE)
         logger.debug("Image '%s' with ID=%s created successfully." %\
-                  (GLANCE_IMAGE_NAME, image_id))
+                     (GLANCE_IMAGE_NAME, image_id))
 
     network_dic = create_private_neutron_net(neutron_client)
     if not network_dic:
@@ -485,8 +495,8 @@ def main():
             break
         elif sec % 10 == 0:
             if "request failed" in console_log:
-                logger.debug("It seems userdata is not supported in nova boot."+\
-                            " Waiting a bit...")
+                logger.debug("It seems userdata is not supported in nova boot." + \
+                             " Waiting a bit...")
                 metadata_tries += 1
             else:
                 logger.debug("Pinging %s. Waiting for response..." % test_ip)
