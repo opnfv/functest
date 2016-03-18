@@ -68,7 +68,7 @@ RUN git clone https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
 RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
 RUN git clone https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
 RUN git clone https://github.com/openstack/rally.git ${repos_dir}/rally
-RUN git clone https://github.com/openstack/tempest.git ${repos_dir}/tempest
+RUN git clone -b 10.0.0 https://github.com/openstack/tempest.git ${repos_dir}/tempest
 RUN git clone https://github.com/opendaylight/integration.git ${repos_dir}/odl_integration
 RUN git clone -b stable https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
 RUN git clone https://github.com/openstack/networking-bgpvpn ${repos_dir}/bgpvpn
