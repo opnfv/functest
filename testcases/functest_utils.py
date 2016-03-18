@@ -67,12 +67,12 @@ def get_credentials(service):
                                    "http://192.168.20.71:5000/v2.0"),
         tenant: os.environ.get("OS_TENANT_NAME", "admin"),
     })
-    ssl = os.environ.get("OS_CACERT")
-    if ssl != None:
-        creds.update({"ca_cert":ssl})
-        if not os.path.isfile(ssl):
+    cacert = os.environ.get("OS_CACERT")
+    if cacert != None:
+        creds.update({"ca_cert":cacert,"insecure":"True"})
+        if not os.path.isfile(cacert):
             print "WARNING: The 'OS_CACERT' environment variable is set to %s "\
-                "but the file does not exist." % ssl
+                "but the file does not exist." % cacert
     return creds
 
 

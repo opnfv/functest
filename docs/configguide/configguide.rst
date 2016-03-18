@@ -234,10 +234,10 @@ environment variable. Check the deployment settings.
 SSL Support
 -----------
 
-If the OpenStack deployment is defined to use HTTPS endpoints, a certificate
-will be needed in the container in order to launch any command.
-
-The OS variable will point to that file. For example::
+If you need to connect to a server that is TLS-enabled (the auth URL begins with ‘https’)
+and it uses a certificate from a private CA or a self-signed certificate you will
+need to specify the path to an appropriate CA certificate to use to validate the
+server certificate with the environment variable OS_CACERT::
 
     echo $OS_CACERT
     /etc/ssl/certs/ca.crt
@@ -252,7 +252,15 @@ be copied manually from the OpenStack deployment. This can be done in 2 ways:
         -v <path_to_your_cert_file>:/etc/ssl/certs/ca.cert
 
 
+You might need to export OS_CACERT environment variable inside the container::
 
+    export OS_CACERT=/etc/ssl/certs/ca.crt
+
+
+Certificate verification can be turned off using OS_INSECURE=true.
+For example, Fuel uses self-signed cacerts by default, so an pre step would be::
+
+    export OS_INSECURE=true
 
 
 Additional Options
