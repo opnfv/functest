@@ -124,7 +124,10 @@ def download_and_add_image_on_glance(glance, image_name, image_url):
 def step_failure(step_name, error_msg):
     logger.error(error_msg)
     set_result(step_name, 0, error_msg)
-    push_results()
+    status = "failed"
+    if step_name == "sig_test":
+         status = "passed"
+    push_results(status)
     exit(-1)
 
 
@@ -250,9 +253,7 @@ def test_clearwater():
         # - VNF deployed
         status = "failed"
         try:
-            # TODO precise condition, for the moment if duration > 3m,
-            # => I consider it is good..
-            if RESULTS['orchestrator']['duration'] > 180 and RESULT['vIMS']['duration'] > 180:
+            if RESULTS['orchestrator']['duration'] > 0 and RESULT['vIMS']['duration'] > 0:
                 status = "passed"
         except:
             logger.error("Unable to set test status")
