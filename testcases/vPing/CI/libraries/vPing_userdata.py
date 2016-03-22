@@ -406,6 +406,7 @@ def main():
         name=NAME_VM_1,
         flavor=flavor,
         image=image_id,
+        config_drive=True,
         nics=[{"net-id": network_id}]
     )
 
@@ -443,6 +444,7 @@ def main():
         flavor=flavor,
         image=image_id,
         nics=[{"net-id": network_id}],
+        config_drive=True,
         userdata=u
     )
 
