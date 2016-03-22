@@ -236,7 +236,6 @@ test-dependencies:
             scenario: '(ocl)|(odl)|(nosdn)'
         vping_ssh:
         vping_userdata:
-            scenario: '(ocl)|(odl)|(nosdn)'
         tempest:
         rally:
         odl:
