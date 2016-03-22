@@ -65,7 +65,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-REPO_PATH=os.environ['repos_dir']+'/functest/'
+REPO_PATH = os.environ['repos_dir']+'/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
@@ -113,17 +113,20 @@ def get_info(file_result):
     logger.debug("duration:"+duration)
 
 
-def push_results_to_db(payload, module, pod_name):
+def push_results_to_db(case, payload, criteria):
 
     # TODO move DB creds into config file
     url = TEST_DB + "/results"
     installer = functest_utils.get_installer_type(logger)
     scenario = functest_utils.get_scenario(logger)
+    pod_name = functest_utils.get_pod_name(logger)
+
     logger.info("Pushing results to DB: '%s'." % url)
 
-    params = {"project_name": "functest", "case_name": "Tempest",
+    params = {"project_name": "functest", "case_name": case,
               "pod_name": str(pod_name), 'installer': installer,
-              "version": scenario, 'details': payload}
+              "version": scenario, "scenario": scenario, "criteria": criteria,
+              'details': payload}
     headers = {'Content-Type': 'application/json'}
 
     r = requests.post(url, data=json.dumps(params), headers=headers)
@@ -134,13 +137,16 @@ def create_tempest_resources():
     ks_creds = functest_utils.get_credentials("keystone")
     logger.info("Creating tenant and user for Tempest suite")
     keystone = ksclient.Client(**ks_creds)
-    tenant_id = functest_utils.create_tenant(keystone, TENANT_NAME, TENANT_DESCRIPTION)
+    tenant_id = functest_utils.create_tenant(keystone,
+                                             TENANT_NAME,
+                                             TENANT_DESCRIPTION)
     if tenant_id == '':
-        logger.error("Error : Failed to create %s tenant" %TENANT_NAME)
+        logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
 
-    user_id = functest_utils.create_user(keystone, USER_NAME, USER_PASSWORD, None, tenant_id)
+    user_id = functest_utils.create_user(keystone, USER_NAME, USER_PASSWORD,
+                                         None, tenant_id)
     if user_id == '':
-        logger.error("Error : Failed to create %s user" %USER_NAME)
+        logger.error("Error : Failed to create %s user" % USER_NAME)
 
 
 def free_tempest_resources():
@@ -170,13 +176,13 @@ def configure_tempest():
 
     logger.debug("Generating tempest.conf file...")
     cmd = "rally verify genconfig"
-    functest_utils.execute_command(cmd,logger)
+    functest_utils.execute_command(cmd, logger)
 
     logger.debug("Resolving deployment UUID...")
     cmd = "rally deployment list | awk '/"+DEPLOYMENT_MAME+"/ {print $2}'"
     p = subprocess.Popen(cmd, shell=True,
                          stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT);
+                         stderr=subprocess.STDOUT)
     deployment_uuid = p.stdout.readline().rstrip()
     if deployment_uuid == "":
         logger.debug("   Rally deployment NOT found")
@@ -184,7 +190,7 @@ def configure_tempest():
 
     logger.debug("Finding tempest.conf file...")
     tempest_conf_file = RALLY_INSTALLATION_DIR+"/tempest/for-deployment-" \
-                        +deployment_uuid+"/tempest.conf"
+                      + deployment_uuid + "/tempest.conf"
     if not os.path.isfile(tempest_conf_file):
         logger.error("   Tempest configuration file %s NOT found." % tempest_conf_file)
         return False
@@ -199,25 +205,24 @@ def configure_tempest():
     else:
         private_net_name = private_net['name']
     cmd = "crudini --set "+tempest_conf_file+" compute fixed_network_name " \
-          +private_net_name
-    functest_utils.execute_command(cmd,logger)
+          + private_net_name
+    functest_utils.execute_command(cmd, logger)
 
     logger.debug("  Updating non-admin credentials...")
-    cmd = "crudini --set "+tempest_conf_file+" identity tenant_name " \
-          +TENANT_NAME
-    functest_utils.execute_command(cmd,logger)
-    cmd = "crudini --set "+tempest_conf_file+" identity username " \
-          +USER_NAME
-    functest_utils.execute_command(cmd,logger)
-    cmd = "crudini --set "+tempest_conf_file+" identity password " \
-          +USER_PASSWORD
-    functest_utils.execute_command(cmd,logger)
-    cmd = "sed -i 's/.*ssh_user_regex.*/ssh_user_regex = "+SSH_USER_REGEX+"/' "+tempest_conf_file
-    functest_utils.execute_command(cmd,logger)
-
+    cmd = "crudini --set " + tempest_conf_file + " identity tenant_name " \
+          + TENANT_NAME
+    functest_utils.execute_command(cmd, logger)
+    cmd = "crudini --set " + tempest_conf_file + " identity username " \
+          + USER_NAME
+    functest_utils.execute_command(cmd, logger)
+    cmd = "crudini --set " + tempest_conf_file + " identity password " \
+          + USER_PASSWORD
+    functest_utils.execute_command(cmd, logger)
+    cmd = "sed -i 's/.*ssh_user_regex.*/ssh_user_regex = " + SSH_USER_REGEX + "/' " + tempest_conf_file
+    functest_utils.execute_command(cmd, logger)
 
     # Copy tempest.conf to /home/opnfv/functest/results/tempest/
-    shutil.copyfile(tempest_conf_file,TEMPEST_RESULTS_DIR+'/tempest.conf')
+    shutil.copyfile(tempest_conf_file, TEMPEST_RESULTS_DIR + '/tempest.conf')
     return True
 
 
@@ -237,9 +242,9 @@ def run_tempest(OPTION):
     else:
         header = "Tempest environment:\n"\
             "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" % \
-            (os.getenv('INSTALLER_TYPE','Unknown'), \
-             os.getenv('DEPLOY_SCENARIO','Unknown'), \
-             os.getenv('NODE_NAME','Unknown'), \
+            (os.getenv('INSTALLER_TYPE', 'Unknown'),
+             os.getenv('DEPLOY_SCENARIO', 'Unknown'),
+             os.getenv('NODE_NAME', 'Unknown'),
              time.strftime("%a %b %d %H:%M:%S %Z %Y"))
 
         f_stdout = open(TEMPEST_RESULTS_DIR+"/tempest.log", 'w+')
@@ -268,21 +273,31 @@ def run_tempest(OPTION):
     time_start = output[6]
     duration = output[7]
     # Compute duration (lets assume it does not take more than 60 min)
-    dur_min=int(duration.split(':')[1])
-    dur_sec_float=float(duration.split(':')[2])
-    dur_sec_int=int(round(dur_sec_float,0))
+    dur_min = int(duration.split(':')[1])
+    dur_sec_float = float(duration.split(':')[2])
+    dur_sec_int = int(round(dur_sec_float, 0))
     dur_sec_int = dur_sec_int + 60 * dur_min
 
     # Generate json results for DB
     json_results = {"timestart": time_start, "duration": dur_sec_int,
                     "tests": int(num_tests), "failures": int(num_failures)}
     logger.info("Results: "+str(json_results))
-    pod_name = functest_utils.get_pod_name(logger)
+
+    status = "failed"
+    try:
+        diff = (int(num_tests) - int(num_failures))
+        success_rate = 100*diff/int(num_tests)
+    except:
+        success_rate = 0
+
+    # For Tempest we assume that teh success rate is above 90%
+    if success_rate >= 90:
+        status = "passed"
 
     # Push results in payload of testcase
     if args.report:
         logger.debug("Push result into DB")
-        push_results_to_db(json_results, MODE, pod_name)
+        push_results_to_db("Tempest", json_results, status)
 
 
 def main():
