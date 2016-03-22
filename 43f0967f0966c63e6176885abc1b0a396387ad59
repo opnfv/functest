@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_88353c48",
+        "filename": "testcases/vPing/CI/libraries/vPing_userdata.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-03-22T08:04:04Z",
+      "side": 1,
+      "message": "We don\u0027t need it here, since we don",
+      "revId": "43f0967f0966c63e6176885abc1b0a396387ad59",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
