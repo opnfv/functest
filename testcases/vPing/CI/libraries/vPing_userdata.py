@@ -417,6 +417,7 @@ def main():
         name=NAME_VM_1,
         flavor=flavor,
         image=image_id,
+        config_drive=True,
         nics=[{"net-id": network_id}]
     )
 
