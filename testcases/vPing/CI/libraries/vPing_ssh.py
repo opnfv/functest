@@ -33,6 +33,7 @@ from glanceclient import client as glanceclient
 pp = pprint.PrettyPrinter(indent=4)
 
 parser = argparse.ArgumentParser()
+image_exists = False
 
 parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
 parser.add_argument("-r", "--report",
@@ -82,9 +83,7 @@ PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
-# GLANCE_IMAGE_NAME = functest_yaml.get("general"). \
-#    get("openstack").get("image_name")
-GLANCE_IMAGE_NAME = "functest-vping"
+GLANCE_IMAGE_NAME = functest_yaml.get("vping").get("image_name")
 GLANCE_IMAGE_FILENAME = functest_yaml.get("general"). \
     get("openstack").get("image_file_name")
 GLANCE_IMAGE_FORMAT = functest_yaml.get("general"). \
@@ -251,9 +250,10 @@ def cleanup(nova, neutron, image_id, network_dic, sg_id, floatingip):
 
     # delete both VMs
     logger.info("Cleaning up...")
-    logger.debug("Deleting image...")
-    if not functest_utils.delete_glance_image(nova, image_id):
-        logger.error("Error deleting the glance image")
+    if not image_exists:
+        logger.debug("Deleting image...")
+        if not functest_utils.delete_glance_image(nova, image_id):
+            logger.error("Error deleting the glance image")
 
     vm1 = functest_utils.get_instance_by_name(nova, NAME_VM_1)
     if vm1:
@@ -366,6 +366,8 @@ def main():
     image_id = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
     if image_id != '':
         logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
+        global image_exists
+        image_exists = True
     else:
         logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                        GLANCE_IMAGE_PATH))

@@ -66,6 +66,7 @@ vping:
     vm_flavor: m1.small #adapt to your environment
     vm_name_1: opnfv-vping-1
     vm_name_2: opnfv-vping-2
+    image_name: functest-vping
     vping_private_net_name: vping-net
     vping_private_subnet_name: vping-subnet
     vping_private_subnet_cidr: 192.168.130.0/24
