@@ -81,9 +81,9 @@ PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
-# GLANCE_IMAGE_NAME = functest_yaml.get("general"). \
-#    get("openstack").get("image_name")
-GLANCE_IMAGE_NAME = "functest-vping"
+GLANCE_IMAGE_NAME = functest_yaml.get("general"). \
+    get("openstack").get("image_name")
+# GLANCE_IMAGE_NAME = "functest-vping"
 GLANCE_IMAGE_FILENAME = functest_yaml.get("general"). \
     get("openstack").get("image_file_name")
 GLANCE_IMAGE_FORMAT = functest_yaml.get("general"). \
