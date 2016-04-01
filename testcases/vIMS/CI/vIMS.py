@@ -1,4 +1,4 @@
-#!/usr/bin/python
+ #!/usr/bin/python
 # coding: utf8
 #######################################################################
 #
@@ -253,7 +253,7 @@ def test_clearwater():
         # - VNF deployed
         status = "failed"
         try:
-            if RESULTS['orchestrator']['duration'] > 0 and RESULT['vIMS']['duration'] > 0:
+            if RESULTS['orchestrator']['duration'] > 0 and RESULTS['vIMS']['duration'] > 0:
                 status = "passed"
         except:
             logger.error("Unable to set test status")
