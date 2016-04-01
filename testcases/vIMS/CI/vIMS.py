@@ -156,10 +156,9 @@ def set_result(step_name, duration=0, result=""):
 
 
 def test_clearwater():
-
     script = "source " + VIMS_DATA_DIR + "venv_cloudify/bin/activate; "
     script += "cd " + VIMS_DATA_DIR + "; "
-    script += "cfy status | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}'"
+    script += "cfy status | grep -Eo \"([0-9]{1,3}\.){3}[0-9]{1,3}\""
     cmd = "/bin/bash -c '" + script + "'"
 
     try:
@@ -167,7 +166,7 @@ def test_clearwater():
         mgr_ip = os.popen(cmd).read()
         mgr_ip = mgr_ip.splitlines()[0]
     except:
-        logger.error("Unable to retrieve the IP of the cloudify manager server !")
+        step_failure("sig_test", "Unable to retrieve the IP of the cloudify manager server !")
 
     api_url = "http://" + mgr_ip + "/api/v2"
     dep_outputs = requests.get(api_url + "/deployments/" + CW_DEPLOYMENT_NAME + "/outputs")
