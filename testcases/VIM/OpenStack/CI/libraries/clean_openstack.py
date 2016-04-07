@@ -57,7 +57,7 @@ if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
 sys.path.append(REPO_PATH + "testcases/")
-import functest_utils
+import openstack_utils
 
 DEFAULTS_FILE = '/home/opnfv/functest/conf/os_defaults.yaml'
 
@@ -85,7 +85,7 @@ def separator():
 
 def remove_instances(nova_client):
     logger.info("Removing Nova instances...")
-    instances = functest_utils.get_instances(nova_client)
+    instances = openstack_utils.get_instances(nova_client)
     if instances is None or len(instances) == 0:
         logger.debug("No instances found.")
         return
@@ -94,7 +94,7 @@ def remove_instances(nova_client):
         instance_name = getattr(instance, 'name')
         instance_id = getattr(instance, 'id')
         logger.debug("Removing instance '%s', ID=%s ..." % (instance_name,instance_id))
-        if functest_utils.delete_instance(nova_client, instance_id):
+        if openstack_utils.delete_instance(nova_client, instance_id):
             logger.debug("  > Done!")
         else:
             logger.error("There has been a problem removing the "
@@ -102,7 +102,7 @@ def remove_instances(nova_client):
 
     timeout = 50
     while timeout > 0:
-        instances = functest_utils.get_instances(nova_client)
+        instances = openstack_utils.get_instances(nova_client)
         if instances is None or len(instances) == 0:
             break
         else:
@@ -113,7 +113,7 @@ def remove_instances(nova_client):
 
 def remove_images(nova_client):
     logger.info("Removing Glance images...")
-    images = functest_utils.get_images(nova_client)
+    images = openstack_utils.get_images(nova_client)
     if images is None or len(images) == 0:
         logger.debug("No images found.")
         return
@@ -124,7 +124,7 @@ def remove_images(nova_client):
         logger.debug("'%s', ID=%s " %(image_name,image_id))
         if image_id not in default_images:
             logger.debug("Removing image '%s', ID=%s ..." % (image_name,image_id))
-            if functest_utils.delete_glance_image(nova_client, image_id):
+            if openstack_utils.delete_glance_image(nova_client, image_id):
                 logger.debug("  > Done!")
             else:
                 logger.error("There has been a problem removing the"
@@ -135,7 +135,7 @@ def remove_images(nova_client):
 
 def remove_volumes(cinder_client):
     logger.info("Removing Cinder volumes...")
-    volumes = functest_utils.get_volumes(cinder_client)
+    volumes = openstack_utils.get_volumes(cinder_client)
     if volumes is None or len(volumes) == 0:
         logger.debug("No volumes found.")
         return
@@ -146,11 +146,11 @@ def remove_volumes(cinder_client):
         logger.debug("'%s', ID=%s " %(volume_name,volume_id))
         if volume_id not in default_volumes:
             logger.debug("Removing cinder volume %s ..." % volume_id)
-            if functest_utils.delete_volume(cinder_client, volume_id):
+            if openstack_utils.delete_volume(cinder_client, volume_id):
                 logger.debug("  > Done!")
             else:
                 logger.debug("Trying forced removal...")
-                if functest_utils.delete_volume(cinder_client,
+                if openstack_utils.delete_volume(cinder_client,
                                                 volume_id,
                                                 forced=True):
                     logger.debug("  > Done!")
@@ -162,7 +162,7 @@ def remove_volumes(cinder_client):
 
 def remove_floatingips(nova_client):
     logger.info("Removing floating IPs...")
-    floatingips = functest_utils.get_floating_ips(nova_client)
+    floatingips = openstack_utils.get_floating_ips(nova_client)
     if floatingips is None or len(floatingips) == 0:
         logger.debug("No floating IPs found.")
         return
@@ -175,7 +175,7 @@ def remove_floatingips(nova_client):
         logger.debug("'%s', ID=%s " %(fip_ip,fip_id))
         if fip_id not in default_floatingips:
             logger.debug("Removing floating IP %s ..." % fip_id)
-            if functest_utils.delete_floating_ip(nova_client, fip_id):
+            if openstack_utils.delete_floating_ip(nova_client, fip_id):
                 logger.debug("  > Done!")
                 deleted += 1
             else:
@@ -187,7 +187,7 @@ def remove_floatingips(nova_client):
 
     timeout = 50
     while timeout > 0:
-        floatingips = functest_utils.get_floating_ips(nova_client)
+        floatingips = openstack_utils.get_floating_ips(nova_client)
         if floatingips is None or len(floatingips) == (init_len - deleted):
             break
         else:
@@ -199,7 +199,7 @@ def remove_floatingips(nova_client):
 def remove_networks(neutron_client):
     logger.info("Removing Neutron objects")
     network_ids = []
-    networks = functest_utils.get_network_list(neutron_client)
+    networks = openstack_utils.get_network_list(neutron_client)
     if networks == None:
         logger.debug("There are no networks in the deployment. ")
     else:
@@ -217,14 +217,14 @@ def remove_networks(neutron_client):
                 network_ids.append(net_id)
 
     #delete ports
-    ports = functest_utils.get_port_list(neutron_client)
+    ports = openstack_utils.get_port_list(neutron_client)
     if ports is None:
         logger.debug("There are no ports in the deployment. ")
     else:
         remove_ports(neutron_client, ports, network_ids)
 
     #remove routers
-    routers = functest_utils.get_router_list(neutron_client)
+    routers = openstack_utils.get_router_list(neutron_client)
     if routers is None:
         logger.debug("There are no routers in the deployment. ")
     else:
@@ -234,7 +234,7 @@ def remove_networks(neutron_client):
     if network_ids != None:
         for net_id in network_ids:
             logger.debug("Removing network %s ..." % net_id)
-            if functest_utils.delete_neutron_net(neutron_client, net_id):
+            if openstack_utils.delete_neutron_net(neutron_client, net_id):
                 logger.debug("  > Done!")
             else:
                 logger.error("There has been a problem removing the "
@@ -253,7 +253,7 @@ def remove_ports(neutron_client, ports, network_ids):
             router_id = port['device_id']
             if len(port['fixed_ips']) == 0 and router_id == '':
                 logger.debug("Removing port %s ..." % port_id)
-                if functest_utils.delete_neutron_port(neutron_client, port_id):
+                if openstack_utils.delete_neutron_port(neutron_client, port_id):
                     logger.debug("  > Done!")
                 else:
                     logger.error("There has been a problem removing the "
@@ -263,7 +263,7 @@ def remove_ports(neutron_client, ports, network_ids):
             elif port['device_owner'] == 'network:router_interface':
                 logger.debug("Detaching port %s (subnet %s) from router %s ..."
                              % (port_id,subnet_id,router_id))
-                if functest_utils.remove_interface_router(neutron_client,
+                if openstack_utils.remove_interface_router(neutron_client,
                                                           router_id, subnet_id):
                     time.sleep(5) # leave 5 seconds to detach before doing anything else
                     logger.debug("  > Done!")
@@ -277,11 +277,11 @@ def remove_ports(neutron_client, ports, network_ids):
 
 def force_remove_port(neutron_client, port_id):
     logger.debug("Clearing device_owner for port %s ..." % port_id)
-    functest_utils.update_neutron_port(neutron_client,
+    openstack_utils.update_neutron_port(neutron_client,
                                        port_id,
                                        device_owner='clear')
     logger.debug("Removing port %s ..." % port_id)
-    if functest_utils.delete_neutron_port(neutron_client, port_id):
+    if openstack_utils.delete_neutron_port(neutron_client, port_id):
         logger.debug("  > Done!")
     else:
         logger.error("There has been a problem removing "
@@ -296,7 +296,7 @@ def remove_routers(neutron_client, routers):
             logger.debug("Checking '%s' with ID=(%s) ..." % (router_name,router_id))
             if router['external_gateway_info'] != None:
                 logger.debug("Router has gateway to external network. Removing link...")
-                if functest_utils.remove_gateway_router(neutron_client, router_id):
+                if openstack_utils.remove_gateway_router(neutron_client, router_id):
                     logger.debug("  > Done!")
                 else:
                     logger.error("There has been a problem removing "
@@ -304,7 +304,7 @@ def remove_routers(neutron_client, routers):
             else:
                 logger.debug("Router is not connected to anything. Ready to remove...")
             logger.debug("Removing router %s(%s) ..." % (router_name, router_id))
-            if functest_utils.delete_neutron_router(neutron_client, router_id):
+            if openstack_utils.delete_neutron_router(neutron_client, router_id):
                 logger.debug("  > Done!")
             else:
                 logger.error("There has been a problem removing the "
@@ -313,7 +313,7 @@ def remove_routers(neutron_client, routers):
 
 def remove_security_groups(neutron_client):
     logger.info("Removing Security groups...")
-    secgroups = functest_utils.get_security_groups(neutron_client)
+    secgroups = openstack_utils.get_security_groups(neutron_client)
     if secgroups is None or len(secgroups) == 0:
         logger.debug("No security groups found.")
         return
@@ -324,7 +324,7 @@ def remove_security_groups(neutron_client):
         logger.debug("'%s', ID=%s " %(secgroup_name,secgroup_id))
         if secgroup_id not in default_security_groups:
             logger.debug(" Removing '%s'..." % secgroup_name)
-            if functest_utils.delete_security_group(neutron_client, secgroup_id):
+            if openstack_utils.delete_security_group(neutron_client, secgroup_id):
                 logger.debug("  > Done!")
             else:
                 logger.error("There has been a problem removing the "
@@ -336,7 +336,7 @@ def remove_security_groups(neutron_client):
 
 def remove_users(keystone_client):
     logger.info("Removing Users...")
-    users = functest_utils.get_users(keystone_client)
+    users = openstack_utils.get_users(keystone_client)
     if users == None:
         logger.debug("There are no users in the deployment. ")
         return
@@ -347,7 +347,7 @@ def remove_users(keystone_client):
         logger.debug("'%s', ID=%s " %(user_name,user_id))
         if user_id not in default_users:
             logger.debug(" Removing '%s'..." % user_name)
-            if functest_utils.delete_user(keystone_client,user_id):
+            if openstack_utils.delete_user(keystone_client,user_id):
                 logger.debug("  > Done!")
             else:
                 logger.error("There has been a problem removing the "
@@ -358,7 +358,7 @@ def remove_users(keystone_client):
 
 def remove_tenants(keystone_client):
     logger.info("Removing Tenants...")
-    tenants = functest_utils.get_tenants(keystone_client)
+    tenants = openstack_utils.get_tenants(keystone_client)
     if tenants == None:
         logger.debug("There are no tenants in the deployment. ")
         return
@@ -369,7 +369,7 @@ def remove_tenants(keystone_client):
         logger.debug("'%s', ID=%s " %(tenant_name,tenant_id))
         if tenant_id not in default_tenants:
             logger.debug(" Removing '%s'..." % tenant_name)
-            if functest_utils.delete_tenant(keystone_client,tenant_id):
+            if openstack_utils.delete_tenant(keystone_client,tenant_id):
                 logger.debug("  > Done!")
             else:
                 logger.error("There has been a problem removing the "
@@ -380,16 +380,16 @@ def remove_tenants(keystone_client):
 
 
 def main():
-    creds_nova = functest_utils.get_credentials("nova")
+    creds_nova = openstack_utils.get_credentials("nova")
     nova_client = novaclient.Client('2',**creds_nova)
 
-    creds_neutron = functest_utils.get_credentials("neutron")
+    creds_neutron = openstack_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
 
-    creds_keystone = functest_utils.get_credentials("keystone")
+    creds_keystone = openstack_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
 
-    creds_cinder = functest_utils.get_credentials("cinder")
+    creds_cinder = openstack_utils.get_credentials("cinder")
     #cinder_client = cinderclient.Client(**creds_cinder)
     cinder_client = cinderclient.Client('1',creds_cinder['username'],
                                         creds_cinder['api_key'],
@@ -397,7 +397,7 @@ def main():
                                         creds_cinder['auth_url'],
                                         service_type="volume")
 
-    if not functest_utils.check_credentials():
+    if not openstack_utils.check_credentials():
         logger.error("Please source the openrc credentials and run the script again.")
         exit(-1)
 

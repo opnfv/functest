@@ -10,6 +10,7 @@
 
 import re, json, os, urllib2, argparse, logging, shutil, subprocess, yaml, sys, getpass
 import functest_utils
+import openstack_utils
 from git import Repo
 from os import stat
 from pwd import getpwuid
@@ -78,7 +79,7 @@ NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("general"). \
 NEUTRON_ROUTER_NAME = functest_yaml.get("general"). \
     get("openstack").get("neutron_router_name")
 
-creds_neutron = functest_utils.get_credentials("neutron")
+creds_neutron = openstack_utils.get_credentials("neutron")
 neutron_client = neutronclient.Client(**creds_neutron)
 
 def action_start():
@@ -99,7 +100,7 @@ def action_start():
         action_clean()
         logger.info("Starting installation of functest environment")
 
-        private_net = functest_utils.get_private_net(neutron_client)
+        private_net = openstack_utils.get_private_net(neutron_client)
         if private_net is None:
             # If there is no private network in the deployment we create one
             if not create_private_neutron_net(neutron_client):
@@ -234,7 +235,7 @@ def check_rally():
 def create_private_neutron_net(neutron):
     neutron.format = 'json'
     logger.info("Creating network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
-    network_id = functest_utils. \
+    network_id = openstack_utils. \
         create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
 
     if not network_id:
@@ -242,13 +243,13 @@ def create_private_neutron_net(neutron):
     logger.debug("Network '%s' created successfully." % network_id)
 
     logger.info("Updating network '%s' with shared=True..." % NEUTRON_PRIVATE_NET_NAME)
-    if functest_utils.update_neutron_net(neutron, network_id, shared=True):
+    if openstack_utils.update_neutron_net(neutron, network_id, shared=True):
         logger.debug("Network '%s' updated successfully." % network_id)
     else:
         logger.info("Updating neutron network '%s' failed" % network_id)
 
     logger.info("Creating Subnet....")
-    subnet_id = functest_utils. \
+    subnet_id = openstack_utils. \
         create_neutron_subnet(neutron,
                               NEUTRON_PRIVATE_SUBNET_NAME,
                               NEUTRON_PRIVATE_SUBNET_CIDR,
@@ -257,7 +258,7 @@ def create_private_neutron_net(neutron):
         return False
     logger.debug("Subnet '%s' created successfully." % subnet_id)
     logger.info("Creating Router...")
-    router_id = functest_utils. \
+    router_id = openstack_utils. \
         create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
 
     if not router_id:
@@ -266,7 +267,7 @@ def create_private_neutron_net(neutron):
     logger.debug("Router '%s' created successfully." % router_id)
     logger.info("Adding router to subnet...")
 
-    result = functest_utils.add_interface_router(neutron, router_id, subnet_id)
+    result = openstack_utils.add_interface_router(neutron, router_id, subnet_id)
 
     if not result:
         return False
@@ -284,7 +285,7 @@ def main():
         exit(-1)
 
 
-    if not functest_utils.check_credentials():
+    if not openstack_utils.check_credentials():
         logger.error("Please source the openrc credentials and run the script again.")
         #TODO: source the credentials in this script
         exit(-1)

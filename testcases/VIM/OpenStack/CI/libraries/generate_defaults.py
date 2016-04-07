@@ -57,7 +57,7 @@ if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
 sys.path.append(REPO_PATH + "testcases/")
-import functest_utils
+import openstack_utils
 
 DEFAULTS_FILE = '/home/opnfv/functest/conf/os_defaults.yaml'
 
@@ -68,7 +68,7 @@ def separator():
 def get_instances(nova_client):
     logger.debug("Getting instances...")
     dic_instances = {}
-    instances = functest_utils.get_instances(nova_client)
+    instances = openstack_utils.get_instances(nova_client)
     if not (instances is None or len(instances) == 0):
         for instance in instances:
             dic_instances.update({getattr(instance, 'id'):getattr(instance, 'name')})
@@ -78,7 +78,7 @@ def get_instances(nova_client):
 def get_images(nova_client):
     logger.debug("Getting images...")
     dic_images = {}
-    images = functest_utils.get_images(nova_client)
+    images = openstack_utils.get_images(nova_client)
     if not (images is None or len(images) == 0):
         for image in images:
             dic_images.update({getattr(image, 'id'):getattr(image, 'name')})
@@ -88,7 +88,7 @@ def get_images(nova_client):
 def get_volumes(cinder_client):
     logger.debug("Getting volumes...")
     dic_volumes = {}
-    volumes = functest_utils.get_volumes(cinder_client)
+    volumes = openstack_utils.get_volumes(cinder_client)
     if volumes != None:
         for volume in volumes:
             dic_volumes.update({volume.id:volume.display_name})
@@ -98,7 +98,7 @@ def get_volumes(cinder_client):
 def get_networks(neutron_client):
     logger.debug("Getting networks")
     dic_networks = {}
-    networks = functest_utils.get_network_list(neutron_client)
+    networks = openstack_utils.get_network_list(neutron_client)
     if networks != None:
         for network in networks:
             dic_networks.update({network['id']:network['name']})
@@ -108,7 +108,7 @@ def get_networks(neutron_client):
 def get_routers(neutron_client):
     logger.debug("Getting routers")
     dic_routers = {}
-    routers = functest_utils.get_router_list(neutron_client)
+    routers = openstack_utils.get_router_list(neutron_client)
     if routers != None:
         for router in routers:
             dic_routers.update({router['id']:router['name']})
@@ -118,7 +118,7 @@ def get_routers(neutron_client):
 def get_security_groups(neutron_client):
     logger.debug("Getting Security groups...")
     dic_secgroups = {}
-    secgroups = functest_utils.get_security_groups(neutron_client)
+    secgroups = openstack_utils.get_security_groups(neutron_client)
     if not (secgroups is None or len(secgroups) == 0):
         for secgroup in secgroups:
             dic_secgroups.update({secgroup['id']:secgroup['name']})
@@ -128,7 +128,7 @@ def get_security_groups(neutron_client):
 def get_floatinips(nova_client):
     logger.debug("Getting Floating IPs...")
     dic_floatingips = {}
-    floatingips = functest_utils.get_floating_ips(nova_client)
+    floatingips = openstack_utils.get_floating_ips(nova_client)
     if not (floatingips is None or len(floatingips) == 0):
         for floatingip in floatingips:
             dic_floatingips.update({floatingip.id:floatingip.ip})
@@ -138,7 +138,7 @@ def get_floatinips(nova_client):
 def get_users(keystone_client):
     logger.debug("Getting users...")
     dic_users = {}
-    users = functest_utils.get_users(keystone_client)
+    users = openstack_utils.get_users(keystone_client)
     if not (users is None or len(users) == 0):
         for user in users:
             dic_users.update({getattr(user, 'id'):getattr(user, 'name')})
@@ -148,7 +148,7 @@ def get_users(keystone_client):
 def get_tenants(keystone_client):
     logger.debug("Getting users...")
     dic_tenants = {}
-    tenants = functest_utils.get_tenants(keystone_client)
+    tenants = openstack_utils.get_tenants(keystone_client)
     if not (tenants is None or len(tenants) == 0):
         for tenant in tenants:
             dic_tenants.update({getattr(tenant, 'id'):getattr(tenant, 'name')})
@@ -156,23 +156,23 @@ def get_tenants(keystone_client):
 
 
 def main():
-    creds_nova = functest_utils.get_credentials("nova")
+    creds_nova = openstack_utils.get_credentials("nova")
     nova_client = novaclient.Client('2',**creds_nova)
 
-    creds_neutron = functest_utils.get_credentials("neutron")
+    creds_neutron = openstack_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
 
-    creds_keystone = functest_utils.get_credentials("keystone")
+    creds_keystone = openstack_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
 
-    creds_cinder = functest_utils.get_credentials("cinder")
+    creds_cinder = openstack_utils.get_credentials("cinder")
     cinder_client = cinderclient.Client('1',creds_cinder['username'],
                                         creds_cinder['api_key'],
                                         creds_cinder['project_id'],
                                         creds_cinder['auth_url'],
                                         service_type="volume")
 
-    if not functest_utils.check_credentials():
+    if not openstack_utils.check_credentials():
         logger.error("Please source the openrc credentials and run the script again.")
         exit(-1)
 

@@ -89,6 +89,7 @@ if not os.path.exists(REPO_PATH):
     exit(-1)
 sys.path.append(REPO_PATH + "testcases/")
 import functest_utils
+import openstack_utils
 
 with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
@@ -210,13 +211,13 @@ def build_task_args(test_file_name):
     task_args['iterations'] = ITERATIONS_AMOUNT
     task_args['concurrency'] = CONCURRENCY
 
-    ext_net = functest_utils.get_external_net(client_dict['neutron'])
+    ext_net = openstack_utils.get_external_net(client_dict['neutron'])
     if ext_net:
         task_args['floating_network'] = str(ext_net)
     else:
         task_args['floating_network'] = ''
 
-    net_id = functest_utils.get_network_id(client_dict['neutron'],
+    net_id = openstack_utils.get_network_id(client_dict['neutron'],
                                            PRIVATE_NETWORK)
     task_args['netid'] = str(net_id)
     task_args['live_migration'] = live_migration_supported()
@@ -374,17 +375,17 @@ def main():
         exit(-1)
 
     SUMMARY = []
-    creds_nova = functest_utils.get_credentials("nova")
+    creds_nova = openstack_utils.get_credentials("nova")
     nova_client = novaclient.Client('2', **creds_nova)
-    creds_neutron = functest_utils.get_credentials("neutron")
+    creds_neutron = openstack_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
-    creds_keystone = functest_utils.get_credentials("keystone")
+    creds_keystone = openstack_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
     glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
                                                               endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
-    creds_cinder = functest_utils.get_credentials("cinder")
+    creds_cinder = openstack_utils.get_credentials("cinder")
     cinder_client = cinderclient.Client('2', creds_cinder['username'],
                                         creds_cinder['api_key'],
                                         creds_cinder['project_id'],
@@ -393,10 +394,10 @@ def main():
 
     client_dict['neutron'] = neutron_client
 
-    volume_types = functest_utils.list_volume_types(cinder_client,
+    volume_types = openstack_utils.list_volume_types(cinder_client,
                                                     private=False)
     if not volume_types:
-        volume_type = functest_utils.create_volume_type(cinder_client,
+        volume_type = openstack_utils.create_volume_type(cinder_client,
                                                         CINDER_VOLUME_TYPE_NAME)
         if not volume_type:
             logger.error("Failed to create volume type...")
@@ -407,12 +408,12 @@ def main():
     else:
         logger.debug("Using existing volume type(s)...")
 
-    image_id = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+    image_id = openstack_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
 
     if image_id == '':
         logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                            GLANCE_IMAGE_PATH))
-        image_id = functest_utils.create_glance_image(glance_client,
+        image_id = openstack_utils.create_glance_image(glance_client,
                                                       GLANCE_IMAGE_NAME,
                                                       GLANCE_IMAGE_PATH)
         if not image_id:
@@ -499,13 +500,13 @@ def main():
 
     logger.debug("Deleting image '%s' with ID '%s'..." \
                  % (GLANCE_IMAGE_NAME, image_id))
-    if not functest_utils.delete_glance_image(nova_client, image_id):
+    if not openstack_utils.delete_glance_image(nova_client, image_id):
         logger.error("Error deleting the glance image")
 
     if not volume_types:
         logger.debug("Deleting volume type '%s'..." \
                      % CINDER_VOLUME_TYPE_NAME)
-        if not functest_utils.delete_volume_type(cinder_client, volume_type):
+        if not openstack_utils.delete_volume_type(cinder_client, volume_type):
             logger.error("Error in deleting volume type...")
 
 
