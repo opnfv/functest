@@ -60,6 +60,7 @@ GLANCE_IMAGE_PATH = functest_yaml.get('general'). \
 
 sys.path.append('%s/testcases' % FUNCTEST_REPO)
 import functest_utils
+import openstack_utils
 
 """ logging configuration """
 logger = logging.getLogger('Promise')
@@ -85,20 +86,20 @@ def create_image(glance_client, name):
 
 
 def main():
-    ks_creds = functest_utils.get_credentials("keystone")
-    nv_creds = functest_utils.get_credentials("nova")
-    nt_creds = functest_utils.get_credentials("neutron")
+    ks_creds = openstack_utils.get_credentials("keystone")
+    nv_creds = openstack_utils.get_credentials("nova")
+    nt_creds = openstack_utils.get_credentials("neutron")
 
     keystone = ksclient.Client(**ks_creds)
 
-    user_id = functest_utils.get_user_id(keystone, ks_creds['username'])
+    user_id = openstack_utils.get_user_id(keystone, ks_creds['username'])
     if user_id == '':
         logger.error("Error : Failed to get id of %s user" %
                      ks_creds['username'])
         exit(-1)
 
     logger.info("Creating tenant '%s'..." % TENANT_NAME)
-    tenant_id = functest_utils.create_tenant(
+    tenant_id = openstack_utils.create_tenant(
         keystone, TENANT_NAME, TENANT_DESCRIPTION)
     if tenant_id == '':
         logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
@@ -109,21 +110,21 @@ def main():
     role_id = ''
     for role_name in roles_name:
         if role_id == '':
-            role_id = functest_utils.get_role_id(keystone, role_name)
+            role_id = openstack_utils.get_role_id(keystone, role_name)
 
     if role_id == '':
         logger.error("Error : Failed to get id for %s role" % role_name)
         exit(-1)
 
     logger.info("Adding role '%s' to tenant '%s'..." % (role_id, TENANT_NAME))
-    if not functest_utils.add_role_user(keystone, user_id, role_id, tenant_id):
+    if not openstack_utils.add_role_user(keystone, user_id, role_id, tenant_id):
         logger.error("Error : Failed to add %s on tenant %s" %
                      (ks_creds['username'], TENANT_NAME))
         exit(-1)
     logger.debug("Role added successfully.")
 
     logger.info("Creating user '%s'..." % USER_NAME)
-    user_id = functest_utils.create_user(
+    user_id = openstack_utils.create_user(
         keystone, USER_NAME, USER_PWD, None, tenant_id)
 
     if user_id == '':
@@ -153,7 +154,7 @@ def main():
 
     logger.info("Creating image '%s' from '%s'..." % (IMAGE_NAME,
                                                       GLANCE_IMAGE_PATH))
-    image_id = functest_utils.create_glance_image(glance,
+    image_id = openstack_utils.create_glance_image(glance,
                                                   IMAGE_NAME,
                                                   GLANCE_IMAGE_PATH)
     if not image_id:
@@ -161,10 +162,10 @@ def main():
         exit(-1)
     logger.debug("Image '%s' with ID '%s' created successfully." % (IMAGE_NAME,
                                                                     image_id))
-    flavor_id = functest_utils.get_flavor_id(nova, FLAVOR_NAME)
+    flavor_id = openstack_utils.get_flavor_id(nova, FLAVOR_NAME)
     if flavor_id == '':
         logger.info("Creating flavor '%s'..." % FLAVOR_NAME)
-        flavor_id = functest_utils.create_flavor(nova,
+        flavor_id = openstack_utils.create_flavor(nova,
                                                  FLAVOR_NAME,
                                                  FLAVOR_RAM,
                                                  FLAVOR_DISK,
@@ -179,7 +180,7 @@ def main():
                                                                      flavor_id))
 
     neutron = ntclient.Client(**nt_creds)
-    private_net = functest_utils.get_private_net(neutron)
+    private_net = openstack_utils.get_private_net(neutron)
     if private_net is None:
         logger.error("There is no private network in the deployment. Aborting...")
         exit(-1)
