@@ -24,6 +24,8 @@ where:
     -n|--no-clean     do not clean OpenStack resources after test run
     -s|--serial       run tests in one thread
     -t|--test         run specific set of tests
+    --tempest-mode    run specific set of tempest cases when -t includes \
+tempest.  Defaults to custom.
       <test_name>     one or more of the following separated by comma:
                             vping_ssh,vping_userdata,odl,onos,tempest,rally,vims,promise,doctor
 
@@ -40,6 +42,7 @@ offline=false
 report=""
 clean=true
 serial=false
+tempest_mode=custom
 
 # Get the list of runnable tests
 # Check if we are in CI mode
@@ -122,7 +125,7 @@ function run_test(){
         "tempest")
             info "Running Tempest tests..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
-                --debug $serial_flag $clean_flag -m custom ${report}
+                --debug $serial_flag $clean_flag -m ${tempest_mode} ${report}
             # save tempest.conf for further troubleshooting
             tempest_conf="${RALLY_VENV_DIR}/tempest/for-deployment-*/tempest.conf"
             if [ -f ${tempest_conf} ]; then
@@ -225,6 +228,10 @@ while [[ $# > 0 ]]
         ;;
         -t|--test|--tests)
             TEST="$2"
+            shift
+        ;;
+        --tempest-mode)
+            tempest_mode="$2"
             shift
         ;;
         *)

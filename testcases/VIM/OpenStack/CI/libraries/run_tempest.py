@@ -29,7 +29,7 @@ from neutronclient.v2_0 import client as neutronclient
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',
-         'telemetry', 'volume', 'custom']
+         'telemetry', 'volume', 'custom', 'apex-verify-smoke']
 
 """ tests configuration """
 parser = argparse.ArgumentParser()
@@ -310,6 +310,10 @@ def main():
         exit(-1)
     elif (args.mode == 'custom'):
         MODE = "--tests-file "+REPO_PATH+"testcases/VIM/OpenStack/CI/custom_tests/test_list.txt"
+    elif args.mode == 'apex-verify-smoke':
+        MODE = "--tests-file " + REPO_PATH + \
+               "testcases/VIM/OpenStack/CI/custom_tests" + \
+               "/apex_smoke_test_list.txt"
     else:
         MODE = "--set "+args.mode
 
