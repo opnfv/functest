@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_e604d77f",
+        "filename": "testcases/VIM/OpenStack/CI/custom_tests/apex_smoke_test_list.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 235
+      },
+      "writtenOn": "2016-04-08T02:20:28Z",
+      "side": 1,
+      "message": "What are all the id- things in this file? I\u0027m assuming just generated ID\u0027s and not something that needs to be groomed and maintained?",
+      "revId": "5f455231078c9d75c90aa3005a79d0fcb31d42ab",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
