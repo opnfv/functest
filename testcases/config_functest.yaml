@@ -250,11 +250,6 @@ test-dependencies:
     policy-test:
         scenario: 'odl'
     sdnvpn:
-        odl-vpnservice:
-            installer: 'fuel'
-            scenario: 'bgpvpn'
-            # this execute the tests:
-            # /home/opnfv/repos/odl_integration/test/csit/suites/vpnservice
         bgpvpn:
             installer: 'fuel'
             scenario: 'bgpvpn'
