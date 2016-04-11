@@ -154,6 +154,7 @@ function run_test(){
             pushd $tempest_dir
               . .venv/bin/activate
               pip install --no-deps -e ~/repos/bgpvpn/.
+              mkdir -p /etc/tempest/
               cp tempest.conf /etc/tempest/
               echo "[service_available]
 bgpvpn = True" >> /etc/tempest/tempest.conf
