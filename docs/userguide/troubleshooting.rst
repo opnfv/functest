@@ -271,7 +271,7 @@ Possible scenarios are:
  * vm
 
 To know more about what those scenarios are doing, they are defined in:
-*$repos_dir/functest/testcases/VIM/OpenStack/CI/suites*. For more info about
+*$repos_dir/functest/testcases/VIM/OpenStack/CI/rally_cert/scenario*. For more info about
 Rally scenario definition please refer to the Rally official documentation.
 
 If the flag *all* is specified, it will run all the scenarios one by one. Please

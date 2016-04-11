@@ -4,7 +4,7 @@ general:
         dir_vping:      testcases/vPing/CI/libraries/
         dir_odl:        testcases/Controllers/ODL/CI/
         dir_rally:      testcases/VIM/OpenStack/CI/libraries/
-        dir_rally_scn:  testcases/VIM/OpenStack/CI/suites/
+        dir_rally_scn:  testcases/VIM/OpenStack/CI/rally_cert/
         dir_vIMS:       testcases/vIMS/CI/
         dir_onos:       testcases/Controllers/ONOS/Teston/CI/
 
