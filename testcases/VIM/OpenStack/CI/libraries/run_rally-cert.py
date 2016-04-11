@@ -96,11 +96,8 @@ with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
 f.close()
 
 HOME = os.environ['HOME']+"/"
-### todo:
-# SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general"). \
-#    get("directories").get("dir_rally_scn")
-SCENARIOS_DIR = REPO_PATH + "testcases/VIM/OpenStack/CI/rally_cert/"
-###
+SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general"). \
+    get("directories").get("dir_rally_scn")
 TEMPLATE_DIR = SCENARIOS_DIR + "scenario/templates"
 SUPPORT_DIR = SCENARIOS_DIR + "scenario/support"
 ###todo:
