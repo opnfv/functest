@@ -1,0 +1,117 @@
+healthcheck:
+    order: 0
+    description : |
+        This is the optional healthcheck
+        that can provided by the installer
+        or the internal in functest
+    testcases:
+        healthcheck:
+            installer: any
+            sdn: any
+            feat: any
+            mode: any
+smoke:
+    order: 1
+    description : |
+        This is the set of basic functest
+        tests and smoke tempest in serial mode.
+    testcases:
+        vping_ssh:
+            installer: any
+            sdn: any
+            feat: any
+            mode: any
+
+        vping_userdata:
+            installer: any
+            sdn: any
+            feat: any
+            mode: any
+
+        tempest_smoke_serial:
+            installer: any
+            sdn: any
+            feat: any
+            mode: any
+
+        rally_smoke:
+            installer: any
+            sdn: any
+            feat: any
+            mode: any
+
+        security_groups:
+            installer: any
+            sdn: any
+            feat: any
+            mode: any
+sdn_suites:
+    order: 2
+    description : |
+        test cases for the SDN controllers
+    testcases:
+        odl:
+            installer: any
+            sdn: odl_l2|odl_l3
+            feat: any
+            mode: any
+        onos:
+            installer: any
+            sdn: onos
+            feat: any
+            mode: any
+        ovno:
+            installer: any
+            sdn: ocl
+            feat: any
+            mode: any
+features:
+    order: 4
+    description : |
+        test from feature projects integrated in functest
+    testcases:
+        promise:
+            installer: fuel|joid
+            sdn: any
+            feat: any
+            mode: any
+        sdnvpn:
+            installer: fuel|apex
+            sdn: odl_l2
+            feat: bgpvpn
+            mode: any
+        policy-test:
+            installer: any
+            sdn: odl_l2|odl_l3
+            feat: any
+            mode: any
+tempest:
+    order: 5
+    description : |
+        this is the execution of the full tempest suite in parallel
+    testcases:
+        tempest_full_parallel:
+            installer: any
+            sdn: any
+            feat: any
+            mode: any
+rally:
+    order: 6
+    description : |
+        Full Rally suite
+    testcases:
+        tempest_full_parallel:
+            installer: any
+            sdn: any
+            feat: any
+            mode: any
+vnf:
+    order: 7
+    description : |
+        collection of VNF test cases
+    testcases:
+        vims:
+            installer: any
+            sdn: any
+            feat: any
+            mode: any
