@@ -162,20 +162,6 @@ bgpvpn = True" >> /etc/tempest/tempest.conf
               rm -rf /etc/tempest/tempest.conf
             popd
         ;;
-        "odl-vpnservice")
-            info "Running VPNSERVICE Robot test case..."
-            odl_tests
-            cp ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt \
-                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt.bak
-            echo "
-test/csit/suites/vpnservice
-" > ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt
-            ODL_PORT=$odl_port ODL_IP=$odl_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$password \
-                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
-            cp ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt.bak \
-                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/test_list.txt
-            # TODO: copy logs
-       ;;
         "onos")
             info "Running ONOS test case..."
             if [ $INSTALLER_TYPE == "joid" ]; then
