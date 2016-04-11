@@ -66,6 +66,7 @@ if not os.path.exists(REPO_PATH):
     exit(-1)
 sys.path.append(REPO_PATH + "testcases/")
 import functest_utils
+import openstack_utils
 
 with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
@@ -119,7 +120,7 @@ def waitVmActive(nova, vm):
     sleep_time = 3
     count = VM_BOOT_TIMEOUT / sleep_time
     while True:
-        status = functest_utils.get_instance_status(nova, vm)
+        status = openstack_utils.get_instance_status(nova, vm)
         logger.debug("Status: %s" % status)
         if status == "ACTIVE":
             return True
@@ -139,7 +140,7 @@ def waitVmDeleted(nova, vm):
     sleep_time = 3
     count = VM_DELETE_TIMEOUT / sleep_time
     while True:
-        status = functest_utils.get_instance_status(nova, vm)
+        status = openstack_utils.get_instance_status(nova, vm)
         if not status:
             return True
         elif count == 0:
@@ -155,23 +156,23 @@ def waitVmDeleted(nova, vm):
 def create_private_neutron_net(neutron):
 
     # Check if the network already exists
-    network_id = functest_utils.get_network_id(neutron, NEUTRON_PRIVATE_NET_NAME)
-    subnet_id = functest_utils.get_subnet_id(neutron, NEUTRON_PRIVATE_SUBNET_NAME)
-    router_id = functest_utils.get_router_id(neutron, NEUTRON_ROUTER_NAME)
+    network_id = openstack_utils.get_network_id(neutron, NEUTRON_PRIVATE_NET_NAME)
+    subnet_id = openstack_utils.get_subnet_id(neutron, NEUTRON_PRIVATE_SUBNET_NAME)
+    router_id = openstack_utils.get_router_id(neutron, NEUTRON_ROUTER_NAME)
 
     if network_id != '' and subnet_id != '' and router_id != '':
         logger.info("Using existing network '%s'.." % NEUTRON_PRIVATE_NET_NAME)
     else:
         neutron.format = 'json'
         logger.info('Creating neutron network %s..' % NEUTRON_PRIVATE_NET_NAME)
-        network_id = functest_utils. \
+        network_id = openstack_utils. \
             create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
 
         if not network_id:
             return False
         logger.debug("Network '%s' created successfully" % network_id)
         logger.debug('Creating Subnet....')
-        subnet_id = functest_utils. \
+        subnet_id = openstack_utils. \
             create_neutron_subnet(neutron,
                                   NEUTRON_PRIVATE_SUBNET_NAME,
                                   NEUTRON_PRIVATE_SUBNET_CIDR,
@@ -180,7 +181,7 @@ def create_private_neutron_net(neutron):
             return False
         logger.debug("Subnet '%s' created successfully" % subnet_id)
         logger.debug('Creating Router...')
-        router_id = functest_utils. \
+        router_id = openstack_utils. \
             create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
 
         if not router_id:
@@ -189,12 +190,12 @@ def create_private_neutron_net(neutron):
         logger.debug("Router '%s' created successfully" % router_id)
         logger.debug('Adding router to subnet...')
 
-        if not functest_utils.add_interface_router(neutron, router_id, subnet_id):
+        if not openstack_utils.add_interface_router(neutron, router_id, subnet_id):
             return False
         logger.debug("Interface added successfully.")
 
         logger.debug('Adding gateway to router...')
-        if not functest_utils.add_gateway_router(neutron, router_id):
+        if not openstack_utils.add_gateway_router(neutron, router_id):
             return False
         logger.debug("Gateway added successfully.")
 
@@ -205,12 +206,12 @@ def create_private_neutron_net(neutron):
 
 
 def create_security_group(neutron_client):
-    sg_id = functest_utils.get_security_group_id(neutron_client, SECGROUP_NAME)
+    sg_id = openstack_utils.get_security_group_id(neutron_client, SECGROUP_NAME)
     if sg_id != '':
         logger.info("Using existing security group '%s'..." % SECGROUP_NAME)
     else:
         logger.info("Creating security group  '%s'..." % SECGROUP_NAME)
-        SECGROUP = functest_utils.create_security_group(neutron_client,
+        SECGROUP = openstack_utils.create_security_group(neutron_client,
                                                         SECGROUP_NAME,
                                                         SECGROUP_DESCR)
         if not SECGROUP:
@@ -223,19 +224,19 @@ def create_security_group(neutron_client):
                      (SECGROUP['name'], sg_id))
 
         logger.debug("Adding ICMP rules in security group '%s'..." % SECGROUP_NAME)
-        if not functest_utils.create_secgroup_rule(neutron_client, sg_id, \
+        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id, \
                                                    'ingress', 'icmp'):
             logger.error("Failed to create the security group rule...")
             return False
 
         logger.debug("Adding SSH rules in security group '%s'..." % SECGROUP_NAME)
-        if not functest_utils.create_secgroup_rule(neutron_client, sg_id, \
+        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id, \
                                                    'ingress', 'tcp',
                                                    '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
 
-        if not functest_utils.create_secgroup_rule(neutron_client, sg_id, \
+        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id, \
                         'egress', 'tcp', '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
@@ -251,10 +252,10 @@ def cleanup(nova, neutron, image_id, network_dic):
     logger.info("Cleaning up...")
     if not image_exists:
         logger.debug("Deleting image...")
-        if not functest_utils.delete_glance_image(nova, image_id):
+        if not openstack_utils.delete_glance_image(nova, image_id):
             logger.error("Error deleting the glance image")
 
-    vm1 = functest_utils.get_instance_by_name(nova, NAME_VM_1)
+    vm1 = openstack_utils.get_instance_by_name(nova, NAME_VM_1)
     if vm1:
         logger.debug("Deleting '%s'..." % NAME_VM_1)
         nova.servers.delete(vm1)
@@ -262,11 +263,11 @@ def cleanup(nova, neutron, image_id, network_dic):
         if not waitVmDeleted(nova, vm1):
             logger.error(
                 "Instance '%s' with cannot be deleted. Status is '%s'" % (
-                    NAME_VM_1, functest_utils.get_instance_status(nova, vm1)))
+                    NAME_VM_1, openstack_utils.get_instance_status(nova, vm1)))
         else:
             logger.debug("Instance %s terminated." % NAME_VM_1)
 
-    vm2 = functest_utils.get_instance_by_name(nova, NAME_VM_2)
+    vm2 = openstack_utils.get_instance_by_name(nova, NAME_VM_2)
 
     if vm2:
         logger.debug("Deleting '%s'..." % NAME_VM_2)
@@ -276,7 +277,7 @@ def cleanup(nova, neutron, image_id, network_dic):
         if not waitVmDeleted(nova, vm2):
             logger.error(
                 "Instance '%s' with cannot be deleted. Status is '%s'" % (
-                    NAME_VM_2, functest_utils.get_instance_status(nova, vm2)))
+                    NAME_VM_2, openstack_utils.get_instance_status(nova, vm2)))
         else:
             logger.debug("Instance %s terminated." % NAME_VM_2)
 
@@ -286,27 +287,27 @@ def cleanup(nova, neutron, image_id, network_dic):
     subnet_id = network_dic["subnet_id"]
     router_id = network_dic["router_id"]
 
-    if not functest_utils.remove_interface_router(neutron, router_id,
+    if not openstack_utils.remove_interface_router(neutron, router_id,
                                                   subnet_id):
         logger.error("Unable to remove subnet '%s' from router '%s'" % (
             subnet_id, router_id))
         return False
 
     logger.debug("Interface removed successfully")
-    if not functest_utils.delete_neutron_router(neutron, router_id):
+    if not openstack_utils.delete_neutron_router(neutron, router_id):
         logger.error("Unable to delete router '%s'" % router_id)
         return False
 
     logger.debug("Router deleted successfully")
 
-    if not functest_utils.delete_neutron_subnet(neutron, subnet_id):
+    if not openstack_utils.delete_neutron_subnet(neutron, subnet_id):
         logger.error("Unable to delete subnet '%s'" % subnet_id)
         return False
 
     logger.debug(
         "Subnet '%s' deleted successfully" % NEUTRON_PRIVATE_SUBNET_NAME)
 
-    if not functest_utils.delete_neutron_net(neutron, net_id):
+    if not openstack_utils.delete_neutron_net(neutron, net_id):
         logger.error("Unable to delete network '%s'" % net_id)
         return False
 
@@ -340,11 +341,11 @@ def push_results(start_time_ts, duration, test_status):
 
 def main():
 
-    creds_nova = functest_utils.get_credentials("nova")
+    creds_nova = openstack_utils.get_credentials("nova")
     nova_client = novaclient.Client('2', **creds_nova)
-    creds_neutron = functest_utils.get_credentials("neutron")
+    creds_neutron = openstack_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
-    creds_keystone = functest_utils.get_credentials("keystone")
+    creds_keystone = openstack_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
     glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
                                                               endpoint_type='publicURL')
@@ -356,7 +357,7 @@ def main():
     flavor = None
 
     # Check if the given image exists
-    image_id = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+    image_id = openstack_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
     if image_id != '':
         logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
         global image_exists
@@ -364,7 +365,7 @@ def main():
     else:
         logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                           GLANCE_IMAGE_PATH))
-        image_id = functest_utils.create_glance_image(glance_client,
+        image_id = openstack_utils.create_glance_image(glance_client,
                                                       GLANCE_IMAGE_NAME,
                                                       GLANCE_IMAGE_PATH)
         if not image_id:
@@ -427,7 +428,7 @@ def main():
     if not waitVmActive(nova_client, vm1):
 
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
-            NAME_VM_1, functest_utils.get_instance_status(nova_client, vm1)))
+            NAME_VM_1, openstack_utils.get_instance_status(nova_client, vm1)))
         cleanup(nova_client, neutron_client, image_id, network_dic)
         return (EXIT_CODE)
     else:
@@ -463,7 +464,7 @@ def main():
 
     if not waitVmActive(nova_client, vm2):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
-            NAME_VM_2, functest_utils.get_instance_status(nova_client, vm2)))
+            NAME_VM_2, openstack_utils.get_instance_status(nova_client, vm2)))
         cleanup(nova_client, neutron_client, image_id, network_dic,
                 port_id1, port_id2)
         return (EXIT_CODE)

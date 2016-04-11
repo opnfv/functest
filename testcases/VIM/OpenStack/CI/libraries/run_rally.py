@@ -79,6 +79,7 @@ if not os.path.exists(REPO_PATH):
     exit(-1)
 sys.path.append(REPO_PATH + "testcases/")
 import functest_utils
+import openstack_utils
 
 with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
@@ -236,21 +237,21 @@ def main():
         logger.error('argument not valid')
         exit(-1)
 
-    creds_nova = functest_utils.get_credentials("nova")
+    creds_nova = openstack_utils.get_credentials("nova")
     nova_client = novaclient.Client('2', **creds_nova)
-    creds_keystone = functest_utils.get_credentials("keystone")
+    creds_keystone = openstack_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
     glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
                                                               endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
 
-    image_id = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+    image_id = openstack_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
 
     if image_id == '':
         logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                            GLANCE_IMAGE_PATH))
-        image_id = functest_utils.create_glance_image(glance_client,
+        image_id = openstack_utils.create_glance_image(glance_client,
                                                 GLANCE_IMAGE_NAME,
                                                 GLANCE_IMAGE_PATH)
         if not image_id:
@@ -281,7 +282,7 @@ def main():
 
     logger.debug("Deleting image '%s' with ID '%s'..." \
                          % (GLANCE_IMAGE_NAME, image_id))
-    if not functest_utils.delete_glance_image(nova_client, image_id):
+    if not openstack_utils.delete_glance_image(nova_client, image_id):
         logger.error("Error deleting the glance image")
 
 if __name__ == '__main__':

@@ -63,6 +63,7 @@ if not os.path.exists(REPO_PATH):
     exit(-1)
 sys.path.append(REPO_PATH + "testcases/")
 import functest_utils
+import openstack_utils
 
 with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
@@ -112,7 +113,7 @@ def download_and_add_image_on_glance(glance, image_name, image_url):
         logger.error("Failed to download image %s" % file_name)
         return False
 
-    image = functest_utils.create_glance_image(
+    image = openstack_utils.create_glance_image(
         glance, image_name, dest_path + file_name)
     if not image:
         logger.error("Failed to upload image on glance")
@@ -271,19 +272,19 @@ def main():
     if not os.path.exists(VIMS_DATA_DIR):
         os.makedirs(VIMS_DATA_DIR)
 
-    ks_creds = functest_utils.get_credentials("keystone")
-    nv_creds = functest_utils.get_credentials("nova")
-    nt_creds = functest_utils.get_credentials("neutron")
+    ks_creds = openstack_utils.get_credentials("keystone")
+    nv_creds = openstack_utils.get_credentials("nova")
+    nt_creds = openstack_utils.get_credentials("neutron")
 
     logger.info("Prepare OpenStack plateform (create tenant and user)")
     keystone = ksclient.Client(**ks_creds)
 
-    user_id = functest_utils.get_user_id(keystone, ks_creds['username'])
+    user_id = openstack_utils.get_user_id(keystone, ks_creds['username'])
     if user_id == '':
         step_failure("init", "Error : Failed to get id of " +
                      ks_creds['username'])
 
-    tenant_id = functest_utils.create_tenant(
+    tenant_id = openstack_utils.create_tenant(
         keystone, TENANT_NAME, TENANT_DESCRIPTION)
     if tenant_id == '':
         step_failure("init", "Error : Failed to create " +
@@ -293,16 +294,16 @@ def main():
     role_id = ''
     for role_name in roles_name:
         if role_id == '':
-            role_id = functest_utils.get_role_id(keystone, role_name)
+            role_id = openstack_utils.get_role_id(keystone, role_name)
 
     if role_id == '':
         logger.error("Error : Failed to get id for %s role" % role_name)
 
-    if not functest_utils.add_role_user(keystone, user_id, role_id, tenant_id):
+    if not openstack_utils.add_role_user(keystone, user_id, role_id, tenant_id):
         logger.error("Error : Failed to add %s on tenant" %
                      ks_creds['username'])
 
-    user_id = functest_utils.create_user(
+    user_id = openstack_utils.create_user(
         keystone, TENANT_NAME, TENANT_NAME, None, tenant_id)
     if user_id == '':
         logger.error("Error : Failed to create %s user" % TENANT_NAME)
@@ -331,7 +332,7 @@ def main():
         image_name = IMAGES[img]['image_name']
         image_url = IMAGES[img]['image_url']
 
-        image_id = functest_utils.get_image_id(glance, image_name)
+        image_id = openstack_utils.get_image_id(glance, image_name)
 
         if image_id == '':
             logger.info("""%s image doesn't exist on glance repository.
@@ -347,20 +348,20 @@ def main():
 
     logger.info("Update security group quota for this tenant")
     neutron = ntclient.Client(**nt_creds)
-    if not functest_utils.update_sg_quota(neutron, tenant_id, 50, 100):
+    if not openstack_utils.update_sg_quota(neutron, tenant_id, 50, 100):
         step_failure(
             "init", "Failed to update security group quota for tenant " + TENANT_NAME)
 
     logger.info("Update cinder quota for this tenant")
     from cinderclient import client as cinderclient
 
-    creds_cinder = functest_utils.get_credentials("cinder")
+    creds_cinder = openstack_utils.get_credentials("cinder")
     cinder_client = cinderclient.Client('1', creds_cinder['username'],
                                         creds_cinder['api_key'],
                                         creds_cinder['project_id'],
                                         creds_cinder['auth_url'],
                                         service_type="volume")
-    if not functest_utils.update_cinder_quota(cinder_client, tenant_id, 20, 10, 150):
+    if not openstack_utils.update_cinder_quota(cinder_client, tenant_id, 20, 10, 150):
         step_failure(
             "init", "Failed to update cinder quota for tenant " + TENANT_NAME)
 
@@ -375,16 +376,16 @@ def main():
     nova = nvclient.Client("2", **nv_creds)
 
     flavor_name = "m1.medium"
-    flavor_id = functest_utils.get_flavor_id(nova, flavor_name)
+    flavor_id = openstack_utils.get_flavor_id(nova, flavor_name)
     for requirement in CFY_MANAGER_REQUIERMENTS:
         if requirement == 'ram_min':
-            flavor_id = functest_utils.get_flavor_id_by_ram_range(
+            flavor_id = openstack_utils.get_flavor_id_by_ram_range(
                 nova, CFY_MANAGER_REQUIERMENTS['ram_min'], 8196)
 
     if flavor_id == '':
         logger.error(
             "Failed to find %s flavor. Try with ram range default requirement !" % flavor_name)
-        flavor_id = functest_utils.get_flavor_id_by_ram_range(nova, 4000, 8196)
+        flavor_id = openstack_utils.get_flavor_id_by_ram_range(nova, 4000, 8196)
 
     if flavor_id == '':
         step_failure("orchestrator",
@@ -393,10 +394,10 @@ def main():
     cfy.set_flavor_id(flavor_id)
 
     image_name = "centos_7"
-    image_id = functest_utils.get_image_id(glance, image_name)
+    image_id = openstack_utils.get_image_id(glance, image_name)
     for requirement in CFY_MANAGER_REQUIERMENTS:
         if requirement == 'os_image':
-            image_id = functest_utils.get_image_id(
+            image_id = openstack_utils.get_image_id(
                 glance, CFY_MANAGER_REQUIERMENTS['os_image'])
 
     if image_id == '':
@@ -405,7 +406,7 @@ def main():
 
     cfy.set_image_id(image_id)
 
-    ext_net = functest_utils.get_external_net(neutron)
+    ext_net = openstack_utils.get_external_net(neutron)
     if not ext_net:
         step_failure("orchestrator", "Failed to get external network")
 
@@ -449,16 +450,16 @@ def main():
     nova = nvclient.Client("2", **nv_creds)
 
     flavor_name = "m1.small"
-    flavor_id = functest_utils.get_flavor_id(nova, flavor_name)
+    flavor_id = openstack_utils.get_flavor_id(nova, flavor_name)
     for requirement in CW_REQUIERMENTS:
         if requirement == 'ram_min':
-            flavor_id = functest_utils.get_flavor_id_by_ram_range(
+            flavor_id = openstack_utils.get_flavor_id_by_ram_range(
                 nova, CW_REQUIERMENTS['ram_min'], 8196)
 
     if flavor_id == '':
         logger.error(
             "Failed to find %s flavor. Try with ram range default requirement !" % flavor_name)
-        flavor_id = functest_utils.get_flavor_id_by_ram_range(nova, 4000, 8196)
+        flavor_id = openstack_utils.get_flavor_id_by_ram_range(nova, 4000, 8196)
 
     if flavor_id == '':
         step_failure(
@@ -467,10 +468,10 @@ def main():
     cw.set_flavor_id(flavor_id)
 
     image_name = "ubuntu_14.04"
-    image_id = functest_utils.get_image_id(glance, image_name)
+    image_id = openstack_utils.get_image_id(glance, image_name)
     for requirement in CW_REQUIERMENTS:
         if requirement == 'os_image':
-            image_id = functest_utils.get_image_id(
+            image_id = openstack_utils.get_image_id(
                 glance, CW_REQUIERMENTS['os_image'])
 
     if image_id == '':
@@ -479,7 +480,7 @@ def main():
 
     cw.set_image_id(image_id)
 
-    ext_net = functest_utils.get_external_net(neutron)
+    ext_net = openstack_utils.get_external_net(neutron)
     if not ext_net:
         step_failure("vIMS", "Failed to get external network")
 
@@ -518,29 +519,29 @@ def main():
     if args.noclean:
         exit(0)
 
-    ks_creds = functest_utils.get_credentials("keystone")
+    ks_creds = openstack_utils.get_credentials("keystone")
 
     keystone = ksclient.Client(**ks_creds)
 
     logger.info("Removing %s tenant .." % CFY_INPUTS['keystone_tenant_name'])
-    tenant_id = functest_utils.get_tenant_id(
+    tenant_id = openstack_utils.get_tenant_id(
         keystone, CFY_INPUTS['keystone_tenant_name'])
     if tenant_id == '':
         logger.error("Error : Failed to get id of %s tenant" %
                      CFY_INPUTS['keystone_tenant_name'])
     else:
-        if not functest_utils.delete_tenant(keystone, tenant_id):
+        if not openstack_utils.delete_tenant(keystone, tenant_id):
             logger.error("Error : Failed to remove %s tenant" %
                          CFY_INPUTS['keystone_tenant_name'])
 
     logger.info("Removing %s user .." % CFY_INPUTS['keystone_username'])
-    user_id = functest_utils.get_user_id(
+    user_id = openstack_utils.get_user_id(
         keystone, CFY_INPUTS['keystone_username'])
     if user_id == '':
         logger.error("Error : Failed to get id of %s user" %
                      CFY_INPUTS['keystone_username'])
     else:
-        if not functest_utils.delete_user(keystone, user_id):
+        if not openstack_utils.delete_user(keystone, user_id):
             logger.error("Error : Failed to remove %s user" %
                          CFY_INPUTS['keystone_username'])
 

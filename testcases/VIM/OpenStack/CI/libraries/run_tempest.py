@@ -71,6 +71,7 @@ if not os.path.exists(REPO_PATH):
     exit(-1)
 sys.path.append(REPO_PATH + "testcases/")
 import functest_utils
+import openstack_utils
 
 with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
@@ -134,38 +135,38 @@ def push_results_to_db(case, payload, criteria):
 
 
 def create_tempest_resources():
-    ks_creds = functest_utils.get_credentials("keystone")
+    ks_creds = openstack_utils.get_credentials("keystone")
     logger.info("Creating tenant and user for Tempest suite")
     keystone = ksclient.Client(**ks_creds)
-    tenant_id = functest_utils.create_tenant(keystone,
+    tenant_id = openstack_utils.create_tenant(keystone,
                                              TENANT_NAME,
                                              TENANT_DESCRIPTION)
     if tenant_id == '':
         logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
 
-    user_id = functest_utils.create_user(keystone, USER_NAME, USER_PASSWORD,
+    user_id = openstack_utils.create_user(keystone, USER_NAME, USER_PASSWORD,
                                          None, tenant_id)
     if user_id == '':
         logger.error("Error : Failed to create %s user" % USER_NAME)
 
 
 def free_tempest_resources():
-    ks_creds = functest_utils.get_credentials("keystone")
+    ks_creds = openstack_utils.get_credentials("keystone")
     logger.info("Deleting tenant and user for Tempest suite)")
     keystone = ksclient.Client(**ks_creds)
 
-    user_id = functest_utils.get_user_id(keystone, USER_NAME)
+    user_id = openstack_utils.get_user_id(keystone, USER_NAME)
     if user_id == '':
         logger.error("Error : Failed to get id of %s user" % USER_NAME)
     else:
-        if not functest_utils.delete_user(keystone, user_id):
+        if not openstack_utils.delete_user(keystone, user_id):
             logger.error("Error : Failed to delete %s user" % USER_NAME)
 
-    tenant_id = functest_utils.get_tenant_id(keystone, TENANT_NAME)
+    tenant_id = openstack_utils.get_tenant_id(keystone, TENANT_NAME)
     if tenant_id == '':
         logger.error("Error : Failed to get id of %s tenant" % TENANT_NAME)
     else:
-        if not functest_utils.delete_tenant(keystone, tenant_id):
+        if not openstack_utils.delete_tenant(keystone, tenant_id):
             logger.error("Error : Failed to delete %s tenant" % TENANT_NAME)
 
 
@@ -197,9 +198,9 @@ def configure_tempest():
 
     logger.debug("  Updating fixed_network_name...")
     private_net_name = ""
-    creds_neutron = functest_utils.get_credentials("neutron")
+    creds_neutron = openstack_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
-    private_net = functest_utils.get_private_net(neutron_client)
+    private_net = openstack_utils.get_private_net(neutron_client)
     if private_net is None:
         logger.error("No shared private networks found.")
     else:
