@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_bfd13ecf",
+        "filename": "docker/config_install_env.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-12T11:25:00Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be \u003d\u003d instead of only 1 \u003d ?",
+      "revId": "7c5eb08436bb85f499eb0e84be759f11deb1f404",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_9fd682c4",
+        "filename": "docker/config_install_env.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-12T11:25:00Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "7c5eb08436bb85f499eb0e84be759f11deb1f404",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
