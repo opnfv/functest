@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation     Checking Port created in OpenStack are pushed to OpenDaylight
 Suite Setup       Create Session    OSSession    http://${NEUTRON}:9696    headers=${X-AUTH}
+Suite Setup       Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
 Suite Teardown    Delete All Sessions
 Library           SSHLibrary
 Library           Collections
@@ -28,7 +29,6 @@ Check OpenStack ports
 Check OpenDaylight ports
     [Documentation]    Checking OpenDaylight Neutron API for Known Ports
     [Tags]    Ports Neutron OpenDaylight
-    Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
     ${resp}    get    ODLSession    ${ODLREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${ODLResult}    To Json    ${resp.content}
@@ -50,7 +50,7 @@ Create New Port
     sleep    2
 
 Check New Port
-    [Documentation]    Check new subnet created in OpenDaylight
+    [Documentation]    Check new port created in OpenDaylight
     [Tags]    Check subnet OpenDaylight
     ${resp}    get    ODLSession    ${ODLREST}/${PORTID}
     Should be Equal As Strings    ${resp.status_code}    200
