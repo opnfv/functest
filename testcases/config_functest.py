@@ -87,8 +87,7 @@ def action_start():
     Start the functest environment installation
     """
     if not functest_utils.check_internet_connectivity():
-        logger.error("There is no Internet connectivity. Please check the network configuration.")
-        exit(-1)
+        logger.info("No Internet connectivity. This may affect some test case suits.")
 
     if action_check():
         logger.info("Functest environment already installed. Nothing to do.")
