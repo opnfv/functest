@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a486d77_7ac4f491",
+        "filename": "docker/config_install_env.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-04-13T02:33:23Z",
+      "side": 1,
+      "message": "I get used to sh script, and it only works in 1 \u003d, in bash scripts, it works in both way.",
+      "parentUuid": "1a486d77_bfd13ecf",
+      "revId": "7c5eb08436bb85f499eb0e84be759f11deb1f404",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a486d77_5fd80aef",
         "filename": "docker/config_install_env.sh",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-04-12T11:26:21Z",
       "side": 1,
       "message": "another thing. In our container, $BASE_PIP_URL is not set... so this will always exit..am I missing something?",
+      "revId": "7c5eb08436bb85f499eb0e84be759f11deb1f404",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_da0ac8d1",
+        "filename": "docker/config_install_env.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-04-13T02:33:23Z",
+      "side": 1,
+      "message": "In install_rally script, $BASE_PIP_URL is used before set, so I consider it has been set before. If it is not the case, should I change the script to use a input parameter instead of a global one?\n###install_rally.sh####\nBASE_PIP_URL\u003d${BASE_PIP_URL:-\"https://pypi.python.org/simple\"}",
+      "parentUuid": "1a486d77_5fd80aef",
       "revId": "7c5eb08436bb85f499eb0e84be759f11deb1f404",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
