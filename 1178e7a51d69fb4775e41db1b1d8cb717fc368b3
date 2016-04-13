@@ -16,6 +16,24 @@
       "revId": "1178e7a51d69fb4775e41db1b1d8cb717fc368b3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_7ace3485",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-04-13T07:31:20Z",
+      "side": 1,
+      "message": "Great! I\u0027ve learned one new thing today! :)",
+      "parentUuid": "1a486d77_1aee20ed",
+      "revId": "1178e7a51d69fb4775e41db1b1d8cb717fc368b3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
