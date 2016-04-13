@@ -95,6 +95,11 @@ function run_test(){
     fi
 
     case $test_name in
+        "healthcheck")
+            info "Running health check test..."
+            ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/healthcheck.sh
+            clean_openstack
+        ;;
         "vping_ssh")
             info "Running vPing-SSH test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_ssh.py \
