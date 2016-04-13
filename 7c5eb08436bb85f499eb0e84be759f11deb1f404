@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1a486d77_9ab0d0f5",
+        "filename": "docker/config_install_env.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-13T07:59:27Z",
+      "side": 1,
+      "message": "ok, no problem. That works too",
+      "parentUuid": "1a486d77_7ac4f491",
+      "revId": "7c5eb08436bb85f499eb0e84be759f11deb1f404",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a486d77_5fd80aef",
         "filename": "docker/config_install_env.sh",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "In install_rally script, $BASE_PIP_URL is used before set, so I consider it has been set before. If it is not the case, should I change the script to use a input parameter instead of a global one?\n###install_rally.sh####\nBASE_PIP_URL\u003d${BASE_PIP_URL:-\"https://pypi.python.org/simple\"}",
       "parentUuid": "1a486d77_5fd80aef",
+      "revId": "7c5eb08436bb85f499eb0e84be759f11deb1f404",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_baab8c88",
+        "filename": "docker/config_install_env.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-13T07:59:27Z",
+      "side": 1,
+      "message": "No,no, I was just wondering. I didn\u0027t remembe what install_rally was doing :)",
+      "parentUuid": "1a486d77_da0ac8d1",
       "revId": "7c5eb08436bb85f499eb0e84be759f11deb1f404",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
