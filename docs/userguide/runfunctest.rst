@@ -98,10 +98,6 @@ tenants, networks, volumes etc.) that are not always properly cleaned, so this
 function has been set to keep the system as clean as it was before a
 full Functest execution.
 
-Within the Tempest test suite it is possible to define which test cases to execute
-by editing **test_list.txt** file before executing **run_tests.sh** script. This file
-is located in *$repos_dir/functest/testcases/VIM/OpenStack/CI/custom_tests/test_list.txt*
-
 Although **run_tests.sh** provides an easy way to run any test, it is possible to
 do a direct call to the desired test script. For example:
 
