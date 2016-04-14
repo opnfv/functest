@@ -63,6 +63,8 @@ args = parser.parse_args()
 
 client_dict = {}
 
+image_exists = False
+
 if args.verbose:
     RALLY_STDERR = subprocess.STDOUT
 else:
@@ -422,6 +424,8 @@ def main():
     else:
         logger.debug("Using existing image '%s' with ID '%s'..." \
                      % (GLANCE_IMAGE_NAME, image_id))
+        global image_exists
+        image_exists = True
 
     if args.test_name == "all":
         for test_name in tests:
@@ -495,10 +499,11 @@ def main():
     if args.noclean:
         exit(0)
 
-    logger.debug("Deleting image '%s' with ID '%s'..." \
-                 % (GLANCE_IMAGE_NAME, image_id))
-    if not openstack_utils.delete_glance_image(nova_client, image_id):
-        logger.error("Error deleting the glance image")
+    if not image_exists:
+        logger.debug("Deleting image '%s' with ID '%s'..." \
+                     % (GLANCE_IMAGE_NAME, image_id))
+        if not openstack_utils.delete_glance_image(nova_client, image_id):
+            logger.error("Error deleting the glance image")
 
     if not volume_types:
         logger.debug("Deleting volume type '%s'..." \
