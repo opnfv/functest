@@ -419,6 +419,7 @@ def main():
         logger.debug("Using existing volume type(s)...")
 
     image_id = functest_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+    image_exists = False
 
     if image_id == '':
         logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
@@ -435,6 +436,7 @@ def main():
     else:
         logger.debug("Using existing image '%s' with ID '%s'..." \
                      % (GLANCE_IMAGE_NAME, image_id))
+        image_exists = True
 
     if args.test_name == "all":
         for test_name in tests:
@@ -502,10 +504,11 @@ def main():
     if args.noclean:
         exit(0)
 
-    logger.debug("Deleting image '%s' with ID '%s'..." \
-                         % (GLANCE_IMAGE_NAME, image_id))
-    if not functest_utils.delete_glance_image(nova_client, image_id):
-        logger.error("Error deleting the glance image")
+    if not image_exists:
+        logger.debug("Deleting image '%s' with ID '%s'..." \
+                             % (GLANCE_IMAGE_NAME, image_id))
+        if not functest_utils.delete_glance_image(nova_client, image_id):
+            logger.error("Error deleting the glance image")
 
     if not volume_types:
         logger.debug("Deleting volume type '%s'..." \
