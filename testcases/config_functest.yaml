@@ -235,6 +235,7 @@ test-dependencies:
     functest:
         vims:
             scenario: '(ocl)|(odl)|(nosdn)'
+        healthcheck:
         vping_ssh:
         vping_userdata:
         tempest:

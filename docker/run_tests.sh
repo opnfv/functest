@@ -233,7 +233,7 @@ if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]] &&\
    [[ -f $tests_file ]]; then
     arr_test=($(cat $tests_file))
 else
-    arr_test=(vping_ssh tempest vims rally)
+    arr_test=(healthcheck vping_ssh vping_userdata tempest vims rally)
 fi
 
 BASEDIR=`dirname $0`
