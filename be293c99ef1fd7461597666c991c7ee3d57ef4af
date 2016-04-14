@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_154b93b1",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-14T13:35:18Z",
+      "side": 1,
+      "message": "I think we should differentiate \u0027smoke\u0027 from \u0027custom\u0027. Here, they do the same.\n\nWe might want to give the possibility to provide a list of \u0027custom\u0027 test cases as a parameter to the script.\n\nI would separate this.",
+      "revId": "be293c99ef1fd7461597666c991c7ee3d57ef4af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
