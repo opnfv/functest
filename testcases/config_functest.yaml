@@ -233,8 +233,9 @@ test-dependencies:
         installer: 'apex'
     functest:
         vims:
-            scenario: '(ocl)|(odl)|(nosdn)'
+            scenario: '(ocl)|(nosdn)|(?!.*bgpvpn)odl'
         vping_ssh:
+            scenario: '(?!.*bgpvpn)odl'
         vping_userdata:
             scenario: '(ocl)|(odl)|(nosdn)'
         tempest:
