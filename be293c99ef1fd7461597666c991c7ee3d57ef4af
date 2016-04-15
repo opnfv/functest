@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1a486d77_595f05e6",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-04-15T07:11:47Z",
+      "side": 1,
+      "message": "I think we think in the same way... Just kept it here for compatibility reasons but OK, let\u0027s put it on run_tests.sh as well... We need to discuss next possible new parameter(s) for defining \"1...5 stars\" test levels...\n\nSerena: test_list.txt is either generated according to the otion",
+      "parentUuid": "1a486d77_154b93b1",
+      "revId": "be293c99ef1fd7461597666c991c7ee3d57ef4af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a486d77_393d6990",
         "filename": "testcases/VIM/OpenStack/CI/libraries/run_tempest.py",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2016-04-15T06:38:28Z",
       "side": 1,
       "message": "it seems like, in the configure_tempest process, args.mode is not offered case is omitted.",
+      "revId": "be293c99ef1fd7461597666c991c7ee3d57ef4af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_396449b8",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-04-15T07:11:47Z",
+      "side": 1,
+      "message": "I will check this...",
+      "parentUuid": "1a486d77_393d6990",
       "revId": "be293c99ef1fd7461597666c991c7ee3d57ef4af",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
