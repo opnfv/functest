@@ -179,10 +179,11 @@ test_exec_priority:
     7: doctor
     8: promise
     9: odl-vpnservice
+    10: bgpvpn
     #11: openstack-neutron-bgpvpn-api-extension-tests
     12: vims
     13: rally
-    14: bgpvpn
+
 
 ########################################################################
 # This part lists the dependencies of the tests
