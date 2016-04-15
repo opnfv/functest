@@ -251,6 +251,6 @@ test-dependencies:
         scenario: 'odl'
     sdnvpn:
         bgpvpn:
-            installer: 'fuel'
+            installer: '(fuel)|(apex)'
             scenario: 'bgpvpn'
             # this execute the tempest tests of networking-bgpvpn
