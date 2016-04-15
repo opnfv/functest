@@ -9,7 +9,7 @@
 #
 pyyaml==3.10
 gitpython==1.0.1
-python-openstackclient==2.0.0
+python-openstackclient==2.3.0
 python-ceilometerclient==1.5.1
 virtualenv==1.11.4
 pexpect==4.0
