@@ -22,7 +22,7 @@ where:
     -h|--help         show this help text
 
 examples:
-    $(basename "$0")
+    $(basename "$0")"
 
 
 # Parse parameters
