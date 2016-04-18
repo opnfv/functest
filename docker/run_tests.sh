@@ -125,7 +125,7 @@ function run_test(){
         "tempest")
             info "Running Tempest tests..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
-                --debug $serial_flag $clean_flag -m custom ${report}
+                --debug $serial_flag $clean_flag -m smoke ${report}
             # save tempest.conf for further troubleshooting
             tempest_conf="${RALLY_VENV_DIR}/tempest/for-deployment-*/tempest.conf"
             if [ -f ${tempest_conf} ]; then
