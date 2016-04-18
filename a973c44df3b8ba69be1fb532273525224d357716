@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_dff995c9",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-04-18T14:22:45Z",
+      "side": 1,
+      "message": "git clone -b 0.3.3",
+      "revId": "a973c44df3b8ba69be1fb532273525224d357716",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_bff6d9d5",
+        "filename": "docker/run_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-04-18T14:22:45Z",
+      "side": 1,
+      "message": "not used anymore",
+      "revId": "a973c44df3b8ba69be1fb532273525224d357716",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
