@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_7fb6213f",
+        "filename": "testcases/SECTests/requirements.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-18T11:13:14Z",
+      "side": 1,
+      "message": "can you move this to functest/docker/requirements.pip ? We would like to have all the needed libraries by functest centralized and pre installed.\n\nparamiko is already included, by the way.",
+      "revId": "e09238580f7f3dec3fb6db0015e53e56b2b5c5bd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
