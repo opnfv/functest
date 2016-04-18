@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_1fde0d40",
+        "filename": "testcases/SECTests/OpenSCAP.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-04-18T14:30:38Z",
+      "side": 1,
+      "message": "could be done later but it would be interesting to know the results you expect, push it to the DB (so a test case shall be created first), add it to the reporting/dashboard",
+      "revId": "62185d58e1376fdbd2ec58cb9d592954d09fbd3d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
