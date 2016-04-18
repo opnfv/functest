@@ -22,7 +22,7 @@ where:
     -h|--help         show this help text
     -r|--report       push results to database (false by default)
     -n|--no-clean     do not clean OpenStack resources after test run
-    -s|--serial       run tests in one thread
+    -s|--serial       run Tempest tests in one thread
     -t|--test         run specific set of tests
       <test_name>     one or more of the following separated by comma:
                             healthcheck,vping_ssh,vping_userdata,odl,onos,
@@ -41,13 +41,16 @@ serial=false
 
 # Get the list of runnable tests
 # Check if we are in CI mode
-
+debug=""
+if [[ "${CI_DEBUG,,}" == "true" ]];then
+    debug="--debug"
+fi
 
 function clean_openstack(){
     if [ $clean == true ]; then
         echo -e "\n\nCleaning Openstack environment..."
         python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py \
-            --debug
+            $debug
         echo -e "\n\n"
     fi
 }
@@ -101,12 +104,12 @@ function run_test(){
         "vping_ssh")
             info "Running vPing-SSH test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_ssh.py \
-                --debug $clean_flag ${report}
+                $debug $clean_flag $report
         ;;
         "vping_userdata")
             info "Running vPing-userdata test... "
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_userdata.py \
-                --debug $clean_flag ${report}
+                $debug $clean_flag $report
         ;;
         "odl")
             info "Running ODL test..."
@@ -125,7 +128,7 @@ function run_test(){
         "tempest")
             info "Running Tempest tests..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
-                --debug $serial_flag $clean_flag -m smoke ${report}
+                $debug $serial_flag $clean_flag -m smoke $report
             # save tempest.conf for further troubleshooting
             tempest_conf="${RALLY_VENV_DIR}/tempest/for-deployment-*/tempest.conf"
             if [ -f ${tempest_conf} ]; then
@@ -136,13 +139,13 @@ function run_test(){
         "vims")
             info "Running vIMS test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py \
-                --debug $clean_flag ${report}
+                $debug $clean_flag $report
             clean_openstack
         ;;
         "rally")
             info "Running Rally benchmark suite..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py \
-                --debug $clean_flag all ${report}
+                $debug $clean_flag all $report
             clean_openstack
 
         ;;
@@ -177,7 +180,7 @@ bgpvpn = True" >> /etc/tempest/tempest.conf
       ;;
         "promise")
             info "Running PROMISE test case..."
-            python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py --debug ${report}
+            python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py $debug $report
             sleep 10 #to let the instances terminate
             clean_openstack
         ;;
