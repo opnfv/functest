@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_3fd66950",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-18T11:31:20Z",
+      "side": 1,
+      "message": "please, use this format:\nJIRA: FUNCTEST-169\n\nThis way, it will create a link to JIRA :)",
+      "revId": "32cc6fd7a3972a5193a27690aa5d790270aea9ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
