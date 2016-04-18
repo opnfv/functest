@@ -25,7 +25,8 @@ where:
     -s|--serial       run tests in one thread
     -t|--test         run specific set of tests
       <test_name>     one or more of the following separated by comma:
-                            vping_ssh,vping_userdata,odl,onos,tempest,rally,vims,promise,doctor
+                            healthcheck,vping_ssh,vping_userdata,odl,onos,
+                            tempest,rally,vims,promise,doctor
 
 
 examples:
@@ -34,9 +35,6 @@ examples:
     $(basename "$0") -t tempest,rally"
 
 
-# Support for Functest offline
-# NOTE: Still not 100% working when running the tests
-offline=false
 report=""
 clean=true
 serial=false
@@ -204,9 +202,6 @@ while [[ $# > 0 ]]
             echo "$usage"
             exit 0
             shift
-        ;;
-        -o|--offline)
-            offline=true
         ;;
         -r|--report)
             report="-r"
