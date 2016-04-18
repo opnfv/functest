@@ -28,25 +28,6 @@ general:
         dir_vIMS_data:      /home/opnfv/functest/data/vIMS
         dir_rally_inst:     /home/opnfv/.rally
 
-    repositories:
-        # branch and commit ID to which the repos will be reset (HEAD)
-        releng_branch:  master
-        releng_commit:  latest
-        rally_branch:   master
-        rally_commit:   1b6e9e9219b143c685a2af134ab025dddd72ed27
-        vims_test_branch:   stable
-        vims_test_commit:   latest
-        bgpvpn_branch:   master
-        bgpvpn_commit:   latest
-        onos_branch:   master
-        onos_commit:   latest
-        promise_branch:   master
-        promise_commit:   latest
-        ovno_branch:   master
-        ovno_commit:   latest
-        doctor_branch: stable/brahmaputra
-        doctor_commit: latest
-
     openstack:
         image_name: functest-img
         image_file_name:  cirros-0.3.4-x86_64-disk.img
