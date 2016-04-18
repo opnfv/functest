@@ -170,16 +170,17 @@ results:
 # the execution order is important as some tests may be more destructive than others
 # and if vPing is failing is usually not needed to continue...
 test_exec_priority:
-    1: vping_ssh
-    2: vping_userdata
-    3: tempest
-    4: odl
-    5: onos
-    6: ovno
-    7: doctor
-    8: promise
-    9: odl-vpnservice
-    10: bgpvpn
+    1: healtheck
+    2: vping_ssh
+    3: vping_userdata
+    4: tempest
+    5: odl
+    6: onos
+    7: ovno
+    8: doctor
+    9: promise
+    10: odl-vpnservice
+    11: bgpvpn
     #11: openstack-neutron-bgpvpn-api-extension-tests
     12: vims
     13: rally
