@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_9c58cb57",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_tempest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-18T08:34:45Z",
+      "side": 1,
+      "message": "small comments. You don\u0027t need \u0027()\u0027 for if-else statements :)\n\nBTW, will you have another patch for the case mode\u003d\u003dcustom?",
+      "revId": "27f2a0236d1562aa2ebc4ce782c6a8181e5e07b0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
