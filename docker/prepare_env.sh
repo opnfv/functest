@@ -77,6 +77,11 @@ mkdir -p ${FUNCTEST_DATA_DIR}
 mkdir -p ${FUNCTEST_RESULTS_DIR}/ODL
 
 
+# Default repos dir if undefined
+if [ -z "$REPOS_DIR" ]; then
+  REPOS_DIR=/home/opnfv/repos
+fi
+
 # Create Openstack credentials file
 # $creds is an env varialbe in the docker container pointing to
 # /home/opnfv/functest/conf/openstack.creds
