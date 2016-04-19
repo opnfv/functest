@@ -63,7 +63,6 @@ DATA_DIR = functest_yaml.get("general").get("directories").get("dir_functest_dat
 
 # Tempest/Rally configuration details
 DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
-RALLY_COMMIT = functest_yaml.get("general").get("repositories").get("rally_commit")
 
 #Image (cirros)
 IMAGE_FILE_NAME = functest_yaml.get("general").get("openstack").get("image_file_name")
