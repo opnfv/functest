@@ -46,6 +46,11 @@ done
 BASEDIR=`dirname $0`
 source ${BASEDIR}/common.sh
 
+debug=""
+if [[ "${CI_DEBUG,,}" == "true" ]];then
+    debug="--debug"
+fi
+
 
 info "######### Preparing Functest environment #########"
 
@@ -111,7 +116,7 @@ fi
 
 # Prepare Functest Environment
 info "Preparing Functest environment..."
-python ${FUNCTEST_REPO_DIR}/testcases/config_functest.py --debug start
+python ${FUNCTEST_REPO_DIR}/testcases/config_functest.py $debug start
 retval=$?
 if [ $retval != 0 ]; then
     error "Error when configuring Functest environment"
