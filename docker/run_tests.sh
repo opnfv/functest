@@ -35,6 +35,9 @@ examples:
     $(basename "$0") -t tempest,rally"
 
 
+BASEDIR=`dirname $0`
+source ${BASEDIR}/common.sh
+
 report=""
 clean=true
 serial=false
@@ -48,10 +51,11 @@ fi
 
 function clean_openstack(){
     if [ $clean == true ]; then
-        echo -e "\n\nCleaning Openstack environment..."
+        echo -e "\n"
+        info "Cleaning Openstack environment..."
         python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py \
             $debug
-        echo -e "\n\n"
+        echo -e "\n"
     fi
 }
 
@@ -156,8 +160,7 @@ function run_test(){
             popd
             tempest_dir=$(ls -t /home/opnfv/.rally/tempest/ |grep for-deploy |tail -1)
             if [[ $tempest_dir == "" ]]; then
-                echo "Make sure tempest was running before"
-                exit 1
+                error "Make sure tempest was running before"
             fi
             tempest_dir=/home/opnfv/.rally/tempest/$tempest_dir
             pushd $tempest_dir
@@ -236,8 +239,6 @@ else
     arr_test=(healthcheck vping_ssh vping_userdata tempest vims rally)
 fi
 
-BASEDIR=`dirname $0`
-source ${BASEDIR}/common.sh
 
 info "Tests to be executed: ${arr_test[@]}"
 
