@@ -156,9 +156,12 @@ def waitVmDeleted(nova, vm):
 def create_private_neutron_net(neutron):
 
     # Check if the network already exists
-    network_id = openstack_utils.get_network_id(neutron, NEUTRON_PRIVATE_NET_NAME)
-    subnet_id = openstack_utils.get_subnet_id(neutron, NEUTRON_PRIVATE_SUBNET_NAME)
-    router_id = openstack_utils.get_router_id(neutron, NEUTRON_ROUTER_NAME)
+    network_id = openstack_utils.get_network_id(neutron,
+                                                NEUTRON_PRIVATE_NET_NAME)
+    subnet_id = openstack_utils.get_subnet_id(neutron,
+                                              NEUTRON_PRIVATE_SUBNET_NAME)
+    router_id = openstack_utils.get_router_id(neutron,
+                                              NEUTRON_ROUTER_NAME)
 
     if network_id != '' and subnet_id != '' and router_id != '':
         logger.info("Using existing network '%s'.." % NEUTRON_PRIVATE_NET_NAME)
@@ -190,7 +193,8 @@ def create_private_neutron_net(neutron):
         logger.debug("Router '%s' created successfully" % router_id)
         logger.debug('Adding router to subnet...')
 
-        if not openstack_utils.add_interface_router(neutron, router_id, subnet_id):
+        if not openstack_utils.add_interface_router(neutron, router_id,
+                                                    subnet_id):
             return False
         logger.debug("Interface added successfully.")
 
@@ -206,7 +210,8 @@ def create_private_neutron_net(neutron):
 
 
 def create_security_group(neutron_client):
-    sg_id = openstack_utils.get_security_group_id(neutron_client, SECGROUP_NAME)
+    sg_id = openstack_utils.get_security_group_id(neutron_client,
+                                                  SECGROUP_NAME)
     if sg_id != '':
         logger.info("Using existing security group '%s'..." % SECGROUP_NAME)
     else:
@@ -223,13 +228,15 @@ def create_security_group(neutron_client):
         logger.debug("Security group '%s' with ID=%s created successfully." %\
                      (SECGROUP['name'], sg_id))
 
-        logger.debug("Adding ICMP rules in security group '%s'..." % SECGROUP_NAME)
+        logger.debug("Adding ICMP rules in security group '%s'..."
+                     % SECGROUP_NAME)
         if not openstack_utils.create_secgroup_rule(neutron_client, sg_id, \
                                                    'ingress', 'icmp'):
             logger.error("Failed to create the security group rule...")
             return False
 
-        logger.debug("Adding SSH rules in security group '%s'..." % SECGROUP_NAME)
+        logger.debug("Adding SSH rules in security group '%s'..."
+                     % SECGROUP_NAME)
         if not openstack_utils.create_secgroup_rule(neutron_client, sg_id, \
                                                    'ingress', 'tcp',
                                                    '22', '22'):
@@ -336,7 +343,8 @@ def push_results(start_time_ts, duration, test_status):
                                                    'duration': duration,
                                                    'status': test_status})
     except:
-        logger.error("Error pushing results into Database '%s'" % sys.exc_info()[0])
+        logger.error("Error pushing results into Database '%s'"
+                     % sys.exc_info()[0])
 
 
 def main():
@@ -347,8 +355,9 @@ def main():
     neutron_client = neutronclient.Client(**creds_neutron)
     creds_keystone = openstack_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
-    glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
-                                                              endpoint_type='publicURL')
+    glance_endpoint = keystone_client.\
+        service_catalog.url_for(service_type='image',
+                                endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
     EXIT_CODE = -1
@@ -500,8 +509,8 @@ def main():
             break
         elif sec % 10 == 0:
             if "request failed" in console_log:
-                logger.debug("It seems userdata is not supported in nova boot." + \
-                             " Waiting a bit...")
+                logger.debug("It seems userdata is not supported in " \
+                             "nova boot. Waiting a bit...")
                 metadata_tries += 1
             else:
                 logger.debug("Pinging %s. Waiting for response..." % test_ip)
