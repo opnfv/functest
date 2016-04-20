@@ -59,14 +59,17 @@ def get_credentials(service):
         tenant: os.environ.get("OS_TENANT_NAME", "admin"),
     })
     cacert = os.environ.get("OS_CACERT")
-    if cacert != None:
+    if cacert is not None:
         # each openstack client uses differnt kwargs for this
-        creds.update({"cacert":cacert,"ca_cert":cacert,"https_ca_cert":cacert, \
-                      "https_cacert":cacert,"ca_file":cacert})
-        creds.update({"insecure":"True","https_insecure":"True"})
+        creds.update({"cacert": cacert,
+                      "ca_cert": cacert,
+                      "https_ca_cert": cacert,
+                      "https_cacert": cacert,
+                      "ca_file": cacert})
+        creds.update({"insecure": "True", "https_insecure": "True"})
         if not os.path.isfile(cacert):
-            print "WARNING: The 'OS_CACERT' environment variable is set to %s "\
-                "but the file does not exist." % cacert
+            print "WARNING: The 'OS_CACERT' environment variable is " + \
+                "set to %s but the file does not exist." % cacert
     return creds
 
 
@@ -178,7 +181,8 @@ def delete_floating_ip(nova_client, floatingip_id):
         nova_client.floating_ips.delete(floatingip_id)
         return True
     except Exception, e:
-        print "Error [delete_floating_ip(nova_client, '%s')]:" % floatingip_id, e
+        print "Error [delete_floating_ip(nova_client, '%s')]:" \
+            % floatingip_id, e
         return False
 
 
@@ -365,7 +369,8 @@ def add_gateway_router(neutron_client, router_id):
         neutron_client.add_gateway_router(router_id, router_dict)
         return True
     except Exception, e:
-        print "Error [add_gateway_router(neutron_client, '%s')]:" % router_id, e
+        print "Error [add_gateway_router(neutron_client, '%s')]:" \
+            % router_id, e
         return False
 
 
@@ -374,7 +379,8 @@ def delete_neutron_net(neutron_client, network_id):
         neutron_client.delete_network(network_id)
         return True
     except Exception, e:
-        print "Error [delete_neutron_net(neutron_client, '%s')]:" % network_id, e
+        print "Error [delete_neutron_net(neutron_client, '%s')]:" \
+            % network_id, e
         return False
 
 
@@ -383,7 +389,8 @@ def delete_neutron_subnet(neutron_client, subnet_id):
         neutron_client.delete_subnet(subnet_id)
         return True
     except Exception, e:
-        print "Error [delete_neutron_subnet(neutron_client, '%s')]:" % subnet_id, e
+        print "Error [delete_neutron_subnet(neutron_client, '%s')]:" \
+            % subnet_id, e
         return False
 
 
@@ -424,7 +431,8 @@ def remove_gateway_router(neutron_client, router_id):
         neutron_client.remove_gateway_router(router_id)
         return True
     except Exception, e:
-        print "Error [remove_gateway_router(neutron_client, '%s')]:" % router_id, e
+        print "Error [remove_gateway_router(neutron_client, '%s')]:" \
+            % router_id, e
         return False
 
 
@@ -478,7 +486,8 @@ def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
     else:
         print "Error [create_secgroup_rule(neutron_client, '%s', '%s', "\
               "'%s', '%s', '%s', '%s')]:" % (neutron_client, sg_id, direction,
-                                             port_range_min, port_range_max, protocol),\
+                                             port_range_min, port_range_max,
+                                             protocol),\
               " Invalid values for port_range_min, port_range_max"
         return False
     try:
