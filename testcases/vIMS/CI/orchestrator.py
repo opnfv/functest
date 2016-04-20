@@ -76,7 +76,7 @@ class orchestrator:
                 self.manager_blueprint = True
 
     def manager_up(self):
-        return manager_up
+        return self.manager_up
 
     def deploy_manager(self):
         if self.manager_blueprint:

@@ -16,7 +16,6 @@ import requests
 import shutil
 import socket
 import subprocess
-import sys
 import urllib2
 from git import Repo
 
@@ -113,7 +112,8 @@ def get_pod_name(logger=None):
     except KeyError:
         if logger:
             logger.error(
-                "Unable to retrieve the POD name from environment.Using pod name 'unknown-pod'")
+                "Unable to retrieve the POD name from environment. " +
+                "Using pod name 'unknown-pod'")
         return "unknown-pod"
 
 
@@ -150,8 +150,10 @@ def push_results_to_db(db_url, project, case_name, logger, pod_name,
             logger.debug(r)
         return True
     except Exception, e:
-        print "Error [push_results_to_db('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')]:" \
-            % (db_url, project, case_name, pod_name, version, scenario, criteria, build_tag, payload), e
+        print "Error [push_results_to_db('%s', '%s', '%s', " + \
+              "'%s', '%s', '%s', '%s', '%s', '%s')]:" \
+               % (db_url, project, case_name, pod_name, version, 
+                  scenario, criteria, build_tag, payload), e
         return False
 
 

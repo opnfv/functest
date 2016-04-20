@@ -1,4 +1,4 @@
- #!/usr/bin/python
+#!/usr/bin/python
 # coding: utf8
 #######################################################################
 #
@@ -27,8 +27,8 @@ import glanceclient.client as glclient
 import novaclient.client as nvclient
 from neutronclient.v2_0 import client as ntclient
 
-from orchestrator import *
-from clearwater import *
+import orchestrator
+import clearwater
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -127,7 +127,7 @@ def step_failure(step_name, error_msg):
     set_result(step_name, 0, error_msg)
     status = "failed"
     if step_name == "sig_test":
-         status = "passed"
+        status = "passed"
     push_results(status)
     exit(-1)
 
