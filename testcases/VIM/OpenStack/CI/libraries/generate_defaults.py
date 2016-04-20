@@ -23,9 +23,7 @@
 import argparse
 import logging
 import os
-import re
 import sys
-import time
 import yaml
 
 from novaclient import client as novaclient
@@ -65,6 +63,7 @@ DEFAULTS_FILE = '/home/opnfv/functest/conf/os_defaults.yaml'
 def separator():
     logger.info("-------------------------------------------")
 
+
 def get_instances(nova_client):
     logger.debug("Getting instances...")
     dic_instances = {}
@@ -89,7 +88,7 @@ def get_volumes(cinder_client):
     logger.debug("Getting volumes...")
     dic_volumes = {}
     volumes = openstack_utils.get_volumes(cinder_client)
-    if volumes != None:
+    if volumes is not None:
         for volume in volumes:
             dic_volumes.update({volume.id:volume.display_name})
     return {'volumes': dic_volumes}
@@ -99,7 +98,7 @@ def get_networks(neutron_client):
     logger.debug("Getting networks")
     dic_networks = {}
     networks = openstack_utils.get_network_list(neutron_client)
-    if networks != None:
+    if networks is not None:
         for network in networks:
             dic_networks.update({network['id']:network['name']})
     return {'networks': dic_networks}
@@ -109,7 +108,7 @@ def get_routers(neutron_client):
     logger.debug("Getting routers")
     dic_routers = {}
     routers = openstack_utils.get_router_list(neutron_client)
-    if routers != None:
+    if routers is not None:
         for router in routers:
             dic_routers.update({router['id']:router['name']})
     return {'routers': dic_routers}
