@@ -1,4 +1,4 @@
- #!/usr/bin/python
+#!/usr/bin/python
 # coding: utf8
 #######################################################################
 #
@@ -27,8 +27,8 @@ import glanceclient.client as glclient
 import novaclient.client as nvclient
 from neutronclient.v2_0 import client as ntclient
 
-from orchestrator import *
-from clearwater import *
+import orchestrator
+import clearwater
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -127,7 +127,7 @@ def step_failure(step_name, error_msg):
     set_result(step_name, 0, error_msg)
     status = "failed"
     if step_name == "sig_test":
-         status = "passed"
+        status = "passed"
     push_results(status)
     exit(-1)
 
@@ -167,10 +167,12 @@ def test_clearwater():
         mgr_ip = os.popen(cmd).read()
         mgr_ip = mgr_ip.splitlines()[0]
     except:
-        step_failure("sig_test", "Unable to retrieve the IP of the cloudify manager server !")
+        step_failure("sig_test", "Unable to retrieve the IP of the "
+                     "cloudify manager server !")
 
     api_url = "http://" + mgr_ip + "/api/v2"
-    dep_outputs = requests.get(api_url + "/deployments/" + CW_DEPLOYMENT_NAME + "/outputs")
+    dep_outputs = requests.get(api_url + "/deployments/" +
+                               CW_DEPLOYMENT_NAME + "/outputs")
     dns_ip = dep_outputs.json()['outputs']['dns_ip']
     ellis_ip = dep_outputs.json()['outputs']['ellis_ip']
 
@@ -204,7 +206,8 @@ def test_clearwater():
             time.sleep(25)
 
     if rq.status_code != 200:
-        step_failure("sig_test", "Unable to create a number: %s" % rq.json()['reason'])
+        step_failure("sig_test", "Unable to create a number: %s"
+                     % rq.json()['reason'])
 
     start_time_ts = time.time()
     end_time_ts = start_time_ts
@@ -217,7 +220,8 @@ def test_clearwater():
         resolvconf += "\nnameserver " + ns
 
     if dns_ip != "":
-        script = 'echo -e "nameserver ' + dns_ip + resolvconf + '" > /etc/resolv.conf; '
+        script = 'echo -e "nameserver ' + dns_ip + resolvconf + \
+            '" > /etc/resolv.conf; '
         script += 'source /etc/profile.d/rvm.sh; '
         script += 'cd ' + VIMS_TEST_DIR + '; '
         script += 'rake test[' + \
@@ -253,8 +257,9 @@ def test_clearwater():
         # - VNF deployed
         status = "failed"
         try:
-            if RESULTS['orchestrator']['duration'] > 0 and RESULTS['vIMS']['duration'] > 0:
-                status = "passed"
+            if (RESULTS['orchestrator']['duration'] > 0 and
+                RESULTS['vIMS']['duration'] > 0):
+                    status = "passed"
         except:
             logger.error("Unable to set test status")
         push_results(status)
@@ -299,7 +304,8 @@ def main():
     if role_id == '':
         logger.error("Error : Failed to get id for %s role" % role_name)
 
-    if not openstack_utils.add_role_user(keystone, user_id, role_id, tenant_id):
+    if not openstack_utils.add_role_user(keystone, user_id,
+                                         role_id, tenant_id):
         logger.error("Error : Failed to add %s on tenant" %
                      ks_creds['username'])
 
@@ -324,8 +330,9 @@ def main():
     })
 
     logger.info("Upload some OS images if it doesn't exist")
-    glance_endpoint = keystone.service_catalog.url_for(service_type='image',
-                                                       endpoint_type='publicURL')
+    glance_endpoint = keystone.\
+        service_catalog.url_for(service_type='image',
+                                endpoint_type='publicURL')
     glance = glclient.Client(1, glance_endpoint, token=keystone.auth_token)
 
     for img in IMAGES.keys():
@@ -335,14 +342,16 @@ def main():
         image_id = openstack_utils.get_image_id(glance, image_name)
 
         if image_id == '':
-            logger.info("""%s image doesn't exist on glance repository.
-                            Try downloading this image and upload on glance !""" % image_name)
+            logger.info("""%s image doesn't exist on glance repository. Try
+            downloading this image and upload on glance !""" % image_name)
             image_id = download_and_add_image_on_glance(
                 glance, image_name, image_url)
 
         if image_id == '':
             step_failure(
-                "init", "Error : Failed to find or upload required OS image for this deployment")
+                "init",
+                "Error : Failed to find or upload required OS "
+                "image for this deployment")
 
     nova = nvclient.Client("2", **nv_creds)
 
@@ -350,7 +359,8 @@ def main():
     neutron = ntclient.Client(**nt_creds)
     if not openstack_utils.update_sg_quota(neutron, tenant_id, 50, 100):
         step_failure(
-            "init", "Failed to update security group quota for tenant " + TENANT_NAME)
+            "init",
+            "Failed to update security group quota for tenant " + TENANT_NAME)
 
     logger.info("Update cinder quota for this tenant")
     from cinderclient import client as cinderclient
@@ -361,7 +371,8 @@ def main():
                                         creds_cinder['project_id'],
                                         creds_cinder['auth_url'],
                                         service_type="volume")
-    if not openstack_utils.update_cinder_quota(cinder_client, tenant_id, 20, 10, 150):
+    if not openstack_utils.update_cinder_quota(cinder_client, tenant_id,
+                                               20, 10, 150):
         step_failure(
             "init", "Failed to update cinder quota for tenant " + TENANT_NAME)
 
@@ -370,7 +381,8 @@ def main():
     cfy = orchestrator(VIMS_DATA_DIR, CFY_INPUTS, logger)
 
     cfy.set_credentials(username=ks_creds['username'], password=ks_creds[
-                        'password'], tenant_name=ks_creds['tenant_name'], auth_url=ks_creds['auth_url'])
+                        'password'], tenant_name=ks_creds['tenant_name'],
+                        auth_url=ks_creds['auth_url'])
 
     logger.info("Collect flavor id for cloudify manager server")
     nova = nvclient.Client("2", **nv_creds)
@@ -384,8 +396,10 @@ def main():
 
     if flavor_id == '':
         logger.error(
-            "Failed to find %s flavor. Try with ram range default requirement !" % flavor_name)
-        flavor_id = openstack_utils.get_flavor_id_by_ram_range(nova, 4000, 8196)
+            "Failed to find %s flavor. "
+            "Try with ram range default requirement !" % flavor_name)
+        flavor_id = openstack_utils.\
+            get_flavor_id_by_ram_range(nova, 4000, 8196)
 
     if flavor_id == '':
         step_failure("orchestrator",
@@ -402,7 +416,8 @@ def main():
 
     if image_id == '':
         step_failure(
-            "orchestrator", "Error : Failed to find required OS image for cloudify manager")
+            "orchestrator",
+            "Error : Failed to find required OS image for cloudify manager")
 
     cfy.set_image_id(image_id)
 
@@ -458,8 +473,10 @@ def main():
 
     if flavor_id == '':
         logger.error(
-            "Failed to find %s flavor. Try with ram range default requirement !" % flavor_name)
-        flavor_id = openstack_utils.get_flavor_id_by_ram_range(nova, 4000, 8196)
+            "Failed to find %s flavor. Try with ram range "
+            "default requirement !" % flavor_name)
+        flavor_id = openstack_utils.\
+            get_flavor_id_by_ram_range(nova, 4000, 8196)
 
     if flavor_id == '':
         step_failure(
@@ -476,7 +493,8 @@ def main():
 
     if image_id == '':
         step_failure(
-            "vIMS", "Error : Failed to find required OS image for cloudify manager")
+            "vIMS",
+            "Error : Failed to find required OS image for cloudify manager")
 
     cw.set_image_id(image_id)
 

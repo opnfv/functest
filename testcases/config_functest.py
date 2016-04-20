@@ -7,18 +7,21 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-
-import re, json, os, urllib2, argparse, logging, shutil, subprocess, yaml, sys, getpass
+import argparse
+import logging
+import os
+import shutil
+import subprocess
+import sys
+import yaml
 import functest_utils
 import openstack_utils
-from git import Repo
-from os import stat
-from pwd import getpwuid
 from neutronclient.v2_0 import client as neutronclient
 
 actions = ['start', 'check', 'clean']
 parser = argparse.ArgumentParser()
-parser.add_argument("action", help="Possible actions are: '{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
+parser.add_argument("action", help="Possible actions are: \
+    '{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
 parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 parser.add_argument("-f", "--force", help="Force",  action="store_true")
 args = parser.parse_args()
@@ -34,14 +37,16 @@ if args.debug:
 else:
     ch.setLevel(logging.INFO)
 
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s - %(name)s - ' \
+                              '%(levelname)s - %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-REPOS_DIR=os.environ['repos_dir']
-FUNCTEST_REPO=REPOS_DIR+'/functest/'
+REPOS_DIR = os.environ['repos_dir']
+FUNCTEST_REPO = REPOS_DIR+'/functest/'
 if not os.path.exists(FUNCTEST_REPO):
-    logger.error("Functest repository directory not found '%s'" % FUNCTEST_REPO)
+    logger.error("Functest repository directory not found '%s'"
+                 % FUNCTEST_REPO)
     exit(-1)
 sys.path.append(FUNCTEST_REPO + "testcases/")
 
@@ -52,20 +57,29 @@ f.close()
 
 """ global variables """
 # Directories
-RALLY_DIR = FUNCTEST_REPO + functest_yaml.get("general").get("directories").get("dir_rally")
-RALLY_REPO_DIR = functest_yaml.get("general").get("directories").get("dir_repo_rally")
-RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("dir_rally_inst")
-RALLY_RESULT_DIR = functest_yaml.get("general").get("directories").get("dir_rally_res")
-TEMPEST_REPO_DIR = functest_yaml.get("general").get("directories").get("dir_repo_tempest")
-VPING_DIR = FUNCTEST_REPO + functest_yaml.get("general").get("directories").get("dir_vping")
-ODL_DIR = FUNCTEST_REPO + functest_yaml.get("general").get("directories").get("dir_odl")
-DATA_DIR = functest_yaml.get("general").get("directories").get("dir_functest_data")
+RALLY_DIR = FUNCTEST_REPO + functest_yaml.get("general").\
+    get("directories").get("dir_rally")
+RALLY_REPO_DIR = functest_yaml.get("general").\
+    get("directories").get("dir_repo_rally")
+RALLY_INSTALLATION_DIR = functest_yaml.get("general").\
+    get("directories").get("dir_rally_inst")
+RALLY_RESULT_DIR = functest_yaml.get("general").\
+    get("directories").get("dir_rally_res")
+TEMPEST_REPO_DIR = functest_yaml.get("general").\
+    get("directories").get("dir_repo_tempest")
+VPING_DIR = FUNCTEST_REPO + functest_yaml.\
+    get("general").get("directories").get("dir_vping")
+ODL_DIR = FUNCTEST_REPO + functest_yaml.\
+    get("general").get("directories").get("dir_odl")
+DATA_DIR = functest_yaml.get("general").\
+    get("directories").get("dir_functest_data")
 
 # Tempest/Rally configuration details
 DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
 
-#Image (cirros)
-IMAGE_FILE_NAME = functest_yaml.get("general").get("openstack").get("image_file_name")
+# Image (cirros)
+IMAGE_FILE_NAME = functest_yaml.get("general").\
+    get("openstack").get("image_file_name")
 IMAGE_PATH = DATA_DIR + "/" + IMAGE_FILE_NAME
 
 # NEUTRON Private Network parameters
@@ -81,12 +95,14 @@ NEUTRON_ROUTER_NAME = functest_yaml.get("general"). \
 creds_neutron = openstack_utils.get_credentials("neutron")
 neutron_client = neutronclient.Client(**creds_neutron)
 
+
 def action_start():
     """
     Start the functest environment installation
     """
     if not functest_utils.check_internet_connectivity():
-        logger.info("No Internet connectivity. This may affect some test case suites.")
+        logger.info("No Internet connectivity. " \
+                    "This may affect some test case suites.")
 
     if action_check():
         logger.info("Functest environment already installed. Nothing to do.")
@@ -102,11 +118,13 @@ def action_start():
         if private_net is None:
             # If there is no private network in the deployment we create one
             if not create_private_neutron_net(neutron_client):
-                logger.error("There has been a problem while creating the functest network.")
+                logger.error("There has been a problem while " \
+                             "creating the functest network.")
                 action_clean()
                 exit(-1)
         else:
-            logger.info("Private network '%s' already existing in the deployment."
+            logger.info("Private network '%s' already existing in " \
+                        "the deployment."
                  % private_net['name'])
 
         logger.info("Installing Rally...")
@@ -162,10 +180,8 @@ def action_check():
     else:
         logger.debug("   Image file found in %s" % IMAGE_PATH)
 
-
-    #TODO: check OLD environment setup
+    # TODO: check OLD environment setup
     return not errors_all
-
 
 
 def action_clean():
@@ -174,15 +190,15 @@ def action_clean():
     """
     logger.info("Removing current functest environment...")
     if os.path.exists(RALLY_INSTALLATION_DIR):
-        logger.debug("Removing Rally installation directory %s" % RALLY_INSTALLATION_DIR)
-        shutil.rmtree(RALLY_INSTALLATION_DIR,ignore_errors=True)
+        logger.debug("Removing Rally installation directory %s"
+                     % RALLY_INSTALLATION_DIR)
+        shutil.rmtree(RALLY_INSTALLATION_DIR, ignore_errors=True)
 
     if os.path.exists(RALLY_RESULT_DIR):
         logger.debug("Removing Result directory")
-        shutil.rmtree(RALLY_RESULT_DIR,ignore_errors=True)
+        shutil.rmtree(RALLY_RESULT_DIR, ignore_errors=True)
 
     logger.info("Functest environment clean!")
-
 
 
 def install_rally():
@@ -191,35 +207,39 @@ def install_rally():
     else:
         logger.debug("Creating Rally environment...")
         cmd = "rally deployment create --fromenv --name="+DEPLOYMENT_MAME
-        functest_utils.execute_command(cmd,logger)
+        functest_utils.execute_command(cmd, logger)
 
         logger.debug("Installing tempest from existing repo...")
-        cmd = "rally verify install --source " + TEMPEST_REPO_DIR + " --system-wide"
-        functest_utils.execute_command(cmd,logger)
+        cmd = "rally verify install --source " + TEMPEST_REPO_DIR + \
+            " --system-wide"
+        functest_utils.execute_command(cmd, logger)
 
         cmd = "rally deployment check"
-        functest_utils.execute_command(cmd,logger)
-        #TODO: check that everything is 'Available' and warn if not
+        functest_utils.execute_command(cmd, logger)
+        # TODO: check that everything is 'Available' and warn if not
 
         cmd = "rally show images"
-        functest_utils.execute_command(cmd,logger)
+        functest_utils.execute_command(cmd, logger)
 
         cmd = "rally show flavors"
-        functest_utils.execute_command(cmd,logger)
+        functest_utils.execute_command(cmd, logger)
 
     return True
+
 
 def check_rally():
     """
     Check if Rally is installed and properly configured
     """
     if os.path.exists(RALLY_INSTALLATION_DIR):
-        logger.debug("   Rally installation directory found in %s" % RALLY_INSTALLATION_DIR)
-        FNULL = open(os.devnull, 'w');
-        cmd="rally deployment list | grep "+DEPLOYMENT_MAME
+        logger.debug("   Rally installation directory found in %s"
+                     % RALLY_INSTALLATION_DIR)
+        FNULL = open(os.devnull, 'w')
+        cmd="rally deployment list | grep " + DEPLOYMENT_MAME
         logger.debug('   Executing command : {}'.format(cmd))
-        p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=FNULL);
-        #if the command does not exist or there is no deployment
+        p=subprocess.Popen(cmd,shell=True,
+                           stdout=subprocess.PIPE,stderr=FNULL)
+        # if the command does not exist or there is no deployment
         line = p.stdout.readline()
         if line == "":
             logger.debug("   Rally deployment NOT found")
@@ -240,7 +260,8 @@ def create_private_neutron_net(neutron):
         return False
     logger.debug("Network '%s' created successfully." % network_id)
 
-    logger.info("Updating network '%s' with shared=True..." % NEUTRON_PRIVATE_NET_NAME)
+    logger.info("Updating network '%s' with shared=True..."
+                % NEUTRON_PRIVATE_NET_NAME)
     if openstack_utils.update_neutron_net(neutron, network_id, shared=True):
         logger.debug("Network '%s' updated successfully." % network_id)
     else:
@@ -265,7 +286,9 @@ def create_private_neutron_net(neutron):
     logger.debug("Router '%s' created successfully." % router_id)
     logger.info("Adding router to subnet...")
 
-    result = openstack_utils.add_interface_router(neutron, router_id, subnet_id)
+    result = openstack_utils.add_interface_router(neutron,
+                                                  router_id,
+                                                  subnet_id)
 
     if not result:
         return False
@@ -282,12 +305,11 @@ def main():
         logger.error('argument not valid')
         exit(-1)
 
-
     if not openstack_utils.check_credentials():
-        logger.error("Please source the openrc credentials and run the script again.")
-        #TODO: source the credentials in this script
+        logger.error("Please source the openrc credentials and " \
+                     "run the script again.")
+        # TODO: source the credentials in this script
         exit(-1)
-
 
     if args.action == "start":
         action_start()
@@ -299,9 +321,9 @@ def main():
             logger.info("Functest environment not found or faulty")
 
     if args.action == "clean":
-        if args.force :
+        if args.force:
             action_clean()
-        else :
+        else:
             while True:
                 print("Are you sure? [y|n]")
                 answer = raw_input("")
@@ -317,4 +339,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
