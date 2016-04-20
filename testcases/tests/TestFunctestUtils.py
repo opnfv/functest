@@ -80,7 +80,6 @@ class TestFunctestUtils(unittest.TestCase):
         test = isTestRunnable('functest/vims', functest_yaml)
         self.assertTrue(test)
 
-
     def test_generateTestcaseList(self):
 
         test = generateTestcaseList(functest_yaml)
@@ -95,4 +94,3 @@ class TestFunctestUtils(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

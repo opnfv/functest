@@ -10,8 +10,6 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
-import sys
-import subprocess
 
 
 class clearwater:
@@ -52,7 +50,7 @@ class clearwater:
 
         else:
             if self.logger:
-                logger.error("Cloudify manager is down or not provide...")
+                self.logger.error("Cloudify manager is down or not provide...")
 
     def undeploy_vnf(self):
         if self.orchestrator:
@@ -61,7 +59,7 @@ class clearwater:
                 self.orchestrator.undeploy_deployment(self.dep_name)
             else:
                 if self.logger:
-                    logger.error("Clearwater isn't already deploy...")
+                    self.logger.error("Clearwater isn't already deploy...")
         else:
             if self.logger:
-                logger.error("Cloudify manager is down or not provide...")
+                self.logger.error("Cloudify manager is down or not provide...")

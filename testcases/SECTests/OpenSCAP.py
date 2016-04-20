@@ -56,7 +56,7 @@ parser.add_argument('--port',
                     action='store',
                     dest='port"',
                     help='port',
-                   required=True)
+                    required=True)
 parser.add_argument('--dist',
                     action='store',
                     dest='dist',
@@ -147,11 +147,12 @@ def run_scanner():
                                             parserout.password,
                                             com)
     elif args['which'] == 'oval':
-        com = '{0} oval eval --results {1}/{2} --report {1}/{3} {4}'.format(oscap,
-                                                                    tmpdir.rstrip(),
-                                                                    parserout.results,
-                                                                    parserout.report,
-                                                                    parserout.secpolicy)
+        com = '{0} oval eval --results {1}/{2}' + \
+            ' --report {1}/{3} {4}'.format(oscap,
+                                           tmpdir.rstrip(),
+                                           parserout.results,
+                                           parserout.report,
+                                           parserout.secpolicy)
         connect = connect.connectionManager(parserout.host,
                                             parserout.user,
                                             parserout.password,
@@ -168,7 +169,9 @@ def run_scanner():
 
 def post_tasks():
     import connect
-    dl_folder = os.path.join(os.getcwd(), parserout.host + datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
+    dl_folder = os.path.join(os.getcwd(), parserout.host +
+                             datetime.datetime.now().
+                             strftime('%Y-%m-%d_%H-%M-%S'))
     os.mkdir(dl_folder, 0755)
     reportfile = '{0}/{1}'.format(tmpdir.rstrip(), parserout.report)
     connect = connect.connectionManager(parserout.host,
