@@ -7,6 +7,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
+
 class Tier:
     def __init__(self, name, description, order):
         self.tests_array = []
@@ -14,8 +15,7 @@ class Tier:
         self.description = description
         self.order = order
 
-
-    def add_test(self,testcase):
+    def add_test(self, testcase):
         self.tests_array.append(testcase)
 
     def get_tests(self):
@@ -25,11 +25,11 @@ class Tier:
         return array_str
 
     def __str__(self):
-        return "Tier info:\n"+\
-        "\tName: " + self.name + "\n" +\
-        "\tDescription: " + self.description + "\n" +\
-        "\tOrder: " + self.order + "\n" +\
-        "\tTest cases: " + str(self.get_tests()) + "\n"
+        return "Tier info:\n" + \
+            "\tName: " + self.name + "\n" + \
+            "\tDescription: " + self.description + "\n" + \
+            "\tOrder: " + self.order + "\n" + \
+            "\tTest cases: " + str(self.get_tests()) + "\n"
 
 
 class Testcase:
