@@ -16,7 +16,6 @@ import requests
 import shutil
 import socket
 import subprocess
-import sys
 import urllib2
 from git import Repo
 

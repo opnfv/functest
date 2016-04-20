@@ -36,7 +36,7 @@ class connection( foundation ):
         """
         print( "Now Adding an user to known hosts " + ipaddr )
         login = handle
-        login.sendline( "ssh -l %s -p 8101 %s"%( username, ipaddr ) )
+        login.sendline("ssh -l %s -p 8101 %s" %( username, ipaddr ))
         index = 0
         while index != 2:
             index = login.expect( ['assword:', 'yes/no', pexpect.EOF, \
