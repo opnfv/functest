@@ -61,7 +61,8 @@ if args.debug:
 else:
     ch.setLevel(logging.INFO)
 
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s - %(name)s - ' \
+                              '%(levelname)s - %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
@@ -79,16 +80,25 @@ f.close()
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 
 MODE = "smoke"
-TENANT_NAME = functest_yaml.get("tempest").get("identity").get("tenant_name")
-TENANT_DESCRIPTION = functest_yaml.get("tempest").get("identity").get("tenant_description")
-USER_NAME = functest_yaml.get("tempest").get("identity").get("user_name")
-USER_PASSWORD = functest_yaml.get("tempest").get("identity").get("user_password")
-SSH_USER_REGEX = functest_yaml.get("tempest").get("input-scenario").get("ssh_user_regex")
-DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
-RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("dir_rally_inst")
-RESULTS_DIR = functest_yaml.get("general").get("directories").get("dir_results")
+TENANT_NAME = functest_yaml.get("tempest").\
+    get("identity").get("tenant_name")
+TENANT_DESCRIPTION = functest_yaml.get("tempest").\
+    get("identity").get("tenant_description")
+USER_NAME = functest_yaml.get("tempest").\
+    get("identity").get("user_name")
+USER_PASSWORD = functest_yaml.get("tempest").\
+    get("identity").get("user_password")
+SSH_USER_REGEX = functest_yaml.get("tempest").\
+    get("input-scenario").get("ssh_user_regex")
+DEPLOYMENT_MAME = functest_yaml.get("rally").\
+    get("deployment_name")
+RALLY_INSTALLATION_DIR = functest_yaml.get("general").\
+    get("directories").get("dir_rally_inst")
+RESULTS_DIR = functest_yaml.get("general").\
+    get("directories").get("dir_results")
 TEMPEST_RESULTS_DIR = RESULTS_DIR + '/tempest'
-TEST_LIST_DIR = functest_yaml.get("general").get("directories").get("dir_tempest_cases")
+TEST_LIST_DIR = functest_yaml.get("general").\
+    get("directories").get("dir_tempest_cases")
 TEMPEST_LIST_FILE = REPO_PATH + TEST_LIST_DIR + 'test_list.txt'
 TEMPEST_DEFCORE = REPO_PATH + TEST_LIST_DIR + 'defcore_req.txt'
 
@@ -191,12 +201,14 @@ def configure_tempest(mode):
     if deployment_uuid == "":
         logger.debug("   Rally deployment NOT found")
         return False
-    deployment_dir = RALLY_INSTALLATION_DIR + "/tempest/for-deployment-" + deployment_uuid
+    deployment_dir = RALLY_INSTALLATION_DIR + "/tempest/for-deployment-" + \
+        deployment_uuid
 
     logger.debug("Finding tempest.conf file...")
     tempest_conf_file = deployment_dir + "/tempest.conf"
     if not os.path.isfile(tempest_conf_file):
-        logger.error("   Tempest configuration file %s NOT found." % tempest_conf_file)
+        logger.error("   Tempest configuration file %s NOT found."
+                     % tempest_conf_file)
         return False
 
     logger.debug("Generating test case list...")
@@ -231,7 +243,8 @@ def configure_tempest(mode):
     cmd = "crudini --set " + tempest_conf_file + " identity password " \
           + USER_PASSWORD
     functest_utils.execute_command(cmd, logger)
-    cmd = "sed -i 's/.*ssh_user_regex.*/ssh_user_regex = " + SSH_USER_REGEX + "/' " + tempest_conf_file
+    cmd = "sed -i 's/.*ssh_user_regex.*/ssh_user_regex = " + SSH_USER_REGEX + \
+        "/' " + tempest_conf_file
     functest_utils.execute_command(cmd, logger)
 
     # Copy tempest.conf to /home/opnfv/functest/results/tempest/
@@ -315,9 +328,9 @@ def run_tempest(OPTION):
 
 def main():
     global MODE
-
     if not (args.mode in modes):
-        logger.error("Tempest mode not valid. Possible values are:\n" + str(modes))
+        logger.error("Tempest mode not valid. Possible values are:\n"
+                     + str(modes))
         exit(-1)
 
     if args.mode == 'custom' or args.mode == 'smoke' or args.mode == 'full':

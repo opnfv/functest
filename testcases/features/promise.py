@@ -117,7 +117,8 @@ def main():
         exit(-1)
 
     logger.info("Adding role '%s' to tenant '%s'..." % (role_id, TENANT_NAME))
-    if not openstack_utils.add_role_user(keystone, user_id, role_id, tenant_id):
+    if not openstack_utils.add_role_user(keystone, user_id,
+                                         role_id, tenant_id):
         logger.error("Error : Failed to add %s on tenant %s" %
                      (ks_creds['username'], TENANT_NAME))
         exit(-1)
@@ -147,8 +148,8 @@ def main():
         "project_id": TENANT_NAME,
     })
 
-    glance_endpoint = keystone.service_catalog.url_for(service_type='image',
-                                                       endpoint_type='publicURL')
+    glance_endpoint = keystone.\
+        service_catalog.url_for(service_type='image',endpoint_type='publicURL')
     glance = glclient.Client(1, glance_endpoint, token=keystone.auth_token)
     nova = nvclient.Client("2", **nv_creds)
 
@@ -176,13 +177,14 @@ def main():
         logger.debug("Flavor '%s' with ID '%s' created successfully." %
                      (FLAVOR_NAME, flavor_id))
     else:
-        logger.debug("Using existing flavor '%s' with ID '%s'..." % (FLAVOR_NAME,
-                                                                     flavor_id))
+        logger.debug("Using existing flavor '%s' with ID '%s'..."
+                     % (FLAVOR_NAME, flavor_id))
 
     neutron = ntclient.Client(**nt_creds)
     private_net = openstack_utils.get_private_net(neutron)
     if private_net is None:
-        logger.error("There is no private network in the deployment. Aborting...")
+        logger.error("There is no private network in the deployment."\
+                     "Aborting...")
         exit(-1)
     logger.debug("Using private network '%s' (%s)." % (private_net['name'],
                                                        private_net['id']))
@@ -241,7 +243,8 @@ def main():
                 " End:     \t%s\n"\
                 " Duration:\t%s\n"\
                 "****************************************\n\n"\
-                % (suites, tests, passes, pending, failures, start_time, end_time, duration))
+                % (suites, tests, passes, pending, failures,
+                   start_time, end_time, duration))
 
     if args.report:
         pod_name = functest_utils.get_pod_name(logger)

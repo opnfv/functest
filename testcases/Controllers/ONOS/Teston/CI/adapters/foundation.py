@@ -18,38 +18,39 @@ import yaml
 import re
 import datetime
 
+
 class foundation:
 
     def __init__(self):
 
-        #currentpath = os.getcwd()
+        # currentpath = os.getcwd()
         REPO_PATH = os.environ['repos_dir']+'/functest/'
         currentpath = REPO_PATH + 'testcases/Controllers/ONOS/Teston/CI'
         self.cipath = currentpath
-        self.logdir = os.path.join( currentpath, 'log' )
+        self.logdir = os.path.join(currentpath, 'log')
         self.workhome = currentpath[0:currentpath.rfind('testcases')-1]
         self.Result_DB = ''
-        filename = time.strftime( '%Y-%m-%d-%H-%M-%S' ) + '.log'
-        self.logfilepath = os.path.join( self.logdir, filename )
+        filename = time.strftime('%Y-%m-%d-%H-%M-%S') + '.log'
+        self.logfilepath = os.path.join(self.logdir, filename)
         self.starttime = datetime.datetime.now()
 
-    def log (self, loginfo):
+    def log(self, loginfo):
         """
         Record log in log directory for deploying test environment
         parameters:
         loginfo(input): record info
         """
-        logging.basicConfig( level=logging.INFO,
-                format = '%(asctime)s %(filename)s:%(message)s',
-                datefmt = '%d %b %Y %H:%M:%S',
-                filename = self.logfilepath,
-                filemode = 'w')
-        filelog = logging.FileHandler( self.logfilepath )
-        logging.getLogger( 'Functest' ).addHandler( filelog )
+        logging.basicConfig(level=logging.INFO,
+                format='%(asctime)s %(filename)s:%(message)s',
+                datefmt='%d %b %Y %H:%M:%S',
+                filename=self.logfilepath,
+                filemode='w')
+        filelog = logging.FileHandler(self.logfilepath)
+        logging.getLogger('Functest').addHandler(filelog)
         print loginfo
         logging.info(loginfo)
 
-    def getdefaultpara( self ):
+    def getdefaultpara(self):
         """
         Get Default Parameters value
         """
@@ -66,25 +67,32 @@ class foundation:
                                  get("onoscli_username"))
         self.agentpassword = str(functest_yaml.get("ONOS").get("general").\
                                  get("onoscli_password"))
-        self.runtimeout = functest_yaml.get("ONOS").get("general").get("runtimeout")
+        self.runtimeout = functest_yaml.get("ONOS").\
+            get("general").get("runtimeout")
         self.OCT = str(functest_yaml.get("ONOS").get("environment").get("OCT"))
         self.OC1 = str(functest_yaml.get("ONOS").get("environment").get("OC1"))
         self.OC2 = str(functest_yaml.get("ONOS").get("environment").get("OC2"))
         self.OC3 = str(functest_yaml.get("ONOS").get("environment").get("OC3"))
         self.OCN = str(functest_yaml.get("ONOS").get("environment").get("OCN"))
-        self.OCN2 = str(functest_yaml.get("ONOS").get("environment").get("OCN2"))
-        self.installer_master = str(functest_yaml.get("ONOS").get("environment").get("installer_master"))
-        self.installer_master_username = str(functest_yaml.get("ONOS").get("environment").get("installer_master_username"))
-        self.installer_master_password = str(functest_yaml.get("ONOS").get("environment").get("installer_master_password"))
+        self.OCN2 = str(functest_yaml.get("ONOS").\
+                        get("environment").get("OCN2"))
+        self.installer_master = str(functest_yaml.get("ONOS").\
+                                    get("environment").get("installer_master"))
+        self.installer_master_username = str(functest_yaml.get("ONOS").\
+                                             get("environment").\
+                                             get("installer_master_username"))
+        self.installer_master_password = str(functest_yaml.get("ONOS").\
+                                             get("environment").\
+                                             get("installer_master_password"))
         self.hosts = [self.OC1, self.OCN, self.OCN2]
         self.localhost = self.OCT
-    
-    def GetResult( self ):
+
+    def GetResult(self):
         cmd = "cat " + self.logfilepath + " | grep Fail"
         Resultbuffer = os.popen(cmd).read()
         duration = datetime.datetime.now() - self.starttime
         time.sleep(2)
-        
+
         if re.search("[1-9]+", Resultbuffer):
             self.log("Testcase Fails\n" + Resultbuffer)
             Result = "POK"
@@ -92,6 +100,6 @@ class foundation:
             self.log("Testcases Pass")
             Result = "OK"
         payload={'timestart': str(self.starttime),
-                  'duration': str(duration),
-                    'status': Result}
+                 'duration': str(duration), 'status': Result}
+
         return payload

@@ -23,9 +23,7 @@
 import argparse
 import logging
 import os
-import re
 import sys
-import time
 import yaml
 
 from novaclient import client as novaclient
@@ -48,11 +46,12 @@ if args.debug:
 else:
     ch.setLevel(logging.INFO)
 
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - ' +
+                              '%(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-REPO_PATH=os.environ['repos_dir']+'/functest/'
+REPO_PATH = os.environ['repos_dir']+'/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
@@ -65,13 +64,15 @@ DEFAULTS_FILE = '/home/opnfv/functest/conf/os_defaults.yaml'
 def separator():
     logger.info("-------------------------------------------")
 
+
 def get_instances(nova_client):
     logger.debug("Getting instances...")
     dic_instances = {}
     instances = openstack_utils.get_instances(nova_client)
     if not (instances is None or len(instances) == 0):
         for instance in instances:
-            dic_instances.update({getattr(instance, 'id'):getattr(instance, 'name')})
+            dic_instances.update({getattr(instance, 'id'): getattr(instance,
+                                                                   'name')})
     return {'instances': dic_instances}
 
 
@@ -81,7 +82,7 @@ def get_images(nova_client):
     images = openstack_utils.get_images(nova_client)
     if not (images is None or len(images) == 0):
         for image in images:
-            dic_images.update({getattr(image, 'id'):getattr(image, 'name')})
+            dic_images.update({getattr(image, 'id'): getattr(image, 'name')})
     return {'images': dic_images}
 
 
@@ -89,9 +90,9 @@ def get_volumes(cinder_client):
     logger.debug("Getting volumes...")
     dic_volumes = {}
     volumes = openstack_utils.get_volumes(cinder_client)
-    if volumes != None:
+    if volumes is not None:
         for volume in volumes:
-            dic_volumes.update({volume.id:volume.display_name})
+            dic_volumes.update({volume.id: volume.display_name})
     return {'volumes': dic_volumes}
 
 
@@ -99,9 +100,9 @@ def get_networks(neutron_client):
     logger.debug("Getting networks")
     dic_networks = {}
     networks = openstack_utils.get_network_list(neutron_client)
-    if networks != None:
+    if networks is not None:
         for network in networks:
-            dic_networks.update({network['id']:network['name']})
+            dic_networks.update({network['id']: network['name']})
     return {'networks': dic_networks}
 
 
@@ -109,9 +110,9 @@ def get_routers(neutron_client):
     logger.debug("Getting routers")
     dic_routers = {}
     routers = openstack_utils.get_router_list(neutron_client)
-    if routers != None:
+    if routers is not None:
         for router in routers:
-            dic_routers.update({router['id']:router['name']})
+            dic_routers.update({router['id']: router['name']})
     return {'routers': dic_routers}
 
 
@@ -131,7 +132,7 @@ def get_floatinips(nova_client):
     floatingips = openstack_utils.get_floating_ips(nova_client)
     if not (floatingips is None or len(floatingips) == 0):
         for floatingip in floatingips:
-            dic_floatingips.update({floatingip.id:floatingip.ip})
+            dic_floatingips.update({floatingip.id: floatingip.ip})
     return {'floatingips': dic_floatingips}
 
 
@@ -141,7 +142,7 @@ def get_users(keystone_client):
     users = openstack_utils.get_users(keystone_client)
     if not (users is None or len(users) == 0):
         for user in users:
-            dic_users.update({getattr(user, 'id'):getattr(user, 'name')})
+            dic_users.update({getattr(user, 'id'): getattr(user, 'name')})
     return {'users': dic_users}
 
 
@@ -151,7 +152,7 @@ def get_tenants(keystone_client):
     tenants = openstack_utils.get_tenants(keystone_client)
     if not (tenants is None or len(tenants) == 0):
         for tenant in tenants:
-            dic_tenants.update({getattr(tenant, 'id'):getattr(tenant, 'name')})
+            dic_tenants.update({getattr(tenant, 'id'): getattr(tenant, 'name')})
     return {'tenants': dic_tenants}
 
 
@@ -173,7 +174,8 @@ def main():
                                         service_type="volume")
 
     if not openstack_utils.check_credentials():
-        logger.error("Please source the openrc credentials and run the script again.")
+        logger.error("Please source the openrc credentials and run the" +
+                     "script again.")
         exit(-1)
 
     defaults = {}
@@ -192,7 +194,7 @@ def main():
         yaml_file.seek(0)
         logger.info("Openstack Defaults found in the deployment:")
         print yaml_file.read()
-        logger.debug("NOTE: These objects will NOT be deleted after "+\
+        logger.debug("NOTE: These objects will NOT be deleted after " +
                      "running the tests.")
 
     exit(0)

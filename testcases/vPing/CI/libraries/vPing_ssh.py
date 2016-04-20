@@ -159,15 +159,20 @@ def waitVmDeleted(nova, vm):
 def create_private_neutron_net(neutron):
 
     # Check if the network already exists
-    network_id = openstack_utils.get_network_id(neutron, NEUTRON_PRIVATE_NET_NAME)
-    subnet_id = openstack_utils.get_subnet_id(neutron, NEUTRON_PRIVATE_SUBNET_NAME)
-    router_id = openstack_utils.get_router_id(neutron, NEUTRON_ROUTER_NAME)
+    network_id = openstack_utils.get_network_id(neutron,
+                                                NEUTRON_PRIVATE_NET_NAME)
+    subnet_id = openstack_utils.get_subnet_id(neutron,
+                                              NEUTRON_PRIVATE_SUBNET_NAME)
+    router_id = openstack_utils.get_router_id(neutron,
+                                              NEUTRON_ROUTER_NAME)
 
     if network_id != '' and subnet_id != '' and router_id != '':
-        logger.info("Using existing network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
+        logger.info("Using existing network '%s'..."
+                    % NEUTRON_PRIVATE_NET_NAME)
     else:
         neutron.format = 'json'
-        logger.info('Creating neutron network %s...' % NEUTRON_PRIVATE_NET_NAME)
+        logger.info('Creating neutron network %s...'
+                    % NEUTRON_PRIVATE_NET_NAME)
         network_id = openstack_utils. \
             create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
 
@@ -193,7 +198,9 @@ def create_private_neutron_net(neutron):
         logger.debug("Router '%s' created successfully" % router_id)
         logger.debug('Adding router to subnet...')
 
-        if not openstack_utils.add_interface_router(neutron, router_id, subnet_id):
+        if not openstack_utils.add_interface_router(neutron,
+                                                    router_id,
+                                                    subnet_id):
             return False
         logger.debug("Interface added successfully.")
 
@@ -209,7 +216,8 @@ def create_private_neutron_net(neutron):
 
 
 def create_security_group(neutron_client):
-    sg_id = openstack_utils.get_security_group_id(neutron_client, SECGROUP_NAME)
+    sg_id = openstack_utils.get_security_group_id(neutron_client,
+                                                  SECGROUP_NAME)
     if sg_id != '':
         logger.info("Using existing security group '%s'..." % SECGROUP_NAME)
     else:
@@ -223,23 +231,27 @@ def create_security_group(neutron_client):
 
         sg_id = SECGROUP['id']
 
-        logger.debug("Security group '%s' with ID=%s created successfully." %\
+        logger.debug("Security group '%s' with ID=%s created successfully." % \
                      (SECGROUP['name'], sg_id))
 
-        logger.debug("Adding ICMP rules in security group '%s'..." % SECGROUP_NAME)
+        logger.debug("Adding ICMP rules in security group '%s'..."
+                     % SECGROUP_NAME)
         if not openstack_utils.create_secgroup_rule(neutron_client, sg_id, \
                                                    'ingress', 'icmp'):
             logger.error("Failed to create the security group rule...")
             return False
 
-        logger.debug("Adding SSH rules in security group '%s'..." % SECGROUP_NAME)
-        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id, \
-                                                   'ingress', 'tcp', '22', '22'):
+        logger.debug("Adding SSH rules in security group '%s'..."
+                     % SECGROUP_NAME)
+        if not openstack_utils.\
+            create_secgroup_rule(neutron_client, sg_id,
+                                 'ingress', 'tcp', '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
 
-        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id, \
-                                                   'egress', 'tcp', '22', '22'):
+        if not openstack_utils.\
+            create_secgroup_rule(neutron_client, sg_id,
+                                 'egress', 'tcp', '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
     return sg_id
@@ -324,7 +336,8 @@ def cleanup(nova, neutron, image_id, network_dic, sg_id, floatingip):
 
     logger.debug("Releasing floating ip '%s'..." % floatingip['fip_addr'])
     if not openstack_utils.delete_floating_ip(nova, floatingip['fip_id']):
-        logger.error("Unable to delete floatingip '%s'" % floatingip['fip_addr'])
+        logger.error("Unable to delete floatingip '%s'"
+                     % floatingip['fip_addr'])
         return False
     logger.debug(
         "Floating IP '%s' deleted successfully" % floatingip['fip_addr'])
@@ -350,7 +363,8 @@ def push_results(start_time_ts, duration, test_status):
                                                    'duration': duration,
                                                    'status': test_status})
     except:
-        logger.error("Error pushing results into Database '%s'" % sys.exc_info()[0])
+        logger.error("Error pushing results into Database '%s'"
+                     % sys.exc_info()[0])
 
 
 def main():
@@ -361,8 +375,9 @@ def main():
     neutron_client = neutronclient.Client(**creds_neutron)
     creds_keystone = openstack_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
-    glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
-                                                              endpoint_type='publicURL')
+    glance_endpoint = keystone_client.\
+        service_catalog.url_for(service_type='image',
+                                endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
     EXIT_CODE = -1
@@ -437,7 +452,8 @@ def main():
     if not waitVmActive(nova_client, vm1):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_1, openstack_utils.get_instance_status(nova_client, vm1)))
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatingip)
+        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
+                floatingip)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
@@ -446,7 +462,8 @@ def main():
     test_ip = vm1.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
     logger.debug("Instance '%s' got private ip '%s'." % (NAME_VM_1, test_ip))
 
-    logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_1, SECGROUP_NAME))
+    logger.info("Adding '%s' to security group '%s'..."
+                % (NAME_VM_1, SECGROUP_NAME))
     openstack_utils.add_secgroup_to_instance(nova_client, vm1.id, sg_id)
 
     # boot VM 2
@@ -464,12 +481,14 @@ def main():
     if not waitVmActive(nova_client, vm2):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_2, openstack_utils.get_instance_status(nova_client, vm2)))
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
+        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
+                floatip_dic)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_2)
 
-    logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_2, SECGROUP_NAME))
+    logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_2,
+                                                           SECGROUP_NAME))
     openstack_utils.add_secgroup_to_instance(nova_client, vm2.id, sg_id)
 
     logger.info("Creating floating IP for VM '%s'..." % NAME_VM_2)
@@ -479,14 +498,17 @@ def main():
 
     if floatip is None:
         logger.error("Cannot create floating IP.")
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
+        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
+                floatip_dic)
         return (EXIT_CODE)
     logger.info("Floating IP created: '%s'" % floatip)
 
-    logger.info("Associating floating ip: '%s' to VM '%s' " % (floatip, NAME_VM_2))
+    logger.info("Associating floating ip: '%s' to VM '%s' "
+                % (floatip, NAME_VM_2))
     if not openstack_utils.add_floating_ip(nova_client, vm2.id, floatip):
         logger.error("Cannot associate floating IP to VM.")
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
+        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
+                floatip_dic)
         return (EXIT_CODE)
 
     logger.info("Trying to establish SSH connection to %s..." % floatip)
@@ -502,7 +524,8 @@ def main():
     cidr_first_octet = NEUTRON_PRIVATE_SUBNET_CIDR.split('.')[0]
     while timeout > 0:
         try:
-            ssh.connect(floatip, username=username, password=password, timeout=2)
+            ssh.connect(floatip, username=username,
+                        password=password, timeout=2)
             logger.debug("SSH connection established to %s." % floatip)
             break
         except:
@@ -513,26 +536,33 @@ def main():
         console_log = vm2.get_console_output()
 
         # print each "Sending discover" captured on the console log
-        if len(re.findall("Sending discover", console_log)) > discover_count and not got_ip:
-            discover_count += 1
-            logger.debug("Console-log '%s': Sending discover..." % NAME_VM_2)
+        if len(re.findall("Sending discover", console_log)) > discover_count \
+            and not got_ip:
+                discover_count += 1
+                logger.debug("Console-log '%s': Sending discover..."
+                             % NAME_VM_2)
 
-        # check if eth0 got an ip, the line looks like this: "inet addr:192.168."....
+        # check if eth0 got an ip,the line looks like this:
+        # "inet addr:192.168."....
         # if the dhcp agent fails to assing ip, this line will not appear
         if "inet addr:"+cidr_first_octet in console_log and not got_ip:
             got_ip = True
-            logger.debug("The instance '%s' succeeded to get the IP from the dhcp agent.")
+            logger.debug("The instance '%s' succeeded to get the IP " \
+                         "from the dhcp agent.")
 
-        # if dhcp doesn't work, it shows "No lease, failing". The test will fail...
+        # if dhcp doesnt work,it shows "No lease, failing".The test will fail
         if "No lease, failing" in console_log and not nolease and not got_ip:
                 nolease = True
-                logger.debug("Console-log '%s': No lease, failing..." % NAME_VM_2)
-                logger.info("The instance failed to get an IP from "\
-                            "the DHCP agent. The test will probably timeout...")
+                logger.debug("Console-log '%s': No lease, failing..."
+                             % NAME_VM_2)
+                logger.info("The instance failed to get an IP from the"\
+                            "DHCP agent. The test will probably timeout...")
 
     if timeout == 0:  # 300 sec timeout (5 min)
-        logger.error("Cannot establish connection to IP '%s'. Aborting" % floatip)
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
+        logger.error("Cannot establish connection to IP '%s'. Aborting"
+                     % floatip)
+        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
+                floatip_dic)
         return (EXIT_CODE)
 
     scp = SCPClient(ssh.get_transport())
@@ -541,7 +571,8 @@ def main():
     try:
         scp.put(ping_script, "~/")
     except:
-        logger.error("Cannot SCP the file '%s' to VM '%s'" % (ping_script, floatip))
+        logger.error("Cannot SCP the file '%s' to VM '%s'"
+                     % (ping_script, floatip))
 
     cmd = 'chmod 755 ~/ping.sh'
     (stdin, stdout, stderr) = ssh.exec_command(cmd)
@@ -579,7 +610,8 @@ def main():
         logger.debug("Pinging %s. Waiting for response..." % test_ip)
         sec += 1
 
-    cleanup(nova_client, neutron_client, image_id, network_dic, sg_id, floatip_dic)
+    cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
+            floatip_dic)
 
     test_status = "NOK"
     if EXIT_CODE == 0:
