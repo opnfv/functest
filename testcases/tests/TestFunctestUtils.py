@@ -80,12 +80,12 @@ class TestFunctestUtils(unittest.TestCase):
         test = isTestRunnable('functest/vims', functest_yaml)
         self.assertTrue(test)
 
-
     def test_generateTestcaseList(self):
 
         test = generateTestcaseList(functest_yaml)
 
-        expected_list = "vping_ssh vping_userdata tempest odl doctor promise policy-test odl-vpn_service-tests vims rally "
+        expected_list = "vping_ssh vping_userdata tempest odl doctor " + \
+            "promise policy-test odl-vpn_service-tests vims rally "
         self.assertEqual(test, expected_list)
 
     def tearDown(self):
@@ -95,4 +95,3 @@ class TestFunctestUtils(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

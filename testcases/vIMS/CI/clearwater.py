@@ -10,8 +10,6 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
-import sys
-import subprocess
 
 
 class clearwater:
@@ -40,7 +38,8 @@ class clearwater:
     def set_public_domain(self, public_domain):
         self.config['public_domain'] = public_domain
 
-    def deploy_vnf(self, blueprint, bp_name='clearwater', dep_name='clearwater-opnfv'):
+    def deploy_vnf(self, blueprint, bp_name='clearwater',
+                   dep_name='clearwater-opnfv'):
         if self.orchestrator:
             self.dep_name = dep_name
             error = self.orchestrator.download_upload_and_deploy_blueprint(
@@ -52,7 +51,7 @@ class clearwater:
 
         else:
             if self.logger:
-                logger.error("Cloudify manager is down or not provide...")
+                self.logger.error("Cloudify manager is down or not provide...")
 
     def undeploy_vnf(self):
         if self.orchestrator:
@@ -61,7 +60,7 @@ class clearwater:
                 self.orchestrator.undeploy_deployment(self.dep_name)
             else:
                 if self.logger:
-                    logger.error("Clearwater isn't already deploy...")
+                    self.logger.error("Clearwater isn't already deploy...")
         else:
             if self.logger:
-                logger.error("Cloudify manager is down or not provide...")
+                self.logger.error("Cloudify manager is down or not provide...")
