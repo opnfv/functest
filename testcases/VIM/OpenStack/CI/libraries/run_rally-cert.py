@@ -100,7 +100,7 @@ SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general"). \
     get("directories").get("dir_rally_scn")
 TEMPLATE_DIR = SCENARIOS_DIR + "scenario/templates"
 SUPPORT_DIR = SCENARIOS_DIR + "scenario/support"
-###todo:
+
 FLAVOR_NAME = "m1.tiny"
 USERS_AMOUNT = 2
 TENANTS_AMOUNT = 3
@@ -471,7 +471,7 @@ def main():
     total_success_str = "{0:<10}".format(str(total_success)+'%')
     report += "+===================+============+===============+===========+\n"
     report += "| TOTAL:            | " + total_duration_str2 + " | " + \
-            total_nb_tests_str  + " | " + total_success_str + "|\n"
+        total_nb_tests_str + " | " + total_success_str + "|\n"
     report += "+===================+============+===============+===========+\n"
 
     logger.info("\n"+report)

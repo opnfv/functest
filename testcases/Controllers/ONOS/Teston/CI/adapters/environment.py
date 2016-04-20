@@ -23,7 +23,7 @@ import sys
 import pxssh
 from connection import connection
 
-class environment( connection ):
+class environment(connection):
 
     def __init__( self ):
         connection.__init__( self )
@@ -46,9 +46,9 @@ class environment( connection ):
         index = 0
         increment = 0
         while index != 1 or index != 4:
-            index = gitclone.expect ( ['already exists', 'esolving deltas: 100%', \
+            index = gitclone.expect (['already exists', 'esolving deltas: 100%', \
                                     'eceiving objects', 'Already up-to-date', \
-                                    'npacking objects: 100%', pexpect.EOF] )
+                                    'npacking objects: 100%', pexpect.EOF])
 
             filefolder = self.home + '/' + codeurl.split('/')[-1].split('.')[0]
             if index == 0 :
@@ -191,7 +191,7 @@ class environment( connection ):
         user: onos&compute node user
         password: onos&compute node password
         """
-        print "Now Changing " + testcase +  " name&password"
+        print "Now Changing " + testcase + " name&password"
         if self.masterusername == 'root':
             filepath = '/root/'
         else :

@@ -7,8 +7,16 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-
-import re, json, os, urllib2, argparse, logging, shutil, subprocess, yaml, sys, getpass
+import argparse
+import getpass
+import json
+import logging
+import os
+import re
+import shutil
+import subprocess
+import sys
+import yaml
 import functest_utils
 import openstack_utils
 from git import Repo
@@ -215,7 +223,7 @@ def check_rally():
     """
     if os.path.exists(RALLY_INSTALLATION_DIR):
         logger.debug("   Rally installation directory found in %s" % RALLY_INSTALLATION_DIR)
-        FNULL = open(os.devnull, 'w');
+        FNULL = open(os.devnull, 'w')
         cmd="rally deployment list | grep "+DEPLOYMENT_MAME
         logger.debug('   Executing command : {}'.format(cmd))
         p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=FNULL);
@@ -299,7 +307,7 @@ def main():
             logger.info("Functest environment not found or faulty")
 
     if args.action == "clean":
-        if args.force :
+        if args.force:
             action_clean()
         else :
             while True:

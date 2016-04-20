@@ -210,7 +210,7 @@ def remove_networks(neutron_client):
             logger.debug(" '%s', ID=%s " %(net_name,net_id))
             if net_id in default_networks:
                 logger.debug("   > this is a default network and will NOT be deleted.")
-            elif network['router:external'] == True:
+            elif network['router:external'] is True:
                 logger.debug("   > this is an external network and will NOT be deleted.")
             else:
                 logger.debug("   > this network will be deleted.")
@@ -265,7 +265,7 @@ def remove_ports(neutron_client, ports, network_ids):
                              % (port_id,subnet_id,router_id))
                 if openstack_utils.remove_interface_router(neutron_client,
                                                           router_id, subnet_id):
-                    time.sleep(5) # leave 5 seconds to detach before doing anything else
+                    time.sleep(5)  #leave 5 seconds to detach before doing anything else
                     logger.debug("  > Done!")
                 else:
                     logger.error("There has been a problem removing the "

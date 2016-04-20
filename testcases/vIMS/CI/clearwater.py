@@ -52,7 +52,7 @@ class clearwater:
 
         else:
             if self.logger:
-                logger.error("Cloudify manager is down or not provide...")
+                self.logger.error("Cloudify manager is down or not provide...")
 
     def undeploy_vnf(self):
         if self.orchestrator:
