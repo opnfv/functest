@@ -16,7 +16,6 @@ import requests
 import shutil
 import socket
 import subprocess
-import sys
 import urllib2
 from git import Repo
 
@@ -113,7 +112,8 @@ def get_pod_name(logger=None):
     except KeyError:
         if logger:
             logger.error(
-                "Unable to retrieve the POD name from environment.Using pod name 'unknown-pod'")
+                "Unable to retrieve the POD name from environment. " + \
+                "Using pod name 'unknown-pod'")
         return "unknown-pod"
 
 

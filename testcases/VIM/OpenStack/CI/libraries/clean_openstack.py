@@ -52,7 +52,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-REPO_PATH=os.environ['repos_dir']+'/functest/'
+REPO_PATH = os.environ['repos_dir']+'/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
@@ -80,8 +80,10 @@ default_floatingips = defaults_yaml.get('floatingips')
 default_users = defaults_yaml.get('users')
 default_tenants = defaults_yaml.get('tenants')
 
+
 def separator():
     logger.info("-------------------------------------------")
+
 
 def remove_instances(nova_client):
     logger.info("Removing Nova instances...")
@@ -184,7 +186,6 @@ def remove_floatingips(nova_client):
         else:
             logger.debug("   > this is a default floating IP and will NOT be deleted.")
 
-
     timeout = 50
     while timeout > 0:
         floatingips = openstack_utils.get_floating_ips(nova_client)
@@ -200,7 +201,7 @@ def remove_networks(neutron_client):
     logger.info("Removing Neutron objects")
     network_ids = []
     networks = openstack_utils.get_network_list(neutron_client)
-    if networks == None:
+    if networks is None:
         logger.debug("There are no networks in the deployment. ")
     else:
         logger.debug("Existing networks:")
@@ -210,7 +211,7 @@ def remove_networks(neutron_client):
             logger.debug(" '%s', ID=%s " %(net_name,net_id))
             if net_id in default_networks:
                 logger.debug("   > this is a default network and will NOT be deleted.")
-            elif network['router:external'] == True:
+            elif network['router:external'] is True:
                 logger.debug("   > this is an external network and will NOT be deleted.")
             else:
                 logger.debug("   > this network will be deleted.")
@@ -231,7 +232,7 @@ def remove_networks(neutron_client):
         remove_routers(neutron_client, routers)
 
     #remove networks
-    if network_ids != None:
+    if network_ids is not None:
         for net_id in network_ids:
             logger.debug("Removing network %s ..." % net_id)
             if openstack_utils.delete_neutron_net(neutron_client, net_id):
@@ -265,7 +266,7 @@ def remove_ports(neutron_client, ports, network_ids):
                              % (port_id,subnet_id,router_id))
                 if openstack_utils.remove_interface_router(neutron_client,
                                                           router_id, subnet_id):
-                    time.sleep(5) # leave 5 seconds to detach before doing anything else
+                    time.sleep(5)  # leave 5 seconds to detach before doing anything else
                     logger.debug("  > Done!")
                 else:
                     logger.error("There has been a problem removing the "
@@ -284,8 +285,8 @@ def force_remove_port(neutron_client, port_id):
     if openstack_utils.delete_neutron_port(neutron_client, port_id):
         logger.debug("  > Done!")
     else:
-        logger.error("There has been a problem removing "
-                                "the port %s..." % port_id)
+        logger.error("There has been a problem removing the port %s..." \
+                     % port_id)
 
 
 def remove_routers(neutron_client, routers):
