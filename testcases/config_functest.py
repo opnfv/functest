@@ -7,11 +7,16 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-
-import re, json, os, urllib2, argparse, logging, shutil, subprocess, yaml, sys, getpass
+import argparse
+import json
+import logging
+import os
+import shutil
+import subprocess
+import sys
+import yaml
 import functest_utils
 import openstack_utils
-from git import Repo
 from os import stat
 from pwd import getpwuid
 from neutronclient.v2_0 import client as neutronclient
@@ -64,7 +69,7 @@ DATA_DIR = functest_yaml.get("general").get("directories").get("dir_functest_dat
 # Tempest/Rally configuration details
 DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
 
-#Image (cirros)
+# Image (cirros)
 IMAGE_FILE_NAME = functest_yaml.get("general").get("openstack").get("image_file_name")
 IMAGE_PATH = DATA_DIR + "/" + IMAGE_FILE_NAME
 
@@ -80,6 +85,7 @@ NEUTRON_ROUTER_NAME = functest_yaml.get("general"). \
 
 creds_neutron = openstack_utils.get_credentials("neutron")
 neutron_client = neutronclient.Client(**creds_neutron)
+
 
 def action_start():
     """
@@ -162,10 +168,8 @@ def action_check():
     else:
         logger.debug("   Image file found in %s" % IMAGE_PATH)
 
-
-    #TODO: check OLD environment setup
+    # TODO: check OLD environment setup
     return not errors_all
-
 
 
 def action_clean():
@@ -184,7 +188,6 @@ def action_clean():
     logger.info("Functest environment clean!")
 
 
-
 def install_rally():
     if check_rally():
         logger.info("Rally is already installed.")
@@ -199,7 +202,7 @@ def install_rally():
 
         cmd = "rally deployment check"
         functest_utils.execute_command(cmd,logger)
-        #TODO: check that everything is 'Available' and warn if not
+        # TODO: check that everything is 'Available' and warn if not
 
         cmd = "rally show images"
         functest_utils.execute_command(cmd,logger)
@@ -209,17 +212,18 @@ def install_rally():
 
     return True
 
+
 def check_rally():
     """
     Check if Rally is installed and properly configured
     """
     if os.path.exists(RALLY_INSTALLATION_DIR):
         logger.debug("   Rally installation directory found in %s" % RALLY_INSTALLATION_DIR)
-        FNULL = open(os.devnull, 'w');
+        FNULL = open(os.devnull, 'w')
         cmd="rally deployment list | grep "+DEPLOYMENT_MAME
         logger.debug('   Executing command : {}'.format(cmd))
-        p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=FNULL);
-        #if the command does not exist or there is no deployment
+        p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=FNULL)
+        # if the command does not exist or there is no deployment
         line = p.stdout.readline()
         if line == "":
             logger.debug("   Rally deployment NOT found")
@@ -282,12 +286,10 @@ def main():
         logger.error('argument not valid')
         exit(-1)
 
-
     if not openstack_utils.check_credentials():
         logger.error("Please source the openrc credentials and run the script again.")
-        #TODO: source the credentials in this script
+        # TODO: source the credentials in this script
         exit(-1)
-
 
     if args.action == "start":
         action_start()
@@ -299,9 +301,9 @@ def main():
             logger.info("Functest environment not found or faulty")
 
     if args.action == "clean":
-        if args.force :
+        if args.force:
             action_clean()
-        else :
+        else:
             while True:
                 print("Are you sure? [y|n]")
                 answer = raw_input("")
@@ -317,4 +319,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
