@@ -10,7 +10,6 @@
 #
 # 0.1: OpenSCAP paramiko connection functions
 
-import os
 import paramiko
 
 __version__ = 0.1
