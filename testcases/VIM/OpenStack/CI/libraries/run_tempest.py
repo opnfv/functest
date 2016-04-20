@@ -61,14 +61,12 @@ if args.debug:
 else:
     ch.setLevel(logging.INFO)
 
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s - %(name)s - '
+                              '%(levelname)s - %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-REPO_PATH = os.environ['repos_dir']+'/functest/'
-if not os.path.exists(REPO_PATH):
-    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
-    exit(-1)
+REPO_PATH = os.environ['repos_dir'] + '/functest/'
 sys.path.append(REPO_PATH + "testcases/")
 import functest_utils
 import openstack_utils
@@ -79,16 +77,25 @@ f.close()
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 
 MODE = "smoke"
-TENANT_NAME = functest_yaml.get("tempest").get("identity").get("tenant_name")
-TENANT_DESCRIPTION = functest_yaml.get("tempest").get("identity").get("tenant_description")
-USER_NAME = functest_yaml.get("tempest").get("identity").get("user_name")
-USER_PASSWORD = functest_yaml.get("tempest").get("identity").get("user_password")
-SSH_USER_REGEX = functest_yaml.get("tempest").get("input-scenario").get("ssh_user_regex")
-DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
-RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get("dir_rally_inst")
-RESULTS_DIR = functest_yaml.get("general").get("directories").get("dir_results")
+TENANT_NAME = functest_yaml.get("tempest").\
+    get("identity").get("tenant_name")
+TENANT_DESCRIPTION = functest_yaml.get("tempest").\
+    get("identity").get("tenant_description")
+USER_NAME = functest_yaml.get("tempest").\
+    get("identity").get("user_name")
+USER_PASSWORD = functest_yaml.get("tempest").\
+    get("identity").get("user_password")
+SSH_USER_REGEX = functest_yaml.get("tempest").\
+    get("input-scenario").get("ssh_user_regex")
+DEPLOYMENT_MAME = functest_yaml.get("rally").\
+    get("deployment_name")
+RALLY_INSTALLATION_DIR = functest_yaml.get("general").\
+    get("directories").get("dir_rally_inst")
+RESULTS_DIR = functest_yaml.get("general").\
+    get("directories").get("dir_results")
 TEMPEST_RESULTS_DIR = RESULTS_DIR + '/tempest'
-TEST_LIST_DIR = functest_yaml.get("general").get("directories").get("dir_tempest_cases")
+TEST_LIST_DIR = functest_yaml.get("general").\
+    get("directories").get("dir_tempest_cases")
 TEMPEST_LIST_FILE = REPO_PATH + TEST_LIST_DIR + 'test_list.txt'
 TEMPEST_DEFCORE = REPO_PATH + TEST_LIST_DIR + 'defcore_req.txt'
 
@@ -111,10 +118,8 @@ def get_info(file_result):
         if (len(test_failed) < 1):
             test_failed = re.findall(regexp, line)
 
-    retval = p.wait()
-
-    logger.debug("test_run:"+test_run)
-    logger.debug("duration:"+duration)
+    logger.debug("test_run:" + test_run)
+    logger.debug("duration:" + duration)
 
 
 def push_results_to_db(case, payload, criteria):
@@ -183,7 +188,7 @@ def configure_tempest(mode):
     functest_utils.execute_command(cmd, logger)
 
     logger.debug("Resolving deployment UUID and directory...")
-    cmd = "rally deployment list | awk '/"+DEPLOYMENT_MAME+"/ {print $2}'"
+    cmd = "rally deployment list | awk '/" + DEPLOYMENT_MAME + "/ {print $2}'"
     p = subprocess.Popen(cmd, shell=True,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
@@ -191,12 +196,14 @@ def configure_tempest(mode):
     if deployment_uuid == "":
         logger.debug("   Rally deployment NOT found")
         return False
-    deployment_dir = RALLY_INSTALLATION_DIR + "/tempest/for-deployment-" + deployment_uuid
+    deployment_dir = RALLY_INSTALLATION_DIR + "/tempest/for-deployment-" + \
+        deployment_uuid
 
     logger.debug("Finding tempest.conf file...")
     tempest_conf_file = deployment_dir + "/tempest.conf"
     if not os.path.isfile(tempest_conf_file):
-        logger.error("   Tempest configuration file %s NOT found." % tempest_conf_file)
+        logger.error("   Tempest configuration file %s NOT found."
+                     % tempest_conf_file)
         return False
 
     logger.debug("Generating test case list...")
@@ -217,8 +224,9 @@ def configure_tempest(mode):
         logger.error("No shared private networks found.")
     else:
         private_net_name = private_net['name']
-    cmd = "crudini --set "+tempest_conf_file+" compute fixed_network_name " \
-          + private_net_name
+    cmd = "crudini --set " + tempest_conf_file + \
+          " compute fixed_network_name " + \
+          private_net_name
     functest_utils.execute_command(cmd, logger)
 
     logger.debug("  Updating non-admin credentials...")
@@ -231,7 +239,8 @@ def configure_tempest(mode):
     cmd = "crudini --set " + tempest_conf_file + " identity password " \
           + USER_PASSWORD
     functest_utils.execute_command(cmd, logger)
-    cmd = "sed -i 's/.*ssh_user_regex.*/ssh_user_regex = " + SSH_USER_REGEX + "/' " + tempest_conf_file
+    cmd = "sed -i 's/.*ssh_user_regex.*/ssh_user_regex = " + SSH_USER_REGEX + \
+        "/' " + tempest_conf_file
     functest_utils.execute_command(cmd, logger)
 
     # Copy tempest.conf to /home/opnfv/functest/results/tempest/
@@ -260,9 +269,9 @@ def run_tempest(OPTION):
              os.getenv('NODE_NAME', 'Unknown'),
              time.strftime("%a %b %d %H:%M:%S %Z %Y"))
 
-        f_stdout = open(TEMPEST_RESULTS_DIR+"/tempest.log", 'w+')
-        f_stderr = open(TEMPEST_RESULTS_DIR+"/tempest-error.log", 'w+')
-        f_env = open(TEMPEST_RESULTS_DIR+"/environment.log", 'w+')
+        f_stdout = open(TEMPEST_RESULTS_DIR + "/tempest.log", 'w+')
+        f_stderr = open(TEMPEST_RESULTS_DIR + "/tempest-error.log", 'w+')
+        f_env = open(TEMPEST_RESULTS_DIR + "/environment.log", 'w+')
         f_env.write(header)
 
         subprocess.call(cmd_line, shell=True, stdout=f_stdout, stderr=f_stderr)
@@ -294,12 +303,12 @@ def run_tempest(OPTION):
     # Generate json results for DB
     json_results = {"timestart": time_start, "duration": dur_sec_int,
                     "tests": int(num_tests), "failures": int(num_failures)}
-    logger.info("Results: "+str(json_results))
+    logger.info("Results: " + str(json_results))
 
     status = "failed"
     try:
         diff = (int(num_tests) - int(num_failures))
-        success_rate = 100*diff/int(num_tests)
+        success_rate = 100 * diff / int(num_tests)
     except:
         success_rate = 0
 
@@ -317,7 +326,8 @@ def main():
     global MODE
 
     if not (args.mode in modes):
-        logger.error("Tempest mode not valid. Possible values are:\n" + str(modes))
+        logger.error("Tempest mode not valid. "
+                     "Possible values are:\n" + str(modes))
         exit(-1)
 
     if args.mode == 'custom' or args.mode == 'smoke' or args.mode == 'full':

@@ -10,7 +10,6 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
-import sys
 import subprocess
 import os
 import shutil
@@ -56,17 +55,21 @@ class orchestrator:
     def set_logger(self, logger):
         self.logger = logger
 
-    def download_manager_blueprint(self, manager_blueprint_url, manager_blueprint_branch):
+    def download_manager_blueprint(self, manager_blueprint_url,
+                                   manager_blueprint_branch):
         if self.manager_blueprint:
             if self.logger:
                 self.logger.info(
-                    "cloudify manager server blueprint is already downloaded !")
+                    "cloudify manager server blueprint is "
+                    "already downloaded !")
         else:
             if self.logger:
                 self.logger.info(
                     "Downloading the cloudify manager server blueprint")
             download_result = download_blueprints(
-                manager_blueprint_url, manager_blueprint_branch, self.blueprint_dir)
+                manager_blueprint_url,
+                manager_blueprint_branch,
+                self.blueprint_dir)
 
             if not download_result:
                 if self.logger:
@@ -76,7 +79,7 @@ class orchestrator:
                 self.manager_blueprint = True
 
     def manager_up(self):
-        return manager_up
+        return self.manager_up
 
     def deploy_manager(self):
         if self.manager_blueprint:
@@ -98,13 +101,16 @@ class orchestrator:
             if self.logger:
                 self.logger.info("Launching the cloudify-manager deployment")
             script = "set -e; "
-            script += "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
+            script += "source " + self.testcase_dir + \
+                "venv_cloudify/bin/activate; "
             script += "cd " + self.testcase_dir + "; "
             script += "cfy init -r; "
             script += "cd cloudify-manager-blueprint; "
-            script += "cfy local create-requirements -o requirements.txt -p openstack-manager-blueprint.yaml; "
+            script += "cfy local create-requirements -o requirements.txt " + \
+                "-p openstack-manager-blueprint.yaml; "
             script += "pip install -r requirements.txt; "
-            script += "timeout 1800 cfy bootstrap --install-plugins -p openstack-manager-blueprint.yaml -i inputs.yaml; "
+            script += "timeout 1800 cfy bootstrap --install-plugins " + \
+                "-p openstack-manager-blueprint.yaml -i inputs.yaml; "
             cmd = "/bin/bash -c '" + script + "'"
             error = execute_command(cmd, self.logger)
             if error:
@@ -131,23 +137,30 @@ class orchestrator:
             self.logger.info(
                 "Cloudify-manager server has been successfully removed!")
 
-    def download_upload_and_deploy_blueprint(self, blueprint, config, bp_name, dep_name):
+    def download_upload_and_deploy_blueprint(self, blueprint, config,
+                                             bp_name, dep_name):
         if self.logger:
             self.logger.info("Downloading the {0} blueprint".format(
                 blueprint['file_name']))
-        download_result = download_blueprints(blueprint['url'], blueprint['branch'],
-                                              self.testcase_dir + blueprint['destination_folder'])
+        download_result = download_blueprints(blueprint['url'],
+                                              blueprint['branch'],
+                                              self.testcase_dir +
+                                              blueprint['destination_folder'])
 
         if not download_result:
             if self.logger:
                 self.logger.error(
-                    "Failed to download blueprint {0}".format(blueprint['file_name']))
+                    "Failed to download blueprint {0}".
+                    format(blueprint['file_name']))
             exit(-1)
 
         if self.logger:
             self.logger.info("Writing the inputs file")
-        with open(self.testcase_dir + blueprint['destination_folder'] + "/inputs.yaml", "w") as f:
+
+        with open(self.testcase_dir + blueprint['destination_folder'] +
+                  "/inputs.yaml", "w") as f:
             f.write(yaml.dump(config, default_style='"'))
+
         f.close()
 
         if self.logger:
@@ -159,7 +172,8 @@ class orchestrator:
             bp_name + " -p openstack-blueprint.yaml; "
         script += "cfy deployments create -b " + bp_name + \
             " -d " + dep_name + " --inputs inputs.yaml; "
-        script += "cfy executions start -w install -d " + dep_name + " --timeout 1800; "
+        script += "cfy executions start -w install -d " \
+            + dep_name + " --timeout 1800; "
 
         cmd = "/bin/bash -c '" + script + "'"
         error = execute_command(cmd, self.logger)
@@ -173,7 +187,8 @@ class orchestrator:
             self.logger.info("Launching the {0} undeployment".format(dep_name))
         script = "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
         script += "cd " + self.testcase_dir + "; "
-        script += "cfy executions start -w uninstall -d " + dep_name + " --timeout 1800 ; "
+        script += "cfy executions start -w uninstall -d " + dep_name \
+            + " --timeout 1800 ; "
         script += "cfy deployments delete -d " + dep_name + "; "
 
         cmd = "/bin/bash -c '" + script + "'"

@@ -10,7 +10,6 @@
 #
 # 0.1: OpenSCAP paramiko connection functions
 
-import os
 import paramiko
 
 __version__ = 0.1
@@ -68,8 +67,8 @@ class connectionManager:
             print "There was no output for this command"
 
     def run_tool(self):
-        dist = self.args[0]
-        report = self.args[1]
+        # dist = self.args[0]
+        # report = self.args[1]
         com = self.args[2]
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())

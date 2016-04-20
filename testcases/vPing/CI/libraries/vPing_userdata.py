@@ -60,7 +60,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s'
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-REPO_PATH = os.environ['repos_dir']+'/functest/'
+REPO_PATH = os.environ['repos_dir'] + '/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
@@ -156,9 +156,12 @@ def waitVmDeleted(nova, vm):
 def create_private_neutron_net(neutron):
 
     # Check if the network already exists
-    network_id = openstack_utils.get_network_id(neutron, NEUTRON_PRIVATE_NET_NAME)
-    subnet_id = openstack_utils.get_subnet_id(neutron, NEUTRON_PRIVATE_SUBNET_NAME)
-    router_id = openstack_utils.get_router_id(neutron, NEUTRON_ROUTER_NAME)
+    network_id = openstack_utils.get_network_id(neutron,
+                                                NEUTRON_PRIVATE_NET_NAME)
+    subnet_id = openstack_utils.get_subnet_id(neutron,
+                                              NEUTRON_PRIVATE_SUBNET_NAME)
+    router_id = openstack_utils.get_router_id(neutron,
+                                              NEUTRON_ROUTER_NAME)
 
     if network_id != '' and subnet_id != '' and router_id != '':
         logger.info("Using existing network '%s'.." % NEUTRON_PRIVATE_NET_NAME)
@@ -190,7 +193,8 @@ def create_private_neutron_net(neutron):
         logger.debug("Router '%s' created successfully" % router_id)
         logger.debug('Adding router to subnet...')
 
-        if not openstack_utils.add_interface_router(neutron, router_id, subnet_id):
+        if not openstack_utils.add_interface_router(neutron, router_id,
+                                                    subnet_id):
             return False
         logger.debug("Interface added successfully.")
 
@@ -206,38 +210,42 @@ def create_private_neutron_net(neutron):
 
 
 def create_security_group(neutron_client):
-    sg_id = openstack_utils.get_security_group_id(neutron_client, SECGROUP_NAME)
+    sg_id = openstack_utils.get_security_group_id(neutron_client,
+                                                  SECGROUP_NAME)
     if sg_id != '':
         logger.info("Using existing security group '%s'..." % SECGROUP_NAME)
     else:
         logger.info("Creating security group  '%s'..." % SECGROUP_NAME)
         SECGROUP = openstack_utils.create_security_group(neutron_client,
-                                                        SECGROUP_NAME,
-                                                        SECGROUP_DESCR)
+                                                         SECGROUP_NAME,
+                                                         SECGROUP_DESCR)
         if not SECGROUP:
             logger.error("Failed to create the security group...")
             return False
 
         sg_id = SECGROUP['id']
 
-        logger.debug("Security group '%s' with ID=%s created successfully." %\
-                     (SECGROUP['name'], sg_id))
+        logger.debug("Security group '%s' with ID=%s created successfully."
+                     % (SECGROUP['name'], sg_id))
 
-        logger.debug("Adding ICMP rules in security group '%s'..." % SECGROUP_NAME)
-        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id, \
-                                                   'ingress', 'icmp'):
+        logger.debug("Adding ICMP rules in security group '%s'..."
+                     % SECGROUP_NAME)
+        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id,
+                                                    'ingress', 'icmp'):
             logger.error("Failed to create the security group rule...")
             return False
 
-        logger.debug("Adding SSH rules in security group '%s'..." % SECGROUP_NAME)
-        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id, \
-                                                   'ingress', 'tcp',
-                                                   '22', '22'):
+        logger.debug("Adding SSH rules in security group '%s'..."
+                     % SECGROUP_NAME)
+        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id,
+                                                    'ingress', 'tcp',
+                                                    '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
 
-        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id, \
-                        'egress', 'tcp', '22', '22'):
+        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id,
+                                                    'egress', 'tcp',
+                                                    '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
     return sg_id
@@ -288,7 +296,7 @@ def cleanup(nova, neutron, image_id, network_dic):
     router_id = network_dic["router_id"]
 
     if not openstack_utils.remove_interface_router(neutron, router_id,
-                                                  subnet_id):
+                                                   subnet_id):
         logger.error("Unable to remove subnet '%s' from router '%s'" % (
             subnet_id, router_id))
         return False
@@ -336,7 +344,8 @@ def push_results(start_time_ts, duration, test_status):
                                                    'duration': duration,
                                                    'status': test_status})
     except:
-        logger.error("Error pushing results into Database '%s'" % sys.exc_info()[0])
+        logger.error("Error pushing results into Database '%s'"
+                     % sys.exc_info()[0])
 
 
 def main():
@@ -347,8 +356,9 @@ def main():
     neutron_client = neutronclient.Client(**creds_neutron)
     creds_keystone = openstack_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
-    glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
-                                                              endpoint_type='publicURL')
+    glance_endpoint = keystone_client.\
+        service_catalog.url_for(service_type='image',
+                                endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
     EXIT_CODE = -1
@@ -366,13 +376,13 @@ def main():
         logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                           GLANCE_IMAGE_PATH))
         image_id = openstack_utils.create_glance_image(glance_client,
-                                                      GLANCE_IMAGE_NAME,
-                                                      GLANCE_IMAGE_PATH)
+                                                       GLANCE_IMAGE_NAME,
+                                                       GLANCE_IMAGE_PATH)
         if not image_id:
             logger.error("Failed to create a Glance image...")
             return(EXIT_CODE)
-        logger.debug("Image '%s' with ID=%s created successfully." %\
-                     (GLANCE_IMAGE_NAME, image_id))
+        logger.debug("Image '%s' with ID=%s created successfully."
+                     % (GLANCE_IMAGE_NAME, image_id))
 
     network_dic = create_private_neutron_net(neutron_client)
     if not network_dic:
@@ -381,7 +391,7 @@ def main():
         return(EXIT_CODE)
     network_id = network_dic["net_id"]
 
-    sg_id = create_security_group(neutron_client)
+    create_security_group(neutron_client)
 
     # Check if the given flavor exists
     try:
@@ -500,8 +510,8 @@ def main():
             break
         elif sec % 10 == 0:
             if "request failed" in console_log:
-                logger.debug("It seems userdata is not supported in nova boot." + \
-                             " Waiting a bit...")
+                logger.debug("It seems userdata is not supported in "
+                             "nova boot. Waiting a bit...")
                 metadata_tries += 1
             else:
                 logger.debug("Pinging %s. Waiting for response..." % test_ip)
