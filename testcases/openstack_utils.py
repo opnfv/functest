@@ -59,14 +59,17 @@ def get_credentials(service):
         tenant: os.environ.get("OS_TENANT_NAME", "admin"),
     })
     cacert = os.environ.get("OS_CACERT")
-    if cacert != None:
+    if cacert is not None:
         # each openstack client uses differnt kwargs for this
-        creds.update({"cacert":cacert,"ca_cert":cacert,"https_ca_cert":cacert, \
-                      "https_cacert":cacert,"ca_file":cacert})
+        creds.update({"cacert": cacert,
+                      "ca_cert": cacert,
+                      "https_ca_cert": cacert,
+                      "https_cacert": cacert,
+                      "ca_file": cacert})
         creds.update({"insecure":"True","https_insecure":"True"})
         if not os.path.isfile(cacert):
-            print "WARNING: The 'OS_CACERT' environment variable is set to %s "\
-                "but the file does not exist." % cacert
+            print "WARNING: The 'OS_CACERT' environment variable is " + \
+                "set to %s but the file does not exist." % cacert
     return creds
 
 

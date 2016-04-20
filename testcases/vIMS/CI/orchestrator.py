@@ -10,7 +10,6 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
-import sys
 import subprocess
 import os
 import shutil
@@ -76,7 +75,7 @@ class orchestrator:
                 self.manager_blueprint = True
 
     def manager_up(self):
-        return manager_up
+        return self.manager_up
 
     def deploy_manager(self):
         if self.manager_blueprint:
