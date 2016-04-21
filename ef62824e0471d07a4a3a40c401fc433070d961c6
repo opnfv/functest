@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_a89341a2",
+        "filename": "CI/tier_manager.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-21T08:56:25Z",
+      "side": 1,
+      "message": "https://www.python.org/dev/peps/pep-0008/\nParentheses, brackets and braces should be used in preference to using a backslash for line continuation",
+      "revId": "ef62824e0471d07a4a3a40c401fc433070d961c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_28d63150",
+        "filename": "testcases/Controllers/ONOS/Teston/CI/onosfunctest.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-21T08:56:25Z",
+      "side": 1,
+      "message": "https://www.python.org/dev/peps/pep-0008/\nParentheses, brackets and braces should be used in preference to using a backslash for line continuation",
+      "revId": "ef62824e0471d07a4a3a40c401fc433070d961c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_08cb75a6",
+        "filename": "testcases/SECTests/OpenSCAP.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-21T08:56:25Z",
+      "side": 1,
+      "message": "https://www.python.org/dev/peps/pep-0008/\nParentheses, brackets and braces should be used in preference to using a backslash for line continuation",
+      "range": {
+        "startLine": 150,
+        "startChar": 50,
+        "endLine": 150,
+        "endChar": 51
+      },
+      "revId": "ef62824e0471d07a4a3a40c401fc433070d961c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_e8cff9ae",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_tempest.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-21T08:56:25Z",
+      "side": 1,
+      "message": "https://www.python.org/dev/peps/pep-0008/\nParentheses, brackets and braces should be used in preference to using a backslash for line continuation",
+      "revId": "ef62824e0471d07a4a3a40c401fc433070d961c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_c8c43d94",
+        "filename": "testcases/config_functest.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-21T08:56:25Z",
+      "side": 1,
+      "message": "https://www.python.org/dev/peps/pep-0008/\nParentheses, brackets and braces should be used in preference to using a backslash for line continuation",
+      "revId": "ef62824e0471d07a4a3a40c401fc433070d961c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_88be45fe",
+        "filename": "testcases/functest_utils.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-21T08:56:25Z",
+      "side": 1,
+      "message": "https://www.python.org/dev/peps/pep-0008/\nParentheses, brackets and braces should be used in preference to using a backslash for line continuation",
+      "revId": "ef62824e0471d07a4a3a40c401fc433070d961c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_68bb090f",
+        "filename": "testcases/openstack_utils.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-21T08:56:25Z",
+      "side": 1,
+      "message": "https://www.python.org/dev/peps/pep-0008/\nParentheses, brackets and braces should be used in preference to using a backslash for line continuation",
+      "revId": "ef62824e0471d07a4a3a40c401fc433070d961c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_283d1190",
+        "filename": "testcases/tests/TestFunctestUtils.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-21T08:56:25Z",
+      "side": 1,
+      "message": "https://www.python.org/dev/peps/pep-0008/\nParentheses, brackets and braces should be used in preference to using a backslash for line continuation",
+      "revId": "ef62824e0471d07a4a3a40c401fc433070d961c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_08425510",
+        "filename": "testcases/vIMS/CI/orchestrator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-21T08:56:25Z",
+      "side": 1,
+      "message": "https://www.python.org/dev/peps/pep-0008/\nParentheses, brackets and braces should be used in preference to using a backslash for line continuation",
+      "revId": "ef62824e0471d07a4a3a40c401fc433070d961c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_e846d922",
+        "filename": "testcases/vPing/CI/libraries/vPing_userdata.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-21T08:56:25Z",
+      "side": 1,
+      "message": "https://www.python.org/dev/peps/pep-0008/\nParentheses, brackets and braces should be used in preference to using a backslash for line continuation",
+      "revId": "ef62824e0471d07a4a3a40c401fc433070d961c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
