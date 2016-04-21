@@ -45,7 +45,7 @@ parser.add_argument("test_name",
                          "performs all possible test scenarios"
                          .format(d=tests))
 
-parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
+parser.add_argument("-d", "--debug", help="Debug mode",  action="store_true")
 parser.add_argument("-r", "--report",
                     help="Create json result file",
                     action="store_true")
@@ -83,7 +83,7 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - "
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-REPO_PATH = os.environ['repos_dir'] + '/functest/'
+REPO_PATH = os.environ['repos_dir']+'/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
@@ -95,12 +95,12 @@ with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
-HOME = os.environ['HOME'] + "/"
+HOME = os.environ['HOME']+"/"
 SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general"). \
     get("directories").get("dir_rally_scn")
 TEMPLATE_DIR = SCENARIOS_DIR + "scenario/templates"
 SUPPORT_DIR = SCENARIOS_DIR + "scenario/support"
-
+###todo:
 FLAVOR_NAME = "m1.tiny"
 USERS_AMOUNT = 2
 TENANTS_AMOUNT = 3
@@ -215,7 +215,7 @@ def build_task_args(test_file_name):
         task_args['floating_network'] = ''
 
     net_id = openstack_utils.get_network_id(client_dict['neutron'],
-                                            PRIVATE_NETWORK)
+                                           PRIVATE_NETWORK)
     task_args['netid'] = str(net_id)
     task_args['live_migration'] = live_migration_supported()
 
@@ -270,7 +270,7 @@ def get_output(proc, test_name):
             except ValueError:
                 logger.info('Duration error: %s, %s' % (duration, line))
 
-    overall_duration = "{:10.2f}".format(overall_duration)
+    overall_duration="{:10.2f}".format(overall_duration)
     if nb_totals == 0:
         success_avg = 0
     else:
@@ -378,9 +378,8 @@ def main():
     neutron_client = neutronclient.Client(**creds_neutron)
     creds_keystone = openstack_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
-    glance_endpoint = keystone_client.\
-        service_catalog.url_for(service_type='image',
-                                endpoint_type='publicURL')
+    glance_endpoint = keystone_client.service_catalog.url_for(service_type='image',
+                                                              endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
     creds_cinder = openstack_utils.get_credentials("cinder")
@@ -393,15 +392,15 @@ def main():
     client_dict['neutron'] = neutron_client
 
     volume_types = openstack_utils.list_volume_types(cinder_client,
-                                                     private=False)
+                                                    private=False)
     if not volume_types:
-        volume_type = openstack_utils.\
-            create_volume_type(cinder_client, CINDER_VOLUME_TYPE_NAME)
+        volume_type = openstack_utils.create_volume_type(cinder_client,
+                                                        CINDER_VOLUME_TYPE_NAME)
         if not volume_type:
             logger.error("Failed to create volume type...")
             exit(-1)
         else:
-            logger.debug("Volume type '%s' created succesfully..."
+            logger.debug("Volume type '%s' created succesfully..." \
                          % CINDER_VOLUME_TYPE_NAME)
     else:
         logger.debug("Using existing volume type(s)...")
@@ -413,16 +412,16 @@ def main():
         logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                            GLANCE_IMAGE_PATH))
         image_id = openstack_utils.create_glance_image(glance_client,
-                                                       GLANCE_IMAGE_NAME,
-                                                       GLANCE_IMAGE_PATH)
+                                                      GLANCE_IMAGE_NAME,
+                                                      GLANCE_IMAGE_PATH)
         if not image_id:
             logger.error("Failed to create the Glance image...")
             exit(-1)
         else:
-            logger.debug("Image '%s' with ID '%s' created succesfully ."
+            logger.debug("Image '%s' with ID '%s' created succesfully ." \
                          % (GLANCE_IMAGE_NAME, image_id))
     else:
-        logger.debug("Using existing image '%s' with ID '%s'..."
+        logger.debug("Using existing image '%s' with ID '%s'..." \
                      % (GLANCE_IMAGE_NAME, image_id))
         image_exists = True
 
@@ -436,19 +435,14 @@ def main():
         run_task(args.test_name)
 
     report = "\n"\
-             "                                                              "\
-             "\n"\
+             "                                                              \n"\
              "                     Rally Summary Report\n"\
-             "\n"\
-             "+===================+============+===============+===========+"\
-             "\n"\
-             "| Module            | Duration   | nb. Test Run  | Success   |"\
-             "\n"\
-             "+===================+============+===============+===========+"\
-             "\n"
+             "+===================+============+===============+===========+\n"\
+             "| Module            | Duration   | nb. Test Run  | Success   |\n"\
+             "+===================+============+===============+===========+\n"
     payload = []
 
-    # for each scenario we draw a row for the table
+    #for each scenario we draw a row for the table
     total_duration = 0.0
     total_nb_tests = 0
     total_success = 0.0
@@ -460,12 +454,11 @@ def main():
         duration = "{0:<10}".format(duration)
         nb_tests = "{0:<13}".format(s['nb_tests'])
         total_nb_tests += int(s['nb_tests'])
-        success = "{0:<10}".format(str(s['success']) + '%')
+        success = "{0:<10}".format(str(s['success'])+'%')
         total_success += float(s['success'])
-        report += "" + \
-            "| " + name + " | " + duration + " | " + \
-            nb_tests + " | " + success + "|\n" + \
-            "+-------------------+------------+---------------+-----------+\n"
+        report += ""\
+        "| " + name + " | " + duration + " | " + nb_tests + " | " + success + "|\n"\
+        "+-------------------+------------+---------------+-----------+\n"
         payload.append({'module': name,
                         'details': {'duration': s['overall_duration'],
                                     'nb tests': s['nb_tests'],
@@ -475,24 +468,21 @@ def main():
     total_duration_str2 = "{0:<10}".format(total_duration_str)
     total_nb_tests_str = "{0:<13}".format(total_nb_tests)
     total_success = "{:0.2f}".format(total_success / len(SUMMARY))
-    total_success_str = "{0:<10}".format(str(total_success) + '%')
-    report += "+===================+============+===============+===========+"
-    report += "\n"
+    total_success_str = "{0:<10}".format(str(total_success)+'%')
+    report += "+===================+============+===============+===========+\n"
     report += "| TOTAL:            | " + total_duration_str2 + " | " + \
-        total_nb_tests_str + " | " + total_success_str + "|\n"
-    report += "+===================+============+===============+===========+"
-    report += "\n"
+            total_nb_tests_str  + " | " + total_success_str + "|\n"
+    report += "+===================+============+===============+===========+\n"
 
-    logger.info("\n" + report)
+    logger.info("\n"+report)
     payload.append({'summary': {'duration': total_duration,
-                                'nb tests': total_nb_tests,
-                                'nb success': total_success}})
+                               'nb tests': total_nb_tests,
+                               'nb success': total_success}})
 
     # Generate json results for DB
-    # json_results = {"timestart": time_start, "duration": total_duration,
-    #                "tests": int(total_nb_tests),
-    #                "success": int(total_success)}
-    # logger.info("Results: "+str(json_results))
+    #json_results = {"timestart": time_start, "duration": total_duration,
+    #                "tests": int(total_nb_tests), "success": int(total_success)}
+    #logger.info("Results: "+str(json_results))
 
     # Evaluation of the success criteria
     status = "failed"
@@ -508,13 +498,13 @@ def main():
         exit(0)
 
     if not image_exists:
-        logger.debug("Deleting image '%s' with ID '%s'..."
+        logger.debug("Deleting image '%s' with ID '%s'..." \
                      % (GLANCE_IMAGE_NAME, image_id))
         if not openstack_utils.delete_glance_image(nova_client, image_id):
             logger.error("Error deleting the glance image")
 
     if not volume_types:
-        logger.debug("Deleting volume type '%s'..."
+        logger.debug("Deleting volume type '%s'..." \
                      % CINDER_VOLUME_TYPE_NAME)
         if not openstack_utils.delete_volume_type(cinder_client, volume_type):
             logger.error("Error in deleting volume type...")

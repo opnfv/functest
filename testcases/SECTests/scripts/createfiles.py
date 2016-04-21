@@ -21,6 +21,6 @@ files = ['results.xml', 'report.html', 'syschar.xml']
 directory_name = tempfile.mkdtemp()
 
 for i in files:
-    os.system("touch %s/%s" % (directory_name, i))
+    os.system("touch %s/%s" % (directory_name,i))
 
 print directory_name

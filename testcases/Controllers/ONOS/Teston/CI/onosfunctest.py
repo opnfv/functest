@@ -46,10 +46,8 @@ f.close()
 
 # onos parameters
 TEST_DB = functest_yaml.get("results").get("test_db_url")
-ONOS_REPO_PATH = functest_yaml.get("general").\
-    get("directories").get("dir_repos")
-ONOS_CONF_DIR = functest_yaml.get("general").\
-    get("directories").get("dir_functest_conf")
+ONOS_REPO_PATH = functest_yaml.get("general").get("directories").get("dir_repos")
+ONOS_CONF_DIR = functest_yaml.get("general").get("directories").get("dir_functest_conf")
 REPO_PATH = ONOS_REPO_PATH + '/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
@@ -89,15 +87,15 @@ def GetResult():
     LOGPATH = ONOSCI_PATH + "OnosSystemTest/TestON/logs"
     cmd = "grep -rnh " + "Fail" + " " + LOGPATH
     Resultbuffer = os.popen(cmd).read()
-    # duration = datetime.datetime.now() - starttime
+    duration = datetime.datetime.now() - starttime
     time.sleep(2)
 
     if re.search("\s+[1-9]+\s+", Resultbuffer):
         logger.debug("Testcase Fails\n" + Resultbuffer)
-        # Result = "Failed"
+        Result = "Failed"
     else:
         logger.debug("Testcases Success")
-        # Result = "Success"
+        Result = "Success"
     # payload={'timestart': str(starttime),
     #          'duration': str(duration),
     #            'status': Result}
@@ -197,9 +195,8 @@ def main():
         # i.e. FUNCvirNet & FUNCvirNetL3
         status = "failed"
         try:
-            if (result['FUNCvirNet']['result'] == "Success" and
-                    result['FUNCvirNetL3']['result'] == "Success"):
-                    status = "passed"
+            if result['FUNCvirNet']['result'] == "Success" and result['FUNCvirNetL3']['result'] == "Success":
+                status = "passed"
         except:
             logger.error("Unable to set ONOS criteria")
 

@@ -59,17 +59,14 @@ def get_credentials(service):
         tenant: os.environ.get("OS_TENANT_NAME", "admin"),
     })
     cacert = os.environ.get("OS_CACERT")
-    if cacert is not None:
+    if cacert != None:
         # each openstack client uses differnt kwargs for this
-        creds.update({"cacert": cacert,
-                      "ca_cert": cacert,
-                      "https_ca_cert": cacert,
-                      "https_cacert": cacert,
-                      "ca_file": cacert})
-        creds.update({"insecure": "True", "https_insecure": "True"})
+        creds.update({"cacert":cacert,"ca_cert":cacert,"https_ca_cert":cacert, \
+                      "https_cacert":cacert,"ca_file":cacert})
+        creds.update({"insecure":"True","https_insecure":"True"})
         if not os.path.isfile(cacert):
-            print "WARNING: The 'OS_CACERT' environment variable is " + \
-                "set to %s but the file does not exist." % cacert
+            print "WARNING: The 'OS_CACERT' environment variable is set to %s "\
+                "but the file does not exist." % cacert
     return creds
 
 
@@ -181,8 +178,7 @@ def delete_floating_ip(nova_client, floatingip_id):
         nova_client.floating_ips.delete(floatingip_id)
         return True
     except Exception, e:
-        print "Error [delete_floating_ip(nova_client, '%s')]:" \
-            % floatingip_id, e
+        print "Error [delete_floating_ip(nova_client, '%s')]:" % floatingip_id, e
         return False
 
 
@@ -369,8 +365,7 @@ def add_gateway_router(neutron_client, router_id):
         neutron_client.add_gateway_router(router_id, router_dict)
         return True
     except Exception, e:
-        print "Error [add_gateway_router(neutron_client, '%s')]:" \
-            % router_id, e
+        print "Error [add_gateway_router(neutron_client, '%s')]:" % router_id, e
         return False
 
 
@@ -379,8 +374,7 @@ def delete_neutron_net(neutron_client, network_id):
         neutron_client.delete_network(network_id)
         return True
     except Exception, e:
-        print "Error [delete_neutron_net(neutron_client, '%s')]:" \
-            % network_id, e
+        print "Error [delete_neutron_net(neutron_client, '%s')]:" % network_id, e
         return False
 
 
@@ -389,12 +383,12 @@ def delete_neutron_subnet(neutron_client, subnet_id):
         neutron_client.delete_subnet(subnet_id)
         return True
     except Exception, e:
-        print "Error [delete_neutron_subnet(neutron_client, '%s')]:" \
-            % subnet_id, e
+        print "Error [delete_neutron_subnet(neutron_client, '%s')]:" % subnet_id, e
         return False
 
 
 def delete_neutron_router(neutron_client, router_id):
+    json_body = {'router': {'id': router_id}}
     try:
         neutron_client.delete_router(router=router_id)
         return True
@@ -420,8 +414,8 @@ def remove_interface_router(neutron_client, router_id, subnet_id):
                                                body=json_body)
         return True
     except Exception, e:
-        print "Error [remove_interface_router(neutron_client, '%s', '%s')]:" \
-            % (router_id, subnet_id), e
+        print "Error [remove_interface_router(neutron_client, '%s', '%s')]:" % \
+            (router_id, subnet_id), e
         return False
 
 
@@ -430,8 +424,7 @@ def remove_gateway_router(neutron_client, router_id):
         neutron_client.remove_gateway_router(router_id)
         return True
     except Exception, e:
-        print "Error [remove_gateway_router(neutron_client, '%s')]:" \
-            % router_id, e
+        print "Error [remove_gateway_router(neutron_client, '%s')]:" % router_id, e
         return False
 
 
@@ -485,8 +478,7 @@ def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
     else:
         print "Error [create_secgroup_rule(neutron_client, '%s', '%s', "\
               "'%s', '%s', '%s', '%s')]:" % (neutron_client, sg_id, direction,
-                                             port_range_min, port_range_max,
-                                             protocol),\
+                                             port_range_min, port_range_max, protocol),\
               " Invalid values for port_range_min, port_range_max"
         return False
     try:
@@ -517,11 +509,11 @@ def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
     }}
 
     try:
-        neutron_client.update_quota(tenant_id=tenant_id,
-                                    body=json_body)
+        quota = neutron_client.update_quota(tenant_id=tenant_id,
+                                            body=json_body)
         return True
     except Exception, e:
-        print "Error [update_sg_quota(neutron_client, '%s', '%s', " \
+        print "Error [update_sg_quota(neutron_client, '%s', '%s', "\
             "'%s')]:" % (tenant_id, sg_quota, sg_rule_quota), e
         return False
 
@@ -531,8 +523,7 @@ def delete_security_group(neutron_client, secgroup_id):
         neutron_client.delete_security_group(secgroup_id)
         return True
     except Exception, e:
-        print "Error [delete_security_group(neutron_client, '%s')]:"  \
-            % secgroup_id, e
+        print "Error [delete_security_group(neutron_client, '%s')]:" % secgroup_id, e
         return False
 
 
@@ -626,7 +617,8 @@ def update_cinder_quota(cinder_client, tenant_id, vols_quota,
                      "gigabytes": gigabytes_quota}
 
     try:
-        cinder_client.quotas.update(tenant_id, **quotas_values)
+        quotas_default = cinder_client.quotas.update(tenant_id,
+                                                     **quotas_values)
         return True
     except Exception, e:
         print "Error [update_cinder_quota(cinder_client, '%s', '%s', '%s'" \
@@ -657,8 +649,7 @@ def delete_volume_type(cinder_client, volume_type):
         cinder_client.volume_types.delete(volume_type)
         return True
     except Exception, e:
-        print "Error [delete_volume_type(cinder_client, '%s')]:" \
-            % volume_type, e
+        print "Error [delete_volume_type(cinder_client, '%s')]:" % volume_type, e
         return False
 
 
@@ -750,7 +741,7 @@ def add_role_user(keystone_client, user_id, role_id, tenant_id):
 
 def delete_tenant(keystone_client, tenant_id):
     try:
-        keystone_client.tenants.delete(tenant_id)
+        tenant = keystone_client.tenants.delete(tenant_id)
         return True
     except Exception, e:
         print "Error [delete_tenant(keystone_client, '%s')]:" % tenant_id, e
@@ -759,7 +750,7 @@ def delete_tenant(keystone_client, tenant_id):
 
 def delete_user(keystone_client, user_id):
     try:
-        keystone_client.users.delete(user_id)
+        tenant = keystone_client.users.delete(user_id)
         return True
     except Exception, e:
         print "Error [delete_user(keystone_client, '%s')]:" % user_id, e

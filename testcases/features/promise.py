@@ -80,6 +80,11 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
+def create_image(glance_client, name):
+
+    return image_id
+
+
 def main():
     ks_creds = openstack_utils.get_credentials("keystone")
     nv_creds = openstack_utils.get_credentials("nova")
@@ -112,8 +117,7 @@ def main():
         exit(-1)
 
     logger.info("Adding role '%s' to tenant '%s'..." % (role_id, TENANT_NAME))
-    if not openstack_utils.add_role_user(keystone, user_id,
-                                         role_id, tenant_id):
+    if not openstack_utils.add_role_user(keystone, user_id, role_id, tenant_id):
         logger.error("Error : Failed to add %s on tenant %s" %
                      (ks_creds['username'], TENANT_NAME))
         exit(-1)
@@ -143,17 +147,16 @@ def main():
         "project_id": TENANT_NAME,
     })
 
-    glance_endpoint = keystone.\
-        service_catalog.url_for(service_type='image',
-                                endpoint_type='publicURL')
+    glance_endpoint = keystone.service_catalog.url_for(service_type='image',
+                                                       endpoint_type='publicURL')
     glance = glclient.Client(1, glance_endpoint, token=keystone.auth_token)
     nova = nvclient.Client("2", **nv_creds)
 
     logger.info("Creating image '%s' from '%s'..." % (IMAGE_NAME,
                                                       GLANCE_IMAGE_PATH))
     image_id = openstack_utils.create_glance_image(glance,
-                                                   IMAGE_NAME,
-                                                   GLANCE_IMAGE_PATH)
+                                                  IMAGE_NAME,
+                                                  GLANCE_IMAGE_PATH)
     if not image_id:
         logger.error("Failed to create the Glance image...")
         exit(-1)
@@ -163,24 +166,23 @@ def main():
     if flavor_id == '':
         logger.info("Creating flavor '%s'..." % FLAVOR_NAME)
         flavor_id = openstack_utils.create_flavor(nova,
-                                                  FLAVOR_NAME,
-                                                  FLAVOR_RAM,
-                                                  FLAVOR_DISK,
-                                                  FLAVOR_VCPUS)
+                                                 FLAVOR_NAME,
+                                                 FLAVOR_RAM,
+                                                 FLAVOR_DISK,
+                                                 FLAVOR_VCPUS)
         if not flavor_id:
             logger.error("Failed to create the Flavor...")
             exit(-1)
         logger.debug("Flavor '%s' with ID '%s' created successfully." %
                      (FLAVOR_NAME, flavor_id))
     else:
-        logger.debug("Using existing flavor '%s' with ID '%s'..."
-                     % (FLAVOR_NAME, flavor_id))
+        logger.debug("Using existing flavor '%s' with ID '%s'..." % (FLAVOR_NAME,
+                                                                     flavor_id))
 
     neutron = ntclient.Client(**nt_creds)
     private_net = openstack_utils.get_private_net(neutron)
     if private_net is None:
-        logger.error("There is no private network in the deployment."
-                     "Aborting...")
+        logger.error("There is no private network in the deployment. Aborting...")
         exit(-1)
     logger.debug("Using private network '%s' (%s)." % (private_net['name'],
                                                        private_net['id']))
@@ -200,16 +202,16 @@ def main():
     cmd = 'npm run -s test -- --reporter json'
 
     logger.info("Running command: %s" % cmd)
-    ret = subprocess.call(cmd, shell=True, stdout=results_file,
+    ret = subprocess.call(cmd, shell=True, stdout=results_file, \
                           stderr=subprocess.STDOUT)
     results_file.close()
 
     if ret == 0:
         logger.info("The test succeeded.")
-        # test_status = 'OK'
+        test_status = 'OK'
     else:
         logger.info("The command '%s' failed." % cmd)
-        # test_status = "Failed"
+        test_status = "Failed"
 
     # Print output of file
     with open(results_file_name, 'r') as results_file:
@@ -224,35 +226,34 @@ def main():
         failures = json_data["stats"]["failures"]
         start_time = json_data["stats"]["start"]
         end_time = json_data["stats"]["end"]
-        duration = float(json_data["stats"]["duration"]) / float(1000)
+        duration = float(json_data["stats"]["duration"])/float(1000)
 
-    logger.info("\n"
-                "****************************************\n"
-                "          Promise test report\n\n"
-                "****************************************\n"
-                " Suites:  \t%s\n"
-                " Tests:   \t%s\n"
-                " Passes:  \t%s\n"
-                " Pending: \t%s\n"
-                " Failures:\t%s\n"
-                " Start:   \t%s\n"
-                " End:     \t%s\n"
-                " Duration:\t%s\n"
-                "****************************************\n\n"
-                % (suites, tests, passes, pending, failures,
-                   start_time, end_time, duration))
+    logger.info("\n" \
+                "****************************************\n"\
+                "          Promise test report\n\n"\
+                "****************************************\n"\
+                " Suites:  \t%s\n"\
+                " Tests:   \t%s\n"\
+                " Passes:  \t%s\n"\
+                " Pending: \t%s\n"\
+                " Failures:\t%s\n"\
+                " Start:   \t%s\n"\
+                " End:     \t%s\n"\
+                " Duration:\t%s\n"\
+                "****************************************\n\n"\
+                % (suites, tests, passes, pending, failures, start_time, end_time, duration))
 
     if args.report:
         pod_name = functest_utils.get_pod_name(logger)
         installer = functest_utils.get_installer_type(logger)
         scenario = functest_utils.get_scenario(logger)
         build_tag = functest_utils.get_build_tag(logger)
-        # git_version = functest_utils.get_git_branch(PROMISE_REPO)
+        git_version = functest_utils.get_git_branch(PROMISE_REPO)
         url = TEST_DB + "/results"
 
         json_results = {"timestart": start_time, "duration": duration,
                         "tests": int(tests), "failures": int(failures)}
-        logger.debug("Results json: " + str(json_results))
+        logger.debug("Results json: "+str(json_results))
 
         # criteria for Promise in Release B was 100% of tests OK
         status = "failed"
