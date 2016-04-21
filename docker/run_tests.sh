@@ -103,17 +103,16 @@ function run_test(){
         "healthcheck")
             info "Running health check test..."
             ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/healthcheck.sh
-            clean_openstack
         ;;
         "vping_ssh")
             info "Running vPing-SSH test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_ssh.py \
-                $debug $clean_flag $report
+                $debug $report
         ;;
         "vping_userdata")
             info "Running vPing-userdata test... "
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_userdata.py \
-                $debug $clean_flag $report
+                $debug $report
         ;;
         "odl")
             info "Running ODL test..."
@@ -138,19 +137,16 @@ function run_test(){
             if [ -f ${tempest_conf} ]; then
                 cp $tempest_conf ${FUNCTEST_CONF_DIR}
             fi
-            clean_openstack
         ;;
         "vims")
             info "Running vIMS test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py \
                 $debug $clean_flag $report
-            clean_openstack
         ;;
         "rally")
             info "Running Rally benchmark suite..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py \
                 $debug $clean_flag all $report
-            clean_openstack
 
         ;;
         "bgpvpn")
@@ -171,7 +167,6 @@ bgpvpn = True" >> /etc/tempest/tempest.conf
               ./run_tempest.sh -t -N -- networking_bgpvpn_tempest
               rm -rf /etc/tempest/tempest.conf
             popd
-            clean_openstack
         ;;
         "onos")
             info "Running ONOS test case..."
@@ -185,7 +180,6 @@ bgpvpn = True" >> /etc/tempest/tempest.conf
             info "Running PROMISE test case..."
             python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py $debug $report
             sleep 10 # to let the instances terminate
-            clean_openstack
         ;;
         "doctor")
             info "Running Doctor test..."
@@ -196,6 +190,10 @@ bgpvpn = True" >> /etc/tempest/tempest.conf
             ${repos_dir}/ovno/Testcases/RunTests.sh
         ;;
     esac
+
+    if [[ -n $clean_flag ]]; then
+        clean_openstack
+    fi
 }
 
 

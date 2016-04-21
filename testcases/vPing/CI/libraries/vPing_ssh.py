@@ -38,9 +38,6 @@ parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
 parser.add_argument("-r", "--report",
                     help="Create json result file",
                     action="store_true")
-parser.add_argument("-n", "--noclean",
-                    help="Don't clean the created resources for this test.",
-                    action="store_true")
 
 args = parser.parse_args()
 
@@ -257,93 +254,6 @@ def create_security_group(neutron_client):
     return sg_id
 
 
-def cleanup(nova, neutron, image_id, network_dic, sg_id, floatingip):
-    if args.noclean:
-        logger.debug("The OpenStack resources are not deleted.")
-        return True
-
-    # delete both VMs
-    logger.info("Cleaning up...")
-    if not image_exists:
-        logger.debug("Deleting image...")
-        if not openstack_utils.delete_glance_image(nova, image_id):
-            logger.error("Error deleting the glance image")
-
-    vm1 = openstack_utils.get_instance_by_name(nova, NAME_VM_1)
-    if vm1:
-        logger.debug("Deleting '%s'..." % NAME_VM_1)
-        nova.servers.delete(vm1)
-        # wait until VMs are deleted
-        if not waitVmDeleted(nova, vm1):
-            logger.error(
-                "Instance '%s' with cannot be deleted. Status is '%s'" % (
-                    NAME_VM_1, openstack_utils.get_instance_status(nova, vm1)))
-        else:
-            logger.debug("Instance %s terminated." % NAME_VM_1)
-
-    vm2 = openstack_utils.get_instance_by_name(nova, NAME_VM_2)
-
-    if vm2:
-        logger.debug("Deleting '%s'..." % NAME_VM_2)
-        vm2 = nova.servers.find(name=NAME_VM_2)
-        nova.servers.delete(vm2)
-
-        if not waitVmDeleted(nova, vm2):
-            logger.error(
-                "Instance '%s' with cannot be deleted. Status is '%s'" % (
-                    NAME_VM_2, openstack_utils.get_instance_status(nova, vm2)))
-        else:
-            logger.debug("Instance %s terminated." % NAME_VM_2)
-
-    # delete created network
-    logger.debug("Deleting network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
-    net_id = network_dic["net_id"]
-    subnet_id = network_dic["subnet_id"]
-    router_id = network_dic["router_id"]
-
-    if not openstack_utils.remove_interface_router(neutron, router_id,
-                                                   subnet_id):
-        logger.error("Unable to remove subnet '%s' from router '%s'" % (
-            subnet_id, router_id))
-        return False
-
-    logger.debug("Interface removed successfully")
-    if not openstack_utils.delete_neutron_router(neutron, router_id):
-        logger.error("Unable to delete router '%s'" % router_id)
-        return False
-
-    logger.debug("Router deleted successfully")
-
-    if not openstack_utils.delete_neutron_subnet(neutron, subnet_id):
-        logger.error("Unable to delete subnet '%s'" % subnet_id)
-        return False
-
-    logger.debug(
-        "Subnet '%s' deleted successfully" % NEUTRON_PRIVATE_SUBNET_NAME)
-
-    if not openstack_utils.delete_neutron_net(neutron, net_id):
-        logger.error("Unable to delete network '%s'" % net_id)
-        return False
-
-    logger.debug(
-        "Network '%s' deleted successfully" % NEUTRON_PRIVATE_NET_NAME)
-
-    if not openstack_utils.delete_security_group(neutron, sg_id):
-        logger.error("Unable to delete security group '%s'" % sg_id)
-        return False
-    logger.debug(
-        "Security group '%s' deleted successfully" % sg_id)
-
-    logger.debug("Releasing floating ip '%s'..." % floatingip['fip_addr'])
-    if not openstack_utils.delete_floating_ip(nova, floatingip['fip_id']):
-        logger.error("Unable to delete floatingip '%s'"
-                     % floatingip['fip_addr'])
-        return False
-    logger.debug(
-        "Floating IP '%s' deleted successfully" % floatingip['fip_addr'])
-    return True
-
-
 def push_results(start_time_ts, duration, test_status):
     try:
         logger.debug("Pushing result into DB...")
@@ -452,8 +362,6 @@ def main():
     if not waitVmActive(nova_client, vm1):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_1, openstack_utils.get_instance_status(nova_client, vm1)))
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
-                floatingip)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
@@ -481,8 +389,6 @@ def main():
     if not waitVmActive(nova_client, vm2):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_2, openstack_utils.get_instance_status(nova_client, vm2)))
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
-                floatip_dic)
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_2)
@@ -498,8 +404,6 @@ def main():
 
     if floatip is None:
         logger.error("Cannot create floating IP.")
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
-                floatip_dic)
         return (EXIT_CODE)
     logger.info("Floating IP created: '%s'" % floatip)
 
@@ -507,8 +411,6 @@ def main():
                 % (floatip, NAME_VM_2))
     if not openstack_utils.add_floating_ip(nova_client, vm2.id, floatip):
         logger.error("Cannot associate floating IP to VM.")
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
-                floatip_dic)
         return (EXIT_CODE)
 
     logger.info("Trying to establish SSH connection to %s..." % floatip)
@@ -561,8 +463,6 @@ def main():
     if timeout == 0:  # 300 sec timeout (5 min)
         logger.error("Cannot establish connection to IP '%s'. Aborting"
                      % floatip)
-        cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
-                floatip_dic)
         return (EXIT_CODE)
 
     scp = SCPClient(ssh.get_transport())
@@ -609,9 +509,6 @@ def main():
             break
         logger.debug("Pinging %s. Waiting for response..." % test_ip)
         sec += 1
-
-    cleanup(nova_client, neutron_client, image_id, network_dic, sg_id,
-            floatip_dic)
 
     test_status = "NOK"
     if EXIT_CODE == 0:
