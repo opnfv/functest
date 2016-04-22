@@ -98,9 +98,19 @@ def get_version(logger=None):
     """
     Get version
     """
-    # TODO
-
-    return ""
+    # Use the build tag to retrieve the version
+    # By default version is unknown
+    # if launched through CI the build tag has the following format
+    # jenkins-<project>-<installer>-<pod>-<job>-<branch>-<id>
+    # e.g. jenkins-functest-fuel-opnfv-jump-2-daily-master-190
+    # use regex to match branch info
+    rule = "daily-(.+?)-[0-9]*"
+    build_tag = get_build_tag(logger)
+    m = re.search(rule, build_tag)
+    if m:
+        return m.group(1)
+    else:
+        return "unknown"
 
 
 def get_pod_name(logger=None):

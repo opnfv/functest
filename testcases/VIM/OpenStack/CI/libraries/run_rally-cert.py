@@ -137,7 +137,7 @@ def push_results_to_db(case, payload, criteria):
     installer = functest_utils.get_installer_type(logger)
     scenario = functest_utils.get_scenario(logger)
     # Until we found a way to manage version, use scenario
-    version = scenario
+    version = functest_utils.get_version(logger)
     pod_name = functest_utils.get_pod_name(logger)
 
     # evalutate success criteria

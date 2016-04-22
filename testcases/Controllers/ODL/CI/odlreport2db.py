@@ -129,7 +129,7 @@ def main(argv):
         #                        -i fuel
         #                        -p opnfv-jump-2
         #                        -s os-odl_l2-ha
-        version = scenario
+        version = functest_utils.get_version()
 
         # success criteria for ODL = 100% of tests OK
         status = "failed"
