@@ -9,11 +9,12 @@
 
 
 class Tier:
-    def __init__(self, name, description, order):
+    def __init__(self, name, order, ci, description=""):
         self.tests_array = []
         self.name = name
-        self.description = description
         self.order = order
+        self.ci = ci
+        self.description = description
 
     def add_test(self, testcase):
         self.tests_array.append(testcase)
@@ -25,39 +26,32 @@ class Tier:
         return array_str
 
     def __str__(self):
-        return "Tier info:\n" + \
-            "\tName: " + self.name + "\n" + \
-            "\tDescription: " + self.description + "\n" + \
-            "\tOrder: " + self.order + "\n" + \
-            "\tTest cases: " + str(self.get_tests()) + "\n"
+        return ("Tier info:\n"
+                "\tName: " + self.name + "\n"
+                "\tDescription: " + self.description + "\n"
+                "\tOrder: " + self.order + "\n"
+                "\tTest cases: " + str(self.get_tests()) + "\n")
 
 
 class Testcase:
-    def __init__(self, name, description, dependency):
+    def __init__(self, name, dependency, description=""):
         self.name = name
-        self.description = description
         self.dependency = dependency
+        self.description = description
 
     def __str__(self):
-        return "Testcase info:\n" + \
-            "\tName: " + self.name + "\n" + \
-            "\tName: " + self.name + "\n" + \
-            "\tDescription: " + self.description + "\n" + \
-            "\tDependencies: " + str(self.dependency) + "\n"
+        return ("Testcase info:\n"
+                "\tName: " + self.name + "\n"
+                "\tDescription: " + self.description + "\n"
+                "\t" + str(self.dependency) + "\n")
 
 
 class Dependency:
-    def __init__(self, installer, sdn, feature, mode):
+    def __init__(self, installer, scenario):
         self.installer = installer
-        self.sdn = sdn
-        self.feature = feature
-        self.mode = mode
+        self.scenario = scenario
 
     def __str__(self):
-        return "Dependency info:\n" + \
-            "\t" + self.installer + " os-[" + self.sdn + "]-[" + \
-            self.feature + "]-[" + self.mode + "]" + "\n" + \
-            "\t\t- installer: " + self.installer + "\n" + \
-            "\t\t- sdn Controller: " + self.sdn + "\n" + \
-            "\t\t- feature: " + self.feature + "\n" + \
-            "\t\t- mode: " + self.mode + "\n"
+        return ("Dependency info:\n"
+                "\t\tinstaller: " + self.installer + "\n"
+                "\t\tscenario:  " + self.scenario + "\n")
