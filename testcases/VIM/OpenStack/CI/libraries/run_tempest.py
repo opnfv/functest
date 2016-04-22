@@ -21,11 +21,14 @@ import re
 import requests
 import shutil
 import subprocess
-import sys
 import time
 import yaml
+
 import keystoneclient.v2_0.client as ksclient
 from neutronclient.v2_0 import client as neutronclient
+
+import functest_utils
+import openstack_utils
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',
@@ -67,9 +70,7 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
-sys.path.append(REPO_PATH + "testcases/")
-import functest_utils
-import openstack_utils
+
 
 with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)

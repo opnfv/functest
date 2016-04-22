@@ -14,14 +14,15 @@ lanqinglong@huawei.com
 #
 """
 
-import os
-import time
-import sys
-import logging
-import yaml
-import datetime
-import re
 import argparse
+import datetime
+import logging
+import os
+import re
+import time
+import yaml
+
+import functest_utils
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--installer", help="Installer type")
@@ -54,8 +55,6 @@ REPO_PATH = ONOS_REPO_PATH + '/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
-sys.path.append(REPO_PATH + "testcases/")
-import functest_utils
 
 ONOSCI_PATH = REPO_PATH + 'testcases/Controllers/ONOS/Teston/CI/'
 starttime = datetime.datetime.now()

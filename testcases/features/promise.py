@@ -15,13 +15,15 @@ import logging
 import os
 import requests
 import subprocess
-import sys
 import yaml
 
 import keystoneclient.v2_0.client as ksclient
 import glanceclient.client as glclient
 import novaclient.client as nvclient
 from neutronclient.v2_0 import client as ntclient
+
+import functest_utils
+import openstack_utils
 
 parser = argparse.ArgumentParser()
 
@@ -57,10 +59,6 @@ GLANCE_IMAGE_FORMAT = functest_yaml.get('general'). \
     get('openstack').get('image_disk_format')
 GLANCE_IMAGE_PATH = functest_yaml.get('general'). \
     get('directories').get('dir_functest_data') + "/" + GLANCE_IMAGE_FILENAME
-
-sys.path.append('%s/testcases' % FUNCTEST_REPO)
-import functest_utils
-import openstack_utils
 
 """ logging configuration """
 logger = logging.getLogger('Promise')

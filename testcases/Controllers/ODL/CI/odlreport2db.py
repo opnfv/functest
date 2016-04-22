@@ -20,14 +20,13 @@
 # 0.2: measure test duration and publish results under json format
 #
 #
-import xmltodict
+
+import getopt
 import json
 import sys
-import getopt
+import xmltodict
 import yaml
 
-
-sys.path.append("/home/opnfv/repos/functest/testcases")
 import functest_utils
 
 

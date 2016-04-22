@@ -11,24 +11,26 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
 
-import os
-import time
-import subprocess
-import logging
 import argparse
-import yaml
-import pprint
-import sys
-import json
 import datetime
+import json
+import logging
+import os
+import pprint
 import requests
+import subprocess
+import time
+import yaml
+
 import keystoneclient.v2_0.client as ksclient
 import glanceclient.client as glclient
 import novaclient.client as nvclient
 from neutronclient.v2_0 import client as ntclient
 
-import orchestrator
 import clearwater
+import functest_utils
+import openstack_utils
+import orchestrator
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -61,9 +63,6 @@ REPO_PATH = os.environ['repos_dir'] + '/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
-sys.path.append(REPO_PATH + "testcases/")
-import functest_utils
-import openstack_utils
 
 with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)

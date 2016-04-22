@@ -1,9 +1,8 @@
-import unittest
-import os
-import sys
-import yaml
+#!/usr/bin/python
 
-sys.path.append("../")
+import os
+import unittest
+import yaml
 from functest_utils import getTestEnv, isTestRunnable, generateTestcaseList
 
 

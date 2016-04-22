@@ -33,6 +33,7 @@ ENV repos_dir /home/opnfv/repos
 ENV creds /home/opnfv/functest/conf/openstack.creds
 ENV TERM xterm
 ENV COLORTERM gnome-terminal
+ENV PYTHONPATH $PYTHONPATH:/home/opnfv/repos/functest/testcases/
 WORKDIR /home/opnfv
 
 # Packaged dependencies
