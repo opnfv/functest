@@ -258,7 +258,7 @@ def push_results(start_time_ts, duration, test_status):
     try:
         logger.debug("Pushing result into DB...")
         scenario = functest_utils.get_scenario(logger)
-        version = scenario
+        version = functest_utils.get_version(logger)
         criteria = "failed"
         if test_status == "OK":
             criteria = "passed"

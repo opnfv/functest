@@ -63,7 +63,7 @@ def main():
     }
     pod_name = functest_utils.get_pod_name(logger)
     scenario = functest_utils.get_scenario(logger)
-    version = scenario
+    version = functest_utils.get_version(logger)
     build_tag = functest_utils.get_build_tag(logger)
 
     status = "failed"
