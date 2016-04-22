@@ -128,13 +128,14 @@ def push_results_to_db(case, payload, criteria):
     url = TEST_DB + "/results"
     installer = functest_utils.get_installer_type(logger)
     scenario = functest_utils.get_scenario(logger)
+    version = functest_utils.get_version(logger)
     pod_name = functest_utils.get_pod_name(logger)
 
     logger.info("Pushing results to DB: '%s'." % url)
 
     params = {"project_name": "functest", "case_name": case,
               "pod_name": str(pod_name), 'installer': installer,
-              "version": scenario, "scenario": scenario, "criteria": criteria,
+              "version": version, "scenario": scenario, "criteria": criteria,
               'details': payload}
     headers = {'Content-Type': 'application/json'}
 

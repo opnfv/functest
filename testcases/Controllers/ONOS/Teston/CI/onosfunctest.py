@@ -190,7 +190,7 @@ def main():
         logger.debug("Push result into DB")
         # TODO check path result for the file
         scenario = functest_utils.get_scenario(logger)
-        version = scenario
+        version = functest_utils.get_version(logger)
         result = GetResult()
 
         # ONOS success criteria = all tests OK
