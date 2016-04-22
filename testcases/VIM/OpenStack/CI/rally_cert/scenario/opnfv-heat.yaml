@@ -1,3 +1,7 @@
+{# all scenarios included only in full mode #}
+
+{% if full_mode %}
+
   HeatStacks.create_and_delete_stack:
     -
       args:
@@ -39,28 +43,6 @@
     -
       args:
         template_path: "{{ tmpl_dir }}/default.yaml.template"
-      context:
-        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
-      runner:
-        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
-      sla:
-        {{ no_failures_sla() }}
-
-  HeatStacks.create_check_delete_stack:
-    -
-      args:
-        template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
-      context:
-        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
-      runner:
-        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
-      sla:
-        {{ no_failures_sla() }}
-
-  HeatStacks.create_suspend_resume_delete_stack:
-    -
-      args:
-        template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
       runner:
@@ -130,6 +112,44 @@
       sla:
         {{ no_failures_sla() }}
 
+{% else %}
+
+  HeatStacks.create_update_delete_stack:
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/autoscaling_policy.yaml.template"
+        updated_template_path: "{{ tmpl_dir }}/updated_autoscaling_policy_inplace.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+{% endif %}
+
+  HeatStacks.create_check_delete_stack:
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  HeatStacks.create_suspend_resume_delete_stack:
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
   HeatStacks.list_stacks_and_resources:
     -
       context:
@@ -138,4 +158,3 @@
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
-

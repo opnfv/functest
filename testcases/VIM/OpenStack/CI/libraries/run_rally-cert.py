@@ -60,6 +60,9 @@ parser.add_argument("-v", "--verbose",
 parser.add_argument("-n", "--noclean",
                     help="Don't clean the created resources for this test.",
                     action="store_true")
+parser.add_argument("-q", "--quick",
+                    help="Quick test mode, execute only a subset of tests",
+                    action="store_true")
 
 args = parser.parse_args()
 
@@ -107,7 +110,6 @@ TENANTS_AMOUNT = 3
 ITERATIONS_AMOUNT = 10
 CONCURRENCY = 4
 
-###
 RESULTS_DIR = functest_yaml.get("general").get("directories"). \
     get("dir_rally_res")
 TEMPEST_CONF_FILE = functest_yaml.get("general").get("directories"). \
@@ -196,7 +198,6 @@ def live_migration_supported():
 
 def build_task_args(test_file_name):
     task_args = {'service_list': [test_file_name]}
-    task_args['smoke'] = args.smoke
     task_args['image_name'] = GLANCE_IMAGE_NAME
     task_args['flavor_name'] = FLAVOR_NAME
     task_args['glance_image_location'] = GLANCE_IMAGE_PATH
@@ -206,6 +207,13 @@ def build_task_args(test_file_name):
     task_args['tenants_amount'] = TENANTS_AMOUNT
     task_args['iterations'] = ITERATIONS_AMOUNT
     task_args['concurrency'] = CONCURRENCY
+
+    if args.quick:
+        task_args['full_mode'] = False
+        task_args['smoke'] = True
+    else:
+        task_args['full_mode'] = True
+        task_args['smoke'] = args.smoke
 
     ext_net = openstack_utils.get_external_net(client_dict['neutron'])
     if ext_net:
