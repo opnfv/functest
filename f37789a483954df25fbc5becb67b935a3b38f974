@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_739c1a6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-04-22T10:30:54Z",
+      "side": 1,
+      "message": "JIRA",
+      "revId": "f37789a483954df25fbc5becb67b935a3b38f974",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_53891e25",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-04-22T10:30:54Z",
+      "side": 1,
+      "message": "comment not valid anymore",
+      "revId": "f37789a483954df25fbc5becb67b935a3b38f974",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
