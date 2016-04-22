@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_53ea3e10",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-04-22T08:36:07Z",
+      "side": 1,
+      "message": "shall we use quick or smoke?\nto be aligned with tempest\n\nthere is a param smoke and in the if statement below\n\nis it not confusing to have if on quick to select smoke?",
+      "range": {
+        "startLine": 61,
+        "startChar": 22,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "05cbd704e23b8124b4d12a510d90f0fecc19a2fa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
