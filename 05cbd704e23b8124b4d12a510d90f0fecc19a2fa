@@ -40,6 +40,24 @@
       "revId": "05cbd704e23b8124b4d12a510d90f0fecc19a2fa",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_b3929255",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-04-22T09:56:50Z",
+      "side": 1,
+      "message": "smoke as a term is already used in rally scenarios. Means that only one tenant and user is created and only one iteration per case is executed. This concept was presented by upstream rally (certification).\n\nIn this mode run_rally-cert.py executes all scenarios but with above mentioned constraints.\n\n\"quick\" here indeed refers to subset of that smoke; in addition to above mentioned constraints also some of the scenarios are excluded to achieve shorter execution time.\n\nCalls to run_tests.sh can use consistent terminology (e.g. full/smoke). When run_tests.sh calls different runners, it can conform each runners approach, e.g. for run_rally-cert.py:\n\nfull: run_rally-cert.py all\nsmoke: run_rally-cert.py --quick all",
+      "parentUuid": "1a486d77_93e79640",
+      "revId": "05cbd704e23b8124b4d12a510d90f0fecc19a2fa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
