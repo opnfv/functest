@@ -136,7 +136,7 @@ def push_results(status):
         logger.debug("Pushing results to DB....")
 
         scenario = functest_utils.get_scenario(logger)
-        version = scenario
+        version = functest_utils.get_version(logger)
         pod_name = functest_utils.get_pod_name(logger)
         build_tag = functest_utils.get_build_tag(logger)
 
