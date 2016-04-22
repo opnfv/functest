@@ -20,14 +20,17 @@ import os
 import paramiko
 import pprint
 import re
-import sys
 import time
 import yaml
 from scp import SCPClient
+
 from novaclient import client as novaclient
 from neutronclient.v2_0 import client as neutronclient
 from keystoneclient.v2_0 import client as keystoneclient
 from glanceclient import client as glanceclient
+
+import functest_utils
+import openstack_utils
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -64,9 +67,6 @@ REPO_PATH = os.environ['repos_dir'] + '/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
-sys.path.append(REPO_PATH + "testcases/")
-import functest_utils
-import openstack_utils
 
 with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)

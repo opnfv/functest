@@ -23,7 +23,6 @@
 import argparse
 import logging
 import os
-import sys
 import time
 import yaml
 
@@ -31,6 +30,8 @@ from novaclient import client as novaclient
 from neutronclient.v2_0 import client as neutronclient
 from keystoneclient.v2_0 import client as keystoneclient
 from cinderclient import client as cinderclient
+
+import openstack_utils
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
@@ -53,8 +54,6 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
-sys.path.append(REPO_PATH + "testcases/")
-import openstack_utils
 
 DEFAULTS_FILE = '/home/opnfv/functest/conf/os_defaults.yaml'
 

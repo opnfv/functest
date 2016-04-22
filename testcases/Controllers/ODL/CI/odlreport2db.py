@@ -25,9 +25,6 @@ import json
 import sys
 import getopt
 import yaml
-
-
-sys.path.append("/home/opnfv/repos/functest/testcases")
 import functest_utils
 
 

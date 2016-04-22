@@ -23,13 +23,14 @@
 import argparse
 import logging
 import os
-import sys
 import yaml
 
 from novaclient import client as novaclient
 from neutronclient.v2_0 import client as neutronclient
 from keystoneclient.v2_0 import client as keystoneclient
 from cinderclient import client as cinderclient
+
+import openstack_utils
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
@@ -55,8 +56,7 @@ REPO_PATH = os.environ['repos_dir'] + '/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
-sys.path.append(REPO_PATH + "testcases/")
-import openstack_utils
+
 
 DEFAULTS_FILE = '/home/opnfv/functest/conf/os_defaults.yaml'
 

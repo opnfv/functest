@@ -21,7 +21,6 @@ import os
 import re
 import requests
 import subprocess
-import sys
 import time
 import yaml
 
@@ -30,6 +29,9 @@ from glanceclient import client as glanceclient
 from keystoneclient.v2_0 import client as keystoneclient
 from neutronclient.v2_0 import client as neutronclient
 from cinderclient import client as cinderclient
+
+import functest_utils
+import openstack_utils
 
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
@@ -87,9 +89,7 @@ REPO_PATH = os.environ['repos_dir'] + '/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
-sys.path.append(REPO_PATH + "testcases/")
-import functest_utils
-import openstack_utils
+
 
 with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)

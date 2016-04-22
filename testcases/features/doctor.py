@@ -15,10 +15,9 @@
 #
 
 import logging
-import sys
 import time
 import yaml
-
+import functest_utils
 
 with open('/home/opnfv/functest/conf/config_functest.yaml') as f:
     functest_yaml = yaml.safe_load(f)
@@ -27,9 +26,6 @@ dirs = functest_yaml.get('general').get('directories')
 FUNCTEST_REPO = dirs.get('dir_repo_functest')
 DOCTOR_REPO = dirs.get('dir_repo_doctor')
 TEST_DB_URL = functest_yaml.get('results').get('test_db_url')
-
-sys.path.append('%s/testcases' % FUNCTEST_REPO)
-import functest_utils
 
 logger = logging.getLogger('doctor')
 logger.setLevel(logging.DEBUG)

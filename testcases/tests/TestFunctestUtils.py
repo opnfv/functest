@@ -1,9 +1,6 @@
 import unittest
 import os
-import sys
 import yaml
-
-sys.path.append("../")
 from functest_utils import getTestEnv, isTestRunnable, generateTestcaseList
 
 
