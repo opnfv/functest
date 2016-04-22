@@ -244,6 +244,7 @@ def main():
         pod_name = functest_utils.get_pod_name(logger)
         installer = functest_utils.get_installer_type(logger)
         scenario = functest_utils.get_scenario(logger)
+        version = functest_utils.get_version(logger)
         build_tag = functest_utils.get_build_tag(logger)
         # git_version = functest_utils.get_git_branch(PROMISE_REPO)
         url = TEST_DB + "/results"
@@ -259,7 +260,7 @@ def main():
 
         params = {"project_name": "promise", "case_name": "promise",
                   "pod_name": str(pod_name), 'installer': installer,
-                  "version": scenario, "scenario": scenario,
+                  "version": version, "scenario": scenario,
                   "criteria": status, "build_tag": build_tag,
                   'details': json_results}
         headers = {'Content-Type': 'application/json'}
