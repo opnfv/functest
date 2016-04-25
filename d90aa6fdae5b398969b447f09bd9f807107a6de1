@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da87b5cf_c19b2271",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-25T10:04:25Z",
+      "side": 1,
+      "message": "E501 line too long (80 \u003e 79 characters)\n\nThis works as well:\n\nSCENARIOS_DIR \u003d REPO_PATH + functest_yaml.get(\"general\").get(\n                \"directories\").get(\"dir_rally_scn\")",
+      "range": {
+        "startLine": 102,
+        "startChar": 76,
+        "endLine": 102,
+        "endChar": 79
+      },
+      "revId": "d90aa6fdae5b398969b447f09bd9f807107a6de1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_01790a2f",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-25T10:04:25Z",
+      "side": 1,
+      "message": "E129 visually indented line with same indent as next logical line.\nYou can add a indent from the second line of the \"if\" to the end.\n\nif (\"Load duration\" in line or\n        \"started\" in line or\n        \"finished\" in line or\n        \" Preparing\" in line or\n        \"+-\" in line or\n        \"|\" in line):\n    result +\u003d line",
+      "range": {
+        "startLine": 250,
+        "startChar": 16,
+        "endLine": 250,
+        "endChar": 19
+      },
+      "revId": "d90aa6fdae5b398969b447f09bd9f807107a6de1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_e17bc627",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-25T10:04:25Z",
+      "side": 1,
+      "message": "E129 visually indented line with same indent as next logical line.\n\nYou can add a indent from the second line of the \"if\" to the end.\n\nif (\"| \" in line and\n        \"| action\" not in line and\n        \"| Starting\" not in line and\n        \"| Completed\" not in line and\n        \"| ITER\" not in line and\n        \"|   \" not in line and\n        \"| total\" not in line):\n    nb_tests +\u003d 1",
+      "range": {
+        "startLine": 264,
+        "startChar": 20,
+        "endLine": 264,
+        "endChar": 21
+      },
+      "revId": "d90aa6fdae5b398969b447f09bd9f807107a6de1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da87b5cf_21820e01",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-25T10:04:25Z",
+      "side": 1,
+      "message": "E501 line too long (80 \u003e 79 characters)\n\nreport +\u003d (\"\" +\n           \"| \" + name + \" | \" + duration + \" | \" +\n           nb_tests + \" | \" + success + \"|\\n\" +\n           \"+-------------------+------------+---------------\"\n           \"+-----------+\\n\")",
+      "range": {
+        "startLine": 474,
+        "startChar": 84,
+        "endLine": 474,
+        "endChar": 86
+      },
+      "revId": "d90aa6fdae5b398969b447f09bd9f807107a6de1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
