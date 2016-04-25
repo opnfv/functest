@@ -23,6 +23,7 @@ import shutil
 import subprocess
 import time
 import yaml
+import ConfigParser
 
 import keystoneclient.v2_0.client as ksclient
 from neutronclient.v2_0 import client as neutronclient
@@ -217,7 +218,9 @@ def configure_tempest(mode):
         cmd += "testr list-tests >" + TEMPEST_LIST_FILE + ";cd"
         functest_utils.execute_command(cmd, logger)
 
-    logger.debug("  Updating fixed_network_name...")
+    logger.debug("Updating selected tempest.conf parameters...")
+    config = ConfigParser.RawConfigParser()
+    config.read(tempest_conf_file)
     private_net_name = ""
     creds_neutron = openstack_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
@@ -226,24 +229,12 @@ def configure_tempest(mode):
         logger.error("No shared private networks found.")
     else:
         private_net_name = private_net['name']
-    cmd = "crudini --set " + tempest_conf_file + \
-          " compute fixed_network_name " + \
-          private_net_name
-    functest_utils.execute_command(cmd, logger)
-
-    logger.debug("  Updating non-admin credentials...")
-    cmd = "crudini --set " + tempest_conf_file + " identity tenant_name " \
-          + TENANT_NAME
-    functest_utils.execute_command(cmd, logger)
-    cmd = "crudini --set " + tempest_conf_file + " identity username " \
-          + USER_NAME
-    functest_utils.execute_command(cmd, logger)
-    cmd = "crudini --set " + tempest_conf_file + " identity password " \
-          + USER_PASSWORD
-    functest_utils.execute_command(cmd, logger)
-    cmd = "sed -i 's/.*ssh_user_regex.*/ssh_user_regex = " + SSH_USER_REGEX + \
-        "/' " + tempest_conf_file
-    functest_utils.execute_command(cmd, logger)
+    config.set('compute', 'fixed_network_name', private_net_name)
+    config.set('identity', 'tenant_name', TENANT_NAME)
+    config.set('identity', 'username', USER_NAME)
+    config.set('identity', 'password', USER_PASSWORD)
+    with open(tempest_conf_file, 'wb') as config_file:
+        config.write(config_file)
 
     # Copy tempest.conf to /home/opnfv/functest/results/tempest/
     shutil.copyfile(tempest_conf_file, TEMPEST_RESULTS_DIR + '/tempest.conf')
