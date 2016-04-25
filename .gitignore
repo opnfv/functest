@@ -1,5 +1,8 @@
 *~
+*.pyc
 .*.sw?
+.project
+.pydevproject
 /docs_build/
 /docs_output/
 /releng/
