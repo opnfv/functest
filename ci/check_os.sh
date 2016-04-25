@@ -7,8 +7,8 @@
 #
 
 verify_connectivity() {
-    for i in $(seq 0 10); do
-        if echo "test" | nc -v $1 $2 &>/dev/null; then
+    for i in $(seq 0 9); do
+        if echo "test" | nc -v -w 10 $1 $2 &>/dev/null; then
             return 0
         fi
         sleep 1
@@ -88,27 +88,4 @@ if [ $is_external == "False" ]; then
     exit 1
 fi
 
-
-# Temporary output information
-# To see the initial OpenStack defaults
-# in case we delete something later on.
-# This is to be removed for the release
-if [[ "${CI_DEBUG,,}" == "true" ]];then
-    echo "nova list:"
-    nova list
-    echo "cinder list"
-    cinder list
-    echo "nova floating-ip-list:"
-    nova floating-ip-list
-    echo "neutron net-list:"
-    neutron net-list
-    echo "neutron router-list:"
-    neutron router-list
-    echo "neutron security-group-list:"
-    neutron security-group-list
-    echo "openstack project list:"
-    openstack project list
-    echo "openstack user list:"
-    openstack user list
-fi
 exit 0

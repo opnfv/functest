@@ -1,0 +1,296 @@
+#!/bin/bash
+#
+# Author: Jose Lausuch (jose.lausuch@ericsson.com)
+#
+# Installs the Functest framework within the Docker container
+# and run the tests automatically
+#
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Apache License, Version 2.0
+# which accompanies this distribution, and is available at
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+
+import argparse
+import os
+import re
+import subprocess
+import sys
+import yaml
+
+import functest.ci.tier_builder as tb
+import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as ft_utils
+import functest.utils.generate_defaults as gen_def
+import functest.utils.openstack_utils as os_utils
+
+
+""" arguments """
+actions = ['start', 'check']
+parser = argparse.ArgumentParser()
+parser.add_argument("action", help="Possible actions are: "
+                    "'{d[0]}|{d[1]}' ".format(d=actions))
+parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
+args = parser.parse_args()
+
+
+""" logging configuration """
+logger = ft_logger.Logger("prepare_env").getLogger()
+
+
+""" global variables """
+INSTALLERS = ['fuel', 'compass', 'apex', 'joid']
+CI_INSTALLER_TYPE = ""
+CI_INSTALLER_IP = ""
+CI_SCENARIO = ""
+CI_DEBUG = False
+REPOS_DIR = os.getenv('repos_dir')
+FUNCTEST_REPO = REPOS_DIR + '/functest/'
+
+with open("/home/opnfv/repos/functest/testcases/config_functest.yaml") as f:
+    functest_yaml = yaml.safe_load(f)
+
+FUNCTEST_CONF_DIR = functest_yaml.get("general").get(
+    "directories").get("dir_functest_conf")
+
+FUNCTEST_DATA_DIR = functest_yaml.get("general").get(
+    "directories").get("dir_functest_data")
+FUNCTEST_RESULTS_DIR = functest_yaml.get("general").get(
+    "directories").get("dir_results")
+DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
+TEMPEST_REPO_DIR = functest_yaml.get("general").get(
+    "directories").get("dir_repo_tempest")
+
+ENV_FILE = FUNCTEST_CONF_DIR + "/env_active"
+
+
+def print_separator():
+    logger.info("==============================================")
+
+
+def check_env_variables():
+    print_separator()
+    logger.info("Checking environment variables...")
+    global CI_INSTALLER_TYPE
+    global CI_INSTALLER_IP
+    global CI_DEBUG
+    global CI_SCENARIO
+    CI_INSTALLER_TYPE = os.getenv('INSTALLER_TYPE')
+    CI_INSTALLER_IP = os.getenv('INSTALLER_IP')
+    CI_SCENARIO = os.getenv('DEPLOY_SCENARIO')
+    CI_NODE = os.getenv('NODE_NAME')
+    CI_BUILD_TAG = os.getenv('BUILD_TAG')
+    CI_DEBUG = os.getenv('CI_DEBUG')
+
+    # Mandatory environment variables
+    if CI_INSTALLER_TYPE is None:
+        logger.error("The env variable 'INSTALLER_TYPE' is not defined. "
+                     "Please add it to the 'docker run' command.")
+        sys.exit(1)
+    else:
+        logger.info("    INSTALLER_TYPE=%s" % CI_INSTALLER_TYPE)
+
+    if os.getenv('INSTALLER_TYPE') not in INSTALLERS:
+        logger.error("'INSTALLER_TYPE=%s' is not a valid installer. "
+                     "Available OPNFV Installers are ")
+        sys.exit(1)
+
+    if CI_SCENARIO is None:
+        logger.error("The env variable 'DEPLOY_SCENARIO' is not defined. "
+                     "Please add it to the 'docker run' command.")
+        sys.exit(1)
+    else:
+        logger.info("    DEPLOY_SCENARIO=%s" % CI_SCENARIO)
+
+    # Optional environment variables
+    if CI_INSTALLER_IP is None:
+        logger.warning("The env variable 'INSTALLER_IP' is not defined. "
+                       "It is needed to fetch the OpenStack credentials. "
+                       "If the credentials are not provided to the "
+                       "container as a volume, please add this env variable "
+                       "to the 'docker run' command.")
+    else:
+        logger.info("    INSTALLER_IP=%s" % CI_INSTALLER_IP)
+
+    if CI_DEBUG:
+        logger.info("    CI_DEBUG=%s" % CI_DEBUG)
+
+    if CI_NODE:
+        logger.info("    NODE_NAME=%s" % CI_NODE)
+
+    if CI_BUILD_TAG:
+        logger.info("    BUILD_TAG=%s" % CI_BUILD_TAG)
+
+
+def create_directories():
+    print_separator()
+    logger.info("Creating needed directories...")
+    if not os.path.exists(FUNCTEST_CONF_DIR):
+        os.makedirs(FUNCTEST_CONF_DIR)
+        logger.info("    %s created." % FUNCTEST_CONF_DIR)
+    else:
+        logger.debug("   %s already exists." % FUNCTEST_CONF_DIR)
+
+    if not os.path.exists(FUNCTEST_DATA_DIR):
+        os.makedirs(FUNCTEST_DATA_DIR)
+        logger.info("    %s created." % FUNCTEST_DATA_DIR)
+    else:
+        logger.debug("   %s already exists." % FUNCTEST_DATA_DIR)
+
+    if not os.path.exists(FUNCTEST_RESULTS_DIR):
+        os.makedirs(FUNCTEST_RESULTS_DIR)
+        logger.info("    %s created." % FUNCTEST_RESULTS_DIR)
+        os.makedirs(FUNCTEST_RESULTS_DIR + "/ODL/")
+        logger.info("    %s created." % (FUNCTEST_RESULTS_DIR + "/ODL/"))
+    else:
+        logger.debug("   %s already exists." % FUNCTEST_RESULTS_DIR)
+
+
+def source_rc_file():
+    print_separator()
+    logger.info("Fetching RC file...")
+    rc_file = os.getenv('creds')
+    if rc_file is None:
+        logger.warning("The environment variable 'creds' must be set and"
+                       "pointing to the local RC file. Using default: "
+                       "/home/opnfv/functest/conf/openstack.creds ...")
+        rc_file = "/home/opnfv/functest/conf/openstack.creds ..."
+
+    if not os.path.isfile(rc_file):
+        logger.info("RC file not provided. "
+                    "Fetching it from the installer...")
+
+        cmd = ("/home/opnfv/repos/releng/utils/fetch_os_creds.sh "
+               "-d %s -i %s -a %s"
+               % (rc_file, CI_INSTALLER_TYPE, CI_INSTALLER_IP))
+        logger.debug("Executing command: %s" % cmd)
+        p = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
+        output = p.communicate()[0]
+        logger.debug(output)
+        if p.returncode != 0:
+            logger.error("Failed to fetch credentials from installer.")
+            sys.exit(1)
+    else:
+        logger.info("RC file provided in %s." % rc_file)
+        if os.path.getsize(rc_file) == 0:
+            logger.error("The file %s is empty." % rc_file)
+            sys.exit(1)
+
+    logger.info("Sourcing the OpenStack RC file...")
+    creds = os_utils.source_credentials(rc_file)
+    str = ""
+    for key, value in creds.iteritems():
+        if re.search("OS_", key):
+            str += "\n\t\t\t\t\t\t   " + key + "=" + value
+    logger.debug("Used credentials: %s" % str)
+
+
+def verify_deployment():
+    print_separator()
+    logger.info("Verifying OpenStack services...")
+    cmd = ("%s/ci/check_os.sh" % FUNCTEST_REPO)
+
+    logger.debug("Executing command: %s" % cmd)
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+
+    while p.poll() is None:
+        line = p.stdout.readline().rstrip()
+        if "ERROR" in line:
+            logger.error(line)
+            sys.exit("Problem while running 'check_os.sh'.")
+        logger.debug(line)
+
+
+def install_rally():
+    print_separator()
+    logger.info("Creating Rally environment...")
+
+    cmd = "rally deployment destroy opnfv-rally"
+    ft_utils.execute_command(cmd, logger=None, exit_on_error=False)
+
+    cmd = "rally deployment create --fromenv --name=" + DEPLOYMENT_MAME
+    if not ft_utils.execute_command(cmd, logger):
+        logger.error("Problem while creating Rally deployment.")
+        sys.exit(cmd)
+
+    logger.info("Installing tempest from existing repo...")
+    cmd = ("rally verify install --source " + TEMPEST_REPO_DIR +
+           " --system-wide")
+    if not ft_utils.execute_command(cmd, logger):
+        logger.error("Problem while installing Tempest.")
+        sys.exit(cmd)
+
+    cmd = "rally deployment check"
+    if not ft_utils.execute_command(cmd, logger):
+        logger.error("OpenStack not responding or faulty Rally deployment.")
+        sys.exit(cmd)
+
+    cmd = "rally show images"
+    if not ft_utils.execute_command(cmd, logger):
+        logger.error("Problem while listing OpenStack images.")
+        sys.exit(cmd)
+
+    cmd = "rally show flavors"
+    if not ft_utils.execute_command(cmd, logger):
+        logger.error("Problem while showing OpenStack flavors.")
+        sys.exit(cmd)
+
+
+def generate_os_defaults():
+    print_separator()
+    logger.info("Generating OpenStack defaults...")
+    gen_def.main()
+
+
+def generate_tiers():
+    print_separator()
+    logger.info("Generating Tiers and test cases...")
+    file = FUNCTEST_REPO + "/ci/testcases.yaml"
+
+    t = tb.TierBuilder(CI_INSTALLER_TYPE, CI_SCENARIO, file)
+    logger.info("Tiers and tests to be executed:\n\n%s" % t)
+
+
+def check_environment():
+    msg_not_active = "The Functest environment is not installed."
+    if not os.path.isfile(ENV_FILE):
+        logger.error(msg_not_active)
+        sys.exit(1)
+
+    with open(ENV_FILE, "r") as env_file:
+        s = env_file.read()
+        if not re.search("1", s):
+            logger.error(msg_not_active)
+            sys.exit(1)
+
+    logger.info("Functest environment installed.")
+
+
+def main():
+    if not (args.action in actions):
+        logger.error('Argument not valid.')
+        sys.exit()
+
+    if args.action == "start":
+        print ("\n######### Preparing Functest environment #########\n")
+        check_env_variables()
+        create_directories()
+        source_rc_file()
+        verify_deployment()
+        install_rally()
+        generate_os_defaults()
+        generate_tiers()
+
+        with open(ENV_FILE, "w") as env_file:
+            env_file.write("1")
+
+        check_environment()
+
+    if args.action == "check":
+        check_environment()
+
+    exit(0)
+
+if __name__ == '__main__':
+    main()
