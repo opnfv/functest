@@ -10,6 +10,7 @@
 
 import os
 import os.path
+import subprocess
 import sys
 
 # ----------------------------------------------------------
@@ -71,6 +72,15 @@ def get_credentials(service):
             print ("WARNING: The 'OS_CACERT' environment variable is " +
                    "set to %s but the file does not exist." % cacert)
     return creds
+
+
+def source_credentials(rc_file):
+    pipe = subprocess.Popen(". %s; env" % rc_file, stdout=subprocess.PIPE,
+                            shell=True)
+    output = pipe.communicate()[0]
+    env = dict((line.split("=", 1) for line in output.splitlines()))
+    os.environ.update(env)
+    return env
 
 
 # *********************************************

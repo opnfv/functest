@@ -62,7 +62,6 @@ do
     result=$?
     if [ $result -ne 0 ];
     then
-
         echo "ERROR: Failed execution $cmd. The $service does not seem to be working."
         exit 1
     else
