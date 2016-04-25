@@ -101,16 +101,16 @@ class orchestrator:
             if self.logger:
                 self.logger.info("Launching the cloudify-manager deployment")
             script = "set -e; "
-            script += "source " + self.testcase_dir + \
-                "venv_cloudify/bin/activate; "
+            script += ("source " + self.testcase_dir +
+                       "venv_cloudify/bin/activate; ")
             script += "cd " + self.testcase_dir + "; "
             script += "cfy init -r; "
             script += "cd cloudify-manager-blueprint; "
-            script += "cfy local create-requirements -o requirements.txt " + \
-                "-p openstack-manager-blueprint.yaml; "
+            script += ("cfy local create-requirements -o requirements.txt " +
+                       "-p openstack-manager-blueprint.yaml; ")
             script += "pip install -r requirements.txt; "
-            script += "timeout 1800 cfy bootstrap --install-plugins " + \
-                "-p openstack-manager-blueprint.yaml -i inputs.yaml; "
+            script += ("timeout 1800 cfy bootstrap --install-plugins " +
+                       "-p openstack-manager-blueprint.yaml -i inputs.yaml; ")
             cmd = "/bin/bash -c '" + script + "'"
             error = execute_command(cmd, self.logger)
             if error:
@@ -166,14 +166,14 @@ class orchestrator:
         if self.logger:
             self.logger.info("Launching the {0} deployment".format(bp_name))
         script = "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
-        script += "cd " + self.testcase_dir + \
-            blueprint['destination_folder'] + "; "
-        script += "cfy blueprints upload -b " + \
-            bp_name + " -p openstack-blueprint.yaml; "
-        script += "cfy deployments create -b " + bp_name + \
-            " -d " + dep_name + " --inputs inputs.yaml; "
-        script += "cfy executions start -w install -d " \
-            + dep_name + " --timeout 1800; "
+        script += ("cd " + self.testcase_dir +
+                   blueprint['destination_folder'] + "; ")
+        script += ("cfy blueprints upload -b " +
+                   bp_name + " -p openstack-blueprint.yaml; ")
+        script += ("cfy deployments create -b " + bp_name +
+                   " -d " + dep_name + " --inputs inputs.yaml; ")
+        script += ("cfy executions start -w install -d " +
+                   dep_name + " --timeout 1800; ")
 
         cmd = "/bin/bash -c '" + script + "'"
         error = execute_command(cmd, self.logger)
@@ -187,8 +187,8 @@ class orchestrator:
             self.logger.info("Launching the {0} undeployment".format(dep_name))
         script = "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
         script += "cd " + self.testcase_dir + "; "
-        script += "cfy executions start -w uninstall -d " + dep_name \
-            + " --timeout 1800 ; "
+        script += ("cfy executions start -w uninstall -d " + dep_name +
+                   " --timeout 1800 ; ")
         script += "cfy deployments delete -d " + dep_name + "; "
 
         cmd = "/bin/bash -c '" + script + "'"
