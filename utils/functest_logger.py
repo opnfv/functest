@@ -38,10 +38,10 @@ class Logger:
 
         CI_DEBUG = os.getenv('CI_DEBUG')
 
-        if CI_DEBUG.lower() == "true":
+        ch.setLevel(logging.INFO)
+
+        if CI_DEBUG is not None and CI_DEBUG.lower() == "true":
             ch.setLevel(logging.DEBUG)
-        else:
-            ch.setLevel(logging.INFO)
 
         self.logger.addHandler(ch)
 
