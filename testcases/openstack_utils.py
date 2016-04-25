@@ -68,8 +68,8 @@ def get_credentials(service):
                       "ca_file": cacert})
         creds.update({"insecure": "True", "https_insecure": "True"})
         if not os.path.isfile(cacert):
-            print "WARNING: The 'OS_CACERT' environment variable is " + \
-                "set to %s but the file does not exist." % cacert
+            print ("WARNING: The 'OS_CACERT' environment variable is " +
+                   "set to %s but the file does not exist." % cacert)
     return creds
 
 
@@ -90,8 +90,8 @@ def get_instance_status(nova_client, instance):
         instance = nova_client.servers.get(instance.id)
         return instance.status
     except:
-        # print "Error [get_instance_status(nova_client, '%s')]:" % \
-        #    str(instance), e
+        # print ("Error [get_instance_status(nova_client, '%s')]:" %
+        #        str(instance), e)
         return None
 
 
@@ -100,8 +100,8 @@ def get_instance_by_name(nova_client, instance_name):
         instance = nova_client.servers.find(name=instance_name)
         return instance
     except Exception, e:
-        print "Error [get_instance_by_name(nova_client, '%s')]:" % \
-            instance_name, e
+        print ("Error [get_instance_by_name(nova_client, '%s')]:" %
+               instance_name, e)
         return None
 
 
@@ -138,8 +138,8 @@ def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
     try:
         flavor = nova_client.flavors.create(flavor_name, ram, vcpus, disk)
     except Exception, e:
-        print "Error [create_flavor(nova_client, '%s', '%s', '%s', "\
-            "'%s')]:" % (flavor_name, ram, disk, vcpus), e
+        print ("Error [create_flavor(nova_client, '%s', '%s', '%s', "
+               "'%s')]:" % (flavor_name, ram, disk, vcpus), e)
         return None
     return flavor.id
 
@@ -162,8 +162,8 @@ def add_floating_ip(nova_client, server_id, floatingip_id):
         nova_client.servers.add_floating_ip(server_id, floatingip_id)
         return True
     except Exception, e:
-        print "Error [add_floating_ip(nova_client, '%s', '%s')]:" % \
-            (server_id, floatingip_id), e
+        print ("Error [add_floating_ip(nova_client, '%s', '%s')]:" %
+               (server_id, floatingip_id), e)
         return False
 
 
@@ -181,8 +181,8 @@ def delete_floating_ip(nova_client, floatingip_id):
         nova_client.floating_ips.delete(floatingip_id)
         return True
     except Exception, e:
-        print "Error [delete_floating_ip(nova_client, '%s')]:" \
-            % floatingip_id, e
+        print ("Error [delete_floating_ip(nova_client, '%s')]:" %
+               floatingip_id, e)
         return False
 
 
@@ -295,8 +295,8 @@ def create_neutron_subnet(neutron_client, name, cidr, net_id):
         subnet = neutron_client.create_subnet(body=json_body)
         return subnet['subnets'][0]['id']
     except Exception, e:
-        print "Error [create_neutron_subnet(neutron_client, '%s', '%s', "\
-            "'%s')]:" % (name, cidr, net_id), e
+        print ("Error [create_neutron_subnet(neutron_client, '%s', '%s', "
+               "'%s')]:" % (name, cidr, net_id), e)
         return False
 
 
@@ -321,8 +321,8 @@ def create_neutron_port(neutron_client, name, network_id, ip):
         port = neutron_client.create_port(body=json_body)
         return port['port']['id']
     except Exception, e:
-        print "Error [create_neutron_port(neutron_client, '%s', '%s', "\
-            "'%s')]:" % (name, network_id, ip), e
+        print ("Error [create_neutron_port(neutron_client, '%s', '%s', "
+               "'%s')]:" % (name, network_id, ip), e)
         return False
 
 
@@ -332,8 +332,8 @@ def update_neutron_net(neutron_client, network_id, shared=False):
         neutron_client.update_network(network_id, body=json_body)
         return True
     except Exception, e:
-        print "Error [update_neutron_net(neutron_client, '%s', '%s')]:" % \
-            (network_id, str(shared)), e
+        print ("Error [update_neutron_net(neutron_client, '%s', '%s')]:" %
+               (network_id, str(shared)), e)
         return False
 
 
@@ -346,8 +346,8 @@ def update_neutron_port(neutron_client, port_id, device_owner):
                                           body=json_body)
         return port['port']['id']
     except Exception, e:
-        print "Error [update_neutron_port(neutron_client, '%s', '%s')]:" % \
-            (port_id, device_owner), e
+        print ("Error [update_neutron_port(neutron_client, '%s', '%s')]:" %
+               (port_id, device_owner), e)
         return False
 
 
@@ -357,8 +357,8 @@ def add_interface_router(neutron_client, router_id, subnet_id):
         neutron_client.add_interface_router(router=router_id, body=json_body)
         return True
     except Exception, e:
-        print "Error [add_interface_router(neutron_client, '%s', '%s')]:" % \
-            (router_id, subnet_id), e
+        print ("Error [add_interface_router(neutron_client, '%s', '%s')]:" %
+               (router_id, subnet_id), e)
         return False
 
 
@@ -369,8 +369,8 @@ def add_gateway_router(neutron_client, router_id):
         neutron_client.add_gateway_router(router_id, router_dict)
         return True
     except Exception, e:
-        print "Error [add_gateway_router(neutron_client, '%s')]:" \
-            % router_id, e
+        print ("Error [add_gateway_router(neutron_client, '%s')]:" %
+               router_id, e)
         return False
 
 
@@ -379,8 +379,8 @@ def delete_neutron_net(neutron_client, network_id):
         neutron_client.delete_network(network_id)
         return True
     except Exception, e:
-        print "Error [delete_neutron_net(neutron_client, '%s')]:" \
-            % network_id, e
+        print ("Error [delete_neutron_net(neutron_client, '%s')]:" %
+               network_id, e)
         return False
 
 
@@ -389,8 +389,8 @@ def delete_neutron_subnet(neutron_client, subnet_id):
         neutron_client.delete_subnet(subnet_id)
         return True
     except Exception, e:
-        print "Error [delete_neutron_subnet(neutron_client, '%s')]:" \
-            % subnet_id, e
+        print ("Error [delete_neutron_subnet(neutron_client, '%s')]:" %
+               subnet_id, e)
         return False
 
 
@@ -399,8 +399,8 @@ def delete_neutron_router(neutron_client, router_id):
         neutron_client.delete_router(router=router_id)
         return True
     except Exception, e:
-        print "Error [delete_neutron_router(neutron_client, '%s')]:" % \
-            router_id, e
+        print ("Error [delete_neutron_router(neutron_client, '%s')]:" %
+               router_id, e)
         return False
 
 
@@ -420,8 +420,8 @@ def remove_interface_router(neutron_client, router_id, subnet_id):
                                                body=json_body)
         return True
     except Exception, e:
-        print "Error [remove_interface_router(neutron_client, '%s', '%s')]:" \
-            % (router_id, subnet_id), e
+        print ("Error [remove_interface_router(neutron_client, '%s', '%s')]:" %
+               (router_id, subnet_id), e)
         return False
 
 
@@ -430,8 +430,8 @@ def remove_gateway_router(neutron_client, router_id):
         neutron_client.remove_gateway_router(router_id)
         return True
     except Exception, e:
-        print "Error [remove_gateway_router(neutron_client, '%s')]:" \
-            % router_id, e
+        print ("Error [remove_gateway_router(neutron_client, '%s')]:" %
+               router_id, e)
         return False
 
 
@@ -465,8 +465,8 @@ def create_security_group(neutron_client, sg_name, sg_description):
         secgroup = neutron_client.create_security_group(json_body)
         return secgroup['security_group']
     except Exception, e:
-        print "Error [create_security_group(neutron_client, '%s', '%s')]:" % \
-            (sg_name, sg_description), e
+        print ("Error [create_security_group(neutron_client, '%s', '%s')]:" %
+               (sg_name, sg_description), e)
         return False
 
 
@@ -483,20 +483,20 @@ def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
                                              'port_range_max': port_range_max,
                                              'protocol': protocol}}
     else:
-        print "Error [create_secgroup_rule(neutron_client, '%s', '%s', "\
-              "'%s', '%s', '%s', '%s')]:" % (neutron_client, sg_id, direction,
-                                             port_range_min, port_range_max,
-                                             protocol),\
-              " Invalid values for port_range_min, port_range_max"
+        print ("Error [create_secgroup_rule(neutron_client, '%s', '%s', "
+               "'%s', '%s', '%s', '%s')]:" % (neutron_client, sg_id, direction,
+                                              port_range_min, port_range_max,
+                                              protocol),
+               " Invalid values for port_range_min, port_range_max")
         return False
     try:
         neutron_client.create_security_group_rule(json_body)
         return True
     except Exception, e:
-        print "Error [create_secgroup_rule(neutron_client, '%s', '%s', "\
-            "'%s', '%s', '%s', '%s')]:" % (neutron_client, sg_id, direction,
-                                           port_range_min, port_range_max,
-                                           protocol), e
+        print ("Error [create_secgroup_rule(neutron_client, '%s', '%s', "
+               "'%s', '%s', '%s', '%s')]:" % (neutron_client, sg_id, direction,
+                                              port_range_min, port_range_max,
+                                              protocol), e)
         return False
 
 
@@ -505,8 +505,8 @@ def add_secgroup_to_instance(nova_client, instance_id, secgroup_id):
         nova_client.servers.add_security_group(instance_id, secgroup_id)
         return True
     except Exception, e:
-        print "Error [add_secgroup_to_instance(nova_client, '%s', '%s')]: " % \
-            (instance_id, secgroup_id), e
+        print ("Error [add_secgroup_to_instance(nova_client, '%s', '%s')]: " %
+               (instance_id, secgroup_id), e)
         return False
 
 
@@ -521,8 +521,8 @@ def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
                                     body=json_body)
         return True
     except Exception, e:
-        print "Error [update_sg_quota(neutron_client, '%s', '%s', " \
-            "'%s')]:" % (tenant_id, sg_quota, sg_rule_quota), e
+        print ("Error [update_sg_quota(neutron_client, '%s', '%s', "
+               "'%s')]:" % (tenant_id, sg_quota, sg_rule_quota), e)
         return False
 
 
@@ -531,8 +531,8 @@ def delete_security_group(neutron_client, secgroup_id):
         neutron_client.delete_security_group(secgroup_id)
         return True
     except Exception, e:
-        print "Error [delete_security_group(neutron_client, '%s')]:"  \
-            % secgroup_id, e
+        print ("Error [delete_security_group(neutron_client, '%s')]:" %
+               secgroup_id, e)
         return False
 
 
@@ -571,8 +571,8 @@ def create_glance_image(glance_client, image_name, file_path, public=True):
                                                 data=fimage)
         return image.id
     except Exception, e:
-        print "Error [create_glance_image(glance_client, '%s', '%s', "\
-            "'%s')]:" % (image_name, file_path, str(public)), e
+        print ("Error [create_glance_image(glance_client, '%s', '%s', "
+               "'%s')]:" % (image_name, file_path, str(public)), e)
         return False
 
 
@@ -581,7 +581,7 @@ def delete_glance_image(nova_client, image_id):
         nova_client.images.delete(image_id)
         return True
     except Exception, e:
-        print "Error [delete_glance_image(nova_client, '%s')]:" % image_id, e
+        print ("Error [delete_glance_image(nova_client, '%s')]:" % image_id, e)
         return False
 
 
@@ -629,9 +629,9 @@ def update_cinder_quota(cinder_client, tenant_id, vols_quota,
         cinder_client.quotas.update(tenant_id, **quotas_values)
         return True
     except Exception, e:
-        print "Error [update_cinder_quota(cinder_client, '%s', '%s', '%s'" \
-            "'%s')]:" % (tenant_id, vols_quota,
-                         snapshots_quota, gigabytes_quota), e
+        print ("Error [update_cinder_quota(cinder_client, '%s', '%s', '%s'"
+               "'%s')]:" % (tenant_id, vols_quota,
+                            snapshots_quota, gigabytes_quota), e)
         return False
 
 
@@ -647,8 +647,8 @@ def delete_volume(cinder_client, volume_id, forced=False):
             cinder_client.volumes.delete(volume_id)
         return True
     except Exception, e:
-        print "Error [delete_volume(cinder_client, '%s', '%s')]:" % \
-            (volume_id, str(forced)), e
+        print ("Error [delete_volume(cinder_client, '%s', '%s')]:" %
+               (volume_id, str(forced)), e)
         return False
 
 
@@ -657,8 +657,8 @@ def delete_volume_type(cinder_client, volume_type):
         cinder_client.volume_types.delete(volume_type)
         return True
     except Exception, e:
-        print "Error [delete_volume_type(cinder_client, '%s')]:" \
-            % volume_type, e
+        print ("Error [delete_volume_type(cinder_client, '%s')]:" %
+               volume_type, e)
         return False
 
 
@@ -720,8 +720,8 @@ def create_tenant(keystone_client, tenant_name, tenant_description):
                                                 enabled=True)
         return tenant.id
     except Exception, e:
-        print "Error [create_tenant(cinder_client, '%s', '%s')]:" % \
-            (tenant_name, tenant_description), e
+        print ("Error [create_tenant(cinder_client, '%s', '%s')]:" %
+               (tenant_name, tenant_description), e)
         return False
 
 
@@ -733,8 +733,9 @@ def create_user(keystone_client, user_name, user_password,
                                             enabled=True)
         return user.id
     except Exception, e:
-        print "Error [create_user(keystone_client, '%s', '%s', '%s'" \
-            "'%s')]:" % (user_name, user_password, user_email, tenant_id), e
+        print ("Error [create_user(keystone_client, '%s', '%s', '%s'"
+               "'%s')]:" % (user_name, user_password, user_email, tenant_id),
+               e)
         return False
 
 
@@ -743,8 +744,8 @@ def add_role_user(keystone_client, user_id, role_id, tenant_id):
         keystone_client.roles.add_user_role(user_id, role_id, tenant_id)
         return True
     except Exception, e:
-        print "Error [add_role_user(keystone_client, '%s', '%s'" \
-            "'%s')]:" % (user_id, role_id, tenant_id), e
+        print ("Error [add_role_user(keystone_client, '%s', '%s'"
+               "'%s')]:" % (user_id, role_id, tenant_id), e)
         return False
 
 

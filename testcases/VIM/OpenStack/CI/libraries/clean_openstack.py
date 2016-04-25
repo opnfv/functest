@@ -270,10 +270,8 @@ def remove_ports(neutron_client, ports, network_ids):
             elif port['device_owner'] == 'network:router_interface':
                 logger.debug("Detaching port %s (subnet %s) from router %s ..."
                              % (port_id, subnet_id, router_id))
-                if openstack_utils.\
-                    remove_interface_router(neutron_client,
-                                            router_id,
-                                            subnet_id):
+                if openstack_utils.remove_interface_router(
+                        neutron_client, router_id, subnet_id):
                     time.sleep(5)  # leave 5 seconds to detach
                     logger.debug("  > Done!")
                 else:

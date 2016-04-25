@@ -79,25 +79,22 @@ f.close()
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 
 MODE = "smoke"
-TENANT_NAME = functest_yaml.get("tempest").\
-    get("identity").get("tenant_name")
-TENANT_DESCRIPTION = functest_yaml.get("tempest").\
-    get("identity").get("tenant_description")
-USER_NAME = functest_yaml.get("tempest").\
-    get("identity").get("user_name")
-USER_PASSWORD = functest_yaml.get("tempest").\
-    get("identity").get("user_password")
-SSH_USER_REGEX = functest_yaml.get("tempest").\
-    get("input-scenario").get("ssh_user_regex")
-DEPLOYMENT_MAME = functest_yaml.get("rally").\
-    get("deployment_name")
-RALLY_INSTALLATION_DIR = functest_yaml.get("general").\
-    get("directories").get("dir_rally_inst")
-RESULTS_DIR = functest_yaml.get("general").\
-    get("directories").get("dir_results")
+TENANT_NAME = functest_yaml.get("tempest").get("identity").get("tenant_name")
+TENANT_DESCRIPTION = functest_yaml.get("tempest").get("identity").get(
+    "tenant_description")
+USER_NAME = functest_yaml.get("tempest").get("identity").get("user_name")
+USER_PASSWORD = functest_yaml.get("tempest").get("identity").get(
+    "user_password")
+SSH_USER_REGEX = functest_yaml.get("tempest").get("input-scenario").get(
+    "ssh_user_regex")
+DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
+RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get(
+    "dir_rally_inst")
+RESULTS_DIR = functest_yaml.get("general").get("directories").get(
+    "dir_results")
 TEMPEST_RESULTS_DIR = RESULTS_DIR + '/tempest'
-TEST_LIST_DIR = functest_yaml.get("general").\
-    get("directories").get("dir_tempest_cases")
+TEST_LIST_DIR = functest_yaml.get("general").get("directories").get(
+    "dir_tempest_cases")
 TEMPEST_LIST_FILE = REPO_PATH + TEST_LIST_DIR + 'test_list.txt'
 TEMPEST_DEFCORE = REPO_PATH + TEST_LIST_DIR + 'defcore_req.txt'
 
@@ -199,8 +196,8 @@ def configure_tempest(mode):
     if deployment_uuid == "":
         logger.debug("   Rally deployment NOT found")
         return False
-    deployment_dir = RALLY_INSTALLATION_DIR + "/tempest/for-deployment-" + \
-        deployment_uuid
+    deployment_dir = (RALLY_INSTALLATION_DIR + "/tempest/for-deployment-" +
+                      deployment_uuid)
 
     logger.debug("Finding tempest.conf file...")
     tempest_conf_file = deployment_dir + "/tempest.conf"
@@ -255,12 +252,12 @@ def run_tempest(OPTION):
     if CI_DEBUG == "true" or CI_DEBUG == "True":
         subprocess.call(cmd_line, shell=True, stderr=subprocess.STDOUT)
     else:
-        header = "Tempest environment:\n"\
-            "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" % \
-            (os.getenv('INSTALLER_TYPE', 'Unknown'),
-             os.getenv('DEPLOY_SCENARIO', 'Unknown'),
-             os.getenv('NODE_NAME', 'Unknown'),
-             time.strftime("%a %b %d %H:%M:%S %Z %Y"))
+        header = ("Tempest environment:\n"
+                  "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
+                  (os.getenv('INSTALLER_TYPE', 'Unknown'),
+                   os.getenv('DEPLOY_SCENARIO', 'Unknown'),
+                   os.getenv('NODE_NAME', 'Unknown'),
+                   time.strftime("%a %b %d %H:%M:%S %Z %Y")))
 
         f_stdout = open(TEMPEST_RESULTS_DIR + "/tempest.log", 'w+')
         f_stderr = open(TEMPEST_RESULTS_DIR + "/tempest-error.log", 'w+')

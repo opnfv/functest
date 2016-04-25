@@ -69,8 +69,8 @@ with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
 f.close()
 
 # Cloudify parameters
-VIMS_DIR = REPO_PATH + \
-    functest_yaml.get("general").get("directories").get("dir_vIMS")
+VIMS_DIR = (REPO_PATH +
+            functest_yaml.get("general").get("directories").get("dir_vIMS"))
 VIMS_DATA_DIR = functest_yaml.get("general").get(
     "directories").get("dir_vIMS_data") + "/"
 VIMS_TEST_DIR = functest_yaml.get("general").get(
@@ -219,12 +219,12 @@ def test_clearwater():
         resolvconf += "\nnameserver " + ns
 
     if dns_ip != "":
-        script = 'echo -e "nameserver ' + dns_ip + resolvconf + \
-            '" > /etc/resolv.conf; '
+        script = ('echo -e "nameserver ' + dns_ip + resolvconf +
+                  '" > /etc/resolv.conf; ')
         script += 'source /etc/profile.d/rvm.sh; '
         script += 'cd ' + VIMS_TEST_DIR + '; '
-        script += 'rake test[' + \
-            CW_INPUTS["public_domain"] + '] SIGNUP_CODE="secret"'
+        script += ('rake test[' + CW_INPUTS["public_domain"] +
+                   '] SIGNUP_CODE="secret"')
 
         cmd = "/bin/bash -c '" + script + "'"
         output_file = "output.txt"
@@ -329,9 +329,8 @@ def main():
     })
 
     logger.info("Upload some OS images if it doesn't exist")
-    glance_endpoint = keystone.\
-        service_catalog.url_for(service_type='image',
-                                endpoint_type='publicURL')
+    glance_endpoint = keystone.service_catalog.url_for(
+        service_type='image', endpoint_type='publicURL')
     glance = glclient.Client(1, glance_endpoint, token=keystone.auth_token)
 
     for img in IMAGES.keys():
@@ -397,8 +396,8 @@ def main():
         logger.error(
             "Failed to find %s flavor. "
             "Try with ram range default requirement !" % flavor_name)
-        flavor_id = openstack_utils.\
-            get_flavor_id_by_ram_range(nova, 4000, 8196)
+        flavor_id = openstack_utils.get_flavor_id_by_ram_range(
+                        nova, 4000, 8196)
 
     if flavor_id == '':
         step_failure("orchestrator",
@@ -474,8 +473,8 @@ def main():
         logger.error(
             "Failed to find %s flavor. Try with ram range "
             "default requirement !" % flavor_name)
-        flavor_id = openstack_utils.\
-            get_flavor_id_by_ram_range(nova, 4000, 8196)
+        flavor_id = openstack_utils.get_flavor_id_by_ram_range(
+                        nova, 4000, 8196)
 
     if flavor_id == '':
         step_failure(

@@ -36,8 +36,8 @@ class client(environment):
         self.ChangeTestCasePara(testname, self.masterusername,
                                 self.masterpassword)
         runhandle = handle
-        runtest = self.home + "/OnosSystemTest/TestON/bin/cli.py run " + \
-            testname
+        runtest = (self.home + "/OnosSystemTest/TestON/bin/cli.py run " +
+                   testname)
         runhandle.sendline(runtest)
         circletime = 0
         lastshowscreeninfo = ''

@@ -67,8 +67,8 @@ class foundation:
                                  get("onoscli_username"))
         self.agentpassword = str(functest_yaml.get("ONOS").get("general").
                                  get("onoscli_password"))
-        self.runtimeout = functest_yaml.get("ONOS").\
-            get("general").get("runtimeout")
+        self.runtimeout = functest_yaml.get("ONOS").get("general").get(
+            "runtimeout")
         self.OCT = str(functest_yaml.get("ONOS").get("environment").get("OCT"))
         self.OC1 = str(functest_yaml.get("ONOS").get("environment").get("OC1"))
         self.OC2 = str(functest_yaml.get("ONOS").get("environment").get("OC2"))
