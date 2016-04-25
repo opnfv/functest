@@ -81,31 +81,28 @@ TEST_DB = functest_yaml.get("results").get("test_db_url")
 NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
 GLANCE_IMAGE_NAME = functest_yaml.get("vping").get("image_name")
-GLANCE_IMAGE_FILENAME = functest_yaml.get("general"). \
-    get("openstack").get("image_file_name")
-GLANCE_IMAGE_FORMAT = functest_yaml.get("general"). \
-    get("openstack").get("image_disk_format")
-GLANCE_IMAGE_PATH = functest_yaml.get("general"). \
-    get("directories").get("dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
-
+GLANCE_IMAGE_FILENAME = functest_yaml.get("general").get("openstack").get(
+    "image_file_name")
+GLANCE_IMAGE_FORMAT = functest_yaml.get("general").get("openstack").get(
+    "image_disk_format")
+GLANCE_IMAGE_PATH = functest_yaml.get("general").get("directories").get(
+    "dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
 
 FLAVOR = functest_yaml.get("vping").get("vm_flavor")
 
 # NEUTRON Private Network parameters
 
-NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("vping"). \
-    get("vping_private_net_name")
-NEUTRON_PRIVATE_SUBNET_NAME = functest_yaml.get("vping"). \
-    get("vping_private_subnet_name")
-NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("vping"). \
-    get("vping_private_subnet_cidr")
-NEUTRON_ROUTER_NAME = functest_yaml.get("vping"). \
-    get("vping_router_name")
+NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("vping").get(
+    "vping_private_net_name")
+NEUTRON_PRIVATE_SUBNET_NAME = functest_yaml.get("vping").get(
+    "vping_private_subnet_name")
+NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("vping").get(
+    "vping_private_subnet_cidr")
+NEUTRON_ROUTER_NAME = functest_yaml.get("vping").get(
+    "vping_router_name")
 
-SECGROUP_NAME = functest_yaml.get("vping"). \
-    get("vping_sg_name")
-SECGROUP_DESCR = functest_yaml.get("vping"). \
-    get("vping_sg_descr")
+SECGROUP_NAME = functest_yaml.get("vping").get("vping_sg_name")
+SECGROUP_DESCR = functest_yaml.get("vping").get("vping_sg_descr")
 
 
 def pMsg(value):
@@ -170,24 +167,22 @@ def create_private_neutron_net(neutron):
         neutron.format = 'json'
         logger.info('Creating neutron network %s...'
                     % NEUTRON_PRIVATE_NET_NAME)
-        network_id = openstack_utils. \
-            create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
+        network_id = openstack_utils.create_neutron_net(
+            neutron, NEUTRON_PRIVATE_NET_NAME)
 
         if not network_id:
             return False
         logger.debug("Network '%s' created successfully" % network_id)
         logger.debug('Creating Subnet....')
-        subnet_id = openstack_utils. \
-            create_neutron_subnet(neutron,
-                                  NEUTRON_PRIVATE_SUBNET_NAME,
-                                  NEUTRON_PRIVATE_SUBNET_CIDR,
-                                  network_id)
+        subnet_id = openstack_utils.create_neutron_subnet(
+            neutron, NEUTRON_PRIVATE_SUBNET_NAME, NEUTRON_PRIVATE_SUBNET_CIDR,
+            network_id)
         if not subnet_id:
             return False
         logger.debug("Subnet '%s' created successfully" % subnet_id)
         logger.debug('Creating Router...')
-        router_id = openstack_utils. \
-            create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
+        router_id = openstack_utils.create_neutron_router(
+            neutron, NEUTRON_ROUTER_NAME)
 
         if not router_id:
             return False
@@ -240,15 +235,13 @@ def create_security_group(neutron_client):
 
         logger.debug("Adding SSH rules in security group '%s'..."
                      % SECGROUP_NAME)
-        if not openstack_utils.\
-            create_secgroup_rule(neutron_client, sg_id,
-                                 'ingress', 'tcp', '22', '22'):
+        if not openstack_utils.create_secgroup_rule(
+                neutron_client, sg_id, 'ingress', 'tcp', '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
 
-        if not openstack_utils.\
-            create_secgroup_rule(neutron_client, sg_id,
-                                 'egress', 'tcp', '22', '22'):
+        if not openstack_utils.create_secgroup_rule(
+                neutron_client, sg_id, 'egress', 'tcp', '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
     return sg_id
@@ -285,9 +278,8 @@ def main():
     neutron_client = neutronclient.Client(**creds_neutron)
     creds_keystone = openstack_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
-    glance_endpoint = keystone_client.\
-        service_catalog.url_for(service_type='image',
-                                endpoint_type='publicURL')
+    glance_endpoint = keystone_client.service_catalog.url_for(
+        service_type='image', endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
     EXIT_CODE = -1
@@ -438,8 +430,8 @@ def main():
         console_log = vm2.get_console_output()
 
         # print each "Sending discover" captured on the console log
-        if len(re.findall("Sending discover", console_log)) > discover_count \
-           and not got_ip:
+        if (len(re.findall("Sending discover", console_log)) >
+                discover_count and not got_ip):
             discover_count += 1
             logger.debug("Console-log '%s': Sending discover..."
                          % NAME_VM_2)

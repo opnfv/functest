@@ -147,12 +147,12 @@ def run_scanner():
                                             parserout.password,
                                             com)
     elif args['which'] == 'oval':
-        com = '{0} oval eval --results {1}/{2}' + \
-            ' --report {1}/{3} {4}'.format(oscap,
-                                           tmpdir.rstrip(),
-                                           parserout.results,
-                                           parserout.report,
-                                           parserout.secpolicy)
+        com = ('{0} oval eval --results {1}/{2}' +
+               ' --report {1}/{3} {4}'.format(oscap,
+                                              tmpdir.rstrip(),
+                                              parserout.results,
+                                              parserout.report,
+                                              parserout.secpolicy))
         connect = connect.connectionManager(parserout.host,
                                             parserout.user,
                                             parserout.password,

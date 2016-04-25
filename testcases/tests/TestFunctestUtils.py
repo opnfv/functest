@@ -83,8 +83,9 @@ class TestFunctestUtils(unittest.TestCase):
 
         test = generateTestcaseList(functest_yaml)
 
-        expected_list = "vping_ssh vping_userdata tempest odl doctor " + \
-            "promise policy-test odl-vpn_service-tests vims rally "
+        expected_list = ("vping_ssh vping_userdata tempest odl doctor " +
+                         "promise policy-test odl-vpn_service-tests vims " +
+                         "rally ")
         self.assertEqual(test, expected_list)
 
     def tearDown(self):

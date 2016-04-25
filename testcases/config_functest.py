@@ -20,8 +20,8 @@ from neutronclient.v2_0 import client as neutronclient
 
 actions = ['start', 'check', 'clean']
 parser = argparse.ArgumentParser()
-parser.add_argument("action", help="Possible actions are: \
-    '{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
+parser.add_argument("action", help="Possible actions are: "
+                    "'{d[0]}|{d[1]}|{d[2]}' ".format(d=actions))
 parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
 parser.add_argument("-f", "--force", help="Force", action="store_true")
 args = parser.parse_args()
@@ -57,40 +57,40 @@ f.close()
 
 """ global variables """
 # Directories
-RALLY_DIR = FUNCTEST_REPO + functest_yaml.get("general").\
-    get("directories").get("dir_rally")
-RALLY_REPO_DIR = functest_yaml.get("general").\
-    get("directories").get("dir_repo_rally")
-RALLY_INSTALLATION_DIR = functest_yaml.get("general").\
-    get("directories").get("dir_rally_inst")
-RALLY_RESULT_DIR = functest_yaml.get("general").\
-    get("directories").get("dir_rally_res")
-TEMPEST_REPO_DIR = functest_yaml.get("general").\
-    get("directories").get("dir_repo_tempest")
-VPING_DIR = FUNCTEST_REPO + functest_yaml.\
-    get("general").get("directories").get("dir_vping")
-ODL_DIR = FUNCTEST_REPO + functest_yaml.\
-    get("general").get("directories").get("dir_odl")
-DATA_DIR = functest_yaml.get("general").\
-    get("directories").get("dir_functest_data")
+RALLY_DIR = FUNCTEST_REPO + functest_yaml.get("general").get(
+    "directories").get("dir_rally")
+RALLY_REPO_DIR = functest_yaml.get("general").get(
+    "directories").get("dir_repo_rally")
+RALLY_INSTALLATION_DIR = functest_yaml.get("general").get(
+    "directories").get("dir_rally_inst")
+RALLY_RESULT_DIR = functest_yaml.get("general").get(
+    "directories").get("dir_rally_res")
+TEMPEST_REPO_DIR = functest_yaml.get("general").get(
+    "directories").get("dir_repo_tempest")
+VPING_DIR = FUNCTEST_REPO + functest_yaml.get("general").get(
+    "directories").get("dir_vping")
+ODL_DIR = FUNCTEST_REPO + functest_yaml.get("general").get(
+    "directories").get("dir_odl")
+DATA_DIR = functest_yaml.get("general").get(
+    "directories").get("dir_functest_data")
 
 # Tempest/Rally configuration details
 DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
 
 # Image (cirros)
-IMAGE_FILE_NAME = functest_yaml.get("general").\
-    get("openstack").get("image_file_name")
+IMAGE_FILE_NAME = functest_yaml.get("general").get("openstack").get(
+    "image_file_name")
 IMAGE_PATH = DATA_DIR + "/" + IMAGE_FILE_NAME
 
 # NEUTRON Private Network parameters
-NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general"). \
-    get("openstack").get("neutron_private_net_name")
-NEUTRON_PRIVATE_SUBNET_NAME = functest_yaml.get("general"). \
-    get("openstack").get("neutron_private_subnet_name")
-NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("general"). \
-    get("openstack").get("neutron_private_subnet_cidr")
-NEUTRON_ROUTER_NAME = functest_yaml.get("general"). \
-    get("openstack").get("neutron_router_name")
+NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("general").get(
+    "openstack").get("neutron_private_net_name")
+NEUTRON_PRIVATE_SUBNET_NAME = functest_yaml.get("general").get(
+    "openstack").get("neutron_private_subnet_name")
+NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("general").get(
+    "openstack").get("neutron_private_subnet_cidr")
+NEUTRON_ROUTER_NAME = functest_yaml.get("general").get(
+    "openstack").get("neutron_router_name")
 
 creds_neutron = openstack_utils.get_credentials("neutron")
 neutron_client = neutronclient.Client(**creds_neutron)
@@ -205,8 +205,8 @@ def install_rally():
         functest_utils.execute_command(cmd, logger)
 
         logger.debug("Installing tempest from existing repo...")
-        cmd = "rally verify install --source " + TEMPEST_REPO_DIR + \
-            " --system-wide"
+        cmd = ("rally verify install --source " + TEMPEST_REPO_DIR +
+               " --system-wide")
         functest_utils.execute_command(cmd, logger)
 
         cmd = "rally deployment check"
@@ -248,8 +248,8 @@ def check_rally():
 def create_private_neutron_net(neutron):
     neutron.format = 'json'
     logger.info("Creating network '%s'..." % NEUTRON_PRIVATE_NET_NAME)
-    network_id = openstack_utils. \
-        create_neutron_net(neutron, NEUTRON_PRIVATE_NET_NAME)
+    network_id = openstack_utils.create_neutron_net(
+        neutron, NEUTRON_PRIVATE_NET_NAME)
 
     if not network_id:
         return False
@@ -263,17 +263,15 @@ def create_private_neutron_net(neutron):
         logger.info("Updating neutron network '%s' failed" % network_id)
 
     logger.info("Creating Subnet....")
-    subnet_id = openstack_utils. \
-        create_neutron_subnet(neutron,
-                              NEUTRON_PRIVATE_SUBNET_NAME,
-                              NEUTRON_PRIVATE_SUBNET_CIDR,
-                              network_id)
+    subnet_id = openstack_utils.create_neutron_subnet(
+        neutron, NEUTRON_PRIVATE_SUBNET_NAME, NEUTRON_PRIVATE_SUBNET_CIDR,
+        network_id)
     if not subnet_id:
         return False
     logger.debug("Subnet '%s' created successfully." % subnet_id)
     logger.info("Creating Router...")
-    router_id = openstack_utils. \
-        create_neutron_router(neutron, NEUTRON_ROUTER_NAME)
+    router_id = openstack_utils.create_neutron_router(neutron,
+                                                      NEUTRON_ROUTER_NAME)
 
     if not router_id:
         return False

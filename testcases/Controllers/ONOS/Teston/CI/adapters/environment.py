@@ -136,8 +136,8 @@ class environment(connection):
             print "try to connect " + str(host)
             result = self.CheckSshNoPasswd(host)
             if not result:
-                print "ssh lgin failed,try to copy master publickey" + \
-                    "to agent " + str(host)
+                print ("ssh lgin failed,try to copy master publickey" +
+                       "to agent " + str(host))
                 self.CopyPublicKey(host)
         self.OnosPushKeys(handle, "onos-push-keys " + self.OCT, masterpass)
         self.OnosPushKeys(handle, "onos-push-keys " + self.OC1, agentpass)
@@ -201,18 +201,18 @@ class environment(connection):
             filepath = '/root/'
         else:
             filepath = '/home/' + self.masterusername + '/'
-        filepath = filepath + "OnosSystemTest/TestON/tests/" \
-            + testcase + "/" + testcase + ".topo"
+        filepath = (filepath + "OnosSystemTest/TestON/tests/" +
+                    testcase + "/" + testcase + ".topo")
         line = open(filepath, 'r').readlines()
         lenall = len(line) - 1
         for i in range(lenall - 2):
             if("localhost" in line[i]) or ("OCT" in line[i]):
                 line[i + 1] = re.sub(">\w+", ">" + user, line[i + 1])
                 line[i + 2] = re.sub(">\w+", ">" + password, line[i + 2])
-            if "OC1" in line[i] or "OC2" in line[i] or "OC3" in line[i] or \
-               "OCN" in line[i] or "OCN2" in line[i]:
-                    line[i + 1] = re.sub(">\w+", ">root", line[i + 1])
-                    line[i + 2] = re.sub(">\w+", ">root", line[i + 2])
+            if ("OC1" in line[i] or "OC2" in line[i] or "OC3" in line[i] or
+                    "OCN" in line[i] or "OCN2" in line[i]):
+                line[i + 1] = re.sub(">\w+", ">root", line[i + 1])
+                line[i + 2] = re.sub(">\w+", ">root", line[i + 2])
         NewFile = open(filepath, 'w')
         NewFile.writelines(line)
         NewFile.close
