@@ -20,8 +20,6 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import argparse
-import logging
 import os
 import yaml
 
@@ -30,27 +28,11 @@ from neutronclient.v2_0 import client as neutronclient
 from keystoneclient.v2_0 import client as keystoneclient
 from cinderclient import client as cinderclient
 
-import openstack_utils
-
-parser = argparse.ArgumentParser()
-parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
-args = parser.parse_args()
-
+import functest.utils.openstack_utils as openstack_utils
+import functest.utils.functest_logger as ft_logger
 
 """ logging configuration """
-logger = logging.getLogger('generate_defaults')
-logger.setLevel(logging.DEBUG)
-
-ch = logging.StreamHandler()
-if args.debug:
-    ch.setLevel(logging.DEBUG)
-else:
-    ch.setLevel(logging.INFO)
-
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - ' +
-                              '%(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+logger = ft_logger.Logger("generate_defaults").getLogger()
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
 if not os.path.exists(REPO_PATH):
