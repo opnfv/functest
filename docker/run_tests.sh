@@ -191,7 +191,7 @@ bgpvpn = True" >> /etc/tempest/tempest.conf
         ;;
     esac
 
-    if [[ -n $clean_flag ]]; then
+    if [ $clean == "true" ]; then
         clean_openstack
     fi
 }
