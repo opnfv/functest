@@ -47,10 +47,10 @@ f.close()
 
 # onos parameters
 TEST_DB = functest_yaml.get("results").get("test_db_url")
-ONOS_REPO_PATH = functest_yaml.get("general").\
-    get("directories").get("dir_repos")
-ONOS_CONF_DIR = functest_yaml.get("general").\
-    get("directories").get("dir_functest_conf")
+ONOS_REPO_PATH = functest_yaml.get("general").get("directories").get(
+    "dir_repos")
+ONOS_CONF_DIR = functest_yaml.get("general").get("directories").get(
+    "dir_functest_conf")
 REPO_PATH = ONOS_REPO_PATH + '/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)

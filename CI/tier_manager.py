@@ -25,11 +25,11 @@ class Tier:
         return array_str
 
     def __str__(self):
-        return "Tier info:\n" + \
-            "\tName: " + self.name + "\n" + \
-            "\tDescription: " + self.description + "\n" + \
-            "\tOrder: " + self.order + "\n" + \
-            "\tTest cases: " + str(self.get_tests()) + "\n"
+        return ("Tier info:\n" +
+                "\tName: " + self.name + "\n" +
+                "\tDescription: " + self.description + "\n" +
+                "\tOrder: " + self.order + "\n" +
+                "\tTest cases: " + str(self.get_tests()) + "\n")
 
 
 class Testcase:
@@ -39,11 +39,11 @@ class Testcase:
         self.dependency = dependency
 
     def __str__(self):
-        return "Testcase info:\n" + \
-            "\tName: " + self.name + "\n" + \
-            "\tName: " + self.name + "\n" + \
-            "\tDescription: " + self.description + "\n" + \
-            "\tDependencies: " + str(self.dependency) + "\n"
+        return ("Testcase info:\n" +
+                "\tName: " + self.name + "\n" +
+                "\tName: " + self.name + "\n" +
+                "\tDescription: " + self.description + "\n" +
+                "\tDependencies: " + str(self.dependency) + "\n")
 
 
 class Dependency:
@@ -54,10 +54,10 @@ class Dependency:
         self.mode = mode
 
     def __str__(self):
-        return "Dependency info:\n" + \
-            "\t" + self.installer + " os-[" + self.sdn + "]-[" + \
-            self.feature + "]-[" + self.mode + "]" + "\n" + \
-            "\t\t- installer: " + self.installer + "\n" + \
-            "\t\t- sdn Controller: " + self.sdn + "\n" + \
-            "\t\t- feature: " + self.feature + "\n" + \
-            "\t\t- mode: " + self.mode + "\n"
+        return ("Dependency info:\n" +
+                "\t" + self.installer + " os-[" + self.sdn + "]-[" +
+                self.feature + "]-[" + self.mode + "]" + "\n" +
+                "\t\t- installer: " + self.installer + "\n" +
+                "\t\t- sdn Controller: " + self.sdn + "\n" +
+                "\t\t- feature: " + self.feature + "\n" +
+                "\t\t- mode: " + self.mode + "\n")

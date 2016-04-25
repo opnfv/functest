@@ -53,12 +53,12 @@ FLAVOR_RAM = functest_yaml.get('promise').get('general').get('flavor_ram')
 FLAVOR_DISK = functest_yaml.get('promise').get('general').get('flavor_disk')
 
 
-GLANCE_IMAGE_FILENAME = functest_yaml.get('general'). \
-    get('openstack').get('image_file_name')
-GLANCE_IMAGE_FORMAT = functest_yaml.get('general'). \
-    get('openstack').get('image_disk_format')
-GLANCE_IMAGE_PATH = functest_yaml.get('general'). \
-    get('directories').get('dir_functest_data') + "/" + GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_FILENAME = functest_yaml.get('general').get('openstack').get(
+    'image_file_name')
+GLANCE_IMAGE_FORMAT = functest_yaml.get('general').get('openstack').get(
+    'image_disk_format')
+GLANCE_IMAGE_PATH = functest_yaml.get('general').get('directories').get(
+    'dir_functest_data') + "/" + GLANCE_IMAGE_FILENAME
 
 """ logging configuration """
 logger = logging.getLogger('Promise')
@@ -141,9 +141,8 @@ def main():
         "project_id": TENANT_NAME,
     })
 
-    glance_endpoint = keystone.\
-        service_catalog.url_for(service_type='image',
-                                endpoint_type='publicURL')
+    glance_endpoint = keystone.service_catalog.url_for(
+        service_type='image', endpoint_type='publicURL')
     glance = glclient.Client(1, glance_endpoint, token=keystone.auth_token)
     nova = nvclient.Client("2", **nv_creds)
 

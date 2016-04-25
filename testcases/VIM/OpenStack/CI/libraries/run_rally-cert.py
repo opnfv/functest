@@ -99,8 +99,8 @@ with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
 f.close()
 
 HOME = os.environ['HOME'] + "/"
-SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general"). \
-    get("directories").get("dir_rally_scn")
+SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general").get(
+    "directories").get("dir_rally_scn")
 TEMPLATE_DIR = SCENARIOS_DIR + "scenario/templates"
 SUPPORT_DIR = SCENARIOS_DIR + "scenario/support"
 
@@ -110,22 +110,22 @@ TENANTS_AMOUNT = 3
 ITERATIONS_AMOUNT = 10
 CONCURRENCY = 4
 
-RESULTS_DIR = functest_yaml.get("general").get("directories"). \
-    get("dir_rally_res")
-TEMPEST_CONF_FILE = functest_yaml.get("general").get("directories"). \
-    get("dir_results") + '/tempest/tempest.conf'
+RESULTS_DIR = functest_yaml.get("general").get("directories").get(
+    "dir_rally_res")
+TEMPEST_CONF_FILE = functest_yaml.get("general").get("directories").get(
+    "dir_results") + '/tempest/tempest.conf'
 TEST_DB = functest_yaml.get("results").get("test_db_url")
-PRIVATE_NETWORK = functest_yaml.get("general"). \
-    get("openstack").get("neutron_private_net_name")
+PRIVATE_NETWORK = functest_yaml.get("general").get("openstack").get(
+    "neutron_private_net_name")
 
-GLANCE_IMAGE_NAME = functest_yaml.get("general"). \
-    get("openstack").get("image_name")
-GLANCE_IMAGE_FILENAME = functest_yaml.get("general"). \
-    get("openstack").get("image_file_name")
-GLANCE_IMAGE_FORMAT = functest_yaml.get("general"). \
-    get("openstack").get("image_disk_format")
-GLANCE_IMAGE_PATH = functest_yaml.get("general"). \
-    get("directories").get("dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_NAME = functest_yaml.get("general").get("openstack").get(
+    "image_name")
+GLANCE_IMAGE_FILENAME = functest_yaml.get("general").get("openstack").get(
+    "image_file_name")
+GLANCE_IMAGE_FORMAT = functest_yaml.get("general").get("openstack").get(
+    "image_disk_format")
+GLANCE_IMAGE_PATH = functest_yaml.get("general").get("directories").get(
+    "dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
 
 CINDER_VOLUME_TYPE_NAME = "volume_test"
 
@@ -188,9 +188,9 @@ def task_succeed(json_raw):
 
 def live_migration_supported():
     config = iniparse.ConfigParser()
-    if config.read(TEMPEST_CONF_FILE) and \
-       config.has_section('compute-feature-enabled') and \
-       config.has_option('compute-feature-enabled', 'live_migration'):
+    if (config.read(TEMPEST_CONF_FILE) and
+            config.has_section('compute-feature-enabled') and
+            config.has_option('compute-feature-enabled', 'live_migration')):
         return config.getboolean('compute-feature-enabled', 'live_migration')
 
     return False
@@ -242,12 +242,12 @@ def get_output(proc, test_name):
         if args.verbose:
             result += line
         else:
-            if "Load duration" in line or \
-               "started" in line or \
-               "finished" in line or \
-               " Preparing" in line or \
-               "+-" in line or \
-               "|" in line:
+            if ("Load duration" in line or
+                    "started" in line or
+                    "finished" in line or
+                    " Preparing" in line or
+                    "+-" in line or
+                    "|" in line):
                 result += line
             elif "test scenario" in line:
                 result += "\n" + line
@@ -255,13 +255,13 @@ def get_output(proc, test_name):
                 result += line + "\n\n"
 
         # parse output for summary report
-        if "| " in line and \
-           "| action" not in line and \
-           "| Starting" not in line and \
-           "| Completed" not in line and \
-           "| ITER" not in line and \
-           "|   " not in line and \
-           "| total" not in line:
+        if ("| " in line and
+                "| action" not in line and
+                "| Starting" not in line and
+                "| Completed" not in line and
+                "| ITER" not in line and
+                "|   " not in line and
+                "| total" not in line):
             nb_tests += 1
         elif "| total" in line:
             percentage = ((line.split('|')[8]).strip(' ')).strip('%')
@@ -316,9 +316,9 @@ def run_task(test_name):
 
     logger.debug('Scenario fetched from : {}'.format(test_file_name))
 
-    cmd_line = "rally task start --abort-on-sla-failure " + \
-               "--task {} ".format(task_file) + \
-               "--task-args \"{}\" ".format(build_task_args(test_name))
+    cmd_line = ("rally task start --abort-on-sla-failure " +
+                "--task {} ".format(task_file) +
+                "--task-args \"{}\" ".format(build_task_args(test_name)))
     logger.debug('running command line : {}'.format(cmd_line))
 
     p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
@@ -385,9 +385,8 @@ def main():
     neutron_client = neutronclient.Client(**creds_neutron)
     creds_keystone = openstack_utils.get_credentials("keystone")
     keystone_client = keystoneclient.Client(**creds_keystone)
-    glance_endpoint = keystone_client.\
-        service_catalog.url_for(service_type='image',
-                                endpoint_type='publicURL')
+    glance_endpoint = keystone_client.service_catalog.url_for(
+        service_type='image', endpoint_type='publicURL')
     glance_client = glanceclient.Client(1, glance_endpoint,
                                         token=keystone_client.auth_token)
     creds_cinder = openstack_utils.get_credentials("cinder")
@@ -402,8 +401,8 @@ def main():
     volume_types = openstack_utils.list_volume_types(cinder_client,
                                                      private=False)
     if not volume_types:
-        volume_type = openstack_utils.\
-            create_volume_type(cinder_client, CINDER_VOLUME_TYPE_NAME)
+        volume_type = openstack_utils.create_volume_type(
+            cinder_client, CINDER_VOLUME_TYPE_NAME)
         if not volume_type:
             logger.error("Failed to create volume type...")
             exit(-1)
@@ -442,17 +441,17 @@ def main():
         logger.debug("Test name: " + args.test_name)
         run_task(args.test_name)
 
-    report = "\n"\
-             "                                                              "\
-             "\n"\
-             "                     Rally Summary Report\n"\
-             "\n"\
-             "+===================+============+===============+===========+"\
-             "\n"\
-             "| Module            | Duration   | nb. Test Run  | Success   |"\
-             "\n"\
-             "+===================+============+===============+===========+"\
-             "\n"
+    report = ("\n"
+              "                                                              "
+              "\n"
+              "                     Rally Summary Report\n"
+              "\n"
+              "+===================+============+===============+===========+"
+              "\n"
+              "| Module            | Duration   | nb. Test Run  | Success   |"
+              "\n"
+              "+===================+============+===============+===========+"
+              "\n")
     payload = []
 
     # for each scenario we draw a row for the table
@@ -469,10 +468,11 @@ def main():
         total_nb_tests += int(s['nb_tests'])
         success = "{0:<10}".format(str(s['success']) + '%')
         total_success += float(s['success'])
-        report += "" + \
-            "| " + name + " | " + duration + " | " + \
-            nb_tests + " | " + success + "|\n" + \
-            "+-------------------+------------+---------------+-----------+\n"
+        report += ("" +
+                   "| " + name + " | " + duration + " | " +
+                   nb_tests + " | " + success + "|\n" +
+                   "+-------------------+------------"
+                   "+---------------+-----------+\n")
         payload.append({'module': name,
                         'details': {'duration': s['overall_duration'],
                                     'nb tests': s['nb_tests'],
@@ -485,8 +485,8 @@ def main():
     total_success_str = "{0:<10}".format(str(total_success) + '%')
     report += "+===================+============+===============+===========+"
     report += "\n"
-    report += "| TOTAL:            | " + total_duration_str2 + " | " + \
-        total_nb_tests_str + " | " + total_success_str + "|\n"
+    report += ("| TOTAL:            | " + total_duration_str2 + " | " +
+               total_nb_tests_str + " | " + total_success_str + "|\n")
     report += "+===================+============+===============+===========+"
     report += "\n"
 
