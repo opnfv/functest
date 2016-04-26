@@ -28,6 +28,9 @@ Version history
 | 2016-02-25 | 1.0.0    | Morgan Richomme  | Functest for B release |
 |            |          | (Orange)         |                        |
 +------------+----------+------------------+------------------------+
+| 2016-04-27 | 3.0.0    | Morgan Richomme  | Add scenarios          |
+|            |          | (Orange)         |                        |
++------------+----------+------------------+------------------------+
 
 OPNFV Brahmaputra Release
 =========================
@@ -50,6 +53,7 @@ The OPNFV projects integrated into Functest framework for automation are:
  * Promise
  * Doctor
  * ONOSFW
+ * bgpvpn
 
 Release Data
 ============
@@ -96,54 +100,38 @@ Version change
 Feature evolution
 -----------------
 
- - dockerization of Functest
-
- - renaming of vPing into vPing userdata
-
- - Tempest update, use custom list of test cases
-
- - Rally update, use global scenario
-
- - Update jenkins logs
-
- - support of the different scenarios
+ - support new scenarios
 
 New features
 ------------
 
- - introduction of a new vPing test case vPing ssh
+ - minor bug fixes (formating)
 
- - introduction of vIMS test case
+ - Modification of the configuration to support vPing_userdata on ONOS scenario
 
- - support of Promise
-
- - support of Doctor
-
- - support of ONOSFW
-
- - scenario management system
-
- - creation of a Test collection API
-
- - creation of the Test dashboard: https://www.opnfv.org/opnfvtestgraphs/summary
-
- - creation of Functest dashboard: http://testresults.opnfv.org/dashboard/
+ - Use serial option in Tempest to improve success rate
 
 Scenario Matrix
 ===============
 
-For Brahmaputra, Functest supports the following scenarios:
+For Brahmaputra 3.0, Functest was succesfully tested on the following scenarios:
 
 +----------------+---------+---------+---------+---------+
 |    Scenario    |  Apex   | Compass |  Fuel   |   Joid  |
 +================+=========+=========+=========+=========+
 |   odl_l2       |    X    |    X    |    X    |    X    |
 +----------------+---------+---------+---------+---------+
-|   onos         |         |    X    |         |         |
+|   onos         |         |    X    |    X    |         |
 +----------------+---------+---------+---------+---------+
 |   nosdn        |         |    X    |    X    |         |
 +----------------+---------+---------+---------+---------+
 |   ovs (dpdk)   |         |         |    X    |         |
++----------------+---------+---------+---------+---------+
+|   kvm          |         |         |    X    |         |
++----------------+---------+---------+---------+---------+
+|   bgpvpn       |    X    |         |    X    |         |
++----------------+---------+---------+---------+---------+
+|   sfc          |         |         |    X    |         |
 +----------------+---------+---------+---------+---------+
 
 Functest defines the success criteria when having at least 4 consecutive
@@ -158,6 +146,7 @@ The success criteria is defined as follows:
  * ODL success rate = 100%
  * ONOSFW success rate = 100%
  * Promise success rate = 100%
+ * Bgpvpn success rate = 100%
  * vIMS: deployement of the orchestrator and the vIMS VNF successful
 
 Other scenarios are currently available but did not meet success criteria for
@@ -167,18 +156,22 @@ release.
 Brahmaputra limitations
 -----------------------
 
-- Fuel and Apex Tempest success rate was below 90% but above 80%. Some of the
-error causes were identified (workers, lack of IP)
+- Fuel and Apex Tempest success rate was below 90% but above 80% on some
+scenarios. Some of the error causes were identified (workers, lack of IP)
 
 - vIMS failed in CI for joid/odl_l2 scenario
 
 - vPing userdata and vIMS excluded from onos scenario
 
-- None of the odl_l3 scenarios has been successful due to vPing ssh issue.
+- vPing_ssh and vIMS excluded from bgpvpn and kvm scenario
 
-- joid/nosdn successful but the complete scenario not run 4 times in a raw
+- None of the odl_l3 scenarios has been successful due to vPing ssh issue (ODL
+bug reported https://bugs.opendaylight.org/show_bug.cgi?id=5582)
 
 - apex/nosdn never run (not a target scenario) but probably succesful
+
+- vPing SSH and vPing userdata no more run on CI since modification of bgpvpn
+configuration regex.
 
 See known issues section for details
 
@@ -191,10 +184,9 @@ following table details the dependencies of the test cases per scenario.
 +----------------+-------------+-------------+-------------+-------------+
 |  Test cases    |    Apex     |   Compass   |    Fuel     |     Joid    |
 +================+=============+=============+=============+=============+
-|   vPing SSH    | all         | all         | all         | all         |
+| vPing SSH      | all         | all         | all         | all         |
 +----------------+-------------+-------------+-------------+-------------+
-| vPing userdata | all except  | all except  | all except  | all except  |
-|                | ONOS        | ONOS        | ONOS        | ONOS        |
+| vPing userdata | all         | all         | all         | all         |
 +----------------+-------------+-------------+-------------+-------------+
 | Tempest        | all         | all         | all         | all         |
 +----------------+-------------+-------------+-------------+-------------+
@@ -211,6 +203,8 @@ following table details the dependencies of the test cases per scenario.
 +----------------+-------------+-------------+-------------+-------------+
 | Doctor         | all         | no          | no          | no          |
 +----------------+-------------+-------------+-------------+-------------+
+| Bgpvpn         | all         | no          | all         | no          |
++----------------+-------------+-------------+-------------+-------------+
 
 Test results
 ============
@@ -226,18 +220,6 @@ Test results are available in:
 Known issues
 ------------
 
- - nova metadata service not supported in ONOS:
-
-    - it excludes vPing userdata and vIMS test cases
-
- - Rally worker issues:
-
-    - A workaround has been implemented to run Tempest test cases sequentially
-
-    - It may explain why Tempest scenarios (mainly on apex) do not run the 210 tests
-
-    - https://bugs.launchpad.net/testrepository/+bug/1538941
-
  - IPv6 issues in tempest suite:
 
     - tempest.api.network.test_ports.PortsIpV6TestJSON.test_create_port_in_allowed_allocation_pools
@@ -247,8 +229,8 @@ Known issues
     - https://bugs.launchpad.net/tempest/+bug/1514457
 
  - Lack of IP addresses available lead to several errors in different test cases
-
- - vIMS:
+ 
+ - vIMS (http://testresults.opnfv.org/reporting/vims/):
 
     - the VM needs to have access to OpenStack API.
 
@@ -257,6 +239,8 @@ Known issues
     - Orchestrator can be deployed but the vIMS VNF cannot
 
     - That is the reason why it fails on joid/odl_l2 scenario on Orange POD 2
+    
+    - case needs to be consolidated on new scenaios (bgpvpn, sfc, ovs)
 
 Open JIRA tickets
 =================
@@ -264,17 +248,18 @@ Open JIRA tickets
 +------------------+-----------------------------------------+
 |   JIRA           |         Description                     |
 +==================+=========================================+
+| FUNCTEST-231     | vPing SSH no more run systematically    |
+|                  | in CI                                   |
++------------------+-----------------------------------------+
+| FUNCTEST-230     | Heat issues in Rally scenarios          |
++------------------+-----------------------------------------+
+| FUNCTEST-229     | Extend reporting to brahmaputra         |
++------------------+-----------------------------------------+
 | FUNCTEST-139     | prepare_env failed due to               |
 |                  | https://pypi.python.org/samples is not  |
 |                  | accessible                              |
 +------------------+-----------------------------------------+
-| FUNCTEST-137     | Tempest success rate below 90 on apex   |
-+------------------+-----------------------------------------+
-| FUNCTEST-136     | Tempest success rate below 90 on fuel   |
-+------------------+-----------------------------------------+
 | FUNCTEST-135     | vPing scenario failed in odl_l3 scenario|
-+------------------+-----------------------------------------+
-| FUNCTEST-124     | odl test suite troubleshooting          |
 +------------------+-----------------------------------------+
 
 Useful links
