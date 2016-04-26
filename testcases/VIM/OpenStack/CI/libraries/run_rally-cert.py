@@ -30,8 +30,8 @@ from keystoneclient.v2_0 import client as keystoneclient
 from neutronclient.v2_0 import client as neutronclient
 from cinderclient import client as cinderclient
 
-import functest_utils
-import openstack_utils
+import functest.utils.functest_utils as functest_utils
+import functest.utils.openstack_utils as openstack_utils
 
 """ tests configuration """
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',

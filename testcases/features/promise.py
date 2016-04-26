@@ -22,8 +22,8 @@ import glanceclient.client as glclient
 import novaclient.client as nvclient
 from neutronclient.v2_0 import client as ntclient
 
-import functest_utils
-import openstack_utils
+import functest.utils.functest_utils as functest_utils
+import functest.utils.openstack_utils as openstack_utils
 
 parser = argparse.ArgumentParser()
 

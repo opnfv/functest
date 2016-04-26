@@ -28,9 +28,11 @@ import novaclient.client as nvclient
 from neutronclient.v2_0 import client as ntclient
 
 import clearwater
-import functest_utils
-import openstack_utils
 import orchestrator
+
+import functest.utils.functest_utils as functest_utils
+import functest.utils.openstack_utils as openstack_utils
+
 
 pp = pprint.PrettyPrinter(indent=4)
 

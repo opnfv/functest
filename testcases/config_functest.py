@@ -14,9 +14,12 @@ import shutil
 import subprocess
 import sys
 import yaml
-import functest_utils
-import openstack_utils
+
 from neutronclient.v2_0 import client as neutronclient
+
+import functest.utils.functest_utils as functest_utils
+import functest.utils.openstack_utils as openstack_utils
+
 
 actions = ['start', 'check', 'clean']
 parser = argparse.ArgumentParser()

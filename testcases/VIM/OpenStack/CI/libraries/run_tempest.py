@@ -28,8 +28,8 @@ import ConfigParser
 import keystoneclient.v2_0.client as ksclient
 from neutronclient.v2_0 import client as neutronclient
 
-import functest_utils
-import openstack_utils
+import functest.utils.functest_utils as functest_utils
+import functest.utils.openstack_utils as openstack_utils
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',

@@ -27,7 +27,7 @@ import sys
 import xmltodict
 import yaml
 
-import functest_utils
+import functest.utils.functest_utils as functest_utils
 
 
 def usage():

@@ -22,7 +22,7 @@ import re
 import time
 import yaml
 
-import functest_utils
+import functest.utils.functest_utils as functest_utils
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--installer", help="Installer type")

@@ -29,8 +29,8 @@ from neutronclient.v2_0 import client as neutronclient
 from keystoneclient.v2_0 import client as keystoneclient
 from glanceclient import client as glanceclient
 
-import functest_utils
-import openstack_utils
+import functest.utils.functest_utils as functest_utils
+import functest.utils.openstack_utils as openstack_utils
 
 pp = pprint.PrettyPrinter(indent=4)
 
