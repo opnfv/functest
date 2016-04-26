@@ -350,7 +350,20 @@ The available 33 test cases can be grouped into 7 test suites:
     #. Cleanup test allocations: Destroys all allocations in OpenStack.
 
 
+SDNVPN
+^^^^^^
+Many telecom network functions are relying on layer-3 infrastructure services,
+within a VNF between components, or towards existing external networks.
+In many cases, these external networks are implemented in MPLS/BGP technology in
+existing service provider wide-area-networks (WAN). This proven technology
+provides a good mechanism for inter-operation of a NFV Infrastructure (NFVI)
+and WAN.
 
+The bgpvpn suite deals with 2 Tempest cases dedicated to the test of the
+OpenStack bgpvpn API:
+
+  * test_create_bgpvpn
+  * test_create_bgpvpn_as_non_admin_fail
 
 .. include:: ./runfunctest.rst
 
@@ -369,7 +382,6 @@ Test Dashboard
 ==============
 
 Based on results collected in CI, a test dashboard is dynamically generated.
-The URL of this dashboard is TODO LF
 
 
 .. include:: ./troubleshooting.rst
