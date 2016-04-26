@@ -37,7 +37,7 @@ several options::
         -s|--serial       run tests in one thread
         -t|--test         run specific set of tests
           <test_name>     one or more of the following separated by comma:
-                             vping_ssh,vping_userdata,odl,onos,tempest,rally,vims,promise,doctor
+                             vping_ssh,vping_userdata,odl,onos,tempest,rally,vims,promise,doctor,bgpvpn
 
     examples:
         run_tests.sh
@@ -55,7 +55,7 @@ by default Functest will launch all the test suites in the following order:
   1) vPing test cases
   2) Tempest suite
   3) SDN controller suites
-  4) Feature project tests cases (Promise, Doctor, ...)
+  4) Feature project tests cases (Promise, Doctor, BGPVPN)
   5) vIMS suite
   6) Rally suite
 
@@ -127,7 +127,7 @@ variables:
  * The scenario [controller]-[feature]-[mode], stored in DEPLOY_SCENARIO with
 
    * controller = (odl|onos|ocl|nosdn)
-   * feature = (ovs(dpdk)|kvm)
+   * feature = (ovs(dpdk)|kvm|sfc|bgpvpn)
    * mode = (ha|noha)
 
 The constraints per test case are defined in the Functest configuration file
@@ -169,7 +169,7 @@ The order of execution is also described in the Functest configuration file::
     8: promise
     9: odl-vpnservice
     10: bgpvpn
-    11: openstack-neutron-bgpvpn-api-extension-tests
+    #11: openstack-neutron-bgpvpn-api-extension-tests
     12: vims
     13: rally
 
@@ -178,7 +178,7 @@ The tests are executed in the following order:
   1) vPing test cases
   2) Tempest suite
   3) SDN controller suites
-  4) Feature project tests cases (Promise, Doctor, ...)
+  4) Feature project tests cases (Promise, Doctor, BGPVPN...)
   5) vIMS suite
   6) Rally suite
 
