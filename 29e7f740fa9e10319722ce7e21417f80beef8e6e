@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da87b5cf_07103a4d",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-26T17:39:36Z",
+      "side": 1,
+      "message": "this is confusing, I think the project name is SDNVPN but the feature BGPVPN :D",
+      "range": {
+        "startLine": 58,
+        "startChar": 51,
+        "endLine": 58,
+        "endChar": 57
+      },
+      "revId": "29e7f740fa9e10319722ce7e21417f80beef8e6e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
