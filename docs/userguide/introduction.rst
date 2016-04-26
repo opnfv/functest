@@ -50,6 +50,11 @@ The current list of test suites can be distributed in 3 main domains: VIM
 |                |                | * Consistent resource state awareness     |
 |                |                | (compute), see `Doctor User Guide`_ for   |
 |                |                | details                                   |
+|                +----------------+-------------------------------------------+
+|                | Bgpvpn         | Implementation of the OpenStack bgpvpn API|
+|                |                | from the SDNVPN feature project.          |
+|                |                | It allowing the cration of BGP VPNs       |
+|                |                | see SDNVPN User Guide for                 |
 +----------------+----------------+-------------------------------------------+
 
 
