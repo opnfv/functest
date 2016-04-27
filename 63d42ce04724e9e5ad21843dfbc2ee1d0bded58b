@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_7f0aefd3",
+        "filename": "CI/prepare_env.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-04-27T04:31:00Z",
+      "side": 1,
+      "message": "will the available installers be printed here?",
+      "revId": "63d42ce04724e9e5ad21843dfbc2ee1d0bded58b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_1f0f23e3",
+        "filename": "utils/clean_openstack.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-04-27T04:31:00Z",
+      "side": 1,
+      "message": "should we use functest.utils.functest_logger here also?..",
+      "revId": "63d42ce04724e9e5ad21843dfbc2ee1d0bded58b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
