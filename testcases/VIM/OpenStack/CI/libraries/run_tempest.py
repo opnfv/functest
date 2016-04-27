@@ -15,7 +15,6 @@
 #
 import argparse
 import json
-import logging
 import os
 import re
 import requests
@@ -28,6 +27,7 @@ import ConfigParser
 import keystoneclient.v2_0.client as ksclient
 from neutronclient.v2_0 import client as neutronclient
 
+import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
 
@@ -56,19 +56,7 @@ parser.add_argument("-n", "--noclean",
 args = parser.parse_args()
 
 """ logging configuration """
-logger = logging.getLogger('run_tempest')
-logger.setLevel(logging.DEBUG)
-
-ch = logging.StreamHandler()
-if args.debug:
-    ch.setLevel(logging.DEBUG)
-else:
-    ch.setLevel(logging.INFO)
-
-formatter = logging.Formatter('%(asctime)s - %(name)s - '
-                              '%(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+logger = ft_logger.Logger("run_tempest").getLogger()
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
 
