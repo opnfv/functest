@@ -19,7 +19,6 @@ import subprocess
 import sys
 import yaml
 
-import functest.ci.tier_builder as tb
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.generate_defaults as gen_def
@@ -248,15 +247,6 @@ def generate_os_defaults():
     gen_def.main()
 
 
-def generate_tiers():
-    print_separator()
-    logger.info("Generating Tiers and test cases...")
-    file = FUNCTEST_REPO + "/ci/testcases.yaml"
-
-    t = tb.TierBuilder(CI_INSTALLER_TYPE, CI_SCENARIO, file)
-    logger.info("Tiers and tests to be executed:\n\n%s" % t)
-
-
 def check_environment():
     msg_not_active = "The Functest environment is not installed."
     if not os.path.isfile(ENV_FILE):
@@ -285,7 +275,6 @@ def main():
         verify_deployment()
         install_rally()
         generate_os_defaults()
-        generate_tiers()
 
         with open(ENV_FILE, "w") as env_file:
             env_file.write("1")
