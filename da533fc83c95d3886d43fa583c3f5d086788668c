@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_4225d4a9",
+        "filename": "ci/check_os.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-27T12:35:36Z",
+      "side": 1,
+      "message": "$OS_AUTH_URL could be parsed too.",
+      "revId": "da533fc83c95d3886d43fa583c3f5d086788668c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_8252fc11",
+        "filename": "ci/check_os.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-27T12:35:36Z",
+      "side": 1,
+      "message": "You could remove this line",
+      "revId": "da533fc83c95d3886d43fa583c3f5d086788668c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_22577004",
+        "filename": "ci/prepare_env.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-27T12:35:36Z",
+      "side": 1,
+      "message": "It induces a defined INSTALLER_TYPE too, doesn\u0027t it?",
+      "revId": "da533fc83c95d3886d43fa583c3f5d086788668c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_425cf425",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/__init__.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-27T12:35:36Z",
+      "side": 1,
+      "message": "This should be a new file",
+      "revId": "da533fc83c95d3886d43fa583c3f5d086788668c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
