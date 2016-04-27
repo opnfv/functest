@@ -11,7 +11,6 @@
 #
 import argparse
 import json
-import logging
 import os
 import requests
 import subprocess
@@ -22,6 +21,7 @@ import glanceclient.client as glclient
 import novaclient.client as nvclient
 from neutronclient.v2_0 import client as ntclient
 
+import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
 
@@ -61,21 +61,7 @@ GLANCE_IMAGE_PATH = functest_yaml.get('general').get('directories').get(
     'dir_functest_data') + "/" + GLANCE_IMAGE_FILENAME
 
 """ logging configuration """
-logger = logging.getLogger('Promise')
-logger.setLevel(logging.DEBUG)
-
-ch = logging.StreamHandler()
-
-if args.debug:
-    ch.setLevel(logging.DEBUG)
-else:
-    ch.setLevel(logging.INFO)
-
-formatter = logging.Formatter('%(asctime)s - %(name)s'
-                              '- %(levelname)s - %(message)s')
-
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+logger = ft_logger.Logger("promise").getLogger()
 
 
 def main():

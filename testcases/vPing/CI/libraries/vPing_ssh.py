@@ -15,7 +15,6 @@
 #
 import argparse
 import datetime
-import logging
 import os
 import paramiko
 import pprint
@@ -29,6 +28,7 @@ from neutronclient.v2_0 import client as neutronclient
 from keystoneclient.v2_0 import client as keystoneclient
 from glanceclient import client as glanceclient
 
+import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
 
@@ -45,22 +45,8 @@ parser.add_argument("-r", "--report",
 args = parser.parse_args()
 
 """ logging configuration """
+logger = ft_logger.Logger("vping_ssh").getLogger()
 
-logger = logging.getLogger('vPing_ssh')
-logger.setLevel(logging.DEBUG)
-
-ch = logging.StreamHandler()
-
-if args.debug:
-    ch.setLevel(logging.DEBUG)
-else:
-    ch.setLevel(logging.INFO)
-
-formatter = logging.Formatter('%(asctime)s - %(name)s'
-                              '- %(levelname)s - %(message)s')
-
-ch.setFormatter(formatter)
-logger.addHandler(ch)
 paramiko.util.log_to_file("/var/log/paramiko.log")
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'

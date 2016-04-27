@@ -16,30 +16,19 @@ lanqinglong@huawei.com
 
 import argparse
 import datetime
-import logging
 import os
 import re
 import time
 import yaml
 
+import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--installer", help="Installer type")
 args = parser.parse_args()
 """ logging configuration """
-
-logger = logging.getLogger('onos')
-logger.setLevel(logging.DEBUG)
-
-ch = logging.StreamHandler()
-
-
-formatter = logging.Formatter('%(asctime)s - %(name)s'
-                              '- %(levelname)s - %(message)s')
-
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+logger = ft_logger.Logger("onos").getLogger()
 
 with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
     functest_yaml = yaml.safe_load(f)
