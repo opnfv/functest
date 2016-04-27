@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a91bd0f_c28c8482",
+        "filename": "ci/check_os.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-27T12:50:35Z",
+      "side": 1,
+      "message": "Not sure if I get it, but let\u0027s do improvements on this script later, this was just to move the script to a consistent location.",
+      "parentUuid": "9a91bd0f_4225d4a9",
+      "revId": "da533fc83c95d3886d43fa583c3f5d086788668c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a91bd0f_8252fc11",
         "filename": "ci/check_os.sh",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9a91bd0f_a28f0075",
+        "filename": "ci/check_os.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-27T12:50:35Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a91bd0f_8252fc11",
+      "revId": "da533fc83c95d3886d43fa583c3f5d086788668c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a91bd0f_22577004",
         "filename": "ci/prepare_env.py",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2016-04-27T12:35:36Z",
       "side": 1,
       "message": "It induces a defined INSTALLER_TYPE too, doesn\u0027t it?",
+      "revId": "da533fc83c95d3886d43fa583c3f5d086788668c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_e2950889",
+        "filename": "ci/prepare_env.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-27T12:50:35Z",
+      "side": 1,
+      "message": "In order to run fetch_os_creds you need INSTALLER and IP as parameters, otherwise it will fail. \nIf you want to skip this test, you need to pass the RC file as a docker volume.",
+      "parentUuid": "9a91bd0f_22577004",
       "revId": "da533fc83c95d3886d43fa583c3f5d086788668c",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
