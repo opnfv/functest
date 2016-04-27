@@ -53,7 +53,7 @@ function clean_openstack(){
     if [ $clean == true ]; then
         echo -e "\n"
         info "Cleaning Openstack environment..."
-        python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/clean_openstack.py \
+        python ${FUNCTEST_REPO_DIR}/utils/clean_openstack.py \
             $debug
         echo -e "\n"
     fi

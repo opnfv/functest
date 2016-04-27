@@ -126,7 +126,7 @@ fi
 
 # Generate OpenStack defaults
 info "Generating OpenStack defaults..."
-python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/generate_defaults.py $debug
+python ${FUNCTEST_REPO_DIR}/utils/generate_defaults.py $debug
 
 ifconfig eth0 mtu 1450
 

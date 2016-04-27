@@ -69,7 +69,7 @@ the test name or names separated by commas in the following list:
 
 Functest includes cleaning mechanism in order to remove
 all the OpenStack resources except what was present before running any test. The script
-*$repos_dir/functest/testcases/VIM/OpenStack/CI/libraries/generate_defaults.py*
+*$repos_dir/functest/utils/generate_defaults.py*
 is called once by *prepare_env.sh* when setting up the Functest environment
 to snapshot all the OpenStack resources (images, networks, volumes, security groups,
 tenants, users) so that an eventual cleanup does not remove any of this defaults.
