@@ -16,7 +16,6 @@
 import argparse
 import iniparse
 import json
-import logging
 import os
 import re
 import requests
@@ -30,6 +29,7 @@ from keystoneclient.v2_0 import client as keystoneclient
 from neutronclient.v2_0 import client as neutronclient
 from cinderclient import client as cinderclient
 
+import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
 
@@ -74,19 +74,7 @@ else:
     RALLY_STDERR = open(os.devnull, 'w')
 
 """ logging configuration """
-logger = logging.getLogger("run_rally")
-logger.setLevel(logging.DEBUG)
-
-ch = logging.StreamHandler()
-if args.debug:
-    ch.setLevel(logging.DEBUG)
-else:
-    ch.setLevel(logging.INFO)
-
-formatter = logging.Formatter("%(asctime)s - %(name)s - "
-                              "%(levelname)s - %(message)s")
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+logger = ft_logger.Logger("run_rally").getLogger()
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
 if not os.path.exists(REPO_PATH):

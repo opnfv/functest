@@ -14,10 +14,10 @@
 #
 #
 
-import logging
 import time
 import yaml
 
+import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 
 with open('/home/opnfv/functest/conf/config_functest.yaml') as f:
@@ -28,14 +28,7 @@ FUNCTEST_REPO = dirs.get('dir_repo_functest')
 DOCTOR_REPO = dirs.get('dir_repo_doctor')
 TEST_DB_URL = functest_yaml.get('results').get('test_db_url')
 
-logger = logging.getLogger('doctor')
-logger.setLevel(logging.DEBUG)
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - ' +
-                              '%(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+logger = ft_logger.Logger("doctor").getLogger()
 
 
 def main():
