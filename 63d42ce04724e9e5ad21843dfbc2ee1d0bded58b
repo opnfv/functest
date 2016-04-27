@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a91bd0f_bf72b747",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-27T08:05:05Z",
+      "side": 1,
+      "message": "You could set -1 on workflow instead",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "63d42ce04724e9e5ad21843dfbc2ee1d0bded58b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a91bd0f_7f0aefd3",
         "filename": "CI/prepare_env.py",
         "patchSetId": 8
@@ -31,6 +54,52 @@
       "side": 1,
       "message": "Good catch! I",
       "parentUuid": "9a91bd0f_7f0aefd3",
+      "revId": "63d42ce04724e9e5ad21843dfbc2ee1d0bded58b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_3f9ea757",
+        "filename": "CI/prepare_env.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-27T08:05:05Z",
+      "side": 1,
+      "message": "I disagree. You could run tests even if it was installed by hand.",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 16
+      },
+      "revId": "63d42ce04724e9e5ad21843dfbc2ee1d0bded58b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_5fddab13",
+        "filename": "CI/prepare_env.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-04-27T08:05:05Z",
+      "side": 1,
+      "message": "I think makedirs could be called only once",
+      "range": {
+        "startLine": 142,
+        "startChar": 20,
+        "endLine": 142,
+        "endChar": 40
+      },
       "revId": "63d42ce04724e9e5ad21843dfbc2ee1d0bded58b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
