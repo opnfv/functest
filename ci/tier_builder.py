@@ -54,6 +54,27 @@ class TierBuilder:
 
             self.tier_objects.append(tier)
 
+    def get_tiers(self):
+        return self.tier_objects
+
+    def get_tier(self, tier_name):
+        for i in range(0, len(self.tier_objects)):
+            if self.tier_objects[i].get_name() == tier_name:
+                return self.tier_objects[i]
+        return None
+
+    def get_test(self, test_name):
+        for i in range(0, len(self.tier_objects)):
+            if self.tier_objects[i].is_test(test_name):
+                return self.tier_objects[i].get_test(test_name)
+        return None
+
+    def get_tests(self, tier_name):
+        for i in range(0, len(self.tier_objects)):
+            if self.tier_objects[i].get_name() == tier_name:
+                return self.tier_objects[i].get_tests()
+        return None
+
     def __str__(self):
         output = ""
         for i in range(0, len(self.tier_objects)):

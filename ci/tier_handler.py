@@ -23,17 +23,39 @@ class Tier:
         self.tests_array.append(testcase)
 
     def get_tests(self):
-        array_str = []
+        array_tests = []
         for test in self.tests_array:
-            array_str.append(test.name)
-        return array_str
+            array_tests.append(test)
+        return array_tests
+
+    def get_test_names(self):
+        array_tests = []
+        for test in self.tests_array:
+            array_tests.append(test.get_name())
+        return array_tests
+
+    def get_test(self, test_name):
+        if self.is_test(test_name):
+            for test in self.tests_array:
+                if test.get_name() == test_name:
+                    return test
+        return None
+
+    def is_test(self, test_name):
+        for test in self.tests_array:
+            if test.get_name() == test_name:
+                return True
+        return False
+
+    def get_name(self):
+        return self.name
 
     def __str__(self):
         return ("Tier info:\n"
                 "    Name: " + self.name + "\n"
                 "    Description: " + self.description + "\n"
                 "    Order: " + str(self.order) + "\n"
-                "    Test cases: " + str(self.get_tests()) + "\n")
+                "    Test cases: " + str(self.get_test_names()) + "\n")
 
 
 class TestCase:
@@ -50,6 +72,9 @@ class TestCase:
             return False
 
         return True
+
+    def get_name(self):
+        return self.name
 
     def __str__(self):
         return ("Testcase info:\n"
