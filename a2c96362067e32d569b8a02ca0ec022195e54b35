@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_e82407c8",
+        "filename": "testcases/vIMS/CI/vIMS.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-04-28T04:11:55Z",
+      "side": 1,
+      "message": "hmmm... why not ft_utils?",
+      "revId": "a2c96362067e32d569b8a02ca0ec022195e54b35",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
