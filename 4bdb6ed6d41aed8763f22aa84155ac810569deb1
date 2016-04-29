@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_0ec7f346",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-04-29T14:07:50Z",
+      "side": 1,
+      "message": "no risk to loop forever?",
+      "range": {
+        "startLine": 288,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 9
+      },
+      "revId": "4bdb6ed6d41aed8763f22aa84155ac810569deb1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_aec36737",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-04-29T14:07:50Z",
+      "side": 1,
+      "message": "not connected to the issue, but it would make sense to add the --verbose as a possible option",
+      "range": {
+        "startLine": 330,
+        "startChar": 0,
+        "endLine": 330,
+        "endChar": 8
+      },
+      "revId": "4bdb6ed6d41aed8763f22aa84155ac810569deb1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
