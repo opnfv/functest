@@ -132,7 +132,9 @@ Add your user to docker group to be able to run commands without sudo::
 
  sudo usermod -aG docker <your_user>
 
-Disconnect and reconnect to enable the group change.
+A reconnect is needed. There are 2 ways for this:
+    #. Re-login to your account
+    #. su - <username>
 
 References:
 
