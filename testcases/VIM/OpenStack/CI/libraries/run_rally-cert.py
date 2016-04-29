@@ -282,6 +282,16 @@ def get_output(proc, test_name):
     return result
 
 
+def get_cmd_output(proc):
+    result = ""
+
+    while proc.poll() is None:
+        line = proc.stdout.readline()
+        result += line
+
+    return result
+
+
 def run_task(test_name):
     #
     # the "main" function of the script who launch rally for a task
@@ -316,8 +326,16 @@ def run_task(test_name):
     logger.debug('task_id : {}'.format(task_id))
 
     if task_id is None:
-        logger.error("Failed to retrieve task_id.")
-        exit(-1)
+        logger.error('Failed to retrieve task_id, validating task...')
+        cmd_line = ("rally task validate " +
+                    "--task {} ".format(task_file) +
+                    "--task-args \"{}\" ".format(build_task_args(test_name)))
+        logger.debug('running command line : {}'.format(cmd_line))
+        p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
+                             stderr=subprocess.STDOUT, shell=True)
+        output = get_cmd_output(p)
+        logger.error("Task validation result:" + "\n" + output)
+        return
 
     # check for result directory and create it otherwise
     if not os.path.exists(RESULTS_DIR):
