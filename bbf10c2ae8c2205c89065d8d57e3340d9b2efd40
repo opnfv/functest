@@ -16,6 +16,24 @@
       "revId": "bbf10c2ae8c2205c89065d8d57e3340d9b2efd40",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_4e73bbb1",
+        "filename": "utils/clean_openstack.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-04-29T05:07:17Z",
+      "side": 1,
+      "message": "Or is it so that existing testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml will not be used anymore?",
+      "parentUuid": "9a91bd0f_8e79c395",
+      "revId": "bbf10c2ae8c2205c89065d8d57e3340d9b2efd40",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
