@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_8e6303b1",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-04-29T08:24:10Z",
+      "side": 1,
+      "message": "There are 2 ways for this:\n1) Re-login to your account\n2) su - \u003cusername\u003e\n\nCan you extend it to these 2 options?\nThanks.",
+      "range": {
+        "startLine": 135,
+        "startChar": 15,
+        "endLine": 135,
+        "endChar": 24
+      },
+      "revId": "29dc5482608c8504e9becbc6dabb92f32d55d696",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
