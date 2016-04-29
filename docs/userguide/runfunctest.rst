@@ -41,7 +41,7 @@ several options::
 
     examples:
         run_tests.sh
-        run_tests.sh --test vping,odl
+        run_tests.sh --test vping_ssh,odl
         run_tests.sh -t tempest,rally --no-clean
 
 The *-r* option is used by the OPNFV Continuous Integration automation mechanisms
