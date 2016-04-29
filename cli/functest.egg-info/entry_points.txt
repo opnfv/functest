@@ -1,0 +1,4 @@
+
+        [console_scripts]
+        functest=cli_base:cli
+    
