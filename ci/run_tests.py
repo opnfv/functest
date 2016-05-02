@@ -13,8 +13,9 @@ import os
 import sys
 
 import functest.ci.tier_builder as tb
-import functest.utils.functest_logger as ft_logger
 import functest.utils.clean_openstack as clean_os
+import functest.utils.functest_logger as ft_logger
+import functest.utils.openstack_utils as os_utils
 
 
 """ arguments """
@@ -48,6 +49,15 @@ def print_separator(str, count=45):
         line += str
 
     logger.info("%s" % line)
+
+
+def source_rc_file():
+    rc_file = os.getenv('creds')
+    if not os.path.isfile(rc_file):
+        logger.error("RC file %s does not exist..." % rc_file)
+        sys.exit(1)
+    logger.info("Sourcing the OpenStack RC file...")
+    os_utils.source_credentials(rc_file)
 
 
 def cleanup():
@@ -110,6 +120,7 @@ def main():
         REPORT_FLAG = True
 
     if args.test:
+        source_rc_file()
         if _tiers.get_tier(args.test):
             run_tier(_tiers.get_tier(args.test))
 
