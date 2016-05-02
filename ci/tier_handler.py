@@ -50,6 +50,9 @@ class Tier:
     def get_name(self):
         return self.name
 
+    def get_order(self):
+        return self.order
+
     def __str__(self):
         lines = []
         line_max = 50
