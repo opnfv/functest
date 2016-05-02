@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_59e2a304",
+        "filename": "cli/cli_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-02T07:52:14Z",
+      "side": 1,
+      "message": "I would have deleted these 3 lines",
+      "revId": "b4a22a9193d30b93a188812401dcba9028139410",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_39dd5f43",
+        "filename": "cli/cli_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-02T07:52:14Z",
+      "side": 1,
+      "message": "I would have deleted these 3 lines",
+      "revId": "b4a22a9193d30b93a188812401dcba9028139410",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_f9e61716",
+        "filename": "cli/cli_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-02T07:52:14Z",
+      "side": 1,
+      "message": "I would have deleted these 3 lines",
+      "revId": "b4a22a9193d30b93a188812401dcba9028139410",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_19e41b0c",
+        "filename": "cli/functest.egg-info/entry_points.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-02T07:52:14Z",
+      "side": 1,
+      "message": "Please remove trailing whitespace",
+      "revId": "b4a22a9193d30b93a188812401dcba9028139410",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_d9ed53f1",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-02T07:52:14Z",
+      "side": 1,
+      "message": "Is it relevant to modify vim configuration files in Dockerfile?",
+      "revId": "b4a22a9193d30b93a188812401dcba9028139410",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_b9f08fca",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-02T07:52:14Z",
+      "side": 1,
+      "message": "\u0026\u0026 ?",
+      "range": {
+        "startLine": 112,
+        "startChar": 33,
+        "endLine": 112,
+        "endChar": 34
+      },
+      "revId": "b4a22a9193d30b93a188812401dcba9028139410",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
