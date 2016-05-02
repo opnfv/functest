@@ -66,11 +66,6 @@ function odl_tests(){
 }
 function run_test(){
     test_name=$1
-    echo -e "\n\n\n\n"
-    echo "----------------------------------------------"
-    echo "  Running test case: ${test_name}"
-    echo "----------------------------------------------"
-    echo ""
     serial_flag=""
     if [ $serial == "true" ]; then
         serial_flag="-s"
@@ -78,21 +73,17 @@ function run_test(){
 
     case $test_name in
         "healthcheck")
-            echo "Running health check test..."
             ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/healthcheck.sh
         ;;
         "vping_ssh")
-            echo "Running vPing-SSH test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_ssh.py \
                 $debug $report
         ;;
         "vping_userdata")
-            echo "Running vPing-userdata test... "
             python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_userdata.py \
                 $debug $report
         ;;
         "odl")
-            echo "Running ODL test..."
             odl_tests
             ODL_PORT=$odl_port ODL_IP=$odl_ip KEYSTONE_IP=$keystone_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$password \
                 ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
@@ -106,7 +97,6 @@ function run_test(){
             fi
         ;;
         "tempest")
-            echo "Running Tempest tests..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
                 $debug $serial_flag $clean_flag -m smoke $report
             # save tempest.conf for further troubleshooting
@@ -116,18 +106,15 @@ function run_test(){
             fi
         ;;
         "vims")
-            echo "Running vIMS test..."
             python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py \
                 $debug $clean_flag $report
         ;;
         "rally")
-            echo "Running Rally benchmark suite..."
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py \
                 $debug $clean_flag all $report
 
         ;;
         "bgpvpn")
-            echo "Running BGPVPN Tempest test case..."
             pushd ${repos_dir}/bgpvpn/
               pip install --no-deps -e .
             popd
@@ -146,7 +133,6 @@ bgpvpn = True" >> /etc/tempest/tempest.conf
             popd
         ;;
         "onos")
-            echo "Running ONOS test case..."
             if [ $INSTALLER_TYPE == "joid" ]; then
                 python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py -i joid
             else
@@ -154,16 +140,13 @@ bgpvpn = True" >> /etc/tempest/tempest.conf
             fi
       ;;
         "promise")
-            echo "Running PROMISE test case..."
             python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py $debug $report
             sleep 10 # to let the instances terminate
         ;;
         "doctor")
-            echo "Running Doctor test..."
             python ${FUNCTEST_REPO_DIR}/testcases/features/doctor.py
         ;;
         "ovno")
-            echo "Running OpenContrail test..."
             ${repos_dir}/ovno/Testcases/RunTests.sh
         ;;
     esac
