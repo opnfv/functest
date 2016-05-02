@@ -28,6 +28,9 @@ class Tier:
             array_tests.append(test)
         return array_tests
 
+    def get_order(self):
+        return self.order
+
     def get_test_names(self):
         array_tests = []
         for test in self.tests_array:

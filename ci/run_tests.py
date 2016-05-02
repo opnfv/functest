@@ -10,6 +10,7 @@
 
 import argparse
 import os
+import subprocess
 import sys
 
 import functest.ci.tier_builder as tb
@@ -81,8 +82,16 @@ def run_test(test):
 
     cmd = ("%s%s" % (EXEC_SCRIPT, flags))
     logger.debug("Executing command %s" % cmd)
-
     print_separator("")
+
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+
+    while p.poll() is None:
+        line = p.stdout.readline().rstrip()
+        if p != 0:
+            logger.error("The command exited with error.")
+            sys.exit(1)
+        logger.debug(line)
 
     if CLEAN_FLAG:
         cleanup()
@@ -98,7 +107,11 @@ def run_tier(tier):
 
 
 def run_all(tiers):
-    logger.debug("Tiers to be executed:\n\n%s" % tiers)
+    logger.debug("Tiers to be executed:")
+    for tier in tiers.get_tiers():
+        logger.info("\n    -%s. %s:%s"
+                    % (tier.get_order(), tier.get_name(), tier.get_tests()))
+
     for tier in tiers.get_tiers():
         run_tier(tier)
 
