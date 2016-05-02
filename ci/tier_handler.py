@@ -51,11 +51,42 @@ class Tier:
         return self.name
 
     def __str__(self):
-        return ("Tier info:\n"
-                "    Name: " + self.name + "\n"
-                "    Description: " + self.description + "\n"
-                "    Order: " + str(self.order) + "\n"
-                "    Test cases: " + str(self.get_test_names()) + "\n")
+        lines = []
+        line_max = 50
+        line = ""
+        line_count = 0
+        for i in range(len(self.description)):
+            line += self.description[i]
+            if line_count >= line_max - 1:
+                line_count = 0
+                lines.append(line)
+                line = ""
+            else:
+                line_count += 1
+        if line != "":
+            lines.append(line)
+
+        out = ""
+        out += ("+=======================================================+\n")
+        out += ("| Tier:  " + self.name.ljust(47) + "|\n")
+        out += ("+=======================================================+\n")
+        out += ("| Order: " + str(self.order).ljust(47) + "|\n")
+        out += ("| Description:                                          |\n")
+        for i in range(len(lines)):
+            out += ("|    " + lines[i].ljust(50) + " |\n")
+        out += ("| Test cases:                                           |\n")
+        tests = self.get_test_names()
+        if len(tests) > 0:
+            for i in range(len(tests)):
+                out += ("|    - %s |\n" % tests[i].ljust(48))
+        else:
+            out += ("|    (There are no supported test cases "
+                    .ljust(56) + "|\n")
+            out += ("|    in this tier for the given scenario) "
+                    .ljust(56) + "|\n")
+        out += ("|".ljust(56) + "|\n")
+        out += ("+-------------------------------------------------------+\n")
+        return out
 
 
 class TestCase:
@@ -77,10 +108,36 @@ class TestCase:
         return self.name
 
     def __str__(self):
-        return ("Testcase info:\n"
-                "    Name: " + self.name + "\n"
-                "    Description: " + self.description + "\n"
-                "    " + str(self.dependency) + "\n")
+        lines = []
+        line_max = 50
+        line = ""
+        line_count = 0
+        for i in range(len(self.description)):
+            line += self.description[i]
+            if line_count >= line_max - 1:
+                line_count = 0
+                lines.append(line)
+                line = ""
+            else:
+                line_count += 1
+        if line != "":
+            lines.append(line)
+
+        out = ""
+        out += ("+=======================================================+\n")
+        out += ("| Testcase:  " + self.name.ljust(43) + "|\n")
+        out += ("+=======================================================+\n")
+        out += ("| Description:                                          |\n")
+        for i in range(len(lines)):
+            out += ("|    " + lines[i].ljust(50) + " |\n")
+        out += ("| Dependencies:                                         |\n")
+        installer = self.dependency.get_installer()
+        scenario = self.dependency.get_scenario()
+        out += ("|    - Installer: " + installer.ljust(38) + "|\n")
+        out += ("|    - Scenario : " + scenario.ljust(38) + "|\n")
+        out += ("|".ljust(56) + "|\n")
+        out += ("+-------------------------------------------------------+\n")
+        return out
 
 
 class Dependency:
