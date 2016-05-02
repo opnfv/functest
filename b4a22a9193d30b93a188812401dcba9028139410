@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a91bd0f_b99e4f62",
+        "filename": "cli/cli_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-02T09:25:16Z",
+      "side": 1,
+      "message": "Any other suggestion to make this 3 sections clearer?",
+      "parentUuid": "9a91bd0f_59e2a304",
+      "revId": "b4a22a9193d30b93a188812401dcba9028139410",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a91bd0f_39dd5f43",
         "filename": "cli/cli_base.py",
         "patchSetId": 1
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "9a91bd0f_1992db57",
+        "filename": "cli/functest.egg-info/entry_points.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-02T09:25:16Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a91bd0f_19e41b0c",
+      "revId": "b4a22a9193d30b93a188812401dcba9028139410",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a91bd0f_d9ed53f1",
         "filename": "docker/Dockerfile",
         "patchSetId": 1
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "9a91bd0f_f994d745",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-02T09:25:16Z",
+      "side": 1,
+      "message": "yes, it was a nightmare when troubleshooting directly in the container and we added this.",
+      "parentUuid": "9a91bd0f_d9ed53f1",
+      "revId": "b4a22a9193d30b93a188812401dcba9028139410",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a91bd0f_b9f08fca",
         "filename": "docker/Dockerfile",
         "patchSetId": 1
@@ -98,6 +152,30 @@
       "writtenOn": "2016-05-02T07:52:14Z",
       "side": 1,
       "message": "\u0026\u0026 ?",
+      "range": {
+        "startLine": 112,
+        "startChar": 33,
+        "endLine": 112,
+        "endChar": 34
+      },
+      "revId": "b4a22a9193d30b93a188812401dcba9028139410",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_59b063f4",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-02T09:25:16Z",
+      "side": 1,
+      "message": "good catch!",
+      "parentUuid": "9a91bd0f_b9f08fca",
       "range": {
         "startLine": 112,
         "startChar": 33,
