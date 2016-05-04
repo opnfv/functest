@@ -66,12 +66,10 @@ def cleanup():
     logger.info("Cleaning OpenStack resources...")
     print_separator("+")
     clean_os.main()
-    print_separator("")
 
 
 def run_test(test):
     test_name = test.get_name()
-    print_separator("")
     print_separator("=")
     logger.info("Running test case '%s'..." % test_name)
     print_separator("=")
@@ -100,7 +98,6 @@ def run_test(test):
         cleanup()
 
 
-
 def run_tier(tier):
     print_separator("#")
     logger.info("Running tier '%s'" % tier.get_name())
@@ -111,10 +108,14 @@ def run_tier(tier):
 
 
 def run_all(tiers):
-    logger.debug("Tiers to be executed:")
+    summary = ""
     for tier in tiers.get_tiers():
-        logger.info("\n    - %s. %s:\n\t%s"
-                    % (tier.get_order(), tier.get_name(), tier.get_tests()))
+        summary += ("\n    - %s. %s:\n\t   %s"
+                    % (tier.get_order(),
+                       tier.get_name(),
+                       tier.get_test_names()))
+
+    logger.info("Tiers to be executed:%s" % summary)
 
     for tier in tiers.get_tiers():
         run_tier(tier)

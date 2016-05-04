@@ -33,7 +33,7 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-with open('/home/opnfv/functest/conf/config_functest.yaml') as f:
+with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 
 dirs = functest_yaml.get('general').get('directories')
