@@ -28,6 +28,8 @@ import os
 class Logger:
     def __init__(self, logger_name):
 
+        CI_DEBUG = os.getenv('CI_DEBUG')
+
         self.logger = logging.getLogger(logger_name)
         self.logger.setLevel(logging.DEBUG)
 
@@ -35,15 +37,16 @@ class Logger:
         formatter = logging.Formatter('%(asctime)s - %(name)s - '
                                       '%(levelname)s - %(message)s')
         ch.setFormatter(formatter)
-
-        CI_DEBUG = os.getenv('CI_DEBUG')
-
-        ch.setLevel(logging.INFO)
-
         if CI_DEBUG is not None and CI_DEBUG.lower() == "true":
             ch.setLevel(logging.DEBUG)
-
+        else:
+            ch.setLevel(logging.INFO)
         self.logger.addHandler(ch)
+
+        hdlr = logging.FileHandler('/home/opnfv/functest/results/functest.log')
+        hdlr.setFormatter(formatter)
+        hdlr.setLevel(logging.DEBUG)
+        self.logger.addHandler(hdlr)
 
     def getLogger(self):
         return self.logger

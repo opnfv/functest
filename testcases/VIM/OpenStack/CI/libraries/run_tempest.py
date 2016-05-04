@@ -28,8 +28,8 @@ import keystoneclient.v2_0.client as ksclient
 from neutronclient.v2_0 import client as neutronclient
 
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
-import functest.utils.openstack_utils as openstack_utils
+import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as os_utils
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',
@@ -113,10 +113,10 @@ def push_results_to_db(case, payload, criteria):
 
     # TODO move DB creds into config file
     url = TEST_DB + "/results"
-    installer = functest_utils.get_installer_type(logger)
-    scenario = functest_utils.get_scenario(logger)
-    version = functest_utils.get_version(logger)
-    pod_name = functest_utils.get_pod_name(logger)
+    installer = ft_utils.get_installer_type(logger)
+    scenario = ft_utils.get_scenario(logger)
+    version = ft_utils.get_version(logger)
+    pod_name = ft_utils.get_pod_name(logger)
 
     logger.info("Pushing results to DB: '%s'." % url)
 
@@ -131,38 +131,38 @@ def push_results_to_db(case, payload, criteria):
 
 
 def create_tempest_resources():
-    ks_creds = openstack_utils.get_credentials("keystone")
+    ks_creds = os_utils.get_credentials("keystone")
     logger.info("Creating tenant and user for Tempest suite")
     keystone = ksclient.Client(**ks_creds)
-    tenant_id = openstack_utils.create_tenant(keystone,
-                                              TENANT_NAME,
-                                              TENANT_DESCRIPTION)
+    tenant_id = os_utils.create_tenant(keystone,
+                                       TENANT_NAME,
+                                       TENANT_DESCRIPTION)
     if tenant_id == '':
         logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
 
-    user_id = openstack_utils.create_user(keystone, USER_NAME, USER_PASSWORD,
-                                          None, tenant_id)
+    user_id = os_utils.create_user(keystone, USER_NAME, USER_PASSWORD,
+                                   None, tenant_id)
     if user_id == '':
         logger.error("Error : Failed to create %s user" % USER_NAME)
 
 
 def free_tempest_resources():
-    ks_creds = openstack_utils.get_credentials("keystone")
+    ks_creds = os_utils.get_credentials("keystone")
     logger.info("Deleting tenant and user for Tempest suite)")
     keystone = ksclient.Client(**ks_creds)
 
-    user_id = openstack_utils.get_user_id(keystone, USER_NAME)
+    user_id = os_utils.get_user_id(keystone, USER_NAME)
     if user_id == '':
         logger.error("Error : Failed to get id of %s user" % USER_NAME)
     else:
-        if not openstack_utils.delete_user(keystone, user_id):
+        if not os_utils.delete_user(keystone, user_id):
             logger.error("Error : Failed to delete %s user" % USER_NAME)
 
-    tenant_id = openstack_utils.get_tenant_id(keystone, TENANT_NAME)
+    tenant_id = os_utils.get_tenant_id(keystone, TENANT_NAME)
     if tenant_id == '':
         logger.error("Error : Failed to get id of %s tenant" % TENANT_NAME)
     else:
-        if not openstack_utils.delete_tenant(keystone, tenant_id):
+        if not os_utils.delete_tenant(keystone, tenant_id):
             logger.error("Error : Failed to delete %s tenant" % TENANT_NAME)
 
 
@@ -173,7 +173,7 @@ def configure_tempest(mode):
 
     logger.debug("Generating tempest.conf file...")
     cmd = "rally verify genconfig"
-    functest_utils.execute_command(cmd, logger)
+    ft_utils.execute_command(cmd, logger)
 
     logger.debug("Resolving deployment UUID and directory...")
     cmd = "rally deployment list | awk '/" + DEPLOYMENT_MAME + "/ {print $2}'"
@@ -198,18 +198,18 @@ def configure_tempest(mode):
     cmd = "cd " + deployment_dir + ";"
     if mode == 'smoke':
         cmd += "testr list-tests smoke >" + TEMPEST_LIST_FILE + ";cd"
-        functest_utils.execute_command(cmd, logger)
+        ft_utils.execute_command(cmd, logger)
     elif mode == 'full':
         cmd += "testr list-tests >" + TEMPEST_LIST_FILE + ";cd"
-        functest_utils.execute_command(cmd, logger)
+        ft_utils.execute_command(cmd, logger)
 
     logger.debug("Updating selected tempest.conf parameters...")
     config = ConfigParser.RawConfigParser()
     config.read(tempest_conf_file)
     private_net_name = ""
-    creds_neutron = openstack_utils.get_credentials("neutron")
+    creds_neutron = os_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
-    private_net = openstack_utils.get_private_net(neutron_client)
+    private_net = os_utils.get_private_net(neutron_client)
     if private_net is None:
         logger.error("No shared private networks found.")
     else:
@@ -238,7 +238,7 @@ def run_tempest(OPTION):
 
     CI_DEBUG = os.environ.get("CI_DEBUG")
     if CI_DEBUG == "true" or CI_DEBUG == "True":
-        subprocess.call(cmd_line, shell=True, stderr=subprocess.STDOUT)
+        ft_utils.execute_command(cmd_line, logger, exit_on_error=True)
     else:
         header = ("Tempest environment:\n"
                   "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
@@ -259,7 +259,8 @@ def run_tempest(OPTION):
         f_env.close()
 
         cmd_line = "rally verify show"
-        subprocess.call(cmd_line, shell=True)
+        ft_utils.execute_command(cmd_line, logger,
+                                 exit_on_error=True, info=True)
 
     cmd_line = "rally verify list"
     logger.debug('Executing command : {}'.format(cmd_line))
