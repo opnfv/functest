@@ -10,12 +10,12 @@
 
 import argparse
 import os
-import subprocess
 import sys
 
 import functest.ci.tier_builder as tb
 import functest.utils.clean_openstack as clean_os
 import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 
 
@@ -77,13 +77,9 @@ def run_test(test):
     cmd = ("%s%s" % (EXEC_SCRIPT, flags))
     logger.debug("Executing command '%s'" % cmd)
 
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+    result = ft_utils.execute_command(cmd, logger, exit_on_error=False)
 
-    while p.poll() is None:
-        line = p.stdout.readline().rstrip()
-        logger.debug(line)
-
-    if p.returncode != 0:
+    if result != 0:
         logger.error("The test case '%s' failed. Cleaning and exiting."
                      % test_name)
         if CLEAN_FLAG:

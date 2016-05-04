@@ -16,6 +16,7 @@ import requests
 import shutil
 import socket
 import subprocess
+import sys
 import urllib2
 from git import Repo
 
@@ -185,33 +186,6 @@ def get_resolvconf_ns():
     return nameservers
 
 
-def getTestEnv(test, functest_yaml):
-    """
-    Get the config of the testcase based on functest_config.yaml
-      2 options
-        - test = test project e.g; ovno
-        - test = testcase e.g. functest/odl
-       look for the / to see if it is a test project or a testcase
-    """
-    try:
-        TEST_ENV = functest_yaml.get("test-dependencies")
-
-        if test.find("/") < 0:
-            config_test = TEST_ENV[test]
-        else:
-            test_split = test.split("/")
-            testproject = test_split[0]
-            testcase = test_split[1]
-            config_test = TEST_ENV[testproject][testcase]
-    except KeyError:
-        # if not defined in dependencies => no dependencies
-        config_test = ""
-    except Exception, e:
-        print "Error [getTestEnv]:", e
-
-    return config_test
-
-
 def get_ci_envvars():
     """
     Get the CI env variables
@@ -222,97 +196,25 @@ def get_ci_envvars():
     return ci_env_var
 
 
-def isTestRunnable(test, functest_yaml):
-    """
-    Return True if the test is runnable in the current scenario
-    """
-    # By default we assume that all the tests are always runnable...
-    is_runnable = True
-    # Retrieve CI environment
-    ci_env = get_ci_envvars()
-    # Retrieve test environement from config file
-    test_env = getTestEnv(test, functest_yaml)
-
-    # if test_env not empty => dependencies to be checked
-    if test_env is not None and len(test_env) > 0:
-        # possible criteria = ["installer", "scenario"]
-        # consider test criteria from config file
-        # compare towards CI env through CI en variable
-        for criteria in test_env:
-            if re.search(test_env[criteria], ci_env[criteria]) is None:
-                # print "Test "+ test + " cannot be run on the environment"
-                is_runnable = False
-    return is_runnable
-
-
-def generateTestcaseList(functest_yaml):
-    """
-    Generate a test file with the runnable test according to
-    the current scenario
-    """
-    test_list = ""
-    # get testcases
-    testcase_list = functest_yaml.get("test-dependencies")
-    projects = testcase_list.keys()
-
-    for project in projects:
-        testcases = testcase_list[project]
-        # 1 or 2 levels for testcases project[/case]l
-        # if only project name without controller or scenario
-        # => shall be runnable on any controller/scenario
-        if testcases is None:
-            test_list += project + " "
-        else:
-            for testcase in testcases:
-                if testcase == "installer" or testcase == "scenario":
-                    # project (1 level)
-                    if isTestRunnable(project, functest_yaml):
-                        test_list += project + " "
-                else:
-                    # project/testcase (2 levels)
-                    thetest = project + "/" + testcase
-                    if isTestRunnable(thetest, functest_yaml):
-                        test_list += testcase + " "
-
-    # sort the list to execute the test in the right order
-    test_order_list = functest_yaml.get("test_exec_priority")
-    test_sorted_list = ""
-    for test in test_order_list:
-        if test_order_list[test] in test_list:
-            test_sorted_list += test_order_list[test] + " "
-
-    # create a file that could be consumed by run-test.sh
-    # this method is used only for CI
-    # so it can be run only in container
-    # reuse default conf directory to store the list of runnable tests
-    file = open("/home/opnfv/functest/conf/testcase-list.txt", 'w')
-    file.write(test_sorted_list)
-    file.close()
-
-    return test_sorted_list
-
-
-def execute_command(cmd, logger=None, exit_on_error=True):
-    """
-    Execute Linux command
-        prints stdout to a file and depending on if there
-        is a logger defined, it will print it or not.
-    """
+def execute_command(cmd, logger=None, exit_on_error=True, info=False):
     if logger:
         logger.debug('Executing command : {}'.format(cmd))
-    output_file = "output.txt"
-    f = open(output_file, 'w+')
-    p = subprocess.call(cmd, shell=True, stdout=f, stderr=subprocess.STDOUT)
-    f.close()
-    f = open(output_file, 'r')
-    result = f.read()
-    if result != "" and logger:
-        logger.debug(result)
-    if p == 0:
-        return True
-    else:
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+    while p.poll() is None:
+        line = p.stdout.readline().rstrip()
+        if logger:
+            if info:
+                logger.info(line)
+            else:
+                logger.debug(line)
+        else:
+            print line
+    if p.returncode != 0:
         if logger:
             logger.error("Error when executing command %s" % cmd)
+        else:
+            print("Error when executing command %s" % cmd)
         if exit_on_error:
-            exit(-1)
-        return False
+            sys.exit(1)
+
+    return p.returncode
