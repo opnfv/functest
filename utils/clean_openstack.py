@@ -34,7 +34,7 @@ import functest.utils.openstack_utils as os_utils
 
 
 """ logging configuration """
-logger = ft_logger.Logger("run_rally").getLogger()
+logger = ft_logger.Logger("clean_openstack").getLogger()
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
 
