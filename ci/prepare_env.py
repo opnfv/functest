@@ -171,7 +171,7 @@ def source_rc_file():
         logger.debug("Executing command: %s" % cmd)
         p = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
         output = p.communicate()[0]
-        logger.debug(output)
+        logger.debug("\n%s" % output)
         if p.returncode != 0:
             logger.error("Failed to fetch credentials from installer.")
             sys.exit(1)
@@ -268,7 +268,7 @@ def main():
         sys.exit()
 
     if args.action == "start":
-        print ("\n######### Preparing Functest environment #########\n")
+        logger.info("\n######### Preparing Functest environment #########\n")
         check_env_variables()
         create_directories()
         source_rc_file()

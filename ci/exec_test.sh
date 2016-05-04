@@ -149,6 +149,9 @@ bgpvpn = True" >> /etc/tempest/tempest.conf
         "ovno")
             ${repos_dir}/ovno/Testcases/RunTests.sh
         ;;
+        *)
+            echo "The test case '${test_name}' does not exist."
+            exit 1
     esac
 }
 
@@ -183,7 +186,7 @@ done
 
 
 # Source credentials
-echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/openstack.creds to run the tests.."
+echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/openstack.creds to run the test.."
 source ${FUNCTEST_CONF_DIR}/openstack.creds
 
 

@@ -30,7 +30,7 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("onos").getLogger()
 
-with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
+with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
