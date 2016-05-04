@@ -277,7 +277,7 @@ from the repository to your current directory and run the container with a volum
     docker run -ti -e \
     "INSTALLER_TYPE=fuel" -e "INSTALLER_IP=10.20.0.2" \
     opnfv/functest:brahmaputra.1.0 \
-    -v $(pwd)/config_functest.yaml:/home/opnfv/functest/conf/config_functest.yaml \
+    -v $(pwd)/config_functest.yaml:/home/opnfv/repos/functest/ci/config_functest.yaml \
     /bin/bash\
 
 However, this is not recommended since most of the test cases rely on static

@@ -12,7 +12,7 @@
 #    $ docker run -t -i \
 #      -e "INSTALLER_TYPE=fuel|apex|compass|joid \
 #      -e "INSTALLER_IP=10.20.0.2/172.30.10.73" \
-#      -v $(pwd)/config_functest.yaml:/home/opnfv/functest/conf/config_functest.yaml
+#      -v $(pwd)/config_functest.yaml:/home/opnfv/repos/functest/ci/config_functest.yaml
 #      opnfv/functest /bin/bash
 #
 # NOTE: providing config_functest.yaml is optional. If not provided, it will
@@ -34,6 +34,7 @@ ENV creds /home/opnfv/functest/conf/openstack.creds
 ENV TERM xterm
 ENV COLORTERM gnome-terminal
 ENV PYTHONPATH $PYTHONPATH:/home/opnfv/repos/
+ENV CONFIG_FUNCTEST_YAML /home/opnfv/repos/functest/ci/config_functest.yaml
 WORKDIR /home/opnfv
 
 # Packaged dependencies

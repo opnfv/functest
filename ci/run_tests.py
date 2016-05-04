@@ -33,7 +33,7 @@ args = parser.parse_args()
 
 
 """ logging configuration """
-logger = ft_logger.Logger("run_test").getLogger()
+logger = ft_logger.Logger("run_tests").getLogger()
 
 
 """ global variables """
@@ -66,13 +66,10 @@ def cleanup():
     logger.info("Cleaning OpenStack resources...")
     print_separator("+")
     clean_os.main()
-    print_separator("")
 
 
 def run_test(test):
     test_name = test.get_name()
-    print_separator("")
-    print_separator("=")
     logger.info("Running test case '%s'..." % test_name)
     print_separator("=")
     logger.debug("\n%s" % test)
@@ -90,7 +87,7 @@ def run_test(test):
         line = p.stdout.readline().rstrip()
         logger.debug(line)
 
-    if p != 0:
+    if p.returncode != 0:
         logger.error("The command '%s' failed. Cleaning and exiting." % cmd)
         if CLEAN_FLAG:
             cleanup()
@@ -98,7 +95,6 @@ def run_test(test):
 
     if CLEAN_FLAG:
         cleanup()
-
 
 
 def run_tier(tier):
@@ -111,10 +107,14 @@ def run_tier(tier):
 
 
 def run_all(tiers):
-    logger.debug("Tiers to be executed:")
+    summary = ""
     for tier in tiers.get_tiers():
-        logger.info("\n    - %s. %s:\n\t%s"
-                    % (tier.get_order(), tier.get_name(), tier.get_tests()))
+        summary += ("\n    - %s. %s:\n\t   %s"
+                    % (tier.get_order(),
+                       tier.get_name(),
+                       tier.get_test_names()))
+
+    logger.info("Tiers to be executed:%s" % summary)
 
     for tier in tiers.get_tiers():
         run_tier(tier)

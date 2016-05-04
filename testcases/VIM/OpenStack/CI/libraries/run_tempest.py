@@ -61,7 +61,7 @@ logger = ft_logger.Logger("run_tempest").getLogger()
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
 
 
-with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
+with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 TEST_DB = functest_yaml.get("results").get("test_db_url")
