@@ -175,8 +175,8 @@ def main():
     with open(DEFAULTS_FILE, 'w+') as yaml_file:
         yaml_file.write(yaml.safe_dump(defaults, default_flow_style=False))
         yaml_file.seek(0)
-        logger.debug("Openstack Defaults found in the deployment:")
-        print yaml_file.read()
+        logger.info("Openstack Defaults found in the deployment:\n%s"
+                    % yaml_file.read())
         logger.debug("NOTE: These objects will NOT be deleted after " +
                      "running the tests.")
 
