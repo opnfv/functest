@@ -34,7 +34,7 @@ import functest.utils.openstack_utils as os_utils
 
 
 """ logging configuration """
-logger = ft_logger.Logger("run_rally").getLogger()
+logger = ft_logger.Logger("clean_openstack").getLogger()
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
 
@@ -374,6 +374,9 @@ def remove_tenants(keystone_client):
 
 
 def main():
+    logger.info("+++++++++++++++++++++++++++++++")
+    logger.info("Cleaning OpenStack resources...")
+    logger.info("+++++++++++++++++++++++++++++++")
     creds_nova = os_utils.get_credentials("nova")
     nova_client = novaclient.Client('2', **creds_nova)
 
@@ -412,8 +415,6 @@ def main():
     separator()
     remove_tenants(keystone_client)
     separator()
-
-    exit(0)
 
 
 if __name__ == '__main__':
