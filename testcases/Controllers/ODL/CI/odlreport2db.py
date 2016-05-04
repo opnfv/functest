@@ -23,6 +23,7 @@
 
 import getopt
 import json
+import os
 import sys
 import xmltodict
 import yaml
@@ -116,7 +117,7 @@ def main(argv):
     json.dumps(data, indent=4, separators=(',', ': '))
 
     # Only used from container, we can set up absolute path
-    with open("/home/opnfv/functest/conf/config_functest.yaml") as f:
+    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
         functest_yaml = yaml.safe_load(f)
         f.close()
 
