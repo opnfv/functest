@@ -268,7 +268,7 @@ def main():
         sys.exit()
 
     if args.action == "start":
-        logger.info("\n######### Preparing Functest environment #########\n")
+        logger.info("######### Preparing Functest environment #########\n")
         check_env_variables()
         create_directories()
         source_rc_file()
