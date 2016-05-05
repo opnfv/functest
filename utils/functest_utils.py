@@ -213,16 +213,17 @@ def execute_command(cmd, logger=None,
         else:
             print(msg_exec)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-    while p.poll() is None:
-        line = p.stdout.readline().rstrip()
-        if verbose:
-            if logger:
-                if info:
-                    logger.info(line)
-                else:
-                    logger.debug(line)
+    while True:
+        line = p.stdout.readline().replace('\n', '')
+        if not line:
+            break
+        if logger:
+            if info:
+                logger.info(line)
             else:
-                print line
+                logger.debug(line)
+        else:
+            print line
     if p.returncode != 0:
         if verbose:
             if logger:

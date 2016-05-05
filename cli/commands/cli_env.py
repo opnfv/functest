@@ -8,29 +8,27 @@
 #
 
 import click
+import os
+
+import functest.utils.functest_utils as ft_utils
+
+ENV_FILE = "/home/opnfv/functest/conf/env_active"
 
 
 class CliEnv:
     def __init__(self):
         pass
 
+    def prepare(self):
+        cmd = ("python /home/opnfv/repos/functest/ci/prepare_env.py start")
+        ft_utils.execute_command(cmd)
+
     def show(self):
         click.echo("env show")
 
     def status(self):
-        click.echo("env status")
-
-    def getrc(self):
-        click.echo("env getrc")
-
-    def sourcerc(self):
-        click.echo("env sourcerc")
-
-    def setdefaults(self):
-        click.echo("env setdefaults")
-
-    def getdefaults(self):
-        click.echo("env getdefaults")
-
-    def clean(self):
-        click.echo("env clean")
+        ret_val = 0
+        if not os.path.isfile(ENV_FILE):
+            click.echo("Functest environment is not installed.\n")
+            ret_val = 1
+        return ret_val

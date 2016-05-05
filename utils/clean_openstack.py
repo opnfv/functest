@@ -37,34 +37,14 @@ import functest.utils.openstack_utils as os_utils
 logger = ft_logger.Logger("clean_openstack").getLogger()
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
-
 DEFAULTS_FILE = '/home/opnfv/functest/conf/os_defaults.yaml'
-
-try:
-    with open(DEFAULTS_FILE) as f:
-        defaults_yaml = yaml.safe_load(f)
-except Exception, e:
-    logger.info("The file %s does not exist. Please run generate_defaults.py "
-                "to create the OpenStack defaults. "
-                "Aborting cleanup..." % DEFAULTS_FILE)
-    exit(0)
-
-default_images = defaults_yaml.get('images')
-default_instances = defaults_yaml.get('instances')
-default_volumes = defaults_yaml.get('volumes')
-default_networks = defaults_yaml.get('networks')
-default_routers = defaults_yaml.get('routers')
-default_security_groups = defaults_yaml.get('secgroups')
-default_floatingips = defaults_yaml.get('floatingips')
-default_users = defaults_yaml.get('users')
-default_tenants = defaults_yaml.get('tenants')
 
 
 def separator():
     logger.info("-------------------------------------------")
 
 
-def remove_instances(nova_client):
+def remove_instances(nova_client, default_instances):
     logger.info("Removing Nova instances...")
     instances = os_utils.get_instances(nova_client)
     if instances is None or len(instances) == 0:
@@ -93,7 +73,7 @@ def remove_instances(nova_client):
             time.sleep(1)
 
 
-def remove_images(nova_client):
+def remove_images(nova_client, default_images):
     logger.info("Removing Glance images...")
     images = os_utils.get_images(nova_client)
     if images is None or len(images) == 0:
@@ -117,7 +97,7 @@ def remove_images(nova_client):
                          "NOT be deleted.")
 
 
-def remove_volumes(cinder_client):
+def remove_volumes(cinder_client, default_volumes):
     logger.info("Removing Cinder volumes...")
     volumes = os_utils.get_volumes(cinder_client)
     if volumes is None or len(volumes) == 0:
@@ -146,7 +126,7 @@ def remove_volumes(cinder_client):
                          "NOT be deleted.")
 
 
-def remove_floatingips(nova_client):
+def remove_floatingips(nova_client, default_floatingips):
     logger.info("Removing floating IPs...")
     floatingips = os_utils.get_floating_ips(nova_client)
     if floatingips is None or len(floatingips) == 0:
@@ -182,7 +162,7 @@ def remove_floatingips(nova_client):
             time.sleep(1)
 
 
-def remove_networks(neutron_client):
+def remove_networks(neutron_client, default_networks, default_routers):
     logger.info("Removing Neutron objects")
     network_ids = []
     networks = os_utils.get_network_list(neutron_client)
@@ -216,7 +196,7 @@ def remove_networks(neutron_client):
     if routers is None:
         logger.debug("There are no routers in the deployment. ")
     else:
-        remove_routers(neutron_client, routers)
+        remove_routers(neutron_client, routers, default_routers)
 
     # remove networks
     if network_ids is not None:
@@ -277,7 +257,7 @@ def force_remove_port(neutron_client, port_id):
                      % port_id)
 
 
-def remove_routers(neutron_client, routers):
+def remove_routers(neutron_client, routers, default_routers):
     for router in routers:
         router_id = router['id']
         router_name = router['name']
@@ -304,7 +284,7 @@ def remove_routers(neutron_client, routers):
                              "router '%s'(%s)..." % (router_name, router_id))
 
 
-def remove_security_groups(neutron_client):
+def remove_security_groups(neutron_client, default_security_groups):
     logger.info("Removing Security groups...")
     secgroups = os_utils.get_security_groups(neutron_client)
     if secgroups is None or len(secgroups) == 0:
@@ -327,7 +307,7 @@ def remove_security_groups(neutron_client):
                          "be deleted.")
 
 
-def remove_users(keystone_client):
+def remove_users(keystone_client, default_users):
     logger.info("Removing Users...")
     users = os_utils.get_users(keystone_client)
     if users is None:
@@ -350,7 +330,7 @@ def remove_users(keystone_client):
                          "NOT be deleted.")
 
 
-def remove_tenants(keystone_client):
+def remove_tenants(keystone_client, default_tenants):
     logger.info("Removing Tenants...")
     tenants = os_utils.get_tenants(keystone_client)
     if tenants is None:
@@ -377,6 +357,25 @@ def main():
     logger.info("+++++++++++++++++++++++++++++++")
     logger.info("Cleaning OpenStack resources...")
     logger.info("+++++++++++++++++++++++++++++++")
+
+    try:
+        with open(DEFAULTS_FILE) as f:
+            defaults_yaml = yaml.safe_load(f)
+    except Exception:
+        logger.info("The file %s does not exist. The OpenStack snapshot must"
+                    " be created first. Aborting cleanup." % DEFAULTS_FILE)
+        exit(0)
+
+    default_images = defaults_yaml.get('images')
+    default_instances = defaults_yaml.get('instances')
+    default_volumes = defaults_yaml.get('volumes')
+    default_networks = defaults_yaml.get('networks')
+    default_routers = defaults_yaml.get('routers')
+    default_security_groups = defaults_yaml.get('secgroups')
+    default_floatingips = defaults_yaml.get('floatingips')
+    default_users = defaults_yaml.get('users')
+    default_tenants = defaults_yaml.get('tenants')
+
     creds_nova = os_utils.get_credentials("nova")
     nova_client = novaclient.Client('2', **creds_nova)
 
@@ -399,21 +398,21 @@ def main():
                      "the script again.")
         exit(-1)
 
-    remove_instances(nova_client)
+    remove_instances(nova_client, default_instances)
     separator()
-    remove_images(nova_client)
+    remove_images(nova_client, default_images)
     separator()
-    remove_volumes(cinder_client)
+    remove_volumes(cinder_client, default_volumes)
     separator()
-    remove_floatingips(nova_client)
+    remove_floatingips(nova_client, default_floatingips)
     separator()
-    remove_networks(neutron_client)
+    remove_networks(neutron_client, default_networks, default_routers)
     separator()
-    remove_security_groups(neutron_client)
+    remove_security_groups(neutron_client, default_security_groups)
     separator()
-    remove_users(keystone_client)
+    remove_users(keystone_client, default_users)
     separator()
-    remove_tenants(keystone_client)
+    remove_tenants(keystone_client, default_tenants)
     separator()
 
 
