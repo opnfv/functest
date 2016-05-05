@@ -110,5 +110,5 @@ RUN cd ${repos_dir}/promise && npm install
 
 RUN /bin/echo -e "set nocompatible\nset backspace=2" >> /home/opnfv/.vimrc
 RUN echo "set nocompatible" >> /home/opnfv/.exrc
-RUN echo "alias ll='ls -lh'" >> /home/opnfv/.bashrc
+RUN echo -e "alias ll='ls -lh'\n. /home/opnfv/repos/functest/cli/functest-complete.sh" >> /home/opnfv/.bashrc
 RUN cd ${repos_dir}/functest/cli && pip install .
