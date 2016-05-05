@@ -47,7 +47,7 @@ CI_DEBUG = False
 REPOS_DIR = os.getenv('repos_dir')
 FUNCTEST_REPO = REPOS_DIR + '/functest/'
 
-with open("/home/opnfv/repos/functest/testcases/config_functest.yaml") as f:
+with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 
 FUNCTEST_CONF_DIR = functest_yaml.get("general").get(

@@ -20,6 +20,7 @@ import re
 import requests
 import shutil
 import subprocess
+import sys
 import time
 import yaml
 import ConfigParser
@@ -212,6 +213,7 @@ def configure_tempest(mode):
     private_net = os_utils.get_private_net(neutron_client)
     if private_net is None:
         logger.error("No shared private networks found.")
+        sys.exit(1)
     else:
         private_net_name = private_net['name']
     config.set('compute', 'fixed_network_name', private_net_name)
