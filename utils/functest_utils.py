@@ -196,24 +196,39 @@ def get_ci_envvars():
     return ci_env_var
 
 
-def execute_command(cmd, logger=None, exit_on_error=True, info=False):
-    if logger:
-        logger.debug('Executing command : {}'.format(cmd))
+def execute_command(cmd, logger=None,
+                    exit_on_error=True,
+                    info=False,
+                    error_msg="",
+                    verbose=True):
+    if not error_msg:
+        error_msg = ("The command '%s' failed." % cmd)
+    msg_exec = ("Executing command: '%s'" % cmd)
+    if verbose:
+        if logger:
+            if info:
+                logger.info(msg_exec)
+            else:
+                logger.debug(msg_exec)
+        else:
+            print(msg_exec)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     while p.poll() is None:
         line = p.stdout.readline().rstrip()
-        if logger:
-            if info:
-                logger.info(line)
+        if verbose:
+            if logger:
+                if info:
+                    logger.info(line)
+                else:
+                    logger.debug(line)
             else:
-                logger.debug(line)
-        else:
-            print line
+                print line
     if p.returncode != 0:
-        if logger:
-            logger.error("Error when executing command %s" % cmd)
-        else:
-            print("Error when executing command %s" % cmd)
+        if verbose:
+            if logger:
+                logger.error(error_msg)
+            else:
+                print(error_msg)
         if exit_on_error:
             sys.exit(1)
 

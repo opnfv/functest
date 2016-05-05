@@ -203,7 +203,7 @@ def verify_deployment():
         if "ERROR" in line:
             logger.error(line)
             sys.exit("Problem while running 'check_os.sh'.")
-        logger.debug(line)
+        logger.info(line)
 
 
 def install_rally():
@@ -211,34 +211,34 @@ def install_rally():
     logger.info("Creating Rally environment...")
 
     cmd = "rally deployment destroy opnfv-rally"
-    ft_utils.execute_command(cmd, logger=None, exit_on_error=False)
+    ft_utils.execute_command(cmd, logger=logger, exit_on_error=False,
+                             error_msg=("Deployment %s does not exist."
+                                        % DEPLOYMENT_MAME), verbose=False)
 
     cmd = "rally deployment create --fromenv --name=" + DEPLOYMENT_MAME
-    if not ft_utils.execute_command(cmd, logger):
-        logger.error("Problem while creating Rally deployment.")
-        sys.exit(cmd)
+    ft_utils.execute_command(cmd, logger,
+                             error_msg="Problem creating Rally deployment")
 
     logger.info("Installing tempest from existing repo...")
     cmd = ("rally verify install --source " + TEMPEST_REPO_DIR +
            " --system-wide")
-    if not ft_utils.execute_command(cmd, logger):
-        logger.error("Problem while installing Tempest.")
-        sys.exit(cmd)
+    ft_utils.execute_command(cmd, logger,
+                             error_msg="Problem installing Tempest.")
 
     cmd = "rally deployment check"
-    if not ft_utils.execute_command(cmd, logger):
-        logger.error("OpenStack not responding or faulty Rally deployment.")
-        sys.exit(cmd)
+    ft_utils.execute_command(cmd, logger,
+                             error_msg=("OpenStack not responding or "
+                                        "faulty Rally deployment."))
 
     cmd = "rally show images"
-    if not ft_utils.execute_command(cmd, logger):
-        logger.error("Problem while listing OpenStack images.")
-        sys.exit(cmd)
+    ft_utils.execute_command(cmd, logger,
+                             error_msg=("Problem while listing "
+                                        "OpenStack images."))
 
     cmd = "rally show flavors"
-    if not ft_utils.execute_command(cmd, logger):
-        logger.error("Problem while showing OpenStack flavors.")
-        sys.exit(cmd)
+    ft_utils.execute_command(cmd, logger,
+                             error_msg=("Problem while showing "
+                                        "OpenStack flavors."))
 
 
 def generate_os_defaults():
