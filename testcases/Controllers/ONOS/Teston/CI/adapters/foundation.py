@@ -54,9 +54,8 @@ class foundation:
         """
         Get Default Parameters value
         """
-        with open(self.workhome + "/testcases/config_functest.yaml") as f:
+        with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
             functest_yaml = yaml.safe_load(f)
-        f.close()
 
         self.Result_DB = str(functest_yaml.get("results").get("test_db_url"))
         self.masterusername = str(functest_yaml.get("ONOS").get("general").
