@@ -62,6 +62,7 @@ ruby1.9.1-dev \
 
 
 RUN mkdir -p ${repos_dir}
+RUN mkdir -p /home/opnfv/functest/results
 RUN mkdir -p /root/.ssh
 RUN chmod 700 /root/.ssh
 
