@@ -135,7 +135,7 @@ tiers:
                     scenario: ''
 
             -
-                name: sdnvpn
+                name: bgpvpn
                 description: >-
                     Test suite from SDNVPN project.
                 dependencies:

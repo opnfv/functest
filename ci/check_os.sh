@@ -7,7 +7,7 @@
 #
 
 verify_connectivity() {
-    for i in $(seq 0 9); do
+    for i in $(seq 0 10); do
         if echo "test" | nc -v -w 10 $1 $2 &>/dev/null; then
             return 0
         fi
