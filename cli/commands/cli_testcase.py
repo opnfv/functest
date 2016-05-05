@@ -8,17 +8,50 @@
 #
 
 import click
+import os
+import yaml
+
+import functest.ci.tier_builder as tb
+import functest.utils.functest_utils as ft_utils
+
+""" global variables """
+with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
+    functest_yaml = yaml.safe_load(f)
+
+REPOS_DIR = os.getenv('repos_dir')
+FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
+FUNCTEST_CONF_DIR = functest_yaml.get("general").get(
+    "directories").get("dir_functest_conf")
+ENV_FILE = FUNCTEST_CONF_DIR + "/env_active"
 
 
 class CliTestcase:
     def __init__(self):
-        pass
+        CI_INSTALLER_TYPE = os.getenv('INSTALLER_TYPE')
+        CI_SCENARIO = os.getenv('DEPLOY_SCENARIO')
+        testcases = FUNCTEST_REPO + "/ci/testcases.yaml"
+        self.tiers = tb.TierBuilder(CI_INSTALLER_TYPE, CI_SCENARIO, testcases)
 
     def list(self):
-        click.echo("testcase list")
+        summary = ""
+        for tier in self.tiers.get_tiers():
+            for test in tier.get_tests():
+                summary += (" %s\n" % test.get_name())
+        click.echo(summary)
 
     def show(self, testname):
-        click.echo("testcase show %s" % testname)
+        description = self.tiers.get_test(testname)
+        if description is None:
+            click.echo("The test case '%s' does not exist or is not supported."
+                       % testname)
+
+        click.echo(description)
 
     def run(self, testname):
-        click.echo("testcase run %s" % testname)
+        if not os.path.isfile(ENV_FILE):
+            click.echo("Functest environment is not ready. "
+                       "Run first 'functest env prepare'")
+        else:
+            cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py -t %s"
+                   % testname)
+            ft_utils.execute_command(cmd)

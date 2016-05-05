@@ -10,6 +10,23 @@
 
 import re
 
+LINE_LENGTH = 72
+
+
+def split_text(text, max_len):
+    words = text.split()
+    lines = []
+    line = ""
+    for word in words:
+        if len(line) + len(word) < max_len - 1:
+            line += word + " "
+        else:
+            lines.append(line)
+            line = word + " "
+    if line != "":
+        lines.append(line)
+    return lines
+
 
 class Tier:
     def __init__(self, name, order, ci, description=""):
@@ -54,41 +71,28 @@ class Tier:
         return self.order
 
     def __str__(self):
-        lines = []
-        line_max = 50
-        line = ""
-        line_count = 0
-        for i in range(len(self.description)):
-            line += self.description[i]
-            if line_count >= line_max - 1:
-                line_count = 0
-                lines.append(line)
-                line = ""
-            else:
-                line_count += 1
-        if line != "":
-            lines.append(line)
+        lines = split_text(self.description, LINE_LENGTH-6)
 
         out = ""
-        out += ("+=======================================================+\n")
-        out += ("| Tier:  " + self.name.ljust(47) + "|\n")
-        out += ("+=======================================================+\n")
-        out += ("| Order: " + str(self.order).ljust(47) + "|\n")
-        out += ("| Description:                                          |\n")
-        for i in range(len(lines)):
-            out += ("|    " + lines[i].ljust(50) + " |\n")
-        out += ("| Test cases:                                           |\n")
+        out += ("+%s+\n" % ("=" * (LINE_LENGTH - 2)))
+        out += ("| Tier:  " + self.name.ljust(LINE_LENGTH - 10) + "|\n")
+        out += ("+%s+\n" % ("=" * (LINE_LENGTH - 2)))
+        out += ("| Order: " + str(self.order).ljust(LINE_LENGTH - 10) + "|\n")
+        out += ("| Description:".ljust(LINE_LENGTH - 1) + "|\n")
+        for line in lines:
+            out += ("|    " + line.ljust(LINE_LENGTH - 7) + " |\n")
+        out += ("| Test cases:".ljust(LINE_LENGTH - 1) + "|\n")
         tests = self.get_test_names()
         if len(tests) > 0:
             for i in range(len(tests)):
-                out += ("|    - %s |\n" % tests[i].ljust(48))
+                out += ("|    - %s |\n" % tests[i].ljust(LINE_LENGTH - 9))
         else:
             out += ("|    (There are no supported test cases "
-                    .ljust(56) + "|\n")
+                    .ljust(LINE_LENGTH - 1) + "|\n")
             out += ("|    in this tier for the given scenario) "
-                    .ljust(56) + "|\n")
-        out += ("|".ljust(56) + "|\n")
-        out += ("+-------------------------------------------------------+\n")
+                    .ljust(LINE_LENGTH - 1) + "|\n")
+        out += ("|".ljust(LINE_LENGTH - 1) + "|\n")
+        out += ("+%s+\n" % ("-" * (LINE_LENGTH - 2)))
         return out
 
 
@@ -111,35 +115,22 @@ class TestCase:
         return self.name
 
     def __str__(self):
-        lines = []
-        line_max = 50
-        line = ""
-        line_count = 0
-        for i in range(len(self.description)):
-            line += self.description[i]
-            if line_count >= line_max - 1:
-                line_count = 0
-                lines.append(line)
-                line = ""
-            else:
-                line_count += 1
-        if line != "":
-            lines.append(line)
+        lines = split_text(self.description, LINE_LENGTH-6)
 
         out = ""
-        out += ("+=======================================================+\n")
-        out += ("| Testcase:  " + self.name.ljust(43) + "|\n")
-        out += ("+=======================================================+\n")
-        out += ("| Description:                                          |\n")
-        for i in range(len(lines)):
-            out += ("|    " + lines[i].ljust(50) + " |\n")
-        out += ("| Dependencies:                                         |\n")
+        out += ("+%s+\n" % ("=" * (LINE_LENGTH - 2)))
+        out += ("| Testcase:  " + self.name.ljust(LINE_LENGTH - 14) + "|\n")
+        out += ("+%s+\n" % ("=" * (LINE_LENGTH - 2)))
+        out += ("| Description:".ljust(LINE_LENGTH - 1) + "|\n")
+        for line in lines:
+            out += ("|    " + line.ljust(LINE_LENGTH - 7) + " |\n")
+        out += ("| Dependencies:".ljust(LINE_LENGTH - 1) + "|\n")
         installer = self.dependency.get_installer()
         scenario = self.dependency.get_scenario()
-        out += ("|    - Installer: " + installer.ljust(38) + "|\n")
-        out += ("|    - Scenario : " + scenario.ljust(38) + "|\n")
-        out += ("|".ljust(56) + "|\n")
-        out += ("+-------------------------------------------------------+\n")
+        out += ("|   - Installer:" + installer.ljust(LINE_LENGTH - 17) + "|\n")
+        out += ("|   - Scenario :" + scenario.ljust(LINE_LENGTH - 17) + "|\n")
+        out += ("|".ljust(LINE_LENGTH - 1) + "|\n")
+        out += ("+%s+\n" % ("-" * (LINE_LENGTH - 2)))
         return out
 
 
