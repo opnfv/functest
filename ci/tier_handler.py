@@ -12,11 +12,11 @@ import re
 
 
 class Tier:
-    def __init__(self, name, order, ci, description=""):
+    def __init__(self, name, order, ci_loop, description=""):
         self.tests_array = []
         self.name = name
         self.order = order
-        self.ci = ci
+        self.ci_loop = ci_loop
         self.description = description
 
     def add_test(self, testcase):
@@ -53,6 +53,9 @@ class Tier:
     def get_order(self):
         return self.order
 
+    def get_ci_loop(self):
+        return self.ci_loop
+
     def __str__(self):
         lines = []
         line_max = 50
@@ -74,6 +77,7 @@ class Tier:
         out += ("| Tier:  " + self.name.ljust(47) + "|\n")
         out += ("+=======================================================+\n")
         out += ("| Order: " + str(self.order).ljust(47) + "|\n")
+        out += ("| CI Loop: " + str(self.ci_loop).ljust(45) + "|\n")
         out += ("| Description:                                          |\n")
         for i in range(len(lines)):
             out += ("|    " + lines[i].ljust(50) + " |\n")

@@ -38,7 +38,7 @@ class TierBuilder:
         for dic_tier in self.dic_tier_array:
             tier = th.Tier(name=dic_tier['name'],
                            order=dic_tier['order'],
-                           ci=dic_tier['ci'],
+                           ci_loop=dic_tier['ci_loop'],
                            description=dic_tier['description'])
 
             for dic_testcase in dic_tier['testcases']:
