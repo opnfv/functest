@@ -60,6 +60,12 @@ GLANCE_IMAGE_FORMAT = functest_yaml.get('general').get('openstack').get(
 GLANCE_IMAGE_PATH = functest_yaml.get('general').get('directories').get(
     'dir_functest_data') + "/" + GLANCE_IMAGE_FILENAME
 
+NET_NAME = functest_yaml.get('promise').get('general').get('network_name')
+SUBNET_NAME = functest_yaml.get('promise').get('general').get('subnet_name')
+SUBNET_CIDR = functest_yaml.get('promise').get('general').get('subnet_cidr')
+ROUTER_NAME = functest_yaml.get('promise').get('general').get('router_name')
+
+
 """ logging configuration """
 logger = ft_logger.Logger("promise").getLogger()
 
@@ -160,13 +166,16 @@ def main():
                      % (FLAVOR_NAME, flavor_id))
 
     neutron = ntclient.Client(**nt_creds)
-    private_net = openstack_utils.get_private_net(neutron)
-    if private_net is None:
-        logger.error("There is no private network in the deployment."
-                     "Aborting...")
+
+    network_dic = openstack_utils.create_network_full(logger,
+                                                      neutron,
+                                                      NET_NAME,
+                                                      SUBNET_NAME,
+                                                      ROUTER_NAME,
+                                                      SUBNET_CIDR)
+    if network_dic is False:
+        logger.error("Failed to create the private network...")
         exit(-1)
-    logger.debug("Using private network '%s' (%s)." % (private_net['name'],
-                                                       private_net['id']))
 
     logger.info("Exporting environment variables...")
     os.environ["NODE_ENV"] = "functest"
@@ -175,7 +184,7 @@ def main():
     os.environ["OS_PASSWORD"] = USER_PWD
     os.environ["OS_TEST_IMAGE"] = image_id
     os.environ["OS_TEST_FLAVOR"] = flavor_id
-    os.environ["OS_TEST_NETWORK"] = private_net['id']
+    os.environ["OS_TEST_NETWORK"] = network_dic["net_id"]
 
     os.chdir(PROMISE_REPO)
     results_file_name = 'promise-results.json'
