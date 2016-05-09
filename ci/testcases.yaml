@@ -2,7 +2,7 @@ tiers:
     -
         name: healthcheck
         order: 0
-        ci: daily
+        ci_loop: '(daily)|(weekly)'
         description : >-
             First tier to be executed to verify the basic
             operations in the VIM.
@@ -20,15 +20,15 @@ tiers:
     -
         name: smoke
         order: 1
-        ci: daily
+        ci_loop: '(daily)|(weekly)'
         description : >-
             Set of basic Functional tests to validate the OpenStack deployment.
         testcases:
             -
                 name: vping_ssh
                 description: >-
-                    This test case verifies: 1) SSH to an instance using floating 
-                    IPs over the public network. 2) Connectivity between 2 instances 
+                    This test case verifies: 1) SSH to an instance using floating
+                    IPs over the public network. 2) Connectivity between 2 instances
                     over a private network.
                 dependencies:
                     installer: ''
@@ -37,7 +37,7 @@ tiers:
             -
                 name: vping_userdata
                 description: >-
-                    This test case verifies:  1) Boot a VM with given userdata. 
+                    This test case verifies:  1) Boot a VM with given userdata.
                     2) Connectivity between 2 instances over a private network.
                 dependencies:
                     installer: ''
@@ -76,7 +76,7 @@ tiers:
     -
         name: sdn_suites
         order: 2
-        ci: daily
+        ci_loop: '(daily)|(weekly)'
         description : >-
             Test suites corresponding to the different
             SDN Controllers existing in OPNFV.
@@ -113,7 +113,7 @@ tiers:
     -
         name: features
         order: 3
-        ci: daily
+        ci_loop: '(daily)|(weekly)'
         description : >-
             Test suites from feature projects
             integrated in functest
@@ -145,7 +145,7 @@ tiers:
     -
         name: tempest
         order: 4
-        ci: weekly
+        ci_loop: 'weekly'
         description : >-
             This test case runs the full set of the OpenStack Tempest suite.
         testcases:
@@ -162,7 +162,7 @@ tiers:
     -
         name: rally
         order: 5
-        ci: weekly
+        ci_loop: 'weekly'
         description : >-
             Rally suite from the OpenStack community.
         testcases:
@@ -178,7 +178,7 @@ tiers:
     -
         name: vnf
         order: 6
-        ci: weekly
+        ci_loop: 'weekly'
         description : >-
             Collection of VNF test cases.
         testcases:
