@@ -82,7 +82,7 @@ def os_show_credentials():
 
 
 @openstack.command('fetch-rc', help="Fetch the OpenStack RC file from "
-                   "the installer")
+                   "the installer.")
 def os_fetch_rc():
     _openstack.fetch_credentials()
 

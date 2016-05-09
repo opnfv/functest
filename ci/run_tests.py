@@ -10,6 +10,7 @@
 
 import argparse
 import os
+import re
 import sys
 
 import functest.ci.tier_builder as tb
@@ -101,15 +102,25 @@ def run_tier(tier):
 
 def run_all(tiers):
     summary = ""
+    BUILD_TAG = os.getenv('BUILD_TAG')
+    if BUILD_TAG is not None and re.search("daily", BUILD_TAG) is not None:
+        CI_LOOP = "daily"
+    else:
+        CI_LOOP = "weekly"
+
+    tiers_to_run = []
+
     for tier in tiers.get_tiers():
-        summary += ("\n    - %s. %s:\n\t   %s"
-                    % (tier.get_order(),
-                       tier.get_name(),
-                       tier.get_test_names()))
+        if re.search(CI_LOOP, tier.get_ci_loop()) is not None:
+            tiers_to_run.append(tier)
+            summary += ("\n    - %s. %s:\n\t   %s"
+                        % (tier.get_order(),
+                           tier.get_name(),
+                           tier.get_test_names()))
 
     logger.info("Tiers to be executed:%s" % summary)
 
-    for tier in tiers.get_tiers():
+    for tier in tiers_to_run:
         run_tier(tier)
 
 
