@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a91bd0f_770e8b36",
+        "filename": "ci/tier_handler.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-09T13:13:15Z",
+      "side": 1,
+      "message": "Yes, actually I thought about that, having a const LINE_LENGTH or something like that. Also for the long strings \"\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\" ...Next improvement!",
+      "parentUuid": "9a91bd0f_bc1dd875",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 28
+      },
+      "revId": "e1db3973d9e9e425c2b9919c66309f1132c0e300",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a91bd0f_5c128c63",
         "filename": "docker/Dockerfile",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2016-05-09T13:04:31Z",
       "side": 1,
       "message": "Or you could merge both echo commands in 1 cat.",
+      "revId": "e1db3973d9e9e425c2b9919c66309f1132c0e300",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_17137f5d",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-09T13:13:15Z",
+      "side": 1,
+      "message": "For sure there must be a better way to handle that. Can you give an example? (or propose a patch)",
+      "parentUuid": "9a91bd0f_5c128c63",
       "revId": "e1db3973d9e9e425c2b9919c66309f1132c0e300",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
