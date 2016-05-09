@@ -445,6 +445,62 @@ def remove_gateway_router(neutron_client, router_id):
         return False
 
 
+def create_network_full(logger,
+                        neutron_client,
+                        net_name,
+                        subnet_name,
+                        router_name,
+                        cidr):
+
+    # Check if the network already exists
+    network_id = get_network_id(neutron_client, net_name)
+    subnet_id = get_subnet_id(neutron_client, subnet_name)
+    router_id = get_router_id(neutron_client, router_name)
+
+    if network_id != '' and subnet_id != '' and router_id != '':
+        logger.info("A network with name '%s' already exists..." % net_name)
+    else:
+        neutron_client.format = 'json'
+        logger.info('Creating neutron network %s...' % net_name)
+        network_id = create_neutron_net(neutron_client, net_name)
+
+        if not network_id:
+            return False
+
+        logger.debug("Network '%s' created successfully" % network_id)
+        logger.debug('Creating Subnet....')
+        subnet_id = create_neutron_subnet(neutron_client, subnet_name,
+                                          cidr, network_id)
+        if not subnet_id:
+            return False
+
+        logger.debug("Subnet '%s' created successfully" % subnet_id)
+        logger.debug('Creating Router...')
+        router_id = create_neutron_router(neutron_client, router_name)
+
+        if not router_id:
+            return False
+
+        logger.debug("Router '%s' created successfully" % router_id)
+        logger.debug('Adding router to subnet...')
+
+        if not add_interface_router(neutron_client, router_id, subnet_id):
+            return False
+
+        logger.debug("Interface added successfully.")
+
+        logger.debug('Adding gateway to router...')
+        if not add_gateway_router(neutron_client, router_id):
+            return False
+
+        logger.debug("Gateway added successfully.")
+
+    network_dic = {'net_id': network_id,
+                   'subnet_id': subnet_id,
+                   'router_id': router_id}
+    return network_dic
+
+
 # *********************************************
 #   SEC GROUPS
 # *********************************************

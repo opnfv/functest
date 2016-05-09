@@ -78,13 +78,13 @@ FLAVOR = functest_yaml.get("vping").get("vm_flavor")
 
 # NEUTRON Private Network parameters
 
-NEUTRON_PRIVATE_NET_NAME = functest_yaml.get("vping").get(
+PRIVATE_NET_NAME = functest_yaml.get("vping").get(
     "vping_private_net_name")
-NEUTRON_PRIVATE_SUBNET_NAME = functest_yaml.get("vping").get(
+PRIVATE_SUBNET_NAME = functest_yaml.get("vping").get(
     "vping_private_subnet_name")
-NEUTRON_PRIVATE_SUBNET_CIDR = functest_yaml.get("vping").get(
+PRIVATE_SUBNET_CIDR = functest_yaml.get("vping").get(
     "vping_private_subnet_cidr")
-NEUTRON_ROUTER_NAME = functest_yaml.get("vping").get(
+ROUTER_NAME = functest_yaml.get("vping").get(
     "vping_router_name")
 
 SECGROUP_NAME = functest_yaml.get("vping").get("vping_sg_name")
@@ -134,63 +134,6 @@ def waitVmDeleted(nova, vm):
             count -= 1
         time.sleep(sleep_time)
     return False
-
-
-def create_private_neutron_net(neutron):
-
-    # Check if the network already exists
-    network_id = openstack_utils.get_network_id(neutron,
-                                                NEUTRON_PRIVATE_NET_NAME)
-    subnet_id = openstack_utils.get_subnet_id(neutron,
-                                              NEUTRON_PRIVATE_SUBNET_NAME)
-    router_id = openstack_utils.get_router_id(neutron,
-                                              NEUTRON_ROUTER_NAME)
-
-    if network_id != '' and subnet_id != '' and router_id != '':
-        logger.info("Using existing network '%s'..."
-                    % NEUTRON_PRIVATE_NET_NAME)
-    else:
-        neutron.format = 'json'
-        logger.info('Creating neutron network %s...'
-                    % NEUTRON_PRIVATE_NET_NAME)
-        network_id = openstack_utils.create_neutron_net(
-            neutron, NEUTRON_PRIVATE_NET_NAME)
-
-        if not network_id:
-            return False
-        logger.debug("Network '%s' created successfully" % network_id)
-        logger.debug('Creating Subnet....')
-        subnet_id = openstack_utils.create_neutron_subnet(
-            neutron, NEUTRON_PRIVATE_SUBNET_NAME, NEUTRON_PRIVATE_SUBNET_CIDR,
-            network_id)
-        if not subnet_id:
-            return False
-        logger.debug("Subnet '%s' created successfully" % subnet_id)
-        logger.debug('Creating Router...')
-        router_id = openstack_utils.create_neutron_router(
-            neutron, NEUTRON_ROUTER_NAME)
-
-        if not router_id:
-            return False
-
-        logger.debug("Router '%s' created successfully" % router_id)
-        logger.debug('Adding router to subnet...')
-
-        if not openstack_utils.add_interface_router(neutron,
-                                                    router_id,
-                                                    subnet_id):
-            return False
-        logger.debug("Interface added successfully.")
-
-        logger.debug('Adding gateway to router...')
-        if not openstack_utils.add_gateway_router(neutron, router_id):
-            return False
-        logger.debug("Gateway added successfully.")
-
-    network_dic = {'net_id': network_id,
-                   'subnet_id': subnet_id,
-                   'router_id': router_id}
-    return network_dic
 
 
 def create_security_group(neutron_client):
@@ -291,7 +234,12 @@ def main():
         logger.debug("Image '%s' with ID=%s created successfully."
                      % (GLANCE_IMAGE_NAME, image_id))
 
-    network_dic = create_private_neutron_net(neutron_client)
+    network_dic = openstack_utils.create_network_full(logger,
+                                                      neutron_client,
+                                                      PRIVATE_NET_NAME,
+                                                      PRIVATE_SUBNET_NAME,
+                                                      ROUTER_NAME,
+                                                      PRIVATE_SUBNET_CIDR)
     if not network_dic:
         logger.error(
             "There has been a problem when creating the neutron network")
@@ -345,7 +293,7 @@ def main():
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
 
     # Retrieve IP of first VM
-    test_ip = vm1.networks.get(NEUTRON_PRIVATE_NET_NAME)[0]
+    test_ip = vm1.networks.get(PRIVATE_NET_NAME)[0]
     logger.debug("Instance '%s' got private ip '%s'." % (NAME_VM_1, test_ip))
 
     logger.info("Adding '%s' to security group '%s'..."
@@ -401,7 +349,7 @@ def main():
     nolease = False
     got_ip = False
     discover_count = 0
-    cidr_first_octet = NEUTRON_PRIVATE_SUBNET_CIDR.split('.')[0]
+    cidr_first_octet = PRIVATE_SUBNET_CIDR.split('.')[0]
     while timeout > 0:
         try:
             ssh.connect(floatip, username=username,
