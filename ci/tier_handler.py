@@ -29,11 +29,11 @@ def split_text(text, max_len):
 
 
 class Tier:
-    def __init__(self, name, order, ci, description=""):
+    def __init__(self, name, order, ci_loop, description=""):
         self.tests_array = []
         self.name = name
         self.order = order
-        self.ci = ci
+        self.ci_loop = ci_loop
         self.description = description
 
     def add_test(self, testcase):
@@ -70,6 +70,9 @@ class Tier:
     def get_order(self):
         return self.order
 
+    def get_ci_loop(self):
+        return self.ci_loop
+
     def __str__(self):
         lines = split_text(self.description, LINE_LENGTH-6)
 
@@ -78,6 +81,8 @@ class Tier:
         out += ("| Tier:  " + self.name.ljust(LINE_LENGTH - 10) + "|\n")
         out += ("+%s+\n" % ("=" * (LINE_LENGTH - 2)))
         out += ("| Order: " + str(self.order).ljust(LINE_LENGTH - 10) + "|\n")
+        out += ("| CI Loop: " + str(self.ci_loop).ljust(LINE_LENGTH - 12) +
+                "|\n")
         out += ("| Description:".ljust(LINE_LENGTH - 1) + "|\n")
         for line in lines:
             out += ("|    " + line.ljust(LINE_LENGTH - 7) + " |\n")
