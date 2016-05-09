@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env python
 #
 # Author: Jose Lausuch (jose.lausuch@ericsson.com)
 #
