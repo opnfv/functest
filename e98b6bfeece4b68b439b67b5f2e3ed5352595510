@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_0d13705d",
+        "filename": "ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-10T14:38:48Z",
+      "side": 1,
+      "message": "this should be called \"rally_full\", same name as in exec_test.sh",
+      "range": {
+        "startLine": 163,
+        "startChar": 14,
+        "endLine": 163,
+        "endChar": 19
+      },
+      "revId": "e98b6bfeece4b68b439b67b5f2e3ed5352595510",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
