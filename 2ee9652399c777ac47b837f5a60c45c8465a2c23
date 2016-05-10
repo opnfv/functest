@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_d72e77a5",
+        "filename": "testcases/VIM/OpenStack/CI/libraries/run_tempest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-10T07:38:32Z",
+      "side": 1,
+      "message": "EXIT_CODE is not a defined variable. If you want, use exit(-1), exit(1) or just sys.exit(), as you wish.",
+      "range": {
+        "startLine": 161,
+        "startChar": 15,
+        "endLine": 161,
+        "endChar": 24
+      },
+      "revId": "2ee9652399c777ac47b837f5a60c45c8465a2c23",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
