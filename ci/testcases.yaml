@@ -54,15 +54,15 @@ tiers:
             #        installer: ''
             #        scenario: ''
             #
-            #-
-            #    name: rally_sanity
-            #    description: >-
-            #        This test case runs a sub group of tests of the OpenStack
-            #        Rally suite in smoke mode.
-            #    dependencies:
-            #        installer: ''
-            #        scenario: ''
-            #
+            -
+                name: rally_sanity
+                description: >-
+                    This test case runs a sub group of tests of the OpenStack
+                    Rally suite in smoke mode.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+
             #-
             #    name: security_groups
             #    description: >-
@@ -167,7 +167,7 @@ tiers:
             Rally suite from the OpenStack community.
         testcases:
             -
-                name: rally
+                name: rally_full
                 description: >-
                     This test case runs the full suite of scenarios of the OpenStack
                     Rally suite using several threads and iterations.

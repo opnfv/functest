@@ -109,10 +109,13 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py \
                 $debug $clean_flag $report
         ;;
-        "rally")
+        "rally_full")
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py \
                 $debug $clean_flag all $report
-
+        ;;
+        "rally_sanity")
+            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py \
+                $debug $clean_flag --sanity all $report
         ;;
         "bgpvpn")
             pushd ${repos_dir}/bgpvpn/
