@@ -62,8 +62,10 @@ tempest:
         tenant_description: Tenant for Tempest test suite
         user_name: tempest
         user_password: tempest
-    input-scenario:
-        ssh_user_regex: '[["^.*[Cc]irros.*$", "cirros"], ["^.*[Tt]est[VvMm].*$", "cirros"], ["^.*rally_verify.*$", "cirros"]]'
+    private_net_name: tempest-net
+    private_subnet_name: tempest-subnet
+    private_subnet_cidr: 192.168.150.0/24
+    router_name: tempest-router
 
 rally:
     deployment_name: opnfv-rally
