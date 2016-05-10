@@ -67,6 +67,7 @@ parser.add_argument("-z", "--sanity",
 args = parser.parse_args()
 
 client_dict = {}
+network_dict = {}
 
 if args.verbose:
     RALLY_STDERR = subprocess.STDOUT
@@ -103,8 +104,11 @@ RESULTS_DIR = functest_yaml.get("general").get("directories").get(
 TEMPEST_CONF_FILE = functest_yaml.get("general").get("directories").get(
     "dir_results") + '/tempest/tempest.conf'
 TEST_DB = functest_yaml.get("results").get("test_db_url")
-PRIVATE_NETWORK = functest_yaml.get("general").get("openstack").get(
-    "neutron_private_net_name")
+
+PRIVATE_NET_NAME = functest_yaml.get("rally").get("network_name")
+PRIVATE_SUBNET_NAME = functest_yaml.get("rally").get("subnet_name")
+PRIVATE_SUBNET_CIDR = functest_yaml.get("rally").get("subnet_cidr")
+ROUTER_NAME = functest_yaml.get("rally").get("router_name")
 
 GLANCE_IMAGE_NAME = functest_yaml.get("general").get("openstack").get(
     "image_name")
@@ -209,8 +213,7 @@ def build_task_args(test_file_name):
     else:
         task_args['floating_network'] = ''
 
-    net_id = openstack_utils.get_network_id(client_dict['neutron'],
-                                            PRIVATE_NETWORK)
+    net_id = network_dict['net_id']
     task_args['netid'] = str(net_id)
     task_args['live_migration'] = live_migration_supported()
 
@@ -379,6 +382,7 @@ def run_task(test_name):
 
 def main():
     global SUMMARY
+    global network_dict
     # configure script
     if not (args.test_name in tests):
         logger.error('argument not valid')
@@ -437,6 +441,25 @@ def main():
         logger.debug("Using existing image '%s' with ID '%s'..."
                      % (GLANCE_IMAGE_NAME, image_id))
         image_exists = True
+
+    logger.debug("Creating network '%s'..." % PRIVATE_NET_NAME)
+    network_dict = openstack_utils.create_network_full(logger,
+                                                       client_dict['neutron'],
+                                                       PRIVATE_NET_NAME,
+                                                       PRIVATE_SUBNET_NAME,
+                                                       ROUTER_NAME,
+                                                       PRIVATE_SUBNET_CIDR)
+    if not network_dict:
+        logger.error("Failed to create network...")
+        exit(-1)
+    else:
+        if not openstack_utils.update_neutron_net(client_dict['neutron'],
+                                                  network_dict['net_id'],
+                                                  shared=True):
+            logger.error("Failed to update network...")
+            exit(-1)
+        else:
+            logger.debug("Network '%s' available..." % PRIVATE_NET_NAME)
 
     if args.test_name == "all":
         for test_name in tests:
