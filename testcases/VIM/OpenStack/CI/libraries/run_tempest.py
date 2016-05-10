@@ -20,7 +20,6 @@ import re
 import requests
 import shutil
 import subprocess
-import sys
 import time
 import yaml
 import ConfigParser
@@ -68,14 +67,16 @@ f.close()
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 
 MODE = "smoke"
+PRIVATE_NET_NAME = functest_yaml.get("tempest").get("private_net_name")
+PRIVATE_SUBNET_NAME = functest_yaml.get("tempest").get("private_subnet_name")
+PRIVATE_SUBNET_CIDR = functest_yaml.get("tempest").get("private_subnet_cidr")
+ROUTER_NAME = functest_yaml.get("tempest").get("router_name")
 TENANT_NAME = functest_yaml.get("tempest").get("identity").get("tenant_name")
 TENANT_DESCRIPTION = functest_yaml.get("tempest").get("identity").get(
     "tenant_description")
 USER_NAME = functest_yaml.get("tempest").get("identity").get("user_name")
 USER_PASSWORD = functest_yaml.get("tempest").get("identity").get(
     "user_password")
-SSH_USER_REGEX = functest_yaml.get("tempest").get("input-scenario").get(
-    "ssh_user_regex")
 DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
 RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get(
     "dir_rally_inst")
@@ -146,25 +147,18 @@ def create_tempest_resources():
     if user_id == '':
         logger.error("Error : Failed to create %s user" % USER_NAME)
 
-
-def free_tempest_resources():
-    ks_creds = os_utils.get_credentials("keystone")
-    logger.info("Deleting tenant and user for Tempest suite)")
-    keystone = ksclient.Client(**ks_creds)
-
-    user_id = os_utils.get_user_id(keystone, USER_NAME)
-    if user_id == '':
-        logger.error("Error : Failed to get id of %s user" % USER_NAME)
-    else:
-        if not os_utils.delete_user(keystone, user_id):
-            logger.error("Error : Failed to delete %s user" % USER_NAME)
-
-    tenant_id = os_utils.get_tenant_id(keystone, TENANT_NAME)
-    if tenant_id == '':
-        logger.error("Error : Failed to get id of %s tenant" % TENANT_NAME)
-    else:
-        if not os_utils.delete_tenant(keystone, tenant_id):
-            logger.error("Error : Failed to delete %s tenant" % TENANT_NAME)
+    logger.info("Creating private network for Tempest suite")
+    creds_neutron = os_utils.get_credentials("neutron")
+    neutron_client = neutronclient.Client(**creds_neutron)
+    network_dic = os_utils.create_network_full(logger,
+                                               neutron_client,
+                                               PRIVATE_NET_NAME,
+                                               PRIVATE_SUBNET_NAME,
+                                               ROUTER_NAME,
+                                               PRIVATE_SUBNET_CIDR)
+    if not network_dic:
+        logger.error("Private network creation failed")
+        return(EXIT_CODE)
 
 
 def configure_tempest(mode):
@@ -207,16 +201,7 @@ def configure_tempest(mode):
     logger.debug("Updating selected tempest.conf parameters...")
     config = ConfigParser.RawConfigParser()
     config.read(tempest_conf_file)
-    private_net_name = ""
-    creds_neutron = os_utils.get_credentials("neutron")
-    neutron_client = neutronclient.Client(**creds_neutron)
-    private_net = os_utils.get_private_net(neutron_client)
-    if private_net is None:
-        logger.error("No shared private networks found.")
-        sys.exit(1)
-    else:
-        private_net_name = private_net['name']
-    config.set('compute', 'fixed_network_name', private_net_name)
+    config.set('compute', 'fixed_network_name', PRIVATE_NET_NAME)
     config.set('identity', 'tenant_name', TENANT_NAME)
     config.set('identity', 'username', USER_NAME)
     config.set('identity', 'password', USER_PASSWORD)
@@ -330,8 +315,6 @@ def main():
 
     if args.noclean:
         exit(0)
-
-    free_tempest_resources()
 
 
 if __name__ == '__main__':
