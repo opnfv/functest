@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a91bd0f_32233107",
+        "filename": "cli/cli_base.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-10T11:53:25Z",
+      "side": 1,
+      "message": "oops. Didn\u0027t see that. Next patch will fix it, thanks.",
+      "parentUuid": "9a91bd0f_d2ac458f",
+      "revId": "bd00e6f289a69badf7beea827b20764ed3252c7a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a91bd0f_f272a948",
         "filename": "cli/commands/cli_env.py",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2016-05-10T11:18:31Z",
       "side": 1,
       "message": "Can these be retrieved in a similar fashion as in e.g. cli_tier.py?",
+      "revId": "bd00e6f289a69badf7beea827b20764ed3252c7a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_12262d17",
+        "filename": "cli/commands/cli_env.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-10T11:53:25Z",
+      "side": 1,
+      "message": "Yes, I take a note. It could probably be in config_functest.yaml ..",
+      "parentUuid": "9a91bd0f_f272a948",
       "revId": "bd00e6f289a69badf7beea827b20764ed3252c7a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
