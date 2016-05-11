@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_31f80e7c",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-11T08:42:22Z",
+      "side": 1,
+      "message": "There is a problem with this. This variable is not defined any more. You need to define it or hard code the path.",
+      "range": {
+        "startLine": 70,
+        "startChar": 20,
+        "endLine": 70,
+        "endChar": 34
+      },
+      "revId": "9abb9f8b07f4bcb36f57dd3ff388ab9d66e5fcfd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
