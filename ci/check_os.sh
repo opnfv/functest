@@ -72,7 +72,7 @@ done
 echo "OpenStack services are OK."
 
 echo "Checking External network..."
-networks=($(neutron net-list | tail -n +4 | head -n -1 | awk '{print $2}'))
+networks=($(neutron net-list -F id | tail -n +4 | head -n -1 | awk '{print $2}'))
 is_external=False
 for net in "${networks[@]}"
 do
