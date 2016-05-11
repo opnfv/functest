@@ -11,7 +11,7 @@
 # Execution:
 #    $ docker run -t -i \
 #      -e "INSTALLER_TYPE=fuel|apex|compass|joid \
-#      -e "INSTALLER_IP=10.20.0.2/172.30.10.73" \
+#      -e "INSTALLER_IP=10.20.0.2" \
 #      -v $(pwd)/config_functest.yaml:/home/opnfv/repos/functest/ci/config_functest.yaml
 #      opnfv/functest /bin/bash
 #

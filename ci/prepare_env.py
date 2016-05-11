@@ -150,7 +150,7 @@ def source_rc_file():
         logger.warning("The environment variable 'creds' must be set and"
                        "pointing to the local RC file. Using default: "
                        "/home/opnfv/functest/conf/openstack.creds ...")
-        rc_file = "/home/opnfv/functest/conf/openstack.creds ..."
+        rc_file = "/home/opnfv/functest/conf/openstack.creds"
 
     if not os.path.isfile(rc_file):
         logger.info("RC file not provided. "
