@@ -64,6 +64,7 @@ function odl_tests(){
         exit 1
     fi
 }
+
 function run_test(){
     test_name=$1
     serial_flag=""
@@ -96,14 +97,13 @@ function run_test(){
                 python ${odl_path}/odlreport2db.py -x ${odl_logs}/output.xml -i ${INSTALLER_TYPE} -p ${node_name} -s ${DEPLOY_SCENARIO}
             fi
         ;;
-        "tempest")
+        "tempest_smoke_serial")
             python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
-                $debug $serial_flag $clean_flag -m smoke $report
-            # save tempest.conf for further troubleshooting
-            tempest_conf="${RALLY_VENV_DIR}/tempest/for-deployment-*/tempest.conf"
-            if [ -f ${tempest_conf} ]; then
-                cp $tempest_conf ${FUNCTEST_CONF_DIR}
-            fi
+                $debug $clean_flag -s -m smoke $report
+        ;;
+        "tempest_full_parallel")
+            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
+                $debug $serial_flag $clean_flag -m full $report
         ;;
         "vims")
             python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py \

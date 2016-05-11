@@ -260,7 +260,7 @@ def run_tempest(OPTION):
     cmd_line = "rally verify list"
     logger.debug('Executing command : {}'.format(cmd_line))
     cmd = os.popen(cmd_line)
-    output = (((cmd.read()).splitlines()[3]).replace(" ", "")).split("|")
+    output = (((cmd.read()).splitlines()[-2]).replace(" ", "")).split("|")
     # Format:
     # | UUID | Deployment UUID | smoke | tests | failures | Created at |
     # Duration | Status  |
