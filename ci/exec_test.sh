@@ -48,16 +48,16 @@ function odl_tests(){
     usr_name=$(env | grep OS | grep OS_USERNAME | cut -f2 -d'=')
     password=$(env | grep OS | grep OS_PASSWORD | cut -f2 -d'=')
     odl_port=8181
-    if [ $INSTALLER_TYPE == "fuel" ]; then
+    if [ "$INSTALLER_TYPE" == "fuel" ]; then
         odl_port=8282
-    elif [ $INSTALLER_TYPE == "apex" ]; then
+    elif [ "$INSTALLER_TYPE" == "apex" ]; then
         :
-    elif [ $INSTALLER_TYPE == "joid" ]; then
+    elif [ "$INSTALLER_TYPE" == "joid" ]; then
         odl_ip=$(env | grep SDN_CONTROLLER | cut -f2 -d'=')
         neutron_ip=$(openstack catalog show network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
         odl_port=8080
         :
-    elif [ $INSTALLER_TYPE == "compass" ]; then
+    elif [ "$INSTALLER_TYPE" == "compass" ]; then
         :
     else
         error "INSTALLER_TYPE not valid."
@@ -136,7 +136,7 @@ bgpvpn = True" >> /etc/tempest/tempest.conf
             popd
         ;;
         "onos")
-            if [ $INSTALLER_TYPE == "joid" ]; then
+            if [ "$INSTALLER_TYPE" == "joid" ]; then
                 python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py -i joid
             else
                 python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py
