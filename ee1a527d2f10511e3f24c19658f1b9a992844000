@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_253a08ce",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-12T17:59:46Z",
+      "side": 1,
+      "message": "I think we should also remove this error, since we said that we will allow other installers or even skypping this env var... can you remove this else?",
+      "revId": "ee1a527d2f10511e3f24c19658f1b9a992844000",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
