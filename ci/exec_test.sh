@@ -42,26 +42,21 @@ FUNCTEST_CONF_DIR=/home/opnfv/functest/conf/
 
 function odl_tests(){
     keystone_ip=$(openstack catalog show identity |grep publicURL| cut -f3 -d"/" | cut -f1 -d":")
-    # historically most of the installers use the same IP for neutron and keystone API
-    neutron_ip=$keystone_ip
-    odl_ip=$(openstack catalog show network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
-    usr_name=$(env | grep OS | grep OS_USERNAME | cut -f2 -d'=')
-    password=$(env | grep OS | grep OS_PASSWORD | cut -f2 -d'=')
+    neutron_ip=$(openstack catalog show network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+    odl_ip=${neutron_ip}
     odl_port=8181
     if [ "$INSTALLER_TYPE" == "fuel" ]; then
         odl_port=8282
     elif [ "$INSTALLER_TYPE" == "apex" ]; then
         :
     elif [ "$INSTALLER_TYPE" == "joid" ]; then
-        odl_ip=$(env | grep SDN_CONTROLLER | cut -f2 -d'=')
-        neutron_ip=$(openstack catalog show network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
+        odl_ip=$SDN_CONTROLLER
         odl_port=8080
         :
     elif [ "$INSTALLER_TYPE" == "compass" ]; then
         :
     else
-        echo "INSTALLER_TYPE not valid." >&2
-        exit 1
+        odl_ip=$SDN_CONTROLLER
     fi
 }
 
@@ -86,7 +81,7 @@ function run_test(){
         ;;
         "odl")
             odl_tests
-            ODL_PORT=$odl_port ODL_IP=$odl_ip KEYSTONE_IP=$keystone_ip NEUTRON_IP=$neutron_ip USR_NAME=$usr_name PASS=$password \
+            ODL_PORT=$odl_port ODL_IP=$odl_ip KEYSTONE_IP=$keystone_ip NEUTRON_IP=$neutron_ip USR_NAME=${OS_USERNAME} PASS=${OS_PASSWORD} \
                 ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
 
             # push results to the DB in case of CI
