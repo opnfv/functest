@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_25b0c88a",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-05-13T13:58:57Z",
+      "side": 1,
+      "message": "it seems that for Apex installer odl_ip !\u003d neutron_ip, that is why we always have 15/18 running this suite on Apex\nto be conifrmed by trozet or dradez",
+      "revId": "a6ecd279e2d9191aee8f903528056f0cc84a09fa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
