@@ -60,7 +60,7 @@ function odl_tests(){
     elif [ "$INSTALLER_TYPE" == "compass" ]; then
         :
     else
-        error "INSTALLER_TYPE not valid."
+        echo "INSTALLER_TYPE not valid." >&2
         exit 1
     fi
 }
@@ -123,7 +123,7 @@ function run_test(){
             popd
             tempest_dir=$(ls -t /home/opnfv/.rally/tempest/ |grep for-deploy |tail -1)
             if [[ $tempest_dir == "" ]]; then
-                error "Make sure tempest was running before"
+                echo "Make sure tempest was running before" >&2
             fi
             tempest_dir=/home/opnfv/.rally/tempest/$tempest_dir
             pushd $tempest_dir
