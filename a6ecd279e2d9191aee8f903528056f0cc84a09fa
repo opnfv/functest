@@ -16,6 +16,24 @@
       "revId": "a6ecd279e2d9191aee8f903528056f0cc84a09fa",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_c0bb0ac3",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-14T18:34:30Z",
+      "side": 1,
+      "message": "I think Apex test case has not been changed by this proposal or that would have induced neutron endpoints badly registered (neutron_ip !\u003d neutron public endpoint).\n\nLet me know if odl_ip must be equal to SDN_CONTROLLER in Apex too. And compass?",
+      "parentUuid": "9a91bd0f_25b0c88a",
+      "revId": "a6ecd279e2d9191aee8f903528056f0cc84a09fa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
