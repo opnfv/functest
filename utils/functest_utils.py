@@ -18,6 +18,7 @@ import socket
 import subprocess
 import sys
 import urllib2
+import yaml
 from git import Repo
 
 
@@ -235,3 +236,28 @@ def execute_command(cmd, logger=None,
             sys.exit(1)
 
     return p.returncode
+
+
+def get_deployment_dir(logger=None):
+    """
+    Returns current Rally deployment directory
+    """
+    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
+        functest_yaml = yaml.safe_load(f)
+    f.close()
+    deployment_name = functest_yaml.get("rally").get("deployment_name")
+    rally_dir = functest_yaml.get("general").get("directories").get(
+        "dir_rally_inst")
+    cmd = ("rally deployment list | awk '/" + deployment_name +
+           "/ {print $2}'")
+    p = subprocess.Popen(cmd, shell=True,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
+    deployment_uuid = p.stdout.readline().rstrip()
+    if deployment_uuid == "":
+        if logger:
+            logger.error("Rally deployment not found.")
+        exit(-1)
+    deployment_dir = (rally_dir + "/tempest/for-deployment-" +
+                      deployment_uuid)
+    return deployment_dir
