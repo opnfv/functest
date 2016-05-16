@@ -118,22 +118,7 @@ function run_test(){
                 $debug $clean_flag --sanity all $report
         ;;
         "bgpvpn")
-            pushd ${repos_dir}/bgpvpn/
-              pip install --no-deps -e .
-            popd
-            tempest_dir=$(ls -t /home/opnfv/.rally/tempest/ |grep for-deploy |tail -1)
-            if [[ $tempest_dir == "" ]]; then
-                echo "Make sure tempest was running before" >&2
-            fi
-            tempest_dir=/home/opnfv/.rally/tempest/$tempest_dir
-            pushd $tempest_dir
-              mkdir -p /etc/tempest/
-              cp tempest.conf /etc/tempest/
-              echo "[service_available]
-bgpvpn = True" >> /etc/tempest/tempest.conf
-              ./run_tempest.sh -t -N -- networking_bgpvpn_tempest
-              rm -rf /etc/tempest/tempest.conf
-            popd
+            python ${FUNCTEST_REPO_DIR}/testcases/features/bgpvpn.py
         ;;
         "onos")
             if [ "$INSTALLER_TYPE" == "joid" ]; then
