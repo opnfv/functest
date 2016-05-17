@@ -88,10 +88,10 @@ with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
 f.close()
 
 HOME = os.environ['HOME'] + "/"
-SCENARIOS_DIR = REPO_PATH + functest_yaml.get("general").get(
-    "directories").get("dir_rally_scn")
-TEMPLATE_DIR = SCENARIOS_DIR + "scenario/templates"
-SUPPORT_DIR = SCENARIOS_DIR + "scenario/support"
+RALLY_DIR = REPO_PATH + functest_yaml.get("general").get(
+    "directories").get("dir_rally")
+TEMPLATE_DIR = RALLY_DIR + "scenario/templates"
+SUPPORT_DIR = RALLY_DIR + "scenario/support"
 
 FLAVOR_NAME = "m1.tiny"
 USERS_AMOUNT = 2
@@ -304,12 +304,12 @@ def run_task(test_name):
     global SUMMARY
     logger.info('Starting test scenario "{}" ...'.format(test_name))
 
-    task_file = '{}task.yaml'.format(SCENARIOS_DIR)
+    task_file = '{}task.yaml'.format(RALLY_DIR)
     if not os.path.exists(task_file):
         logger.error("Task file '%s' does not exist." % task_file)
         exit(-1)
 
-    test_file_name = '{}opnfv-{}.yaml'.format(SCENARIOS_DIR + "scenario/",
+    test_file_name = '{}opnfv-{}.yaml'.format(RALLY_DIR + "scenario/",
                                               test_name)
     if not os.path.exists(test_file_name):
         logger.error("The scenario '%s' does not exist." % test_file_name)

@@ -74,7 +74,7 @@ class Tier:
         return self.ci_loop
 
     def __str__(self):
-        lines = split_text(self.description, LINE_LENGTH-6)
+        lines = split_text(self.description, LINE_LENGTH - 6)
 
         out = ""
         out += ("+%s+\n" % ("=" * (LINE_LENGTH - 2)))
@@ -120,7 +120,7 @@ class TestCase:
         return self.name
 
     def __str__(self):
-        lines = split_text(self.description, LINE_LENGTH-6)
+        lines = split_text(self.description, LINE_LENGTH - 6)
 
         out = ""
         out += ("+%s+\n" % ("=" * (LINE_LENGTH - 2)))
