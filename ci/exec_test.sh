@@ -69,61 +69,57 @@ function run_test(){
 
     case $test_name in
         "healthcheck")
-            ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/healthcheck.sh
+            ${FUNCTEST_REPO_DIR}/testcases/OpenStack/healthcheck/healthcheck.sh
         ;;
         "vping_ssh")
-            python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_ssh.py \
-                $debug $report
+            python ${FUNCTEST_REPO_DIR}/testcases/vPing/vPing_ssh.py $report
         ;;
         "vping_userdata")
-            python ${FUNCTEST_REPO_DIR}/testcases/vPing/CI/libraries/vPing_userdata.py \
-                $debug $report
+            python ${FUNCTEST_REPO_DIR}/testcases/vPing/vPing_userdata.py $report
         ;;
         "odl")
             odl_tests
             ODL_PORT=$odl_port ODL_IP=$odl_ip KEYSTONE_IP=$keystone_ip NEUTRON_IP=$neutron_ip USR_NAME=${OS_USERNAME} PASS=${OS_PASSWORD} \
-                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI/start_tests.sh
+                ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/start_tests.sh
 
             # push results to the DB in case of CI
             if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" ]]; then
                 odl_logs="/home/opnfv/functest/results/odl/logs/2"
-                odl_path="${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/CI"
+                odl_path="${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/"
                 node_name=$(env | grep NODE_NAME | cut -f2 -d'=')
                 python ${odl_path}/odlreport2db.py -x ${odl_logs}/output.xml -i ${INSTALLER_TYPE} -p ${node_name} -s ${DEPLOY_SCENARIO}
             fi
         ;;
         "tempest_smoke_serial")
-            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
-                $debug $clean_flag -s -m smoke $report
+            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/run_tempest.py \
+                $clean_flag -s -m smoke $report
         ;;
         "tempest_full_parallel")
-            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_tempest.py \
-                $debug $serial_flag $clean_flag -m full $report
+            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/run_tempest.py \
+                $serial_flag $clean_flag -m full $report
         ;;
         "vims")
-            python ${FUNCTEST_REPO_DIR}/testcases/vIMS/CI/vIMS.py \
-                $debug $clean_flag $report
+            python ${FUNCTEST_REPO_DIR}/testcases/vIMS/vIMS.py $clean_flag $report
         ;;
         "rally_full")
-            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py \
-                $debug $clean_flag all $report
+            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/rally/run_rally-cert.py $clean_flag all $report
         ;;
         "rally_sanity")
-            python ${FUNCTEST_REPO_DIR}/testcases/VIM/OpenStack/CI/libraries/run_rally-cert.py \
-                $debug $clean_flag --sanity all $report
+            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/rally/run_rally-cert.py \
+                $clean_flag --sanity all $report
         ;;
         "bgpvpn")
             python ${FUNCTEST_REPO_DIR}/testcases/features/bgpvpn.py
         ;;
         "onos")
             if [ "$INSTALLER_TYPE" == "joid" ]; then
-                python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py -i joid
+                python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/onosfunctest.py -i joid
             else
-                python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/CI/onosfunctest.py
+                python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/onosfunctest.py
             fi
       ;;
         "promise")
-            python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py $debug $report
+            python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py $report
             sleep 10 # to let the instances terminate
         ;;
         "doctor")

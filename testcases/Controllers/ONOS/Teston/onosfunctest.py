@@ -45,7 +45,7 @@ if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
 
-ONOSCI_PATH = REPO_PATH + 'testcases/Controllers/ONOS/Teston/CI/'
+ONOSCI_PATH = REPO_PATH + 'testcases/Controllers/ONOS/Teston/'
 starttime = datetime.datetime.now()
 
 HOME = os.environ['HOME'] + "/"
