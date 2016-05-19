@@ -393,7 +393,7 @@ def main():
 
     scp = SCPClient(ssh.get_transport())
 
-    ping_script = REPO_PATH + "testcases/vPing/ping.sh"
+    ping_script = REPO_PATH + "testcases/OpenStack/vPing/ping.sh"
     try:
         scp.put(ping_script, "~/")
     except:
