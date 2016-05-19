@@ -72,10 +72,10 @@ function run_test(){
             ${FUNCTEST_REPO_DIR}/testcases/OpenStack/healthcheck/healthcheck.sh
         ;;
         "vping_ssh")
-            python ${FUNCTEST_REPO_DIR}/testcases/vPing/vPing_ssh.py $report
+            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/vPing/vPing_ssh.py $report
         ;;
         "vping_userdata")
-            python ${FUNCTEST_REPO_DIR}/testcases/vPing/vPing_userdata.py $report
+            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/vPing/vPing_userdata.py $report
         ;;
         "odl")
             odl_tests
