@@ -54,23 +54,29 @@ def remove_instances(nova_client, default_instances):
     for instance in instances:
         instance_name = getattr(instance, 'name')
         instance_id = getattr(instance, 'id')
-        logger.debug("Removing instance '%s', ID=%s ..."
-                     % (instance_name, instance_id))
-        if os_utils.delete_instance(nova_client, instance_id):
-            logger.debug("  > Done!")
+        logger.debug("'%s', ID=%s " % (instance_name, instance_id))
+        if instance_id not in default_instances:
+            logger.debug("Removing instance '%s' ..."  % instance_id)
+            if os_utils.delete_instance(nova_client, instance_id):
+                logger.debug("  > Request sent.")
+            else:
+                logger.error("There has been a problem removing the "
+                             "instance %s..." % instance_id)
         else:
-            logger.error("There has been a problem removing the "
-                         "instance %s..." % instance_id)
+            logger.debug("   > this is a default instance and will "
+                         "NOT be deleted.")
 
     timeout = 50
     while timeout > 0:
         instances = os_utils.get_instances(nova_client)
-        if instances is None or len(instances) == 0:
-            break
-        else:
-            logger.debug("Waiting for instances to be terminated...")
-            timeout -= 1
-            time.sleep(1)
+        for instance in instances:
+            instance_id = getattr(instance, 'id')
+            if instance_id not in default_instances:
+                logger.debug("Waiting for instances to be terminated...")
+                timeout -= 1
+                time.sleep(1)
+                continue
+        break
 
 
 def remove_images(nova_client, default_images):
