@@ -393,12 +393,13 @@ def main():
 
     scp = SCPClient(ssh.get_transport())
 
-    ping_script = REPO_PATH + "testcases/vPing/ping.sh"
+    ping_script = REPO_PATH + "testcases/OpenStack/vPing/ping.sh"
     try:
         scp.put(ping_script, "~/")
     except:
         logger.error("Cannot SCP the file '%s' to VM '%s'"
                      % (ping_script, floatip))
+        return (EXIT_CODE)
 
     cmd = 'chmod 755 ~/ping.sh'
     (stdin, stdout, stderr) = ssh.exec_command(cmd)
@@ -427,6 +428,7 @@ def main():
                 EXIT_CODE = 0
                 flag = True
                 break
+
             elif sec == PING_TIMEOUT:
                 logger.info("Timeout reached.")
                 flag = True
