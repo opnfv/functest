@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_8482edfe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-23T12:52:17Z",
+      "side": 1,
+      "message": "nit?",
+      "revId": "c836df2e6e02f788086b5a4662a41cfe20afe3c2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_447ce520",
+        "filename": "docs/com/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-23T12:52:17Z",
+      "side": 1,
+      "message": "Theses spaces would have been deleted if we don\u0027t clone it as-is.",
+      "revId": "c836df2e6e02f788086b5a4662a41cfe20afe3c2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_0476dd3e",
+        "filename": "docs/com/css/theme/source/blood.scss",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-23T12:52:17Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "c836df2e6e02f788086b5a4662a41cfe20afe3c2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_2473e14e",
+        "filename": "docs/com/functest_meetup201603_secgroups.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-23T12:52:17Z",
+      "side": 1,
+      "message": "please delete blanks",
+      "revId": "c836df2e6e02f788086b5a4662a41cfe20afe3c2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_c48f9522",
+        "filename": "docs/com/pres/summit-Berlin.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-23T12:52:17Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "c836df2e6e02f788086b5a4662a41cfe20afe3c2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
