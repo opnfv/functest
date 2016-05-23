@@ -22,6 +22,29 @@
       "revId": "b0c2c20f3efa58622d922e120746c3d78ef6d6d9",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_64cec95c",
+        "filename": "docs/com/pres/summit-Berlin.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-05-23T13:48:04Z",
+      "side": 1,
+      "message": "Functest",
+      "range": {
+        "startLine": 259,
+        "startChar": 8,
+        "endLine": 259,
+        "endChar": 15
+      },
+      "revId": "b0c2c20f3efa58622d922e120746c3d78ef6d6d9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
