@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_241d21be",
+        "filename": "docs/com/pres/summit-Berlin.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-05-23T14:45:02Z",
+      "side": 1,
+      "message": "you could remove trailing whitespaces",
+      "revId": "f04c55b58bab9113560690ca04c344a763c08c84",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
