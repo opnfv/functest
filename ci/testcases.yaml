@@ -63,16 +63,6 @@ tiers:
                     installer: ''
                     scenario: ''
 
-            #-
-            #    name: security_groups
-            #    description: >-
-            #        This test case verifies the functionality of the OpenStack
-            #        security groups and that the port rules created are
-            #        fullfilled.
-            #    dependencies:
-            #        installer: ''
-            #        scenario: ''
-
     -
         name: sdn_suites
         order: 2
@@ -143,11 +133,11 @@ tiers:
                     scenario: 'bgpvpn'
 
     -
-        name: tempest
+        name: openstack
         order: 4
         ci_loop: 'weekly'
         description : >-
-            This test case runs the full set of the OpenStack Tempest suite.
+            Extensive testing of OpenStack API.
         testcases:
             -
                 name: tempest_full_parallel
@@ -159,13 +149,6 @@ tiers:
                     installer: ''
                     scenario: ''
 
-    -
-        name: rally
-        order: 5
-        ci_loop: 'weekly'
-        description : >-
-            Rally suite from the OpenStack community.
-        testcases:
             -
                 name: rally_full
                 description: >-
