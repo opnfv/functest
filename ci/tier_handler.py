@@ -109,10 +109,15 @@ class TestCase:
 
     def is_compatible(self, ci_installer, ci_scenario):
         try:
-            return not (re.search(self.dependency.get_installer(),
-                                  ci_installer) is None or
-                        re.search(self.dependency.get_scenario(),
-                                  ci_scenario) is None)
+            if ci_installer is not None:
+                if re.search(self.dependency.get_installer(),
+                             ci_installer) is None:
+                    return False
+            if ci_scenario is not None:
+                if re.search(self.dependency.get_scenario(),
+                             ci_scenario) is None:
+                    return False
+            return not (ci_scenario is None and ci_installer is None)
         except TypeError:
             return False
 
