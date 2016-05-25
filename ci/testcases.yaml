@@ -132,6 +132,14 @@ tiers:
                     installer: '(fuel)|(apex)'
                     scenario: 'bgpvpn'
 
+            -
+                name: scurity_scan
+                description: >-
+                    Simple security Scan
+                dependencies:
+                    installer: 'apex'
+                    scenario: ''
+
     -
         name: openstack
         order: 4
