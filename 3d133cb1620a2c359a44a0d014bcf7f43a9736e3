@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_7e7731d5",
+        "filename": "ci/tier_handler.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-05-25T09:22:34Z",
+      "side": 1,
+      "message": "let\u0027s try it manually...\n1) odl / compass/os-odl_l2-nofeature-ha\nci_scenario \u003d os-odl_l2-nofeature-ha\nget_scenario() \u003d\u003e installer: \u0027\u0027, scenario odl\n\n1.1 if re.search(self.dependency.get_scenario(), ci_scenario)\n\u003d\u003d\u003e True\n1.2 elif ci_installer is not None:\n\u003d\u003d\u003e return True\n\n\u003d\u003d\u003e OK\n\n------------------------------------------------------------\n2) doctor / fuel/os-odl_l2-nofeature-ha\nci_scenario \u003d os-odl_l2-nofeature-ha\nget_scenario() \u003d\u003e installer: \u0027apex\u0027, scenario:\u0027\u0027 \n\n1.1 \u003d\u003e True\n1.2 \u003d\u003e  False\n\u003d\u003d\u003e OK\n\n------------------------------------------------------------\n3) doctor / apex/os-odl_l2-nofeature-ha\n1.1 \u003d\u003e True\n1.2 \u003d\u003e  True\n\u003d\u003d\u003e OK\n\n------------------------------------------------------------\n4) doctor / apex/os-onos-nofeature-ha\n1.1 \u003d\u003e False\n\u003d\u003d\u003e KO\n\ndoctor is not executed because first statement is met then elif not executed",
+      "revId": "3d133cb1620a2c359a44a0d014bcf7f43a9736e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
