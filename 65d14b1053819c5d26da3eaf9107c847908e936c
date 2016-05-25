@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_81d17afd",
+        "filename": "ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 610
+      },
+      "writtenOn": "2016-05-25T16:15:10Z",
+      "side": 1,
+      "message": "little typo",
+      "range": {
+        "startLine": 136,
+        "startChar": 22,
+        "endLine": 136,
+        "endChar": 34
+      },
+      "revId": "65d14b1053819c5d26da3eaf9107c847908e936c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
