@@ -33,14 +33,15 @@ class Logger:
         self.logger = logging.getLogger(logger_name)
         self.logger.setLevel(logging.DEBUG)
 
-        ch = logging.StreamHandler()
         formatter = logging.Formatter('%(asctime)s - %(name)s - '
                                       '%(levelname)s - %(message)s')
+        ch = logging.StreamHandler()
         ch.setFormatter(formatter)
         if CI_DEBUG is not None and CI_DEBUG.lower() == "true":
             ch.setLevel(logging.DEBUG)
         else:
             ch.setLevel(logging.INFO)
+
         self.logger.addHandler(ch)
 
         hdlr = logging.FileHandler('/home/opnfv/functest/results/functest.log')

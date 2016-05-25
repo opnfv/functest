@@ -29,12 +29,11 @@ from neutronclient.v2_0 import client as neutronclient
 from keystoneclient.v2_0 import client as keystoneclient
 from cinderclient import client as cinderclient
 
-import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
 
 
 """ logging configuration """
-logger = ft_logger.Logger("clean_openstack").getLogger()
+logger = None
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
 DEFAULTS_FILE = '/home/opnfv/functest/conf/os_defaults.yaml'
@@ -359,7 +358,9 @@ def remove_tenants(keystone_client, default_tenants):
                          "NOT be deleted.")
 
 
-def main():
+def main(_logger):
+    global logger
+    logger = _logger
     logger.info("+++++++++++++++++++++++++++++++")
     logger.info("Cleaning OpenStack resources...")
     logger.info("+++++++++++++++++++++++++++++++")
