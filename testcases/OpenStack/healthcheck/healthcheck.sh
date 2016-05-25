@@ -182,6 +182,11 @@ info "...Neutron OK!"
 info "Testing Nova API..."
 #################################
 
+# This delay should be removed after resolving Jira case APEX-149.
+# The purpose is to give some time to populate openflow rules
+# by SDN controller in case of odl_l2 scenario.
+sleep 60
+
 nova boot --flavor 2 --image ${image_1} --nic net-id=${net1_id} ${instance_1}
 debug "nova instance '${instance_1}' booted on ${net_1}."
 nova boot --flavor 2 --image ${image_1} --nic net-id=${net1_id} ${instance_2}
