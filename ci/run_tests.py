@@ -155,8 +155,14 @@ def main():
             logger.error("Unknown test case or tier '%s', or not supported by "
                          "the given scenario '%s'."
                          % (args.test, CI_SCENARIO))
-            logger.debug("Available tiers are:\n\n%s"
-                         % _tiers)
+
+            summary =""
+            for tier in _tiers.get_tiers():
+                summary += ("    - %s. %s:\n\t   %s\n"
+                            % (tier.get_order(),
+                               tier.get_name(),
+                               tier.get_test_names()))
+            logger.debug("Available tests are:\n\n%s" % summary)
     else:
         run_all(_tiers)
 
