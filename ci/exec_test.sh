@@ -128,7 +128,13 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/features/doctor.py
         ;;
         "ovno")
-            ${repos_dir}/ovno/Testcases/RunTests.sh
+            # suite under rewritting for colorado
+            # no need to run anything until refactoring done 
+            # ${repos_dir}/ovno/Testcases/RunTests.sh
+        ;;
+        "security_scan")
+            # TODO
+            # call you script here....
         ;;
         *)
             echo "The test case '${test_name}' does not exist."
