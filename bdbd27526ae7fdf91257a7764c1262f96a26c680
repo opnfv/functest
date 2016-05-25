@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_21a18ef8",
+        "filename": "testcases/OpenStack/healthcheck/healthcheck.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-05-25T13:07:22Z",
+      "side": 1,
+      "message": "Would it make sense to sleep here? That would indicate to user that resource creation is still on progress.",
+      "revId": "bdbd27526ae7fdf91257a7764c1262f96a26c680",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
