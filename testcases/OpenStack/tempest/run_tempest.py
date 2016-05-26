@@ -255,6 +255,7 @@ def run_tempest(OPTION):
     logger.info("Starting Tempest test suite: '%s'." % OPTION)
     cmd_line = "rally verify start " + OPTION + " --system-wide"
     CI_DEBUG = os.environ.get("CI_DEBUG")
+
     if CI_DEBUG == "true" or CI_DEBUG == "True":
         ft_utils.execute_command(cmd_line, logger, exit_on_error=True)
     else:
@@ -297,24 +298,35 @@ def run_tempest(OPTION):
     dur_sec_int = int(round(dur_sec_float, 0))
     dur_sec_int = dur_sec_int + 60 * dur_min
 
-    # Generate json results for DB
-    json_results = {"timestart": time_start, "duration": dur_sec_int,
-                    "tests": int(num_tests), "failures": int(num_failures)}
-    logger.info("Results: " + str(json_results))
-
-    status = "failed"
-    try:
-        diff = (int(num_tests) - int(num_failures))
-        success_rate = 100 * diff / int(num_tests)
-    except:
-        success_rate = 0
-
-    # For Tempest we assume that teh success rate is above 90%
-    if success_rate >= 90:
-        status = "passed"
-
     # Push results in payload of testcase
     if args.report:
+        # Note criteria hardcoded...TODO move to testcase.yaml
+        status = "failed"
+        try:
+            diff = (int(num_tests) - int(num_failures))
+            success_rate = 100 * diff / int(num_tests)
+        except:
+            success_rate = 0
+
+        # For Tempest we assume that the success rate is above 90%
+        if success_rate >= 90:
+            status = "passed"
+
+        # add the test in error in the details sections
+        # should be possible to do it during the test
+        with open(TEMPEST_RESULTS_DIR + "/tempest.log", 'r') as myfile:
+            output = myfile.read()
+        error_logs = ""
+
+        for match in re.findall('(.*?)[. ]*FAILED', output):
+                error_logs += match
+
+        # Generate json results for DB
+        json_results = {"timestart": time_start, "duration": dur_sec_int,
+                        "tests": int(num_tests), "failures": int(num_failures),
+                        "errors": error_logs}
+        logger.info("Results: " + str(json_results))
+
         logger.debug("Push result into DB")
         push_results_to_db("Tempest", json_results, status)
 
