@@ -83,7 +83,8 @@ function run_test(){
                 ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/start_tests.sh
 
             # push results to the DB in case of CI
-            if [[ -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" &&
+            if [[ "$report" == "-r" &&
+                  -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" &&
                   -n "$INSTALLER_TYPE" && "$INSTALLER_TYPE" != "none" ]] &&
                env | grep NODE_NAME > /dev/null; then
                 odl_logs="/home/opnfv/functest/results/odl/logs/2"
