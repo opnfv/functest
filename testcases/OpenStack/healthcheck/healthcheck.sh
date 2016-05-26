@@ -187,13 +187,13 @@ info "Testing Nova API..."
 # by SDN controller in case of odl_l2 scenario.
 sleep 60
 
-nova boot --flavor 2 --image ${image_1} --nic net-id=${net1_id} ${instance_1}
+nova boot --flavor m1.small --image ${image_1} --nic net-id=${net1_id} ${instance_1}
 debug "nova instance '${instance_1}' booted on ${net_1}."
-nova boot --flavor 2 --image ${image_1} --nic net-id=${net1_id} ${instance_2}
+nova boot --flavor m1.small --image ${image_1} --nic net-id=${net1_id} ${instance_2}
 debug "nova instance '${instance_2}' booted on ${net_1}."
-nova boot --flavor 2 --image ${image_2} --nic net-id=${net2_id} ${instance_3}
+nova boot --flavor m1.small --image ${image_2} --nic net-id=${net2_id} ${instance_3}
 debug "nova instance '${instance_3}' booted on ${net_2}."
-nova boot --flavor 2 --image ${image_2} --nic net-id=${net2_id} ${instance_4}
+nova boot --flavor m1.small --image ${image_2} --nic net-id=${net2_id} ${instance_4}
 debug "nova instance '${instance_4}' booted on ${net_2}."
 
 vm1_id=$(nova list | grep ${instance_1} | awk '{print $2}')

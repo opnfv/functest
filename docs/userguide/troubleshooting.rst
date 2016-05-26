@@ -89,7 +89,7 @@ is not **ACTIVE**), you can check why it failed by doing::
 
 It might show some messages about the booting failure. To try that manually::
 
-    nova boot --flavor 2 --image functest-vping --nic net-id=<NET_ID> nova-test
+    nova boot --flavor m1.small --image functest-vping --nic net-id=<NET_ID> nova-test
 
 This will spawn a VM using the network created previously manually.
 In all the OPNFV tested scenarios from CI, it never has been a problem with the
