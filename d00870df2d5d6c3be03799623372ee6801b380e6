@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a91bd0f_c4b6b08a",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-05-26T10:15:22Z",
+      "side": 1,
+      "message": "Hmmm... Is it so that in Colorado we require different success rates for different tempest test sets (tempest_smoke_serial vs. tempest_full_parallel, see e.g. https://wiki.opnfv.org/display/SWREL/Test+Release+Criteria)?",
+      "revId": "d00870df2d5d6c3be03799623372ee6801b380e6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
