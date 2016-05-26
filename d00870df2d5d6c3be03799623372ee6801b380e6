@@ -16,6 +16,24 @@
       "revId": "d00870df2d5d6c3be03799623372ee6801b380e6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a91bd0f_442f00a2",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-05-26T14:20:57Z",
+      "side": 1,
+      "message": "good catch, even if it is not directly linked to this patch\n\nWe decided to put the criteria in the testcases.yaml and to retrieve it from the file so it should not be hardcoded anymore. The difficulty will be the description of the criteria (shall we have pre defined variables?)\nit is the object of another JIRA",
+      "parentUuid": "9a91bd0f_c4b6b08a",
+      "revId": "d00870df2d5d6c3be03799623372ee6801b380e6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
