@@ -82,7 +82,8 @@ def main():
         tests = m.group(1)
         # Look for tests failed
         m = re.search('Failed:(.*)', output)
-        failed = m.group(1)
+        if m is not None:
+            failed = m.group(1)
     except:
         logger.error("Impossible to parse the result file")
 
@@ -93,9 +94,7 @@ def main():
                     "errors": error_logs}
 
     logger.info("Results: " + str(json_results))
-    criteria = "failed"
-    if int(tests) > 0 and int(failed) < 1:
-        criteria = "passed"
+
     # Push results in payload of testcase
     if args.report:
         logger.debug("Push result into DB")
@@ -104,6 +103,9 @@ def main():
         version = ft_utils.get_version(logger)
         pod_name = ft_utils.get_pod_name(logger)
         build_tag = ft_utils.get_build_tag(logger)
+        criteria = "failed"
+        if int(tests) > 0 and int(failed) < 1:
+            criteria = "passed"
 
         ft_utils.push_results_to_db(url, "sdnvpn", "bgpvpn_api", logger,
                                     pod_name, version, scenario, criteria,
