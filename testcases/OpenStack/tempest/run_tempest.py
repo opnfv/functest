@@ -314,7 +314,7 @@ def run_tempest(OPTION):
 
         # add the test in error in the details sections
         # should be possible to do it during the test
-        with open(TEMPEST_RESULTS_DIR + "/tempest.log", 'r') as myfile:
+        with open(RESULTS_DIR + "/functest.log", 'r') as myfile:
             output = myfile.read()
         error_logs = ""
 
