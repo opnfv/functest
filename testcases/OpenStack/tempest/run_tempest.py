@@ -191,6 +191,7 @@ def configure_tempest(deployment_dir):
     logger.debug("Updating selected tempest.conf parameters...")
     config = ConfigParser.RawConfigParser()
     config.read(tempest_conf_file)
+    config.set('DEFAULT', 'log_dir', TEMPEST_RESULTS_DIR)
     config.set('compute', 'fixed_network_name', PRIVATE_NET_NAME)
     config.set('identity', 'tenant_name', TENANT_NAME)
     config.set('identity', 'username', USER_NAME)
