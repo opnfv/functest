@@ -256,30 +256,27 @@ def run_tempest(OPTION):
     cmd_line = "rally verify start " + OPTION + " --system-wide"
     CI_DEBUG = os.environ.get("CI_DEBUG")
 
-    if CI_DEBUG == "true" or CI_DEBUG == "True":
-        ft_utils.execute_command(cmd_line, logger, exit_on_error=True)
-    else:
-        header = ("Tempest environment:\n"
-                  "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
-                  (os.getenv('INSTALLER_TYPE', 'Unknown'),
-                   os.getenv('DEPLOY_SCENARIO', 'Unknown'),
-                   os.getenv('NODE_NAME', 'Unknown'),
-                   time.strftime("%a %b %d %H:%M:%S %Z %Y")))
+    header = ("Tempest environment:\n"
+              "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
+              (os.getenv('INSTALLER_TYPE', 'Unknown'),
+               os.getenv('DEPLOY_SCENARIO', 'Unknown'),
+               os.getenv('NODE_NAME', 'Unknown'),
+               time.strftime("%a %b %d %H:%M:%S %Z %Y")))
 
-        f_stdout = open(TEMPEST_RESULTS_DIR + "/tempest.log", 'w+')
-        f_stderr = open(TEMPEST_RESULTS_DIR + "/tempest-error.log", 'w+')
-        f_env = open(TEMPEST_RESULTS_DIR + "/environment.log", 'w+')
-        f_env.write(header)
+    f_stdout = open(TEMPEST_RESULTS_DIR + "/tempest.log", 'w+')
+    f_stderr = open(TEMPEST_RESULTS_DIR + "/tempest-error.log", 'w+')
+    f_env = open(TEMPEST_RESULTS_DIR + "/environment.log", 'w+')
+    f_env.write(header)
 
-        subprocess.call(cmd_line, shell=True, stdout=f_stdout, stderr=f_stderr)
+    subprocess.call(cmd_line, shell=True, stdout=f_stdout, stderr=f_stderr)
 
-        f_stdout.close()
-        f_stderr.close()
-        f_env.close()
+    f_stdout.close()
+    f_stderr.close()
+    f_env.close()
 
-        cmd_line = "rally verify show"
-        ft_utils.execute_command(cmd_line, logger,
-                                 exit_on_error=True, info=True)
+    cmd_line = "rally verify show"
+    ft_utils.execute_command(cmd_line, logger,
+                             exit_on_error=True, info=True)
 
     cmd_line = "rally verify list"
     logger.debug('Executing command : {}'.format(cmd_line))
