@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_f8c60d49",
+        "filename": "testcases/security_scan/security_scan.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-31T07:50:39Z",
+      "side": 1,
+      "message": "there are many places where you call a function and store the result in a variable, however that variable is not further used. I keep it as a comment but the right way would be to just call the function if you don\u0027t want to use the result for anything.",
+      "revId": "41c911f9b427b867d2c1bad3b808ab084668d2c4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_d8c9d15b",
+        "filename": "testcases/security_scan/security_scan.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-31T07:50:39Z",
+      "side": 1,
+      "message": "oscap variable is undefined. Do you mean oscapbin?",
+      "range": {
+        "startLine": 153,
+        "startChar": 41,
+        "endLine": 153,
+        "endChar": 46
+      },
+      "revId": "41c911f9b427b867d2c1bad3b808ab084668d2c4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
