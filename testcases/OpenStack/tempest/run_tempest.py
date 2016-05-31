@@ -254,7 +254,6 @@ def run_tempest(OPTION):
     #
     logger.info("Starting Tempest test suite: '%s'." % OPTION)
     cmd_line = "rally verify start " + OPTION + " --system-wide"
-    CI_DEBUG = os.environ.get("CI_DEBUG")
 
     header = ("Tempest environment:\n"
               "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
