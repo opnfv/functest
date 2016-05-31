@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_18b6698b",
+        "filename": "testcases/security_scan/security_scan.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-05-31T11:21:03Z",
+      "side": 1,
+      "message": "I guess we dont need to include functest.utils.functest_logger as you import it already in connect, right?",
+      "revId": "80c9d307432b1b3d41d7146ecfe2c6c202954381",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
