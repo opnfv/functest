@@ -20,6 +20,12 @@ import sys
 import urllib2
 import yaml
 from git import Repo
+import functest.ci.tier_builder as tb
+
+
+""" global variables """
+REPOS_DIR = os.getenv('repos_dir')
+FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
 
 
 # ----------------------------------------------------------
@@ -261,3 +267,15 @@ def get_deployment_dir(logger=None):
     deployment_dir = (rally_dir + "/tempest/for-deployment-" +
                       deployment_uuid)
     return deployment_dir
+
+
+def get_criteria_by_test(testname):
+    criteria = ""
+    file = FUNCTEST_REPO + "/ci/testcases.yaml"
+    tiers = tb.TierBuilder("", "", file)
+    for tier in tiers.get_tiers():
+        for test in tier.get_tests():
+            if test.get_name() == testname:
+                criteria = test.get_criteria()
+
+    return criteria;
