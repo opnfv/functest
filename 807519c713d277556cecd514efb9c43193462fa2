@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_fb692726",
+        "filename": "ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-05-31T16:35:41Z",
+      "side": 1,
+      "message": "that was the sense of my question this morning but I was not very clear....\nI am not sure that a percentage means something...\nif we consider the current test used to set up the criteria we have\nvPing_SSH, vPing_userdata: if test_status \u003d\u003d \"OK\"\ntempest: if success_rate \u003e\u003d 90\nrally: if task_succeed(json_results)\nodl: if tests_failed \u003c 1\nONOS: if (result[\u0027FUNCvirNet\u0027][\u0027result\u0027] \u003d\u003d \"Success\" and result[\u0027FUNCvirNetL3\u0027][\u0027result\u0027] \u003d\u003d \"Success\")\nbgpvpn: if int(tests) \u003e 0 and int(failed) \u003c 1\npromise: if int(tests) \u003e 32 and int(failures) \u003c 1\ndoctor: if details[\u0027status\u0027] \u003d\u003d \"OK\"\nvIMS: if (RESULTS[\u0027orchestrator\u0027][\u0027duration\u0027] \u003e 0 and\n                    RESULTS[\u0027vIMS\u0027][\u0027duration\u0027] \u003e 0)\n\n..... what does 100% mean there.... :)\n\nHowever we can see that we have a limited number of possibilities\n\nstatus \u003d\u003d \"OK\"\nnb_test_run \u003e X and/or nb_test_failed \u003c Y\nsuccess_rate \u003e Z\n....\n\nwe may propose a simple grammar to cover all the tests and put into criteria something based on that\n\ne.g for vPing\nCriteria: test_status\u003d\"OK\"",
+      "revId": "807519c713d277556cecd514efb9c43193462fa2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
