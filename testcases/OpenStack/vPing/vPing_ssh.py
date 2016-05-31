@@ -176,13 +176,14 @@ def create_security_group(neutron_client):
     return sg_id
 
 
-def push_results(start_time_ts, duration, test_status):
+def push_results(start_time_ts, duration, status):
     try:
         logger.debug("Pushing result into DB...")
         scenario = functest_utils.get_scenario(logger)
         version = functest_utils.get_version(logger)
         criteria = "failed"
-        if test_status == "OK":
+        test_criteria = functest_utils.get_criteria_by_test("vping_ssh")
+        if eval(test_criteria):  # evaluates the regex 'status == "PASS"' 
             criteria = "passed"
         pod_name = functest_utils.get_pod_name(logger)
         build_tag = functest_utils.get_build_tag(logger)
@@ -193,7 +194,7 @@ def push_results(start_time_ts, duration, test_status):
                                           criteria, build_tag,
                                           payload={'timestart': start_time_ts,
                                                    'duration': duration,
-                                                   'status': test_status})
+                                                   'status': status})
     except:
         logger.error("Error pushing results into Database '%s'"
                      % sys.exc_info()[0])
@@ -438,10 +439,10 @@ def main():
         logger.debug("Pinging %s. Waiting for response..." % test_ip)
         sec += 1
 
-    test_status = "NOK"
+    test_status = "FAIL"
     if EXIT_CODE == 0:
         logger.info("vPing OK")
-        test_status = "OK"
+        test_status = "PASS"
     else:
         duration = 0
         logger.error("vPing FAILED")
