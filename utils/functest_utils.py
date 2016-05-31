@@ -165,7 +165,7 @@ def push_results_to_db(db_url, project, case_name, logger, pod_name,
         print ("Error [push_results_to_db('%s', '%s', '%s', " +
                "'%s', '%s', '%s', '%s', '%s', '%s')]:" %
                (db_url, project, case_name, pod_name, version,
-                scenario, criteria, build_tag, payload), e)
+                scenario, criteria, build_tag, payload)), e
         return False
 
 
