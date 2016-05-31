@@ -48,6 +48,7 @@ class TierBuilder:
 
                 testcase = th.TestCase(name=dic_testcase['name'],
                                        dependency=dep,
+                                       criteria=dic_testcase['criteria'],
                                        description=dic_testcase['description'])
                 if testcase.is_compatible(self.ci_installer, self.ci_scenario):
                     tier.add_test(testcase)
