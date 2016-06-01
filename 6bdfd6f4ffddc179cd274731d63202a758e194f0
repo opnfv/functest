@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_be2b9d93",
+        "filename": "ci/testcases.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2697
+      },
+      "writtenOn": "2016-06-01T07:29:16Z",
+      "side": 1,
+      "message": "would it not be good to have default pass and only specify if it is ok to fail?",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 36
+      },
+      "revId": "6bdfd6f4ffddc179cd274731d63202a758e194f0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
