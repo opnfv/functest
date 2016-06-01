@@ -31,6 +31,7 @@ class Logger:
         CI_DEBUG = os.getenv('CI_DEBUG')
 
         self.logger = logging.getLogger(logger_name)
+        self.logger.propagate = 0
         self.logger.setLevel(logging.DEBUG)
 
         ch = logging.StreamHandler()
