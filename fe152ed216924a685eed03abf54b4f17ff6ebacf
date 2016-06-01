@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_0948592c",
+        "filename": "ci/testcases.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-01T09:16:42Z",
+      "side": 1,
+      "message": "should we not unify OK or PASS but not both, or do you see any difference?",
+      "range": {
+        "startLine": 12,
+        "startChar": 37,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "fe152ed216924a685eed03abf54b4f17ff6ebacf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
