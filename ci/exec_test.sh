@@ -141,6 +141,10 @@ function run_test(){
             echo "The test case '${test_name}' does not exist."
             exit 1
     esac
+
+    if [[ $? != 0 ]]; then exit 1
+    else exit 0
+    fi
 }
 
 
