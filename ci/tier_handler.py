@@ -107,6 +107,7 @@ class TestCase:
         self.dependency = dependency
         self.description = description
         self.criteria = criteria
+        self.result = "Not executed"
 
     def is_compatible(self, ci_installer, ci_scenario):
         try:
@@ -127,6 +128,12 @@ class TestCase:
 
     def get_criteria(self):
         return self.criteria
+
+    def get_result(self):
+        return self.result
+
+    def set_result(self, result):
+        self.result = result
 
     def __str__(self):
         lines = split_text(self.description, LINE_LENGTH - 6)
