@@ -26,7 +26,7 @@ Check OpenStack ports
     Log    ${OSResult}
 
 Check OpenDaylight ports
-    [Documentation]    Checking OpenDaylight Neutron API for Known Ports
+    [Documentation]    Checking OpenDaylight Neutron API for known ports
     [Tags]    Ports Neutron OpenDaylight
     Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
     ${resp}    get    ODLSession    ${ODLREST}
@@ -50,7 +50,7 @@ Create New Port
     sleep    2
 
 Check New Port
-    [Documentation]    Check new subnet created in OpenDaylight
+    [Documentation]    Check new port created in OpenDaylight
     [Tags]    Check subnet OpenDaylight
     ${resp}    get    ODLSession    ${ODLREST}/${PORTID}
     Should be Equal As Strings    ${resp.status_code}    200

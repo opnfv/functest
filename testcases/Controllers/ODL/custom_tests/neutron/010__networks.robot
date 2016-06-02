@@ -26,7 +26,7 @@ Check OpenStack Networks
     Log    ${OSResult}
 
 Check OpenDaylight Networks
-    [Documentation]    Checking OpenDaylight Neutron API for Known Networks
+    [Documentation]    Checking OpenDaylight Neutron API for known networks
     [Tags]    Network Neutron OpenDaylight
     Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
     ${resp}    get    ODLSession    ${ODLREST}
@@ -50,7 +50,7 @@ Create Network
     sleep    2
 
 Check Network
-    [Documentation]    Check Network created in OpenDaylight
+    [Documentation]    Check network created in OpenDaylight
     [Tags]    Check    Network OpenDaylight
     ${resp}    get    ODLSession    ${ODLREST}/${NetID}
     Should be Equal As Strings    ${resp.status_code}    200
