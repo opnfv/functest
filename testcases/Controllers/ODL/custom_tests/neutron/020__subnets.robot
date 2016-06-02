@@ -16,7 +16,7 @@ ${data}           {"subnet":{"network_id":"${NETID}","ip_version":4,"cidr":"172.
 
 *** Test Cases ***
 Check OpenStack Subnets
-    [Documentation]    Checking OpenStack Neutron for known Subnets
+    [Documentation]    Checking OpenStack Neutron for known subnets
     [Tags]    Subnets Neutron OpenStack
     Log    ${X-AUTH}
     ${resp}    get    OSSession    ${OSREST}
@@ -26,7 +26,7 @@ Check OpenStack Subnets
     Log    ${OSResult}
 
 Check OpenDaylight subnets
-    [Documentation]    Checking OpenDaylight Neutron API for Known Subnets
+    [Documentation]    Checking OpenDaylight Neutron API for known subnets
     [Tags]    Subnets Neutron OpenDaylight
     Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
     ${resp}    get    ODLSession    ${ODLREST}
