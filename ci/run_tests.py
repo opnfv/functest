@@ -30,6 +30,8 @@ parser.add_argument("-n", "--noclean", help="Do not clean OpenStack resources"
                     action="store_true")
 parser.add_argument("-r", "--report", help="Push results to database "
                     "(default=false).", action="store_true")
+parser.add_argument("-s", "--summary", help="Generate a summary report of "
+                    "the results.", action="store_true")
 args = parser.parse_args()
 
 
@@ -65,6 +67,10 @@ def cleanup():
     clean_os.main()
 
 
+def generate_report(tiers):
+    pass
+
+
 def run_test(test):
     test_name = test.get_name()
     print_separator("=")
@@ -83,10 +89,12 @@ def run_test(test):
     if result != 0:
         logger.error("The test case '%s' failed. Cleaning and exiting."
                      % test_name)
+        test.set_result("FAILED")
         if CLEAN_FLAG:
             cleanup()
         sys.exit(1)
 
+    test.set_result("OK")
     if CLEAN_FLAG:
         cleanup()
 
@@ -159,6 +167,8 @@ def main():
                          % _tiers)
     else:
         run_all(_tiers)
+        if args.summary:
+            generate_report(_tiers)
 
     sys.exit(0)
 

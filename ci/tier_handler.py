@@ -102,11 +102,12 @@ class Tier:
 
 
 class TestCase:
-    def __init__(self, name, dependency, criteria, description=""):
+    def __init__(self, name, dependency, criteria, description="", result=""):
         self.name = name
         self.dependency = dependency
         self.description = description
         self.criteria = criteria
+        self.result = result
 
     def is_compatible(self, ci_installer, ci_scenario):
         try:
@@ -127,6 +128,9 @@ class TestCase:
 
     def get_criteria(self):
         return self.criteria
+
+    def set_result(self, result):
+        self.result = result
 
     def __str__(self):
         lines = split_text(self.description, LINE_LENGTH - 6)
