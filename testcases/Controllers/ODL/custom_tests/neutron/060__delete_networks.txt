@@ -25,7 +25,7 @@ Delete Network
         sleep    2
 
 Check Network deleted
-	[Documentation]	  Check Network deleted in OpenDaylight
+	[Documentation]	  Check network deleted in OpenDaylight
 	[Tags]		Check  Network OpenDaylight
         Create Session	ODLSession	http://${CONTROLLER}:${PORT}     headers=${HEADERS}  auth=${AUTH}
         ${resp} 	get	ODLSession	${ODLREST}
