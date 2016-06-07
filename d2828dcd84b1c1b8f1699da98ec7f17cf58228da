@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_d74517b4",
+        "filename": "testcases/Controllers/ODL/start_tests.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 2919
+      },
+      "writtenOn": "2016-06-07T17:47:23Z",
+      "side": 1,
+      "message": "instead of this, you could add \"-d $RESULTS_DIR/logs/${test_num}\" to your pybot command line.  \n\nnbd, just fyi",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 48
+      },
+      "revId": "d2828dcd84b1c1b8f1699da98ec7f17cf58228da",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
