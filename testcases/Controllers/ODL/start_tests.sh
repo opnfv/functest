@@ -9,7 +9,7 @@
 
 BASEDIR=`dirname $0`
 RESULTS_DIR='/home/opnfv/functest/results/odl/'
-REPO_DIR='/home/opnfv/repos/odl_integration'
+REPO_DIR='/home/opnfv/repos/odl_test'
 #TODO: read this form config_functest.yaml
 
 # Colors
@@ -54,7 +54,7 @@ NEUTRON_IP=${NEUTRON_IP:-192.168.0.68}
 KEYSTONE_IP=${KEYSTONE_IP:-192.168.0.69}
 set +x
 
-init_file=${REPO_DIR}/test/csit/suites/openstack/neutron/__init__.robot
+init_file=${REPO_DIR}/csit/suites/openstack/neutron/__init__.robot
 # Change openstack password for admin tenant in neutron suite
 sed -i "s/\"password\": \".*\"/\"password\": \"${PASS}\"/" $init_file
 
@@ -66,7 +66,7 @@ fi
 
 # add custom tests to suite, if there are more custom tests needed this will be reworked
 echo -e "${green}Copy custom tests to suite.${nc}"
-cp -vf ${BASEDIR}/custom_tests/neutron/* ${REPO_DIR}/test/csit/suites/openstack/neutron/
+cp -vf ${BASEDIR}/custom_tests/neutron/* ${REPO_DIR}/csit/suites/openstack/neutron/
 
 # List of tests are specified in test_list.txt
 # those are relative paths to test directories from integartion suite
