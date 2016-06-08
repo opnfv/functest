@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_326579e1",
+        "filename": "docs/com/pres/conversation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-08T07:06:07Z",
+      "side": 1,
+      "message": "good point, my assumption was that once declared as a contributor in one project, you did not need to be declared specifically in Functest, I will check with Aric",
+      "parentUuid": "5a7ca5a3_9e09fc97",
+      "revId": "3ef60807e850910d0ccbedee0b8e8237a3f7a919",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_ca47af4a",
         "filename": "docs/com/pres/conversation.html",
         "patchSetId": 2
