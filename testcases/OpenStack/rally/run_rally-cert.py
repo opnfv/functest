@@ -18,7 +18,6 @@ import iniparse
 import json
 import os
 import re
-import requests
 import subprocess
 import time
 import yaml
@@ -123,26 +122,6 @@ CINDER_VOLUME_TYPE_NAME = "volume_test"
 
 
 SUMMARY = []
-
-
-def push_results_to_db(case, payload, criteria):
-
-    url = TEST_DB + "/results"
-    installer = functest_utils.get_installer_type(logger)
-    scenario = functest_utils.get_scenario(logger)
-    version = functest_utils.get_version(logger)
-    pod_name = functest_utils.get_pod_name(logger)
-
-    # evalutate success criteria
-
-    params = {"project_name": "functest", "case_name": case,
-              "pod_name": pod_name, "installer": installer,
-              "version": version, "scenario": scenario,
-              "criteria": criteria, "details": payload}
-
-    headers = {'Content-Type': 'application/json'}
-    r = requests.post(url, data=json.dumps(params), headers=headers)
-    logger.debug(r)
 
 
 def get_task_id(cmd_raw):
@@ -303,6 +282,8 @@ def run_task(test_name):
     #
     global SUMMARY
     logger.info('Starting test scenario "{}" ...'.format(test_name))
+    start_time = time.time()
+    stop_time = start_time
 
     task_file = '{}task.yaml'.format(RALLY_DIR)
     if not os.path.exists(task_file):
@@ -376,13 +357,23 @@ def run_task(test_name):
 
     # Push results in payload of testcase
     if args.report:
-        logger.debug("Push result into DB")
-        push_results_to_db("Rally_details", json_data, status)
+        stop_time = time.time()
+        logger.debug("Push Rally detailed results into DB")
+        functest_utils.push_results_to_db("functest",
+                                          "Rally_details",
+                                          logger,
+                                          start_time,
+                                          stop_time,
+                                          status,
+                                          json_data)
 
 
 def main():
     global SUMMARY
     global network_dict
+    start_time = time.time()
+    stop_time = start_time
+
     # configure script
     if not (args.test_name in tests):
         logger.error('argument not valid')
@@ -482,6 +473,7 @@ def main():
               "+===================+============+===============+===========+"
               "\n")
     payload = []
+    stop_time = time.time()
 
     # for each scenario we draw a row for the table
     total_duration = 0.0
@@ -538,8 +530,13 @@ def main():
 
     if args.report:
         logger.debug("Pushing Rally summary into DB...")
-        push_results_to_db("Rally", payload, status)
-
+        functest_utils.push_results_to_db("functest",
+                                          "Rally",
+                                          logger,
+                                          start_time,
+                                          stop_time,
+                                          status,
+                                          payload)
     if args.noclean:
         exit(0)
 

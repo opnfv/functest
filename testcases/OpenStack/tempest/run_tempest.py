@@ -14,12 +14,11 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 import argparse
-import json
 import os
 import re
-import requests
 import shutil
 import subprocess
+import sys
 import time
 import yaml
 import ConfigParser
@@ -112,27 +111,6 @@ def get_info(file_result):
 
     logger.debug("test_run:" + test_run)
     logger.debug("duration:" + duration)
-
-
-def push_results_to_db(case, payload, criteria):
-
-    # TODO move DB creds into config file
-    url = TEST_DB + "/results"
-    installer = ft_utils.get_installer_type(logger)
-    scenario = ft_utils.get_scenario(logger)
-    version = ft_utils.get_version(logger)
-    pod_name = ft_utils.get_pod_name(logger)
-
-    logger.info("Pushing results to DB: '%s'." % url)
-
-    params = {"project_name": "functest", "case_name": case,
-              "pod_name": str(pod_name), 'installer': installer,
-              "version": version, "scenario": scenario, "criteria": criteria,
-              'details': payload}
-    headers = {'Content-Type': 'application/json'}
-
-    r = requests.post(url, data=json.dumps(params), headers=headers)
-    logger.debug(r)
 
 
 def create_tempest_resources():
@@ -253,6 +231,8 @@ def run_tempest(OPTION):
     # :return: void
     #
     logger.info("Starting Tempest test suite: '%s'." % OPTION)
+    start_time = time.time()
+    stop_time = start_time
     cmd_line = "rally verify start " + OPTION + " --system-wide"
 
     header = ("Tempest environment:\n"
@@ -293,11 +273,12 @@ def run_tempest(OPTION):
     dur_sec_float = float(duration.split(':')[2])
     dur_sec_int = int(round(dur_sec_float, 0))
     dur_sec_int = dur_sec_int + 60 * dur_min
-
+    stop_time = time.time()
     # Push results in payload of testcase
     if args.report:
+        logger.debug("Pushing tempest results into DB...")
         # Note criteria hardcoded...TODO move to testcase.yaml
-        status = "failed"
+        status = "FAIL"
         try:
             diff = (int(num_tests) - int(num_failures))
             success_rate = 100 * diff / int(num_tests)
@@ -306,7 +287,7 @@ def run_tempest(OPTION):
 
         # For Tempest we assume that the success rate is above 90%
         if success_rate >= 90:
-            status = "passed"
+            status = "PASS"
 
         # add the test in error in the details sections
         # should be possible to do it during the test
@@ -322,9 +303,18 @@ def run_tempest(OPTION):
                         "tests": int(num_tests), "failures": int(num_failures),
                         "errors": error_logs}
         logger.info("Results: " + str(json_results))
-
-        logger.debug("Push result into DB")
-        push_results_to_db("Tempest", json_results, status)
+        # TODO split Tempest smoke and full
+        try:
+            ft_utils.push_results_to_db("functest",
+                                        "Tempest",
+                                        logger,
+                                        start_time,
+                                        stop_time,
+                                        status,
+                                        json_results)
+        except:
+            logger.error("Error pushing results into Database '%s'"
+                         % sys.exc_info()[0])
 
 
 def main():

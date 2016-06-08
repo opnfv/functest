@@ -149,17 +149,35 @@ def get_build_tag(logger=None):
     return build_tag
 
 
-def push_results_to_db(db_url, project, case_name, logger, pod_name,
-                       version, scenario, criteria, build_tag, payload):
+def get_db_url(logger=None):
+    """
+    Returns DB URL
+    """
+    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
+        functest_yaml = yaml.safe_load(f)
+    f.close()
+    db_url = functest_yaml.get("results").get("test_db_url")
+    return db_url
+
+
+def push_results_to_db(project, case_name, logger,
+                       start_date, stop_date, criteria, details):
     """
     POST results to the Result target DB
     """
-    url = db_url + "/results"
+    # Retrieve params from CI and conf
+    url = get_db_url(logger) + "/results"
     installer = get_installer_type(logger)
+    scenario = get_scenario(logger)
+    version = get_version(logger)
+    pod_name = get_pod_name(logger)
+    build_tag = get_build_tag(logger)
+
     params = {"project_name": project, "case_name": case_name,
               "pod_name": pod_name, "installer": installer,
               "version": version, "scenario": scenario, "criteria": criteria,
-              "build_tag": build_tag, "details": payload}
+              "build_tag": build_tag, "start_date": start_date,
+              "stop_date": stop_date, "details": details}
 
     headers = {'Content-Type': 'application/json'}
     try:
@@ -170,8 +188,8 @@ def push_results_to_db(db_url, project, case_name, logger, pod_name,
     except Exception, e:
         print ("Error [push_results_to_db('%s', '%s', '%s', " +
                "'%s', '%s', '%s', '%s', '%s', '%s')]:" %
-               (db_url, project, case_name, pod_name, version,
-                scenario, criteria, build_tag, payload)), e
+               (url, project, case_name, pod_name, version,
+                scenario, criteria, build_tag, details)), e
         return False
 
 

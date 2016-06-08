@@ -155,7 +155,7 @@ promise:
         router_name: promise-router
 
 results:
-    test_db_url: http://testresults.opnfv.org/testapi
+    test_db_url: http://testresults.opnfv.org/test/api/v1
 
 # to be maintained...
 # the execution order is important as some tests may be more destructive than others

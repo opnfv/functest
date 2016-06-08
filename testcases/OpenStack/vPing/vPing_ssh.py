@@ -11,7 +11,7 @@
 # Later, the VM2 boots then execute cloud-init to ping VM1.
 # After successful ping, both the VMs are deleted.
 # 0.2: measure test duration and publish results under json format
-#
+# 0.3: adapt push 2 DB after Test API refacroting
 #
 import argparse
 import datetime
@@ -19,6 +19,7 @@ import os
 import paramiko
 import pprint
 import re
+import sys
 import time
 import yaml
 from scp import SCPClient
@@ -176,30 +177,6 @@ def create_security_group(neutron_client):
     return sg_id
 
 
-def push_results(start_time_ts, duration, status):
-    try:
-        logger.debug("Pushing result into DB...")
-        scenario = functest_utils.get_scenario(logger)
-        version = functest_utils.get_version(logger)
-        criteria = "failed"
-        test_criteria = functest_utils.get_criteria_by_test("vping_ssh")
-        if eval(test_criteria):  # evaluates the regex 'status == "PASS"' 
-            criteria = "passed"
-        pod_name = functest_utils.get_pod_name(logger)
-        build_tag = functest_utils.get_build_tag(logger)
-        functest_utils.push_results_to_db(TEST_DB,
-                                          "functest",
-                                          "vPing",
-                                          logger, pod_name, version, scenario,
-                                          criteria, build_tag,
-                                          payload={'timestart': start_time_ts,
-                                                   'duration': duration,
-                                                   'status': status})
-    except:
-        logger.error("Error pushing results into Database '%s'"
-                     % sys.exc_info()[0])
-
-
 def main():
 
     creds_nova = openstack_utils.get_credentials("nova")
@@ -268,10 +245,10 @@ def main():
             server.delete()
 
     # boot VM 1
-    start_time_ts = time.time()
-    end_time_ts = start_time_ts
+    start_time = time.time()
+    stop_time = start_time
     logger.info("vPing Start Time:'%s'" % (
-        datetime.datetime.fromtimestamp(start_time_ts).strftime(
+        datetime.datetime.fromtimestamp(start_time).strftime(
             '%Y-%m-%d %H:%M:%S')))
 
     logger.info("Creating instance '%s'..." % NAME_VM_1)
@@ -409,10 +386,12 @@ def main():
 
     logger.info("Waiting for ping...")
     sec = 0
+    stop_time = time.time()
     duration = 0
 
     cmd = '~/ping.sh ' + test_ip
     flag = False
+
     while True:
         time.sleep(1)
         (stdin, stdout, stderr) = ssh.exec_command(cmd)
@@ -423,8 +402,8 @@ def main():
                 logger.info("vPing detected!")
 
                 # we consider start time at VM1 booting
-                end_time_ts = time.time()
-                duration = round(end_time_ts - start_time_ts, 1)
+                stop_time = time.time()
+                duration = round(stop_time - start_time, 1)
                 logger.info("vPing duration:'%s' s." % duration)
                 EXIT_CODE = 0
                 flag = True
@@ -440,7 +419,9 @@ def main():
         sec += 1
 
     test_status = "FAIL"
-    if EXIT_CODE == 0:
+    test_criteria = functest_utils.get_criteria_by_test("vping_ssh")
+
+    if eval(test_criteria):
         logger.info("vPing OK")
         test_status = "PASS"
     else:
@@ -448,7 +429,20 @@ def main():
         logger.error("vPing FAILED")
 
     if args.report:
-        push_results(start_time_ts, duration, test_status)
+        try:
+            logger.debug("Pushing vPing SSH results into DB...")
+            functest_utils.push_results_to_db("functest",
+                                              "vPing",
+                                              logger,
+                                              start_time,
+                                              stop_time,
+                                              test_status,
+                                              details={'timestart': start_time,
+                                                       'duration': duration,
+                                                       'status': test_status})
+        except:
+            logger.error("Error pushing results into Database '%s'"
+                         % sys.exc_info()[0])
 
     exit(EXIT_CODE)
 

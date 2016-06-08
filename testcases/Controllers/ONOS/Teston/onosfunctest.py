@@ -164,7 +164,8 @@ def CleanOnosTest():
 
 
 def main():
-
+    start_time = time.time()
+    stop_time = start_time
     DownloadCodes()
     if args.installer == "joid":
         logger.debug("Installer is Joid")
@@ -175,11 +176,10 @@ def main():
     RunScript("FUNCvirNetNBL3")
 
     try:
-        logger.debug("Push result into DB")
+        logger.debug("Push ONOS results into DB")
         # TODO check path result for the file
-        scenario = functest_utils.get_scenario(logger)
-        version = functest_utils.get_version(logger)
         result = GetResult()
+        stop_time = time.time()
 
         # ONOS success criteria = all tests OK
         # i.e. FUNCvirNet & FUNCvirNetL3
@@ -191,13 +191,14 @@ def main():
         except:
             logger.error("Unable to set ONOS criteria")
 
-        pod_name = functest_utils.get_pod_name(logger)
-        build_tag = functest_utils.get_build_tag(logger)
-        functest_utils.push_results_to_db(TEST_DB,
-                                          "functest",
+        functest_utils.push_results_to_db("functest",
                                           "ONOS",
-                                          logger, pod_name, version, scenario,
-                                          status, build_tag, payload=result)
+                                          logger,
+                                          start_time,
+                                          stop_time,
+                                          status,
+                                          result)
+
     except:
         logger.error("Error pushing results into Database")
 
