@@ -16,14 +16,13 @@ import paramiko
 
 import functest.utils.functest_logger as ft_logger
 
-# Enable below for connection debugging
-# paramiko.util.log_to_file('ssh.log')
-
 # add installer IP from env
 INSTALLER_IP = os.getenv('INSTALLER_IP')
 
-# Set up logger
+# Set up loggers
 logger = ft_logger.Logger("security_scan").getLogger()
+
+paramiko.util.log_to_file("/var/log/paramiko.log")
 
 
 class novaManager:
