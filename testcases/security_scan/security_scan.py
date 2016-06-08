@@ -22,6 +22,8 @@ from keystoneclient.auth.identity import v2
 from keystoneclient import session
 from novaclient import client
 
+import functest.utils.functest_logger as ft_logger
+
 __version__ = 0.1
 __author__ = 'Luke Hinds (lhinds@redhat.com)'
 __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'

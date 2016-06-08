@@ -16,14 +16,13 @@ import paramiko
 
 import functest.utils.functest_logger as ft_logger
 
-# Enable below for connection debugging
-# paramiko.util.log_to_file('ssh.log')
-
 # add installer IP from env
 INSTALLER_IP = os.getenv('INSTALLER_IP')
 
-# Set up logger
+# Set up loggers
 logger = ft_logger.Logger("security_scan").getLogger()
+
+paramiko.util.log_to_file("/var/log/paramiko.log")
 
 
 class novaManager:
@@ -38,13 +37,13 @@ class novaManager:
             client.connect(INSTALLER_IP, port=22, username='stack')
         except paramiko.SSHException:
             logger.error("Password is invalid for "
-                         "undercloud host: {0}").format(INSTALLER_IP)
+                         "undercloud host: {0}".format(INSTALLER_IP))
         except paramiko.AuthenticationException:
             logger.error("Authentication failed for "
-                         "undercloud host: {0}").format(INSTALLER_IP)
+                         "undercloud host: {0}".format(INSTALLER_IP))
         except socket.error:
             logger.error("Socker Connection failed for "
-                         "undercloud host: {0}").format(INSTALLER_IP)
+                         "undercloud host: {0}".format(INSTALLER_IP))
         stdin, stdout, stderr = client.exec_command(com)
         return stdout.read()
 
@@ -69,13 +68,13 @@ class connectionManager:
             client.connect(INSTALLER_IP, port=22, username='stack')
         except paramiko.SSHException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except paramiko.AuthenticationException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except socket.error:
             logger.error("Socker Connection failed for "
-                         "undercloud host: {0}").format(self.host)
+                         "undercloud host: {0}".format(self.host))
 
         transport = client.get_transport()
         local_addr = ('127.0.0.1', 0)
@@ -92,13 +91,13 @@ class connectionManager:
             sftp.put(localpath, remotepath)
         except paramiko.SSHException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except paramiko.AuthenticationException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except socket.error:
             logger.error("Socker Connection failed for "
-                         "undercloud host: {0}").format(self.host)
+                         "undercloud host: {0}".format(self.host))
 
         output = ""
         stdin, stdout, stderr = remote_client.exec_command(com)
@@ -123,13 +122,13 @@ class connectionManager:
             client.connect(INSTALLER_IP, port=22, username='stack')
         except paramiko.SSHException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except paramiko.AuthenticationException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except socket.error:
             logger.error("Socker Connection failed for "
-                         "undercloud host: {0}").format(self.host)
+                         "undercloud host: {0}".format(self.host))
 
         transport = client.get_transport()
         local_addr = ('127.0.0.1', 0)  # 0 denotes choose random port
@@ -144,13 +143,13 @@ class connectionManager:
                                   key_filename=self.user_key, sock=channel)
         except paramiko.SSHException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except paramiko.AuthenticationException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except socket.error:
             logger.error("Socker Connection failed for "
-                         "undercloud host: {0}").format(self.host)
+                         "undercloud host: {0}".format(self.host))
 
         chan = remote_client.get_transport().open_session()
         chan.get_pty()
@@ -173,13 +172,13 @@ class connectionManager:
             client.connect(INSTALLER_IP, port=22, username='stack')
         except paramiko.SSHException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except paramiko.AuthenticationException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except socket.error:
             logger.error("Socker Connection failed for "
-                         "undercloud host: {0}").format(self.host)
+                         "undercloud host: {0}".format(self.host))
 
         transport = client.get_transport()
         local_addr = ('127.0.0.1', 0)  # 0 denotes choose random port
@@ -194,18 +193,18 @@ class connectionManager:
                                   key_filename=self.user_key, sock=channel)
         except paramiko.SSHException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except paramiko.AuthenticationException:
             logger.error("Authentication failed for "
-                         "host: {0}").format(self.host)
+                         "host: {0}".format(self.host))
         except socket.error:
             logger.error("Socker Connection failed for "
-                         "undercloud host: {0}").format(self.host)
+                         "undercloud host: {0}".format(self.host))
         # Download the reports
         sftp = remote_client.open_sftp()
-        logger.info('Downloading \"{0}\"...\n').format(reportname)
+        logger.info("Downloading \"{0}\"...\n".format(reportname))
         sftp.get(reportfile, ('{0}/{1}'.format(dl_folder, reportname)))
-        logger.info('Downloading \"{0}\"...\n').format(resultsname)
+        logger.info("Downloading \"{0}\"...\n".format(resultsname))
         sftp.get(reportfile, ('{0}/{1}'.format(dl_folder, resultsname)))
         sftp.close()
         transport.close()
