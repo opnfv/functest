@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_12263d17",
+        "filename": "testcases/OpenStack/vPing/vPing_userdata.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-08T14:21:34Z",
+      "side": 1,
+      "message": "vPing_userdata",
+      "revId": "c587102d855a6989a161144a0fb965477d3edbec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
