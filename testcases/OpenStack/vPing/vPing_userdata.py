@@ -11,6 +11,7 @@
 # Later, the VM2 boots then execute cloud-init to ping VM1.
 # After successful ping, both the VMs are deleted.
 # 0.2: measure test duration and publish results under json format
+# 0.3: adapt push 2 DB after Test API refacroting
 #
 #
 
@@ -18,6 +19,7 @@ import argparse
 import datetime
 import os
 import pprint
+import sys
 import time
 import yaml
 
@@ -174,29 +176,6 @@ def create_security_group(neutron_client):
     return sg_id
 
 
-def push_results(start_time_ts, duration, test_status):
-    try:
-        logger.debug("Pushing result into DB...")
-        scenario = functest_utils.get_scenario(logger)
-        version = functest_utils.get_version(logger)
-        criteria = "failed"
-        if test_status == "OK":
-            criteria = "passed"
-        pod_name = functest_utils.get_pod_name(logger)
-        build_tag = functest_utils.get_build_tag(logger)
-        functest_utils.push_results_to_db(TEST_DB,
-                                          "functest",
-                                          "vPing_userdata",
-                                          logger, pod_name, version, scenario,
-                                          criteria, build_tag,
-                                          payload={'timestart': start_time_ts,
-                                                   'duration': duration,
-                                                   'status': test_status})
-    except:
-        logger.error("Error pushing results into Database '%s'"
-                     % sys.exc_info()[0])
-
-
 def main():
 
     creds_nova = openstack_utils.get_credentials("nova")
@@ -268,10 +247,10 @@ def main():
     # tune (e.g. flavor, images, network) to your specific
     # openstack configuration here
     # we consider start time at VM1 booting
-    start_time_ts = time.time()
-    end_time_ts = start_time_ts
+    start_time = time.time()
+    stop_time = start_time
     logger.info("vPing Start Time:'%s'" % (
-        datetime.datetime.fromtimestamp(start_time_ts).strftime(
+        datetime.datetime.fromtimestamp(start_time).strftime(
             '%Y-%m-%d %H:%M:%S')))
 
     # create VM
@@ -336,6 +315,7 @@ def main():
     metadata_tries = 0
     console_log = vm2.get_console_output()
     duration = 0
+    stop_time = time.time()
 
     while True:
         time.sleep(1)
@@ -346,8 +326,8 @@ def main():
             logger.info("vPing detected!")
 
             # we consider start time at VM1 booting
-            end_time_ts = time.time()
-            duration = round(end_time_ts - start_time_ts, 1)
+            stop_time = time.time()
+            duration = round(stop_time - start_time, 1)
             logger.info("vPing duration:'%s'" % duration)
             EXIT_CODE = 0
             break
@@ -379,7 +359,20 @@ def main():
         logger.error("vPing FAILED")
 
     if args.report:
-        push_results(start_time_ts, duration, test_status)
+        try:
+            logger.debug("Pushing vPing userdata results into DB...")
+            functest_utils.push_results_to_db("functest",
+                                              "vPing_userdata",
+                                              logger,
+                                              start_time,
+                                              stop_time,
+                                              test_status,
+                                              details={'timestart': start_time,
+                                                       'duration': duration,
+                                                       'status': test_status})
+        except:
+            logger.error("Error pushing results into Database '%s'"
+                         % sys.exc_info()[0])
 
     exit(EXIT_CODE)
 

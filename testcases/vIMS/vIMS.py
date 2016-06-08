@@ -115,31 +115,20 @@ def download_and_add_image_on_glance(glance, image_name, image_url):
 def step_failure(step_name, error_msg):
     logger.error(error_msg)
     set_result(step_name, 0, error_msg)
-    status = "failed"
+    status = "FAIL"
+    # in case of failure starting and stoping time are not correct
+    start_time = time.time()
+    stop_time = start_time
     if step_name == "sig_test":
-        status = "passed"
-    push_results(status)
+        status = "PASS"
+    functest_utils.push_results_to_db("functest",
+                                      "vIMS",
+                                      logger,
+                                      start_time,
+                                      stop_time,
+                                      status,
+                                      RESULTS)
     exit(-1)
-
-
-def push_results(status):
-    if args.report:
-        logger.debug("Pushing results to DB....")
-
-        scenario = functest_utils.get_scenario(logger)
-        version = functest_utils.get_version(logger)
-        pod_name = functest_utils.get_pod_name(logger)
-        build_tag = functest_utils.get_build_tag(logger)
-
-        functest_utils.push_results_to_db(db_url=DB_URL,
-                                          project="functest",
-                                          case_name="vIMS",
-                                          logger=logger, pod_name=pod_name,
-                                          version=version,
-                                          scenario=scenario,
-                                          criteria=status,
-                                          build_tag=build_tag,
-                                          payload=RESULTS)
 
 
 def set_result(step_name, duration=0, result=""):
@@ -245,14 +234,22 @@ def test_clearwater():
         # success criteria for vIMS (for Brahmaputra)
         # - orchestrator deployed
         # - VNF deployed
-        status = "failed"
+        # TODO use test criteria defined in config file
+        status = "FAIL"
         try:
             if (RESULTS['orchestrator']['duration'] > 0 and
                     RESULTS['vIMS']['duration'] > 0):
-                status = "passed"
+                status = "PASS"
         except:
             logger.error("Unable to set test status")
-        push_results(status)
+
+        functest_utils.push_results_to_db("functest",
+                                          "vIMS",
+                                          logger,
+                                          start_time_ts,
+                                          end_time_ts,
+                                          status,
+                                          RESULTS)
 
         try:
             os.remove(VIMS_TEST_DIR + "temp.json")

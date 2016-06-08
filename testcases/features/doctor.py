@@ -34,12 +34,12 @@ logger = ft_logger.Logger("doctor").getLogger()
 
 def main():
     cmd = 'cd %s/tests && ./run.sh' % DOCTOR_REPO
-    start_time_ts = time.time()
+    start_time = time.time()
 
     ret = functest_utils.execute_command(cmd, logger, exit_on_error=False)
 
-    end_time_ts = time.time()
-    duration = round(end_time_ts - start_time_ts, 1)
+    stop_time = time.time()
+    duration = round(end_time_ts - start_time, 1)
     if ret:
         logger.info("doctor OK")
         test_status = 'OK'
@@ -48,7 +48,7 @@ def main():
         test_status = 'NOK'
 
     details = {
-        'timestart': start_time_ts,
+        'timestart': start_time,
         'duration': duration,
         'status': test_status,
     }
@@ -61,7 +61,7 @@ def main():
     if details['status'] == "OK":
         status = "passed"
 
-    logger.info("Pushing result: TEST_DB_URL=%(db)s pod_name=%(pod)s "
+    logger.info("Pushing Doctor results: TEST_DB_URL=%(db)s pod_name=%(pod)s "
                 "version=%(v)s scenario=%(s)s criteria=%(c)s details=%(d)s" % {
                     'db': TEST_DB_URL,
                     'pod': pod_name,
@@ -71,11 +71,13 @@ def main():
                     'b': build_tag,
                     'd': details,
                 })
-    functest_utils.push_results_to_db(TEST_DB_URL,
-                                      'doctor', 'doctor-notification',
-                                      logger, pod_name, version, scenario,
-                                      status, build_tag, details)
-
+    functest_utils.push_results_to_db("doctor",
+                                      "doctor-notification",
+                                      logger,
+                                      start_time,
+                                      stop_time,
+                                      status,
+                                      details)
 
 if __name__ == '__main__':
     main()

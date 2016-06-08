@@ -18,6 +18,7 @@
 # Later, the VM2 boots then execute cloud-init to ping VM1.
 # After successful ping, both the VMs are deleted.
 # 0.2: measure test duration and publish results under json format
+# 0.3: adapt push 2 DB after Test API refacroting
 #
 #
 
@@ -25,6 +26,7 @@ import getopt
 import json
 import os
 import sys
+import time
 import xmltodict
 import yaml
 
@@ -125,19 +127,19 @@ def main(argv):
         functest_yaml = yaml.safe_load(f)
         f.close()
 
-    database = functest_yaml.get("results").get("test_db_url")
-    build_tag = functest_utils.get_build_tag()
-
     try:
         # example:
         # python odlreport2db.py -x ~/Pictures/Perso/odl/output3.xml
         #                        -i fuel
         #                        -p opnfv-jump-2
         #                        -s os-odl_l2-ha
-        version = functest_utils.get_version()
 
         # success criteria for ODL = 100% of tests OK
-        status = "failed"
+        status = "FAIL"
+        # TODO as part of the tests are executed before in the bash
+        # start and stoptime have no real meaning
+        start_time = time.time()
+        stop_time = start_time
         try:
             tests_passed = 0
             tests_failed = 0
@@ -148,19 +150,18 @@ def main(argv):
                     tests_failed += 1
 
             if (tests_failed < 1):
-                status = "passed"
+                status = "PASS"
         except:
             print("Unable to set criteria" % sys.exc_info()[0])
-        functest_utils.push_results_to_db(database,
-                                          "functest",
+
+        functest_utils.push_results_to_db("functest",
                                           data['case_name'],
                                           None,
-                                          data['pod_name'],
-                                          version,
-                                          scenario,
+                                          start_time,
+                                          stop_time,
                                           status,
-                                          build_tag,
                                           data)
+
     except:
         print("Error pushing results into Database '%s'" % sys.exc_info()[0])
 

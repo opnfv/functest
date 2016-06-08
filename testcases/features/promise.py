@@ -12,8 +12,8 @@
 import argparse
 import json
 import os
-import requests
 import subprocess
+import time
 import yaml
 
 import keystoneclient.v2_0.client as ksclient
@@ -71,6 +71,7 @@ logger = ft_logger.Logger("promise").getLogger()
 
 
 def main():
+    start_time = time.time()
     ks_creds = openstack_utils.get_credentials("keystone")
     nv_creds = openstack_utils.get_credentials("nova")
     nt_creds = openstack_utils.get_credentials("neutron")
@@ -235,33 +236,23 @@ def main():
                    start_time, end_time, duration))
 
     if args.report:
-        pod_name = functest_utils.get_pod_name(logger)
-        installer = functest_utils.get_installer_type(logger)
-        scenario = functest_utils.get_scenario(logger)
-        version = functest_utils.get_version(logger)
-        build_tag = functest_utils.get_build_tag(logger)
-        # git_version = functest_utils.get_git_branch(PROMISE_REPO)
-        url = TEST_DB + "/results"
-
+        stop_time = time.time()
         json_results = {"timestart": start_time, "duration": duration,
                         "tests": int(tests), "failures": int(failures)}
-        logger.debug("Results json: " + str(json_results))
+        logger.debug("Promise Results json: " + str(json_results))
 
         # criteria for Promise in Release B was 100% of tests OK
-        status = "failed"
+        status = "FAIL"
         if int(tests) > 32 and int(failures) < 1:
-            status = "passed"
+            status = "PASS"
 
-        params = {"project_name": "promise", "case_name": "promise",
-                  "pod_name": str(pod_name), 'installer': installer,
-                  "version": version, "scenario": scenario,
-                  "criteria": status, "build_tag": build_tag,
-                  'details': json_results}
-        headers = {'Content-Type': 'application/json'}
-
-        logger.info("Pushing results to DB...")
-        r = requests.post(url, data=json.dumps(params), headers=headers)
-        logger.debug(r)
+        functest_utils.push_results_to_db("promise",
+                                          "promise",
+                                          logger,
+                                          start_time,
+                                          stop_time,
+                                          status,
+                                          json_results)
 
 
 if __name__ == '__main__':

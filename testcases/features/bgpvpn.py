@@ -12,6 +12,7 @@
 import argparse
 import os
 import re
+import time
 import yaml
 import ConfigParser
 
@@ -41,6 +42,7 @@ logger = ft_logger.Logger("bgpvpn").getLogger()
 
 def main():
     logger.info("Running BGPVPN Tempest test case...")
+    start_time = time.time()
 
     cmd = 'cd ' + BGPVPN_REPO + ';pip install --no-deps -e .'
     ft_utils.execute_command(cmd, logger, exit_on_error=False)
@@ -93,8 +95,9 @@ def main():
                     "errors": error_logs}
 
     logger.info("Results: " + str(json_results))
-    criteria = "failed"
+    criteria = "FAIL"
     # criteria = success rate = 100% (i.e all tests passed)
+    # TODO use criteria defined in config file
     criteria_run = int(tests)
     if not failed:
         criteria_failed = 0
@@ -102,20 +105,19 @@ def main():
         criteria_failed = int(failed)
 
     if criteria_run > 0 and criteria_failed < 1:
-        criteria = "passed"
+        criteria = "PASS"
 
     # Push results in payload of testcase
     if args.report:
-        logger.debug("Push result into DB")
-        url = TEST_DB_URL
-        scenario = ft_utils.get_scenario(logger)
-        version = ft_utils.get_version(logger)
-        pod_name = ft_utils.get_pod_name(logger)
-        build_tag = ft_utils.get_build_tag(logger)
-
-        ft_utils.push_results_to_db(url, "sdnvpn", "bgpvpn_api", logger,
-                                    pod_name, version, scenario, criteria,
-                                    build_tag, json_results)
+        logger.debug("Push bgpvpn results into DB")
+        stop_time = time.time()
+        ft_utils.push_results_to_db("sdnvpn",
+                                    "bgpvpn_api",
+                                    logger,
+                                    start_time,
+                                    stop_time,
+                                    criteria,
+                                    json_results)
 
 if __name__ == '__main__':
     main()
