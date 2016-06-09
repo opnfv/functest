@@ -21,13 +21,9 @@ INSTALLER_IP = os.getenv('INSTALLER_IP')
 
 # Set up loggers
 logger = ft_logger.Logger("security_scan").getLogger()
-
 paramiko.util.log_to_file("/var/log/paramiko.log")
 
-paramiko.util.log_to_file("/var/log/paramiko.log")
-
-
-class novaManager:
+class setup:
     def __init__(self, *args):
         self.args = args
 
@@ -48,14 +44,35 @@ class novaManager:
                          "undercloud host: {0}".format(INSTALLER_IP))
         stdin, stdout, stderr = client.exec_command(com)
         return stdout.read()
+        client.close()
+
+    def getOCKey(self):
+        remotekey = self.args[0]
+        localkey = self.args[1]
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        try:
+            client.connect(INSTALLER_IP, port=22, username='stack')
+            sftp = client.open_sftp()
+            sftp.get(remotekey, localkey)
+        except paramiko.SSHException:
+            logger.error("Authentication failed for "
+                         "host: {0}".format(self.host))
+        except paramiko.AuthenticationException:
+            logger.error("Authentication failed for "
+                         "host: {0}".format(self.host))
+        except socket.error:
+            logger.error("Socker Connection failed for "
+                         "undercloud host: {0}".format(self.host))
+        client.close()
 
 
 class connectionManager:
-    def __init__(self, host, port, user, user_key, *args):
+    def __init__(self, host, port, user, localkey, *args):
         self.host = host
         self.port = port
         self.user = user
-        self.user_key = user_key
+        self.localkey = localkey
         self.args = args
 
     def remotescript(self):
@@ -88,7 +105,7 @@ class connectionManager:
         # Tunnel to overcloud
         try:
             remote_client.connect('127.0.0.1', port=22, username=self.user,
-                                  key_filename=self.user_key, sock=channel)
+                                  key_filename=self.localkey, sock=channel)
             sftp = remote_client.open_sftp()
             sftp.put(localpath, remotepath)
         except paramiko.SSHException:
@@ -142,7 +159,7 @@ class connectionManager:
         # Tunnel to overcloud
         try:
             remote_client.connect('127.0.0.1', port=22, username=self.user,
-                                  key_filename=self.user_key, sock=channel)
+                                  key_filename=self.localkey, sock=channel)
         except paramiko.SSHException:
             logger.error("Authentication failed for "
                          "host: {0}".format(self.host))
@@ -192,7 +209,7 @@ class connectionManager:
         # Tunnel to overcloud
         try:
             remote_client.connect('127.0.0.1', port=22, username=self.user,
-                                  key_filename=self.user_key, sock=channel)
+                                  key_filename=self.localkey, sock=channel)
         except paramiko.SSHException:
             logger.error("Authentication failed for "
                          "host: {0}".format(self.host))
@@ -204,9 +221,9 @@ class connectionManager:
                          "undercloud host: {0}".format(self.host))
         # Download the reports
         sftp = remote_client.open_sftp()
-        logger.info("Downloading \"{0}\"...\n".format(reportname))
+        logger.info("Downloading \"{0}\"...".format(reportname))
         sftp.get(reportfile, ('{0}/{1}'.format(dl_folder, reportname)))
-        logger.info("Downloading \"{0}\"...\n".format(resultsname))
+        logger.info("Downloading \"{0}\"...".format(resultsname))
         sftp.get(reportfile, ('{0}/{1}'.format(dl_folder, resultsname)))
         sftp.close()
         transport.close()
