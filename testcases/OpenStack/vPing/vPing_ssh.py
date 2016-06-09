@@ -391,6 +391,7 @@ def main():
 
     cmd = '~/ping.sh ' + test_ip
     flag = False
+    status = "FAIL"
 
     while True:
         time.sleep(1)
@@ -400,7 +401,7 @@ def main():
         for line in output:
             if "vPing OK" in line:
                 logger.info("vPing detected!")
-
+                status = "OK"
                 # we consider start time at VM1 booting
                 stop_time = time.time()
                 duration = round(stop_time - start_time, 1)
@@ -418,12 +419,8 @@ def main():
         logger.debug("Pinging %s. Waiting for response..." % test_ip)
         sec += 1
 
-    test_status = "FAIL"
-    test_criteria = functest_utils.get_criteria_by_test("vping_ssh")
-
-    if eval(test_criteria):
+    if status == "PASS":
         logger.info("vPing OK")
-        test_status = "PASS"
     else:
         duration = 0
         logger.error("vPing FAILED")
@@ -436,10 +433,10 @@ def main():
                                               logger,
                                               start_time,
                                               stop_time,
-                                              test_status,
+                                              status,
                                               details={'timestart': start_time,
                                                        'duration': duration,
-                                                       'status': test_status})
+                                                       'status': status})
         except:
             logger.error("Error pushing results into Database '%s'"
                          % sys.exc_info()[0])
