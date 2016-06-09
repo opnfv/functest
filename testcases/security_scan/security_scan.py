@@ -22,8 +22,6 @@ from keystoneclient.auth.identity import v2
 from keystoneclient import session
 from novaclient import client
 
-import functest.utils.functest_logger as ft_logger
-
 __version__ = 0.1
 __author__ = 'Luke Hinds (lhinds@redhat.com)'
 __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
@@ -32,10 +30,27 @@ __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
 INSTALLER_IP = os.getenv('INSTALLER_IP')
 oscapbin = 'sudo /bin/oscap'
 
+# args
+parser = argparse.ArgumentParser(description='OPNFV OpenSCAP Scanner')
+parser.add_argument('--config', action='store', dest='cfgfile',
+                    help='Config file', required=True)
+args = parser.parse_args()
+
+# Config Parser
+cfgparse = SafeConfigParser()
+cfgparse.read(args.cfgfile)
+
+#  Grab Undercloud key
+remotekey = cfgparse.get('undercloud', 'remotekey')
+localkey = cfgparse.get('undercloud', 'localkey')
+setup = connect.setup(remotekey, localkey)
+setup.getOCKey()
+
+
 # Configure Nova Credentials
 com = 'sudo hiera admin_password'
-connect = connect.novaManager(com)
-keypass = connect.keystonepass()
+setup = connect.setup(com)
+keypass = setup.keystonepass()
 auth = v2.Password(auth_url='http://{0}:5000/v2.0'.format(INSTALLER_IP),
                    username='admin',
                    password=str(keypass).rstrip(),
@@ -44,40 +59,25 @@ sess = session.Session(auth=auth)
 nova = client.Client(2, session=sess)
 
 
-# args
-parser = argparse.ArgumentParser(description='OPNFV OpenSCAP Scanner')
-parser.add_argument('--config', action='store', dest='cfgfile',
-                    help='Config file', required=True)
-args = parser.parse_args()
-
-# functest logger
-logger = ft_logger.Logger("security_scan").getLogger()
-
-# Config Parser
-cfgparse = SafeConfigParser()
-cfgparse.read(args.cfgfile)
-
-
 def run_tests(host, nodetype):
-    port = cfgparse.get(nodetype, 'port')
     user = cfgparse.get(nodetype, 'user')
-    user_key = cfgparse.get(nodetype, 'user_key')
-    logger.info("Host: {0} Selected Profile: {1}").format(host, nodetype)
-    logger.info("Creating temp file structure..")
-    createfiles(host, port, user, user_key)
-    logger.info("Installing OpenSCAP...")
-    install_pkg(host, port, user, user_key)
-    logger.info("Running scan...")
-    run_scanner(host, port, user, user_key, nodetype)
+    port = cfgparse.get(nodetype, 'port')
+    connect.logger.info("Host: {0} Selected Profile: {1}".format(host, nodetype))
+    connect.logger.info("Creating temp file structure..")
+    createfiles(host, port, user, localkey)
+    connect.logger.info("Installing OpenSCAP...")
+    install_pkg(host, port, user, localkey)
+    connect.logger.info("Running scan...")
+    run_scanner(host, port, user, localkey, nodetype)
     clean = cfgparse.get(nodetype, 'clean')
-    logger.info("Post installation tasks....")
-    post_tasks(host, port, user, user_key, nodetype)
+    connect.logger.info("Post installation tasks....")
+    post_tasks(host, port, user, localkey, nodetype)
     if clean:
-        logger.info("Cleaning down environment....")
-        logger.info("Removing OpenSCAP....")
-        removepkg(host, port, user, user_key, nodetype)
-        logger.info("Deleting tmp file and reports (remote)...")
-        cleandir(host, port, user, user_key, nodetype)
+        connect.logger.info("Cleaning down environment....")
+        connect.logger.info("Removing OpenSCAP....")
+        removepkg(host, port, user, localkey, nodetype)
+        connect.logger.info("Deleting tmp file and reports (remote)...")
+        cleandir(host, port, user, localkey, nodetype)
 
 
 def nova_iterate():
@@ -96,25 +96,25 @@ def nova_iterate():
                 run_tests(host, nodetype)
 
 
-def createfiles(host, port, user, user_key):
+def createfiles(host, port, user, localkey):
     import connect
     global tmpdir
     localpath = os.getcwd() + '/scripts/createfiles.py'
     remotepath = '/tmp/createfiles.py'
     com = 'python /tmp/createfiles.py'
-    connect = connect.connectionManager(host, port, user, user_key,
+    connect = connect.connectionManager(host, port, user, localkey,
                                         localpath, remotepath, com)
     tmpdir = connect.remotescript()
 
 
-def install_pkg(host, port, user, user_key):
+def install_pkg(host, port, user, localkey):
     import connect
     com = 'sudo yum -y install openscap-scanner scap-security-guide'
-    connect = connect.connectionManager(host, port, user, user_key, com)
+    connect = connect.connectionManager(host, port, user, localkey, com)
     connect.remotecmd()
 
 
-def run_scanner(host, port, user, user_key, nodetype):
+def run_scanner(host, port, user, localkey, nodetype):
     import connect
     scantype = cfgparse.get(nodetype, 'scantype')
     profile = cfgparse.get(nodetype, 'profile')
@@ -132,47 +132,47 @@ def run_scanner(host, port, user, user_key, nodetype):
                                                        report,
                                                        cpe,
                                                        secpolicy)
-        connect = connect.connectionManager(host, port, user, user_key, com)
+        connect = connect.connectionManager(host, port, user, localkey, com)
         connect.remotecmd()
     elif scantype == 'oval':
         com = '{0} oval eval --results {1}/{2} '
         '--report {1}/{3} {4}'.format(oscapbin, tmpdir.rstrip(),
                                       results, report, secpolicy)
-        connect = connect.connectionManager(host, port, user, user_key, com)
+        connect = connect.connectionManager(host, port, user, localkey, com)
         connect.remotecmd()
     else:
         com = '{0} oval-collect '.format(oscapbin)
-        connect = connect.connectionManager(host, port, user, user_key, com)
+        connect = connect.connectionManager(host, port, user, localkey, com)
         connect.remotecmd()
 
 
-def post_tasks(host, port, user, user_key, nodetype):
+def post_tasks(host, port, user, localkey, nodetype):
     import connect
     # Create the download folder for functest dashboard and download reports
     reports_dir = cfgparse.get(nodetype, 'reports_dir')
     dl_folder = os.path.join(reports_dir, host + "_" +
                              datetime.datetime.
                              now().strftime('%Y-%m-%d_%H-%M-%S'))
-    os.makesdir(dl_folder, 0755)
+    os.makedirs(dl_folder, 0755)
     report = cfgparse.get(nodetype, 'report')
     results = cfgparse.get(nodetype, 'results')
     reportfile = '{0}/{1}'.format(tmpdir.rstrip(), report)
-    connect = connect.connectionManager(host, port, user, user_key, dl_folder,
+    connect = connect.connectionManager(host, port, user, localkey, dl_folder,
                                         reportfile, report, results)
     connect.download_reports()
 
 
-def removepkg(host, port, user, user_key, nodetype):
+def removepkg(host, port, user, localkey, nodetype):
     import connect
     com = 'sudo yum -y remove openscap-scanner scap-security-guide'
-    connect = connect.connectionManager(host, port, user, user_key, com)
+    connect = connect.connectionManager(host, port, user, localkey, com)
     connect.remotecmd()
 
 
-def cleandir(host, port, user, user_key, nodetype):
+def cleandir(host, port, user, localkey, nodetype):
     import connect
     com = 'sudo rm -r {0}'.format(tmpdir.rstrip())
-    connect = connect.connectionManager(host, port, user, user_key, com)
+    connect = connect.connectionManager(host, port, user, localkey, com)
     connect.remotecmd()
 
 
