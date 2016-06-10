@@ -107,31 +107,64 @@
                     <section data-markdown>
                     ## Lessons learned in B.
                     * Wiki documentation is painful
-                    * result modl too simple
-                     * version used for scenario
+                    * Result model too simple
+                     * version used instead of scenario
                      * no version
-                     * no overall criteria (passed/failed)
+                     * no overall criteria (PASS/FAIL)
                     * need unit tests for data model evolution
                     </section>
                     <section data-markdown>
                     ## Colorado refactoring
-                    * done by Serena Feng (ZTE)
-                    * update of the data model (based on lesson learned)
-                    * creation of a swagger tornado framework for the doc
-                    * creation of unit tests
+                    * Done by Serena Feng (ZTE)
+                    * Update of the data model (based on lessons learned)
+                    * New swagger tornado framework for the doc
+                    * URL and Mongo collection renaming
+                    * Scripts to manage backup/restore/DB update
+                    * Setup scripts
+                    * Unit tests
                     </section>
                 </section>
 
                 <section>
                     <section data-markdown>
-						#API evolution
+						# Result management changes
                     </section>
-<section>
-						<h3>Test API evolution</h3>
+                    
+                    <section data-markdown>
+						## main changes
+						An URI change...
+						
+						testresults.opnfv.org/test/testapi => testresults.opnfv.org/test/api/v1
+						
+						http://testresults.opnfv.org/test/api/v1/projects
+						http://testresults.opnfv.org/test/api/v1/projects/yardstick/cases
+                        http://testresults.opnfv.org/test/api/v1/results?case=Tempest&period=1					
+						</section>
+						<section>
+						<h3>One new field for pods</h3>
 						<table>
 							<thead>
 								<tr>
 									<th>Field</th>
+									<th>Brahmaputra</th>
+									<th>Colorado</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>role</td>
+									<td>N.R</td>
+									<td>community_pod, ci_pod, ..</td>
+								</tr>
+							</tbody>
+						</table>                        
+						</section>
+                        <section>
+						<h3>New fields and filters for results</h3>
+						<table>
+							<thead>
+								<tr>
+									<th>Item</th>
 									<th>Brahmaputra</th>
 									<th>Colorado</th>
 								</tr>
@@ -158,7 +191,7 @@
 									<td>passed/failed</td>
 								</tr>
 								<tr>
-									<td>trust_indictator</td>
+									<td>trust_indicator</td>
 									<td>N.R</td>
 									<td>between 0 and 1</td>
 								</tr>
@@ -171,7 +204,7 @@
 						</table>
 					</section>
                     <section data-markdown>
-						## Swagger doc
+						http://testresults.opnfv.org/test/swagger/spec.html
 						![alt text](../img/testapi1.png "Test API swagger interface")
                     </section>
 <section>
