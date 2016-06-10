@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_e8738e13",
+        "filename": "testcases/security_scan/security_scan.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-10T12:44:40Z",
+      "side": 1,
+      "message": "this is then very Apex specific",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 18
+      },
+      "revId": "41d963f89b9a1de8c7a4583ff1bbe1275e5ac0c2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
