@@ -22,6 +22,30 @@
       "revId": "41d963f89b9a1de8c7a4583ff1bbe1275e5ac0c2",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_486de203",
+        "filename": "testcases/security_scan/security_scan.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 610
+      },
+      "writtenOn": "2016-06-10T14:51:49Z",
+      "side": 1,
+      "message": "With no common connection method to access the nodes of each installer, its very likely to be a separate set of scripts for each scan. Either that or we develop a gateway of some sort. I need to think about how we do this, as we have three installers with a forth being pushed forward (daisy). I will do a rename for now.",
+      "parentUuid": "5a7ca5a3_e8738e13",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 18
+      },
+      "revId": "41d963f89b9a1de8c7a4583ff1bbe1275e5ac0c2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
