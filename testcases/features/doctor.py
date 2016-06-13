@@ -39,7 +39,7 @@ def main():
     ret = functest_utils.execute_command(cmd, logger, exit_on_error=False)
 
     stop_time = time.time()
-    duration = round(end_time_ts - start_time, 1)
+    duration = round(stop_time - start_time, 1)
     if ret:
         logger.info("doctor OK")
         test_status = 'OK'
