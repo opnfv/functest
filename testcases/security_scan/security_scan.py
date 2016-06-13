@@ -43,13 +43,13 @@ cfgparse.read(args.cfgfile)
 #  Grab Undercloud key
 remotekey = cfgparse.get('undercloud', 'remotekey')
 localkey = cfgparse.get('undercloud', 'localkey')
-setup = connect.setup(remotekey, localkey)
-setup.getOCKey()
+setup = connect.SetUp(remotekey, localkey)
+setup.getockey()
 
 
 # Configure Nova Credentials
 com = 'sudo hiera admin_password'
-setup = connect.setup(com)
+setup = connect.SetUp(com)
 keypass = setup.keystonepass()
 auth = v2.Password(auth_url='http://{0}:5000/v2.0'.format(INSTALLER_IP),
                    username='admin',
@@ -103,7 +103,7 @@ def createfiles(host, port, user, localkey):
     localpath = os.getcwd() + '/scripts/createfiles.py'
     remotepath = '/tmp/createfiles.py'
     com = 'python /tmp/createfiles.py'
-    connect = connect.connectionManager(host, port, user, localkey,
+    connect = connect.ConnectionManager(host, port, user, localkey,
                                         localpath, remotepath, com)
     tmpdir = connect.remotescript()
 
@@ -111,7 +111,7 @@ def createfiles(host, port, user, localkey):
 def install_pkg(host, port, user, localkey):
     import connect
     com = 'sudo yum -y install openscap-scanner scap-security-guide'
-    connect = connect.connectionManager(host, port, user, localkey, com)
+    connect = connect.ConnectionManager(host, port, user, localkey, com)
     connect.remotecmd()
 
 
@@ -133,17 +133,17 @@ def run_scanner(host, port, user, localkey, nodetype):
                                                        report,
                                                        cpe,
                                                        secpolicy)
-        connect = connect.connectionManager(host, port, user, localkey, com)
+        connect = connect.ConnectionManager(host, port, user, localkey, com)
         connect.remotecmd()
     elif scantype == 'oval':
         com = '{0} oval eval --results {1}/{2} '
         '--report {1}/{3} {4}'.format(oscapbin, tmpdir.rstrip(),
                                       results, report, secpolicy)
-        connect = connect.connectionManager(host, port, user, localkey, com)
+        connect = connect.ConnectionManager(host, port, user, localkey, com)
         connect.remotecmd()
     else:
         com = '{0} oval-collect '.format(oscapbin)
-        connect = connect.connectionManager(host, port, user, localkey, com)
+        connect = connect.ConnectionManager(host, port, user, localkey, com)
         connect.remotecmd()
 
 
@@ -158,7 +158,7 @@ def post_tasks(host, port, user, localkey, nodetype):
     report = cfgparse.get(nodetype, 'report')
     results = cfgparse.get(nodetype, 'results')
     reportfile = '{0}/{1}'.format(tmpdir.rstrip(), report)
-    connect = connect.connectionManager(host, port, user, localkey, dl_folder,
+    connect = connect.ConnectionManager(host, port, user, localkey, dl_folder,
                                         reportfile, report, results)
     connect.download_reports()
 
@@ -166,14 +166,14 @@ def post_tasks(host, port, user, localkey, nodetype):
 def removepkg(host, port, user, localkey, nodetype):
     import connect
     com = 'sudo yum -y remove openscap-scanner scap-security-guide'
-    connect = connect.connectionManager(host, port, user, localkey, com)
+    connect = connect.ConnectionManager(host, port, user, localkey, com)
     connect.remotecmd()
 
 
 def cleandir(host, port, user, localkey, nodetype):
     import connect
     com = 'sudo rm -r {0}'.format(tmpdir.rstrip())
-    connect = connect.connectionManager(host, port, user, localkey, com)
+    connect = connect.ConnectionManager(host, port, user, localkey, com)
     connect.remotecmd()
 
 
