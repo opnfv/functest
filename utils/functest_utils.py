@@ -8,6 +8,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
+from datetime import datetime as dt
 import json
 import os
 import os.path
@@ -172,12 +173,14 @@ def push_results_to_db(project, case_name, logger,
     version = get_version(logger)
     pod_name = get_pod_name(logger)
     build_tag = get_build_tag(logger)
+    test_start = dt.fromtimestamp(start_date).strftime('%Y-%m-%d %H:%M:%S')
+    test_stop = dt.fromtimestamp(stop_date).strftime('%Y-%m-%d %H:%M:%S')
 
     params = {"project_name": project, "case_name": case_name,
               "pod_name": pod_name, "installer": installer,
               "version": version, "scenario": scenario, "criteria": criteria,
-              "build_tag": build_tag, "start_date": start_date,
-              "stop_date": stop_date, "details": details}
+              "build_tag": build_tag, "start_date": test_start,
+              "stop_date": test_stop, "details": details}
 
     headers = {'Content-Type': 'application/json'}
     try:
