@@ -29,7 +29,7 @@ general:
         dir_rally_inst:     /home/opnfv/.rally
 
     openstack:
-        image_name: functest-img
+        image_name: Cirros-0.3.4
         image_file_name:  cirros-0.3.4-x86_64-disk.img
         image_disk_format:  qcow2
 

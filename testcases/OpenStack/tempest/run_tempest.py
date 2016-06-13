@@ -24,6 +24,7 @@ import yaml
 import ConfigParser
 
 import keystoneclient.v2_0.client as ksclient
+from glanceclient import client as glanceclient
 from neutronclient.v2_0 import client as neutronclient
 
 import functest.utils.functest_logger as ft_logger
@@ -66,6 +67,14 @@ f.close()
 TEST_DB = functest_yaml.get("results").get("test_db_url")
 
 MODE = "smoke"
+GLANCE_IMAGE_NAME = functest_yaml.get("general").get(
+    "openstack").get("image_name")
+GLANCE_IMAGE_FILENAME = functest_yaml.get("general").get(
+    "openstack").get("image_file_name")
+GLANCE_IMAGE_FORMAT = functest_yaml.get("general").get(
+    "openstack").get("image_disk_format")
+GLANCE_IMAGE_PATH = functest_yaml.get("general").get("directories").get(
+    "dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
 PRIVATE_NET_NAME = functest_yaml.get("tempest").get("private_net_name")
 PRIVATE_SUBNET_NAME = functest_yaml.get("tempest").get("private_subnet_name")
 PRIVATE_SUBNET_CIDR = functest_yaml.get("tempest").get("private_subnet_cidr")
@@ -148,6 +157,27 @@ def create_tempest_resources():
     else:
         logger.error("Private network creation failed")
         exit(-1)
+
+    logger.debug("Creating image for Tempest suite")
+    glance_endpoint = keystone.service_catalog.url_for(
+        service_type='image', endpoint_type='publicURL')
+    glance_client = glanceclient.Client(1, glance_endpoint,
+                                        token=keystone.auth_token)
+    # Check if the given image exists
+    image_id = os_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+    if image_id != '':
+        logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
+    else:
+        logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
+                                                          GLANCE_IMAGE_PATH))
+        image_id = os_utils.create_glance_image(glance_client,
+                                                GLANCE_IMAGE_NAME,
+                                                GLANCE_IMAGE_PATH)
+        if not image_id:
+            logger.error("Failed to create a Glance image...")
+            exit(-1)
+        logger.debug("Image '%s' with ID=%s created successfully."
+                     % (GLANCE_IMAGE_NAME, image_id))
 
 
 def configure_tempest(deployment_dir):
