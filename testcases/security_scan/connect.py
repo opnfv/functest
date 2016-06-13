@@ -24,16 +24,19 @@ logger = ft_logger.Logger("security_scan").getLogger()
 paramiko.util.log_to_file("/var/log/paramiko.log")
 
 
-class setup:
+class SetUp:
     def __init__(self, *args):
         self.args = args
 
     def keystonepass(self):
         com = self.args[0]
         client = paramiko.SSHClient()
+        privatekeyfile = os.path.expanduser('/root/.ssh/id_rsa')
+        selectedkey = paramiko.RSAKey.from_private_key_file(privatekeyfile)
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         try:
-            client.connect(INSTALLER_IP, port=22, username='stack')
+            client.connect(INSTALLER_IP, port=22, username='stack',
+                           pkey=selectedkey)
         except paramiko.SSHException:
             logger.error("Password is invalid for "
                          "undercloud host: {0}".format(INSTALLER_IP))
@@ -47,28 +50,30 @@ class setup:
         return stdout.read()
         client.close()
 
-    def getOCKey(self):
+    def getockey(self):
         remotekey = self.args[0]
         localkey = self.args[1]
-        client = paramiko.SSHClient()
-        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        privatekeyfile = os.path.expanduser('/root/.ssh/id_rsa')
+        selectedkey = paramiko.RSAKey.from_private_key_file(privatekeyfile)
+        transport = paramiko.Transport((INSTALLER_IP, 22))
+        transport.connect(username='stack', pkey=selectedkey)
         try:
-            client.connect(INSTALLER_IP, port=22, username='stack')
-            sftp = client.open_sftp()
-            sftp.get(remotekey, localkey)
+            sftp = paramiko.SFTPClient.from_transport(transport)
         except paramiko.SSHException:
             logger.error("Authentication failed for "
-                         "host: {0}".format(self.host))
+                         "host: {0}".format(INSTALLER_IP))
         except paramiko.AuthenticationException:
             logger.error("Authentication failed for "
-                         "host: {0}".format(self.host))
+                         "host: {0}".format(INSTALLER_IP))
         except socket.error:
             logger.error("Socker Connection failed for "
-                         "undercloud host: {0}".format(self.host))
-        client.close()
+                         "undercloud host: {0}".format(INSTALLER_IP))
+        sftp.get(remotekey, localkey)
+        sftp.close()
+        transport.close()
 
 
-class connectionManager:
+class ConnectionManager:
     def __init__(self, host, port, user, localkey, *args):
         self.host = host
         self.port = port
@@ -82,10 +87,13 @@ class connectionManager:
         com = self.args[2]
 
         client = paramiko.SSHClient()
+        privatekeyfile = os.path.expanduser('/root/.ssh/id_rsa')
+        selectedkey = paramiko.RSAKey.from_private_key_file(privatekeyfile)
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         # Connection to undercloud
         try:
-            client.connect(INSTALLER_IP, port=22, username='stack')
+            client.connect(INSTALLER_IP, port=22, username='stack',
+                           pkey=selectedkey)
         except paramiko.SSHException:
             logger.error("Authentication failed for "
                          "host: {0}".format(self.host))
@@ -136,10 +144,13 @@ class connectionManager:
         com = self.args[0]
 
         client = paramiko.SSHClient()
+        privatekeyfile = os.path.expanduser('/root/.ssh/id_rsa')
+        selectedkey = paramiko.RSAKey.from_private_key_file(privatekeyfile)
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         # Connection to undercloud
         try:
-            client.connect(INSTALLER_IP, port=22, username='stack')
+            client.connect(INSTALLER_IP, port=22, username='stack',
+                           pkey=selectedkey)
         except paramiko.SSHException:
             logger.error("Authentication failed for "
                          "host: {0}".format(self.host))
@@ -173,12 +184,13 @@ class connectionManager:
 
         chan = remote_client.get_transport().open_session()
         chan.get_pty()
-        f = chan.makefile()
+        feed = chan.makefile()
         chan.exec_command(com)
-        print f.read()
+        print feed.read()
 
         remote_client.close()
         client.close()
+
 
     def download_reports(self):
         dl_folder = self.args[0]
@@ -186,10 +198,13 @@ class connectionManager:
         reportname = self.args[2]
         resultsname = self.args[3]
         client = paramiko.SSHClient()
+        privatekeyfile = os.path.expanduser('/root/.ssh/id_rsa')
+        selectedkey = paramiko.RSAKey.from_private_key_file(privatekeyfile)
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         # Connection to overcloud
         try:
-            client.connect(INSTALLER_IP, port=22, username='stack')
+            client.connect(INSTALLER_IP, port=22, username='stack',
+            pkey=selectedkey)
         except paramiko.SSHException:
             logger.error("Authentication failed for "
                          "host: {0}".format(self.host))
