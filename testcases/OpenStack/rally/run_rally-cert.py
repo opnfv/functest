@@ -176,6 +176,7 @@ def build_task_args(test_file_name):
     task_args['sup_dir'] = SUPPORT_DIR
     task_args['users_amount'] = USERS_AMOUNT
     task_args['tenants_amount'] = TENANTS_AMOUNT
+    task_args['use_existing_users'] = False
     task_args['iterations'] = ITERATIONS_AMOUNT
     task_args['concurrency'] = CONCURRENCY
 
