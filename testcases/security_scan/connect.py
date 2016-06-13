@@ -23,6 +23,7 @@ INSTALLER_IP = os.getenv('INSTALLER_IP')
 logger = ft_logger.Logger("security_scan").getLogger()
 paramiko.util.log_to_file("/var/log/paramiko.log")
 
+
 class setup:
     def __init__(self, *args):
         self.args = args

@@ -24,11 +24,9 @@
 
 import getopt
 import json
-import os
 import sys
 import time
 import xmltodict
-import yaml
 
 import functest.utils.functest_utils as functest_utils
 
@@ -121,11 +119,6 @@ def main(argv):
     data['installer'] = installer
 
     json.dumps(data, indent=4, separators=(',', ': '))
-
-    # Only used from container, we can set up absolute path
-    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-        functest_yaml = yaml.safe_load(f)
-        f.close()
 
     try:
         # example:
