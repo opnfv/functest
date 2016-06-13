@@ -196,6 +196,12 @@ def build_task_args(test_file_name):
     task_args['netid'] = str(net_id)
     task_args['live_migration'] = live_migration_supported()
 
+    auth_url = os.getenv('OS_AUTH_URL')
+    if auth_url is not None:
+        task_args['request_url'] = auth_url.rsplit(":", 1)[0]
+    else:
+        task_args['request_url'] = ''
+
     return task_args
 
 
