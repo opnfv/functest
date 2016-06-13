@@ -63,7 +63,7 @@ def run_tests(host, nodetype):
     user = cfgparse.get(nodetype, 'user')
     port = cfgparse.get(nodetype, 'port')
     connect.logger.info("Host: {0} Selected Profile: {1}".format(host,
-                                                                 nodetype))
+    nodetype))
     connect.logger.info("Creating temp file structure..")
     createfiles(host, port, user, localkey)
     connect.logger.info("Installing OpenSCAP...")
