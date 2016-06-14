@@ -2,17 +2,13 @@
 Documentation     Checking Subnets deleted in OpenStack are deleted also in OpenDaylight
 Suite Setup       Create Session    OSSession     http://${NEUTRON}:9696    headers=${X-AUTH}
 Suite Teardown    Delete All Sessions
-Library           SSHLibrary
-Library           Collections
-Library           OperatingSystem
-Library           ../../../libraries/RequestsLibrary.py
-Library           ../../../libraries/Common.py
+Library           RequestsLibrary
 Variables         ../../../variables/Variables.py
 
 *** Variables ***
 ${ODLREST}       /controller/nb/v2/neutron/subnets
 ${OSREST}        /v2.0/subnets/${SUBNETID}
-${data}       {"subnet":{"network_id":"${NETID}","ip_version":4,"cidr":"172.16.64.0/24","allocation_pools":[{"start":"172.16.64.20","end":"172.16.64.120"}]}}
+${data}          {"subnet":{"network_id":"${NETID}","ip_version":4,"cidr":"172.16.64.0/24","allocation_pools":[{"start":"172.16.64.20","end":"172.16.64.120"}]}}
 
 *** Test Cases ***
 Delete New subnet

@@ -2,17 +2,13 @@
 Documentation     Checking Port deleted in OpenStack are deleted also in OpenDaylight
 Suite Setup       Create Session    OSSession     http://${NEUTRON}:9696    headers=${X-AUTH}
 Suite Teardown    Delete All Sessions
-Library           SSHLibrary
-Library           Collections
-Library           OperatingSystem
-Library           ../../../libraries/RequestsLibrary.py
-Library           ../../../libraries/Common.py
+Library           RequestsLibrary
 Variables         ../../../variables/Variables.py
 
 *** Variables ***
 ${ODLREST}       /controller/nb/v2/neutron/ports
 ${OSREST}        /v2.0/ports/${PORTID}
-${data}       {"port":{"network_id":"${NETID}","admin_state_up": true}}
+${data}          {"port":{"network_id":"${NETID}","admin_state_up": true}}
 
 *** Test Cases ***
 Delete New Port
