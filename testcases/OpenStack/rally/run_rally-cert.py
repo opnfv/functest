@@ -266,7 +266,7 @@ def get_output(proc, test_name):
                         'success': success_avg}
     SUMMARY.append(scenario_summary)
 
-    logger.info("\n" + result)
+    logger.debug("\n" + result)
 
     return result
 
