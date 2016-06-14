@@ -134,8 +134,7 @@ function run_test(){
             # ${repos_dir}/ovno/Testcases/RunTests.sh
         ;;
         "security_scan")
-            # To be enabled once verified manually
-            # python ${FUNCTEST_REPO_DIR}/Testcases/security_scan/security_scan.py --config config.ini
+            python ${FUNCTEST_REPO_DIR}/testcases/security_scan/security_scan.py --config config.ini
         ;;
         *)
             echo "The test case '${test_name}' does not exist."
