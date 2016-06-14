@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_4993a3a3",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-14T11:54:02Z",
+      "side": 1,
+      "message": "shouldn\u0027t we put the full path of config.ini?",
+      "revId": "9633cefc5cebd68d45e4ca20536460179705e22d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
