@@ -2,11 +2,8 @@
 Documentation     Checking Network created in OpenStack are pushed to OpenDaylight
 Suite Setup       Create Session    OSSession    http://${NEUTRON}:9696    headers=${X-AUTH}
 Suite Teardown    Delete All Sessions
-Library           SSHLibrary
 Library           Collections
-Library           OperatingSystem
 Library           RequestsLibrary
-Library           ../../../libraries/Common.py
 Variables         ../../../variables/Variables.py
 
 *** Variables ***
