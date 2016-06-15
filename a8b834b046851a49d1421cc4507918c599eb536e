@@ -16,6 +16,24 @@
       "revId": "a8b834b046851a49d1421cc4507918c599eb536e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_12e71414",
+        "filename": "testcases/security_scan/security_scan.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 610
+      },
+      "writtenOn": "2016-06-15T17:18:32Z",
+      "side": 1,
+      "message": "Any reason why? I thought it was better situated next to the other env call, instead of having the oscap binary declaration in the middle?",
+      "parentUuid": "5a7ca5a3_b23180a4",
+      "revId": "a8b834b046851a49d1421cc4507918c599eb536e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
