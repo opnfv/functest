@@ -130,10 +130,12 @@ function run_test(){
         ;;
         "ovno")
             # suite under rewritting for colorado
-            # no need to run anything until refactoring done 
+            # no need to run anything until refactoring done
             # ${repos_dir}/ovno/Testcases/RunTests.sh
         ;;
         "security_scan")
+            echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/stackrc for security_scan test.."
+            source ${FUNCTEST_CONF_DIR}/stackrc
             python ${FUNCTEST_REPO_DIR}/testcases/security_scan/security_scan.py --config ${FUNCTEST_REPO_DIR}/testcases/security_scan/config.ini
         ;;
         *)
