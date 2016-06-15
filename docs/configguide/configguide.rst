@@ -5,47 +5,123 @@
 Preparing the Docker container
 ------------------------------
 
-Pull the Functest Docker image from the Docker hub::
+Pull the Functest Docker image ('opnfv/functest') from the public dockerhub registry under the OPNFV account: [dockerhub_], 
+with the following docker command::
 
-  docker pull opnfv/functest:brahmaputra.1.0
+  docker pull opnfv/functest:<TagIdentifier>
 
+where <TagIdentifier> identifies a specifically tagged release of the Functest docker container image in the public dockerhub registry. 
+There are many different tags created automatically by the CI mechanisms, but you must ensure you pull an image with the **correct tag**
+to match the OPNFV software release installed in your environment. All available tagged images can be seen from location [FunctestDockerTags_].
+For example, when running on the first official release of the OPNFV Colorado system platform, tag "colorado.1.0" is needed. Pulling other tags
+might cause some problems while running the tests. If you need to specifically pull the latest Functest docker image, then omit the tag argument::
 
-Check that the image is available::
+  docker pull opnfv/functest
+
+After pulling the Docker image, check that the pulled image is available with the following docker command::
 
   docker images
+
+(Docker images pulled without a tag specifier bear the implicitly assigned label "latest".)
 
 Run the docker container giving the environment variables:
 
  * **INSTALLER_TYPE** : possible values are **apex**, **compass**, **fuel** or **joid**.
  * **INSTALLER_IP** : IP of the installer node/VM.
 
-Functest may need to know the IP of the installer to retrieve automatically the
-credentials from the installer node/VM or even from the actual controllers.
+Functest may need to know the IP of the installer to retrieve automatically the credentials from the installer node/VM
+or even from the actual controllers. 
 
-The minimum command to create the Functest Docker container can be described as
-follows::
 
-  docker run -it -e "INSTALLER_IP=10.20.0.2" -e "INSTALLER_TYPE=fuel" opnfv/functest:brahmaputra.1.0 /bin/bash
+The minimum command to create the Functest Docker container can be described as follows::
 
-Optionally, it is possible to precise the container name through the option
-**--name**::
+  docker run -it \
+  -e "INSTALLER_IP=10.20.0.2" \
+  -e "INSTALLER_TYPE=fuel" \
+  opnfv/functest:colorado.1.0 /bin/bash
 
-  docker run --name "CONTAINER_NAME" -it -e "INSTALLER_IP=10.20.0.2" -e "INSTALLER_TYPE=fuel" opnfv/functest:brahmaputra.1.0 /bin/bash
+Optionally, it is possible to assign precisely a container name through the **--name** option::
 
-It is also possible to to indicate the path of the OpenStack credentials using **-v**::
+  docker run --name "CONTAINER_NAME" -it \
+  -e "INSTALLER_IP=10.20.0.2" \
+  -e "INSTALLER_TYPE=fuel" \
+  opnfv/functest:colorado.1.0 /bin/bash
 
-  docker run  -it -e "INSTALLER_IP=10.20.0.2" -e "INSTALLER_TYPE=fuel" -v <path_to_your_local_creds_file>:/home/opnfv/functest/conf/openstack.creds opnfv/functest:brahmaputra.1.0 /bin/bash
+It is also possible to to indicate the path of the OpenStack credentials using a **-v** option::
 
-The local file will be mounted in the container under
-*/home/opnfv/functest/conf/openstack.creds*
+  docker run  -it \
+  -e "INSTALLER_IP=10.20.0.2" \
+  -e "INSTALLER_TYPE=fuel" \
+  -v <path_to_your_local_creds_file>:/home/opnfv/functest/conf/openstack.creds \
+  opnfv/functest:colorado.1.0 /bin/bash
 
-If the intention is to run Functest against any of the supported OPNFV scenarios,
-it is recommended to include also the environment variable **DEPLOY_SCENARIO**,
-for example::
+The local openstack credential file will be mounted in the Docker container under the path: */home/opnfv/functest/conf/openstack.creds*
 
-  docker run -it -e "INSTALLER_IP=10.20.0.2" -e "INSTALLER_TYPE=fuel" -e "DEPLOY_SCENARIO=os-odl_l2-nofeature-ha" opnfv/functest:brahmaputra.1.0 /bin/bash
+If the intention is to run Functest against any of the supported OPNFV scenarios, it is recommended to include also the environment variable 
+**DEPLOY_SCENARIO**, for example::
 
-Inside the container, the following directory structure should be in place::
+  docker run -it \
+  -e "INSTALLER_IP=10.20.0.2" \
+  -e "INSTALLER_TYPE=fuel" \
+  -e "DEPLOY_SCENARIO=os-odl_l2-nofeature-ha" \
+  opnfv/functest:colorado.1.0 /bin/bash
+
+Apex Installer Tips
+-------------------
+Some specific tips are useful for the Apex Installer case. If not using Apex Installer; ignore this section.
+
+    #. The "INSTALLER_IP" environmental variable should be set equal to the IP address of the so-called "Instack Virtual Machine".
+       You can use the following shell command to determine the correct value of the "Instack IP"::
+
+         INSTACK_VM_IP=$(sudo virsh domifaddr instack | \
+         grep -Eo "[0-9.]+{4}")
+
+       You can now replace arguments like::
+
+         -e "INSTALLER_IP=<Specific IP Address>"
+
+       shown in the specific docker example commands above, instead by::
+
+         -e "INSTALLER_IP=${INSTACK_VM_IP}"
+
+    #. If you want to 'Bind mount' a local Openstack credentials file to the Docker container, you may need to pre-copy the required local
+       Openstack credential file from the 'Instack VM' to the Jump host. Using the 'INSTACK_VM_IP' environmental variable created above, 
+       use the following shell commands **in the Jumphost**, before issuing the 'docker run ...' command invocation::
+
+         scp stack@${INSTACK_VM_IP}:overcloudrc .
+         sed -i 's/export no_proxy/#export no_proxy/' overcloudrc
+         # The above 'sed' command is needed *only* in cases where
+         # the Jumphost is operating behind a http proxy. 
+         # (See the 'Proxy Support' section later on in this document)
+
+       The file located at Jumphost path: '~/overcloudrc' is now 'Bind mounted' to the Docker path '/home/opnfv/functest/conf/openstack.creds' 
+       by specifying a **-v** option::
+
+         -v ~/overcloudrc:/home/opnfv/functest/conf/openstack.creds
+
+       in the argument list of the 'docker run ...' command invocation. In the Apex installer case, the Openstack Credential file has the 
+       name 'overcloudrc' and is located in the home directory of the 'stack' user ( '/home/stack' ) in the Instack VM.
+
+    #. In order that the docker container can access the Instack VM, even with 'stack' user, the SSH keys of the Jumphost root user 
+       **must be** 'Bind mounted' to the docker container by the following **-v** option in the 'docker run ...' command invocation::
+
+         -v /root/.ssh/id_rsa:/root/.ssh/id_rsa
+
+    #.  Here is an example of the docker command invocation for an Apex installed system, using latest Funtest docker container, 
+        for illustration purposes::
+
+         docker run -it  --name "ApexFuncTstODL" \
+         -e "INSTALLER_IP=${INSTACK_VM_IP}" \
+         -e "INSTALLER_TYPE=apex" \
+         -e "DEPLOY_SCENARIO=os-odl_l2-nofeature-ha" \
+         -v /root/.ssh/id_rsa:/root/.ssh/id_rsa \
+         -v ~/overcloudrc:/home/opnfv/functest/conf/openstack.creds \
+         opnfv/functest /bin/bash
+
+
+Functest docker container directory structure
+---------------------------------------------           
+Inside the docker container, the following directory structure should now be in place::
 
   `-- home
       `-- opnfv
@@ -59,64 +135,97 @@ Inside the container, the following directory structure should be in place::
             |-- functest
             |-- odl_integration
             |-- onos
+            |-- ovno
             |-- promise
             |-- rally
             |-- releng
             `-- vims-test
+  
+  (The sub-directory 'ovno' holds SDN controller functional
+   tests for the OpenContrail, which will be available later)
 
+Underneath the /home/opnfv directory, the Functest docker container includes two main directories:
 
-Basically the container includes:
+  * The **functest** directory stores configuration files (e.g. the OpenStack creds are stored
+    in /home/opnfv/functest/conf/openstack.creds), the **data** directory stores a 'cirros' test image 
+    used in some functional tests and the **results** directory stores some temporary result log files
+  * The **repos** directory holds various repositories. The directory **/home/opnfv/repos/functest** is used 
+    to prepare the needed Functest environment and to run the tests. The other repository directories are used for 
+    the installation of the needed tooling (e.g. rally) or for the retrieval of feature projects scenarios (e.g. promise)
 
-  * Functest directory to store the configuration (the OpenStack creds are stored
-    in /home/opngb/functest/conf/openstack.creds), the data (cirros image needed for
-    some tests), results (some temporary result logs may be stored here)
-  * Repositories: the functest repository will be used to prepare the
-    environment and run the tests. Other repositories are used for the installation
-    of the needed tooling (e.g. rally) and/or the retrieval of feature projects
-    scenarios (e.g. promise)
-
-The structure under the Functest repository can be described as follows::
+The structure under the **functest** repository can be described as follows::
 
   .
-    |-- INFO
-    |-- LICENSE
-    |-- commons
-    |   |-- ims
-    |   |-- mobile
-    |   `-- traffic-profile-guidelines.rst
-    |-- docker
-    |   |-- Dockerfile
-    |   |-- common.sh
-    |   |-- prepare_env.sh
-    |   |-- requirements.pip
-    |   `-- run_tests.sh
-    |-- docs
-    |   |-- configguide
-    |   |-- devguide
-    |   |-- images
-    |   |-- results
-    |   `-- userguide
-    `-- testcases
-        |-- Controllers
-        |-- features
-        |-- tests
-        |-- VIM
-        |-- vIMS
-        |-- vPing
-        |-- __init__.py
-        |-- config_functest.py
-        |-- config_functest.yaml
-        `-- functest_utils.py
+  |-- INFO
+  |-- LICENSE
+  |-- __init__.py
+  |-- ci
+  |   |-- __init__.py
+  |   |-- check_os.sh
+  |   |-- config_functest.yaml
+  |   |-- exec_test.sh
+  |   |-- prepare_env.py
+  |   |-- run_tests.py
+  |   |-- testcases.yaml
+  |   |-- tier_builder.py
+  |   `-- tier_handler.py
+  |-- cli
+  |   |-- __init__.py
+  |   |-- cli_base.py
+  |   |-- commands
+  |   |-- functest-complete.sh
+  |   `-- setup.py
+  |-- commons
+  |   |-- ims
+  |   |-- mobile
+  |   `-- traffic-profile-guidelines.rst
+  |-- docker
+  |   |-- Dockerfile
+  |   |-- config_install_env.sh
+  |   `-- requirements.pip
+  |-- docs
+  |   |-- com
+  |   |-- configguide
+  |   |-- devguide
+  |   |-- images
+  |   |-- release-notes
+  |   |-- results
+  |   `-- userguide
+  |-- testcases
+  |   |-- Controllers
+  |   |-- OpenStack
+  |   |-- __init__.py
+  |   |-- features
+  |   |-- security_scan
+  |   `-- vIMS
+  `-- utils
+      |-- __init__.py
+      |-- clean_openstack.py
+      |-- functest_logger.py
+      |-- functest_utils.py
+      |-- generate_defaults.py
+      `-- openstack_utils.py
+      
+      ( Note: All *.pyc files removed from above list for brevity... )
 
-We may distinguish 4 different folders:
+We may distinguish 7 different folders:
 
-  * **commons**: it is a folder dedicated to store traffic profile or any test
-    inputs that could be reused by any test project
-  * **docker**: this folder includes the scripts that will be used to setup the
-    environment and run the tests
-  * **docs**: this folder includes the user and installation/configuration guide
-  * **testcases**: this folder includes the scripts required by Functest internal
-    test cases and other feature projects test cases.
+  * **ci**: This folder contains test structure defintion files ( e.g <filename>.yaml) and bash
+    shell/python scripts used to configure and execute Functional tests. The test execution 
+    script can be executed under the control of Jenkins CI jobs.
+  * **cli**: This folder holds the python based Functest CLI utility source code, 
+    which is based on the Python 'click' framework.
+  * **commons**: This folder is dedicated for storage of traffic profile or any other 
+    test inputs that could be reused by any test project.
+  * **docker**: This folder includes the scripts that will be used to setup the Functest 
+    docker container environment.
+  * **docs**: This folder includes documentation: Release Notes, User Guide, Configuration Guide 
+    and Developer Guide. Test results are also located in a sub--folder called 'results'.
+  * **testcases**: This folder includes the scripts required by Functest internal test cases 
+    and other feature projects test cases.
+  * **utils**: this folder holds Python source code for some general purpose helper utilities, 
+    which testers can also re-use in their own test code. See for an example the Openstack helper 
+    utility: 'openstack_utils.py'.
 
 After the *run* command, a new prompt appears which means that we are inside the
 container and ready to move to the next step.
@@ -130,7 +239,7 @@ exiting the container and probably stopping it. When stopping a running Docker c
 all the changes will be lost, there is a keyboard shortcut to
 quit the container without stopping it: CTRL+P+Q.
 To reconnect to the running container **DO NOT** use the *run* command again
-(since it will create a new container), use *exec* instead::
+(since it will create a new container), use the *exec* command instead::
 
   docker ps
   <copy the container ID>
@@ -171,17 +280,76 @@ Check the Docker documentation dockerdocs_ for more information.
 Preparing the Functest environment
 ----------------------------------
 
-Once the docker container is up and running, execute the following command in the
-prompt::
+Once the docker container is up and running, the required Functest environment needs to be prepared.
+A custom built **functest** CLI utility is availabe to perform the needed environment preparation action.
+Once the enviroment is prepared, the **functest** CLI utility can be used to run different functional tests.
+The usage of the **functest** CLI utility to run tests is described further in the Functest User Guide `OPNFV_FuncTestUserGuide`_
 
-    ${repos_dir}/functest/docker/prepare_env.sh
+To prepare the Functest docker container for test case execution, issue the **functest env prepare** command at the prompt::
 
-NOTE: **${repos_dir}** is a default environment variable inside the docker
-container, which points to */home/opnfv/repos/*
+  functest env prepare
 
 This script will make sure that the requirements to run the tests are met and will
-install the needed libraries and tools by all Functest test cases. It must be run
-only once every time the docker is started from sratch.
+install the needed libraries and tools by all Functest test cases. It should be run
+only once every time the docker is started from sratch. If you try to run this command,
+on an already prepared enviroment, you will be prompted whether you really want to continue or not::
+
+  functest env prepare
+  It seems that the environment has been already prepared. Do you want to do it again? [y|n]
+
+(Type 'n' to abandon the request, or 'y' to repeat the environment preparation).
+
+To confirm the 'preparation status' of a Functest docker container, issue the **functest env status** command at the prompt::
+
+  functest env status
+  Functest environment ready to run tests.
+
+To list some basic information about an already prepared Functestdocker container environment, issue the **functest env show** at the prompt::
+
+  functest env show
+  +======================================================+
+  | Functest Environment info                            |
+  +======================================================+
+  |  INSTALLER: apex, 192.168.122.89                     |
+  |   SCENARIO: os-odl_l2-nofeature-ha                   |
+  |        POD: localhost                                |
+  | GIT BRACNH: master                                   |
+  |   GIT HASH: 5bf1647dec6860464eeb082b2875798f0759aa91 |
+  | DEBUG FLAG: false                                    |
+  +------------------------------------------------------+
+  |     STATUS: ready                                    |
+  +------------------------------------------------------+
+  
+  (The INSTALLER_IP is also shown. Here = "192.168.122.89")
+
+Finally, the **functest** CLI has a basic 'help' system with so called **--help** options:
+Some examples::
+
+  functest --help
+  Usage: functest [OPTIONS] COMMAND [ARGS]...
+  
+  Options:
+    --version   Show the version and exit.
+    -h, --help  Show this message and exit.
+  
+  Commands:
+    env
+    openstack
+    testcase
+    tier
+  
+  
+  functest env --help
+  Usage: functest env [OPTIONS] COMMAND [ARGS]...
+  
+  Options:
+    -h, --help  Show this message and exit.
+  
+  Commands:
+    prepare  Prepares the Functest environment.
+    show     Shows information about the current...
+    status   Checks if the Functest environment is ready...
+  
 
 
 Focus on the OpenStack credentials
@@ -192,11 +360,19 @@ There are 3 ways to provide them to Functest:
 
   * using the -v option when running the Docker container
   * create an empty file in /home/opnfv/functest/conf/openstack.creds and paste
-    the credentials in it.
+    the credentials in it. (Consult your installer guide to know from where you can
+    retrieve credential files which are set-up in the Openstack installation of the SUT)
   * automatically retrieved using the following script::
-         $repos_dir/releng/utils/fetch_os_creds.sh
 
-Once the credentials are there, they shall be sourced before running the tests::
+      $repos_dir/releng/utils/fetch_os_creds.sh -d /home/opnfv/functest/conf/openstack.creds
+      
+      Note: If you omit the -d <full destination path> option in the command invocation, 
+      then the script will create the credential file with name 'opnfv-openrc.sh' in directory
+      '/home/opnfv'. In that case you need to copy/edit the file into the correct target path:
+      '/home/opnfv/functest/conf/openstack.creds'.
+      
+
+Once the credentials are there, they shall be sourced **before** running the tests::
 
     source /home/opnfv/functest/conf/openstack.creds
 
@@ -227,7 +403,7 @@ This command must show a set of environment variables starting with *OS_*, for e
     OS_ENDPOINT_TYPE=internalURL
     OS_NO_CACHE=true
 
-If still the OpenStack command does not show anything or complains about
+If the OpenStack command still does not show anything or complains about
 connectivity issues, it could be due to an incorrect url given to the OS_AUTH_URL
 environment variable. Check the deployment settings.
 
@@ -274,11 +450,12 @@ from the repository to your current directory and run the container with a volum
 
     <modify the file accordingly>
 
-    docker run -ti -e \
-    "INSTALLER_TYPE=fuel" -e "INSTALLER_IP=10.20.0.2" \
-    opnfv/functest:brahmaputra.1.0 \
+    docker run -ti \
+    -e "INSTALLER_TYPE=fuel" \
+    -e "INSTALLER_IP=10.20.0.2" \
     -v $(pwd)/config_functest.yaml:/home/opnfv/repos/functest/ci/config_functest.yaml \
-    /bin/bash\
+    opnfv/functest:colorado.1.0 /bin/bash\
+    
 
 However, this is not recommended since most of the test cases rely on static
 parameters read from this file, and changing them might cause problems.
@@ -286,21 +463,59 @@ parameters read from this file, and changing them might cause problems.
 
 Proxy support
 -------------
+If your Jumphost node is operating behind a http proxy, then there are 2 places 
+where some special actions may be needed to make operations succeed:
 
-Functest needs internet access to download some resources for some test cases.
-For example to install the Rally environment. This might not work properly if
-the Jumphost is running through a Proxy.
+  #. Initial installation of docker engine
+     First, try following the official Docker documentation for Proxy_ settings.
+     Some issues were experienced on CentOS 7 based Jumphost. 
+     Some tips are documented in section: `Docker Installation on CentOS 7 behind http proxy`_ below.
 
-If that is the case, make sure the resolv.conf and the needed proxy environment
-variables are properly set::
+  #. Execution of the Functest environment preparation inside the created docker container
+     Functest needs internet access to download some resources for some test cases.
+     For example to install the Rally environment. This might not work properly if
+     the Jumphost is running through a http Proxy.
+     
+     If that is the case, make sure the resolv.conf and the needed http and https proxy environment
+     variables as well as the 'no_proxy' are properly set::
+     
+       # Make double sure that the 'no_proxy=...' line in the
+       # 'openstack.creds' file is commented out first. 
+       # Otherwise the no_proxy values set below will be 
+       # corrupted each time a 
+       # 'source ~/functest/conf/openstack.creds' 
+       # command is issued.
+       
+       sed -i 's/export no_proxy/#export no_proxy/' \
+       ~/functest/conf/openstack.creds
+       
+       source ~/functest/conf/openstack.creds
+       
+       # Next calculate some IP addresses for which http proxy
+       # should be excluded:
+       
+       publicURL_IP=$(echo $OS_AUTH_URL| \
+       grep -Eo "([0-9]+\.){3}[0-9]+")
+       
+       adminURL_IP=$(openstack catalog show identity | \
+       grep adminURL | \
+       grep -Eo "([0-9]+\.){3}[0-9]+")
+       
+       export http_proxy="<your http proxy settings>"
+       export https_proxy="<your https proxy settings>"
+       export no_proxy="127.0.0.1,localhost,\
+       $publicURL_IP,$adminURL_IP"
+       
+       # Ensure that "git" uses the http proxy 
+       # This may be needed if your firewall forbids SSL based git fetch
+       
+       git config --global http.sslVerify True
+       git config --global http.proxy <Your http proxy settings>
+       
+     
 
-    export http_proxy=<your http proxy settings>
-    export https_proxy=<your https proxy settings>
-
-Or refer to the official Docker documentation for Proxy_ settings.
-
-Before running **prepare_env.sh** make sure you can ping http and https sites
-inside the container. For example::
+Validation check: Before running **'functest env prepare'** CLI command, make sure 
+you can ping http and https sites inside the container. For example::
 
     nc -v google.com 80
     Connection to google.com 80 port [tcp/http] succeeded!
@@ -308,8 +523,81 @@ inside the container. For example::
     nc -v google.com 443
     Connection to google.com 443 port [tcp/https] succeeded!
 
+Note: In Jumphost based on CentOS 7, enviroment, it was observed that the 'nc' 
+commands did not function as described in the section above. However you can 
+also try using the **curl** command instead, if you encounter issues with **nc**::
 
+    curl http://www.google.com:80
+    
+    <HTML><HEAD><meta http-equiv="content-type" 
+    content="text/html;charset=utf-8">
+    <TITLE>302 Moved</TITLE>
+    </HEAD><BODY>
+    <H1>302 Moved</H1>
+    :
+    :
+    </BODY></HTML>
+    
+    curl https://www.google.com:443
+    
+    <HTML><HEAD><meta http-equiv="content-type" 
+    content="text/html;charset=utf-8">
+    <TITLE>302 Moved</TITLE>
+    </HEAD><BODY>
+    <H1>302 Moved</H1>
+    :
+    :
+    </BODY></HTML>
+    
+    (Even Google complained the URL used, it proves the http and
+    https protocols are working through the proxy! 
+    
+
+Docker Installation on CentOS 7 behind http proxy
+-------------------------------------------------
+There are good instructions in [`InstallDockerCentOS7`_] for the installation of **docker** on CentOS 7.
+However, if your Jumphost is behind a http proxy, then the following steps are needed **before** following the 
+instructions in the above reference::
+
+  1) # Make a directory '/etc/systemd/system/docker.service.d'  
+     # if it does not exist
+     sudo mkdir /etc/systemd/system/docker.service.d
+     
+     # Create a file called 'env.conf' in that directory with 
+     # the following contents:
+     
+       [Service]
+       EnvironmentFile=-/etc/sysconfig/docker
+     
+  2) # Set up a file called 'docker' in directory
+     # '/etc/sysconfig' with the following contents:
+     
+       HTTP_PROXY="<Your http proxy settings>"
+       HTTPS_PROXY="<Your https proxy settings>"
+       http_proxy="${HTTP_PROXY}"
+       https_proxy="${HTTPS_PROXY}"
+     
+  3) # Reload the daemon
+     
+       systemctl daemon-reload
+     
+  4) # Sanity check - check the following docker settings:
+     
+       systemctl show docker | grep -i env
+     
+       Expected result:
+       ----------------
+       EnvironmentFile=/etc/sysconfig/docker (ignore_errors=yes)
+       DropInPaths=/etc/systemd/system/docker.service.d/env.conf
+     
+  
+Now follow the instructions in [`InstallDockerCentOS7`_] to download and install the **docker-engine**.
+The instructions end with a test pull of a docker "Hello World" container. This should now work with the 
+above pre-requisite actions.
 
 .. _dockerdocs: https://docs.docker.com/
 .. _dockerhub: https://hub.docker.com/r/opnfv/functest/
 .. _Proxy: https://docs.docker.com/engine/admin/systemd/#http-proxy
+.. _FunctestDockerTags: https://hub.docker.com/r/opnfv/functest/tags/
+.. _InstallDockerCentOS7: https://docs.docker.com/engine/installation/linux/centos/
+.. _OPNFV_FuncTestUserGuide: http://artifacts.opnfv.org/functest/docs/userguide/index.html
