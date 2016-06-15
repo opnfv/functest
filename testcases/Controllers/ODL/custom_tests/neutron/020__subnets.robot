@@ -16,7 +16,7 @@ Check OpenStack Subnets
     [Documentation]    Checking OpenStack Neutron for known subnets
     [Tags]    Subnets Neutron OpenStack
     Log    ${X-AUTH}
-    ${resp}    get    OSSession    ${OSREST}
+    ${resp}    get request    OSSession    ${OSREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${OSResult}    To Json    ${resp.content}
     Set Suite Variable    ${OSResult}
@@ -26,7 +26,7 @@ Check OpenDaylight subnets
     [Documentation]    Checking OpenDaylight Neutron API for known subnets
     [Tags]    Subnets Neutron OpenDaylight
     Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
-    ${resp}    get    ODLSession    ${ODLREST}
+    ${resp}    get request    ODLSession    ${ODLREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${ODLResult}    To Json    ${resp.content}
     Set Suite Variable    ${ODLResult}
@@ -36,7 +36,7 @@ Create New subnet
     [Documentation]    Create new subnet in OpenStack
     [Tags]    Create Subnet OpenStack Neutron
     Log    ${data}
-    ${resp}    post    OSSession    ${OSREST}    data=${data}
+    ${resp}    post request    OSSession    ${OSREST}    data=${data}
     Should be Equal As Strings    ${resp.status_code}    201
     ${result}    To JSON    ${resp.content}
     ${result}    Get From Dictionary    ${result}    subnet
@@ -49,5 +49,5 @@ Create New subnet
 Check New subnet
     [Documentation]    Check new subnet created in OpenDaylight
     [Tags]    Check    subnet OpenDaylight
-    ${resp}    get    ODLSession    ${ODLREST}/${SUBNETID}
+    ${resp}    get request    ODLSession    ${ODLREST}/${SUBNETID}
     Should be Equal As Strings    ${resp.status_code}    200
