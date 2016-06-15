@@ -27,10 +27,17 @@ __author__ = 'Luke Hinds (lhinds@redhat.com)'
 __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
 
 # Global vars
-INSTALLER_IP = os.getenv('INSTALLER_IP')
 oscapbin = 'sudo /bin/oscap'
+INSTALLER_IP = os.getenv('INSTALLER_IP')
 
-# args
+# Apex Spefic var needed to query Undercloud
+if os.getenv('OS_AUTH_URL') is None:
+    connect.logger.error(" Enviroment variable OS_AUTH_URL is not set")
+    sys.exit(0)
+else:
+    OS_AUTH_URL = os.getenv('OS_AUTH_URL')
+
+# argparse
 parser = argparse.ArgumentParser(description='OPNFV OpenSCAP Scanner')
 parser.add_argument('--config', action='store', dest='cfgfile',
                     help='Config file', required=True)
@@ -51,7 +58,7 @@ setup.getockey()
 com = 'sudo hiera admin_password'
 setup = connect.SetUp(com)
 keypass = setup.keystonepass()
-auth = v2.Password(auth_url='http://{0}:5000/v2.0'.format(INSTALLER_IP),
+auth = v2.Password(auth_url='http://{0}:5000/v2.0'.format(OS_AUTH_URL),
                    username='admin',
                    password=str(keypass).rstrip(),
                    tenant_name='admin')

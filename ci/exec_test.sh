@@ -180,6 +180,8 @@ done
 echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/openstack.creds to run the test.."
 source ${FUNCTEST_CONF_DIR}/openstack.creds
 
+echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/stackrc for security_scan test.."
+source ${FUNCTEST_CONF_DIR}/stackrc
 
 # Run test
 run_test $TEST
