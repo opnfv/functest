@@ -15,7 +15,7 @@ Delete New subnet
     [Documentation]    Delete previously created subnet in OpenStack
     [Tags]    Delete Subnet OpenStack Neutron
     Log    ${data}
-    ${resp}    delete    OSSession    ${OSREST}
+    ${resp}    delete request    OSSession    ${OSREST}
     Should be Equal As Strings    ${resp.status_code}    204
     Log    ${resp.content}
     sleep    2
@@ -24,10 +24,10 @@ Check New subnet deleted
     [Documentation]    Check subnet deleted in OpenDaylight
     [Tags]    Check subnet deleted OpenDaylight
     Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
-    ${resp}    get    ODLSession    ${ODLREST}
+    ${resp}    get request    ODLSession    ${ODLREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${ODLResult}    To Json    ${resp.content}
     Set Suite Variable    ${ODLResult}
     Log    ${ODLResult}
-    ${resp}    get    ODLSession    ${ODLREST}/${SUBNETID}
+    ${resp}    get request    ODLSession    ${ODLREST}/${SUBNETID}
     Should be Equal As Strings    ${resp.status_code}    404
