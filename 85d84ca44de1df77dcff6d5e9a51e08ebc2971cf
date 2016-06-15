@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_92824451",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 610
+      },
+      "writtenOn": "2016-06-15T16:18:38Z",
+      "side": 1,
+      "message": "I don\u0027t believe its used anywhere else, which is why we are now copying in the stackrc to source that var.\n\nfixed trailing space",
+      "parentUuid": "5a7ca5a3_d24afc54",
+      "revId": "85d84ca44de1df77dcff6d5e9a51e08ebc2971cf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_f247f849",
         "filename": "testcases/security_scan/security_scan.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-06-15T16:00:12Z",
       "side": 1,
       "message": "will it be over or undercloud?",
+      "revId": "85d84ca44de1df77dcff6d5e9a51e08ebc2971cf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_f2b5b831",
+        "filename": "testcases/security_scan/security_scan.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 610
+      },
+      "writtenOn": "2016-06-15T16:18:38Z",
+      "side": 1,
+      "message": "undercloud (we query the nova API on underground).",
+      "parentUuid": "5a7ca5a3_f247f849",
       "revId": "85d84ca44de1df77dcff6d5e9a51e08ebc2971cf",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
