@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="../css/reveal.css">
-		<link rel="stylesheet" href="../css/theme/OPNFV.css" id="theme">
+		<link rel="stylesheet" href="../css/theme/OPNFV-Berlin.css" id="theme">
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="../lib/css/zenburn.css">
@@ -40,11 +40,11 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 
-				<section data-background="../img/title-bg.png" data-background-transition="none">
-                     <br>
+				<section data-background="../img/title-bg-berlin.png" data-background-transition="none">
+                     <br><br><br><br><br>
                      <h1>From Arno to Colorado</h1>
                      <h3>Functest: Many rivers to cross</h3>
-                     <br><br>
+                     <br>
 					 <h4>Functest contributors</h4>
 					 <h5>OPNFV Design Summit, 20/6/2016, Berlin</h5>
 					 <br>
@@ -161,7 +161,7 @@
 				</section>
 
 				<section>
-					Comparison odl_l2-nofeature-noha scenario
+					Comparison odl_l2-nofeature-ha scenario
 					<table>
 						<thead>
 							<tr>
@@ -201,9 +201,13 @@
 
 				<section data-markdown>
 					## Lessons learned
-					* Tempest: harmonizing installer related OpenStack configuration differences, creating customized test lists, main challenge was resolving SDN controller interworking problems 
-					* Rally:
-					* vIMS: complete but complex test case, very interesting to automate (pre MANO, most of Telco needs met there)
+					* Tempest/Rally
+					  * harmonizing installer related OpenStack configuration differences
+					  * creating customized test lists
+					  * main challenge was resolving SDN controller interworking problems 
+					* vIMS
+					  * complete but complex test case
+					  * very interesting to automate (pre MANO, most of Telco needs met there)
 				</section>
 
 				</section>
@@ -215,15 +219,23 @@
 
 					<section data-markdown>
 						## What's new?
-						* Slicing of the tests (healthcheck / Smoke / SDN controllers / Features / VNFs)
-						* Test duration management
-						* New test cases: healthcheck, security
-						* Refactoring (API, structure)
-						* ARM Support 
+						* New internal test cases: healthcheck, security
+						* New controler: OpenContrail?
+						* New feature projects (domino, multisites, movie, parser, moon, copper, models, onos-sfc...)						
+						* ARM Support (congratulations to ANEA team!)
+						* Simplified feature project integration journey
+					</section>
+
+					<section data-markdown>
+						## What's new?
+						* Slicing of the tests (healthcheck / Smoke / SDN controllers / Features / Components / VNFs)
+						* Better Test duration management
+						* Refactoring (repo, case management, test API)
 						* Automatic reporting
 						* Dashboard evolution to ELK
 						* CLI
 					</section>
+
 
 				<section>
 					<h3>Automatic reporting</h3>
@@ -240,21 +252,20 @@
 					</section>
 					<section data-markdown>
 						## More test cases
-						* New controler: OpenContrail
-						* New feature projects
 						* New VNFs (vEPC, vCDN, vWhatever...)
 						* Multi sites (e.g bgpvpn with different back ends)
+						* Better test coverage
 					</section>					
 					<section data-markdown>
 						## A Functional testing As a Service framework
-						* Scenarios can select their relevant test cases
+						* Scenario owner can select their relevant test cases
 						* Test duration estimation
 						* Agile dashboarding
 						* Analytics
 					</section>	
                     <section data-markdown>
 						## Upstream
-						* Rally
+						* Rally: time to give back more
 						* Functest description for ETSI?   
 					</section>					
                 </section>
@@ -266,7 +277,7 @@
 
 			</div>
             <div class='footer'>
-				 <img src="../img/logo-OPNFV.png" alt="OPNFV logo"> 
+				 <img src="../img/logo-OPNFV-Berlin.png" alt="OPNFV logo"> 
 	        </div>
 		</div>
 
