@@ -110,17 +110,17 @@ def main(argv):
     # dictionary populated with data from xml file
     all_data = xmltodict.parse(xml_input)['robot']
 
-    data = parse_suites(all_data['suite']['suite'])
-    data['description'] = all_data['suite']['@name']
-    data['version'] = all_data['@generator']
-    data['test_project'] = "functest"
-    data['case_name'] = "ODL"
-    data['pod_name'] = pod
-    data['installer'] = installer
-
-    json.dumps(data, indent=4, separators=(',', ': '))
-
     try:
+        data = parse_suites(all_data['suite']['suite'])
+        data['description'] = all_data['suite']['@name']
+        data['version'] = all_data['@generator']
+        data['test_project'] = "functest"
+        data['case_name'] = "ODL"
+        data['pod_name'] = pod
+        data['installer'] = installer
+
+        json.dumps(data, indent=4, separators=(',', ': '))
+
         # example:
         # python odlreport2db.py -x ~/Pictures/Perso/odl/output3.xml
         #                        -i fuel
@@ -133,19 +133,16 @@ def main(argv):
         # start and stoptime have no real meaning
         start_time = time.time()
         stop_time = start_time
-        try:
-            tests_passed = 0
-            tests_failed = 0
-            for v in data['details']:
-                if v['test_status']['@status'] == "PASS":
-                    tests_passed += 1
-                else:
-                    tests_failed += 1
+        tests_passed = 0
+        tests_failed = 0
+        for v in data['details']:
+            if v['test_status']['@status'] == "PASS":
+                tests_passed += 1
+            else:
+                tests_failed += 1
 
-            if (tests_failed < 1):
-                status = "PASS"
-        except:
-            print("Unable to set criteria" % sys.exc_info()[0])
+        if (tests_failed < 1):
+            status = "PASS"
 
         functest_utils.push_results_to_db("functest",
                                           data['case_name'],
@@ -156,7 +153,7 @@ def main(argv):
                                           data)
 
     except:
-        print("Error pushing results into Database '%s'" % sys.exc_info()[0])
+        print("Error pushing ODL results into DB '%s'" % sys.exc_info()[0])
 
 
 if __name__ == "__main__":
