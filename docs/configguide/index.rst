@@ -11,13 +11,14 @@ OPNFV FUNCTEST Configuration Guide
 
 Introduction
 ============
-
 This document describes how to install and configure Functest in OPNFV.
+The Functest CLI is utilized during the Functest environment preparation step.
 
 High level architecture
 -----------------------
 
-The high level architecture of Functest within OPNFV can be described as follows::
+The high level architecture of Functest within OPNFV can be described as
+follows::
 
  CIMC/Lights+out management                 Admin     Private   Public   Storage
                                              PXE
@@ -70,61 +71,66 @@ The high level architecture of Functest within OPNFV can be described as follows
  |      | | | |             5  +---------------+         |         |        |
  |      +-+ | |  nodes for     |               |         |         |        |
  |        | | |  deploying     +-------------------------+         |        |
- |        +-+ |  opnfv         |               |         |         |        |
- |          | |     SUT        +-----------------------------------+        |
- |          +-+                |               |         |         |        |
+ |        +-+ |  OPNFV         |               |         |         |        |
+ |          | |                +-----------------------------------+        |
+ |          +-+     SUT        |               |         |         |        |
  |            |                +--------------------------------------------+
  |            +----------------+               |         |         |        |
  |                                             |         |         |        |
- |                                             +         +         +        +
+ +                                             +         +         +        +
+              SUT = System Under Test
 
-All the libraries and dependencies needed by all the Functest tools are
-pre-installed in the Docker image.
-This allows running Functest on any platform on any Operating System.
+All the libraries and dependencies needed by all of the Functest tools are
+pre-installed into the Docker image. This allows running Functest on any
+platform on any Operating System.
 
 The automated mechanisms inside the Functest Docker container will:
 
   * retrieve OpenStack credentials
   * prepare the environment according to the SUT
-  * perform the appropriate tests
-  * push the results into the OPNFV test result database
-
+  * perform the appropriate functional tests
+  * push the test results into the OPNFV test result database
 
 This Docker image can be integrated into CI or deployed independently.
 
-Please note that the Functest container has been designed for OPNFV, however, it
-would be possible to adapt it to any VIM+controller environment since most of the
-test cases are integrated from upstream communities.
+Please note that the Functest Docker container has been designed for OPNFV,
+however, it would be possible to adapt it to any VIM+controller environment,
+since most of the test cases are integrated from upstream communities.
 
 The test cases are described in the Functest User Guide `[2]`_
 
 
 Prerequisites
 =============
-
-The OPNFV deployment is out of the scope of this document but it can be found in
-`[4]`_. The OPNFV platform is considered as the System Under Test (SUT) in this
-document.
+The OPNFV deployment is out of the scope of this document but it can be found
+in `[4]`_. The OPNFV platform is considered as the System Under Test (SUT) in
+this document.
 
 Several prerequisites are needed for Functest:
 
     #. A Jumphost to run Functest on
-    #. Docker daemon shall be installed on the Jumphost
+    #. A Docker daemon shall be installed on the Jumphost
     #. A public/external network created on the SUT
+    #. An admin/management network created on the SUT
     #. Connectivity from the Jumphost to the SUT public/external network
-    #. Connectivity from the Jumphost to the SUT management network
+    #. Connectivity from the Jumphost to the SUT admin/management network
 
-NOTE: “Jumphost” refers to any server which meets the previous requirements.
+NOTE: **Jumphost** refers to any server which meets the previous requirements.
 Normally it is the same server from where the OPNFV deployment has been
 triggered previously.
 
 Docker installation
 -------------------
-
 .. _Ubuntu: https://docs.docker.com/installation/ubuntulinux/
 .. _RHEL: https://docs.docker.com/installation/rhel/
+.. _CentOS: https://docs.docker.com/engine/installation/linux/centos/
 
-Log on your Jumphost and install docker (e.g. for Ubuntu)::
+*Tip:* If your Jumphost is operating behind a company http proxy and/or
+Firewall, please consult first the section `Proxy Support`_, towards the end
+of this document. The section details some tips/tricks which *may* be of help
+in a proxified environment.
+
+Log on to your Jumphost and install the Docker Engine (e.g. for Ubuntu)::
 
  curl -sSL https://get.docker.com/ | sh
 
@@ -136,42 +142,50 @@ A reconnect is needed. There are 2 ways for this:
     #. Re-login to your account
     #. su - <username>
 
-References:
+If your Jumphost is based on Red Hat Enterprise Linux, or CentOS 7 linux,
+please consult the references below.
+
+References - Installing Docker Engine on different Linux Operating Systems:
 
   * Ubuntu_
   * RHEL_
+  * CentOS_
 
-External network on SUT
------------------------
+Public/External network on SUT
+------------------------------
+Some of the tests against the VIM (Virtual Infrastructure Manager) need
+connectivity through an existing public/external network in order to succeed.
+This is needed, for example, to create floating IPs to access VM instances
+through the public/external network (i.e. from the Docker container).
 
-Some of the tests against the VIM (Virtual Infrastructure Manager) need an
-existing public network to succeed. This is needed, for example, to create
-floating IPs to access instances from the public network (i.e. Docker container).
+By default, the four OPNFV installers provide a fresh installation with a
+public/external network created along with a router. Make sure that the
+public/external subnet is reachable from the Jumphost.
 
-By default, the four OPNFV installers provide a fresh installation with
-an external network created along with a router. Make sure that subnet
-is reachable from the Jumphost
+*Hint:* For the given OPNFV Installer in use, the IP sub-net address used for
+the public/external network is usually a planning item and should thus be known.
+Consult the OPNFV Configuration guide `[4]`_, and ensure you can reach each
+node in the SUT, from the Jumphost using the 'ping' command using the
+respective IP address on the public/external network for each node in the SUT.
+(The details of how to determine the needed IP addresses for each node in the
+SUT may vary according to the used installer and are therefore ommitted here.)
 
-
-Connectivity to OPNFV management network
-----------------------------------------
-
-Some of the Functest tools need to have access to the OpenStack management
+Connectivity to OPNFV admin/management network
+----------------------------------------------
+Some of the Functest tools need to have access to the OpenStack admin/management
 network of the controllers `[1]`_.
 
-For this reason, an interface shall be configured in the Jumphost in the
-OpenStack management network range.
+For this reason, an interface shall be configured in the Jumphost in the OpenStack admin/management network range.
 
-For example, if the management network is on VLAN 300 and subnet 192.168.1.0/24
-and assuming that eth1 is the physical interface with access to that subnet::
+For example, if the admin/management network is using VLAN 300 and subnet 192.168.1.0/24 and assuming that eth1 is the
+physical interface with access to that subnet::
 
     ip link add name eth1.300 link eth1 type vlan id 300
     ip link set eth1.300 up
     ip addr add 192.168.1.66/24 dev eth1.300
 
-This is just an example about how to configure an interface with vlan, but it might
-differ depending on the deployment settings on each installer. Check the
-corresponding installer instructions for more info.
+This is just an example about how to configure an interface with vlan, but it might differ depending on the deployment
+settings on each installer. Check the corresponding installer instructions for more precise instructions.
 
 
 Installation and configuration
@@ -179,10 +193,8 @@ Installation and configuration
 
 .. include:: ./configguide.rst
 
-
 Integration in CI
 =================
-
 In CI we use the Docker image and execute the appropriate commands within the
 container from Jenkins.
 
@@ -245,7 +257,6 @@ Docker clean in functest-cleanup builder `[3]`_::
     fi
 
 
-
 References
 ==========
 .. _`[1]`: https://ask.openstack.org/en/question/68144/keystone-unable-to-use-the-public-endpoint/
@@ -262,7 +273,3 @@ IRC support channel: #opnfv-testperf
 
 .. _opnfvmain: http://www.opnfv.org
 .. _opnfvfunctest: https://wiki.opnfv.org/opnfv_functional_testing
-.. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
-.. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
-.. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
-.. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.yaml
