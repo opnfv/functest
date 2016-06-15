@@ -16,7 +16,7 @@ Check OpenStack Networks
     [Documentation]    Checking OpenStack Neutron for known networks
     [Tags]    Network Neutron OpenStack
     Log    ${X-AUTH}
-    ${resp}    get    OSSession    ${OSREST}
+    ${resp}    get request    OSSession    ${OSREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${OSResult}    To Json    ${resp.content}
     Set Suite Variable    ${OSResult}
@@ -26,7 +26,7 @@ Check OpenDaylight Networks
     [Documentation]    Checking OpenDaylight Neutron API for known networks
     [Tags]    Network Neutron OpenDaylight
     Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
-    ${resp}    get    ODLSession    ${ODLREST}
+    ${resp}    get request    ODLSession    ${ODLREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${ODLResult}    To Json    ${resp.content}
     Set Suite Variable    ${ODLResult}
@@ -36,7 +36,7 @@ Create Network
     [Documentation]    Create new network in OpenStack
     [Tags]    Create Network OpenStack Neutron
     Log    ${postNet}
-    ${resp}    post    OSSession    ${OSREST}    data=${postNet}
+    ${resp}    post request    OSSession    ${OSREST}    data=${postNet}
     Should be Equal As Strings    ${resp.status_code}    201
     ${result}    To JSON    ${resp.content}
     ${result}    Get From Dictionary    ${result}    network
@@ -49,5 +49,5 @@ Create Network
 Check Network
     [Documentation]    Check network created in OpenDaylight
     [Tags]    Check    Network OpenDaylight
-    ${resp}    get    ODLSession    ${ODLREST}/${NetID}
+    ${resp}    get request    ODLSession    ${ODLREST}/${NetID}
     Should be Equal As Strings    ${resp.status_code}    200

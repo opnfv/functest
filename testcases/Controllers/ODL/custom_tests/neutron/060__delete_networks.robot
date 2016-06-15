@@ -15,7 +15,7 @@ Delete Network
     [Documentation]    Delete network in OpenStack
     [Tags]    Delete Network OpenStack Neutron
     Log    ${postNet}
-    ${resp}    delete    OSSession    ${OSREST}
+    ${resp}    delete request    OSSession    ${OSREST}
     Should be Equal As Strings    ${resp.status_code}    204
     Log    ${resp.content}
     sleep    2
@@ -24,10 +24,10 @@ Check Network deleted
     [Documentation]    Check network deleted in OpenDaylight
     [Tags]    Check  Network OpenDaylight
     Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
-    ${resp}    get    ODLSession    ${ODLREST}
+    ${resp}    get request    ODLSession    ${ODLREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${ODLResult}    To Json    ${resp.content}
     Set Suite Variable    ${ODLResult}
     Log    ${ODLResult}
-    ${resp}    get    ODLSession    ${ODLREST}/${NetID}
+    ${resp}    get request    ODLSession    ${ODLREST}/${NetID}
     Should be Equal As Strings    ${resp.status_code}    404
