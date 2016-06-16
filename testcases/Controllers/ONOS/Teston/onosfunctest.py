@@ -192,7 +192,7 @@ def main():
             logger.error("Unable to set ONOS criteria")
 
         functest_utils.push_results_to_db("functest",
-                                          "ONOS",
+                                          "onos",
                                           logger,
                                           start_time,
                                           stop_time,

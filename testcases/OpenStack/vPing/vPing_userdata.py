@@ -362,7 +362,7 @@ def main():
         try:
             logger.debug("Pushing vPing userdata results into DB...")
             functest_utils.push_results_to_db("functest",
-                                              "vPing_userdata",
+                                              "vping_userdata",
                                               logger,
                                               start_time,
                                               stop_time,

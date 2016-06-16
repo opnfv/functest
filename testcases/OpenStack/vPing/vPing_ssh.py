@@ -429,7 +429,7 @@ def main():
         try:
             logger.debug("Pushing vPing SSH results into DB...")
             functest_utils.push_results_to_db("functest",
-                                              "vPing",
+                                              "vping_ssh",
                                               logger,
                                               start_time,
                                               stop_time,

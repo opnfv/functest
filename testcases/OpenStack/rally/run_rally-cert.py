@@ -535,11 +535,16 @@ def main():
     if total_success >= 90:
         status = "passed"
 
+    if args.sanity:
+        case_name = "rally_sanity"
+    else:
+        case_name = "rally_full"
+
     if args.report:
         logger.debug("Pushing Rally summary into DB...")
         functest_utils.push_results_to_db("functest",
-                                          "Rally",
-                                          logger,
+                                          case_name,
+                                          None,
                                           start_time,
                                           stop_time,
                                           status,
