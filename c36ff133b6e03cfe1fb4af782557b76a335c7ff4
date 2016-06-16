@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_f8f8374b",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T12:47:44Z",
+      "side": 1,
+      "message": "This is the first time we face this problem. This workaround at least will inform that the credentials are not sourced, but it shouldnt happen since they are sourced in exec_test.sh",
+      "parentUuid": "5a7ca5a3_d8769b06",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 16
+      },
+      "revId": "c36ff133b6e03cfe1fb4af782557b76a335c7ff4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_f81cb7c3",
         "filename": "utils/openstack_utils.py",
         "patchSetId": 2
