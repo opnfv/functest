@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_f81cb7c3",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-06-16T12:29:46Z",
+      "side": 1,
+      "message": "Could you use a loop ?",
+      "revId": "c36ff133b6e03cfe1fb4af782557b76a335c7ff4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
