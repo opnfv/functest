@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_5d359d44",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-16T08:50:06Z",
+      "side": 1,
+      "message": "I think it makes sense to cut the line at 80 character...easier to review",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_9d2b35eb",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-16T08:50:06Z",
+      "side": 1,
+      "message": "shall we indicate that for joid, it is the way to give credentals, the fetch_creds will not be effective, creds must be provided with this method",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_fd4589b3",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-16T08:50:06Z",
+      "side": 1,
+      "message": "shall we not introduce the env status before the env prepare?",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_3d3c612f",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-16T08:50:06Z",
+      "side": 1,
+      "message": "missing space",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_9d1255b3",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-16T08:50:06Z",
+      "side": 1,
+      "message": "somehow a bit redundant with previous section.\nCould be merged with previous section \nBut no problem to keep a dedicated section, maybe the right place to indicate joid limitation here.",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
