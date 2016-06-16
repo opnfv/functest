@@ -41,6 +41,21 @@ def get_credentials(service):
                     requesting the credentials.
     """
     creds = {}
+
+    # Check that the env vars exists:
+    if os.getenv('OS_USERNAME') is None:
+        print "OS_USERNAME is not exported as an env variable."
+        exit(-1)
+    if os.getenv('OS_PASSWORD') is None:
+        print "OS_PASSWORD is not exported as an env variable."
+        exit(-1)
+    if os.getenv('OS_AUTH_URL') is None:
+        print "OS_AUTH_URL is not exported as an env variable."
+        exit(-1)
+    if os.getenv('OS_TENANT_NAME') is None:
+        print "OS_TENANT_NAME is not exported as an env variable."
+        exit(-1)
+
     # Unfortunately, each of the OpenStack client will request slightly
     # different entries in their credentials dict.
     if service.lower() in ("nova", "cinder"):
@@ -53,11 +68,10 @@ def get_credentials(service):
     # The most common way to pass these info to the script is to do it through
     # environment variables.
     creds.update({
-        "username": os.environ.get('OS_USERNAME', "admin"),
-        password: os.environ.get("OS_PASSWORD", 'admin'),
-        "auth_url": os.environ.get("OS_AUTH_URL",
-                                   "http://192.168.20.71:5000/v2.0"),
-        tenant: os.environ.get("OS_TENANT_NAME", "admin"),
+        "username": os.environ.get("OS_USERNAME"),
+        password: os.environ.get("OS_PASSWORD"),
+        "auth_url": os.environ.get("OS_AUTH_URL"),
+        tenant: os.environ.get("OS_TENANT_NAME")
     })
     cacert = os.environ.get("OS_CACERT")
     if cacert is not None:
