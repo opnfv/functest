@@ -26,8 +26,8 @@ import glanceclient.client as glclient
 import novaclient.client as nvclient
 from neutronclient.v2_0 import client as ntclient
 
-import clearwater
-import orchestrator
+from clearwater import *
+from orchestrator import *
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
