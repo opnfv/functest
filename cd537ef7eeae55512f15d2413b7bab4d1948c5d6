@@ -19,6 +19,74 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_bd307157",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T09:14:40Z",
+      "side": 1,
+      "message": "can you include here an example of the output that this commands gives?",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_7d3ad937",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T09:14:40Z",
+      "side": 1,
+      "message": "However, as of Colorado release, it is possible to omit this parameters.",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_dd48cdce",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T09:14:40Z",
+      "side": 1,
+      "message": "Since Colorado, this 2 envs are not mandatory, but recommended if using OPNFV installers. We can say that Functest can be run on non OPNFV official installers as well (devstack, for example), but emphasizing that it is not supported.\nSo, the minimum command would be just \"docker run -ti opnfv/functest:\u003cTagIdentifier\u003e /bin/bash\"",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_1d3f2527",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T09:14:40Z",
+      "side": 1,
+      "message": "Shall we use also here \u003cTagIdentifier\u003e? Then we don\u0027t need to change this for every SR (colorado.2.0, colorado.3.0,...)",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_9d2b35eb",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 1
@@ -30,6 +98,103 @@
       "writtenOn": "2016-06-16T08:50:06Z",
       "side": 1,
       "message": "shall we indicate that for joid, it is the way to give credentals, the fetch_creds will not be effective, creds must be provided with this method",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_1d264517",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T09:14:40Z",
+      "side": 1,
+      "message": "Let\u0027s include also a small section about recommended env variables like CI_DEBUG and DEPLOY_SCENARIO. Please refer to this file for more info https://git.opnfv.org/cgit/releng/tree/jjb/functest/set-functest-env.sh#n36",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_5d835dcc",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T09:14:40Z",
+      "side": 1,
+      "message": "careful, in some cases it is not called instack, but undercloud. See https://git.opnfv.org/cgit/releng/tree/jjb/functest/set-functest-env.sh#n12",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_dd1f6db6",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T09:14:40Z",
+      "side": 1,
+      "message": "Since we are talking about Apex, instead of \"Openstack credential file\" I would say \"overcloudrc\", since there are actually 2 credentials files (stackrc, overcloudrc)",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_dd768d06",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T09:14:40Z",
+      "side": 1,
+      "message": "s/folders/directories/g (folders is a Windows name, let\u0027s put it right this time)",
+      "range": {
+        "startLine": 211,
+        "startChar": 31,
+        "endLine": 211,
+        "endChar": 38
+      },
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_5dd11dcc",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T09:14:40Z",
+      "side": 1,
+      "message": "I would rather say: This directory includes the needed files and tools to build the Functest Docker image.",
+      "range": {
+        "startLine": 220,
+        "startChar": 28,
+        "endLine": 220,
+        "endChar": 36
+      },
       "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -81,6 +246,40 @@
       "writtenOn": "2016-06-16T08:50:06Z",
       "side": 1,
       "message": "somehow a bit redundant with previous section.\nCould be merged with previous section \nBut no problem to keep a dedicated section, maybe the right place to indicate joid limitation here.",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_7dbbb972",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T09:14:40Z",
+      "side": 1,
+      "message": "this is incomplete, you also need to specify -i \u003cinstaller_name\u003e and -a \u003cinstaller_ip\u003e. See https://git.opnfv.org/cgit/releng/tree/utils/fetch_os_creds.sh#n13 for more info",
+      "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_dda9ad25",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-16T09:14:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this section. I will think through and we might remove it to avoid confusion.",
       "revId": "cd537ef7eeae55512f15d2413b7bab4d1948c5d6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
