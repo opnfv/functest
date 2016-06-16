@@ -134,7 +134,7 @@ function run_test(){
             # ${repos_dir}/ovno/Testcases/RunTests.sh
         ;;
         "security_scan")
-            echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/stackrc for security_scan test.."
+            echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/stackrc for undercloud .."
             source ${FUNCTEST_CONF_DIR}/stackrc
             python ${FUNCTEST_REPO_DIR}/testcases/security_scan/security_scan.py --config ${FUNCTEST_REPO_DIR}/testcases/security_scan/config.ini
         ;;
