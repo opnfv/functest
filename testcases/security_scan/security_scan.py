@@ -58,7 +58,7 @@ setup.getockey()
 com = 'sudo hiera admin_password'
 setup = connect.SetUp(com)
 keypass = setup.keystonepass()
-auth = v2.Password(auth_url='http://{0}:5000/v2.0'.format(OS_AUTH_URL),
+auth = v2.Password(auth_url=OS_AUTH_URL,
                    username='admin',
                    password=str(keypass).rstrip(),
                    tenant_name='admin')
