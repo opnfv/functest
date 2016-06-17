@@ -122,8 +122,8 @@ def step_failure(step_name, error_msg):
     if step_name == "sig_test":
         status = "PASS"
     functest_utils.push_results_to_db("functest",
-                                      "vIMS",
-                                      logger,
+                                      "vims",
+                                      None,
                                       start_time,
                                       stop_time,
                                       status,

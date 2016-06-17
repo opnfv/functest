@@ -333,11 +333,16 @@ def run_tempest(OPTION):
                         "tests": int(num_tests), "failures": int(num_failures),
                         "errors": error_logs}
         logger.info("Results: " + str(json_results))
-        # TODO split Tempest smoke and full
+        # split Tempest smoke and full
+        if "smoke" in args.mode:
+            case_name = "tempest_smoke_serial"
+        else:
+            case_name = "tempest_full_parallel"
+
         try:
             ft_utils.push_results_to_db("functest",
-                                        "Tempest",
-                                        logger,
+                                        case_name,
+                                        None,
                                         start_time,
                                         stop_time,
                                         status,

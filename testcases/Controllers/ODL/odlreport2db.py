@@ -115,7 +115,7 @@ def main(argv):
         data['description'] = all_data['suite']['@name']
         data['version'] = all_data['@generator']
         data['test_project'] = "functest"
-        data['case_name'] = "ODL"
+        data['case_name'] = "odl"
         data['pod_name'] = pod
         data['installer'] = installer
 
@@ -144,7 +144,7 @@ def main(argv):
         if (tests_failed < 1):
             status = "PASS"
 
-        functest_utils.push_results_to_db("functest",
+        functest_utils.push_results_to_db(data['test_project'],
                                           data['case_name'],
                                           None,
                                           start_time,
