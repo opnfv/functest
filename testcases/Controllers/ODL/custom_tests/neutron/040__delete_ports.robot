@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation     Checking Port deleted in OpenStack are deleted also in OpenDaylight
-Suite Setup       Create Session    OSSession     http://${NEUTRON}:9696    headers=${X-AUTH}
+Suite Setup       Start Suite
 Suite Teardown    Delete All Sessions
 Library           RequestsLibrary
 Variables         ../../../variables/Variables.py
@@ -23,7 +23,6 @@ Delete New Port
 Check Port Deleted
     [Documentation]    Check port deleted in OpenDaylight
     [Tags]    Check port deleted OpenDaylight
-    Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
     ${resp}    get request    ODLSession    ${ODLREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${ODLResult}    To Json    ${resp.content}
@@ -31,3 +30,14 @@ Check Port Deleted
     Log    ${ODLResult}
     ${resp}    get request    ODLSession    ${ODLREST}/${PORTID}
     Should be Equal As Strings    ${resp.status_code}    404
+
+*** Keywords ***
+Check Port Exists
+    [Arguments]    ${portid}
+    ${resp}    get request    ODLSession    ${ODLREST}/${portid}
+    Should be Equal As Strings    ${resp.status_code}    200
+
+Start Suite
+    Create Session    OSSession    http://${NEUTRON}:9696    headers=${X-AUTH}
+    Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
+    Check Port Exists    ${PORTID}

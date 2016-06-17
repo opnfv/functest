@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation     Checking Subnets deleted in OpenStack are deleted also in OpenDaylight
-Suite Setup       Create Session    OSSession     http://${NEUTRON}:9696    headers=${X-AUTH}
+Suite Setup       Start Suite
 Suite Teardown    Delete All Sessions
 Library           RequestsLibrary
 Variables         ../../../variables/Variables.py
@@ -23,7 +23,6 @@ Delete New subnet
 Check New subnet deleted
     [Documentation]    Check subnet deleted in OpenDaylight
     [Tags]    Check subnet deleted OpenDaylight
-    Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
     ${resp}    get request    ODLSession    ${ODLREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${ODLResult}    To Json    ${resp.content}
@@ -31,3 +30,14 @@ Check New subnet deleted
     Log    ${ODLResult}
     ${resp}    get request    ODLSession    ${ODLREST}/${SUBNETID}
     Should be Equal As Strings    ${resp.status_code}    404
+
+*** Keywords ***
+Check Subnet Exists
+    [Arguments]    ${subnetid}
+    ${resp}    get request    ODLSession    ${ODLREST}/${subnetid}
+    Should be Equal As Strings    ${resp.status_code}    200
+
+Start Suite
+    Create Session    OSSession    http://${NEUTRON}:9696    headers=${X-AUTH}
+    Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
+    Check Subnet Exists    ${SUBNETID}

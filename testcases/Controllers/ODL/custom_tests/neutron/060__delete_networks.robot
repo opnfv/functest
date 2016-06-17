@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation     Checking Network deleted in OpenStack are deleted also in OpenDaylight
-Suite Setup       Create Session    OSSession     http://${NEUTRON}:9696    headers=${X-AUTH}
+Suite Setup       Start Suite
 Suite Teardown    Delete All Sessions
 Library           RequestsLibrary
 Variables         ../../../variables/Variables.py
@@ -23,11 +23,21 @@ Delete Network
 Check Network deleted
     [Documentation]    Check network deleted in OpenDaylight
     [Tags]    Check  Network OpenDaylight
-    Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
     ${resp}    get request    ODLSession    ${ODLREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${ODLResult}    To Json    ${resp.content}
     Set Suite Variable    ${ODLResult}
     Log    ${ODLResult}
-    ${resp}    get request    ODLSession    ${ODLREST}/${NetID}
+    ${resp}    get request    ODLSession    ${ODLREST}/${NETID}
     Should be Equal As Strings    ${resp.status_code}    404
+
+*** Keywords ***
+Check Network Exists
+    [Arguments]    ${netid}
+    ${resp}    get request    ODLSession    ${ODLREST}/${netid}
+    Should be Equal As Strings    ${resp.status_code}    200
+
+Start Suite
+    Create Session    OSSession    http://${NEUTRON}:9696    headers=${X-AUTH}
+    Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
+    Check Network Exists    ${NETID}
