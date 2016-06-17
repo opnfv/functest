@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_efd86a55",
+        "filename": "docs/com/pres/testapi.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-17T10:05:01Z",
+      "side": 1,
+      "message": "possible to use css fro Berlin if you want\nOPNFV-Berlin.css (already in repo)",
+      "revId": "1b9e194e59a3156a82ca93cd0a2cf11360f362a9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_8fdd3645",
+        "filename": "docs/com/pres/testapi.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-17T10:05:01Z",
+      "side": 1,
+      "message": "title-bg-berlin.png",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "1b9e194e59a3156a82ca93cd0a2cf11360f362a9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_afe27201",
+        "filename": "docs/com/pres/testapi.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-17T10:05:01Z",
+      "side": 1,
+      "message": "logo-OPNFV-Berlin.png",
+      "revId": "1b9e194e59a3156a82ca93cd0a2cf11360f362a9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
