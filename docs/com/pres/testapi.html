@@ -62,9 +62,9 @@
                     </section>
                     <section data-markdown>
                     ## Give a consistant view for
+                    * Test resources (Pods)
                     * Test projects
                     * Test cases
-                    * Test resources (Pods)
                     * Test results
                     </section>
 
@@ -87,21 +87,21 @@
                     # API overview
                     </section>
                     <section data-markdown>
+					## API storage structure
+					![testapi](https://wiki.opnfv.org/download/attachments/2926452/results_collection_structure.png?version=1&modificationDate=1459196347000&api=v2 "OPNFV API page")
+                    </section>
+                    <section data-markdown>
+					## API in Brahmaputra
+					![testapi](../img/testapi0.png)
+					https://wiki.opnfv.org/display/functest/Collection+Of+Test+Results
+                    </section>
+
+                    <section data-markdown>
                     ## API in Brahmaputra
                     * Tornado + MongoDB
                     * Simple data models aggreed with the testing group
                     * No unit tests
                     * Wiki and rst documentation
-                    </section>
-
-                    <section data-markdown>
-					## API in Brahmaputra
-					![testapi](https://wiki.opnfv.org/download/attachments/2926452/results_collection_structure.png?version=1&modificationDate=1459196347000&api=v2 "OPNFV API page")
-					</section>
-                    <section data-markdown>
-					## API in Brahmaputra
-					![testapi](../img/testapi0.png)
-					https://wiki.opnfv.org/display/functest/Collection+Of+Test+Results
                     </section>
 
                     <section data-markdown>
@@ -137,8 +137,8 @@
 						testresults.opnfv.org/test/testapi => testresults.opnfv.org/test/api/v1
 						
 						http://testresults.opnfv.org/test/api/v1/projects
-						http://testresults.opnfv.org/test/api/v1/projects/yardstick/cases
-                        http://testresults.opnfv.org/test/api/v1/results?case=Tempest&period=1					
+						http://testresults.opnfv.org/test/api/v1/projects/qtip/cases
+						http://testresults.opnfv.org/test/api/v1/results?case=Tempest&period=1
 						</section>
 						<section>
 						<h3>One new field for pods</h3>
