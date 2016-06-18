@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_02201df6",
+        "filename": "testcases/vIMS/requirements.pip",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-18T18:36:53Z",
+      "side": 1,
+      "message": "Shall we move this to here? https://git.opnfv.org/cgit/functest/tree/docker/requirements.pip",
+      "revId": "e7d9a9c4b8017464e76fdbe11945f8c45b6ee4f5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
