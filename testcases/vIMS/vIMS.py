@@ -89,6 +89,7 @@ CW_REQUIERMENTS = functest_yaml.get("vIMS").get(
 CFY_DEPLOYMENT_DURATION = 0
 CW_DEPLOYMENT_DURATION = 0
 
+TESTCASE_START_TIME = time.time()
 RESULTS = {'orchestrator': {'duration': 0, 'result': ''},
            'vIMS': {'duration': 0, 'result': ''},
            'sig_test': {'duration': 0, 'result': ''}}
@@ -117,14 +118,13 @@ def step_failure(step_name, error_msg):
     set_result(step_name, 0, error_msg)
     status = "FAIL"
     # in case of failure starting and stoping time are not correct
-    start_time = time.time()
-    stop_time = start_time
+    stop_time = time.time()
     if step_name == "sig_test":
         status = "PASS"
     functest_utils.push_results_to_db("functest",
                                       "vims",
                                       None,
-                                      start_time,
+                                      TESTCASE_START_TIME,
                                       stop_time,
                                       status,
                                       RESULTS)
@@ -244,9 +244,9 @@ def test_clearwater():
             logger.error("Unable to set test status")
 
         functest_utils.push_results_to_db("functest",
-                                          "vIMS",
+                                          "vims",
                                           logger,
-                                          start_time_ts,
+                                          TESTCASE_START_TIME,
                                           end_time_ts,
                                           status,
                                           RESULTS)
