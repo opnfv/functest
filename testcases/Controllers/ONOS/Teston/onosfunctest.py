@@ -62,7 +62,7 @@ def RunScript(testname):
     os.system(runtest)
 
 
-def DownloadCodes(url="https://github.com/sunyulin/OnosSystemTest.git"):
+def DownloadCodes(url="https://github.com/wuwenbin2/OnosSystemTest.git"):
     """
     Download Onos Teston codes
     Parameters:
