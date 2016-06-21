@@ -75,7 +75,7 @@ RUN git clone https://github.com/openstack/tempest.git ${repos_dir}/tempest
 RUN git clone https://git.opendaylight.org/gerrit/p/integration/test.git ${repos_dir}/odl_test
 RUN git clone -b stable https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
 RUN git clone https://github.com/openstack/networking-bgpvpn ${repos_dir}/bgpvpn
-RUN git clone https://gerrit.onosproject.org/OnosSystemTest  ${repos_dir}/onos
+RUN git clone https://github.com/wuwenbin2/OnosSystemTest.git ${repos_dir}/onos
 RUN git clone https://github.com/opnfv/promise ${repos_dir}/promise
 RUN git clone https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
 
