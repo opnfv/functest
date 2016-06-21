@@ -268,7 +268,7 @@ class environment(connection):
         self.AddKnownHost(handle, self.OC2, "karaf", "karaf")
         self.AddKnownHost(handle, self.OC3, "karaf", "karaf")
         self.DownLoadCode(handle,
-                          'https://github.com/sunyulin/OnosSystemTest.git')
+                          'https://github.com/wuwenbin2/OnosSystemTest.git')
         # self.DownLoadCode(handle, 'https://gerrit.onosproject.org/onos')
         if self.masterusername == 'root':
             filepath = '/root/'
