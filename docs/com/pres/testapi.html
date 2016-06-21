@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="../css/reveal.css">
-		<link rel="stylesheet" href="../css/theme/OPNFV.css" id="theme">
+		<link rel="stylesheet" href="../css/theme/OPNFV-Berlin.css" id="theme">
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="../lib/css/zenburn.css">
@@ -40,176 +40,149 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 
-				<section data-background="../img/title-bg.png" data-background-transition="none">
-                     <h1>Test API</h1>
-                     <h3>Clean, Easy, Complete</h3>
-                     <br>
-					 <h4>OPNFV testing community</h4>
-					 <h5>OPNFV Design Summit, 20/6/2016, Berlin</h5>
-					 <br>
+				<section data-background="../img/title-bg-berlin.png" data-background-transition="none">
+					<br><br><br><br><br>
+					<h1>Test API</h1>
+					<h3>Clean, Easy, Complete</h3>
+					<br>
+						<h4>OPNFV testing community</h4>
+						<h5>OPNFV Design Summit, 20/6/2016, Berlin</h5>
+					<br>
 				</section>
 
 				<section data-markdown>
 					# Agenda
-					* A test API: what for?
+					* testAPI: what for?
 					* API overview
 					* API evolution
+					* Roadmap
 				</section>
 
-                <section>
-                    <section data-markdown>
-                    # A test API: what for?
-                    </section>
-                    <section data-markdown>
-                    ## Give a consistant view for
-                    * Test resources (Pods)
-                    * Test projects
-                    * Test cases
-                    * Test results
-                    </section>
-
-                    <section data-markdown>
-                    ## Unify result display
-                    * From many projects
-                    * Many formats (log, html, json, ..)
-                    * Many locations (in VM, Jumphost, external DB,...)
-                    </section>
-
-                    <section data-markdown>
-                    ## Help building
-                    * Dashboards
-                    * Automatic reporting
-                    </section>
-                </section>
-
-                <section>
-                    <section data-markdown>
-                    # API overview
-                    </section>
-                    <section data-markdown>
-					## API storage structure
-					![testapi](https://wiki.opnfv.org/download/attachments/2926452/results_collection_structure.png?version=1&modificationDate=1459196347000&api=v2 "OPNFV API page")
-                    </section>
-                    <section data-markdown>
-					## API in Brahmaputra
-					![testapi](../img/testapi0.png)
-					https://wiki.opnfv.org/display/functest/Collection+Of+Test+Results
-                    </section>
-
-                    <section data-markdown>
-                    ## API in Brahmaputra
-                    * Tornado + MongoDB
-                    * Simple data models aggreed with the testing group
-                    * No unit tests
-                    * Wiki and rst documentation
-                    </section>
-
-                    <section data-markdown>
-                    ## Lessons learned in B.
-                    * Wiki documentation is painful
-                    * Result model too simple
-                     * version used instead of scenario
-                     * no version
-                     * no overall criteria (PASS/FAIL)
-                    * need unit tests for data model evolution
-                    </section>
-                    <section data-markdown>
-                    ## Colorado refactoring
-                    * Done by Serena Feng (ZTE)
-                    * Update of the data model (based on lessons learned)
-                    * New swagger tornado framework for the doc
-                    * URL and Mongo collection renaming
-                    * Scripts to manage backup/restore/DB update
-                    * Setup scripts
-                    * Unit tests
-                    </section>
-                </section>
-
-                <section>
-                    <section data-markdown>
-						# Result management changes
-                    </section>
-                    
-                    <section data-markdown>
-						## main changes
-						An URI change...
-						
-						testresults.opnfv.org/test/testapi => testresults.opnfv.org/test/api/v1
-						
-						http://testresults.opnfv.org/test/api/v1/projects
-						http://testresults.opnfv.org/test/api/v1/projects/qtip/cases
-						http://testresults.opnfv.org/test/api/v1/results?case=Tempest&period=1
-						</section>
-						<section>
-						<h3>One new field for pods</h3>
-						<table>
-							<thead>
-								<tr>
-									<th>Field</th>
-									<th>Brahmaputra</th>
-									<th>Colorado</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>role</td>
-									<td>N.R</td>
-									<td>community_pod, ci_pod, ..</td>
-								</tr>
-							</tbody>
-						</table>                        
-						</section>
-                        <section>
-						<h3>New fields and filters for results</h3>
-						<table>
-							<thead>
-								<tr>
-									<th>Item</th>
-									<th>Brahmaputra</th>
-									<th>Colorado</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>date</td>
-									<td>creation_date</td>
-									<td>start_date and stop_date</td>
-								</tr>
-								<tr>
-									<td>version</td>
-									<td>used as scenario</td>
-									<td>git version</td>
-								</tr>
-								<tr>
-									<td>scenario</td>
-									<td>N.R</td>
-									<td>used for scenario</td>
-								</tr>
-								<tr>
-									<td>criteria</td>
-									<td>N.R</td>
-									<td>PASS/FAILED</td>
-								</tr>
-								<tr>
-									<td>trust_indicator</td>
-									<td>N.R</td>
-									<td>between 0 and 1</td>
-								</tr>
-								<tr>
-									<td>last</td>
-									<td>N.R</td>
-									<td>get last N results</td>
-								</tr>
-							</tbody>
-						</table>
+				<section>
+					<section data-markdown>
+						# test API: what for?
 					</section>
-                    <section data-markdown>
+					<section data-markdown>
+						## Consistant view for
+						* Resources (Pods)
+						* Projects
+						* Test cases
+						* Results
+					</section>
+	
+					<section data-markdown>
+						## Status Currently
+						* From many projects
+						* Many formats (log, html, json, ..)
+						* Many locations (in VM, Jumphost, external DB,...)
+					</section>
+					<section data-markdown>
+						## Achieve using testAPI
+						* Uniform API: testAPI
+						* Uniform format: JSON
+						* Universal Location: http://testresults.opnfv.org
+					</section>
+	
+					<section data-markdown>
+						## Help building
+						* Dashboards
+						* Automatic reporting
+					</section>
+				</section>
+
+				<section>
+					<section data-markdown>
+						# API overview
+					</section>
+					<section data-markdown>
+						## Storage structure
+						![testapi](https://wiki.opnfv.org/download/attachments/2926452/results_collection_structure.png?version=1&modificationDate=1459196347000&api=v2 "OPNFV API page")
+					</section>
+					<section data-markdown>
+						## API in Brahmaputra
+						![testapi](../img/testapi0.png)
+						https://wiki.opnfv.org/display/functest/Collection+Of+Test+Results
+					</section>
+
+					<section data-markdown>
+						## API status in Brahmaputra
+						* Simple data models aggreed with the testing group
+						* No unit tests
+						* Wiki and rst documentation
+					</section>
+
+					<section data-markdown>
+						## Lessons learned in B.
+						* Painful wiki documentation
+						* Simple result model
+						 * Misuse version as scenario
+						 * No version actually
+						 * No overall criteria (PASS/FAIL)
+						* Difficult refactoring
+					</section>
+					<section>
+						<h2>Colorado refactoring</h2>
+						<ul>Unit tests
+						<li>Update of the data model</li>
+						<li>Swagger tornado framework for the doc</li>
+						<li>URL and MongoDB collection renaming</li>
+						<li>Scripts to support backup/restore/update DB</li>
+						<li>Support installation</li>
+                        </ul>
+                        <p class="fragment fade-up"><b>All done in Colorado!</b></p>
+					</section>						
+				</section>
+
+				<section>
+					<section data-markdown>
+						# API Evoluation
+					</section>
+					
+					<section>
+						<h2> URI changes...</h2>
+						<div style="text-align:left""> 
+							<p> testresults.opnfv.org/test/testapi => <br>testresults.opnfv.org/test/api/v1 </p>
+			
+							<p> http://testresults.opnfv.org/test/api/v1/<b>pods</b></p>
+							<p> http://testresults.opnfv.org/test/api/v1/<b>projects</b></p>
+							<p> http://testresults.opnfv.org/test/api/v1/projects/qtip/<b>cases</b></p>
+							<p> http://testresults.opnfv.org/test/api/v1/<b>results</b></p>
+						</div>
+					</section>
+					<section data-markdown>
+						## One new field for pods
+						| Field | Colorado |
+						| :--- | :--- |
+						| role | community_pod, ci_pod, .. |
+					</section>
+					<section data-markdown>
+						## Changed fields for results
+						| Item | Brahmaputra | Colorado |
+						| :--- | :--- | :--- |
+						| date | creation_date | start_date and stop_date |
+						| version | used as scenario | git version |
+					</section>
+					<section data-markdown>
+						## New fields for results
+						| Item | Colorado |
+						| :--- | :--- |
+						| scenario | used for scenario |
+						| criteria | Pass/Failed |
+						| trust_indicator | between 0 and 1|
+					</section>
+					<section data-markdown>
+						## One new filter for results
+						| Item | Colorado |
+						| :--- | :--- |
+						| last | get last N results|
+					</section>
+					<section data-markdown>
 						http://testresults.opnfv.org/test/swagger/spec.html
 						![alt text](../img/testapi1.png "Test API swagger interface")
-                    </section>
-<section>
-					<h2>unit tests</h2>
-					<pre><code class="hljs" data-trim contenteditable>
+					</section>
+					<section>
+						<h2>unit tests</h2>
+						<pre><code class="hljs" data-trim contenteditable>
 umry8364@umry8364-Latitude-E6400:~/Dev/OPNFV/releng/utils/test/result_collection_api$ ./run_test.sh 
 Tests running...
 WARNING:tornado.general:404 GET /dashboard/v1/results?case=vPing&pod=zte-pod1&version=C&installer=fuel&period=5 (127.0.0.1): Project name missing
@@ -223,18 +196,33 @@ WARNING:tornado.access:404 PUT /api/v1/projects/functest/cases/notFound (127.0.0
 
 Ran 74 tests in 1.848s
 OK
-					</code></pre>
-				</section>
-                </section>
-				<section>
-					<h3>Thank you</h3>
-					<img width="600"  data-src="../img/colorado.png" alt="tests">
+						</code></pre>
+					</section>
 				</section>
 
+				<section>
+					<section data-markdown>
+						# Roadmap
+					</section>
+					<section data-markdown>
+						## Roadmap
+						* Dockerized testAPI
+						* Integration with Kibana
+						* Command Line Interface
+						* Automatic update for pods/projects/testcases
+					</section>
+					<section data-markdown>
+						# suggestions ...
+					</section>
+					<section>
+						<h3>Thank you</h3>
+						<img width="600"  data-src="../img/colorado.png" alt="tests">
+					</section>
+				</section>
 			</div>
-            <div class='footer'>
-				 <img src="../img/logo-OPNFV.png" alt="OPNFV logo">
-	        </div>
+			<div class='footer'>
+				 <img src="../img/logo-OPNFV-Berlin.png" alt="OPNFV logo">
+			</div>
 		</div>
 
 		<script src="../lib/js/head.min.js"></script>
