@@ -45,7 +45,7 @@ if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
 
-ONOSCI_PATH = REPO_PATH + 'testcases/Controllers/ONOS/Teston/'
+ONOSCI_PATH = ONOS_REPO_PATH + "/"
 starttime = datetime.datetime.now()
 
 HOME = os.environ['HOME'] + "/"
@@ -57,12 +57,12 @@ def RunScript(testname):
     Parameters:
     testname: ONOS Testcase Name
     """
-    runtest = ONOSCI_PATH + "OnosSystemTest/TestON/bin/cli.py run " + testname
+    runtest = ONOSCI_PATH + "onos/TestON/bin/cli.py run " + testname
     logger.debug("Run script " + testname)
     os.system(runtest)
 
 
-def DownloadCodes(url="https://github.com/sunyulin/OnosSystemTest.git"):
+def DownloadCodes(url="https://github.com/wuwenbin2/OnosSystemTest.git"):
     """
     Download Onos Teston codes
     Parameters:
@@ -74,7 +74,7 @@ def DownloadCodes(url="https://github.com/sunyulin/OnosSystemTest.git"):
 
 
 def GetResult():
-    LOGPATH = ONOSCI_PATH + "OnosSystemTest/TestON/logs"
+    LOGPATH = ONOSCI_PATH + "onos/TestON/logs"
     cmd = "grep -rnh " + "Fail" + " " + LOGPATH
     Resultbuffer = os.popen(cmd).read()
     # duration = datetime.datetime.now() - starttime
@@ -156,7 +156,7 @@ def SetOnosIpForJoid():
 
 
 def CleanOnosTest():
-    TESTONPATH = ONOSCI_PATH + "OnosSystemTest/"
+    TESTONPATH = ONOSCI_PATH + "onos/"
     cmd = "rm -rf " + TESTONPATH
     os.system(cmd)
     time.sleep(2)
@@ -166,7 +166,7 @@ def CleanOnosTest():
 def main():
     start_time = time.time()
     stop_time = start_time
-    DownloadCodes()
+    # DownloadCodes()
     if args.installer == "joid":
         logger.debug("Installer is Joid")
         SetOnosIpForJoid()
@@ -202,7 +202,7 @@ def main():
     except:
         logger.error("Error pushing results into Database")
 
-    CleanOnosTest()
+    # CleanOnosTest()
 
 
 if __name__ == '__main__':
