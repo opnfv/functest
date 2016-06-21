@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_a5bb7371",
+        "filename": "testcases/Controllers/ONOS/Teston/adapters/environment.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-21T11:21:26Z",
+      "side": 1,
+      "message": "Although I think this should be included in the dockerimage, so that you don\u0027t download it here. Can you move this to the Dockerfile? You have example of other repos being cloned.",
+      "revId": "9827d845acef31b37ca62033a1207e0537923d1f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
