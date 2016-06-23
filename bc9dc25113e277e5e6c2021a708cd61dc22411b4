@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_80e8a57d",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-23T07:52:41Z",
+      "side": 1,
+      "message": "ok, I see you have commented this line, then it will use the already downloaded repository, right?",
+      "revId": "bc9dc25113e277e5e6c2021a708cd61dc22411b4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
