@@ -215,7 +215,7 @@ def main():
         passes = json_data["stats"]["passes"]
         pending = json_data["stats"]["pending"]
         failures = json_data["stats"]["failures"]
-        start_time = json_data["stats"]["start"]
+        start_time_json = json_data["stats"]["start"]
         end_time = json_data["stats"]["end"]
         duration = float(json_data["stats"]["duration"]) / float(1000)
 
@@ -233,7 +233,7 @@ def main():
                 " Duration:\t%s\n"
                 "****************************************\n\n"
                 % (suites, tests, passes, pending, failures,
-                   start_time, end_time, duration))
+                   start_time_json, end_time, duration))
 
     if args.report:
         stop_time = time.time()
