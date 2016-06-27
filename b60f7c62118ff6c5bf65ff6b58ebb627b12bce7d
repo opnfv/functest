@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_1ba72851",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-06-27T13:17:41Z",
+      "side": 1,
+      "message": "Instead of assigning to a variable, you could refer to the actual output of the command. Later refer to output, not the variable.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 7
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_fb482cce",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
