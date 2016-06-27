@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_db30d058",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-27T09:09:49Z",
+      "side": 1,
+      "message": "This looks much clear. However, when there is a wiki page or official documentation about the available scenarios in Colorado, we can include that link here. For now, we can maybe highlight that not all the combinations are supported and the scenario name should be the same as the one used to install the OPNFV deployment.",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_7b35fc44",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-27T09:09:49Z",
+      "side": 1,
+      "message": "That is only used by CI\u0026Jenkins automatically, maybe we can omit this in the documentation... BUILD_TAG is a default parameter of the jenkins job, for example \"jenkins-functest-compass-baremetal-daily-master-88\". Thus, no sense to include it if running Functest manually...",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_fb482cce",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-27T09:09:49Z",
+      "side": 1,
+      "message": "misplaced coma? \"...only once...\"",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_1b4648c0",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-27T09:09:49Z",
+      "side": 1,
+      "message": "s/installer type/INSTALLER_TYPE   since we use the keyword INSTALLER_IP in the line below.",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_5b236005",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-27T09:09:49Z",
+      "side": 1,
+      "message": "\u0027If the installer is \"fuel\" and ...\u0027",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_fb1fccb5",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-27T09:09:49Z",
+      "side": 1,
+      "message": "shall we remove this section? This is highly not recommended and we haven\u0027t tested it...",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
