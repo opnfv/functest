@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_36af9be5",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "CG: Yes you are right.\n    I will add a note that you need to ensure the\n    local file is in place and give tip that it is\n    shown later how to specifically do the needed copy",
+      "parentUuid": "5a7ca5a3_1b55e81c",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 35
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_db30d058",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2016-06-27T09:09:49Z",
       "side": 1,
       "message": "This looks much clear. However, when there is a wiki page or official documentation about the available scenarios in Colorado, we can include that link here. For now, we can maybe highlight that not all the combinations are supported and the scenario name should be the same as the one used to install the OPNFV deployment.",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_56ac97ed",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "not so clear from following references\nhttps://wiki.opnfv.org/display/SWREL/Colorado+scenario+inventory+and+dependencies\n+\nhttps://wiki.opnfv.org/display/INF/CI+Scenario+Naming\nwhat is right feature name for ovs. I put ovs in place of\novs(dpdk).\n\n--\u003e You mentioned in the meeting today that we cannot add\n    Wiki links into this document so I didn\u0027t!\n\nAdd warning that the DEPLOY_SCENARIO should match the OPNFV Deployment of the relevant installer",
+      "parentUuid": "5a7ca5a3_db30d058",
       "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_f6b8432c",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "I\u0027ve given a warning, but for the curious reading your scripts there is no also some kind of explanation ot it\u0027s purpose! If the explanation is too clumsy/verbode, it can be wiped out!",
+      "parentUuid": "5a7ca5a3_7b35fc44",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_1ba72851",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -70,6 +130,30 @@
       "writtenOn": "2016-06-27T13:17:41Z",
       "side": 1,
       "message": "Instead of assigning to a variable, you could refer to the actual output of the command. Later refer to output, not the variable.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 7
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_16b61f3e",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_1ba72851",
       "range": {
         "startLine": 151,
         "startChar": 0,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_b682cb50",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "NO worries... I\u0027ve tried to rewrite it according your preference. Your worry was validd here!",
+      "parentUuid": "5a7ca5a3_fb802c8d",
+      "range": {
+        "startLine": 152,
+        "startChar": 26,
+        "endLine": 152,
+        "endChar": 29
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_bb4ab481",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_d6874760",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "Left the name instact but tried to use some english text to make the point clear.  if it looks confusing let me know!",
+      "parentUuid": "5a7ca5a3_bb4ab481",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_db4f7091",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -133,6 +259,30 @@
       "writtenOn": "2016-06-27T14:09:00Z",
       "side": 1,
       "message": "maybe this could be removed? Or then use some valid IP address as a sample:\n-e \"INSTALLER_IP\u003d192.168.122.89\"",
+      "range": {
+        "startLine": 162,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 41
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_767c3373",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_db4f7091",
       "range": {
         "startLine": 162,
         "startChar": 1,
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_9681cf4c",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_9b49f88d",
+      "range": {
+        "startLine": 172,
+        "startChar": 19,
+        "endLine": 172,
+        "endChar": 32
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_bb31540d",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -179,6 +353,30 @@
       "writtenOn": "2016-06-27T14:09:00Z",
       "side": 1,
       "message": "Again: instead of variable, use some real IP or refer to \u003cIP address of the installer\u003e",
+      "range": {
+        "startLine": 204,
+        "startChar": 26,
+        "endLine": 204,
+        "endChar": 39
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_3696bb95",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "Now says \u003cSpecific IP Address\u003e but make clear earlier how to manually determine it.   Used \"undercloud\" in place of \"instack\" as it is more accurate for Colorado.",
+      "parentUuid": "5a7ca5a3_bb31540d",
       "range": {
         "startLine": 204,
         "startChar": 26,
@@ -208,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_569337a3",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_fb482cce",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_1b4648c0",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -219,6 +435,24 @@
       "writtenOn": "2016-06-27T09:09:49Z",
       "side": 1,
       "message": "s/installer type/INSTALLER_TYPE   since we use the keyword INSTALLER_IP in the line below.",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_f68fe373",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_1b4648c0",
       "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -242,6 +476,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_168dbf7b",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_5b236005",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_fb1fccb5",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -253,6 +505,24 @@
       "writtenOn": "2016-06-27T09:09:49Z",
       "side": 1,
       "message": "shall we remove this section? This is highly not recommended and we haven\u0027t tested it...",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_b6e96b1c",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-27T17:44:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_fb1fccb5",
       "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
