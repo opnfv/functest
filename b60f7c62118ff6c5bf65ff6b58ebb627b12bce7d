@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a7ca5a3_1b55e81c",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-06-27T14:09:00Z",
+      "side": 1,
+      "message": "By default, I think you only have the credential in installer host. You might need to copy them to the host where you run the docker command. You have instructions later how to copy them (line 172 in this version of doc), but command is executed already here. Meaning before you copy the file.",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 35
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_db30d058",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -52,6 +75,115 @@
         "startChar": 0,
         "endLine": 151,
         "endChar": 7
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_fb802c8d",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-06-27T14:09:00Z",
+      "side": 1,
+      "message": "By executing a command, you might see if the output is empty (or otherwise faulty). You might not recognize that if you assign the output to a variable. Sorry, I\u0027m to blame for this confusion",
+      "range": {
+        "startLine": 152,
+        "startChar": 26,
+        "endLine": 152,
+        "endChar": 29
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_bb4ab481",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-06-27T14:09:00Z",
+      "side": 1,
+      "message": "instead of \u003cspecific IP Address\u003e you could say:\n\u003cIP address picked from previous command\u003e so it would read:\n-e \"INSTALLER_IP\u003d\u003cIP address picked from previous command\u003e\"",
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_db4f7091",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-06-27T14:09:00Z",
+      "side": 1,
+      "message": "maybe this could be removed? Or then use some valid IP address as a sample:\n-e \"INSTALLER_IP\u003d192.168.122.89\"",
+      "range": {
+        "startLine": 162,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 41
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_9b49f88d",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-06-27T14:09:00Z",
+      "side": 1,
+      "message": "again, use something like \"Ip address from previous command\" or \"IP address of the Installer from previous step\"",
+      "range": {
+        "startLine": 172,
+        "startChar": 19,
+        "endLine": 172,
+        "endChar": 32
+      },
+      "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_bb31540d",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-06-27T14:09:00Z",
+      "side": 1,
+      "message": "Again: instead of variable, use some real IP or refer to \u003cIP address of the installer\u003e",
+      "range": {
+        "startLine": 204,
+        "startChar": 26,
+        "endLine": 204,
+        "endChar": 39
       },
       "revId": "b60f7c62118ff6c5bf65ff6b58ebb627b12bce7d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
