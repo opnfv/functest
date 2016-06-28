@@ -160,7 +160,7 @@ debug "subnet '${subnet_1}' created."
 neutron subnet-create --name ${subnet_2} --allocation-pool start=10.7.0.2,end=10.7.0.253 --gateway 10.7.0.254 ${net_2} 10.7.0.0/24
 debug "subnet '${subnet_2}' created."
 
-info "4. Create Routers..."
+info "3. Create Routers..."
 neutron router-create ${router_1}
 debug "router '${router_1}' created."
 neutron router-create ${router_2}
