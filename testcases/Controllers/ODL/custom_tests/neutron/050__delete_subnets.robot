@@ -26,7 +26,6 @@ Check New subnet deleted
     ${resp}    get request    ODLSession    ${ODLREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${ODLResult}    To Json    ${resp.content}
-    Set Suite Variable    ${ODLResult}
     Log    ${ODLResult}
     ${resp}    get request    ODLSession    ${ODLREST}/${SUBNETID}
     Should be Equal As Strings    ${resp.status_code}    404
@@ -38,6 +37,6 @@ Check Subnet Exists
     Should be Equal As Strings    ${resp.status_code}    200
 
 Start Suite
-    Create Session    OSSession    http://${NEUTRON}:9696    headers=${X-AUTH}
-    Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
+    Create Session    OSSession    http://${OPENSTACK}:9696    headers=${X-AUTH}
+    Create Session    ODLSession    http://${ODL_SYSTEM_IP}:${PORT}    headers=${HEADERS}    auth=${AUTH}
     Check Subnet Exists    ${SUBNETID}
