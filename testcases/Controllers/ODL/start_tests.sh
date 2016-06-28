@@ -81,7 +81,7 @@ do
 
     ((test_num++))
     echo -e "${light_green}Starting test: $line ${nc}"
-    pybot -v OPENSTACK:${KEYSTONE_IP} -v NEUTRON:${NEUTRON_IP} -v PORT:${ODL_PORT} -v CONTROLLER:${ODL_IP} ${REPO_DIR}/$line
+    pybot -v OPENSTACK:${NEUTRON_IP} -v PORT:${ODL_PORT} -v ODL_SYSTEM_IP:${ODL_IP} ${REPO_DIR}/$line
     mkdir -p $RESULTS_DIR/logs/${test_num}
     mv log.html $RESULTS_DIR/logs/${test_num}/
     mv report.html $RESULTS_DIR/logs/${test_num}/

@@ -5,7 +5,7 @@ ${SubnetNorthbound}     ${NeutronNorthbound}/subnets
 ${PortNorthbound}       ${NeutronNorthbound}/ports
 
 *** Settings ***
-Suite Setup       Create Session    ODL    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
+Suite Setup       Create Session    ODL    http://${ODL_SYSTEM_IP}:${PORT}    headers=${HEADERS}    auth=${AUTH}
 Suite Teardown    Delete All Sessions
 Library           RequestsLibrary
 Variables         ../../../variables/Variables.py

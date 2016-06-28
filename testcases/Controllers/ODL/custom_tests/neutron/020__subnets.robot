@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation     Checking Subnets created in OpenStack are pushed to OpenDaylight
-Suite Setup       Create Session    OSSession    http://${NEUTRON}:9696    headers=${X-AUTH}
+Suite Setup       Create Session    OSSession    http://${OPENSTACK}:9696    headers=${X-AUTH}
 Suite Teardown    Delete All Sessions
 Library           Collections
 Library           RequestsLibrary
@@ -19,17 +19,15 @@ Check OpenStack Subnets
     ${resp}    get request    OSSession    ${OSREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${OSResult}    To Json    ${resp.content}
-    Set Suite Variable    ${OSResult}
     Log    ${OSResult}
 
 Check OpenDaylight subnets
     [Documentation]    Checking OpenDaylight Neutron API for known subnets
     [Tags]    Subnets Neutron OpenDaylight
-    Create Session    ODLSession    http://${CONTROLLER}:${PORT}    headers=${HEADERS}    auth=${AUTH}
+    Create Session    ODLSession    http://${ODL_SYSTEM_IP}:${PORT}    headers=${HEADERS}    auth=${AUTH}
     ${resp}    get request    ODLSession    ${ODLREST}
     Should be Equal As Strings    ${resp.status_code}    200
     ${ODLResult}    To Json    ${resp.content}
-    Set Suite Variable    ${ODLResult}
     Log    ${ODLResult}
 
 Create New subnet
