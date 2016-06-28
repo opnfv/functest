@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_d61747a2",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-28T09:27:31Z",
+      "side": 1,
+      "message": "shall we specify odl_l2 | odl_l3 as we spoke yesterday?",
+      "revId": "65fb8b4e53592b93d30ab826e7c202e3ad5fcdd8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_9611cfae",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-28T09:27:31Z",
+      "side": 1,
+      "message": "not only the results/log file, also the console output",
+      "revId": "65fb8b4e53592b93d30ab826e7c202e3ad5fcdd8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
