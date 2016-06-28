@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_56d817ef",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-28T10:29:03Z",
+      "side": 1,
+      "message": "OK Will do! Small lapse on my part.\nI\u0027ll change it in Patch set #5 (coming soon)\nto odl_l2 | odl_l3\n\nIn Examples later odl_l2 is used !",
+      "parentUuid": "5a7ca5a3_d61747a2",
+      "revId": "65fb8b4e53592b93d30ab826e7c202e3ad5fcdd8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_9611cfae",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2016-06-28T09:27:31Z",
       "side": 1,
       "message": "not only the results/log file, also the console output",
+      "revId": "65fb8b4e53592b93d30ab826e7c202e3ad5fcdd8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_f6e4c3ad",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-28T10:29:03Z",
+      "side": 1,
+      "message": "Misunderstanding on my part. I thought you wanted me to remove the mention of console output. I\u0027ll add it back in Patch Set #5 !",
+      "parentUuid": "5a7ca5a3_9611cfae",
       "revId": "65fb8b4e53592b93d30ab826e7c202e3ad5fcdd8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
