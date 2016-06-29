@@ -10,23 +10,23 @@ Manual testing
 This section assumes the following:
  * The Functest Docker container is running
  * The docker prompt is shown
- * The Functest environment is ready (prepare_env.sh has been executed)
+ * The Functest environment is ready (Functest CLI command 'functest env prepare'
+   has been executed)
 
-If any of the above steps is missing please refer to the Functest Config Guide
+If any of the above steps are missing please refer to the Functest Config Guide
 as they are a prerequisite and all the commands explained in this section **must** be
 performed **inside the container**.
 
-The script **run_tests.sh** launches the test in an automated way.
-Although it is possible to execute the different tests manually, it is
-recommended to use the previous shell script which makes the call
-to the actual scripts with the appropriate parameters.
+In Colorado release, the scripts **run_tests.sh** is now replaced with the new 
+Functest CLI. 
 
-It is located in *$repos_dir/functest/docker* and it has
-several options::
+**TODO** Figure out how the different options below are passed to the 
+Functest CLI and then fix this document in patch #2 !!! Sorry for this approach 
+Jose/Morgan. Time is running out
 
-    ./run_tests.sh -h
-    Script to trigger the tests automatically.
+** End of TODO**
 
+** WARNING - Next sections are not yet ready. will be fixed in patch #2 **
     usage:
         bash run_tests.sh [-h|--help] [-r|--report] [-n|--no-clean] [-t|--test <test_name>]
 
