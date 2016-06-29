@@ -10,107 +10,301 @@ Manual testing
 This section assumes the following:
  * The Functest Docker container is running
  * The docker prompt is shown
- * The Functest environment is ready (prepare_env.sh has been executed)
+ * The Functest environment is ready (Functest CLI command 'functest env prepare'
+   has been executed)
 
-If any of the above steps is missing please refer to the Functest Config Guide
+If any of the above steps are missing please refer to the Functest Config Guide
 as they are a prerequisite and all the commands explained in this section **must** be
 performed **inside the container**.
 
-The script **run_tests.sh** launches the test in an automated way.
-Although it is possible to execute the different tests manually, it is
-recommended to use the previous shell script which makes the call
-to the actual scripts with the appropriate parameters.
+Note: In Colorado release, the scripts **run_tests.sh** is now replaced with a
+new Functest CLI. One difference, is that tests run through the Functest CLI
+will always clean-up OpenStack resources. See the `Troubleshooting`_ section of this
+document, where this difference is discussed.
 
-It is located in *$repos_dir/functest/docker* and it has
-several options::
+The Functest CLI offers two commands (functest tier ...) and (functest testcase ... )
+for the execution of Test Tiers or Test Cases::
 
-    ./run_tests.sh -h
-    Script to trigger the tests automatically.
+  root@22e436918db0:~/repos/functest/ci# functest tier --help
+  Usage: functest tier [OPTIONS] COMMAND [ARGS]...
 
-    usage:
-        bash run_tests.sh [-h|--help] [-r|--report] [-n|--no-clean] [-t|--test <test_name>]
+  Options:
+    -h, --help  Show this message and exit.
 
-    where:
-        -h|--help         show this help text
-        -r|--report       push results to database (false by default)
-        -n|--no-clean     do not clean up OpenStack resources after test run
-        -s|--serial       run tests in one thread
-        -t|--test         run specific set of tests
-          <test_name>     one or more of the following separated by comma:
-                             vping_ssh,vping_userdata,odl,onos,tempest,rally,vims,promise,doctor,bgpvpn
+  Commands:
+    get-tests  Prints the tests in a tier.
+    list       Lists the available tiers.
+    run        Executes all the tests within a tier.
+    show       Shows information about a tier.
+  root@22e436918db0:~/repos/functest/ci# functest testcase --help
 
-    examples:
-        run_tests.sh
-        run_tests.sh --test vping_ssh,odl
-        run_tests.sh -t tempest,rally --no-clean
+  and
 
-The *-r* option is used by the OPNFV Continuous Integration automation mechanisms
-in order to push the test results into the NoSQL results collection database.
-This database is read only for a regular user given that it needs special rights
-and special conditions to push data.
+  Usage: functest testcase [OPTIONS] COMMAND [ARGS]...
 
-The *-t* option can be used to specify the list of a desired test to be launched,
-by default Functest will launch all the test suites in the following order:
+  Options:
+    -h, --help  Show this message and exit.
 
-  1) vPing test cases
-  2) Tempest suite
-  3) SDN controller suites
-  4) Feature project tests cases (Promise, Doctor, SDNVPN)
-  5) vIMS suite
-  6) Rally suite
+  Commands:
+    list  Lists the available testcases.
+    run   Executes a test case.
+    show  Shows information about a test case.
+
+More details on the existing Tiers and Test Cases can be seen with the 'list'
+command::
+
+  root@22e436918db0:~/repos/functest/ci# functest tier list
+      - 0. healthcheck:
+             ['healthcheck']
+      - 1. smoke:
+             ['vping_ssh', 'vping_userdata', 'tempest_smoke_serial', 'rally_sanity']
+      - 2. sdn_suites:
+             ['odl']
+      - 3. features:
+             ['doctor', 'security_scan']
+      - 4. openstack:
+             ['tempest_full_parallel', 'rally_full']
+      - 5. vnf:
+             ['vims']
+
+  and
+
+  root@22e436918db0:~/repos/functest/ci# functest testcase list
+  healthcheck
+  vping_ssh
+  vping_userdata
+  tempest_smoke_serial
+  rally_sanity
+  odl
+  doctor
+  security_scan
+  tempest_full_parallel
+  rally_full
+  vims
+
+More specific details on specific Tiers or Test Cases can be seen wih the
+'show' command::
+
+  root@22e436918db0:~/repos/functest/ci# functest tier show smoke
+  +======================================================================+
+  | Tier:  smoke                                                         |
+  +======================================================================+
+  | Order: 1                                                             |
+  | CI Loop: (daily)|(weekly)                                            |
+  | Description:                                                         |
+  |    Set of basic Functional tests to validate the OpenStack           |
+  |    deployment.                                                       |
+  | Test cases:                                                          |
+  |    - vping_ssh                                                       |
+  |    - vping_userdata                                                  |
+  |    - tempest_smoke_serial                                            |
+  |    - rally_sanity                                                    |
+  |                                                                      |
+  +----------------------------------------------------------------------+
+
+  and
+
+  root@22e436918db0:~/repos/functest/ci# functest testcase  show tempest_smoke_serial
+  +======================================================================+
+  | Testcase:  tempest_smoke_serial                                      |
+  +======================================================================+
+  | Description:                                                         |
+  |    This test case runs the smoke subset of the OpenStack Tempest     |
+  |    suite. The list of test cases is generated by Tempest             |
+  |    automatically and depends on the parameters of the OpenStack      |
+  |    deplopyment.                                                      |
+  | Dependencies:                                                        |
+  |   - Installer:                                                       |
+  |   - Scenario :                                                       |
+  |                                                                      |
+  +----------------------------------------------------------------------+
+
+
+To execute a Test Tier or Test Case, the 'run' command is used::
+
+  root@22e436918db0:~/repos/functest/ci# functest tier run healthcheck
+  Executing command: 'python /home/opnfv/repos/functest/ci/run_tests.py -t healthcheck'
+  2016-06-30 11:44:56,933 - run_tests - INFO - Sourcing the OpenStack RC file...
+  2016-06-30 11:44:56,937 - run_tests - INFO - ############################################
+  2016-06-30 11:44:56,938 - run_tests - INFO - Running tier 'healthcheck'
+  2016-06-30 11:44:56,938 - run_tests - INFO - ############################################
+  2016-06-30 11:44:56,938 - run_tests - INFO - ============================================
+  2016-06-30 11:44:56,938 - run_tests - INFO - Running test case 'healthcheck'...
+  2016-06-30 11:44:56,938 - run_tests - INFO - ============================================
+  2016-06-30 11:44:56,953 - healtcheck - INFO -  Testing Keystone API...
+  2016-06-30 11:45:05,351 - healtcheck - INFO -  ...Keystone OK!
+  2016-06-30 11:45:05,354 - healtcheck - INFO -  Testing Glance API...
+  2016-06-30 11:45:29,746 - healtcheck - INFO -  ... Glance OK!
+  2016-06-30 11:45:29,749 - healtcheck - INFO -  Testing Cinder API...
+  2016-06-30 11:45:37,502 - healtcheck - INFO -  ...Cinder OK!
+  2016-06-30 11:45:37,505 - healtcheck - INFO -  Testing Neutron API...
+  2016-06-30 11:45:39,664 - healtcheck - INFO -  External network found. ccd98ad6-d34a-4768-b03c-e28ecfcd51ca
+  2016-06-30 11:45:39,667 - healtcheck - INFO -  1. Create Networks...
+  2016-06-30 11:45:44,227 - healtcheck - INFO -  2. Create subnets...
+  2016-06-30 11:45:46,805 - healtcheck - INFO -  4. Create Routers...
+  2016-06-30 11:45:54,261 - healtcheck - INFO -  ...Neutron OK!
+  2016-06-30 11:45:54,264 - healtcheck - INFO -  Testing Nova API...
+  2016-06-30 11:47:12,272 - healtcheck - INFO -  ...Nova OK!
+  2016-06-30 11:47:12,274 - healtcheck - INFO -  Checking if instances get an IP from DHCP...
+  :
+  :
+  2016-06-30 11:48:17,832 - healtcheck - INFO -  ...DHCP OK!
+  2016-06-30 11:48:17,835 - healtcheck - INFO -  Health check passed!
+  2016-06-30 11:48:17,837 - clean_openstack - INFO - +++++++++++++++++++++++++++++++
+  2016-06-30 11:48:17,837 - clean_openstack - INFO - Cleaning OpenStack resources...
+  2016-06-30 11:48:17,837 - clean_openstack - INFO - +++++++++++++++++++++++++++++++
+  Version 1 is deprecated, use alternative version 2 instead.
+  WARNING:cinderclient.api_versions:Version 1 is deprecated, use alternative version 2 instead.
+  2016-06-30 11:48:18,272 - clean_openstack - INFO - Removing Nova instances...
+  2016-06-30 11:48:24,439 - clean_openstack - INFO - -------------------------------------------
+  2016-06-30 11:48:24,440 - clean_openstack - INFO - Removing Glance images...
+  2016-06-30 11:48:35,853 - clean_openstack - INFO - -------------------------------------------
+  2016-06-30 11:48:35,854 - clean_openstack - INFO - Removing Cinder volumes...
+  2016-06-30 11:48:37,344 - clean_openstack - INFO - -------------------------------------------
+  2016-06-30 11:48:37,344 - clean_openstack - INFO - Removing floating IPs...
+  2016-06-30 11:48:37,467 - clean_openstack - INFO - -------------------------------------------
+  2016-06-30 11:48:37,467 - clean_openstack - INFO - Removing Neutron objects
+  2016-06-30 11:48:53,633 - clean_openstack - INFO - -------------------------------------------
+  2016-06-30 11:48:53,633 - clean_openstack - INFO - Removing Security groups...
+  2016-06-30 11:48:53,689 - clean_openstack - INFO - -------------------------------------------
+  2016-06-30 11:48:53,689 - clean_openstack - INFO - Removing Users...
+  2016-06-30 11:48:54,444 - clean_openstack - INFO - -------------------------------------------
+  2016-06-30 11:48:54,444 - clean_openstack - INFO - Removing Tenants...
+  2016-06-30 11:48:54,711 - clean_openstack - INFO - -------------------------------------------
+
+  and
+
+  root@22e436918db0:~/repos/functest/ci# functest testcase run vping_ssh
+  Executing command: 'python /home/opnfv/repos/functest/ci/run_tests.py -t vping_ssh'
+  2016-06-30 11:50:31,861 - run_tests - INFO - Sourcing the OpenStack RC file...
+  2016-06-30 11:50:31,865 - run_tests - INFO - ============================================
+  2016-06-30 11:50:31,865 - run_tests - INFO - Running test case 'vping_ssh'...
+  2016-06-30 11:50:31,865 - run_tests - INFO - ============================================
+  2016-06-30 11:50:32,977 - vping_ssh - INFO - Creating image 'functest-vping' from '/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img'...
+  2016-06-30 11:50:45,470 - vping_ssh - INFO - Creating neutron network vping-net...
+  2016-06-30 11:50:47,645 - vping_ssh - INFO - Creating security group  'vPing-sg'...
+  2016-06-30 11:50:48,843 - vping_ssh - INFO - Using existing Flavor 'm1.small'...
+  2016-06-30 11:50:48,927 - vping_ssh - INFO - vPing Start Time:'2016-06-30 11:50:48'
+  2016-06-30 11:50:48,927 - vping_ssh - INFO - Creating instance 'opnfv-vping-1'...
+  2016-06-30 11:51:34,664 - vping_ssh - INFO - Instance 'opnfv-vping-1' is ACTIVE.
+  2016-06-30 11:51:34,818 - vping_ssh - INFO - Adding 'opnfv-vping-1' to security group 'vPing-sg'...
+  2016-06-30 11:51:35,209 - vping_ssh - INFO - Creating instance 'opnfv-vping-2'...
+  2016-06-30 11:52:01,439 - vping_ssh - INFO - Instance 'opnfv-vping-2' is ACTIVE.
+  2016-06-30 11:52:01,439 - vping_ssh - INFO - Adding 'opnfv-vping-2' to security group 'vPing-sg'...
+  2016-06-30 11:52:01,754 - vping_ssh - INFO - Creating floating IP for VM 'opnfv-vping-2'...
+  2016-06-30 11:52:01,969 - vping_ssh - INFO - Floating IP created: '10.17.94.140'
+  2016-06-30 11:52:01,969 - vping_ssh - INFO - Associating floating ip: '10.17.94.140' to VM 'opnfv-vping-2'
+  2016-06-30 11:52:02,792 - vping_ssh - INFO - Trying to establish SSH connection to 10.17.94.140...
+  2016-06-30 11:52:19,915 - vping_ssh - INFO - Waiting for ping...
+  2016-06-30 11:52:21,108 - vping_ssh - INFO - vPing detected!
+  2016-06-30 11:52:21,108 - vping_ssh - INFO - vPing duration:'92.2' s.
+  2016-06-30 11:52:21,109 - vping_ssh - INFO - vPing OK
+  2016-06-30 11:52:21,153 - clean_openstack - INFO - +++++++++++++++++++++++++++++++
+  2016-06-30 11:52:21,153 - clean_openstack - INFO - Cleaning OpenStack resources...
+  2016-06-30 11:52:21,153 - clean_openstack - INFO - +++++++++++++++++++++++++++++++
+  Version 1 is deprecated, use alternative version 2 instead.
+  :
+  :
+  etc.
+
+To list the test cases which are part of a specific Test Tier, the 'get-tests'
+command is used with 'functest tier'::
+
+  root@22e436918db0:~/repos/functest/ci# functest tier get-tests sdn_suites
+  Test cases in tier 'sdn_suites':
+   ['odl']
+
 
 Please note that for some scenarios some test cases might not be launched.
-Functest calculates automatically which test can be executed and which cannot given
-the environment variable **DEPLOY_SCENARIO** to the docker container.
+For example, the last example displayed only the 'odl' testcase for the given
+environment. In this system the deployment does not support the 'onos' SDN
+Controller Test Case; for example.
 
-A single or set of test may be launched at once using *-t <test_name>* specifying
-the test name or names separated by commas in the following list:
-*[vping_ssh,vping_userdata,odl,onos,rally,tempest,vims,promise,doctor]*.
+**Important** If you use the command 'functest tier run <tier_name>', then the
+Functest CLI utility will call **all valid Test Cases**, which belong to the
+specified Test Tier, as relevant to scenarios deployed to the SUT environment.
+Thus, the Functest CLI utility calculates automatically which tests can be
+executed and which cannot, given the environment variable **DEPLOY_SCENARIO**,
+which is passed in to the Functest docker container.
 
-Functest includes cleaning mechanism in order to remove
-all the OpenStack resources except what was present before running any test. The script
-*$repos_dir/functest/utils/generate_defaults.py*
-is called once by *prepare_env.sh* when setting up the Functest environment
-to snapshot all the OpenStack resources (images, networks, volumes, security groups,
-tenants, users) so that an eventual cleanup does not remove any of this defaults.
+Currently, the Functest CLI command 'functest testcase run <testcase_name>', supports
+two possibilities::
 
-The *-n* option is used for preserving all the possible OpenStack resources created
-by the tests after their execution.
+ *  Run a single Test Case, specified by a valid choice of <testcase_name>
+ *  Run ALL test Test Cases (for all Tiers) by specifying <testcase_name> = 'all'
 
-The *-s* option forces execution of test cases in a single thread. Currently this
-option affects Tempest test cases only and can be used e.g. for troubleshooting
-concurrency problems.
+Example::
+
+  root@22e436918db0:~/repos/functest/ci# functest testcase run all
+  Executing command: 'python /home/opnfv/repos/functest/ci/run_tests.py -t all'
+  2016-06-30 12:03:28,628 - run_tests - INFO - Sourcing the OpenStack RC file...
+  2016-06-30 12:03:28,634 - run_tests - INFO - Tiers to be executed:
+      - 0. healthcheck:
+             ['healthcheck']
+      - 1. smoke:
+             ['vping_ssh', 'vping_userdata', 'tempest_smoke_serial', 'rally_sanity']
+      - 2. sdn_suites:
+             ['odl']
+      - 3. features:
+             ['doctor', 'security_scan']
+      - 4. openstack:
+             ['tempest_full_parallel', 'rally_full']
+      - 5. vnf:
+             ['vims']
+  2016-06-30 12:03:28,634 - run_tests - INFO - ############################################
+  2016-06-30 12:03:28,635 - run_tests - INFO - Running tier 'healthcheck'
+  2016-06-30 12:03:28,635 - run_tests - INFO - ############################################
+  2016-06-30 12:03:28,635 - run_tests - INFO - ============================================
+  2016-06-30 12:03:28,635 - run_tests - INFO - Running test case 'healthcheck'...
+  2016-06-30 12:03:28,635 - run_tests - INFO - ============================================
+  2016-06-30 12:03:28,651 - healtcheck - INFO -  Testing Keystone API...
+  2016-06-30 12:03:36,676 - healtcheck - INFO -  ...Keystone OK!
+  2016-06-30 12:03:36,679 - healtcheck - INFO -  Testing Glance API...
+  :
+  :
+  etc.
+
+Functest includes cleaning mechanism in order to remove all the OpenStack
+resources except what was present before running any test. The script
+*$repos_dir/functest/utils/generate_defaults.py* is called once when setting up
+the Functest environment (i.e. CLI command 'functest env prepare') to snapshot
+all the OpenStack resources (images, networks, volumes, security groups, tenants,
+users) so that an eventual cleanup does not remove any of this defaults.
 
 The script **clean_openstack.py** which is located in
-*$repos_dir/functest/testcases/VIM/OpenStack/CI/libraries/*
-is normally called after a test execution if the *-n* is not specified. It
-is in charge of cleaning the OpenStack resources that are not specified
-in the defaults file generated previously which is stored in
-*/home/opnfv/functest/conf/os_defaults.yaml* in the docker
-container.
+*$repos_dir/functest/utils/* is normally called after a test execution. It is
+in charge of cleaning the OpenStack resources that are not specified in the
+defaults file generated previously which is stored in
+*/home/opnfv/functest/conf/os_defaults.yaml* in the Functest docker container.
 
 It is important to mention that if there are new OpenStack resources created
-manually after preparing the Functest environment, they will be removed if this
-flag is not specified in the *run_tests.sh* command.
+manually after preparing the Functest environment, they will be removed, unless
+you use the special method of invoking the test case with specific suppression
+of clean up. (See the `Troubleshooting`_ section).
+
 The reason to include this cleanup meachanism in Functest is because some
 test suites such as Tempest or Rally create a lot of resources (users,
 tenants, networks, volumes etc.) that are not always properly cleaned, so this
 function has been set to keep the system as clean as it was before a
 full Functest execution.
 
-Although **run_tests.sh** provides an easy way to run any test, it is possible to
+Although the Functest CLI provides an easy way to run any test, it is possible to
 do a direct call to the desired test script. For example:
 
-    python $repos_dir/functest/testcases/vPing/vPing_ssh.py -d
+    python $repos_dir/functest/testcases/OpenStack/vPing/vPing_ssh.py -d
+
 
 Automated testing
 -----------------
 
-As mentioned previously, the **prepare-env.sh** and **run_test.sh** can be called within
-the container from Jenkins. There are 2 jobs that automate all the manual steps
-explained in the previous section. One job runs all the tests and the other one allows testing
-test suite by test suite specifying the test name. The user might use one or
-the other job to execute the desired test suites.
+**TODO** Jose, the next section has not yet been revised!
+
+As mentioned previously, the Functest Docker container preparation as well as
+invocation of Test Cases can be called within the container from the Jenkins CI
+system. There are 2 jobs that automate the whole process. The first job runs all
+the tests and the second job allows testing test suite by test suite specifying
+the test suite name. The user may also use either of these Jenkins jobs to execute
+the desired test suites.
 
 One of the most challenging task in the Brahmaputra release consists
 in dealing with lots of scenarios and installers. Thus, when the tests are
@@ -126,9 +320,9 @@ variables:
  * Installer IP of the engine or VM running the actual deployment, stored in INSTALLER_IP
  * The scenario [controller]-[feature]-[mode], stored in DEPLOY_SCENARIO with
 
-   * controller = (odl|onos|ocl|nosdn)
-   * feature = (ovs(dpdk)|kvm|sfc|bgpvpn)
-   * mode = (ha|noha)
+ * controller = (odl|onos|ocl|nosdn)
+ * feature = (ovs(dpdk)|kvm|sfc|bgpvpn)
+ * mode = (ha|noha)
 
 The constraints per test case are defined in the Functest configuration file
 */home/opnfv/functest/config/config_functest.yaml*::
@@ -184,3 +378,5 @@ The tests are executed in the following order:
 
 As explained before, at the end of an automated execution, the OpenStack resources
 might be eventually removed.
+
+**END of TODO**
