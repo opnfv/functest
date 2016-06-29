@@ -12,23 +12,44 @@ OPNFV FUNCTEST user guide
 Introduction
 ============
 
-The goal of this document is to describe the Functest test cases as well as
-provide a procedure to execute them.
+The goal of this document is to describe the OPNFV Functest test cases and to
+provide a procedure to execute them. In the OPNFV Colorado system release,
+a Functest CLI utility is introduced for easier execution of test procedures.
 
-A presentation has been created for the first OPNFV Summit `[4]`_.
+A overview presentation has been created for the first OPNFV Summit `[4]`_.
 
-This document is a continuation of the Functest Configuration Guide`[1]`_ and it
-is assumed that the Functest Docker container is properly deployed.
+This document is a continuation of the OPNFV Functest Configuration Guide `[1]`_.
 
-**IMPORTANT**: All the instructions described in this guide must be performed
-inside the container.
+**IMPORTANT**: It is assumed here that the Functest Docker container is already
+properly deployed and that all instructions described in this guide are to be
+performed from *inside* the deployed Functest Docker container.
 
 .. include:: ./introduction.rst
 
-The different test cases are described in the section hereafter.
+The different test cases are described in the remaining sections of this document.
 
 VIM (Virtualized Infrastructure Manager)
 ----------------------------------------
+
+Healthcheck
+^^^^^^^^^^^
+In Colorado release a new Tier 'healthcheck' with one testcase 'healthcheck'
+is introduced. The healthcheck testcase verifies that some basic IP connectivity
+and  essential operations of OpenStack functionality over the command line are
+working correctly.
+
+In particular, the following verifications of basic operations are performed:
+
+  * DHCP agent functionality for IP address allocation
+  * Openstack Authentication management functionality via the Keystone API
+  * OpenStack Image management functionality via the Glance API
+  * OpenStack Block Storage management functionality via the Cinder API
+  * OpenStack Networking management functionality via the Neutron API
+  * Openstack Compute management functionality via the NOVA API
+
+Self-obviously, successful completion of the 'healthcheck' testcase is a
+necessary pre-requisite for the execution of all other test Tiers.
+
 
 vPing_ssh
 ^^^^^^^^^
@@ -50,7 +71,8 @@ Given the script **ping.sh**::
 
 
 The goal of this test is to establish an SSH connection using a floating IP
-on the public network and verify that 2 instances can talk on a private network::
+on the Public/External network and verify that 2 instances can talk over a Private
+Tenant network::
 
  vPing_ssh test case
  +-------------+                    +-------------+
@@ -88,15 +110,15 @@ on the public network and verify that 2 instances can talk on a private network:
  +-------------+                    +-------------+
 
 This test can be considered as an "Hello World" example.
-It is the first basic use case which shall work on any deployment.
+It is the first basic use case which **must** work on any deployment.
 
 vPing_userdata
 ^^^^^^^^^^^^^^
 
-This test case is similar to vPing_ssh but without the use of floating ips
-and the public network. It only checks that 2 instances can talk to each other
-on a private network but it also verifies that the Nova metadata service is
-properly working::
+This test case is similar to vPing_ssh but without the use of Floating IPs
+and the Public/External network. It specifically checks that 2 instances can talk to
+each other on a Private Tenant network. In addition, it also verifies that the
+Nova metadata service is also working properly::
 
  vPing_userdata test case
  +-------------+                    +-------------+
@@ -122,8 +144,8 @@ properly working::
  |             |                    |             |
  +-------------+                    +-------------+
 
-When the second VM boots it will execute the script passed as userdata
-automatically and the ping will be detected capturing periodically the output
+When the second VM boots it will execute the script passed as userdata;
+automatically. The ping will be detected by periodically capturing the output
 in the console-log of the second VM.
 
 
@@ -132,7 +154,7 @@ Tempest
 
 Tempest `[2]`_ is the reference OpenStack Integration test suite.
 It is a set of integration tests to be run against a live OpenStack cluster.
-Tempest has batteries of tests for:
+Tempest has suites of tests for:
 
   * OpenStack API validation
   * Scenarios
@@ -143,22 +165,25 @@ Rally generates automatically the Tempest configuration file **tempest.conf**.
 Before running the actual test cases,
 Functest creates the needed resources (user, tenant) and
 updates the appropriate parameters into the configuration file.
+
 When the Tempest suite is executed, each test duration is measured and the full
-console output is stored in a *log* file for further analysis.
+console output is stored to a *log* file for further analysis.
 
-As an addition of Arno, Brahmaputra runs a customized set of Tempest test cases.
-The list is specificed through *--tests-file* when executing the Rally command.
-This option has been introduced in the version 0.1.2 of the Rally framework.
+In the Colorado release, the Tempest testcases are now now distributed accross two
+Tiers:
 
-This customized list contains more than 200 Tempest test cases and can be divided
-into two main sections:
+  * Smoke Tier - Test Case 'tempest_smoke_serial'
+  * Openstack Tier - Test case 'tempest_full_parallel'
 
-  1) Set of Tempest smoke test cases
-  2) Set of test cases from DefCore list `[8]`_
+NOTE: Test case 'tempest_smoke_serial' executes a defined set of tempest smoke
+tests with a single thread (i.e. serial mode). Test case 'tempest_full_parallel'
+executes all defined Tempest tests using several concurrent threads
+(i.e. parallel mode). The number of threads activated corresponds to the number
+of available logical CPUs.
 
 The goal of the Tempest test suite is to check the basic functionalities of the
-different OpenStack components on an OPNFV fresh installation using
-the corresponding REST API interfaces.
+different OpenStack components on an OPNFV fresh installation, using the
+corresponding REST API interfaces.
 
 
 Rally bench test suites
@@ -183,17 +208,27 @@ The OPNFV Rally scenarios are based on the collection of the actual Rally scenar
  * quotas
  * requests
 
-A basic SLA (stop test on errors) have been implemented.
+A basic SLA (stop test on errors) has been implemented.
+
+In the Colorado release, the Rally testcases are now distributed accross
+two Tiers:
+
+  * Smoke Tier - Test Case 'rally_sanity'
+  * Openstack Tier - Test case 'rally_full'
+
+NOTE: Test case 'rally_sanity' executes a limited number of Rally smoke test
+cases. Test case 'rally_full' executes the full defined set of Rally tests.
 
 
 SDN Controllers
 ---------------
 
-Brahmaputra introduces new SDN controllers.
-There are currently 2 available controllers:
+Colorado introduces one additional SDN controller.
+There are currently 3 available controllers:
 
  * OpenDaylight (ODL)
  * ONOS
+ * OpenContrail (ovno)
 
 OpenDaylight
 ^^^^^^^^^^^^
@@ -271,56 +306,44 @@ The test cases are described as follows:
 
  * FUNCvirNetNBL3
 
-   * Create Router: Post dataes for create Router and check it in ONOS
+   * Create Router: Post data for create Router and check it in ONOS
    * Update Router: Update the Router and compare it in ONOS
-   * Delete Router: Delete the Router dataes and check it in ONOS
-   * Create RouterInterface: Post RouterInterface data to an exist Router
+   * Delete Router: Delete the Router data and check it in ONOS
+   * Create RouterInterface: Post Router Interface data to an existing Router
      and check it in ONOS
    * Delete RouterInterface: Delete the RouterInterface and check the Router
-   * Create FloatingIp: Post dataes for create FloatingIp and check it in
-     ONOS
+   * Create FloatingIp: Post data for create FloatingIp and check it in ONOS
    * Update FloatingIp: Update the FloatingIp and compare it in ONOS
-   * Delete FloatingIp: Delete the FloatingIp and check if it's NULL in
-     ONOS  or not
-   * Create External Gateway: Post dataes for create External Gateway to an
-     exit Router and check it
-   * Update External Gateway: Update the External Gateway and compare it
-   * Delete External Gateway: Delete the External Gateway and check if it's
-     NULL in ONOS or not
+   * Delete FloatingIp: Delete the FloatingIp and check that it is 'NULL' in
+     ONOS
+   * Create External Gateway: Post data to create an External Gateway for an
+     existing Router and check it in ONOS
+   * Update External Gateway: Update the External Gateway and compare the change
+   * Delete External Gateway: Delete the External Gateway and check that it is
+     'NULL' in ONOS
+
+Open Contrail
+^^^^^^^^^^^^^
+**TODO:**
+Open Contrail team has been contacted for some overview documentation of the
+'ovno' testcase. It has to be added here; when received.
 
 
 Features
 --------
 
-vIMS
-^^^^
-The IP Multimedia Subsystem or IP Multimedia Core Network Subsystem (IMS) is an
-architectural framework for delivering IP multimedia services.
+Doctor
+^^^^^^
 
-vIMS has been integrated in Functest to demonstrate the capability to deploy a
-relatively complex NFV scenario on the OPNFV platform. The deployment of a complete
-functional VNF allows the test of most of the
-essential functions needed for a NFV platform.
-
-The goal of this test suite consists of:
-
- * deploy a VNF orchestrator (Cloudify)
- * deploy a Clearwater vIMS (IP Multimedia Subsystem) VNF from this
-   orchestrator based on a TOSCA blueprint defined in `[5]`_
- * run suite of signaling tests on top of this VNF
-
-The Clearwater architecture is described as follows:
-
-.. figure:: ../images/clearwater-architecture.png
-   :align: center
-   :alt: vIMS architecture
-
+**TODO:**
+Doctor team has been contacted for some overview documentation of the
+'doctor' testcase. It has to be added here; when received.
 
 
 Promise
 ^^^^^^^
 
-Promise provides a basic set of test cases as part of Brahmaputra.
+Promise provides a basic set of test cases as part of Colorado.
 
 The available 33 test cases can be grouped into 7 test suites:
 
@@ -350,7 +373,7 @@ The available 33 test cases can be grouped into 7 test suites:
     #. Cleanup test allocations: Destroys all allocations in OpenStack.
 
 
-SDNVPN
+bgpvpn
 ^^^^^^
 Many telecom network functions are relying on layer-3 infrastructure services,
 within a VNF between components, or towards existing external networks.
@@ -359,24 +382,59 @@ existing service provider wide-area-networks (WAN). This proven technology
 provides a good mechanism for inter-operation of a NFV Infrastructure (NFVI)
 and WAN.
 
-The SDNVPN project defined a bgpvpn suite.
-This bgpvpn suite deals with 2 Tempest cases dedicated to the test of the
-OpenStack bgpvpn API:
+The SDNVPN project defined a 'bgpvpn' test suite.
+This 'bgpvpn' test suite deals with 2 Tempest cases dedicated to the test of
+the OpenStack 'bgpvpn' API:
 
   * test_create_bgpvpn
   * test_create_bgpvpn_as_non_admin_fail
 
+security_scan
+^^^^^^^^^^^^^
+
+**TODO:**
+Security Scan team has been contacted for some overview documentation of the
+'security_scan' testcase. It has to be added here; when received.
+
+
+VNF
+---
+
+
+vIMS
+^^^^
+The IP Multimedia Subsystem or IP Multimedia Core Network Subsystem (IMS) is an
+architectural framework for delivering IP multimedia services.
+
+vIMS has been integrated in Functest to demonstrate the capability to deploy a
+relatively complex NFV scenario on the OPNFV platform. The deployment of a complete
+functional VNF allows the test of most of the
+essential functions needed for a NFV platform.
+
+The goal of this test suite consists of:
+
+ * deploy a VNF orchestrator (Cloudify)
+ * deploy a Clearwater vIMS (IP Multimedia Subsystem) VNF from this
+   orchestrator based on a TOSCA blueprint defined in `[5]`_
+ * run suite of signaling tests on top of this VNF
+
+The Clearwater architecture is described as follows:
+
+.. figure:: ../images/clearwater-architecture.png
+   :align: center
+   :alt: vIMS architecture
+
+
 .. include:: ./runfunctest.rst
+
 
 Test results
 ============
 
-For Brahmaputra test results, see the functest results document at `[12]`_
-
 Note that the results are documented per scenario basis. Although most of the test
 cases might show the same output, some of them are not supported by
-certain scenario. Please select the appropriate scenario and compare the results
-to the referenced in the documentation.
+certain scenarios. Please select the appropriate scenario and compare the results
+to that referenced in the documentation.
 
 
 Test Dashboard
@@ -391,18 +449,13 @@ Based on results collected in CI, a test dashboard is dynamically generated.
 References
 ==========
 
-.. _`[1]`: http://artifacts.opnfv.org/functest/docs/configguide/#functional-testing-installation
+.. _`[1]`: http://artifacts.opnfv.org/functest/docs/configguide/#
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`[4]`: http://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
 .. _`[5]`: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/openstack-blueprint.yaml
-.. _`[6]`: https://wiki.opnfv.org/opnfv_test_dashboard
-.. _`[7]`: http://testresults.opnfv.org/testapi/test_projects/functest/cases
-.. _`[8]`: https://wiki.openstack.org/wiki/Governance/DefCoreCommittee
 .. _`[9]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml
-.. _`[10]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/rally_cert/task.yaml
 .. _`[11]`: http://robotframework.org/
-.. _`[12]`: http://artifacts.opnfv.org/functest/brahmaputra/docs/results/index.html
 
 OPNFV main site: opnfvmain_.
 
