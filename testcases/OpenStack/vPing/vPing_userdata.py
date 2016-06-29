@@ -347,10 +347,10 @@ def main():
                 logger.debug("Pinging %s. Waiting for response..." % test_ip)
         sec += 1
 
-    test_status = "NOK"
+    test_status = "FAIL"
     if EXIT_CODE == 0:
         logger.info("vPing OK")
-        test_status = "OK"
+        test_status = "PASS"
     elif EXIT_CODE == -2:
         duration = 0
         logger.info("Userdata is not supported in nova boot. Aborting test...")

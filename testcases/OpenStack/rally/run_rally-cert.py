@@ -355,10 +355,10 @@ def run_task(test_name):
         json_data = json.load(json_file)
 
     """ parse JSON operation result """
-    status = "failed"
+    status = "FAIL"
     if task_succeed(json_results):
         logger.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
-        status = "passed"
+        status = "PASS"
     else:
         logger.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
 
