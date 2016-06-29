@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_99cedf59",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-29T09:45:10Z",
+      "side": 1,
+      "message": "use \nimport functest.utils.functest_logger as ft_logger\nor sfc_logger if you like, the name you use here is not relevant, but use the functest library (dont copy code over)",
+      "revId": "85f3e3dff66e56311313328e8dd661ceda49b614",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_b9e71be4",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc_fun.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-29T09:45:10Z",
+      "side": 1,
+      "message": "use \nimport functest.utils.functest_logger as ft_logger\nor sfc_logger if you like, the name you use here is not relevant, but use the functest library (dont copy code over)",
+      "revId": "85f3e3dff66e56311313328e8dd661ceda49b614",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_79cae350",
+        "filename": "testcases/Controllers/ONOS/Sfc/functest_logger.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-29T09:45:10Z",
+      "side": 1,
+      "message": "Why are you copying this file again here? Please don\u0027t do that. This module is already available in functest/utils.",
+      "revId": "85f3e3dff66e56311313328e8dd661ceda49b614",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
