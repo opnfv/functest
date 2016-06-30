@@ -7,15 +7,15 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import click
+
 import os
+import click
+import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_clean as os_clean
+import functest.utils.openstack_snapshot as os_snapshot
 import yaml
 
-import functest.utils.clean_openstack as clean_os
-import functest.utils.functest_utils as ft_utils
-import functest.utils.generate_defaults as gen_def
 
-""" global variables """
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 
@@ -24,10 +24,12 @@ FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
 FUNCTEST_CONF_DIR = functest_yaml.get("general").get(
     "directories").get("dir_functest_conf")
 RC_FILE = os.getenv('creds')
-OS_DEFAULTS_FILE = FUNCTEST_CONF_DIR + '/os_defaults.yaml'
+OS_SNAPSHOT_FILE = ft_utils.get_parameter_from_yaml(
+    "general.openstack.snapshot_file")
 
 
 class CliOpenStack:
+
     def __init__(self):
         self.os_auth_url = os.getenv('OS_AUTH_URL')
         self.endpoint_ip = None
@@ -86,7 +88,7 @@ class CliOpenStack:
 
     def snapshot_create(self):
         self.ping_endpoint()
-        if os.path.isfile(OS_DEFAULTS_FILE):
+        if os.path.isfile(OS_SNAPSHOT_FILE):
             answer = raw_input("It seems there is already an OpenStack "
                                "snapshot. Do you want to overwrite it with "
                                "the current OpenStack status? [y|n]\n")
@@ -99,22 +101,22 @@ class CliOpenStack:
                     answer = raw_input("Invalid answer. Please type [y|n]\n")
 
         click.echo("Generating Openstack snapshot...")
-        gen_def.main()
+        os_snapshot.main()
 
     def snapshot_show(self):
-        if not os.path.isfile(OS_DEFAULTS_FILE):
+        if not os.path.isfile(OS_SNAPSHOT_FILE):
             click.echo("There is no OpenStack snapshot created. To create "
                        "one run the command 'functest env os-create-snapshot'")
             return
-        with open(OS_DEFAULTS_FILE, 'r') as yaml_file:
+        with open(OS_SNAPSHOT_FILE, 'r') as yaml_file:
             click.echo("\n%s"
                        % yaml_file.read())
 
     def clean(self):
         self.ping_endpoint()
-        if not os.path.isfile(OS_DEFAULTS_FILE):
+        if not os.path.isfile(OS_SNAPSHOT_FILE):
             click.echo("Not possible to clean OpenStack without a snapshot. "
                        "This could cause problems. "
                        "Run first the command 'os-create-shapshot'.")
             return
-        clean_os.main()
+        os_clean.main()
