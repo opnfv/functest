@@ -37,6 +37,58 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_ffeed38a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-30T09:00:58Z",
+      "side": 1,
+      "message": "What I do normally if something is not ready to be merged, I give -1 myself :)",
+      "parentUuid": "5a7ca5a3_7f95e33e",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_1ff4ef59",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-30T09:00:58Z",
+      "side": 1,
+      "message": "to not confuse people, I would rather say command line instead of REST API.",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_9fff9f34",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-30T09:00:58Z",
+      "side": 1,
+      "message": "Agree with Viktor. No need to mention the progress from Arno to Brahmaputra any more.",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_5fc58759",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -158,6 +210,23 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_1f694ff9",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-30T09:00:58Z",
+      "side": 1,
+      "message": "s/testcases/test suites",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_7f6de331",
         "filename": "docs/userguide/runfunctest.rst",
         "patchSetId": 1
@@ -169,6 +238,58 @@
       "writtenOn": "2016-06-30T08:25:40Z",
       "side": 1,
       "message": "Maybe just mention the CLI and not the run_tests.sh anymore as it is obsolete",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_df72f7e4",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-30T09:00:58Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "5a7ca5a3_7f6de331",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_9f747fd0",
+        "filename": "docs/userguide/troubleshooting.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-30T09:00:58Z",
+      "side": 1,
+      "message": "this is not relevant any more",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_3f81ab8f",
+        "filename": "docs/userguide/troubleshooting.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-06-30T09:00:58Z",
+      "side": 1,
+      "message": "the path has changed now. It is $repos_dir/functest/testcases/OpenStack/vPing/ ..",
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
