@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_6200e8aa",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-30T12:41:24Z",
+      "side": 1,
+      "message": "it is still in use but there is no more CI, so it is frozen..\nI think it could be misleading\nI will suggest to remove it\nwe still have the Brahmaputra docuementation for people who would like to have info",
+      "parentUuid": "5a7ca5a3_02d1f456",
+      "revId": "67e073559c2f93eed47180c7c8e42b5b6bcc32c7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_a29360a2",
         "filename": "docs/devguide/index.rst",
         "patchSetId": 2
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Ok, let\u0027s give the authentication here, and notes that POST/PUT/DELETE is not allowed through swagger website useless have to. Is that OK?",
       "parentUuid": "5a7ca5a3_a29360a2",
+      "revId": "67e073559c2f93eed47180c7c8e42b5b6bcc32c7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_022d7446",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-30T12:41:24Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "5a7ca5a3_625228df",
       "revId": "67e073559c2f93eed47180c7c8e42b5b6bcc32c7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
