@@ -301,7 +301,7 @@ page `[3]`_.
 
 Overall Architecture
 ====================
-The Test result management in Brahmaputra can be summarized as follows::
+The Test result management can be summarized as follows::
 
   +-------------+    +-------------+    +-------------+
   |             |    |             |    |             |
@@ -314,7 +314,7 @@ The Test result management in Brahmaputra can be summarized as follows::
        +-----------------------------------------+
        |                                         |
        |         Test Rest API front end         |
-       |  http://testresults.opnfv.org/testapi   |
+       |  http://testresults.opnfv.org/test      |
        |                                         |
        +-----------------------------------------+
            A                |
@@ -333,24 +333,16 @@ The Test result management in Brahmaputra can be summarized as follows::
      |                      |
      +----------------------+
 
-The Test dashboard URL is: TODO LF
-A alternate Test dashboard has been realized to provide a view per installer and
-per scenario for Brahmaputra release::
-
-  http://testresults.opnfv.org/proto/brahma/
-
-This Dashboard consumes the results retrieved thanks to the Test API.
-
 Test API description
 ====================
 The Test API is used to declare pods, projects, test cases and test results. An
-additional method dashboard has been added to post-process the raw results. The
-data model is very basic, 4 objects are created:
+additional method dashboard has been added to post-process the raw results in release Brahmaputra. 
+The data model is very basic, 4 objects are created:
 
   * Pods
-  * Test projects
-  * Test cases
-  * Test results
+  * Projects
+  * Testcases
+  * Results
 
 Pods::
 
@@ -359,10 +351,11 @@ Pods::
     "details": <URL description of the POD>,
     "creation_date": YYYY-MM-DD HH:MM:SS ,
     "name": <The POD Name>,
-    "mode": <metal or virtual>
+    "mode": <metal or virtual>,
+    "role": <ci-pod or community-pod or single-node>
   },
 
-Test project::
+Projects::
 
   {
     "id": <ID>,
@@ -371,185 +364,241 @@ Test project::
     "description": <Short description>
   },
 
-Test case::
+Testcases::
 
   {
     "id": <ID>,
     "name":<Name of the test case>,
+    "project_name":<Name of belonged project>,
     "creation_date": "YYYY-MM-DD HH:MM:SS",
     "description": <short description>,
     "url":<URL for longer description>
   },
 
-Test results::
+Results::
 
   {
     "_id": <ID,
+    "case_name": <Reference to the test case>
     "project_name": <Reference to project>,
     "pod_name": <Reference to POD where the test was executed>,
-    "version": <Scenario on which the test was executed>,
     "installer": <Installer Apex or Compass or Fuel or Joid>,
+    "version": <master or Colorado or Brahmaputra>,
+    "start_date": "YYYY-MM-DD HH:MM:SS",
+    "stop_date": "YYYY-MM-DD HH:MM:SS",
     "description": <Short description>,
-    "creation_date": "YYYY-MM-DD HH:MM:SS",
-    "case_name": <Reference to the test case>
-    "details":{
-       <- the results to be put here ->
-    }
+    "build_tag":<>,
+    "scenario": <Scenario on which the test was executed>,
+    "criteria": <PASS or FAILED>,
+    "trust_indicator": <0 ~ 1>
 
-
-For Brahmaputra, we got:
-
- * 16 pods
- * 18 projects
- * 101 test cases
-
-The projects and the test cases have been frozen in December.
-But all were not ready for Brahmaputra.
-
-
-
-The API can described as follows:
+The API can described as follows. For detailed information, please go to
+http://testresults.opnfv.org/test/swagger/spec.html
 
 Version:
 
  +--------+--------------------------+-----------------------------------------+
  | Method | Path                     | Description                             |
  +========+==========================+=========================================+
- | GET    | /version                 | Get API version                         |
+ | GET    | /versions                 | Get all supported API versions         |
  +--------+--------------------------+-----------------------------------------+
 
 
 Pods:
 
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    | /pods                    | Get the list of declared Labs (PODs)    |
- +--------+--------------------------+-----------------------------------------+
- | POST   | /pods                    | Declare a new POD                       |
- |        |                          | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          | "name": "pod_foo",                      |
- |        |                          | "creation_date": "YYYY-MM-DD HH:MM:SS"  |
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
+ +--------+----------------------------+-----------------------------------------+
+ | Method | Path                       | Description                             |
+ +========+============================+=========================================+
+ | GET    | /api/v1/pods               | Get the list of declared Labs (PODs)    |
+ +--------+----------------------------+-----------------------------------------+
+ | POST   | /api/v1/pods               | Declare a new POD                       |
+ |        |                            | Content-Type: application/json          |
+ |        |                            | {                                       |
+ |        |                            | "name": "pod_foo",                      |
+ |        |                            | "mode": "metal",                        |
+ |        |                            | "role": "ci-pod",                       |
+ |        |                            | "details": "it is a ci pod"             |
+ |        |                            | }                                       |
+ +--------+----------------------------+-----------------------------------------+
+ | GET    | /api/v1/pods/{pod_name}    | Get a declared POD                      |
+ +--------+----------------------------+-----------------------------------------+
 
 Projects:
 
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    | /test_projects           | Get the list of test projects           |
- +--------+--------------------------+-----------------------------------------+
- | GET    |/test_projects/{project}  | Get details on {project}                |
- |        |                          |                                         |
- +--------+--------------------------+-----------------------------------------+
- | POST   | /test_projects           | Add a new test project                  |
- |        |                          | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          | "name": "project_foo",                  |
- |        |                          | "description": "whatever you want"      |
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
- | PUT    | /test_projects/{project} | Update a test project                   |
- |        |                          |                                         |
- |        |                          | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          | <the field(s) you want to modify>       |
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
- | DELETE | /test_projects/{project} | Delete a test project                   |
- +--------+--------------------------+-----------------------------------------+
+ +--------+----------------------------+-----------------------------------------+
+ | Method | Path                       | Description                             |
+ +========+============================+=========================================+
+ | GET    | /api/v1/projects           | Get the list of declared projects       |
+ +--------+----------------------------+-----------------------------------------+
+ | POST   | /api/v1/projects           | Declare a new test project              |
+ |        |                            | Content-Type: application/json          |
+ |        |                            | {                                       |
+ |        |                            | "name": "project_foo",                  |
+ |        |                            | "description": "whatever you want"      |
+ |        |                            | }                                       |
+ +--------+----------------------------+-----------------------------------------+
+ | DELETE | /api/v1/projects/{project} | Delete a test project                   |
+ +--------+----------------------------+-----------------------------------------+
+ | GET    | /api/v1/projects/{project} | Get details on a {project}              |
+ |        |                            |                                         |
+ +--------+----------------------------+-----------------------------------------+
+ | PUT    | /api/v1/projects/{project} | Update a test project                   |
+ |        |                            |                                         |
+ |        |                            | Content-Type: application/json          |
+ |        |                            | {                                       |
+ |        |                            | <the field(s) you want to modify>       |
+ |        |                            | }                                       |
+ +--------+----------------------------+-----------------------------------------+
 
 
-Test cases:
+Testcases:
 
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    | /test_projects/{project}/| Get the list of test cases of {project} |
- |        | cases                    |                                         |
- +--------+--------------------------+-----------------------------------------+
- | POST   | /test_projects/{project}/| Add a new test case to {project}        |
- |        | cases                    | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          | "name": "case_foo",                     |
- |        |                          | "description": "whatever you want"      |
- |        |                          | "creation_date": "YYYY-MM-DD HH:MM:SS"  |
- |        |                          | "url": "whatever you want"              |
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
- | PUT    | /test_projects/{project}?| Modify a test case of {project}         |
- |        | case_name={case}         |                                         |
- |        |                          | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          | <the field(s) you want to modify>       |
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
- | DELETE | /test_projects/{project}/| Delete a test case                      |
- |        | case_name={case}         |                                         |
- +--------+--------------------------+-----------------------------------------+
+ +--------+----------------------------+-----------------------------------------+
+ | Method | Path                       | Description                             |
+ +========+============================+=========================================+
+ | GET    | /api/v1/projects/{project}/| Get the list of testcases of {project}  |
+ |        | cases                      |                                         |
+ +--------+----------------------------+-----------------------------------------+
+ | POST   | /api/v1/projects/{project}/| Add a new test case to {project}        |
+ |        | cases                      | Content-Type: application/json          |
+ |        |                            | {                                       |
+ |        |                            | "name": "case_foo",                     |
+ |        |                            | "description": "whatever you want"      |
+ |        |                            | "url": "whatever you want"              |
+ |        |                            | }                                       |
+ +--------+----------------------------+-----------------------------------------+
+ | DELETE | /api/v1/projects/{project}/| Delete a test case                      |
+ |        | cases/{case}               |                                         |
+ +--------+----------------------------+-----------------------------------------+
+ | GET    | /api/v1/projects/{project}/| Get a declared test case                |
+ |        | cases/{case}               |                                         |
+ +--------+----------------------------+-----------------------------------------+
+ | PUT    | /api/v1/projects/{project}?| Modify a test case of {project}         |
+ |        | cases/{case}               |                                         |
+ |        |                            | Content-Type: application/json          |
+ |        |                            | {                                       |
+ |        |                            | <the field(s) you want to modify>       |
+ |        |                            | }                                       |
+ +--------+----------------------------+-----------------------------------------+
 
-Test Results:
+Results:
 
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    |/results/project={project}| Get the test results of {project}       |
- +--------+--------------------------+-----------------------------------------+
- | GET    |/results/case={case}      | Get the test results of {case}          |
- +--------+--------------------------+-----------------------------------------+
- | GET    |/results?pod={pod}        | get the results on pod {pod}            |
- +--------+--------------------------+-----------------------------------------+
- | GET    |/results?installer={inst} | Get the test results of installer {inst}|
- +--------+--------------------------+-----------------------------------------+
- | GET    |/results?version={version}| Get the test results of scenario        |
- |        |                          | {version}. Initially the version param  |
- |        |                          | was reflecting git version, in Functest |
- |        |                          | it was decided to move to scenario      |
- +--------+--------------------------+-----------------------------------------+
- | GET    |/results?project={project}| Get all the results of the test case    |
- |        |&case={case}              | {case} of the project {project} with    |
- |        |&version={scenario}       | version {scenario} installed by         |
- |        |&installer={installer}    | {installer} on POD {pod} stored since   |
- |        |&pod={pod}                | {days} days                             |
- |        |                          | {project_name} and {case_name} are      |
- |        |&period={days}            | mandatory, the other parameters are     |
- |        |                          | optional.                               |
- +--------+--------------------------+-----------------------------------------+
- | POST   | /results                 | Add a new test results                  |
- |        |                          | Content-Type: application/json          |
- |        |                          | {                                       |
- |        |                          | "project_name": "project_foo",          |
- |        |                          | "case_name": "case_foo",                |
- |        |                          | "pod_name": "pod_foo",                  |
- |        |                          | "installer": "installer_foo",           |
- |        |                          | "version": "scenario_foo",              |
- |        |                          | "details": <your results>               |
- |        |                          | }                                       |
- +--------+--------------------------+-----------------------------------------+
+ +--------+----------------------------+------------------------------------------+
+ | Method | Path                       | Description                              |
+ +========+============================+==========================================+
+ | GET    | /api/v1/results             | Get all the test results                |
+ +--------+----------------------------+------------------------------------------+
+ | POST   | /api/v1/results            | Add a new test results                   |
+ |        |                            | Content-Type: application/json           |
+ |        |                            | {                                        |
+ |        |                            | "project_name": "project_foo",           |
+ |        |                            | "scenario": "odl-l2",                    |
+ |        |                            | "stop_date": "2016-05-28T14:42:58.384Z", |
+ |        |                            | "trust_indicator": 0.5,                  |
+ |        |                            | "case_name": "vPing",                    |
+ |        |                            | "build_tag": "",                         |
+ |        |                            | "version": "Colorado",                   |
+ |        |                            | "pod_name": "pod_foo",                   |
+ |        |                            | "criteria": "PASS",                      |
+ |        |                            | "installer": "fuel",                     |
+ |        |                            | "start_date": "2016-05-28T14:41:58.384Z",|
+ |        |                            | "details": <your results>                |
+ |        |                            | }                                        |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | Get the test results of {case}           |
+ |        | case={case}                |                                          |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | Get the test results of build_tag        |
+ |        | build_tag={tag}            | {tag}.                                   |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | Get last {N} records of test results     |
+ |        | last={N}                   |                                          |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | Get the test results of scenario         |
+ |        | scenario={scenario}        | {scenario}.                              |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | Get the test results of trust_indicator  |
+ |        | trust_indicator={ind}      | {ind}.                                   |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | Get the test results of last days        |
+ |        | period={period}            | {period}.                                |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | Get the test results of {project}        |
+ |        | project={project}          |                                          |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | Get the test results of version          |
+ |        | version={version}          | {version}.                               |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | Get the test results of criteria         |
+ |        | criteria={criteria}        | {criteria}.                              |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | get the results on pod {pod}             |
+ |        | pod={pod}                  |                                          |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | Get the test results of installer {inst} |
+ |        | installer={inst}           |                                          |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results?           | Get the results according to combined    |
+ |        | <query conditions>         | query conditions supported above         |
+ +--------+----------------------------+------------------------------------------+
+ | GET    | /api/v1/results/{result_id}| Get the test result by result_id         |
+ +--------+----------------------------+------------------------------------------+
 
 
 Dashboard:
 
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    |/dashboard?               | Get all the dashboard ready results of  |
- |        |&project={project}        | {case} of the project {project}         |
- |        |&case={case}              | version {scenario} installed by         |
- |        |&version={scenario}       | {installer} on POD {pod} stored since   |
- |        |&installer={installer}    | {days} days                             |
- |        |&pod={pod}                |                                         |
- |        |&period={days}            | {project_name} and {case_name} are      |
- |        |                          | mandatory, the other parameters are     |
- |        |                          | optional.                               |
- +--------+--------------------------+-----------------------------------------+
+ +--------+----------------------------+-----------------------------------------+
+ | Method | Path                       | Description                             |
+ +========+============================+=========================================+
+ | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
+ |        |&project={project}          | {case} of the project {project}         |
+ |        |&case={case}                |                                         |
+ +--------+----------------------------+-----------------------------------------+
+ | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
+ |        |&project={project}          | {case} of the project {project}         |
+ |        |&case={case}                | version {version}                       |
+ |        |&version={version}          |                                         |
+ +--------+----------------------------+-----------------------------------------+
+ | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
+ |        |&project={project}          | {case} of the project {project}         |
+ |        |&case={case}                | since {days} days                       |
+ |        |&period={days}              |                                         |
+ +--------+----------------------------+-----------------------------------------+
+ | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
+ |        |&project={project}          | {case} of the project {project}         |
+ |        |&case={case}                | installed by {installer}                |
+ |        |&installer={installer}      |                                         |
+ +--------+----------------------------+-----------------------------------------+
+ | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
+ |        |&project={project}          | {case} of the project {project}         |
+ |        |&case={case}                | on POD {pod}                            |
+ |        |&pod={pod}                  |                                         |
+ +--------+----------------------------+-----------------------------------------+
+ | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
+ |        |&project={project}          | {case} of the project {project}         |
+ |        |&case={case}                | and combined by other query conditions  |
+ |        |&<query conditions>         | supported above.                        |
+ +--------+----------------------------+-----------------------------------------+
+ | GET    |/dashboard/v1/projects?     | Get all the dashboard ready projects    |
+ +--------+----------------------------+-----------------------------------------+
 
+Dashboard description
+=====================
 
 The results with dashboard method are post-processed from raw results.
 Please note that dashboard results are not stored. Only raw results are stored.
 
+Release Brahmaputra
+-------------------
+
+Dashboard url: http://testresults.opnfv.org/dashboard/
+
+Release Colorado
+----------------
+
+Dashboard url: http://testresults.opnfv.org/kibana_dashboards/
+
+Credentials for a guest account: opnfvuser/kibana
 
 ===============================================
 How to push your results into the Test Database
