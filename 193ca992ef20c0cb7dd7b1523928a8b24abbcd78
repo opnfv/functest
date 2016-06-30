@@ -69,6 +69,24 @@
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_1f0aaf8a",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-06-30T07:48:30Z",
+      "side": 1,
+      "message": "I meant lines 183...187. They are valid for Brahmaputra only.",
+      "parentUuid": "5a7ca5a3_1f8e2f2f",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
