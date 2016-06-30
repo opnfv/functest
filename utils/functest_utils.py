@@ -8,23 +8,25 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
+""" global variables """
+
 from datetime import datetime as dt
 import json
 import os
 import os.path
 import re
-import requests
 import shutil
 import socket
 import subprocess
 import sys
 import urllib2
-import yaml
-from git import Repo
+
 import functest.ci.tier_builder as tb
+from git import Repo
+import requests
+import yaml
 
 
-""" global variables """
 REPOS_DIR = os.getenv('repos_dir')
 FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
 
@@ -300,3 +302,24 @@ def get_criteria_by_test(testname):
                 criteria = test.get_criteria()
 
     return criteria
+
+
+# ----------------------------------------------------------
+#
+#               YAML UTILS
+#
+# -----------------------------------------------------------
+def get_parameter_from_yaml(parameter):
+    """
+    Returns the value of a given parameter in config_functest.yaml
+    parameter must be given in string format with dots
+    Example: general.openstack.image_name
+    """
+    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
+        functest_yaml = yaml.safe_load(f)
+    f.close()
+
+    value = functest_yaml
+    for element in parameter.split("."):
+        value = value.get(element)
+    return value
