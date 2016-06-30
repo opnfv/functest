@@ -12,20 +12,19 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
+
 import argparse
 import os
 import re
 import subprocess
 import sys
-import yaml
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
-import functest.utils.generate_defaults as gen_def
 import functest.utils.openstack_utils as os_utils
+import yaml
 
 
-""" arguments """
 actions = ['start', 'check']
 parser = argparse.ArgumentParser()
 parser.add_argument("action", help="Possible actions are: "
@@ -241,12 +240,6 @@ def install_rally():
                                         "OpenStack flavors."))
 
 
-def generate_os_defaults():
-    print_separator()
-    logger.info("Generating OpenStack defaults...")
-    gen_def.main()
-
-
 def check_environment():
     msg_not_active = "The Functest environment is not installed."
     if not os.path.isfile(ENV_FILE):
@@ -274,7 +267,6 @@ def main():
         source_rc_file()
         verify_deployment()
         install_rally()
-        generate_os_defaults()
 
         with open(ENV_FILE, "w") as env_file:
             env_file.write("1")
