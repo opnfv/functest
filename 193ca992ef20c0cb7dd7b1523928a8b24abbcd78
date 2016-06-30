@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_6def79b1",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "Feel free to change! in patch #3",
+      "parentUuid": "5a7ca5a3_1ff4ef59",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_62e4683b",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -119,6 +137,30 @@
       "writtenOn": "2016-06-30T12:38:55Z",
       "side": 1,
       "message": "syntax: verified\nshall we not write the following verifications are performed: ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 33,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_0d2cc501",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "+1 Feel free to introduce the improved text folks in Patch #3",
+      "parentUuid": "5a7ca5a3_62e4683b",
       "range": {
         "startLine": 41,
         "startChar": 33,
@@ -154,6 +196,30 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_2d31815a",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "+1 The suggestion is good.... Feel free to do it folks in Patch#3",
+      "parentUuid": "5a7ca5a3_a2c12082",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 19
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_62bb080f",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -165,6 +231,30 @@
       "writtenOn": "2016-06-30T12:38:55Z",
       "side": 1,
       "message": "on or in?",
+      "range": {
+        "startLine": 79,
+        "startChar": 68,
+        "endLine": 79,
+        "endChar": 70
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_cd356d47",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "In fact a better solution would be   on ---\u003e over\nin is out !!! (-1)",
+      "parentUuid": "5a7ca5a3_62bb080f",
       "range": {
         "startLine": 79,
         "startChar": 68,
@@ -205,6 +295,24 @@
       "writtenOn": "2016-06-30T12:38:55Z",
       "side": 1,
       "message": "+1",
+      "parentUuid": "5a7ca5a3_9fff9f34",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_4df2bd9b",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "Feel free to change it folks! for patch #3",
       "parentUuid": "5a7ca5a3_9fff9f34",
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
@@ -265,6 +373,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_ed3aa935",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "+1 ok for me. I did not really know which of the existing texts are no longer relevant to Colorado\n\nJose/Juha to incorporate Vitkor\u0027s suggestion in patch #3",
+      "parentUuid": "5a7ca5a3_1f0aaf8a",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_c241bc0c",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -276,6 +402,30 @@
       "writtenOn": "2016-06-30T12:38:55Z",
       "side": 1,
       "message": "trailing space",
+      "range": {
+        "startLine": 199,
+        "startChar": 26,
+        "endLine": 199,
+        "endChar": 27
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_8d3f7525",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "Sorry forgot to run my trim trailing space de-crapifier!\n\nJuha to learn the art of flusinh useless white space out of the documents for Patch #3 !",
+      "parentUuid": "5a7ca5a3_c241bc0c",
       "range": {
         "startLine": 199,
         "startChar": 26,
@@ -311,6 +461,30 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_ad3cb130",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "+1   has is a better choice\n\n\"The lads\" to incorporate in Patch #",
+      "parentUuid": "5a7ca5a3_824bc42a",
+      "range": {
+        "startLine": 228,
+        "startChar": 34,
+        "endLine": 228,
+        "endChar": 38
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_4255acc4",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -322,6 +496,30 @@
       "writtenOn": "2016-06-30T12:38:55Z",
       "side": 1,
       "message": "now now \u003d\u003e now",
+      "range": {
+        "startLine": 230,
+        "startChar": 49,
+        "endLine": 230,
+        "endChar": 52
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_4d495dcf",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "+1  Juha to delete! for patch #3",
+      "parentUuid": "5a7ca5a3_4255acc4",
       "range": {
         "startLine": 230,
         "startChar": 49,
@@ -357,6 +555,30 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_6d4699c1",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "+1  Jose to improve the text to take Morgan\u0027s suggestion on board!",
+      "parentUuid": "5a7ca5a3_025fb4e6",
+      "range": {
+        "startLine": 236,
+        "startChar": 42,
+        "endLine": 236,
+        "endChar": 53
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_226430b8",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -374,6 +596,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_0d1365b9",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "+/- 0 !!!",
+      "parentUuid": "5a7ca5a3_226430b8",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_8272e47a",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -385,6 +625,24 @@
       "writtenOn": "2016-06-30T12:38:55Z",
       "side": 1,
       "message": "I will add Cedric in review, as he planned to refactor this section. I think we could let it as it is for the moment but it will surely evolve",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_2d18a1d2",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "+1  Excellent if Cedric could revise/improve this section for patch #3 or #4...",
+      "parentUuid": "5a7ca5a3_8272e47a",
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -531,6 +789,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_cd0c8d97",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "+1 and anyway reference to Brahmaputra would anyway be wrong as this document is Colorado...\n\nPlease remove the section in patch#3 if you feel that\u0027s best",
+      "parentUuid": "5a7ca5a3_426ccc9c",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_6269c88a",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -542,6 +818,24 @@
       "writtenOn": "2016-06-30T12:38:55Z",
       "side": 1,
       "message": "scenarios",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_ed1149ad",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:30:56Z",
+      "side": 1,
+      "message": "+1\nJuha to add an \u0027s\u0027 and I owe him a pint of plain after patch #3",
+      "parentUuid": "5a7ca5a3_6269c88a",
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
