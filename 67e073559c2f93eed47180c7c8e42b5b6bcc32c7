@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_02d1f456",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-06-30T12:30:38Z",
+      "side": 1,
+      "message": "I think if the Brahmaputra dashboard is still in use, we should keep it, or else we could delete it",
+      "parentUuid": "5a7ca5a3_e281584b",
+      "revId": "67e073559c2f93eed47180c7c8e42b5b6bcc32c7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_a29360a2",
         "filename": "docs/devguide/index.rst",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2016-06-30T12:19:02Z",
       "side": 1,
       "message": "Shall we indicate that an authentication is required to access the swagger interface?",
+      "revId": "67e073559c2f93eed47180c7c8e42b5b6bcc32c7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_625228df",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-06-30T12:30:38Z",
+      "side": 1,
+      "message": "Ok, let\u0027s give the authentication here, and notes that POST/PUT/DELETE is not allowed through swagger website useless have to. Is that OK?",
+      "parentUuid": "5a7ca5a3_a29360a2",
       "revId": "67e073559c2f93eed47180c7c8e42b5b6bcc32c7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
