@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_ffa1f3a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-06-30T06:53:28Z",
+      "side": 1,
+      "message": "You can probably save some space here by not mentioning patch numbers. This information (patch numbers) will not be valuable anymore after merging the change.",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_5fc58759",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-06-30T06:53:28Z",
+      "side": 1,
+      "message": "Is it OK that User Guide contains also older release specific information? (\u003d Is it so that there will be only one version of the document covering all the releases)? Or will we have separate versions for different releases? In the latter case there is no probably need to mention Brahmaputra specific features which will not be supported anymore in Colorado.",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
