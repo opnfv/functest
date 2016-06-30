@@ -330,7 +330,7 @@ The structure under the **functest** repository can be described as follows::
         |-- clean_openstack.py
         |-- functest_logger.py
         |-- functest_utils.py
-        |-- generate_defaults.py
+        |-- openstack_snapshot.py
         `-- openstack_utils.py
 
     (Note: All *.pyc files removed from above list for brevity...)

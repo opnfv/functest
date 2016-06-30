@@ -20,19 +20,21 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
+""" logging configuration """
+
 import os
+
+from cinderclient import client as cinderclient
+import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as os_utils
+from keystoneclient.v2_0 import client as keystoneclient
+from neutronclient.v2_0 import client as neutronclient
+from novaclient import client as novaclient
 import yaml
 
-from novaclient import client as novaclient
-from neutronclient.v2_0 import client as neutronclient
-from keystoneclient.v2_0 import client as keystoneclient
-from cinderclient import client as cinderclient
 
-import functest.utils.openstack_utils as os_utils
-import functest.utils.functest_logger as ft_logger
-
-""" logging configuration """
-logger = ft_logger.Logger("generate_defaults").getLogger()
+logger = ft_logger.Logger("openstack_snapshot").getLogger()
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
 if not os.path.exists(REPO_PATH):
@@ -40,7 +42,8 @@ if not os.path.exists(REPO_PATH):
     exit(-1)
 
 
-DEFAULTS_FILE = '/home/opnfv/functest/conf/os_defaults.yaml'
+OS_SNAPSHOT_FILE = ft_utils.get_parameter_from_yaml(
+    "general.openstack.snapshot_file")
 
 
 def separator():
@@ -161,24 +164,24 @@ def main():
                      "script again.")
         exit(-1)
 
-    defaults = {}
-    defaults.update(get_instances(nova_client))
-    defaults.update(get_images(nova_client))
-    defaults.update(get_volumes(cinder_client))
-    defaults.update(get_networks(neutron_client))
-    defaults.update(get_routers(neutron_client))
-    defaults.update(get_security_groups(neutron_client))
-    defaults.update(get_floatinips(nova_client))
-    defaults.update(get_users(keystone_client))
-    defaults.update(get_tenants(keystone_client))
+    snapshot = {}
+    snapshot.update(get_instances(nova_client))
+    snapshot.update(get_images(nova_client))
+    snapshot.update(get_volumes(cinder_client))
+    snapshot.update(get_networks(neutron_client))
+    snapshot.update(get_routers(neutron_client))
+    snapshot.update(get_security_groups(neutron_client))
+    snapshot.update(get_floatinips(nova_client))
+    snapshot.update(get_users(keystone_client))
+    snapshot.update(get_tenants(keystone_client))
 
-    with open(DEFAULTS_FILE, 'w+') as yaml_file:
-        yaml_file.write(yaml.safe_dump(defaults, default_flow_style=False))
+    with open(OS_SNAPSHOT_FILE, 'w+') as yaml_file:
+        yaml_file.write(yaml.safe_dump(snapshot, default_flow_style=False))
         yaml_file.seek(0)
-        logger.info("Openstack Defaults found in the deployment:\n%s"
+        logger.info("Openstack Snapshot found in the deployment:\n%s"
                     % yaml_file.read())
         logger.debug("NOTE: These objects will NOT be deleted after " +
-                     "running the tests.")
+                     "running the test.")
 
 
 if __name__ == '__main__':
