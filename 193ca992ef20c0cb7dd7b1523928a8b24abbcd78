@@ -426,6 +426,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_edece9c9",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:13:35Z",
+      "side": 1,
+      "message": "Correct.... I put name here just to indicate from whom we are collecting the information which is missing from this section. Hence the name \"TODO\"  Once the real document text is added the name and the whole \"TODO\" text is history!",
+      "parentUuid": "5a7ca5a3_c258dcfc",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_df9e7756",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -443,6 +461,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_8dd1b5fd",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:13:35Z",
+      "side": 1,
+      "message": "CG: As per the previous reply... Its a \"TODO\" (reminder) and this kind of text would never be merged!",
+      "parentUuid": "5a7ca5a3_df9e7756",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_bfb05bde",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -454,6 +490,24 @@
       "writtenOn": "2016-06-30T08:25:40Z",
       "side": 1,
       "message": "Check the need of persons name in the document",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_0d05a579",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:13:35Z",
+      "side": 1,
+      "message": "Its a \"TODO\" which will be clearly removed and NEVER merged as such!",
+      "parentUuid": "5a7ca5a3_bfb05bde",
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -505,6 +559,24 @@
       "writtenOn": "2016-06-30T08:25:40Z",
       "side": 1,
       "message": "is the reference link 6\u00267\u002610 (Dashboard, FuncTest cases and Rally yaml) removed on purpose? No objections, just wondering...",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_2d0ae18a",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:13:35Z",
+      "side": 1,
+      "message": "They were not actually used anywhere in the text so I weeded them out!",
+      "parentUuid": "5a7ca5a3_3f49abd0",
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -655,6 +727,24 @@
       "side": 1,
       "message": "+1 it will be confusing to mention anything but the CLI",
       "parentUuid": "5a7ca5a3_7f6de331",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_cdfecd6b",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T19:13:35Z",
+      "side": 1,
+      "message": "See patch #2...",
+      "parentUuid": "5a7ca5a3_82f984ca",
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
