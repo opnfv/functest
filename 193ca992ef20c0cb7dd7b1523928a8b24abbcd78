@@ -126,6 +126,60 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_8d89b5cc",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Surpise ... i did patch #3 for introduction.rst comments",
+      "parentUuid": "5a7ca5a3_6def79b1",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_ad86f1b7",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_42e7ec40",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_6d90d9ec",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_1ff4ef59",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_62e4683b",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -161,6 +215,54 @@
       "side": 1,
       "message": "+1 Feel free to introduce the improved text folks in Patch #3",
       "parentUuid": "5a7ca5a3_62e4683b",
+      "range": {
+        "startLine": 41,
+        "startChar": 33,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_0dbda568",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_62e4683b",
+      "range": {
+        "startLine": 41,
+        "startChar": 33,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_4d939dfa",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "I did patch #3 for introduction.rst comments!",
+      "parentUuid": "5a7ca5a3_0d2cc501",
       "range": {
         "startLine": 41,
         "startChar": 33,
@@ -220,6 +322,54 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_cdb6cd8a",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_a2c12082",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 19
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_2dc2e1e9",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "I did patch #3 for introduction.rst comments",
+      "parentUuid": "5a7ca5a3_2d31815a",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 19
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_62bb080f",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -255,6 +405,30 @@
       "side": 1,
       "message": "In fact a better solution would be   on ---\u003e over\nin is out !!! (-1)",
       "parentUuid": "5a7ca5a3_62bb080f",
+      "range": {
+        "startLine": 79,
+        "startChar": 68,
+        "endLine": 79,
+        "endChar": 70
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_edbb8970",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_cd356d47",
       "range": {
         "startLine": 79,
         "startChar": 68,
@@ -391,6 +565,78 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_4daabd1a",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_1f0aaf8a",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_6da77950",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_ed3aa935",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_adad9133",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_1f8e2f2f",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_8db0d58c",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_5fc58759",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_c241bc0c",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -438,6 +684,54 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_0d64c520",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_c241bc0c",
+      "range": {
+        "startLine": 199,
+        "startChar": 26,
+        "endLine": 199,
+        "endChar": 27
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_2d6981f9",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_8d3f7525",
+      "range": {
+        "startLine": 199,
+        "startChar": 26,
+        "endLine": 199,
+        "endChar": 27
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_824bc42a",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -473,6 +767,30 @@
       "side": 1,
       "message": "+1   has is a better choice\n\n\"The lads\" to incorporate in Patch #",
       "parentUuid": "5a7ca5a3_824bc42a",
+      "range": {
+        "startLine": 228,
+        "startChar": 34,
+        "endLine": 228,
+        "endChar": 38
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_cd6d6d06",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_ad3cb130",
       "range": {
         "startLine": 228,
         "startChar": 34,
@@ -566,6 +884,30 @@
       "writtenOn": "2016-06-30T19:30:56Z",
       "side": 1,
       "message": "+1  Jose to improve the text to take Morgan\u0027s suggestion on board!",
+      "parentUuid": "5a7ca5a3_025fb4e6",
+      "range": {
+        "startLine": 236,
+        "startChar": 42,
+        "endLine": 236,
+        "endChar": 53
+      },
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_ed72a9e4",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "5a7ca5a3_025fb4e6",
       "range": {
         "startLine": 236,
@@ -702,6 +1044,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_8d7775d4",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_edece9c9",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_df9e7756",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -731,6 +1091,24 @@
       "side": 1,
       "message": "CG: As per the previous reply... Its a \"TODO\" (reminder) and this kind of text would never be merged!",
       "parentUuid": "5a7ca5a3_df9e7756",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_ad74b1cf",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_8dd1b5fd",
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -772,6 +1150,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_4d815d8e",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_0d05a579",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_426ccc9c",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -800,6 +1196,42 @@
       "writtenOn": "2016-06-30T19:30:56Z",
       "side": 1,
       "message": "+1 and anyway reference to Brahmaputra would anyway be wrong as this document is Colorado...\n\nPlease remove the section in patch#3 if you feel that\u0027s best",
+      "parentUuid": "5a7ca5a3_426ccc9c",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_0d4b6588",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_cd0c8d97",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_6d7e99b0",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "5a7ca5a3_426ccc9c",
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
@@ -842,6 +1274,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_2d50a131",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7ca5a3_ed1149ad",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_3f49abd0",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -870,6 +1320,42 @@
       "writtenOn": "2016-06-30T19:13:35Z",
       "side": 1,
       "message": "They were not actually used anywhere in the text so I weeded them out!",
+      "parentUuid": "5a7ca5a3_3f49abd0",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_eda4e958",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "and now #8 and #12 are eliminated!",
+      "parentUuid": "5a7ca5a3_2d0ae18a",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_cd448d76",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T21:07:00Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "5a7ca5a3_3f49abd0",
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
