@@ -16,6 +16,41 @@
       "revId": "67e073559c2f93eed47180c7c8e42b5b6bcc32c7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_e281584b",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-30T12:19:02Z",
+      "side": 1,
+      "message": "the method had been added in brahmaputra...but the whole API had been developped for brahmaputra :) it is still there in Colorado. I do not know if we have to keep the history",
+      "parentUuid": "5a7ca5a3_c26e9cc9",
+      "revId": "67e073559c2f93eed47180c7c8e42b5b6bcc32c7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_a29360a2",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-06-30T12:19:02Z",
+      "side": 1,
+      "message": "Shall we indicate that an authentication is required to access the swagger interface?",
+      "revId": "67e073559c2f93eed47180c7c8e42b5b6bcc32c7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
