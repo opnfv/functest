@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_7f95e33e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T07:15:02Z",
+      "side": 1,
+      "message": "OK Viktor. You are correct.",
+      "parentUuid": "5a7ca5a3_ffa1f3a9",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_5fc58759",
         "filename": "docs/userguide/index.rst",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-06-30T06:53:28Z",
       "side": 1,
       "message": "Is it OK that User Guide contains also older release specific information? (\u003d Is it so that there will be only one version of the document covering all the releases)? Or will we have separate versions for different releases? In the latter case there is no probably need to mention Brahmaputra specific features which will not be supported anymore in Colorado.",
+      "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_1f8e2f2f",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-06-30T07:15:02Z",
+      "side": 1,
+      "message": "CG: I was unclear on this actually. Morgan mentioned that mention here only what\u0027s relevant to Colorado. I\u0027ll have to try and clean up the document in this respect in the next patch. I understand that each release has it\u0027s own independent version of document, but I will check with Jose.\n\nQuestion: In the context of this remark here, what do you mean by \"Brahmaputra specific features which will not be supported anymore in Colorado\".  I am not sure what features are in question here but I agree is some feature is supported in Brahmaputra and not in Colorado then it should not be mentioned in the Colorado document!",
+      "parentUuid": "5a7ca5a3_5fc58759",
       "revId": "193ca992ef20c0cb7dd7b1523928a8b24abbcd78",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
