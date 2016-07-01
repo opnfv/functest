@@ -349,7 +349,7 @@ Pods::
   {
     "id": <ID>,
     "details": <URL description of the POD>,
-    "creation_date": YYYY-MM-DD HH:MM:SS ,
+    "creation_date": "YYYY-MM-DD HH:MM:SS",
     "name": <The POD Name>,
     "mode": <metal or virtual>,
     "role": <ci-pod or community-pod or single-node>
@@ -378,8 +378,8 @@ Testcases::
 Results::
 
   {
-    "_id": <ID,
-    "case_name": <Reference to the test case>
+    "_id": <ID>,
+    "case_name": <Reference to the test case>,
     "project_name": <Reference to project>,
     "pod_name": <Reference to POD where the test was executed>,
     "installer": <Installer Apex or Compass or Fuel or Joid>,
@@ -389,7 +389,8 @@ Results::
     "build_tag": <such as "jenkins-functest-fuel-baremetal-daily-master-108">,
     "scenario": <Scenario on which the test was executed>,
     "criteria": <PASS or FAILED>,
-    "trust_indicator": <0 ~ 1>
+    "trust_indicator": <0~1>
+  }
 
 The API can described as follows. For detailed information, please go to
 http://testresults.opnfv.org/test/swagger/spec.html
