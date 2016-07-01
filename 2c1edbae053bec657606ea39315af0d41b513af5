@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_d33bd0e9",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc_fun.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-01T15:33:33Z",
+      "side": 1,
+      "message": "Can you please change this to lower case? This will be part of the Functest output in this format (as an example):\n\n2016-07-01 02:51:23,071 - vping_userdata - INFO - Creating neutron network vping-net...\nto be consistent with all the scripts that use the functest logger, it would be nice to keep it lower case as well.",
+      "revId": "2c1edbae053bec657606ea39315af0d41b513af5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
