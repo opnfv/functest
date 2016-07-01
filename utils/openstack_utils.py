@@ -12,17 +12,24 @@ import os
 import os.path
 import subprocess
 import sys
+import time
+
+from glanceclient import client as glanceclient
+from keystoneclient.v2_0 import client as keystoneclient
+from neutronclient.v2_0 import client as neutronclient
+from novaclient import client as novaclient
+
 
 # ----------------------------------------------------------
 #
 #               OPENSTACK UTILS
 #
 # -----------------------------------------------------------
-
-
 # *********************************************
 #   CREDENTIALS
 # *********************************************
+
+
 def check_credentials():
     """
     Check if the OpenStack credentials (openrc) are sourced
@@ -91,8 +98,37 @@ def source_credentials(rc_file):
 
 
 # *********************************************
+#   CLIENTS
+# *********************************************
+
+
+def get_keystone_client():
+    creds_keystone = get_credentials("keystone")
+    return keystoneclient.Client(**creds_keystone)
+
+
+def get_nova_client():
+    creds_nova = get_credentials("nova")
+    return novaclient.Client('2', **creds_nova)
+
+
+def get_neutron_client():
+    creds_neutron = get_credentials("neutron")
+    return neutronclient.Client(**creds_neutron)
+
+
+def get_glance_client():
+    keystone_client = get_keystone_client()
+    glance_endpoint = keystone_client.service_catalog.url_for(
+        service_type='image', endpoint_type='publicURL')
+    return glanceclient.Client(1, glance_endpoint,
+                               token=keystone_client.auth_token)
+
+# *********************************************
 #   NOVA
 # *********************************************
+
+
 def get_instances(nova_client):
     try:
         instances = nova_client.servers.list(search_opts={'all_tenants': 1})
@@ -159,6 +195,61 @@ def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
                "'%s')]:" % (flavor_name, ram, disk, vcpus)), e
         return None
     return flavor.id
+
+
+def create_instance(flavor_name,
+                    image_id,
+                    network_id,
+                    instance_name="",
+                    config_drive=False,
+                    userdata=""):
+    nova_client = get_nova_client()
+    try:
+        flavor = nova_client.flavors.find(name=flavor_name)
+    except:
+        print("Error: Flavor '%s' not found. Available flavors are:" %
+              flavor_name)
+        print(nova_client.flavor.list())
+        return -1
+
+    return nova_client.servers.create(
+        name=instance_name,
+        flavor=flavor,
+        image=image_id,
+        config_drive=config_drive,
+        nics=[{"net-id": network_id}]
+    )
+
+
+def create_instance_and_wait_for_active(flavor_name,
+                                        image_id,
+                                        network_id,
+                                        instance_name="",
+                                        config_drive=False,
+                                        userdata=""):
+    SLEEP = 3
+    VM_BOOT_TIMEOUT = 180
+    nova_client = get_nova_client()
+    instance = create_instance(flavor_name,
+                               image_id,
+                               network_id,
+                               instance_name="",
+                               config_drive=False,
+                               userdata="")
+
+    count = VM_BOOT_TIMEOUT / SLEEP
+    while True:
+        status = get_instance_status(nova_client, instance)
+        if status == "ACTIVE":
+            return instance
+        if status.lower() == "error":
+            return None
+        if count == 0:
+            print("Timeout booting the instance %s." % instance_name)
+            return None
+        count -= 1
+        time.sleep(SLEEP)
+    return None
 
 
 def create_floating_ip(neutron_client):
