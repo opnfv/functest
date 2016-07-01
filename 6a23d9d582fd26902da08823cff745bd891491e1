@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_a8c7bf44",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-01T06:12:22Z",
+      "side": 1,
+      "message": "I think \u0027of basic operations\u0027 can be deleted here, as it has already been declared that Healthcheck verifies basic and essential operations.",
+      "range": {
+        "startLine": 41,
+        "startChar": 43,
+        "endLine": 41,
+        "endChar": 63
+      },
+      "revId": "6a23d9d582fd26902da08823cff745bd891491e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_a8a01f91",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-01T06:12:22Z",
+      "side": 1,
+      "message": "I think both vPing_ssh and vPing_userdata check 2 instances can talk over a Private Tenant network, no \u0027specifically\u0027.\n\nI am not very sure but I think that the main difference between these two testcases is, vPing_ssh use ssh to transfer ping.sh to vm, vPing_userdata via metadata",
+      "range": {
+        "startLine": 119,
+        "startChar": 36,
+        "endLine": 119,
+        "endChar": 48
+      },
+      "revId": "6a23d9d582fd26902da08823cff745bd891491e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_c8b0fbdf",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-01T06:12:22Z",
+      "side": 1,
+      "message": "why is \u0027;\u0027 needed here?",
+      "range": {
+        "startLine": 147,
+        "startChar": 70,
+        "endLine": 147,
+        "endChar": 71
+      },
+      "revId": "6a23d9d582fd26902da08823cff745bd891491e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_48adcb87",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-01T06:12:22Z",
+      "side": 1,
+      "message": "two \u0027now\u0027 exist",
+      "range": {
+        "startLine": 172,
+        "startChar": 51,
+        "endLine": 172,
+        "endChar": 55
+      },
+      "revId": "6a23d9d582fd26902da08823cff745bd891491e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_48c4eb3f",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-01T06:12:22Z",
+      "side": 1,
+      "message": "I think Colorado appears too many times, how do you think if introduce a new chapter of New Features in Colorado?",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 23
+      },
+      "revId": "6a23d9d582fd26902da08823cff745bd891491e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
