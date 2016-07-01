@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_ce356347",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-07-01T20:40:10Z",
+      "side": 1,
+      "message": "trailing space",
+      "revId": "a570951f6fdd8842602483e2848e24bd7d0604ee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
