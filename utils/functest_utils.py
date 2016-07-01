@@ -309,13 +309,15 @@ def get_criteria_by_test(testname):
 #               YAML UTILS
 #
 # -----------------------------------------------------------
-def get_parameter_from_yaml(parameter):
+def get_parameter_from_yaml(parameter, file=None):
     """
     Returns the value of a given parameter in config_functest.yaml
     parameter must be given in string format with dots
     Example: general.openstack.image_name
     """
-    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
+    if file is None:
+        file = os.environ["CONFIG_FUNCTEST_YAML"]
+    with open(file) as f:
         functest_yaml = yaml.safe_load(f)
     f.close()
     value = functest_yaml
