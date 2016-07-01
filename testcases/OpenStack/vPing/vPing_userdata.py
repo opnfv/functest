@@ -21,16 +21,16 @@ import os
 import pprint
 import sys
 import time
-import yaml
-
-from novaclient import client as novaclient
-from neutronclient.v2_0 import client as neutronclient
-from keystoneclient.v2_0 import client as keystoneclient
-from glanceclient import client as glanceclient
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
+from glanceclient import client as glanceclient
+from keystoneclient.v2_0 import client as keystoneclient
+from neutronclient.v2_0 import client as neutronclient
+from novaclient import client as novaclient
+import yaml
+
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -90,7 +90,6 @@ SECGROUP_DESCR = functest_yaml.get("vping").get("vping_sg_descr")
 
 
 def pMsg(value):
-
     """pretty printing"""
     pp.pprint(value)
 
@@ -111,25 +110,6 @@ def waitVmActive(nova, vm):
             logger.debug("Booting a VM timed out...")
             return False
         count -= 1
-        time.sleep(sleep_time)
-    return False
-
-
-def waitVmDeleted(nova, vm):
-
-    # sleep and wait for VM status change
-    sleep_time = 3
-    count = VM_DELETE_TIMEOUT / sleep_time
-    while True:
-        status = openstack_utils.get_instance_status(nova, vm)
-        if not status:
-            return True
-        elif count == 0:
-            logger.debug("Timeout")
-            return False
-        else:
-            # return False
-            count -= 1
         time.sleep(sleep_time)
     return False
 

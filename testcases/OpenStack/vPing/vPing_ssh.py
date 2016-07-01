@@ -16,22 +16,22 @@
 import argparse
 import datetime
 import os
-import paramiko
 import pprint
 import re
 import sys
 import time
-import yaml
-from scp import SCPClient
-
-from novaclient import client as novaclient
-from neutronclient.v2_0 import client as neutronclient
-from keystoneclient.v2_0 import client as keystoneclient
-from glanceclient import client as glanceclient
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
+from glanceclient import client as glanceclient
+from keystoneclient.v2_0 import client as keystoneclient
+from neutronclient.v2_0 import client as neutronclient
+from novaclient import client as novaclient
+import paramiko
+from scp import SCPClient
+import yaml
+
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -93,7 +93,6 @@ SECGROUP_DESCR = functest_yaml.get("vping").get("vping_sg_descr")
 
 
 def pMsg(value):
-
     """pretty printing"""
     pp.pprint(value)
 
@@ -114,25 +113,6 @@ def waitVmActive(nova, vm):
             logger.debug("Booting a VM timed out...")
             return False
         count -= 1
-        time.sleep(sleep_time)
-    return False
-
-
-def waitVmDeleted(nova, vm):
-
-    # sleep and wait for VM status change
-    sleep_time = 3
-    count = VM_DELETE_TIMEOUT / sleep_time
-    while True:
-        status = openstack_utils.get_instance_status(nova, vm)
-        if not status:
-            return True
-        elif count == 0:
-            logger.debug("Timeout")
-            return False
-        else:
-            # return False
-            count -= 1
         time.sleep(sleep_time)
     return False
 
@@ -358,11 +338,11 @@ def main():
 
         # if dhcp doesnt work,it shows "No lease, failing".The test will fail
         if "No lease, failing" in console_log and not nolease and not got_ip:
-                nolease = True
-                logger.debug("Console-log '%s': No lease, failing..."
-                             % NAME_VM_2)
-                logger.info("The instance failed to get an IP from the "
-                            "DHCP agent. The test will probably timeout...")
+            nolease = True
+            logger.debug("Console-log '%s': No lease, failing..."
+                         % NAME_VM_2)
+            logger.info("The instance failed to get an IP from the "
+                        "DHCP agent. The test will probably timeout...")
 
     if timeout == 0:  # 300 sec timeout (5 min)
         logger.error("Cannot establish connection to IP '%s'. Aborting"
