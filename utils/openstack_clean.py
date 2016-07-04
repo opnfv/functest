@@ -20,24 +20,24 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import os
+""" logging configuration """
+
 import time
+
+from cinderclient import client as cinderclient
+import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as os_utils
+from keystoneclient.v2_0 import client as keystoneclient
+from neutronclient.v2_0 import client as neutronclient
+from novaclient import client as novaclient
 import yaml
 
-from novaclient import client as novaclient
-from neutronclient.v2_0 import client as neutronclient
-from keystoneclient.v2_0 import client as keystoneclient
-from cinderclient import client as cinderclient
 
-import functest.utils.functest_logger as ft_logger
-import functest.utils.openstack_utils as os_utils
+logger = ft_logger.Logger("openstack_clean").getLogger()
 
-
-""" logging configuration """
-logger = ft_logger.Logger("clean_openstack").getLogger()
-
-REPO_PATH = os.environ['repos_dir'] + '/functest/'
-DEFAULTS_FILE = '/home/opnfv/functest/conf/os_defaults.yaml'
+OS_SNAPSHOT_FILE = ft_utils.get_parameter_from_yaml(
+    "general.openstack.snapshot_file")
 
 
 def separator():
@@ -365,22 +365,22 @@ def main():
     logger.info("+++++++++++++++++++++++++++++++")
 
     try:
-        with open(DEFAULTS_FILE) as f:
-            defaults_yaml = yaml.safe_load(f)
+        with open(OS_SNAPSHOT_FILE) as f:
+            snapshot_yaml = yaml.safe_load(f)
     except Exception:
         logger.info("The file %s does not exist. The OpenStack snapshot must"
-                    " be created first. Aborting cleanup." % DEFAULTS_FILE)
+                    " be created first. Aborting cleanup." % OS_SNAPSHOT_FILE)
         exit(0)
 
-    default_images = defaults_yaml.get('images')
-    default_instances = defaults_yaml.get('instances')
-    default_volumes = defaults_yaml.get('volumes')
-    default_networks = defaults_yaml.get('networks')
-    default_routers = defaults_yaml.get('routers')
-    default_security_groups = defaults_yaml.get('secgroups')
-    default_floatingips = defaults_yaml.get('floatingips')
-    default_users = defaults_yaml.get('users')
-    default_tenants = defaults_yaml.get('tenants')
+    default_images = snapshot_yaml.get('images')
+    default_instances = snapshot_yaml.get('instances')
+    default_volumes = snapshot_yaml.get('volumes')
+    default_networks = snapshot_yaml.get('networks')
+    default_routers = snapshot_yaml.get('routers')
+    default_security_groups = snapshot_yaml.get('secgroups')
+    default_floatingips = snapshot_yaml.get('floatingips')
+    default_users = snapshot_yaml.get('users')
+    default_tenants = snapshot_yaml.get('tenants')
 
     creds_nova = os_utils.get_credentials("nova")
     nova_client = novaclient.Client('2', **creds_nova)

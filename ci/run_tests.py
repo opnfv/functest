@@ -14,13 +14,13 @@ import re
 import sys
 
 import functest.ci.tier_builder as tb
-import functest.utils.clean_openstack as clean_os
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_clean as os_clean
+import functest.utils.openstack_snapshot as os_snapshot
 import functest.utils.openstack_utils as os_utils
 
 
-""" arguments """
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--test", dest="test", action='store',
                     help="Test case or tier (group of tests) to be executed. "
@@ -61,8 +61,13 @@ def source_rc_file():
     os_utils.source_credentials(rc_file)
 
 
+def generate_os_snapshot():
+    logger.debug("Generating OpenStack snapshot...")
+    os_snapshot.main()
+
+
 def cleanup():
-    clean_os.main()
+    os_clean.main()
 
 
 def run_test(test):
@@ -71,6 +76,9 @@ def run_test(test):
     logger.info("Running test case '%s'..." % test_name)
     print_separator("=")
     logger.debug("\n%s" % test)
+
+    generate_os_snapshot()
+
     flags = (" -t %s" % (test_name))
     if REPORT_FLAG:
         flags += " -r"
