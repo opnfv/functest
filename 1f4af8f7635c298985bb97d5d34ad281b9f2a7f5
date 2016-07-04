@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_424b67b0",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-07-04T09:32:07Z",
+      "side": 1,
+      "message": "I would have deleted all headers",
+      "revId": "1f4af8f7635c298985bb97d5d34ad281b9f2a7f5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_02f48f59",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-07-04T09:32:07Z",
+      "side": 1,
+      "message": "I would have switched to a for loop (count could be used as condition)",
+      "revId": "1f4af8f7635c298985bb97d5d34ad281b9f2a7f5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_42e287a0",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-07-04T09:32:07Z",
+      "side": 1,
+      "message": "if..else could be used (both tests in lower or upper)",
+      "revId": "1f4af8f7635c298985bb97d5d34ad281b9f2a7f5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
