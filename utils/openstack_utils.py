@@ -191,9 +191,9 @@ def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
 def create_instance(flavor_name,
                     image_id,
                     network_id,
-                    instance_name="",
-                    config_drive=False,
-                    userdata=""):
+                    instance_name="functest-vm",
+                    confdrive=True,
+                    userdata=None):
     nova_client = get_nova_client()
     try:
         flavor = nova_client.flavors.find(name=flavor_name)
@@ -202,14 +202,23 @@ def create_instance(flavor_name,
               flavor_name)
         print(nova_client.flavor.list())
         return -1
-
-    return nova_client.servers.create(
-        name=instance_name,
-        flavor=flavor,
-        image=image_id,
-        config_drive=config_drive,
-        nics=[{"net-id": network_id}]
-    )
+    if userdata is None:
+        instance = nova_client.servers.create(
+            name=instance_name,
+            flavor=flavor,
+            image=image_id,
+            nics=[{"net-id": network_id}]
+        )
+    else:
+        instance = nova_client.servers.create(
+            name=instance_name,
+            flavor=flavor,
+            image=image_id,
+            nics=[{"net-id": network_id}],
+            config_drive=confdrive,
+            userdata=userdata
+        )
+    return instance
 
 
 def create_instance_and_wait_for_active(flavor_name,
@@ -224,9 +233,9 @@ def create_instance_and_wait_for_active(flavor_name,
     instance = create_instance(flavor_name,
                                image_id,
                                network_id,
-                               instance_name="",
-                               config_drive=False,
-                               userdata="")
+                               instance_name,
+                               config_drive,
+                               userdata)
 
     count = VM_BOOT_TIMEOUT / SLEEP
     for n in range(count, -1, -1):
@@ -653,6 +662,46 @@ def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
         return False
 
 
+def create_security_group_full(logger, neutron_client,
+                               sg_name, sg_description):
+    sg_id = get_security_group_id(neutron_client, sg_name)
+    if sg_id != '':
+        logger.info("Using existing security group '%s'..." % sg_name)
+    else:
+        logger.info("Creating security group  '%s'..." % sg_name)
+        SECGROUP = create_security_group(neutron_client,
+                                         sg_name,
+                                         sg_description)
+        if not SECGROUP:
+            logger.error("Failed to create the security group...")
+            return False
+
+        sg_id = SECGROUP['id']
+
+        logger.debug("Security group '%s' with ID=%s created successfully."
+                     % (SECGROUP['name'], sg_id))
+
+        logger.debug("Adding ICMP rules in security group '%s'..."
+                     % sg_name)
+        if not create_secgroup_rule(neutron_client, sg_id,
+                                    'ingress', 'icmp'):
+            logger.error("Failed to create the security group rule...")
+            return False
+
+        logger.debug("Adding SSH rules in security group '%s'..."
+                     % sg_name)
+        if not create_secgroup_rule(
+                neutron_client, sg_id, 'ingress', 'tcp', '22', '22'):
+            logger.error("Failed to create the security group rule...")
+            return False
+
+        if not create_secgroup_rule(
+                neutron_client, sg_id, 'egress', 'tcp', '22', '22'):
+            logger.error("Failed to create the security group rule...")
+            return False
+    return sg_id
+
+
 def add_secgroup_to_instance(nova_client, instance_id, secgroup_id):
     try:
         nova_client.servers.add_security_group(instance_id, secgroup_id)
@@ -711,18 +760,28 @@ def get_image_id(glance_client, image_name):
     return id
 
 
-def create_glance_image(glance_client, image_name, file_path, public=True):
+def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
+                        container="bare", public=True, logger=None):
     if not os.path.isfile(file_path):
         print "Error: file " + file_path + " does not exist."
         return False
     try:
-        with open(file_path) as fimage:
-            image = glance_client.images.create(name=image_name,
-                                                is_public=public,
-                                                disk_format="qcow2",
-                                                container_format="bare",
-                                                data=fimage)
-        return image.id
+        image_id = get_image_id(glance_client, image_name)
+        if image_id != '':
+            if logger:
+                logger.info("Image %s already exists." % image_name)
+        else:
+            if logger:
+                logger.info("Creating image '%s' from '%s'..." % (image_name,
+                                                                  file_path))
+            with open(file_path) as fimage:
+                image = glance_client.images.create(name=image_name,
+                                                    is_public=public,
+                                                    disk_format=disk,
+                                                    container_format=container,
+                                                    data=fimage)
+            image_id = image.id
+        return image_id
     except Exception, e:
         print ("Error [create_glance_image(glance_client, '%s', '%s', "
                "'%s')]:" % (image_name, file_path, str(public))), e
