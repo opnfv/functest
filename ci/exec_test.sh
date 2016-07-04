@@ -115,11 +115,7 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/features/bgpvpn.py
         ;;
         "onos")
-            if [ "$INSTALLER_TYPE" == "joid" ]; then
-                python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/onosfunctest.py -i joid
-            else
-                python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/onosfunctest.py
-            fi
+            python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/onosfunctest.py
       ;;
         "promise")
             python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py $report
