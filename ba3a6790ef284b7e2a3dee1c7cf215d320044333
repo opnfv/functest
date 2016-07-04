@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_65722d7e",
+        "filename": "testcases/OpenStack/examples/create_instance_and_ip.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-07-04T13:43:11Z",
+      "side": 1,
+      "message": "this function is common to vPings, could it make sens to put it in any utility files?",
+      "revId": "ba3a6790ef284b7e2a3dee1c7cf215d320044333",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
