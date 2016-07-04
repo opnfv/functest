@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_82489f2e",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-04T06:34:40Z",
+      "side": 1,
+      "message": "why not configure GLANCE_IMAGE_NAME in functest_yaml file?",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 17
+      },
+      "revId": "7fedcb0e310f02c3d787c6f602c20dbb0157a55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_22550bc6",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-04T06:34:40Z",
+      "side": 1,
+      "message": "same to GLANCE_IMAGE_NAME",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "7fedcb0e310f02c3d787c6f602c20dbb0157a55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
