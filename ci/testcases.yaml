@@ -98,16 +98,6 @@ tiers:
                     installer: ''
                     scenario: 'onos'
 
-            -
-                name: ovno
-                criteria: 'status == "PASS"'
-                description: >-
-                    Test Suite for the Open Contrail SDN Controller.
-                    framework.
-                dependencies:
-                    installer: ''
-                    scenario: 'ocl'
-
     -
         name: features
         order: 3
