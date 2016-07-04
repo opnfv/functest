@@ -139,6 +139,9 @@ function run_test(){
             source ${FUNCTEST_CONF_DIR}/stackrc
             python ${FUNCTEST_REPO_DIR}/testcases/security_scan/security_scan.py --config ${FUNCTEST_REPO_DIR}/testcases/security_scan/config.ini
         ;;
+        "copper")
+            python ${FUNCTEST_REPO_DIR}/testcases/features/copper.py
+        ;;
         *)
             echo "The test case '${test_name}' does not exist."
             exit 1
