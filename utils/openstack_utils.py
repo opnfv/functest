@@ -711,7 +711,8 @@ def get_image_id(glance_client, image_name):
     return id
 
 
-def create_glance_image(glance_client, image_name, file_path, public=True):
+def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
+                        container="bare", public=True):
     if not os.path.isfile(file_path):
         print "Error: file " + file_path + " does not exist."
         return False
@@ -719,8 +720,8 @@ def create_glance_image(glance_client, image_name, file_path, public=True):
         with open(file_path) as fimage:
             image = glance_client.images.create(name=image_name,
                                                 is_public=public,
-                                                disk_format="qcow2",
-                                                container_format="bare",
+                                                disk_format=disk,
+                                                container_format=container,
                                                 data=fimage)
         return image.id
     except Exception, e:
