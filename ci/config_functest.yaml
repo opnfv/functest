@@ -156,5 +156,16 @@ promise:
         subnet_cidr: 192.168.121.0/24
         router_name: promise-router
 
+example:
+    example_vm_name: example-vm
+    example_flavor: m1.small
+    example_image_name: functest-example-vm
+    example_private_net_name: example-net
+    example_private_subnet_name: example-subnet
+    example_private_subnet_cidr: 192.168.170.0/24
+    example_router_name: example-router
+    example_sg_name: example-sg
+    example_sg_descr: Example Security group
+
 results:
     test_db_url: http://testresults.opnfv.org/test/api/v1
