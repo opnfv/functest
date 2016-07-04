@@ -142,6 +142,15 @@ tiers:
                     installer: 'apex'
                     scenario: ''
 
+            -
+                name: copper
+                criteria: 'status == "PASS"'
+                description: >-
+                    Test suite for policy management based on OpenStack Congress
+                dependencies:
+                    installer: 'apex'
+                    scenario: ''
+
     -
         name: openstack
         order: 4

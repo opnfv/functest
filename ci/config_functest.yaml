@@ -20,6 +20,7 @@ general:
         dir_repo_onos:      /home/opnfv/repos/onos
         dir_repo_promise:   /home/opnfv/repos/promise
         dir_repo_doctor:    /home/opnfv/repos/doctor
+        dir_repo_copper:    /home/opnfv/repos/copper
         dir_repo_ovno:      /home/opnfv/repos/ovno
         dir_functest:       /home/opnfv/functest
         dir_results:        /home/opnfv/functest/results
