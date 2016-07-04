@@ -30,6 +30,7 @@ __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
 # Global vars
 INSTALLER_IP = os.getenv('INSTALLER_IP')
 oscapbin = 'sudo /bin/oscap'
+functest_dir = '/home/opnfv/repos/functest/testcases/security_scan/'
 
 # Apex Spefic var needed to query Undercloud
 if os.getenv('OS_AUTH_URL') is None:
@@ -108,7 +109,7 @@ def nova_iterate():
 def createfiles(host, port, user, localkey):
     import connect
     global tmpdir
-    localpath = os.getcwd() + '/scripts/createfiles.py'
+    localpath = functest_dir + 'scripts/createfiles.py'
     remotepath = '/tmp/createfiles.py'
     com = 'python /tmp/createfiles.py'
     connect = connect.ConnectionManager(host, port, user, localkey,
