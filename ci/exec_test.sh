@@ -37,6 +37,7 @@ if [[ "${CI_DEBUG,,}" == "true" ]];then
 fi
 
 FUNCTEST_REPO_DIR=${repos_dir}/functest/
+COPPER_REPO_DIR=${repos_dir}/copper/
 FUNCTEST_CONF_DIR=/home/opnfv/functest/conf/
 
 
@@ -138,6 +139,9 @@ function run_test(){
             echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/stackrc for undercloud .."
             source ${FUNCTEST_CONF_DIR}/stackrc
             python ${FUNCTEST_REPO_DIR}/testcases/security_scan/security_scan.py --config ${FUNCTEST_REPO_DIR}/testcases/security_scan/config.ini
+        ;;
+        "copper")
+            python ${COPPER_REPO_DIR}/tests/copper.py
         ;;
         *)
             echo "The test case '${test_name}' does not exist."
