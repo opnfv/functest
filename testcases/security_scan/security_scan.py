@@ -57,7 +57,7 @@ setup.getockey()
 
 
 # Configure Nova Credentials
-com = 'sudo hiera admin_password'
+com = 'sudo /usr/bin/hiera admin_password'
 setup = connect.SetUp(com)
 keypass = setup.keystonepass()
 auth = v2.Password(auth_url=OS_AUTH_URL,
