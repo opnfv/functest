@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_e29b93c7",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-04T01:20:00Z",
+      "side": 1,
+      "message": "Is there any unexpected thing happen if parameter is not existed in config_functest.yaml?",
+      "revId": "c33e931a1ac3eaccca580a123fb3fe2186e5ce24",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
