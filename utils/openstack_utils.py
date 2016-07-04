@@ -191,9 +191,9 @@ def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
 def create_instance(flavor_name,
                     image_id,
                     network_id,
-                    instance_name="",
-                    config_drive=False,
-                    userdata=""):
+                    instance_name="functest-vm",
+                    config_drive=True,
+                    userdata=None):
     nova_client = get_nova_client()
     try:
         flavor = nova_client.flavors.find(name=flavor_name)
@@ -202,14 +202,25 @@ def create_instance(flavor_name,
               flavor_name)
         print(nova_client.flavor.list())
         return -1
-
-    return nova_client.servers.create(
-        name=instance_name,
-        flavor=flavor,
-        image=image_id,
-        config_drive=config_drive,
-        nics=[{"net-id": network_id}]
-    )
+    if userdata is None:
+        instance = nova_client.servers.create(
+            name=instance_name,
+            flavor=flavor,
+            image=image_id,
+            config_drive=config_drive,
+            nics=[{"net-id": network_id}]
+        )
+    else:
+        instance = nova_client.servers.create(
+            name=instance_name,
+            flavor=flavor,
+            image=image_id,
+            config_drive=config_drive,
+            nics=[{"net-id": network_id}],
+            config_drive=config_drive,
+            userdata=userdata
+        )
+    return instance
 
 
 def create_instance_and_wait_for_active(flavor_name,
@@ -224,9 +235,9 @@ def create_instance_and_wait_for_active(flavor_name,
     instance = create_instance(flavor_name,
                                image_id,
                                network_id,
-                               instance_name="",
-                               config_drive=False,
-                               userdata="")
+                               instance_name,
+                               config_drive,
+                               userdata)
 
     count = VM_BOOT_TIMEOUT / SLEEP
     for n in range(count, -1, -1):
@@ -711,7 +722,8 @@ def get_image_id(glance_client, image_name):
     return id
 
 
-def create_glance_image(glance_client, image_name, file_path, public=True):
+def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
+                        container="bare", public=True):
     if not os.path.isfile(file_path):
         print "Error: file " + file_path + " does not exist."
         return False
@@ -719,8 +731,8 @@ def create_glance_image(glance_client, image_name, file_path, public=True):
         with open(file_path) as fimage:
             image = glance_client.images.create(name=image_name,
                                                 is_public=public,
-                                                disk_format="qcow2",
-                                                container_format="bare",
+                                                disk_format=disk,
+                                                container_format=container,
                                                 data=fimage)
         return image.id
     except Exception, e:
