@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_a5fe056a",
+        "filename": "ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 232
+      },
+      "writtenOn": "2016-07-04T16:02:45Z",
+      "side": 1,
+      "message": "Will be installer: \u0027(apex)|(joid)\u0027  but for now just apex is OK.",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 37
+      },
+      "revId": "2df340b6254b59641447a79a1310c316ac86f208",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
