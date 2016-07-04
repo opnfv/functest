@@ -14,19 +14,23 @@ lanqinglong@huawei.com
 #
 """
 
-import argparse
+# import argparse
 import datetime
 import os
 import re
 import time
 import yaml
 
+from keystoneclient.v2_0 import client as keystoneclient
+from glanceclient import client as glanceclient
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
+import functest.utils.openstack_utils as openstack_utils
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-i", "--installer", help="Installer type")
-args = parser.parse_args()
+# parser = argparse.ArgumentParser()
+# parser.add_argument("-i", "--installer", help="Installer type")
+# args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("onos").getLogger()
 
@@ -49,6 +53,15 @@ ONOSCI_PATH = ONOS_REPO_PATH + "/"
 starttime = datetime.datetime.now()
 
 HOME = os.environ['HOME'] + "/"
+INSTALLER_TYPE = os.environ['INSTALLER_TYPE']
+DEPLOY_SCENARIO = os.environ['DEPLOY_SCENARIO']
+ONOSCI_PATH = ONOS_REPO_PATH + "/"
+GLANCE_IMAGE_NAME = "TestSfcVm"
+GLANCE_IMAGE_FILENAME = "firewall_block_image.img"
+GLANCE_IMAGE_PATH = functest_yaml.get("general").get("directories").get(
+    "dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
+SFC_PATH = REPO_PATH + functest_yaml.get("general").get("directories").get(
+    "dir_sfc")
 
 
 def RunScript(testname):
@@ -163,18 +176,67 @@ def CleanOnosTest():
     logger.debug("Clean ONOS Teston")
 
 
+def CreateImage():
+    creds_keystone = openstack_utils.get_credentials("keystone")
+    keystone_client = keystoneclient.Client(**creds_keystone)
+    glance_endpoint = keystone_client.service_catalog.url_for(
+        service_type='image', endpoint_type='publicURL')
+    glance_client = glanceclient.Client(1, glance_endpoint,
+                                        token=keystone_client.auth_token)
+    EXIT_CODE = -1
+    # Check if the given image exists
+    image_id = openstack_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+    if image_id != '':
+        logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
+        global image_exists
+        image_exists = True
+    else:
+        logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
+                                                          GLANCE_IMAGE_PATH))
+        image_id = openstack_utils.create_glance_image(glance_client,
+                                                       GLANCE_IMAGE_NAME,
+                                                       GLANCE_IMAGE_PATH)
+        if not image_id:
+            logger.error("Failed to create a Glance image...")
+            return(EXIT_CODE)
+        logger.debug("Image '%s' with ID=%s created successfully."
+                     % (GLANCE_IMAGE_NAME, image_id))
+
+
+def SfcTest():
+    cmd = "python " + SFC_PATH + "Sfc.py"
+    logger.debug("Run sfc tests")
+    os.system(cmd)
+
+
+def SetSfcIp():
+    cmd = "openstack catalog show network | grep publicURL"
+    cmd_output = os.popen(cmd).read()
+    ip = re.search(r"\d+\.\d+\.\d+\.\d+", cmd_output).group()
+    cmd_onos_ip = "sed -i 's/onos_ip/" + ip + "/g' " + SFC_PATH + "Sfc_fun.py"
+    cmd_openstack_ip = "sed -i 's/openstack_ip/" + ip\
+                       + "/g' " + SFC_PATH + "Sfc_fun.py"
+    logger.info("Modify ip for SFC")
+    os.system(cmd_onos_ip)
+    os.system(cmd_openstack_ip)
+
+
 def main():
     start_time = time.time()
     stop_time = start_time
     # DownloadCodes()
-    if args.installer == "joid":
+    # if args.installer == "joid":
+    if INSTALLER_TYPE == "joid":
         logger.debug("Installer is Joid")
         SetOnosIpForJoid()
     else:
         SetOnosIp()
     RunScript("FUNCvirNetNB")
     RunScript("FUNCvirNetNBL3")
-
+    if DEPLOY_SCENARIO == "os-onos-sfc-ha":
+        CreateImage()
+        SetSfcIp()
+        SfcTest()
     try:
         logger.debug("Push ONOS results into DB")
         # TODO check path result for the file

@@ -7,6 +7,7 @@ general:
         dir_tempest_cases: testcases/OpenStack/tempest/custom_tests/
         dir_vIMS:          testcases/vIMS/
         dir_onos:          testcases/Controllers/ONOS/Teston/
+        dir_sfc:           testcases/Controllers/ONOS/Sfc/
 
         # Absolute path
         dir_repos:          /home/opnfv/repos
