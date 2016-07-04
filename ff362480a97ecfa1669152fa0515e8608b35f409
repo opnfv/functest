@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_450051aa",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-04T13:51:49Z",
+      "side": 1,
+      "message": "can you please remove this line? It seems my eclipse introduced it automatically...",
+      "revId": "ff362480a97ecfa1669152fa0515e8608b35f409",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
