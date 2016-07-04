@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a7ca5a3_e28f1322",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-04T07:37:07Z",
+      "side": 1,
+      "message": "verified?",
+      "range": {
+        "startLine": 7,
+        "startChar": 44,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "7fedcb0e310f02c3d787c6f602c20dbb0157a55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_c29e9756",
+        "filename": "ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-04T07:37:07Z",
+      "side": 1,
+      "message": "can you change dir_sfc to dir_onos_sfc? There is also another sfc solution for ODL. It would be good to distinguish which one it is.",
+      "revId": "7fedcb0e310f02c3d787c6f602c20dbb0157a55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_82489f2e",
         "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
         "patchSetId": 2
