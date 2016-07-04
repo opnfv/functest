@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_a5e8457d",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 232
+      },
+      "writtenOn": "2016-07-04T22:41:48Z",
+      "side": 1,
+      "message": "should not be needed if copper.py is submitted to the functest repo (planned)",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "845d4c1da2e2386cfd69b90783c6327fb73c4732",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_c5ed418d",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 232
+      },
+      "writtenOn": "2016-07-04T22:41:48Z",
+      "side": 1,
+      "message": "should be same as for other features",
+      "range": {
+        "startLine": 144,
+        "startChar": 19,
+        "endLine": 144,
+        "endChar": 44
+      },
+      "revId": "845d4c1da2e2386cfd69b90783c6327fb73c4732",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
