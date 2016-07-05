@@ -7,6 +7,7 @@ general:
         dir_tempest_cases: testcases/OpenStack/tempest/custom_tests/
         dir_vIMS:          testcases/vIMS/
         dir_onos:          testcases/Controllers/ONOS/Teston/
+        dir_onos_sfc:           testcases/Controllers/ONOS/Sfc/
 
         # Absolute path
         dir_repos:          /home/opnfv/repos
@@ -34,7 +35,7 @@ general:
         image_name: Cirros-0.3.4
         image_file_name:  cirros-0.3.4-x86_64-disk.img
         image_disk_format:  qcow2
-
+        
         # Private network for functest. Will be created by config_functest.py
         neutron_private_net_name: functest-net
         neutron_private_subnet_name: functest-subnet
@@ -56,6 +57,10 @@ vping:
     vping_router_name: vping-router
     vping_sg_name: vPing-sg
     vping_sg_descr: Security group for vPing test case
+
+onos_sfc:
+    image_name: TestSfcVm
+    image_file_name: firewall_block_image.img
 
 tempest:
     identity:
