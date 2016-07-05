@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_18aac019",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-05T12:16:39Z",
+      "side": 1,
+      "message": "if you do what is explained below, you don\u0027t need this.",
+      "revId": "32a860fa3366508cbbd85af07daaebf2d19883bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_78adf430",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-05T12:16:39Z",
+      "side": 1,
+      "message": "If you want, there is a cool function to avoid reading the yaml yourself. It is a new function, so the new scripts in the repo could start using it:\n\nTEST_DB \u003d functest_utils.get_parameter_from_yaml(\"results.test_db_url\")\n\n\nAnd the same for all the parameters taken from config_functest.yaml. \n\nCan you please update all the parameters you use in this script?",
+      "revId": "32a860fa3366508cbbd85af07daaebf2d19883bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
