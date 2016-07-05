@@ -122,8 +122,7 @@ function run_test(){
             sleep 10 # to let the instances terminate
         ;;
         "doctor")
-            # Comment Doctor until Green light from Doctor team
-            # python ${FUNCTEST_REPO_DIR}/testcases/features/doctor.py
+            python ${FUNCTEST_REPO_DIR}/testcases/features/doctor.py
         ;;
         "ovno")
             # suite under rewritting for colorado
