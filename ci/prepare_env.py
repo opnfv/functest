@@ -230,7 +230,7 @@ def install_rally():
                                         "faulty Rally deployment."))
 
     cmd = "rally show images"
-    ft_utils.execute_command(cmd, logger,
+    ft_utils.execute_command(cmd, logger, shell=False
                              error_msg=("Problem while listing "
                                         "OpenStack images."))
 
