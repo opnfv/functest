@@ -3,7 +3,7 @@ CLIENT=$(echo python-python-tackerclient_*_all.deb)
 CLIREPO="tacker-client"
 
 # Function checks whether a python egg is available, if not, installs
-function chkPPkg () {
+function chkPPkg() {
     PKG="$1"
     IPPACK=$(python - <<'____EOF'
 import pip
@@ -19,8 +19,8 @@ ____EOF
     fi
 }
 
-function envSetup () {
-    apt-get install -y python-all debhelper
+function envSetup() {
+    apt-get install -y python-all debhelper fakeroot
     chkPPkg stdeb
     chkCrudini
 }
