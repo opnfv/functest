@@ -14,23 +14,16 @@ lanqinglong@huawei.com
 #
 """
 
-# import argparse
 import datetime
 import os
 import re
 import time
 import yaml
 
-from keystoneclient.v2_0 import client as keystoneclient
-from glanceclient import client as glanceclient
-
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument("-i", "--installer", help="Installer type")
-# args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("onos").getLogger()
 
@@ -179,30 +172,16 @@ def CleanOnosTest():
 
 
 def CreateImage():
-    creds_keystone = openstack_utils.get_credentials("keystone")
-    keystone_client = keystoneclient.Client(**creds_keystone)
-    glance_endpoint = keystone_client.service_catalog.url_for(
-        service_type='image', endpoint_type='publicURL')
-    glance_client = glanceclient.Client(1, glance_endpoint,
-                                        token=keystone_client.auth_token)
+    glance_client = openstack_utils.get_glance_client()
+    image_id = openstack_utils.create_glance_image(glance_client,
+                                                   GLANCE_IMAGE_NAME,
+                                                   GLANCE_IMAGE_PATH)
     EXIT_CODE = -1
-    # Check if the given image exists
-    image_id = openstack_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
-    if image_id != '':
-        logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
-        global image_exists
-        image_exists = True
-    else:
-        logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
-                                                          GLANCE_IMAGE_PATH))
-        image_id = openstack_utils.create_glance_image(glance_client,
-                                                       GLANCE_IMAGE_NAME,
-                                                       GLANCE_IMAGE_PATH)
-        if not image_id:
-            logger.error("Failed to create a Glance image...")
-            return(EXIT_CODE)
-        logger.debug("Image '%s' with ID=%s created successfully."
-                     % (GLANCE_IMAGE_NAME, image_id))
+    if not image_id:
+        logger.error("Failed to create a Glance image...")
+        return(EXIT_CODE)
+    logger.debug("Image '%s' with ID=%s created successfully."
+                 % (GLANCE_IMAGE_NAME, image_id))
 
 
 def SfcTest():
