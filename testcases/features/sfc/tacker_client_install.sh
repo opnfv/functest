@@ -21,8 +21,8 @@ ____EOF
 
 function envSetup() {
     apt-get install -y python-all debhelper fakeroot
+    pip install --upgrade python-keystoneclient==1.7.4
     chkPPkg stdeb
-    chkCrudini
 }
 
 # Function installs python-tackerclient from github
@@ -34,6 +34,8 @@ function deployTackerClient() {
     cd "deb_dist"
     CLIENT=$(echo python-python-tackerclient_*_all.deb)
     cp $CLIENT $MYDIR
+    dpkg -i "${MYDIR}/${CLIENT}"
+    apt-get -f -y install
     dpkg -i "${MYDIR}/${CLIENT}"
 }
 
