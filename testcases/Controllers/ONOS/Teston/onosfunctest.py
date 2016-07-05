@@ -14,36 +14,25 @@ lanqinglong@huawei.com
 #
 """
 
-# import argparse
 import datetime
 import os
 import re
 import time
-import yaml
-
-from keystoneclient.v2_0 import client as keystoneclient
-from glanceclient import client as glanceclient
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument("-i", "--installer", help="Installer type")
-# args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("onos").getLogger()
 
-with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-    functest_yaml = yaml.safe_load(f)
-f.close()
-
 # onos parameters
-TEST_DB = functest_yaml.get("results").get("test_db_url")
-ONOS_REPO_PATH = functest_yaml.get("general").get("directories").get(
-    "dir_repos")
-ONOS_CONF_DIR = functest_yaml.get("general").get("directories").get(
-    "dir_functest_conf")
+TEST_DB = functest_utils.get_parameter_from_yaml(
+    "results.test_db_url")
+ONOS_REPO_PATH = functest_utils.get_parameter_from_yaml(
+    "general.directories.dir_repos")
+ONOS_CONF_DIR = functest_utils.get_parameter_from_yaml(
+    "general.directories.dir_functest_conf")
 REPO_PATH = ONOS_REPO_PATH + '/functest/'
 if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
@@ -56,14 +45,14 @@ HOME = os.environ['HOME'] + "/"
 INSTALLER_TYPE = os.environ['INSTALLER_TYPE']
 DEPLOY_SCENARIO = os.environ['DEPLOY_SCENARIO']
 ONOSCI_PATH = ONOS_REPO_PATH + "/"
-GLANCE_IMAGE_NAME = functest_yaml.get("onos_sfc").get("image_name")
-GLANCE_IMAGE_FILENAME = functest_yaml.get("onos_sfc").get("image_file_name")
-GLANCE_IMAGE_FORMAT = functest_yaml.get("general").get("openstack").get(
-    "image_disk_format")
-GLANCE_IMAGE_PATH = functest_yaml.get("general").get("directories").get(
-    "dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
-SFC_PATH = REPO_PATH + functest_yaml.get("general").get("directories").get(
-    "dir_onos_sfc")
+GLANCE_IMAGE_NAME = functest_utils.get_parameter_from_yaml(
+    "onos_sfc.image_name")
+GLANCE_IMAGE_FILENAME = functest_utils.get_parameter_from_yaml(
+    "onos_sfc.image_file_name")
+GLANCE_IMAGE_PATH = functest_utils.get_parameter_from_yaml(
+    "general.directories.dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
+SFC_PATH = REPO_PATH + functest_utils.get_parameter_from_yaml(
+    "general.directories.dir_onos_sfc")
 
 
 def RunScript(testname):
@@ -179,30 +168,16 @@ def CleanOnosTest():
 
 
 def CreateImage():
-    creds_keystone = openstack_utils.get_credentials("keystone")
-    keystone_client = keystoneclient.Client(**creds_keystone)
-    glance_endpoint = keystone_client.service_catalog.url_for(
-        service_type='image', endpoint_type='publicURL')
-    glance_client = glanceclient.Client(1, glance_endpoint,
-                                        token=keystone_client.auth_token)
+    glance_client = openstack_utils.get_glance_client()
+    image_id = openstack_utils.create_glance_image(glance_client,
+                                                   GLANCE_IMAGE_NAME,
+                                                   GLANCE_IMAGE_PATH)
     EXIT_CODE = -1
-    # Check if the given image exists
-    image_id = openstack_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
-    if image_id != '':
-        logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
-        global image_exists
-        image_exists = True
-    else:
-        logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
-                                                          GLANCE_IMAGE_PATH))
-        image_id = openstack_utils.create_glance_image(glance_client,
-                                                       GLANCE_IMAGE_NAME,
-                                                       GLANCE_IMAGE_PATH)
-        if not image_id:
-            logger.error("Failed to create a Glance image...")
-            return(EXIT_CODE)
-        logger.debug("Image '%s' with ID=%s created successfully."
-                     % (GLANCE_IMAGE_NAME, image_id))
+    if not image_id:
+        logger.error("Failed to create a Glance image...")
+        return(EXIT_CODE)
+    logger.debug("Image '%s' with ID=%s created successfully."
+                 % (GLANCE_IMAGE_NAME, image_id))
 
 
 def SfcTest():
