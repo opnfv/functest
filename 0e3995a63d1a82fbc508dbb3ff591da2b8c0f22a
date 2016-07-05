@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_d8a1a8aa",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 2283
+      },
+      "writtenOn": "2016-07-05T09:25:44Z",
+      "side": 1,
+      "message": "This image contains firewall and dpi functions for sfc tests.",
+      "parentUuid": "5a7ca5a3_f80a64d1",
+      "revId": "0e3995a63d1a82fbc508dbb3ff591da2b8c0f22a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_980fb0e1",
         "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2016-07-05T08:39:14Z",
       "side": 1,
       "message": "please delete it if unused",
+      "revId": "0e3995a63d1a82fbc508dbb3ff591da2b8c0f22a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_988250ff",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2283
+      },
+      "writtenOn": "2016-07-05T09:25:44Z",
+      "side": 1,
+      "message": "This is just for reference if we need parameters in future.",
+      "parentUuid": "5a7ca5a3_980fb0e1",
       "revId": "0e3995a63d1a82fbc508dbb3ff591da2b8c0f22a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
