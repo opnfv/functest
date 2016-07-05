@@ -40,7 +40,7 @@ def main():
 
     stop_time = time.time()
     duration = round(stop_time - start_time, 1)
-    if ret:
+    if ret == 0:
         logger.info("doctor OK")
         test_status = 'OK'
     else:
