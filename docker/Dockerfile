@@ -109,6 +109,7 @@ RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -'
 RUN sudo apt-get install -y nodejs
 RUN cd ${repos_dir}/promise && sudo npm -g install npm@latest
 RUN cd ${repos_dir}/promise && npm install
+RUN cd ${repos_dir}/functest/testcases/features/sfc/ && ./tacker_client_install.sh
 
 RUN echo "set nocompatible \n\
 set backspace=2" \
