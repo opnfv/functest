@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_f80a64d1",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-07-05T08:39:14Z",
+      "side": 1,
+      "message": "Does it increase the docker image size too much?",
+      "revId": "0e3995a63d1a82fbc508dbb3ff591da2b8c0f22a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_980fb0e1",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-07-05T08:39:14Z",
+      "side": 1,
+      "message": "please delete it if unused",
+      "revId": "0e3995a63d1a82fbc508dbb3ff591da2b8c0f22a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
