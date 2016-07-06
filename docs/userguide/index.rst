@@ -388,9 +388,35 @@ the OpenStack 'bgpvpn' API:
 security_scan
 ^^^^^^^^^^^^^
 
-**TODO:**
+Security Scanning, is a project to insure security compliance and vulnerability
+checks, as part of an automated CI / CD platform delivery process.
 
+The project makes use of the existing SCAP format[1] to perform deep scanning of
+NFVi nodes, to insure they are hardened and free of known CVE reported vulnerabilities.
 
+The SCAP content itself, is then consumed and run using an upstream opensource tool
+known as OpenSCAP[2].
+
+The OPNFV Security Group have developed the code that will called by the OPNFV Jenkins
+build platform, to perform a complete scan. Resulting reports are then copied to the
+OPNFV functest dashboard.
+
+The current work flow is as follows:
+
+  * Jenkins Build Initiated
+  * security_scan.py script is called, and a config file is passed to the script as
+    an argument.
+  * The IP addresses of each NFVi node (compute / control), is gathered.
+  * A scan profile is matched to the node type.
+  * The OpenSCAP application is remotely installed onto each target node gathered
+    on step 3, using upstream packaging (rpm and .deb).
+  * A scan is made against each node gathered within step 3.
+  * HTML Reports are downloaded for rendering on a dashboard.
+  * If the config file value 'clean' is set to 'True' then the application installed in
+    step 5 is removed, and all reports created at step 6 are deleted.
+
+[1] https://scap.nist.gov/
+[2] https://github.com/OpenSCAP/openscap
 
 VNF
 ---
