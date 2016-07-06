@@ -80,6 +80,7 @@ RUN git clone https://github.com/opnfv/promise ${repos_dir}/promise
 RUN git clone https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
 RUN git clone https://gerrit.opnfv.org/gerrit/copper ${repos_dir}/copper
 RUN git clone https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
+RUN git clone https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt
