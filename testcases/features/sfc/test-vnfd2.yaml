@@ -1,0 +1,31 @@
+template_name: test-vnfd2
+description: firewall2-example
+
+service_properties:
+  Id: firewall2-vnfd
+  vendor: tacker
+  version: 1
+  type:
+      - firewall2
+vdus:
+  vdu1:
+    id: vdu1
+    vm_image: sf_summit2016
+    instance_type: custom
+    service_type: firewall2
+
+    network_interfaces:
+      management:
+        network: example-net
+        management: true
+
+    placement_policy:
+      availability_zone: nova
+
+    auto-scaling: noop
+    monitoring_policy: noop
+    failure_policy: respawn
+
+    config:
+      param0: key0
+      param1: key1
