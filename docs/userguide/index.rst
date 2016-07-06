@@ -388,9 +388,35 @@ the OpenStack 'bgpvpn' API:
 security_scan
 ^^^^^^^^^^^^^
 
-**TODO:**
+Security Scanning, is a project to insure security compliance and vulnerability
+checks, as part of an automated CI / CD platform delivery process.
 
+The project makes use of the existing SCAP format[6] to perform deep scanning of
+NFVi nodes, to insure they are hardened and free of known CVE reported vulnerabilities.
 
+The SCAP content itself, is then consumed and run using an upstream opensource tool
+known as OpenSCAP[7].
+
+The OPNFV Security Group have developed the code that will called by the OPNFV Jenkins
+build platform, to perform a complete scan. Resulting reports are then copied to the
+OPNFV functest dashboard.
+
+The current work flow is as follows:
+
+  * Jenkins Build Initiated
+  * security_scan.py script is called, and a config file is passed to the script as
+    an argument.
+  * The IP addresses of each NFVi node (compute / control), is gathered.
+  * A scan profile is matched to the node type.
+  * The OpenSCAP application is remotely installed onto each target node gathered
+    on step 3, using upstream packaging (rpm and .deb).
+  * A scan is made against each node gathered within step 3.
+  * HTML Reports are downloaded for rendering on a dashboard.
+  * If the config file value 'clean' is set to 'True' then the application installed in
+    step 5 is removed, and all reports created at step 6 are deleted.
+
+At present, only the Apex installer is supported, with other supports due to be included
+within D-release.
 
 VNF
 ---
@@ -449,6 +475,8 @@ References
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`[4]`: http://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
 .. _`[5]`: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/openstack-blueprint.yaml
+.. _`[6]`: https://scap.nist.gov/
+.. _`[7]`: https://github.com/OpenSCAP/openscap
 .. _`[9]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml
 .. _`[11]`: http://robotframework.org/
 
