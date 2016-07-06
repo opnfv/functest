@@ -614,9 +614,28 @@ def create_network_full(logger,
     return network_dic
 
 
+def create_bgpvpn(neutron_client, **kwargs):
+    # route_distinguishers
+    # route_targets
+    json_body = {"bgpvpn": kwargs}
+    return neutron_client.create_bgpvpn(json_body)
+
+
+def create_network_association(neutron_client, bgpvpn_id, neutron_network_id):
+    json_body = {"network_association": {"network_id": neutron_network_id,
+                                         "id": bgpvpn_id}}
+    return neutron_client.create_network_association(json_body)
+
+
+def update_bgpvpn(neutron_client, **kwargs):
+    json_body = {"bgpvpn": kwargs}
+    return neutron_client.update_bgpvpn(json_body)
+
 # *********************************************
 #   SEC GROUPS
 # *********************************************
+
+
 def get_security_groups(neutron_client):
     try:
         security_groups = neutron_client.list_security_groups()[
