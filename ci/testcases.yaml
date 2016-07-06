@@ -150,6 +150,14 @@ tiers:
                 dependencies:
                     installer: 'apex'
                     scenario: ''
+            -
+                name: moon
+                criteria: 'status == "PASS"'
+                description: >-
+                    Security management system for OPNFV
+                dependencies:
+                    installer: 'compass'
+                    scenario: '(odl)*(moon)'
 
     -
         name: openstack
