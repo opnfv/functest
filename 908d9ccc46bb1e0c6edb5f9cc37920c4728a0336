@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_7695053f",
+        "filename": "testcases/features/sfc/tacker_client_install.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-07-06T08:11:45Z",
+      "side": 1,
+      "message": "is the version specific to tacker?",
+      "revId": "908d9ccc46bb1e0c6edb5f9cc37920c4728a0336",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
