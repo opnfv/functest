@@ -178,6 +178,18 @@ def get_floating_ips(nova_client):
         return None
 
 
+def get_hypervisors(nova_client):
+    try:
+        nodes = []
+        hypervisors = nova_client.hypervisors.list()
+        for hypervisor in hypervisors:
+            nodes.append(hypervisor.hypervisor_hostname)
+        return nodes
+    except Exception, e:
+        print "Error [get_hypervisors(nova_client)]:", e
+        return None
+
+
 def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
     try:
         flavor = nova_client.flavors.create(flavor_name, ram, vcpus, disk)
@@ -193,7 +205,8 @@ def create_instance(flavor_name,
                     network_id,
                     instance_name="functest-vm",
                     confdrive=True,
-                    userdata=None):
+                    userdata=None,
+                    av_zone=''):
     nova_client = get_nova_client()
     try:
         flavor = nova_client.flavors.find(name=flavor_name)
@@ -207,7 +220,8 @@ def create_instance(flavor_name,
             name=instance_name,
             flavor=flavor,
             image=image_id,
-            nics=[{"net-id": network_id}]
+            nics=[{"net-id": network_id}],
+            availability_zone=av_zone
         )
     else:
         instance = nova_client.servers.create(
@@ -216,7 +230,8 @@ def create_instance(flavor_name,
             image=image_id,
             nics=[{"net-id": network_id}],
             config_drive=confdrive,
-            userdata=userdata
+            userdata=userdata,
+            availability_zone=av_zone
         )
     return instance
 
@@ -226,7 +241,8 @@ def create_instance_and_wait_for_active(flavor_name,
                                         network_id,
                                         instance_name="",
                                         config_drive=False,
-                                        userdata=""):
+                                        userdata="",
+                                        av_zone=''):
     SLEEP = 3
     VM_BOOT_TIMEOUT = 180
     nova_client = get_nova_client()
@@ -235,7 +251,8 @@ def create_instance_and_wait_for_active(flavor_name,
                                network_id,
                                instance_name,
                                config_drive,
-                               userdata)
+                               userdata,
+                               av_zone)
 
     count = VM_BOOT_TIMEOUT / SLEEP
     for n in range(count, -1, -1):
