@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_ecd06255",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-06T21:47:23Z",
+      "side": 1,
+      "message": "please add \nJIRA: FUNCTEST-99",
+      "revId": "bae11882be3eee6df6ff8be792690668a67b4340",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
