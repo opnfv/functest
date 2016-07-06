@@ -312,58 +312,80 @@ def delete_floating_ip(nova_client, floatingip_id):
 # *********************************************
 #   NEUTRON
 # *********************************************
-def get_network_list(neutron_client):
-    network_list = neutron_client.list_networks()['networks']
-    if len(network_list) == 0:
-        return None
-    else:
-        return network_list
+# For network, route, port, bgpvpn use:
+# get_*_list()
+# same for get_*_id(), delete_neutron_*()
+# for network_association use: <- cause network_association is a neutron
+# get_*_list(uuid_bgpvpn)
+# same for get_*_id(uuid_bgpvpn), delete_neutron_*()
+root_module = __import__(__name__)
 
 
-def get_router_list(neutron_client):
-    router_list = neutron_client.list_routers()['routers']
-    if len(router_list) == 0:
-        return None
-    else:
-        return router_list
+def make_function_get_list(type):
+    def _get_list(neutron_client, *args):
+        type_plural = '%ss' % type
+        list = getattr(neutron_client, 'list_%s'
+                       % type_plural)(*args)[type_plural]
+        if len(list) == 0:
+            return None
+        else:
+            return list
+    return _get_list
 
 
-def get_port_list(neutron_client):
-    port_list = neutron_client.list_ports()['ports']
-    if len(port_list) == 0:
-        return None
-    else:
-        return port_list
+def make_function_get_id(type):
+    def _get_id(neutron_client, name, *args):
+        type_plural = '%ss' % type
+        list = getattr(neutron_client, 'list_%s'
+                       % type_plural)(*args)[type_plural]
+        id = ''
+        for n in list:
+            if n['name'] == name:
+                id = n['id']
+                break
+        return id
+    return _get_id
 
 
-def get_network_id(neutron_client, network_name):
-    networks = neutron_client.list_networks()['networks']
-    id = ''
-    for n in networks:
-        if n['name'] == network_name:
-            id = n['id']
-            break
-    return id
+def make_function_delete(type, function_name):
+    def _delete(neutron_client, id):
+        try:
+            getattr(neutron_client, 'delete_%s' % type)(id)
+            return True
+        except Exception, e:
+            print ("Error [%s(neutron_client, '%s')]:" %
+                   (function_name, id)), e
+            return False
+    return _delete
 
 
-def get_subnet_id(neutron_client, subnet_name):
-    subnets = neutron_client.list_subnets()['subnets']
-    id = ''
-    for s in subnets:
-        if s['name'] == subnet_name:
-            id = s['id']
-            break
-    return id
+class NeutronBuilder(object):
+    _objects = ['network', 'subnet', 'port', 'router', 'bgpvpn',
+                'network_association']
+
+    def setup(self):
+        for type in self._objects:
+            # get_*_list
+            function_name = 'get_%s_list' % type
+            func = make_function_get_list(type)
+            setattr(root_module, function_name, func)
+
+            # get_*_id
+            function_name = 'get_%s_id' % type
+            func = make_function_get_id(type)
+            setattr(root_module, function_name, func)
+
+            # delete_*
+            function_name = 'delete_neutron_%s' % type
+            func = make_function_delete(type, function_name)
+            setattr(root_module, function_name, func)
+
+neutronbuilder = NeutronBuilder()
+neutronbuilder.setup()
 
 
-def get_router_id(neutron_client, router_name):
-    routers = neutron_client.list_routers()['routers']
-    id = ''
-    for r in routers:
-        if r['name'] == router_name:
-            id = r['id']
-            break
-    return id
+def delete_neutron_net(neutron_client, network_id):
+    return delete_neutron_network(neutron_client, network_id)
 
 
 def get_private_net(neutron_client):
@@ -497,45 +519,6 @@ def add_gateway_router(neutron_client, router_id):
         return False
 
 
-def delete_neutron_net(neutron_client, network_id):
-    try:
-        neutron_client.delete_network(network_id)
-        return True
-    except Exception, e:
-        print ("Error [delete_neutron_net(neutron_client, '%s')]:" %
-               network_id), e
-        return False
-
-
-def delete_neutron_subnet(neutron_client, subnet_id):
-    try:
-        neutron_client.delete_subnet(subnet_id)
-        return True
-    except Exception, e:
-        print ("Error [delete_neutron_subnet(neutron_client, '%s')]:" %
-               subnet_id), e
-        return False
-
-
-def delete_neutron_router(neutron_client, router_id):
-    try:
-        neutron_client.delete_router(router=router_id)
-        return True
-    except Exception, e:
-        print ("Error [delete_neutron_router(neutron_client, '%s')]:" %
-               router_id), e
-        return False
-
-
-def delete_neutron_port(neutron_client, port_id):
-    try:
-        neutron_client.delete_port(port_id)
-        return True
-    except Exception, e:
-        print "Error [delete_neutron_port(neutron_client, '%s')]:" % port_id, e
-        return False
-
-
 def remove_interface_router(neutron_client, router_id, subnet_id):
     json_body = {"subnet_id": subnet_id}
     try:
@@ -612,6 +595,24 @@ def create_network_full(logger,
                    'subnet_id': subnet_id,
                    'router_id': router_id}
     return network_dic
+
+
+def create_bgpvpn(neutron_client, **kwargs):
+    # route_distinguishers
+    # route_targets
+    json_body = {"bgpvpn": kwargs}
+    return neutron_client.create_bgpvpn(json_body)
+
+
+def create_network_association(neutron_client, bgpvpn_id, neutron_network_id):
+    json_body = {"network_association": {"network_id": neutron_network_id,
+                                         "id": bgpvpn_id}}
+    return neutron_client.create_network_association(json_body)
+
+
+def update_bgpvpn(neutron_client, **kwargs):
+    json_body = {"bgpvpn": kwargs}
+    return neutron_client.update_bgpvpn(json_body)
 
 
 # *********************************************
