@@ -93,6 +93,7 @@ RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C
 RUN curl -L https://get.rvm.io | bash -s stable
 
 RUN /bin/bash -c ". /home/opnfv/repos/functest/testcases/features/sfc/tacker_client_install.sh"
+RUN cd ${repos_dir}/bgpvpn && pip install .
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd /home/opnfv/repos/vims-test \
