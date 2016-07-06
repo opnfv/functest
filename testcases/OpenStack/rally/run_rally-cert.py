@@ -530,10 +530,10 @@ def main():
     # logger.info("Results: "+str(json_results))
 
     # Evaluation of the success criteria
-    status = "failed"
+    status = "FAIL"
     # for Rally we decided that the overall success rate must be above 90%
     if total_success >= 90:
-        status = "passed"
+        status = "PASS"
 
     if args.sanity:
         case_name = "rally_sanity"
