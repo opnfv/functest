@@ -183,7 +183,8 @@ def get_hypervisors(nova_client):
         nodes = []
         hypervisors = nova_client.hypervisors.list()
         for hypervisor in hypervisors:
-            nodes.append(hypervisor.hypervisor_hostname)
+            if hypervisor.state == "up":
+                nodes.append(hypervisor.hypervisor_hostname)
         return nodes
     except Exception, e:
         print "Error [get_hypervisors(nova_client)]:", e
