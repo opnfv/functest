@@ -59,6 +59,23 @@
     },
     {
       "key": {
+        "uuid": "5a7ca5a3_ec186286",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-07-07T07:49:17Z",
+      "side": 1,
+      "message": "Trailing whitespace here? Renderer seems awfully sensitive about these..",
+      "revId": "679f2591266ed951ab5d534de9dff019678ae3c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7ca5a3_2c2f3aa3",
         "filename": "docs/devguide/index.rst",
         "patchSetId": 2
