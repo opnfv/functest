@@ -13,6 +13,7 @@ import yaml
 
 import functest.ci.tier_builder as tb
 import functest.utils.functest_utils as ft_utils
+import functest.utils.functest_vacation as vacation
 
 """ global variables """
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
@@ -48,7 +49,9 @@ class CliTestcase:
         click.echo(description)
 
     def run(self, testname):
-        if not os.path.isfile(ENV_FILE):
+        if testname == 'vacation':
+            vacation.main()
+        elif not os.path.isfile(ENV_FILE):
             click.echo("Functest environment is not ready. "
                        "Run first 'functest env prepare'")
         else:
