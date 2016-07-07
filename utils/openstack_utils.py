@@ -622,14 +622,13 @@ def create_bgpvpn(neutron_client, **kwargs):
 
 
 def create_network_association(neutron_client, bgpvpn_id, neutron_network_id):
-    json_body = {"network_association": {"network_id": neutron_network_id,
-                                         "id": bgpvpn_id}}
-    return neutron_client.create_network_association(json_body)
+    json_body = {"network_association": {"network_id": neutron_network_id}}
+    return neutron_client.create_network_association(bgpvpn_id, json_body)
 
 
-def update_bgpvpn(neutron_client, **kwargs):
+def update_bgpvpn(neutron_client, bgpvpn_id, **kwargs):
     json_body = {"bgpvpn": kwargs}
-    return neutron_client.update_bgpvpn(json_body)
+    return neutron_client.update_bgpvpn(bgpvpn_id, json_body)
 
 # *********************************************
 #   SEC GROUPS
