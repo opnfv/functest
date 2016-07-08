@@ -5,7 +5,7 @@ general:
         dir_odl:           testcases/Controllers/ODL/
         dir_rally:         testcases/OpenStack/rally/
         dir_tempest_cases: testcases/OpenStack/tempest/custom_tests/
-        dir_vIMS:          testcases/vIMS/
+        dir_vIMS:          testcases/vnf/vIMS/
         dir_onos:          testcases/Controllers/ONOS/Teston/
         dir_onos_sfc:           testcases/Controllers/ONOS/Sfc/
 
