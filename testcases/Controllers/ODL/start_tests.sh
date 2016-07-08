@@ -54,16 +54,6 @@ NEUTRON_IP=${NEUTRON_IP:-192.168.0.68}
 KEYSTONE_IP=${KEYSTONE_IP:-192.168.0.69}
 set +x
 
-init_file=${REPO_DIR}/csit/suites/openstack/neutron/__init__.robot
-# Change openstack password for admin tenant in neutron suite
-sed -i "s/\"password\": \".*\"/\"password\": \"${PASS}\"/" $init_file
-
-# Add Start Suite and Teardown Suite
-if [[ ! `grep 'Suite Teardown' ${init_file}` ]]; then
-    sed -i "/^Documentation.*/a Suite Teardown     Stop Suite" $init_file
-    sed -i "/^Documentation.*/a Suite Setup        Start Suite" $init_file
-fi
-
 # add custom tests to suite, if there are more custom tests needed this will be reworked
 echo -e "${green}Copy custom tests to suite.${nc}"
 cp -vf ${BASEDIR}/custom_tests/neutron/* ${REPO_DIR}/csit/suites/openstack/neutron/
@@ -81,7 +71,7 @@ do
 
     ((test_num++))
     echo -e "${light_green}Starting test: $line ${nc}"
-    pybot -v OPENSTACK:${NEUTRON_IP} -v PORT:${ODL_PORT} -v ODL_SYSTEM_IP:${ODL_IP} ${REPO_DIR}/$line
+    pybot -v OPENSTACK:${NEUTRON_IP} -v PORT:${ODL_PORT} -v ODL_SYSTEM_IP:${ODL_IP} -v OSPASSWORD:\"${PASS}\" ${REPO_DIR}/$line
     mkdir -p $RESULTS_DIR/logs/${test_num}
     mv log.html $RESULTS_DIR/logs/${test_num}/
     mv report.html $RESULTS_DIR/logs/${test_num}/
