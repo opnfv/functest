@@ -94,8 +94,8 @@ class Sfc:
         logger.error("\t\t  :   Floating Ip NOT attached to VM ")
     print ("\n###########################################################\n")
     ########################################################################
-    logger.info("TestCase 3 : Configure SFC [Portair,PortGroup,\
-                 Flow classifer")
+    logger.info(
+        "TestCase 3 : Configure SFC [Portair,PortGroup,Flow classifer]")
     #########################################################################
     logger.info("\t3.1 Creation of Port Pair")
     if (Sfc_obj.createPortPair() == 201):
@@ -133,8 +133,8 @@ class Sfc:
         logger.error("\t\t  :  Flow Classifier NOT successfully Created")
     print ("\n###########################################################\n")
     ########################################################################
-    logger.info("TestCase 4 : Configure Port Chain and verify the flows are\
-                 added.")
+    logger.info(
+        "TestCase 4 : Configure Port Chain and verify flows are added")
     #########################################################################
     logger.info("\t4.1 Creation of PortChain")
     if (Sfc_obj.createPortChain() == 201):
@@ -185,8 +185,8 @@ class Sfc:
         if (Sfc_obj.deleteFlowClassifier() == 204):
             if (Sfc_obj.deletePortGroup() == 204):
                 if (Sfc_obj.deletePortPair() == 204):
-                    logger.info("\t\tSFC configuration is deleted \
-                                successfully")
+                    logger.info(
+                        "\t\tSFC configuration is deleted successfully")
                 else:
                     logger.error("\t\t  :  Port pair configuration is NOT\
                                   deleted successfully")
