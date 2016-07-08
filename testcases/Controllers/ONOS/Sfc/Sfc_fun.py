@@ -7,6 +7,7 @@ from pexpect import pxssh
 import re
 import requests
 import time
+import os
 
 
 class Sfc_fun:
@@ -14,7 +15,7 @@ class Sfc_fun:
 
     def __init__(self):
         """Initialization of variables."""
-        self.logger = ft_logger.Logger("sfc_fun_log").getLogger()
+        self.logger = ft_logger.Logger("sfc_fun").getLogger()
         self.osver = "v2.0"
         self.token_id = 0
         self.net_id = 0
@@ -303,7 +304,7 @@ class Sfc_fun:
             response = requests.post(url, headers=headers,  data=data)
             if (response.status_code == 201):
                 print ("\t\t\t\tCreation of Port Pair PP"+str(p) +
-                       "is successful")
+                       " is successful")
             else:
                 return(response.status_code)
 
@@ -617,8 +618,40 @@ class Sfc_fun:
                 self.logger.info("\tPacket not received in Instance")
                 queue1.put("0")
 
-        if (self.value == 0):
-            time.sleep(10)
+        def ping(ip):
+            repo = '/home/opnfv/repos'
+            path = repo + '/functest/testcases/Controllers/ONOS/Sfc/ping.sh'
+            cmd = 'sh ' + path + ' ' + ip
+            flag = False
+            status = "FAIL"
+            PING_TIMEOUT = 300
+            sec = 0
+
+            while True:
+                time.sleep(1)
+                output = os.popen(cmd).readlines()
+
+                for line in output:
+                    if "Ping OK" in line:
+                        self.logger.info("Ping " + ip + " detected!")
+                        status = "PASS"
+                        flag = True
+                        break
+
+                    elif sec == PING_TIMEOUT:
+                        self.logger.info("Ping " + ip + " timeout reached.")
+                        flag = True
+                        break
+                if flag:
+                    return status
+                    break
+                self.logger.debug("Pinging %s. Waiting for response..." % ip)
+                sec += 1
+
+        result0 = ping(self.vm_public_ip[0])
+        result1 = ping(self.vm_public_ip[1])
+        if result0 == "PASS" and result1 == "PASS":
+            time.sleep(300)
             queue1 = Queue()
             p1 = Process(target=vm1,  args=(queue1, ))
             p1.start()
@@ -797,7 +830,7 @@ class Sfc_fun:
         else:
             return(response.status_code)
 
-        print ("\n\t\t Deletion of Floating ip")
+        print ("\n\t\tDeletion of Floating ip")
         for ip_num in range(0, 2):
             url = 'http://'+self.os_hostname+':9696/'+self.osver + \
                   '/floatingips/'+self.vm_public_id[ip_num]
