@@ -7,15 +7,17 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import click
-import os
-import yaml
+""" global variables """
 
+import os
+
+import click
 import functest.ci.tier_builder as tb
 import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_vacation as vacation
+import yaml
 
-""" global variables """
+
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 
@@ -27,6 +29,7 @@ ENV_FILE = FUNCTEST_CONF_DIR + "/env_active"
 
 
 class CliTestcase:
+
     def __init__(self):
         CI_INSTALLER_TYPE = os.getenv('INSTALLER_TYPE')
         CI_SCENARIO = os.getenv('DEPLOY_SCENARIO')
@@ -48,13 +51,17 @@ class CliTestcase:
 
         click.echo(description)
 
-    def run(self, testname):
+    def run(self, testname, noclean=False):
         if testname == 'vacation':
             vacation.main()
         elif not os.path.isfile(ENV_FILE):
             click.echo("Functest environment is not ready. "
                        "Run first 'functest env prepare'")
         else:
-            cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py -t %s"
-                   % testname)
+            if noclean:
+                cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py "
+                       "-t --no-clean %s" % testname)
+            else:
+                cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py "
+                       "-t %s" % testname)
             ft_utils.execute_command(cmd)
