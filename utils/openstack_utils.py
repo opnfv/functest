@@ -631,6 +631,11 @@ def update_bgpvpn(neutron_client, bgpvpn_id, **kwargs):
     json_body = {"bgpvpn": kwargs}
     return neutron_client.update_bgpvpn(bgpvpn_id, json_body)
 
+
+def delete_bgpvpn(neutron_client, bgpvpn_id):
+    return neutron_client.delete_bgpvpn(bgpvpn_id)
+
+
 # *********************************************
 #   SEC GROUPS
 # *********************************************
