@@ -117,8 +117,9 @@ def testcase_show(testname):
 
 @testcase.command('run', help="Executes a test case.")
 @click.argument('testname', type=click.STRING, required=True)
-def testcase_run(testname):
-    _testcase.run(testname)
+@click.option('-n', '--noclean', default=False)
+def testcase_run(testname, noclean):
+    _testcase.run(testname, noclean)
 
 
 @tier.command('list', help="Lists the available tiers.")
@@ -140,5 +141,6 @@ def tier_gettests(tiername):
 
 @tier.command('run', help="Executes all the tests within a tier.")
 @click.argument('tiername', type=click.STRING, required=True)
-def tier_run(tiername):
-    _tier.run(tiername)
+@click.option('-n', '--noclean', default=False)
+def tier_run(tiername, noclean):
+    _tier.run(tiername, noclean)
