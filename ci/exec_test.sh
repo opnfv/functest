@@ -102,7 +102,7 @@ function run_test(){
                 $serial_flag $clean_flag -m full $report
         ;;
         "vims")
-            python ${FUNCTEST_REPO_DIR}/testcases/vIMS/vIMS.py $clean_flag $report
+            python ${FUNCTEST_REPO_DIR}/testcases/vnf/vIMS/vIMS.py $clean_flag $report
         ;;
         "rally_full")
             python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/rally/run_rally-cert.py $clean_flag all $report
