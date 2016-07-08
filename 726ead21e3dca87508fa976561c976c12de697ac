@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_ea5b6152",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc_fun.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-08T09:35:21Z",
+      "side": 1,
+      "message": "Still, the code is too much for what it does. I have written this for you, please have a look and do the proper changes:\nhttp://pastebin.com/raw/Nvr9yu9G\n\nNOTE: change my \"prints\" by \"logger.debug\"",
+      "revId": "726ead21e3dca87508fa976561c976c12de697ac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
