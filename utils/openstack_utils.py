@@ -207,7 +207,8 @@ def create_instance(flavor_name,
                     instance_name="functest-vm",
                     confdrive=True,
                     userdata=None,
-                    av_zone=''):
+                    av_zone='',
+                    fixed_ip=None):
     nova_client = get_nova_client()
     try:
         flavor = nova_client.flavors.find(name=flavor_name)
@@ -216,12 +217,16 @@ def create_instance(flavor_name,
               flavor_name)
         print(nova_client.flavor.list())
         return -1
+    if fixed_ip is not None:
+        nics = {"net-id": network_id, "v4-fixed-ip": fixed_ip}
+    else:
+        nics = {"net-id": network_id}
     if userdata is None:
         instance = nova_client.servers.create(
             name=instance_name,
             flavor=flavor,
             image=image_id,
-            nics=[{"net-id": network_id}],
+            nics=[nics],
             availability_zone=av_zone
         )
     else:
@@ -229,7 +234,7 @@ def create_instance(flavor_name,
             name=instance_name,
             flavor=flavor,
             image=image_id,
-            nics=[{"net-id": network_id}],
+            nics=[nics],
             config_drive=confdrive,
             userdata=userdata,
             availability_zone=av_zone
@@ -243,7 +248,8 @@ def create_instance_and_wait_for_active(flavor_name,
                                         instance_name="",
                                         config_drive=False,
                                         userdata="",
-                                        av_zone=''):
+                                        av_zone='',
+                                        fixed_ip=None):
     SLEEP = 3
     VM_BOOT_TIMEOUT = 180
     nova_client = get_nova_client()
@@ -253,7 +259,8 @@ def create_instance_and_wait_for_active(flavor_name,
                                instance_name,
                                config_drive,
                                userdata,
-                               av_zone)
+                               av_zone,
+                               fixed_ip)
 
     count = VM_BOOT_TIMEOUT / SLEEP
     for n in range(count, -1, -1):
@@ -634,7 +641,6 @@ def update_bgpvpn(neutron_client, bgpvpn_id, **kwargs):
 
 def delete_bgpvpn(neutron_client, bgpvpn_id):
     return neutron_client.delete_bgpvpn(bgpvpn_id)
-
 
 # *********************************************
 #   SEC GROUPS
