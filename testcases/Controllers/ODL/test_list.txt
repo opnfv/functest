@@ -1,5 +1,0 @@
-# List of tests` which will be executed by script start_test.sh
-# You can specify path to specific robot test file or directory (in that case all tests from directory will be executed)
-
-csit/suites/integration/basic/
-csit/suites/openstack/neutron/
