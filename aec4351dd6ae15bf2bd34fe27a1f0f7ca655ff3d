@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_f0f6f4d6",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-07-11T07:33:58Z",
+      "side": 1,
+      "message": "this v4 dependency would not be problematic later?",
+      "range": {
+        "startLine": 221,
+        "startChar": 42,
+        "endLine": 221,
+        "endChar": 47
+      },
+      "revId": "aec4351dd6ae15bf2bd34fe27a1f0f7ca655ff3d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
