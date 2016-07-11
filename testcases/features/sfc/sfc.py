@@ -68,7 +68,7 @@ def main():
         logger.info("Using old image")
 
 # Allow any port so that tacker commands reaches the server.
-#CHECK IF THIS STILL MAKES SENSE WHEN TACKER IS INCLUDED IN OPNFV INSTALATION
+# CHECK IF THIS STILL MAKES SENSE WHEN TACKER IS INCLUDED IN OPNFV INSTALATION
 
     controller_command = ("sshpass -p r00tme ssh root@10.20.0.2"
                           " 'fuel node'|grep controller|awk '{print $10}'")
