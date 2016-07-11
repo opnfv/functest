@@ -25,7 +25,7 @@ usage:
 
 where:
     -h     show this help text
-    var    one of the following: ODL_IP, ODL_PORT, USR_NAME, PASS, NEUTRON_IP
+    var    one of the following: ODL_IP, ODL_PORT, ODL_USER, ODL_PASS, TENANT_NAME, USR_NAME, PASS, NEUTRON_IP, KEYSTONE_IP
     value  new value for var
 
 example:
@@ -46,13 +46,20 @@ done
 echo -e "${green}Current environment parameters for ODL suite.${nc}"
 # Following vars might be also specified as CLI params
 set -x
-ODL_IP=${ODL_IP:-'192.168.1.5'}
-ODL_PORT=${ODL_PORT:-8081}
-USR_NAME=${USR_NAME:-'neutron'}
-PASS=${PASS:-'octopus'}
-NEUTRON_IP=${NEUTRON_IP:-192.168.0.68}
-KEYSTONE_IP=${KEYSTONE_IP:-192.168.0.69}
+ODL_IP=${ODL_IP:-'127.0.0.1'}
+ODL_PORT=${ODL_PORT:-8181}
+ODL_USER=${ODL_USER:-'admin'}
+ODL_PASS=${ODL_PASS:-'admin'}
+TENANT_NAME=${TENANT_NAME:-'admin'}
+USR_NAME=${USR_NAME:-'admin'}
+PASS=${PASS:-'admin'}
+NEUTRON_IP=${NEUTRON_IP:-'127.0.0.1'}
+KEYSTONE_IP=${KEYSTONE_IP:-'127.0.0.1'}
 set +x
+
+# set ODL credentials in ${REPO_DIR}/csit/variables/Variables.py
+sed -i "s/^AUTH\ =.*$/AUTH\ =\ [u'$ODL_USER', u'$ODL_PASS']/"  \
+    ${REPO_DIR}/csit/variables/Variables.py
 
 # add custom tests to suite, if there are more custom tests needed this will be reworked
 echo -e "${green}Copy custom tests to suite.${nc}"
@@ -71,7 +78,10 @@ do
 
     ((test_num++))
     echo -e "${light_green}Starting test: $line ${nc}"
-    pybot -v OPENSTACK:${NEUTRON_IP} -v PORT:${ODL_PORT} -v ODL_SYSTEM_IP:${ODL_IP} -v OSPASSWORD:\"${PASS}\" ${REPO_DIR}/$line
+    pybot -v KEYSTONE:${KEYSTONE_IP} -v NEUTRON:${NEUTRON_IP} \
+        -v OSUSERNAME:\"${USR_NAME}\" -v OSTENANTNAME:\"${TENANT_NAME}\" -v OSPASSWORD:\"${PASS}\"  \
+        -v PORT:${ODL_PORT} -v ODL_SYSTEM_IP:${ODL_IP} \
+        ${REPO_DIR}/$line
     mkdir -p $RESULTS_DIR/logs/${test_num}
     mv log.html $RESULTS_DIR/logs/${test_num}/
     mv report.html $RESULTS_DIR/logs/${test_num}/

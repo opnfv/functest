@@ -79,7 +79,8 @@ function run_test(){
         ;;
         "odl")
             odl_tests
-            ODL_PORT=$odl_port ODL_IP=$odl_ip KEYSTONE_IP=$keystone_ip NEUTRON_IP=$neutron_ip USR_NAME=${OS_USERNAME} PASS=${OS_PASSWORD} \
+            ODL_PORT=$odl_port ODL_IP=$odl_ip KEYSTONE_IP=$keystone_ip NEUTRON_IP=$neutron_ip \
+                TENANT_NAME=${OS_TENANT_NAME} USR_NAME=${OS_USERNAME} PASS=${OS_PASSWORD} \
                 ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/start_tests.sh
 
             # push results to the DB in case of CI
