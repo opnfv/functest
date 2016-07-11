@@ -222,11 +222,11 @@ def main():
 
         # ONOS success criteria = all tests OK
         # i.e. FUNCvirNet & FUNCvirNetL3
-        status = "failed"
+        status = "FAIL"
         try:
             if (result['FUNCvirNet']['result'] == "Success" and
                     result['FUNCvirNetL3']['result'] == "Success"):
-                    status = "passed"
+                    status = "PASS"
         except:
             logger.error("Unable to set ONOS criteria")
 
