@@ -16,6 +16,24 @@
       "revId": "628113d14a66c03049a1a19ea103e61e35c4e2bf",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_36bb04e7",
+        "filename": "testcases/OpenStack/healthcheck/healthcheck.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-12T12:13:55Z",
+      "side": 1,
+      "message": "How about create a new flavor here or during the deploying of functest, just like some images and default networks will be created during the functest deploying?",
+      "parentUuid": "5a7ca5a3_b6e71412",
+      "revId": "628113d14a66c03049a1a19ea103e61e35c4e2bf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
