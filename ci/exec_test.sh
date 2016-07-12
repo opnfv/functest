@@ -141,6 +141,9 @@ function run_test(){
             # TODO put the link to Moon script to be run (if test runnable) here
             ${repos_dir}/moon/tests/run_tests.sh
         ;;
+        "domino")
+            python ${FUNCTEST_REPO_DIR}/testcases/features/domino.py
+        ;;
         *)
             echo "The test case '${test_name}' does not exist."
             exit 1
