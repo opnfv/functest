@@ -133,13 +133,6 @@ def create_directories():
     else:
         logger.debug("   %s already exists." % FUNCTEST_DATA_DIR)
 
-    ODL_RESULTS_DIR = FUNCTEST_RESULTS_DIR + "/ODL/"
-    if not os.path.exists(ODL_RESULTS_DIR):
-        os.makedirs(ODL_RESULTS_DIR)
-        logger.info("    %s created." % ODL_RESULTS_DIR)
-    else:
-        logger.debug("   %s already exists." % ODL_RESULTS_DIR)
-
 
 def source_rc_file():
     print_separator()
