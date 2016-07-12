@@ -116,7 +116,7 @@ function run_test(){
                 $clean_flag --sanity all $report
         ;;
         "bgpvpn")
-            python ${FUNCTEST_REPO_DIR}/testcases/features/bgpvpn.py
+            python ${repos_dir}/sdnvpn/test/functest/run_tests.py
         ;;
         "onos")
             python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/onosfunctest.py
