@@ -60,7 +60,7 @@ class CliTestcase:
         else:
             if noclean:
                 cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py "
-                       "-t --no-clean %s" % testname)
+                       "-n -t %s" % testname)
             else:
                 cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py "
                        "-t %s" % testname)

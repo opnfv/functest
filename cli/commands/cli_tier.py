@@ -70,7 +70,7 @@ class CliTier:
         else:
             if noclean:
                 cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py "
-                       "-t --no-clean %s" % tiername)
+                       "-n -t %s" % tiername)
             else:
                 cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py "
                        "-t %s" % tiername)
