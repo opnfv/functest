@@ -149,6 +149,8 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/features/multisite.py
             python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/run_tempest.py \
                 $clean_flag -s -m feature_multisite $report
+        "domino")
+            python ${FUNCTEST_REPO_DIR}/testcases/features/domino.py
         ;;
         *)
             echo "The test case '${test_name}' does not exist."

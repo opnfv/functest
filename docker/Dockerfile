@@ -82,6 +82,7 @@ RUN git clone https://gerrit.opnfv.org/gerrit/copper ${repos_dir}/copper
 RUN git clone https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
 RUN git clone https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
 RUN git clone https://github.com/openstack/kingbird.git ${repos_dir}/kingbird
+RUN git clone https://gerrit.opnfv.org/gerrit/domino ${repos_dir}/domino
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt

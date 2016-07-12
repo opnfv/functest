@@ -166,7 +166,14 @@ tiers:
                 dependencies:
                     installer: 'compass'
                     scenario: 'multisite'
-
+            -
+                name: domino
+                criteria: 'status == "PASS"'
+                description: >-
+                    Test suite for template distribution based on Domino
+                dependencies:
+                    installer: 'joid'
+                    scenario: ''
     -
         name: openstack
         order: 4
