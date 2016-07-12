@@ -66,6 +66,7 @@ port_1="opnfv-port1"
 port_2="opnfv-port2"
 router_1="opnfv-router1"
 router_2="opnfv-router2"
+flavor="m1.tiny"
 instance_1="opnfv-instance1"
 instance_2="opnfv-instance2"
 instance_3="opnfv-instance3"
@@ -187,13 +188,23 @@ info "Testing Nova API..."
 # by SDN controller in case of odl_l2 scenario.
 sleep 60
 
-nova boot --flavor m1.small --image ${image_1} --nic net-id=${net1_id} ${instance_1}
+
+# Check if flavor exists
+if [[ -z $(nova flavor-list|grep $flavor) ]]; then
+    # if given flavor doesn't exist, we create one
+    debug "Flavor $flavor doesn't exist. Creating a new flavor."
+    nova flavor-create --is-public false ${flavor} auto 512 1 1 --is-public True
+fi
+debug "Using flavor $flavor to boot the instances."
+
+
+nova boot --flavor ${flavor} --image ${image_1} --nic net-id=${net1_id} ${instance_1}
 debug "nova instance '${instance_1}' booted on ${net_1}."
-nova boot --flavor m1.small --image ${image_1} --nic net-id=${net1_id} ${instance_2}
+nova boot --flavor ${flavor} --image ${image_1} --nic net-id=${net1_id} ${instance_2}
 debug "nova instance '${instance_2}' booted on ${net_1}."
-nova boot --flavor m1.small --image ${image_2} --nic net-id=${net2_id} ${instance_3}
+nova boot --flavor ${flavor} --image ${image_2} --nic net-id=${net2_id} ${instance_3}
 debug "nova instance '${instance_3}' booted on ${net_2}."
-nova boot --flavor m1.small --image ${image_2} --nic net-id=${net2_id} ${instance_4}
+nova boot --flavor ${flavor} --image ${image_2} --nic net-id=${net2_id} ${instance_4}
 debug "nova instance '${instance_4}' booted on ${net_2}."
 
 vm1_id=$(nova list | grep ${instance_1} | awk '{print $2}')
