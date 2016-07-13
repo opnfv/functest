@@ -62,7 +62,6 @@ def source_rc_file():
 
 
 def generate_os_snapshot():
-    logger.debug("Generating OpenStack snapshot...")
     os_snapshot.main()
 
 
