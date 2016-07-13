@@ -13,26 +13,21 @@
 # 0.3 (19/10/2015) remove Tempest from run_rally
 # and push result into test DB
 #
+""" tests configuration """
+
 import argparse
-import iniparse
 import json
 import os
 import re
 import subprocess
 import time
-import yaml
-
-from novaclient import client as novaclient
-from glanceclient import client as glanceclient
-from keystoneclient.v2_0 import client as keystoneclient
-from neutronclient.v2_0 import client as neutronclient
-from cinderclient import client as cinderclient
-
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
-import functest.utils.openstack_utils as openstack_utils
+import functest.utils.openstack_utils as os_utils
+import iniparse
+import yaml
 
-""" tests configuration """
+
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
          'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
 parser = argparse.ArgumentParser()
@@ -187,7 +182,7 @@ def build_task_args(test_file_name):
         task_args['full_mode'] = True
         task_args['smoke'] = args.smoke
 
-    ext_net = openstack_utils.get_external_net(client_dict['neutron'])
+    ext_net = os_utils.get_external_net(client_dict['neutron'])
     if ext_net:
         task_args['floating_network'] = str(ext_net)
     else:
@@ -378,6 +373,12 @@ def run_task(test_name):
 def main():
     global SUMMARY
     global network_dict
+
+    nova_client = os_utils.get_nova_client()
+    neutron_client = os_utils.get_neutron_client()
+    glance_client = os_utils.get_glance_client()
+    cinder_client = os_utils.get_cinder_client()
+
     start_time = time.time()
     stop_time = start_time
 
@@ -387,29 +388,11 @@ def main():
         exit(-1)
 
     SUMMARY = []
-    creds_nova = openstack_utils.get_credentials("nova")
-    nova_client = novaclient.Client('2', **creds_nova)
-    creds_neutron = openstack_utils.get_credentials("neutron")
-    neutron_client = neutronclient.Client(**creds_neutron)
-    creds_keystone = openstack_utils.get_credentials("keystone")
-    keystone_client = keystoneclient.Client(**creds_keystone)
-    glance_endpoint = keystone_client.service_catalog.url_for(
-        service_type='image', endpoint_type='publicURL')
-    glance_client = glanceclient.Client(1, glance_endpoint,
-                                        token=keystone_client.auth_token)
-    creds_cinder = openstack_utils.get_credentials("cinder")
-    cinder_client = cinderclient.Client('2', creds_cinder['username'],
-                                        creds_cinder['api_key'],
-                                        creds_cinder['project_id'],
-                                        creds_cinder['auth_url'],
-                                        service_type="volume")
 
-    client_dict['neutron'] = neutron_client
-
-    volume_types = openstack_utils.list_volume_types(cinder_client,
-                                                     private=False)
+    volume_types = os_utils.list_volume_types(cinder_client,
+                                              private=False)
     if not volume_types:
-        volume_type = openstack_utils.create_volume_type(
+        volume_type = os_utils.create_volume_type(
             cinder_client, CINDER_VOLUME_TYPE_NAME)
         if not volume_type:
             logger.error("Failed to create volume type...")
@@ -420,15 +403,15 @@ def main():
     else:
         logger.debug("Using existing volume type(s)...")
 
-    image_id = openstack_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+    image_id = os_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
     image_exists = False
 
     if image_id == '':
         logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                            GLANCE_IMAGE_PATH))
-        image_id = openstack_utils.create_glance_image(glance_client,
-                                                       GLANCE_IMAGE_NAME,
-                                                       GLANCE_IMAGE_PATH)
+        image_id = os_utils.create_glance_image(glance_client,
+                                                GLANCE_IMAGE_NAME,
+                                                GLANCE_IMAGE_PATH)
         if not image_id:
             logger.error("Failed to create the Glance image...")
             exit(-1)
@@ -441,19 +424,19 @@ def main():
         image_exists = True
 
     logger.debug("Creating network '%s'..." % PRIVATE_NET_NAME)
-    network_dict = openstack_utils.create_network_full(logger,
-                                                       client_dict['neutron'],
-                                                       PRIVATE_NET_NAME,
-                                                       PRIVATE_SUBNET_NAME,
-                                                       ROUTER_NAME,
-                                                       PRIVATE_SUBNET_CIDR)
+    network_dict = os_utils.create_network_full(logger,
+                                                neutron_client,
+                                                PRIVATE_NET_NAME,
+                                                PRIVATE_SUBNET_NAME,
+                                                ROUTER_NAME,
+                                                PRIVATE_SUBNET_CIDR)
     if not network_dict:
         logger.error("Failed to create network...")
         exit(-1)
     else:
-        if not openstack_utils.update_neutron_net(client_dict['neutron'],
-                                                  network_dict['net_id'],
-                                                  shared=True):
+        if not os_utils.update_neutron_net(neutron_client['neutron'],
+                                           network_dict['net_id'],
+                                           shared=True):
             logger.error("Failed to update network...")
             exit(-1)
         else:
@@ -555,13 +538,13 @@ def main():
     if not image_exists:
         logger.debug("Deleting image '%s' with ID '%s'..."
                      % (GLANCE_IMAGE_NAME, image_id))
-        if not openstack_utils.delete_glance_image(nova_client, image_id):
+        if not os_utils.delete_glance_image(nova_client, image_id):
             logger.error("Error deleting the glance image")
 
     if not volume_types:
         logger.debug("Deleting volume type '%s'..."
                      % CINDER_VOLUME_TYPE_NAME)
-        if not openstack_utils.delete_volume_type(cinder_client, volume_type):
+        if not os_utils.delete_volume_type(cinder_client, volume_type):
             logger.error("Error in deleting volume type...")
 
 
