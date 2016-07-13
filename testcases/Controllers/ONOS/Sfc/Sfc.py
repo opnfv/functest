@@ -142,7 +142,7 @@ class Sfc:
     else:
         logger.error("\t\tPortChain NOT successfully Created")
     #########################################################################
-    logger.info("\t4.2 Verification of Flows Installed in OVS")
+    '''logger.info("\t4.2 Verification of Flows Installed in OVS")
     if (Sfc_obj.checkFlowAdded() == 200):
         logger.info("\t\tFlows Installed successfully ")
     else:
@@ -158,14 +158,14 @@ class Sfc:
     else:
         logger.error("\t\t  :  portChainSfMap NOT Installed successfully")
     print ("\n############################################################n")
-    ########################################################################
+    ########################################################################'''
     logger.info("\tTestCase 5 : Verify  traffic with VNF node.")
     if (Sfc_obj.loginToVM() == "1"):
         logger.info("\t\tSFC function Working")
     else:
         logger.error("\t\t  :  SFC function not working")
     print ("\n###########################################################\n")
-    logger.info("TestCase 6 : Verify the Service Chain Statistics")
+    '''logger.info("TestCase 6 : Verify the Service Chain Statistics")
     if (Sfc_obj.portChainDeviceMap() == 200):
         logger.info("\t\tportChainDeviceMap successfully ")
     else:
@@ -175,7 +175,7 @@ class Sfc:
         logger.info("\t\tportChainSfMap successfully ")
     else:
         logger.error("\t\t  :  portChainSfMap NOT Installed successfully")
-    print ("\n##########################################################\n")
+    print ("\n##########################################################\n")'''
     logger.info("TestCase 7 : Remove the Port Chain and Verify the traffic")
     if (Sfc_obj.deletePortChain() == 204):
         if (Sfc_obj.loginToVM() == "0"):
