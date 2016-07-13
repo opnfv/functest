@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_e174e4d0",
+        "filename": "ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-13T07:59:15Z",
+      "side": 1,
+      "message": "From integration perspective this is fine, however multisite.py does not do anything, not even a print. Shall we comment/remove this section until the script does something?",
+      "revId": "e8532f7a286cb071463acacb0b95e2d9316687bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
