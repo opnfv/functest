@@ -158,6 +158,14 @@ tiers:
                 dependencies:
                     installer: 'compass'
                     scenario: '(odl)*(moon)'
+            -
+                name: multisite
+                criteria: 'status == "PASS"'
+                description: >-
+                    Test suite from kingbird
+                dependencies:
+                    installer: 'compass'
+                    scenario: 'multisite'
 
     -
         name: openstack
