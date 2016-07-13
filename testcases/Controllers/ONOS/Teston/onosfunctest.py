@@ -19,6 +19,8 @@ import os
 import re
 import time
 
+from neutronclient.v2_0 import client as neutronclient
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
@@ -186,16 +188,31 @@ def SfcTest():
     os.system(cmd)
 
 
-def SetSfcIp():
-    cmd = "openstack catalog show network | grep publicURL"
+def GetIp(type):
+    cmd = "openstack catalog show " + type + " | grep publicURL"
     cmd_output = os.popen(cmd).read()
     ip = re.search(r"\d+\.\d+\.\d+\.\d+", cmd_output).group()
-    cmd_onos_ip = "sed -i 's/onos_ip/" + ip + "/g' " + SFC_PATH + "Sfc_fun.py"
-    cmd_openstack_ip = "sed -i 's/openstack_ip/" + ip\
-                       + "/g' " + SFC_PATH + "Sfc_fun.py"
-    logger.info("Modify ip for SFC")
-    os.system(cmd_onos_ip)
-    os.system(cmd_openstack_ip)
+    return ip
+
+
+def Replace(before, after):
+    file = "Sfc_fun.py"
+    cmd = "sed -i 's/" + before + "/" + after + "/g' " + SFC_PATH + file
+    os.system(cmd)
+
+
+def SetSfcConf():
+    Replace("keystone_ip", GetIp("keystone"))
+    Replace("neutron_ip", GetIp("neutron"))
+    Replace("nova_ip", GetIp("nova"))
+    Replace("glance_ip", GetIp("glance"))
+    pwd = os.environ['OS_PASSWORD']
+    Replace("console", pwd)
+    creds_neutron = openstack_utils.get_credentials("neutron")
+    neutron_client = neutronclient.Client(**creds_neutron)
+    ext_net = openstack_utils.get_external_net(neutron_client)
+    Replace("admin_floating_net", ext_net)
+    logger.info("Modify configuration for SFC")
 
 
 def main():
@@ -212,7 +229,7 @@ def main():
     RunScript("FUNCvirNetNBL3")
     if DEPLOY_SCENARIO == "os-onos-sfc-ha":
         CreateImage()
-        SetSfcIp()
+        SetSfcConf()
         SfcTest()
     try:
         logger.debug("Push ONOS results into DB")
