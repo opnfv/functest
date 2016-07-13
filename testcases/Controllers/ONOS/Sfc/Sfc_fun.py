@@ -20,7 +20,10 @@ class Sfc_fun:
         self.token_id = 0
         self.net_id = 0
         self.image_id = 0
-        self.os_hostname = 'openstack_ip'
+        self.keystone_hostname = 'keystone_ip'
+        self.neutron_hostname = 'neutron_ip'
+        self.nova_hostname = 'nova_ip'
+        self.glance_hostname = 'glance_ip'
         self.onos_hostname = 'onos_ip'
         # Network variables #######
         self.netname = "test_nw"
@@ -98,9 +101,9 @@ class Sfc_fun:
 
     def getToken(self):
         """Get the keystone token value from Openstack ."""
-        url = 'http://'+self.os_hostname+':5000/'+self.osver+'/tokens'
+        url = 'http://'+self.keystone_hostname+':5000/'+self.osver+'/tokens'
         data = '{"auth": {"tenantName": "admin",  "passwordCredentials":\
-                { "username": "admin", "password": "admin"}}}'
+                { "username": "admin", "password": "console"}}}'
         headers = {"Accept": "application/json"}
         response = requests.post(url, headers=headers,  data=data)
         if (response.status_code == 200):
@@ -123,7 +126,7 @@ class Sfc_fun:
             Dicdata['admin_state_up'] = self.admin_state_up
         Dicdata = {'network': Dicdata}
         data = json.dumps(Dicdata,  indent=4)
-        url = 'http://'+self.os_hostname+':9696/'+self.osver+'/networks'
+        url = 'http://'+self.neutron_hostname+':9696/'+self.osver+'/networks'
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.post(url, headers=headers,  data=data)
@@ -152,7 +155,7 @@ class Sfc_fun:
 
         Dicdata = {'subnet': Dicdata}
         data = json.dumps(Dicdata, indent=4)
-        url = 'http://'+self.os_hostname+':9696/'+self.osver+'/subnets'
+        url = 'http://'+self.neutron_hostname+':9696/'+self.osver+'/subnets'
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.post(url, headers=headers,  data=data)
@@ -179,12 +182,12 @@ class Sfc_fun:
                 Dicdata['admin_state_up'] = self.admin_state_up
             if self.security_groups != '':
                 Dicdata['security_groups'] = self.security_groups
-            if self.port_security_enabled != '':
-                Dicdata['port_security_enabled'] = self.port_security_enabled
+            # if self.port_security_enabled != '':
+            #    Dicdata['port_security_enabled'] = self.port_security_enabled
 
             Dicdata = {'port': Dicdata}
             data = json.dumps(Dicdata, indent=4)
-            url = 'http://'+self.os_hostname+':9696/'+self.osver+'/ports'
+            url = 'http://'+self.neutron_hostname+':9696/'+self.osver+'/ports'
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
             response = requests.post(url, headers=headers,  data=data)
@@ -204,7 +207,7 @@ class Sfc_fun:
 
     def createVm(self):
         """Creation of Instance, using  firewall image."""
-        url = 'http://'+self.os_hostname+':9292/v2/images?name=TestSfcVm'
+        url = 'http://'+self.glance_hostname+':9292/v2/images?name=TestSfcVm'
         headers = {"Accept": "application/json", "Content-Type": "application/\
                     octet-stream",  "X-Auth-Token": self.token_id}
         response = requests.get(url, headers=headers)
@@ -237,7 +240,7 @@ class Sfc_fun:
             Dicdata = {'server': Dicdata}
             data = json.dumps(Dicdata, indent=4)
 
-            url = 'http://'+self.os_hostname+':8774/v2.1/'+self.tenant_id + \
+            url = 'http://'+self.nova_hostname+':8774/v2.1/'+self.tenant_id + \
                   '/servers'
             headers = {"Accept": "application/json", "Content-Type":
                        "application/json", "X-Auth-Token": self.token_id}
@@ -260,8 +263,8 @@ class Sfc_fun:
         """Checking the Status of the Instance."""
         time.sleep(10)
         for y in range(0, 3):
-            url = 'http://'+self.os_hostname + \
-                  ':8774/v2.1/servers/detail?name=vm'+str(y)
+            url = 'http://' + \
+                  self.nova_hostname+':8774/v2.1/servers/detail?name=vm'+str(y)
             headers = {"Accept": "application/json",  "X-Auth-Token":
                        self.token_id}
             response = requests.get(url, headers=headers)
@@ -297,7 +300,7 @@ class Sfc_fun:
             Dicdata = {'port_pair': Dicdata}
             data = json.dumps(Dicdata, indent=4)
 
-            url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+            url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
                 '/sfc/port_pairs'
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
@@ -313,7 +316,7 @@ class Sfc_fun:
     def getPortPair(self):
         """Query the Portpair id value."""
         for p in range(0, 1):
-            url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+            url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
                   '/sfc/port_pairs?name=PP1'
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
@@ -342,7 +345,7 @@ class Sfc_fun:
 
             Dicdata = {'port_pair_group': Dicdata}
             data = json.dumps(Dicdata, indent=4)
-            url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+            url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
                   '/sfc/port_pair_groups'
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
@@ -358,7 +361,7 @@ class Sfc_fun:
     def getPortGroup(self):
         """Query the PortGroup id."""
         for p in range(0, 1):
-            url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+            url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
                   '/sfc/port_pair_groups?name=PG'+str(p)
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
@@ -390,7 +393,7 @@ class Sfc_fun:
 
         Dicdata = {'flow_classifier': Dicdata}
         data = json.dumps(Dicdata, indent=4)
-        url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+        url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
               '/sfc/flow_classifiers'
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
@@ -420,7 +423,7 @@ class Sfc_fun:
 
         Dicdata = {'port_chain': Dicdata}
         data = json.dumps(Dicdata, indent=4)
-        url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+        url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
               '/sfc/port_chains'
         headers = {"Accept": "application/json",
                    "Content-Type": "application/json",
@@ -464,7 +467,8 @@ class Sfc_fun:
 
         Dicdata = {'router': Dicdata}
         data = json.dumps(Dicdata, indent=4)
-        url = 'http://'+self.os_hostname+':9696/'+self.osver+'/routers.json'
+        url = 'http://'+self.neutron_hostname+':9696/' + \
+            self.osver+'/routers.json'
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.post(url, headers=headers,  data=data)
@@ -481,7 +485,7 @@ class Sfc_fun:
 
     def attachInterface(self):
         """Attachment of instance ports to the Router."""
-        url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+        url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
               '/networks?name=admin_floating_net'
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
@@ -504,7 +508,7 @@ class Sfc_fun:
             Dicdata['subnet_id'] = self.subnetId
 
         data = json.dumps(Dicdata, indent=4)
-        url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+        url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
               '/routers/'+self.router_id+'/add_router_interface'
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
@@ -525,7 +529,7 @@ class Sfc_fun:
         Dicdata1 = {'external_gateway_info': Dicdata1}
         Dicdata1 = {'router': Dicdata1}
         data = json.dumps(Dicdata1, indent=4)
-        url = 'http://' + self.os_hostname+':9696/'+self.osver + \
+        url = 'http://' + self.neutron_hostname+':9696/'+self.osver + \
               '/routers/' + self.router_id
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
@@ -542,11 +546,10 @@ class Sfc_fun:
         """Attachment of Floating Ip to the Router."""
         for ip_num in range(0, 2):
             Dicdata = {}
-            if self.ip_pool != '':
-                Dicdata['pool'] = ""
+            Dicdata['pool'] = "admin_floating_net"
 
             data = json.dumps(Dicdata, indent=4)
-            url = 'http://'+self.os_hostname+':8774/v2.1/os-floating-ips'
+            url = 'http://'+self.nova_hostname+':8774/v2.1/os-floating-ips'
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
             response = requests.post(url, headers=headers,  data=data)
@@ -567,8 +570,8 @@ class Sfc_fun:
 
             Dicdata1 = {'addFloatingIp': Dicdata1}
             data = json.dumps(Dicdata1, indent=4)
-            url = 'http://'+self.os_hostname + \
-                  ':8774/v2.1/servers/'+self.vm[ip_num]+'/action'
+            url = 'http://' + self.nova_hostname + ':8774/v2.1/servers/' + \
+                  self.vm[ip_num]+'/action'
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
             response = requests.post(url, headers=headers,  data=data)
@@ -618,7 +621,7 @@ class Sfc_fun:
                 self.logger.info("\tPacket not received in Instance")
                 queue1.put("0")
 
-        def ping(ip, timeout=300):
+        def ping(ip, timeout=120):
             while True:
                 time.sleep(1)
                 self.logger.debug("Pinging %s. Waiting for response..." % ip)
@@ -635,7 +638,7 @@ class Sfc_fun:
         result0 = ping(self.vm_public_ip[0])
         result1 = ping(self.vm_public_ip[1])
         if result0 == 0 and result1 == 0:
-            time.sleep(300)
+            time.sleep(120)
             queue1 = Queue()
             p1 = Process(target=vm1,  args=(queue1, ))
             p1.start()
@@ -674,7 +677,7 @@ class Sfc_fun:
 
     def deletePortChain(self):
         """Deletion of PortChain."""
-        url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+        url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
               '/sfc/port_chains/'+self.PC_id
         headers = {"Accept": "application/json", "Content-Type":
                    "application/json", "X-Auth-Token": self.token_id}
@@ -688,7 +691,7 @@ class Sfc_fun:
 
     def deleteFlowClassifier(self):
         """Deletion of Flow Classifier."""
-        url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+        url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
               '/sfc/flow_classifiers/'+self.flow_class_if
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
@@ -703,7 +706,7 @@ class Sfc_fun:
     def deletePortGroup(self):
         """Deletion of PortGroup."""
         for p in range(0, 1):
-            url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+            url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
                   '/sfc/port_pair_groups/'+self.port_grp_id[p]
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
@@ -719,7 +722,7 @@ class Sfc_fun:
     def deletePortPair(self):
         """Deletion of Portpair."""
         for p in range(1,  2):
-            url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+            url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
                   '/sfc/port_pairs/'+self.port_pair_id[0]
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
@@ -735,7 +738,7 @@ class Sfc_fun:
         """Cleanup."""
         print ("\n\t\tDeleting the VMs")
         for y in range(0, 3):
-            url = 'http://'+self.os_hostname+':8774/v2.1/servers/'+self.vm[y]
+            url = 'http://'+self.nova_hostname+':8774/v2.1/servers/'+self.vm[y]
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
             response = requests.delete(url, headers=headers)
@@ -748,7 +751,7 @@ class Sfc_fun:
                 return(response.status_code)
         print ("\n\t\tDeletion of Ports")
         for x in range(self.i, self.numTerms):
-            url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+            url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
                   '/ports/'+self.port_num[x]
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
@@ -766,7 +769,7 @@ class Sfc_fun:
         Dicdata['external_gateway_info'] = {}
         Dicdata = {'router': Dicdata}
         data = json.dumps(Dicdata, indent=4)
-        url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+        url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
               '/routers/'+self.router_id
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
@@ -778,14 +781,14 @@ class Sfc_fun:
             if self.subnetId != '':
                 Dicdata1['subnet_id'] = self.subnetId
             data = json.dumps(Dicdata1, indent=4)
-            url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+            url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
                   '/routers/'+self.router_id + \
                   '/remove_router_interface.json'
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
             response = requests.put(url, headers=headers,  data=data)
             if (response.status_code == 200):
-                url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+                url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
                       '/routers/'+self.router_id
                 headers = {"Accept": "application/json",  "X-Auth-Token":
                            self.token_id}
@@ -802,7 +805,7 @@ class Sfc_fun:
             return(response.status_code)
 
         print ("\n\t\tDeletion of Network")
-        url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+        url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
               '/networks/'+self.net_id
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
@@ -816,7 +819,7 @@ class Sfc_fun:
 
         print ("\n\t\tDeletion of Floating ip")
         for ip_num in range(0, 2):
-            url = 'http://'+self.os_hostname+':9696/'+self.osver + \
+            url = 'http://'+self.neutron_hostname+':9696/'+self.osver + \
                   '/floatingips/'+self.vm_public_id[ip_num]
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}

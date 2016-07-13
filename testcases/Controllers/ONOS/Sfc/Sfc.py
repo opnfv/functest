@@ -18,9 +18,8 @@
 # TestCase 3 : Configure  SFC [Port pair,Port Group ,Flow classifer
 # TestCase 4 : Configure Port Chain and verify the flows are added.
 # TestCase 5 : Verify  traffic with VNF node.
-# TestCase 6 : Verify the Service Chain Statistics
-# TestCase 7 : Remove the Port Chain and Verify the traffic.
-# Testcase 8 : Cleanup
+# TestCase 6 : Remove the Port Chain and Verify the traffic.
+# Testcase 7 : Cleanup
 # ###########################################################################
 #
 import functest.utils.functest_logger as ft_logger
@@ -52,7 +51,7 @@ class Sfc:
     if (Sfc_obj.createSubnets() == 201):
         logger.info("\t\tCreation of Subnetwork is successfull")
     else:
-        logger.error("\t\t  :  Creation of Subnetwork is NOT successfull")
+        lo7ger.error("\t\t  :  Creation of Subnetwork is NOT successfull")
     print ("\n###########################################################\n")
     ########################################################################
     logger.info("Testcase 2 : Creation of 3 VNF Nodes and Attaching Ports")
@@ -141,42 +140,16 @@ class Sfc:
         logger.info("\t\tPortChain successfully Created")
     else:
         logger.error("\t\tPortChain NOT successfully Created")
+    print ("\n###########################################################\n")
     #########################################################################
-    logger.info("\t4.2 Verification of Flows Installed in OVS")
-    if (Sfc_obj.checkFlowAdded() == 200):
-        logger.info("\t\tFlows Installed successfully ")
-    else:
-        logger.error("\t\t  :  Flows NOT Installed successfully")
-
-    if (Sfc_obj.portChainDeviceMap() == 200):
-        logger.info("\t\t portChainDeviceMap successfully ")
-    else:
-        logger.error("\t\t:portChainDeviceMap NOT Installed successfully")
-
-    if (Sfc_obj.portChainSfMap() == 200):
-        logger.info("\t\tportChainSfMap successfully ")
-    else:
-        logger.error("\t\t  :  portChainSfMap NOT Installed successfully")
-    print ("\n############################################################n")
-    ########################################################################
     logger.info("\tTestCase 5 : Verify  traffic with VNF node.")
     if (Sfc_obj.loginToVM() == "1"):
         logger.info("\t\tSFC function Working")
     else:
         logger.error("\t\t  :  SFC function not working")
     print ("\n###########################################################\n")
-    logger.info("TestCase 6 : Verify the Service Chain Statistics")
-    if (Sfc_obj.portChainDeviceMap() == 200):
-        logger.info("\t\tportChainDeviceMap successfully ")
-    else:
-        logger.error("\t\t:portChainDeviceMap NOT Installed successfully")
-
-    if (Sfc_obj.portChainSfMap() == 200):
-        logger.info("\t\tportChainSfMap successfully ")
-    else:
-        logger.error("\t\t  :  portChainSfMap NOT Installed successfully")
-    print ("\n##########################################################\n")
-    logger.info("TestCase 7 : Remove the Port Chain and Verify the traffic")
+    #########################################################################
+    logger.info("TestCase 6 : Remove the Port Chain and Verify the traffic")
     if (Sfc_obj.deletePortChain() == 204):
         if (Sfc_obj.loginToVM() == "0"):
             logger.info("\t\tSFC function is removed Successfully")
@@ -201,7 +174,7 @@ class Sfc:
                      successfully")
     print ("\n###########################################################n")
     #######################################################################
-    logger.info("Testcase 8 : Cleanup")
+    logger.info("Testcase 7 : Cleanup")
     if (Sfc_obj.cleanup() == 204):
         logger.info("\t\tCleanUp is successfull")
     else:
