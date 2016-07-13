@@ -81,6 +81,7 @@ RUN git clone https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
 RUN git clone https://gerrit.opnfv.org/gerrit/copper ${repos_dir}/copper
 RUN git clone https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
 RUN git clone https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
+RUN git clone https://github.com/openstack/kingbird.git ${repos_dir}/kb/kingbird
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt
@@ -96,6 +97,7 @@ RUN curl -L https://get.rvm.io | bash -s stable
 
 RUN /bin/bash -c ". /home/opnfv/repos/functest/testcases/features/sfc/tacker_client_install.sh"
 RUN cd ${repos_dir}/bgpvpn && pip install .
+RUN cd ${repos_dir}/kb/kingbird && pip install -e .
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd /home/opnfv/repos/vims-test \
