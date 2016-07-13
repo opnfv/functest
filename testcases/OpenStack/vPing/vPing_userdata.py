@@ -21,16 +21,11 @@ import os
 import pprint
 import sys
 import time
-import yaml
-
-from novaclient import client as novaclient
-from neutronclient.v2_0 import client as neutronclient
-from keystoneclient.v2_0 import client as keystoneclient
-from glanceclient import client as glanceclient
-
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
-import functest.utils.openstack_utils as openstack_utils
+import functest.utils.openstack_utils as os_utils
+import yaml
+
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -90,7 +85,6 @@ SECGROUP_DESCR = functest_yaml.get("vping").get("vping_sg_descr")
 
 
 def pMsg(value):
-
     """pretty printing"""
     pp.pprint(value)
 
@@ -101,7 +95,7 @@ def waitVmActive(nova, vm):
     sleep_time = 3
     count = VM_BOOT_TIMEOUT / sleep_time
     while True:
-        status = openstack_utils.get_instance_status(nova, vm)
+        status = os_utils.get_instance_status(nova, vm)
         logger.debug("Status: %s" % status)
         if status == "ACTIVE":
             return True
@@ -121,7 +115,7 @@ def waitVmDeleted(nova, vm):
     sleep_time = 3
     count = VM_DELETE_TIMEOUT / sleep_time
     while True:
-        status = openstack_utils.get_instance_status(nova, vm)
+        status = os_utils.get_instance_status(nova, vm)
         if not status:
             return True
         elif count == 0:
@@ -135,15 +129,15 @@ def waitVmDeleted(nova, vm):
 
 
 def create_security_group(neutron_client):
-    sg_id = openstack_utils.get_security_group_id(neutron_client,
-                                                  SECGROUP_NAME)
+    sg_id = os_utils.get_security_group_id(neutron_client,
+                                           SECGROUP_NAME)
     if sg_id != '':
         logger.info("Using existing security group '%s'..." % SECGROUP_NAME)
     else:
         logger.info("Creating security group  '%s'..." % SECGROUP_NAME)
-        SECGROUP = openstack_utils.create_security_group(neutron_client,
-                                                         SECGROUP_NAME,
-                                                         SECGROUP_DESCR)
+        SECGROUP = os_utils.create_security_group(neutron_client,
+                                                  SECGROUP_NAME,
+                                                  SECGROUP_DESCR)
         if not SECGROUP:
             logger.error("Failed to create the security group...")
             return False
@@ -155,22 +149,22 @@ def create_security_group(neutron_client):
 
         logger.debug("Adding ICMP rules in security group '%s'..."
                      % SECGROUP_NAME)
-        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id,
-                                                    'ingress', 'icmp'):
+        if not os_utils.create_secgroup_rule(neutron_client, sg_id,
+                                             'ingress', 'icmp'):
             logger.error("Failed to create the security group rule...")
             return False
 
         logger.debug("Adding SSH rules in security group '%s'..."
                      % SECGROUP_NAME)
-        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id,
-                                                    'ingress', 'tcp',
-                                                    '22', '22'):
+        if not os_utils.create_secgroup_rule(neutron_client, sg_id,
+                                             'ingress', 'tcp',
+                                             '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
 
-        if not openstack_utils.create_secgroup_rule(neutron_client, sg_id,
-                                                    'egress', 'tcp',
-                                                    '22', '22'):
+        if not os_utils.create_secgroup_rule(neutron_client, sg_id,
+                                             'egress', 'tcp',
+                                             '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
     return sg_id
@@ -178,23 +172,17 @@ def create_security_group(neutron_client):
 
 def main():
 
-    creds_nova = openstack_utils.get_credentials("nova")
-    nova_client = novaclient.Client('2', **creds_nova)
-    creds_neutron = openstack_utils.get_credentials("neutron")
-    neutron_client = neutronclient.Client(**creds_neutron)
-    creds_keystone = openstack_utils.get_credentials("keystone")
-    keystone_client = keystoneclient.Client(**creds_keystone)
-    glance_endpoint = keystone_client.service_catalog.url_for(
-        service_type='image', endpoint_type='publicURL')
-    glance_client = glanceclient.Client(1, glance_endpoint,
-                                        token=keystone_client.auth_token)
+    nova_client = os_utils.get_nova_client()
+    neutron_client = os_utils.get_neutron_client()
+    glance_client = os_utils.get_glance_client()
+
     EXIT_CODE = -1
 
     image_id = None
     flavor = None
 
     # Check if the given image exists
-    image_id = openstack_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
+    image_id = os_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
     if image_id != '':
         logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
         global image_exists
@@ -202,21 +190,21 @@ def main():
     else:
         logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                           GLANCE_IMAGE_PATH))
-        image_id = openstack_utils.create_glance_image(glance_client,
-                                                       GLANCE_IMAGE_NAME,
-                                                       GLANCE_IMAGE_PATH)
+        image_id = os_utils.create_glance_image(glance_client,
+                                                GLANCE_IMAGE_NAME,
+                                                GLANCE_IMAGE_PATH)
         if not image_id:
             logger.error("Failed to create a Glance image...")
             return(EXIT_CODE)
         logger.debug("Image '%s' with ID=%s created successfully."
                      % (GLANCE_IMAGE_NAME, image_id))
 
-    network_dic = openstack_utils.create_network_full(logger,
-                                                      neutron_client,
-                                                      PRIVATE_NET_NAME,
-                                                      PRIVATE_SUBNET_NAME,
-                                                      ROUTER_NAME,
-                                                      PRIVATE_SUBNET_CIDR)
+    network_dic = os_utils.create_network_full(logger,
+                                               neutron_client,
+                                               PRIVATE_NET_NAME,
+                                               PRIVATE_SUBNET_NAME,
+                                               ROUTER_NAME,
+                                               PRIVATE_SUBNET_CIDR)
     if not network_dic:
         logger.error(
             "There has been a problem when creating the neutron network")
@@ -270,7 +258,7 @@ def main():
     if not waitVmActive(nova_client, vm1):
 
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
-            NAME_VM_1, openstack_utils.get_instance_status(nova_client, vm1)))
+            NAME_VM_1, os_utils.get_instance_status(nova_client, vm1)))
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
@@ -305,7 +293,7 @@ def main():
 
     if not waitVmActive(nova_client, vm2):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
-            NAME_VM_2, openstack_utils.get_instance_status(nova_client, vm2)))
+            NAME_VM_2, os_utils.get_instance_status(nova_client, vm2)))
         return (EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_2)
