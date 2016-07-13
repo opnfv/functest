@@ -95,7 +95,7 @@ vIMS:
     cloudify:
         blueprint:
             url: https://github.com/boucherv-orange/cloudify-manager-blueprints.git
-            branch: "3.3-build"
+            branch: "3.3.1-build"
         requierments:
             ram_min: 3000
             os_image: centos_7
