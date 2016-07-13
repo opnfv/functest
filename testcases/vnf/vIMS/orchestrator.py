@@ -10,7 +10,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
-import subprocess
+import subprocess32 as subprocess
 import os
 import shutil
 import yaml
@@ -109,7 +109,7 @@ class orchestrator:
             script += ("cfy local create-requirements -o requirements.txt " +
                        "-p openstack-manager-blueprint.yaml; ")
             script += "pip install -r requirements.txt; "
-            script += ("timeout 1800 cfy bootstrap --install-plugins " +
+            script += ("cfy bootstrap --install-plugins " +
                        "-p openstack-manager-blueprint.yaml -i inputs.yaml; ")
             cmd = "/bin/bash -c '" + script + "'"
             error = execute_command(cmd, self.logger)
@@ -199,7 +199,7 @@ class orchestrator:
                 self.logger.error("Clearwater undeployment failed")
 
 
-def execute_command(cmd, logger):
+def execute_command(cmd, logger, timeout=1800):
     """
     Execute Linux command
     """
@@ -207,7 +207,8 @@ def execute_command(cmd, logger):
         logger.debug('Executing command : {}'.format(cmd))
     output_file = "output.txt"
     f = open(output_file, 'w+')
-    p = subprocess.call(cmd, shell=True, stdout=f, stderr=subprocess.STDOUT)
+    p = subprocess.call(cmd, shell=True, stdout=f,
+    stderr=subprocess.STDOUT, timeout=timeout)
     f.close()
     f = open(output_file, 'r')
     result = f.read()
