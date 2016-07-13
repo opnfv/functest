@@ -20,17 +20,10 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-""" logging configuration """
-
 import os
-
-from cinderclient import client as cinderclient
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-from keystoneclient.v2_0 import client as keystoneclient
-from neutronclient.v2_0 import client as neutronclient
-from novaclient import client as novaclient
 import yaml
 
 
@@ -143,21 +136,12 @@ def get_tenants(keystone_client):
 
 
 def main():
-    creds_nova = os_utils.get_credentials("nova")
-    nova_client = novaclient.Client('2', **creds_nova)
+    logger.info("Generating OpenStack snapshot...")
 
-    creds_neutron = os_utils.get_credentials("neutron")
-    neutron_client = neutronclient.Client(**creds_neutron)
-
-    creds_keystone = os_utils.get_credentials("keystone")
-    keystone_client = keystoneclient.Client(**creds_keystone)
-
-    creds_cinder = os_utils.get_credentials("cinder")
-    cinder_client = cinderclient.Client('1', creds_cinder['username'],
-                                        creds_cinder['api_key'],
-                                        creds_cinder['project_id'],
-                                        creds_cinder['auth_url'],
-                                        service_type="volume")
+    nova_client = os_utils.get_nova_client()
+    neutron_client = os_utils.get_neutron_client()
+    keystone_client = os_utils.get_keystone_client()
+    cinder_client = os_utils.get_cinder_client()
 
     if not os_utils.check_credentials():
         logger.error("Please source the openrc credentials and run the" +

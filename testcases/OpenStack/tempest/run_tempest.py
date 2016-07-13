@@ -13,6 +13,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
+import ConfigParser
 import argparse
 import os
 import re
@@ -20,16 +21,12 @@ import shutil
 import subprocess
 import sys
 import time
-import yaml
-import ConfigParser
-
-import keystoneclient.v2_0.client as ksclient
-from glanceclient import client as glanceclient
-from neutronclient.v2_0 import client as neutronclient
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+import yaml
+
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',
@@ -123,23 +120,24 @@ def get_info(file_result):
 
 
 def create_tempest_resources():
-    ks_creds = os_utils.get_credentials("keystone")
+
+    keystone_client = os_utils.get_keystone_client()
+    neutron_client = os_utils.get_neutron_client()
+    glance_client = os_utils.get_glance_client()
+
     logger.debug("Creating tenant and user for Tempest suite")
-    keystone = ksclient.Client(**ks_creds)
-    tenant_id = os_utils.create_tenant(keystone,
+    tenant_id = os_utils.create_tenant(keystone_client,
                                        TENANT_NAME,
                                        TENANT_DESCRIPTION)
     if tenant_id == '':
         logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
 
-    user_id = os_utils.create_user(keystone, USER_NAME, USER_PASSWORD,
+    user_id = os_utils.create_user(keystone_client, USER_NAME, USER_PASSWORD,
                                    None, tenant_id)
     if user_id == '':
         logger.error("Error : Failed to create %s user" % USER_NAME)
 
     logger.debug("Creating private network for Tempest suite")
-    creds_neutron = os_utils.get_credentials("neutron")
-    neutron_client = neutronclient.Client(**creds_neutron)
     network_dic = os_utils.create_network_full(logger,
                                                neutron_client,
                                                PRIVATE_NET_NAME,
@@ -159,10 +157,6 @@ def create_tempest_resources():
         exit(-1)
 
     logger.debug("Creating image for Tempest suite")
-    glance_endpoint = keystone.service_catalog.url_for(
-        service_type='image', endpoint_type='publicURL')
-    glance_client = glanceclient.Client(1, glance_endpoint,
-                                        token=keystone.auth_token)
     # Check if the given image exists
     image_id = os_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
     if image_id != '':
@@ -326,7 +320,7 @@ def run_tempest(OPTION):
         error_logs = ""
 
         for match in re.findall('(.*?)[. ]*FAILED', output):
-                error_logs += match
+            error_logs += match
 
         # Generate json results for DB
         json_results = {"timestart": time_start, "duration": dur_sec_int,

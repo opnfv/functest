@@ -14,6 +14,7 @@ import subprocess
 import sys
 import time
 
+from cinderclient import client as cinderclient
 from glanceclient import client as glanceclient
 from keystoneclient.v2_0 import client as keystoneclient
 from neutronclient.v2_0 import client as neutronclient
@@ -101,6 +102,15 @@ def get_keystone_client():
 def get_nova_client():
     creds_nova = get_credentials("nova")
     return novaclient.Client('2', **creds_nova)
+
+
+def get_cinder_client():
+    creds_cinder = get_credentials("cinder")
+    return cinderclient.Client('2', creds_cinder['username'],
+                               creds_cinder['api_key'],
+                               creds_cinder['project_id'],
+                               creds_cinder['auth_url'],
+                               service_type="volume")
 
 
 def get_neutron_client():
