@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_5331ed58",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-14T08:59:16Z",
+      "side": 1,
+      "message": "why ${repos_dir}/kb/kingbird and not ${repos_dir}/kingbird? Do you expect more repos in ${repos_dir}/kb ?",
+      "revId": "92228d4e3e23648d1f617d5e2a81dbe8f3dfa62a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
