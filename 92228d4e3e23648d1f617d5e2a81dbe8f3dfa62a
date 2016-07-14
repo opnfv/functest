@@ -16,6 +16,24 @@
       "revId": "92228d4e3e23648d1f617d5e2a81dbe8f3dfa62a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_33c8f121",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 306
+      },
+      "writtenOn": "2016-07-14T09:15:41Z",
+      "side": 1,
+      "message": "I translated from https://wiki.opnfv.org/display/multisite/Kingbird+integration?focusedCommentId\u003d6825593#comment-6825593 \n\nbut I think we can discard the kb directory as Dimitri Mazmanov replyed",
+      "parentUuid": "5a7ca5a3_5331ed58",
+      "revId": "92228d4e3e23648d1f617d5e2a81dbe8f3dfa62a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
