@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_33ea3110",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-14T07:08:24Z",
+      "side": 1,
+      "message": "can you please move this after line 100, where there is another pip install?",
+      "revId": "4ab01229db3e5b7172a082e126d6dd7129ddf92c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_f3f35908",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-14T07:08:24Z",
+      "side": 1,
+      "message": "move the pip install here please",
+      "revId": "4ab01229db3e5b7172a082e126d6dd7129ddf92c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
