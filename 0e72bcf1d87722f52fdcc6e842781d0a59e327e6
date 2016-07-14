@@ -22,6 +22,30 @@
       "revId": "0e72bcf1d87722f52fdcc6e842781d0a59e327e6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_935225dc",
+        "filename": "testcases/features/domino.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-14T07:33:06Z",
+      "side": 1,
+      "message": "It is in the domino repo, but the repo is not cloned...",
+      "parentUuid": "5a7ca5a3_f0126f61",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 41
+      },
+      "revId": "0e72bcf1d87722f52fdcc6e842781d0a59e327e6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
