@@ -85,7 +85,7 @@ tiers:
                     framework.
                 dependencies:
                     installer: ''
-                    scenario: 'skip'
+                    scenario: 'odl'
 
             -
                 name: onos
