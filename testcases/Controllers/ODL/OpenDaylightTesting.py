@@ -4,9 +4,10 @@ import argparse
 import fileinput
 import os
 import re
-from robot import run
 import shutil
 import sys
+import functest.utils.functest_logger as ft_logger
+from robot import run
 
 
 class ODLTestCases:
@@ -15,6 +16,7 @@ class ODLTestCases:
     odl_test_repo = repos + "odl_test/"
     neutron_suite_dir = odl_test_repo + "csit/suites/openstack/neutron/"
     basic_suite_dir = odl_test_repo + "csit/suites/integration/basic/"
+    logger = ft_logger.Logger("opendaylight").getLogger()
 
     @classmethod
     def copy_opnf_testcases(cls):
@@ -28,7 +30,8 @@ class ODLTestCases:
             try:
                 shutil.copy(f, cls.neutron_suite_dir)
             except IOError as e:
-                print "Cannot copy OPNFV's testcases to ODL directory", e
+                cls.logger.error(
+                    "Cannot copy OPNFV's testcases to ODL directory", e)
                 return False
         return True
 
@@ -36,7 +39,7 @@ class ODLTestCases:
     def set_robotframework_vars(cls, odlusername="admin", odlpassword="admin"):
         odl_variables_files = cls.odl_test_repo + 'csit/variables/Variables.py'
         try:
-            print cls.neutron_suite_dir + '__init__.robot'
+            cls.logger.debug(cls.neutron_suite_dir + '__init__.robot')
             for line in fileinput.input(odl_variables_files,
                                         inplace=True):
                 print re.sub("AUTH = .*",
@@ -45,7 +48,7 @@ class ODLTestCases:
                              line.rstrip())
             return True
         except Exception as e:
-            print "Cannot set ODL creds", e
+            cls.logger.error("Cannot set ODL creds", e)
             return False
 
     @classmethod
@@ -63,7 +66,7 @@ class ODLTestCases:
                          'PORT:' + kwargs['odlwebport'],
                          'RESTCONFPORT:' + kwargs['odlrestconfport']]
         except KeyError as e:
-            print "Cannot run ODL testcases. Please check", e
+            cls.logger.error("Cannot run ODL testcases. Please check", e)
             return False
         res_dir = '/home/opnfv/functest/results/odl/'
         if (cls.copy_opnf_testcases() and
@@ -72,10 +75,18 @@ class ODLTestCases:
                 os.makedirs(res_dir)
             except OSError:
                 pass
-            return run(*dirs, variable=variables,
-                       output=res_dir + 'output.xml',
-                       log=res_dir + 'log.html',
-                       report=res_dir + 'report.html')
+            stdout_file = res_dir + 'stdout.txt'
+            with open(stdout_file, 'w') as stdout:
+                result = run(*dirs, variable=variables,
+                             output=res_dir + 'output.xml',
+                             log=res_dir + 'log.html',
+                             report=res_dir + 'report.html',
+                             stdout=stdout)
+
+            with open(stdout_file, 'r') as stdout:
+                cls.logger.info("\n" + stdout.read())
+
+            return result
         else:
             return False
 
