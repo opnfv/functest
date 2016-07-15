@@ -38,7 +38,7 @@ def separator():
 
 
 def remove_instances(nova_client, default_instances):
-    logger.info("Removing Nova instances...")
+    logger.debug("Removing Nova instances...")
     instances = os_utils.get_instances(nova_client)
     if instances is None or len(instances) == 0:
         logger.debug("No instances found.")
@@ -73,7 +73,7 @@ def remove_instances(nova_client, default_instances):
 
 
 def remove_images(nova_client, default_images):
-    logger.info("Removing Glance images...")
+    logger.debug("Removing Glance images...")
     images = os_utils.get_images(nova_client)
     if images is None or len(images) == 0:
         logger.debug("No images found.")
@@ -97,7 +97,7 @@ def remove_images(nova_client, default_images):
 
 
 def remove_volumes(cinder_client, default_volumes):
-    logger.info("Removing Cinder volumes...")
+    logger.debug("Removing Cinder volumes...")
     volumes = os_utils.get_volumes(cinder_client)
     if volumes is None or len(volumes) == 0:
         logger.debug("No volumes found.")
@@ -126,7 +126,7 @@ def remove_volumes(cinder_client, default_volumes):
 
 
 def remove_floatingips(nova_client, default_floatingips):
-    logger.info("Removing floating IPs...")
+    logger.debug("Removing floating IPs...")
     floatingips = os_utils.get_floating_ips(nova_client)
     if floatingips is None or len(floatingips) == 0:
         logger.debug("No floating IPs found.")
@@ -162,7 +162,7 @@ def remove_floatingips(nova_client, default_floatingips):
 
 
 def remove_networks(neutron_client, default_networks, default_routers):
-    logger.info("Removing Neutron objects")
+    logger.debug("Removing Neutron objects")
     network_ids = []
     networks = os_utils.get_network_list(neutron_client)
     if networks is None:
@@ -215,8 +215,8 @@ def remove_ports(neutron_client, ports, network_ids):
             try:
                 subnet_id = port['fixed_ips'][0]['subnet_id']
             except:
-                logger.info("  > WARNING: Port %s does not contain 'fixed_ips'"
-                            % port_id)
+                logger.debug("  > WARNING: Port %s does not contain 'fixed_ips'"
+                             % port_id)
                 print port
             router_id = port['device_id']
             if len(port['fixed_ips']) == 0 and router_id == '':
@@ -284,7 +284,7 @@ def remove_routers(neutron_client, routers, default_routers):
 
 
 def remove_security_groups(neutron_client, default_security_groups):
-    logger.info("Removing Security groups...")
+    logger.debug("Removing Security groups...")
     secgroups = os_utils.get_security_groups(neutron_client)
     if secgroups is None or len(secgroups) == 0:
         logger.debug("No security groups found.")
@@ -307,7 +307,7 @@ def remove_security_groups(neutron_client, default_security_groups):
 
 
 def remove_users(keystone_client, default_users):
-    logger.info("Removing Users...")
+    logger.debug("Removing Users...")
     users = os_utils.get_users(keystone_client)
     if users is None:
         logger.debug("There are no users in the deployment. ")
@@ -330,7 +330,7 @@ def remove_users(keystone_client, default_users):
 
 
 def remove_tenants(keystone_client, default_tenants):
-    logger.info("Removing Tenants...")
+    logger.debug("Removing Tenants...")
     tenants = os_utils.get_tenants(keystone_client)
     if tenants is None:
         logger.debug("There are no tenants in the deployment. ")
