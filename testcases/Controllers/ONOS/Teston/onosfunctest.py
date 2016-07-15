@@ -227,10 +227,6 @@ def main():
         SetOnosIp()
     RunScript("FUNCvirNetNB")
     RunScript("FUNCvirNetNBL3")
-    if DEPLOY_SCENARIO == "os-onos-sfc-ha":
-        CreateImage()
-        SetSfcConf()
-        SfcTest()
     try:
         logger.debug("Push ONOS results into DB")
         # TODO check path result for the file
@@ -257,6 +253,11 @@ def main():
 
     except:
         logger.error("Error pushing results into Database")
+
+    if DEPLOY_SCENARIO == "os-onos-sfc-ha":
+        CreateImage()
+        SetSfcConf()
+        SfcTest()
 
     # CleanOnosTest()
 

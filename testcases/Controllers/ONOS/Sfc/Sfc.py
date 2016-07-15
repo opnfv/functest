@@ -22,7 +22,10 @@
 # Testcase 7 : Cleanup
 # ###########################################################################
 #
+
 import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as functest_utils
+import time
 from Sfc_fun import Sfc_fun
 
 
@@ -30,6 +33,9 @@ class Sfc:
     """Script to Test the SFC scenarios in ONOS."""
     logger = ft_logger.Logger("sfc").getLogger()
     Sfc_obj = Sfc_fun()
+    start_time = time.time()
+    stop_time = start_time
+    status = "PASS"
     print("################################################################")
     print("                    OPNFV SFC Script             ")
     print("################################################################")
@@ -39,18 +45,21 @@ class Sfc:
     if (Sfc_obj.getToken() == 200):
         logger.info("\t\tCreation of Token is successfull")
     else:
+        status = "FAIL"
         logger.error("\t\t  :  Creation of Token is NOT successfull")
     #########################################################################
     logger.info("\t1.2 Creation of Network")
     if (Sfc_obj.createNetworks() == 201):
         logger.info("\t\tCreation of network is successfull")
     else:
+        status = "FAIL"
         logger.error("\t\t  :  Creation of network is NOT successfull")
     #########################################################################
     logger.info("\t1.3 Creation of Subnetwork")
     if (Sfc_obj.createSubnets() == 201):
         logger.info("\t\tCreation of Subnetwork is successfull")
     else:
+        status = "FAIL"
         logger.error("\t\t  :  Creation of Subnetwork is NOT successfull")
     print ("\n###########################################################\n")
     ########################################################################
@@ -60,36 +69,42 @@ class Sfc:
     if (Sfc_obj.createPorts() == 201):
         logger.info("\t\tCreation of Port is successfull")
     else:
+        status = "FAIL"
         logger.error("\t\t  :  Creation of Port is NOT successfull")
     #########################################################################
     logger.info("\t2.2 Creation of VM-Compute-Node")
     if (Sfc_obj.createVm() == 202):
         logger.info("\t\tCreation of VM is successfull")
     else:
+        status = "FAIL"
         logger.error("\t\t  :  Creation of VM is NOT successfull")
     #########################################################################
     logger.info("\t2.3 Check VM Status")
     if (Sfc_obj.checkVmState() == 200):
         logger.info("\t\tVM are in active state")
     else:
+        status = "FAIL"
         logger.error("\t\t  :   VM is NOT Active")
     #########################################################################
     logger.info("\t\t2.4 Router Creation")
     if (Sfc_obj.createRouter() == 201):
         logger.info("\t\t Router Creation is Successful")
     else:
+        status = "FAIL"
         logger.error("\t\t  :   Router Creation is NOT Successful")
     #########################################################################
     logger.info("\t\t2.5 Attachement of Interface to VM")
     if (Sfc_obj.attachInterface() == 200):
         logger.info("\t\t Interface attached to VM")
     else:
+        status = "FAIL"
         logger.error("\t\t  :   Interface NOT attached to VM")
     #########################################################################
     logger.info("\t\t2.6 Attachement of FLoating Ip to VM")
     if (Sfc_obj.addFloatingIp() == 202):
         logger.info("\t\t Floating Ip attached to VM SUccessful")
     else:
+        status = "FAIL"
         logger.error("\t\t  :   Floating Ip NOT attached to VM ")
     print ("\n###########################################################\n")
     ########################################################################
@@ -100,6 +115,7 @@ class Sfc:
     if (Sfc_obj.createPortPair() == 201):
         logger.info("\t\tCreation of Port pair is successful")
     else:
+        status = "FAIL"
         logger.error("\t\t  :  Creation of Port pair is NOT successful")
 
     #########################################################################
@@ -107,6 +123,7 @@ class Sfc:
     if (Sfc_obj.getPortPair() == 200):
         logger.info("\t\tSuccessfully got Port Pair ID")
     else:
+        status = "FAIL"
         logger.error("\t\t  :  UnSuccessfully got Port Pair ID")
 
     #########################################################################
@@ -114,6 +131,7 @@ class Sfc:
     if (Sfc_obj.createPortGroup() == 201):
         logger.info("\t\tPort Pair Group successfully Created")
     else:
+        status = "FAIL"
         logger.error("\t\t  :  Port Pair Group NOT successfully Created")
 
     #########################################################################
@@ -122,6 +140,7 @@ class Sfc:
     if (Sfc_obj.getPortGroup() == 200):
         logger.info("\t\tPort Pair Group ID successfully received")
     else:
+        status = "FAIL"
         logger.error("\t\t  :  Port Pair Group ID NOT successfully received")
 
     #########################################################################
@@ -129,6 +148,7 @@ class Sfc:
     if (Sfc_obj.createFlowClassifier() == 201):
         logger.info("\t\tFlow Classifier successfully Created")
     else:
+        status = "FAIL"
         logger.error("\t\t  :  Flow Classifier NOT successfully Created")
     print ("\n###########################################################\n")
     ########################################################################
@@ -139,6 +159,7 @@ class Sfc:
     if (Sfc_obj.createPortChain() == 201):
         logger.info("\t\tPortChain successfully Created")
     else:
+        status = "FAIL"
         logger.error("\t\tPortChain NOT successfully Created")
     print ("\n###########################################################\n")
     #########################################################################
@@ -146,6 +167,7 @@ class Sfc:
     if (Sfc_obj.loginToVM() == "1"):
         logger.info("\t\tSFC function Working")
     else:
+        status = "FAIL"
         logger.error("\t\t  :  SFC function not working")
     print ("\n###########################################################\n")
     #########################################################################
@@ -154,6 +176,7 @@ class Sfc:
         if (Sfc_obj.loginToVM() == "0"):
             logger.info("\t\tSFC function is removed Successfully")
         else:
+            status = "FAIL"
             logger.error("\t\t:SFC function not Removed.Have some problem")
         if (Sfc_obj.deleteFlowClassifier() == 204):
             if (Sfc_obj.deletePortGroup() == 204):
@@ -161,15 +184,19 @@ class Sfc:
                     logger.info(
                         "\t\tSFC configuration is deleted successfully")
                 else:
+                    status = "FAIL"
                     logger.error("\t\t  :  Port pair configuration is NOT\
                                   deleted successfully")
             else:
+                status = "FAIL"
                 logger.error("\t\t  :  Port Group configuration is NOT \
                              deleted successfully")
         else:
+                status = "FAIL"
                 logger.error("\t\t  :  Flow classifier configuration is NOT \
                              deleted successfully")
     else:
+        status = "FAIL"
         logger.error("\t\t:PortChain configuration is NOT deleted \
                      successfully")
     print ("\n###########################################################n")
@@ -180,4 +207,23 @@ class Sfc:
     else:
         logger.error("\t\t  :  CleanUp is NOT successfull")
     print ("###############################################################")
+    logger.info("Summary :")
+    try:
+        logger.debug("Push ONOS SFC results into DB")
+        stop_time = time.time()
+
+        # ONOS SFC success criteria = all tests OK
+        duration = round(stop_time - start_time, 1)
+        logger.info("Result is " + status)
+        functest_utils.push_results_to_db("functest",
+                                          "onos_sfc",
+                                          logger,
+                                          start_time,
+                                          stop_time,
+                                          status,
+                                          details={'timestart': start_time,
+                                                   'duration': duration,
+                                                   'status': status})
+    except:
+        logger.error("Error pushing results into Database")
     print("############################END OF SCRIPT ######################")
