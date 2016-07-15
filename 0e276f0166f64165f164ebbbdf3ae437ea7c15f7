@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_a9256ec3",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-15T11:07:50Z",
+      "side": 1,
+      "message": "why stop time \u003d start time?",
+      "revId": "0e276f0166f64165f164ebbbdf3ae437ea7c15f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_0941025a",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-15T11:07:50Z",
+      "side": 1,
+      "message": "status \u003d \"FAIL\" here as well?",
+      "revId": "0e276f0166f64165f164ebbbdf3ae437ea7c15f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
