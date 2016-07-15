@@ -22,6 +22,30 @@
       "revId": "649151b1577ac2485c77a40e5fa3de02c1adb3fa",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_44c04150",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1452
+      },
+      "writtenOn": "2016-07-15T16:11:19Z",
+      "side": 1,
+      "message": "Indeed. ;; before domino is missing. It is there in my local folder, there should be an issue with the merge conflict when multisite added their lines of code.",
+      "parentUuid": "5a7ca5a3_c9f6aad7",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 17
+      },
+      "revId": "649151b1577ac2485c77a40e5fa3de02c1adb3fa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
