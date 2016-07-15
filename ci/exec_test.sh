@@ -116,7 +116,21 @@ function run_test(){
                 $clean_flag --sanity all $report
         ;;
         "bgpvpn")
-            python ${repos_dir}/sdnvpn/test/functest/run_tests.py
+            sdnvpn_repo_dir=${repos_dir}/sdnvpn/test/functest/
+
+            # Execute SDNVPN test cases
+            python ${sdnvpn_repo_dir}/run_tests.py $report
+
+            # Copy blacklist from sdnvpn repo to the proper place to execute functest
+            src=${sdnvpn_repo_dir}/tempest_blacklist.txt
+            dst=${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/custom_tests/blacklist.txt
+            cp $src $dst
+            # Execute tempest smoke with blacklist
+            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/run_tempest.py \
+                $clean_flag -s -m smoke $report
+            # Remove blacklist file
+            rm $dst
+
         ;;
         "onos")
             python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/onosfunctest.py
