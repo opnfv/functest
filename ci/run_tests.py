@@ -76,7 +76,8 @@ def run_test(test):
     print_separator("=")
     logger.debug("\n%s" % test)
 
-    generate_os_snapshot()
+    if CLEAN_FLAG:
+        generate_os_snapshot()
 
     flags = (" -t %s" % (test_name))
     if REPORT_FLAG:
