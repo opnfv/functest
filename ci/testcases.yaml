@@ -164,7 +164,7 @@ tiers:
                 description: >-
                     Test suite from kingbird
                 dependencies:
-                    installer: 'compass'
+                    installer: '(fuel)|(compass)'
                     scenario: 'multisite'
             -
                 name: domino
