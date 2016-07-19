@@ -621,7 +621,7 @@ class Sfc_fun:
                 self.logger.info("\tPacket not received in Instance")
                 queue1.put("0")
 
-        def ping(ip, timeout=120):
+        def ping(ip, timeout=300):
             while True:
                 time.sleep(1)
                 self.logger.debug("Pinging %s. Waiting for response..." % ip)
@@ -638,7 +638,7 @@ class Sfc_fun:
         result0 = ping(self.vm_public_ip[0])
         result1 = ping(self.vm_public_ip[1])
         if result0 == 0 and result1 == 0:
-            time.sleep(120)
+            time.sleep(300)
             queue1 = Queue()
             p1 = Process(target=vm1,  args=(queue1, ))
             p1.start()
