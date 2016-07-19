@@ -312,18 +312,35 @@ def run_tempest(OPTION):
     f_env = open(TEMPEST_RESULTS_DIR + "/environment.log", 'w+')
     f_env.write(header)
 
-    subprocess.call(cmd_line, shell=True, stdout=f_stdout, stderr=f_stderr)
+    # subprocess.call(cmd_line, shell=True, stdout=f_stdout, stderr=f_stderr)
+    p = subprocess.Popen(
+        cmd_line, shell=True,
+        stdout=subprocess.PIPE,
+        stderr=f_stderr,
+        bufsize=1)
+
+    with p.stdout:
+        for line in iter(p.stdout.readline, b''):
+            if re.search("\} tempest\.", line):
+                logger.info(line.replace('\n', ''))
+            f_stdout.write(line)
+    p.wait()
 
     f_stdout.close()
     f_stderr.close()
     f_env.close()
 
     cmd_line = "rally verify show"
-    ft_utils.execute_command(cmd_line, logger,
-                             exit_on_error=True, info=True)
+    output = ""
+    p = subprocess.Popen(
+        cmd_line, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    for line in p.stdout:
+        if re.search("Tests\:", line):
+            break
+        output += line
+    logger.info(output)
 
     cmd_line = "rally verify list"
-    logger.debug('Executing command : {}'.format(cmd_line))
     cmd = os.popen(cmd_line)
     output = (((cmd.read()).splitlines()[-2]).replace(" ", "")).split("|")
     # Format:

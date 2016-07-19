@@ -244,7 +244,8 @@ def execute_command(cmd, logger=None,
             print(msg_exec)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     while True:
-        line = p.stdout.readline().replace('\n', '')
+        output = p.stdout.readline()
+        line = output.replace('\n', '')
         if not line:
             break
         if logger:
