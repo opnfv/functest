@@ -176,7 +176,7 @@ class orchestrator:
                    dep_name + " --timeout 1800; ")
 
         cmd = "/bin/bash -c '" + script + "'"
-        error = execute_command(cmd, self.logger)
+        error = execute_command(cmd, self.logger, 2000)
         if error:
             return error
         if self.logger:
@@ -205,10 +205,18 @@ def execute_command(cmd, logger, timeout=1800):
     """
     if logger:
         logger.debug('Executing command : {}'.format(cmd))
+    timeout_exception = False
     output_file = "output.txt"
     f = open(output_file, 'w+')
-    p = subprocess.call(cmd, shell=True, stdout=f,
+    try:
+        p = subprocess.call(cmd, shell=True, stdout=f,
                         stderr=subprocess.STDOUT, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        timeout_exception = True
+        if logger:
+            logger.error("TIMEOUT when executing command %s" % cmd)
+        pass
+
     f.close()
     f = open(output_file, 'r')
     result = f.read()
@@ -217,7 +225,7 @@ def execute_command(cmd, logger, timeout=1800):
     if p == 0:
         return False
     else:
-        if logger:
+        if logger and not timeout_exception:
             logger.error("Error when executing command %s" % cmd)
         f = open(output_file, 'r')
         lines = f.readlines()
