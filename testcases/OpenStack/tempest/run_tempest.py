@@ -312,7 +312,19 @@ def run_tempest(OPTION):
     f_env = open(TEMPEST_RESULTS_DIR + "/environment.log", 'w+')
     f_env.write(header)
 
-    subprocess.call(cmd_line, shell=True, stdout=f_stdout, stderr=f_stderr)
+    # subprocess.call(cmd_line, shell=True, stdout=f_stdout, stderr=f_stderr)
+    p = subprocess.Popen(
+        cmd_line, shell=True,
+        stdout=subprocess.PIPE,
+        stderr=f_stderr,
+        bufsize=1)
+
+    with p.stdout:
+        for line in iter(p.stdout.readline, b''):
+            if re.search("\} tempest\.", line):
+                logger.info(line.replace('\n', ''))
+            f_stdout.write(line)
+    p.wait()
 
     f_stdout.close()
     f_stderr.close()
