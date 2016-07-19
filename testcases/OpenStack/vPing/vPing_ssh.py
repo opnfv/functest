@@ -43,7 +43,7 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("vping_ssh").getLogger()
 
-paramiko.util.log_to_file("/var/log/paramiko.log")
+# paramiko.util.log_to_file("/var/log/paramiko.log")
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
 if not os.path.exists(REPO_PATH):
@@ -195,7 +195,7 @@ def main():
                                                 GLANCE_IMAGE_PATH)
         if not image_id:
             logger.error("Failed to create a Glance image...")
-            return(EXIT_CODE)
+            exit(EXIT_CODE)
         logger.debug("Image '%s' with ID=%s created successfully."
                      % (GLANCE_IMAGE_NAME, image_id))
 
@@ -208,7 +208,7 @@ def main():
     if not network_dic:
         logger.error(
             "There has been a problem when creating the neutron network")
-        return(EXIT_CODE)
+        exit(EXIT_CODE)
 
     network_id = network_dic["net_id"]
 
@@ -222,7 +222,7 @@ def main():
         logger.error("Flavor '%s' not found." % FLAVOR)
         logger.info("Available flavors are: ")
         pMsg(nova_client.flavor.list())
-        return(EXIT_CODE)
+        exit(EXIT_CODE)
 
     # Deleting instances if they exist
     servers = nova_client.servers.list()
@@ -253,7 +253,7 @@ def main():
     if not waitVmActive(nova_client, vm1):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_1, os_utils.get_instance_status(nova_client, vm1)))
-        return (EXIT_CODE)
+        exit(EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
 
@@ -280,7 +280,7 @@ def main():
     if not waitVmActive(nova_client, vm2):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_2, os_utils.get_instance_status(nova_client, vm2)))
-        return (EXIT_CODE)
+        exit(EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_2)
 
@@ -295,14 +295,14 @@ def main():
 
     if floatip is None:
         logger.error("Cannot create floating IP.")
-        return (EXIT_CODE)
+        exit(EXIT_CODE)
     logger.info("Floating IP created: '%s'" % floatip)
 
     logger.info("Associating floating ip: '%s' to VM '%s' "
                 % (floatip, NAME_VM_2))
     if not os_utils.add_floating_ip(nova_client, vm2.id, floatip):
         logger.error("Cannot associate floating IP to VM.")
-        return (EXIT_CODE)
+        exit(EXIT_CODE)
 
     logger.info("Trying to establish SSH connection to %s..." % floatip)
     username = 'cirros'
@@ -341,7 +341,7 @@ def main():
         if "inet addr:" + cidr_first_octet in console_log and not got_ip:
             got_ip = True
             logger.debug("The instance '%s' succeeded to get the IP "
-                         "from the dhcp agent.")
+                         "from the dhcp agent." % NAME_VM_2)
 
         # if dhcp doesnt work,it shows "No lease, failing".The test will fail
         if "No lease, failing" in console_log and not nolease and not got_ip:
@@ -354,7 +354,7 @@ def main():
     if timeout == 0:  # 300 sec timeout (5 min)
         logger.error("Cannot establish connection to IP '%s'. Aborting"
                      % floatip)
-        return (EXIT_CODE)
+        exit(EXIT_CODE)
 
     scp = SCPClient(ssh.get_transport())
 
@@ -364,7 +364,7 @@ def main():
     except:
         logger.error("Cannot SCP the file '%s' to VM '%s'"
                      % (ping_script, floatip))
-        return (EXIT_CODE)
+        exit(EXIT_CODE)
 
     cmd = 'chmod 755 ~/ping.sh'
     (stdin, stdout, stderr) = ssh.exec_command(cmd)

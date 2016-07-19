@@ -195,7 +195,7 @@ def main():
                                                 GLANCE_IMAGE_PATH)
         if not image_id:
             logger.error("Failed to create a Glance image...")
-            return(EXIT_CODE)
+            exit(EXIT_CODE)
         logger.debug("Image '%s' with ID=%s created successfully."
                      % (GLANCE_IMAGE_NAME, image_id))
 
@@ -208,7 +208,7 @@ def main():
     if not network_dic:
         logger.error(
             "There has been a problem when creating the neutron network")
-        return(EXIT_CODE)
+        exit(EXIT_CODE)
     network_id = network_dic["net_id"]
 
     create_security_group(neutron_client)
@@ -259,7 +259,7 @@ def main():
 
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_1, os_utils.get_instance_status(nova_client, vm1)))
-        return (EXIT_CODE)
+        exit(EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
 
@@ -294,7 +294,7 @@ def main():
     if not waitVmActive(nova_client, vm2):
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
             NAME_VM_2, os_utils.get_instance_status(nova_client, vm2)))
-        return (EXIT_CODE)
+        exit(EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % NAME_VM_2)
 
