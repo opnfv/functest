@@ -146,6 +146,16 @@ ONOS:
         installer_master_username: 'root'
         installer_master_password: 'r00tme'
 
+multisite:
+    fuel_environment:
+        installer_username: 'root'
+        installer_password: 'r00tme'
+        multisite_controller_ip: '10.20.0.4'
+    compass_environment:
+        installer_username: 'root'
+        installer_password: 'root'
+        multisite_controller_ip: '10.1.0.50'
+
 promise:
     general:
         tenant_name: promise
