@@ -66,12 +66,16 @@ def parse_test(tests, details):
 def parse_suites(suites):
     data = {}
     details = []
-    try:
-        for suite in suites:
-            data['details'] = parse_test(suite['test'], details)
-    except TypeError:
-        # suites is not iterable
-        data['details'] = parse_test(suites['test'], details)
+    for suite in suites:
+        a = suite['suite']
+        if type(a) == list:
+            for b in a:
+                data['details'] = parse_test(b['test'], details)
+        else:
+            data['details'] = parse_test(a['test'], details)
+
+        # data['details'] = parse_test(suite['test'], details)
+    # suites is not iterable
     return data
 
 
