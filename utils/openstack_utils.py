@@ -146,9 +146,8 @@ def get_instance_status(nova_client, instance):
     try:
         instance = nova_client.servers.get(instance.id)
         return instance.status
-    except:
-        # logger.error("Error [get_instance_status(nova_client, '%s')]:" %
-        #        str(instance)), e
+    except Exception, e:
+        logger.error("Error [get_instance_status(nova_client)]: %s" % e)
         return None
 
 
@@ -588,8 +587,7 @@ def remove_gateway_router(neutron_client, router_id):
         return False
 
 
-def create_network_full(logger,
-                        neutron_client,
+def create_network_full(neutron_client,
                         net_name,
                         subnet_name,
                         router_name,
@@ -736,7 +734,7 @@ def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
         return False
 
 
-def create_security_group_full(logger, neutron_client,
+def create_security_group_full(neutron_client,
                                sg_name, sg_description):
     sg_id = get_security_group_id(neutron_client, sg_name)
     if sg_id != '':
@@ -835,7 +833,7 @@ def get_image_id(glance_client, image_name):
 
 
 def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
-                        container="bare", public=True, logger=None):
+                        container="bare", public=True):
     if not os.path.isfile(file_path):
         logger.error("Error: file %s does not exist." % file_path)
         return False

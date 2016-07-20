@@ -199,8 +199,7 @@ def main():
         logger.debug("Image '%s' with ID=%s created successfully."
                      % (GLANCE_IMAGE_NAME, image_id))
 
-    network_dic = os_utils.create_network_full(logger,
-                                               neutron_client,
+    network_dic = os_utils.create_network_full(neutron_client,
                                                PRIVATE_NET_NAME,
                                                PRIVATE_SUBNET_NAME,
                                                ROUTER_NAME,
