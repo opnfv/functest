@@ -26,9 +26,9 @@ import getopt
 import json
 import sys
 import time
-import xmltodict
 
 import functest.utils.functest_utils as functest_utils
+import xmltodict
 
 
 def usage():
@@ -66,12 +66,16 @@ def parse_test(tests, details):
 def parse_suites(suites):
     data = {}
     details = []
-    try:
-        for suite in suites:
-            data['details'] = parse_test(suite['test'], details)
-    except TypeError:
-        # suites is not iterable
-        data['details'] = parse_test(suites['test'], details)
+    for suite in suites:
+        a = suite['suite']
+        if type(a) == list:
+            for b in a:
+                data['details'] = parse_test(b['test'], details)
+        else:
+            data['details'] = parse_test(a['test'], details)
+
+        # data['details'] = parse_test(suite['test'], details)
+    # suites is not iterable
     return data
 
 
@@ -151,10 +155,8 @@ def main(argv):
                                           stop_time,
                                           status,
                                           data)
-
     except:
         print("Error pushing ODL results into DB '%s'" % sys.exc_info()[0])
-
 
 if __name__ == "__main__":
     main(sys.argv[1:])
