@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_e24ad826",
+        "filename": "ci/config_functest.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 770
+      },
+      "writtenOn": "2016-07-20T09:28:24Z",
+      "side": 1,
+      "message": "the king-bird installation script doesn\u0027t work in compass environment, so please add the CI in compass later after the intel pod works very well",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 44
+      },
+      "revId": "f25cf2f5d2d6d84cb4e072f3dc8bf23b8fd9488e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_823c4495",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 770
+      },
+      "writtenOn": "2016-07-20T09:28:24Z",
+      "side": 1,
+      "message": "the sync time should be longer in case of failure, for example 30 seconds or 50 seconds.",
+      "range": {
+        "startLine": 255,
+        "startChar": 50,
+        "endLine": 255,
+        "endChar": 52
+      },
+      "revId": "f25cf2f5d2d6d84cb4e072f3dc8bf23b8fd9488e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
