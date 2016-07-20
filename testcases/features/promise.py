@@ -14,16 +14,16 @@ import json
 import os
 import subprocess
 import time
-import yaml
-
-import keystoneclient.v2_0.client as ksclient
-import glanceclient.client as glclient
-import novaclient.client as nvclient
-from neutronclient.v2_0 import client as ntclient
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
+import glanceclient.client as glclient
+import keystoneclient.v2_0.client as ksclient
+from neutronclient.v2_0 import client as ntclient
+import novaclient.client as nvclient
+import yaml
+
 
 parser = argparse.ArgumentParser()
 
@@ -168,8 +168,7 @@ def main():
 
     neutron = ntclient.Client(**nt_creds)
 
-    network_dic = openstack_utils.create_network_full(logger,
-                                                      neutron,
+    network_dic = openstack_utils.create_network_full(neutron,
                                                       NET_NAME,
                                                       SUBNET_NAME,
                                                       ROUTER_NAME,

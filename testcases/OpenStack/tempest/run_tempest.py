@@ -138,8 +138,7 @@ def create_tempest_resources():
         logger.error("Error : Failed to create %s user" % USER_NAME)
 
     logger.debug("Creating private network for Tempest suite")
-    network_dic = os_utils.create_network_full(logger,
-                                               neutron_client,
+    network_dic = os_utils.create_network_full(neutron_client,
                                                PRIVATE_NET_NAME,
                                                PRIVATE_SUBNET_NAME,
                                                ROUTER_NAME,

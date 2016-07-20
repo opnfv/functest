@@ -425,8 +425,7 @@ def main():
         image_exists = True
 
     logger.debug("Creating network '%s'..." % PRIVATE_NET_NAME)
-    network_dict = os_utils.create_network_full(logger,
-                                                neutron_client,
+    network_dict = os_utils.create_network_full(neutron_client,
                                                 PRIVATE_NET_NAME,
                                                 PRIVATE_SUBNET_NAME,
                                                 ROUTER_NAME,

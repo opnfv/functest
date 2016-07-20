@@ -73,11 +73,9 @@ def main():
                                             IMAGE_PATH,
                                             disk=IMAGE_FORMAT,
                                             container="bare",
-                                            public=True,
-                                            logger=logger)
+                                            public=True)
 
-    network_dic = os_utils.create_network_full(logger,
-                                               neutron_client,
+    network_dic = os_utils.create_network_full(neutron_client,
                                                NET_NAME,
                                                SUBNET_NAME,
                                                ROUTER_NAME,
@@ -89,7 +87,7 @@ def main():
 
     network_id = network_dic["net_id"]
 
-    sg_id = os_utils.create_security_group_full(logger, neutron_client,
+    sg_id = os_utils.create_security_group_full(neutron_client,
                                                 SECGROUP_NAME, SECGROUP_DESCR)
 
     # boot INTANCE
