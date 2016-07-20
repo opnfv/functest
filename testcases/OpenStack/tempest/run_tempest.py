@@ -221,17 +221,36 @@ def configure_tempest_feature(deployment_dir, mode):
     config = ConfigParser.RawConfigParser()
     config.read(tempest_conf_file)
     if mode == 'feature_multisite':
-        config.set('service_available', 'kingbird', 'true')
-        cmd = "openstack endpoint show kingbird | grep publicurl |\
-               awk '{print $4}' | awk -F '/' '{print $3}'"
-        kingbird_endpoint_url = os.popen(cmd).read()
-        cmd = "openstack endpoint show kingbird | grep publicurl |\
-               awk '{print $4}' | awk -F '/' '{print $4}'"
-        kingbird_api_version = os.popen(cmd).read()
+        ssh_options = "-o UserKnownHostsFile=/dev/null\
+            -o StrictHostKeyChecking=no"
+        installer_type = os.getenv('INSTALLER_TYPE', 'Unknown')
+        installer_ip = os.getenv('INSTALLER_IP', 'Unknown')
+        installer_username = ft_utils.get_parameter_from_yaml(
+            "multisite."+installer_type+"_environment.installer_username")
+        installer_password = ft_utils.get_parameter_from_yaml(
+            "multisite."+installer_type+"_environment.installer_password")
+        multisite_controller_ip = ft_utils.get_parameter_from_yaml(
+            "multisite."+installer_type+"_environment.multisite_controller_ip")
+
+        cmd = '''sshpass -p %s ssh 2>/dev/null %s %s@%s \
+            "ssh %s 'source /opt/admin-openrc.sh;\
+            openstack endpoint show kingbird |grep publicurl'" 2>/dev/null'''\
+            % (
+            installer_password, ssh_options, installer_username,
+            installer_ip, multisite_controller_ip
+            )
+        publicurl = os.popen(cmd).read()
+        if publicurl == "":
+            logger.error('kingbird server abnormal!')
+            exit(-1)
+        output = publicurl.split("|")[2].split("/")
+        kingbird_api_version = output[3].strip()
+        kingbird_endpoint_url = output[0].strip()+"//"+output[2].strip()
         try:
             config.add_section("kingbird")
         except:
             logger.info('kingbird section exist')
+        config.set('service_available', 'kingbird', 'true')
         config.set('kingbird', 'endpoint_type', 'publicURL')
         config.set('kingbird', 'TIME_TO_SYNC', '20')
         config.set('kingbird', 'endpoint_url', kingbird_endpoint_url)
