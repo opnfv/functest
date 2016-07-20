@@ -26,9 +26,9 @@ import getopt
 import json
 import sys
 import time
-import xmltodict
 
 import functest.utils.functest_utils as functest_utils
+import xmltodict
 
 
 def usage():
@@ -64,14 +64,21 @@ def parse_test(tests, details):
 
 
 def parse_suites(suites):
+    myfile = open("suites.txt", "w")
+    myfile.write("%s" % suites)
+    myfile.close()
     data = {}
     details = []
-    try:
-        for suite in suites:
-            data['details'] = parse_test(suite['test'], details)
-    except TypeError:
-        # suites is not iterable
-        data['details'] = parse_test(suites['test'], details)
+    for suite in suites:
+        a = suite['suite']
+        if type(a) == list:
+            for b in a:
+                data['details'] = parse_test(b['test'], details)
+        else:
+            data['details'] = parse_test(a['test'], details)
+
+        #data['details'] = parse_test(suite['test'], details)
+    # suites is not iterable
     return data
 
 
@@ -103,57 +110,51 @@ def main(argv):
 
     if not all(x is not None for x in (xml_file, pod, installer, scenario)):
         usage()
-
     with open(xml_file, "r") as myfile:
         xml_input = myfile.read().replace('\n', '')
-
     # dictionary populated with data from xml file
     all_data = xmltodict.parse(xml_input)['robot']
 
-    try:
-        data = parse_suites(all_data['suite']['suite'])
-        data['description'] = all_data['suite']['@name']
-        data['version'] = all_data['@generator']
-        data['test_project'] = "functest"
-        data['case_name'] = "odl"
-        data['pod_name'] = pod
-        data['installer'] = installer
+    data = parse_suites(all_data['suite']['suite'])
+    data['description'] = all_data['suite']['@name']
+    data['version'] = all_data['@generator']
+    data['test_project'] = "functest"
+    data['case_name'] = "odl"
+    data['pod_name'] = pod
+    data['installer'] = installer
 
-        json.dumps(data, indent=4, separators=(',', ': '))
+    json.dumps(data, indent=4, separators=(',', ': '))
 
-        # example:
-        # python odlreport2db.py -x ~/Pictures/Perso/odl/output3.xml
-        #                        -i fuel
-        #                        -p opnfv-jump-2
-        #                        -s os-odl_l2-ha
+    # example:
+    # python odlreport2db.py -x ~/Pictures/Perso/odl/output3.xml
+    #                        -i fuel
+    #                        -p opnfv-jump-2
+    #                        -s os-odl_l2-ha
 
-        # success criteria for ODL = 100% of tests OK
-        status = "FAIL"
-        # TODO as part of the tests are executed before in the bash
-        # start and stoptime have no real meaning
-        start_time = time.time()
-        stop_time = start_time
-        tests_passed = 0
-        tests_failed = 0
-        for v in data['details']:
-            if v['test_status']['@status'] == "PASS":
-                tests_passed += 1
-            else:
-                tests_failed += 1
+    # success criteria for ODL = 100% of tests OK
+    status = "FAIL"
+    # TODO as part of the tests are executed before in the bash
+    # start and stoptime have no real meaning
+    start_time = time.time()
+    stop_time = start_time
+    tests_passed = 0
+    tests_failed = 0
+    for v in data['details']:
+        if v['test_status']['@status'] == "PASS":
+            tests_passed += 1
+        else:
+            tests_failed += 1
 
-        if (tests_failed < 1):
-            status = "PASS"
+    if (tests_failed < 1):
+        status = "PASS"
 
-        functest_utils.push_results_to_db(data['test_project'],
-                                          data['case_name'],
-                                          None,
-                                          start_time,
-                                          stop_time,
-                                          status,
-                                          data)
-
-    except:
-        print("Error pushing ODL results into DB '%s'" % sys.exc_info()[0])
+    functest_utils.push_results_to_db(data['test_project'],
+                                      data['case_name'],
+                                      None,
+                                      start_time,
+                                      stop_time,
+                                      status,
+                                      data)
 
 
 if __name__ == "__main__":
