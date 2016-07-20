@@ -34,7 +34,8 @@ logger = ft_logger.Logger("copper").getLogger()
 
 
 def main():
-    cmd = ('%s/tests/run.sh' % COPPER_REPO)
+    cmd = "%s/tests/run.sh %s/tests" % (COPPER_REPO, COPPER_REPO)
+
     start_time = time.time()
 
     ret = functest_utils.execute_command(cmd, logger, exit_on_error=False)
