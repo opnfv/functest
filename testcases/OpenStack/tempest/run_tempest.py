@@ -27,7 +27,6 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 import yaml
 
-
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',
          'telemetry', 'volume', 'custom', 'defcore', 'feature_multisite']
@@ -56,7 +55,6 @@ args = parser.parse_args()
 logger = ft_logger.Logger("run_tempest").getLogger()
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
-
 
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
@@ -120,7 +118,6 @@ def get_info(file_result):
 
 
 def create_tempest_resources():
-
     keystone_client = os_utils.get_keystone_client()
     neutron_client = os_utils.get_neutron_client()
     glance_client = os_utils.get_glance_client()
@@ -224,13 +221,62 @@ def configure_tempest_feature(deployment_dir, mode):
         config.set('service_available', 'kingbird', 'true')
         cmd = "openstack endpoint show kingbird | grep publicurl |\
                awk '{print $4}' | awk -F '/' '{print $3}'"
-        kingbird_endpoint_url = os.popen(cmd).read()
-        cmd = "openstack endpoint show kingbird | grep publicurl |\
-               awk '{print $4}' | awk -F '/' '{print $4}'"
         kingbird_api_version = os.popen(cmd).read()
+        if os.environ.get("INSTALLER_TYPE") == 'fuel':
+            # For MOS based setup, the service is accessible
+            # via bind host
+            kingbird_conf_path = "/etc/kingbird/kingbird.conf"
+            installer_type = os.getenv('INSTALLER_TYPE', 'Unknown')
+            installer_ip = os.getenv('INSTALLER_IP', 'Unknown')
+            installer_username = ft_utils.get_parameter_from_yaml(
+                "multisite." + installer_type +
+                "_environment.installer_username")
+            installer_password = ft_utils.get_parameter_from_yaml(
+                "multisite." + installer_type +
+                "_environment.installer_password")
+            multisite_controller_ip = ft_utils.get_parameter_from_yaml(
+                "multisite." + installer_type +
+                "_environment.multisite_controller_ip")
+
+            ssh_options = "-o UserKnownHostsFile=/dev/null -o \
+                StrictHostKeyChecking=no"
+
+            if installer_type is 'fuel':
+                # Get the controller IP from the fuel node
+                cmd = 'sshpass -p %s ssh 2>/dev/null %s %s@%s \
+                    \'fuel node --env 1| grep controller | grep "True\|  1" \
+                    | awk -F\| "{print \$5}"\'' % (installer_password,
+                                                   ssh_options,
+                                                   installer_username,
+                                                   installer_ip)
+                multisite_controller_ip = \
+                    "".join(os.popen(cmd).reawd().split())
+
+            # Login to controller and get bind host details
+            cmd = 'sshpass -p %s ssh 2>/dev/null  %s %s@%s "ssh %s \\" \
+                grep -e "^bind_" %s  \\""' % (installer_password,
+                                              ssh_options,
+                                              installer_username,
+                                              installer_ip,
+                                              multisite_controller_ip,
+                                              kingbird_conf_path)
+            bind_details = os.popen(cmd).read()
+            bind_details = "".join(bind_details.split())
+            # Extract port number from the bind details
+            bind_port = re.findall(r"\D(\d{4})", bind_details)[0]
+            # Extract ip address from the bind details
+            bind_host = re.findall(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}",
+                                   bind_details)[0]
+            kingbird_endpoint_url = "http://" + bind_host + ":" + bind_port + \
+                                    "/"
+        else:
+            cmd = "openstack endpoint show kingbird | grep publicurl |\
+                   awk '{print $4}' | awk -F '/' '{print $3}'"
+            kingbird_endpoint_url = os.popen(cmd).read()
+
         try:
             config.add_section("kingbird")
-        except:
+        except Exception:
             logger.info('kingbird section exist')
         config.set('kingbird', 'endpoint_type', 'publicURL')
         config.set('kingbird', 'TIME_TO_SYNC', '20')
