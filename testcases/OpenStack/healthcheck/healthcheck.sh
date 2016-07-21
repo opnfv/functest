@@ -162,9 +162,9 @@ neutron subnet-create --name ${subnet_2} --allocation-pool start=10.7.0.2,end=10
 debug "subnet '${subnet_2}' created."
 
 info "3. Create Routers..."
-neutron router-create ${router_1}
+neutron router-create --ha False ${router_1}
 debug "router '${router_1}' created."
-neutron router-create ${router_2}
+neutron router-create --ha False ${router_2}
 debug "router '${router_2}' created."
 
 neutron router-gateway-set ${router_1} ${ext_net_id}
