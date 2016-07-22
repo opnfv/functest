@@ -12,7 +12,7 @@ import argparse
 import os
 import re
 import sys
-
+import functest.ci.test as generate_report
 import functest.ci.tier_builder as tb
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
@@ -43,6 +43,7 @@ FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
 EXEC_SCRIPT = ("%sci/exec_test.sh" % FUNCTEST_REPO)
 CLEAN_FLAG = True
 REPORT_FLAG = False
+EXECUTED_TEST_CASES = []
 
 
 def print_separator(str, count=45):
@@ -135,8 +136,10 @@ def run_all(tiers):
 
     logger.info("Tests to be executed:%s" % summary)
 
-    for tier in tiers_to_run:
-        run_tier(tier)
+    #for tier in tiers_to_run:
+    #    run_tier(tier)
+
+    generate_report(tiers_to_run)
 
 
 def main():
