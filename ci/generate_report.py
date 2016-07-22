@@ -1,0 +1,113 @@
+import json
+import os
+import urllib2
+import functest.utils.functest_logger as ft_logger
+
+
+COL_1_LEN = 25
+COL_2_LEN = 15
+COL_3_LEN = 12
+COL_4_LEN = 10
+COL_5_LEN = 75
+
+# If we run from CI (Jenkins) we will push the results to the DB
+# and then we can print the url to the specific test result
+IS_CI_RUN = False
+BUILD_TAG = None
+
+logger = ft_logger.Logger("generate_report").getLogger()
+
+
+def init(tiers_to_run):
+    test_cases_arr = []
+    for tier in tiers_to_run:
+        for test in tier.get_tests():
+            test_cases_arr.append({'test_name': test.get_name(),
+                                   'tier_name': tier.get_name(),
+                                   'result': 'Not executed',
+                                   'duration': '0',
+                                   'url': ''})
+    return test_cases_arr
+
+
+def get_results_from_db():
+    url = 'http://testresults.opnfv.org/test/api/v1/results?build_tag=' + \
+        BUILD_TAG
+    logger.debug("Query to rest api: %s" % url)
+    data = json.load(urllib2.urlopen(url))
+    return data['results']
+
+
+def get_data(test, results):
+    test_result = test['result']
+    url = ''
+    for test_db in results:
+        logger.debug("DB RESULTS, testname: %s" % test_db['case_name'])
+        if test['test_name'] in test_db['case_name']:
+            id = test_db['_id']
+            url = 'http://testresults.opnfv.org/test/api/v1/results/' + id
+            test_result = test_db['criteria']
+            logger.debug(test_db['case_name'] + " : " + test_db['criteria'])
+
+    return {"url": url, "result": test_result}
+
+
+def print_line(w1, w2, w3, w4, w5=''):
+    str = ('| ' + w1.ljust(COL_1_LEN - 1) +
+           '| ' + w2.ljust(COL_2_LEN - 1) +
+           '| ' + w3.ljust(COL_3_LEN - 1) +
+           '| ' + w4.ljust(COL_4_LEN - 1))
+    if IS_CI_RUN:
+        str += ('| ' + w5.ljust(COL_5_LEN - 1))
+    str += '|\n'
+    return str
+
+
+def print_separator(char="="):
+    str = ('+' + char * COL_1_LEN +
+           '+' + char * COL_2_LEN +
+           '+' + char * COL_3_LEN +
+           '+' + char * COL_4_LEN)
+    if IS_CI_RUN:
+        str += ('+' + char * COL_5_LEN)
+    str += '+\n'
+    return str
+
+
+def main(args):
+    global BUILD_TAG, IS_CI_RUN
+    executed_test_cases = args
+
+    BUILD_TAG = os.getenv("BUILD_TAG")
+    if BUILD_TAG is not None:
+        IS_CI_RUN = True
+
+    if IS_CI_RUN:
+        results = get_results_from_db()
+        for test in executed_test_cases:
+            data = get_data(test, results)
+            logger.debug(test['test_name'])
+            test.update({"url": data['url'],
+                         "result": data['result']})
+
+    str = ''
+    str += print_separator('=')
+    if IS_CI_RUN:
+        str += print_line('TEST CASE', 'TIER', 'DURATION', 'RESULT', 'URL')
+    else:
+        str += print_line('TEST CASE', 'TIER', 'DURATION', 'RESULT')
+    str += print_separator('=')
+    for test in executed_test_cases:
+        str += print_line(test['test_name'],
+                          test['tier_name'],
+                          test['duration'],
+                          test['result'],
+                          test['url'])
+        str += print_separator('-')
+
+    logger.info("\n\n\n%s" % str)
+
+
+if __name__ == '__main__':
+    import sys
+    main(sys.argv[1:])
