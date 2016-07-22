@@ -117,7 +117,7 @@ def testcase_show(testname):
 
 @testcase.command('run', help="Executes a test case.")
 @click.argument('testname', type=click.STRING, required=True)
-@click.option('-n', '--noclean',  is_flag=True, default=False,
+@click.option('-n', '--noclean', is_flag=True, default=False,
               help='The created openstack resources by the test'
               'will not be cleaned after the execution.')
 def testcase_run(testname, noclean):
@@ -143,7 +143,7 @@ def tier_gettests(tiername):
 
 @tier.command('run', help="Executes all the tests within a tier.")
 @click.argument('tiername', type=click.STRING, required=True)
-@click.option('-n', '--noclean',  is_flag=True, default=False,
+@click.option('-n', '--noclean', is_flag=True, default=False,
               help='The created openstack resources by the tests'
               'will not be cleaned after the execution.')
 def tier_run(tiername, noclean):

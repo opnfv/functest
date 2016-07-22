@@ -9,6 +9,7 @@
 #
 
 import argparse
+import datetime
 import os
 import re
 import sys
@@ -70,6 +71,7 @@ def cleanup():
 
 
 def run_test(test):
+    start = datetime.datetime.now()
     test_name = test.get_name()
     logger.info("\n")  # blank line
     print_separator("=")
@@ -98,6 +100,10 @@ def run_test(test):
 
     if CLEAN_FLAG:
         cleanup()
+    end = datetime.datetime.now()
+    duration = (end - start).seconds
+    str = ("%02d:%02d" % divmod(duration, 60))
+    logger.info("Test execution time: %s" % str)
 
 
 def run_tier(tier):
