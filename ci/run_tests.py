@@ -57,7 +57,7 @@ def source_rc_file():
     if not os.path.isfile(rc_file):
         logger.error("RC file %s does not exist..." % rc_file)
         sys.exit(1)
-    logger.info("Sourcing the OpenStack RC file...")
+    logger.debug("Sourcing the OpenStack RC file...")
     os_utils.source_credentials(rc_file)
 
 
@@ -100,11 +100,16 @@ def run_test(test):
 
 
 def run_tier(tier):
+    tests = tier.get_tests()
+    if tests is None or len(tests) == 0:
+        logger.info("There are no supported test cases in this tier "
+                    "for the given scenario")
+        return 0
     print_separator("#")
     logger.info("Running tier '%s'" % tier.get_name())
     print_separator("#")
     logger.debug("\n%s" % tier)
-    for test in tier.get_tests():
+    for test in tests:
         run_test(test)
 
 
@@ -119,14 +124,14 @@ def run_all(tiers):
     tiers_to_run = []
 
     for tier in tiers.get_tiers():
-        if re.search(CI_LOOP, tier.get_ci_loop()) is not None:
+        if (len(tier.get_tests()) != 0 and
+                re.search(CI_LOOP, tier.get_ci_loop()) is not None):
             tiers_to_run.append(tier)
-            summary += ("\n    - %s. %s:\n\t   %s"
-                        % (tier.get_order(),
-                           tier.get_name(),
+            summary += ("\n    - %s:\n\t   %s"
+                        % (tier.get_name(),
                            tier.get_test_names()))
 
-    logger.info("Tiers to be executed:%s" % summary)
+    logger.info("Tests to be executed:%s" % summary)
 
     for tier in tiers_to_run:
         run_tier(tier)
