@@ -18,6 +18,7 @@ import re
 import shutil
 import socket
 import subprocess
+import subprocess
 import sys
 import urllib2
 
@@ -243,11 +244,8 @@ def execute_command(cmd, logger=None,
         else:
             print(msg_exec)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-    while True:
-        output = p.stdout.readline()
-        line = output.replace('\n', '')
-        if not line:
-            break
+    for line in iter(p.stdout.readline, b''):
+        line = line.replace('\n', '')
         if logger:
             if info:
                 logger.info(line)
@@ -255,8 +253,9 @@ def execute_command(cmd, logger=None,
                 logger.debug(line)
         else:
             print line
-    p.communicate()
-    if p.returncode != 0:
+    p.stdout.close()
+    returncode = p.wait()
+    if returncode != 0:
         if verbose:
             if logger:
                 logger.error(error_msg)
@@ -265,7 +264,7 @@ def execute_command(cmd, logger=None,
         if exit_on_error:
             sys.exit(1)
 
-    return p.returncode
+    return returncode
 
 
 def get_deployment_dir(logger=None):
