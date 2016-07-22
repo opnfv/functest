@@ -13,7 +13,7 @@ import datetime
 import os
 import re
 import sys
-
+import functest.ci.generate_report as generate_report
 import functest.ci.tier_builder as tb
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
@@ -44,6 +44,7 @@ FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
 EXEC_SCRIPT = ("%sci/exec_test.sh" % FUNCTEST_REPO)
 CLEAN_FLAG = True
 REPORT_FLAG = False
+EXECUTED_TEST_CASES = []
 
 # This will be the return code of this script. If any of the tests fails,
 # this variable will change to -1
@@ -74,8 +75,9 @@ def cleanup():
     os_clean.main()
 
 
-def run_test(test):
-    global OVERALL_RESULT
+def run_test(test, tier_name):
+    global OVERALL_RESULT, EXECUTED_TEST_CASES
+    result_str = "PASS"
     start = datetime.datetime.now()
     test_name = test.get_name()
     logger.info("\n")  # blank line
@@ -101,21 +103,28 @@ def run_test(test):
 
     end = datetime.datetime.now()
     duration = (end - start).seconds
-    str = ("%02d:%02d" % divmod(duration, 60))
-    logger.info("Test execution time: %s" % str)
+    duration_str = ("%02d:%02d" % divmod(duration, 60))
+    logger.info("Test execution time: %s" % duration_str)
 
     if result != 0:
         logger.error("The test case '%s' failed. " % test_name)
         OVERALL_RESULT = -1
+        result_str = "FAIL"
 
         if test.get_blocking():
             logger.info("This test case is blocking. Exiting...")
             sys.exit(OVERALL_RESULT)
 
+    EXECUTED_TEST_CASES.append({"test_name": test_name,
+                                "tier_name": tier_name,
+                                "result": result_str,
+                                "duration": duration_str})
+
     return result
 
 
 def run_tier(tier):
+    tier_name = tier.get_name()
     tests = tier.get_tests()
     if tests is None or len(tests) == 0:
         logger.info("There are no supported test cases in this tier "
@@ -123,14 +132,19 @@ def run_tier(tier):
         return 0
     logger.info("\n\n")  # blank line
     print_separator("#")
-    logger.info("Running tier '%s'" % tier.get_name())
+    logger.info("Running tier '%s'" % tier_name)
     print_separator("#")
     logger.debug("\n%s" % tier)
     for test in tests:
-        run_test(test)
+        res = run_test(test, tier_name)
+        if res != 0:
+            return res
+
+    return 0
 
 
 def run_all(tiers):
+    global EXECUTED_TEST_CASES
     summary = ""
     BUILD_TAG = os.getenv('BUILD_TAG')
     if BUILD_TAG is not None and re.search("daily", BUILD_TAG) is not None:
@@ -150,8 +164,13 @@ def run_all(tiers):
 
     logger.info("Tests to be executed:%s" % summary)
 
-    for tier in tiers_to_run:
-        run_tier(tier)
+    # for tier in tiers_to_run:
+    #    res = run_tier(tier)
+    #    if res != 0:
+    #        return res
+    generate_report.main([tiers_to_run, EXECUTED_TEST_CASES])
+
+    return 0
 
 
 def main():
@@ -173,13 +192,13 @@ def main():
     if args.test:
         source_rc_file()
         if _tiers.get_tier(args.test):
-            run_tier(_tiers.get_tier(args.test))
+            res = run_tier(_tiers.get_tier(args.test))
 
         elif _tiers.get_test(args.test):
-            run_test(_tiers.get_test(args.test))
+            res = run_test(_tiers.get_test(args.test))
 
         elif args.test == "all":
-            run_all(_tiers)
+            res = run_all(_tiers)
 
         else:
             logger.error("Unknown test case or tier '%s', or not supported by "
