@@ -92,18 +92,20 @@ def run_test(test):
     result = ft_utils.execute_command(cmd, logger, exit_on_error=False)
 
     if result != 0:
-        logger.error("The test case '%s' failed. Cleaning and exiting."
-                     % test_name)
-        if CLEAN_FLAG:
-            cleanup()
-        sys.exit(1)
+        logger.error("The test case '%s' failed. " % test_name)
 
-    if CLEAN_FLAG:
-        cleanup()
     end = datetime.datetime.now()
     duration = (end - start).seconds
     str = ("%02d:%02d" % divmod(duration, 60))
     logger.info("Test execution time: %s" % str)
+
+    if CLEAN_FLAG:
+        cleanup()
+
+    if result != 0 and test.get_blocking():
+        sys.exit(-1)
+
+    return result
 
 
 def run_tier(tier):
