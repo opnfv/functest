@@ -7,12 +7,12 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import yaml
-
 import tier_handler as th
+import yaml
 
 
 class TierBuilder:
+
     def __init__(self, ci_installer, ci_scenario, testcases_file):
         self.ci_installer = ci_installer
         self.ci_scenario = ci_scenario
@@ -49,6 +49,7 @@ class TierBuilder:
                 testcase = th.TestCase(name=dic_testcase['name'],
                                        dependency=dep,
                                        criteria=dic_testcase['criteria'],
+                                       blocking=dic_testcase['blocking'],
                                        description=dic_testcase['description'])
                 if testcase.is_compatible(self.ci_installer, self.ci_scenario):
                     tier.add_test(testcase)

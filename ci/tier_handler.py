@@ -29,6 +29,7 @@ def split_text(text, max_len):
 
 
 class Tier:
+
     def __init__(self, name, order, ci_loop, description=""):
         self.tests_array = []
         self.name = name
@@ -102,11 +103,13 @@ class Tier:
 
 
 class TestCase:
-    def __init__(self, name, dependency, criteria, description=""):
+
+    def __init__(self, name, dependency, criteria, blocking, description=""):
         self.name = name
         self.dependency = dependency
         self.description = description
         self.criteria = criteria
+        self.blocking = blocking
 
     def is_compatible(self, ci_installer, ci_scenario):
         try:
@@ -127,6 +130,9 @@ class TestCase:
 
     def get_criteria(self):
         return self.criteria
+
+    def get_blocking(self):
+        return self.blocking
 
     def __str__(self):
         lines = split_text(self.description, LINE_LENGTH - 6)
@@ -151,6 +157,7 @@ class TestCase:
 
 
 class Dependency:
+
     def __init__(self, installer, scenario):
         self.installer = installer
         self.scenario = scenario
