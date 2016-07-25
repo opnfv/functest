@@ -45,6 +45,10 @@ EXEC_SCRIPT = ("%sci/exec_test.sh" % FUNCTEST_REPO)
 CLEAN_FLAG = True
 REPORT_FLAG = False
 
+# This will be the return code of this script. If any of the tests fails,
+# this variable will change to -1
+OVERALL_RESULT = 0
+
 
 def print_separator(str, count=45):
     line = ""
@@ -71,6 +75,7 @@ def cleanup():
 
 
 def run_test(test):
+    global OVERALL_RESULT
     start = datetime.datetime.now()
     test_name = test.get_name()
     logger.info("\n")  # blank line
@@ -91,19 +96,23 @@ def run_test(test):
 
     result = ft_utils.execute_command(cmd, logger, exit_on_error=False)
 
-    if result != 0:
-        logger.error("The test case '%s' failed. Cleaning and exiting."
-                     % test_name)
-        if CLEAN_FLAG:
-            cleanup()
-        sys.exit(1)
-
     if CLEAN_FLAG:
         cleanup()
+
     end = datetime.datetime.now()
     duration = (end - start).seconds
     str = ("%02d:%02d" % divmod(duration, 60))
     logger.info("Test execution time: %s" % str)
+
+    if result != 0:
+        logger.error("The test case '%s' failed. " % test_name)
+        OVERALL_RESULT = -1
+
+        if test.get_blocking():
+            logger.info("This test case is blocking. Exiting...")
+            sys.exit(OVERALL_RESULT)
+
+    return result
 
 
 def run_tier(tier):
@@ -181,7 +190,7 @@ def main():
     else:
         run_all(_tiers)
 
-    sys.exit(0)
+    sys.exit(OVERALL_RESULT)
 
 if __name__ == '__main__':
     main()
