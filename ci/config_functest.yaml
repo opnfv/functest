@@ -36,7 +36,7 @@ general:
         image_name: Cirros-0.3.4
         image_file_name:  cirros-0.3.4-x86_64-disk.img
         image_disk_format:  qcow2
-        
+
         # Private network for functest. Will be created by config_functest.py
         neutron_private_net_name: functest-net
         neutron_private_subnet_name: functest-subnet
@@ -45,6 +45,9 @@ general:
         neutron_private_subnet_end: 192.168.120.254
         neutron_private_subnet_gateway: 192.168.120.254
         neutron_router_name: functest-router
+
+healthcheck:
+    disk_image: /home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img
 
 vping:
     ping_timeout:   200

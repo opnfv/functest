@@ -18,6 +18,7 @@ set -e
 
 #Redirect all the output (stdout) to a log file and show only possible errors.
 LOG_FILE=/home/opnfv/functest/results/healthcheck.log
+YAML_FILE=${CONFIG_FUNCTEST_YAML}
 echo "">$LOG_FILE
 exec 1<>$LOG_FILE
 
@@ -54,6 +55,8 @@ user_3="opnfv_user3"
 user_4="opnfv_user4"
 user_5="opnfv_user5"
 user_6="opnfv_user6"
+kernel_image="opnfv-kernel-img"
+ramdisk_image="opnfv-ramdisk-img"
 image_1="opnfv-image1"
 image_2="opnfv-image2"
 volume_1="opnfv-volume1"
@@ -116,10 +119,39 @@ info "...Keystone OK!"
 #################################
 info "Testing Glance API..."
 #################################
-image=/home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img
-glance image-create --name ${image_1} --disk-format qcow2 --container-format bare < ${image}
+disk_img=$(cat ${YAML_FILE} | shyaml get-value healthcheck.disk_image 2> /dev/null || true)
+kernel_img=$(cat ${YAML_FILE} | shyaml get-value healthcheck.kernel_image 2> /dev/null || true)
+ramdisk_img=$(cat ${YAML_FILE} | shyaml get-value healthcheck.ramdisk_image 2> /dev/null || true)
+extra_properties=$(cat ${YAML_FILE} | shyaml get-value healthcheck.extra_properties 2> /dev/null || true)
+
+# Test if we need to create a 3part image
+if [ "X$kernel_img" != "X" ]
+then
+    img_id=$(glance image-create --name ${kernel_image} --disk-format aki --container-format bare < ${kernel_img} | awk '$2 == "id" { print $4 }')
+    extra_opts="--property kernel_id=${img_id}"
+
+    if [ "X$ramdisk_img" != "X" ]
+    then
+        img_id=$(glance image-create --name ${ramdisk_image} --disk-format ari --container-format bare < ${ramdisk_img} | awk '$2 == "id" { print $4 }')
+        extra_opts="$extra_opts --property ramdisk_id=${img_id}"
+    fi
+fi
+
+if [ "X$extra_properties" != "X" ]
+then
+    keys=$(cat ${YAML_FILE} | shyaml keys healthcheck.extra_properties)
+    for key in ${keys}
+    do
+        value=$(cat ${YAML_FILE} | shyaml get-value healthcheck.extra_properties.${key})
+        extra_opts="$extra_opts --property ${key}=\"${value}\""
+    done
+fi
+
+debug "image extra_properties=${extra_properties}"
+
+eval glance image-create --name ${image_1} --disk-format qcow2 --container-format bare ${extra_opts} < ${disk_img}
 debug "image '${image_1}' created."
-glance image-create --name ${image_2} --disk-format qcow2 --container-format bare < ${image}
+eval glance image-create --name ${image_2} --disk-format qcow2 --container-format bare ${extra_opts} < ${disk_img}
 debug "image '${image_2}' created."
 info "... Glance OK!"
 
