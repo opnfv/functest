@@ -46,6 +46,9 @@ general:
         neutron_private_subnet_gateway: 192.168.120.254
         neutron_router_name: functest-router
 
+healthcheck:
+    disk_image: /home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img
+
 vping:
     ping_timeout:   200
     vm_flavor: m1.small # adapt to your environment
