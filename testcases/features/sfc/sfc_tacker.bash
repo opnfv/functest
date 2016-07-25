@@ -1,5 +1,5 @@
 #!/bin/bash
-BASEDIR=`pwd`
+BASEDIR=`dirname $0`
 
 #import VNF descriptor
 tacker vnfd-create --vnfd-file ${BASEDIR}/test-vnfd1.yaml

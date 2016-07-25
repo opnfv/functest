@@ -18,7 +18,7 @@ parser.add_argument("-r", "--report",
 args = parser.parse_args()
 
 """ logging configuration """
-logger = ft_logger.Logger("create_instance_and_ip").getLogger()
+logger = ft_logger.Logger("ODL_SFC").getLogger()
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
 HOME = os.environ['HOME'] + "/"
@@ -81,7 +81,7 @@ def main():
     iptable_command1 = ("sshpass -p r00tme ssh root@10.20.0.2 ssh"
                         " " + ip + " iptables -P INPUT ACCEPT ")
     iptable_command2 = ("sshpass -p r00tme ssh root@10.20.0.2 ssh"
-                        " " + ip + "iptables -t nat -P INPUT ACCEPT ")
+                        " " + ip + " iptables -t nat -P INPUT ACCEPT ")
 
     subprocess.call(iptable_command1, shell=True)
     subprocess.call(iptable_command2, shell=True)
@@ -269,13 +269,12 @@ def main():
 
     # WRITE THE CORRECT WAY TO DO LOGGING
     i = 0
-    logger.info("First output: %s" % stdout.readlines())
     if "timed out" in stdout.readlines()[0]:
         logger.info('\033[92m' + "TEST 1 [PASSED] "
                     "==> SSH BLOCKED" + '\033[0m')
         i = i + 1
     else:
-        logger.debug('\033[91m' + "TEST 1 [FAILED] "
+        logger.error('\033[91m' + "TEST 1 [FAILED] "
                      "==> SSH NOT BLOCKED" + '\033[0m')
         return
 
@@ -296,7 +295,7 @@ def main():
                     "==> HTTP WORKS" + '\033[0m')
         i = i + 1
     else:
-        logger.debug('\033[91m' + "TEST 2 [FAILED] "
+        logger.error('\033[91m' + "TEST 2 [FAILED] "
                      "==> HTTP BLOCKED" + '\033[0m')
         return
 
@@ -323,7 +322,7 @@ def main():
                     "==> HTTP BLOCKED" + '\033[0m')
         i = i + 1
     else:
-        logger.debug('\033[91m' + "TEST 3 [FAILED] "
+        logger.error('\033[91m' + "TEST 3 [FAILED] "
                      "==> HTTP NOT BLOCKED" + '\033[0m')
         return
 
@@ -344,7 +343,7 @@ def main():
                     "==> SSH WORKS" + '\033[0m')
         i = i + 1
     else:
-        logger.debug('\033[91m' + "TEST 4 [FAILED] "
+        logger.error('\033[91m' + "TEST 4 [FAILED] "
                      "==> SSH BLOCKED" + '\033[0m')
         return
 
