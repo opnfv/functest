@@ -36,7 +36,7 @@ tiers:
                     over a private network.
                 dependencies:
                     installer: ''
-                    scenario: '^((?!bgpvpn).)*$'
+                    scenario: '^((?!bgpvpn|odl_l3).)*$'
 
             -
                 name: vping_userdata
