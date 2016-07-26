@@ -515,7 +515,7 @@ def main():
     # Evaluation of the success criteria
     status = "FAIL"
     # for Rally we decided that the overall success rate must be above 90%
-    if total_success >= 90:
+    if float(total_success) >= 90:
         status = "PASS"
 
     if args.sanity:
