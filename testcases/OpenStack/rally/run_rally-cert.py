@@ -285,7 +285,6 @@ def run_task(test_name):
     global SUMMARY
     logger.info('Starting test scenario "{}" ...'.format(test_name))
     start_time = time.time()
-    stop_time = start_time
 
     task_file = '{}task.yaml'.format(RALLY_DIR)
     if not os.path.exists(task_file):
@@ -381,7 +380,6 @@ def main():
     cinder_client = os_utils.get_cinder_client()
 
     start_time = time.time()
-    stop_time = start_time
 
     # configure script
     if not (args.test_name in tests):
