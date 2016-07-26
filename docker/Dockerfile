@@ -70,7 +70,7 @@ RUN git config --global http.sslVerify false
 RUN git clone https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
 RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
 RUN git clone https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
-RUN git clone -b 0.3.3 https://github.com/openstack/rally.git ${repos_dir}/rally
+RUN git clone -b 0.5.0 https://github.com/openstack/rally.git ${repos_dir}/rally
 RUN git clone https://github.com/openstack/tempest.git ${repos_dir}/tempest
 RUN git clone https://git.opendaylight.org/gerrit/p/integration/test.git ${repos_dir}/odl_test
 RUN git clone -b stable https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
