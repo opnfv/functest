@@ -229,6 +229,7 @@ def main():
         logger.debug("Problems assigning floating IP to SFs")
 
     logger.debug("Floating IPs for SFs: %s..." % ips)
+
     # SSH TO START THE VXLAN_TOOL ON SF1
     logger.info("Configuring the SFs")
     try:
@@ -242,6 +243,15 @@ def main():
         time.sleep(6)
         # timeout -= 1
 
+    try:
+        (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
+        if "vxlan_tool.py" in stdout.readlines()[0]:
+            logger.debug("HTTP firewall started")
+        else:
+            logger.error("HTTP firewall not started")
+    except:
+        logger.error("vxlan_tool not started in SF1")
+
     # SSH TO START THE VXLAN_TOOL ON SF2
     try:
         ssh.connect(ips[1], username="root",
@@ -253,6 +263,15 @@ def main():
         logger.debug("Waiting for %s..." % ips[1])
         time.sleep(6)
         # timeout -= 1
+
+    try:
+        (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
+        if "vxlan_tool.py" in stdout.readlines()[0]:
+            logger.debug("SSH firewall started")
+        else:
+            logger.error("SSH firewall not started")
+    except:
+        logger.error("vxlan_tool not started in SF2")
 
     # SSH TO EXECUTE cmd_client
 
