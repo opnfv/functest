@@ -120,8 +120,10 @@ def testcase_show(testname):
 @click.option('-n', '--noclean', is_flag=True, default=False,
               help='The created openstack resources by the test'
               'will not be cleaned after the execution.')
-def testcase_run(testname, noclean):
-    _testcase.run(testname, noclean)
+@click.option('-r', '--report', is_flag=True, default=False,
+              help='Push results to database.')
+def testcase_run(testname, noclean, report):
+    _testcase.run(testname, noclean, report)
 
 
 @tier.command('list', help="Lists the available tiers.")

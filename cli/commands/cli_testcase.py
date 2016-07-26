@@ -51,17 +51,17 @@ class CliTestcase:
 
         click.echo(description)
 
-    def run(self, testname, noclean=False):
+    def run(self, testname, noclean=False, report=False):
         if testname == 'vacation':
             vacation.main()
         elif not os.path.isfile(ENV_FILE):
             click.echo("Functest environment is not ready. "
                        "Run first 'functest env prepare'")
         else:
+            cmd = "python /home/opnfv/repos/functest/ci/run_tests.py"
             if noclean:
-                cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py "
-                       "-n -t %s" % testname)
-            else:
-                cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py "
-                       "-t %s" % testname)
+                cmd += " -n"
+            if report:
+                cmd += " -r"
+            cmd += " -t %s" % testname
             ft_utils.execute_command(cmd)
