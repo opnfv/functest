@@ -189,6 +189,15 @@ tiers:
                 dependencies:
                     installer: 'joid'
                     scenario: ''
+            -
+                name: odl-sfc
+                criteria: 'status == "PASS"'
+                blocking: false
+                description: >-
+                    Test suite for odl-sfc to test two chains and two SFs
+                dependencies:
+                    installer: 'fuel'
+                    scenario: 'odl_l2-sfc'
     -
         name: openstack
         order: 4

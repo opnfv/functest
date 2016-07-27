@@ -166,6 +166,9 @@ function run_test(){
         "domino")
             python ${FUNCTEST_REPO_DIR}/testcases/features/domino.py
         ;;
+        "odl-sfc")
+            python ${FUNCTEST_REPO_DIR}/testcases/features/sfc/sfc.py
+        ;;
         *)
             echo "The test case '${test_name}' does not exist."
             exit 1
