@@ -16,11 +16,12 @@
 #
 
 import os
+import sys
 import time
-import yaml
-
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
+import yaml
+
 
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
@@ -38,11 +39,11 @@ def main():
 
     start_time = time.time()
 
-    ret = functest_utils.execute_command(cmd, logger, exit_on_error=False)
+    ret_val = functest_utils.execute_command(cmd, logger, exit_on_error=False)
 
     stop_time = time.time()
     duration = round(stop_time - start_time, 1)
-    if ret == 0:
+    if ret_val == 0:
         logger.info("COPPER PASSED")
         test_status = 'PASS'
     else:
@@ -76,6 +77,10 @@ def main():
                                       stop_time,
                                       details['status'],
                                       details)
+    if ret_val != 0:
+        sys.exit(-1)
+
+    sys.exit(0)
 
 if __name__ == '__main__':
     main()
