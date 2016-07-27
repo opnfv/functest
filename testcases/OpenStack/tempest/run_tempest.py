@@ -400,23 +400,41 @@ def run_tempest(OPTION):
     dur_sec_int = int(round(dur_sec_float, 0))
     dur_sec_int = dur_sec_int + 60 * dur_min
     stop_time = time.time()
+
+    status = "FAIL"
+    try:
+        diff = (int(num_tests) - int(num_failures))
+        success_rate = 100 * diff / int(num_tests)
+    except:
+        success_rate = 0
+
+    # For Tempest we assume that the success rate is above 90%
+    if "smoke" in args.mode:
+        case_name = "tempest_smoke_serial"
+        # Note criteria hardcoded...TODO read it from testcases.yaml
+        success_criteria = 100
+        if success_rate >= success_criteria:
+            status = "PASS"
+        else:
+            logger.info("Tempest success rate: %s%%. The success criteria to "
+                        "pass this test is %s%%. Marking the test as FAILED." %
+                        (success_rate, success_criteria))
+    else:
+        case_name = "tempest_full_parallel"
+        # Note criteria hardcoded...TODO read it from testcases.yaml
+        success_criteria = 80
+        if success_rate >= success_criteria:
+            status = "PASS"
+        else:
+            logger.info("Tempest success rate: %s%%. The success criteria to "
+                        "pass this test is %s%%. Marking the test as FAILED." %
+                        (success_rate, success_criteria))
+
     # Push results in payload of testcase
     if args.report:
-        logger.debug("Pushing tempest results into DB...")
-        # Note criteria hardcoded...TODO move to testcase.yaml
-        status = "FAIL"
-        try:
-            diff = (int(num_tests) - int(num_failures))
-            success_rate = 100 * diff / int(num_tests)
-        except:
-            success_rate = 0
-
-        # For Tempest we assume that the success rate is above 90%
-        if success_rate >= 90:
-            status = "PASS"
-
         # add the test in error in the details sections
         # should be possible to do it during the test
+        logger.debug("Pushing tempest results into DB...")
         with open(TEMPEST_RESULTS_DIR + "/tempest.log", 'r') as myfile:
             output = myfile.read()
         error_logs = ""
@@ -430,10 +448,6 @@ def run_tempest(OPTION):
                         "errors": error_logs}
         logger.info("Results: " + str(json_results))
         # split Tempest smoke and full
-        if "smoke" in args.mode:
-            case_name = "tempest_smoke_serial"
-        else:
-            case_name = "tempest_full_parallel"
 
         try:
             ft_utils.push_results_to_db("functest",
@@ -446,6 +460,11 @@ def run_tempest(OPTION):
         except:
             logger.error("Error pushing results into Database '%s'"
                          % sys.exc_info()[0])
+
+    if status == "PASS":
+        return 0
+    else:
+        return -1
 
 
 def main():
@@ -470,7 +489,11 @@ def main():
     if args.serial:
         MODE += " --concur 1"
 
-    run_tempest(MODE)
+    ret_val = run_tempest(MODE)
+    if ret_val != 0:
+        sys.exit(-1)
+
+    sys.exit(0)
 
 
 if __name__ == '__main__':
