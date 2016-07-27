@@ -233,9 +233,6 @@ def configure_tempest_feature(deployment_dir, mode):
             installer_password = ft_utils.get_parameter_from_yaml(
                 "multisite." + installer_type +
                 "_environment.installer_password")
-            multisite_controller_ip = ft_utils.get_parameter_from_yaml(
-                "multisite." + installer_type +
-                "_environment.multisite_controller_ip")
 
             ssh_options = "-o UserKnownHostsFile=/dev/null -o \
                 StrictHostKeyChecking=no"
@@ -248,7 +245,7 @@ def configure_tempest_feature(deployment_dir, mode):
                                                    installer_username,
                                                    installer_ip)
             multisite_controller_ip = \
-                "".join(os.popen(cmd).reawd().split())
+                "".join(os.popen(cmd).read().split())
 
             # Login to controller and get bind host details
             cmd = 'sshpass -p %s ssh 2>/dev/null  %s %s@%s "ssh %s \\" \
@@ -308,7 +305,7 @@ def generate_test_list(deployment_dir, mode):
         if mode == 'smoke':
             testr_mode = "smoke"
         elif mode == 'feature_multisite':
-            testr_mode = " | grep kingbird "
+            testr_mode = " | grep -i kingbird "
         elif mode == 'full':
             testr_mode = ""
         else:
