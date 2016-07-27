@@ -22,7 +22,6 @@ import time
 import yaml
 
 import keystoneclient.v2_0.client as ksclient
-import glanceclient.client as glclient
 import novaclient.client as nvclient
 from neutronclient.v2_0 import client as ntclient
 
@@ -316,9 +315,7 @@ def main():
     })
 
     logger.info("Upload some OS images if it doesn't exist")
-    glance_endpoint = keystone.service_catalog.url_for(
-        service_type='image', endpoint_type='publicURL')
-    glance = glclient.Client(1, glance_endpoint, token=keystone.auth_token)
+    glance = os_utils.get_glance_client()
 
     for img in IMAGES.keys():
         image_name = IMAGES[img]['image_name']
@@ -347,36 +344,25 @@ def main():
             "init",
             "Failed to update security group quota for tenant " + TENANT_NAME)
 
-    logger.info("Update cinder quota for this tenant")
-    from cinderclient import client as cinderclient
-
-    creds_cinder = os_utils.get_credentials("cinder")
-    cinder_client = cinderclient.Client('1', creds_cinder['username'],
-                                        creds_cinder['api_key'],
-                                        creds_cinder['project_id'],
-                                        creds_cinder['auth_url'],
-                                        service_type="volume")
-    if not os_utils.update_cinder_quota(cinder_client, tenant_id, 20, 10, 150):
-        step_failure(
-            "init", "Failed to update cinder quota for tenant " + TENANT_NAME)
-
     # ############### CLOUDIFY INITIALISATION ################
+    public_auth_url = keystone.service_catalog.url_for(
+        service_type='identity', endpoint_type='publicURL')
 
     cfy = orchestrator(VIMS_DATA_DIR, CFY_INPUTS, logger)
 
     cfy.set_credentials(username=ks_creds['username'], password=ks_creds[
                         'password'], tenant_name=ks_creds['tenant_name'],
-                        auth_url=ks_creds['auth_url'])
+                        auth_url=public_auth_url)
 
     logger.info("Collect flavor id for cloudify manager server")
     nova = nvclient.Client("2", **nv_creds)
 
-    flavor_name = "m1.medium"
+    flavor_name = "m1.large"
     flavor_id = os_utils.get_flavor_id(nova, flavor_name)
     for requirement in CFY_MANAGER_REQUIERMENTS:
         if requirement == 'ram_min':
             flavor_id = os_utils.get_flavor_id_by_ram_range(
-                nova, CFY_MANAGER_REQUIERMENTS['ram_min'], 8196)
+                nova, CFY_MANAGER_REQUIERMENTS['ram_min'], 10000)
 
     if flavor_id == '':
         logger.error(
@@ -413,6 +399,11 @@ def main():
     ns = functest_utils.get_resolvconf_ns()
     if ns:
         cfy.set_nameservers(ns)
+
+    if 'compute' in nova.client.services_url:
+        cfy.set_nova_url(nova.client.services_url['compute'])
+    if neutron.httpclient.endpoint_url is not None:
+        cfy.set_neutron_url(neutron.httpclient.endpoint_url)
 
     logger.info("Prepare virtualenv for cloudify-cli")
     cmd = "chmod +x " + VIMS_DIR + "create_venv.sh"
