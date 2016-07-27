@@ -70,6 +70,10 @@ def get_credentials(service):
         "auth_url": os.environ.get("OS_AUTH_URL"),
         tenant: os.environ.get("OS_TENANT_NAME")
     })
+    if os.getenv('OS_ENDPOINT_TYPE') is not None:
+        creds.update({
+            "endpoint_type": os.environ.get("OS_ENDPOINT_TYPE")
+        })
     cacert = os.environ.get("OS_CACERT")
     if cacert is not None:
         # each openstack client uses differnt kwargs for this
@@ -94,6 +98,24 @@ def source_credentials(rc_file):
     return env
 
 
+def get_credentials_for_rally():
+    creds = get_credentials("keystone")
+    admin_keys = ['username', 'tenant_name', 'password']
+    endpoint_types = [('internalURL', 'internal'),
+                      ('publicURL', 'public'), ('adminURL', 'admin')]
+    if 'endpoint_type' in creds.keys():
+        for k, v in endpoint_types:
+            if creds['endpoint_type'] == k:
+                creds['endpoint_type'] = v
+    rally_conf = {"type": "ExistingCloud", "admin": {}}
+    for key in creds:
+        if key in admin_keys:
+            rally_conf['admin'][key] = creds[key]
+        else:
+            rally_conf[key] = creds[key]
+    return rally_conf
+
+
 # *********************************************
 #   CLIENTS
 # *********************************************
@@ -109,11 +131,10 @@ def get_nova_client():
 
 def get_cinder_client():
     creds_cinder = get_credentials("cinder")
-    return cinderclient.Client('2', creds_cinder['username'],
-                               creds_cinder['api_key'],
-                               creds_cinder['project_id'],
-                               creds_cinder['auth_url'],
-                               service_type="volume")
+    creds_cinder.update({
+        "service_type": "volume"
+    })
+    return cinderclient.Client('2', **creds_cinder)
 
 
 def get_neutron_client():
@@ -123,8 +144,11 @@ def get_neutron_client():
 
 def get_glance_client():
     keystone_client = get_keystone_client()
+    glance_endpoint_type = 'publicURL'
+    if os.getenv('OS_ENDPOINT_TYPE') is not None:
+        glance_endpoint_type = os.environ.get("OS_ENDPOINT_TYPE")
     glance_endpoint = keystone_client.service_catalog.url_for(
-        service_type='image', endpoint_type='publicURL')
+        service_type='image', endpoint_type=glance_endpoint_type)
     return glanceclient.Client(1, glance_endpoint,
                                token=keystone_client.auth_token)
 

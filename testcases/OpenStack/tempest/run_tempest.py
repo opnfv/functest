@@ -193,6 +193,17 @@ def configure_tempest(deployment_dir):
     config.set('identity', 'tenant_name', TENANT_NAME)
     config.set('identity', 'username', USER_NAME)
     config.set('identity', 'password', USER_PASSWORD)
+
+    services_list = ['compute', 'volume', 'image', 'network',
+                     'data-processing', 'object-storage', 'orchestration']
+    sections = config.sections()
+    if os.getenv('OS_ENDPOINT_TYPE') is not None:
+        for service in services_list:
+            if service not in sections:
+                config.add_section(service)
+            config.set(service, 'endpoint_type',
+                       os.environ.get("OS_ENDPOINT_TYPE"))
+
     with open(tempest_conf_file, 'wb') as config_file:
         config.write(config_file)
 
