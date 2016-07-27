@@ -194,7 +194,7 @@ def main():
             run_tier(_tiers.get_tier(args.test))
 
         elif _tiers.get_test(args.test):
-            run_test(_tiers.get_test(args.test))
+            run_test(_tiers.get_test(args.test), _tiers.get_tier(args.test))
 
         elif args.test == "all":
             run_all(_tiers)
