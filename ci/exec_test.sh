@@ -167,6 +167,12 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/features/domino.py
         ;;
         "odl-sfc")
+            bash ${FUNCTEST_REPO_DIR}/testcases/features/sfc/server_presetup_CI.bash
+            ret_val=$?
+            if [$ret_val != 0]; then 
+                exit $ret_val
+            fi
+            source ${FUNCTEST_REPO_DIR}/testcases/features/sfc/tackerc
             python ${FUNCTEST_REPO_DIR}/testcases/features/sfc/sfc.py
         ;;
         "parser")
