@@ -48,7 +48,8 @@ def remove_instances(nova_client, default_instances):
         instance_name = getattr(instance, 'name')
         instance_id = getattr(instance, 'id')
         logger.debug("'%s', ID=%s " % (instance_name, instance_id))
-        if instance_id not in default_instances:
+        if (instance_id not in default_instances and
+                instance_name not in default_instances.values()):
             logger.debug("Removing instance '%s' ..." % instance_id)
             if os_utils.delete_instance(nova_client, instance_id):
                 logger.debug("  > Request sent.")
@@ -83,7 +84,8 @@ def remove_images(nova_client, default_images):
         image_name = getattr(image, 'name')
         image_id = getattr(image, 'id')
         logger.debug("'%s', ID=%s " % (image_name, image_id))
-        if image_id not in default_images:
+        if (image_id not in default_images and
+                image_name not in default_images.values()):
             logger.debug("Removing image '%s', ID=%s ..."
                          % (image_name, image_id))
             if os_utils.delete_glance_image(nova_client, image_id):
@@ -107,7 +109,8 @@ def remove_volumes(cinder_client, default_volumes):
         volume_id = getattr(volume, 'id')
         volume_name = getattr(volume, 'display_name')
         logger.debug("'%s', ID=%s " % (volume_name, volume_id))
-        if volume_id not in default_volumes:
+        if (volume_id not in default_volumes and
+                volume_name not in default_volumes.values()):
             logger.debug("Removing cinder volume %s ..." % volume_id)
             if os_utils.delete_volume(cinder_client, volume_id):
                 logger.debug("  > Done!")
@@ -138,7 +141,8 @@ def remove_floatingips(nova_client, default_floatingips):
         fip_id = getattr(fip, 'id')
         fip_ip = getattr(fip, 'ip')
         logger.debug("'%s', ID=%s " % (fip_ip, fip_id))
-        if fip_id not in default_floatingips:
+        if (fip_id not in default_floatingips and
+                fip_ip not in default_floatingips.values()):
             logger.debug("Removing floating IP %s ..." % fip_id)
             if os_utils.delete_floating_ip(nova_client, fip_id):
                 logger.debug("  > Done!")
@@ -173,7 +177,8 @@ def remove_networks(neutron_client, default_networks, default_routers):
             net_id = network['id']
             net_name = network['name']
             logger.debug(" '%s', ID=%s " % (net_name, net_id))
-            if net_id in default_networks:
+            if (net_id in default_networks and
+                    net_name in default_networks.values()):
                 logger.debug("   > this is a default network and will "
                              "NOT be deleted.")
             elif network['router:external'] is True:
@@ -260,7 +265,8 @@ def remove_routers(neutron_client, routers, default_routers):
     for router in routers:
         router_id = router['id']
         router_name = router['name']
-        if router_id not in default_routers:
+        if (router_id not in default_routers and
+                router_name not in default_routers.values()):
             logger.debug("Checking '%s' with ID=(%s) ..." % (router_name,
                                                              router_id))
             if router['external_gateway_info'] is not None:
@@ -317,7 +323,8 @@ def remove_users(keystone_client, default_users):
         user_name = getattr(user, 'name')
         user_id = getattr(user, 'id')
         logger.debug("'%s', ID=%s " % (user_name, user_id))
-        if user_id not in default_users:
+        if (user_id not in default_users and
+                user_name not in default_users.values()):
             logger.debug(" Removing '%s'..." % user_name)
             if os_utils.delete_user(keystone_client, user_id):
                 logger.debug("  > Done!")
@@ -340,7 +347,8 @@ def remove_tenants(keystone_client, default_tenants):
         tenant_name = getattr(tenant, 'name')
         tenant_id = getattr(tenant, 'id')
         logger.debug("'%s', ID=%s " % (tenant_name, tenant_id))
-        if tenant_id not in default_tenants:
+        if (tenant_id not in default_tenants and
+                tenant_name not in default_tenants.values()):
             logger.debug(" Removing '%s'..." % tenant_name)
             if os_utils.delete_tenant(keystone_client, tenant_id):
                 logger.debug("  > Done!")
