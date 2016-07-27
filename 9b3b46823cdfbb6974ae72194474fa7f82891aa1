@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_a504e07e",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-27T14:10:49Z",
+      "side": 1,
+      "message": "you could move this 2 lines inside the if-else",
+      "revId": "9b3b46823cdfbb6974ae72194474fa7f82891aa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_85b524cf",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-27T14:10:49Z",
+      "side": 1,
+      "message": "you can do the same for this",
+      "revId": "9b3b46823cdfbb6974ae72194474fa7f82891aa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_25ca1050",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-27T14:10:49Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "9b3b46823cdfbb6974ae72194474fa7f82891aa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c509dc96",
+        "filename": "testcases/vnf/vIMS/vIMS.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-27T14:10:49Z",
+      "side": 1,
+      "message": "you can also get the client from openstack_utils",
+      "revId": "9b3b46823cdfbb6974ae72194474fa7f82891aa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_65fec86d",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-27T14:10:49Z",
+      "side": 1,
+      "message": "os_endpoint_type \u003d os.getenv(\u0027OS_ENDPOINT_TYPE\u0027)\nif os_endpoint_type is not None:\n    glance_endpoint_type \u003d os_endpoint_type",
+      "revId": "9b3b46823cdfbb6974ae72194474fa7f82891aa1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
