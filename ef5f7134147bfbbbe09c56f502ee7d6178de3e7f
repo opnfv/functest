@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_25545053",
+        "filename": "ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-27T15:48:06Z",
+      "side": 1,
+      "message": "I know it was there before, but can you remove this trailing whitespace?",
+      "revId": "ef5f7134147bfbbbe09c56f502ee7d6178de3e7f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_45514c61",
+        "filename": "testcases/OpenStack/healthcheck/healthcheck.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-27T15:48:06Z",
+      "side": 1,
+      "message": "do you need quotes here? or just ${extra_opts}",
+      "revId": "ef5f7134147bfbbbe09c56f502ee7d6178de3e7f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
