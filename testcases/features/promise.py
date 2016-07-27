@@ -134,9 +134,7 @@ def main():
         "project_id": TENANT_NAME,
     })
 
-    glance_endpoint = keystone.service_catalog.url_for(
-        service_type='image', endpoint_type='publicURL')
-    glance = glclient.Client(1, glance_endpoint, token=keystone.auth_token)
+    glance = openstack_utils.get_glance_client()
     nova = nvclient.Client("2", **nv_creds)
 
     logger.info("Creating image '%s' from '%s'..." % (IMAGE_NAME,

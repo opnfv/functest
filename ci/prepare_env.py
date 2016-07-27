@@ -18,6 +18,7 @@ import os
 import re
 import subprocess
 import sys
+import json
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
@@ -206,8 +207,10 @@ def install_rally():
     ft_utils.execute_command(cmd, logger=logger, exit_on_error=False,
                              error_msg=("Deployment %s does not exist."
                                         % DEPLOYMENT_MAME), verbose=False)
-
-    cmd = "rally deployment create --fromenv --name=" + DEPLOYMENT_MAME
+    rally_conf = os_utils.get_credentials_for_rally()
+    with open('rally_conf.json', 'w') as fp:
+        json.dump(rally_conf, fp)
+    cmd = "rally deployment create --file=rally_conf.json --name=" + DEPLOYMENT_MAME
     ft_utils.execute_command(cmd, logger,
                              error_msg="Problem creating Rally deployment")
 

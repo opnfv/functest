@@ -46,6 +46,12 @@ class orchestrator:
     def set_ssh_user(self, ssh_user):
         self.config['ssh_user'] = ssh_user
 
+    def set_nova_url(self, nova_url):
+        self.config['nova_url'] = nova_url
+
+    def set_neutron_url(self, neutron_url):
+        self.config['neutron_url'] = neutron_url
+
     def set_nameservers(self, nameservers):
         if 0 < len(nameservers):
             self.config['dns_subnet_1'] = nameservers[0]
