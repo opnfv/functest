@@ -490,19 +490,19 @@ def main():
     total_duration_str = time.strftime("%H:%M:%S", time.gmtime(total_duration))
     total_duration_str2 = "{0:<10}".format(total_duration_str)
     total_nb_tests_str = "{0:<13}".format(total_nb_tests)
-    total_success = "{:0.2f}".format(total_success / len(SUMMARY))
-    total_success_str = "{0:<10}".format(str(total_success) + '%')
+    success_rate = "{:0.2f}".format(total_success / len(SUMMARY))
+    success_rate_str = "{0:<10}".format(str(success_rate) + '%')
     report += "+===================+============+===============+===========+"
     report += "\n"
     report += ("| TOTAL:            | " + total_duration_str2 + " | " +
-               total_nb_tests_str + " | " + total_success_str + "|\n")
+               total_nb_tests_str + " | " + success_rate_str + "|\n")
     report += "+===================+============+===============+===========+"
     report += "\n"
 
     logger.info("\n" + report)
     payload.append({'summary': {'duration': total_duration,
                                 'nb tests': total_nb_tests,
-                                'nb success': total_success}})
+                                'nb success': success_rate}})
 
     # Generate json results for DB
     # json_results = {"timestart": time_start, "duration": total_duration,
@@ -513,7 +513,7 @@ def main():
     # Evaluation of the success criteria
     status = "FAIL"
     # for Rally we decided that the overall success rate must be above 90%
-    if float(total_success) >= 90:
+    if float(success_rate) >= 90:
         status = "PASS"
 
     if args.sanity:
