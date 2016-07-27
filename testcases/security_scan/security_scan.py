@@ -12,6 +12,7 @@
 # nominated node. Post scan a report is downloaded and if '--clean' is passed
 # all trace of the scan is removed from the remote system.
 
+
 import argparse
 import connect
 import datetime
@@ -19,9 +20,10 @@ import os
 import sys
 
 from ConfigParser import SafeConfigParser
-from keystoneclient.auth.identity import v2
 from keystoneclient import session
+from keystoneclient.auth.identity import v2
 from novaclient import client
+
 
 __version__ = 0.1
 __author__ = 'Luke Hinds (lhinds@redhat.com)'
@@ -96,8 +98,9 @@ def nova_iterate():
         if server.status == 'ACTIVE' and 'compute' in server.name:
             networks = server.networks
             nodetype = 'compute'
-            for host in networks['ctlplane']:
-                run_tests(host, nodetype)
+            connect.log('Skipping test for compute nodes...')
+            # for host in networks['ctlplane']:
+            #   run_tests(host, nodetype)
         # Find controller nodes, active with network on ctlplane
         elif server.status == 'ACTIVE' and 'controller' in server.name:
             networks = server.networks
