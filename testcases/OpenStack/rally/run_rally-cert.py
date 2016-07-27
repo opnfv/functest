@@ -525,7 +525,7 @@ def main():
         logger.debug("Pushing Rally summary into DB...")
         functest_utils.push_results_to_db("functest",
                                           case_name,
-                                          None,
+                                          logger,
                                           start_time,
                                           stop_time,
                                           status,
