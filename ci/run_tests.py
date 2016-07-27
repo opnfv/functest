@@ -104,7 +104,6 @@ def run_test(test, tier_name):
     duration_str = ("%02d:%02d" % divmod(duration, 60))
     logger.info("Test execution time: %s" % duration_str)
 
-    result = 0
     if result != 0:
         logger.error("The test case '%s' failed. " % test_name)
         OVERALL_RESULT = -1
