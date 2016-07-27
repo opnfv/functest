@@ -16,6 +16,24 @@
       "revId": "3564f303a380fc6250bce311a40a867e713ffc6d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_61a47d57",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 3859
+      },
+      "writtenOn": "2016-07-27T08:22:59Z",
+      "side": 1,
+      "message": "See the commit message, we need it to make healthcheck configurable",
+      "parentUuid": "1a76adc5_46e8777c",
+      "revId": "3564f303a380fc6250bce311a40a867e713ffc6d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
