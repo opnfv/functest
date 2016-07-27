@@ -219,7 +219,7 @@ def configure_tempest_feature(deployment_dir, mode):
     if mode == 'feature_multisite':
         config.set('service_available', 'kingbird', 'true')
         cmd = "openstack endpoint show kingbird | grep publicurl |\
-               awk '{print $4}' | awk -F '/' '{print $3}'"
+               awk '{print $4}' | awk -F '/' '{print $4}'"
         kingbird_api_version = os.popen(cmd).read()
         if os.environ.get("INSTALLER_TYPE") == 'fuel':
             # For MOS based setup, the service is accessible
