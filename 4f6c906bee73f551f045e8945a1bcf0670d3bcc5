@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_65b6c88c",
+        "filename": "testcases/features/sfc/server_presetup_CI.bash",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-27T16:29:07Z",
+      "side": 1,
+      "message": "better to create a variable ssh_options and use it instead of repeating the same options. The commands will be clearer.",
+      "revId": "4f6c906bee73f551f045e8945a1bcf0670d3bcc5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_25b0d08a",
+        "filename": "testcases/features/sfc/set-up-tacker.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-27T16:29:07Z",
+      "side": 1,
+      "message": "No need to clone fuel just for 1 file. Do this:\n\nwget https://gerrit.opnfv.org/gerrit/#/c/15065/5/prototypes/sfc_tacker/poc.tacker-up.sh",
+      "revId": "4f6c906bee73f551f045e8945a1bcf0670d3bcc5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
