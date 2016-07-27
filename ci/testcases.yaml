@@ -151,7 +151,7 @@ tiers:
                     Simple security Scan
                 dependencies:
                     installer: 'apex'
-                    scenario: ''
+                    scenario: 'disable'
 
             -
                 name: copper
