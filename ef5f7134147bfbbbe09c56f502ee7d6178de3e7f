@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_65e8087d",
+        "filename": "ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3859
+      },
+      "writtenOn": "2016-07-27T15:50:27Z",
+      "side": 1,
+      "message": "sure thing, didn\u0027t notice it.",
+      "parentUuid": "1a76adc5_25545053",
+      "revId": "ef5f7134147bfbbbe09c56f502ee7d6178de3e7f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_45514c61",
         "filename": "testcases/OpenStack/healthcheck/healthcheck.sh",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-07-27T15:48:06Z",
       "side": 1,
       "message": "do you need quotes here? or just ${extra_opts}",
+      "revId": "ef5f7134147bfbbbe09c56f502ee7d6178de3e7f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c5f31c72",
+        "filename": "testcases/OpenStack/healthcheck/healthcheck.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3859
+      },
+      "writtenOn": "2016-07-27T15:50:27Z",
+      "side": 1,
+      "message": "I need to check, there are 3 extra opts we need, I guess it will work without",
+      "parentUuid": "1a76adc5_45514c61",
       "revId": "ef5f7134147bfbbbe09c56f502ee7d6178de3e7f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
