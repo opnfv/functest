@@ -96,8 +96,9 @@ def nova_iterate():
         if server.status == 'ACTIVE' and 'compute' in server.name:
             networks = server.networks
             nodetype = 'compute'
-            for host in networks['ctlplane']:
-                run_tests(host, nodetype)
+            connect.log('Skipping test for compute nodes...')
+            # for host in networks['ctlplane']:
+            #   run_tests(host, nodetype)
         # Find controller nodes, active with network on ctlplane
         elif server.status == 'ACTIVE' and 'controller' in server.name:
             networks = server.networks
