@@ -109,8 +109,11 @@ def run_test(test, tier_name):
         OVERALL_RESULT = -1
         result_str = "FAIL"
 
-        if test.get_blocking():
+        if test.is_blocking():
             logger.info("This test case is blocking. Exiting...")
+            if not args.test or args.test == "all":
+                # if it is a single test we don't print the whole results table
+                generate_report.main(EXECUTED_TEST_CASES)
             sys.exit(OVERALL_RESULT)
 
     for test in EXECUTED_TEST_CASES:
