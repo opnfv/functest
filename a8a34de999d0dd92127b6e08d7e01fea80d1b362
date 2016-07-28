@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_cb524b13",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-28T09:27:46Z",
+      "side": 1,
+      "message": "Expose too much information to outside interface. Why not put all these works in one script, and just run this new script here?",
+      "revId": "a8a34de999d0dd92127b6e08d7e01fea80d1b362",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_eb3387f4",
         "filename": "testcases/features/sfc/server_presetup_CI.bash",
         "patchSetId": 6
