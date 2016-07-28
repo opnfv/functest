@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_6b20d79b",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-28T09:21:23Z",
+      "side": 1,
+      "message": "whitespace.. and wrong...\n\nif [ $ret_val !\u003d 0 ]; then",
+      "revId": "a8a34de999d0dd92127b6e08d7e01fea80d1b362",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_8b2533ad",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-28T09:21:23Z",
+      "side": 1,
+      "message": "exit $ret_val",
+      "revId": "a8a34de999d0dd92127b6e08d7e01fea80d1b362",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_eb3387f4",
+        "filename": "testcases/features/sfc/server_presetup_CI.bash",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-28T09:21:23Z",
+      "side": 1,
+      "message": "#!/bin/bash\n#set -e\n\nadd that at the begining please",
+      "revId": "a8a34de999d0dd92127b6e08d7e01fea80d1b362",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
