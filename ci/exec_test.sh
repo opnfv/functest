@@ -169,6 +169,9 @@ function run_test(){
         "odl-sfc")
             python ${FUNCTEST_REPO_DIR}/testcases/features/sfc/sfc.py
         ;;
+        "parser")
+            python ${FUNCTEST_REPO_DIR}/testcases/vnf/RNC/parser.py
+        ;;
         *)
             echo "The test case '${test_name}' does not exist."
             exit 1
