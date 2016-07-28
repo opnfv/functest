@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_8b73f3b0",
+        "filename": "testcases/OpenStack/healthcheck/healthcheck.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-28T09:32:22Z",
+      "side": 1,
+      "message": "too long, can you split it to several lines?",
+      "revId": "74046664ff3edb7ea0d7b0eb5653d08a2e561481",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_2b689fb9",
+        "filename": "testcases/OpenStack/healthcheck/healthcheck.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-28T09:32:22Z",
+      "side": 1,
+      "message": "same with above",
+      "revId": "74046664ff3edb7ea0d7b0eb5653d08a2e561481",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
