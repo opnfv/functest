@@ -1,0 +1,17 @@
+-
+    scenarios:
+        - os-odl_l2-bgpvpn-ha
+        - os-odl_l2-bgpvpn-noha
+    installers:
+        - fuel
+        - apex
+    tests:
+        - tempest.api.compute.servers.test_create_server.ServersTestJSON.test_list_servers[id-9a438d88-10c6-4bcd-8b5b-5b6e25e1346f,smoke]
+        - tempest.api.compute.servers.test_create_server.ServersTestJSON.test_verify_server_details[id-5de47127-9977-400a-936f-abcfbec1218f,smoke]
+        - tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_list_servers[id-9a438d88-10c6-4bcd-8b5b-5b6e25e1346f,smoke]
+        - tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_verify_server_details[id-5de47127-9977-400a-936f-abcfbec1218f,smoke]
+        - tempest.api.compute.servers.test_server_actions.ServerActionsTestJSON.test_reboot_server_hard[id-2cb1baf6-ac8d-4429-bf0d-ba8a0ba53e32,smoke]
+        - tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_network_basic_ops[compute,id-f323b3ba-82f8-4db7-8ea6-6a895869ec49,network,smoke]
+        - tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops[compute,id-7fff3fb3-91d8-4fd0-bd7d-0204f1f180ba,network,smoke]
+        - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern.test_volume_boot_pattern[compute,id-557cd2c2-4eb8-4dce-98be-f86765ff311b,image,smoke,volume]
+        - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPatternV2.test_volume_boot_pattern[compute,id-557cd2c2-4eb8-4dce-98be-f86765ff311b,image,smoke,volume]

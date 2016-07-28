@@ -60,7 +60,7 @@ tiers:
                     the OpenStack deplopyment.
                 dependencies:
                     installer: ''
-                    scenario: '^(?!.*bgpvpn).*$'
+                    scenario: ''
 
             -
                 name: rally_sanity
