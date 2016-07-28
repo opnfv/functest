@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_286d0533",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-28T08:31:22Z",
+      "side": 1,
+      "message": "please can you move these pip installs after line 90, together with all the pip installs? so we keep this a bit tidy? Thanks.",
+      "revId": "c4e90c5abe8cb99e77f1425edc594be83290ac54",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a8603536",
+        "filename": "testcases/vnf/RNC/parser.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-28T08:31:22Z",
+      "side": 1,
+      "message": "please add here a return value. \nIf status \u003d\u003d \"FAIL\": sys.exit(-1) or something similar",
+      "revId": "c4e90c5abe8cb99e77f1425edc594be83290ac54",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
