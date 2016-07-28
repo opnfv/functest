@@ -132,7 +132,10 @@ class TestCase:
         return self.criteria
 
     def get_blocking(self):
-        return self.blocking
+        if (self.blocking).lower() == "true":
+            return True
+        else:
+            return False
 
     def __str__(self):
         lines = split_text(self.description, LINE_LENGTH - 6)
