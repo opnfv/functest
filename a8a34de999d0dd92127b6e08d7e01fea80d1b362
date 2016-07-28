@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_cba00bf7",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-28T09:35:35Z",
+      "side": 1,
+      "message": "you are right, but we would have to do the same for the other conditions where there is too much content. So it is not fair to ask Manuel to move everything to a script when there are other tests that also write some logic here. Let\u0027s take it as an improvement for D-river, ok?",
+      "parentUuid": "1a76adc5_cb524b13",
+      "revId": "a8a34de999d0dd92127b6e08d7e01fea80d1b362",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_eb3387f4",
         "filename": "testcases/features/sfc/server_presetup_CI.bash",
         "patchSetId": 6
