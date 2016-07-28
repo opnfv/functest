@@ -128,8 +128,6 @@ def run_test(test, tier_name):
 
     update_test_info(test_name, result_str, duration_str)
 
-    return result
-
 
 def run_tier(tier):
     tier_name = tier.get_name()
@@ -144,11 +142,7 @@ def run_tier(tier):
     print_separator("#")
     logger.debug("\n%s" % tier)
     for test in tests:
-        res = run_test(test, tier_name)
-        if res != 0:
-            return res
-
-    return 0
+        run_test(test, tier_name)
 
 
 def run_all(tiers):
@@ -174,11 +168,8 @@ def run_all(tiers):
     EXECUTED_TEST_CASES = generate_report.init(tiers_to_run)
     for tier in tiers_to_run:
         res = run_tier(tier)
-        if res != 0:
-            return res
-    generate_report.main(EXECUTED_TEST_CASES)
 
-    return 0
+    generate_report.main(EXECUTED_TEST_CASES)
 
 
 def main():
