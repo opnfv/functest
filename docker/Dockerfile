@@ -83,6 +83,7 @@ RUN git clone https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
 RUN git clone https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
 RUN git clone https://github.com/openstack/kingbird.git ${repos_dir}/kingbird
 RUN git clone https://gerrit.opnfv.org/gerrit/domino ${repos_dir}/domino
+RUN git clone https://gerrit.opnfv.org/gerrit/parser ${repos_dir}/parser
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt
@@ -117,6 +118,11 @@ RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -'
 RUN sudo apt-get install -y nodejs
 RUN cd ${repos_dir}/promise && sudo npm -g install npm@latest
 RUN cd ${repos_dir}/promise && npm install
+
+RUN pip install -r ${repos_dir}/parser/tosca2heat/tosca-parser/requirements.txt
+RUN cd ${repos_dir}/parser/tosca2heat/tosca-parser && python setup.py install
+RUN pip install -r ${repos_dir}/parser/tosca2heat/heat-translator/requirements.txt
+RUN cd ${repos_dir}/parser/tosca2heat/heat-translator && python setup.py install
 
 RUN echo "set nocompatible \n\
 set backspace=2" \

@@ -22,6 +22,7 @@ general:
         dir_repo_doctor:    /home/opnfv/repos/doctor
         dir_repo_copper:    /home/opnfv/repos/copper
         dir_repo_ovno:      /home/opnfv/repos/ovno
+        dir_repo_parser:    /home/opnfv/repos/parser
         dir_functest:       /home/opnfv/functest
         dir_results:        /home/opnfv/functest/results
         dir_functest_conf:  /home/opnfv/functest/conf
@@ -168,6 +169,22 @@ promise:
         subnet_name: promise-subnet
         subnet_cidr: 192.168.121.0/24
         router_name: promise-router
+
+parser:
+    general:
+        tenant_name: parser
+        tenant_description: parser Functionality Testing
+        user_name: parser
+        user_pwd: parser
+        image_name: parser-img
+        flavor_name: parser-flavor
+        flavor_vcpus: 1
+        flavor_ram: 512
+        flavor_disk: 0
+        network_name: parser-net
+        subnet_name: parser-subnet
+        subnet_cidr: 192.168.160.0/24
+        router_name: parser-router
 
 example:
     example_vm_name: example-vm
