@@ -74,6 +74,10 @@ def get_credentials(service):
         creds.update({
             "endpoint_type": os.environ.get("OS_ENDPOINT_TYPE")
         })
+    if os.getenv('OS_REGION_NAME') is not None:
+        creds.update({
+            "region_name": os.environ.get("OS_REGION_NAME")
+        })
     cacert = os.environ.get("OS_CACERT")
     if cacert is not None:
         # each openstack client uses differnt kwargs for this
