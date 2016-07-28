@@ -8,7 +8,9 @@
 #
 
 
+from _io import BlockingIOError
 import re
+
 
 LINE_LENGTH = 72
 
@@ -131,7 +133,7 @@ class TestCase:
     def get_criteria(self):
         return self.criteria
 
-    def get_blocking(self):
+    def is_blocking(self):
         return self.blocking
 
     def __str__(self):

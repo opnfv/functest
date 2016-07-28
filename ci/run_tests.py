@@ -75,6 +75,13 @@ def cleanup():
     os_clean.main()
 
 
+def update_test_info(test_name, result, duration_str):
+    for test in EXECUTED_TEST_CASES:
+        if test['test_name'] == test_name:
+            test.update({"result": result,
+                         "duration": duration_str})
+
+
 def run_test(test, tier_name):
     global OVERALL_RESULT, EXECUTED_TEST_CASES
     result_str = "PASS"
@@ -109,14 +116,17 @@ def run_test(test, tier_name):
         OVERALL_RESULT = -1
         result_str = "FAIL"
 
-        if test.get_blocking():
-            logger.info("This test case is blocking. Exiting...")
+        if test.is_blocking():
+            if not args.test or args.test == "all":
+                logger.info("This test case is blocking. Aborting overall "
+                            "execution.")
+                # if it is a single test we don't print the whole results table
+                update_test_info(test_name, result_str, duration_str)
+                generate_report.main(EXECUTED_TEST_CASES)
+            logger.info("Execution exit value: %s" % OVERALL_RESULT)
             sys.exit(OVERALL_RESULT)
 
-    for test in EXECUTED_TEST_CASES:
-        if test['test_name'] == test_name:
-            test.update({"result": result_str,
-                         "duration": duration_str})
+    update_test_info(test_name, result_str, duration_str)
 
     return result
 
@@ -207,6 +217,7 @@ def main():
     else:
         run_all(_tiers)
 
+    logger.info("Execution exit value: %s" % OVERALL_RESULT)
     sys.exit(OVERALL_RESULT)
 
 if __name__ == '__main__':
