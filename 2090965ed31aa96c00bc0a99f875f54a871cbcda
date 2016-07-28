@@ -22,6 +22,30 @@
       "revId": "2090965ed31aa96c00bc0a99f875f54a871cbcda",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_8b11b3ae",
+        "filename": "testcases/OpenStack/tempest/gen_tempest_conf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-28T11:45:22Z",
+      "side": 1,
+      "message": "Yes, $3 will return you the ip and port \u003cIP\u003e:\u003cPORT\u003e",
+      "parentUuid": "1a76adc5_8b5d33ec",
+      "range": {
+        "startLine": 48,
+        "startChar": 50,
+        "endLine": 48,
+        "endChar": 51
+      },
+      "revId": "2090965ed31aa96c00bc0a99f875f54a871cbcda",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
