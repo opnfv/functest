@@ -22,6 +22,7 @@ general:
         dir_repo_doctor:    /home/opnfv/repos/doctor
         dir_repo_copper:    /home/opnfv/repos/copper
         dir_repo_ovno:      /home/opnfv/repos/ovno
+        dir_repo_parser:    /home/opnfv/repos/parser
         dir_functest:       /home/opnfv/functest
         dir_results:        /home/opnfv/functest/results
         dir_functest_conf:  /home/opnfv/functest/conf
