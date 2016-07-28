@@ -21,11 +21,12 @@ import shutil
 import subprocess
 import sys
 import time
+import yaml
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-import yaml
+
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',
@@ -330,13 +331,28 @@ def apply_tempest_blacklist():
     logger.debug("Applying tempest blacklist...")
     cases_file = read_file(TEMPEST_RAW_LIST)
     result_file = open(TEMPEST_LIST, 'w')
+    black_tests = []
     try:
-        black_file = read_file(TEMPEST_BLACKLIST)
+        installer_type = os.getenv('INSTALLER_TYPE')
+        deploy_scenario = os.getenv('DEPLOY_SCENARIO')
+        if not (bool(installer_type) * bool(deploy_scenario)):
+            # if INSTALLER_TYPE and DEPLOY_SCENARIO are set we read the file
+            black_list_file = open(TEMPEST_BLACKLIST)
+            black_list_yaml = yaml.safe_load(black_file)
+            black_list_file.close()
+            for item in black_list_yaml:
+                scenarios = item['sceanrios']
+                if deploy_scenario in scenarios:
+                    tests = item['tests']
+                    for test in tests:
+                        black_tests.append(test)
+                    break
     except:
-        black_file = ''
+        black_tests = ''
         logger.debug("Tempest blacklist file does not exist.")
+
     for line in cases_file:
-        if line not in black_file:
+        if line not in black_tests:
             result_file.write(str(line) + '\n')
     result_file.close()
 
