@@ -1,4 +1,4 @@
-wget https://gerrit.opnfv.org/gerrit/#/c/15065/5/prototypes/sfc_tacker/poc.tacker-up.sh
+curl "https://gerrit.opnfv.org/gerrit/gitweb?p=fuel.git;a=blob_plain;f=prototypes/sfc_tacker/poc.tacker-up.sh;hb=794427a06b46fddecb76b60c8392e37ae504ab60" > poc.tacker-up.sh
 bash poc.tacker-up.sh
 
 touch delete.sh
