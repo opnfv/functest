@@ -8,7 +8,7 @@ import functest.utils.functest_logger as ft_logger
 COL_1_LEN = 25
 COL_2_LEN = 15
 COL_3_LEN = 12
-COL_4_LEN = 10
+COL_4_LEN = 15
 COL_5_LEN = 75
 
 # If we run from CI (Jenkins) we will push the results to the DB
