@@ -245,3 +245,12 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: '(ocl)|(nosdn)|^(os-odl)((?!bgpvpn).)*$'
+            -
+                name: parser
+                criteria: 'status == "PASS"'
+                blocking: false
+                description: >-
+                    Test suite from Parser project.
+                dependencies:
+                    installer: 'fuel'
+                    scenario: ''
