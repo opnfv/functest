@@ -18,12 +18,18 @@ import datetime
 import os
 import re
 import time
+import argparse
 
 from neutronclient.v2_0 import client as neutronclient
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-t", "--testcase", help="Testcase name")
+args = parser.parse_args()
+
 
 """ logging configuration """
 logger = ft_logger.Logger("onos").getLogger()
@@ -215,11 +221,9 @@ def SetSfcConf():
     logger.info("Modify configuration for SFC")
 
 
-def main():
+def OnosTest():
     start_time = time.time()
     stop_time = start_time
-    # DownloadCodes()
-    # if args.installer == "joid":
     if INSTALLER_TYPE == "joid":
         logger.debug("Installer is Joid")
         SetOnosIpForJoid()
@@ -254,13 +258,19 @@ def main():
     except:
         logger.error("Error pushing results into Database")
 
-    if DEPLOY_SCENARIO == "os-onos-sfc-ha":
+    if status == "FAIL":
+        EXIT_CODE = -1
+        exit(EXIT_CODE)
+
+
+def main():
+
+    if args.testcase == "sfc":
         CreateImage()
         SetSfcConf()
         SfcTest()
-
-    # CleanOnosTest()
-
+    else:
+        OnosTest()
 
 if __name__ == '__main__':
     main()
