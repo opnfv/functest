@@ -512,6 +512,10 @@ def main():
     # Evaluation of the success criteria
     status = functest_utils.check_success_rate(case_name, success_rate)
 
+    exit_code = -1
+    if status == "PASS":
+        exit_code = 0
+
     if args.report:
         logger.debug("Pushing Rally summary into DB...")
         functest_utils.push_results_to_db("functest",
@@ -522,7 +526,7 @@ def main():
                                           status,
                                           payload)
     if args.noclean:
-        exit(0)
+        exit(exit_code)
 
     if not image_exists:
         logger.debug("Deleting image '%s' with ID '%s'..."
@@ -535,6 +539,8 @@ def main():
                      % CINDER_VOLUME_TYPE_NAME)
         if not os_utils.delete_volume_type(cinder_client, volume_type):
             logger.error("Error in deleting volume type...")
+
+    exit(exit_code)
 
 
 if __name__ == '__main__':
