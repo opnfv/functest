@@ -33,6 +33,7 @@ logger = ft_logger.Logger("doctor").getLogger()
 
 
 def main():
+    exit_code = -1
     cmd = 'cd %s/tests && ./run.sh' % DOCTOR_REPO
     start_time = time.time()
 
@@ -43,6 +44,7 @@ def main():
     if ret == 0:
         logger.info("doctor OK")
         test_status = 'OK'
+        exit_code = 0
     else:
         logger.info("doctor FAILED")
         test_status = 'NOK'
@@ -78,6 +80,8 @@ def main():
                                       stop_time,
                                       status,
                                       details)
+
+    exit(exit_code)
 
 if __name__ == '__main__':
     main()
