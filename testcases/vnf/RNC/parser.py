@@ -27,13 +27,14 @@ with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
 dirs = functest_yaml.get('general').get('directories')
 FUNCTEST_REPO = dirs.get('dir_repo_functest')
 PARSER_REPO = dirs.get('dir_repo_parser')
-TEST_DB_URL = functest_yaml.get('results').get('test_db_url')
 
 logger = ft_logger.Logger("parser").getLogger()
 
 
 def main():
     EXIT_CODE = -1
+    project = 'parser'
+    case_name = 'parser-basics'
     cmd = 'cd %s/tests && ./functest_run.sh' % PARSER_REPO
     start_time = time.time()
 
@@ -54,27 +55,19 @@ def main():
         'duration': duration,
         'status': test_status,
     }
-    pod_name = functest_utils.get_pod_name(logger)
-    scenario = functest_utils.get_scenario(logger)
-    version = functest_utils.get_version(logger)
-    build_tag = functest_utils.get_build_tag(logger)
 
     status = "FAIL"
     if details['status'] == "OK":
         status = "PASS"
 
-    logger.info("Pushing Parser results: TEST_DB_URL=%(db)s pod_name=%(pod)s "
-                "version=%(v)s scenario=%(s)s criteria=%(c)s details=%(d)s" % {
-                    'db': TEST_DB_URL,
-                    'pod': pod_name,
-                    'v': version,
-                    's': scenario,
-                    'c': status,
-                    'b': build_tag,
-                    'd': details,
-                })
-    functest_utils.push_results_to_db("parser",
-                                      "parser-basics",
+    functest_utils.logger_test_results(logger,
+                                       project,
+                                       case_name,
+                                       status,
+                                       details)
+
+    functest_utils.push_results_to_db(project,
+                                      case_name,
                                       logger,
                                       start_time,
                                       stop_time,

@@ -163,6 +163,27 @@ def get_db_url(logger=None):
     return db_url
 
 
+def logger_test_results(logger, project, case_name, status, details):
+    pod_name = get_pod_name(logger)
+    scenario = get_scenario(logger)
+    version = get_version(logger)
+    build_tag = get_build_tag(logger)
+
+    logger.info("Pushing %(p)s/%(n)s results: TEST_DB_URL=%(db)s "
+                "pod_name=%(pod)s version=%(v)s scenario=%(s)s "
+                "criteria=%(c)s details=%(d)s" % {
+                    'p': project,
+                    'n': case_name,
+                    'db': get_db_url(),
+                    'pod': pod_name,
+                    'v': version,
+                    's': scenario,
+                    'c': status,
+                    'b': build_tag,
+                    'd': details,
+                })
+
+
 def push_results_to_db(project, case_name, logger,
                        start_date, stop_date, criteria, details):
     """
