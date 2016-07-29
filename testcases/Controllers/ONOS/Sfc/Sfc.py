@@ -226,4 +226,9 @@ class Sfc:
                                                    'status': status})
     except:
         logger.error("Error pushing results into Database")
+
+    if status == "FAIL":
+        EXIT_CODE = -1
+        exit(EXIT_CODE)
+
     print("############################END OF SCRIPT ######################")
