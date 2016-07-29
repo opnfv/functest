@@ -70,6 +70,7 @@ logger = ft_logger.Logger("promise").getLogger()
 
 
 def main():
+    exit_code = -1
     start_time = time.time()
     ks_creds = openstack_utils.get_credentials("keystone")
     nv_creds = openstack_utils.get_credentials("nova")
@@ -241,6 +242,7 @@ def main():
         status = "FAIL"
         if int(tests) > 32 and int(failures) < 1:
             status = "PASS"
+            exit_code = 0
 
         functest_utils.push_results_to_db("promise",
                                           "promise",
@@ -249,6 +251,8 @@ def main():
                                           stop_time,
                                           status,
                                           json_results)
+
+    exit(exit_code)
 
 
 if __name__ == '__main__':
