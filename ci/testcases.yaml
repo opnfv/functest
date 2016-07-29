@@ -198,6 +198,16 @@ tiers:
                 dependencies:
                     installer: 'fuel'
                     scenario: 'odl_l2-sfc'
+            -
+                name: onos_sfc
+                criteria: 'status == "PASS"'
+                blocking: true
+                description: >-
+                    Test Suite for onos-sfc to test sfc function.
+                dependencies:
+                    installer: ''
+                    scenario: 'onos-sfc'
+
     -
         name: openstack
         order: 4
