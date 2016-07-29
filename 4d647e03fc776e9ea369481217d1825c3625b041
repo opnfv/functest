@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_ee05d514",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-07-29T01:34:42Z",
+      "side": 1,
+      "message": "If breaks here, it means once the condition met, the following items in black_list_yaml will not be processed, is that right?",
+      "range": {
+        "startLine": 351,
+        "startChar": 20,
+        "endLine": 351,
+        "endChar": 25
+      },
+      "revId": "4d647e03fc776e9ea369481217d1825c3625b041",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
