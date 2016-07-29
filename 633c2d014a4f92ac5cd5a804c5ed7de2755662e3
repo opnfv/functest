@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_f42b6492",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-29T17:50:28Z",
+      "side": 1,
+      "message": "remove this from the first line. Second line must be black. Add in the third line: \nJIRA: DOMINO-19",
+      "revId": "633c2d014a4f92ac5cd5a804c5ed7de2755662e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d42e68a5",
+        "filename": "ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-29T17:50:28Z",
+      "side": 1,
+      "message": "please use spaces instead of tab (see red mark)",
+      "revId": "633c2d014a4f92ac5cd5a804c5ed7de2755662e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
