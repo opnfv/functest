@@ -326,3 +326,22 @@ def get_parameter_from_yaml(parameter, file=None):
             raise ValueError("The parameter %s is not defined in"
                              " config_functest.yaml" % parameter)
     return value
+
+
+def check_success_rate(case_name, success_rate):
+    success_rate = float(success_rate)
+    criteria = get_criteria_by_test(case_name)
+
+    def get_value(op):
+        return float(criteria.split(op)[1].rstrip('%'))
+
+    status = 'FAIL'
+    ops = ['==', '>=']
+    for op in ops:
+        if op in criteria:
+            c_value = get_value(op)
+            if eval("%s %s %s" % (success_rate, op, c_value)):
+                status = 'PASS'
+            break
+
+    return status
