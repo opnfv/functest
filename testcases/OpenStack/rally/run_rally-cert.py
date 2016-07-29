@@ -504,22 +504,13 @@ def main():
                                 'nb tests': total_nb_tests,
                                 'nb success': success_rate}})
 
-    # Generate json results for DB
-    # json_results = {"timestart": time_start, "duration": total_duration,
-    #                "tests": int(total_nb_tests),
-    #                "success": int(total_success)}
-    # logger.info("Results: "+str(json_results))
-
-    # Evaluation of the success criteria
-    status = "FAIL"
-    # for Rally we decided that the overall success rate must be above 90%
-    if float(success_rate) >= 90:
-        status = "PASS"
-
     if args.sanity:
         case_name = "rally_sanity"
     else:
         case_name = "rally_full"
+
+    # Evaluation of the success criteria
+    status = functest_utils.check_success_rate(case_name, success_rate)
 
     if args.report:
         logger.debug("Pushing Rally summary into DB...")
