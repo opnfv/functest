@@ -22,6 +22,30 @@
       "revId": "4d647e03fc776e9ea369481217d1825c3625b041",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_1902d93e",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-29T08:42:07Z",
+      "side": 1,
+      "message": "exactly, it doesn\u0027t make sense to process more since we already found the black tests for the given scenario.",
+      "parentUuid": "1a76adc5_ee05d514",
+      "range": {
+        "startLine": 351,
+        "startChar": 20,
+        "endLine": 351,
+        "endChar": 25
+      },
+      "revId": "4d647e03fc776e9ea369481217d1825c3625b041",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
