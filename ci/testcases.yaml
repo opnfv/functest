@@ -105,6 +105,18 @@ tiers:
                     installer: ''
                     scenario: 'onos'
 
+            -
+                name: onos_sfc
+                criteria: 'status == "PASS"'
+                blocking: true
+                description: >-
+                    Test Suite for SFC in ONOS SDN Controller. It integrates
+                    some test suites from upstream using TestON as the test
+                    framework.
+                dependencies:
+                    installer: ''
+                    scenario: 'onos-sfc'
+
     -
         name: features
         order: 3
