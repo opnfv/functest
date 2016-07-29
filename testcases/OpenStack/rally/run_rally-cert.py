@@ -512,14 +512,30 @@ def main():
 
     # Evaluation of the success criteria
     status = "FAIL"
-    # for Rally we decided that the overall success rate must be above 90%
-    if float(success_rate) >= 90:
-        status = "PASS"
 
     if args.sanity:
         case_name = "rally_sanity"
     else:
         case_name = "rally_full"
+
+    # Fetch success criteria from ci/testcases.yaml
+    with open(os.environ[REPO_PATH + 'ci/testcases.yaml']) as f:
+        testcases_yaml = yaml.safe_load(f)
+    f.close()
+
+    # The old success criteria
+    success_criteria = 90.0
+    for item in testcases_yaml["tiers"]:
+        for i in item["testcases"]:
+            if i["name"] == case_name:
+                success_criteria = float(i["criteria"].split(
+                    "= ")[1].rstrip("%"))
+
+    exit_code = -1
+
+    if float(success_rate) >= success_criteria:
+        status = "PASS"
+        exit_code = 0
 
     if args.report:
         logger.debug("Pushing Rally summary into DB...")
@@ -531,7 +547,7 @@ def main():
                                           status,
                                           payload)
     if args.noclean:
-        exit(0)
+        exit(exit_code)
 
     if not image_exists:
         logger.debug("Deleting image '%s' with ID '%s'..."
@@ -544,6 +560,8 @@ def main():
                      % CINDER_VOLUME_TYPE_NAME)
         if not os_utils.delete_volume_type(cinder_client, volume_type):
             logger.error("Error in deleting volume type...")
+
+    exit(exit_code)
 
 
 if __name__ == '__main__':
