@@ -133,7 +133,10 @@ function run_test(){
         ;;
         "onos")
             python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/onosfunctest.py
-      ;;
+        ;;
+        "onos_sfc")
+            python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/onosfunctest.py -t sfc
+        ;;
         "promise")
             python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py $report
             sleep 10 # to let the instances terminate
