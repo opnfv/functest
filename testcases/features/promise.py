@@ -239,8 +239,10 @@ def main():
 
         # criteria for Promise in Release B was 100% of tests OK
         status = "FAIL"
+        exit_code = -1
         if int(tests) > 32 and int(failures) < 1:
             status = "PASS"
+            exit_code = 0
 
         functest_utils.push_results_to_db("promise",
                                           "promise",
@@ -249,6 +251,8 @@ def main():
                                           stop_time,
                                           status,
                                           json_results)
+
+    exit(exit_code)
 
 
 if __name__ == '__main__':
