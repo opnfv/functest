@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_df752133",
+        "filename": "testcases/OpenStack/tempest/gen_tempest_conf.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-07-31T19:44:55Z",
+      "side": 1,
+      "message": "you need 2 blank lines. Flake8 is very sensitive about some things like this :)",
+      "revId": "a30905d494c5bfd4939d1d5f287fb528f339ee2b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
