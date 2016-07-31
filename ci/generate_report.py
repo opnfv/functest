@@ -35,8 +35,12 @@ def get_results_from_db():
     url = 'http://testresults.opnfv.org/test/api/v1/results?build_tag=' + \
         BUILD_TAG
     logger.debug("Query to rest api: %s" % url)
-    data = json.load(urllib2.urlopen(url))
-    return data['results']
+    try:
+        data = json.load(urllib2.urlopen(url))
+        return data['results']
+    except:
+        logger.error("Cannot read content from the url: %s" % url)
+        return None
 
 
 def get_data(test, results):
@@ -90,10 +94,11 @@ def main(args):
 
     if IS_CI_RUN:
         results = get_results_from_db()
-        for test in executed_test_cases:
-            data = get_data(test, results)
-            test.update({"url": data['url'],
-                         "result": data['result']})
+        if results is not None:
+            for test in executed_test_cases:
+                data = get_data(test, results)
+                test.update({"url": data['url'],
+                             "result": data['result']})
 
     TOTAL_LEN = COL_1_LEN + COL_2_LEN + COL_3_LEN + COL_4_LEN
     if IS_CI_RUN:
