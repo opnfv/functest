@@ -21,11 +21,11 @@ import shutil
 import subprocess
 import sys
 import time
-import yaml
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+import yaml
 
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
@@ -341,7 +341,7 @@ def apply_tempest_blacklist():
             black_list_yaml = yaml.safe_load(black_list_file)
             black_list_file.close()
             for item in black_list_yaml:
-                scenarios = item['sceanrios']
+                scenarios = item['scenarios']
                 installers = item['installers']
                 if (deploy_scenario in scenarios and
                         installer_type in installers):
