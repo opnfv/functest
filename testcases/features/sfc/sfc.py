@@ -53,6 +53,28 @@ TACKER_CHANGECLASSI = "sfc_change_classi.bash"
 
 def main():
 
+# Allow any port so that tacker commands reaches the server.
+# This will be deleted when tacker is included in OPNFV installation
+
+    ssh_options = '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+    contr_cmd = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
+                 " 'fuel node'|grep controller|awk '{print $10}'")
+    logger.info("Executing tacker script: '%s'" % contr_cmd)
+    process = subprocess.Popen(contr_cmd,
+                               shell=True,
+                               stdout=subprocess.PIPE)
+    ip = process.stdout.readline().rstrip()
+
+    iptable_cmd1 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
+                    " ssh " + ip + " iptables -P INPUT ACCEPT ")
+    iptable_cmd2 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
+                    " ssh " + ip + " iptables -t nat -P INPUT ACCEPT ")
+
+    subprocess.call(iptable_cmd1, shell=True)
+    subprocess.call(iptable_cmd2, shell=True)
+
+# Getting the different clients
+
     nova_client = os_utils.get_nova_client()
     neutron_client = os_utils.get_neutron_client()
     glance_client = os_utils.get_glance_client()
@@ -66,25 +88,6 @@ def main():
             "/home/opnfv/functest/data/")
     else:
         logger.info("Using old image")
-
-# Allow any port so that tacker commands reaches the server.
-# CHECK IF THIS STILL MAKES SENSE WHEN TACKER IS INCLUDED IN OPNFV INSTALATION
-
-    controller_command = ("sshpass -p r00tme ssh root@10.20.0.2"
-                          " 'fuel node'|grep controller|awk '{print $10}'")
-    logger.info("Executing tacker script: '%s'" % controller_command)
-    process = subprocess.Popen(controller_command,
-                               shell=True,
-                               stdout=subprocess.PIPE)
-    ip = process.stdout.readline()
-
-    iptable_command1 = ("sshpass -p r00tme ssh root@10.20.0.2 ssh"
-                        " " + ip + " iptables -P INPUT ACCEPT ")
-    iptable_command2 = ("sshpass -p r00tme ssh root@10.20.0.2 ssh"
-                        " " + ip + " iptables -t nat -P INPUT ACCEPT ")
-
-    subprocess.call(iptable_command1, shell=True)
-    subprocess.call(iptable_command2, shell=True)
 
 # Create glance image and the neutron network
 
