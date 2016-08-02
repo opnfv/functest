@@ -22,6 +22,30 @@
       "revId": "bc90becf8cfbe672926c813670a418f125f72b7b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_0e77ec03",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 2977
+      },
+      "writtenOn": "2016-08-02T12:42:37Z",
+      "side": 1,
+      "message": "The line was exceeding 80 characters so had to pull it down.",
+      "parentUuid": "1a76adc5_8e0c5c96",
+      "range": {
+        "startLine": 237,
+        "startChar": 3,
+        "endLine": 237,
+        "endChar": 15
+      },
+      "revId": "bc90becf8cfbe672926c813670a418f125f72b7b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
