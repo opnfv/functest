@@ -427,34 +427,19 @@ def run_tempest(OPTION):
     dur_sec_int = dur_sec_int + 60 * dur_min
     stop_time = time.time()
 
-    status = "FAIL"
     try:
         diff = (int(num_tests) - int(num_failures))
         success_rate = 100 * diff / int(num_tests)
     except:
         success_rate = 0
 
-    # For Tempest we assume that the success rate is above 90%
-    if "smoke" in args.mode:
-        case_name = "tempest_smoke_serial"
-        # Note criteria hardcoded...TODO read it from testcases.yaml
-        success_criteria = 100
-        if success_rate >= success_criteria:
-            status = "PASS"
-        else:
-            logger.info("Tempest success rate: %s%%. The success criteria to "
-                        "pass this test is %s%%. Marking the test as FAILED." %
-                        (success_rate, success_criteria))
+    if 'smoke' in args.mode:
+        case_name = 'tempest_smoke_serial'
     else:
-        case_name = "tempest_full_parallel"
-        # Note criteria hardcoded...TODO read it from testcases.yaml
-        success_criteria = 80
-        if success_rate >= success_criteria:
-            status = "PASS"
-        else:
-            logger.info("Tempest success rate: %s%%. The success criteria to "
-                        "pass this test is %s%%. Marking the test as FAILED." %
-                        (success_rate, success_criteria))
+        case_name = 'tempest_full_parallel'
+
+    status = ft_utils.check_success_rate(case_name, success_rate)
+    logger.info("Tempest %s success rate: %s%%." % (case_name, success_rate))
 
     # Push results in payload of testcase
     if args.report:
