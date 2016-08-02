@@ -15,3 +15,26 @@
         - tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops[compute,id-7fff3fb3-91d8-4fd0-bd7d-0204f1f180ba,network,smoke]
         - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern.test_volume_boot_pattern[compute,id-557cd2c2-4eb8-4dce-98be-f86765ff311b,image,smoke,volume]
         - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPatternV2.test_volume_boot_pattern[compute,id-557cd2c2-4eb8-4dce-98be-f86765ff311b,image,smoke,volume]
+
+    scenarios:
+        - os-odl_l2-nofeature-ha
+        - os-odl_l2-nofeature-noha
+        - os-nosdn-nofeature-ha
+        - os-nosdn-nofeature-noha
+        - os-onos-nofeature-ha
+        - os-onos-nofeature-noha
+        - os-onos-sfc-ha
+        - os-onos-sfc-noha
+        - os-nosdn-lxd-ha
+        - os-nosdn-lxd-noha
+    installers:
+        - joid
+    tests:
+        - tempest.api.object_storage.test_account_quotas.AccountQuotasTest.test_admin_modify_quota
+        - tempest.api.object_storage.test_account_quotas.AccountQuotasTest.test_upload_valid_object
+        - tempest.api.object_storage.test_container_quotas.ContainerQuotasTest.test_upload_large_object
+        - tempest.api.object_storage.test_container_quotas.ContainerQuotasTest.test_upload_too_many_objects
+        - tempest.api.object_storage.test_container_quotas.ContainerQuotasTest.test_upload_valid_object
+        - tempest.api.object_storage.test_container_services.ContainerTest.test_create_container
+        - tempest.api.object_storage.test_container_services.ContainerTest.test_list_container_contents
+        - tempest.api.object_storage.test_container_services.ContainerTest.test_list_container_metadata
