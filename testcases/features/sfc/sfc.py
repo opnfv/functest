@@ -247,11 +247,14 @@ def main():
         # timeout -= 1
 
     try:
-        (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
-        if "vxlan_tool.py" in stdout.readlines()[0]:
-            logger.debug("HTTP firewall started")
-        else:
-            logger.error("HTTP firewall not started")
+        while 1:
+            (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
+            if "vxlan_tool.py" in stdout.readlines()[0]:
+                logger.debug("HTTP firewall started")
+                break
+            else:
+                logger.debug("HTTP firewall not started")
+                time.sleep(3)
     except:
         logger.error("vxlan_tool not started in SF1")
 
@@ -268,11 +271,14 @@ def main():
         # timeout -= 1
 
     try:
-        (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
-        if "vxlan_tool.py" in stdout.readlines()[0]:
-            logger.debug("SSH firewall started")
-        else:
-            logger.error("SSH firewall not started")
+        while 1:
+            (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
+            if "vxlan_tool.py" in stdout.readlines()[0]:
+                logger.debug("SSH firewall started")
+                break
+            else:
+                logger.debug("SSH firewall not started")
+                time.sleep(3)
     except:
         logger.error("vxlan_tool not started in SF2")
 
@@ -282,7 +288,7 @@ def main():
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + floatip_server + " 22 2>&1"
+        command = "nc -w 5 -zv " + instance_ip_2 + " 22 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
     except:
         logger.debug("Waiting for %s..." % floatip_client)
@@ -305,7 +311,7 @@ def main():
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + floatip_server + " 80 2>&1"
+        command = "nc -w 5 -zv " + instance_ip_2 + " 80 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
     except:
         logger.debug("Waiting for %s..." % floatip_client)
@@ -332,7 +338,7 @@ def main():
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + floatip_server + " 80 2>&1"
+        command = "nc -w 5 -zv " + instance_ip_2 + " 80 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
     except:
         logger.debug("Waiting for %s..." % floatip_client)
@@ -353,7 +359,7 @@ def main():
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + floatip_server + " 22 2>&1"
+        command = "nc -w 5 -zv " + instance_ip_2 + " 22 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
     except:
         logger.debug("Waiting for %s..." % floatip_client)
