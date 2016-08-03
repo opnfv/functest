@@ -22,6 +22,30 @@
       "revId": "ac81d82d274d9a9e4e6947b4684d966e6f8841b6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_f11db174",
+        "filename": "testcases/OpenStack/tempest/custom_tests/blacklist.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-08-03T11:31:33Z",
+      "side": 1,
+      "message": "Yes, I\u0027ll upload new patch",
+      "parentUuid": "1a76adc5_712201bb",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 103
+      },
+      "revId": "ac81d82d274d9a9e4e6947b4684d966e6f8841b6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
