@@ -163,6 +163,11 @@ function run_test(){
             if [ $ret_val != 0 ]; then
                 exit $ret_val
             fi
+            bash ${FUNCTEST_REPO_DIR}/testcases/features/sfc/compute_presetup_CI.bash
+            ret_val=$?
+            if [ $ret_val != 0 ]; then
+                exit $ret_val
+            fi
             source ${FUNCTEST_REPO_DIR}/testcases/features/sfc/tackerc
             python ${FUNCTEST_REPO_DIR}/testcases/features/sfc/sfc.py
         ;;
