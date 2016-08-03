@@ -308,9 +308,12 @@ def apply_tempest_blacklist():
         black_tests = []
         logger.debug("Tempest blacklist file does not exist.")
 
-    for line in cases_file:
-        if line not in black_tests:
-            result_file.write(str(line) + '\n')
+    for cases_line in cases_file:
+        for black_tests_line in black_tests:
+            if black_tests_line in cases_line:
+                break
+        else:
+            result_file.write(str(cases_line) + '\n')
     result_file.close()
 
 
