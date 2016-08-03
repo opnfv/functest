@@ -441,9 +441,9 @@ def main():
     flavor_name = "m1.small"
     flavor_id = os_utils.get_flavor_id(nova, flavor_name)
     for requirement in CW_REQUIERMENTS:
-        if requirement == 'ram_min':
+        if requirement == 'ram_min' and flavor_id == '':
             flavor_id = os_utils.get_flavor_id_by_ram_range(
-                nova, CW_REQUIERMENTS['ram_min'], 8196)
+                nova, CW_REQUIERMENTS['ram_min'], 4500)
 
     if flavor_id == '':
         logger.error(
