@@ -59,16 +59,24 @@ def main():
     ssh_options = '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
     contr_cmd = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
                  " 'fuel node'|grep controller|awk '{print $10}'")
-    logger.info("Executing tacker script: '%s'" % contr_cmd)
+    logger.info("Executing script to get ip_server: '%s'" % contr_cmd)
     process = subprocess.Popen(contr_cmd,
                                shell=True,
                                stdout=subprocess.PIPE)
-    ip = process.stdout.readline().rstrip()
+    ip_server = process.stdout.readline().rstrip()
+
+    contr_cmd2 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
+                  " 'fuel node'|grep compute|awk '{print $10}'")
+    logger.info("Executing script to get ip_compute: '%s'" % contr_cmd2)
+    process = subprocess.Popen(contr_cmd2,
+                               shell=True,
+                               stdout=subprocess.PIPE)
+    ip_compute = process.stdout.readline().rstrip()
 
     iptable_cmd1 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
-                    " ssh " + ip + " iptables -P INPUT ACCEPT ")
+                    " ssh " + ip_server + " iptables -P INPUT ACCEPT ")
     iptable_cmd2 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
-                    " ssh " + ip + " iptables -t nat -P INPUT ACCEPT ")
+                    " ssh " + ip_server + " iptables -t nat -P INPUT ACCEPT ")
 
     subprocess.call(iptable_cmd1, shell=True)
     subprocess.call(iptable_cmd2, shell=True)
@@ -247,11 +255,14 @@ def main():
         # timeout -= 1
 
     try:
-        (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
-        if "vxlan_tool.py" in stdout.readlines()[0]:
-            logger.debug("HTTP firewall started")
-        else:
-            logger.error("HTTP firewall not started")
+        while 1:
+            (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
+            if "vxlan_tool.py" in stdout.readlines()[0]:
+                logger.debug("HTTP firewall started")
+                break
+            else:
+                logger.debug("HTTP firewall not started")
+                time.sleep(3)
     except:
         logger.error("vxlan_tool not started in SF1")
 
@@ -268,13 +279,25 @@ def main():
         # timeout -= 1
 
     try:
-        (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
-        if "vxlan_tool.py" in stdout.readlines()[0]:
-            logger.debug("SSH firewall started")
-        else:
-            logger.error("SSH firewall not started")
+        while 1:
+            (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
+            if "vxlan_tool.py" in stdout.readlines()[0]:
+                logger.debug("SSH firewall started")
+                break
+            else:
+                logger.debug("SSH firewall not started")
+                time.sleep(3)
     except:
         logger.error("vxlan_tool not started in SF2")
+
+    # SSH to modify the classification flows in compute
+
+    contr_cmd3 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
+                  " 'ssh " + ip_compute + " 'bash correct_classifier.bash''")
+    logger.info("Executing script to modify the classi: '%s'" % contr_cmd3)
+    process = subprocess.Popen(contr_cmd3,
+                               shell=True,
+                               stdout=subprocess.PIPE)
 
     # SSH TO EXECUTE cmd_client
 
@@ -282,7 +305,7 @@ def main():
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + floatip_server + " 22 2>&1"
+        command = "nc -w 5 -zv " + instance_ip_2 + " 22 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
     except:
         logger.debug("Waiting for %s..." % floatip_client)
@@ -305,7 +328,7 @@ def main():
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + floatip_server + " 80 2>&1"
+        command = "nc -w 5 -zv " + instance_ip_2 + " 80 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
     except:
         logger.debug("Waiting for %s..." % floatip_client)
@@ -332,7 +355,7 @@ def main():
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + floatip_server + " 80 2>&1"
+        command = "nc -w 5 -zv " + instance_ip_2 + " 80 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
     except:
         logger.debug("Waiting for %s..." % floatip_client)
@@ -353,7 +376,7 @@ def main():
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + floatip_server + " 22 2>&1"
+        command = "nc -w 5 -zv " + instance_ip_2 + " 22 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
     except:
         logger.debug("Waiting for %s..." % floatip_client)
