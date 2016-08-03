@@ -37,7 +37,8 @@ def main():
     cmd = 'cd %s/tests && ./run.sh' % DOCTOR_REPO
     start_time = time.time()
 
-    ret = functest_utils.execute_command(cmd, logger, exit_on_error=False)
+    ret = functest_utils.execute_command(cmd, logger, info=True,
+                                         exit_on_error=False)
 
     stop_time = time.time()
     duration = round(stop_time - start_time, 1)
