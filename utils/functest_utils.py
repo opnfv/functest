@@ -20,6 +20,7 @@ import socket
 import subprocess
 import sys
 import urllib2
+import dns.resolver
 
 import functest.ci.tier_builder as tb
 from git import Repo
@@ -226,13 +227,17 @@ def get_resolvconf_ns():
     nameservers = []
     rconf = open("/etc/resolv.conf", "r")
     line = rconf.readline()
+    resolver = dns.resolver.Resolver()
     while line:
         ip = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         if ip:
-            result = sock.connect_ex((ip.group(), 53))
-            if result == 0:
-                nameservers.append(ip.group())
+            resolver.nameservers = [str(ip)]
+            try:
+                result = resolver.query('opnfv.org')[0]
+                if result != "":
+                    nameservers.append(ip.group())
+            except dns.exception.Timeout:
+                pass
         line = rconf.readline()
     return nameservers
 
