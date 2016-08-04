@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_2700cba9",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-08-04T06:54:30Z",
+      "side": 1,
+      "message": "Could this be more readable without get_value() function?",
+      "revId": "54ac436020690cf607a94acff7a6fc1369cc9df5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
