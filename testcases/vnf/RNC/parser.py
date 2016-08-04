@@ -32,33 +32,18 @@ logger = ft_logger.Logger("parser").getLogger()
 
 
 def main():
-    EXIT_CODE = -1
     project = 'parser'
     case_name = 'parser-basics'
     cmd = 'cd %s/tests && ./functest_run.sh' % PARSER_REPO
+
     start_time = time.time()
-
     ret = functest_utils.execute_command(cmd, logger, exit_on_error=False)
-
     stop_time = time.time()
-    duration = round(stop_time - start_time, 1)
-    if ret == 0:
-        EXIT_CODE = 0
-        logger.info("parser OK")
-        test_status = 'OK'
-    else:
-        logger.info("parser FAILED")
-        test_status = 'NOK'
 
-    details = {
-        'timestart': start_time,
-        'duration': duration,
-        'status': test_status,
-    }
-
-    status = "FAIL"
-    if details['status'] == "OK":
-        status = "PASS"
+    status, details = functest_utils.check_test_result(case_name,
+                                                       ret,
+                                                       start_time,
+                                                       stop_time)
 
     functest_utils.logger_test_results(logger,
                                        project,
@@ -73,7 +58,7 @@ def main():
                                       stop_time,
                                       status,
                                       details)
-    exit(EXIT_CODE)
+    exit(ret)
 
 if __name__ == '__main__':
     main()

@@ -357,16 +357,33 @@ def check_success_rate(case_name, success_rate):
     success_rate = float(success_rate)
     criteria = get_criteria_by_test(case_name)
 
-    def get_value(op):
+    def get_criteria_value(op):
         return float(criteria.split(op)[1].rstrip('%'))
 
     status = 'FAIL'
     ops = ['==', '>=']
     for op in ops:
         if op in criteria:
-            c_value = get_value(op)
+            c_value = get_criteria_value(op)
             if eval("%s %s %s" % (success_rate, op, c_value)):
                 status = 'PASS'
             break
 
     return status
+
+
+def check_test_result(test_name, ret, start_time, stop_time):
+    def get_criteria_value():
+        return get_criteria_by_test(test_name).split('==')[1].strip()
+
+    status = 'FAIL'
+    if str(ret) == get_criteria_value():
+        status = 'PASS'
+
+    details = {
+        'timestart': start_time,
+        'duration': round(stop_time - start_time, 1),
+        'status': status,
+    }
+
+    return status, details
