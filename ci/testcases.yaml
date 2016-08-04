@@ -257,7 +257,7 @@ tiers:
                     scenario: '(ocl)|(nosdn)|^(os-odl)((?!bgpvpn).)*$'
             -
                 name: parser
-                criteria: 'status == "PASS"'
+                criteria: 'ret == 0'
                 blocking: false
                 description: >-
                     Test suite from Parser project.
