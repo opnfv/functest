@@ -16,6 +16,24 @@
       "revId": "54ac436020690cf607a94acff7a6fc1369cc9df5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_47206749",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-04T07:05:04Z",
+      "side": 1,
+      "message": "As to clean code, I think extract a method is better, but I think I should change the method name to get_criteria_value",
+      "parentUuid": "1a76adc5_2700cba9",
+      "revId": "54ac436020690cf607a94acff7a6fc1369cc9df5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
