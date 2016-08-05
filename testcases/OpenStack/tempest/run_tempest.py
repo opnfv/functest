@@ -198,6 +198,7 @@ def configure_tempest(deployment_dir):
     config.set('identity', 'tenant_name', TENANT_NAME)
     config.set('identity', 'username', USER_NAME)
     config.set('identity', 'password', USER_PASSWORD)
+    config.set('validation', 'ssh_timeout', 130)
 
     if os.getenv('OS_ENDPOINT_TYPE') is not None:
         services_list = ['compute', 'volume', 'image', 'network',
