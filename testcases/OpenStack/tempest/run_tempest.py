@@ -81,6 +81,8 @@ TENANT_DESCRIPTION = functest_yaml.get("tempest").get("identity").get(
 USER_NAME = functest_yaml.get("tempest").get("identity").get("user_name")
 USER_PASSWORD = functest_yaml.get("tempest").get("identity").get(
     "user_password")
+SSH_TIMEOUT = functest_yaml.get("tempest").get("validation").get(
+    "ssh_timeout")
 DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
 RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get(
     "dir_rally_inst")
@@ -198,6 +200,7 @@ def configure_tempest(deployment_dir):
     config.set('identity', 'tenant_name', TENANT_NAME)
     config.set('identity', 'username', USER_NAME)
     config.set('identity', 'password', USER_PASSWORD)
+    config.set('validation', 'ssh_timeout', SSH_TIMEOUT)
 
     if os.getenv('OS_ENDPOINT_TYPE') is not None:
         services_list = ['compute', 'volume', 'image', 'network',
