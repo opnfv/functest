@@ -155,7 +155,8 @@ function run_test(){
                 $clean_flag -s -m feature_multisite $report
         ;;
         "domino")
-            python ${FUNCTEST_REPO_DIR}/testcases/features/domino.py
+            # TODO Enable this test when there are correct ips passed
+            #python ${FUNCTEST_REPO_DIR}/testcases/features/domino.py
         ;;
         "odl-sfc")
             bash ${FUNCTEST_REPO_DIR}/testcases/features/sfc/server_presetup_CI.bash
