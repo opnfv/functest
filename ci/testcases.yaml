@@ -160,7 +160,7 @@ tiers:
                 description: >-
                     Test suite for policy management based on OpenStack Congress
                 dependencies:
-                    installer: 'apex'
+                    installer: '(apex)|(joid)'
                     scenario: ''
             -
                 name: moon
