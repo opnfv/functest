@@ -10,7 +10,7 @@ service_properties:
 vdus:
   vdu1:
     id: vdu1
-    vm_image: sf_summit2016
+    vm_image: sf_nsh_colorado
     instance_type: custom
     service_type: firewall1
 
