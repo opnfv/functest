@@ -26,8 +26,8 @@ HOME = os.environ['HOME'] + "/"
 VM_BOOT_TIMEOUT = 180
 INSTANCE_NAME = "client"
 FLAVOR = "m1.small"
-IMAGE_NAME = "sf_summit2016"
-IMAGE_FILENAME = "sf_summit2016.qcow2"
+IMAGE_NAME = "sf_nsh_colorado"
+IMAGE_FILENAME = "sf_nsh_colorado.qcow2"
 IMAGE_FORMAT = "qcow2"
 IMAGE_PATH = "/home/opnfv/functest/data" + "/" + IMAGE_FILENAME
 
@@ -92,7 +92,7 @@ def main():
     if not os.path.isfile(IMAGE_PATH):
         logger.info("Downloading image")
         ft_utils.download_url(
-            "http://artifacts.opnfv.org/sfc/demo/sf_summit2016.qcow2",
+            "http://artifacts.opnfv.org/sfc/demo/sf_nsh_colorado.qcow2",
             "/home/opnfv/functest/data/")
     else:
         logger.info("Using old image")
