@@ -40,9 +40,12 @@ def main():
 
     stop_time = time.time()
     duration = round(stop_time - start_time, 1)
-    if ret == 0:
+    if ret == 0 and duration > 1:
         logger.info("domino OK")
         test_status = 'OK'
+    elif ret == 0 and duration <= 1:
+        logger.info("domino TEST SKIPPED")
+        test_status = 'SKIPPED'
     else:
         logger.info("domino FAILED")
         test_status = 'NOK'
@@ -60,6 +63,8 @@ def main():
     status = "FAIL"
     if details['status'] == "OK":
         status = "PASS"
+    elif details['status'] == "SKIPPED":
+        status = "SKIP"
 
     logger.info("Pushing Domino results: TEST_DB_URL=%(db)s pod_name=%(pod)s "
                 "version=%(v)s scenario=%(s)s criteria=%(c)s details=%(d)s" % {
@@ -71,13 +76,15 @@ def main():
                     'b': build_tag,
                     'd': details,
                 })
-    functest_utils.push_results_to_db("domino",
-                                      "domino-multinode",
-                                      logger,
-                                      start_time,
-                                      stop_time,
-                                      status,
-                                      details)
+
+    if status is not "SKIP":
+        functest_utils.push_results_to_db("domino",
+                                          "domino-multinode",
+                                          logger,
+                                          start_time,
+                                          stop_time,
+                                          status,
+                                          details)
 
 if __name__ == '__main__':
     main()
