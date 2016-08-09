@@ -4,8 +4,8 @@
 #when SFF and classifier are in the same swtich
 
 nsp=`ovs-ofctl -O Openflow13 dump-flows br-int table=11 | \
-grep "nsp=" | awk '{print $6}' | awk -F ',' '{print $2}' | \
-awk -F '=' '{print $2}'`
+grep "NXM_NX_NSP" | head -1 | cut -d',' -f13 | cut -d':' -f2 \
+| cut -d'-' -f1`
 
 ip=`ovs-ofctl -O Openflow13 dump-flows br-int table=11 | \
 grep NXM_NX_NSH_C1 | head -1 | cut -d':' -f5 | cut -d'-' -f1`
