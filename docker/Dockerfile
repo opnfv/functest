@@ -88,12 +88,8 @@ RUN git clone https://gerrit.opnfv.org/gerrit/parser ${repos_dir}/parser
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt
 RUN pip install -r ${repos_dir}/tempest/requirements.txt
-RUN pip install -r ${repos_dir}/parser/tosca2heat/tosca-parser/requirements.txt
-RUN pip install -r ${repos_dir}/parser/tosca2heat/heat-translator/requirements.txt
-RUN cd ${repos_dir}/parser/tosca2heat/tosca-parser && python setup.py install
-RUN cd ${repos_dir}/parser/tosca2heat/heat-translator && python setup.py install
 
-
+RUN /bin/bash ${repos_dir}/parser/tests/parser_install.sh ${repos_dir}
 RUN ${repos_dir}/rally/install_rally.sh --yes
 
 ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img /home/opnfv/functest/data/

@@ -176,22 +176,6 @@ promise:
         subnet_cidr: 192.168.121.0/24
         router_name: promise-router
 
-parser:
-    general:
-        tenant_name: parser
-        tenant_description: parser Functionality Testing
-        user_name: parser
-        user_pwd: parser
-        image_name: parser-img
-        flavor_name: parser-flavor
-        flavor_vcpus: 1
-        flavor_ram: 512
-        flavor_disk: 0
-        network_name: parser-net
-        subnet_name: parser-subnet
-        subnet_cidr: 192.168.160.0/24
-        router_name: parser-router
-
 example:
     example_vm_name: example-vm
     example_flavor: m1.small
