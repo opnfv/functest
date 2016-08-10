@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_5dc58f59",
+        "filename": "testcases/features/domino.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-10T07:25:24Z",
+      "side": 1,
+      "message": "if the tests are skipped, does it make sens to push anything to the DB?\nI would push only if the test has been executed assuming that we have the jenkins logs anyway\npushing a skipped status into the result DB sounds a bit strange, no?\n\nif status is not \"SKIPPED\":\n    functest_utils.push_results_to_db(.....",
+      "revId": "685fc4e18928fb0ec50edb47bf9c9f5e53659307",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
