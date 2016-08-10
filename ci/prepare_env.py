@@ -46,9 +46,14 @@ CI_SCENARIO = ""
 CI_DEBUG = False
 REPOS_DIR = os.getenv('repos_dir')
 FUNCTEST_REPO = REPOS_DIR + '/functest/'
+CONFIG_FUNCTEST_PATH = os.environ["CONFIG_FUNCTEST_YAML"]
+CONFIG_PATCH_PATH = os.path.join(os.path.dirname(CONFIG_FUNCTEST_PATH),"config_patch.yaml")
 
-with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
+with open(CONFIG_FUNCTEST_PATH) as f:
     functest_yaml = yaml.safe_load(f)
+
+with open(CONFIG_PATCH_PATH) as f:
+    functest_patch_yaml = yaml.safe_load(f)
 
 FUNCTEST_CONF_DIR = functest_yaml.get("general").get(
     "directories").get("dir_functest_conf")
@@ -183,6 +188,19 @@ def source_rc_file():
     logger.debug("Used credentials: %s" % str)
 
 
+def patch_config_file():
+    updated = False
+    for key in functest_patch_yaml:
+        if key in CI_SCENARIO:
+            new_functest_yaml = dict(ft_utils.merge_dicts(functest_yaml, functest_patch_yaml[key]))
+            updated = True
+
+    if updated:
+        os.remove(CONFIG_FUNCTEST_PATH)
+        with open(CONFIG_FUNCTEST_PATH, "w") as f:
+            f.write(yaml.dump(new_functest_yaml, default_style='"'))
+        f.close()
+
 def verify_deployment():
     print_separator()
     logger.info("Verifying OpenStack services...")
@@ -262,6 +280,7 @@ def main():
         check_env_variables()
         create_directories()
         source_rc_file()
+        patch_config_file()
         verify_deployment()
         install_rally()
 
