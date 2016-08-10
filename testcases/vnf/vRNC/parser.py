@@ -40,7 +40,7 @@ def main():
     ret = functest_utils.execute_command(cmd, logger, exit_on_error=False)
     stop_time = time.time()
 
-    status, details = functest_utils.check_test_result(case_name,
+    status, details = functest_utils.check_test_result(project,
                                                        ret,
                                                        start_time,
                                                        stop_time)
