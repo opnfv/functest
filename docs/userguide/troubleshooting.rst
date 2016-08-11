@@ -312,15 +312,19 @@ To check any possible problems with Rally, the logs are stored under
 Controllers
 -----------
 
-ODL
-^^^
-2 versions are supported in Colorado, depending on the scenario:
- * Lithium
- * Berylium
+Opendaylight
+^^^^^^^^^^^^
 
-The upstream test suites have not been adapted, so you may get 18 or 15 tests
-passed on 18 depending on your configuration. The 3 testcases are partly failed
-due to wrong return code.
+If the Basic Restconf test suite fails, check that the ODL controller is
+reachable and its Restconf module has been installed.
+
+If the Neutron Reachability test suite fails, verify that the modules
+implementing Neutron requirements have been properly installed.
+
+If any of the other testcase fails, check that Neutron and ODL have been
+correctly configured to work together. Check Neutron configuration files,
+accounts, IP addresses etc.).
+
 
 ONOS
 ^^^^
@@ -331,20 +335,14 @@ Please refer to the ONOS documentation. `ONOSFW User Guide`_ .
 Features
 --------
 
-
-Doctor
-^^^^^^
-Please refer to the Doctor documentation. `Doctor User Guide`_
+Please refer to the dedicated feature user guides for details.
 
 
-Promise
-^^^^^^^
-Please refer to the Promise documentation. `Promise User Guide`_
+security_scan
+^^^^^^^^^^^^^
 
+** TODO **
 
-bgpvpn
-^^^^^^
-Please refer to the SNVPN documentation. `SDNVPN User Guide`_
 
 
 NFV
@@ -381,6 +379,12 @@ described in the following table:
 | No access to OpenStack API from   | Orchestrator can be installed but  |
 | the VM                            | the vIMS VNF installation fails    |
 +-----------------------------------+------------------------------------+
+
+
+parser
+^^^^^^
+
+See parser user guide for details: ** TODO link **
 
 
 .. _`OPNFV Functest Developer Guide`:  http://artifacts.opnfv.org/functest/docs/devguide/#
