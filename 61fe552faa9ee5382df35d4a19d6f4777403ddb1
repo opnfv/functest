@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_b1f5ec84",
+        "filename": "testcases/features/sfc/set-up-tacker.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2091
+      },
+      "writtenOn": "2016-08-11T14:47:08Z",
+      "side": 1,
+      "message": "I was doing it with git clone but Jose suggested to do it with curl so that not the whole repo is downloaded and only the file I need",
+      "parentUuid": "1a76adc5_a6093433",
+      "revId": "61fe552faa9ee5382df35d4a19d6f4777403ddb1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_46062022",
         "filename": "testcases/features/sfc/set-up-tacker.sh",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-08-11T12:02:59Z",
       "side": 1,
       "message": "I think this is useless",
+      "revId": "61fe552faa9ee5382df35d4a19d6f4777403ddb1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_51f2589b",
+        "filename": "testcases/features/sfc/set-up-tacker.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 2091
+      },
+      "writtenOn": "2016-08-11T14:47:08Z",
+      "side": 1,
+      "message": "You are right",
+      "parentUuid": "1a76adc5_46062022",
       "revId": "61fe552faa9ee5382df35d4a19d6f4777403ddb1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
