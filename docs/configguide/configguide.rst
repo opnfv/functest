@@ -2,132 +2,108 @@
 .. http://creativecommons.org/licenses/by/4.0
 
 
-Preparing the Docker container
-------------------------------
-
-Pull the Functest Docker image ('opnfv/functest') from the public dockerhub
-registry under the OPNFV account: [dockerhub_], with the following docker
-command::
+Pulling the Docker container
+----------------------------
+Pull the Functest Docker image ('opnfv/functest') from the public
+dockerhub registry under the OPNFV account: [dockerhub_], with the
+following docker command::
 
   docker pull opnfv/functest:<TagIdentifier>
 
-where <TagIdentifier> identifies a specifically tagged release of the Functest
-docker container image in the public dockerhub registry. There are many
-different tags created automatically by the CI mechanisms, but you must ensure
-you pull an image with the **correct tag** to match the OPNFV software release
-installed in your environment. All available tagged images can be seen from
-location [FunctestDockerTags_]. For example, when running on the first official
-release of the OPNFV Colorado system platform, tag "colorado.1.0" is needed.
-Pulling other tags might cause some problems while running the tests. If you
-need to specifically pull the latest Functest docker image, then omit the tag
-argument::
-
+where <TagIdentifier> identifies a release of the Functest docker
+container image in the public dockerhub registry. There are many tags
+created automatically by the CI mechanisms, and you must ensure you
+pull an image with the **correct tag** to match the OPNFV software
+release installed in your environment. All available tagged images can
+be seen from location [FunctestDockerTags_]. For example, when running
+on the first official release of the OPNFV Colorado system platform,
+tag "colorado.1.0" is needed. Pulling other tags might cause some
+problems while running the tests. If you need to specifically pull the
+latest Functest docker image, then omit the tag argument::
 
   docker pull opnfv/functest
 
-After pulling the Docker image, check that the pulled image is available with
-the following docker command::
+After pulling the Docker image, check that the pulled image is
+available with the following docker command::
 
   [functester@jumphost ~]$ docker images
-
   REPOSITORY     TAG             IMAGE ID      CREATED      SIZE
   opnfv/functest latest          8cd6683c32ae  2 weeks ago  1.611 GB
   opnfv/functest brahmaputra.3.0 94b78faa94f7  4 weeks ago  874.9 MB
   hello-world    latest          94df4f0ce8a4  7 weeks ago    967 B
 
-  (Docker images pulled without a tag specifier bear the implicitly
-   assigned label "latest", as seen above.)
+Docker images pulled without a tag specifier bear the implicitly
+assigned label "latest", as seen above.
 
-The Functest docker container environment can -in principle- be also used with
-non-OPNFV official installers (e.g. 'devstack), with the **disclaimer** that
-support for such environments is outside of the scope of responsibility of the
-OPNFV project.
+The Functest docker container environment can -in principle- be also
+used with non-OPNFV official installers (e.g. 'devstack), with the
+**disclaimer** that support for such environments is outside of the
+scope and responsibility of the OPNFV project.
 
-The minimum command to create the Functest Docker container can be described as
-follows::
+Functest Docker parameters
+------------------------------
+  #. For OPNFV official installers, it is recommended (although no
+     longer mandatory) to provide two environment variables, in the
+     'docker run' command invocation:
 
-  docker run -it opnfv/functest:<TagIdentifier> /bin/bash
+     * **INSTALLER_TYPE** : possible values are **apex**, **compass**,
+     **fuel** or **joid**.
+     * **INSTALLER_IP** : IP of the installer node/VM.
 
-For OPNFV official installers, it is recommended (although no longer mandatory)
-to provide two additional environment variables, in the 'docker run ...'
-command nvocation:
+     Functest may need to know the IP of the installer to retrieve
+     automatically the credentials from the installer node/VM or from
+     the actual controllers.
 
- * **INSTALLER_TYPE** : possible values are **apex**, **compass**, **fuel** or
-   **joid**.
- * **INSTALLER_IP** : IP of the installer node/VM.
+  #. It is a good practise to assign precisely a container name through
+     the **--name** option.
 
-Functest may need to know the IP of the installer to retrieve automatically the
-credentials from the installer node/VM or even from the actual controllers.
+  #. Credentials for accessing the Openstack
+     It is possible to to indicate the path of the OpenStack
+     credentials using a **-v** option.
+     NOTE: Make sure you have first placed the needed credential file
+     into the Jumphost local file depicted as <your_local_cred_file>.
+     For the Apex Installer you will need to copy file from the
+     Instack/Undercloud VM to Jumphost. See the section 'Apex Installer
+     Tips' later in this document. You can also separately copy the
+     credentials to inside the Functest container before running the
+     tests, but it is not instructed here.
+     WARNING: If you are using the Joid installer, you must pass the
+     credentials using the **-v** option. See the section 'Focus on the
+     OpenStack credentials' later in this document.
 
-Thus, the recommended minimum command to create the Functest Docker container
-for OPNFV installer can be described (using installer 'fuel', and an invented
-INSTALLER_IP of '10.20.0.2', for example), as follows::
+     The local credential file need to be mounted in the Docker container
+     under the path: '/home/opnfv/functest/conf/openstack.creds'.
 
-  docker run -it \
-  -e "INSTALLER_IP=10.20.0.2" \
-  -e "INSTALLER_TYPE=fuel" \
-  opnfv/functest:<TagIdentifier> /bin/bash
+  #. Passing deployment scenario
+     When running Functest against any of the supported OPNFV scenarios,
+     it is recommended to include also the environment variable
+     **DEPLOY_SCENARIO**. The **DEPLOY_SCENARIO** environment variable
+     is passed with the format::
 
-Optionally, it is possible to assign precisely a container name through the
-**--name** option::
+       -e "DEPLOY_SCENARIO=os-<controller>-<nfv_feature>-<ha_mode>"
+       where:
+       os = OpenStack (No other VIM choices currently available)
+       controller is one of ( nosdn | odl_l2 | odl_l3 | onos )
+       nfv_feature is one or more of ( ovs | kvm | sfc | bgpvpn | nofeature )
+                If several features are pertinent then use the underscore
+                character '_' to separate each feature (e.g. ovs_kvm)
+                'nofeature' indicates no NFV feature is deployed
+       ha_mode is one of ( ha | noha )
 
-  docker run --name "CONTAINER_NAME" -it \
-  -e "INSTALLER_IP=10.20.0.2" \
-  -e "INSTALLER_TYPE=fuel" \
-  opnfv/functest:<TagIdentifier> /bin/bash
+     **NOTE:** Not all possible combinations of "DEPLOY_SCENARIO" are
+     supported. The name passed in to the Functest Docker container must
+     match the scenario used when the actual OPNFV platform was deployed.
 
-It is also possible to to indicate the path of the OpenStack credentials using a
-**-v** option::
+Putting all above together, when using installer 'fuel' and an invented
+INSTALLER_IP of '10.20.0.2', the recommended command to create the
+Functest Docker container is as follows::
 
-  docker run -it \
-  -e "INSTALLER_IP=10.20.0.2" \
-  -e "INSTALLER_TYPE=fuel" \
-  -v <path_to_your_local_creds_file>:/home/opnfv/functest/conf/openstack.creds \
-  opnfv/functest:<TagIdentifier> /bin/bash
-
-  NOTE: Make sure you have placed the needed credential file into the
-        Jumphost local path <path_to_your_local_cred_file>. For the
-        Apex Installer you will need to pre-copy the required OpenStack
-        credentials file from the Instack/Undercloud Virtual Machine.
-        See the section 'Apex Installer Tips' later in this document.
-
-  Warning
-  -------
-  If you are using the Joid installer, you must use the method above
-  to provide the required OpenStack credentials. See the section
-  'Focus on the OpenStack credentials' later in this document.
-
-
-The local openstack credential file will be mounted in the Docker container
-under the path: '/home/opnfv/functest/conf/openstack.creds'
-
-If the intention is to run Functest against any of the supported OPNFV
-scenarios, it is recommended to include also the environment variable
-**DEPLOY_SCENARIO**. The **DEPLOY_SCENARIO** environment variable is passed with the format::
-
-  -e "DEPLOY_SCENARIO=os-<controller>-<nfv_feature>-<ha_mode>"
-
-  where:
-  os = OpenStack (No other VIM choices currently available)
-  controller  is one of ( nosdn | odl_l2 | odl_l3 | onos | ocl )
-  nfv_feature is one or more of ( ovs | kvm | sfc | bgpvpn | nofeature )
-              If several features are pertinent then use the underscore
-              character '_' to separate each feature (e.g. ovs_kvm)
-              'nofeature' indicates no NFV feature is deployed
-  ha_mode     is one of ( ha | noha )
-
-For example::
-
-  docker run -it \
+  docker run --name "FunctestContainer" -it \
   -e "INSTALLER_IP=10.20.0.2" \
   -e "INSTALLER_TYPE=fuel" \
   -e "DEPLOY_SCENARIO=os-odl_l2-ovs_kvm-ha" \
+  -v <your_local_creds_file>:/home/opnfv/functest/conf/openstack.creds \
   opnfv/functest:<TagIdentifier> /bin/bash
-
-**NOTE:** Not all possible combinations of "DEPLOY_SCENARIO" are supported.
-The scenario name passed in to the Functest Docker container must match the
-scenario used with the selected installer to create the actual OPNFV platform
-deployment.
 
 Finally, three additional environment variables can also be passed in to the
 Functest Docker Container, using the -e "<EnvironmentVariableName>=<Value>"
@@ -137,7 +113,6 @@ testing and **should not be used** when performing manual test scenarios::
   -e "NODE_NAME=<Test POD Name>" \
   -e "BUILD_TAG=<Jenkins Build Tag>" \
   -e "CI_DEBUG=<DebugTraceValue>"
-
   where:
   <Test POD Name> = Symbolic name of the POD where the tests are run.
                     Visible in test results files, which are stored
@@ -147,7 +122,6 @@ testing and **should not be used** when performing manual test scenarios::
                     been run. If not specified, then the POD name is
                     defined as "Unknown" by default.
                     DO NOT USE THIS OPTION IN MANUAL TEST SCENARIOS.
-
   <Jenkins Build tag> = Symbolic name of the Jenkins Build Job.
                         Visible in test results files, which are stored
                         to the database. This option is only set when
@@ -156,7 +130,6 @@ testing and **should not be used** when performing manual test scenarios::
                         are independently pushed to the results datbase
                         from different Jenkins jobs.
                         DO NOT USE THIS OPTION IN MANUAL TEST SCENARIOS.
-
   <DebugTraceValue> = "true" or "false"
                       Default = "false", if not specified
                       If "true" is specified, then additional debug trace
@@ -165,8 +138,8 @@ testing and **should not be used** when performing manual test scenarios::
 
 Apex Installer Tips
 -------------------
-Some specific tips are useful for the Apex Installer case. If not using Apex
-Installer; ignore this section.
+Some specific tips are useful for the Apex Installer case. If not using
+Apex Installer; ignore this section.
 
   #. The "INSTALLER_IP" environment variable should be set equal to the IP
      address of the so-called "Instack/undercloud Virtual Machine".
@@ -174,54 +147,46 @@ Installer; ignore this section.
      In the Jumphost, execute the following command and note the returned
      IP address::
 
-       sudo virsh domifaddr undercloud | grep -Eo "[0-9.]+{4}"
+       sudo virsh domifaddr undercloud
 
-       NOTE: In releases prior to Colorado, the name 'instack' was
-       used. From Colorado onward, the name 'undercloud' is used.
-       If in doubt, then execute -from the Jumphost- the command
-       "virsh list" to see which name is in use for the Installer
-       Virtual Machine.
+     NOTE: In releases prior to Colorado, the name 'instack' was
+     used. Currently the name 'undercloud' is used. If in doubt, then
+     execute -from the Jumphost- the command "virsh list" to see
+     which name is in use for the Installer Virtual Machine.
 
-     You can now enter the <Specific IP Address> as learned in the above step in the
-     -e option specification::
+     You can now enter the <Specific IP Address> as learned in the
+     above step in the -e option specification::
 
        -e "INSTALLER_IP=<Specific IP Address>"
 
-  #. If you want to 'Bind mount' a local Openstack credentials file ("overcloudrc")
-     to the Docker container, then you may need to first pre-copy that file from the
-     'Instack/Undercloud VM' to the Jump host.
+  #. When you want to 'Bind mount' a local Openstack credentials file
+     ("overcloudrc") to the Docker container, you must first pre-copy
+     that file from the 'Instack/Undercloud VM' to the Jumphost.
 
-     As before, in the Jumphost, execute the following command and note the
-     returned IP address::
+     In the Apex installer case, the Openstack Credential file has the
+     name 'overcloudrc' and is located in the home directory of the
+     'stack' user in the 'Instack/Undercloud VM'.
 
-       sudo virsh domifaddr undercloud | grep -Eo "[0-9.]+{4}"
-
-     Using the <Specific IP Address> just learned above, execute the following
-     shell commands **in the Jumphost**, before issuing the 'docker run ...' command
-     invocation::
+     Using the <Specific IP Address> just learned in prior step,
+     execute the following commands **in the Jumphost**, before
+     issuing the 'docker run ...' command::
 
        scp stack@<Specific IP Address>:overcloudrc .
        sed -i 's/export no_proxy/#export no_proxy/' overcloudrc
        # The above 'sed' command is needed *only* in cases where
-       # the Jumphost is operating behind a http proxy.
-       # See the 'Proxy Support' section later on in this document
+       # the parameter exists in credentials file.
 
-       NOTE: There are two Openstack credential files present in the
-       Instack/Undercloud VM: 'overcloudrc' and 'stackrc'.
-       Don't mix these up! The file 'stackrc' is intended for use with
+       NOTE: There are two different Openstack credential files present
+       in the Instack/Undercloud VM: 'overcloudrc' and 'stackrc'. Do
+       not mix these up! The file 'stackrc' is intended for use with
        'Triple O Undercloud'; only. The SUT always requires OpenStack
        Overcloud Credentials.
 
-     The file located at Jumphost path: '~/overcloudrc' is now 'Bind mounted'
-     to the Docker path '/home/opnfv/functest/conf/openstack.creds'
-     by specifying a **-v** option::
+     The file located at Jumphost path: '~/overcloudrc' can now be
+     'Bind mounted' to the Docker container by specifying a **-v**
+     option::
 
        -v ~/overcloudrc:/home/opnfv/functest/conf/openstack.creds
-
-     in the argument list of the 'docker run ...' command invocation. In the
-     Apex installer case, the Openstack Credential file has the name
-     'overcloudrc' and is located in the home directory of the 'stack' user
-     ( '/home/stack/' or '~/'] ) in the 'Instack/Undercloud VM'.
 
   #. In order that the docker container can access the Instack/Undercloud VM,
      even with 'stack' user, the SSH keys of the Jumphost root user **must be**
@@ -231,10 +196,10 @@ Installer; ignore this section.
        -v /root/.ssh/id_rsa:/root/.ssh/id_rsa
 
   #. Here is an example of the docker command invocation for an Apex installed
-     system, using latest Funtest docker container, for illustration purposes::
+     system, using latest Functest docker container, for illustration purposes::
 
        docker run -it --name "ApexFuncTstODL" \
-       -e "INSTALLER_IP=<Specific IP Address>" \
+       -e "INSTALLER_IP=192.168.122.89" \
        -e "INSTALLER_TYPE=apex" \
        -e "DEPLOY_SCENARIO=os-odl_l2-nofeature-ha" \
        -v /root/.ssh/id_rsa:/root/.ssh/id_rsa \
@@ -258,15 +223,10 @@ now be in place::
             |-- functest
             |-- odl_integration
             |-- onos
-            |-- ovno
             |-- promise
             |-- rally
             |-- releng
             `-- vims-test
-
-  (The sub-directory 'ovno' holds SDN controller functional tests
-   for the OpenContrail SDN Controller, which should be available
-   for Colorado release)
 
 Underneath the '/home/opnfv/' directory, the Functest docker container
 includes two main directories:
@@ -396,20 +356,14 @@ destroy it::
 
   docker -f rm <CONTAINER_ID>
 
-The Docker image is called **opnfv/functest** and it is stored in the public
-Docker registry under the OPNFV account: dockerhub_. The are many different
-tags that have been created automatically by the CI mechanisms, but the one
-that this document refers to is **brahmaputra.1.0**. Pulling other tags might
-cause some problems while running the tests.
-
 Check the Docker documentation dockerdocs_ for more information.
 
 Preparing the Functest environment
 ----------------------------------
 Once the Functest docker container is up and running, the required Functest
 environment needs to be prepared. A custom built **functest** CLI utility is
-availabe to perform the needed environment preparation action. Once the
-enviroment is prepared, the **functest** CLI utility can be used to run
+available to perform the needed environment preparation action. Once the
+environment is prepared, the **functest** CLI utility can be used to run
 different functional tests. The usage of the **functest** CLI utility to run
 tests is described further in the Functest User Guide `OPNFV_FuncTestUserGuide`_
 
@@ -420,7 +374,7 @@ the prompt::
   functest env status
   Functest environment is not installed.
 
-  Note: When the Funtest environment is prepared, the command will
+  Note: When the Functest environment is prepared, the command will
   return the status: "Functest environment ready to run tests."
 
 To prepare the Functest docker container for test case execution, issue the
@@ -467,8 +421,8 @@ container environment, issue the **functest env show** at the prompt::
               - here = "192.168.122.89"
   SCENARIO:   Displays the DEPLOY_SCENARIO value
               - here = "os-odl_l2-nofeature-ha"
-  POD:        Displays the value pass in NODE_NAME
-              - here = "loclahost"
+  POD:        Displays the value passed in NODE_NAME
+              - here = "localhost"
   GIT BRANCH: Displays the git branch of the OPNFV Functest
               project repository included in the Functest
               Docker Container.
@@ -528,7 +482,7 @@ There are 3 ways to provide them to Functest:
       $repos_dir/releng/utils/fetch_os_creds.sh \
       -d /home/opnfv/functest/conf/openstack.creds \
       -i fuel \
-      -a 10.20.0.2"
+      -a 10.20.0.2
 
       (-d specifies the full destination path where to place the
           copied Openstack credential file
@@ -546,8 +500,8 @@ There are 3 ways to provide them to Functest:
       into the correct target path:
       '/home/opnfv/functest/conf/openstack.creds'.
 
-**Warning** If you are using the Joid installer, the 'fetch_os_cred-sh' shell
-script **should not be used**. Use instead, the **-v** optin to Bind Mount a
+**Warning** If you are using the Joid installer, the 'fetch_os_cred.sh' shell
+script **should not be used**. Use instead, the **-v** option to Bind Mount a
 suitably prepared local copy of the Openstack credentials for usage by the Functest
 docker container
 
@@ -555,10 +509,6 @@ Once the credentials are there, they should be sourced **before** running the
 tests::
 
   source /home/opnfv/functest/conf/openstack.creds
-
-or simply using the environment variable **creds**::
-
-  . $creds
 
 After this, try to run any OpenStack command to see if you get any output, for
 instance::
@@ -679,7 +629,7 @@ container::
   nc -v google.com 443
   Connection to google.com 443 port [tcp/https] succeeded!
 
-Note: In a Jumphost node based on the CentOS 7, enviroment, it was observed that
+Note: In a Jumphost node based on the CentOS 7, environment, it was observed that
 the **nc** commands did not function as described in the section above. You can
 however try using the **curl** command instead, if you encounter any issues
 with the **nc** command::
@@ -711,34 +661,32 @@ with the **nc** command::
   (Even Google complained the URL used, it proves the http and https
    protocols are working correctly through the http / https proxy.)
 
-Docker Installation on CentOS 7 behind http proxy
--------------------------------------------------
-There are good instructions in [`InstallDockerCentOS7`_] for the installation
-of **docker** on CentOS 7. However, if your Jumphost is behind a http proxy,
-then the following steps are needed **before** following the instructions in
-the above reference::
+Docker Installation on CentOS behind http proxy
+-----------------------------------------------
+This section is applicable for CentOS family OS on Jumphost which
+itself is behind a proxy server. In that case, the instructions below
+should be followed **before** installing the docker engine::
 
   1) # Make a directory '/etc/systemd/system/docker.service.d'
      # if it does not exist
      sudo mkdir /etc/systemd/system/docker.service.d
 
-     # Create a file called 'env.conf' in that directory with
+  2) # Create a file called 'env.conf' in that directory with
      # the following contents:
      [Service]
      EnvironmentFile=-/etc/sysconfig/docker
 
-  2) # Set up a file called 'docker' in directory '/etc/sysconfig'
+  3) # Set up a file called 'docker' in directory '/etc/sysconfig'
      # with the following contents:
-
      HTTP_PROXY="<Your http proxy settings>"
      HTTPS_PROXY="<Your https proxy settings>"
      http_proxy="${HTTP_PROXY}"
      https_proxy="${HTTPS_PROXY}"
 
-  3) # Reload the daemon
+  4) # Reload the daemon
      systemctl daemon-reload
 
-  4) # Sanity check - check the following docker settings:
+  5) # Sanity check - check the following docker settings:
      systemctl show docker | grep -i env
 
      Expected result:
@@ -746,10 +694,10 @@ the above reference::
      EnvironmentFile=/etc/sysconfig/docker (ignore_errors=yes)
      DropInPaths=/etc/systemd/system/docker.service.d/env.conf
 
-Now follow the instructions in [`InstallDockerCentOS7`_] to download and
-install the **docker-engine**. The instructions conclude with a "test pull"
-of a sample "Hello World" docker container. This should now work with the
-above pre-requisite actions.
+Now follow the instructions in [`InstallDockerCentOS7`_] to download
+and install the **docker-engine**. The instructions conclude with a
+"test pull" of a sample "Hello World" docker container. This should now
+work with the above pre-requisite actions.
 
 .. _dockerdocs: https://docs.docker.com/
 .. _dockerhub: https://hub.docker.com/r/opnfv/functest/
