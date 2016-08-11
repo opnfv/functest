@@ -58,7 +58,10 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | See the Rally documents `[3]`_.  |
 +-------------+---------------+----------------+----------------------------------+
 | Controllers | sdn_suites    | odl            | Opendaylight Test suite          |
-|             |               |                | TODO: Find a document reference! |
+|             |               |                | Basic tests to check the basic   |
+|             |               |                | network operations in            |
+|             |               |                | OpenDaylight based on upstream   |
+|             |               |                | testcases. See below for details |
 |             |               +----------------+----------------------------------+
 |             |               | onos           | Test suite of ONOS L2 and L3     |
 |             |               |                | functions.                       |
@@ -81,7 +84,8 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | features:                        |
 |             |               |                | * Immediate Notification         |
 |             |               |                | * Consistent resource state      |
-|             |               |                | awareness (compute). See the     |
+|             |               |                | awareness (compute)              |
+|             |               |                | * Get Valid Server state         |
 |             |               |                | See `Doctor User Guide`_ for     |
 |             |               |                | details                          |
 |             |               +----------------+----------------------------------+
@@ -96,8 +100,28 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | security scan. (Currently        |
 |             |               |                | available only for the Apex      |
 |             |               |                | installer environment)           |
-|             |               |                | TODO: Add document link from     |
-|             |               |                | Luke Hinds; when received.       |
+|             |               +----------------+----------------------------------+
+|             |               | onos-sfc       | SFC testing for onos scenarios   |
+|             |               |                | TODO See for details             |
+|             |               +----------------+----------------------------------+
+|             |               | odl-sfc        | SFC testing for odl scenarios    |
+|             |               |                | TODO See for details             |
+|             |               +----------------+----------------------------------+
+|             |               | domino         | Service template publication     |
+|             |               |                | service based on OASIS           |
+|             |               |                | specification "TOSCA Simple      |
+|             |               |                | Profile for Network Function     |
+|             |               |                | Virtualization (NFV) Version 1.0"|
+|             |               |                | TODO See for details             |
+|             |               +----------------+----------------------------------+
+|             |               | copper         | Deployment policy                |
+|             |               |                | TODO See for details             |
+|             |               +----------------+----------------------------------+
+|             |               | multisites     | Multisites                       |
+|             |               |                | TODO See for details             |
+|             |               +----------------+----------------------------------+
+|             |               | moon           | Security management system       |
+|             |               |                | TODO See for details             |
 +-------------+---------------+----------------+----------------------------------+
 | VNF         | vnf           | vims           | Example of a real VNF deployment |
 |             |               |                | to show the NFV capabilities of  |
@@ -105,7 +129,10 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | Subsytem is a typical Telco test |
 |             |               |                | case, referenced by ETSI.        |
 |             |               |                | It provides a fully functional   |
-|             |               |                | VoIP System,                     |
+|             |               |                | VoIP System                      |
++             +---------------+----------------+----------------------------------+
+|             |               | parser         | Service template translation     |
+|             |               |                | TODO See for details             |
 +-------------+---------------+----------------+----------------------------------+
 
 
@@ -129,8 +156,8 @@ are integrated from upstream communities or other OPNFV projects. For example,
 OpenStack integration test suite and Functest is in charge of the selection,
 integration and automation of those tests that fit suitably to OPNFV.
 
-The Tempest test suite has been customized but no new test cases have been
-created in OPNFV Functest.
+The Tempest test suite is the default OpenStack smoke test suite but no new test
+cases have been created in OPNFV Functest.
 
 The results produced by the tests run from CI are pushed and collected into a
 NoSQL database. The goal is to populate the database with results from different
@@ -176,6 +203,4 @@ section `Executing the functest suites`_ of this document.
 .. _`Promise User Guide`: http://artifacts.opnfv.org/promise/brahmaputra/docs/userguide/index.html
 .. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/brahmaputra/docs/userguide/index.html
 .. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/brahmaputra/docs/userguide/featureusage.html
-.. _`Functest Dashboard`: http://testresults.opnfv.org/dashboard/
-
-
+.. _`Functest Dashboard`: http://testresults.opnfv.org/kibana_dashboards/
