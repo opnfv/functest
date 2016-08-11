@@ -8,7 +8,6 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 import paramiko
 
-
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-r", "--report",
@@ -247,7 +246,7 @@ def main():
         ssh.connect(ips[0], username="root",
                     password="opnfv", timeout=2)
         command = ("nohup python vxlan_tool.py -i eth0 "
-                   "-d forward -v off -f -b 80 &")
+                   "-d forward -v off -b 80 > /dev/null 2>&1 &")
         (stdin, stdout, stderr) = ssh.exec_command(command)
     except:
         logger.debug("Waiting for %s..." % ips[0])
@@ -271,7 +270,7 @@ def main():
         ssh.connect(ips[1], username="root",
                     password="opnfv", timeout=2)
         command = ("nohup python vxlan_tool.py -i eth0 "
-                   "-d forward -v off -f -b 22 &")
+                   "-d forward -v off -b 22 > /dev/null 2>&1 &")
         (stdin, stdout, stderr) = ssh.exec_command(command)
     except:
         logger.debug("Waiting for %s..." % ips[1])
@@ -349,6 +348,15 @@ def main():
     tacker_classi = "/home/opnfv/repos/functest/testcases/features/sfc/" + \
         TACKER_CHANGECLASSI
     subprocess.call(tacker_classi, shell=True)
+
+    # SSH to modify the classification flows in compute
+
+    contr_cmd4 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
+                  " 'ssh " + ip_compute + " 'bash correct_classifier.bash''")
+    logger.info("Executing script to modify the classi: '%s'" % contr_cmd4)
+    process = subprocess.Popen(contr_cmd4,
+                               shell=True,
+                               stdout=subprocess.PIPE)
 
     # SSH TO EXECUTE cmd_client
 
