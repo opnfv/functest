@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_cbab1988",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-08-11T02:57:23Z",
+      "side": 1,
+      "message": "Hi Serena,\n\nThis is related to FUNCTEST-407\n\nPatch https://gerrit.opnfv.org/gerrit/#/c/18305/ is NOT merged yet! Please reach out Parser team.\nSee also https://build.opnfv.org/ci/view/functest/job/functest-docker-build-push-master/557/ (RED)\n\u001b[91m/bin/bash: /home/opnfv/repos/parser/tests/parser_install.sh: No such file or directory",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 70
+      },
+      "revId": "25c27755a95b12d5640f3ecdec7bd844037e98c7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
