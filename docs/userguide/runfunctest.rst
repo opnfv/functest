@@ -297,21 +297,23 @@ do a direct call to the desired test script. For example:
 Automated testing
 -----------------
 
-**TODO** Jose, the next section has not yet been revised!
-
 As mentioned previously, the Functest Docker container preparation as well as
 invocation of Test Cases can be called within the container from the Jenkins CI
-system. There are 2 jobs that automate the whole process. The first job runs all
-the tests and the second job allows testing test suite by test suite specifying
+system. There are 3 jobs that automate the whole process. The first job runs all
+the tests referenced in the daily loop (i.e. that must been run daily), the second
+job runs the tests referenced in the weekly loop (usually long duration tests run
+once a week maximum) and the third job allows testing test suite by test suite specifying
 the test suite name. The user may also use either of these Jenkins jobs to execute
 the desired test suites.
 
-One of the most challenging task in the Brahmaputra release consists
+One of the most challenging task in the Colorado release consists
 in dealing with lots of scenarios and installers. Thus, when the tests are
 automatically started from CI, a basic algorithm has been created in order to
 detect whether a given test is runnable or not on the given scenario.
 Some Functest test suites cannot be systematically run (e.g. ODL suite can not
-be run on an ONOS scenario).
+be run on an ONOS scenario). Moreover since Colorado, we also introduce the
+notion of daily/weekly in order to save CI time and avoid running systematically
+long duration tests.
 
 CI provides some useful information passed to the container as environment
 variables:
@@ -321,64 +323,122 @@ variables:
  * The scenario [controller]-[feature]-[mode], stored in DEPLOY_SCENARIO with
 
  * controller = (odl|onos|ocl|nosdn)
- * feature = (ovs(dpdk)|kvm|sfc|bgpvpn)
+ * feature = (ovs(dpdk)|kvm|sfc|bgpvpn|moon|multisites)
  * mode = (ha|noha)
 
 The constraints per test case are defined in the Functest configuration file
-*/home/opnfv/functest/config/config_functest.yaml*::
+*/home/opnfv/repos/functest/ci/testcases.yaml*::
 
- test-dependencies:
-    functest:
-        vims:
-            scenario: '(ocl)|(odl)|(nosdn)'
-        vping:
-        vping_userdata:
-            scenario: '(ocl)|(odl)|(nosdn)'
-        tempest:
-        rally:
-        odl:
-            scenario: 'odl'
-        onos:
-            scenario: 'onos'
+ tiers:
+    -
+        name: healthcheck
+        order: 0
+        ci_loop: '(daily)|(weekly)'
+        description : >-
+            First tier to be executed to verify the basic
+            operations in the VIM.
+        testcases:
+            -
+                name: healthcheck
+                criteria: 'status == "PASS"'
+                blocking: true
+                description: >-
+                    This test case verifies the basic OpenStack services like
+                    Keystone, Glance, Cinder, Neutron and Nova.
+
+                dependencies:
+                    installer: ''
+                    scenario: ''
+
+   -
+        name: smoke
+        order: 1
+        ci_loop: '(daily)|(weekly)'
+        description : >-
+            Set of basic Functional tests to validate the OpenStack deployment.
+        testcases:
+            -
+                name: vping_ssh
+                criteria: 'status == "PASS"'
+                blocking: true
+                description: >-
+                    This test case verifies: 1) SSH to an instance using floating
+                    IPs over the public network. 2) Connectivity between 2 instances
+                    over a private network.
+                dependencies:
+                    installer: ''
+                    scenario: '^((?!bgpvpn|odl_l3).)*$'
         ....
 
-At the end of the Functest environment creation, a file
-*/home/opnfv/functest/conf/testcase-list.txt* is created with the list of
-all the runnable tests.
-Functest considers the static constraints as regular expressions and compare them
-with the given scenario name.
-For instance, ODL suite can be run only on an scenario including 'odl' in its name.
+We may distinguish 2 levels in the test case description:
+  * Tier level
+  * Test case level
 
-The order of execution is also described in the Functest configuration file::
+At the tier level, we define the following parameters:
 
- test_exec_priority:
+ * ci_loop: indicate if in automated mode, the test case must be run in daily and/or weekly jobs
+ * description: a high level view of the test case
 
-    1: vping_ssh
-    2: vping_userdata
-    3: tempest
-    4: odl
-    5: onos
-    6: ovno
-    7: doctor
-    8: promise
-    9: odl-vpnservice
-    10: bgpvpn
-    #11: openstack-neutron-bgpvpn-api-extension-tests
-    12: vims
-    13: rally
+For a given test case we defined:
+  * the name of the test case
+  * the criteria (experimental): a criteria used to declare the test case as PASS or FAIL
+  * blocking: if set to true, if the test is failed, the execution of the following tests is canceled
+  * the description of the test case
+  * the dependencies: a combination of 2 regex on the scenario and the installer name
 
-The tests are executed in the following order:
+The order of execution is the one defined in the file if all test cases are selected.
 
-  1) vPing test cases
-  2) Tempest suite
-  3) SDN controller suites
-  4) Feature project tests cases (Promise, Doctor, BGPVPN...)
+In CI daily job the tests are executed in the following order:
+
+  1) healthcheck (blocking)
+  2) smoke: both vPings are blocking
+  3) SDN controller suites (blocking)
+  4) Feature project tests cases
+
+In CI weekly job we add 2 tiers:
+
   5) vIMS suite
   6) Rally suite
 
 As explained before, at the end of an automated execution, the OpenStack resources
 might be eventually removed.
+Please note that a system snapshot is taken before any test case execution.
 
-**END of TODO**
+This testcase.yaml file is used for CI, for the CLI and for the automatic reporting.
+
+At the end of the jenkins CI job, a summary is displayed::
+
+ +==================================================================================================================================================+
+ |                                                                FUNCTEST REPORT                                                                   |
+ +==================================================================================================================================================+
+ |                                                                                                                                                  |
+ |  Deployment description:                                                                                                                         |
+ |    INSTALLER: fuel                                                                                                                               |
+ |    SCENARIO:  os-odl_l2-nofeature-ha                                                                                                             |
+ |    BUILD TAG: jenkins-functest-fuel-baremetal-daily-master-324                                                                                   |
+ |    CI LOOP:   daily                                                                                                                              |
+ |                                                                                                                                                  |
+ +=========================+===============+============+===============+===========================================================================+
+ | TEST CASE               | TIER          | DURATION   | RESULT        | URL                                                                       |
+ +=========================+===============+============+===============+===========================================================================+
+ | healthcheck             | healthcheck   | 03:07      | PASS          |                                                                           |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | vping_ssh               | smoke         | 00:56      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac13d79377c54b278bd4c1 |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | vping_userdata          | smoke         | 00:41      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac14019377c54b278bd4c2 |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | tempest_smoke_serial    | smoke         | 16:05      | FAIL          | http://testresults.opnfv.org/test/api/v1/results/57ac17ca9377c54b278bd4c3 |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | rally_sanity            | smoke         | 12:19      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac1aad9377c54b278bd4cd |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | odl                     | sdn_suites    | 00:24      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac1ad09377c54b278bd4ce |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | promise                 | features      | 00:41      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac1ae59377c54b278bd4cf |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+
+Results are automatically pushed to the test results database and the
+`Functest reporting`_ portal is also automatically updated.
+
+.. _`Functest reporting`: http://testresults.opnfv.org/reporting/functest/release/master/index-status-fuel.html
 
 

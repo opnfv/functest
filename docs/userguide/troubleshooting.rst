@@ -314,13 +314,8 @@ Controllers
 
 ODL
 ^^^
-2 versions are supported in Colorado, depending on the scenario:
- * Lithium
- * Berylium
 
-The upstream test suites have not been adapted, so you may get 18 or 15 tests
-passed on 18 depending on your configuration. The 3 testcases are partly failed
-due to wrong return code.
+**TODO:**
 
 ONOS
 ^^^^
@@ -345,6 +340,46 @@ Please refer to the Promise documentation. `Promise User Guide`_
 bgpvpn
 ^^^^^^
 Please refer to the SNVPN documentation. `SDNVPN User Guide`_
+
+
+Copper
+^^^^^^
+
+**TODO:**
+
+
+Domino
+^^^^^^
+
+**TODO:**
+
+
+Onos-sfc
+^^^^^^^^
+
+**TODO:**
+
+odl-sfc
+^^^^^^^
+
+**TODO:**
+
+
+parser
+^^^^^^
+
+**TODO:**
+
+
+multisites
+^^^^^^^^^^
+
+**TODO:**
+
+moon
+^^^^
+
+**TODO:**
 
 
 NFV

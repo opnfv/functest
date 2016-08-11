@@ -238,42 +238,47 @@ OpenDaylight and Neutron.
 
 The list of tests can be described as follows:
 
- * Restconf.basic: Get the controller modules via Restconf
- * Neutron.Networks
+ * Basic Restconf
+   * Get the restconf modules, check 200 stat
+   * Test suite to verify Res
 
-   * Check OpenStack Networks :: Checking OpenStack Neutron for known networks
-   * Check OpenDaylight Networks :: Checking OpenDaylight Neutron API
-   * Create Network :: Create new network in OpenStack
-   * Check Network :: Check Network created in OpenDaylight
-   * Neutron.Networks :: Checking Network created in OpenStack are pushed
+ * Basic & Neutron.Neutron.Reachability
+   * Get the complete list of networks
+   * Get the complete list of subnets
+   * Get the complete list of ports
 
- * Neutron.Subnets
+ * Basic & Neutron.Neutron.Networks
+   * Checking OpenStack Networks
+   * Check OpenDaylight Networks
+   * Create new network in OpenStack
+   * Create new network in OpenDaylight
 
-   * Check OpenStack Subnets :: Checking OpenStack Neutron for known Subnets
-   * Check OpenDaylight subnets :: Checking OpenDaylight Neutron API
-   * Create New subnet :: Create new subnet in OpenStack
-   * Check New subnet :: Check new subnet created in OpenDaylight
-   * Neutron.Subnets :: Checking Subnets created in OpenStack are pushed
+ * Basic & Neutron.Neutron.Subnets
+   * Check OpenStack Subnets
+   * Check OpenDaylight subnets
+   * Create New subnet created in OpenStack
+   * Check New subnet created in OpenDaylight
 
- * Neutron.Ports
+ * Basic & Neutron.Neutron.Ports
+   * Check OpenStack Neutron for known ports
+   * Check OpenDaylight ports
+   * Create new port in OpenStack
+   * Check new port created in OpenDaylight
 
-   * Check OpenStack ports :: Checking OpenStack Neutron for known ports
-   * Check OpenDaylight ports :: Checking OpenDaylight Neutron API
-   * Create New Port :: Create new port in OpenStack
-   * Check New Port :: Check new subnet created in OpenDaylight
-   * Neutron.Ports :: Checking Port created in OpenStack are pushed
+ * Basic & Neutron.Neutron.Delete Ports
+   * Delete previously created port in OpenStack
+   * Check port deleted in OpenDaylight
 
- * Delete Ports
-
+ * Basic & Neutron.Neutron.Delete Subnets
    * Delete previously created subnet in OpenStack
    * Check subnet deleted in OpenDaylight
-   * Check subnet deleted in OpenStack
 
- * Delete network
-
-   * Delete previously created network in OpenStack
+ * Basic & Neutron.Neutron.Delete Networks
+   * Delete network in OpenStack
    * Check network deleted in OpenDaylight
-   * Check network deleted in OpenStack
+
+ * Basic & Neutron.Neutron
+   * Test suite for Neutron Plugin
 
 
 ONOS
@@ -319,11 +324,6 @@ The test cases are described as follows:
    * Update External Gateway: Update the External Gateway and compare the change
    * Delete External Gateway: Delete the External Gateway and check that it is
      'NULL' in ONOS
-
-Open Contrail
-^^^^^^^^^^^^^
-**TODO:**
-
 
 
 Features
@@ -417,6 +417,42 @@ The current work flow is as follows:
 
 At present, only the Apex installer is supported, with support for other installers due
 within D-release.
+
+Copper
+^^^^^^
+
+**TODO:**
+
+Domino
+^^^^^^
+
+**TODO:**
+
+Onos-sfc
+^^^^^^^^
+
+**TODO:**
+
+odl-sfc
+^^^^^^^
+
+**TODO:**
+
+parser
+^^^^^^
+
+**TODO:**
+
+multisites
+^^^^^^^^^^
+
+**TODO:**
+
+moon
+^^^^
+
+**TODO:**
+
 
 VNF
 ---
