@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_8b4be12a",
+        "filename": "ci/config_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-11T01:09:55Z",
+      "side": 1,
+      "message": "Since you will merge the content to config_functest.yaml anyway, why not move it there directly?",
+      "revId": "7eefbe8f7ec52d727e8e504e4ddd4ddb57cf569e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
