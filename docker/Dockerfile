@@ -60,6 +60,7 @@ crudini \
 ruby1.9.1-dev \
 --no-install-recommends
 
+RUN pip install --upgrade pip
 
 RUN mkdir -p ${repos_dir}
 RUN mkdir -p /home/opnfv/functest/results
