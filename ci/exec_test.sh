@@ -173,7 +173,7 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/features/sfc/sfc.py
         ;;
         "parser")
-            python ${FUNCTEST_REPO_DIR}/testcases/vnf/vRNC/parser.py
+            python ${FUNCTEST_REPO_DIR}/testcases/vnf/vRNC/parser.py $report
         ;;
         *)
             echo "The test case '${test_name}' does not exist."

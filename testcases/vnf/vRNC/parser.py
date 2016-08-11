@@ -17,9 +17,16 @@
 import os
 import time
 import yaml
+import argparse
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-r", "--report",
+                    help="Create json result file",
+                    action="store_true")
+args = parser.parse_args()
 
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
@@ -51,13 +58,15 @@ def main():
                                        status,
                                        details)
 
-    functest_utils.push_results_to_db(project,
-                                      case_name,
-                                      logger,
-                                      start_time,
-                                      stop_time,
-                                      status,
-                                      details)
+    if args.report:
+        logger.debug("Report Parser Results to DB......")
+        functest_utils.push_results_to_db(project,
+                                          case_name,
+                                          logger,
+                                          start_time,
+                                          stop_time,
+                                          status,
+                                          details)
     exit(ret)
 
 if __name__ == '__main__':
