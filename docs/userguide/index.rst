@@ -238,42 +238,47 @@ OpenDaylight and Neutron.
 
 The list of tests can be described as follows:
 
- * Restconf.basic: Get the controller modules via Restconf
- * Neutron.Networks
+ * Basic Restconf
+   * Get the restconf modules, check 200 stat
+   * Test suite to verify Res
 
-   * Check OpenStack Networks :: Checking OpenStack Neutron for known networks
-   * Check OpenDaylight Networks :: Checking OpenDaylight Neutron API
-   * Create Network :: Create new network in OpenStack
-   * Check Network :: Check Network created in OpenDaylight
-   * Neutron.Networks :: Checking Network created in OpenStack are pushed
+ * Basic & Neutron.Neutron.Reachability
+   * Get the complete list of networks
+   * Get the complete list of subnets
+   * Get the complete list of ports
 
- * Neutron.Subnets
+ * Basic & Neutron.Neutron.Networks
+   * Checking OpenStack Networks
+   * Check OpenDaylight Networks
+   * Create new network in OpenStack
+   * Create new network in OpenDaylight
 
-   * Check OpenStack Subnets :: Checking OpenStack Neutron for known Subnets
-   * Check OpenDaylight subnets :: Checking OpenDaylight Neutron API
-   * Create New subnet :: Create new subnet in OpenStack
-   * Check New subnet :: Check new subnet created in OpenDaylight
-   * Neutron.Subnets :: Checking Subnets created in OpenStack are pushed
+ * Basic & Neutron.Neutron.Subnets
+   * Check OpenStack Subnets
+   * Check OpenDaylight subnets
+   * Create New subnet created in OpenStack
+   * Check New subnet created in OpenDaylight
 
- * Neutron.Ports
+ * Basic & Neutron.Neutron.Ports
+   * Check OpenStack Neutron for known ports
+   * Check OpenDaylight ports
+   * Create new port in OpenStack
+   * Check new port created in OpenDaylight
 
-   * Check OpenStack ports :: Checking OpenStack Neutron for known ports
-   * Check OpenDaylight ports :: Checking OpenDaylight Neutron API
-   * Create New Port :: Create new port in OpenStack
-   * Check New Port :: Check new subnet created in OpenDaylight
-   * Neutron.Ports :: Checking Port created in OpenStack are pushed
+ * Basic & Neutron.Neutron.Delete Ports
+   * Delete previously created port in OpenStack
+   * Check port deleted in OpenDaylight
 
- * Delete Ports
-
+ * Basic & Neutron.Neutron.Delete Subnets
    * Delete previously created subnet in OpenStack
    * Check subnet deleted in OpenDaylight
-   * Check subnet deleted in OpenStack
 
- * Delete network
-
-   * Delete previously created network in OpenStack
+ * Basic & Neutron.Neutron.Delete Networks
+   * Delete network in OpenStack
    * Check network deleted in OpenDaylight
-   * Check network deleted in OpenStack
+
+ * Basic & Neutron.Neutron
+   * Test suite for Neutron Plugin
 
 
 ONOS
@@ -320,70 +325,25 @@ The test cases are described as follows:
    * Delete External Gateway: Delete the External Gateway and check that it is
      'NULL' in ONOS
 
-Open Contrail
-^^^^^^^^^^^^^
-**TODO:**
-
-
 
 Features
 --------
 
-Doctor
-^^^^^^
+Most of the features have been developped by feature projects.
+Security_scan has been initiated in Functest repository but should soon
+be declared in its own repository as well.
 
-**TODO:**
+Please refer to the dedicated feature user guides for details:
 
-
-
-Promise
-^^^^^^^
-
-Promise provides a basic set of test cases as part of the deliverable.
-
-The available 33 test cases can be grouped into 7 test suites:
-
-    #. Add a new OpenStack provider into resource pool: Registers
-       OpenStack into a new resource pool and adds more capacity associated
-       with this pool.
-
-    #. Allocation without reservation: Creates a new server in OpenStack
-       and adds a new allocation record in Promise shim-layer.
-
-    #. Allocation using reservation for immediate use: Creates a resource
-       reservation record with no start/end time and immediately creates a new
-       server in OpenStack and add a new allocation record in Promise
-       shim-layer.
-
-    #. Reservation for future use: Creates a resource reservation record
-       for a future start time, queries, modifies and cancels the newly created
-       reservation.
-
-    #. Capacity planning: Decreases and increases the available capacity
-       from a provider in the future and queries the available collections and
-       utilizations.
-
-    #. Reservation with conflict: Tries to create reservations for
-       immediate and future use with conflict.
-
-    #. Cleanup test allocations: Destroys all allocations in OpenStack.
-
-
-bgpvpn
-^^^^^^
-Many telecom network functions are relying on layer-3 infrastructure services,
-within a VNF between components, or towards existing external networks.
-In many cases, these external networks are implemented in MPLS/BGP technology in
-existing service provider wide-area-networks (WAN). This proven technology
-provides a good mechanism for inter-operation of a NFV Infrastructure (NFVI)
-and WAN.
-
-The SDNVPN project defined a 'bgpvpn' test suite.
-This 'bgpvpn' test suite deals with 2 Tempest cases dedicated to the test of
-the OpenStack 'bgpvpn' API:
-
-  * test_create_bgpvpn
-  * test_create_bgpvpn_as_non_admin_fail
+ * bgpvpn: ** TODO link **
+ * copper: ** TODO link **
+ * doctor: ** TODO link **
+ * domino: ** TODO link **
+ * moon: ** TODO link **
+ * multisites: ** TODO link **
+ * onos-sfc: ** TODO link **
+ * odl-sfc: ** TODO link **
+ * promise: ** TODO link **
 
 security_scan
 ^^^^^^^^^^^^^
@@ -418,6 +378,8 @@ The current work flow is as follows:
 At present, only the Apex installer is supported, with support for other installers due
 within D-release.
 
+
+
 VNF
 ---
 
@@ -446,16 +408,65 @@ The Clearwater architecture is described as follows:
    :alt: vIMS architecture
 
 
+parser
+^^^^^^
+
+See parser user guide for details: ** TODO link **
+
+
 .. include:: ./runfunctest.rst
 
 
 Test results
 ============
 
-Note that the results are documented per scenario basis. Although most of the test
-cases might show the same output, some of them are not supported by
-certain scenarios. Please select the appropriate scenario and compare the results
-to that referenced in the documentation.
+Manual testing
+--------------
+
+In manual mode test results are displayed in the console and result files
+are put in /home/opnfv/functest/results.
+
+Automated testing
+--------------
+
+In automated mode, test results are displayed in jenkins logs, a summary is provided
+at the end of the job and can be described as follow::
+
+ +==================================================================================================================================================+
+ |                                                                FUNCTEST REPORT                                                                   |
+ +==================================================================================================================================================+
+ |                                                                                                                                                  |
+ |  Deployment description:                                                                                                                         |
+ |    INSTALLER: fuel                                                                                                                               |
+ |    SCENARIO:  os-odl_l2-nofeature-ha                                                                                                             |
+ |    BUILD TAG: jenkins-functest-fuel-baremetal-daily-master-324                                                                                   |
+ |    CI LOOP:   daily                                                                                                                              |
+ |                                                                                                                                                  |
+ +=========================+===============+============+===============+===========================================================================+
+ | TEST CASE               | TIER          | DURATION   | RESULT        | URL                                                                       |
+ +=========================+===============+============+===============+===========================================================================+
+ | healthcheck             | healthcheck   | 03:07      | PASS          |                                                                           |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | vping_ssh               | smoke         | 00:56      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac13d79377c54b278bd4c1 |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | vping_userdata          | smoke         | 00:41      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac14019377c54b278bd4c2 |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | tempest_smoke_serial    | smoke         | 16:05      | FAIL          | http://testresults.opnfv.org/test/api/v1/results/57ac17ca9377c54b278bd4c3 |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | rally_sanity            | smoke         | 12:19      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac1aad9377c54b278bd4cd |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | odl                     | sdn_suites    | 00:24      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac1ad09377c54b278bd4ce |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | promise                 | features      | 00:41      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac1ae59377c54b278bd4cf |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+
+Results are automatically pushed to the test results database, some additional
+result files are pushed to OPNFV artifact web sites.
+
+based on the results stored in the result database, a `Functest reporting`_
+portal is also automatically updated in order to provide a consistent view
+of the different tests per scenario and per installer.
+
 
 
 Test Dashboard
@@ -492,3 +503,4 @@ IRC support chan: #opnfv-testperf
 .. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
 .. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
 .. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.yaml
+.. _`Functest reporting`: http://testresults.opnfv.org/reporting/functest/release/master/index-status-fuel.html

@@ -98,6 +98,28 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | installer environment)           |
 |             |               |                | TODO: Add document link from     |
 |             |               |                | Luke Hinds; when received.       |
+|             |               +----------------+----------------------------------+
+|             |               | onos-sfc       | SFC testing for onos scenarios   |
+|             |               |                | TODO See for details             |
+|             |               +----------------+----------------------------------+
+|             |               | odl-sfc        | SFC testing for odl scenarios    |
+|             |               |                | TODO See for details             |
+|             |               +----------------+----------------------------------+
+|             |               | domino         | Service template publication     |
+|             |               |                | service based on OASIS           |
+|             |               |                | specification "TOSCA Simple      |
+|             |               |                | Profile for Network Function     |
+|             |               |                | Virtualization (NFV) Version 1.0"|
+|             |               |                | TODO See for details             |
+|             |               +----------------+----------------------------------+
+|             |               | copper         | Deployment policy                |
+|             |               |                | TODO See for details             |
+|             |               +----------------+----------------------------------+
+|             |               | multisites     | Multisites                       |
+|             |               |                | TODO See for details             |
+|             |               +----------------+----------------------------------+
+|             |               | moon           | Security management system       |
+|             |               |                | TODO See for details             |
 +-------------+---------------+----------------+----------------------------------+
 | VNF         | vnf           | vims           | Example of a real VNF deployment |
 |             |               |                | to show the NFV capabilities of  |
@@ -106,6 +128,9 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | case, referenced by ETSI.        |
 |             |               |                | It provides a fully functional   |
 |             |               |                | VoIP System,                     |
++             +---------------+----------------+----------------------------------+
+|             |               | parser         | Service template translation     |
+|             |               |                | TODO See for details             |
 +-------------+---------------+----------------+----------------------------------+
 
 
@@ -129,8 +154,8 @@ are integrated from upstream communities or other OPNFV projects. For example,
 OpenStack integration test suite and Functest is in charge of the selection,
 integration and automation of those tests that fit suitably to OPNFV.
 
-The Tempest test suite has been customized but no new test cases have been
-created in OPNFV Functest.
+The Tempest test suite is the default OpenStack smoke test suite but no new test
+cases have been created in OPNFV Functest.
 
 The results produced by the tests run from CI are pushed and collected into a
 NoSQL database. The goal is to populate the database with results from different
@@ -176,6 +201,4 @@ section `Executing the functest suites`_ of this document.
 .. _`Promise User Guide`: http://artifacts.opnfv.org/promise/brahmaputra/docs/userguide/index.html
 .. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/brahmaputra/docs/userguide/index.html
 .. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/brahmaputra/docs/userguide/featureusage.html
-.. _`Functest Dashboard`: http://testresults.opnfv.org/dashboard/
-
-
+.. _`Functest Dashboard`: http://testresults.opnfv.org/kibana_dashboards/
