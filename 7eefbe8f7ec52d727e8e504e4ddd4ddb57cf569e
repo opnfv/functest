@@ -34,6 +34,24 @@
       "revId": "7eefbe8f7ec52d727e8e504e4ddd4ddb57cf569e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_66c55c5a",
+        "filename": "ci/config_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-11T08:32:16Z",
+      "side": 1,
+      "message": "ok, I get it",
+      "parentUuid": "1a76adc5_0638289f",
+      "revId": "7eefbe8f7ec52d727e8e504e4ddd4ddb57cf569e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
