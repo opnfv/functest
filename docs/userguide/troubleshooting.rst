@@ -314,13 +314,8 @@ Controllers
 
 ODL
 ^^^
-2 versions are supported in Colorado, depending on the scenario:
- * Lithium
- * Berylium
 
-The upstream test suites have not been adapted, so you may get 18 or 15 tests
-passed on 18 depending on your configuration. The 3 testcases are partly failed
-due to wrong return code.
+**TODO:**
 
 ONOS
 ^^^^
@@ -331,20 +326,14 @@ Please refer to the ONOS documentation. `ONOSFW User Guide`_ .
 Features
 --------
 
-
-Doctor
-^^^^^^
-Please refer to the Doctor documentation. `Doctor User Guide`_
+Please refer to the dedicated feature user guides for details.
 
 
-Promise
-^^^^^^^
-Please refer to the Promise documentation. `Promise User Guide`_
+security_scan
+^^^^^^^^^^^^^
 
+** TODO **
 
-bgpvpn
-^^^^^^
-Please refer to the SNVPN documentation. `SDNVPN User Guide`_
 
 
 NFV
@@ -381,6 +370,12 @@ described in the following table:
 | No access to OpenStack API from   | Orchestrator can be installed but  |
 | the VM                            | the vIMS VNF installation fails    |
 +-----------------------------------+------------------------------------+
+
+
+parser
+^^^^^^
+
+See parser user guide for details: ** TODO link **
 
 
 .. _`OPNFV Functest Developer Guide`:  http://artifacts.opnfv.org/functest/docs/devguide/#
