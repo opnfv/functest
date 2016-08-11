@@ -212,10 +212,10 @@ def push_results_to_db(project, case_name, logger,
             logger.debug(r)
         return True
     except Exception, e:
-        print ("Error [push_results_to_db('%s', '%s', '%s', " +
-               "'%s', '%s', '%s', '%s', '%s', '%s')]:" %
-               (url, project, case_name, pod_name, version,
-                scenario, criteria, build_tag, details)), e
+        print("Error [push_results_to_db('%s', '%s', '%s', " +
+              "'%s', '%s', '%s', '%s', '%s', '%s')]:" %
+              (url, project, case_name, pod_name, version,
+               scenario, criteria, build_tag, details)), e
         return False
 
 
@@ -370,6 +370,19 @@ def check_success_rate(case_name, success_rate):
             break
 
     return status
+
+
+def merge_dicts(dict1, dict2):
+    for k in set(dict1.keys()).union(dict2.keys()):
+        if k in dict1 and k in dict2:
+            if isinstance(dict1[k], dict) and isinstance(dict2[k], dict):
+                yield (k, dict(merge_dicts(dict1[k], dict2[k])))
+            else:
+                yield (k, dict2[k])
+        elif k in dict1:
+            yield (k, dict1[k])
+        else:
+            yield (k, dict2[k])
 
 
 def check_test_result(test_name, ret, start_time, stop_time):

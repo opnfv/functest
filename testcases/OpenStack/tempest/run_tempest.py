@@ -168,7 +168,8 @@ def create_tempest_resources():
                                                           GLANCE_IMAGE_PATH))
         image_id = os_utils.create_glance_image(glance_client,
                                                 GLANCE_IMAGE_NAME,
-                                                GLANCE_IMAGE_PATH)
+                                                GLANCE_IMAGE_PATH,
+                                                GLANCE_IMAGE_FORMAT)
         if not image_id:
             logger.error("Failed to create a Glance image...")
             exit(-1)

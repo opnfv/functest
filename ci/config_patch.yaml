@@ -1,0 +1,9 @@
+lxd:
+    general:
+        openstack:
+            image_name: Cirros-0.3.4
+            image_file_name:  cirros-0.3.4-x86_64-lxc.tar.gz
+            image_disk_format:  raw
+
+    healthcheck:
+        disk_image: /home/opnfv/functest/data/cirros-0.3.4-x86_64-lxc.tar.gz
