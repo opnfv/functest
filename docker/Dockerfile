@@ -64,6 +64,7 @@ RUN pip install --upgrade pip
 
 RUN mkdir -p ${repos_dir}
 RUN mkdir -p /home/opnfv/functest/results
+RUN mkdir -p /home/opnfv/functest/conf
 RUN mkdir -p /root/.ssh
 RUN chmod 700 /root/.ssh
 
