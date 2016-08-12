@@ -7,3 +7,4 @@ lxd:
 
     healthcheck:
         disk_image: /home/opnfv/functest/data/cirros-0.3.4-x86_64-lxc.tar.gz
+        disk_format: raw

@@ -120,6 +120,7 @@ info "...Keystone OK!"
 info "Testing Glance API..."
 #################################
 disk_img=$(cat ${YAML_FILE} | shyaml get-value healthcheck.disk_image 2> /dev/null || true)
+disk_format=$(cat ${YAML_FILE} | shyaml get-value healthcheck.disk_format 2> /dev/null || true)
 kernel_img=$(cat ${YAML_FILE} | shyaml get-value healthcheck.kernel_image 2> /dev/null || true)
 ramdisk_img=$(cat ${YAML_FILE} | shyaml get-value healthcheck.ramdisk_image 2> /dev/null || true)
 extra_properties=$(cat ${YAML_FILE} | shyaml get-value healthcheck.extra_properties 2> /dev/null || true)
@@ -151,10 +152,10 @@ fi
 
 debug "image extra_properties=${extra_properties}"
 
-eval glance image-create --name ${image_1} --disk-format qcow2 --container-format bare \
+eval glance image-create --name ${image_1} --disk-format ${disk_format} --container-format bare \
              ${extra_opts} < ${disk_img}
 debug "image '${image_1}' created."
-eval glance image-create --name ${image_2} --disk-format qcow2 --container-format bare \
+eval glance image-create --name ${image_2} --disk-format ${disk_format} --container-format bare \
              ${extra_opts} < ${disk_img}
 debug "image '${image_2}' created."
 info "... Glance OK!"

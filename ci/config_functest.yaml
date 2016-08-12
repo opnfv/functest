@@ -50,6 +50,7 @@ general:
 
 healthcheck:
     disk_image: /home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img
+    disk_format: qcow2
 
 vping:
     ping_timeout:   200
