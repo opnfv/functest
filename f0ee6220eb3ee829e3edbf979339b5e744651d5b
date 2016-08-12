@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_a3ca819f",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T10:30:50Z",
+      "side": 1,
+      "message": "Indecnt to same level as previous line to avoid error warning",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "f0ee6220eb3ee829e3edbf979339b5e744651d5b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c3cf7daf",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T10:30:50Z",
+      "side": 1,
+      "message": "Remove the 7",
+      "range": {
+        "startLine": 579,
+        "startChar": 5,
+        "endLine": 579,
+        "endChar": 58
+      },
+      "revId": "f0ee6220eb3ee829e3edbf979339b5e744651d5b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_03d6d54f",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T10:30:50Z",
+      "side": 1,
+      "message": "Move the references below..... the bullets to aoid errors!",
+      "revId": "f0ee6220eb3ee829e3edbf979339b5e744651d5b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
