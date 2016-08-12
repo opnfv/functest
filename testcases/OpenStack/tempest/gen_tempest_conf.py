@@ -17,6 +17,7 @@ import shutil
 import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_logger as ft_logger
 from run_tempest import configure_tempest
+from run_tempest import TEMPEST_RESULTS_DIR
 
 logger = ft_logger.Logger("multisite").getLogger()
 
@@ -111,6 +112,9 @@ def configure_tempest_multisite(deployment_dir):
 
 
 def main():
+
+    if not os.path.exists(TEMPEST_RESULTS_DIR):
+        os.makedirs(TEMPEST_RESULTS_DIR)
 
     deployment_dir = ft_utils.get_deployment_dir(logger)
     configure_tempest_multisite(deployment_dir)
