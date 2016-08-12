@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_f6303558",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "Why not \"Neutron Reachability test cases\" ?\nBasic \u0026 Neutron is related to the test suite name",
+      "range": {
+        "startLine": 245,
+        "startChar": 3,
+        "endLine": 245,
+        "endChar": 39
+      },
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_763c2530",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "Why not \"Neutron Network test cases\" ?",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_563fa925",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "check or checking? we are currently using both.",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_164931d0",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "same",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_36746dfc",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "Subnets or subnets? we are currently using both.\nI know we have to fix labels too in Robotframework files which are printing that.",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_3646adc0",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "same",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_7623c505",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "Create a new port via OpenStack and check the HTTP status code returned by Neutron",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_162051f6",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "Check that the new port has been successfully created in OpenDaylight as well by testing the HTTP status code returned",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d612d9b3",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "same",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_f67ef5e3",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "or via?",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_f617d5a1",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "same",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_960c6196",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "same",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d6609937",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "nit",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_96fea16a",
+        "filename": "docs/userguide/troubleshooting.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T14:33:51Z",
+      "side": 1,
+      "message": "nit",
+      "revId": "23ece838b353eb09cc01c85b42df05aa2c88737e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
