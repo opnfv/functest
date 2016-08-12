@@ -422,7 +422,8 @@ def main():
 
     deployment_dir = ft_utils.get_deployment_dir(logger)
 
-    if "" != args.conf:
+    if "" == args.conf:
+        MODE = ""
         configure_tempest(deployment_dir)
     else:
         MODE = " --tempest-config " + args.conf
