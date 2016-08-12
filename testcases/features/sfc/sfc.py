@@ -349,6 +349,9 @@ def main():
         TACKER_CHANGECLASSI
     subprocess.call(tacker_classi, shell=True)
 
+    logger.info("Wait for ODL to update the classification rules in OVS")
+    time.sleep(10)
+
     # SSH to modify the classification flows in compute
 
     contr_cmd4 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
