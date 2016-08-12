@@ -152,7 +152,7 @@ function run_test(){
         "multisite")
             python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/gen_tempest_conf.py
             python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/run_tempest.py \
-                $clean_flag -s -m feature_multisite $report
+                $clean_flag -s -m feature_multisite $report \
                 -c ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/tempest_multisite.conf
         ;;
         "domino")
