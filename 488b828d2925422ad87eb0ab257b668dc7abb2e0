@@ -22,6 +22,30 @@
       "revId": "488b828d2925422ad87eb0ab257b668dc7abb2e0",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_b6bb9d71",
+        "filename": "testcases/security_scan/security_scan.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 610
+      },
+      "writtenOn": "2016-08-12T15:07:07Z",
+      "side": 1,
+      "message": "I don\u0027t believe we can, as even though it uses the word \u0027True\u0027, its not actually a Boolean as it was in the beginning use. Paramiko returns what was a bool, as a tuple (which is why I strip the newline). Otherwise I could just do \u0027if connection result:\u0027",
+      "parentUuid": "1a76adc5_768665bb",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 23
+      },
+      "revId": "488b828d2925422ad87eb0ab257b668dc7abb2e0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
