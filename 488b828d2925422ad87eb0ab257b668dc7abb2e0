@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_768665bb",
+        "filename": "testcases/security_scan/security_scan.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 4057
+      },
+      "writtenOn": "2016-08-12T14:59:03Z",
+      "side": 1,
+      "message": "also you can just:\nreturn (connectionresult.rstrip() \u003d\u003d \u0027True\u0027)",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 23
+      },
+      "revId": "488b828d2925422ad87eb0ab257b668dc7abb2e0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
