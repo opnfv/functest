@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_a0b6f788",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "Stablish ---\u003e Establish",
+      "range": {
+        "startLine": 93,
+        "startChar": 17,
+        "endLine": 93,
+        "endChar": 18
+      },
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_80ff3b34",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "TODO See for details",
+      "range": {
+        "startLine": 61,
+        "startChar": 49,
+        "endLine": 61,
+        "endChar": 82
+      },
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_40f9234c",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "* Get Valid Server State\n\n\n(CG: New feature added to Doctor)",
+      "range": {
+        "startLine": 84,
+        "startChar": 69,
+        "endLine": 84,
+        "endChar": 70
+      },
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a09fd702",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "TODO See for details",
+      "range": {
+        "startLine": 99,
+        "startChar": 49,
+        "endLine": 100,
+        "endChar": 77
+      },
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_2093c7fb",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "(delete comma)\n\nPossibly another location for\n\n\"TODO See for details\"",
+      "range": {
+        "startLine": 130,
+        "startChar": 60,
+        "endLine": 130,
+        "endChar": 61
+      },
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c07213e5",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "add:\n\n\u003clf\u003e\n\u003clf\u003e\nand\n\u003clf\u003e\n\u003clf\u003e\n\n(CG: See below, the and was in the wrong place!)",
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_40a7e34f",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "delete the and (in wrong place!)",
+      "range": {
+        "startLine": 41,
+        "startChar": 1,
+        "endLine": 41,
+        "endChar": 5
+      },
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e32639ba",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "system --\u003e particular system",
+      "range": {
+        "startLine": 220,
+        "startChar": 21,
+        "endLine": 220,
+        "endChar": 28
+      },
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_407e03b0",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "cleaning --\u003e a cleaning",
+      "range": {
+        "startLine": 267,
+        "startChar": 18,
+        "endLine": 267,
+        "endChar": 26
+      },
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e04aaf82",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "what was --\u003e those",
+      "range": {
+        "startLine": 268,
+        "startChar": 17,
+        "endLine": 268,
+        "endChar": 25
+      },
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_00500b31",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "this --\u003e these",
+      "range": {
+        "startLine": 272,
+        "startChar": 58,
+        "endLine": 272,
+        "endChar": 62
+      },
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_2058a755",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "The next three bullet points need to be indented underneath last sentence",
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_805bbb53",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-12T09:15:13Z",
+      "side": 1,
+      "message": "remove ocl",
+      "range": {
+        "startLine": 325,
+        "startChar": 26,
+        "endLine": 325,
+        "endChar": 29
+      },
+      "revId": "29a42b13ff279084afaa68823a402eb98745134f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
