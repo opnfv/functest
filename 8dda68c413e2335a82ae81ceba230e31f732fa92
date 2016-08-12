@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_206c279c",
+        "filename": "testcases/features/sfc/set-up-tacker.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-12T06:01:11Z",
+      "side": 1,
+      "message": "Too long, please separate it to several lines.",
+      "revId": "8dda68c413e2335a82ae81ceba230e31f732fa92",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
