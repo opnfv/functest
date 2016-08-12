@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_2358b155",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T13:14:39Z",
+      "side": 1,
+      "message": "We could also describe the first test as\n * Connect to Restconf URL and check the HTTP code status",
+      "revId": "0439541a2a2cc14f40c1ccd0b7a412a7d88e7236",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e331590c",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T13:14:39Z",
+      "side": 1,
+      "message": "We could also aggregate these lines:\n * Get the complete list of neutron resources (networks, subnets, ports)",
+      "revId": "0439541a2a2cc14f40c1ccd0b7a412a7d88e7236",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_0337b500",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T13:14:39Z",
+      "side": 1,
+      "message": "Create a new network via OpenStack and check the HTTP status code returned by Neutron",
+      "revId": "0439541a2a2cc14f40c1ccd0b7a412a7d88e7236",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a33b61ea",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T13:14:39Z",
+      "side": 1,
+      "message": "Check the network has been successfully created in OpenDaylight as well by testing the HTTP status code returned.",
+      "revId": "0439541a2a2cc14f40c1ccd0b7a412a7d88e7236",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_161db166",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T13:14:39Z",
+      "side": 1,
+      "message": "same comments",
+      "revId": "0439541a2a2cc14f40c1ccd0b7a412a7d88e7236",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c340dd58",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T13:14:39Z",
+      "side": 1,
+      "message": "Delete the previously created network.",
+      "revId": "0439541a2a2cc14f40c1ccd0b7a412a7d88e7236",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_632549c1",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T13:14:39Z",
+      "side": 1,
+      "message": "?",
+      "revId": "0439541a2a2cc14f40c1ccd0b7a412a7d88e7236",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e3639918",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T13:14:39Z",
+      "side": 1,
+      "message": "The basic delete operations are currently hosted by OPNFV.\nIt makes sense to publish them to ODL integration test but it depends on the ODL community agreement.\n\nA proposal:\nLimited test suite to check the basic neutron (Layer 2) operations mainly based on upstream testcases.",
+      "revId": "0439541a2a2cc14f40c1ccd0b7a412a7d88e7236",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_b60e3d33",
+        "filename": "docs/userguide/troubleshooting.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-12T13:14:39Z",
+      "side": 1,
+      "message": "If the Basic Restconf test suite fails, check that the ODL controller is reachable and its Restconf module has been installed.\nElse if the Neutron Reachability test suite fails, verify that the modules implementing Neutron requirements have been installed.\nElse one of the other testcase fails, check that Neutron and ODL have been correctly configured to work together (check Neutron configuration files, accounts, IP addresses etc.).",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 9
+      },
+      "revId": "0439541a2a2cc14f40c1ccd0b7a412a7d88e7236",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
