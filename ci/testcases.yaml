@@ -47,7 +47,7 @@ tiers:
                     2) Connectivity between 2 instances over a private network.
                 dependencies:
                     installer: ''
-                    scenario: ''
+                    scenario: '^((?!lxd).)*$'
 
             -
                 name: tempest_smoke_serial
