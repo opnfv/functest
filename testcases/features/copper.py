@@ -60,23 +60,29 @@ def main():
     version = functest_utils.get_version(logger)
     build_tag = functest_utils.get_build_tag(logger)
 
-    logger.info("Pushing COPPER results: TEST_DB_URL=%(db)s pod_name=%(pod)s "
-                "version=%(v)s scenario=%(s)s criteria=%(c)s details=%(d)s" % {
-                    'db': TEST_DB_URL,
-                    'pod': pod_name,
-                    'v': version,
-                    's': scenario,
-                    'c': details['status'],
-                    'b': build_tag,
-                    'd': details,
-                })
-    functest_utils.push_results_to_db("COPPER",
-                                      "COPPER-notification",
-                                      logger,
-                                      start_time,
-                                      stop_time,
-                                      details['status'],
-                                      details)
+    try:
+        logger.info("Pushing COPPER results: TEST_DB_URL=%(db)s "
+                    "pod_name=%(pod)s version=%(v)s scenario=%(s)s "
+                    "criteria=%(c)s details=%(d)s" % {
+                        'db': TEST_DB_URL,
+                        'pod': pod_name,
+                        'v': version,
+                        's': scenario,
+                        'c': details['status'],
+                        'b': build_tag,
+                        'd': details,
+                    })
+        functest_utils.push_results_to_db("copper",
+                                          "copper-notification",
+                                          logger,
+                                          start_time,
+                                          stop_time,
+                                          details['status'],
+                                          details)
+    except:
+        logger.error("Error pushing results into Database '%s'"
+                     % sys.exc_info()[0])
+
     if ret_val != 0:
         sys.exit(-1)
 
