@@ -73,21 +73,27 @@ def run_tests(host, nodetype):
     port = cfgparse.get(nodetype, 'port')
     connect.logger.info("Host: {0} Selected Profile: {1}".format(host,
                                                                  nodetype))
-    connect.logger.info("Creating temp file structure..")
-    createfiles(host, port, user, localkey)
-    connect.logger.info("Installing OpenSCAP...")
-    install_pkg(host, port, user, localkey)
-    connect.logger.info("Running scan...")
-    run_scanner(host, port, user, localkey, nodetype)
-    clean = cfgparse.get(nodetype, 'clean')
-    connect.logger.info("Post installation tasks....")
-    post_tasks(host, port, user, localkey, nodetype)
-    if clean:
-        connect.logger.info("Cleaning down environment....")
-        connect.logger.info("Removing OpenSCAP....")
-        removepkg(host, port, user, localkey, nodetype)
-        connect.logger.info("Deleting tmp file and reports (remote)...")
-        cleandir(host, port, user, localkey, nodetype)
+    connect.logger.info("Checking internet for package installation...")
+    if internet_check(host,nodetype):
+        connect.logger.info("Internet Connection OK.")
+        connect.logger.info("Creating temp file structure..")
+        createfiles(host, port, user, localkey)
+        connect.logger.info("Installing OpenSCAP...")
+        install_pkg(host, port, user, localkey)
+        connect.logger.info("Running scan...")
+        run_scanner(host, port, user, localkey, nodetype)
+        clean = cfgparse.get(nodetype, 'clean')
+        connect.logger.info("Post installation tasks....")
+        post_tasks(host, port, user, localkey, nodetype)
+        if clean:
+            connect.logger.info("Cleaning down environment....")
+            connect.logger.info("Removing OpenSCAP....")
+            removepkg(host, port, user, localkey, nodetype)
+            connect.logger.info("Deleting tmp file and reports (remote)...")
+            cleandir(host, port, user, localkey, nodetype)
+    else:
+        connect.logger.error("Internet timeout. Moving on to next node..")
+        pass
 
 
 def nova_iterate():
@@ -104,6 +110,22 @@ def nova_iterate():
             nodetype = 'controller'
             for host in networks['ctlplane']:
                 run_tests(host, nodetype)
+
+
+def internet_check(host, nodetype):
+    import connect
+    user = cfgparse.get(nodetype, 'user')
+    port = cfgparse.get(nodetype, 'port')
+    localpath = functest_dir + 'scripts/internet_check.py'
+    remotepath = '/tmp/internet_check.py'
+    com = 'python /tmp/internet_check.py'
+    testconnect = connect.ConnectionManager(host, port, user, localkey,
+                                        localpath, remotepath, com)
+    connectionresult = testconnect.remotescript()
+    if connectionresult.rstrip() == 'True':
+        return True
+    else:
+        return False
 
 
 def createfiles(host, port, user, localkey):
