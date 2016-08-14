@@ -207,7 +207,15 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: 'onos-sfc'
-
+            -
+                name: parser
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    Test suite from Parser project.
+                dependencies:
+                    installer: 'fuel'
+                    scenario: ''
     -
         name: openstack
         order: 4
@@ -255,12 +263,3 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: '(ocl)|(nosdn)|^(os-odl)((?!bgpvpn).)*$'
-            -
-                name: parser
-                criteria: 'ret == 0'
-                blocking: false
-                description: >-
-                    Test suite from Parser project.
-                dependencies:
-                    installer: 'fuel'
-                    scenario: ''
