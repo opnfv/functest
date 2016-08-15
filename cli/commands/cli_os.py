@@ -106,7 +106,8 @@ class CliOpenStack:
     def snapshot_show(self):
         if not os.path.isfile(OS_SNAPSHOT_FILE):
             click.echo("There is no OpenStack snapshot created. To create "
-                       "one run the command 'functest env os-create-snapshot'")
+                       "one run the command "
+                       "'functest openstack snapshot-create'")
             return
         with open(OS_SNAPSHOT_FILE, 'r') as yaml_file:
             click.echo("\n%s"
@@ -117,6 +118,7 @@ class CliOpenStack:
         if not os.path.isfile(OS_SNAPSHOT_FILE):
             click.echo("Not possible to clean OpenStack without a snapshot. "
                        "This could cause problems. "
-                       "Run first the command 'os-create-shapshot'.")
+                       "Run first the command "
+                       "'functest openstack snapshot-create'")
             return
         os_clean.main()
