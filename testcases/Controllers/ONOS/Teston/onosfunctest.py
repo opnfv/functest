@@ -218,6 +218,8 @@ def SetSfcConf():
     neutron_client = neutronclient.Client(**creds_neutron)
     ext_net = openstack_utils.get_external_net(neutron_client)
     Replace("admin_floating_net", ext_net)
+    if INSTALLER_TYPE == "joid":
+        Replace("8774\/v2\.1", "8774\/v2")
     logger.info("Modify configuration for SFC")
 
 
@@ -266,9 +268,9 @@ def OnosTest():
 def main():
 
     if args.testcase == "sfc":
-        CreateImage()
+        #CreateImage()
         SetSfcConf()
-        SfcTest()
+        #SfcTest()
     else:
         OnosTest()
 
