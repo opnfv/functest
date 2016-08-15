@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_f4dd8d15",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-15T07:39:25Z",
+      "side": 1,
+      "message": "I think it would be ok here to explicitly reference the Apex example which follows later, where this needed sudo is shown.\nYou could add a final sentence:\n\nSee Apex command example in section `Apex Installer Tips`_ below.",
+      "range": {
+        "startLine": 128,
+        "startChar": 19,
+        "endLine": 128,
+        "endChar": 23
+      },
+      "revId": "99c0b2c854e090e26f07705b816868d94f1e01fb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
