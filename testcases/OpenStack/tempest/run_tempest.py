@@ -365,6 +365,8 @@ def run_tempest(OPTION):
 
     if 'smoke' in args.mode:
         case_name = 'tempest_smoke_serial'
+    elif 'feature' in args.mode:
+        case_name = args.mode
     else:
         case_name = 'tempest_full_parallel'
 
