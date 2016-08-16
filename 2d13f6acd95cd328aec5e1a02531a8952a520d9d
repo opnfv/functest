@@ -34,6 +34,24 @@
       "revId": "2d13f6acd95cd328aec5e1a02531a8952a520d9d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_ea1286b3",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-16T11:24:15Z",
+      "side": 1,
+      "message": "so it should be \n python ${repos_dir}/securityscanning/security_scan.py --config ${repos_dir}/securityscanning/config.ini\n\nand it shall be ok\n\nFUNCTEST_REPO_DIR is for FUNCTEST repo",
+      "parentUuid": "1a76adc5_6af8b67c",
+      "revId": "2d13f6acd95cd328aec5e1a02531a8952a520d9d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
