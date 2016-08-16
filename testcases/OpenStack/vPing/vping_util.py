@@ -1,79 +1,39 @@
-#!/usr/bin/python
-#
-# Copyright (c) 2015 All rights reserved
-# This program and the accompanying materials
-# are made available under the terms of the Apache License, Version 2.0
-# which accompanies this distribution, and is available at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# 0.1: This script boots the VM1 and allocates IP address from Nova
-# Later, the VM2 boots then execute cloud-init to ping VM1.
-# After successful ping, both the VMs are deleted.
-# 0.2: measure test duration and publish results under json format
-# 0.3: adapt push 2 DB after Test API refacroting
-#
-import argparse
-import datetime
 import os
-import pprint
 import re
+import pprint
 import sys
 import time
-import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
+
+import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 import paramiko
 from scp import SCPClient
 import yaml
 
-
-pp = pprint.PrettyPrinter(indent=4)
-
-parser = argparse.ArgumentParser()
-image_exists = False
-
-parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
-parser.add_argument("-r", "--report",
-                    help="Create json result file",
-                    action="store_true")
-
-args = parser.parse_args()
-
-""" logging configuration """
-logger = ft_logger.Logger("vping_ssh").getLogger()
-
-# paramiko.util.log_to_file("/var/log/paramiko.log")
-
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
-if not os.path.exists(REPO_PATH):
-    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
-    exit(-1)
 
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
-HOME = os.environ['HOME'] + "/"
-# vPing parameters
+NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
+NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
+
 VM_BOOT_TIMEOUT = 180
 VM_DELETE_TIMEOUT = 100
 PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
-TEST_DB = functest_yaml.get("results").get("test_db_url")
-NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
-NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
+
 GLANCE_IMAGE_NAME = functest_yaml.get("vping").get("image_name")
-GLANCE_IMAGE_FILENAME = functest_yaml.get("general").get("openstack").get(
-    "image_file_name")
-GLANCE_IMAGE_FORMAT = functest_yaml.get("general").get("openstack").get(
-    "image_disk_format")
+GLANCE_IMAGE_FILENAME = functest_yaml.get("general").get(
+    "openstack").get("image_file_name")
+GLANCE_IMAGE_FORMAT = functest_yaml.get("general").get(
+    "openstack").get("image_disk_format")
 GLANCE_IMAGE_PATH = functest_yaml.get("general").get("directories").get(
     "dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
 
 FLAVOR = functest_yaml.get("vping").get("vm_flavor")
 
 # NEUTRON Private Network parameters
-
 PRIVATE_NET_NAME = functest_yaml.get("vping").get(
     "vping_private_net_name")
 PRIVATE_SUBNET_NAME = functest_yaml.get("vping").get(
@@ -87,9 +47,42 @@ SECGROUP_NAME = functest_yaml.get("vping").get("vping_sg_name")
 SECGROUP_DESCR = functest_yaml.get("vping").get("vping_sg_descr")
 
 
+neutron_client = None
+glance_client = None
+nova_client = None
+logger = None
+
+pp = pprint.PrettyPrinter(indent=4)
+
+
 def pMsg(value):
     """pretty printing"""
     pp.pprint(value)
+
+
+def check_repo_exist():
+    if not os.path.exists(REPO_PATH):
+        logger.error("Functest repository not found '%s'" % REPO_PATH)
+        exit(-1)
+
+
+def get_vmname_1():
+    return NAME_VM_1
+
+
+def get_vmname_2():
+    return NAME_VM_2
+
+
+def init(vping_logger):
+    global nova_client
+    nova_client = os_utils.get_nova_client()
+    global neutron_client
+    neutron_client = os_utils.get_neutron_client()
+    global glance_client
+    glance_client = os_utils.get_glance_client()
+    global logger
+    logger = vping_logger
 
 
 def waitVmActive(nova, vm):
@@ -112,26 +105,7 @@ def waitVmActive(nova, vm):
     return False
 
 
-def waitVmDeleted(nova, vm):
-
-    # sleep and wait for VM status change
-    sleep_time = 3
-    count = VM_DELETE_TIMEOUT / sleep_time
-    while True:
-        status = os_utils.get_instance_status(nova, vm)
-        if not status:
-            return True
-        elif count == 0:
-            logger.debug("Timeout")
-            return False
-        else:
-            # return False
-            count -= 1
-        time.sleep(sleep_time)
-    return False
-
-
-def create_security_group(neutron_client):
+def create_security_group():
     sg_id = os_utils.get_security_group_id(neutron_client,
                                            SECGROUP_NAME)
     if sg_id != '':
@@ -159,8 +133,9 @@ def create_security_group(neutron_client):
 
         logger.debug("Adding SSH rules in security group '%s'..."
                      % SECGROUP_NAME)
-        if not os_utils.create_secgroup_rule(
-                neutron_client, sg_id, 'ingress', 'tcp', '22', '22'):
+        if not os_utils.create_secgroup_rule(neutron_client, sg_id,
+                                             'ingress', 'tcp',
+                                             '22', '22'):
             logger.error("Failed to create the security group rule...")
             return False
 
@@ -171,21 +146,13 @@ def create_security_group(neutron_client):
     return sg_id
 
 
-def main():
-    nova_client = os_utils.get_nova_client()
-    neutron_client = os_utils.get_neutron_client()
-    glance_client = os_utils.get_glance_client()
-
+def create_image():
     EXIT_CODE = -1
-
-    image_id = None
-    flavor = None
 
     # Check if the given image exists
     image_id = os_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
     if image_id != '':
         logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
-        global image_exists
         image_exists = True
     else:
         logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
@@ -199,99 +166,118 @@ def main():
             exit(EXIT_CODE)
         logger.debug("Image '%s' with ID=%s created successfully."
                      % (GLANCE_IMAGE_NAME, image_id))
+    return image_exists, image_id
 
-    network_dic = os_utils.create_network_full(neutron_client,
-                                               PRIVATE_NET_NAME,
-                                               PRIVATE_SUBNET_NAME,
-                                               ROUTER_NAME,
-                                               PRIVATE_SUBNET_CIDR)
-    if not network_dic:
-        logger.error(
-            "There has been a problem when creating the neutron network")
-        exit(EXIT_CODE)
 
-    network_id = network_dic["net_id"]
-
-    sg_id = create_security_group(neutron_client)
+def get_flavor():
+    EXIT_CODE = -1
 
     # Check if the given flavor exists
     try:
         flavor = nova_client.flavors.find(name=FLAVOR)
         logger.info("Using existing Flavor '%s'..." % FLAVOR)
+        return flavor
     except:
         logger.error("Flavor '%s' not found." % FLAVOR)
         logger.info("Available flavors are: ")
         pMsg(nova_client.flavor.list())
         exit(EXIT_CODE)
 
-    # Deleting instances if they exist
+
+def create_network_full():
+    EXIT_CODE = -1
+
+    network_dic = os_utils.create_network_full(neutron_client,
+                                               PRIVATE_NET_NAME,
+                                               PRIVATE_SUBNET_NAME,
+                                               ROUTER_NAME,
+                                               PRIVATE_SUBNET_CIDR)
+
+    if not network_dic:
+        logger.error(
+            "There has been a problem when creating the neutron network")
+        exit(EXIT_CODE)
+    network_id = network_dic["net_id"]
+    return network_id
+
+
+def delete_exist_vms():
     servers = nova_client.servers.list()
     for server in servers:
         if server.name == NAME_VM_1 or server.name == NAME_VM_2:
             logger.info("Instance %s found. Deleting..." % server.name)
             server.delete()
 
-    # boot VM 1
-    start_time = time.time()
-    stop_time = start_time
-    logger.info("vPing Start Time:'%s'" % (
-        datetime.datetime.fromtimestamp(start_time).strftime(
-            '%Y-%m-%d %H:%M:%S')))
 
-    logger.info("Creating instance '%s'..." % NAME_VM_1)
-    logger.debug(
-        "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
-        "network=%s \n" % (NAME_VM_1, flavor, image_id, network_id))
-    vm1 = nova_client.servers.create(
-        name=NAME_VM_1,
-        flavor=flavor,
-        image=image_id,
-        nics=[{"net-id": network_id}]
-    )
+def is_userdata(case):
+    return case == 'vping_userdata'
+
+
+def is_ssh(case):
+    return case == 'vping_ssh'
+
+
+def boot_vm(case, name, image_id, flavor, network_id, test_ip, sg_id):
+    EXIT_CODE = -1
+
+    config = dict()
+    config['name'] = name
+    config['flavor'] = flavor
+    config['image'] = image_id
+    config['nics'] = [{"net-id": network_id}]
+    if is_userdata(case):
+        config['config_drive'] = True
+        if name == NAME_VM_2:
+            u = ("#!/bin/sh\n\n"
+                 "while true; do\n"
+                 " ping -c 1 %s 2>&1 >/dev/null\n"
+                 " RES=$?\n"
+                 " if [ \"Z$RES\" = \"Z0\" ] ; then\n"
+                 "  echo 'vPing OK'\n"
+                 "  break\n"
+                 " else\n"
+                 "  echo 'vPing KO'\n"
+                 " fi\n"
+                 " sleep 1\n"
+                 "done\n" % test_ip)
+            config['userdata'] = u
+
+    logger.info("Creating instance '%s'..." % name)
+    logger.debug("Configuration: %s" % config)
+    vm = nova_client.servers.create(**config)
 
     # wait until VM status is active
-    if not waitVmActive(nova_client, vm1):
+    if not waitVmActive(nova_client, vm):
+
         logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
-            NAME_VM_1, os_utils.get_instance_status(nova_client, vm1)))
+            name, os_utils.get_instance_status(nova_client, vm)))
         exit(EXIT_CODE)
     else:
-        logger.info("Instance '%s' is ACTIVE." % NAME_VM_1)
+        logger.info("Instance '%s' is ACTIVE." % name)
 
-    # Retrieve IP of first VM
-    test_ip = vm1.networks.get(PRIVATE_NET_NAME)[0]
-    logger.debug("Instance '%s' got private ip '%s'." % (NAME_VM_1, test_ip))
+    add_secgroup(name, vm.id, sg_id)
 
-    logger.info("Adding '%s' to security group '%s'..."
-                % (NAME_VM_1, SECGROUP_NAME))
-    os_utils.add_secgroup_to_instance(nova_client, vm1.id, sg_id)
+    return vm
 
-    # boot VM 2
-    logger.info("Creating instance '%s'..." % NAME_VM_2)
-    logger.debug(
-        "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
-        "network=%s \n" % (NAME_VM_2, flavor, image_id, network_id))
-    vm2 = nova_client.servers.create(
-        name=NAME_VM_2,
-        flavor=flavor,
-        image=image_id,
-        nics=[{"net-id": network_id}]
-    )
 
-    if not waitVmActive(nova_client, vm2):
-        logger.error("Instance '%s' cannot be booted. Status is '%s'" % (
-            NAME_VM_2, os_utils.get_instance_status(nova_client, vm2)))
-        exit(EXIT_CODE)
-    else:
-        logger.info("Instance '%s' is ACTIVE." % NAME_VM_2)
+def get_test_ip(vm):
+    test_ip = vm.networks.get(PRIVATE_NET_NAME)[0]
+    logger.debug("Instance '%s' got %s" % (vm.name, test_ip))
+    return test_ip
 
-    logger.info("Adding '%s' to security group '%s'..." % (NAME_VM_2,
-                                                           SECGROUP_NAME))
-    os_utils.add_secgroup_to_instance(nova_client, vm2.id, sg_id)
+
+def add_secgroup(vmname, vm_id, sg_id):
+    logger.info("Adding '%s' to security group '%s'..." %
+                (vmname, SECGROUP_NAME))
+    os_utils.add_secgroup_to_instance(nova_client, vm_id, sg_id)
+
+
+def add_float_ip(vm):
+    EXIT_CODE = -1
 
     logger.info("Creating floating IP for VM '%s'..." % NAME_VM_2)
     floatip_dic = os_utils.create_floating_ip(neutron_client)
     floatip = floatip_dic['fip_addr']
-    # floatip_id = floatip_dic['fip_id']
 
     if floatip is None:
         logger.error("Cannot create floating IP.")
@@ -300,9 +286,15 @@ def main():
 
     logger.info("Associating floating ip: '%s' to VM '%s' "
                 % (floatip, NAME_VM_2))
-    if not os_utils.add_floating_ip(nova_client, vm2.id, floatip):
+    if not os_utils.add_floating_ip(nova_client, vm.id, floatip):
         logger.error("Cannot associate floating IP to VM.")
         exit(EXIT_CODE)
+
+    return floatip
+
+
+def establish_ssh(vm, floatip):
+    EXIT_CODE = -1
 
     logger.info("Trying to establish SSH connection to %s..." % floatip)
     username = 'cirros'
@@ -326,7 +318,7 @@ def main():
             time.sleep(6)
             timeout -= 1
 
-        console_log = vm2.get_console_output()
+        console_log = vm.get_console_output()
 
         # print each "Sending discover" captured on the console log
         if (len(re.findall("Sending discover", console_log)) >
@@ -355,7 +347,13 @@ def main():
         logger.error("Cannot establish connection to IP '%s'. Aborting"
                      % floatip)
         exit(EXIT_CODE)
+    return ssh
 
+
+def transfer_ping_script(ssh, floatip):
+    EXIT_CODE = -1
+
+    logger.info("Trying to transfer ping.sh to %s..." % floatip)
     scp = SCPClient(ssh.get_transport())
 
     ping_script = REPO_PATH + "testcases/OpenStack/vPing/ping.sh"
@@ -371,14 +369,13 @@ def main():
     for line in stdout.readlines():
         print line
 
-    logger.info("Waiting for ping...")
-    sec = 0
-    stop_time = time.time()
-    duration = 0
 
+def do_vping_ssh(ssh, test_ip):
+    logger.info("Waiting for ping...")
+
+    sec = 0
     cmd = '~/ping.sh ' + test_ip
     flag = False
-    status = "FAIL"
 
     while True:
         time.sleep(1)
@@ -388,11 +385,6 @@ def main():
         for line in output:
             if "vPing OK" in line:
                 logger.info("vPing detected!")
-                status = "PASS"
-                # we consider start time at VM1 booting
-                stop_time = time.time()
-                duration = round(stop_time - start_time, 1)
-                logger.info("vPing duration:'%s' s." % duration)
                 EXIT_CODE = 0
                 flag = True
                 break
@@ -405,30 +397,83 @@ def main():
             break
         logger.debug("Pinging %s. Waiting for response..." % test_ip)
         sec += 1
+    return EXIT_CODE, time.time()
 
-    if status == "PASS":
+
+def do_vping_userdata(vm, test_ip):
+    logger.info("Waiting for ping...")
+    EXIT_CODE = -1
+    sec = 0
+    metadata_tries = 0
+
+    while True:
+        time.sleep(1)
+        console_log = vm.get_console_output()
+        if "vPing OK" in console_log:
+            logger.info("vPing detected!")
+            EXIT_CODE = 0
+            break
+        elif ("failed to read iid from metadata" in console_log or
+              metadata_tries > 5):
+            EXIT_CODE = -2
+            break
+        elif sec == PING_TIMEOUT:
+            logger.info("Timeout reached.")
+            break
+        elif sec % 10 == 0:
+            if "request failed" in console_log:
+                logger.debug("It seems userdata is not supported in "
+                             "nova boot. Waiting a bit...")
+                metadata_tries += 1
+            else:
+                logger.debug("Pinging %s. Waiting for response..." % test_ip)
+        sec += 1
+
+    return EXIT_CODE, time.time()
+
+
+def do_vping(case, vm, test_ip):
+    if is_userdata(case):
+        return do_vping_userdata(vm, test_ip)
+    else:
+        floatip = add_float_ip(vm)
+        ssh = establish_ssh(vm, floatip)
+        transfer_ping_script(ssh, floatip)
+        return do_vping_ssh(ssh, test_ip)
+
+
+def check_result(code, start_time, stop_time):
+    test_status = "FAIL"
+    if code == 0:
         logger.info("vPing OK")
+        duration = round(stop_time - start_time, 1)
+        logger.info("vPing duration:'%s'" % duration)
+        test_status = "PASS"
+    elif code == -2:
+        duration = 0
+        logger.info("Userdata is not supported in nova boot. Aborting test...")
     else:
         duration = 0
         logger.error("vPing FAILED")
 
-    if args.report:
+    details = {'timestart': start_time,
+               'duration': duration,
+               'status': test_status}
+
+    return details
+
+
+def push_result(report, case, start_time, stop_time, details):
+    if report:
         try:
-            logger.debug("Pushing vPing SSH results into DB...")
-            functest_utils.push_results_to_db("functest",
-                                              "vping_ssh",
-                                              logger,
-                                              start_time,
-                                              stop_time,
-                                              status,
-                                              details={'timestart': start_time,
-                                                       'duration': duration,
-                                                       'status': status})
+            logger.debug("Pushing vPing %s results into DB..." % case)
+            ft_utils.push_results_to_db('functest',
+                                        case,
+                                        logger,
+                                        start_time,
+                                        stop_time,
+                                        details['status'],
+                                        details=details)
         except:
             logger.error("Error pushing results into Database '%s'"
                          % sys.exc_info()[0])
-
-    exit(EXIT_CODE)
-
-if __name__ == '__main__':
-    main()
