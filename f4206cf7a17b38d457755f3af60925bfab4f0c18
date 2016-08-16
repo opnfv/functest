@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_e59b99c7",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-08-16T15:19:36Z",
+      "side": 1,
+      "message": "Well put! I\u0027ll add this line and move these commands to \"Apex Tips\"",
+      "parentUuid": "1a76adc5_0a0b42d7",
+      "revId": "f4206cf7a17b38d457755f3af60925bfab4f0c18",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_2aaabe19",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-08-16T12:44:48Z",
       "side": 1,
       "message": "Internet access shouldn\u0027t be required for installing Rally environment (FUNCTEST-200).\n\nRally itself is pre-installed in container and will install Tempest using local repo.",
+      "revId": "f4206cf7a17b38d457755f3af60925bfab4f0c18",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_05a1f5f7",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-08-16T15:19:36Z",
+      "side": 1,
+      "message": "Ookoo. I\u0027ll just leave the generic note and remove the references to Rally",
+      "parentUuid": "1a76adc5_2aaabe19",
       "revId": "f4206cf7a17b38d457755f3af60925bfab4f0c18",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
