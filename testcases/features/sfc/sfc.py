@@ -408,6 +408,21 @@ def main():
             logger.info('\033[92m' + "SFC TEST WORKED"
                         " :) \n" + '\033[0m')
 
+    # TODO report results to DB
+    # functest_utils.logger_test_results(logger, "SFC",
+    # "odl-sfc",
+    # status, details)
+    # see doctor, promise, domino, ...
+    # if args.report:
+        # logger.info("Pushing odl-SFC results")
+        # functest_utils.push_results_to_db("functest",
+        #                                  "odl-sfc",
+        #                                  logger,
+        #                                  start_time,
+        #                                  stop_time,
+        #                                  status,
+        #                                  details)
+
     sys.exit(0)
 
 if __name__ == '__main__':
