@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_0a0b42d7",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-16T07:43:38Z",
+      "side": 1,
+      "message": "is it not too apex oriented in this generic section?\nshall we have a focus for each installer?\n\nI would suggest to indicate that OpenStack credentials are mandatory and can be retrieved in different ways. In automated mode, we use a script to collect them.\n\nand put the specific Triple-O statement in Apex tips below",
+      "revId": "f4206cf7a17b38d457755f3af60925bfab4f0c18",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
