@@ -146,8 +146,7 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/features/copper.py
         ;;
         "moon")
-            # TODO put the link to Moon script to be run (if test runnable) here
-            ${repos_dir}/moon/tests/run_tests.sh
+            python ${repos_dir}/moon/tests/run_tests.py
         ;;
         "multisite")
             python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/gen_tempest_conf.py
