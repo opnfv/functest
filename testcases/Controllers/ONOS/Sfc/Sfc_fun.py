@@ -227,6 +227,22 @@ class Sfc_fun:
         else:
             return(response.status_code)
 
+        url = 'http://' + self.nova_hostname + \
+            ':8774/v2.1/' + self.tenant_id + '/flavors?name=m1.tiny'
+        headers = {"Accept": "application/json", "Content-Type":
+                   "application/json", "X-Auth-Token": self.token_id}
+        response = requests.get(url, headers=headers)
+
+        if (response.status_code == 200):
+            self.logger.debug(response.status_code)
+            self.logger.debug(response.content)
+            self.logger.info("\tFlavor is available")
+            json1_data = json.loads(response.content)
+            self.logger.debug(json1_data)
+            self.flavorRef = json1_data['flavors'][0]['id']
+        else:
+            return(response.status_code)
+
         for y in range(0, 3):
             Dicdata = {}
             org_nw_port = []
