@@ -16,6 +16,24 @@
       "revId": "2d13f6acd95cd328aec5e1a02531a8952a520d9d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_6af8b67c",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 610
+      },
+      "writtenOn": "2016-08-16T10:44:22Z",
+      "side": 1,
+      "message": "The repo is cloned in :\n\nhttps://gerrit.opnfv.org/gerrit/#/c/18727/1/docker/Dockerfile\n\nTo:  ${repos_dir}/securityscanning\n\nSo that should be correct, unless I misunderstood something?",
+      "parentUuid": "1a76adc5_4ac13a2d",
+      "revId": "2d13f6acd95cd328aec5e1a02531a8952a520d9d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
