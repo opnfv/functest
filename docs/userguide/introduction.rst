@@ -108,12 +108,14 @@ Features and VNF (Virtual Network Functions).
 |             |               | odl-sfc        | SFC testing for odl scenarios    |
 |             |               |                | TODO See for details             |
 |             |               +----------------+----------------------------------+
-|             |               | domino         | Service template publication     |
-|             |               |                | service based on OASIS           |
-|             |               |                | specification "TOSCA Simple      |
-|             |               |                | Profile for Network Function     |
-|             |               |                | Virtualization (NFV) Version 1.0"|
-|             |               |                | TODO See for details             |
+|             |               | domino         | Domino provides TOSCA template   |
+|             |               |                | distribution service for network |
+|             |               |                | service and VNF descriptors      |
+|             |               |                | among MANO components e.g.,      |
+|             |               |                | NFVO, VNFM, VIM, SDN-C, etc.,    |
+|             |               |                | as well as OSS/BSS functions.    |
+|             |               |                | See `Domino User Guide`_ for     |
+|             |               |                | details                          |
 |             |               +----------------+----------------------------------+
 |             |               | copper         | Deployment policy                |
 |             |               |                | TODO See for details             |
@@ -204,4 +206,5 @@ section `Executing the functest suites`_ of this document.
 .. _`Promise User Guide`: http://artifacts.opnfv.org/promise/brahmaputra/docs/userguide/index.html
 .. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/brahmaputra/docs/userguide/index.html
 .. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/brahmaputra/docs/userguide/featureusage.html
+.. _`Domino User Guide`: http://artifacts.opnfv.org/domino/docs/userguide/index.html
 .. _`Functest Dashboard`: http://testresults.opnfv.org/kibana_dashboards/
