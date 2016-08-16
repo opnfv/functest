@@ -130,7 +130,7 @@ function run_test(){
             sleep 10 # to let the instances terminate
         ;;
         "doctor")
-            python ${FUNCTEST_REPO_DIR}/testcases/features/doctor.py
+            python ${FUNCTEST_REPO_DIR}/testcases/features/doctor.py $report
         ;;
         "ovno")
             # suite under rewritting for colorado
@@ -143,7 +143,7 @@ function run_test(){
             python ${repos_dir}/securityscanning/security_scan.py --config ${repos_dir}/securityscanning/config.ini
         ;;
         "copper")
-            python ${FUNCTEST_REPO_DIR}/testcases/features/copper.py
+            python ${FUNCTEST_REPO_DIR}/testcases/features/copper.py $report
         ;;
         "moon")
             python ${repos_dir}/moon/tests/run_tests.py
@@ -155,7 +155,7 @@ function run_test(){
                 -c ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/tempest_multisite.conf
         ;;
         "domino")
-            python ${FUNCTEST_REPO_DIR}/testcases/features/domino.py
+            python ${FUNCTEST_REPO_DIR}/testcases/features/domino.py $report
         ;;
         "odl-sfc")
             bash ${FUNCTEST_REPO_DIR}/testcases/features/sfc/server_presetup_CI.bash
@@ -169,7 +169,7 @@ function run_test(){
                 exit $ret_val
             fi
             source ${FUNCTEST_REPO_DIR}/testcases/features/sfc/tackerc
-            python ${FUNCTEST_REPO_DIR}/testcases/features/sfc/sfc.py
+            python ${FUNCTEST_REPO_DIR}/testcases/features/sfc/sfc.py $report
         ;;
         "parser")
             python ${FUNCTEST_REPO_DIR}/testcases/vnf/vRNC/parser.py $report
