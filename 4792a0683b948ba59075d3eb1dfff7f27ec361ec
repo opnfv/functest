@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_8af672d6",
+        "filename": "testcases/OpenStack/tempest/custom_tests/blacklist.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-16T07:46:38Z",
+      "side": 1,
+      "message": "is it possible to have a short justification of the exlusion of these testcases.\nFor the release note, it is better to have a link towards a bug, a JIRA, any reference detailing why the cases have been excluded.",
+      "revId": "4792a0683b948ba59075d3eb1dfff7f27ec361ec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
