@@ -76,7 +76,7 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/vPing/vPing_ssh.py $report
         ;;
         "vping_userdata")
-            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/vPing/vPing_userdata.py $report
+            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/vPing/vping.py -m userdata $report
         ;;
         "odl")
             odl_tests
