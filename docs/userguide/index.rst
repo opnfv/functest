@@ -239,7 +239,7 @@ OpenDaylight and Neutron.
 The list of tests can be described as follows:
 
  * Basic Restconf test cases
-   * Connect to Restconf URL 
+   * Connect to Restconf URL
    * Check the HTTP code status
 
  * Neutron Reachability test cases
@@ -462,7 +462,7 @@ portal is also automatically updated. This portal provides information on:
 
  * The overall status per scenario and per installer
  * Tempest: Tempest test case including reported errors per scenario and installer
- * vIMS: vIMS details per scenario and installer 
+ * vIMS: vIMS details per scenario and installer
 
 .. figure:: ../images/functest-reporting-status.png
    :align: center
