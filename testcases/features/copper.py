@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+import argparse
 import os
 import sys
 import time
@@ -22,6 +22,11 @@ import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import yaml
 
+parser = argparse.ArgumentParser()
+parser.add_argument("-r", "--report",
+                    help="Create json result file",
+                    action="store_true")
+args = parser.parse_args()
 
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
@@ -61,24 +66,25 @@ def main():
     build_tag = functest_utils.get_build_tag(logger)
 
     try:
-        logger.info("Pushing COPPER results: TEST_DB_URL=%(db)s "
-                    "pod_name=%(pod)s version=%(v)s scenario=%(s)s "
-                    "criteria=%(c)s details=%(d)s" % {
-                        'db': TEST_DB_URL,
-                        'pod': pod_name,
-                        'v': version,
-                        's': scenario,
-                        'c': details['status'],
-                        'b': build_tag,
-                        'd': details,
-                    })
-        functest_utils.push_results_to_db("copper",
-                                          "copper-notification",
-                                          logger,
-                                          start_time,
-                                          stop_time,
-                                          details['status'],
-                                          details)
+        if args.report:
+            logger.info("Pushing COPPER results: TEST_DB_URL=%(db)s "
+                        "pod_name=%(pod)s version=%(v)s scenario=%(s)s "
+                        "criteria=%(c)s details=%(d)s" % {
+                            'db': TEST_DB_URL,
+                            'pod': pod_name,
+                            'v': version,
+                            's': scenario,
+                            'c': details['status'],
+                            'b': build_tag,
+                            'd': details,
+                        })
+            functest_utils.push_results_to_db("copper",
+                                              "copper-notification",
+                                              logger,
+                                              start_time,
+                                              stop_time,
+                                              details['status'],
+                                              details)
     except:
         logger.error("Error pushing results into Database '%s'"
                      % sys.exc_info()[0])

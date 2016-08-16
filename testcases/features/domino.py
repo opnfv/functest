@@ -11,15 +11,23 @@
 # Later, the VM2 boots then execute cloud-init to ping VM1.
 # After successful ping, both the VMs are deleted.
 # 0.2: measure test duration and publish results under json format
-#
+# 0.3: add report flag to push results when needed
 #
 
+import argparse
 import os
 import time
 import yaml
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-r", "--report",
+                    help="Create json result file",
+                    action="store_true")
+args = parser.parse_args()
 
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
@@ -66,25 +74,27 @@ def main():
     elif details['status'] == "SKIPPED":
         status = "SKIP"
 
-    logger.info("Pushing Domino results: TEST_DB_URL=%(db)s pod_name=%(pod)s "
-                "version=%(v)s scenario=%(s)s criteria=%(c)s details=%(d)s" % {
-                    'db': TEST_DB_URL,
-                    'pod': pod_name,
-                    'v': version,
-                    's': scenario,
-                    'c': status,
-                    'b': build_tag,
-                    'd': details,
-                })
+    if args.report:
+        logger.info("Pushing Domino results: TEST_DB_URL=%(db)s "
+                    "pod_name=%(pod)s version=%(v)s scenario=%(s)s "
+                    "criteria=%(c)s details=%(d)s" % {
+                        'db': TEST_DB_URL,
+                        'pod': pod_name,
+                        'v': version,
+                        's': scenario,
+                        'c': status,
+                        'b': build_tag,
+                        'd': details,
+                    })
 
-    if status is not "SKIP":
-        functest_utils.push_results_to_db("domino",
-                                          "domino-multinode",
-                                          logger,
-                                          start_time,
-                                          stop_time,
-                                          status,
-                                          details)
+        if status is not "SKIP":
+            functest_utils.push_results_to_db("domino",
+                                              "domino-multinode",
+                                              logger,
+                                              start_time,
+                                              stop_time,
+                                              status,
+                                              details)
 
 if __name__ == '__main__':
     main()
