@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_4ac13a2d",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-16T09:57:30Z",
+      "side": 1,
+      "message": "${FUNCTEST_REPO_DIR} points to functest repo\nI assume you want to do ${repos_dir}/\u003cname of the repo we clone\u003e\nadd the repo to be cloned here: https://git.opnfv.org/cgit/functest/tree/docker/Dockerfile",
+      "revId": "2d13f6acd95cd328aec5e1a02531a8952a520d9d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
