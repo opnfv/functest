@@ -215,7 +215,7 @@ tiers:
                     Test suite from Parser project.
                 dependencies:
                     installer: 'fuel'
-                    scenario: ''
+                    scenario: '^((?!onos).)*$'
     -
         name: openstack
         order: 4
