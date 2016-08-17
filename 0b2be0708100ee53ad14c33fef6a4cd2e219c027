@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_c5b53dce",
+        "filename": "testcases/features/copper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-17T00:58:18Z",
+      "side": 1,
+      "message": "Please exclude logger.info out of args.report check, We still need to see the result via the console or functest.log, even if we don\u0027t report the results to DB.",
+      "revId": "0b2be0708100ee53ad14c33fef6a4cd2e219c027",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
