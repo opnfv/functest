@@ -52,6 +52,24 @@
       "revId": "6457be53815587ae012a1c3cfc554640e513d632",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a9733b4c",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-17T08:41:37Z",
+      "side": 1,
+      "message": "agree but it is the same for all the installers, it is not compass specific\nwe have a section on sourcing Openstack creds that is common to all the installers, see L567 and after\nin the section tips, we want to put indications that are really specific to installer and difficult to guess, maybe this section should be at the end",
+      "parentUuid": "1a76adc5_a99c9b6a",
+      "revId": "6457be53815587ae012a1c3cfc554640e513d632",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
