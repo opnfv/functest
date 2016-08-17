@@ -70,6 +70,24 @@
       "revId": "6457be53815587ae012a1c3cfc554640e513d632",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_698e8330",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-08-17T08:42:33Z",
+      "side": 1,
+      "message": "Good to have a separate chapter for Compass. Getting the docker \"application\" is already in the document as a separate chapter. So you might not want to repeat that here, unless of course there is something specific to Compass.\n\nUnfortunately the whole doc was reorganized ( see https://gerrit.opnfv.org/gerrit/#/c/18479/ ) Is it possible for you to review that change? And see how this would suit that version of document? \n\nMerging as a separate chapter should not be a problem as such, you (or rather I) just have to remember to check that after merging.",
+      "parentUuid": "1a76adc5_89f19fcf",
+      "revId": "6457be53815587ae012a1c3cfc554640e513d632",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
