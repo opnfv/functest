@@ -6,8 +6,10 @@ import os
 import re
 import shutil
 import sys
-import functest.utils.functest_logger as ft_logger
+
 from robot import run
+
+import functest.utils.functest_logger as ft_logger
 
 
 class ODLTestCases:
