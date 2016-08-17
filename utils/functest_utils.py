@@ -169,9 +169,18 @@ def logger_test_results(logger, project, case_name, status, details):
     version = get_version(logger)
     build_tag = get_build_tag(logger)
 
-    logger.info("Pushing %(p)s/%(n)s results: TEST_DB_URL=%(db)s "
-                "pod_name=%(pod)s version=%(v)s scenario=%(s)s "
-                "criteria=%(c)s details=%(d)s" % {
+    logger.info("\n"
+                "****************************************\n"
+                "\t %(p)s/%(n)s results \n\n"
+                "****************************************\n"
+                "DB:\t%(db)s\n"
+                "pod:\t%(pod)s\n"
+                "version:\t%(v)s\n"
+                "scenario:\t%(s)s\n"
+                "status:\t%(c)s\n"
+                "build tag:\t%(b)s\n"
+                "details:\t%(d)s\n"
+                % {
                     'p': project,
                     'n': case_name,
                     'db': get_db_url(),

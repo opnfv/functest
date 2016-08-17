@@ -13,7 +13,7 @@
 # 0.2: measure test duration and publish results under json format
 #
 #
-
+import argparse
 import os
 import time
 import yaml
@@ -21,13 +21,18 @@ import yaml
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 
+parser = argparse.ArgumentParser()
+parser.add_argument("-r", "--report",
+                    help="Create json result file",
+                    action="store_true")
+args = parser.parse_args()
+
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 
 dirs = functest_yaml.get('general').get('directories')
 FUNCTEST_REPO = dirs.get('dir_repo_functest')
 DOCTOR_REPO = dirs.get('dir_repo_doctor')
-TEST_DB_URL = functest_yaml.get('results').get('test_db_url')
 
 logger = ft_logger.Logger("doctor").getLogger()
 
@@ -55,32 +60,21 @@ def main():
         'duration': duration,
         'status': test_status,
     }
-    pod_name = functest_utils.get_pod_name(logger)
-    scenario = functest_utils.get_scenario(logger)
-    version = functest_utils.get_version(logger)
-    build_tag = functest_utils.get_build_tag(logger)
-
     status = "FAIL"
     if details['status'] == "OK":
         status = "PASS"
-
-    logger.info("Pushing Doctor results: TEST_DB_URL=%(db)s pod_name=%(pod)s "
-                "version=%(v)s scenario=%(s)s criteria=%(c)s details=%(d)s" % {
-                    'db': TEST_DB_URL,
-                    'pod': pod_name,
-                    'v': version,
-                    's': scenario,
-                    'c': status,
-                    'b': build_tag,
-                    'd': details,
-                })
-    functest_utils.push_results_to_db("doctor",
-                                      "doctor-notification",
-                                      logger,
-                                      start_time,
-                                      stop_time,
-                                      status,
-                                      details)
+    functest_utils.logger_test_results(logger, "Doctor",
+                                       "doctor-notification",
+                                       status, details)
+    if args.report:
+        functest_utils.push_results_to_db("doctor",
+                                          "doctor-notification",
+                                          logger,
+                                          start_time,
+                                          stop_time,
+                                          status,
+                                          details)
+        logger.info("Doctor results pushed to DB")
 
     exit(exit_code)
 
