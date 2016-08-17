@@ -124,6 +124,29 @@
       "revId": "6457be53815587ae012a1c3cfc554640e513d632",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_090d8f90",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-17T09:28:13Z",
+      "side": 1,
+      "message": "This command is not to execute the container, what \u0027docker exec -it \u003ccontainer\u003e bash\u0027 do is to attach to a running container and start bash mode.\n\nUsage:  docker exec [OPTIONS] CONTAINER COMMAND [ARG...]\n\nRun a command in a running container\n\nUsage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]\n\nRun a command in a new container",
+      "range": {
+        "startLine": 289,
+        "startChar": 3,
+        "endLine": 289,
+        "endChar": 18
+      },
+      "revId": "6457be53815587ae012a1c3cfc554640e513d632",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
