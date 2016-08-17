@@ -44,7 +44,10 @@ def main():
     cmd = 'cd %s/tests && ./functest_run.sh' % PARSER_REPO
 
     start_time = time.time()
-    ret = functest_utils.execute_command(cmd, logger, exit_on_error=False)
+    ret = functest_utils.execute_command(cmd,
+                                         logger,
+                                         info=True,
+                                         exit_on_error=False)
     stop_time = time.time()
 
     status, details = functest_utils.check_test_result(project,
