@@ -219,6 +219,7 @@ def push_results_to_db(project, case_name, logger,
         r = requests.post(url, data=json.dumps(params), headers=headers)
         if logger:
             logger.debug(r)
+        r.raise_for_status()
         return True
     except Exception, e:
         print("Error [push_results_to_db('%s', '%s', '%s', " +
