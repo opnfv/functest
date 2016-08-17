@@ -105,6 +105,7 @@ RUN curl -L https://get.rvm.io | bash -s stable
 RUN /bin/bash -c ". /home/opnfv/repos/functest/testcases/features/sfc/tacker_client_install.sh"
 RUN cd ${repos_dir}/bgpvpn && pip install .
 RUN cd ${repos_dir}/kingbird && pip install -e .
+RUN cd ${repos_dir}/moon && python setup.py install
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd /home/opnfv/repos/vims-test \
