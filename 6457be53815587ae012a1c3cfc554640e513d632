@@ -34,6 +34,24 @@
       "revId": "6457be53815587ae012a1c3cfc554640e513d632",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a99c9b6a",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2016-08-17T08:35:19Z",
+      "side": 1,
+      "message": "since this usually used for local test case check and development activities, openstack service are needed inside the docker, then the parameters are needed beside the \"INSTALLER_TYPE\", etc.",
+      "parentUuid": "1a76adc5_89f19fcf",
+      "revId": "6457be53815587ae012a1c3cfc554640e513d632",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
