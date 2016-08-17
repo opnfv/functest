@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_051ed570",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-17T07:22:14Z",
+      "side": 1,
+      "message": "\u0027devstack    ---\u003e \u0027devstack\u0027\n\n:)",
+      "range": {
+        "startLine": 39,
+        "startChar": 39,
+        "endLine": 39,
+        "endChar": 57
+      },
+      "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a5128160",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-17T07:22:14Z",
+      "side": 1,
+      "message": "The --\u003e From inside the running Functest docker container the",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 9
+      },
+      "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c5177d50",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-17T07:22:14Z",
+      "side": 1,
+      "message": "environment --\u003e Functest environment",
+      "range": {
+        "startLine": 48,
+        "startChar": 53,
+        "endLine": 48,
+        "endChar": 64
+      },
+      "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_650c6943",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-17T07:22:14Z",
+      "side": 1,
+      "message": "document ---\u003e document.\n\n:)",
+      "range": {
+        "startLine": 66,
+        "startChar": 23,
+        "endLine": 66,
+        "endChar": 31
+      },
+      "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_25067121",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-17T07:22:14Z",
+      "side": 1,
+      "message": "In the rendered html the # don\u0027t really work out...\nMight be better to take them out from the rst file.\n\nSorry it\u0027s a pain in the posterior I agree.",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 6
+      },
+      "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_49006701",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-17T07:22:14Z",
+      "side": 1,
+      "message": "These parts would read better \"inline\" \u003d\u003d\u003e add :: mark after\nthe final word parameter on the previous line....\n\n(Suggestion only) See the rendered html...",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 68
+      },
+      "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_89343fdf",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-17T07:22:14Z",
+      "side": 1,
+      "message": "installer IP ---\u003e needed INSTALLER_IP\n\njust to match the parameter argument association.",
+      "range": {
+        "startLine": 212,
+        "startChar": 54,
+        "endLine": 213,
+        "endChar": 2
+      },
+      "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_494e2771",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-17T07:22:14Z",
+      "side": 1,
+      "message": "192.168.122.89 ---\u003e $inst    ???",
+      "range": {
+        "startLine": 225,
+        "startChar": 14,
+        "endLine": 225,
+        "endChar": 28
+      },
+      "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_6953e317",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-17T07:22:14Z",
+      "side": 1,
+      "message": "192.168.122.89 ---\u003e $inst  ???",
+      "range": {
+        "startLine": 232,
+        "startChar": 19,
+        "endLine": 232,
+        "endChar": 33
+      },
+      "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_295deb21",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-08-17T07:22:14Z",
+      "side": 1,
+      "message": "The title of the section now seems odd...",
+      "range": {
+        "startLine": 507,
+        "startChar": 0,
+        "endLine": 508,
+        "endChar": 34
+      },
+      "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
