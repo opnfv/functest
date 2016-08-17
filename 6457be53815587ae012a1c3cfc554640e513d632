@@ -16,6 +16,24 @@
       "revId": "6457be53815587ae012a1c3cfc554640e513d632",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_89f19fcf",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2016-08-17T08:17:21Z",
+      "side": 1,
+      "message": "some parameters such as the OS_PASSWORD, etc, in step 2 are needed, these are the default values and to remind the people to set these parameter values accoding to their compass env. Just put it here convenient for reference to install functest docker on compass env.",
+      "parentUuid": "1a76adc5_c996b794",
+      "revId": "6457be53815587ae012a1c3cfc554640e513d632",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
