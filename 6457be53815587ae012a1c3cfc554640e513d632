@@ -88,6 +88,24 @@
       "revId": "6457be53815587ae012a1c3cfc554640e513d632",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e9c7f343",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2016-08-17T08:57:36Z",
+      "side": 1,
+      "message": ":) \nyep, for local test case check and development activities, some parameters should be configured when docker creation and these parameters are hard to guess for compass. @Juha, I think since the section is independent from your patch, no conflict I think, however, I will check its content. ??",
+      "parentUuid": "1a76adc5_698e8330",
+      "revId": "6457be53815587ae012a1c3cfc554640e513d632",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
