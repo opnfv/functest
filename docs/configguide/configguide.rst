@@ -241,6 +241,57 @@ Installer; ignore this section.
        -v ~/overcloudrc:/home/opnfv/functest/conf/openstack.creds \
        opnfv/functest /bin/bash
 
+Compass installer local development env usage Tips
+--------------------------------------------------
+1, Pull Functest docker image from public dockerhub::
+
+    docker pull opnfv/functest:<Tag>
+
+<Tag> here can be "brahmaputra.1.0", "colorado.1.0", etc. Tag omitted means the
+latest docker image::
+
+    docker pull opnfv/functest
+
+2, Functest Docker container creation
+
+To make a file used for the environment, such as 'functest-docker-env'::
+
+    OS_AUTH_URL=http://172.16.1.222:35357/v2.0
+    OS_USERNAME=admin
+    OS_PASSWORD=console
+    OS_TENANT_NAME=admin
+    OS_VOLUME_API_VERSION=2
+    OS_PROJECT_NAME=admin
+    INSTALLER_TYPE=compass
+    INSTALLER_IP=192.168.200.2
+    EXTERNAL_NETWORK=ext-net
+
+Note: please adjust the content according to the environment, such as 'TENANT_ID'
+maybe used for some special cases.
+
+Then to create the Functest docker::
+
+    docker run --privileged=true --rm -t \
+    --env-file functest-docker-env \
+    --name <Container_Name> \
+    opnfv/functest:<Tag> /bin/bash
+
+Note: it is recommended to be run on jumpserver.
+
+3, Functest Docker execuation
+
+Before executing the Functest container, the status can be checked by::
+
+   docker ps -a
+
+to execute the container::
+
+   docker exec -it <Container_Name> bash
+
+4, Functest environemnt preparation and check
+
+To see the Section below "Preparing the Functest environment".
+
 Functest docker container directory structure
 ---------------------------------------------
 Inside the Functest docker container, the following directory structure should
