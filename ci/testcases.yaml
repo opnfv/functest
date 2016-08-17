@@ -173,7 +173,7 @@ tiers:
                     scenario: '(odl)*(moon)'
             -
                 name: multisite
-                criteria: 'status == "PASS"'
+                criteria: 'success_rate == 100%'
                 blocking: false
                 description: >-
                     Test suite from kingbird
