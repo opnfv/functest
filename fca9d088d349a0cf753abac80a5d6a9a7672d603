@@ -246,6 +246,23 @@
       "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_8903dfb7",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2016-08-17T08:03:54Z",
+      "side": 1,
+      "message": "or -\u003e and",
+      "revId": "fca9d088d349a0cf753abac80a5d6a9a7672d603",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
