@@ -10,10 +10,10 @@ This document describes the release note of Functest project.
 License
 =======
 
-OPNFV Brahmaputra release note for Functest Docs
+OPNFV Colorado release note for Functest Docs
 (c) by Morgan Richomme (Orange)
 
-OPNFV Brahmaputra release note for Functest Docs
+OPNFV Colorado release note for Functest Docs
 are licensed under a Creative Commons Attribution 4.0 International License.
 You should have received a copy of the license along with this.
 If not, see <http://creativecommons.org/licenses/by/4.0/>.
@@ -25,14 +25,11 @@ Version history
 | **Date**   | **Ver.** | **Author**       | **Comment**            |
 |            |          |                  |                        |
 +------------+----------+------------------+------------------------+
-| 2016-02-25 | 1.0.0    | Morgan Richomme  | Functest for B release |
-|            |          | (Orange)         |                        |
-+------------+----------+------------------+------------------------+
-| 2016-04-27 | 3.0.0    | Morgan Richomme  | Add scenarios          |
+| 2016-08-17 | 1.0.0    | Morgan Richomme  | Functest for C release |
 |            |          | (Orange)         |                        |
 +------------+----------+------------------+------------------------+
 
-OPNFV Brahmaputra Release
+OPNFV Colorado Release
 =========================
 
 Functest deals with functional testing of the OPNFV solution.
@@ -41,19 +38,36 @@ other OPNFV projects and other upstream communities.
 
 The internal test cases are:
 
+ * healthcheck
  * vPing ssh
  * vPing userdata
- * Tempest
- * Rally
- * vIMS
+ * Tempest Smoke Serial
+ * Rally Sanity
  * ODL
+ * Tempest full parallel
+ * Rally full parallel
+ * vIMS
 
 The OPNFV projects integrated into Functest framework for automation are:
 
- * Promise
- * Doctor
- * ONOSFW
  * bgpvpn
+ * Copper
+ * Doctor
+ * Domino
+ * Moon
+ * Multisite
+ * ONOSFW
+ * ONOS-sfc
+ * ODL-sfc
+ * Parser
+ * Promise
+ * Security scan
+
+The validation of a scenario requires a subset of these tests depending
+on the installer and the scenario.
+
+The 3 last internal test cases (tempest full parallel, Rally full and
+vIMS) are not considered for scenario validation.
 
 Release Data
 ============
@@ -62,16 +76,16 @@ Release Data
 | **Project**                          | functest                             |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Repo/tag**                         | brahmaputra.1.0                      |
+| **Repo/tag**                         | colorado.1.0                         |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release designation**              | Brahmaputra base release             |
+| **Release designation**              | Colorado base release                |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release date**                     | February 26 2016                     |
+| **Release date**                     | September 22 2016                    |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Purpose of the delivery**          | Brahmaputra base release             |
+| **Purpose of the delivery**          | Colorado base release                |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
 
@@ -81,18 +95,20 @@ Deliverables
 Software
 --------
 
- - The Functest Docker image
+ - The Functest Docker image: * TODO link *
+
+ - The testapi Docker image: * TODO link *
+
 
 Documents
 ---------
 
- - Installation/configuration guide
+ - Installation/configuration guide: * TODO link *
 
- - User Guide
+ - User Guide: * TODO link *
 
- - Developer Guide
+ - Developer Guide: * TODO link *
 
- - Test results per scenario
 
 Version change
 ==============
@@ -100,172 +116,175 @@ Version change
 Feature evolution
 -----------------
 
- - support new scenarios
+ - refactoring of ODL functional tests (with upstream modifications)
+
+ - refactoring of testapi (update, swagger documentation, dockerization)
+
+ - jenkins logs improvement
+
+ - update integration of Doctor, Promise and SDNVPN  projects
+
+ - split Tempest and rally into 2 different tests: smoke and full
+
+ - vIMS test suite integration
+
+ - adoption of Kibana for dashboarding
+
 
 New features
 ------------
 
- - minor bug fixes (formating)
+ - support new scenarios (ocl, odl_l2-sfc, onos-sfc, lxd, moon, multisite)
 
- - Modification of the configuration to support vPing_userdata on ONOS scenario
+ - integration of new OPNFV feature projects (copper, domino, multisite,
+ moon, parser, onos-sfc, odl-sfc, security scan)
 
- - Use serial option in Tempest to improve success rate
+ - creation of the healthcheck test case
+
+ - introduction of test tiers in functest framework
+
+ - automatic reporting
+
+ - introduction of a jenkins summary table
+
+ - support of ARM architecture
+
 
 Scenario Matrix
 ===============
 
-For Brahmaputra 3.0, Functest was succesfully tested on the following scenarios:
+For Colorado 1.0, Functest was tested on the following scenarios (if not
+precised, the scenario is a na scenario):
 
-+----------------+---------+---------+---------+---------+
-|    Scenario    |  Apex   | Compass |  Fuel   |   Joid  |
-+================+=========+=========+=========+=========+
-|   odl_l2       |    X    |    X    |    X    |    X    |
-+----------------+---------+---------+---------+---------+
-|   onos         |         |    X    |    X    |         |
-+----------------+---------+---------+---------+---------+
-|   nosdn        |         |    X    |    X    |         |
-+----------------+---------+---------+---------+---------+
-|   ovs (dpdk)   |         |         |    X    |         |
-+----------------+---------+---------+---------+---------+
-|   kvm          |         |         |    X    |         |
-+----------------+---------+---------+---------+---------+
-|   bgpvpn       |    X    |         |    X    |         |
-+----------------+---------+---------+---------+---------+
-|   sfc          |         |         |    X    |         |
-+----------------+---------+---------+---------+---------+
++---------------------+---------+---------+---------+---------+
+|    Scenario         |  Apex   | Compass |  Fuel   |   Joid  |
++=====================+=========+=========+=========+=========+
+|   nosdn             |    X    |    X    |    X    |    X    |
++---------------------+---------+---------+---------+---------+
+|   odl_l2            |    X    |    X    |    X    |    X    |
++---------------------+---------+---------+---------+---------+
+|   odl_l3            |    X    |    X    |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   onos              |    X    |    X    |    X    |    X    |
++---------------------+---------+---------+---------+---------+
+|   ocl               |         |    X    |         |         |
++---------------------+---------+---------+---------+---------+
+|   ovs-noha (dpdk)   |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   kvm-noha          |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   odl_l2-bgpvpn     |    X    |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   odl_l2-sfc        |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   onos-sfc          |    X    |    X    |    X    |    X    |
++---------------------+---------+---------+---------+---------+
+|   odl_l2-moon       |         |    X    |         |         |
++---------------------+---------+---------+---------+---------+
+|   multisite         |         |         |         |         |
++---------------------+---------+---------+---------+---------+
+|   lxd               |         |         |         |    X    |
++---------------------+---------+---------+---------+---------+
 
-Functest defines the success criteria when having at least 4 consecutive
-successful runs of a given scenario from the Continuous Integration.
+Functest defines a scenario scoring based on the sum of the unitary test
+cases run in CI.
+The scoring method is described in https://wiki.opnfv.org/pages/viewpage.action?pageId=6828617
 
-The success criteria is defined as follows:
+In Colorado, the functional tests have been sliced in different
+categories:
 
- * vPing SSH 100% OK
- * vPing userdata 100% OK
- * Tempest success rate > 90%
- * Rally success rate > 90%
- * ODL success rate = 100%
- * ONOSFW success rate = 100%
- * Promise success rate = 100%
- * Bgpvpn success rate = 100%
- * vIMS: deployement of the orchestrator and the vIMS VNF successful
++----------------+-----------------------------------------------+
+| Category       |  Description                                  |
++================+===============================================+
+| healthcheck    | Basic OpenStack commands                      |
++----------------+-----------------------------------------------+
+| smoke          | vPings, Tempest and rally smoke tests         |
++----------------+-----------------------------------------------+
+| sdn_suites     | Specific SDN feature tests                    |
++----------------+-----------------------------------------------+
+| features       | OPNFV feature project functional test suites  |
++----------------+-----------------------------------------------+
+| openstack      | Advanced, long duration OpenStack tests       |
+|                | (Tempest and Rally full suite). Each test may |
+|                | last several hours                            |
++----------------+-----------------------------------------------+
+| vnf            | Complex scenarios dealing with orchestration, |
+|                | VNF deployment and tests (e.g. vIMS)          |
++----------------+-----------------------------------------------+
 
-Other scenarios are currently available but did not meet success criteria for
-the release but might be added in the incremental scenario update of the
-release.
+For the scenario validation, we consider only the categories healthcheck,
+smoke, sdn_suites and features. These tests are run systematically in
+the CI daily loops.
 
-Brahmaputra limitations
+Success criteria have been defined for these test cases, they can be
+PASS/FAIl or a success rate may be declared (100%, > 90%)
+All the criteria, as well as the test dependencies are declared in the
+ci/testcases.yaml file.
+
+* TODO scoring table *
+
+The reporting pages can be found at:
+
+ * apex: * TODO / check branch *
+ * compass: * TODO / check branch *
+ * fuel: * TODO / check branch *
+ * joid: * TODO / check branch *
+
+Colorado limitations
 -----------------------
 
-- Fuel and Apex Tempest success rate was below 90% but above 80% on some
-scenarios. Some of the error causes were identified (workers, lack of IP)
+- vPing userdata and Tempest cases related to metada service excluded
+from onos scenarios https://gerrit.opnfv.org/gerrit/#/c/18729/
 
-- vIMS failed in CI for joid/odl_l2 scenario
-
-- vPing userdata and vIMS excluded from onos scenario
+- Tempest cases related to storage for joid scenarios
+https://gerrit.opnfv.org/gerrit/#/c/17871/
 
 - vPing_ssh and vIMS excluded from bgpvpn and kvm scenario
 
-- None of the odl_l3 scenarios has been successful due to vPing ssh issue (ODL
-bug reported https://bugs.opendaylight.org/show_bug.cgi?id=5582)
-
-- apex/nosdn never run (not a target scenario) but probably succesful
-
-- vPing SSH and vPing userdata no more run on CI since modification of bgpvpn
-configuration regex.
 
 See known issues section for details
+
 
 Test and installer/scenario dependencies
 ========================================
 
-It is not always possible to run all the test cases on all the scenarios. The
-following table details the dependencies of the test cases per scenario.
-
-+----------------+-------------+-------------+-------------+-------------+
-|  Test cases    |    Apex     |   Compass   |    Fuel     |     Joid    |
-+================+=============+=============+=============+=============+
-| vPing SSH      | all         | all         | all         | all         |
-+----------------+-------------+-------------+-------------+-------------+
-| vPing userdata | all         | all         | all         | all         |
-+----------------+-------------+-------------+-------------+-------------+
-| Tempest        | all         | all         | all         | all         |
-+----------------+-------------+-------------+-------------+-------------+
-| Rally          | all         | all         | all         | all         |
-+----------------+-------------+-------------+-------------+-------------+
-| ODL            | all ODL     | all ODL     | all ODL     | all ODL     |
-+----------------+-------------+-------------+-------------+-------------+
-| ONOS           | ONOS        | ONOS        | ONOS        | ONOS        |
-+----------------+-------------+-------------+-------------+-------------+
-| Promise        | no          | no          | all         | all         |
-+----------------+-------------+-------------+-------------+-------------+
-| vIMS           | all except  | all except  | all except  | all except  |
-|                | ONOS        | ONOS        | ONOS        | ONOS        |
-+----------------+-------------+-------------+-------------+-------------+
-| Doctor         | all         | no          | no          | no          |
-+----------------+-------------+-------------+-------------+-------------+
-| Bgpvpn         | all         | no          | all         | no          |
-+----------------+-------------+-------------+-------------+-------------+
+It is not always possible to run all the test cases on all the scenarios.
+The following table details the dependencies of the test cases per
+scenario. The scenario dependencies (installer or scenario) are detailed
+in https://git.opnfv.org/cgit/functest/tree/ci/testcases.yaml
 
 Test results
 ============
 
 Test results are available in:
 
- - test results document: http://artifacts.opnfv.org/functest/docs/results/index.html
+ - test results document: http://artifacts.opnfv.org/functest
 
  - jenkins logs on CI: https://build.opnfv.org/ci/view/functest/
 
- - Test dashboards: http://testresults.opnfv.org/dashboard
 
 Known issues
 ------------
 
- - IPv6 issues in tempest suite:
-
-    - tempest.api.network.test_ports.PortsIpV6TestJSON.test_create_port_in_allowed_allocation_pools
-
-    - Tempest code which doesn't reserve big enough allocation
-
-    - https://bugs.launchpad.net/tempest/+bug/1514457
-
- - Lack of IP addresses available lead to several errors in different test cases
-
- - vIMS (http://testresults.opnfv.org/reporting/vims/):
-
-    - the VM needs to have access to OpenStack API.
-
-    - Technical architecture may not allow this access (for security reasons)
-
-    - Orchestrator can be deployed but the vIMS VNF cannot
-
-    - That is the reason why it fails on joid/odl_l2 scenario on Orange POD 2
-
-    - case needs to be consolidated on new scenaios (bgpvpn, sfc, ovs)
 
 Open JIRA tickets
 =================
 
-+------------------+-----------------------------------------+
-|   JIRA           |         Description                     |
-+==================+=========================================+
-| FUNCTEST-231     | vPing SSH no more run systematically    |
-|                  | in CI                                   |
-+------------------+-----------------------------------------+
-| FUNCTEST-230     | Heat issues in Rally scenarios          |
-+------------------+-----------------------------------------+
-| FUNCTEST-229     | Extend reporting to brahmaputra         |
-+------------------+-----------------------------------------+
-| FUNCTEST-139     | prepare_env failed due to               |
-|                  | https://pypi.python.org/samples is not  |
-|                  | accessible                              |
-+------------------+-----------------------------------------+
-| FUNCTEST-135     | vPing scenario failed in odl_l3 scenario|
-+------------------+-----------------------------------------+
++------------------+-----------------------------------------------+
+|   JIRA           |         Description                           |
++==================+===============================================+
++------------------+-----------------------------------------------+
++------------------+-----------------------------------------------+
++------------------+-----------------------------------------------+
++------------------+-----------------------------------------------+
++------------------+-----------------------------------------------+
 
 Useful links
 ============
 
  - wiki project page: https://wiki.opnfv.org/opnfv_functional_testing
+
+ - wiki Functest Colorado page: https://wiki.opnfv.org/display/functest/Functest+Colorado
 
  - Functest repo: https://git.opnfv.org/cgit/functest
 
@@ -273,10 +292,16 @@ Useful links
 
  - JIRA dashboard: https://jira.opnfv.org/secure/Dashboard.jspa?selectPageId=10611
 
- - Wiki page for B Release: https://wiki.opnfv.org/functest_release_2
+ - Functest IRC chan: #opnfv-functest
 
- - Functest IRC chan: #opnfv-testperf
+ - Functest reporting: http://testresults.opnfv.org/reporting
 
- - Test dashboard: https://www.opnfv.org/opnfvtestgraphs/summary
+ - Functest test configuration: https://git.opnfv.org/cgit/functest/tree/ci/testcases.yaml
 
- - Functest dashboard: http://testresults.opnfv.org/dashboard
+ - Functest Colorado user guide: * TODO *
+
+ - Functest installation/configuration guide: * TODO *
+
+ - Functest developer guide: * TODO *
+
+
