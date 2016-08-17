@@ -147,6 +147,30 @@
       "revId": "6457be53815587ae012a1c3cfc554640e513d632",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_09d26fd2",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2016-08-17T09:45:25Z",
+      "side": 1,
+      "message": "yep. that is why I add the content in line 283-286, will fix the word in Line 287. exec used here is that for \u0027local\u0027 check\u0026development activities, since I would like to keep the changes when I am using\u0026developing.",
+      "parentUuid": "1a76adc5_090d8f90",
+      "range": {
+        "startLine": 289,
+        "startChar": 3,
+        "endLine": 289,
+        "endChar": 18
+      },
+      "revId": "6457be53815587ae012a1c3cfc554640e513d632",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
