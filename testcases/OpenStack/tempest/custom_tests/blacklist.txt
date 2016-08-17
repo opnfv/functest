@@ -16,6 +16,7 @@
         - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern.test_volume_boot_pattern
         - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPatternV2.test_volume_boot_pattern
 
+-
     scenarios:
         - os-odl_l2-nofeature-ha
         - os-odl_l2-nofeature-noha
@@ -32,6 +33,7 @@
     tests:
         - tempest.api.object_storage
 
+-
     scenarios:
         - os-onos-nofeature-ha
         - os-onos-nofeature-noha
