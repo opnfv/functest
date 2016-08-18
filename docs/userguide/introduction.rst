@@ -81,12 +81,13 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | details.                         |
 |             |               +----------------+----------------------------------+
 |             |               | Doctor         | Doctor platform, as of Colorado  |
-|             |               |                | release, provides the two        |
+|             |               |                | release, provides the three      |
 |             |               |                | features:                        |
 |             |               |                | * Immediate Notification         |
 |             |               |                | * Consistent resource state      |
-|             |               |                | awareness (compute)              |
-|             |               |                | * Get Valid Server state         |
+|             |               |                | awareness for compute host down  |
+|             |               |                | * Valid compute host status      |
+|             |               |                | given to VM owner                |
 |             |               |                | See `Doctor User Guide`_ for     |
 |             |               |                | details                          |
 |             |               +----------------+----------------------------------+
