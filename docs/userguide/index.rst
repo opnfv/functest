@@ -405,7 +405,7 @@ The Clearwater architecture is described as follows:
 parser
 ^^^^^^
 
-See parser user guide for details: ** TODO link **
+See parser user guide for details: `[12]`_
 
 
 .. include:: ./runfunctest.rst
@@ -490,6 +490,7 @@ References
 .. _`[7]`: https://github.com/OpenSCAP/openscap
 .. _`[9]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml
 .. _`[11]`: http://robotframework.org/
+.. _`[12]`: http://artifacts.opnfv.org/parser/docs/userguide/index.html
 
 OPNFV main site: opnfvmain_.
 
