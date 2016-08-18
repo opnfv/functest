@@ -14,13 +14,6 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-# 0.1: This script boots the VM1 and allocates IP address from Nova
-# Later, the VM2 boots then execute cloud-init to ping VM1.
-# After successful ping, both the VMs are deleted.
-# 0.2: measure test duration and publish results under json format
-# 0.3: adapt push 2 DB after Test API refacroting
-#
-#
 
 import getopt
 import json
@@ -42,9 +35,9 @@ def usage():
 
 def populate_detail(test):
     detail = {}
-    detail['test_name'] = test['@name']
-    detail['test_status'] = test['status']
-    detail['test_doc'] = test['doc']
+    detail['name'] = test['@name']
+    for x in ['status', 'critical', 'starttime', 'endtime']:
+        detail[x] = test['status']['@' + x]
     return detail
 
 
@@ -65,9 +58,9 @@ def parse_suites(suites):
         a = suite['suite']
         if type(a) == list:
             for b in a:
-                data['details'] = parse_test(b['test'], details)
+                data['tests'] = parse_test(b['test'], details)
         else:
-            data['details'] = parse_test(a['test'], details)
+            data['tests'] = parse_test(a['test'], details)
 
         # data['details'] = parse_test(suite['test'], details)
     # suites is not iterable
@@ -101,9 +94,7 @@ def main(argv):
     try:
         data = parse_suites(all_data['suite']['suite'])
         data['description'] = all_data['suite']['@name']
-        data['version'] = all_data['@generator']
-        data['test_project'] = "functest"
-        data['case_name'] = "odl"
+        data['generator'] = all_data['@generator']
 
         json.dumps(data, indent=4, separators=(',', ': '))
 
@@ -115,8 +106,8 @@ def main(argv):
         stop_time = start_time
         tests_passed = 0
         tests_failed = 0
-        for v in data['details']:
-            if v['test_status']['@status'] == "PASS":
+        for v in data['tests']:
+            if v['status'] == "PASS":
                 tests_passed += 1
             else:
                 tests_failed += 1
@@ -124,8 +115,8 @@ def main(argv):
         if (tests_failed < 1):
             status = "PASS"
 
-        functest_utils.push_results_to_db(data['test_project'],
-                                          data['case_name'],
+        functest_utils.push_results_to_db("functest",
+                                          "odl",
                                           None,
                                           start_time,
                                           stop_time,
