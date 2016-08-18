@@ -16,6 +16,24 @@
       "revId": "8bcbf28373de6fbf274c9ad7035178bd30a3b203",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_fd6ec9c8",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-18T12:04:41Z",
+      "side": 1,
+      "message": "vping.py -m ssh $report",
+      "parentUuid": "1a76adc5_fd57a900",
+      "revId": "8bcbf28373de6fbf274c9ad7035178bd30a3b203",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
