@@ -22,6 +22,29 @@
       "revId": "2900b363cd2cad5bffd40f6f22e77c6de3b4a4d7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_8fc43f41",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1482
+      },
+      "writtenOn": "2016-08-18T05:44:15Z",
+      "side": 1,
+      "message": "s/(compute)/for compute host down/",
+      "range": {
+        "startLine": 88,
+        "startChar": 58,
+        "endLine": 88,
+        "endChar": 68
+      },
+      "revId": "2900b363cd2cad5bffd40f6f22e77c6de3b4a4d7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
