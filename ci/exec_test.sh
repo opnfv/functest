@@ -36,8 +36,8 @@ if [[ "${CI_DEBUG,,}" == "true" ]];then
     debug="--debug"
 fi
 
-FUNCTEST_REPO_DIR=${repos_dir}/functest/
-FUNCTEST_CONF_DIR=/home/opnfv/functest/conf/
+FUNCTEST_REPO_DIR=${repos_dir}/functest
+FUNCTEST_CONF_DIR=/home/opnfv/functest/conf
 
 
 function odl_tests(){
