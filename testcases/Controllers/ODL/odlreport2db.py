@@ -101,7 +101,6 @@ def main(argv):
     try:
         data = parse_suites(all_data['suite']['suite'])
         data['description'] = all_data['suite']['@name']
-        data['version'] = all_data['@generator']
         data['test_project'] = "functest"
         data['case_name'] = "odl"
 
