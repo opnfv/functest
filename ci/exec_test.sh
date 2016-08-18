@@ -93,8 +93,7 @@ function run_test(){
                env | grep NODE_NAME > /dev/null; then
                 odl_logs="/home/opnfv/functest/results/odl/"
                 odl_path="${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/"
-                node_name=$(env | grep NODE_NAME | cut -f2 -d'=')
-                python ${odl_path}/odlreport2db.py -x ${odl_logs}/output.xml -i ${INSTALLER_TYPE} -p ${node_name} -s ${DEPLOY_SCENARIO}
+                python ${odl_path}/odlreport2db.py -x ${odl_logs}/output.xml
             fi
         ;;
         "tempest_smoke_serial")
