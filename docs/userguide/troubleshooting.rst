@@ -384,7 +384,7 @@ described in the following table:
 parser
 ^^^^^^
 
-See parser user guide for details: ** TODO link **
+For now log info is the only way to do trouble shooting
 
 
 .. _`OPNFV Functest Developer Guide`:  http://artifacts.opnfv.org/functest/docs/devguide/#

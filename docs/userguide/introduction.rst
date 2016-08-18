@@ -135,8 +135,14 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | It provides a fully functional   |
 |             |               |                | VoIP System                      |
 +             +---------------+----------------+----------------------------------+
-|             |               | parser         | Service template translation     |
-|             |               |                | TODO See for details             |
+|             |               | parser         | Parser is an integration project |
+|             |               |                | which aims to provide            |
+|             |               |                | placement/deployment templates   |
+|             |               |                | translation for OPNFV platform,  |
+|             |               |                | including TOSCA -> HOT, POLICY ->|
+|             |               |                | TOSCA and YANG -> TOSCA.         |
+|             |               |                | See `Parser User Guide`_ for     |
+|             |               |                | details                          |
 +-------------+---------------+----------------+----------------------------------+
 
 
@@ -208,4 +214,5 @@ section `Executing the functest suites`_ of this document.
 .. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/brahmaputra/docs/userguide/index.html
 .. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/brahmaputra/docs/userguide/featureusage.html
 .. _`Domino User Guide`: http://artifacts.opnfv.org/domino/docs/userguide/index.html
+.. _`Parser User Guide`: http://artifacts.opnfv.org/parser/docs/userguide/index.html
 .. _`Functest Dashboard`: http://testresults.opnfv.org/kibana_dashboards/
