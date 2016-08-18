@@ -22,6 +22,30 @@
       "revId": "8859b55ca0cf949dea4e4d3e580584c539491080",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_1227f465",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-08-18T08:40:16Z",
+      "side": 1,
+      "message": "All right. Changing to next version.",
+      "parentUuid": "1a76adc5_69668353",
+      "range": {
+        "startLine": 5,
+        "startChar": 19,
+        "endLine": 5,
+        "endChar": 28
+      },
+      "revId": "8859b55ca0cf949dea4e4d3e580584c539491080",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
