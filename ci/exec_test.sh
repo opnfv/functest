@@ -146,7 +146,7 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/features/copper.py $report
         ;;
         "moon")
-            python ${repos_dir}/moon/tests/run_tests.py
+            python ${repos_dir}/moon/tests/run_tests.py $report
         ;;
         "multisite")
             python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/gen_tempest_conf.py
