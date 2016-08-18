@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_12d294d2",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-18T09:51:32Z",
+      "side": 1,
+      "message": "placement",
+      "range": {
+        "startLine": 140,
+        "startChar": 57,
+        "endLine": 140,
+        "endChar": 58
+      },
+      "revId": "a0eda570e5c4ed78531cf88139a4535573b748fe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d2dbbceb",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-18T09:51:32Z",
+      "side": 1,
+      "message": "shall we indicate the future in a user guide?\nI would suggets to document only what exists for the release",
+      "revId": "a0eda570e5c4ed78531cf88139a4535573b748fe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
