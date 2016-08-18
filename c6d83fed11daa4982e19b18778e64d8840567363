@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_92db041b",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-08-18T09:19:07Z",
+      "side": 1,
+      "message": "You can create a link to chapter by adding `Chapter name as it is written`_\nReads: backquote text backquote underscore\nYou should not worry, but the chapter name is about to change with my other commit.",
+      "range": {
+        "startLine": 300,
+        "startChar": 26,
+        "endLine": 300,
+        "endChar": 60
+      },
+      "revId": "c6d83fed11daa4982e19b18778e64d8840567363",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
