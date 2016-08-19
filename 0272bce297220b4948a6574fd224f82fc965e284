@@ -22,6 +22,30 @@
       "revId": "0272bce297220b4948a6574fd224f82fc965e284",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_63645cb9",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-19T07:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a76adc5_184ab380",
+      "range": {
+        "startLine": 48,
+        "startChar": 14,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "0272bce297220b4948a6574fd224f82fc965e284",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
