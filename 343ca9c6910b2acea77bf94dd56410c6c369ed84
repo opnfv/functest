@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_437a80f2",
+        "filename": "testcases/features/sfc/set-up-tacker.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2697
+      },
+      "writtenOn": "2016-08-19T08:52:27Z",
+      "side": 1,
+      "message": "Do you really want to download always the latest version of the script? You do loose the git_commit",
+      "revId": "343ca9c6910b2acea77bf94dd56410c6c369ed84",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
