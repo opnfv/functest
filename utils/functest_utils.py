@@ -222,8 +222,8 @@ def push_results_to_db(project, case_name, logger,
         r.raise_for_status()
         return True
     except Exception, e:
-        print("Error [push_results_to_db('%s', '%s', '%s', " +
-              "'%s', '%s', '%s', '%s', '%s', '%s')]:" %
+        print("Error [push_results_to_db('%s', '%s', '%s', '%s',"
+              "'%s', '%s', '%s', '%s', '%s')]:" %
               (url, project, case_name, pod_name, version,
                scenario, criteria, build_tag, details)), e
         return False
