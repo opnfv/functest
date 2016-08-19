@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_c341b03a",
+        "filename": "testcases/Controllers/ODL/odlreport2db.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-19T06:06:43Z",
+      "side": 0,
+      "message": "I think, you can also remove version/test_project/case_name from the data, they already are included in the result info.",
+      "revId": "2ed904b62281de960aa9fd3ab859c2b57952ad5f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
