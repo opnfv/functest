@@ -16,6 +16,24 @@
       "revId": "343ca9c6910b2acea77bf94dd56410c6c369ed84",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e36aac19",
+        "filename": "testcases/features/sfc/set-up-tacker.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2091
+      },
+      "writtenOn": "2016-08-19T08:56:06Z",
+      "side": 1,
+      "message": "Yes. I don\u0027t need to use that commit anymore as Tacker fixed the bugs. That commit pointed to an \"fork\" which fixed some tacker bugs",
+      "parentUuid": "1a76adc5_437a80f2",
+      "revId": "343ca9c6910b2acea77bf94dd56410c6c369ed84",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
