@@ -54,7 +54,7 @@ healthcheck:
 
 vping:
     ping_timeout:   200
-    vm_flavor: m1.small # adapt to your environment
+    vm_flavor: m1.tiny # adapt to your environment
     vm_name_1: opnfv-vping-1
     vm_name_2: opnfv-vping-2
     image_name: functest-vping
