@@ -34,6 +34,24 @@
       "revId": "8bcbf28373de6fbf274c9ad7035178bd30a3b203",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_43efe087",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-19T09:03:41Z",
+      "side": 1,
+      "message": "I haven\u0027t done vping_ssh.py refactor at that time, now I finished both of them",
+      "parentUuid": "1a76adc5_fd6ec9c8",
+      "revId": "8bcbf28373de6fbf274c9ad7035178bd30a3b203",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
