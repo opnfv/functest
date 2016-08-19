@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_184ab380",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-08-19T05:38:22Z",
+      "side": 1,
+      "message": "how about removing this?",
+      "range": {
+        "startLine": 48,
+        "startChar": 14,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "0272bce297220b4948a6574fd224f82fc965e284",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
