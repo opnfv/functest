@@ -1,6 +1,8 @@
-git_commit=ee3046f24df0bfca7ee15501f6c06ad86dd462c2
-curl "https://gerrit.opnfv.org/gerrit/gitweb?p=fuel.git;a=blob_plain;\
-f=prototypes/sfc_tacker/poc.tacker-up.sh;hb=${git_commit}" > poc.tacker-up.sh
+git clone https://gerrit.opnfv.org/gerrit/fuel fuel
+pushd fuel
+git checkout e7f7abc89161441548545f79f0299610c6e5b203
+popd
+mv fuel/prototypes/sfc_tacker/poc.tacker-up.sh .
 bash poc.tacker-up.sh
 
 cat <<EOF > delete.sh
