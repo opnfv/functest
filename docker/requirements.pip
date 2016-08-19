@@ -26,3 +26,4 @@ python-congressclient==1.3.0
 subprocess32
 shyaml
 dnspython
+Pillow==3.3.0
