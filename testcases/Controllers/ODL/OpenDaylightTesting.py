@@ -8,8 +8,32 @@ import shutil
 import sys
 
 from robot import run
+from robot.api import ExecutionResult, ResultVisitor
+from robot.utils.robottime import timestamp_to_secs
 
 import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as ft_utils
+
+
+class ODLResultVisitor(ResultVisitor):
+
+    def __init__(self):
+        self._data = []
+
+    def visit_test(self, test):
+        output = {}
+        output['name'] = test.name
+        output['parent'] = test.parent.name
+        output['status'] = test.status
+        output['startime'] = test.starttime
+        output['endtime'] = test.endtime
+        output['critical'] = test.critical
+        output['text'] = test.message
+        output['elapsedtime'] = test.elapsedtime
+        self._data.append(output)
+
+    def get_data(self):
+        return self._data
 
 
 class ODLTestCases:
@@ -18,6 +42,7 @@ class ODLTestCases:
     odl_test_repo = repos + "odl_test/"
     neutron_suite_dir = odl_test_repo + "csit/suites/openstack/neutron/"
     basic_suite_dir = odl_test_repo + "csit/suites/integration/basic/"
+    res_dir = '/home/opnfv/functest/results/odl/'
     logger = ft_logger.Logger("opendaylight").getLogger()
 
     @classmethod
@@ -70,19 +95,18 @@ class ODLTestCases:
         except KeyError as e:
             cls.logger.error("Cannot run ODL testcases. Please check", e)
             return False
-        res_dir = '/home/opnfv/functest/results/odl/'
         if (cls.copy_opnf_testcases() and
                 cls.set_robotframework_vars(odlusername, odlpassword)):
             try:
-                os.makedirs(res_dir)
+                os.makedirs(cls.res_dir)
             except OSError:
                 pass
-            stdout_file = res_dir + 'stdout.txt'
+            stdout_file = cls.res_dir + 'stdout.txt'
             with open(stdout_file, 'w') as stdout:
                 result = run(*dirs, variable=variables,
-                             output=res_dir + 'output.xml',
-                             log=res_dir + 'log.html',
-                             report=res_dir + 'report.html',
+                             output=cls.res_dir + 'output.xml',
+                             log=cls.res_dir + 'log.html',
+                             report=cls.res_dir + 'report.html',
                              stdout=stdout)
 
             with open(stdout_file, 'r') as stdout:
@@ -91,6 +115,24 @@ class ODLTestCases:
             return result
         else:
             return False
+
+    @classmethod
+    def push_to_db(cls):
+        result = ExecutionResult(cls.res_dir + 'output.xml')
+        visitor = ODLResultVisitor()
+        result.visit(visitor)
+        start_time = timestamp_to_secs(result.suite.starttime)
+        stop_time = timestamp_to_secs(result.suite.endtime)
+        details = {}
+        details['description'] = result.suite.name
+        details['tests'] = visitor.get_data()
+        if not ft_utils.push_results_to_db(
+                "functest", "odl", None, start_time, stop_time,
+                result.suite.status, details):
+            cls.logger.error("Cannot push ODL results to DB")
+            return False
+        else:
+            return True
 
 
 if __name__ == '__main__':
@@ -125,5 +167,12 @@ if __name__ == '__main__':
     parser.add_argument('-e', '--odlpassword',
                         help='Password for ODL',
                         default='admin')
+    parser.add_argument('-p', '--pushtodb',
+                        help='Push results to DB',
+                        action='store_true')
+
     args = vars(parser.parse_args())
-    sys.exit(ODLTestCases.run(**args))
+    ODLTestCases.run(**args)
+    if args['pushtodb']:
+        sys.exit(not ODLTestCases.push_to_db())
+    sys.exit(os.EX_OK)
