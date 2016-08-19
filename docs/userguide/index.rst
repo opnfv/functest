@@ -334,7 +334,7 @@ Please refer to the dedicated feature user guides for details:
  * doctor: ** TODO link **
  * domino: ** TODO link **
  * moon: ** TODO link **
- * multisites: ** TODO link **
+ * multisites: https://git.opnfv.org/cgit/multisite/tree/docs/userguide
  * onos-sfc: ** TODO link **
  * odl-sfc: ** TODO link **
  * promise: ** TODO link **

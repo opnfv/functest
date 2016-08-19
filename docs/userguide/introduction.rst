@@ -121,8 +121,12 @@ Features and VNF (Virtual Network Functions).
 |             |               | copper         | Deployment policy                |
 |             |               |                | TODO See for details             |
 |             |               +----------------+----------------------------------+
-|             |               | multisites     | Multisites                       |
-|             |               |                | TODO See for details             |
+|             |               | multisite      | Multisite                        |
+|             |               |                | Multisite is to enhance          |
+|             |               |                | OpenStack to support multisite   |
+|             |               |                | NFV cloud.                       |
+|             |               |                | See 'Multisite User Guide for    |
+|             |               |                | details                          |
 |             |               +----------------+----------------------------------+
 |             |               | moon           | Security management system       |
 |             |               |                | TODO See for details             |
