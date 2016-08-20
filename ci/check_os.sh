@@ -62,11 +62,18 @@ do
     result=$?
     if [ $result -ne 0 ];
     then
-        echo "ERROR: Failed execution $cmd. The $service does not seem to be working."
-        exit 1
-    else
-        echo "  ...OK"
+        # if the command is failed for the first time, try again twice
+        # to make sure the service is running
+        $cmd &>/dev/null
+        $cmd &>/dev/null
+        result=$?
+        if [ $result -ne 0 ];
+        then
+            echo "ERROR: Failed execution $cmd. The $service does not seem to be working."
+            exit 1
+        fi
     fi
+    echo "  ...OK"
 done
 
 echo "OpenStack services are OK."
