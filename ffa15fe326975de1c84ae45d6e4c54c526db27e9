@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_683434de",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-22T07:27:21Z",
+      "side": 1,
+      "message": "I think Only requests.post can raise exceptions here. We could manage only one case, couldn\u0027t we?",
+      "revId": "ffa15fe326975de1c84ae45d6e4c54c526db27e9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_284e3c70",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-22T07:27:21Z",
+      "side": 1,
+      "message": "logger.info too?",
+      "revId": "ffa15fe326975de1c84ae45d6e4c54c526db27e9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c83ea8b8",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-22T07:27:21Z",
+      "side": 1,
+      "message": "as e?",
+      "revId": "ffa15fe326975de1c84ae45d6e4c54c526db27e9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_48537817",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-22T07:27:21Z",
+      "side": 1,
+      "message": "logger.error?",
+      "revId": "ffa15fe326975de1c84ae45d6e4c54c526db27e9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
