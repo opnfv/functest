@@ -68,7 +68,6 @@ class ODLTestCases:
     def set_robotframework_vars(cls, odlusername="admin", odlpassword="admin"):
         odl_variables_files = cls.odl_test_repo + 'csit/variables/Variables.py'
         try:
-            cls.logger.debug(cls.neutron_suite_dir + '__init__.robot')
             for line in fileinput.input(odl_variables_files,
                                         inplace=True):
                 print re.sub("AUTH = .*",
@@ -77,7 +76,7 @@ class ODLTestCases:
                              line.rstrip())
             return True
         except Exception as e:
-            cls.logger.error("Cannot set ODL creds", e)
+            cls.logger.error("Cannot set ODL creds: %s" % e.strerror)
             return False
 
     @classmethod
@@ -113,6 +112,7 @@ class ODLTestCases:
                     stdout=stdout)
             with open(stdout_file, 'r') as stdout:
                 cls.logger.info("\n" + stdout.read())
+            cls.logger.info("ODL results was sucessfully generated")
             return True
         else:
             return False
@@ -134,6 +134,7 @@ class ODLTestCases:
                 cls.logger.error("Cannot push ODL results to DB")
                 return False
             else:
+                cls.logger.info("ODL results was sucessfully pushed to DB")
                 return True
         except RobotError as e:
             cls.logger.error("Run tests before publishing: %s" % e.message)
