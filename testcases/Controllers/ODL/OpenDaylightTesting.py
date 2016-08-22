@@ -104,15 +104,19 @@ class ODLTestCases:
             except OSError:
                 pass
             stdout_file = cls.res_dir + 'stdout.txt'
-            with open(stdout_file, 'w') as stdout:
+            with open(stdout_file, 'w+') as stdout:
                 run(*dirs, variable=variables,
                     output=cls.res_dir + 'output.xml',
                     log='NONE',
                     report='NONE',
                     stdout=stdout)
-            with open(stdout_file, 'r') as stdout:
+                stdout.seek(0, 0)
                 cls.logger.info("\n" + stdout.read())
             cls.logger.info("ODL results was sucessfully generated")
+            try:
+                os.remove(stdout_file)
+            except OSError:
+                pass
             return True
         else:
             return False
