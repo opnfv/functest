@@ -9,6 +9,7 @@ import sys
 
 from robot import run
 from robot.api import ExecutionResult, ResultVisitor
+from robot.errors import RobotError
 from robot.utils.robottime import timestamp_to_secs
 
 import functest.utils.functest_logger as ft_logger
@@ -118,21 +119,24 @@ class ODLTestCases:
 
     @classmethod
     def push_to_db(cls):
-        result = ExecutionResult(cls.res_dir + 'output.xml')
-        visitor = ODLResultVisitor()
-        result.visit(visitor)
-        start_time = timestamp_to_secs(result.suite.starttime)
-        stop_time = timestamp_to_secs(result.suite.endtime)
-        details = {}
-        details['description'] = result.suite.name
-        details['tests'] = visitor.get_data()
-        if not ft_utils.push_results_to_db(
-                "functest", "odl", None, start_time, stop_time,
-                result.suite.status, details):
-            cls.logger.error("Cannot push ODL results to DB")
-            return False
-        else:
-            return True
+        try:
+            result = ExecutionResult(cls.res_dir + 'output.xml')
+            visitor = ODLResultVisitor()
+            result.visit(visitor)
+            start_time = timestamp_to_secs(result.suite.starttime)
+            stop_time = timestamp_to_secs(result.suite.endtime)
+            details = {}
+            details['description'] = result.suite.name
+            details['tests'] = visitor.get_data()
+            if not ft_utils.push_results_to_db(
+                    "functest", "odl", None, start_time, stop_time,
+                    result.suite.status, details):
+                cls.logger.error("Cannot push ODL results to DB")
+                return False
+            else:
+                return True
+        except RobotError as e:
+            cls.logger.error("Run tests before publishing: %s" % e.message)
 
 
 if __name__ == '__main__':
