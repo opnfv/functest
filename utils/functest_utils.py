@@ -221,6 +221,10 @@ def push_results_to_db(project, case_name, logger,
             logger.debug(r)
         r.raise_for_status()
         return True
+    except requests.RequestException:
+        logger.error("Pushing Result to DB(%s) failed: %s" %
+                     (r.url, r.content))
+        return False
     except Exception, e:
         print("Error [push_results_to_db('%s', '%s', '%s', '%s',"
               "'%s', '%s', '%s', '%s', '%s')]:" %
