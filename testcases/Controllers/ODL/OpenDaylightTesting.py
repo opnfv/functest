@@ -59,7 +59,8 @@ class ODLTestCases:
                 shutil.copy(f, cls.neutron_suite_dir)
             except IOError as e:
                 cls.logger.error(
-                    "Cannot copy OPNFV's testcases to ODL directory", e)
+                    "Cannot copy OPNFV's testcases to ODL directory: "
+                    "%s" % e.strerror)
                 return False
         return True
 
@@ -67,7 +68,6 @@ class ODLTestCases:
     def set_robotframework_vars(cls, odlusername="admin", odlpassword="admin"):
         odl_variables_files = cls.odl_test_repo + 'csit/variables/Variables.py'
         try:
-            cls.logger.debug(cls.neutron_suite_dir + '__init__.robot')
             for line in fileinput.input(odl_variables_files,
                                         inplace=True):
                 print re.sub("AUTH = .*",
@@ -76,7 +76,7 @@ class ODLTestCases:
                              line.rstrip())
             return True
         except Exception as e:
-            cls.logger.error("Cannot set ODL creds", e)
+            cls.logger.error("Cannot set ODL creds: %s" % e.strerror)
             return False
 
     @classmethod
@@ -94,7 +94,8 @@ class ODLTestCases:
                          'PORT:' + kwargs['odlwebport'],
                          'RESTCONFPORT:' + kwargs['odlrestconfport']]
         except KeyError as e:
-            cls.logger.error("Cannot run ODL testcases. Please check", e)
+            cls.logger.error("Cannot run ODL testcases. Please check "
+                             "%s" % e.strerror)
             return False
         if (cls.copy_opnf_testcases() and
                 cls.set_robotframework_vars(odlusername, odlpassword)):
@@ -103,17 +104,20 @@ class ODLTestCases:
             except OSError:
                 pass
             stdout_file = cls.res_dir + 'stdout.txt'
-            with open(stdout_file, 'w') as stdout:
-                result = run(*dirs, variable=variables,
-                             output=cls.res_dir + 'output.xml',
-                             log=cls.res_dir + 'log.html',
-                             report=cls.res_dir + 'report.html',
-                             stdout=stdout)
-
-            with open(stdout_file, 'r') as stdout:
+            with open(stdout_file, 'w+') as stdout:
+                run(*dirs, variable=variables,
+                    output=cls.res_dir + 'output.xml',
+                    log='NONE',
+                    report='NONE',
+                    stdout=stdout)
+                stdout.seek(0, 0)
                 cls.logger.info("\n" + stdout.read())
-
-            return result
+            cls.logger.info("ODL results was sucessfully generated")
+            try:
+                os.remove(stdout_file)
+            except OSError:
+                pass
+            return True
         else:
             return False
 
@@ -134,6 +138,7 @@ class ODLTestCases:
                 cls.logger.error("Cannot push ODL results to DB")
                 return False
             else:
+                cls.logger.info("ODL results was sucessfully pushed to DB")
                 return True
         except RobotError as e:
             cls.logger.error("Run tests before publishing: %s" % e.message)
@@ -176,7 +181,8 @@ if __name__ == '__main__':
                         action='store_true')
 
     args = vars(parser.parse_args())
-    ODLTestCases.run(**args)
+    if not ODLTestCases.run(**args):
+        sys.exit(os.EX_SOFTWARE)
     if args['pushtodb']:
         sys.exit(not ODLTestCases.push_to_db())
     sys.exit(os.EX_OK)
