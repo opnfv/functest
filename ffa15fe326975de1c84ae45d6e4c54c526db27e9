@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_a896cc92",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-22T07:44:53Z",
+      "side": 1,
+      "message": "I am not very sure here, maybe some other exceptions will happen, maybe json.dumps Exception?",
+      "parentUuid": "1a76adc5_683434de",
+      "revId": "ffa15fe326975de1c84ae45d6e4c54c526db27e9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_284e3c70",
         "filename": "utils/functest_utils.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-08-22T07:27:21Z",
       "side": 1,
       "message": "logger.info too?",
+      "revId": "ffa15fe326975de1c84ae45d6e4c54c526db27e9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_888d107e",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-22T07:44:53Z",
+      "side": 1,
+      "message": "means what? logger.error -\u003e logger.info?",
+      "parentUuid": "1a76adc5_284e3c70",
       "revId": "ffa15fe326975de1c84ae45d6e4c54c526db27e9",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_c89308a2",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-22T07:44:53Z",
+      "side": 1,
+      "message": "both \u0027,\u0027 and \u0027as\u0027 work fine",
+      "parentUuid": "1a76adc5_c83ea8b8",
+      "revId": "ffa15fe326975de1c84ae45d6e4c54c526db27e9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_48537817",
         "filename": "utils/functest_utils.py",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2016-08-22T07:27:21Z",
       "side": 1,
       "message": "logger.error?",
+      "revId": "ffa15fe326975de1c84ae45d6e4c54c526db27e9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_28eabc0f",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-22T07:44:53Z",
+      "side": 1,
+      "message": "this print thing is too difficult to understand, I have a new patch to fix it, am working on it...:)",
+      "parentUuid": "1a76adc5_48537817",
       "revId": "ffa15fe326975de1c84ae45d6e4c54c526db27e9",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
