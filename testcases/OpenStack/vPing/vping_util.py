@@ -166,6 +166,8 @@ def create_image():
             exit(EXIT_CODE)
         logger.debug("Image '%s' with ID=%s created successfully."
                      % (GLANCE_IMAGE_NAME, image_id))
+        image_exists = True
+
     return image_exists, image_id
 
 
