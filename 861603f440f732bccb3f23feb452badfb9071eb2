@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_68f194cc",
+        "filename": "ci/check_os.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 341
+      },
+      "writtenOn": "2016-08-22T08:58:14Z",
+      "side": 1,
+      "message": "It would be better to wrap this in a retry operation, like this one\n\nfunction fail {\n  echo $1 \u003e\u00262\n  exit 1\n}\n\nfunction retry {\n  local n\u003d1\n  local max\u003d5\n  local delay\u003d5\n  while true; do\n    \"$@\" \u0026\u0026 break || {\n      if [[ $n -lt $max ]]; then\n        ((n++))\n        echo \"Command failed. Attempt $n/$max:\"\n        sleep $delay;\n      else\n        fail \"The command has failed after $n attempts.\"\n      fi\n    }\n  done\n}",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 29
+      },
+      "revId": "861603f440f732bccb3f23feb452badfb9071eb2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
