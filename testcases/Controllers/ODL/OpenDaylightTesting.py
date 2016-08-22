@@ -112,7 +112,7 @@ class ODLTestCases:
                     stdout=stdout)
                 stdout.seek(0, 0)
                 cls.logger.info("\n" + stdout.read())
-            cls.logger.info("ODL results was sucessfully generated")
+            cls.logger.info("ODL results were successfully generated")
             try:
                 os.remove(stdout_file)
             except OSError:
@@ -138,7 +138,7 @@ class ODLTestCases:
                 cls.logger.error("Cannot push ODL results to DB")
                 return False
             else:
-                cls.logger.info("ODL results was sucessfully pushed to DB")
+                cls.logger.info("ODL results were successfully pushed to DB")
                 return True
         except RobotError as e:
             cls.logger.error("Run tests before publishing: %s" % e.message)
