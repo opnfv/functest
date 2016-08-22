@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_c8f6a8d7",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-22T08:51:36Z",
+      "side": 1,
+      "message": "logger may be not transferred, so I make the check here, i.e tempest not transfer logger\n            ft_utils.push_results_to_db(\"functest\",\n                                        case_name,\n                                        None,",
+      "parentUuid": "1a76adc5_081580f0",
+      "revId": "ffa15fe326975de1c84ae45d6e4c54c526db27e9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_c83ea8b8",
         "filename": "utils/functest_utils.py",
         "patchSetId": 3
