@@ -59,7 +59,8 @@ class ODLTestCases:
                 shutil.copy(f, cls.neutron_suite_dir)
             except IOError as e:
                 cls.logger.error(
-                    "Cannot copy OPNFV's testcases to ODL directory", e)
+                    "Cannot copy OPNFV's testcases to ODL directory: "
+                    "%s" % e.strerror)
                 return False
         return True
 
@@ -94,7 +95,8 @@ class ODLTestCases:
                          'PORT:' + kwargs['odlwebport'],
                          'RESTCONFPORT:' + kwargs['odlrestconfport']]
         except KeyError as e:
-            cls.logger.error("Cannot run ODL testcases. Please check", e)
+            cls.logger.error("Cannot run ODL testcases. Please check "
+                             "%s" % e.strerror)
             return False
         if (cls.copy_opnf_testcases() and
                 cls.set_robotframework_vars(odlusername, odlpassword)):
@@ -104,16 +106,14 @@ class ODLTestCases:
                 pass
             stdout_file = cls.res_dir + 'stdout.txt'
             with open(stdout_file, 'w') as stdout:
-                result = run(*dirs, variable=variables,
-                             output=cls.res_dir + 'output.xml',
-                             log=cls.res_dir + 'log.html',
-                             report=cls.res_dir + 'report.html',
-                             stdout=stdout)
-
+                run(*dirs, variable=variables,
+                    output=cls.res_dir + 'output.xml',
+                    log='NONE',
+                    report='NONE',
+                    stdout=stdout)
             with open(stdout_file, 'r') as stdout:
                 cls.logger.info("\n" + stdout.read())
-
-            return result
+            return True
         else:
             return False
 
@@ -176,7 +176,8 @@ if __name__ == '__main__':
                         action='store_true')
 
     args = vars(parser.parse_args())
-    ODLTestCases.run(**args)
+    if not ODLTestCases.run(**args):
+        sys.exit(os.EX_SOFTWARE)
     if args['pushtodb']:
         sys.exit(not ODLTestCases.push_to_db())
     sys.exit(os.EX_OK)
