@@ -214,24 +214,47 @@ def push_results_to_db(project, case_name, logger,
               "build_tag": build_tag, "start_date": test_start,
               "stop_date": test_stop, "details": details}
 
+    error = None
     headers = {'Content-Type': 'application/json'}
     try:
         r = requests.post(url, data=json.dumps(params), headers=headers)
         if logger:
             logger.debug(r)
         r.raise_for_status()
-        return True
     except requests.RequestException:
-        if logger:
-            logger.error("Pushing Result to DB(%s) failed: %s" %
-                         (r.url, r.content))
-        return False
-    except Exception, e:
-        print("Error [push_results_to_db('%s', '%s', '%s', '%s',"
-              "'%s', '%s', '%s', '%s', '%s')]:" %
-              (url, project, case_name, pod_name, version,
-               scenario, criteria, build_tag, details)), e
-        return False
+        error = ("Pushing Result to DB(%s) failed: %s" % (r.url, r.content))
+    except Exception as e:
+        error = ("Error [push_results_to_db("
+                 "DB: '%(db)s', "
+                 "project: '%(project)s', "
+                 "case: '%(case)s', "
+                 "pod: '%(pod)s', "
+                 "version: '%(v)s', "
+                 "scenario: '%(s)s', "
+                 "criteria: '%(c)s', "
+                 "build_tag: '%(t)s', "
+                 "details: '%(d)s')]: "
+                 "%(error)s" %
+                 {
+                     'db': url,
+                     'project': project,
+                     'case': case_name,
+                     'pod': pod_name,
+                     'v': version,
+                     's': scenario,
+                     'c': criteria,
+                     't': build_tag,
+                     'd': details,
+                     'error': e
+                 })
+    finally:
+        if error:
+            if logger:
+                logger.error(error)
+            else:
+                print error
+            return False
+        return True
 
 
 def get_resolvconf_ns():
