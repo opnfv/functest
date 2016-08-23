@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_6658e556",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-23T07:04:10Z",
+      "side": 1,
+      "message": "actually, I don\u0027t know why tenant_id or user_id \u003d\u003d \u0027\u0027 exist, and whether id \u003d\u003d \u0027\u0027 will be deleted, I just fix return False situation in this patch.",
+      "parentUuid": "1a76adc5_06a57152",
+      "revId": "16b234a14a6e674b6640695c26ae4b0a1e1d0db8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_a6891dcc",
         "filename": "testcases/OpenStack/tempest/run_tempest.py",
         "patchSetId": 1
