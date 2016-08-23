@@ -423,6 +423,7 @@ def main():
         os.makedirs(TEMPEST_RESULTS_DIR)
 
     deployment_dir = ft_utils.get_deployment_dir(logger)
+    create_tempest_resources()
 
     if "" == args.conf:
         MODE = ""
@@ -430,7 +431,6 @@ def main():
     else:
         MODE = " --tempest-config " + args.conf
 
-    create_tempest_resources()
     generate_test_list(deployment_dir, args.mode)
     apply_tempest_blacklist()
 
