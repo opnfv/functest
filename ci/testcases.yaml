@@ -130,7 +130,7 @@ tiers:
                 description: >-
                     Test suite from Doctor project.
                 dependencies:
-                    installer: 'apex'
+                    installer: '(apex)|(fuel)'
                     scenario: ''
 
             -
