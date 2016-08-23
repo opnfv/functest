@@ -23,8 +23,6 @@ import functest.utils.functest_logger as ft_logger
 import vping_util as util
 
 parser = argparse.ArgumentParser()
-image_exists = False
-
 parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
 parser.add_argument("-r", "--report",
                     help="Create json result file",
@@ -52,8 +50,7 @@ def main():
     vmname_1 = util.get_vmname_1()
     vmname_2 = util.get_vmname_2()
 
-    global image_exists
-    image_exists, image_id = util.create_image()
+    image_id = util.create_image()
 
     flavor = util.get_flavor()
 
