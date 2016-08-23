@@ -102,7 +102,7 @@ def run_test(test, tier_name):
 
     cmd = ("%s%s" % (EXEC_SCRIPT, flags))
     logger.debug("Executing command '%s'" % cmd)
-    result = ft_utils.execute_command(cmd, logger, exit_on_error=False)
+    result = ft_utils.execute_command(cmd, exit_on_error=False)
 
     if CLEAN_FLAG:
         cleanup()
