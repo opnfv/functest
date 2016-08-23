@@ -889,6 +889,26 @@ def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
         return None
 
 
+def get_or_create_image(name, path, format):
+    image_exists = False
+    glance_client = get_glance_client()
+
+    image_id = get_image_id(glance_client, name)
+    if image_id != '':
+        logger.info("Using existing image '%s'..." % name)
+        image_exists = True
+    else:
+        logger.info("Creating image '%s' from '%s'..." % (name, path))
+        image_id = create_glance_image(glance_client, name, path, format)
+        if not image_id:
+            logger.error("Failed to create a Glance image...")
+            exit(-1)
+        logger.debug("Image '%s' with ID=%s created successfully."
+                     % (name, image_id))
+
+    return image_exists, image_id
+
+
 def delete_glance_image(nova_client, image_id):
     try:
         nova_client.images.delete(image_id)
