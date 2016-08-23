@@ -153,7 +153,6 @@ def create_image():
     image_id = os_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
     if image_id != '':
         logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
-        image_exists = True
     else:
         logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
                                                           GLANCE_IMAGE_PATH))
@@ -166,9 +165,8 @@ def create_image():
             exit(EXIT_CODE)
         logger.debug("Image '%s' with ID=%s created successfully."
                      % (GLANCE_IMAGE_NAME, image_id))
-        image_exists = True
 
-    return image_exists, image_id
+    return image_id
 
 
 def get_flavor():
