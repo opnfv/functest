@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_06a57152",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-23T06:39:22Z",
+      "side": 1,
+      "message": "then you can delete tenant_id \u003d\u003d \u0027\u0027?",
+      "revId": "16b234a14a6e674b6640695c26ae4b0a1e1d0db8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a6891dcc",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-23T06:39:22Z",
+      "side": 1,
+      "message": "then you can delete user_id \u003d\u003d \u0027\u0027?",
+      "revId": "16b234a14a6e674b6640695c26ae4b0a1e1d0db8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_469b6918",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-23T06:39:22Z",
+      "side": 1,
+      "message": "then you can delete tenant_id \u003d\u003d \u0027\u0027?",
+      "revId": "16b234a14a6e674b6640695c26ae4b0a1e1d0db8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e69f1502",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-23T06:39:22Z",
+      "side": 1,
+      "message": "then you can delete user_id \u003d\u003d \u0027\u0027?",
+      "revId": "16b234a14a6e674b6640695c26ae4b0a1e1d0db8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_86f9814f",
+        "filename": "testcases/vnf/vIMS/vIMS.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-23T06:39:22Z",
+      "side": 1,
+      "message": "then you can delete tenant_id \u003d\u003d \u0027\u0027?",
+      "revId": "16b234a14a6e674b6640695c26ae4b0a1e1d0db8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_26966df1",
+        "filename": "testcases/vnf/vIMS/vIMS.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-23T06:39:22Z",
+      "side": 1,
+      "message": "then you can delete user_id \u003d\u003d \u0027\u0027?",
+      "revId": "16b234a14a6e674b6640695c26ae4b0a1e1d0db8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
