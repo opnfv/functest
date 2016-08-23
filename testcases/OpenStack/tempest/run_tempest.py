@@ -132,12 +132,12 @@ def create_tempest_resources():
     tenant_id = os_utils.create_tenant(keystone_client,
                                        TENANT_NAME,
                                        TENANT_DESCRIPTION)
-    if tenant_id == '':
+    if not tenant_id:
         logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
 
     user_id = os_utils.create_user(keystone_client, USER_NAME, USER_PASSWORD,
                                    None, tenant_id)
-    if user_id == '':
+    if not user_id:
         logger.error("Error : Failed to create %s user" % USER_NAME)
 
     logger.debug("Creating private network for Tempest suite")
