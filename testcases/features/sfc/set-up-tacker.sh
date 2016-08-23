@@ -1,8 +1,11 @@
-git clone https://gerrit.opnfv.org/gerrit/fuel fuel
-pushd fuel
-git checkout e7f7abc89161441548545f79f0299610c6e5b203
-popd
-mv fuel/prototypes/sfc_tacker/poc.tacker-up.sh .
+#!/bin/bash
+
+apt-get -y wget
+OPNFVGBASE="https://gerrit.opnfv.org/gerrit/gitweb?p=fuel.git;a=blob_plain"
+SCRPATH="prototypes/sfc_tacker/poc.tacker-up.sh"
+COMMIT="e7f7abc89161441548545f79f0299610c6e5b203"
+wget "${OPNFVGBASE};f=${SCRPATH};hb=${COMMIT}" -O poc.tacker-up.sh
+
 bash poc.tacker-up.sh
 
 cat <<EOF > delete.sh
