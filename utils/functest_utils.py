@@ -309,7 +309,8 @@ def execute_command(cmd, logger=None,
                 logger.debug(msg_exec)
         else:
             print(msg_exec)
-    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
     for line in iter(p.stdout.readline, b''):
         line = line.replace('\n', '')
         if logger:
