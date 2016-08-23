@@ -16,6 +16,24 @@
       "revId": "b496128047169402fbea4611bd768b5bce4a1b7a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_26198d88",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-23T07:40:01Z",
+      "side": 1,
+      "message": "Yes, you are right. Thanks for pointing out that.",
+      "parentUuid": "1a76adc5_86e2e19d",
+      "revId": "b496128047169402fbea4611bd768b5bce4a1b7a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
