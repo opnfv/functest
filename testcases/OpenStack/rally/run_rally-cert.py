@@ -376,7 +376,6 @@ def main():
 
     nova_client = os_utils.get_nova_client()
     neutron_client = os_utils.get_neutron_client()
-    glance_client = os_utils.get_glance_client()
     cinder_client = os_utils.get_cinder_client()
 
     start_time = time.time()
@@ -402,26 +401,9 @@ def main():
     else:
         logger.debug("Using existing volume type(s)...")
 
-    image_id = os_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
-    image_exists = False
-
-    if image_id == '':
-        logger.debug("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
-                                                           GLANCE_IMAGE_PATH))
-        image_id = os_utils.create_glance_image(glance_client,
-                                                GLANCE_IMAGE_NAME,
-                                                GLANCE_IMAGE_PATH,
-                                                GLANCE_IMAGE_FORMAT)
-        if not image_id:
-            logger.error("Failed to create the Glance image...")
-            exit(-1)
-        else:
-            logger.debug("Image '%s' with ID '%s' created succesfully ."
-                         % (GLANCE_IMAGE_NAME, image_id))
-    else:
-        logger.debug("Using existing image '%s' with ID '%s'..."
-                     % (GLANCE_IMAGE_NAME, image_id))
-        image_exists = True
+    image_exists, image_id = os_utils.get_or_create_image(GLANCE_IMAGE_NAME,
+                                                          GLANCE_IMAGE_PATH,
+                                                          GLANCE_IMAGE_FORMAT)
 
     logger.debug("Creating network '%s'..." % PRIVATE_NET_NAME)
     network_dict = os_utils.create_network_full(neutron_client,

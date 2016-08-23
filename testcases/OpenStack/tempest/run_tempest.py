@@ -126,7 +126,6 @@ def get_info(file_result):
 def create_tempest_resources():
     keystone_client = os_utils.get_keystone_client()
     neutron_client = os_utils.get_neutron_client()
-    glance_client = os_utils.get_glance_client()
 
     logger.debug("Creating tenant and user for Tempest suite")
     tenant_id = os_utils.create_tenant(keystone_client,
@@ -160,21 +159,9 @@ def create_tempest_resources():
 
     logger.debug("Creating image for Tempest suite")
     # Check if the given image exists
-    image_id = os_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
-    if image_id != '':
-        logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
-    else:
-        logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
-                                                          GLANCE_IMAGE_PATH))
-        image_id = os_utils.create_glance_image(glance_client,
-                                                GLANCE_IMAGE_NAME,
-                                                GLANCE_IMAGE_PATH,
-                                                GLANCE_IMAGE_FORMAT)
-        if not image_id:
-            logger.error("Failed to create a Glance image...")
-            exit(-1)
-        logger.debug("Image '%s' with ID=%s created successfully."
-                     % (GLANCE_IMAGE_NAME, image_id))
+    os_utils.get_or_create_image(GLANCE_IMAGE_NAME,
+                                 GLANCE_IMAGE_PATH,
+                                 GLANCE_IMAGE_FORMAT)
 
 
 def configure_tempest(deployment_dir):
