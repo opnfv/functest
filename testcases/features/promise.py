@@ -87,7 +87,7 @@ def main():
     logger.info("Creating tenant '%s'..." % TENANT_NAME)
     tenant_id = openstack_utils.create_tenant(
         keystone, TENANT_NAME, TENANT_DESCRIPTION)
-    if tenant_id == '':
+    if not tenant_id or tenant_id == '':
         logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
         exit(-1)
     logger.debug("Tenant '%s' created successfully." % TENANT_NAME)
@@ -114,7 +114,7 @@ def main():
     user_id = openstack_utils.create_user(
         keystone, USER_NAME, USER_PWD, None, tenant_id)
 
-    if user_id == '':
+    if not user_id or user_id == '':
         logger.error("Error : Failed to create %s user" % USER_NAME)
         exit(-1)
     logger.debug("User '%s' created successfully." % USER_NAME)
@@ -171,7 +171,7 @@ def main():
                                                       SUBNET_NAME,
                                                       ROUTER_NAME,
                                                       SUBNET_CIDR)
-    if network_dic is False:
+    if not network_dic:
         logger.error("Failed to create the private network...")
         exit(-1)
 

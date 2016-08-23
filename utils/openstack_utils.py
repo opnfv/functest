@@ -258,7 +258,7 @@ def create_instance(flavor_name,
         flavors = nova_client.flavors.list()
         logger.error("Error: Flavor '%s' not found. Available flavors are: "
                      "\n%s" % (flavor_name, flavors))
-        return -1
+        return None
     if fixed_ip is not None:
         nics = {"net-id": network_id, "v4-fixed-ip": fixed_ip}
     else:
@@ -436,14 +436,14 @@ def get_external_net(neutron_client):
     for network in neutron_client.list_networks()['networks']:
         if network['router:external']:
             return network['name']
-    return False
+    return None
 
 
 def get_external_net_id(neutron_client):
     for network in neutron_client.list_networks()['networks']:
         if network['router:external']:
             return network['id']
-    return False
+    return None
 
 
 def check_neutron_net(neutron_client, net_name):
@@ -464,7 +464,7 @@ def create_neutron_net(neutron_client, name):
     except Exception, e:
         logger.error("Error [create_neutron_net(neutron_client, '%s')]: %s"
                      % (name, e))
-        return False
+        return None
 
 
 def create_neutron_subnet(neutron_client, name, cidr, net_id):
@@ -476,7 +476,7 @@ def create_neutron_subnet(neutron_client, name, cidr, net_id):
     except Exception, e:
         logger.error("Error [create_neutron_subnet(neutron_client, '%s', "
                      "'%s', '%s')]: %s" % (name, cidr, net_id, e))
-        return False
+        return None
 
 
 def create_neutron_router(neutron_client, name):
@@ -487,7 +487,7 @@ def create_neutron_router(neutron_client, name):
     except Exception, e:
         logger.error("Error [create_neutron_router(neutron_client, '%s')]: %s"
                      % (name, e))
-        return False
+        return None
 
 
 def create_neutron_port(neutron_client, name, network_id, ip):
@@ -503,7 +503,7 @@ def create_neutron_port(neutron_client, name, network_id, ip):
     except Exception, e:
         logger.error("Error [create_neutron_port(neutron_client, '%s', '%s', "
                      "'%s')]: %s" % (name, network_id, ip, e))
-        return False
+        return None
 
 
 def update_neutron_net(neutron_client, network_id, shared=False):
@@ -528,7 +528,7 @@ def update_neutron_port(neutron_client, port_id, device_owner):
     except Exception, e:
         logger.error("Error [update_neutron_port(neutron_client, '%s', '%s')]:"
                      " %s" % (port_id, device_owner, e))
-        return False
+        return None
 
 
 def add_interface_router(neutron_client, router_id, subnet_id):
@@ -642,26 +642,26 @@ def create_network_full(neutron_client,
         subnet_id = create_neutron_subnet(neutron_client, subnet_name,
                                           cidr, network_id)
         if not subnet_id:
-            return False
+            return None
 
         logger.debug("Subnet '%s' created successfully" % subnet_id)
         logger.debug('Creating Router...')
         router_id = create_neutron_router(neutron_client, router_name)
 
         if not router_id:
-            return False
+            return None
 
         logger.debug("Router '%s' created successfully" % router_id)
         logger.debug('Adding router to subnet...')
 
         if not add_interface_router(neutron_client, router_id, subnet_id):
-            return False
+            return None
 
         logger.debug("Interface added successfully.")
 
         logger.debug('Adding gateway to router...')
         if not add_gateway_router(neutron_client, router_id):
-            return False
+            return None
 
         logger.debug("Gateway added successfully.")
 
@@ -725,7 +725,7 @@ def create_security_group(neutron_client, sg_name, sg_description):
     except Exception, e:
         logger.error("Error [create_security_group(neutron_client, '%s', "
                      "'%s')]: %s" % (sg_name, sg_description, e))
-        return False
+        return None
 
 
 def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
@@ -775,7 +775,7 @@ def create_security_group_full(neutron_client,
                                          sg_description)
         if not SECGROUP:
             logger.error("Failed to create the security group...")
-            return False
+            return None
 
         sg_id = SECGROUP['id']
 
@@ -787,19 +787,19 @@ def create_security_group_full(neutron_client,
         if not create_secgroup_rule(neutron_client, sg_id,
                                     'ingress', 'icmp'):
             logger.error("Failed to create the security group rule...")
-            return False
+            return None
 
         logger.debug("Adding SSH rules in security group '%s'..."
                      % sg_name)
         if not create_secgroup_rule(
                 neutron_client, sg_id, 'ingress', 'tcp', '22', '22'):
             logger.error("Failed to create the security group rule...")
-            return False
+            return None
 
         if not create_secgroup_rule(
                 neutron_client, sg_id, 'egress', 'tcp', '22', '22'):
             logger.error("Failed to create the security group rule...")
-            return False
+            return None
     return sg_id
 
 
@@ -865,7 +865,7 @@ def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
                         container="bare", public=True):
     if not os.path.isfile(file_path):
         logger.error("Error: file %s does not exist." % file_path)
-        return False
+        return None
     try:
         image_id = get_image_id(glance_client, image_name)
         if image_id != '':
@@ -886,7 +886,7 @@ def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
     except Exception, e:
         logger.error("Error [create_glance_image(glance_client, '%s', '%s', "
                      "'%s')]: %s" % (image_name, file_path, str(public), e))
-        return False
+        return None
 
 
 def delete_glance_image(nova_client, image_id):
@@ -1037,7 +1037,7 @@ def create_tenant(keystone_client, tenant_name, tenant_description):
     except Exception, e:
         logger.error("Error [create_tenant(cinder_client, '%s', '%s')]: %s"
                      % (tenant_name, tenant_description, e))
-        return False
+        return None
 
 
 def create_user(keystone_client, user_name, user_password,
@@ -1051,7 +1051,7 @@ def create_user(keystone_client, user_name, user_password,
         logger.error("Error [create_user(keystone_client, '%s', '%s', '%s'"
                      "'%s')]: %s" % (user_name, user_password,
                                      user_email, tenant_id, e))
-        return False
+        return None
 
 
 def add_role_user(keystone_client, user_id, role_id, tenant_id):

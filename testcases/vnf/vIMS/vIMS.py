@@ -277,7 +277,7 @@ def main():
 
     tenant_id = os_utils.create_tenant(
         keystone, TENANT_NAME, TENANT_DESCRIPTION)
-    if tenant_id == '':
+    if not tenant_id or tenant_id == '':
         step_failure("init", "Error : Failed to create " +
                      TENANT_NAME + " tenant")
 
@@ -296,7 +296,7 @@ def main():
 
     user_id = os_utils.create_user(
         keystone, TENANT_NAME, TENANT_NAME, None, tenant_id)
-    if user_id == '':
+    if not user_id or user_id == '':
         logger.error("Error : Failed to create %s user" % TENANT_NAME)
 
     logger.info("Update OpenStack creds informations")
