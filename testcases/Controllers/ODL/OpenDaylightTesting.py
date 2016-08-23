@@ -133,7 +133,7 @@ class ODLTestCases:
             details['description'] = result.suite.name
             details['tests'] = visitor.get_data()
             if not ft_utils.push_results_to_db(
-                    "functest", "odl", None, start_time, stop_time,
+                    "functest", "odl", cls.logger, start_time, stop_time,
                     result.suite.status, details):
                 cls.logger.error("Cannot push ODL results to DB")
                 return False
