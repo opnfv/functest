@@ -331,13 +331,13 @@ Please refer to the dedicated feature user guides for details:
 
  * bgpvpn: ** TODO link **
  * copper: ** TODO link **
- * doctor: ** TODO link **
+ * doctor: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
  * domino: ** TODO link **
  * moon: ** TODO link **
  * multisites: ** TODO link **
  * onos-sfc: ** TODO link **
  * odl-sfc: ** TODO link **
- * promise: ** TODO link **
+ * promise: http://artifacts.opnfv.org/promise/colorado/userguide/index.html
 
 security_scan
 ^^^^^^^^^^^^^
