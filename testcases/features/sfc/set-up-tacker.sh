@@ -1,3 +1,4 @@
+apt-get -y git-core
 git clone https://gerrit.opnfv.org/gerrit/fuel fuel
 pushd fuel
 git checkout e7f7abc89161441548545f79f0299610c6e5b203
