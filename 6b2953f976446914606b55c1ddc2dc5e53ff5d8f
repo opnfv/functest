@@ -118,6 +118,30 @@
       "revId": "6b2953f976446914606b55c1ddc2dc5e53ff5d8f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_9b1313b8",
+        "filename": "testcases/features/sfc/set-up-tacker.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-24T11:35:34Z",
+      "side": 1,
+      "message": "Please see the comment on the previous review not taken into account:\nhttps://gerrit.opnfv.org/gerrit/#/c/18345/",
+      "parentUuid": "1a76adc5_1b6943be",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "6b2953f976446914606b55c1ddc2dc5e53ff5d8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
