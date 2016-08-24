@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_de55f9c6",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2016-08-24T14:54:34Z",
+      "side": 1,
+      "message": "VNF is better",
+      "range": {
+        "startLine": 84,
+        "startChar": 3,
+        "endLine": 84,
+        "endChar": 7
+      },
+      "revId": "ade1fdcf8d7ce95a27d60747e2b6a9358734b13a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
