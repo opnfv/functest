@@ -13,8 +13,10 @@ import datetime
 import os
 import re
 import sys
+
 import functest.ci.generate_report as generate_report
 import functest.ci.tier_builder as tb
+from functest.testcases.Controllers.ODL.OpenDaylightTesting import ODLTestCases
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
@@ -100,9 +102,15 @@ def run_test(test, tier_name):
     if REPORT_FLAG:
         flags += " -r"
 
-    cmd = ("%s%s" % (EXEC_SCRIPT, flags))
-    logger.debug("Executing command '%s'" % cmd)
-    result = ft_utils.execute_command(cmd, exit_on_error=False)
+    if test_name == 'odl':
+        result = ODLTestCases.functest_run()
+        if result and REPORT_FLAG:
+            result = ODLTestCases.push_to_db()
+        result = not result
+    else:
+        cmd = ("%s%s" % (EXEC_SCRIPT, flags))
+        logger.debug("Executing command '%s'" % cmd)
+        result = ft_utils.execute_command(cmd, exit_on_error=False)
 
     if CLEAN_FLAG:
         cleanup()
