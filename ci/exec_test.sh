@@ -44,20 +44,19 @@ function odl_tests(){
     keystone_ip=$(openstack catalog show identity |grep publicURL| cut -f3 -d"/" | cut -f1 -d":")
     neutron_ip=$(openstack catalog show network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
     odl_ip=${neutron_ip}
-    odl_port=8181
+    odl_port=8080
     if [ "$INSTALLER_TYPE" == "fuel" ]; then
         odl_port=8282
     elif [ "$INSTALLER_TYPE" == "apex" ]; then
         odl_ip=$SDN_CONTROLLER_IP
+        odl_port=8181
     elif [ "$INSTALLER_TYPE" == "joid" ]; then
         odl_ip=$SDN_CONTROLLER
-        odl_port=8080
         :
     elif [ "$INSTALLER_TYPE" == "compass" ]; then
-        :
+        odl_port=8181
     else
         odl_ip=$SDN_CONTROLLER_IP
-        odl_port=8080
     fi
 }
 
