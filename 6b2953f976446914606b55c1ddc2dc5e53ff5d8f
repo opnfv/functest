@@ -94,6 +94,30 @@
       "revId": "6b2953f976446914606b55c1ddc2dc5e53ff5d8f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_1b6943be",
+        "filename": "testcases/features/sfc/set-up-tacker.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1580
+      },
+      "writtenOn": "2016-08-24T08:52:22Z",
+      "side": 1,
+      "message": "Yes, You can do sparse checkout, but if You look at the original it was a full clone instead",
+      "parentUuid": "1a76adc5_d712c161",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "6b2953f976446914606b55c1ddc2dc5e53ff5d8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
