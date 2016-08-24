@@ -209,8 +209,8 @@ section `Executing the functest suites`_ of this document.
 
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
-.. _`Doctor User Guide`: http://artifacts.opnfv.org/opnfvdocs/brahmaputra/docs/userguide/featureusage-doctor.html
-.. _`Promise User Guide`: http://artifacts.opnfv.org/promise/brahmaputra/docs/userguide/index.html
+.. _`Doctor User Guide`: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
+.. _`Promise User Guide`: http://artifacts.opnfv.org/promise/colorado/userguide/index.html
 .. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/brahmaputra/docs/userguide/index.html
 .. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/brahmaputra/docs/userguide/featureusage.html
 .. _`Domino User Guide`: http://artifacts.opnfv.org/domino/docs/userguide/index.html
