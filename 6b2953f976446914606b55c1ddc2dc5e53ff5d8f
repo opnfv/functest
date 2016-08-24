@@ -22,6 +22,30 @@
       "revId": "6b2953f976446914606b55c1ddc2dc5e53ff5d8f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_77f96d4c",
+        "filename": "testcases/features/sfc/set-up-tacker.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1580
+      },
+      "writtenOn": "2016-08-24T08:09:13Z",
+      "side": 1,
+      "message": "My concerns:\n- It is a waste of storage resources cloning hundreds of files for a sake acessing only one. If the slave runs out of storage it can cause problems, failures\n- The CI executor machine should be as close to the target as possible. Installing git scm may break this rule. On the other hand what if git is intentionllay missing, and installing it for the sake of a test job may interfere with other jobs.",
+      "parentUuid": "1a76adc5_5c6256d9",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "6b2953f976446914606b55c1ddc2dc5e53ff5d8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
