@@ -13,17 +13,17 @@ Introduction
 
 Functest is a project dealing with functional testing.
 Functest produces its own internal test cases but can also be considered
-as a framework to support feature project testing suite integration.
-Functest developed a test API and defined a Test collection framework
+as a framework to support feature project testing.
+Functest developed a test API and defined a test collection framework
 that can be used by any OPNFV project.
 
 Therefore there are many ways to contribute to Functest. You can:
 
- * develop new internal test cases
- * integrate the tests from your feature project
- * develop the framework to ease the integration of external test cases
- * develop the API / Test collection framework
- * develop dashboards or automatic reporting portals
+ * Develop new internal test cases
+ * Integrate the tests from your feature project
+ * Develop the framework to ease the integration of external test cases
+ * Develop the API / Test collection framework
+ * Develop dashboards or automatic reporting portals
 
 This document describes how, as a developer, you may interact with the
 Functest project. The first section details the main working areas of
@@ -62,6 +62,7 @@ Functest internal test cases
 ============================
 The internal test cases in Colorado are:
 
+ * healthcheck
  * vping_ssh
  * vping_userdata
  * odl
@@ -72,22 +73,28 @@ The internal test cases in Colorado are:
  * vims
 
 By internal, we mean that this particular test cases have been
-developped by functest contributors and the associated code is hosted in
-the Functest repository.
+developped and/or integrated by functest contributors and the associated
+code is hosted in the Functest repository.
+An internal case can be fully developped or a simple integration of
+upstream suites (e.g. Tempest/Rally developped in OpenStack are just
+integrated in Functest).
 The structure of this repository is detailed in `[1]`_.
-The main internal test cases are int the testcases subfolder of the
+The main internal test cases are in the testcases subfolder of the
 repository, the internal test cases are:
 
- * Controllers: odl, onos
- * OpenStack: vping_ssh, vping_userdata, tempest_*, rally_*
- * vIMS: vims
+ * Controllers: odl, onos, ocl
+ * OpenStack: healthcheck, vping_ssh, vping_userdata, tempest_*, rally_*
+ * VNF: vims
 
-If you want to create a new test cases you will have to create a new
-folder under the testcases directory
+If you want to create a new test case you will have to create a new
+folder under the testcases directory.
 
 Functest external test cases
 ============================
-The external tescases are:
+The external test cases are inherited from other OPNFV projects,
+especially the feature projects.
+
+The external test cases are:
 
  * promise
  * doctor
@@ -98,14 +105,16 @@ The external tescases are:
  * security_scan
  * sfc-odl
  * sfc-onos
+ * parser
+ * domino
+ * multisite
 
 
-Note that security_scan has been bootstraped in Functest but will be
-considered as an external test cases as soon as it will get its own
-repository.
+Note that security_scan has been bootstraped in Functest but is
+considered as an external test case as it gets its own repository.
 
 The code to run these test cases may be directly in the repository of
-the project. We have also a features sub directory under testcases
+the project. We have also a **features** sub directory under testcases
 directory that may be used (it can be usefull if you want to reuse
 Functest library).
 
@@ -114,32 +123,37 @@ Functest framework
 ==================
 
 Functest can be considered as a framework.
-Functest is release a a docker file, including tools, scripts and a CLI
+Functest is release as a docker file, including tools, scripts and a CLI
 to prepare the environement and run tests.
-It simplifies the integration of external test suite in CI pipeline
+It simplifies the integration of external test suites in CI pipeline
 and provide commodity tools to collect and display results.
 
 Since Colorado, test categories also known as tiers have been created to
 group similar tests, provide consistant sub-lists and at the end optimize
 test duration for CI (see How To section).
 
-see `[2]`_ for details.
+see http://artifacts.opnfv.org/functest/docs/userguide/index.html for
+details.
 
-Test API
-========
+
+Test collection framework
+=========================
 
 The OPNFV testing group created a test collection database to collect
-the test results from CI.
+the test results from CI:
+
+
+ http://testresults.opnfv.org/test/swagger/spec.html
+ Authentication: opnfv/api@opnfv
+
 Any test project running on any lab integrated in CI can push the
 results to this database.
-This database can be used afterwards to see the evolution of the tests
-and compare the results versus the installers, the scenario or the labs.
+This database can be used to see the evolution of the tests and compare
+the results versus the installers, the scenarios or the labs.
 
-You can find more information about the dashboard from Testing Dashboard
-wiki page `[3]`_.
 
 Overall Architecture
-====================
+--------------------
 The Test result management can be summarized as follows::
 
   +-------------+    +-------------+    +-------------+
@@ -173,10 +187,15 @@ The Test result management can be summarized as follows::
      +----------------------+
 
 Test API description
-====================
+--------------------
 The Test API is used to declare pods, projects, test cases and test
-results. An additional method dashboard has been added to post-process
-the raw results in release Brahmaputra.
+results. Pods are the pods used to run the tests.
+The results pushed in the database are related to pods, projects and
+cases. If you try to push results of test done on non referenced pod,
+the API will return an error message.
+
+An additional method dashboard has been added to post-process
+the raw results in release Brahmaputra (deprecated in Colorado).
 
 The data model is very basic, 4 objects are created:
 
@@ -234,9 +253,9 @@ Results::
   }
 
 The API can described as follows. For detailed information, please go to
-http://testresults.opnfv.org/test/swagger/spec.html
 
-Authentication: opnfv/api@opnfv
+ http://testresults.opnfv.org/test/swagger/spec.html
+ Authentication: opnfv/api@opnfv
 
 Please notes that POST/DELETE/PUT operations for test or study purpose via
 swagger website is not allowed, because it will change the real data in
@@ -247,7 +266,7 @@ Version:
  +--------+--------------------------+-----------------------------------------+
  | Method | Path                     | Description                             |
  +========+==========================+=========================================+
- | GET    | /versions                 | Get all supported API versions         |
+ | GET    | /versions                | Get all supported API versions          |
  +--------+--------------------------+-----------------------------------------+
 
 
@@ -333,7 +352,7 @@ Results:
  +--------+----------------------------+------------------------------------------+
  | Method | Path                       | Description                              |
  +========+============================+==========================================+
- | GET    | /api/v1/results             | Get all the test results                |
+ | GET    | /api/v1/results            | Get all the test results                 |
  +--------+----------------------------+------------------------------------------+
  | POST   | /api/v1/results            | Add a new test results                   |
  |        |                            | Content-Type: application/json           |
@@ -430,6 +449,8 @@ Dashboard:
  +--------+----------------------------+-----------------------------------------+
 
 The code of the API is hosted in the releng repository `[6]`_.
+The test API has been dockerized and may be installed locally in your
+lab. See `[15]`_ for details.
 
 Dashboard
 =========
@@ -458,17 +479,19 @@ Credentials for a guest account: opnfvuser/kibana
 Automatic reporting
 ===================
 
-OPNFV release is scenario centric. An automatic reporting page has been
-created in order to provide a consistant view of the scenarios.
+An automatic reporting page has been created in order to provide a
+consistant view of the scenarios.
 In this page each scenario is evaluated according to test criteria.
 The code for the automatic reporting is available at `[8]`_.
 
-Every day, we collect the results from the centralized database and, per
-scenario we calculate a score. This score is the addition of individual
-tests considered on the last 10 runs according to a defined criteria.
+The results are collected from the centralized database every day and,
+per scenario. A score is calculated based on the results from the last
+50 days. This score is the addition of single test scores. Each test
+case has a success criteria reflected in the criteria field from the
+results.
 
-If we consider for instance a scenario os-odl_l2-nofeature-ha, we will
-consider for the scoring all the runnable tests from the first test
+Considering an instance of a scenario os-odl_l2-nofeature-ha, the
+scoring is the addition of the scores of all the runnable tests from the
 categories (tiers healthcheck, smoke, controller and feature)
 corresponding to this scenario.
 
@@ -495,7 +518,7 @@ corresponding to this scenario.
 
 All the testcases listed in the table are runnable on
 os-odl_l2-nofeature scenarios.
-If no results are available or if all the results are failed, the test
+If no result is available or if all the results are failed, the test
 case get 0 point.
 If it was succesfull at least once but no anymore during the 4 runs,
 the case get 1 point (it worked once).
@@ -508,8 +531,9 @@ is 3x6 = 18 points.
 The scenario is validated per installer when we got 3 points for all
 individual test cases (e.g 18/18).
 Please note that complex or long duration tests are not considered for
-the scoring. Such cases will be also get points, but these points will
-be indicative and not used for the scenario validation.
+the scoring. The success criteria are not always easy to define and may
+require specific hardware configuration. These results however provide
+a good level of trust on the scenario.
 
 A web page is automatically generated every day to display the status.
 This page can be found at `[9]`_. For the status, click on Status menu,
@@ -517,8 +541,8 @@ you may also get feedback for vims and tempest_smoke_serial test cases.
 
 Any validated scenario is stored in a local file on the web server. In
 fact as we are using a sliding windows to get results, it may happen
-that a successfull scenarios is not more run (because considered as
-stable)and then the number of iterations (need 4) would not be
+that a successful scenarios is no more run (because considered as
+stable) and then the number of iterations (4 needed) would not be
 sufficient to get the green status.
 
 Please note that other test cases e.g. sfc_odl, bgpvpn, moon) need also
@@ -546,9 +570,11 @@ contribute to functest. If you are totally new to OPNFV, you must first
 create your Linux Foundation account, then contact us in order to
 declare you in the repository database.
 
-We distinguish 2 levels of contributors: the standard contributor can
-push patch and vote +1/0/-1 on any Functest patch. The commitor can vote
--2/-1/0/+1/+2 and merge.
+We distinguish 2 levels of contributors:
+
+ * the standard contributor can push patch and vote +1/0/-1 on any Functest patch
+ * The commitor can vote -2/-1/0/+1/+2 and merge
+
 Functest commitors are promoted by the Functest contributors.
 
 
@@ -559,22 +585,23 @@ This guide is made for you. You can also have a look at the project wiki
 page `[10]`_.
 There are references on documentation, video tutorials, tips...
 
-You can also directly contact us by mail with [Functest] prefix at
-opnfv-tech-discuss@lists.opnfv.org or on the IRC chan #opnfv-functest.
+You can also directly contact us by mail with [Functest] prefix in the
+title at opnfv-tech-discuss@lists.opnfv.org or on the IRC chan
+#opnfv-functest.
 
 
 What kind of testing do you do in Functest?
 ===========================================
 
 Functest is focusing on Functional testing. The results must be PASS or
-FAILED. We do not deal with performance and/or qualification tests.
+FAIL. We do not deal with performance and/or qualification tests.
 We consider OPNFV as a black box and execute our tests from the jumphost
 according to Pharos reference technical architecture.
 
 Upstream test suites are integrated (Rally/Tempest/ODL/ONOS,...).
 If needed Functest may bootstrap temporarily testing activities if they
 are identified but not covered yet by an existing testing project (e.g
-security_scan before the creation of the security reporistory)
+security_scan before the creation of the security repository)
 
 
 How test constraints are defined?
@@ -582,8 +609,8 @@ How test constraints are defined?
 
 Test constraints are defined according to 2 paramaters:
 
- * the scenario (DEPLOY_SCENARIO env variable)
- * the installer (INSTALLER_TYPE env variable)
+ * The scenario (DEPLOY_SCENARIO env variable)
+ * The installer (INSTALLER_TYPE env variable)
 
 A scenario is a formal description of the system under test.
 The rules to define a scenario are described in `[4]`_
@@ -629,8 +656,7 @@ How to write and check constaint regex?
 
 Regex are standard regex. You can have a look at  `[11]`_
 
-You caa also easily test your regex via an online regex checker such as
- `[12]`_.
+You can also easily test your regex via an online regex checker such as `[12]`_.
 Put your scenario in the TEST STRING window (e.g. os-odl_l3-ovs-ha), put
 your regex in the REGULAR EXPRESSION window, then you can test your rule
 .
@@ -642,7 +668,7 @@ How to know which test I can run?
 You can use the API `[13]`_. The static declaration is in git `[5]`_
 
 If you are in a Functest docker container (assuming that the
-environement has been prepared): just use the new CLI.
+environement has been prepared): just use the CLI.
 
 You can get the list per Test cases or by Tier::
 
@@ -673,10 +699,10 @@ You can get the list per Test cases or by Tier::
     ['vims']
 
 
-How to manually start Functest test?
-====================================
+How to manually start Functest tests?
+=====================================
 
-Assuming that you are connected on the jumhost and that the system is
+Assuming that you are connected on the jumphost and that the system is
 "Pharos compliant", i.e the technical architecture is compatible with
 the one defined in the Pharos project::
 
@@ -731,11 +757,10 @@ How to declare my tests in Functest?
 ====================================
 
 If you want to add new internal test cases, you can submit patch under
-the testcases directory of Functest reporsitory.
+the testcases directory of Functest repository.
 
 For feature test integration, the code can be kept into your own
-repository. Then the files of the Functest repository you must modify to
-integrate Functest are:
+repository. The Functest files to be modified are:
 
  * functest/docker/Dockerfile: get your code in Functest container
  * functest/ci/testcases.yaml: reference your test and its associated constraints
@@ -745,8 +770,8 @@ integrate Functest are:
 Dockerfile
 ----------
 
-This file lists the repositories to be cloned in the Functest container.
-The repositories can be internal or external::
+This file lists the repositories (internal or external) to be cloned in
+the Functest container. You can also add external packages::
 
  RUN git clone https://gerrit.opnfv.org/gerrit/<your project> ${repos_dir}/<your project>
 
@@ -754,8 +779,9 @@ testcases.yaml
 --------------
 
 All the test cases that must be run from CI / CLI must be declared in
-co/testcases.yaml.
-This file is used to get the constraintes related to the test::
+ci/testcases.yaml.
+
+This file is used to get the constraints related to the test::
 
     name: <my_super_test_case>
     criteria: <not used yet in Colorado, could be > 'PASS', 'rate > 90%'
@@ -768,8 +794,8 @@ This file is used to get the constraintes related to the test::
 
 You must declare your test case in one of the category (tier).
 
-If you are integrating test suites from a feature project, the category
-must be features.
+If you are integrating test suites from a feature project, the default
+category is **features**.
 
 
 exec_test.sh
@@ -786,7 +812,9 @@ You just patch the file in git and add a line::
     ;;
 
 
-Note you can use python or bash scripts.
+Note you can use python or bash scripts (or any language assuming that
+the packages have been properly preinstalled but we recommand python or
+bash..).
 
 
 How to select my list of tests for CI?
@@ -801,7 +829,7 @@ Functest jenkins job)::
 
 
 Each case can be configured as daily and/or weekly task.
-When executing run_tests.py a check based on the jenkins build tag will
+When executing run_tests.py, a check based on the jenkins build tag will
 be considered to detect whether it is a daily and/or a weekly test.
 
 in your CI you can customize the list of test you want to run by case or
@@ -825,7 +853,7 @@ The test database is used to collect test results. By default it is
 enabled only for CI tests from Production CI pods.
 
 The architecture and associated API is described in previous chapter.
-If you want to push your results from CI, you just have to use the API
+If you want to push your results from CI, you just have to call the API
 at the end of your script.
 
 You can also reuse a python function defined in functest_utils.py::
@@ -856,29 +884,50 @@ You can also reuse a python function defined in functest_utils.py::
 References
 ==========
 
-.. _`[1]`: http://artifacts.opnfv.org/functest/docs/configguide/index.html Functest configuration guide URL
-.. _`[2]`: http://artifacts.opnfv.org/functest/docs/userguide/index.html functest user guide URL
-.. _`[3]`: https://wiki.opnfv.org/opnfv_test_dashboard
-.. _`[4]`: https://wiki.opnfv.org/display/INF/CI+Scenario+Naming
-.. _`[5]`: https://git.opnfv.org/cgit/functest/tree/ci/testcases.yaml
-.. _`[6]`: https://git.opnfv.org/cgit/releng/tree/utils/test/result_collection_api
-.. _`[7]`: https://git.opnfv.org/cgit/releng/tree/utils/test/scripts
-.. _`[8]`: https://git.opnfv.org/cgit/releng/tree/utils/test/reporting/functest
-.. _`[9]`: http://testresults.opnfv.org/reporting/
-.. _`[10]`: https://wiki.opnfv.org/opnfv_functional_testing
-.. _`[11]`: https://docs.python.org/2/howto/regex.html
-.. _`[12]`: https://regex101.com/
-.. _`[13]`: http://testresults.opnfv.org/test/api/v1/projects/functest/cases
-.. _`[14]`: https://git.opnfv.org/cgit/releng/tree/jjb/functest/functest-daily.sh
+_`[1]`: http://artifacts.opnfv.org/functest/docs/configguide/index.html Functest configuration guide
+
+_`[2]`: http://artifacts.opnfv.org/functest/docs/userguide/index.html functest user guide
+
+_`[3]`: https://wiki.opnfv.org/opnfv_test_dashboard Brahmaputra dashboard
+
+_`[4]`: https://wiki.opnfv.org/display/INF/CI+Scenario+Naming
+
+_`[5]`: https://git.opnfv.org/cgit/functest/tree/ci/testcases.yaml
+
+_`[6]`: https://git.opnfv.org/cgit/releng/tree/utils/test/result_collection_api
+
+_`[7]`: https://git.opnfv.org/cgit/releng/tree/utils/test/scripts
+
+_`[8]`: https://git.opnfv.org/cgit/releng/tree/utils/test/reporting/functest
+
+_`[9]`: http://testresults.opnfv.org/reporting/
+
+_`[10]`: https://wiki.opnfv.org/opnfv_functional_testing
+
+_`[11]`: https://docs.python.org/2/howto/regex.html
+
+_`[12]`: https://regex101.com/
+
+_`[13]`: http://testresults.opnfv.org/test/api/v1/projects/functest/cases
+
+_`[14]`: https://git.opnfv.org/cgit/releng/tree/jjb/functest/functest-daily.sh
+
+_`[15]`: https://git.opnfv.org/cgit/releng/tree/utils/test/result_collection_api/README.rst
+
 OPNFV main site: opnfvmain_.
 
 OPNFV functional test page: opnfvfunctest_.
 
-IRC support chan: #opnfv-testperf
+IRC support chan: #opnfv-functest
 
-.. _opnfvmain: http://www.opnfv.org
-.. _opnfvfunctest: https://wiki.opnfv.org/opnfv_functional_testing
-.. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
-.. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
-.. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
-.. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.yaml
+_opnfvmain: http://www.opnfv.org
+
+_opnfvfunctest: https://wiki.opnfv.org/opnfv_functional_testing
+
+_`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
+
+_`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
+
+_`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
+
+_`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.yaml
