@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_419fce50",
+        "filename": "testcases/OpenStack/vPing/vping_util.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-25T07:29:25Z",
+      "side": 1,
+      "message": "It cannot, Parameters such as GLANCE_IMAGE_NAME need to be transferred, since vping.py don\u0027t hold any configured parameters at all",
+      "parentUuid": "1a76adc5_a1890228",
+      "revId": "7faaab947d720e88618a8f3b1be717e0cb9acb26",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_e19ffa5d",
         "filename": "utils/openstack_utils.py",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_619a0a65",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-25T07:29:25Z",
+      "side": 1,
+      "message": "If we exit here, the outside method do the check and exit too, so I prefer to exit here to eliminate reduplicate.",
+      "parentUuid": "1a76adc5_e19ffa5d",
+      "revId": "7faaab947d720e88618a8f3b1be717e0cb9acb26",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_019b1673",
         "filename": "utils/openstack_utils.py",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2016-08-25T07:13:15Z",
       "side": 1,
       "message": "please remove image_exists. You could raise an exception or return image_id \u003d None",
+      "revId": "7faaab947d720e88618a8f3b1be717e0cb9acb26",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_819de65b",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-25T07:29:25Z",
+      "side": 1,
+      "message": "No, It cannot be removed, because image_exists will be used in resources clean work later, please look at the rally process",
+      "parentUuid": "1a76adc5_019b1673",
       "revId": "7faaab947d720e88618a8f3b1be717e0cb9acb26",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
