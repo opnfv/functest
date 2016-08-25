@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_048fa4cd",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T21:46:39Z",
+      "side": 0,
+      "message": "You don\u0027t define what an \"external\" test case is like you did for internal.  I had to figure out you meant test cases from other opnfv repo\u0027s because I thought it would be upstream.  (NIT: Maybe a different term would be better? native Vs inherited or something?)",
+      "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a4bd906a",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T21:46:39Z",
+      "side": 0,
+      "message": "It might read better with the URL here.  [2] is rather obtuse in this context.",
+      "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c4c0cce2",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T21:46:39Z",
+      "side": 0,
+      "message": "Add the URL here somewhere early in the paragraph, my first reaction was to click but I didn\u0027t know how/where.",
+      "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_64b77887",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T21:46:39Z",
+      "side": 0,
+      "message": "\"The test API is used to declare where the tests were run, it is defined in terms of pods, projects\"...",
+      "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_84bad46c",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T21:46:39Z",
+      "side": 0,
+      "message": "You have a \"|\" out of place here, move one space back.",
+      "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_24b1808f",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T21:46:39Z",
+      "side": 0,
+      "message": "You have a \"|\" out of place here...",
+      "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_44acbc35",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T21:46:39Z",
+      "side": 0,
+      "message": "\"OPNFV release is scenario centric.\" can probably be removed.",
+      "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_04a6c453",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T21:46:39Z",
+      "side": 0,
+      "message": "You can also ...",
+      "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a464b022",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T21:46:39Z",
+      "side": 0,
+      "message": "\"new\" is superfluous",
+      "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c4676c24",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T21:46:39Z",
+      "side": 0,
+      "message": "These should be displaying.  Why is the .. here?",
+      "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
