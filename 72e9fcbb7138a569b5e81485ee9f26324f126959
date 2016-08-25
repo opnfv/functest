@@ -16,6 +16,24 @@
       "revId": "72e9fcbb7138a569b5e81485ee9f26324f126959",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_01a9d67a",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-25T07:30:16Z",
+      "side": 1,
+      "message": "Same to image process refactor, it is better to exit here",
+      "parentUuid": "1a76adc5_6183ea04",
+      "revId": "72e9fcbb7138a569b5e81485ee9f26324f126959",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
