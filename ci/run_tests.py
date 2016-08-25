@@ -20,6 +20,7 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 import functest.utils.openstack_utils as os_utils
+import run_test as rt
 
 
 parser = argparse.ArgumentParser()
@@ -100,9 +101,12 @@ def run_test(test, tier_name):
     if REPORT_FLAG:
         flags += " -r"
 
-    cmd = ("%s%s" % (EXEC_SCRIPT, flags))
-    logger.debug("Executing command '%s'" % cmd)
-    result = ft_utils.execute_command(cmd, exit_on_error=False)
+    if test_name == 'parser':
+        result = rt.run(test, CLEAN_FLAG, REPORT_FLAG)
+    else:
+        cmd = ("%s%s" % (EXEC_SCRIPT, flags))
+        logger.debug("Executing command '%s'" % cmd)
+        result = ft_utils.execute_command(cmd, exit_on_error=False)
 
     if CLEAN_FLAG:
         cleanup()

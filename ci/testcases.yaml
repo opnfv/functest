@@ -9,6 +9,8 @@ tiers:
         testcases:
             -
                 name: healthcheck
+                cmd: ''
+                case: ''
                 criteria: 'status == "PASS"'
                 blocking: true
                 description: >-
@@ -28,6 +30,8 @@ tiers:
         testcases:
             -
                 name: vping_ssh
+                cmd: ''
+                case: ''
                 criteria: 'status == "PASS"'
                 blocking: true
                 description: >-
@@ -40,6 +44,8 @@ tiers:
 
             -
                 name: vping_userdata
+                cmd: ''
+                case: ''
                 criteria: 'status == "PASS"'
                 blocking: true
                 description: >-
@@ -51,6 +57,8 @@ tiers:
 
             -
                 name: tempest_smoke_serial
+                cmd: ''
+                case: ''
                 criteria: 'success_rate == 100%'
                 blocking: false
                 description: >-
@@ -64,6 +72,8 @@ tiers:
 
             -
                 name: rally_sanity
+                cmd: ''
+                case: ''
                 criteria: 'success_rate == 100%'
                 blocking: false
                 description: >-
@@ -83,6 +93,8 @@ tiers:
         testcases:
             -
                 name: odl
+                case: ''
+                cmd: ''
                 criteria: 'success_rate == 100%'
                 blocking: true
                 description: >-
@@ -95,6 +107,8 @@ tiers:
 
             -
                 name: onos
+                case: ''
+                cmd: ''
                 criteria: 'status == "PASS"'
                 blocking: true
                 description: >-
@@ -115,6 +129,8 @@ tiers:
         testcases:
             -
                 name: promise
+                case: ''
+                cmd: ''
                 criteria: 'success_rate == 100%'
                 blocking: false
                 description: >-
@@ -125,6 +141,8 @@ tiers:
 
             -
                 name: doctor
+                case: ''
+                cmd: ''
                 criteria: 'status == "PASS"'
                 blocking: false
                 description: >-
@@ -135,6 +153,8 @@ tiers:
 
             -
                 name: bgpvpn
+                case: ''
+                cmd: ''
                 criteria: 'status == "PASS"'
                 blocking: false
                 description: >-
@@ -145,6 +165,8 @@ tiers:
 
             -
                 name: security_scan
+                case: ''
+                cmd: ''
                 criteria: 'status == "PASS"'
                 blocking: false
                 description: >-
@@ -155,6 +177,8 @@ tiers:
 
             -
                 name: copper
+                case: ''
+                cmd: ''
                 criteria: 'status == "PASS"'
                 blocking: false
                 description: >-
@@ -164,6 +188,8 @@ tiers:
                     scenario: ''
             -
                 name: moon
+                case: ''
+                cmd: ''
                 criteria: 'status == "PASS"'
                 blocking: false
                 description: >-
@@ -173,6 +199,8 @@ tiers:
                     scenario: '(odl)*(moon)'
             -
                 name: multisite
+                case: ''
+                cmd: ''
                 criteria: 'success_rate == 100%'
                 blocking: false
                 description: >-
@@ -182,6 +210,8 @@ tiers:
                     scenario: 'multisite'
             -
                 name: domino
+                case: ''
+                cmd: ''
                 criteria: 'status == "PASS"'
                 blocking: false
                 description: >-
@@ -191,6 +221,8 @@ tiers:
                     scenario: ''
             -
                 name: odl-sfc
+                case: ''
+                cmd: ''
                 criteria: 'status == "PASS"'
                 blocking: false
                 description: >-
@@ -200,6 +232,8 @@ tiers:
                     scenario: 'odl_l2-sfc'
             -
                 name: onos_sfc
+                case: ''
+                cmd: ''
                 criteria: 'status == "PASS"'
                 blocking: true
                 description: >-
@@ -209,7 +243,9 @@ tiers:
                     scenario: 'onos-sfc'
             -
                 name: parser
-                criteria: 'ret == 0'
+                case: 'parser-basics'
+                cmd: 'tests/functest_run.sh'
+                criteria: 'check_return_value'
                 blocking: false
                 description: >-
                     Test suite from Parser project.
@@ -225,6 +261,8 @@ tiers:
         testcases:
             -
                 name: tempest_full_parallel
+                case: ''
+                cmd: ''
                 criteria: 'success_rate >= 80%'
                 blocking: false
                 description: >-
@@ -237,6 +275,8 @@ tiers:
 
             -
                 name: rally_full
+                case: ''
+                cmd: ''
                 criteria: 'success_rate >= 90%'
                 blocking: false
                 description: >-
@@ -255,6 +295,8 @@ tiers:
         testcases:
             -
                 name: vims
+                case: ''
+                cmd: ''
                 criteria: 'status == "PASS"'
                 blocking: false
                 description: >-
