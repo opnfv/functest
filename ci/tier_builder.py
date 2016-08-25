@@ -47,6 +47,8 @@ class TierBuilder:
                 dep = th.Dependency(installer, scenario)
 
                 testcase = th.TestCase(name=dic_testcase['name'],
+                                       case=dic_testcase['case'],
+                                       cmd=dic_testcase['cmd'],
                                        dependency=dep,
                                        criteria=dic_testcase['criteria'],
                                        blocking=dic_testcase['blocking'],

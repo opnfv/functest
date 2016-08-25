@@ -104,8 +104,11 @@ class Tier:
 
 class TestCase:
 
-    def __init__(self, name, dependency, criteria, blocking, description=""):
+    def __init__(self, name, case, cmd,
+                 dependency, criteria, blocking, description=""):
         self.name = name
+        self.case = case
+        self.cmd = cmd
         self.dependency = dependency
         self.description = description
         self.criteria = criteria
@@ -131,6 +134,12 @@ class TestCase:
 
     def get_name(self):
         return self.name
+
+    def get_cmd(self):
+        return self.cmd
+
+    def get_case(self):
+        return self.case
 
     def get_criteria(self):
         return self.criteria
