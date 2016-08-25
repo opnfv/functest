@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_a1890228",
+        "filename": "testcases/OpenStack/vPing/vping_util.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-25T07:13:15Z",
+      "side": 1,
+      "message": "create_image can be removed",
+      "revId": "7faaab947d720e88618a8f3b1be717e0cb9acb26",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e19ffa5d",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-25T07:13:15Z",
+      "side": 1,
+      "message": "please don\u0027t use exit. More in utils methods.",
+      "revId": "7faaab947d720e88618a8f3b1be717e0cb9acb26",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_019b1673",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-25T07:13:15Z",
+      "side": 1,
+      "message": "please remove image_exists. You could raise an exception or return image_id \u003d None",
+      "revId": "7faaab947d720e88618a8f3b1be717e0cb9acb26",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
