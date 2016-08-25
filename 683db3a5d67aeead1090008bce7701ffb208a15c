@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_e4814890",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T22:16:08Z",
+      "side": 0,
+      "message": "This information could/should be in the paragraph at line 13.  It would be more natural there.",
+      "revId": "683db3a5d67aeead1090008bce7701ffb208a15c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_44735ce7",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-25T22:16:08Z",
+      "side": 0,
+      "message": "maybe use the url here.  rather than [4]",
+      "revId": "683db3a5d67aeead1090008bce7701ffb208a15c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
