@@ -125,7 +125,6 @@ def get_info(file_result):
 
 def create_tempest_resources():
     keystone_client = os_utils.get_keystone_client()
-    neutron_client = os_utils.get_neutron_client()
     glance_client = os_utils.get_glance_client()
 
     logger.debug("Creating tenant and user for Tempest suite")
@@ -141,22 +140,10 @@ def create_tempest_resources():
         logger.error("Error : Failed to create %s user" % USER_NAME)
 
     logger.debug("Creating private network for Tempest suite")
-    network_dic = os_utils.create_network_full(neutron_client,
-                                               PRIVATE_NET_NAME,
-                                               PRIVATE_SUBNET_NAME,
-                                               ROUTER_NAME,
-                                               PRIVATE_SUBNET_CIDR)
-    if network_dic:
-        if not os_utils.update_neutron_net(neutron_client,
-                                           network_dic['net_id'],
-                                           shared=True):
-            logger.error("Failed to update private network...")
-            exit(-1)
-        else:
-            logger.debug("Network '%s' is available..." % PRIVATE_NET_NAME)
-    else:
-        logger.error("Private network creation failed")
-        exit(-1)
+    os_utils.create_shared_network_full(PRIVATE_NET_NAME,
+                                        PRIVATE_SUBNET_NAME,
+                                        ROUTER_NAME,
+                                        PRIVATE_SUBNET_CIDR)
 
     logger.debug("Creating image for Tempest suite")
     # Check if the given image exists
