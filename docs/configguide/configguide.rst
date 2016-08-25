@@ -121,8 +121,9 @@ recommended parameters for invoking docker container
        under the path: '/home/opnfv/functest/conf/openstack.creds'.
 
      WARNING: If you are using the Joid installer, you must pass the
-     credentials using the **-v** option. See the section
-     `Accessing the Openstack credentials`_ above.
+     credentials using the **-v** option:
+     -v /var/lib/jenkins/admin-openrc:/home/opnfv/functest/conf/openstack.creds.
+     See the section `Accessing the Openstack credentials`_ above.
 
   #. Passing deployment scenario
      When running Functest against any of the supported OPNFV scenarios,
@@ -133,7 +134,7 @@ recommended parameters for invoking docker container
        -e "DEPLOY_SCENARIO=os-<controller>-<nfv_feature>-<ha_mode>"
        where:
        os = OpenStack (No other VIM choices currently available)
-       controller is one of ( nosdn | odl_l2 | odl_l3 | onos )
+       controller is one of ( nosdn | odl_l2 | odl_l3 | onos | ocl)
        nfv_feature is one or more of ( ovs | kvm | sfc | bgpvpn | nofeature )
                 If several features are pertinent then use the underscore
                 character '_' to separate each feature (e.g. ovs_kvm)
@@ -143,7 +144,7 @@ recommended parameters for invoking docker container
      **NOTE:** Not all possible combinations of "DEPLOY_SCENARIO" are
      supported. The name passed in to the Functest Docker container
      must match the scenario used when the actual OPNFV platform was
-     deployed.
+     deployed. See release note to see the list of supported scenarios.
 
 Putting all above together, when using installer 'fuel' and an invented
 INSTALLER_IP of '10.20.0.2', the recommended command to create the
@@ -243,19 +244,20 @@ illustration purposes::
 
 Compass installer local development env usage Tips
 --------------------------------------------------
-In the compass-functest local test case check and development environment, in order
-to get openstack service inside the functest container, some parameters should be
-configured during container creation, which are hard to guess for freshman. This
-section will provide the guideline, the parameters values are defaults here, which should
-be adjusted according to the settings, the complete steps are given here so as
-not to appear too abruptly.
+In the compass-functest local test case check and development environment,
+in order to get openstack service inside the functest container, some
+parameters should be configured during container creation, which are
+hard to guess for freshman. This section will provide the guideline, the
+parameters values are defaults here, which should be adjusted according
+to the settings, the complete steps are given here so as not to appear
+too abruptly.
 
 1, Pull Functest docker image from public dockerhub::
 
     docker pull opnfv/functest:<Tag>
 
-<Tag> here can be "brahmaputra.1.0", "colorado.1.0", etc. Tag omitted means the
-latest docker image::
+<Tag> here can be "brahmaputra.1.0", "colorado.1.0", etc.
+Tag omitted means the latest docker image::
 
     docker pull opnfv/functest
 
@@ -273,8 +275,8 @@ To make a file used for the environment, such as 'functest-docker-env'::
     INSTALLER_IP=192.168.200.2
     EXTERNAL_NETWORK=ext-net
 
-Note: please adjust the content according to the environment, such as 'TENANT_ID'
-maybe used for some special cases.
+Note: please adjust the content according to the environment, such as
+'TENANT_ID' maybe used for some special cases.
 
 Then to create the Functest docker::
 
@@ -282,8 +284,6 @@ Then to create the Functest docker::
     --env-file functest-docker-env \
     --name <Functest_Container_Name> \
     opnfv/functest:<Tag> /bin/bash
-
-Note: it is recommended to be run on jumpserver.
 
 3, To attach Functest container
 
@@ -345,6 +345,7 @@ follows::
     |   |-- __init__.py
     |   |-- check_os.sh
     |   |-- config_functest.yaml
+    |   |-- generate_report.py
     |   |-- exec_test.sh
     |   |-- prepare_env.py
     |   |-- run_tests.py
@@ -374,12 +375,12 @@ follows::
     |   |-- results
     |   `--userguide
     |-- testcases
+    |   |-- __init__.py
     |   |-- Controllers
     |   |-- OpenStack
-    |   |-- __init__.py
     |   |-- features
     |   |-- security_scan
-    |   `-- vIMS
+    |   `-- vnf
     `-- utils
         |-- __init__.py
         |-- functest_logger.py
@@ -694,22 +695,22 @@ docker container.
 For example, try to use the **nc** command from inside the functest
 docker container::
 
-  nc -v google.com 80
-  Connection to google.com 80 port [tcp/http] succeeded!
+  nc -v opnfv.org 80
+  Connection to opnfv.org 80 port [tcp/http] succeeded!
 
-  nc -v google.com 443
-  Connection to google.com 443 port [tcp/https] succeeded!
+  nc -v opnfv.org 443
+  Connection to opnfv.org 443 port [tcp/https] succeeded!
 
 Note: In a Jumphost node based on the CentOS family OS, the **nc**
 commands might not work. You can use the **curl** command instead.
 
-  curl http://www.google.com:80
+  curl http://www.opnfv.org:80
   <HTML><HEAD><meta http-equiv="content-type"
   .
   .
   </BODY></HTML>
 
-  curl https://www.google.com:443
+  curl https://www.opnfv.org:443
   <HTML><HEAD><meta http-equiv="content-type"
   .
   .

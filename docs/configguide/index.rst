@@ -40,16 +40,20 @@ follows::
  |     |   |                    |   |        |       |        |       |
  |     |   | Testcases          |   |        |       |        |       |
  |     |   | - VIM              |   |        |       |        |       |
- |     |   |  -- vPing          |   |        |       |        |       |
+ |     |   |  -- healthcheck    |   |        |       |        |       |
+ |     |   |  -- vPing_ssh      |   |        |       |        |       |
  |     |   |  -- vPing_userdata |   |        |       |        |       |
- |     |   |  -- Tempest        |   |        |       |        |       |
- |     |   |  -- Rally          |   |        |       |        |       |
- |     |   | - Controller       |   |        |       |        |       |
+ |     |   |  -- Tempest_smoke  |   |        |       |        |       |
+ |     |   |  -- Rally_sanity   |   |        |       |        |       |
+ |     |   |  -- Tempest_full   |   |        |       |        |       |
+ |     |   |  -- Rally_full     |   |        |       |        |       |
+ |     |   |                    |   |        |       |        |       |
+ |     |   | - SDN Controller   |   |        |       |        |       |
  |     |   |  -- odl            |   |        |       |        |       |
  |     |   |  -- onos           |   |        |       |        |       |
  |     |   |                    |   |        |       |        |       |
- |     |   | Features           |   |        |       |        |       |
- |     |   | - vIMS             |   |        |       |        |       |
+ |     |   | - VNF              |   |        |       |        |       |
+ |     |   |  -- vIMS           |   |        |       |        |       |
  |     |   |                    |   |        |       |        |       |
  |     |   +--------------------+   |        |       |        |       |
  |     |                            +-------------------------+       |
@@ -85,10 +89,10 @@ on any platform on any Operating System.
 
 The automated mechanisms inside the Functest Docker container will:
 
-  * retrieve OpenStack credentials
-  * prepare the environment according to the SUT
-  * perform the appropriate functional tests
-  * push the test results into the OPNFV test result database
+  * Retrieve OpenStack credentials
+  * Prepare the environment according to the SUT
+  * Perform the appropriate functional tests
+  * Push the test results into the OPNFV test result database
 
 This Docker image can be integrated into CI or deployed independently.
 
@@ -98,6 +102,7 @@ environment, since most of the test cases are integrated from upstream
 communities.
 
 The functional test cases are described in the Functest User Guide `[2]`_
+
 
 Prerequisites
 =============
