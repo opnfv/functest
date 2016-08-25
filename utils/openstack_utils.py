@@ -671,6 +671,28 @@ def create_network_full(neutron_client,
     return network_dic
 
 
+def create_shared_network_full(net_name, subnt_name, router_name, subnet_cidr):
+    neutron_client = get_neutron_client()
+
+    network_dic = create_network_full(neutron_client,
+                                      net_name,
+                                      subnt_name,
+                                      router_name,
+                                      subnet_cidr)
+    if network_dic:
+        if not update_neutron_net(neutron_client,
+                                  network_dic['net_id'],
+                                  shared=True):
+            logger.error("Failed to update network %s..." % net_name)
+            return None
+        else:
+            logger.debug("Network '%s' is available..." % net_name)
+    else:
+        logger.error("Network %s creation failed" % net_name)
+        return None
+    return network_dic
+
+
 def create_bgpvpn(neutron_client, **kwargs):
     # route_distinguishers
     # route_targets
