@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_41d7cebf",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-25T08:42:36Z",
+      "side": 1,
+      "message": "when there are the clean thing, I prefer your way, now, there aren\u0027t, so, I prefer my way. It depends on the actual usage.",
+      "parentUuid": "1a76adc5_2155f24f",
+      "revId": "7faaab947d720e88618a8f3b1be717e0cb9acb26",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_019b1673",
         "filename": "utils/openstack_utils.py",
         "patchSetId": 2
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "Maybe image_id (! None) would have tested too.",
       "parentUuid": "1a76adc5_819de65b",
+      "revId": "7faaab947d720e88618a8f3b1be717e0cb9acb26",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e1e5baa8",
+        "filename": "utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-25T08:42:36Z",
+      "side": 1,
+      "message": "So, how to deal with rally situation, if an already existed image is used, the image will not be deleted during the clean work, or else delete it??",
+      "parentUuid": "1a76adc5_41502e5e",
       "revId": "7faaab947d720e88618a8f3b1be717e0cb9acb26",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
