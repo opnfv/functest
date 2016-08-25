@@ -46,6 +46,30 @@
       "revId": "861603f440f732bccb3f23feb452badfb9071eb2",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_2196524d",
+        "filename": "ci/check_os.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 341
+      },
+      "writtenOn": "2016-08-25T07:06:40Z",
+      "side": 1,
+      "message": "This is why it is more important to make the retry function common and apply it across functest.",
+      "parentUuid": "1a76adc5_575551c4",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 29
+      },
+      "revId": "861603f440f732bccb3f23feb452badfb9071eb2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
