@@ -424,22 +424,12 @@ def main():
         image_exists = True
 
     logger.debug("Creating network '%s'..." % PRIVATE_NET_NAME)
-    network_dict = os_utils.create_network_full(neutron_client,
-                                                PRIVATE_NET_NAME,
-                                                PRIVATE_SUBNET_NAME,
-                                                ROUTER_NAME,
-                                                PRIVATE_SUBNET_CIDR)
+    network_dict = os_utils.create_shared_network_full(PRIVATE_NET_NAME,
+                                                       PRIVATE_SUBNET_NAME,
+                                                       ROUTER_NAME,
+                                                       PRIVATE_SUBNET_CIDR)
     if not network_dict:
-        logger.error("Failed to create network...")
-        exit(-1)
-    else:
-        if not os_utils.update_neutron_net(neutron_client,
-                                           network_dict['net_id'],
-                                           shared=True):
-            logger.error("Failed to update network...")
-            exit(-1)
-        else:
-            logger.debug("Network '%s' available..." % PRIVATE_NET_NAME)
+        exit(1)
 
     if args.test_name == "all":
         for test_name in tests:
