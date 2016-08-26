@@ -78,10 +78,7 @@ function run_test(){
         ;;
         "odl")
             odl_tests
-            if [[ "$report" == "-r" &&
-                  -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" &&
-                  -n "$INSTALLER_TYPE" && "$INSTALLER_TYPE" != "none" ]] &&
-               env | grep NODE_NAME > /dev/null; then
+            if [[ "$report" == "-r" ]]; then
                 args=-p
             fi
             ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/OpenDaylightTesting.py \
