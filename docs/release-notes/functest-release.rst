@@ -227,24 +227,46 @@ ci/testcases.yaml file.
 
 The reporting pages can be found at:
 
- * apex: * TODO / check branch *
- * compass: * TODO / check branch *
- * fuel: * TODO / check branch *
- * joid: * TODO / check branch *
+ * apex: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-apex.html
+ * compass: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-compass.html
+ * fuel: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-fuel.html
+ * joid: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-joid.html
 
-Colorado limitations
------------------------
+Colorado known issues
+=====================
 
-- vPing userdata and Tempest cases related to metada service excluded
-from onos scenarios https://gerrit.opnfv.org/gerrit/#/c/18729/
-
-- Tempest cases related to storage for joid scenarios
-https://gerrit.opnfv.org/gerrit/#/c/17871/
-
-- vPing_ssh and vIMS excluded from bgpvpn and kvm scenario
-
-
-See known issues section for details
++-----------+-----------+----------------------------------------------+
+| Installer | Scenario  |  Issue                                       |
++===========+===========+==============================================+
+| any       | onos-*    | vPing userdata and Tempest cases related to  |
+|           |           | metadata service excluded from onos scenarios|
+|           |           | https://gerrit.opnfv.org/gerrit/#/c/18729/   |
++-----------+-----------+----------------------------------------------+
+| joid      | any       | Tempest cases related to storage excluded    |
+|           |           | https://gerrit.opnfv.org/gerrit/#/c/17871/   |
++-----------+-----------+----------------------------------------------+
+| fuel      | any       | TestServerBasicOps test case skipped         |
+|           |           | https://gerrit.opnfv.org/gerrit/#/c/19635/   |
++-----------+-----------+----------------------------------------------+
+| apex/fuel | *-bgpvpn  | vPing_ssh (floating ips not supported) and   |
+|           |           | vIMS excluded. Some Tempest cases related to |
+|           |           | floating ips also excluded.                  |
++-----------+-----------+----------------------------------------------+
+| fuel      | kvm       | vPing_ssh and vIMS excluded (metadata related|
+|           |           | scenarios)                                   |
++-----------+-----------+----------------------------------------------+
+| fuel      | multisite | random errors running multisite. A known bug |
+|           |           | in keystone mitaka, due to which memcache    |
+|           |           | raises exception and keystone becomes        |
+|           |           | unresponsive                                 |
+|           |           | bugs.launchpad.net/keystone/+bug/1600394     |
+|           |           | workaround consists in restarting memcache on|
+|           |           | server                                       |
++-----------+-----------+----------------------------------------------+
+| compass   | moon      | First ODL test FAILS because ODL/Openstack   |
+|           |           | federation done in moon is partial. Only     |
+|           |           | MD-SAL is federated (not AD-SAL)             |
++-----------+-----------+----------------------------------------------+
 
 
 Test and installer/scenario dependencies
@@ -264,9 +286,6 @@ Test results are available in:
 
  - jenkins logs on CI: https://build.opnfv.org/ci/view/functest/
 
-
-Known issues
-------------
 
 
 Open JIRA tickets
