@@ -227,24 +227,31 @@ ci/testcases.yaml file.
 
 The reporting pages can be found at:
 
- * apex: * TODO / check branch *
- * compass: * TODO / check branch *
- * fuel: * TODO / check branch *
- * joid: * TODO / check branch *
+ * apex: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-apex.html
+ * compass: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-compass.html
+ * fuel: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-fuel.html
+ * joid: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-joid.html
 
-Colorado limitations
------------------------
+Colorado known issues
+---------------------
 
-- vPing userdata and Tempest cases related to metada service excluded
-from onos scenarios https://gerrit.opnfv.org/gerrit/#/c/18729/
+- onos scenarios: vPing userdata and Tempest cases related to metadata
+service excluded from onos scenarios https://gerrit.opnfv.org/gerrit/#/c/18729/
 
-- Tempest cases related to storage for joid scenarios
+- joid scenarios: Tempest cases related to storage excluded
 https://gerrit.opnfv.org/gerrit/#/c/17871/
 
-- vPing_ssh and vIMS excluded from bgpvpn and kvm scenario
+- fuel scenarios: TestServerBasicOps test case skipped
+https://gerrit.opnfv.org/gerrit/#/c/19635/
 
+- bgpvpn and kvm scenarios: vPing_ssh and vIMS excluded (metadata
+related scenarios)
 
-See known issues section for details
+- multisite: random errors running multisite. A known bug in keystone
+mitaka, due to which memcache raises exception and keystone becomes
+unresponsive(memcache error in keystone.log)
+https://bugs.launchpad.net/keystone/+bug/1600394: workaround consists in
+restarting memcache on server
 
 
 Test and installer/scenario dependencies
@@ -264,9 +271,6 @@ Test results are available in:
 
  - jenkins logs on CI: https://build.opnfv.org/ci/view/functest/
 
-
-Known issues
-------------
 
 
 Open JIRA tickets
