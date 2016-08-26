@@ -147,24 +147,11 @@ def create_security_group():
 
 
 def create_image():
-    EXIT_CODE = -1
-
-    # Check if the given image exists
-    image_id = os_utils.get_image_id(glance_client, GLANCE_IMAGE_NAME)
-    if image_id != '':
-        logger.info("Using existing image '%s'..." % GLANCE_IMAGE_NAME)
-    else:
-        logger.info("Creating image '%s' from '%s'..." % (GLANCE_IMAGE_NAME,
-                                                          GLANCE_IMAGE_PATH))
-        image_id = os_utils.create_glance_image(glance_client,
-                                                GLANCE_IMAGE_NAME,
-                                                GLANCE_IMAGE_PATH,
-                                                GLANCE_IMAGE_FORMAT)
-        if not image_id:
-            logger.error("Failed to create a Glance image...")
-            exit(EXIT_CODE)
-        logger.debug("Image '%s' with ID=%s created successfully."
-                     % (GLANCE_IMAGE_NAME, image_id))
+    _, image_id = os_utils.get_or_create_image(GLANCE_IMAGE_NAME,
+                                               GLANCE_IMAGE_PATH,
+                                               GLANCE_IMAGE_FORMAT)
+    if not image_id:
+        exit(-1)
 
     return image_id
 
