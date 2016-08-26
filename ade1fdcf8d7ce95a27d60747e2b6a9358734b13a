@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_1ecff180",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-26T09:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a76adc5_de55f9c6",
+      "range": {
+        "startLine": 84,
+        "startChar": 3,
+        "endLine": 84,
+        "endChar": 7
+      },
+      "revId": "ade1fdcf8d7ce95a27d60747e2b6a9358734b13a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_e4aaa818",
         "filename": "docs/devguide/index.rst",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2016-08-25T21:46:39Z",
       "side": 1,
       "message": "add a comma after \"per scenario\"",
+      "revId": "ade1fdcf8d7ce95a27d60747e2b6a9358734b13a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_6fe8b1b4",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-26T09:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a76adc5_e4aaa818",
       "revId": "ade1fdcf8d7ce95a27d60747e2b6a9358734b13a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
