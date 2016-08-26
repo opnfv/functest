@@ -6,6 +6,7 @@ import os
 import re
 import shutil
 import sys
+import urlparse
 
 from robot import run
 from robot.api import ExecutionResult, ResultVisitor
@@ -14,6 +15,7 @@ from robot.utils.robottime import timestamp_to_secs
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as op_utils
 
 
 class ODLResultVisitor(ResultVisitor):
@@ -60,7 +62,7 @@ class ODLTestCases:
             except IOError as e:
                 cls.logger.error(
                     "Cannot copy OPNFV's testcases to ODL directory: "
-                    "%s" % e.strerror)
+                    "%s" % str(e))
                 return False
         return True
 
@@ -76,7 +78,7 @@ class ODLTestCases:
                              line.rstrip())
             return True
         except Exception as e:
-            cls.logger.error("Cannot set ODL creds: %s" % e.strerror)
+            cls.logger.error("Cannot set ODL creds: %s" % str(e))
             return False
 
     @classmethod
@@ -95,7 +97,7 @@ class ODLTestCases:
                          'RESTCONFPORT:' + kwargs['odlrestconfport']]
         except KeyError as e:
             cls.logger.error("Cannot run ODL testcases. Please check "
-                             "%s" % e.strerror)
+                             "%s" % str(e))
             return False
         if (cls.copy_opnf_testcases() and
                 cls.set_robotframework_vars(odlusername, odlpassword)):
@@ -120,6 +122,43 @@ class ODLTestCases:
             return True
         else:
             return False
+
+    @classmethod
+    def functest_run(cls):
+        kclient = op_utils.get_keystone_client()
+        keystone_url = kclient.service_catalog.url_for(
+            service_type='identity', endpoint_type='publicURL')
+        neutron_url = kclient.service_catalog.url_for(
+            service_type='network', endpoint_type='publicURL')
+        kwargs = {'keystoneip': urlparse.urlparse(keystone_url).hostname}
+        kwargs['neutronip'] = urlparse.urlparse(neutron_url).hostname
+        kwargs['odlip'] = kwargs['neutronip']
+        kwargs['odlwebport'] = '8080'
+        kwargs['odlrestconfport'] = '8181'
+        kwargs['odlusername'] = 'admin'
+        kwargs['odlpassword'] = 'admin'
+        try:
+            installer_type = os.environ['INSTALLER_TYPE']
+            kwargs['osusername'] = os.environ['OS_USERNAME']
+            kwargs['ostenantname'] = os.environ['OS_TENANT_NAME']
+            kwargs['ospassword'] = os.environ['OS_PASSWORD']
+            if installer_type == 'fuel':
+                kwargs['odlwebport'] = '8282'
+            elif installer_type == 'apex':
+                kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
+                kwargs['odlwebport'] = '8181'
+            elif installer_type == 'joid':
+                kwargs['odlip'] = os.environ['SDN_CONTROLLER']
+            elif installer_type == 'compass':
+                kwargs['odlwebport'] = '8181'
+            else:
+                kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
+        except KeyError as e:
+            cls.logger.error("Cannot run ODL testcases. Please check env var: "
+                             "%s" % str(e))
+            return False
+
+        return cls.run(**kwargs)
 
     @classmethod
     def push_to_db(cls):
