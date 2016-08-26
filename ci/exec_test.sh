@@ -78,12 +78,7 @@ function run_test(){
         ;;
         "odl")
             odl_tests
-            if [[ "$report" == "-r" &&
-                  -n "$DEPLOY_SCENARIO" && "$DEPLOY_SCENARIO" != "none" &&
-                  -n "$INSTALLER_TYPE" && "$INSTALLER_TYPE" != "none" ]] &&
-               env | grep NODE_NAME > /dev/null; then
-                args=-p
-            fi
+            [[ "$report" == "-r" ]] && args=-p
             ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/OpenDaylightTesting.py \
                 --keystoneip $keystone_ip --neutronip $neutron_ip \
                 --osusername ${OS_USERNAME} --ostenantname ${OS_TENANT_NAME} \

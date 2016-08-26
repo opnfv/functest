@@ -200,11 +200,30 @@ def push_results_to_db(project, case_name, logger,
     """
     # Retrieve params from CI and conf
     url = get_db_url(logger) + "/results"
-    installer = get_installer_type(logger)
-    scenario = get_scenario(logger)
-    version = get_version(logger)
-    pod_name = get_pod_name(logger)
-    build_tag = get_build_tag(logger)
+
+    try:
+        installer = os.environ['INSTALLER_TYPE']
+        scenario = os.environ['DEPLOY_SCENARIO']
+        pod_name = os.environ['NODE_NAME']
+        build_tag = os.environ['BUILD_TAG']
+    except KeyError as e:
+        msg = "Please set env var: " + str(e)
+        if logger:
+            logger.error(msg)
+        else:
+            print(msg)
+        return False
+    rule = "daily-(.+?)-[0-9]*"
+    m = re.search(rule, build_tag)
+    if m:
+        version = m.group(1)
+    else:
+        msg = "Please fix BUILD_TAG env var: " + build_tag
+        if logger:
+            logger.error(msg)
+        else:
+            print(msg)
+        return False
     test_start = dt.fromtimestamp(start_date).strftime('%Y-%m-%d %H:%M:%S')
     test_stop = dt.fromtimestamp(stop_date).strftime('%Y-%m-%d %H:%M:%S')
 
