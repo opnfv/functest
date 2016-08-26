@@ -227,10 +227,10 @@ ci/testcases.yaml file.
 
 The reporting pages can be found at:
 
- * apex: * TODO / check branch *
- * compass: * TODO / check branch *
- * fuel: * TODO / check branch *
- * joid: * TODO / check branch *
+ * apex: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-apex.html 
+ * compass: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-compass.html
+ * fuel: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-fuel.html
+ * joid: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-joid.html
 
 Colorado limitations
 -----------------------
@@ -240,6 +240,9 @@ from onos scenarios https://gerrit.opnfv.org/gerrit/#/c/18729/
 
 - Tempest cases related to storage for joid scenarios
 https://gerrit.opnfv.org/gerrit/#/c/17871/
+
+- Skip TestServerBasicOps test case with fuel scenarios
+https://gerrit.opnfv.org/gerrit/#/c/19635/
 
 - vPing_ssh and vIMS excluded from bgpvpn and kvm scenario
 
