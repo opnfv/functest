@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_2a42a73e",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-26T16:18:00Z",
+      "side": 1,
+      "message": "The processing is done in odl_tests then the env vars are only useful for pushing to DB (see functest_utils).\nOpenDaylightTesting.py can be called without setting env vars in a standalone mode (see args).\nIt differs from ODLTestCases.functest_run() which check them as it is launched via run_tests.py without any arg.",
+      "parentUuid": "1a76adc5_aa4eb76d",
+      "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_6a217f9e",
         "filename": "utils/functest_utils.py",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_8a5bbb2d",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-26T16:18:00Z",
+      "side": 1,
+      "message": "Sure if we delete logger_test_results",
+      "parentUuid": "1a76adc5_6a217f9e",
+      "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_0a300be7",
         "filename": "utils/functest_utils.py",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2016-08-26T15:41:34Z",
       "side": 1,
       "message": "we do the same processing for the push and the display of the push...\nmaybe we could then put the info directly in the push_results_to_db function...\n\nbut\n- then we have to modify all the file\n- we will have message duplication in the traces of some feature projects\n\nthe reason why it has been split (push and log of the push) is due to the fact that some feature projects were already doing it properly (with their own rule to display results), then the logger has been added just for the projects that forget to do it...\n\nWithout this duplication  the get_pod, get_version, get_* ... will no more needed",
+      "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_6a589f32",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-26T16:18:00Z",
+      "side": 1,
+      "message": "Yes the next scripts call it:\n - testcases/features/doctor.py\n - testcases/features/copper.py\n - testcases/features/domino.py\n - testcases/vnf/vRNC/parser.py",
+      "parentUuid": "1a76adc5_0a300be7",
       "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
