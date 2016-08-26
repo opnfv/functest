@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_cf93054e",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-26T09:24:58Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "1a76adc5_e4814890",
+      "revId": "683db3a5d67aeead1090008bce7701ffb208a15c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_44735ce7",
         "filename": "docs/configguide/index.rst",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-08-25T22:16:08Z",
       "side": 0,
       "message": "maybe use the url here.  rather than [4]",
+      "revId": "683db3a5d67aeead1090008bce7701ffb208a15c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_6f9af164",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-08-26T09:24:58Z",
+      "side": 0,
+      "message": "Ok I assume it will be http://artifacts.opnfv.org/opnfvdocs/colorado/docs/configguide/index.html but I am not sure, what will opnfvdocs produce as umbrella documents?\nsame than http://artifacts.opnfv.org/opnfvdocs/brahmaputra/docs/configguide/index.html",
+      "parentUuid": "1a76adc5_44735ce7",
       "revId": "683db3a5d67aeead1090008bce7701ffb208a15c",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
