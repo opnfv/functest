@@ -331,6 +331,23 @@
       "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_af7a49ef",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 163
+      },
+      "writtenOn": "2016-08-26T13:14:33Z",
+      "side": 0,
+      "message": "Now they show but the rendering sucks :D  Maybe indent by 2 spaces will fix it.  (I\u0027m not 100% sure on the rendering of the links, seems like trial and error is needed.)",
+      "revId": "1712adf43b1e0a67531f323cc3da765f96d677eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
