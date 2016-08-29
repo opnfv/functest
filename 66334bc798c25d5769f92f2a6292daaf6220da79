@@ -104,6 +104,52 @@
       "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d52ab47d",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-29T06:09:15Z",
+      "side": 1,
+      "message": "I think weekly results will also be pushed to DB?",
+      "range": {
+        "startLine": 216,
+        "startChar": 12,
+        "endLine": 216,
+        "endChar": 17
+      },
+      "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_7521609e",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-29T06:09:15Z",
+      "side": 1,
+      "message": "This is also about parser the env, can it be merged to the try,,,except,,,section? process is similar, can be simplified.",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 15
+      },
+      "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
