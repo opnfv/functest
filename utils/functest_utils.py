@@ -339,6 +339,7 @@ def execute_command(cmd, logger=None,
                 logger.debug(line)
         else:
             print line
+            sys.stdout.flush()
     p.stdout.close()
     returncode = p.wait()
     if returncode != 0:
