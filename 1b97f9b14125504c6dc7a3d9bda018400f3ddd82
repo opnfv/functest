@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_f04b3e57",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-08-29T14:10:58Z",
+      "side": 1,
+      "message": "can you add also here:\nvPing_ssh (floating ips not supported)\nsome tempest cases related to floating ips excluded.",
+      "revId": "1b97f9b14125504c6dc7a3d9bda018400f3ddd82",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
