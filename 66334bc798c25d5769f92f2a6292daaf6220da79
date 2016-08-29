@@ -130,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_1547cc4c",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-29T07:14:05Z",
+      "side": 1,
+      "message": "I haven\u0027t modified the logic...\nBut I can fix it too. Here or in another review.",
+      "parentUuid": "1a76adc5_d52ab47d",
+      "range": {
+        "startLine": 216,
+        "startChar": 12,
+        "endLine": 216,
+        "endChar": 17
+      },
+      "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_7521609e",
         "filename": "utils/functest_utils.py",
         "patchSetId": 2
@@ -141,6 +165,30 @@
       "writtenOn": "2016-08-29T06:09:15Z",
       "side": 1,
       "message": "This is also about parser the env, can it be merged to the try,,,except,,,section? process is similar, can be simplified.",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 15
+      },
+      "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_3569a8be",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-29T07:14:05Z",
+      "side": 1,
+      "message": "Not really. m \u003d None if it fails here. I don\u0027t want to raise a KeyError Exception.\n\nI will delete logger tests in functest_utils.py which will simplify log staff.",
+      "parentUuid": "1a76adc5_7521609e",
       "range": {
         "startLine": 219,
         "startChar": 8,
