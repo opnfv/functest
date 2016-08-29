@@ -260,15 +260,16 @@ def main():
 
     try:
         while 1:
-            (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
-            if "vxlan_tool.py" in stdout.readlines()[0]:
+            (stdin, stdout, stderr) = ssh.exec_command(
+                "ps aux | grep \"vxlan_tool.py\" | grep -v grep")
+            if len(stdout.readlines()) > 0:
                 logger.debug("HTTP firewall started")
                 break
             else:
                 logger.debug("HTTP firewall not started")
                 time.sleep(3)
-    except:
-        logger.error("vxlan_tool not started in SF1")
+    except Exception:
+        logger.exception("vxlan_tool not started in SF1")
 
     # SSH TO START THE VXLAN_TOOL ON SF2
     try:
@@ -284,15 +285,16 @@ def main():
 
     try:
         while 1:
-            (stdin, stdout, stderr) = ssh.exec_command("ps lax | grep python")
-            if "vxlan_tool.py" in stdout.readlines()[0]:
+            (stdin, stdout, stderr) = ssh.exec_command(
+                "ps aux | grep \"vxlan_tool.py\" | grep -v grep")
+            if len(stdout.readlines()) > 0:
                 logger.debug("SSH firewall started")
                 break
             else:
                 logger.debug("SSH firewall not started")
                 time.sleep(3)
-    except:
-        logger.error("vxlan_tool not started in SF2")
+    except Exception:
+        logger.exception("vxlan_tool not started in SF2")
 
     # SSH to modify the classification flows in compute
 
@@ -303,50 +305,54 @@ def main():
                                shell=True,
                                stdout=subprocess.PIPE)
 
-    # SSH TO EXECUTE cmd_client
+    logger.info("Waiting for 60 seconds before TEST")
+    for j in range(0, 6):
+        logger.info("Test starting in {0} seconds".format(str((6 - j)*10)))
+        time.sleep(10)
 
+    i = 0
+
+    # SSH TO EXECUTE cmd_client
     logger.info("TEST STARTED")
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
         command = "nc -w 5 -zv " + instance_ip_2 + " 22 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
+
+        # WRITE THE CORRECT WAY TO DO LOGGING
+        if "timed out" in stdout.readlines()[0]:
+            logger.info('\033[92m' + "TEST 1 [PASSED] "
+                        "==> SSH BLOCKED" + '\033[0m')
+            i = i + 1
+        else:
+            logger.error('\033[91m' + "TEST 1 [FAILED] "
+                         "==> SSH NOT BLOCKED" + '\033[0m')
+            return
     except:
         logger.debug("Waiting for %s..." % floatip_client)
         time.sleep(6)
         # timeout -= 1
 
-    # WRITE THE CORRECT WAY TO DO LOGGING
-    i = 0
-    if "timed out" in stdout.readlines()[0]:
-        logger.info('\033[92m' + "TEST 1 [PASSED] "
-                    "==> SSH BLOCKED" + '\033[0m')
-        i = i + 1
-    else:
-        logger.error('\033[91m' + "TEST 1 [FAILED] "
-                     "==> SSH NOT BLOCKED" + '\033[0m')
-        return
-
     # SSH TO EXECUTE cmd_client
-
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
         command = "nc -w 5 -zv " + instance_ip_2 + " 80 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
+
+        if "succeeded" in stdout.readlines()[0]:
+            logger.info('\033[92m' + "TEST 2 [PASSED] "
+                        "==> HTTP WORKS" + '\033[0m')
+            i = i + 1
+        else:
+            logger.error('\033[91m' + "TEST 2 [FAILED] "
+                         "==> HTTP BLOCKED" + '\033[0m')
+            return
     except:
         logger.debug("Waiting for %s..." % floatip_client)
         time.sleep(6)
         # timeout -= 1
-
-    if "succeeded" in stdout.readlines()[0]:
-        logger.info('\033[92m' + "TEST 2 [PASSED] "
-                    "==> HTTP WORKS" + '\033[0m')
-        i = i + 1
-    else:
-        logger.error('\033[91m' + "TEST 2 [FAILED] "
-                     "==> HTTP BLOCKED" + '\033[0m')
-        return
 
     # CHANGE OF CLASSIFICATION #
     logger.info("Changing the classification")
@@ -373,40 +379,39 @@ def main():
                     password="opnfv", timeout=2)
         command = "nc -w 5 -zv " + instance_ip_2 + " 80 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
+
+        if "timed out" in stdout.readlines()[0]:
+            logger.info('\033[92m' + "TEST 3 [WORKS] "
+                        "==> HTTP BLOCKED" + '\033[0m')
+            i = i + 1
+        else:
+            logger.error('\033[91m' + "TEST 3 [FAILED] "
+                         "==> HTTP NOT BLOCKED" + '\033[0m')
+            return
     except:
         logger.debug("Waiting for %s..." % floatip_client)
         time.sleep(6)
         # timeout -= 1
 
-    if "timed out" in stdout.readlines()[0]:
-        logger.info('\033[92m' + "TEST 3 [WORKS] "
-                    "==> HTTP BLOCKED" + '\033[0m')
-        i = i + 1
-    else:
-        logger.error('\033[91m' + "TEST 3 [FAILED] "
-                     "==> HTTP NOT BLOCKED" + '\033[0m')
-        return
-
     # SSH TO EXECUTE cmd_client
-
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
         command = "nc -w 5 -zv " + instance_ip_2 + " 22 2>&1"
         (stdin, stdout, stderr) = ssh.exec_command(command)
+
+        if "succeeded" in stdout.readlines()[0]:
+            logger.info('\033[92m' + "TEST 4 [WORKS] "
+                        "==> SSH WORKS" + '\033[0m')
+            i = i + 1
+        else:
+            logger.error('\033[91m' + "TEST 4 [FAILED] "
+                         "==> SSH BLOCKED" + '\033[0m')
+            return
     except:
         logger.debug("Waiting for %s..." % floatip_client)
         time.sleep(6)
         # timeout -= 1
-
-    if "succeeded" in stdout.readlines()[0]:
-        logger.info('\033[92m' + "TEST 4 [WORKS] "
-                    "==> SSH WORKS" + '\033[0m')
-        i = i + 1
-    else:
-        logger.error('\033[91m' + "TEST 4 [FAILED] "
-                     "==> SSH BLOCKED" + '\033[0m')
-        return
 
     if i == 4:
         for x in range(0, 5):
