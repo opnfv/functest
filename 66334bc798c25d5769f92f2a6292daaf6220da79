@@ -270,6 +270,54 @@
       "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_75ac00a1",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-29T09:53:01Z",
+      "side": 1,
+      "message": "Agree.",
+      "parentUuid": "1a76adc5_f51a5016",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 15
+      },
+      "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d5a5d4b5",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-29T09:53:01Z",
+      "side": 1,
+      "message": "I think it will induce a too generic log msg if we raise a basic Exception for this case. The next msg would have precised the format required too.",
+      "parentUuid": "1a76adc5_75de4041",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 15
+      },
+      "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
