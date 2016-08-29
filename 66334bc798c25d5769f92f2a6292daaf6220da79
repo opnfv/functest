@@ -246,6 +246,30 @@
       "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_75de4041",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-29T08:57:45Z",
+      "side": 1,
+      "message": "Yes, but you can catch another except error, I don\u0027t remember the name, maybe NoneException or InvalidValueException?",
+      "parentUuid": "1a76adc5_3569a8be",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 15
+      },
+      "revId": "66334bc798c25d5769f92f2a6292daaf6220da79",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
