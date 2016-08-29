@@ -39,6 +39,7 @@ fi
 FUNCTEST_REPO_DIR=${repos_dir}/functest
 FUNCTEST_CONF_DIR=/home/opnfv/functest/conf
 
+export PYTHONUNBUFFERED=1
 
 function odl_tests(){
     keystone_ip=$(openstack catalog show identity |grep publicURL| cut -f3 -d"/" | cut -f1 -d":")
