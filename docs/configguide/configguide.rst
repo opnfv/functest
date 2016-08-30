@@ -18,7 +18,7 @@ release installed in your environment. All available tagged images can
 be seen from location [FunctestDockerTags_]. For example, when running
 on the first official release of the OPNFV Colorado system platform,
 tag "colorado.1.0" is needed. Pulling other tags might cause some
-problems while running the tests. 
+problems while running the tests.
 Docker images pulled without a tag specifier bear the implicitly
 assigned label "latest". If you need to specifically pull the latest
 Functest docker image, then omit the tag argument::
