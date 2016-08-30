@@ -232,8 +232,8 @@ The reporting pages can be found at:
  * fuel: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-fuel.html
  * joid: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-joid.html
 
-Colorado known issues
-=====================
+Colorado known restrictions/issues
+==================================
 
 +-----------+-----------+----------------------------------------------+
 | Installer | Scenario  |  Issue                                       |
@@ -242,15 +242,16 @@ Colorado known issues
 |           |           | metadata service excluded from onos scenarios|
 |           |           | https://gerrit.opnfv.org/gerrit/#/c/18729/   |
 +-----------+-----------+----------------------------------------------+
-| joid      | any       | Tempest cases related to storage excluded    |
-|           |           | https://gerrit.opnfv.org/gerrit/#/c/17871/   |
-+-----------+-----------+----------------------------------------------+
-| fuel      | any       | TestServerBasicOps test case skipped         |
-|           |           | https://gerrit.opnfv.org/gerrit/#/c/19635/   |
-+-----------+-----------+----------------------------------------------+
 | apex/fuel | *-bgpvpn  | vPing_ssh (floating ips not supported) and   |
 |           |           | vIMS excluded. Some Tempest cases related to |
 |           |           | floating ips also excluded.                  |
++-----------+-----------+----------------------------------------------+
+| compass   | moon      | First ODL test FAILS because ODL/Openstack   |
+|           |           | federation done in moon is partial. Only     |
+|           |           | MD-SAL is federated (not AD-SAL)             |
++-----------+-----------+----------------------------------------------+
+| fuel      | any       | TestServerBasicOps test case skipped         |
+|           |           | https://gerrit.opnfv.org/gerrit/#/c/19635/   |
 +-----------+-----------+----------------------------------------------+
 | fuel      | kvm       | vPing_ssh and vIMS excluded (metadata related|
 |           |           | scenarios)                                   |
@@ -263,9 +264,15 @@ Colorado known issues
 |           |           | workaround consists in restarting memcache on|
 |           |           | server                                       |
 +-----------+-----------+----------------------------------------------+
-| compass   | moon      | First ODL test FAILS because ODL/Openstack   |
-|           |           | federation done in moon is partial. Only     |
-|           |           | MD-SAL is federated (not AD-SAL)             |
+| joid      | any       | Tempest cases related to storage excluded    |
+|           |           | https://gerrit.opnfv.org/gerrit/#/c/17871/   |
++-----------+-----------+----------------------------------------------+
+| joid      | domino    | Domino tests are skipped in CI. However the  |
+|           |           | test case can be run by manually setting     |
+|           |           | IS_IPandKEY_CONFIGURED=true after manually   |
+|           |           | setting properly the IP addresses of the 3   |
+|           |           | Controller nodes in the configuration file   |
+|           |           | /repos/domino/tests/run_multinode.sh         |
 +-----------+-----------+----------------------------------------------+
 
 
