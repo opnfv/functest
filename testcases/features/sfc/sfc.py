@@ -240,6 +240,11 @@ def main():
 
     logger.debug("Floating IPs for SFs: %s..." % ips)
 
+    # If no IPs were obtained, then we cant continue
+    if not ips:
+        logger.error('Failed to obtain IPs, cant continue, exiting')
+        return
+
     # SSH TO START THE VXLAN_TOOL ON SF1
     logger.info("Configuring the SFs")
     try:
