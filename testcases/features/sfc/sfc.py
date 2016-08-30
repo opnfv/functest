@@ -238,6 +238,11 @@ def main():
     except:
         logger.debug("Problems assigning floating IP to SFs")
 
+    # If no IPs were obtained, then we cant continue
+    if not ips:
+        logger.error('Failed to obtain IPs, cant continue, exiting')
+        return
+
     logger.debug("Floating IPs for SFs: %s..." % ips)
 
     # SSH TO START THE VXLAN_TOOL ON SF1
