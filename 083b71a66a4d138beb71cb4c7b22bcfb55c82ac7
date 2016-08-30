@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_27badd0a",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-08-30T15:53:53Z",
+      "side": 1,
+      "message": "move this line after the if statement, otherwise if ips is None, it will still complain in this line.",
+      "revId": "083b71a66a4d138beb71cb4c7b22bcfb55c82ac7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
