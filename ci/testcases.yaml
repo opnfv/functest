@@ -17,7 +17,7 @@ tiers:
 
                 dependencies:
                     installer: ''
-                    scenario: ''
+                    scenario: '^((?!lxd).)*$'
 
     -
         name: smoke
