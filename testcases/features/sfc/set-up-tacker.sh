@@ -1,7 +1,7 @@
 apt-get install -y git-core
 git clone https://gerrit.opnfv.org/gerrit/fuel fuel
 pushd fuel
-git checkout e7f7abc89161441548545f79f0299610c6e5b203
+git checkout ad0dd57
 popd
 mv fuel/prototypes/sfc_tacker/poc.tacker-up.sh .
 bash poc.tacker-up.sh
