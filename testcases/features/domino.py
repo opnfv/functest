@@ -14,11 +14,9 @@
 # 0.3: add report flag to push results when needed
 #
 
-import argparse
-import os
 import time
-import yaml
 
+import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 
@@ -29,8 +27,7 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-    functest_yaml = yaml.safe_load(f)
+functest_yaml = functest_utils.get_functest_yaml()
 
 dirs = functest_yaml.get('general').get('directories')
 FUNCTEST_REPO = dirs.get('dir_repo_functest')

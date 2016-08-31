@@ -50,8 +50,7 @@ CONFIG_FUNCTEST_PATH = os.environ["CONFIG_FUNCTEST_YAML"]
 CONFIG_PATCH_PATH = os.path.join(os.path.dirname(
     CONFIG_FUNCTEST_PATH), "config_patch.yaml")
 
-with open(CONFIG_FUNCTEST_PATH) as f:
-    functest_yaml = yaml.safe_load(f)
+functest_yaml = ft_utils.get_functest_yaml()
 
 with open(CONFIG_PATCH_PATH) as f:
     functest_patch_yaml = yaml.safe_load(f)
