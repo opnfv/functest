@@ -31,7 +31,6 @@ with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 
 dirs = functest_yaml.get('general').get('directories')
-FUNCTEST_REPO = dirs.get('dir_repo_functest')
 DOCTOR_REPO = dirs.get('dir_repo_doctor')
 
 logger = ft_logger.Logger("doctor").getLogger()
