@@ -152,9 +152,7 @@ def get_db_url(logger=None):
     """
     Returns DB URL
     """
-    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-        functest_yaml = yaml.safe_load(f)
-    f.close()
+    functest_yaml = get_functest_yaml()
     db_url = functest_yaml.get("results").get("test_db_url")
     return db_url
 
@@ -329,9 +327,7 @@ def get_deployment_dir(logger=None):
     """
     Returns current Rally deployment directory
     """
-    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-        functest_yaml = yaml.safe_load(f)
-    f.close()
+    functest_yaml = get_functest_yaml()
     deployment_name = functest_yaml.get("rally").get("deployment_name")
     rally_dir = functest_yaml.get("general").get("directories").get(
         "dir_rally_inst")
@@ -437,3 +433,10 @@ def check_test_result(test_name, ret, start_time, stop_time):
 
 def get_testcases_file():
     return FUNCTEST_REPO + "/ci/testcases.yaml"
+
+
+def get_functest_yaml():
+    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
+        functest_yaml = yaml.safe_load(f)
+    f.close()
+    return functest_yaml
