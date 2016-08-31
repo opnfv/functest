@@ -249,7 +249,6 @@ def OnosTest():
 
         functest_utils.push_results_to_db("functest",
                                           "onos",
-                                          logger,
                                           start_time,
                                           stop_time,
                                           status,

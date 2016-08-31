@@ -166,7 +166,7 @@ def configure_tempest(deployment_dir):
 
     logger.debug("Generating new tempest.conf file...")
     cmd = "rally verify genconfig"
-    ft_utils.execute_command(cmd, logger)
+    ft_utils.execute_command(cmd)
 
     logger.debug("Finding tempest.conf file...")
     if not os.path.isfile(tempest_conf_file):
@@ -228,7 +228,7 @@ def generate_test_list(deployment_dir, mode):
             testr_mode = 'tempest.api.' + mode
         cmd = ("cd " + deployment_dir + ";" + "testr list-tests " +
                testr_mode + ">" + TEMPEST_RAW_LIST + ";cd")
-        ft_utils.execute_command(cmd, logger)
+        ft_utils.execute_command(cmd)
 
 
 def apply_tempest_blacklist():
@@ -373,7 +373,6 @@ def run_tempest(OPTION):
         try:
             ft_utils.push_results_to_db("functest",
                                         case_name,
-                                        None,
                                         start_time,
                                         stop_time,
                                         status,
@@ -399,7 +398,7 @@ def main():
     if not os.path.exists(TEMPEST_RESULTS_DIR):
         os.makedirs(TEMPEST_RESULTS_DIR)
 
-    deployment_dir = ft_utils.get_deployment_dir(logger)
+    deployment_dir = ft_utils.get_deployment_dir()
     create_tempest_resources()
 
     if "" == args.conf:

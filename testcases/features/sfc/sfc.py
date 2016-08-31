@@ -414,7 +414,7 @@ def main():
                         " :) \n" + '\033[0m')
 
     # TODO report results to DB
-    # functest_utils.logger_test_results(logger, "SFC",
+    # functest_utils.logger_test_results("SFC",
     # "odl-sfc",
     # status, details)
     # see doctor, promise, domino, ...
@@ -422,7 +422,6 @@ def main():
         # logger.info("Pushing odl-SFC results")
         # functest_utils.push_results_to_db("functest",
         #                                  "odl-sfc",
-        #                                  logger,
         #                                  start_time,
         #                                  stop_time,
         #                                  status,
