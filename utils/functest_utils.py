@@ -7,25 +7,25 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-
-""" global variables """
-
 from datetime import datetime as dt
 import json
 import os
-import os.path
 import re
+import requests
 import shutil
 import subprocess
 import sys
 import urllib2
-import dns.resolver
 
 import functest.ci.tier_builder as tb
+import functest.utils.functest_logger as ft_logger
+
+import dns.resolver
 from git import Repo
-import requests
 import yaml
 
+
+logger = ft_logger.Logger("functest_utils").getLogger()
 
 REPOS_DIR = os.getenv('repos_dir')
 FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
@@ -84,8 +84,7 @@ def get_installer_type(logger=None):
     try:
         installer = os.environ['INSTALLER_TYPE']
     except KeyError:
-        if logger:
-            logger.error("Impossible to retrieve the installer type")
+        globals()['logger'].error("Impossible to retrieve the installer type")
         installer = "Unknown_installer"
 
     return installer
@@ -98,8 +97,7 @@ def get_scenario(logger=None):
     try:
         scenario = os.environ['DEPLOY_SCENARIO']
     except KeyError:
-        if logger:
-            logger.error("Impossible to retrieve the scenario")
+        globals()['logger'].error("Impossible to retrieve the scenario")
         scenario = "Unknown_scenario"
 
     return scenario
@@ -131,10 +129,9 @@ def get_pod_name(logger=None):
     try:
         return os.environ['NODE_NAME']
     except KeyError:
-        if logger:
-            logger.error(
-                "Unable to retrieve the POD name from environment. " +
-                "Using pod name 'unknown-pod'")
+        globals()['logger'].error(
+            "Unable to retrieve the POD name from environment. " +
+            "Using pod name 'unknown-pod'")
         return "unknown-pod"
 
 
@@ -145,8 +142,7 @@ def get_build_tag(logger=None):
     try:
         build_tag = os.environ['BUILD_TAG']
     except KeyError:
-        if logger:
-            logger.error("Impossible to retrieve the build tag")
+        globals()['logger'].error("Impossible to retrieve the build tag")
         build_tag = "unknown_build_tag"
 
     return build_tag
@@ -169,28 +165,27 @@ def logger_test_results(logger, project, case_name, status, details):
     version = get_version(logger)
     build_tag = get_build_tag(logger)
 
-    logger.info("\n"
-                "****************************************\n"
-                "\t %(p)s/%(n)s results \n\n"
-                "****************************************\n"
-                "DB:\t%(db)s\n"
-                "pod:\t%(pod)s\n"
-                "version:\t%(v)s\n"
-                "scenario:\t%(s)s\n"
-                "status:\t%(c)s\n"
-                "build tag:\t%(b)s\n"
-                "details:\t%(d)s\n"
-                % {
-                    'p': project,
-                    'n': case_name,
-                    'db': get_db_url(),
-                    'pod': pod_name,
-                    'v': version,
-                    's': scenario,
-                    'c': status,
-                    'b': build_tag,
-                    'd': details,
-                })
+    globals()['logger'].info(
+        "\n"
+        "****************************************\n"
+        "\t %(p)s/%(n)s results \n\n"
+        "****************************************\n"
+        "DB:\t%(db)s\n"
+        "pod:\t%(pod)s\n"
+        "version:\t%(v)s\n"
+        "scenario:\t%(s)s\n"
+        "status:\t%(c)s\n"
+        "build tag:\t%(b)s\n"
+        "details:\t%(d)s\n"
+        % {'p': project,
+            'n': case_name,
+            'db': get_db_url(),
+            'pod': pod_name,
+            'v': version,
+            's': scenario,
+            'c': status,
+            'b': build_tag,
+            'd': details})
 
 
 def push_results_to_db(project, case_name, logger,
@@ -207,22 +202,14 @@ def push_results_to_db(project, case_name, logger,
         pod_name = os.environ['NODE_NAME']
         build_tag = os.environ['BUILD_TAG']
     except KeyError as e:
-        msg = "Please set env var: " + str(e)
-        if logger:
-            logger.error(msg)
-        else:
-            print(msg)
+        globals()['logger'].error("Please set env var: " + str(e))
         return False
     rule = "daily-(.+?)-[0-9]*"
     m = re.search(rule, build_tag)
     if m:
         version = m.group(1)
     else:
-        msg = "Please fix BUILD_TAG env var: " + build_tag
-        if logger:
-            logger.error(msg)
-        else:
-            print(msg)
+        globals()['logger'].error("Please fix BUILD_TAG env var: " + build_tag)
         return False
     test_start = dt.fromtimestamp(start_date).strftime('%Y-%m-%d %H:%M:%S')
     test_stop = dt.fromtimestamp(stop_date).strftime('%Y-%m-%d %H:%M:%S')
@@ -237,8 +224,7 @@ def push_results_to_db(project, case_name, logger,
     headers = {'Content-Type': 'application/json'}
     try:
         r = requests.post(url, data=json.dumps(params), headers=headers)
-        if logger:
-            logger.debug(r)
+        globals()['logger'].debug(r)
         r.raise_for_status()
     except requests.RequestException as exc:
         if 'r' in locals():
@@ -272,10 +258,7 @@ def push_results_to_db(project, case_name, logger,
                  })
     finally:
         if error:
-            if logger:
-                logger.error(error)
-            else:
-                print error
+            globals()['logger'].error(error)
             return False
         return True
 
@@ -321,33 +304,21 @@ def execute_command(cmd, logger=None,
         error_msg = ("The command '%s' failed." % cmd)
     msg_exec = ("Executing command: '%s'" % cmd)
     if verbose:
-        if logger:
-            if info:
-                logger.info(msg_exec)
-            else:
-                logger.debug(msg_exec)
+        if info:
+            globals()['logger'].info(msg_exec)
         else:
-            print(msg_exec)
+            globals()['logger'].debug(msg_exec)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
     for line in iter(p.stdout.readline, b''):
         line = line.replace('\n', '')
-        if logger:
-            if info:
-                logger.info(line)
-            else:
-                logger.debug(line)
-        else:
-            print line
-            sys.stdout.flush()
+        print line
+        sys.stdout.flush()
     p.stdout.close()
     returncode = p.wait()
     if returncode != 0:
         if verbose:
-            if logger:
-                logger.error(error_msg)
-            else:
-                print(error_msg)
+            globals()['logger'].error(error_msg)
         if exit_on_error:
             sys.exit(1)
 
@@ -371,8 +342,7 @@ def get_deployment_dir(logger=None):
                          stderr=subprocess.STDOUT)
     deployment_uuid = p.stdout.readline().rstrip()
     if deployment_uuid == "":
-        if logger:
-            logger.error("Rally deployment not found.")
+        globals()['logger'].error("Rally deployment not found.")
         exit(-1)
     deployment_dir = (rally_dir + "/tempest/for-deployment-" +
                       deployment_uuid)
