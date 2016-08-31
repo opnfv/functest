@@ -21,7 +21,6 @@ with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 
 REPOS_DIR = os.getenv('repos_dir')
-FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
 FUNCTEST_CONF_DIR = functest_yaml.get("general").get(
     "directories").get("dir_functest_conf")
 ENV_FILE = FUNCTEST_CONF_DIR + "/env_active"
@@ -32,7 +31,7 @@ class CliTier:
     def __init__(self):
         CI_INSTALLER_TYPE = os.getenv('INSTALLER_TYPE')
         CI_SCENARIO = os.getenv('DEPLOY_SCENARIO')
-        testcases = FUNCTEST_REPO + "/ci/testcases.yaml"
+        testcases = ft_utils.get_testcases_file()
         self.tiers = tb.TierBuilder(CI_INSTALLER_TYPE, CI_SCENARIO, testcases)
 
     def list(self):
