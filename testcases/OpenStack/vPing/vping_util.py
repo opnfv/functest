@@ -1,6 +1,6 @@
 import os
-import re
 import pprint
+import re
 import sys
 import time
 
@@ -8,13 +8,10 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 import paramiko
 from scp import SCPClient
-import yaml
 
 REPO_PATH = os.environ['repos_dir'] + '/functest/'
 
-with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-    functest_yaml = yaml.safe_load(f)
-f.close()
+functest_yaml = ft_utils.get_functest_yaml()
 
 NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
 NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")

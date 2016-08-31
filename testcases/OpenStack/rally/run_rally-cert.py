@@ -15,18 +15,17 @@
 #
 """ tests configuration """
 
-import argparse
 import json
 import os
 import re
 import subprocess
 import time
+
+import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as os_utils
 import iniparse
-import yaml
-
 
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
          'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
@@ -76,9 +75,7 @@ if not os.path.exists(REPO_PATH):
     exit(-1)
 
 
-with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-    functest_yaml = yaml.safe_load(f)
-f.close()
+functest_yaml = functest_utils.get_functest_yaml()
 
 HOME = os.environ['HOME'] + "/"
 RALLY_DIR = REPO_PATH + functest_yaml.get("general").get(
