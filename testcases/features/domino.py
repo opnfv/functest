@@ -70,14 +70,13 @@ def main():
     elif details['status'] == "SKIPPED":
         status = "SKIP"
 
-    functest_utils.logger_test_results(logger, "Domino",
+    functest_utils.logger_test_results("Domino",
                                        "domino-multinode",
                                        status, details)
     if args.report:
         if status is not "SKIP":
             functest_utils.push_results_to_db("domino",
                                               "domino-multinode",
-                                              logger,
                                               start_time,
                                               stop_time,
                                               status,

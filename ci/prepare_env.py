@@ -222,7 +222,7 @@ def install_rally():
     logger.info("Creating Rally environment...")
 
     cmd = "rally deployment destroy opnfv-rally"
-    ft_utils.execute_command(cmd, logger=logger, exit_on_error=False,
+    ft_utils.execute_command(cmd, exit_on_error=False,
                              error_msg=("Deployment %s does not exist."
                                         % DEPLOYMENT_MAME), verbose=False)
     rally_conf = os_utils.get_credentials_for_rally()
@@ -230,27 +230,27 @@ def install_rally():
         json.dump(rally_conf, fp)
     cmd = "rally deployment create --file=rally_conf.json --name="
     cmd += DEPLOYMENT_MAME
-    ft_utils.execute_command(cmd, logger,
+    ft_utils.execute_command(cmd,
                              error_msg="Problem creating Rally deployment")
 
     logger.info("Installing tempest from existing repo...")
     cmd = ("rally verify install --source " + TEMPEST_REPO_DIR +
            " --system-wide")
-    ft_utils.execute_command(cmd, logger,
+    ft_utils.execute_command(cmd,
                              error_msg="Problem installing Tempest.")
 
     cmd = "rally deployment check"
-    ft_utils.execute_command(cmd, logger,
+    ft_utils.execute_command(cmd,
                              error_msg=("OpenStack not responding or "
                                         "faulty Rally deployment."))
 
     cmd = "rally show images"
-    ft_utils.execute_command(cmd, logger,
+    ft_utils.execute_command(cmd,
                              error_msg=("Problem while listing "
                                         "OpenStack images."))
 
     cmd = "rally show flavors"
-    ft_utils.execute_command(cmd, logger,
+    ft_utils.execute_command(cmd,
                              error_msg=("Problem while showing "
                                         "OpenStack flavors."))
 

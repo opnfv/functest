@@ -66,13 +66,12 @@ def main():
     status = "FAIL"
     if details['status'] == "OK":
         status = "PASS"
-    functest_utils.logger_test_results(logger, "Doctor",
+    functest_utils.logger_test_results("Doctor",
                                        "doctor-notification",
                                        status, details)
     if args.report:
         functest_utils.push_results_to_db("doctor",
                                           "doctor-notification",
-                                          logger,
                                           start_time,
                                           stop_time,
                                           status,
