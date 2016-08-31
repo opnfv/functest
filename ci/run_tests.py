@@ -187,7 +187,7 @@ def main():
     CI_INSTALLER_TYPE = os.getenv('INSTALLER_TYPE')
     CI_SCENARIO = os.getenv('DEPLOY_SCENARIO')
 
-    file = FUNCTEST_REPO + "/ci/testcases.yaml"
+    file = ft_utils.get_testcases_file()
     _tiers = tb.TierBuilder(CI_INSTALLER_TYPE, CI_SCENARIO, file)
 
     if args.noclean:

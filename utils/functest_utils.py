@@ -381,7 +381,7 @@ def get_deployment_dir(logger=None):
 
 def get_criteria_by_test(testname):
     criteria = ""
-    file = FUNCTEST_REPO + "/ci/testcases.yaml"
+    file = get_testcases_file()
     tiers = tb.TierBuilder("", "", file)
     for tier in tiers.get_tiers():
         for test in tier.get_tests():
@@ -463,3 +463,7 @@ def check_test_result(test_name, ret, start_time, stop_time):
     }
 
     return status, details
+
+
+def get_testcases_file():
+    return FUNCTEST_REPO + "/ci/testcases.yaml"
