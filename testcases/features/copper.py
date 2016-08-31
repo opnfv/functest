@@ -32,7 +32,6 @@ with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 
 dirs = functest_yaml.get('general').get('directories')
-FUNCTEST_REPO = dirs.get('dir_repo_functest')
 COPPER_REPO = dirs.get('dir_repo_copper')
 
 logger = ft_logger.Logger("copper").getLogger()
