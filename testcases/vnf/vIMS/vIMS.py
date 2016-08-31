@@ -11,27 +11,24 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
 
-import argparse
 import datetime
 import json
 import os
 import pprint
-import requests
 import subprocess
 import time
-import yaml
 
+import argparse
+import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as functest_utils
+import functest.utils.openstack_utils as os_utils
 import keystoneclient.v2_0.client as ksclient
 import novaclient.client as nvclient
+import requests
 from neutronclient.v2_0 import client as ntclient
 
 from clearwater import clearwater
 from orchestrator import orchestrator
-
-import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
-import functest.utils.openstack_utils as os_utils
-
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -54,9 +51,7 @@ if not os.path.exists(REPO_PATH):
     logger.error("Functest repository directory not found '%s'" % REPO_PATH)
     exit(-1)
 
-with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-    functest_yaml = yaml.safe_load(f)
-f.close()
+functest_yaml = functest_utils.get_functest_yaml()
 
 # Cloudify parameters
 VIMS_DIR = (REPO_PATH +
