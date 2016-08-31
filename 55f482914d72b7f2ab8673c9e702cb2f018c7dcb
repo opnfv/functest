@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_fd90f296",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-08-31T12:58:59Z",
+      "side": 1,
+      "message": "get_installer_type is not called by any third party then it could be removed. \nI prefer (if you agree) doing it in another review. This one can be applied in stable/colorado. The next one modifying method args can be applied on master only.",
+      "parentUuid": "1a76adc5_fd6232d7",
+      "range": {
+        "startLine": 80,
+        "startChar": 23,
+        "endLine": 80,
+        "endChar": 34
+      },
+      "revId": "55f482914d72b7f2ab8673c9e702cb2f018c7dcb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_1aee14b5",
         "filename": "utils/functest_utils.py",
         "patchSetId": 1
