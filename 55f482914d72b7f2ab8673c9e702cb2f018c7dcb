@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_faf23899",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-31T11:14:54Z",
+      "side": 1,
+      "message": "Please delete not used input parameter logger,",
+      "range": {
+        "startLine": 80,
+        "startChar": 23,
+        "endLine": 80,
+        "endChar": 34
+      },
+      "revId": "55f482914d72b7f2ab8673c9e702cb2f018c7dcb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_1aee14b5",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-08-31T11:14:54Z",
+      "side": 1,
+      "message": "How about define a method?\n  def logger()\n        return globals()[\u0027logger\u0027]\nwhen we want to log some information:\n   logger().error(\u0027error message\u0027)",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 27
+      },
+      "revId": "55f482914d72b7f2ab8673c9e702cb2f018c7dcb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
