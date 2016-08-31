@@ -14,13 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import argparse
-import os
 import sys
 import time
+
+import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
-import yaml
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
@@ -28,8 +27,7 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-    functest_yaml = yaml.safe_load(f)
+functest_yaml = functest_utils.get_functest_yaml()
 
 dirs = functest_yaml.get('general').get('directories')
 FUNCTEST_REPO = dirs.get('dir_repo_functest')

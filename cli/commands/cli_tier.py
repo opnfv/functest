@@ -14,11 +14,8 @@ import os
 import click
 import functest.ci.tier_builder as tb
 import functest.utils.functest_utils as ft_utils
-import yaml
 
-
-with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-    functest_yaml = yaml.safe_load(f)
+functest_yaml = ft_utils.get_functest_yaml()
 
 REPOS_DIR = os.getenv('repos_dir')
 FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
