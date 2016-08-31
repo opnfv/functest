@@ -217,7 +217,6 @@ class Sfc:
         logger.info("Result is " + status)
         functest_utils.push_results_to_db("functest",
                                           "onos_sfc",
-                                          logger,
                                           start_time,
                                           stop_time,
                                           status,

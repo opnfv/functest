@@ -116,7 +116,7 @@ def main():
     if not os.path.exists(TEMPEST_RESULTS_DIR):
         os.makedirs(TEMPEST_RESULTS_DIR)
 
-    deployment_dir = ft_utils.get_deployment_dir(logger)
+    deployment_dir = ft_utils.get_deployment_dir()
     configure_tempest_multisite(deployment_dir)
 
 

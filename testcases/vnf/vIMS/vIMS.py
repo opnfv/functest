@@ -114,7 +114,6 @@ def step_failure(step_name, error_msg):
         status = "PASS"
     functest_utils.push_results_to_db("functest",
                                       "vims",
-                                      None,
                                       TESTCASE_START_TIME,
                                       stop_time,
                                       status,
@@ -236,7 +235,6 @@ def test_clearwater():
 
         functest_utils.push_results_to_db("functest",
                                           "vims",
-                                          logger,
                                           TESTCASE_START_TIME,
                                           end_time_ts,
                                           status,
@@ -399,10 +397,10 @@ def main():
 
     logger.info("Prepare virtualenv for cloudify-cli")
     cmd = "chmod +x " + VIMS_DIR + "create_venv.sh"
-    functest_utils.execute_command(cmd, logger)
+    functest_utils.execute_command(cmd)
     time.sleep(3)
     cmd = VIMS_DIR + "create_venv.sh " + VIMS_DATA_DIR
-    functest_utils.execute_command(cmd, logger)
+    functest_utils.execute_command(cmd)
 
     cfy.download_manager_blueprint(
         CFY_MANAGER_BLUEPRINT['url'], CFY_MANAGER_BLUEPRINT['branch'])
