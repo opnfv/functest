@@ -45,7 +45,6 @@ def main():
 
     start_time = time.time()
     ret = functest_utils.execute_command(cmd,
-                                         logger,
                                          info=True,
                                          exit_on_error=False)
     stop_time = time.time()
@@ -55,8 +54,7 @@ def main():
                                                        start_time,
                                                        stop_time)
 
-    functest_utils.logger_test_results(logger,
-                                       project,
+    functest_utils.logger_test_results(project,
                                        case_name,
                                        status,
                                        details)
@@ -65,7 +63,6 @@ def main():
         logger.debug("Report Parser Results to DB......")
         functest_utils.push_results_to_db(project,
                                           case_name,
-                                          logger,
                                           start_time,
                                           stop_time,
                                           status,

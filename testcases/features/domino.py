@@ -43,7 +43,7 @@ def main():
     cmd = 'cd %s && ./tests/run_multinode.sh' % DOMINO_REPO
     start_time = time.time()
 
-    ret = functest_utils.execute_command(cmd, logger, exit_on_error=False)
+    ret = functest_utils.execute_command(cmd, exit_on_error=False)
 
     stop_time = time.time()
     duration = round(stop_time - start_time, 1)
@@ -69,14 +69,13 @@ def main():
     elif details['status'] == "SKIPPED":
         status = "SKIP"
 
-    functest_utils.logger_test_results(logger, "Domino",
+    functest_utils.logger_test_results("Domino",
                                        "domino-multinode",
                                        status, details)
     if args.report:
         if status is not "SKIP":
             functest_utils.push_results_to_db("domino",
                                               "domino-multinode",
-                                              logger,
                                               start_time,
                                               stop_time,
                                               status,

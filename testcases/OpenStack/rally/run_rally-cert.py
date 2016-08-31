@@ -362,7 +362,6 @@ def run_task(test_name):
         logger.debug("Push Rally detailed results into DB")
         functest_utils.push_results_to_db("functest",
                                           "Rally_details",
-                                          logger,
                                           start_time,
                                           stop_time,
                                           status,
@@ -495,7 +494,6 @@ def main():
         logger.debug("Pushing Rally summary into DB...")
         functest_utils.push_results_to_db("functest",
                                           case_name,
-                                          logger,
                                           start_time,
                                           stop_time,
                                           status,

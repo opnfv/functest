@@ -43,7 +43,7 @@ def main():
 
     start_time = time.time()
 
-    ret_val = functest_utils.execute_command(cmd, logger, exit_on_error=False)
+    ret_val = functest_utils.execute_command(cmd, exit_on_error=False)
 
     stop_time = time.time()
     duration = round(stop_time - start_time, 1)
@@ -59,14 +59,13 @@ def main():
         'duration': duration,
         'status': test_status,
     }
-    functest_utils.logger_test_results(logger, "Copper",
+    functest_utils.logger_test_results("Copper",
                                        "copper-notification",
                                        details['status'], details)
     try:
         if args.report:
             functest_utils.push_results_to_db("copper",
                                               "copper-notification",
-                                              logger,
                                               start_time,
                                               stop_time,
                                               details['status'],

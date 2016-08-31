@@ -456,7 +456,6 @@ def push_result(report, case, start_time, stop_time, details):
             logger.debug("Pushing vPing %s results into DB..." % case)
             ft_utils.push_results_to_db('functest',
                                         case,
-                                        logger,
                                         start_time,
                                         stop_time,
                                         details['status'],
