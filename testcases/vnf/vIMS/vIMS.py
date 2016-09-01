@@ -346,7 +346,7 @@ def main():
     public_auth_url = keystone.service_catalog.url_for(
         service_type='identity', endpoint_type='publicURL')
 
-    cfy = orchestrator(VIMS_DATA_DIR, CFY_INPUTS, logger)
+    cfy = orchestrator(VIMS_DATA_DIR, CFY_INPUTS)
 
     cfy.set_credentials(username=ks_creds['username'], password=ks_creds[
                         'password'], tenant_name=ks_creds['tenant_name'],

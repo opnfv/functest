@@ -10,22 +10,26 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
-import subprocess32 as subprocess
+
 import os
 import shutil
+import subprocess32 as subprocess
 import yaml
+
 from git import Repo
+
+import functest.utils.functest_logger as ft_logger
 
 
 class orchestrator:
 
-    def __init__(self, testcase_dir, inputs={}, logger=None):
+    def __init__(self, testcase_dir, inputs={}):
         self.testcase_dir = testcase_dir
         self.blueprint_dir = testcase_dir + 'cloudify-manager-blueprint/'
         self.input_file = 'inputs.yaml'
         self.manager_blueprint = False
         self.config = inputs
-        self.logger = logger
+        self.logger = ft_logger.Logger("Orchestrator").getLogger()
         self.manager_up = False
 
     def set_credentials(self, username, password, tenant_name, auth_url):
@@ -56,28 +60,22 @@ class orchestrator:
         if 0 < len(nameservers):
             self.config['dns_subnet_1'] = nameservers[0]
 
-    def set_logger(self, logger):
-        self.logger = logger
-
     def download_manager_blueprint(self, manager_blueprint_url,
                                    manager_blueprint_branch):
         if self.manager_blueprint:
-            if self.logger:
-                self.logger.info(
-                    "cloudify manager server blueprint is "
-                    "already downloaded !")
+            self.logger.info(
+                "cloudify manager server blueprint is "
+                "already downloaded !")
         else:
-            if self.logger:
-                self.logger.info(
-                    "Downloading the cloudify manager server blueprint")
-            download_result = download_blueprints(
+            self.logger.info(
+                "Downloading the cloudify manager server blueprint")
+            download_result = self._download_blueprints(
                 manager_blueprint_url,
                 manager_blueprint_branch,
                 self.blueprint_dir)
 
             if not download_result:
-                if self.logger:
-                    self.logger.error("Failed to download manager blueprint")
+                self.logger.error("Failed to download manager blueprint")
                 exit(-1)
             else:
                 self.manager_blueprint = True
@@ -87,8 +85,7 @@ class orchestrator:
 
     def deploy_manager(self):
         if self.manager_blueprint:
-            if self.logger:
-                self.logger.info("Writing the inputs file")
+            self.logger.info("Writing the inputs file")
             with open(self.blueprint_dir + "inputs.yaml", "w") as f:
                 f.write(yaml.dump(self.config, default_style='"'))
             f.close()
@@ -102,8 +99,7 @@ class orchestrator:
                 if os.path.isfile(home + key_file):
                     os.remove(home + key_file)
 
-            if self.logger:
-                self.logger.info("Launching the cloudify-manager deployment")
+            self.logger.info("Launching the cloudify-manager deployment")
             script = "set -e; "
             script += ("source " + self.testcase_dir +
                        "venv_cloudify/bin/activate; ")
@@ -120,14 +116,12 @@ class orchestrator:
             if error:
                 return error
 
-            if self.logger:
-                self.logger.info("Cloudify-manager server is UP !")
+            self.logger.info("Cloudify-manager server is UP !")
 
             self.manager_up = True
 
     def undeploy_manager(self):
-        if self.logger:
-            self.logger.info("Launching the cloudify-manager undeployment")
+        self.logger.info("Launching the cloudify-manager undeployment")
 
         self.manager_up = False
 
@@ -137,38 +131,33 @@ class orchestrator:
         cmd = "/bin/bash -c '" + script + "'"
         execute_command(cmd, self.logger)
 
-        if self.logger:
-            self.logger.info(
-                "Cloudify-manager server has been successfully removed!")
+        self.logger.info(
+            "Cloudify-manager server has been successfully removed!")
 
     def download_upload_and_deploy_blueprint(self, blueprint, config,
                                              bp_name, dep_name):
-        if self.logger:
-            self.logger.info("Downloading the {0} blueprint".format(
-                blueprint['file_name']))
-        download_result = download_blueprints(blueprint['url'],
-                                              blueprint['branch'],
-                                              self.testcase_dir +
-                                              blueprint['destination_folder'])
+        self.logger.info("Downloading the {0} blueprint".format(
+            blueprint['file_name']))
+        destination_folder = self.testcase_dir + \
+            blueprint['destination_folder']
+        download_result = self._download_blueprints(blueprint['url'],
+                                                    blueprint['branch'],
+                                                    destination_folder)
 
         if not download_result:
-            if self.logger:
-                self.logger.error(
-                    "Failed to download blueprint {0}".
-                    format(blueprint['file_name']))
+            self.logger.error(
+                "Failed to download blueprint {0}".
+                format(blueprint['file_name']))
             exit(-1)
 
-        if self.logger:
-            self.logger.info("Writing the inputs file")
+        self.logger.info("Writing the inputs file")
 
         with open(self.testcase_dir + blueprint['destination_folder'] +
                   "/inputs.yaml", "w") as f:
             f.write(yaml.dump(config, default_style='"'))
-
         f.close()
 
-        if self.logger:
-            self.logger.info("Launching the {0} deployment".format(bp_name))
+        self.logger.info("Launching the {0} deployment".format(bp_name))
         script = "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
         script += ("cd " + self.testcase_dir +
                    blueprint['destination_folder'] + "; ")
@@ -183,12 +172,10 @@ class orchestrator:
         error = execute_command(cmd, self.logger, 2000)
         if error:
             return error
-        if self.logger:
-            self.logger.info("The deployment of {0} is ended".format(dep_name))
+        self.logger.info("The deployment of {0} is ended".format(dep_name))
 
     def undeploy_deployment(self, dep_name):
-        if self.logger:
-            self.logger.info("Launching the {0} undeployment".format(dep_name))
+        self.logger.info("Launching the {0} undeployment".format(dep_name))
         script = "source " + self.testcase_dir + "venv_cloudify/bin/activate; "
         script += "cd " + self.testcase_dir + "; "
         script += ("cfy executions start -w uninstall -d " + dep_name +
@@ -199,8 +186,16 @@ class orchestrator:
         try:
             execute_command(cmd, self.logger)
         except:
-            if self.logger:
-                self.logger.error("Clearwater undeployment failed")
+            self.logger.error("Clearwater undeployment failed")
+
+    def _download_blueprints(blueprint_url, branch, dest_path):
+        if os.path.exists(dest_path):
+            shutil.rmtree(dest_path)
+        try:
+            Repo.clone_from(blueprint_url, dest_path, branch=branch)
+            return True
+        except:
+            return False
 
 
 def execute_command(cmd, logger, timeout=1800):
@@ -237,13 +232,3 @@ def execute_command(cmd, logger, timeout=1800):
         result += lines[len(lines) - 2]
         result += lines[len(lines) - 1]
         return result
-
-
-def download_blueprints(blueprint_url, branch, dest_path):
-    if os.path.exists(dest_path):
-        shutil.rmtree(dest_path)
-    try:
-        Repo.clone_from(blueprint_url, dest_path, branch=branch)
-        return True
-    except:
-        return False
