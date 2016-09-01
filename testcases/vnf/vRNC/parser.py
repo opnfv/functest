@@ -14,11 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import argparse
 import time
 
-import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
@@ -40,9 +41,11 @@ def main():
     cmd = 'cd %s/tests && ./functest_run.sh' % PARSER_REPO
 
     start_time = time.time()
+    log_file = "/home/opnfv/functest/results/parser.log"
     ret = functest_utils.execute_command(cmd,
                                          info=True,
-                                         exit_on_error=False)
+                                         exit_on_error=False,
+                                         output_file=log_file)
     stop_time = time.time()
 
     status, details = functest_utils.check_test_result(project,
