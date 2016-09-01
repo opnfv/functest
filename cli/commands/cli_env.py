@@ -12,9 +12,9 @@ import git
 import os
 
 import functest.utils.functest_utils as ft_utils
+from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 ENV_FILE = "/home/opnfv/functest/conf/env_active"
-FUNCTEST_REPO = "/home/opnfv/repos/functest/"
 
 
 class CliEnv:
@@ -35,7 +35,7 @@ class CliEnv:
                 else:
                     answer = raw_input("Invalid answer. Please type [y|n]\n")
 
-        cmd = ("python /home/opnfv/repos/functest/ci/prepare_env.py start")
+        cmd = ("python %s/ci/prepare_env.py start" % FUNCTEST_REPO)
         ft_utils.execute_command(cmd)
 
     def show(self):

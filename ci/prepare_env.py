@@ -13,18 +13,18 @@
 #
 
 
-import argparse
+import json
 import os
 import re
 import subprocess
 import sys
-import json
 
+import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 import yaml
-
+from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 actions = ['start', 'check']
 parser = argparse.ArgumentParser()
@@ -44,8 +44,6 @@ CI_INSTALLER_TYPE = ""
 CI_INSTALLER_IP = ""
 CI_SCENARIO = ""
 CI_DEBUG = False
-REPOS_DIR = os.getenv('repos_dir')
-FUNCTEST_REPO = REPOS_DIR + '/functest/'
 CONFIG_FUNCTEST_PATH = os.environ["CONFIG_FUNCTEST_YAML"]
 CONFIG_PATCH_PATH = os.path.join(os.path.dirname(
     CONFIG_FUNCTEST_PATH), "config_patch.yaml")

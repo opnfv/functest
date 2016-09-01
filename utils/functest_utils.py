@@ -28,7 +28,7 @@ import yaml
 logger = ft_logger.Logger("functest_utils").getLogger()
 
 REPOS_DIR = os.getenv('repos_dir')
-FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
+FUNCTEST_REPO = ("%s/functest" % REPOS_DIR)
 
 
 # ----------------------------------------------------------

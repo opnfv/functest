@@ -12,16 +12,18 @@
 # nominated node. Post scan a report is downloaded and if '--clean' is passed
 # all trace of the scan is removed from the remote system.
 
-import argparse
-import connect
 import datetime
 import os
 import sys
-
 from ConfigParser import SafeConfigParser
-from keystoneclient.auth.identity import v2
+
+import argparse
+from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 from keystoneclient import session
+from keystoneclient.auth.identity import v2
 from novaclient import client
+
+import connect
 
 __version__ = 0.1
 __author__ = 'Luke Hinds (lhinds@redhat.com)'
@@ -30,7 +32,7 @@ __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
 # Global vars
 INSTALLER_IP = os.getenv('INSTALLER_IP')
 oscapbin = 'sudo /bin/oscap'
-functest_dir = '/home/opnfv/repos/functest/testcases/security_scan/'
+functest_dir = '%s/testcases/security_scan/' % FUNCTEST_REPO
 
 # Apex Spefic var needed to query Undercloud
 if os.getenv('OS_AUTH_URL') is None:
