@@ -1077,7 +1077,7 @@ def create_tenant(keystone_client, tenant_name, tenant_description):
                                                 enabled=True)
         return tenant.id
     except Exception, e:
-        logger.error("Error [create_tenant(cinder_client, '%s', '%s')]: %s"
+        logger.error("Error [create_tenant(keystone_client, '%s', '%s')]: %s"
                      % (tenant_name, tenant_description, e))
         return None
 

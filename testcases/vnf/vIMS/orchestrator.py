@@ -188,7 +188,7 @@ class orchestrator:
         except:
             self.logger.error("Clearwater undeployment failed")
 
-    def _download_blueprints(blueprint_url, branch, dest_path):
+    def _download_blueprints(self, blueprint_url, branch, dest_path):
         if os.path.exists(dest_path):
             shutil.rmtree(dest_path)
         try:
