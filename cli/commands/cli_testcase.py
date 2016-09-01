@@ -15,11 +15,8 @@ import click
 import functest.ci.tier_builder as tb
 import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_vacation as vacation
-import yaml
 
-
-with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-    functest_yaml = yaml.safe_load(f)
+functest_yaml = ft_utils.get_functest_yaml()
 
 FUNCTEST_CONF_DIR = functest_yaml.get("general").get(
     "directories").get("dir_functest_conf")
