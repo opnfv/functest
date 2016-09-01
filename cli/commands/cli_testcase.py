@@ -16,6 +16,7 @@ import functest.ci.tier_builder as tb
 import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_vacation as vacation
 import yaml
+from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
@@ -57,9 +58,9 @@ class CliTestcase:
                        "Run first 'functest env prepare'")
         else:
             if noclean:
-                cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py "
-                       "-n -t %s" % testname)
+                cmd = ("python %s/ci/run_tests.py "
+                       "-n -t %s" % (FUNCTEST_REPO, testname))
             else:
-                cmd = ("python /home/opnfv/repos/functest/ci/run_tests.py "
-                       "-t %s" % testname)
+                cmd = ("python %s/ci/run_tests.py "
+                       "-t %s" % (FUNCTEST_REPO, testname))
             ft_utils.execute_command(cmd)

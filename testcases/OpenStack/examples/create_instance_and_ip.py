@@ -28,7 +28,6 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("create_instance_and_ip").getLogger()
 
-REPO_PATH = os.environ['repos_dir'] + '/functest/'
 HOME = os.environ['HOME'] + "/"
 
 VM_BOOT_TIMEOUT = 180

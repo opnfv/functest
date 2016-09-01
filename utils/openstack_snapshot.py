@@ -20,7 +20,6 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import os
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
@@ -28,11 +27,6 @@ import yaml
 
 
 logger = ft_logger.Logger("openstack_snapshot").getLogger()
-
-REPO_PATH = os.environ['repos_dir'] + '/functest/'
-if not os.path.exists(REPO_PATH):
-    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
-    exit(-1)
 
 
 OS_SNAPSHOT_FILE = ft_utils.get_parameter_from_yaml(

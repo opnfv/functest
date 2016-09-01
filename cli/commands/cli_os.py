@@ -9,18 +9,17 @@
 
 
 import os
+
 import click
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 import yaml
-
+from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 
-REPOS_DIR = os.getenv('repos_dir')
-FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
 FUNCTEST_CONF_DIR = functest_yaml.get("general").get(
     "directories").get("dir_functest_conf")
 RC_FILE = os.getenv('creds')
@@ -83,7 +82,7 @@ class CliOpenStack:
 
     def check(self):
         self.ping_endpoint()
-        cmd = FUNCTEST_REPO + "ci/check_os.sh"
+        cmd = FUNCTEST_REPO + "/ci/check_os.sh"
         ft_utils.execute_command(cmd, verbose=False)
 
     def snapshot_create(self):

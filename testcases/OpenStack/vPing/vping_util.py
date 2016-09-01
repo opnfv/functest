@@ -1,16 +1,15 @@
 import os
-import re
 import pprint
+import re
 import sys
 import time
 
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 import paramiko
-from scp import SCPClient
 import yaml
-
-REPO_PATH = os.environ['repos_dir'] + '/functest/'
+from functest.utils.functest_utils import FUNCTEST_REPO as REPO_PATH
+from scp import SCPClient
 
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
@@ -343,7 +342,7 @@ def transfer_ping_script(ssh, floatip):
     logger.info("Trying to transfer ping.sh to %s..." % floatip)
     scp = SCPClient(ssh.get_transport())
 
-    ping_script = REPO_PATH + "testcases/OpenStack/vPing/ping.sh"
+    ping_script = REPO_PATH + '/' + "testcases/OpenStack/vPing/ping.sh"
     try:
         scp.put(ping_script, "~/")
     except:

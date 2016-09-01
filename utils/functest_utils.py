@@ -28,7 +28,10 @@ import yaml
 logger = ft_logger.Logger("functest_utils").getLogger()
 
 REPOS_DIR = os.getenv('repos_dir')
-FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
+FUNCTEST_REPO = ("%s/functest" % REPOS_DIR)
+if not os.path.exists(FUNCTEST_REPO):
+    logger.error("Functest repository not exist '%s'" % FUNCTEST_REPO)
+    exit(-1)
 
 
 # ----------------------------------------------------------
