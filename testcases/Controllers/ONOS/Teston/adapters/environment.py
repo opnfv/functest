@@ -15,16 +15,20 @@ Description:
 #
 """
 
-import os
-import time
 import pexpect
-import re
-import sys
 import pxssh
+import re
+import os
+import sys
+import time
+
 from connection import connection
+import functest.utils.functest_logger as ft_logger
 
 
 class environment(connection):
+
+    logger = ft_logger.Logger("environment").getLogger()
 
     def __init__(self):
         connection.__init__(self)
@@ -39,9 +43,9 @@ class environment(connection):
         handle:  current working handle
         codeurl: clone code url
         """
-        print "Now loading test codes! Please wait in patient..."
+        self.logger.info("Now loading test codes! Please wait in patient...")
         originalfolder = sys.path[0]
-        print originalfolder
+        self.logger.info(originalfolder)
         gitclone = handle
         gitclone.sendline("git clone " + codeurl)
         index = 0
@@ -82,7 +86,7 @@ class environment(connection):
         parameters:
         handle(input): current working handle
         """
-        print "Now Cleaning test environment"
+        self.logger.info("Now Cleaning test environment")
         handle.sendline("sudo apt-get install -y mininet")
         handle.prompt()
         handle.sendline("sudo pip install configobj")
@@ -102,7 +106,7 @@ class environment(connection):
         cmd(input): onos-push-keys xxx(xxx is device)
         password(input): login in password
         """
-        print "Now Pushing Onos Keys:" + cmd
+        self.logger.info("Now Pushing Onos Keys:" + cmd)
         Pushkeys = handle
         Pushkeys.sendline(cmd)
         Result = 0
@@ -121,7 +125,7 @@ class environment(connection):
                 break
             time.sleep(2)
         Pushkeys.prompt()
-        print "Done!"
+        self.logger.info("Done!")
 
     def SetOnosEnvVar(self, handle, masterpass, agentpass):
         """
@@ -131,13 +135,14 @@ class environment(connection):
         masterpass: scripts running server's password
         agentpass: onos cluster&compute node password
         """
-        print "Now Setting test environment"
+        self.logger.info("Now Setting test environment")
         for host in self.hosts:
-            print "try to connect " + str(host)
+            self.logger.info("try to connect " + str(host))
             result = self.CheckSshNoPasswd(host)
             if not result:
-                print ("ssh login failed,try to copy master publickey" +
-                       "to agent " + str(host))
+                self.logger.info(
+                        "ssh login failed,try to copy master publickey" +
+                        "to agent " + str(host))
                 self.CopyPublicKey(host)
         self.OnosPushKeys(handle, "onos-push-keys " + self.OCT, masterpass)
         self.OnosPushKeys(handle, "onos-push-keys " + self.OC1, agentpass)
@@ -173,7 +178,7 @@ class environment(connection):
         user: onos&compute node user
         password: onos&compute node password
         """
-        print "Now Changing ONOS name&password"
+        self.logger.info("Now Changing ONOS name&password")
         filepath = self.home + '/onos/tools/build/envDefaults'
         line = open(filepath, 'r').readlines()
         lenall = len(line) - 1
@@ -187,7 +192,7 @@ class environment(connection):
         NewFile = open(filepath, 'w')
         NewFile.writelines(line)
         NewFile.close
-        print "Done!"
+        self.logger.info("Done!")
 
     def ChangeTestCasePara(self, testcase, user, password):
         """
@@ -196,7 +201,7 @@ class environment(connection):
         user: onos&compute node user
         password: onos&compute node password
         """
-        print "Now Changing " + testcase + " name&password"
+        self.logger.info("Now Changing " + testcase + " name&password")
         if self.masterusername == 'root':
             filepath = '/root/'
         else:
@@ -232,7 +237,7 @@ class environment(connection):
         login.sendline('ls -l')
         # match prompt
         login.prompt()
-        print("SSH login " + ipaddr + " success!")
+        self.logger.info("SSH login " + ipaddr + " success!")
         return login
 
     def SSHRelease(self, handle):
@@ -256,7 +261,7 @@ class environment(connection):
                            str(publickey) + ">>/root/.ssh/authorized_keys\'")
         tmphandle.prompt()
         self.SSHRelease(tmphandle)
-        print "Add OCT PublicKey to " + host + " success"
+        self.logger.info("Add OCT PublicKey to " + host + " success")
 
     def OnosEnvSetup(self, handle):
         """
