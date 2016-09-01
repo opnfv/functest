@@ -12,18 +12,18 @@
 # nominated node. Post scan a report is downloaded and if '--clean' is passed
 # all trace of the scan is removed from the remote system.
 
+from ConfigParser import SafeConfigParser
+import argparse
 import datetime
 import os
 import sys
-from ConfigParser import SafeConfigParser
 
-import argparse
+import connect
 from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 from keystoneclient import session
 from keystoneclient.auth.identity import v2
 from novaclient import client
 
-import connect
 
 __version__ = 0.1
 __author__ = 'Luke Hinds (lhinds@redhat.com)'
@@ -80,16 +80,16 @@ def run_tests(host, nodetype):
         connect.logger.info("Internet Connection OK.")
         connect.logger.info("Creating temp file structure..")
         createfiles(host, port, user, localkey)
-        connect.logger.info("Installing OpenSCAP...")
+        connect.logger.debug("Installing OpenSCAP...")
         install_pkg(host, port, user, localkey)
-        connect.logger.info("Running scan...")
+        connect.logger.debug("Running scan...")
         run_scanner(host, port, user, localkey, nodetype)
         clean = cfgparse.get(nodetype, 'clean')
         connect.logger.info("Post installation tasks....")
         post_tasks(host, port, user, localkey, nodetype)
         if clean:
             connect.logger.info("Cleaning down environment....")
-            connect.logger.info("Removing OpenSCAP....")
+            connect.logger.debug("Removing OpenSCAP....")
             removepkg(host, port, user, localkey, nodetype)
             connect.logger.info("Deleting tmp file and reports (remote)...")
             cleandir(host, port, user, localkey, nodetype)
