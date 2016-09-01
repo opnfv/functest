@@ -14,11 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import argparse
 import time
 
-import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
@@ -26,10 +27,10 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-functest_yaml = functest_utils.get_functest_yaml()
-
-dirs = functest_yaml.get('general').get('directories')
-PARSER_REPO = dirs.get('dir_repo_parser')
+PARSER_REPO = functest_utils.get_parameter_from_yaml(
+    'general.directories.dir_repo_parser')
+RESULTS_DIR = functest_utils.get_parameter_from_yaml(
+    'general.directories.dir_results')
 
 logger = ft_logger.Logger("parser").getLogger()
 
@@ -40,10 +41,12 @@ def main():
     cmd = 'cd %s/tests && ./functest_run.sh' % PARSER_REPO
 
     start_time = time.time()
+    log_file = RESULTS_DIR + "/parser.log"
     ret = functest_utils.execute_command(cmd,
                                          logger,
                                          info=True,
-                                         exit_on_error=False)
+                                         exit_on_error=False,
+                                         output_file=log_file)
     stop_time = time.time()
 
     status, details = functest_utils.check_test_result(project,
