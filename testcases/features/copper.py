@@ -14,12 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import argparse
 import sys
 import time
 
-import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
@@ -40,7 +41,10 @@ def main():
 
     start_time = time.time()
 
-    ret_val = functest_utils.execute_command(cmd, exit_on_error=False)
+    log_file = "/home/opnfv/functest/results/copper.log"
+    ret_val = functest_utils.execute_command(cmd,
+                                             exit_on_error=False,
+                                             output_file=log_file)
 
     stop_time = time.time()
     duration = round(stop_time - start_time, 1)
