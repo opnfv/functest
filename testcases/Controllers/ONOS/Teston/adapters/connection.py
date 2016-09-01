@@ -16,10 +16,14 @@ Description:
 import os
 import pexpect
 import re
+
 from foundation import foundation
+import functest.utils.functest_logger as ft_logger
 
 
 class connection(foundation):
+
+    logger = ft_logger.Logger("connection").getLogger()
 
     def __init__(self):
         foundation.__init__(self)
@@ -33,7 +37,7 @@ class connection(foundation):
         username: login user name
         password: login password
         """
-        print("Now Adding an user to known hosts " + ipaddr)
+        self.logger.info("Now Adding an user to known hosts " + ipaddr)
         login = handle
         login.sendline("ssh -l %s -p 8101 %s" % (username, ipaddr))
         index = 0
@@ -78,7 +82,7 @@ class connection(foundation):
         """
         Generate ssh keys, used for some server have no sshkey.
         """
-        print "Now Generating SSH keys..."
+        self.logger.info("Now Generating SSH keys...")
         # Here file name may be id_rsa or id_ecdsa or others
         # So here will have a judgement
         keysub = handle
@@ -112,7 +116,7 @@ class connection(foundation):
         parameters:
         password: root login password
         """
-        print("Now changing to user root")
+        self.logger.info("Now changing to user root")
         login = pexpect.spawn("su - root")
         index = 0
         while index != 2:
@@ -129,7 +133,7 @@ class connection(foundation):
         """
         Exit root user.
         """
-        print("Now Release user root")
+        self.logger.info("Now Release user root")
         login = pexpect.spawn("exit")
         index = login.expect(['logout', pexpect.EOF, pexpect.TIMEOUT])
         if index == 0:
@@ -145,7 +149,7 @@ class connection(foundation):
         parameters:
         envalue: environment value to add
         """
-        print "Now Adding bash environment"
+        self.logger.info("Now Adding bash environment")
         fileopen = open("/etc/profile", 'r')
         findContext = 1
         while findContext:
@@ -165,7 +169,7 @@ class connection(foundation):
         Change ONOS root path in file:bash_profile
         onospath: path of onos root
         """
-        print "Now Changing ONOS Root Path"
+        self.logger.info("Now Changing ONOS Root Path")
         filepath = onospath + 'onos/tools/dev/bash_profile'
         line = open(filepath, 'r').readlines()
         lenall = len(line) - 1
@@ -175,7 +179,7 @@ class connection(foundation):
         NewFile = open(filepath, 'w')
         NewFile.writelines(line)
         NewFile.close
-        print "Done!"
+        self.logger.info("Done!")
 
     def OnosConnectionSet(self):
         """

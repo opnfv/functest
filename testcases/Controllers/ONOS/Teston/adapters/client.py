@@ -10,14 +10,18 @@ Description:
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 """
-from environment import environment
-import time
+import json
 import pexpect
 import requests
-import json
+import time
+
+from environment import environment
+import functest.utils.functest_logger as ft_logger
 
 
 class client(environment):
+
+    logger = ft_logger.Logger("client").getLogger()
 
     def __init__(self):
         environment.__init__(self)
@@ -50,7 +54,7 @@ class client(environment):
                                  [len(lastshowscreeninfo)::])
                 lastshowscreeninfo = curshowscreeninfo
             if Result == 0:
-                print "Done!"
+                self.logger.info("Done!")
                 return
             time.sleep(1)
             circletime += 1
@@ -61,7 +65,7 @@ class client(environment):
     def onosstart(self):
         # This is the compass run machine user&pass,you need to modify
 
-        print "Test Begin....."
+        self.logger.info("Test Begin.....")
         self.OnosConnectionSet()
         masterhandle = self.SSHlogin(self.localhost, self.masterusername,
                                      self.masterpassword)

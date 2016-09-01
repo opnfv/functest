@@ -13,11 +13,12 @@ Description:
 
 import datetime
 import logging
+import re
 import os
 import re
 import time
-
 import yaml
+
 from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 
@@ -49,7 +50,6 @@ class foundation:
                             filemode='w')
         filelog = logging.FileHandler(self.logfilepath)
         logging.getLogger('Functest').addHandler(filelog)
-        print loginfo
         logging.info(loginfo)
 
     def getdefaultpara(self):
