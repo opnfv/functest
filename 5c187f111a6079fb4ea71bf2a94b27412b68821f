@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_f81c8079",
+        "filename": "testcases/security_scan/security_scan.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-01T06:54:15Z",
+      "side": 1,
+      "message": "what is the rule for the import? I assume it was alphabetical order, no?",
+      "revId": "5c187f111a6079fb4ea71bf2a94b27412b68821f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_98130c66",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-01T06:54:15Z",
+      "side": 1,
+      "message": "linked to a previous discussion, we should not exit in a util function, should we? we must log and may raise exceptions. I think we should agree on the exit conditions somewhere in a wiki.\nIf we imagine that this condition could be met (which is highly unlikely) nothing will work, the first healthcheck will fail and lead to an exit -1. it sounds safer to exit at this level rather than on an utility function.",
+      "revId": "5c187f111a6079fb4ea71bf2a94b27412b68821f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
