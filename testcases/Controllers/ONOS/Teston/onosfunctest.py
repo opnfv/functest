@@ -18,13 +18,13 @@ import datetime
 import os
 import re
 import time
+
 import argparse
-
-from neutronclient.v2_0 import client as neutronclient
-
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
+from functest.utils.functest_utils import FUNCTEST_REPO as REPO_PATH
+from neutronclient.v2_0 import client as neutronclient
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--testcase", help="Testcase name")
@@ -41,10 +41,6 @@ ONOS_REPO_PATH = functest_utils.get_parameter_from_yaml(
     "general.directories.dir_repos")
 ONOS_CONF_DIR = functest_utils.get_parameter_from_yaml(
     "general.directories.dir_functest_conf")
-REPO_PATH = ONOS_REPO_PATH + '/functest/'
-if not os.path.exists(REPO_PATH):
-    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
-    exit(-1)
 
 ONOSCI_PATH = ONOS_REPO_PATH + "/"
 starttime = datetime.datetime.now()
@@ -59,7 +55,7 @@ GLANCE_IMAGE_FILENAME = functest_utils.get_parameter_from_yaml(
     "onos_sfc.image_file_name")
 GLANCE_IMAGE_PATH = functest_utils.get_parameter_from_yaml(
     "general.directories.dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
-SFC_PATH = REPO_PATH + functest_utils.get_parameter_from_yaml(
+SFC_PATH = REPO_PATH + "/" + functest_utils.get_parameter_from_yaml(
     "general.directories.dir_onos_sfc")
 
 

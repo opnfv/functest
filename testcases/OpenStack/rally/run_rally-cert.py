@@ -15,18 +15,19 @@
 #
 """ tests configuration """
 
-import argparse
 import json
 import os
 import re
 import subprocess
 import time
+
+import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as os_utils
 import iniparse
 import yaml
-
+from functest.utils.functest_utils import FUNCTEST_REPO as REPO_PATH
 
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
          'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
@@ -70,18 +71,13 @@ else:
 """ logging configuration """
 logger = ft_logger.Logger("run_rally").getLogger()
 
-REPO_PATH = os.environ['repos_dir'] + '/functest/'
-if not os.path.exists(REPO_PATH):
-    logger.error("Functest repository directory not found '%s'" % REPO_PATH)
-    exit(-1)
-
 
 with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
     functest_yaml = yaml.safe_load(f)
 f.close()
 
 HOME = os.environ['HOME'] + "/"
-RALLY_DIR = REPO_PATH + functest_yaml.get("general").get(
+RALLY_DIR = REPO_PATH + '/' + functest_yaml.get("general").get(
     "directories").get("dir_rally")
 TEMPLATE_DIR = RALLY_DIR + "scenario/templates"
 SUPPORT_DIR = RALLY_DIR + "scenario/support"
