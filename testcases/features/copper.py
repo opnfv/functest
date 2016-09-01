@@ -14,12 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import argparse
 import sys
 import time
 
-import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
@@ -27,10 +28,10 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-functest_yaml = functest_utils.get_functest_yaml()
-
-dirs = functest_yaml.get('general').get('directories')
-COPPER_REPO = dirs.get('dir_repo_copper')
+COPPER_REPO = functest_utils.get_parameter_from_yaml(
+    'general.directories.dir_repo_copper')
+RESULTS_DIR = functest_utils.get_parameter_from_yaml(
+    'general.directories.dir_results')
 
 logger = ft_logger.Logger("copper").getLogger()
 
@@ -40,7 +41,10 @@ def main():
 
     start_time = time.time()
 
-    ret_val = functest_utils.execute_command(cmd, logger, exit_on_error=False)
+    log_file = RESULTS_DIR + "/copper.log"
+    ret_val = functest_utils.execute_command(cmd,
+                                             exit_on_error=False,
+                                             output_file=log_file)
 
     stop_time = time.time()
     duration = round(stop_time - start_time, 1)
