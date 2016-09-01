@@ -222,7 +222,7 @@ def remove_ports(neutron_client, ports, network_ids):
             except:
                 logger.debug("  > WARNING: Port %s does not contain fixed_ips"
                              % port_id)
-                print port
+                logger.info(port)
             router_id = port['device_id']
             if len(port['fixed_ips']) == 0 and router_id == '':
                 logger.debug("Removing port %s ..." % port_id)
