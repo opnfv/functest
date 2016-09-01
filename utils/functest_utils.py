@@ -11,17 +11,16 @@ from datetime import datetime as dt
 import json
 import os
 import re
-import requests
 import shutil
 import subprocess
 import sys
 import urllib2
 
+import dns.resolver
 import functest.ci.tier_builder as tb
 import functest.utils.functest_logger as ft_logger
-
-import dns.resolver
 from git import Repo
+import requests
 import yaml
 
 
@@ -294,7 +293,7 @@ def get_ci_envvars():
 
 
 def execute_command(cmd, exit_on_error=True, info=False, error_msg="",
-                    verbose=True):
+                    verbose=True, output_file=None):
     if not error_msg:
         error_msg = ("The command '%s' failed." % cmd)
     msg_exec = ("Executing command: '%s'" % cmd)
@@ -305,10 +304,17 @@ def execute_command(cmd, exit_on_error=True, info=False, error_msg="",
             logger.debug(msg_exec)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
+    if output_file:
+        f = open(output_file, "w")
     for line in iter(p.stdout.readline, b''):
-        line = line.replace('\n', '')
-        print line
-        sys.stdout.flush()
+        if output_file:
+            f.write(line)
+        else:
+            line = line.replace('\n', '')
+            print line
+            sys.stdout.flush()
+    if output_file:
+        f.close()
     p.stdout.close()
     returncode = p.wait()
     if returncode != 0:
