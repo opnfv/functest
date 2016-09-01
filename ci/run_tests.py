@@ -8,21 +8,21 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import argparse
 import datetime
 import os
 import re
 import sys
 
+import argparse
 import functest.ci.generate_report as generate_report
 import functest.ci.tier_builder as tb
-from functest.testcases.Controllers.ODL.OpenDaylightTesting import ODLTestCases
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 import functest.utils.openstack_utils as os_utils
-
+from functest.testcases.Controllers.ODL.OpenDaylightTesting import ODLTestCases
+from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--test", dest="test", action='store',
@@ -41,9 +41,7 @@ logger = ft_logger.Logger("run_tests").getLogger()
 
 
 """ global variables """
-REPOS_DIR = os.getenv('repos_dir')
-FUNCTEST_REPO = ("%s/functest/" % REPOS_DIR)
-EXEC_SCRIPT = ("%sci/exec_test.sh" % FUNCTEST_REPO)
+EXEC_SCRIPT = ("%s/ci/exec_test.sh" % FUNCTEST_REPO)
 CLEAN_FLAG = True
 REPORT_FLAG = False
 EXECUTED_TEST_CASES = []

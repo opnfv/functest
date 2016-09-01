@@ -11,12 +11,14 @@ Description:
 #
 """
 
+import datetime
 import logging
 import os
-import time
-import yaml
 import re
-import datetime
+import time
+
+import yaml
+from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 
 class foundation:
@@ -24,7 +26,7 @@ class foundation:
     def __init__(self):
 
         # currentpath = os.getcwd()
-        REPO_PATH = os.environ['repos_dir'] + '/functest/'
+        REPO_PATH = FUNCTEST_REPO + '/'
         currentpath = REPO_PATH + 'testcases/Controllers/ONOS/Teston/CI'
         self.cipath = currentpath
         self.logdir = os.path.join(currentpath, 'log')

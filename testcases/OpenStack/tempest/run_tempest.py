@@ -14,7 +14,6 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 import ConfigParser
-import argparse
 import os
 import re
 import shutil
@@ -22,11 +21,12 @@ import subprocess
 import sys
 import time
 
+import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 import yaml
-
+from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',
@@ -57,8 +57,6 @@ args = parser.parse_args()
 
 """ logging configuration """
 logger = ft_logger.Logger("run_tempest").getLogger()
-
-REPO_PATH = os.environ['repos_dir'] + '/functest/'
 
 functest_yaml = ft_utils.get_functest_yaml()
 TEST_DB = functest_yaml.get("results").get("test_db_url")
@@ -92,6 +90,7 @@ RESULTS_DIR = functest_yaml.get("general").get("directories").get(
 TEMPEST_RESULTS_DIR = RESULTS_DIR + '/tempest'
 TEST_LIST_DIR = functest_yaml.get("general").get("directories").get(
     "dir_tempest_cases")
+REPO_PATH = FUNCTEST_REPO + '/'
 TEMPEST_CUSTOM = REPO_PATH + TEST_LIST_DIR + 'test_list.txt'
 TEMPEST_BLACKLIST = REPO_PATH + TEST_LIST_DIR + 'blacklist.txt'
 TEMPEST_DEFCORE = REPO_PATH + TEST_LIST_DIR + 'defcore_req.txt'

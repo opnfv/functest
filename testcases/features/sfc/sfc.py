@@ -1,12 +1,14 @@
-import argparse
 import os
 import subprocess
 import sys
 import time
+
+import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 import paramiko
+from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 parser = argparse.ArgumentParser()
 
@@ -19,7 +21,6 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("ODL_SFC").getLogger()
 
-REPO_PATH = os.environ['repos_dir'] + '/functest/'
 HOME = os.environ['HOME'] + "/"
 
 VM_BOOT_TIMEOUT = 180
@@ -203,8 +204,8 @@ def main():
 
     # CREATION OF THE 2 SF ####
 
-    tacker_script = "/home/opnfv/repos/functest/testcases/features/sfc/" + \
-        TACKER_SCRIPT
+    tacker_script = "%s/testcases/features/sfc/%s" % \
+                    (FUNCTEST_REPO, TACKER_SCRIPT)
     logger.info("Executing tacker script: '%s'" % tacker_script)
     subprocess.call(tacker_script, shell=True)
 
@@ -356,8 +357,8 @@ def main():
 
     # CHANGE OF CLASSIFICATION #
     logger.info("Changing the classification")
-    tacker_classi = "/home/opnfv/repos/functest/testcases/features/sfc/" + \
-        TACKER_CHANGECLASSI
+    tacker_classi = "%s/testcases/features/sfc/%s" % \
+                    (FUNCTEST_REPO, TACKER_CHANGECLASSI)
     subprocess.call(tacker_classi, shell=True)
 
     logger.info("Wait for ODL to update the classification rules in OVS")
