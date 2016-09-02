@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_09dc9011",
+        "filename": "testcases/vnf/vRNC/parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-02T08:06:58Z",
+      "side": 1,
+      "message": "I think we should manage the path in one place, it appears many times in the code.",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 44
+      },
+      "revId": "0aba689f2c5365aaf1bf27864a8d648bf3cbf331",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
