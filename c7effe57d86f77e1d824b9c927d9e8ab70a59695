@@ -34,6 +34,24 @@
       "revId": "c7effe57d86f77e1d824b9c927d9e8ab70a59695",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a9e1dcff",
+        "filename": "utils/openstack_clean.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-02T07:36:53Z",
+      "side": 1,
+      "message": "let\u0027s try it this way first.",
+      "parentUuid": "1a76adc5_8958a033",
+      "revId": "c7effe57d86f77e1d824b9c927d9e8ab70a59695",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
