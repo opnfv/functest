@@ -242,6 +242,11 @@ Colorado known restrictions/issues
 |           |           | metadata service excluded from onos scenarios|
 |           |           | https://gerrit.opnfv.org/gerrit/#/c/18729/   |
 +-----------+-----------+----------------------------------------------+
+| any       | odl_l3-*  | vPing_ssh and Tempest cases related to using |
+|           |           | floating IP addresses are excluded (ODL bug) |
+|           |           | https://jira.opnfv.org/browse/APEX-112       |
+|           |           | https://jira.opnfv.org/browse/FUNCTEST-445   |
++-----------+-----------+----------------------------------------------+
 | apex/fuel | *-bgpvpn  | vPing_ssh (floating ips not supported) and   |
 |           |           | vIMS excluded. Some Tempest cases related to |
 |           |           | floating ips also excluded.                  |
