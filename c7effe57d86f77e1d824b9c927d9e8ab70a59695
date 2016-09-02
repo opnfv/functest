@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_4e0dae3d",
+        "filename": "utils/openstack_clean.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-02T01:15:35Z",
+      "side": 1,
+      "message": "5 secs is enough? how about integrate with next section to make a polling check?",
+      "revId": "c7effe57d86f77e1d824b9c927d9e8ab70a59695",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
