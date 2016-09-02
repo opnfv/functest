@@ -16,6 +16,24 @@
       "revId": "c7effe57d86f77e1d824b9c927d9e8ab70a59695",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_8958a033",
+        "filename": "utils/openstack_clean.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 334
+      },
+      "writtenOn": "2016-09-02T03:51:18Z",
+      "side": 1,
+      "message": "I saw in the log it took about 1 second after the router was deleted to delete the network.  I could modify it to poll, say every 5 seconds for 5 tries.  Could we try this first and see if the problem is gone, or would you rather me implement the poll?",
+      "parentUuid": "1a76adc5_4e0dae3d",
+      "revId": "c7effe57d86f77e1d824b9c927d9e8ab70a59695",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
