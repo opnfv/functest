@@ -202,9 +202,20 @@ def remove_networks(neutron_client, default_networks, default_routers):
     else:
         remove_routers(neutron_client, routers, default_routers)
 
+    # trozet: wait for Neutron to auto-cleanup HA networks when HA router is
+    #  deleted
+    time.sleep(5)
+
     # remove networks
     if network_ids is not None:
         for net_id in network_ids:
+            networks = os_utils.get_network_list(neutron_client)
+            if networks is None:
+                logger.debug("No networks left to remove")
+                break
+            elif not any(network['id'] == net_id for network in networks):
+                logger.debug("Network %s has already been removed" % net_id)
+                continue
             logger.debug("Removing network %s ..." % net_id)
             if os_utils.delete_neutron_net(neutron_client, net_id):
                 logger.debug("  > Done!")
