@@ -7,23 +7,21 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-from datetime import datetime as dt
 import json
 import os
 import re
-import requests
 import shutil
 import subprocess
 import sys
 import urllib2
-
-import functest.ci.tier_builder as tb
-import functest.utils.functest_logger as ft_logger
+from datetime import datetime as dt
 
 import dns.resolver
-from git import Repo
+import requests
 import yaml
+from git import Repo
 
+import functest.utils.functest_logger as ft_logger
 
 logger = ft_logger.Logger("functest_utils").getLogger()
 
@@ -350,15 +348,16 @@ def get_deployment_dir():
 
 
 def get_criteria_by_test(testname):
-    criteria = ""
-    file = get_testcases_file()
-    tiers = tb.TierBuilder("", "", file)
-    for tier in tiers.get_tiers():
-        for test in tier.get_tests():
-            if test.get_name() == testname:
-                criteria = test.get_criteria()
+    with open(get_testcases_file()) as f:
+        testcases_yaml = yaml.safe_load(f)
 
-    return criteria
+    for dic_tier in testcases_yaml.get("tiers"):
+        for dic_testcase in dic_tier['testcases']:
+            if dic_testcase['name'] == testname:
+                return dic_testcase['criteria']
+
+    logger.error('Project %s is not defined in testcases.yaml' % testname)
+    return None
 
 
 # ----------------------------------------------------------
