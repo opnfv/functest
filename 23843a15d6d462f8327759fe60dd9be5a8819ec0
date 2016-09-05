@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_b32f06a1",
+        "filename": "testcases/features/promise.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2016-09-05T14:31:56Z",
+      "side": 1,
+      "message": "Nit: Still needed?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 65
+      },
+      "revId": "23843a15d6d462f8327759fe60dd9be5a8819ec0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
