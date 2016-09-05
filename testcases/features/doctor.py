@@ -13,11 +13,12 @@
 # 0.2: measure test duration and publish results under json format
 #
 #
+import argparse
 import time
 
-import argparse
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
@@ -29,6 +30,8 @@ functest_yaml = functest_utils.get_functest_yaml()
 
 dirs = functest_yaml.get('general').get('directories')
 DOCTOR_REPO = dirs.get('dir_repo_doctor')
+RESULTS_DIR = functest_utils.get_parameter_from_yaml(
+    'general.directories.dir_results')
 
 logger = ft_logger.Logger("doctor").getLogger()
 
@@ -36,19 +39,23 @@ logger = ft_logger.Logger("doctor").getLogger()
 def main():
     exit_code = -1
     cmd = 'cd %s/tests && ./run.sh' % DOCTOR_REPO
+    log_file = RESULTS_DIR + "/doctor.log"
+
     start_time = time.time()
 
-    ret = functest_utils.execute_command(cmd, logger, info=True,
-                                         exit_on_error=False)
+    ret = functest_utils.execute_command(cmd,
+                                         info=True,
+                                         exit_on_error=False,
+                                         output_file=log_file)
 
     stop_time = time.time()
     duration = round(stop_time - start_time, 1)
     if ret == 0:
-        logger.info("doctor OK")
+        logger.info("Doctor test case OK")
         test_status = 'OK'
         exit_code = 0
     else:
-        logger.info("doctor FAILED")
+        logger.info("Doctor test case FAILED")
         test_status = 'NOK'
 
     details = {
