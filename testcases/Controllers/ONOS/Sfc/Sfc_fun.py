@@ -1,14 +1,19 @@
-﻿"""SFC functions."""
-import json
-from multiprocessing import Process
-from multiprocessing import Queue
-import os
+﻿import os
 import re
 import time
+import json
+import requests
+
+from multiprocessing import Process
+from multiprocessing import Queue
+from pexpect import pxssh
 
 import functest.utils.functest_logger as ft_logger
-from pexpect import pxssh
-import requests
+
+OK = 200
+CREATED = 201
+ACCEPTED = 202
+NO_CONTENT = 204
 
 
 class Sfc_fun:
@@ -105,10 +110,10 @@ class Sfc_fun:
         url = 'http://' + self.keystone_hostname + \
             ':5000/' + self.osver + '/tokens'
         data = '{"auth": {"tenantName": "admin",  "passwordCredentials":\
-                { "username": "admin", "password": "console"}}}'
+               { "username": "admin", "password": "console"}}}'
         headers = {"Accept": "application/json"}
         response = requests.post(url, headers=headers,  data=data)
-        if (response.status_code == 200):
+        if (response.status_code == OK):
             json1_data = json.loads(response.content)
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
@@ -133,7 +138,7 @@ class Sfc_fun:
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.post(url, headers=headers,  data=data)
-        if (response.status_code == 201):
+        if (response.status_code == CREATED):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
 
@@ -164,7 +169,7 @@ class Sfc_fun:
                    "X-Auth-Token": self.token_id}
         response = requests.post(url, headers=headers,  data=data)
 
-        if (response.status_code == 201):
+        if (response.status_code == CREATED):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
             json1_data = json.loads(response.content)
@@ -197,7 +202,7 @@ class Sfc_fun:
                        "X-Auth-Token": self.token_id}
             response = requests.post(url, headers=headers,  data=data)
 
-            if (response.status_code == 201):
+            if (response.status_code == CREATED):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
 
@@ -217,10 +222,10 @@ class Sfc_fun:
         headers = {"Accept": "application/json", "Content-Type": "application/\
                     octet-stream",  "X-Auth-Token": self.token_id}
         response = requests.get(url, headers=headers)
-        if (response.status_code == 200):
+        if (response.status_code == OK):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
-            self.logger.info("\tFireWall Image is available")
+            self.logger.info("FireWall Image is available")
             json1_data = json.loads(response.content)
             self.logger.debug(json1_data)
             self.image_id = json1_data['images'][0]['id']
@@ -233,10 +238,10 @@ class Sfc_fun:
                    "application/json", "X-Auth-Token": self.token_id}
         response = requests.get(url, headers=headers)
 
-        if (response.status_code == 200):
+        if (response.status_code == OK):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
-            self.logger.info("\tFlavor is available")
+            self.logger.info("Flavor is available")
             json1_data = json.loads(response.content)
             self.logger.debug(json1_data)
             self.flavorRef = json1_data['flavors'][0]['id']
@@ -267,10 +272,11 @@ class Sfc_fun:
             headers = {"Accept": "application/json", "Content-Type":
                        "application/json", "X-Auth-Token": self.token_id}
             response = requests.post(url, headers=headers,  data=data)
-            if (response.status_code == 202):
+            if (response.status_code == ACCEPTED):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
-                self.logger.info("\tCreation of VM is successfull")
+                info = "Creation of VM" + str(y) + " is successfull"
+                self.logger.debug(info)
 
                 json1_data = json.loads(response.content)
                 self.logger.debug(json1_data)
@@ -291,18 +297,19 @@ class Sfc_fun:
             headers = {"Accept": "application/json",  "X-Auth-Token":
                        self.token_id}
             response = requests.get(url, headers=headers)
-            if (response.status_code == 200):
+            if (response.status_code == OK):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
                 json1_data = json.loads(response.content)
                 self.logger.debug(json1_data)
                 self.vm_active = json1_data['servers'][0]['status']
                 if (self.vm_active == "ACTIVE"):
-                    print ("\t\t\t\t\t\tVM" + str(y) + " is Active : " +
-                           self.vm_active)
+                    info = "VM" + str(y) + \
+                        " is Active : " + self.vm_active
                 else:
-                    print ("\t\t\t\t\t\tVM" + str(y) + " is NOT Active : " +
-                           self.vm_active)
+                    info = "VM" + str(y) + " is NOT Active : " + \
+                        self.vm_active
+                self.logger.debug(info)
             else:
                 return(response.status_code)
         return(response.status_code)
@@ -328,9 +335,10 @@ class Sfc_fun:
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
             response = requests.post(url, headers=headers,  data=data)
-            if (response.status_code == 201):
-                print ("\t\t\t\tCreation of Port Pair PP" + str(p) +
-                       " is successful")
+            if (response.status_code == CREATED):
+                info = "Creation of Port Pair PP" + str(p) + \
+                       " is successful"
+                self.logger.debug(info)
             else:
                 return(response.status_code)
 
@@ -345,7 +353,7 @@ class Sfc_fun:
                        self.token_id}
             response = requests.get(url, headers=headers)
 
-            if (response.status_code == 200):
+            if (response.status_code == OK):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
                 json1_data = json.loads(response.content)
@@ -373,9 +381,10 @@ class Sfc_fun:
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
             response = requests.post(url, headers=headers,  data=data)
-            if (response.status_code == 201):
-                print ("\t\t\t\tCreation of Port Group PG" + str(p) +
-                       "is successful")
+            if (response.status_code == CREATED):
+                info = "Creation of Port Group PG" + str(p) + \
+                    "is successful"
+                self.logger.debug(info)
             else:
                 return(response.status_code)
 
@@ -390,7 +399,7 @@ class Sfc_fun:
                        self.token_id}
             response = requests.get(url, headers=headers)
 
-            if (response.status_code == 200):
+            if (response.status_code == OK):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
                 json1_data = json.loads(response.content)
@@ -421,10 +430,10 @@ class Sfc_fun:
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.post(url, headers=headers,  data=data)
-        if (response.status_code == 201):
+        if (response.status_code == CREATED):
             json1_data = json.loads(response.content)
             self.flow_class_if = json1_data['flow_classifier']['id']
-            self.logger.info("\tCreation of Flow Classifier is successful")
+            self.logger.debug("Creation of Flow Classifier is successful")
             return(response.status_code)
         else:
             return(response.status_code)
@@ -452,8 +461,8 @@ class Sfc_fun:
                    "Content-Type": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.post(url, headers=headers,  data=data)
-        if (response.status_code == 201):
-            self.logger.info("\tCreation of PORT CHAIN is successful")
+        if (response.status_code == CREATED):
+            self.logger.debug("Creation of PORT CHAIN is successful")
             json1_data = json.loads(response.content)
             self.PC_id = json1_data['port_chain']['id']
             return(response.status_code)
@@ -466,13 +475,13 @@ class Sfc_fun:
         response = requests.get('http://' + self.onos_hostname +
                                 ':8181/onos/v1/flows',
                                 auth=("karaf",  "karaf"))
-        if (response.status_code == 200):
-            self.logger.info("\tFlow is successfully Queries")
+        if (response.status_code == OK):
+            self.logger.debug("Flow is successfully Queries")
             json1_data = json.loads(response.content)
             self.flowadd = json1_data['flows'][0]['state']
 
             if (self.flowadd == "ADDED"):
-                self.logger.info("\tFlow is successfully added to OVS")
+                self.logger.info("Flow is successfully added to OVS")
                 return(response.status_code)
             else:
                 return(404)
@@ -495,10 +504,10 @@ class Sfc_fun:
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.post(url, headers=headers,  data=data)
-        if (response.status_code == 201):
+        if (response.status_code == CREATED):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
-            self.logger.info("\tCreation of Router is successfull")
+            self.logger.debug("Creation of Router is successfull")
             json1_data = json.loads(response.content)
             self.logger.debug(json1_data)
             self.router_id = json1_data['router']['id']
@@ -513,7 +522,7 @@ class Sfc_fun:
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.get(url, headers=headers)
-        if (response.status_code == 200):
+        if (response.status_code == OK):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
             json1_data = json.loads(response.content)
@@ -525,7 +534,7 @@ class Sfc_fun:
                 return(response.status_code)
         ############################################################
 
-        self.logger.info("\tAttachment of Instance interface to Router")
+        self.logger.info("Attachment of Instance interface to Router")
         Dicdata = {}
         if self.subnetId != '':
             Dicdata['subnet_id'] = self.subnetId
@@ -536,14 +545,14 @@ class Sfc_fun:
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.put(url, headers=headers,  data=data)
-        if (response.status_code == 200):
+        if (response.status_code == OK):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
-            self.logger.info("\tInterface attached successfull")
+            self.logger.info("Interface attached successfull")
         else:
             return(response.status_code)
         ############################################################
-        self.logger.info("\tAttachment of Gateway to Router")
+        self.logger.info("Attachment of Gateway to Router")
 
         Dicdata1 = {}
         if self.pub_net_id != 0:
@@ -557,10 +566,10 @@ class Sfc_fun:
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.put(url, headers=headers,  data=data)
-        if (response.status_code == 200):
+        if (response.status_code == OK):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
-            self.logger.info("\tGateway Interface attached successfull")
+            self.logger.info("Gateway Interface attached successfull")
             return(response.status_code)
         else:
             return(response.status_code)
@@ -576,16 +585,16 @@ class Sfc_fun:
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
             response = requests.post(url, headers=headers,  data=data)
-            if (response.status_code == 200):
+            if (response.status_code == OK):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
-                self.logger.info("\tFloating ip created successfully")
+                self.logger.info("Floating ip created successfully")
                 json1_data = json.loads(response.content)
                 self.logger.debug(json1_data)
                 self.vm_public_ip.append(json1_data['floating_ip']['ip'])
                 self.vm_public_id.append(json1_data['floating_ip']['id'])
             else:
-                self.logger.error("\tFloating ip NOT created successfully")
+                self.logger.error("Floating ip NOT created successfully")
 
             Dicdata1 = {}
             if self.address != '':
@@ -598,10 +607,10 @@ class Sfc_fun:
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
             response = requests.post(url, headers=headers,  data=data)
-            if(response.status_code == 202):
+            if(response.status_code == ACCEPTED):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
-                self.logger.info("\tPublic Ip successfully added to VM")
+                self.logger.info("Public Ip successfully added to VM")
             else:
                 return(response.status_code)
         return(response.status_code)
@@ -623,9 +632,9 @@ class Sfc_fun:
             ping_re = re.search("transmitted.*received",  s.before).group()
             x = re.split('\s+',  ping_re)
             if (x[1] >= "1"):
-                self.logger.info("\tPing is Successfull")
+                self.logger.info("Ping is Successfull")
             else:
-                self.logger.info("\tPing is NOT Successfull")
+                self.logger.info("Ping is NOT Successfull")
 
         def vm1(queue1):
             s = pxssh.pxssh()
@@ -638,10 +647,10 @@ class Sfc_fun:
             output_pack = s.before
 
             if(output_pack.find("nshc") != -1):
-                self.logger.info("\tThe packet has reached VM2 Instance")
+                self.logger.info("The packet has reached VM2 Instance")
                 queue1.put("1")
             else:
-                self.logger.info("\tPacket not received in Instance")
+                self.logger.info("Packet not received in Instance")
                 queue1.put("0")
 
         def ping(ip, timeout=300):
@@ -670,7 +679,7 @@ class Sfc_fun:
             p1.join(10)
             return (queue1.get())
         else:
-            print("Thread didnt run")
+            self.logger.error("Thread didnt run")
 
     """##################################################################"""
     """ ########################  Stats Functions ################# #####"""
@@ -680,8 +689,8 @@ class Sfc_fun:
         response = requests.get('http://' + self.onos_hostname +
                                 ':8181/onos/vtn/portChainDeviceMap/' +
                                 self.PC_id, auth=("karaf", "karaf"))
-        if (response.status_code == 200):
-            self.logger.info("\tPortChainDeviceMap is successfully Queries")
+        if (response.status_code == OK):
+            self.logger.info("PortChainDeviceMap is successfully Queries")
             return(response.status_code)
         else:
             return(response.status_code)
@@ -691,8 +700,8 @@ class Sfc_fun:
         response = requests.get('http://' + self.onos_hostname +
                                 ':8181/onos/vtn/portChainSfMap/' +
                                 self.PC_id, auth=("karaf",  "karaf"))
-        if (response.status_code == 200):
-            self.logger.info("\tportChainSfMap is successfully Queries")
+        if (response.status_code == OK):
+            self.logger.info("portChainSfMap is successfully Queries")
             return(response.status_code)
         else:
             return(response.status_code)
@@ -706,7 +715,7 @@ class Sfc_fun:
         headers = {"Accept": "application/json", "Content-Type":
                    "application/json", "X-Auth-Token": self.token_id}
         response = requests.delete(url, headers=headers)
-        if (response.status_code == 200):
+        if (response.status_code == OK):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
             return(response.status_code)
@@ -720,7 +729,7 @@ class Sfc_fun:
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.delete(url, headers=headers)
-        if (response.status_code == 200):
+        if (response.status_code == OK):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
             return(response.status_code)
@@ -735,10 +744,9 @@ class Sfc_fun:
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
             response = requests.delete(url, headers=headers)
-            if (response.status_code == 204):
+            if (response.status_code == NO_CONTENT):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
-                print ("\n\t\tPort " + self.port_grp_id[p] + "Deleted")
             else:
                 return(response.status_code)
         return(response.status_code)
@@ -751,7 +759,7 @@ class Sfc_fun:
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
             response = requests.delete(url, headers=headers)
-            if (response.status_code == 204):
+            if (response.status_code == NO_CONTENT):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
             else:
@@ -760,21 +768,21 @@ class Sfc_fun:
 
     def cleanup(self):
         """Cleanup."""
-        print ("\n\t\tDeleting the VMs")
+        self.logger.info("Deleting VMs")
         for y in range(0, 3):
             url = 'http://' + self.nova_hostname + \
                 ':8774/v2.1/servers/' + self.vm[y]
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
             response = requests.delete(url, headers=headers)
-            if (response.status_code == 204):
+            if (response.status_code == NO_CONTENT):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
-                print ("\n\t\tVM" + str(y) + " is Deleted : ")
+                self.logger.debug("VM" + str(y) + " is Deleted : ")
                 time.sleep(10)
             else:
                 return(response.status_code)
-        print ("\n\t\tDeletion of Ports")
+        self.logger.info("Deleting Ports")
         for x in range(self.i, self.numTerms):
             url = 'http://' + self.neutron_hostname + ':9696/' + self.osver + \
                   '/ports/' + self.port_num[x]
@@ -782,13 +790,13 @@ class Sfc_fun:
                        self.token_id}
             response = requests.delete(url, headers=headers)
 
-            if (response.status_code == 204):
+            if (response.status_code == NO_CONTENT):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
-                print ("\n\t\tPort" + str(x) + "  Deleted")
+                self.logger.debug("Port" + str(x) + "  Deleted")
             else:
                 return(response.status_code)
-        print ("\n\t\tDeleting Router")
+        self.logger.info("Deleting Router")
 
         Dicdata = {}
         Dicdata['external_gateway_info'] = {}
@@ -799,7 +807,7 @@ class Sfc_fun:
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.put(url, headers=headers,  data=data)
-        if (response.status_code == 200):
+        if (response.status_code == OK):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
             Dicdata1 = {}
@@ -812,16 +820,15 @@ class Sfc_fun:
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
             response = requests.put(url, headers=headers,  data=data)
-            if (response.status_code == 200):
+            if (response.status_code == OK):
                 url = ('http://' + self.neutron_hostname + ':9696/' +
                        self.osver + '/routers/' + self.router_id)
                 headers = {"Accept": "application/json",  "X-Auth-Token":
                            self.token_id}
                 response = requests.delete(url, headers=headers)
-                if (response.status_code == 204):
+                if (response.status_code == NO_CONTENT):
                     self.logger.debug(response.status_code)
                     self.logger.debug(response.content)
-                    print ("\n\t\tDeletion of Router is successfull")
                 else:
                     return(response.status_code)
             else:
@@ -829,27 +836,26 @@ class Sfc_fun:
         else:
             return(response.status_code)
 
-        print ("\n\t\tDeletion of Network")
+        self.logger.info("Deleting Network")
         url = 'http://' + self.neutron_hostname + ':9696/' + self.osver + \
               '/networks/' + self.net_id
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
         response = requests.delete(url, headers=headers)
-        if (response.status_code == 204):
+        if (response.status_code == NO_CONTENT):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
-            print ("\n\t\tNetwork deleted Successfully")
         else:
             return(response.status_code)
 
-        print ("\n\t\tDeletion of Floating ip")
+        self.logger.info("Deleting Floating ip")
         for ip_num in range(0, 2):
             url = 'http://' + self.neutron_hostname + ':9696/' + self.osver + \
                   '/floatingips/' + self.vm_public_id[ip_num]
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
             response = requests.delete(url, headers=headers)
-            if (response.status_code == 204):
+            if (response.status_code == NO_CONTENT):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
             else:
