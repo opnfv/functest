@@ -18,6 +18,7 @@ import time
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
+import os
 
 
 parser = argparse.ArgumentParser()
@@ -38,6 +39,14 @@ logger = ft_logger.Logger("doctor").getLogger()
 
 def main():
     exit_code = -1
+
+    # if the image name is explicitly set for the doctor suite, set it as
+    # enviroment variable
+    for key in functest_yaml:
+        if key == "doctor":
+            os.environ["IMAGE_NAME"] = functest_yaml.get(
+                'doctor').get('image_name')
+
     cmd = 'cd %s/tests && ./run.sh' % DOCTOR_REPO
     log_file = RESULTS_DIR + "/doctor.log"
 
