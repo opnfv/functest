@@ -14,6 +14,7 @@
 #
 #
 import argparse
+import os
 import time
 
 import functest.utils.functest_logger as ft_logger
@@ -28,8 +29,8 @@ args = parser.parse_args()
 
 functest_yaml = functest_utils.get_functest_yaml()
 
-dirs = functest_yaml.get('general').get('directories')
-DOCTOR_REPO = dirs.get('dir_repo_doctor')
+DOCTOR_REPO = functest_utils.get_parameter_from_yaml(
+    'general.directories.dir_repo_doctor')
 RESULTS_DIR = functest_utils.get_parameter_from_yaml(
     'general.directories.dir_results')
 
@@ -38,6 +39,12 @@ logger = ft_logger.Logger("doctor").getLogger()
 
 def main():
     exit_code = -1
+
+    # if the image name is explicitly set for the doctor suite, set it as
+    # enviroment variable
+    if 'doctor' in functest_yaml and 'image_name' in functest_yaml['doctor']:
+        os.environ["IMAGE_NAME"] = functest_yaml['doctor']['image_name']
+
     cmd = 'cd %s/tests && ./run.sh' % DOCTOR_REPO
     log_file = RESULTS_DIR + "/doctor.log"
 
