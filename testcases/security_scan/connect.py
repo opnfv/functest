@@ -12,9 +12,11 @@
 
 import os
 import socket
+
 import paramiko
 
 import functest.utils.functest_logger as ft_logger
+
 
 # add installer IP from env
 INSTALLER_IP = os.getenv('INSTALLER_IP')
@@ -25,6 +27,7 @@ paramiko.util.log_to_file("/var/log/paramiko.log")
 
 
 class SetUp:
+
     def __init__(self, *args):
         self.args = args
 
@@ -74,6 +77,7 @@ class SetUp:
 
 
 class ConnectionManager:
+
     def __init__(self, host, port, user, localkey, *args):
         self.host = host
         self.port = port
@@ -184,9 +188,9 @@ class ConnectionManager:
 
         chan = remote_client.get_transport().open_session()
         chan.get_pty()
-        feed = chan.makefile()
+        # feed = chan.makefile()
         chan.exec_command(com)
-        print feed.read()
+        # print feed.read()
 
         remote_client.close()
         client.close()
