@@ -31,7 +31,7 @@ following docker command::
   [functester@jumphost ~]$ docker images
   REPOSITORY     TAG             IMAGE ID      CREATED      SIZE
   opnfv/functest latest          8cd6683c32ae  2 weeks ago  1.611 GB
-  opnfv/functest brahmaputra.3.0 94b78faa94f7  4 weeks ago  874.9 MB
+  opnfv/functest colorado.1.0    94b78faa94f7  4 weeks ago  874.9 MB
   hello-world    latest          94df4f0ce8a4  7 weeks ago    967 B
 
 The Functest docker container environment can -in principle- be also
@@ -119,7 +119,7 @@ recommended parameters for invoking docker container
        The credentials file needs to exist in the Docker container
        under the path: '/home/opnfv/functest/conf/openstack.creds'.
 
-     WARNING: If you are using the Joid installer, you must pass the
+     **WARNING:** If you are using the Joid installer, you must pass the
      credentials using the **-v** option:
      -v /var/lib/jenkins/admin-openrc:/home/opnfv/functest/conf/openstack.creds.
      See the section `Accessing the Openstack credentials`_ above.

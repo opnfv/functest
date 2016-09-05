@@ -195,14 +195,14 @@ offers a lot of potential combinations:
 Most of the tests are runnable by any combination, but some tests might have
 restrictions imposed by the utilized installers or due to the available
 deployed features. The system uses the environment variables (INSTALLER_IP and
-DEPLOY_SCENARIO) to automatically determine the valid test cases; for each given
+DEPLOY_SCENARIO) to automatically determine the valid test cases, for each given
 environment.
 
 In the Colorado OPNFV System release a convenience Functest CLI utility is also
 introduced to simplify setting up the Functest evironment, management of the
 OpenStack environment (e.g. resource clean-up) and for executing tests.
 The Functest CLI organised the testcase into logical Tiers, which contain in
-turn one or more testcases. The CLI allow execution of a single specified
+turn one or more testcases. The CLI allows execution of a single specified
 testcase, all test cases in a specified Tier, or the special case of execution
 of **ALL** testcases. The Functest CLI is introduced in more detail in the
 section `Executing the functest suites`_ of this document.
