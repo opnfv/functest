@@ -20,6 +20,7 @@ import os
 import re
 import subprocess
 import time
+import yaml
 
 import argparse
 import functest.utils.functest_logger as ft_logger
@@ -78,6 +79,8 @@ RALLY_DIR = REPO_PATH + '/' + functest_yaml.get("general").get(
     "directories").get("dir_rally")
 TEMPLATE_DIR = RALLY_DIR + "scenario/templates"
 SUPPORT_DIR = RALLY_DIR + "scenario/support"
+TEMP_DIR = RALLY_DIR + "var"
+BLACKLIST_FILE = RALLY_DIR + "blacklist.txt"
 
 FLAVOR_NAME = "m1.tiny"
 USERS_AMOUNT = 2
@@ -269,6 +272,64 @@ def get_cmd_output(proc):
     return result
 
 
+def apply_blacklist(case_file_name, result_file_name):
+    logger.debug("Applying blacklist...")
+    cases_file = open(case_file_name, 'r')
+    result_file = open(result_file_name, 'w')
+    black_tests = []
+
+    try:
+        installer_type = os.getenv('INSTALLER_TYPE')
+        deploy_scenario = os.getenv('DEPLOY_SCENARIO')
+        if (bool(installer_type) * bool(deploy_scenario)):
+            # if INSTALLER_TYPE and DEPLOY_SCENARIO are set we read the file
+            with open(BLACKLIST_FILE, 'r') as black_list_file:
+                black_list_yaml = yaml.safe_load(black_list_file)
+
+            for item in black_list_yaml:
+                scenarios = item['scenarios']
+                installers = item['installers']
+                if (deploy_scenario in scenarios and
+                        installer_type in installers):
+                    tests = item['tests']
+                    black_tests.extend(tests)
+    except:
+        black_tests = []
+        logger.debug("Blacklisting not applied.")
+
+    include = True
+    for cases_line in cases_file:
+        if include:
+            for black_tests_line in black_tests:
+                if black_tests_line == cases_line.strip().rstrip(':'):
+                    include = False
+                    break
+            else:
+                result_file.write(str(cases_line))
+        else:
+            if cases_line.isspace():
+                include = True
+
+    cases_file.close()
+    result_file.close()
+
+
+def prepare_test_list(test_name):
+    scenario_file_name = '{}opnfv-{}.yaml'.format(RALLY_DIR + "scenario/",
+                                                  test_name)
+    if not os.path.exists(scenario_file_name):
+        logger.info("The scenario '%s' does not exist." % scenario_file_name)
+        exit(-1)
+
+    logger.debug('Scenario fetched from : {}'.format(scenario_file_name))
+    test_file_name = '{}opnfv-{}.yaml'.format(TEMP_DIR + "/", test_name)
+
+    if not os.path.exists(TEMP_DIR):
+        os.makedirs(TEMP_DIR)
+
+    apply_blacklist(scenario_file_name, test_file_name)
+
+
 def run_task(test_name):
     #
     # the "main" function of the script who launch rally for a task
@@ -284,13 +345,7 @@ def run_task(test_name):
         logger.error("Task file '%s' does not exist." % task_file)
         exit(-1)
 
-    test_file_name = '{}opnfv-{}.yaml'.format(RALLY_DIR + "scenario/",
-                                              test_name)
-    if not os.path.exists(test_file_name):
-        logger.error("The scenario '%s' does not exist." % test_file_name)
-        exit(-1)
-
-    logger.debug('Scenario fetched from : {}'.format(test_file_name))
+    prepare_test_list(test_name)
 
     cmd_line = ("rally task start --abort-on-sla-failure " +
                 "--task {} ".format(task_file) +
