@@ -8,41 +8,41 @@
 
 ---
 {% if "authenticate" in service_list %}
-{%- include "scenario/opnfv-authenticate.yaml"-%}
+{%- include "var/opnfv-authenticate.yaml"-%}
 {% endif %}
 
 {% if "cinder" in service_list %}
-{%- include "scenario/opnfv-cinder.yaml"-%}
+{%- include "var/opnfv-cinder.yaml"-%}
 {% endif %}
 
 {% if "keystone" in service_list %}
-{%- include "scenario/opnfv-keystone.yaml"-%}
+{%- include "var/opnfv-keystone.yaml"-%}
 {% endif %}
 
 {% if "nova" in service_list %}
-{%- include "scenario/opnfv-nova.yaml"-%}
+{%- include "var/opnfv-nova.yaml"-%}
 {% endif %}
 
 {% if "glance" in service_list %}
-{%- include "scenario/opnfv-glance.yaml"-%}
+{%- include "var/opnfv-glance.yaml"-%}
 {% endif %}
 
 {% if "neutron" in service_list %}
-{%- include "scenario/opnfv-neutron.yaml"-%}
+{%- include "var/opnfv-neutron.yaml"-%}
 {% endif %}
 
 {% if "quotas" in service_list %}
-{%- include "scenario/opnfv-quotas.yaml"-%}
+{%- include "var/opnfv-quotas.yaml"-%}
 {% endif %}
 
 {% if "requests" in service_list %}
-{%- include "scenario/opnfv-requests.yaml"-%}
+{%- include "var/opnfv-requests.yaml"-%}
 {% endif %}
 
 {% if "heat" in service_list %}
-{%- include "scenario/opnfv-heat.yaml"-%}
+{%- include "var/opnfv-heat.yaml"-%}
 {% endif %}
 
 {% if "vm" in service_list %}
-{%- include "scenario/opnfv-vm.yaml"-%}
+{%- include "var/opnfv-vm.yaml"-%}
 {% endif %}
