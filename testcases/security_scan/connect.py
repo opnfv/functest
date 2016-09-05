@@ -12,9 +12,10 @@
 
 import os
 import socket
-import paramiko
 
 import functest.utils.functest_logger as ft_logger
+import paramiko
+
 
 # add installer IP from env
 INSTALLER_IP = os.getenv('INSTALLER_IP')
@@ -25,6 +26,7 @@ paramiko.util.log_to_file("/var/log/paramiko.log")
 
 
 class SetUp:
+
     def __init__(self, *args):
         self.args = args
 
@@ -74,6 +76,7 @@ class SetUp:
 
 
 class ConnectionManager:
+
     def __init__(self, host, port, user, localkey, *args):
         self.host = host
         self.port = port
@@ -140,7 +143,7 @@ class ConnectionManager:
         if output != "":
             return output
 
-    def remotecmd(self):
+    def remotecmd(self, file=None):
         com = self.args[0]
 
         client = paramiko.SSHClient()
@@ -186,7 +189,10 @@ class ConnectionManager:
         chan.get_pty()
         feed = chan.makefile()
         chan.exec_command(com)
-        print feed.read()
+        if file:
+            file.write(feed.read())
+        else:
+            print feed.read()
 
         remote_client.close()
         client.close()
