@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_93352af9",
+        "filename": "testcases/security_scan/connect.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-05T13:44:46Z",
+      "side": 1,
+      "message": "local import in 3rd bunch (as far as I understand OpenStack directives)",
+      "revId": "99ea03313d6aee3f0ac4d271508a59401fbb088b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d353a237",
+        "filename": "testcases/security_scan/security_scan.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-05T13:44:46Z",
+      "side": 1,
+      "message": "looks like 3rd party import shall be in the second bunch and at the end (import then from ...\nto be clarified during weekly meeting",
+      "revId": "99ea03313d6aee3f0ac4d271508a59401fbb088b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
