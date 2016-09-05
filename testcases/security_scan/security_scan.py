@@ -14,26 +14,29 @@
 
 
 import argparse
-import connect
 import datetime
 import os
 import sys
 
 from ConfigParser import SafeConfigParser
-from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
+import functest.utils.functest_utils as functest_utils
 from keystoneclient import session
 from keystoneclient.auth.identity import v2
 from novaclient import client
 
+import connect
 
 __version__ = 0.1
 __author__ = 'Luke Hinds (lhinds@redhat.com)'
 __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
 
 # Global vars
+FUNCTEST_REPO = functest_utils.get_parameter_from_yaml(
+    'general.directories.dir_repo_functest')
 INSTALLER_IP = os.getenv('INSTALLER_IP')
 oscapbin = 'sudo /bin/oscap'
 functest_dir = '%s/testcases/security_scan/' % FUNCTEST_REPO
+
 
 # Apex Spefic var needed to query Undercloud
 if os.getenv('OS_AUTH_URL') is None:
@@ -81,16 +84,16 @@ def run_tests(host, nodetype):
         connect.logger.info("Internet Connection OK.")
         connect.logger.info("Creating temp file structure..")
         createfiles(host, port, user, localkey)
-        connect.logger.debug("Installing OpenSCAP...")
+        connect.logger.info("Installing OpenSCAP...")
         install_pkg(host, port, user, localkey)
-        connect.logger.debug("Running scan...")
+        connect.logger.info("Running scan...")
         run_scanner(host, port, user, localkey, nodetype)
         clean = cfgparse.get(nodetype, 'clean')
         connect.logger.info("Post installation tasks....")
         post_tasks(host, port, user, localkey, nodetype)
         if clean:
             connect.logger.info("Cleaning down environment....")
-            connect.logger.debug("Removing OpenSCAP....")
+            connect.logger.info("Removing OpenSCAP....")
             removepkg(host, port, user, localkey, nodetype)
             connect.logger.info("Deleting tmp file and reports (remote)...")
             cleandir(host, port, user, localkey, nodetype)
