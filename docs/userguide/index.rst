@@ -16,7 +16,7 @@ The goal of this document is to describe the OPNFV Functest test cases and to
 provide a procedure to execute them. In the OPNFV Colorado system release,
 a Functest CLI utility is introduced for easier execution of test procedures.
 
-A overview presentation has been created for the first OPNFV Summit `[4]`_.
+An overview presentation has been created for the first OPNFV Summit `[4]`_.
 
 This document is a continuation of the OPNFV Functest Configuration Guide `[1]`_.
 
@@ -360,7 +360,7 @@ The current work flow is as follows:
   * Jenkins Build Initiated
   * security_scan.py script is called, and a config file is passed to the script as
     an argument.
-  * The IP addresses of each NFVi node (compute / control), is gathered.
+  * The IP addresses of each NFVi node (compute / control) are gathered
   * A scan profile is matched to the node type.
   * The OpenSCAP application is remotely installed onto each target node gathered
     on step 3, using upstream packaging (rpm and .deb).
