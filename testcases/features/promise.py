@@ -9,18 +9,19 @@
 #
 # Maintainer : jose.lausuch@ericsson.com
 #
+import argparse
 import json
 import os
 import subprocess
 import time
 
-import argparse
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
+import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as openstack_utils
 import keystoneclient.v2_0.client as ksclient
-import novaclient.client as nvclient
 from neutronclient.v2_0 import client as ntclient
+import novaclient.client as nvclient
+
 
 parser = argparse.ArgumentParser()
 
@@ -30,35 +31,37 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-functest_yaml = functest_utils.get_functest_yaml()
 
-dirs = functest_yaml.get('general').get('directories')
+dirs = ft_utils.get_parameter_from_yaml('general.directories')
 PROMISE_REPO = dirs.get('dir_repo_promise')
-TEST_DB = functest_yaml.get('results').get('test_db_url')
+RESULTS_DIR = ft_utils.get_parameter_from_yaml(
+    'general.directories.dir_results')
 
-TENANT_NAME = functest_yaml.get('promise').get('general').get('tenant_name')
-TENANT_DESCRIPTION = functest_yaml.get('promise').get(
-    'general').get('tenant_description')
-USER_NAME = functest_yaml.get('promise').get('general').get('user_name')
-USER_PWD = functest_yaml.get('promise').get('general').get('user_pwd')
-IMAGE_NAME = functest_yaml.get('promise').get('general').get('image_name')
-FLAVOR_NAME = functest_yaml.get('promise').get('general').get('flavor_name')
-FLAVOR_VCPUS = functest_yaml.get('promise').get('general').get('flavor_vcpus')
-FLAVOR_RAM = functest_yaml.get('promise').get('general').get('flavor_ram')
-FLAVOR_DISK = functest_yaml.get('promise').get('general').get('flavor_disk')
+TEST_DB = ft_utils.get_parameter_from_yaml('results.test_db_url')
+
+TENANT_NAME = ft_utils.get_parameter_from_yaml('promise.tenant_name')
+TENANT_DESCRIPTION = ft_utils.get_parameter_from_yaml(
+    'promise.tenant_description')
+USER_NAME = ft_utils.get_parameter_from_yaml('promise.user_name')
+USER_PWD = ft_utils.get_parameter_from_yaml('promise.user_pwd')
+IMAGE_NAME = ft_utils.get_parameter_from_yaml('promise.image_name')
+FLAVOR_NAME = ft_utils.get_parameter_from_yaml('promise.flavor_name')
+FLAVOR_VCPUS = ft_utils.get_parameter_from_yaml('promise.flavor_vcpus')
+FLAVOR_RAM = ft_utils.get_parameter_from_yaml('promise.flavor_ram')
+FLAVOR_DISK = ft_utils.get_parameter_from_yaml('promise.flavor_disk')
 
 
-GLANCE_IMAGE_FILENAME = functest_yaml.get('general').get('openstack').get(
-    'image_file_name')
-GLANCE_IMAGE_FORMAT = functest_yaml.get('general').get('openstack').get(
-    'image_disk_format')
-GLANCE_IMAGE_PATH = functest_yaml.get('general').get('directories').get(
-    'dir_functest_data') + "/" + GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_FILENAME = ft_utils.get_parameter_from_yaml(
+    'general.openstack.image_file_name')
+GLANCE_IMAGE_FORMAT = ft_utils.get_parameter_from_yaml(
+    'general.openstack.image_disk_format')
+GLANCE_IMAGE_PATH = ft_utils.get_parameter_from_yaml(
+    'general.directories.dir_functest_data') + "/" + GLANCE_IMAGE_FILENAME
 
-NET_NAME = functest_yaml.get('promise').get('general').get('network_name')
-SUBNET_NAME = functest_yaml.get('promise').get('general').get('subnet_name')
-SUBNET_CIDR = functest_yaml.get('promise').get('general').get('subnet_cidr')
-ROUTER_NAME = functest_yaml.get('promise').get('general').get('router_name')
+NET_NAME = ft_utils.get_parameter_from_yaml('promise.network_name')
+SUBNET_NAME = ft_utils.get_parameter_from_yaml('promise.subnet_name')
+SUBNET_CIDR = ft_utils.get_parameter_from_yaml('promise.subnet_cidr')
+ROUTER_NAME = ft_utils.get_parameter_from_yaml('promise.router_name')
 
 
 """ logging configuration """
@@ -182,7 +185,7 @@ def main():
 
     os.chdir(PROMISE_REPO)
     results_file_name = 'promise-results.json'
-    results_file = open(results_file_name, 'w+')
+    results_file = open(RESULTS_DIR + '/' + results_file_name, 'w+')
     cmd = 'npm run -s test -- --reporter json'
 
     logger.info("Running command: %s" % cmd)
@@ -240,12 +243,12 @@ def main():
             status = "PASS"
             exit_code = 0
 
-        functest_utils.push_results_to_db("promise",
-                                          "promise",
-                                          start_time,
-                                          stop_time,
-                                          status,
-                                          json_results)
+        ft_utils.push_results_to_db("promise",
+                                    "promise",
+                                    start_time,
+                                    stop_time,
+                                    status,
+                                    json_results)
 
     exit(exit_code)
 
