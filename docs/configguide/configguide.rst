@@ -119,7 +119,7 @@ recommended parameters for invoking docker container
        The credentials file needs to exist in the Docker container
        under the path: '/home/opnfv/functest/conf/openstack.creds'.
 
-     WARNING: If you are using the Joid installer, you must pass the
+     **WARNING:** If you are using the Joid installer, you must pass the
      credentials using the **-v** option:
      -v /var/lib/jenkins/admin-openrc:/home/opnfv/functest/conf/openstack.creds.
      See the section `Accessing the Openstack credentials`_ above.
