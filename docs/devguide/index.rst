@@ -249,7 +249,10 @@ Results::
     "build_tag": <such as "jenkins-functest-fuel-baremetal-daily-master-108">,
     "scenario": <Scenario on which the test was executed>,
     "criteria": <PASS or FAILED>,
-    "trust_indicator": <0~1>
+    "trust_indicator": {
+                        "current": 0,
+                        "histories": []
+                       }
   }
 
 The API can described as follows. For detailed information, please go to
@@ -475,6 +478,9 @@ Dashboard url: http://testresults.opnfv.org/kibana_dashboards/
 
 Credentials for a guest account: opnfvuser/kibana
 
+A script has been developped to build elasticsearch data set. This
+script can be found in `[16]`_.
+
 
 Automatic reporting
 ===================
@@ -511,7 +517,13 @@ corresponding to this scenario.
  +---------------------+---------+---------+---------+---------+
  | promise             |         |         |    X    |    X    |
  +---------------------+---------+---------+---------+---------+
+ | doctor              |    X    |         |    X    |         |
+ +---------------------+---------+---------+---------+---------+
  | security_scan       |    X    |         |         |         |
+ +---------------------+---------+---------+---------+---------+
+ | parser              |         |         |    X    |         |
+ +---------------------+---------+---------+---------+---------+
+ | moon                |         |    X    |         |         |
  +---------------------+---------+---------+---------+---------+
  | copper              |    X    |         |         |    X    |
  +---------------------+---------+---------+---------+---------+
@@ -647,8 +659,6 @@ bgpvpn scenarios::
     dependencies:
         installer: ''
         scenario: '(ocl)|(nosdn)|^(os-odl)((?!bgpvpn).)*$'
-
-
 
 
 How to write and check constaint regex?
@@ -913,6 +923,8 @@ _`[13]`: http://testresults.opnfv.org/test/api/v1/projects/functest/cases
 _`[14]`: https://git.opnfv.org/cgit/releng/tree/jjb/functest/functest-daily.sh
 
 _`[15]`: https://git.opnfv.org/cgit/releng/tree/utils/test/result_collection_api/README.rst
+
+_`[16]`: https://git.opnfv.org/cgit/releng/tree/utils/test/scripts/mongo_to_elasticsearch.py
 
 OPNFV main site: opnfvmain_.
 
