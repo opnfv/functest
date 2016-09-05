@@ -13,14 +13,14 @@
 # all trace of the scan is removed from the remote system.
 
 
+from ConfigParser import SafeConfigParser
 import argparse
-import connect
 import datetime
 import os
 import sys
 
-from ConfigParser import SafeConfigParser
-from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
+import connect
+import functest.utils.functest_utils as functest_utils
 from keystoneclient import session
 from keystoneclient.auth.identity import v2
 from novaclient import client
@@ -31,9 +31,16 @@ __author__ = 'Luke Hinds (lhinds@redhat.com)'
 __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
 
 # Global vars
+FUNCTEST_REPO = functest_utils.get_parameter_from_yaml(
+    'general.directories.dir_repo_functest')
+RESULTS_DIR = functest_utils.get_parameter_from_yaml(
+    'general.directories.dir_results')
+LOG_FILE_PATH = RESULTS_DIR + "/security_scan.log"
+LOG_FILE = open(LOG_FILE_PATH, "w+")
 INSTALLER_IP = os.getenv('INSTALLER_IP')
 oscapbin = 'sudo /bin/oscap'
 functest_dir = '%s/testcases/security_scan/' % FUNCTEST_REPO
+
 
 # Apex Spefic var needed to query Undercloud
 if os.getenv('OS_AUTH_URL') is None:
@@ -81,16 +88,16 @@ def run_tests(host, nodetype):
         connect.logger.info("Internet Connection OK.")
         connect.logger.info("Creating temp file structure..")
         createfiles(host, port, user, localkey)
-        connect.logger.debug("Installing OpenSCAP...")
+        connect.logger.info("Installing OpenSCAP...")
         install_pkg(host, port, user, localkey)
-        connect.logger.debug("Running scan...")
+        connect.logger.info("Running scan...")
         run_scanner(host, port, user, localkey, nodetype)
         clean = cfgparse.get(nodetype, 'clean')
         connect.logger.info("Post installation tasks....")
         post_tasks(host, port, user, localkey, nodetype)
         if clean:
             connect.logger.info("Cleaning down environment....")
-            connect.logger.debug("Removing OpenSCAP....")
+            connect.logger.info("Removing OpenSCAP....")
             removepkg(host, port, user, localkey, nodetype)
             connect.logger.info("Deleting tmp file and reports (remote)...")
             cleandir(host, port, user, localkey, nodetype)
@@ -146,7 +153,7 @@ def install_pkg(host, port, user, localkey):
     import connect
     com = 'sudo yum -y install openscap-scanner scap-security-guide'
     connect = connect.ConnectionManager(host, port, user, localkey, com)
-    connect.remotecmd()
+    connect.remotecmd(LOG_FILE)
 
 
 def run_scanner(host, port, user, localkey, nodetype):
@@ -168,17 +175,17 @@ def run_scanner(host, port, user, localkey, nodetype):
                                                        cpe,
                                                        secpolicy)
         connect = connect.ConnectionManager(host, port, user, localkey, com)
-        connect.remotecmd()
+        connect.remotecmd(LOG_FILE)
     elif scantype == 'oval':
         com = '{0} oval eval --results {1}/{2} '
         '--report {1}/{3} {4}'.format(oscapbin, tmpdir.rstrip(),
                                       results, report, secpolicy)
         connect = connect.ConnectionManager(host, port, user, localkey, com)
-        connect.remotecmd()
+        connect.remotecmd(LOG_FILE)
     else:
         com = '{0} oval-collect '.format(oscapbin)
         connect = connect.ConnectionManager(host, port, user, localkey, com)
-        connect.remotecmd()
+        connect.remotecmd(LOG_FILE)
 
 
 def post_tasks(host, port, user, localkey, nodetype):
@@ -201,14 +208,14 @@ def removepkg(host, port, user, localkey, nodetype):
     import connect
     com = 'sudo yum -y remove openscap-scanner scap-security-guide'
     connect = connect.ConnectionManager(host, port, user, localkey, com)
-    connect.remotecmd()
+    connect.remotecmd(LOG_FILE)
 
 
 def cleandir(host, port, user, localkey, nodetype):
     import connect
     com = 'sudo rm -r {0}'.format(tmpdir.rstrip())
     connect = connect.ConnectionManager(host, port, user, localkey, com)
-    connect.remotecmd()
+    connect.remotecmd(LOG_FILE)
 
 
 if __name__ == '__main__':
