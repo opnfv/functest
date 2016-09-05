@@ -21,10 +21,10 @@ class Sfc_fun:
         self.token_id = 0
         self.net_id = 0
         self.image_id = 0
-        self.keystone_hostname = 'keystone_ip'
-        self.neutron_hostname = 'neutron_ip'
-        self.nova_hostname = 'nova_ip'
-        self.glance_hostname = 'glance_ip'
+        self.keystone_hostname = '192.168.22.17'
+        self.neutron_hostname = '192.168.22.17'
+        self.nova_hostname = '192.168.22.17'
+        self.glance_hostname = '192.168.22.17'
         self.onos_hostname = 'onos_ip'
         # Network variables #######
         self.netname = "test_nw"
@@ -105,7 +105,7 @@ class Sfc_fun:
         url = 'http://' + self.keystone_hostname + \
             ':5000/' + self.osver + '/tokens'
         data = '{"auth": {"tenantName": "admin",  "passwordCredentials":\
-                { "username": "admin", "password": "console"}}}'
+                { "username": "admin", "password": "admin"}}}'
         headers = {"Accept": "application/json"}
         response = requests.post(url, headers=headers,  data=data)
         if (response.status_code == 200):
@@ -270,7 +270,8 @@ class Sfc_fun:
             if (response.status_code == 202):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
-                self.logger.info("\tCreation of VM is successfull")
+                info = "\tCreation of VM" + str(y) + " is successfull"
+                self.logger.debug(info)
 
                 json1_data = json.loads(response.content)
                 self.logger.debug(json1_data)
@@ -298,11 +299,12 @@ class Sfc_fun:
                 self.logger.debug(json1_data)
                 self.vm_active = json1_data['servers'][0]['status']
                 if (self.vm_active == "ACTIVE"):
-                    print ("\t\t\t\t\t\tVM" + str(y) + " is Active : " +
-                           self.vm_active)
+                    info = "\tVM" + str(y) + \
+                        " is Active : " + self.vm_active
                 else:
-                    print ("\t\t\t\t\t\tVM" + str(y) + " is NOT Active : " +
-                           self.vm_active)
+                    info = "\tVM" + str(y) + " is NOT Active : " + \
+                        self.vm_active
+                self.logger.debug(info)
             else:
                 return(response.status_code)
         return(response.status_code)
@@ -329,8 +331,9 @@ class Sfc_fun:
                        self.token_id}
             response = requests.post(url, headers=headers,  data=data)
             if (response.status_code == 201):
-                print ("\t\t\t\tCreation of Port Pair PP" + str(p) +
-                       " is successful")
+                info = "\tCreation of Port Pair PP" + str(p) + \
+                       " is successful"
+                self.logger.debug(info)
             else:
                 return(response.status_code)
 
@@ -374,8 +377,9 @@ class Sfc_fun:
                        self.token_id}
             response = requests.post(url, headers=headers,  data=data)
             if (response.status_code == 201):
-                print ("\t\t\t\tCreation of Port Group PG" + str(p) +
-                       "is successful")
+                info = "\tCreation of Port Group PG" + str(p) + \
+                    "is successful"
+                self.logger.debug(info)
             else:
                 return(response.status_code)
 
@@ -424,7 +428,7 @@ class Sfc_fun:
         if (response.status_code == 201):
             json1_data = json.loads(response.content)
             self.flow_class_if = json1_data['flow_classifier']['id']
-            self.logger.info("\tCreation of Flow Classifier is successful")
+            self.logger.debug("\tCreation of Flow Classifier is successful")
             return(response.status_code)
         else:
             return(response.status_code)
@@ -453,7 +457,7 @@ class Sfc_fun:
                    "X-Auth-Token": self.token_id}
         response = requests.post(url, headers=headers,  data=data)
         if (response.status_code == 201):
-            self.logger.info("\tCreation of PORT CHAIN is successful")
+            self.logger.debug("\tCreation of PORT CHAIN is successful")
             json1_data = json.loads(response.content)
             self.PC_id = json1_data['port_chain']['id']
             return(response.status_code)
@@ -467,7 +471,7 @@ class Sfc_fun:
                                 ':8181/onos/v1/flows',
                                 auth=("karaf",  "karaf"))
         if (response.status_code == 200):
-            self.logger.info("\tFlow is successfully Queries")
+            self.logger.debug("\tFlow is successfully Queries")
             json1_data = json.loads(response.content)
             self.flowadd = json1_data['flows'][0]['state']
 
@@ -498,7 +502,7 @@ class Sfc_fun:
         if (response.status_code == 201):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
-            self.logger.info("\tCreation of Router is successfull")
+            self.logger.debug("\tCreation of Router is successfull")
             json1_data = json.loads(response.content)
             self.logger.debug(json1_data)
             self.router_id = json1_data['router']['id']
@@ -650,11 +654,11 @@ class Sfc_fun:
                 self.logger.debug("Pinging %s. Waiting for response..." % ip)
                 response = os.system("ping -c 1 " + ip + " >/dev/null 2>&1")
                 if response == 0:
-                    self.logger.info("Ping " + ip + " detected!")
+                    self.logger.info("\tPing " + ip + " detected!")
                     return 0
 
                 elif timeout == 0:
-                    self.logger.info("Ping " + ip + " timeout reached.")
+                    self.logger.info("\tPing " + ip + " timeout reached.")
                     return 1
                 timeout -= 1
 
@@ -670,7 +674,7 @@ class Sfc_fun:
             p1.join(10)
             return (queue1.get())
         else:
-            print("Thread didnt run")
+            self.logger.error("Thread didnt run")
 
     """##################################################################"""
     """ ########################  Stats Functions ################# #####"""
@@ -738,7 +742,6 @@ class Sfc_fun:
             if (response.status_code == 204):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
-                print ("\n\t\tPort " + self.port_grp_id[p] + "Deleted")
             else:
                 return(response.status_code)
         return(response.status_code)
@@ -760,7 +763,7 @@ class Sfc_fun:
 
     def cleanup(self):
         """Cleanup."""
-        print ("\n\t\tDeleting the VMs")
+        self.logger.info("\tDeleting VMs")
         for y in range(0, 3):
             url = 'http://' + self.nova_hostname + \
                 ':8774/v2.1/servers/' + self.vm[y]
@@ -770,11 +773,11 @@ class Sfc_fun:
             if (response.status_code == 204):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
-                print ("\n\t\tVM" + str(y) + " is Deleted : ")
+                self.logger.debug("\t\t\tVM" + str(y) + " is Deleted : ")
                 time.sleep(10)
             else:
                 return(response.status_code)
-        print ("\n\t\tDeletion of Ports")
+        self.logger.info("\tDeleting Ports")
         for x in range(self.i, self.numTerms):
             url = 'http://' + self.neutron_hostname + ':9696/' + self.osver + \
                   '/ports/' + self.port_num[x]
@@ -785,10 +788,10 @@ class Sfc_fun:
             if (response.status_code == 204):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
-                print ("\n\t\tPort" + str(x) + "  Deleted")
+                self.logger.debug("\t\t\tPort" + str(x) + "  Deleted")
             else:
                 return(response.status_code)
-        print ("\n\t\tDeleting Router")
+        self.logger.info("\tDeleting Router")
 
         Dicdata = {}
         Dicdata['external_gateway_info'] = {}
@@ -821,7 +824,6 @@ class Sfc_fun:
                 if (response.status_code == 204):
                     self.logger.debug(response.status_code)
                     self.logger.debug(response.content)
-                    print ("\n\t\tDeletion of Router is successfull")
                 else:
                     return(response.status_code)
             else:
@@ -829,7 +831,7 @@ class Sfc_fun:
         else:
             return(response.status_code)
 
-        print ("\n\t\tDeletion of Network")
+        self.logger.info("\tDeleting Network")
         url = 'http://' + self.neutron_hostname + ':9696/' + self.osver + \
               '/networks/' + self.net_id
         headers = {"Accept": "application/json",
@@ -838,11 +840,10 @@ class Sfc_fun:
         if (response.status_code == 204):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
-            print ("\n\t\tNetwork deleted Successfully")
         else:
             return(response.status_code)
 
-        print ("\n\t\tDeletion of Floating ip")
+        self.logger.info("\tDeleting Floating ip")
         for ip_num in range(0, 2):
             url = 'http://' + self.neutron_hostname + ':9696/' + self.osver + \
                   '/floatingips/' + self.vm_public_id[ip_num]
