@@ -16,6 +16,24 @@
       "revId": "76bd174e53ccfbc6e435658bceb4e3ee0d35db94",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_735f2ee6",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-05T12:14:39Z",
+      "side": 1,
+      "message": "oops, sorry. Bad copy paste :)",
+      "parentUuid": "1a76adc5_53ceb2b5",
+      "revId": "76bd174e53ccfbc6e435658bceb4e3ee0d35db94",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
