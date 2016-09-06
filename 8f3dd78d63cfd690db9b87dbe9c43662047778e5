@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_614e7871",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-06T08:24:01Z",
+      "side": 1,
+      "message": "Please order them:\n\nimport time\n\nimport functest.utils.functest_logger as ft_logger\nimport functest.utils.functest_utils as functest_utils\nfrom Sfc_fun import Sfc_fun",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "8f3dd78d63cfd690db9b87dbe9c43662047778e5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_81515410",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-06T08:24:01Z",
+      "side": 1,
+      "message": "Could you delete \\t?\ninfo mesages and error messages don\u0027t respect the same format",
+      "revId": "8f3dd78d63cfd690db9b87dbe9c43662047778e5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_21588031",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-06T08:24:01Z",
+      "side": 1,
+      "message": "You could define HTTP status code in vars (or u could use request vars).",
+      "revId": "8f3dd78d63cfd690db9b87dbe9c43662047778e5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_415b3c2e",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-06T08:24:01Z",
+      "side": 1,
+      "message": "I think this can be optimized",
+      "revId": "8f3dd78d63cfd690db9b87dbe9c43662047778e5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
