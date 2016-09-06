@@ -16,6 +16,24 @@
       "revId": "57216c073d650acac5eb574082094424ebab2101",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_415c9ced",
+        "filename": "ci/run_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-06T09:41:21Z",
+      "side": 1,
+      "message": "Yes you\u0027re right, but not all the tests are written by us, some feature tests are written by the people of feature project, and they are shell scripts. If they agree to give us a python version, we can call python method here as you did in ODL.\n\nThe core here is to distinguish the trigger part with the actual test part. The framework I write here is to process the trigger part, which is how functest trigger each feature project test without establishing a feature directory and parser.py/doctor.py/copper.py files in it",
+      "parentUuid": "1a76adc5_2a96274d",
+      "revId": "57216c073d650acac5eb574082094424ebab2101",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
