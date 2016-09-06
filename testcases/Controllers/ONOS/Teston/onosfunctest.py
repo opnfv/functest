@@ -187,7 +187,9 @@ def CreateImage():
 def SfcTest():
     cmd = "python " + SFC_PATH + "Sfc.py"
     logger.debug("Run sfc tests")
-    os.system(cmd)
+    if os.system(cmd) != 0:
+        EXIT_CODE = -1
+        exit(EXIT_CODE)
 
 
 def GetIp(type):
