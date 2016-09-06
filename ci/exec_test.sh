@@ -147,18 +147,11 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/features/domino.py $report
         ;;
         "odl-sfc")
-            bash ${FUNCTEST_REPO_DIR}/testcases/features/sfc/server_presetup_CI.bash
-            ret_val=$?
-            if [ $ret_val != 0 ]; then
-                exit $ret_val
-            fi
-            bash ${FUNCTEST_REPO_DIR}/testcases/features/sfc/compute_presetup_CI.bash
-            ret_val=$?
-            if [ $ret_val != 0 ]; then
-                exit $ret_val
-            fi
-            source ${FUNCTEST_REPO_DIR}/testcases/features/sfc/tackerc
-            python ${FUNCTEST_REPO_DIR}/testcases/features/sfc/sfc.py $report
+            ODL_SFC_DIR=${FUNCTEST_REPO_DIR}/testcases/features/sfc
+            # pass FUNCTEST_REPO_DIR inside prepare_odl_sfc.bash
+            FUNCTEST_REPO_DIR=${FUNCTEST_REPO_DIR} bash ${ODL_SFC_DIR}/prepare_odl_sfc.bash || exit $?
+            source ${ODL_SFC_DIR}/tackerc
+            python ${ODL_SFC_DIR}/sfc.py $report
         ;;
         "parser")
             python ${FUNCTEST_REPO_DIR}/testcases/vnf/vRNC/parser.py $report
