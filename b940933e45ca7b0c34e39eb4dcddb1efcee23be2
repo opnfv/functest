@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_01ac6434",
+        "filename": "testcases/features/sfc/prepare_odl_sfc.bash",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-06T12:54:13Z",
+      "side": 1,
+      "message": "better change the authors to you and manuel only :)",
+      "revId": "b940933e45ca7b0c34e39eb4dcddb1efcee23be2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
