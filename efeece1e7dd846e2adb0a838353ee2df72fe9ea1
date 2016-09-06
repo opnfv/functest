@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_fc3a2b33",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-06T16:11:30Z",
+      "side": 1,
+      "message": "OPENSTACK_TAG?",
+      "revId": "efeece1e7dd846e2adb0a838353ee2df72fe9ea1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
