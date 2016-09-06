@@ -182,8 +182,8 @@ def main():
     os.environ["OS_TEST_NETWORK"] = network_dic["net_id"]
 
     os.chdir(PROMISE_REPO)
-    results_file_name = 'promise-results.json'
-    results_file = open(RESULTS_DIR + '/' + results_file_name, 'w+')
+    results_file_name = RESULTS_DIR + '/' + 'promise-results.json'
+    results_file = open(results_file_name, 'w+')
     cmd = 'npm run -s test -- --reporter json'
 
     logger.info("Running command: %s" % cmd)
