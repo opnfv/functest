@@ -160,6 +160,7 @@ def build_task_args(test_file_name):
     task_args['image_name'] = GLANCE_IMAGE_NAME
     task_args['flavor_name'] = FLAVOR_NAME
     task_args['glance_image_location'] = GLANCE_IMAGE_PATH
+    task_args['glance_image_format'] = GLANCE_IMAGE_FORMAT
     task_args['tmpl_dir'] = TEMPLATE_DIR
     task_args['sup_dir'] = SUPPORT_DIR
     task_args['users_amount'] = USERS_AMOUNT
