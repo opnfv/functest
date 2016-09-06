@@ -28,6 +28,12 @@ FROM ubuntu:14.04
 MAINTAINER Jose Lausuch <jose.lausuch@ericsson.com>
 LABEL version="0.1" description="OPNFV Functest Docker container"
 
+ARG BRANCH=master
+ARG TEMPEST_TAG=12.1.0
+ARG RALLY_TAG=0.5.0
+ARG ODL_TAG=release/beryllium-sr3
+ARG OPENSTACK_TAG=stable/mitaka
+ARG KINGBIRD_TAG=0.2.1
 ENV HOME /home/opnfv
 ENV repos_dir /home/opnfv/repos
 ENV creds /home/opnfv/functest/conf/openstack.creds
@@ -69,24 +75,31 @@ RUN mkdir -p /root/.ssh
 RUN chmod 700 /root/.ssh
 
 RUN git config --global http.sslVerify false
-RUN git clone https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
-RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
-RUN git clone https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
-RUN git clone -b 0.5.0 https://github.com/openstack/rally.git ${repos_dir}/rally
-RUN git clone -b 12.1.0 https://github.com/openstack/tempest.git ${repos_dir}/tempest
-RUN git clone https://git.opendaylight.org/gerrit/p/integration/test.git ${repos_dir}/odl_test
-RUN git clone -b stable https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
-RUN git clone https://github.com/openstack/networking-bgpvpn ${repos_dir}/bgpvpn
-RUN git clone https://github.com/wuwenbin2/OnosSystemTest.git ${repos_dir}/onos
-RUN git clone https://github.com/opnfv/promise ${repos_dir}/promise
-RUN git clone https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
-RUN git clone https://gerrit.opnfv.org/gerrit/copper ${repos_dir}/copper
-RUN git clone https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
-RUN git clone https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
-RUN git clone https://github.com/openstack/kingbird.git ${repos_dir}/kingbird
-RUN git clone https://gerrit.opnfv.org/gerrit/domino ${repos_dir}/domino
-RUN git clone https://gerrit.opnfv.org/gerrit/parser ${repos_dir}/parser
+
+# OPNFV repositories
+RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
+RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${repos_dir}/copper
+RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
+RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
+RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${repos_dir}/domino
+RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${repos_dir}/parser
+RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${repos_dir}/promise
+RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
+RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
 RUN git clone https://gerrit.opnfv.org/gerrit/securityscanning ${repos_dir}/securityscanning
+RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
+
+
+# OpenStack repositories
+RUN git clone -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${repos_dir}/bgpvpn
+RUN git clone -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${repos_dir}/kingbird
+RUN git clone -b $RALLY_TAG https://github.com/openstack/rally.git ${repos_dir}/rally
+RUN git clone -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${repos_dir}/tempest
+
+# other repositories
+RUN git clone -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${repos_dir}/odl_test
+RUN git clone -b stable https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
+RUN git clone https://github.com/wuwenbin2/OnosSystemTest.git ${repos_dir}/onos
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt
