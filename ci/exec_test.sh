@@ -147,13 +147,18 @@ function run_test(){
             python ${FUNCTEST_REPO_DIR}/testcases/features/domino.py $report
         ;;
         "odl-sfc")
-            bash ${FUNCTEST_REPO_DIR}/testcases/features/sfc/server_presetup_CI.bash
-            ret_val=$?
+            # Split the output to the log file and redirect STDOUT and STDERR to /dev/null
+            bash ${FUNCTEST_REPO_DIR}/testcases/features/sfc/server_presetup_CI.bash |& tee -a /home/opnfv/functest/results/odl-sfc.log 1>/dev/null 2>&1
+            # Get return value from PIPESTATUS array
+            ret_val=${PIPESTATUS[0]}
             if [ $ret_val != 0 ]; then
+                echo "The tacker server deployment failed"
                 exit $ret_val
             fi
-            bash ${FUNCTEST_REPO_DIR}/testcases/features/sfc/compute_presetup_CI.bash
-            ret_val=$?
+            echo "The tacker server was deployed successfully"
+
+            bash ${FUNCTEST_REPO_DIR}/testcases/features/sfc/compute_presetup_CI.bash |& tee -a /home/opnfv/functest/results/odl-sfc.log 1>/dev/null 2>&1
+            ret_val=${PIPESTATUS[0]}
             if [ $ret_val != 0 ]; then
                 exit $ret_val
             fi
