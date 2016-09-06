@@ -16,6 +16,23 @@
       "revId": "80902f1949604eecad181094e3ef6c399c7b28ba",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c11bccc8",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-06T12:01:03Z",
+      "side": 1,
+      "message": "no specific branch for bgpvpn, kingbird,... or any third party?",
+      "revId": "80902f1949604eecad181094e3ef6c399c7b28ba",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
