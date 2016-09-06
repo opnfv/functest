@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_41481c87",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-06T13:08:40Z",
+      "side": 1,
+      "message": "we are not using this repo, shall we remove it?",
+      "revId": "70cb5b55243f0cba27bb415a7bf0e516659c6102",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
