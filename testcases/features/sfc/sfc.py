@@ -62,7 +62,8 @@ def main():
     logger.info("Executing script to get ip_server: '%s'" % contr_cmd)
     process = subprocess.Popen(contr_cmd,
                                shell=True,
-                               stdout=subprocess.PIPE)
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
     ip_server = process.stdout.readline().rstrip()
 
     contr_cmd2 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
@@ -70,7 +71,8 @@ def main():
     logger.info("Executing script to get ip_compute: '%s'" % contr_cmd2)
     process = subprocess.Popen(contr_cmd2,
                                shell=True,
-                               stdout=subprocess.PIPE)
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
     ip_compute = process.stdout.readline().rstrip()
 
     iptable_cmd1 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
@@ -78,8 +80,11 @@ def main():
     iptable_cmd2 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
                     " ssh " + ip_server + " iptables -t nat -P INPUT ACCEPT ")
 
-    subprocess.call(iptable_cmd1, shell=True)
-    subprocess.call(iptable_cmd2, shell=True)
+    logger.info("Changing firewall policy in controller: '%s'" % iptable_cmd1)
+    subprocess.call(iptable_cmd1, shell=True, stderr=subprocess.PIPE)
+
+    logger.info("Changing firewall policy in controller: '%s'" % iptable_cmd2)
+    subprocess.call(iptable_cmd2, shell=True, stderr=subprocess.PIPE)
 
 # Getting the different clients
 
