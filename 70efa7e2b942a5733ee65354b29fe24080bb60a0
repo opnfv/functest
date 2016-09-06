@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_c1a8ac79",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2016-09-06T11:26:30Z",
+      "side": 1,
+      "message": "Cannot remove this line, as I need functest_yaml later in the code",
+      "parentUuid": "1a76adc5_c1c3cc55",
+      "revId": "70efa7e2b942a5733ee65354b29fe24080bb60a0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_61a2f8af",
         "filename": "testcases/features/doctor.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-09-06T10:35:53Z",
       "side": 1,
       "message": "remove this line",
+      "revId": "70efa7e2b942a5733ee65354b29fe24080bb60a0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_019f8451",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2016-09-06T11:26:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a76adc5_61a2f8af",
       "revId": "70efa7e2b942a5733ee65354b29fe24080bb60a0",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_a1ad708a",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2016-09-06T11:26:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a76adc5_81a5d4b6",
+      "revId": "70efa7e2b942a5733ee65354b29fe24080bb60a0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_21ac00a0",
         "filename": "testcases/features/doctor.py",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2016-09-06T10:35:53Z",
       "side": 1,
       "message": "Is this needed? there is no section for doctor in config_functest.yaml ... is it planned?",
+      "revId": "70efa7e2b942a5733ee65354b29fe24080bb60a0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e1a3689c",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2016-09-06T11:26:30Z",
+      "side": 1,
+      "message": "When running functest on ARM we use a custom config_functest.yaml with specific configuration. In our file there will be a doctor section that sets the image name.",
+      "parentUuid": "1a76adc5_21ac00a0",
       "revId": "70efa7e2b942a5733ee65354b29fe24080bb60a0",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
