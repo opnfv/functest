@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_fc778b39",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-06T14:39:28Z",
+      "side": 1,
+      "message": "Could we use gerrit here too?",
+      "revId": "d2208bab74327fc24fb5f88e3f06d35ba73b8211",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_bc711346",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-06T14:39:28Z",
+      "side": 1,
+      "message": "$BRANCH?",
+      "revId": "d2208bab74327fc24fb5f88e3f06d35ba73b8211",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_9c76973d",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-06T14:39:28Z",
+      "side": 1,
+      "message": "Could we define another var for Openstack stable release?",
+      "revId": "d2208bab74327fc24fb5f88e3f06d35ba73b8211",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
