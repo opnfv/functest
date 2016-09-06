@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_16aca834",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 132
+      },
+      "writtenOn": "2016-09-06T07:51:40Z",
+      "side": 1,
+      "message": "if \u0027doctor\u0027 in functest_yaml and \u0027image_name\u0027 in functest_yaml[\u0027doctor\u0027]:\n    os.environ[\"IMAGE_NAME\"] \u003d functest_yaml[\u0027doctor\u0027][\u0027image_name\u0027]",
+      "revId": "325af87efbc4c15f95fc35d9aace727d43e2bfe4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
