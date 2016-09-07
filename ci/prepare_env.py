@@ -20,11 +20,11 @@ import subprocess
 import sys
 
 import argparse
+import yaml
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-import yaml
-from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 actions = ['start', 'check']
 parser = argparse.ArgumentParser()
@@ -204,7 +204,7 @@ def patch_config_file():
 def verify_deployment():
     print_separator()
     logger.info("Verifying OpenStack services...")
-    cmd = ("%s/ci/check_os.sh" % FUNCTEST_REPO)
+    cmd = ("%s/ci/check_os.sh" % ft_utils.FUNCTEST_REPO)
 
     logger.debug("Executing command: %s" % cmd)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
