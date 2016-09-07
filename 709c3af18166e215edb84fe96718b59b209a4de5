@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_62d19656",
+        "filename": "testcases/OpenStack/rally/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-07T09:40:02Z",
+      "side": 1,
+      "message": "I think we should also split CONSTANT in another module. I am not sure FUNCTEST_REPO is useful as you can use __file__ (all scripts are in the directory).",
+      "parentUuid": "1a76adc5_22f4fef0",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_42f7baf5",
         "filename": "testcases/OpenStack/tempest/run_tempest.py",
         "patchSetId": 1
@@ -36,6 +54,23 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_82d4f247",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-07T09:40:02Z",
+      "side": 1,
+      "message": "useless",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_e2dda671",
         "filename": "testcases/OpenStack/vPing/vping_util.py",
         "patchSetId": 1
@@ -47,6 +82,24 @@
       "writtenOn": "2016-09-07T09:29:36Z",
       "side": 1,
       "message": "sometimes you use ft_utils.FUNCTEST_REPO directly in the code without creating this variable. Shall we follow the same approach for all the scripts?",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_22cb9ea6",
+        "filename": "testcases/OpenStack/vPing/vping_util.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-07T09:40:02Z",
+      "side": 1,
+      "message": "FUNCTEST_REPO is useless",
+      "parentUuid": "1a76adc5_e2dda671",
       "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
