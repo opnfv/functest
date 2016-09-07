@@ -73,6 +73,24 @@
       "revId": "8f3dd78d63cfd690db9b87dbe9c43662047778e5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c1718c45",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 2283
+      },
+      "writtenOn": "2016-09-07T01:39:11Z",
+      "side": 1,
+      "message": "What\u0027s you suggestion on optimization.",
+      "parentUuid": "1a76adc5_415b3c2e",
+      "revId": "8f3dd78d63cfd690db9b87dbe9c43662047778e5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
