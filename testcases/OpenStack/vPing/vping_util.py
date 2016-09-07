@@ -4,12 +4,13 @@ import re
 import sys
 import time
 
-import functest.utils.functest_utils as ft_utils
-import functest.utils.openstack_utils as os_utils
 import paramiko
-from functest.utils.functest_utils import FUNCTEST_REPO as REPO_PATH
 from scp import SCPClient
 
+import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as os_utils
+
+FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
 functest_yaml = ft_utils.get_functest_yaml()
 
 NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
@@ -57,8 +58,8 @@ def pMsg(value):
 
 
 def check_repo_exist():
-    if not os.path.exists(REPO_PATH):
-        logger.error("Functest repository not found '%s'" % REPO_PATH)
+    if not os.path.exists(FUNCTEST_REPO):
+        logger.error("Functest repository not found '%s'" % FUNCTEST_REPO)
         exit(-1)
 
 
@@ -339,7 +340,7 @@ def transfer_ping_script(ssh, floatip):
     logger.info("Trying to transfer ping.sh to %s..." % floatip)
     scp = SCPClient(ssh.get_transport())
 
-    ping_script = REPO_PATH + '/' + "testcases/OpenStack/vPing/ping.sh"
+    ping_script = FUNCTEST_REPO + "/testcases/OpenStack/vPing/ping.sh"
     try:
         scp.put(ping_script, "~/")
     except:

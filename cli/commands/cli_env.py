@@ -7,12 +7,12 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import click
-import git
 import os
 
+import click
+import git
+
 import functest.utils.functest_utils as ft_utils
-from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 ENV_FILE = "/home/opnfv/functest/conf/env_active"
 
@@ -35,7 +35,7 @@ class CliEnv:
                 else:
                     answer = raw_input("Invalid answer. Please type [y|n]\n")
 
-        cmd = ("python %s/ci/prepare_env.py start" % FUNCTEST_REPO)
+        cmd = ("python %s/ci/prepare_env.py start" % ft_utils.FUNCTEST_REPO)
         ft_utils.execute_command(cmd)
 
     def show(self):
@@ -55,7 +55,7 @@ class CliEnv:
         if CI_NODE is None:
             CI_NODE = "Unknown"
 
-        repo = git.Repo(FUNCTEST_REPO)
+        repo = git.Repo(ft_utils.FUNCTEST_REPO)
         branch = repo.head.reference
         GIT_BRANCH = branch.name
         GIT_HASH = branch.commit.hexsha

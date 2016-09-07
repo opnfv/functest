@@ -11,10 +11,10 @@
 import os
 
 import click
+
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
-from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 functest_yaml = ft_utils.get_functest_yaml()
 
@@ -80,7 +80,7 @@ class CliOpenStack:
 
     def check(self):
         self.ping_endpoint()
-        cmd = FUNCTEST_REPO + "/ci/check_os.sh"
+        cmd = ft_utils.FUNCTEST_REPO + "/ci/check_os.sh"
         ft_utils.execute_command(cmd, verbose=False)
 
     def snapshot_create(self):
