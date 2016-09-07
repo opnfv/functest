@@ -25,7 +25,7 @@ import requests
 from neutronclient.v2_0 import client as ntclient
 
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
+import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 from clearwater import clearwater
 from orchestrator import orchestrator
@@ -47,34 +47,40 @@ args = parser.parse_args()
 logger = ft_logger.Logger("vIMS").getLogger()
 
 
-functest_yaml = functest_utils.get_functest_yaml()
-
 # Cloudify parameters
-VIMS_DIR = (functest_utils.FUNCTEST_REPO + '/' +
-            functest_yaml.get("general").get("directories").get("dir_vIMS"))
-VIMS_DATA_DIR = functest_yaml.get("general").get(
-    "directories").get("dir_vIMS_data") + "/"
-VIMS_TEST_DIR = functest_yaml.get("general").get(
-    "directories").get("dir_repo_vims_test") + "/"
-DB_URL = functest_yaml.get("results").get("test_db_url")
+VIMS_DIR = ft_utils.FUNCTEST_REPO + '/' + \
+           ft_utils.get_functest_config('general.directories.dir_vIMS')
 
-TENANT_NAME = functest_yaml.get("vIMS").get("general").get("tenant_name")
-TENANT_DESCRIPTION = functest_yaml.get("vIMS").get(
-    "general").get("tenant_description")
-IMAGES = functest_yaml.get("vIMS").get("general").get("images")
+VIMS_DATA_DIR = \
+    ft_utils.get_functest_config('general.directories.dir_vIMS_data') + \
+    '/'
+VIMS_TEST_DIR = \
+    ft_utils.get_functest_config('general.directories.dir_repo_vims_test') + \
+    '/'
+DB_URL = \
+    ft_utils.get_functest_config('results.test_db_url')
 
-CFY_MANAGER_BLUEPRINT = functest_yaml.get(
-    "vIMS").get("cloudify").get("blueprint")
-CFY_MANAGER_REQUIERMENTS = functest_yaml.get(
-    "vIMS").get("cloudify").get("requierments")
-CFY_INPUTS = functest_yaml.get("vIMS").get("cloudify").get("inputs")
+TENANT_NAME = \
+    ft_utils.get_functest_config('vIMS.general.tenant_name')
+TENANT_DESCRIPTION = \
+    ft_utils.get_functest_config('vIMS.general.tenant_description')
+IMAGES = \
+    ft_utils.get_functest_config('vIMS.general.images')
 
-CW_BLUEPRINT = functest_yaml.get("vIMS").get("clearwater").get("blueprint")
-CW_DEPLOYMENT_NAME = functest_yaml.get("vIMS").get(
-    "clearwater").get("deployment-name")
-CW_INPUTS = functest_yaml.get("vIMS").get("clearwater").get("inputs")
-CW_REQUIERMENTS = functest_yaml.get("vIMS").get(
-    "clearwater").get("requierments")
+CFY_MANAGER_BLUEPRINT = \
+    ft_utils.get_functest_config('vIMS.cloudify.blueprint')
+CFY_MANAGER_REQUIERMENTS = \
+    ft_utils.get_functest_config('vIMS.cloudify.requierments')
+CFY_INPUTS = ft_utils.get_functest_config('vIMS.cloudify.inputs')
+
+CW_BLUEPRINT = \
+    ft_utils.get_functest_config('vIMS.clearwater.blueprint')
+CW_DEPLOYMENT_NAME = \
+    ft_utils.get_functest_config('vIMS.clearwater.deployment-name')
+CW_INPUTS = \
+    ft_utils.get_functest_config('vIMS.clearwater.inputs')
+CW_REQUIERMENTS = \
+    ft_utils.get_functest_config('vIMS.clearwater.requierments')
 
 CFY_DEPLOYMENT_DURATION = 0
 CW_DEPLOYMENT_DURATION = 0
@@ -90,7 +96,7 @@ def download_and_add_image_on_glance(glance, image_name, image_url):
     if not os.path.exists(dest_path):
         os.makedirs(dest_path)
     file_name = image_url.rsplit('/')[-1]
-    if not functest_utils.download_url(image_url, dest_path):
+    if not ft_utils.download_url(image_url, dest_path):
         logger.error("Failed to download image %s" % file_name)
         return False
 
@@ -111,12 +117,12 @@ def step_failure(step_name, error_msg):
     stop_time = time.time()
     if step_name == "sig_test":
         status = "PASS"
-    functest_utils.push_results_to_db("functest",
-                                      "vims",
-                                      TESTCASE_START_TIME,
-                                      stop_time,
-                                      status,
-                                      RESULTS)
+    ft_utils.push_results_to_db("functest",
+                                "vims",
+                                TESTCASE_START_TIME,
+                                stop_time,
+                                status,
+                                RESULTS)
     exit(-1)
 
 
@@ -182,7 +188,7 @@ def test_clearwater():
     logger.info("vIMS functional test Start Time:'%s'" % (
         datetime.datetime.fromtimestamp(start_time_ts).strftime(
             '%Y-%m-%d %H:%M:%S')))
-    nameservers = functest_utils.get_resolvconf_ns()
+    nameservers = ft_utils.get_resolvconf_ns()
     resolvconf = ""
     for ns in nameservers:
         resolvconf += "\nnameserver " + ns
@@ -232,12 +238,12 @@ def test_clearwater():
         except:
             logger.error("Unable to set test status")
 
-        functest_utils.push_results_to_db("functest",
-                                          "vims",
-                                          TESTCASE_START_TIME,
-                                          end_time_ts,
-                                          status,
-                                          RESULTS)
+        ft_utils.push_results_to_db("functest",
+                                    "vims",
+                                    TESTCASE_START_TIME,
+                                    end_time_ts,
+                                    status,
+                                    RESULTS)
 
         try:
             os.remove(VIMS_TEST_DIR + "temp.json")
@@ -385,7 +391,7 @@ def main():
 
     cfy.set_external_network_name(ext_net)
 
-    ns = functest_utils.get_resolvconf_ns()
+    ns = ft_utils.get_resolvconf_ns()
     if ns:
         cfy.set_nameservers(ns)
 
@@ -396,10 +402,10 @@ def main():
 
     logger.info("Prepare virtualenv for cloudify-cli")
     cmd = "chmod +x " + VIMS_DIR + "create_venv.sh"
-    functest_utils.execute_command(cmd)
+    ft_utils.execute_command(cmd)
     time.sleep(3)
     cmd = VIMS_DIR + "create_venv.sh " + VIMS_DATA_DIR
-    functest_utils.execute_command(cmd)
+    ft_utils.execute_command(cmd)
 
     cfy.download_manager_blueprint(
         CFY_MANAGER_BLUEPRINT['url'], CFY_MANAGER_BLUEPRINT['branch'])

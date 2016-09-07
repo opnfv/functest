@@ -23,7 +23,7 @@ import argparse
 from neutronclient.v2_0 import client as neutronclient
 
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
+import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as openstack_utils
 
 parser = argparse.ArgumentParser()
@@ -35,12 +35,11 @@ args = parser.parse_args()
 logger = ft_logger.Logger("onos").getLogger()
 
 # onos parameters
-TEST_DB = functest_utils.get_parameter_from_yaml(
-    "results.test_db_url")
-ONOS_REPO_PATH = functest_utils.get_parameter_from_yaml(
-    "general.directories.dir_repos")
-ONOS_CONF_DIR = functest_utils.get_parameter_from_yaml(
-    "general.directories.dir_functest_conf")
+TEST_DB = ft_utils.get_functest_config("results.test_db_url")
+ONOS_REPO_PATH = \
+    ft_utils.get_functest_config("general.directories.dir_repos")
+ONOS_CONF_DIR = \
+    ft_utils.get_functest_config("general.directories.dir_functest_conf")
 
 ONOSCI_PATH = ONOS_REPO_PATH + "/"
 starttime = datetime.datetime.now()
@@ -49,15 +48,14 @@ HOME = os.environ['HOME'] + "/"
 INSTALLER_TYPE = os.environ['INSTALLER_TYPE']
 DEPLOY_SCENARIO = os.environ['DEPLOY_SCENARIO']
 ONOSCI_PATH = ONOS_REPO_PATH + "/"
-GLANCE_IMAGE_NAME = functest_utils.get_parameter_from_yaml(
-    "onos_sfc.image_name")
-GLANCE_IMAGE_FILENAME = functest_utils.get_parameter_from_yaml(
-    "onos_sfc.image_file_name")
-GLANCE_IMAGE_PATH = functest_utils.get_parameter_from_yaml(
-    "general.directories.dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
-SFC_PATH = functest_utils.FUNCTEST_REPO + "/" + \
-           functest_utils.get_parameter_from_yaml(
-               "general.directories.dir_onos_sfc")
+GLANCE_IMAGE_NAME = ft_utils.get_functest_config("onos_sfc.image_name")
+GLANCE_IMAGE_FILENAME = \
+    ft_utils.get_functest_config("onos_sfc.image_file_name")
+GLANCE_IMAGE_PATH = \
+    ft_utils.get_functest_config("general.directories.dir_functest_data") + \
+    "/" + GLANCE_IMAGE_FILENAME
+SFC_PATH = ft_utils.FUNCTEST_REPO + "/" + \
+           ft_utils.get_functest_config("general.directories.dir_onos_sfc")
 
 
 def RunScript(testname):
@@ -244,12 +242,12 @@ def OnosTest():
         except:
             logger.error("Unable to set ONOS criteria")
 
-        functest_utils.push_results_to_db("functest",
+        ft_utils.push_results_to_db("functest",
                                           "onos",
-                                          start_time,
-                                          stop_time,
-                                          status,
-                                          result)
+                                    start_time,
+                                    stop_time,
+                                    status,
+                                    result)
 
     except:
         logger.error("Error pushing results into Database")
