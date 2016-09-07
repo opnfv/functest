@@ -192,6 +192,23 @@
       "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_82be32d3",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-07T10:32:39Z",
+      "side": 1,
+      "message": "for example here you use FUNCTEST_REPO 2 times and don\u0027t create a global variable for that. Either way is fine for me.",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
