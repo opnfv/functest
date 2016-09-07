@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_22f4fef0",
+        "filename": "testcases/OpenStack/rally/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-07T09:29:36Z",
+      "side": 1,
+      "message": "Maybe for a different patch, can you change this to \nfunctest_utils.get_parameter_from_yaml(\u0027general.directories.dir_rally\u0027) ?\nand probably no need to do  functest_yaml \u003d functest_utils.get_functest_yaml() and import yaml",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_42f7baf5",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-07T09:29:36Z",
+      "side": 1,
+      "message": "same here, we could use the function  functest_utils.get_parameter_from_yaml()",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e2dda671",
+        "filename": "testcases/OpenStack/vPing/vping_util.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-07T09:29:36Z",
+      "side": 1,
+      "message": "sometimes you use ft_utils.FUNCTEST_REPO directly in the code without creating this variable. Shall we follow the same approach for all the scripts?",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_02d9c282",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-07T09:29:36Z",
+      "side": 1,
+      "message": "Related to my previous comment. Either we keep this or we create a variable at the begining of the script FUNCTEST_REPO \u003d ft_utils.FUNCTEST_REPO as in vping_util",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
