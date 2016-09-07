@@ -150,9 +150,7 @@ def get_db_url():
     """
     Returns DB URL
     """
-    functest_yaml = get_functest_yaml()
-    db_url = functest_yaml.get("results").get("test_db_url")
-    return db_url
+    return get_parameter_from_yaml('results.test_db_url')
 
 
 def logger_test_results(project, case_name, status, details):
@@ -329,10 +327,8 @@ def get_deployment_dir():
     """
     Returns current Rally deployment directory
     """
-    functest_yaml = get_functest_yaml()
-    deployment_name = functest_yaml.get("rally").get("deployment_name")
-    rally_dir = functest_yaml.get("general").get("directories").get(
-        "dir_rally_inst")
+    deployment_name = get_parameter_from_yaml('rally.deployment_name')
+    rally_dir = get_parameter_from_yaml('general.directories.dir_rally_inst')
     cmd = ("rally deployment list | awk '/" + deployment_name +
            "/ {print $2}'")
     p = subprocess.Popen(cmd, shell=True,

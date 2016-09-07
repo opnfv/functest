@@ -58,39 +58,48 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("run_tempest").getLogger()
 
-functest_yaml = ft_utils.get_functest_yaml()
-TEST_DB = functest_yaml.get("results").get("test_db_url")
+TEST_DB = ft_utils.get_parameter_from_yaml('results.test_db_url')
 
 MODE = "smoke"
-GLANCE_IMAGE_NAME = functest_yaml.get("general").get(
-    "openstack").get("image_name")
-GLANCE_IMAGE_FILENAME = functest_yaml.get("general").get(
-    "openstack").get("image_file_name")
-GLANCE_IMAGE_FORMAT = functest_yaml.get("general").get(
-    "openstack").get("image_disk_format")
-GLANCE_IMAGE_PATH = functest_yaml.get("general").get("directories").get(
-    "dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
-PRIVATE_NET_NAME = functest_yaml.get("tempest").get("private_net_name")
-PRIVATE_SUBNET_NAME = functest_yaml.get("tempest").get("private_subnet_name")
-PRIVATE_SUBNET_CIDR = functest_yaml.get("tempest").get("private_subnet_cidr")
-ROUTER_NAME = functest_yaml.get("tempest").get("router_name")
-TENANT_NAME = functest_yaml.get("tempest").get("identity").get("tenant_name")
-TENANT_DESCRIPTION = functest_yaml.get("tempest").get("identity").get(
-    "tenant_description")
-USER_NAME = functest_yaml.get("tempest").get("identity").get("user_name")
-USER_PASSWORD = functest_yaml.get("tempest").get("identity").get(
-    "user_password")
-SSH_TIMEOUT = functest_yaml.get("tempest").get("validation").get(
-    "ssh_timeout")
-DEPLOYMENT_MAME = functest_yaml.get("rally").get("deployment_name")
-RALLY_INSTALLATION_DIR = functest_yaml.get("general").get("directories").get(
-    "dir_rally_inst")
-RESULTS_DIR = functest_yaml.get("general").get("directories").get(
-    "dir_results")
+GLANCE_IMAGE_NAME = \
+    ft_utils.get_parameter_from_yaml('general.openstack.image_name')
+GLANCE_IMAGE_FILENAME = \
+    ft_utils.get_parameter_from_yaml('general.openstack.image_file_name')
+GLANCE_IMAGE_FORMAT = \
+    ft_utils.get_parameter_from_yaml('general.openstack.image_disk_format')
+GLANCE_IMAGE_PATH = \
+    ft_utils.get_parameter_from_yaml(
+        'general.directories.dir_functest_data') + "/" + GLANCE_IMAGE_FILENAME
+
+PRIVATE_NET_NAME = \
+    ft_utils.get_parameter_from_yaml('tempest.private_net_name')
+PRIVATE_SUBNET_NAME = \
+    ft_utils.get_parameter_from_yaml('tempest.private_subnet_name')
+PRIVATE_SUBNET_CIDR = \
+    ft_utils.get_parameter_from_yaml('tempest.private_subnet_cidr')
+ROUTER_NAME = \
+    ft_utils.get_parameter_from_yaml('tempest.router_name')
+TENANT_NAME = \
+    ft_utils.get_parameter_from_yaml('tempest.identity.tenant_name')
+TENANT_DESCRIPTION = \
+    ft_utils.get_parameter_from_yaml('tempest.identity.tenant_description')
+USER_NAME = \
+    ft_utils.get_parameter_from_yaml('tempest.identity.user_name')
+USER_PASSWORD = \
+    ft_utils.get_parameter_from_yaml('tempest.identity.user_password')
+SSH_TIMEOUT = \
+    ft_utils.get_parameter_from_yaml('tempest.validation.ssh_timeout')
+DEPLOYMENT_MAME = \
+    ft_utils.get_parameter_from_yaml('rally.deployment_name')
+RALLY_INSTALLATION_DIR = \
+    ft_utils.get_parameter_from_yaml('general.directories.dir_rally_inst')
+RESULTS_DIR = \
+    ft_utils.get_parameter_from_yaml('general.directories.dir_results')
 TEMPEST_RESULTS_DIR = RESULTS_DIR + '/tempest'
-TEST_LIST_DIR = functest_yaml.get("general").get("directories").get(
-    "dir_tempest_cases")
+
 REPO_PATH = ft_utils.FUNCTEST_REPO + '/'
+TEST_LIST_DIR = \
+    ft_utils.get_parameter_from_yaml('general.directories.dir_tempest_cases')
 TEMPEST_CUSTOM = REPO_PATH + TEST_LIST_DIR + 'test_list.txt'
 TEMPEST_BLACKLIST = REPO_PATH + TEST_LIST_DIR + 'blacklist.txt'
 TEMPEST_DEFCORE = REPO_PATH + TEST_LIST_DIR + 'defcore_req.txt'

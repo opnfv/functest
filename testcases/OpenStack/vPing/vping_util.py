@@ -9,39 +9,40 @@ from scp import SCPClient
 
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-
 FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
-functest_yaml = ft_utils.get_functest_yaml()
 
-NAME_VM_1 = functest_yaml.get("vping").get("vm_name_1")
-NAME_VM_2 = functest_yaml.get("vping").get("vm_name_2")
+NAME_VM_1 = ft_utils.get_parameter_from_yaml('vping.vm_name_1')
+NAME_VM_2 = ft_utils.get_parameter_from_yaml('vping.vm_name_2')
 
 VM_BOOT_TIMEOUT = 180
 VM_DELETE_TIMEOUT = 100
-PING_TIMEOUT = functest_yaml.get("vping").get("ping_timeout")
+PING_TIMEOUT = ft_utils.get_parameter_from_yaml('vping.ping_timeout')
 
-GLANCE_IMAGE_NAME = functest_yaml.get("vping").get("image_name")
-GLANCE_IMAGE_FILENAME = functest_yaml.get("general").get(
-    "openstack").get("image_file_name")
-GLANCE_IMAGE_FORMAT = functest_yaml.get("general").get(
-    "openstack").get("image_disk_format")
-GLANCE_IMAGE_PATH = functest_yaml.get("general").get("directories").get(
-    "dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_NAME = \
+    ft_utils.get_parameter_from_yaml('vping.image_name')
+GLANCE_IMAGE_FILENAME = \
+    ft_utils.get_parameter_from_yaml('general.openstack.image_file_name')
+GLANCE_IMAGE_FORMAT = \
+    ft_utils.get_parameter_from_yaml('general.openstack.image_disk_format')
+GLANCE_IMAGE_PATH = \
+    ft_utils.get_parameter_from_yaml(
+        'general.directories.dir_functest_data') + "/" + GLANCE_IMAGE_FILENAME
 
-FLAVOR = functest_yaml.get("vping").get("vm_flavor")
+
+FLAVOR = ft_utils.get_parameter_from_yaml('vping.vm_flavor')
 
 # NEUTRON Private Network parameters
-PRIVATE_NET_NAME = functest_yaml.get("vping").get(
-    "vping_private_net_name")
-PRIVATE_SUBNET_NAME = functest_yaml.get("vping").get(
-    "vping_private_subnet_name")
-PRIVATE_SUBNET_CIDR = functest_yaml.get("vping").get(
-    "vping_private_subnet_cidr")
-ROUTER_NAME = functest_yaml.get("vping").get(
-    "vping_router_name")
+PRIVATE_NET_NAME = \
+    ft_utils.get_parameter_from_yaml('vping.vping_private_net_name')
+PRIVATE_SUBNET_NAME = \
+    ft_utils.get_parameter_from_yaml('vping.vping_private_subnet_name')
+PRIVATE_SUBNET_CIDR = \
+    ft_utils.get_parameter_from_yaml('vping.vping_private_subnet_cidr')
+ROUTER_NAME = \
+    ft_utils.get_parameter_from_yaml('vping.vping_router_name')
 
-SECGROUP_NAME = functest_yaml.get("vping").get("vping_sg_name")
-SECGROUP_DESCR = functest_yaml.get("vping").get("vping_sg_descr")
+SECGROUP_NAME = ft_utils.get_parameter_from_yaml('vping.vping_sg_name')
+SECGROUP_DESCR = ft_utils.get_parameter_from_yaml('vping.vping_sg_descr')
 
 
 neutron_client = None
