@@ -20,11 +20,11 @@ import re
 import time
 
 import argparse
+from neutronclient.v2_0 import client as neutronclient
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as openstack_utils
-from functest.utils.functest_utils import FUNCTEST_REPO as REPO_PATH
-from neutronclient.v2_0 import client as neutronclient
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--testcase", help="Testcase name")
@@ -55,8 +55,9 @@ GLANCE_IMAGE_FILENAME = functest_utils.get_parameter_from_yaml(
     "onos_sfc.image_file_name")
 GLANCE_IMAGE_PATH = functest_utils.get_parameter_from_yaml(
     "general.directories.dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
-SFC_PATH = REPO_PATH + "/" + functest_utils.get_parameter_from_yaml(
-    "general.directories.dir_onos_sfc")
+SFC_PATH = functest_utils.FUNCTEST_REPO + "/" + \
+           functest_utils.get_parameter_from_yaml(
+               "general.directories.dir_onos_sfc")
 
 
 def RunScript(testname):

@@ -18,7 +18,7 @@ import re
 import time
 import yaml
 
-from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
+import functest.utils.functest_utils as ft_utils
 
 
 class foundation:
@@ -26,7 +26,7 @@ class foundation:
     def __init__(self):
 
         # currentpath = os.getcwd()
-        REPO_PATH = FUNCTEST_REPO + '/'
+        REPO_PATH = ft_utils.FUNCTEST_REPO + '/'
         currentpath = REPO_PATH + 'testcases/Controllers/ONOS/Teston/CI'
         self.cipath = currentpath
         self.logdir = os.path.join(currentpath, 'log')

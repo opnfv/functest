@@ -19,15 +19,14 @@ import subprocess
 import time
 
 import argparse
-import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
-import functest.utils.openstack_utils as os_utils
 import keystoneclient.v2_0.client as ksclient
 import novaclient.client as nvclient
 import requests
-from functest.utils.functest_utils import FUNCTEST_REPO as REPO_PATH
 from neutronclient.v2_0 import client as ntclient
 
+import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as functest_utils
+import functest.utils.openstack_utils as os_utils
 from clearwater import clearwater
 from orchestrator import orchestrator
 
@@ -51,7 +50,7 @@ logger = ft_logger.Logger("vIMS").getLogger()
 functest_yaml = functest_utils.get_functest_yaml()
 
 # Cloudify parameters
-VIMS_DIR = (REPO_PATH + '/' +
+VIMS_DIR = (functest_utils.FUNCTEST_REPO + '/' +
             functest_yaml.get("general").get("directories").get("dir_vIMS"))
 VIMS_DATA_DIR = functest_yaml.get("general").get(
     "directories").get("dir_vIMS_data") + "/"

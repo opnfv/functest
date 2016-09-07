@@ -4,11 +4,11 @@ import sys
 import time
 
 import argparse
+import paramiko
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-import paramiko
-from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 parser = argparse.ArgumentParser()
 
@@ -20,6 +20,8 @@ args = parser.parse_args()
 
 """ logging configuration """
 logger = ft_logger.Logger("ODL_SFC").getLogger()
+
+FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
 
 HOME = os.environ['HOME'] + "/"
 
