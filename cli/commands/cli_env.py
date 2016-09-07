@@ -7,14 +7,15 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import click
-import git
 import os
 
+import click
+import git
+
 import functest.utils.functest_utils as ft_utils
-from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
 ENV_FILE = "/home/opnfv/functest/conf/env_active"
+FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
 
 
 class CliEnv:
