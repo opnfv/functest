@@ -20,14 +20,14 @@ import os
 import re
 import subprocess
 import time
-import yaml
 
 import argparse
+import iniparse
+import yaml
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.openstack_utils as os_utils
-import iniparse
-from functest.utils.functest_utils import FUNCTEST_REPO as REPO_PATH
 
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
          'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
@@ -75,8 +75,8 @@ logger = ft_logger.Logger("run_rally").getLogger()
 functest_yaml = functest_utils.get_functest_yaml()
 
 HOME = os.environ['HOME'] + "/"
-RALLY_DIR = REPO_PATH + '/' + functest_yaml.get("general").get(
-    "directories").get("dir_rally")
+RALLY_DIR = functest_utils.FUNCTEST_REPO + '/' + \
+            functest_yaml.get("general").get("directories").get("dir_rally")
 TEMPLATE_DIR = RALLY_DIR + "scenario/templates"
 SUPPORT_DIR = RALLY_DIR + "scenario/support"
 TEMP_DIR = RALLY_DIR + "var"
