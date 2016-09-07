@@ -1,7 +1,7 @@
 -
     scenarios:
-        -
+        - os-nosdn-lxd-ha
     installers:
-        -
+        - joid
     tests:
-        -
+        - NovaServers.boot_server_from_volume_and_delete
