@@ -152,9 +152,7 @@ def get_db_url():
     """
     Returns DB URL
     """
-    functest_yaml = get_functest_yaml()
-    db_url = functest_yaml.get("results").get("test_db_url")
-    return db_url
+    return get_functest_config('results.test_db_url')
 
 
 def logger_test_results(project, case_name, status, details):
@@ -331,10 +329,8 @@ def get_deployment_dir():
     """
     Returns current Rally deployment directory
     """
-    functest_yaml = get_functest_yaml()
-    deployment_name = functest_yaml.get("rally").get("deployment_name")
-    rally_dir = functest_yaml.get("general").get("directories").get(
-        "dir_rally_inst")
+    deployment_name = get_functest_config('rally.deployment_name')
+    rally_dir = get_functest_config('general.directories.dir_rally_inst')
     cmd = ("rally deployment list | awk '/" + deployment_name +
            "/ {print $2}'")
     p = subprocess.Popen(cmd, shell=True,
@@ -366,24 +362,27 @@ def get_criteria_by_test(testname):
 #               YAML UTILS
 #
 # -----------------------------------------------------------
-def get_parameter_from_yaml(parameter, file=None):
+def get_parameter_from_yaml(parameter, file):
     """
-    Returns the value of a given parameter in config_functest.yaml
+    Returns the value of a given parameter in file.yaml
     parameter must be given in string format with dots
     Example: general.openstack.image_name
     """
-    if file is None:
-        file = os.environ["CONFIG_FUNCTEST_YAML"]
     with open(file) as f:
-        functest_yaml = yaml.safe_load(f)
+        file_yaml = yaml.safe_load(f)
     f.close()
-    value = functest_yaml
+    value = file_yaml
     for element in parameter.split("."):
         value = value.get(element)
         if value is None:
             raise ValueError("The parameter %s is not defined in"
                              " config_functest.yaml" % parameter)
     return value
+
+
+def get_functest_config(parameter):
+    yaml_ = os.environ["CONFIG_FUNCTEST_YAML"]
+    return get_parameter_from_yaml(parameter, yaml_)
 
 
 def check_success_rate(case_name, success_rate):

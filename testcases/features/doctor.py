@@ -29,10 +29,10 @@ args = parser.parse_args()
 
 functest_yaml = functest_utils.get_functest_yaml()
 
-DOCTOR_REPO = functest_utils.get_parameter_from_yaml(
-    'general.directories.dir_repo_doctor')
-RESULTS_DIR = functest_utils.get_parameter_from_yaml(
-    'general.directories.dir_results')
+DOCTOR_REPO = \
+    functest_utils.get_functest_config('general.directories.dir_repo_doctor')
+RESULTS_DIR = \
+    functest_utils.get_functest_config('general.directories.dir_results')
 
 logger = ft_logger.Logger("doctor").getLogger()
 

@@ -29,8 +29,8 @@ import yaml
 
 logger = ft_logger.Logger("openstack_clean").getLogger()
 
-OS_SNAPSHOT_FILE = ft_utils.get_parameter_from_yaml(
-    "general.openstack.snapshot_file")
+OS_SNAPSHOT_FILE = \
+    ft_utils.get_functest_config("general.openstack.snapshot_file")
 
 
 def separator():
