@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_02c0e27a",
+        "filename": "testcases/OpenStack/rally/run_rally-cert.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-07T09:44:16Z",
+      "side": 1,
+      "message": "Ok, I will do it in a new patch. follow one patch one task rule",
+      "parentUuid": "1a76adc5_22f4fef0",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_42f7baf5",
         "filename": "testcases/OpenStack/tempest/run_tempest.py",
         "patchSetId": 1
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_a2becefd",
+        "filename": "testcases/OpenStack/tempest/run_tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-07T09:44:16Z",
+      "side": 1,
+      "message": "which one is useless?",
+      "parentUuid": "1a76adc5_82d4f247",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_e2dda671",
         "filename": "testcases/OpenStack/vPing/vping_util.py",
         "patchSetId": 1
@@ -99,6 +135,42 @@
       "writtenOn": "2016-09-07T09:40:02Z",
       "side": 1,
       "message": "FUNCTEST_REPO is useless",
+      "parentUuid": "1a76adc5_e2dda671",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c2b98a16",
+        "filename": "testcases/OpenStack/vPing/vping_util.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-07T09:44:16Z",
+      "side": 1,
+      "message": "It is used in the following part",
+      "parentUuid": "1a76adc5_22cb9ea6",
+      "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_42cedab5",
+        "filename": "testcases/OpenStack/vPing/vping_util.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-07T09:44:16Z",
+      "side": 1,
+      "message": "aha, for this one, I just want to solve the flake8 violation, so I make a lazy refactor. :) \nI don\u0027t think we need to follow the same approach everywhere, it depends on whether ft_utils.FUNCTEST_REPO is referred once or more than once in the same file,\nif it is referred only one time, we can use ft_util.FUNCTEST_REPO directly, or else we\u0027d better use FUNCTEST_REPO \u003d ft_utils.FUNCTEST_REPO instead.I will follow the rule and refactor other files right now.",
       "parentUuid": "1a76adc5_e2dda671",
       "revId": "709c3af18166e215edb84fe96718b59b209a4de5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
