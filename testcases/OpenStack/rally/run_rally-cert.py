@@ -20,13 +20,14 @@ import os
 import re
 import subprocess
 import time
-import yaml
 
 import argparse
-import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
-import functest.utils.openstack_utils as os_utils
 import iniparse
+import yaml
+
+import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as os_utils
 from functest.utils.functest_utils import FUNCTEST_REPO as REPO_PATH
 
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
@@ -72,11 +73,9 @@ else:
 logger = ft_logger.Logger("run_rally").getLogger()
 
 
-functest_yaml = functest_utils.get_functest_yaml()
-
 HOME = os.environ['HOME'] + "/"
-RALLY_DIR = REPO_PATH + '/' + functest_yaml.get("general").get(
-    "directories").get("dir_rally")
+RALLY_DIR = REPO_PATH + '/' + \
+            ft_utils.get_parameter_from_yaml('general.directories.dir_rally')
 TEMPLATE_DIR = RALLY_DIR + "scenario/templates"
 SUPPORT_DIR = RALLY_DIR + "scenario/support"
 TEMP_DIR = RALLY_DIR + "var"
@@ -88,25 +87,27 @@ TENANTS_AMOUNT = 3
 ITERATIONS_AMOUNT = 10
 CONCURRENCY = 4
 
-RESULTS_DIR = functest_yaml.get("general").get("directories").get(
-    "dir_rally_res")
-TEMPEST_CONF_FILE = functest_yaml.get("general").get("directories").get(
-    "dir_results") + '/tempest/tempest.conf'
-TEST_DB = functest_yaml.get("results").get("test_db_url")
+RESULTS_DIR = \
+    ft_utils.get_parameter_from_yaml('general.directories.dir_rally_res')
+TEMPEST_CONF_FILE = \
+    ft_utils.get_parameter_from_yaml('general.directories.dir_results') + \
+    '/tempest/tempest.conf'
+TEST_DB = ft_utils.get_parameter_from_yaml('results.test_db_url')
 
-PRIVATE_NET_NAME = functest_yaml.get("rally").get("network_name")
-PRIVATE_SUBNET_NAME = functest_yaml.get("rally").get("subnet_name")
-PRIVATE_SUBNET_CIDR = functest_yaml.get("rally").get("subnet_cidr")
-ROUTER_NAME = functest_yaml.get("rally").get("router_name")
+PRIVATE_NET_NAME = ft_utils.get_parameter_from_yaml('rally.network_name')
+PRIVATE_SUBNET_NAME = ft_utils.get_parameter_from_yaml('rally.subnet_name')
+PRIVATE_SUBNET_CIDR = ft_utils.get_parameter_from_yaml('rally.subnet_cidr')
+ROUTER_NAME = ft_utils.get_parameter_from_yaml('rally.router_name')
 
-GLANCE_IMAGE_NAME = functest_yaml.get("general").get("openstack").get(
-    "image_name")
-GLANCE_IMAGE_FILENAME = functest_yaml.get("general").get("openstack").get(
-    "image_file_name")
-GLANCE_IMAGE_FORMAT = functest_yaml.get("general").get("openstack").get(
-    "image_disk_format")
-GLANCE_IMAGE_PATH = functest_yaml.get("general").get("directories").get(
-    "dir_functest_data") + "/" + GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_NAME = \
+    ft_utils.get_parameter_from_yaml('general.openstack.image_name')
+GLANCE_IMAGE_FILENAME = \
+    ft_utils.get_parameter_from_yaml('general.openstack.image_file_name')
+GLANCE_IMAGE_FORMAT = \
+    ft_utils.get_parameter_from_yaml('general.openstack.image_disk_format')
+GLANCE_IMAGE_PATH = \
+    ft_utils.get_parameter_from_yaml('general.directories.dir_functest_data') + \
+    "/" + GLANCE_IMAGE_FILENAME
 
 CINDER_VOLUME_TYPE_NAME = "volume_test"
 
@@ -409,12 +410,12 @@ def run_task(test_name):
     if args.report:
         stop_time = time.time()
         logger.debug("Push Rally detailed results into DB")
-        functest_utils.push_results_to_db("functest",
+        ft_utils.push_results_to_db("functest",
                                           "Rally_details",
-                                          start_time,
-                                          stop_time,
-                                          status,
-                                          json_data)
+                                    start_time,
+                                    stop_time,
+                                    status,
+                                    json_data)
 
 
 def main():
@@ -533,7 +534,7 @@ def main():
         case_name = "rally_full"
 
     # Evaluation of the success criteria
-    status = functest_utils.check_success_rate(case_name, success_rate)
+    status = ft_utils.check_success_rate(case_name, success_rate)
 
     exit_code = -1
     if status == "PASS":
@@ -541,12 +542,12 @@ def main():
 
     if args.report:
         logger.debug("Pushing Rally summary into DB...")
-        functest_utils.push_results_to_db("functest",
-                                          case_name,
-                                          start_time,
-                                          stop_time,
-                                          status,
-                                          payload)
+        ft_utils.push_results_to_db("functest",
+                                    case_name,
+                                    start_time,
+                                    stop_time,
+                                    status,
+                                    payload)
     if args.noclean:
         exit(exit_code)
 

@@ -18,7 +18,7 @@ import argparse
 import time
 
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
+import functest.utils.functest_utils as ft_utils
 
 parser = argparse.ArgumentParser()
 
@@ -27,12 +27,11 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-functest_yaml = functest_utils.get_functest_yaml()
 
-dirs = functest_yaml.get('general').get('directories')
-DOMINO_REPO = dirs.get('dir_repo_domino')
-RESULTS_DIR = functest_utils.get_parameter_from_yaml(
-    'general.directories.dir_results')
+DOMINO_REPO = \
+    ft_utils.get_parameter_from_yaml('general.directories.dir_repo_domino')
+RESULTS_DIR = \
+    ft_utils.get_parameter_from_yaml('general.directories.dir_results')
 
 logger = ft_logger.Logger("domino").getLogger()
 
@@ -42,9 +41,9 @@ def main():
     log_file = RESULTS_DIR + "/domino.log"
     start_time = time.time()
 
-    ret = functest_utils.execute_command(cmd,
-                                         exit_on_error=False,
-                                         output_file=log_file)
+    ret = ft_utils.execute_command(cmd,
+                                   exit_on_error=False,
+                                   output_file=log_file)
 
     stop_time = time.time()
     duration = round(stop_time - start_time, 1)
@@ -70,17 +69,18 @@ def main():
     elif details['status'] == "SKIPPED":
         status = "SKIP"
 
-    functest_utils.logger_test_results("Domino",
-                                       "domino-multinode",
-                                       status, details)
+    ft_utils.logger_test_results("Domino",
+                                 "domino-multinode",
+                                 status,
+                                 details)
     if args.report:
         if status is not "SKIP":
-            functest_utils.push_results_to_db("domino",
-                                              "domino-multinode",
-                                              start_time,
-                                              stop_time,
-                                              status,
-                                              details)
+            ft_utils.push_results_to_db("domino",
+                                        "domino-multinode",
+                                        start_time,
+                                        stop_time,
+                                        status,
+                                        details)
             logger.info("Domino results pushed to DB")
 
 

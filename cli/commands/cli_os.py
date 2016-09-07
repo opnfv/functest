@@ -16,10 +16,9 @@ import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
-functest_yaml = ft_utils.get_functest_yaml()
 
-FUNCTEST_CONF_DIR = functest_yaml.get("general").get(
-    "directories").get("dir_functest_conf")
+FUNCTEST_CONF_DIR = \
+    ft_utils.get_parameter_from_yaml('general.directories.dir_functest_conf')
 RC_FILE = os.getenv('creds')
 OS_SNAPSHOT_FILE = ft_utils.get_parameter_from_yaml(
     "general.openstack.snapshot_file")

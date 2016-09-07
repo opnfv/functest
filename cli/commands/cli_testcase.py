@@ -17,10 +17,9 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_vacation as vacation
 from functest.utils.functest_utils import FUNCTEST_REPO as FUNCTEST_REPO
 
-functest_yaml = ft_utils.get_functest_yaml()
 
-FUNCTEST_CONF_DIR = functest_yaml.get("general").get(
-    "directories").get("dir_functest_conf")
+FUNCTEST_CONF_DIR = \
+    ft_utils.get_parameter_from_yaml('general.directories.dir_functest_conf')
 ENV_FILE = FUNCTEST_CONF_DIR + "/env_active"
 
 
