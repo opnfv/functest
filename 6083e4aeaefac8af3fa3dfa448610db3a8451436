@@ -34,6 +34,24 @@
       "revId": "6083e4aeaefac8af3fa3dfa448610db3a8451436",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_cc2f7ca0",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-08T09:43:31Z",
+      "side": 1,
+      "message": "As it exits before, \"Summary\" won\u0027t be printed.",
+      "parentUuid": "1a76adc5_2cfe3039",
+      "revId": "6083e4aeaefac8af3fa3dfa448610db3a8451436",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
