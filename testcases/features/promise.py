@@ -12,6 +12,7 @@
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import time
 
@@ -182,7 +183,7 @@ def main():
     os.environ["OS_TEST_NETWORK"] = network_dic["net_id"]
 
     os.chdir(PROMISE_REPO)
-    results_file_name = RESULTS_DIR + '/' + 'promise-results.json'
+    results_file_name = 'promise-results.json'
     results_file = open(results_file_name, 'w+')
     cmd = 'npm run -s test -- --reporter json'
 
@@ -190,6 +191,7 @@ def main():
     ret = subprocess.call(cmd, shell=True, stdout=results_file,
                           stderr=subprocess.STDOUT)
     results_file.close()
+    shutil.copy2(results_file_name, RESULTS_DIR + '/' + results_file_name)
 
     if ret == 0:
         logger.info("The test succeeded.")
