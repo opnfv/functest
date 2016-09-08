@@ -1,6 +1,7 @@
 -
     scenarios:
         - os-nosdn-lxd-ha
+        - os-nosdn-lxd-noha
     installers:
         - joid
     tests:
