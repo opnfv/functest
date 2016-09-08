@@ -84,9 +84,9 @@ RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
 RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
 RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${repos_dir}/domino
 RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${repos_dir}/parser
-RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${repos_dir}/promise
 RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
 RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
+RUN git clone https://github.com/opnfv/promise ${repos_dir}/promise
 RUN git clone https://gerrit.opnfv.org/gerrit/securityscanning ${repos_dir}/securityscanning
 RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
 
