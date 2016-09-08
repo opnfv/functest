@@ -16,6 +16,47 @@
       "revId": "55d301a2622ff5b63d431b9272caa68224d53843",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_0c4c9441",
+        "filename": "ci/prepare_env.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-08T07:41:20Z",
+      "side": 1,
+      "message": "I think so, I remember it is added to support lxd",
+      "parentUuid": "1a76adc5_ac86c063",
+      "revId": "55d301a2622ff5b63d431b9272caa68224d53843",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_cc553cc7",
+        "filename": "ci/prepare_env.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-08T07:41:20Z",
+      "side": 1,
+      "message": "to Morgan, functest_patch_yaml is used here",
+      "range": {
+        "startLine": 194,
+        "startChar": 46,
+        "endLine": 194,
+        "endChar": 65
+      },
+      "revId": "55d301a2622ff5b63d431b9272caa68224d53843",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
