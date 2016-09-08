@@ -32,34 +32,34 @@ parser.add_argument("-r", "--report",
 args = parser.parse_args()
 
 
-dirs = ft_utils.get_parameter_from_yaml('general.directories')
+dirs = ft_utils.get_functest_config('general.directories')
 PROMISE_REPO = dirs.get('dir_repo_promise')
-RESULTS_DIR = ft_utils.get_parameter_from_yaml(
-    'general.directories.dir_results')
+RESULTS_DIR = ft_utils.get_functest_config('general.directories.dir_results')
 
-TENANT_NAME = ft_utils.get_parameter_from_yaml('promise.tenant_name')
-TENANT_DESCRIPTION = ft_utils.get_parameter_from_yaml(
-    'promise.tenant_description')
-USER_NAME = ft_utils.get_parameter_from_yaml('promise.user_name')
-USER_PWD = ft_utils.get_parameter_from_yaml('promise.user_pwd')
-IMAGE_NAME = ft_utils.get_parameter_from_yaml('promise.image_name')
-FLAVOR_NAME = ft_utils.get_parameter_from_yaml('promise.flavor_name')
-FLAVOR_VCPUS = ft_utils.get_parameter_from_yaml('promise.flavor_vcpus')
-FLAVOR_RAM = ft_utils.get_parameter_from_yaml('promise.flavor_ram')
-FLAVOR_DISK = ft_utils.get_parameter_from_yaml('promise.flavor_disk')
+TENANT_NAME = ft_utils.get_functest_config('promise.tenant_name')
+TENANT_DESCRIPTION = \
+    ft_utils.get_functest_config('promise.tenant_description')
+USER_NAME = ft_utils.get_functest_config('promise.user_name')
+USER_PWD = ft_utils.get_functest_config('promise.user_pwd')
+IMAGE_NAME = ft_utils.get_functest_config('promise.image_name')
+FLAVOR_NAME = ft_utils.get_functest_config('promise.flavor_name')
+FLAVOR_VCPUS = ft_utils.get_functest_config('promise.flavor_vcpus')
+FLAVOR_RAM = ft_utils.get_functest_config('promise.flavor_ram')
+FLAVOR_DISK = ft_utils.get_functest_config('promise.flavor_disk')
 
 
-GLANCE_IMAGE_FILENAME = ft_utils.get_parameter_from_yaml(
-    'general.openstack.image_file_name')
-GLANCE_IMAGE_FORMAT = ft_utils.get_parameter_from_yaml(
-    'general.openstack.image_disk_format')
-GLANCE_IMAGE_PATH = ft_utils.get_parameter_from_yaml(
-    'general.directories.dir_functest_data') + "/" + GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_FILENAME = \
+    ft_utils.get_functest_config('general.openstack.image_file_name')
+GLANCE_IMAGE_FORMAT = \
+    ft_utils.get_functest_config('general.openstack.image_disk_format')
+GLANCE_IMAGE_PATH = \
+    ft_utils.get_functest_config('general.directories.dir_functest_data') + \
+    "/" + GLANCE_IMAGE_FILENAME
 
-NET_NAME = ft_utils.get_parameter_from_yaml('promise.network_name')
-SUBNET_NAME = ft_utils.get_parameter_from_yaml('promise.subnet_name')
-SUBNET_CIDR = ft_utils.get_parameter_from_yaml('promise.subnet_cidr')
-ROUTER_NAME = ft_utils.get_parameter_from_yaml('promise.router_name')
+NET_NAME = ft_utils.get_functest_config('promise.network_name')
+SUBNET_NAME = ft_utils.get_functest_config('promise.subnet_name')
+SUBNET_CIDR = ft_utils.get_functest_config('promise.subnet_cidr')
+ROUTER_NAME = ft_utils.get_functest_config('promise.router_name')
 
 
 """ logging configuration """

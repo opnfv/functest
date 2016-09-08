@@ -28,10 +28,10 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-COPPER_REPO = functest_utils.get_parameter_from_yaml(
-    'general.directories.dir_repo_copper')
-RESULTS_DIR = functest_utils.get_parameter_from_yaml(
-    'general.directories.dir_results')
+COPPER_REPO = \
+    functest_utils.get_functest_config('general.directories.dir_repo_copper')
+RESULTS_DIR = \
+    functest_utils.get_functest_config('general.directories.dir_results')
 
 logger = ft_logger.Logger("copper").getLogger()
 
