@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_ac86c063",
+        "filename": "ci/prepare_env.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-08T07:14:06Z",
+      "side": 1,
+      "message": "hmm will this still work?\nit overrides the functest yaml with specific config due to scenario?",
+      "revId": "55d301a2622ff5b63d431b9272caa68224d53843",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
