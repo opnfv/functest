@@ -16,6 +16,24 @@
       "revId": "6083e4aeaefac8af3fa3dfa448610db3a8451436",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_2cfe3039",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 2283
+      },
+      "writtenOn": "2016-09-08T09:16:17Z",
+      "side": 1,
+      "message": "If it returns status \"FAIL\", I need to figure out the status and do if else.  Now if it fails, cleanup is done and there\u0027s no need to move on. In addition, it exit with -1 that indicate failure for report.",
+      "parentUuid": "1a76adc5_0c21f44c",
+      "revId": "6083e4aeaefac8af3fa3dfa448610db3a8451436",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
