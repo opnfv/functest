@@ -86,11 +86,18 @@ def main():
                     " ssh " + ip_server + " iptables -P INPUT ACCEPT ")
     iptable_cmd2 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
                     " ssh " + ip_server + " iptables -t nat -P INPUT ACCEPT ")
+    iptable_cmd3 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
+                    " ssh " + ssh_options + " " + ip_server +
+                    " iptables -A INPUT -m state"
+                    " --state NEW,ESTABLISHED,RELATED -j ACCEPT")
 
     logger.info("Changing firewall policy in controller: '%s'" % iptable_cmd1)
     subprocess.call(iptable_cmd1, shell=True, stderr=subprocess.PIPE)
 
     logger.info("Changing firewall policy in controller: '%s'" % iptable_cmd2)
+    subprocess.call(iptable_cmd2, shell=True, stderr=subprocess.PIPE)
+
+    logger.info("Changing firewall policy in controller: '%s'" % iptable_cmd3)
     subprocess.call(iptable_cmd2, shell=True, stderr=subprocess.PIPE)
 
 # Getting the different clients
