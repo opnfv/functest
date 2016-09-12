@@ -36,6 +36,8 @@ CREATED = 201
 ACCEPTED = 202
 NO_CONTENT = 204
 
+start_time = time.time()
+
 
 def PreConfig():
     logger.info("Testcase 1 : Prerequisites configuration for SFC")
@@ -43,21 +45,24 @@ def PreConfig():
     if (Sfc_obj.getToken() == OK):
         logger.info("Creation of Token is successfull")
     else:
-        logger.error("  :  Creation of Token is NOT successfull")
-        fail()
+        fail_info = "Creation of Token is NOT successfull"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info("1.2 Creation of Network")
     if (Sfc_obj.createNetworks() == CREATED):
         logger.info("Creation of network is successfull")
     else:
-        logger.error("  :  Creation of network is NOT successfull")
-        fail()
+        fail_info = "Creation of network is NOT successfull"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info("1.3 Creation of Subnetwork")
 
     if (Sfc_obj.createSubnets() == CREATED):
         logger.info("Creation of Subnetwork is successfull")
     else:
-        logger.error("  :  Creation of Subnetwork is NOT successfull")
-        fail()
+        fail_info = "Creation of Subnetwork is NOT successfull"
+        logger.error(fail_info)
+        fail(fail_info)
 
 
 def CreateNodes():
@@ -66,38 +71,44 @@ def CreateNodes():
     if (Sfc_obj.createPorts() == CREATED):
         logger.info("Creation of Port is successfull")
     else:
-        logger.error("  :  Creation of Port is NOT successfull")
-        fail()
+        fail_info = "Creation of Port is NOT successfull"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info("2.2 Creation of VM-Compute-Node")
     if (Sfc_obj.createVm() == ACCEPTED):
         logger.info("Creation of VM is successfull")
     else:
-        logger.error("  :  Creation of VM is NOT successfull")
-        fail()
+        fail_info = "Creation of VM is NOT successfull"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info("2.3 Check VM Status")
     if (Sfc_obj.checkVmState() == OK):
         logger.info("VM are in active state")
     else:
-        logger.error("  :   VM is NOT Active")
-        fail()
+        fail_info = "VM is NOT Active"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info("2.4 Router Creation")
     if (Sfc_obj.createRouter() == CREATED):
         logger.info("Creation of Router is Successful")
     else:
-        logger.error("  :   Router Creation is NOT Successful")
-        fail()
+        fail_info = "Router Creation is NOT Successful"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info("2.5 Attachement of Interface to VM")
     if (Sfc_obj.attachInterface() == OK):
         logger.info("Interface attached to VM")
     else:
-        logger.error("  :   Interface NOT attached to VM")
-        fail()
+        fail_info = "Interface NOT attached to VM"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info("2.6 Attachement of FLoating Ip to VM")
     if (Sfc_obj.addFloatingIp() == ACCEPTED):
         logger.info("Floating Ip attached to VM SUccessful")
     else:
-        logger.error("  :   Floating Ip NOT attached to VM ")
-        fail()
+        fail_info = "Floating Ip NOT attached to VM"
+        logger.error(fail_info)
+        fail(fail_info)
 
 
 def ConfigSfc():
@@ -107,39 +118,46 @@ def ConfigSfc():
     if (Sfc_obj.createPortPair() == CREATED):
         logger.info("Creation of Port pair is successful")
     else:
-        logger.error("  :  Creation of Port pair is NOT successful")
-        fail()
+        fail_info = "Creation of Port pair is NOT successful"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info("3.2 Getting the  Port Pair ID")
     if (Sfc_obj.getPortPair() == OK):
         logger.info("Port Pair ID is successfully got")
     else:
-        logger.error("  :  UnSuccessfully got Port Pair ID")
-        fail()
+        fail_info = "UnSuccessfully got Port Pair ID"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info("3.3 Creation of Port Pair Group")
     if (Sfc_obj.createPortGroup() == CREATED):
         logger.info("Creation of Port Pair Group is successful")
     else:
-        logger.error("  :  Creation of Port Pair Group is NOT successful")
-        fail()
+        fail_info = "Creation of Port Pair Group is NOT successful"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info("3.4 Getting Port Pair Group ID ")
     if (Sfc_obj.getPortGroup() == OK):
         logger.info("Port Pair Group ID is successfully received")
     else:
-        logger.error("  :  Port Pair Group ID is NOT successfully got")
-        fail()
+        fail_info = "Port Pair Group ID is NOT successfully got"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info("3.5 Creation of Flow Classifier")
     if (Sfc_obj.createFlowClassifier() == CREATED):
         logger.info("Creation of Flow Classifier is successful")
     else:
-        logger.error("  :  Creation of Flow Classifier is NOT successful")
-        fail()
+        fail_info = "Creation of Flow Classifier is NOT successful"
+        logger.error(fail_info)
+        fail(fail_info)
     logger.info(
         "Testcase 4 : Configure Port Chain and verify flows are added")
     logger.info("4.1 Creation of Port Chain")
     if (Sfc_obj.createPortChain() == CREATED):
         logger.info("Creation of Port Chain is successful")
     else:
-        logger.error("Creation of Port Chain is NOT successful")
+        fail_info = "Creation of Port Chain is NOT successful"
+        logger.error(fail_info)
+        fail(fail_info)
 
 
 def VerifySfcTraffic():
@@ -148,7 +166,8 @@ def VerifySfcTraffic():
     if (Sfc_obj.loginToVM() == "1"):
         logger.info("SFC function Working")
     else:
-        logger.error("  :  SFC function not working")
+        fail_info = "SFC function not working"
+        logger.error(fail_info)
         status = "FAIL"
 
     logger.info("Testcase 6 : Remove the Port Chain and Verify the traffic")
@@ -156,7 +175,8 @@ def VerifySfcTraffic():
         if (Sfc_obj.loginToVM() == "0"):
             logger.info("SFC function is removed Successfully")
         else:
-            logger.error(":SFC function not Removed. Have some problem")
+            fail_info = "SFC function not Removed. Have some problem"
+            logger.error(fail_info)
             status = "FAIL"
         if (Sfc_obj.deleteFlowClassifier() == NO_CONTENT):
             if (Sfc_obj.deletePortGroup() == NO_CONTENT):
@@ -164,23 +184,23 @@ def VerifySfcTraffic():
                     logger.info(
                         "SFC configuration is deleted successfully")
                 else:
-                    logger.error("  :  Port pair configuration is NOT\
-                                  deleted successfully")
+                    fail_info = "Port pair configuration deleted successfully"
+                    logger.error(fail_info)
                     status = "FAIL"
             else:
-                logger.error("  :  Port Group configuration is NOT \
-                             deleted successfully")
+                fail_info = "Port Group is NOT deleted successfully"
+                logger.error(fail_info)
                 status = "FAIL"
         else:
-                logger.error("  :  Flow classifier configuration is NOT \
-                             deleted successfully")
-                status = "FAIL"
+            fail_info = "Flow classifier is NOT deleted successfully"
+            logger.error(fail_info)
+            status = "FAIL"
     else:
-        logger.error(":PortChain configuration is NOT deleted \
-                     successfully")
+        fail_info = "PortChain configuration is NOT deleted successfully"
+        logger.error(fail_info)
         status = "FAIL"
     if (status == "FAIL"):
-        fail()
+        fail("Traffic for SFC is NOT verified successfully")
 
 
 def CleanUp():
@@ -188,23 +208,16 @@ def CleanUp():
     if (Sfc_obj.cleanup() == NO_CONTENT):
         logger.info("CleanUp is successfull")
     else:
-        logger.error("  :  CleanUp is NOT successfull")
+        logger.error("CleanUp is NOT successfull")
 
 
-def fail():
+def fail(fail_info):
     CleanUp()
+    PushDB("FAIL", fail_info)
     exit(-1)
 
 
-def main():
-    """Script to Test the SFC scenarios in ONOS."""
-    start_time = time.time()
-    PreConfig()
-    CreateNodes()
-    ConfigSfc()
-    VerifySfcTraffic()
-    CleanUp()
-    status = "PASS"
+def PushDB(status, info):
     logger.info("Summary :")
     try:
         logger.debug("Push ONOS SFC results into DB")
@@ -218,11 +231,22 @@ def main():
                                           start_time,
                                           stop_time,
                                           status,
-                                          details={'timestart': start_time,
-                                                   'duration': duration,
-                                                   'status': status})
+                                          details={'duration': duration,
+                                                   'status': status,
+                                                   'error': info})
     except:
         logger.error("Error pushing results into Database")
+
+
+def main():
+    """Script to Test the SFC scenarios in ONOS."""
+    PreConfig()
+    CreateNodes()
+    ConfigSfc()
+    VerifySfcTraffic()
+    CleanUp()
+    PushDB("PASS", "")
+
 
 if __name__ == '__main__':
     main()
