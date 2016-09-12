@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_5fcc6735",
+        "filename": "testcases/OpenStack/tempest/custom_tests/blacklist.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-12T09:50:48Z",
+      "side": 1,
+      "message": "it would be nice to have something like: os-odl_l2-nofeature-*  or os-odl_l2-*",
+      "revId": "8cfb05465b9069960e45ffdf50e5cf987f0e8693",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
