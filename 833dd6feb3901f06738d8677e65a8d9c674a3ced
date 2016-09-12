@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_7fae0387",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-12T09:22:10Z",
+      "side": 1,
+      "message": "on fail_info\nif there are several failures, the last failure message will overwritte the previous one",
+      "revId": "833dd6feb3901f06738d8677e65a8d9c674a3ced",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_dfcdd75e",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-12T09:22:10Z",
+      "side": 1,
+      "message": "would be interesting to get also the info\nnumber tests run / nb test failed in the DB for further processing (dashboard in Kibana for instance)\n\nsee details for onos_sfc http://testresults.opnfv.org/test/api/v1/results?case\u003donos_sfc\u0026last\u003d10\n\nand possible views\ntempest \u003d\u003e http://testresults.opnfv.org/test/api/v1/results?case\u003dtempest_smoke_serial\u0026last\u003d10\u0026scenario\u003dos-onos-sfc-ha\n\nodl \u003d\u003e http://testresults.opnfv.org/test/api/v1/results?case\u003dodl\u0026last\u003d10",
+      "revId": "833dd6feb3901f06738d8677e65a8d9c674a3ced",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
