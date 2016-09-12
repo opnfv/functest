@@ -235,6 +235,11 @@ def get_hypervisors(nova_client):
 def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
     try:
         flavor = nova_client.flavors.create(flavor_name, ram, vcpus, disk)
+        extra_specs = {}
+        deploy_scenario = os.environ.get('DEPLOY_SCENARIO')
+        if deploy_scenario is not None and 'fdio' in deploy_scenario:
+            extra_specs['hw:mem_page_size'] = 'large'
+            flavor.update(extra_specs)
     except Exception, e:
         logger.error("Error [create_flavor(nova_client, '%s', '%s', '%s', "
                      "'%s')]: %s" % (flavor_name, ram, disk, vcpus, e))
@@ -902,11 +907,16 @@ def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
             if logger:
                 logger.info("Creating image '%s' from '%s'..." % (image_name,
                                                                   file_path))
+            properties = {}
+            deploy_scenario = os.environ.get('DEPLOY_SCENARIO')
+            if deploy_scenario is not None and 'fdio' in deploy_scenario:
+                properties['hw_mem_page_size'] = 'large'
             with open(file_path) as fimage:
                 image = glance_client.images.create(name=image_name,
                                                     is_public=public,
                                                     disk_format=disk,
                                                     container_format=container,
+                                                    properties=properties,
                                                     data=fimage)
             image_id = image.id
         return image_id
