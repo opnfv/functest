@@ -219,7 +219,7 @@ def test_clearwater():
         try:
             logger.debug("Trying to load test results")
             with open(VIMS_TEST_DIR + "temp.json") as f:
-                vims_test_result = json.load(f)
+                vims_test_result = json.safe_load(f)
             f.close()
         except:
             logger.error("Unable to retrieve test results")

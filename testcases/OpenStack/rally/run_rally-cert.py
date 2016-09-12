@@ -395,7 +395,7 @@ def run_task(test_name):
 
     with open('{}opnfv-{}.json'
               .format(RESULTS_DIR, test_name)) as json_file:
-        json_data = json.load(json_file)
+        json_data = json.safe_load(json_file)
 
     """ parse JSON operation result """
     status = "FAIL"

@@ -36,7 +36,7 @@ def get_results_from_db():
     url = ft_utils.get_db_url() + '/results?build_tag=' + BUILD_TAG
     logger.debug("Query to rest api: %s" % url)
     try:
-        data = json.load(urllib2.urlopen(url))
+        data = json.safe_load(urllib2.urlopen(url))
         return data['results']
     except:
         logger.error("Cannot read content from the url: %s" % url)
