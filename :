@@ -39,6 +39,7 @@ NO_CONTENT = 204
 start_time = time.time()
 
 
+
 def PreConfig():
     logger.info("Testcase 1 : Prerequisites configuration for SFC")
     logger.info("1.1 Creation of Auth-Token")
@@ -123,11 +124,7 @@ def VerifySfcTraffic():
 
 def CleanUp():
     logger.info("Testcase 7 : Cleanup")
-    if (Sfc_obj.cleanup() == NO_CONTENT):
-        logger.info("CleanUp is successfull")
-    else:
-        logger.error("CleanUp is NOT successfull")
-
+    check(Sfc_obj.cleanup, NO_CONTENT,  "CleanUp")
 
 def check(method, criteria, msg):
     if (method() == criteria):
