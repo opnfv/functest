@@ -79,11 +79,17 @@
     # https://bugs.launchpad.net/tempest/+bug/1586931
     scenarios:
         - os-odl_l2-nofeature-ha
+        - os-odl_l2-nofeature-noha
         - os-odl_l2-sfc-ha
+        - os-odl_l2-sfc-noha
         - os-odl_l3-nofeature-ha
+        - os-odl_l3-nofeature-noha
         - os-nosdn-kvm-ha
+        - os-nosdn-kvm-noha
         - os-nosdn-nofeature-ha
+        - os-nosdn-nofeature-noha
         - os-nosdn-ovs-ha
+        - os-nosdn-ovs-noha
     installers:
         - fuel
     tests:
