@@ -36,6 +36,8 @@ CREATED = 201
 ACCEPTED = 202
 NO_CONTENT = 204
 
+start_time = time.time()
+
 
 def PreConfig():
     logger.info("Testcase 1 : Prerequisites configuration for SFC")
@@ -193,18 +195,11 @@ def CleanUp():
 
 def fail():
     CleanUp()
+    PushDB("FAIL")
     exit(-1)
 
 
-def main():
-    """Script to Test the SFC scenarios in ONOS."""
-    start_time = time.time()
-    PreConfig()
-    CreateNodes()
-    ConfigSfc()
-    VerifySfcTraffic()
-    CleanUp()
-    status = "PASS"
+def PushDB(status):
     logger.info("Summary :")
     try:
         logger.debug("Push ONOS SFC results into DB")
@@ -223,6 +218,17 @@ def main():
                                                    'status': status})
     except:
         logger.error("Error pushing results into Database")
+
+
+def main():
+    """Script to Test the SFC scenarios in ONOS."""
+    PreConfig()
+    CreateNodes()
+    ConfigSfc()
+    VerifySfcTraffic()
+    CleanUp()
+    PushDB("PASS")
+
 
 if __name__ == '__main__':
     main()
