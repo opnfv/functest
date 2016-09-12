@@ -58,6 +58,10 @@ def main():
     # Allow any port so that tacker commands reaches the server.
     # This will be deleted when tacker is included in OPNFV installation
 
+    status = "PASS"
+    failures = 0
+    start_time = time.time()
+
     ssh_options = '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
     contr_cmd = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
                  " 'fuel node'|grep controller|awk '{print $10}'")
@@ -315,7 +319,7 @@ def main():
 
     logger.info("Waiting for 60 seconds before TEST")
     for j in range(0, 6):
-        logger.info("Test starting in {0} seconds".format(str((6 - j)*10)))
+        logger.info("Test starting in {0} seconds".format(str((6 - j) * 10)))
         time.sleep(10)
 
     i = 0
@@ -336,7 +340,8 @@ def main():
         else:
             logger.error('\033[91m' + "TEST 1 [FAILED] "
                          "==> SSH NOT BLOCKED" + '\033[0m')
-            return
+            status = "FAILED"
+            failures += 1
     except:
         logger.debug("Waiting for %s..." % floatip_client)
         time.sleep(6)
@@ -356,7 +361,8 @@ def main():
         else:
             logger.error('\033[91m' + "TEST 2 [FAILED] "
                          "==> HTTP BLOCKED" + '\033[0m')
-            return
+            status = "FAILED"
+            failures += 1
     except:
         logger.debug("Waiting for %s..." % floatip_client)
         time.sleep(6)
@@ -389,13 +395,14 @@ def main():
         (stdin, stdout, stderr) = ssh.exec_command(command)
 
         if "timed out" in stdout.readlines()[0]:
-            logger.info('\033[92m' + "TEST 3 [WORKS] "
+            logger.info('\033[92m' + "TEST 3 [PASSED] "
                         "==> HTTP BLOCKED" + '\033[0m')
             i = i + 1
         else:
             logger.error('\033[91m' + "TEST 3 [FAILED] "
                          "==> HTTP NOT BLOCKED" + '\033[0m')
-            return
+            status = "FAILED"
+            failures += 1
     except:
         logger.debug("Waiting for %s..." % floatip_client)
         time.sleep(6)
@@ -409,13 +416,14 @@ def main():
         (stdin, stdout, stderr) = ssh.exec_command(command)
 
         if "succeeded" in stdout.readlines()[0]:
-            logger.info('\033[92m' + "TEST 4 [WORKS] "
+            logger.info('\033[92m' + "TEST 4 [PASSED] "
                         "==> SSH WORKS" + '\033[0m')
             i = i + 1
         else:
             logger.error('\033[91m' + "TEST 4 [FAILED] "
                          "==> SSH BLOCKED" + '\033[0m')
-            return
+            status = "FAILED"
+            failures += 1
     except:
         logger.debug("Waiting for %s..." % floatip_client)
         time.sleep(6)
@@ -426,21 +434,22 @@ def main():
             logger.info('\033[92m' + "SFC TEST WORKED"
                         " :) \n" + '\033[0m')
 
-    # TODO report results to DB
-    # functest_utils.logger_test_results("SFC",
-    # "odl-sfc",
-    # status, details)
-    # see doctor, promise, domino, ...
-    # if args.report:
-        # logger.info("Pushing odl-SFC results")
-        # functest_utils.push_results_to_db("functest",
-        #                                  "odl-sfc",
-        #                                  start_time,
-        #                                  stop_time,
-        #                                  status,
-        #                                  details)
-
-    sys.exit(0)
+    if args.report:
+        stop_time = time.time()
+        duration = stop_time - start_time
+        json_results = {"timestart": start_time, "duration": duration,
+                        "tests": "4", "failures": int(failures)}
+        logger.debug("Promise Results json: " + str(json_results))
+        ft_utils.push_results_to_db("sfc",
+                                    "functest-odl-sfc",
+                                    start_time,
+                                    stop_time,
+                                    status,
+                                    json_results)
+    if status == "PASS":
+        sys.exit(0)
+    else:
+        sys.exit(-1)
 
 if __name__ == '__main__':
     main()
