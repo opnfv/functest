@@ -223,5 +223,5 @@ if __name__ == '__main__':
     if not ODLTestCases.run(**args):
         sys.exit(os.EX_SOFTWARE)
     if args['pushtodb']:
-        sys.exit(not ODLTestCases.push_to_db())
+        ODLTestCases.push_to_db()
     sys.exit(os.EX_OK)
