@@ -87,6 +87,42 @@
       "revId": "83df5b888282e83f401a230d6cfda30df1bdb7b6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_7f4cc370",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 306
+      },
+      "writtenOn": "2016-09-12T08:03:05Z",
+      "side": 1,
+      "message": "but using \"return\" doesn\u0027t work~!\nbacause we check $? to judge the result",
+      "parentUuid": "1a76adc5_f60c8c44",
+      "revId": "83df5b888282e83f401a230d6cfda30df1bdb7b6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_db2acc8f",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 306
+      },
+      "writtenOn": "2016-09-12T08:03:05Z",
+      "side": 1,
+      "message": "ok! we need a check of return value in main, otherwise the return fail doesn\u0027t work",
+      "parentUuid": "1a76adc5_81787490",
+      "revId": "83df5b888282e83f401a230d6cfda30df1bdb7b6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
