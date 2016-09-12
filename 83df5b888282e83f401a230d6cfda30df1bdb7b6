@@ -123,6 +123,24 @@
       "revId": "83df5b888282e83f401a230d6cfda30df1bdb7b6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_1f734fb2",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-12T08:16:13Z",
+      "side": 1,
+      "message": "ofc it works. It only requires another programming design.",
+      "parentUuid": "1a76adc5_7f4cc370",
+      "revId": "83df5b888282e83f401a230d6cfda30df1bdb7b6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
