@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_e86edb95",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-13T10:11:52Z",
+      "side": 1,
+      "message": "has been\n\nmaybe add\nPerformance issues seem to be connected to ODL version. It is planned to reintroduce Rally sanity in Colorado 2.0 with the adoption of ODL Boron.",
+      "range": {
+        "startLine": 258,
+        "startChar": 49,
+        "endLine": 258,
+        "endChar": 51
+      },
+      "revId": "952d319685d5cc085bc0c9c78ff247b7f9d226aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
