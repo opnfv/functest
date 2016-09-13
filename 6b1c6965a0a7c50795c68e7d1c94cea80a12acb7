@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_e5f5a6cb",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-13T02:22:19Z",
+      "side": 1,
+      "message": "personal opinion, how about:\n\ndef obj_item_check(check_method, success_criteria, msg)\n    if check_method() \u003d\u003d success_criteria:\n        logger.info(msg + \u0027is Successful\u0027)\n    else:\n        fail(msg + \u0027is not successful\u0027)\n\nreference:\nobj_item_check(Sfc_obj.getToken, OK, \u0027Creation of Token\u0027)",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "6b1c6965a0a7c50795c68e7d1c94cea80a12acb7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
