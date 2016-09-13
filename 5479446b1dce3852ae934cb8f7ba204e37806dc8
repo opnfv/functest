@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_055c627d",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-13T07:24:12Z",
+      "side": 1,
+      "message": "You are right",
+      "parentUuid": "1a76adc5_6530b656",
+      "revId": "5479446b1dce3852ae934cb8f7ba204e37806dc8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_0537824f",
         "filename": "testcases/features/sfc/sfc.py",
         "patchSetId": 2
@@ -99,6 +117,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_65651644",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-13T07:24:12Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll remove it.",
+      "parentUuid": "1a76adc5_253abe36",
+      "revId": "5479446b1dce3852ae934cb8f7ba204e37806dc8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_85f3929d",
         "filename": "testcases/features/sfc/sfc.py",
         "patchSetId": 2
@@ -110,6 +146,24 @@
       "writtenOn": "2016-09-13T06:44:35Z",
       "side": 1,
       "message": "ok so we could remove odl-sfc test case from functest cases\nsfc / functest-odl-sfc already properly exists in the DB",
+      "revId": "5479446b1dce3852ae934cb8f7ba204e37806dc8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_45625a3f",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-13T07:24:12Z",
+      "side": 1,
+      "message": "\u0027odl-sfc\u0027 test case does not exist, I created \u0027functest-odl-sfc\u0027 to make things simpler. They declared firstly the test case for Yardstick as the DB can show, but now it is implemented in Functest.",
+      "parentUuid": "1a76adc5_85f3929d",
       "revId": "5479446b1dce3852ae934cb8f7ba204e37806dc8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
