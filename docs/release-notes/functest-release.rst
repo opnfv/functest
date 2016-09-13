@@ -309,6 +309,8 @@ Test results are available in:
 
  - jenkins logs on CI: https://build.opnfv.org/ci/view/functest/
 
+ - jenkins logs on ARM CI: https://build.opnfv.org/ci/view/armband/
+
 
 
 Open JIRA tickets
