@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_e5d7e6bd",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2016-09-13T07:57:51Z",
+      "side": 1,
+      "message": "This should be \u0027not\u0027 I guess",
+      "range": {
+        "startLine": 537,
+        "startChar": 39,
+        "endLine": 537,
+        "endChar": 41
+      },
+      "revId": "8f9161f58efa9fdd36424bb374865066c6837527",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
