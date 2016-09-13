@@ -1,5 +1,5 @@
 ==============================================
-OPNFV Brahmaputra3.0 release note for Functest
+OPNFV Colorado 1.0 release note for Functest
 ==============================================
 
 Abstract
