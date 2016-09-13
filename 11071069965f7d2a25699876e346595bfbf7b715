@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_53d2205d",
+        "filename": ":",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-13T14:00:16Z",
+      "side": 1,
+      "message": "new file, same code? maybe an upload mistake",
+      "revId": "11071069965f7d2a25699876e346595bfbf7b715",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
