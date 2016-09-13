@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_6530b656",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-13T06:44:35Z",
+      "side": 1,
+      "message": "FAIL",
+      "revId": "5479446b1dce3852ae934cb8f7ba204e37806dc8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_0537824f",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-13T06:44:35Z",
+      "side": 1,
+      "message": "FAIL",
+      "revId": "5479446b1dce3852ae934cb8f7ba204e37806dc8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_452d7afd",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-13T06:44:35Z",
+      "side": 1,
+      "message": "FAIL",
+      "range": {
+        "startLine": 404,
+        "startChar": 22,
+        "endLine": 404,
+        "endChar": 28
+      },
+      "revId": "5479446b1dce3852ae934cb8f7ba204e37806dc8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a5eeceb2",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-13T06:44:35Z",
+      "side": 1,
+      "message": "FAIL not FAILED",
+      "range": {
+        "startLine": 425,
+        "startChar": 22,
+        "endLine": 425,
+        "endChar": 28
+      },
+      "revId": "5479446b1dce3852ae934cb8f7ba204e37806dc8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_253abe36",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-13T06:44:35Z",
+      "side": 1,
+      "message": "note with start_time and stop_time we do not need timestart and duration in the detail section now...",
+      "revId": "5479446b1dce3852ae934cb8f7ba204e37806dc8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_85f3929d",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-13T06:44:35Z",
+      "side": 1,
+      "message": "ok so we could remove odl-sfc test case from functest cases\nsfc / functest-odl-sfc already properly exists in the DB",
+      "revId": "5479446b1dce3852ae934cb8f7ba204e37806dc8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
