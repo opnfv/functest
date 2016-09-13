@@ -71,7 +71,7 @@ tiers:
                     Rally suite in smoke mode.
                 dependencies:
                     installer: ''
-                    scenario: ''
+                    scenario: '^((?!bgpvpn).)*$'
 
     -
         name: sdn_suites
