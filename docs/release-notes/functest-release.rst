@@ -251,7 +251,15 @@ Colorado known restrictions/issues
 +-----------+-----------+----------------------------------------------+
 | apex/fuel | *-bgpvpn  | vPing_ssh (floating ips not supported) and   |
 |           |           | vIMS excluded. Some Tempest cases related to |
-|           |           | floating ips also excluded.                  |
+|           |           | floating ips also excluded. Some performance |
+|           |           | issues have been detected in this scenario   |
+|           |           | (i.e. BGPVPN extension enabled) when running |
+|           |           | commands against the OpenStack APIs, thus    |
+|           |           | Rally sanity test case has been disabled.    |
+|           |           | Performance issues seem to be connected to   |
+|           |           | the ODL version. It is planned to reintroduce|
+|           |           | Rally sanity in Colorado 2.0 with the        |
+|           |           | adoption of ODL Boron release.               |
 +-----------+-----------+----------------------------------------------+
 | compass   | moon      | First ODL test FAILS because ODL/Openstack   |
 |           |           | federation done in moon is partial. Only     |
