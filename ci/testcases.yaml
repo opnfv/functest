@@ -151,7 +151,7 @@ tiers:
                     Simple security Scan
                 dependencies:
                     installer: 'apex'
-                    scenario: ''
+                    scenario: '^((?!fdio).)*$'
 
             -
                 name: copper
@@ -161,7 +161,7 @@ tiers:
                     Test suite for policy management based on OpenStack Congress
                 dependencies:
                     installer: '(apex)|(joid)'
-                    scenario: '^((?!lxd).)*$'
+                    scenario: '^((?!fdio|lxd).)*$'
             -
                 name: moon
                 criteria: 'status == "PASS"'
