@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a76adc5_4e7b57f5",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-14T08:01:54Z",
+      "side": 1,
+      "message": "os.EX_SOFTWARE",
+      "revId": "64d20d06573ca64c67e794980dc76f66ffbe9c6a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_6e7e53e6",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-14T08:01:54Z",
+      "side": 1,
+      "message": "os.EX_OK",
+      "revId": "64d20d06573ca64c67e794980dc76f66ffbe9c6a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_0e855fcf",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-14T08:01:54Z",
+      "side": 1,
+      "message": "please use the related openstack client",
+      "revId": "64d20d06573ca64c67e794980dc76f66ffbe9c6a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_df507760",
         "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
         "patchSetId": 2
@@ -13,6 +64,58 @@
       "writtenOn": "2016-09-12T09:47:55Z",
       "side": 1,
       "message": "@Meimei: you said: we need a check of return value in main, otherwise the return fail doesn\u0027t work. It is that still to be implemented here?",
+      "revId": "64d20d06573ca64c67e794980dc76f66ffbe9c6a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_2e885be6",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-14T08:01:54Z",
+      "side": 1,
+      "message": "Agree. return(SfcTest()) seems better",
+      "parentUuid": "1a76adc5_df507760",
+      "revId": "64d20d06573ca64c67e794980dc76f66ffbe9c6a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_ce6e872f",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-14T08:01:54Z",
+      "side": 1,
+      "message": "return(OnosTest()) too?",
+      "revId": "64d20d06573ca64c67e794980dc76f66ffbe9c6a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_ae730b14",
+        "filename": "testcases/Controllers/ONOS/Teston/onosfunctest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-14T08:01:54Z",
+      "side": 1,
+      "message": "exit(main()) ?",
       "revId": "64d20d06573ca64c67e794980dc76f66ffbe9c6a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
