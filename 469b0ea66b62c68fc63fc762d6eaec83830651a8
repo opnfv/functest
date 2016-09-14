@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_ce40c7a7",
+        "filename": "testcases/Controllers/ONOS/Sfc/Sfc.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-14T07:54:23Z",
+      "side": 1,
+      "message": "duplicated",
+      "revId": "469b0ea66b62c68fc63fc762d6eaec83830651a8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
