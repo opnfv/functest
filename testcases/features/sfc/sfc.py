@@ -263,6 +263,11 @@ def main():
         logger.error('Failed to obtain IPs, cant continue, exiting')
         return
 
+    logger.info("Waiting 60 seconds for floating IP assignment")
+    for j in range(0, 6):
+        logger.debug("Test starting in {0} seconds".format(str((6 - j) * 10)))
+        time.sleep(10)
+
     logger.debug("Floating IPs for SFs: %s..." % ips)
 
     # SSH TO START THE VXLAN_TOOL ON SF1
@@ -324,11 +329,6 @@ def main():
     process = subprocess.Popen(contr_cmd3,
                                shell=True,
                                stdout=subprocess.PIPE)
-
-    logger.info("Waiting for 60 seconds before TEST")
-    for j in range(0, 6):
-        logger.info("Test starting in {0} seconds".format(str((6 - j) * 10)))
-        time.sleep(10)
 
     i = 0
 
