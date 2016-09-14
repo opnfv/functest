@@ -89,10 +89,11 @@ def check_env_variables():
         logger.warning("The env variable 'INSTALLER_TYPE' is not defined.")
         CI_INSTALLER_TYPE = "undefined"
     else:
-        if os.getenv('INSTALLER_TYPE') not in INSTALLERS:
+        if CI_INSTALLER_TYPE not in INSTALLERS:
             logger.warning("INSTALLER_TYPE=%s is not a valid OPNFV installer. "
-                           "Available OPNFV Installers are : %s."
-                           "Setting INSTALLER_TYPE=undefined." % INSTALLERS)
+                           "Available OPNFV Installers are : %s. "
+                           "Setting INSTALLER_TYPE=undefined."
+                           % (CI_INSTALLER_TYPE, INSTALLERS))
             CI_INSTALLER_TYPE = "undefined"
         else:
             logger.info("    INSTALLER_TYPE=%s" % CI_INSTALLER_TYPE)
