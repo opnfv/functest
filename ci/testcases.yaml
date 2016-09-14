@@ -131,7 +131,7 @@ tiers:
                     Test suite from Doctor project.
                 dependencies:
                     installer: '(apex)|(fuel)'
-                    scenario: ''
+                    scenario: '^((?!fdio).)*$'
 
             -
                 name: bgpvpn
@@ -161,7 +161,7 @@ tiers:
                     Test suite for policy management based on OpenStack Congress
                 dependencies:
                     installer: '(apex)|(joid)'
-                    scenario: '^((?!lxd).)*$'
+                    scenario: '^((?!fdio|lxd).)*$'
             -
                 name: moon
                 criteria: 'status == "PASS"'
