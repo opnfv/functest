@@ -33,7 +33,7 @@ ARG TEMPEST_TAG=12.2.0
 ARG RALLY_TAG=0.5.0
 ARG ODL_TAG=release/beryllium-sr3
 ARG OPENSTACK_TAG=stable/mitaka
-ARG KINGBIRD_TAG=0.2.1
+ARG KINGBIRD_TAG=0.2.2
 ARG VIMS_TAG=stable
 ENV HOME /home/opnfv
 ENV repos_dir /home/opnfv/repos
