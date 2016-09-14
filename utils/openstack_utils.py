@@ -727,6 +727,18 @@ def update_bgpvpn(neutron_client, bgpvpn_id, **kwargs):
 def delete_bgpvpn(neutron_client, bgpvpn_id):
     return neutron_client.delete_bgpvpn(bgpvpn_id)
 
+
+def get_bgpvpn(neutron_client, bgpvpn_id):
+    return neutron_client.show_bgpvpn(bgpvpn_id)
+
+
+def get_bgpvpn_routers(neutron_client, bgpvpn_id):
+    return get_bgpvpn(neutron_client, bgpvpn_id)['bgpvpn']['routers']
+
+
+def get_bgpvpn_networks(neutron_client, bgpvpn_id):
+    return get_bgpvpn(neutron_client, bgpvpn_id)['bgpvpn']['networks']
+
 # *********************************************
 #   SEC GROUPS
 # *********************************************
