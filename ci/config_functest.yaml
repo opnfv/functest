@@ -39,6 +39,11 @@ general:
         image_file_name:  cirros-0.3.4-x86_64-disk.img
         image_disk_format:  qcow2
 
+        flavor_name: opnfv_flavor
+        flavor_ram: 512
+        flavor_disk: 1
+        flavor_vcpus: 1
+
         # Private network for functest. Will be created by config_functest.py
         neutron_private_net_name: functest-net
         neutron_private_subnet_name: functest-subnet
@@ -81,6 +86,8 @@ tempest:
     private_subnet_name: tempest-subnet
     private_subnet_cidr: 192.168.150.0/24
     router_name: tempest-router
+    use_custom_images: False
+    use_custom_flavors: False
 
 rally:
     deployment_name: opnfv-rally
