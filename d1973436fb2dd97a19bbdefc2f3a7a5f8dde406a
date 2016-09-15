@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_b4459ab4",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-15T07:56:52Z",
+      "side": 1,
+      "message": "you are right, I put the colorado links better than master",
+      "parentUuid": "1a76adc5_14e9eeb7",
+      "range": {
+        "startLine": 106,
+        "startChar": 1,
+        "endLine": 110,
+        "endChar": 80
+      },
+      "revId": "d1973436fb2dd97a19bbdefc2f3a7a5f8dde406a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_74d86253",
         "filename": "docs/release-notes/functest-release.rst",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_54f0c666",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-15T07:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a76adc5_74d86253",
+      "revId": "d1973436fb2dd97a19bbdefc2f3a7a5f8dde406a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_34ec2ac7",
         "filename": "docs/release-notes/functest-release.rst",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2016-09-15T06:31:15Z",
       "side": 1,
       "message": "l --\u003e L    !!!",
+      "range": {
+        "startLine": 240,
+        "startChar": 8,
+        "endLine": 240,
+        "endChar": 9
+      },
+      "revId": "d1973436fb2dd97a19bbdefc2f3a7a5f8dde406a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_5414469f",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-15T07:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a76adc5_34ec2ac7",
       "range": {
         "startLine": 240,
         "startChar": 8,
@@ -93,6 +159,30 @@
       "writtenOn": "2016-09-15T06:31:15Z",
       "side": 1,
       "message": "no ---\u003e not   ?or what?",
+      "range": {
+        "startLine": 472,
+        "startChar": 25,
+        "endLine": 472,
+        "endChar": 27
+      },
+      "revId": "d1973436fb2dd97a19bbdefc2f3a7a5f8dde406a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_741702a4",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-09-15T07:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a76adc5_d4d296ff",
       "range": {
         "startLine": 472,
         "startChar": 25,
