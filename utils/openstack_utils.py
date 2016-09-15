@@ -239,7 +239,7 @@ def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
         try:
             extra_specs = ft_utils.get_functest_config(
                 'general.flavor_extra_specs')
-            flavor.update(extra_specs)
+            flavor.set_keys(extra_specs)
         except ValueError:
             # flavor extra specs are not configured, therefore skip the update
             pass
