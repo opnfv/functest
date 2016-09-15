@@ -70,6 +70,16 @@ GLANCE_IMAGE_FORMAT = \
 GLANCE_IMAGE_PATH = \
     ft_utils.get_functest_config('general.directories.dir_functest_data') + \
     "/" + GLANCE_IMAGE_FILENAME
+IMAGE_ID = None
+IMAGE_ID_ALT = None
+
+FLAVOR_NAME = \
+    ft_utils.get_functest_config('general.openstack.flavor_name')
+FLAVOR_RAM = ft_utils.get_functest_config('general.openstack.flavor_ram')
+FLAVOR_DISK = ft_utils.get_functest_config('general.openstack.flavor_disk')
+FLAVOR_VCPUS = ft_utils.get_functest_config('general.openstack.flavor_vcpus')
+FLAVOR_ID = None
+FLAVOR_ID_ALT = None
 
 PRIVATE_NET_NAME = \
     ft_utils.get_functest_config('tempest.private_net_name')
@@ -89,6 +99,11 @@ USER_PASSWORD = \
     ft_utils.get_functest_config('tempest.identity.user_password')
 SSH_TIMEOUT = \
     ft_utils.get_functest_config('tempest.validation.ssh_timeout')
+USE_CUSTOM_IMAGES = \
+    ft_utils.get_functest_config('tempest.use_custom_images')
+USE_CUSTOM_FLAVORS = \
+    ft_utils.get_functest_config('tempest.use_custom_flavors')
+
 DEPLOYMENT_MAME = \
     ft_utils.get_functest_config('rally.deployment_name')
 RALLY_INSTALLATION_DIR = \
@@ -153,12 +168,26 @@ def create_tempest_resources():
     if not network_dic:
         exit(1)
 
-    logger.debug("Creating image for Tempest suite")
-    _, image_id = os_utils.get_or_create_image(GLANCE_IMAGE_NAME,
-                                               GLANCE_IMAGE_PATH,
-                                               GLANCE_IMAGE_FORMAT)
-    if not image_id:
-        exit(-1)
+    if USE_CUSTOM_IMAGES:
+        # adding alternative image should be trivial should we need it
+        logger.debug("Creating image for Tempest suite")
+        global IMAGE_ID
+        _, IMAGE_ID = os_utils.get_or_create_image(GLANCE_IMAGE_NAME,
+                                                   GLANCE_IMAGE_PATH,
+                                                   GLANCE_IMAGE_FORMAT)
+        if not IMAGE_ID:
+            exit(-1)
+
+    if USE_CUSTOM_FLAVORS:
+        # adding alternative flavor should be trivial should we need it
+        logger.debug("Creating flavor for Tempest suite")
+        global FLAVOR_ID
+        _, FLAVOR_ID = os_utils.get_or_create_flavor(FLAVOR_NAME,
+                                                     FLAVOR_RAM,
+                                                     FLAVOR_DISK,
+                                                     FLAVOR_VCPUS)
+        if not FLAVOR_ID:
+            exit(-1)
 
 
 def configure_tempest(deployment_dir):
@@ -185,6 +214,16 @@ def configure_tempest(deployment_dir):
     config = ConfigParser.RawConfigParser()
     config.read(tempest_conf_file)
     config.set('compute', 'fixed_network_name', PRIVATE_NET_NAME)
+    if USE_CUSTOM_IMAGES:
+        if IMAGE_ID is not None:
+            config.set('compute', 'image_ref', IMAGE_ID)
+        if IMAGE_ID_ALT is not None:
+            config.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
+    if USE_CUSTOM_FLAVORS:
+        if FLAVOR_ID is not None:
+            config.set('compute', 'flavor_ref', FLAVOR_ID)
+        if FLAVOR_ID_ALT is not None:
+            config.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
     config.set('identity', 'tenant_name', TENANT_NAME)
     config.set('identity', 'username', USER_NAME)
     config.set('identity', 'password', USER_PASSWORD)

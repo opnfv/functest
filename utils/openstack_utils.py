@@ -211,6 +211,45 @@ def get_flavor_id_by_ram_range(nova_client, min_ram, max_ram):
     return id
 
 
+def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
+    try:
+        flavor = nova_client.flavors.create(flavor_name, ram, vcpus, disk)
+        try:
+            extra_specs = ft_utils.get_functest_config(
+                'general.flavor_extra_specs')
+            flavor.set_keys(extra_specs)
+        except ValueError:
+            # flavor extra specs are not configured, therefore skip the update
+            pass
+
+    except Exception, e:
+        logger.error("Error [create_flavor(nova_client, '%s', '%s', '%s', "
+                     "'%s')]: %s" % (flavor_name, ram, disk, vcpus, e))
+        return None
+    return flavor.id
+
+
+def get_or_create_flavor(flavor_name, ram, disk, vcpus):
+    flavor_exists = False
+    nova_client = get_nova_client()
+
+    flavor_id = get_flavor_id(nova_client, flavor_name)
+    if flavor_id != '':
+        logger.info("Using existing flavor '%s'..." % flavor_name)
+        flavor_exists = True
+    else:
+        logger.info("Creating flavor '%s' with '%s' RAM, '%s' disk size, "
+                    "'%s' vcpus..." % (flavor_name, ram, disk, vcpus))
+        flavor_id = create_flavor(nova_client, flavor_name, ram, disk, vcpus)
+        if not flavor_id:
+            logger.error("Failed to create flavor '%s'..." % (flavor_name))
+        else:
+            logger.debug("Flavor '%s' with ID=%s created successfully."
+                         % (flavor_name, flavor_id))
+
+    return flavor_exists, flavor_id
+
+
 def get_floating_ips(nova_client):
     try:
         floating_ips = nova_client.floating_ips.list()
@@ -231,24 +270,6 @@ def get_hypervisors(nova_client):
     except Exception, e:
         logger.error("Error [get_hypervisors(nova_client)]: %s" % e)
         return None
-
-
-def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
-    try:
-        flavor = nova_client.flavors.create(flavor_name, ram, vcpus, disk)
-        try:
-            extra_specs = ft_utils.get_functest_config(
-                'general.flavor_extra_specs')
-            flavor.set_keys(extra_specs)
-        except ValueError:
-            # flavor extra specs are not configured, therefore skip the update
-            pass
-
-    except Exception, e:
-        logger.error("Error [create_flavor(nova_client, '%s', '%s', '%s', "
-                     "'%s')]: %s" % (flavor_name, ram, disk, vcpus, e))
-        return None
-    return flavor.id
 
 
 def create_instance(flavor_name,
