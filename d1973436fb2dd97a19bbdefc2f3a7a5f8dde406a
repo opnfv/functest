@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_74d86253",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-15T07:53:45Z",
+      "side": 1,
+      "message": "multisite is supported in Fuel, right?",
+      "revId": "d1973436fb2dd97a19bbdefc2f3a7a5f8dde406a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_34ec2ac7",
         "filename": "docs/release-notes/functest-release.rst",
         "patchSetId": 3
@@ -48,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_54c9a624",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-15T07:53:45Z",
+      "side": 1,
+      "message": "would be nice to include the hyperlink to the rest url.",
+      "revId": "d1973436fb2dd97a19bbdefc2f3a7a5f8dde406a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_d4d296ff",
         "filename": "docs/release-notes/functest-release.rst",
         "patchSetId": 3
@@ -65,6 +99,23 @@
         "endLine": 472,
         "endChar": 27
       },
+      "revId": "d1973436fb2dd97a19bbdefc2f3a7a5f8dde406a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d455b650",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-15T07:53:45Z",
+      "side": 1,
+      "message": "it could look ugly in the rst, but it would be nice that FUNCTEST-X is a hyperlink where the reader can click.",
       "revId": "d1973436fb2dd97a19bbdefc2f3a7a5f8dde406a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
