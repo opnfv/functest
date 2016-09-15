@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_d4dcd6e6",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-15T07:56:42Z",
+      "side": 1,
+      "message": "Once I asked Chris and said that we shouldn\u0027t include links to the wiki in the official docs. Not sure if it is still the case..",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 38
+      },
+      "revId": "a4d53d19ceed6d7d3339426e174647433666a049",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
