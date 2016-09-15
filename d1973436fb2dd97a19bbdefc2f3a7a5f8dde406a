@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_14e9eeb7",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-09-15T06:31:15Z",
+      "side": 1,
+      "message": "All of the link here are good and work! \n\nHowever one point which has me a bit puzzled is this:\n - If you search the artifacts holding place using link:\n   http://artifacts.opnfv.org/functest.html \n\n   you will find a path:   functest/colorado/docs\n\n   It has the colorado docs contained underneath etc.\n\n--\u003e So for this version of the colorado released document\n    should these references refer as they do now to the\n    latest docs, or shoud they (as was done for Brahmaputra)\n    call out the path with the specific release name\n    (i.e. in this case colorado)",
+      "range": {
+        "startLine": 106,
+        "startChar": 1,
+        "endLine": 110,
+        "endChar": 80
+      },
+      "revId": "d1973436fb2dd97a19bbdefc2f3a7a5f8dde406a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_34ec2ac7",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-09-15T06:31:15Z",
+      "side": 1,
+      "message": "l --\u003e L    !!!",
+      "range": {
+        "startLine": 240,
+        "startChar": 8,
+        "endLine": 240,
+        "endChar": 9
+      },
+      "revId": "d1973436fb2dd97a19bbdefc2f3a7a5f8dde406a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d4d296ff",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 3659
+      },
+      "writtenOn": "2016-09-15T06:31:15Z",
+      "side": 1,
+      "message": "no ---\u003e not   ?or what?",
+      "range": {
+        "startLine": 472,
+        "startChar": 25,
+        "endLine": 472,
+        "endChar": 27
+      },
+      "revId": "d1973436fb2dd97a19bbdefc2f3a7a5f8dde406a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
