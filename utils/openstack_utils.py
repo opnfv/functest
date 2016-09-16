@@ -389,7 +389,7 @@ def delete_floating_ip(nova_client, floatingip_id):
         nova_client.floating_ips.delete(floatingip_id)
         return True
     except Exception, e:
-        logger.error("Error [delete_floating_ip(nova_client, '%s')]:"
+        logger.error("Error [delete_floating_ip(nova_client, '%s')]: %s"
                      % (floatingip_id, e))
         return False
 
