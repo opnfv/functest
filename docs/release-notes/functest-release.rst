@@ -252,10 +252,14 @@ test [0-3]. The scoring method is described in https://wiki.opnfv.org/pages/view
  tests = vping_ssh+vping_userdata+tempest+rally+odl+doctor+copper
  Scoring = 21/21 = 7 * 3
 
-By default, if not precised, the scenarios are HA.
-HA means OpenStack High Availability (main services). For copper test,
-the OpenStack congress module is not HA. See the release notes of the
-installers for details.
+By default, if not specified, the scenarios are HA.
+HA means OpenStack High Availability (main services). Note that not
+all VIM (e.g. OpenStack) services are deployed in HA mode, as that
+depends upon support of the specific service for HA deployment.
+For example, in the Colorado release, the Congress service
+is deployed in non-HA mode even for HA OPNFV scenarios, as explicit
+support for HA operation has not yet been verified.
+See the release notes of the installers for more details.
 
 
 apex
