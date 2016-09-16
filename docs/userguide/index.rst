@@ -337,7 +337,7 @@ Please refer to the dedicated feature user guides for details:
  * multisites: ** TODO link **
  * onos-sfc: ** TODO link **
  * odl-sfc: ** TODO link **
- * promise: http://artifacts.opnfv.org/promise/colorado/userguide/index.html
+ * promise: http://artifacts.opnfv.org/promise/colorado/docs/userguide/index.html
 
 security_scan
 ^^^^^^^^^^^^^
