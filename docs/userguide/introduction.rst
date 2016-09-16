@@ -118,8 +118,17 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | See `Domino User Guide`_ for     |
 |             |               |                | details                          |
 |             |               +----------------+----------------------------------+
-|             |               | copper         | Deployment policy                |
-|             |               |                | TODO See for details             |
+|             |               | Copper         | Copper develops OPNFV platform   |
+|             |               |                | support for policy management,   |
+|             |               |                | using open source projects such  |
+|             |               |                | as OpenStack Congress, focused   |
+|             |               |                | on helping ensure that virtual   |
+|             |               |                | infrastructure and the apps that |
+|             |               |                | execute on it comply with the    |
+|             |               |                | configuration policy intent of   |
+|             |               |                | service providers, developers,   |
+|             |               |                | and end users. See more detail   |
+|             |               |                | in the `Copper User Guide`_.     |
 |             |               +----------------+----------------------------------+
 |             |               | multisites     | Multisites                       |
 |             |               |                | TODO See for details             |
@@ -209,6 +218,7 @@ section `Executing the functest suites`_ of this document.
 
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
+.. _`Copper User Guide`: http://artifacts.opnfv.org/copper/colorado/docs/userguide/index.html
 .. _`Doctor User Guide`: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
 .. _`Promise User Guide`: http://artifacts.opnfv.org/promise/colorado/docs/userguide/index.html
 .. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/brahmaputra/docs/userguide/index.html
