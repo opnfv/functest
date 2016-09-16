@@ -52,6 +52,14 @@ TACKER_SCRIPT = 'sfc_tacker.bash'
 TEARDOWN_SCRIPT = "sfc_teardown.bash"
 TACKER_CHANGECLASSI = "sfc_change_classi.bash"
 
+ssh_options = '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+
+
+def check_ssh(ip):
+    return subprocess.call("sshpass -p opnfv ssh " +
+                           ssh_options + " -q " + ip +
+                           " exit", shell=True) == 0
+
 
 def main():
 
@@ -63,7 +71,6 @@ def main():
     start_time = time.time()
     json_results = {}
 
-    ssh_options = '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
     contr_cmd = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
                  " 'fuel node'|grep controller|awk '{print $10}'")
     logger.info("Executing script to get ip_server: '%s'" % contr_cmd)
@@ -98,7 +105,7 @@ def main():
     subprocess.call(iptable_cmd2, shell=True, stderr=subprocess.PIPE)
 
     logger.info("Changing firewall policy in controller: '%s'" % iptable_cmd3)
-    subprocess.call(iptable_cmd2, shell=True, stderr=subprocess.PIPE)
+    subprocess.call(iptable_cmd3, shell=True, stderr=subprocess.PIPE)
 
 # Getting the different clients
 
@@ -263,12 +270,22 @@ def main():
         logger.error('Failed to obtain IPs, cant continue, exiting')
         return
 
-    logger.info("Waiting 60 seconds for floating IP assignment")
-    for j in range(0, 6):
-        logger.debug("Test starting in {0} seconds".format(str((6 - j) * 10)))
-        time.sleep(10)
-
     logger.debug("Floating IPs for SFs: %s..." % ips)
+
+    # Check SSH connectivity to VNFs
+    r = 0
+    retries = 100
+    check = [False, False]
+
+    logger.debug("Checking SSH connectivity to the SFs...")
+    while r < retries and not all(check):
+        check = [check_ssh(ips[0]), check_ssh(ips[1])]
+        time.sleep(3)
+        r += 1
+
+    if not all(check):
+        logger.error("Cannot establish SSH connection to the SFs")
+        # TODO: Handle this with appropriate exit condition
 
     # SSH TO START THE VXLAN_TOOL ON SF1
     logger.info("Configuring the SFs")
