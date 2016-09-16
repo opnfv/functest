@@ -346,6 +346,9 @@ fuel
 | multisite           |  N.R    |  100%   | `fuel-res-8`_     |
 +---------------------+---------+---------+-------------------+
 
+Note: Results of Functest on AArch64 Colorado 1.0 can be seen at
+`fuel-res-armband`_
+
 joid
 ----
 
@@ -576,6 +579,8 @@ Useful links
 .. _`fuel-res-155`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-155
 
 .. _`fuel-res-123`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-123
+
+.. _`fuel-res-armband`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/
 
 .. _`joid-res-102`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-102
 
