@@ -330,7 +330,7 @@ be declared in its own repository as well.
 Please refer to the dedicated feature user guides for details:
 
  * bgpvpn: ** TODO link **
- * copper: ** TODO link **
+ * copper: http://artifacts.opnfv.org/copper/docs/userguide/index.html
  * doctor: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
  * domino: ** TODO link **
  * moon: ** TODO link **
