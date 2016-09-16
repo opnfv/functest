@@ -273,7 +273,7 @@ apex
 +------------------+---------+---------+-------------------+
 | odl_l2-bgpvpn    |  14/18  |    78%  |     ??            |
 +------------------+---------+---------+-------------------+
-| odl_l2-fdio-noha |  11/15  |    73%  |     ??            |
+| odl_l2-fdio-noha |  11/15  |    80%  | `apex-res-6`_     |
 +------------------+---------+---------+-------------------+
 | odl_l2-sfc-noha  |  18/21  |    86%  |     ??            |
 +------------------+---------+---------+-------------------+
@@ -533,6 +533,8 @@ Useful links
 .. _`FUNCTEST-460` : https://jira.opnfv.org/browse/FUNCTEST-460
 
 .. _`FUNCTEST-462` : https://jira.opnfv.org/browse/FUNCTEST-462
+
+.. _`apex-res-6` : http://testresults.opnfv.org/test/api/v1/results?build_tag=bd-push-daily-colorado-6 
 
 .. _`apex-res-174` : http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-174
 
