@@ -104,10 +104,11 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | installer environment)           |
 |             |               +----------------+----------------------------------+
 |             |               | onos-sfc       | SFC testing for onos scenarios   |
-|             |               |                | TODO See for details             |
+|             |               |                | See `ONOSFW User Guide`_ for     |
+|             |               |                | details                          |
 |             |               +----------------+----------------------------------+
 |             |               | odl-sfc        | SFC testing for odl scenarios    |
-|             |               |                | TODO See for details             |
+|             |               |                | See `SFC User Guide`_ for details|
 |             |               +----------------+----------------------------------+
 |             |               | domino         | Domino provides TOSCA template   |
 |             |               |                | distribution service for network |
@@ -131,10 +132,12 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | in the `Copper User Guide`_.     |
 |             |               +----------------+----------------------------------+
 |             |               | multisites     | Multisites                       |
-|             |               |                | TODO See for details             |
+|             |               |                | See `Multisite User Guide`_ for  |
+|             |               |                | details                          |
 |             |               +----------------+----------------------------------+
 |             |               | moon           | Security management system       |
-|             |               |                | TODO See for details             |
+|             |               |                | See `Moon User Guide`_ for       |
+|             |               |                | details                          |
 +-------------+---------------+----------------+----------------------------------+
 | VNF         | vnf           | vims           | Example of a real VNF deployment |
 |             |               |                | to show the NFV capabilities of  |
@@ -183,7 +186,7 @@ NoSQL database. The goal is to populate the database with results from different
 sources and scenarios and to show them on a `Functest Dashboard`_. A screenshot
 of a live Functest Dashboard is shown below:
 
-.. figure:: ../images/FunctestDashboard.png
+.. figure:: ../images/FunctestDashboardColorado.png
    :align: center
    :alt: Functest Dashboard
 
@@ -221,8 +224,11 @@ section `Executing the functest suites`_ of this document.
 .. _`Copper User Guide`: http://artifacts.opnfv.org/copper/colorado/docs/userguide/index.html
 .. _`Doctor User Guide`: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
 .. _`Promise User Guide`: http://artifacts.opnfv.org/promise/colorado/docs/userguide/index.html
-.. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/brahmaputra/docs/userguide/index.html
-.. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/brahmaputra/docs/userguide/featureusage.html
-.. _`Domino User Guide`: http://artifacts.opnfv.org/domino/docs/userguide/index.html
-.. _`Parser User Guide`: http://artifacts.opnfv.org/parser/docs/userguide/index.html
+.. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/colorado/userguide/index.html
+.. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/colorado/docs/userguide/index.html
+.. _`Domino User Guide`: http://artifacts.opnfv.org/domino/docs/userguide-single/index.html
+.. _`Parser User Guide`: http://artifacts.opnfv.org/parser/colorado/docs/userguide/index.html
 .. _`Functest Dashboard`: http://testresults.opnfv.org/kibana_dashboards/
+.. _`SFC User Guide`: http://artifacts.opnfv.org/sfc/colorado/userguide/index.html
+.. _`Multisite User Guide`: http://artifacts.opnfv.org/multisite/docs/userguide/index.html
+.. _`Moon User Guide`: http://artifacts.opnfv.org/moon/docs/userguide/index.html
