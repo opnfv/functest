@@ -329,14 +329,14 @@ be declared in its own repository as well.
 
 Please refer to the dedicated feature user guides for details:
 
- * bgpvpn: ** TODO link **
+ * bgpvpn: http://artifacts.opnfv.org/sdnvpn/colorado/docs/userguide/index.html
  * copper: http://artifacts.opnfv.org/copper/colorado/docs/userguide/index.html
  * doctor: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
- * domino: ** TODO link **
- * moon: ** TODO link **
- * multisites: ** TODO link **
- * onos-sfc: ** TODO link **
- * odl-sfc: ** TODO link **
+ * domino: http://artifacts.opnfv.org/domino/docs/userguide-single/index.html
+ * moon: http://artifacts.opnfv.org/moon/docs/userguide/index.html
+ * multisites: http://artifacts.opnfv.org/multisite/docs/userguide/index.html
+ * onos-sfc: http://artifacts.opnfv.org/onosfw/colorado/userguide/index.html
+ * odl-sfc: http://artifacts.opnfv.org/sfc/colorado/userguide/index.html
  * promise: http://artifacts.opnfv.org/promise/colorado/docs/userguide/index.html
 
 security_scan
@@ -481,7 +481,7 @@ Based on results collected in CI, a test dashboard is dynamically generated.
 References
 ==========
 
-.. _`[1]`: http://artifacts.opnfv.org/functest/docs/configguide/#
+.. _`[1]`: http://artifacts.opnfv.org/functest/colorado/docs/configguide/#
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`[4]`: http://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
@@ -490,7 +490,7 @@ References
 .. _`[7]`: https://github.com/OpenSCAP/openscap
 .. _`[9]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml
 .. _`[11]`: http://robotframework.org/
-.. _`[12]`: http://artifacts.opnfv.org/parser/docs/userguide/index.html
+.. _`[12]`: http://artifacts.opnfv.org/parser/colorado/docs/userguide/index.html
 
 OPNFV main site: opnfvmain_.
 
@@ -504,4 +504,4 @@ IRC support chan: #opnfv-testperf
 .. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
 .. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
 .. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.yaml
-.. _`Functest reporting`: http://testresults.opnfv.org/reporting/functest/release/master/index-status-fuel.html
+.. _`Functest reporting`: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-fuel.html
