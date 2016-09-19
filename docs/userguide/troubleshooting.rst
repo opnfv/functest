@@ -341,7 +341,7 @@ Please refer to the dedicated feature user guides for details.
 security_scan
 ^^^^^^^^^^^^^
 
-** TODO **
+See OpenSCAP web site: https://www.open-scap.org/
 
 
 
