@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_d25aa14f",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 4243
+      },
+      "writtenOn": "2016-09-19T10:12:02Z",
+      "side": 1,
+      "message": "No similar directory structure for domino/moon/multisite as other projects? That\u0027s fine by me, just wondering.",
+      "range": {
+        "startLine": 335,
+        "startChar": 11,
+        "endLine": 335,
+        "endChar": 77
+      },
+      "revId": "c4895122dc3d3ea2d744660a9106c1c297b7b854",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
