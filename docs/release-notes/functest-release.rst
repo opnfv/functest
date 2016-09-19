@@ -1,3 +1,4 @@
+=======
 License
 =======
 
@@ -262,7 +263,7 @@ support for HA operation has not yet been verified.
 See the release notes of the installers for more details.
 
 
-apex
+Apex
 ----
 
 +------------------+---------+---------+-------------------+
@@ -282,7 +283,7 @@ apex
 | odl_l2-sfc-noha  |  18/21  |    86%  |     ??            |
 +------------------+---------+---------+-------------------+
 
-compass
+Compass
 -------
 
 +------------------+---------+---------+-------------------+
@@ -306,7 +307,7 @@ Note: all the Compass tests for Colorado have been executed on virtual
 environment. Bare metal resources were used for Master branch.
 
 
-fuel
+Fuel
 ----
 
 +---------------------+---------+---------+-------------------+
@@ -367,7 +368,7 @@ Results of Functest on AArch64 Colorado 1.0
 +---------------------+---------+---------+----------------------+
 
 
-joid
+Joid
 ----
 
 +---------------------+---------+---------+-----------------+
