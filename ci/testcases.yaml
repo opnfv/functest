@@ -215,7 +215,8 @@ tiers:
                     Test suite from Parser project.
                 dependencies:
                     installer: 'fuel'
-                    scenario: '^((?!noha).)*$'
+                    scenario: '^((?!bgpvpn|noha).)*$'
+                    
     -
         name: openstack
         order: 4
