@@ -350,8 +350,22 @@ fuel
 | multisite           |  N.R    |  100%   | `fuel-res-8`_     |
 +---------------------+---------+---------+-------------------+
 
-Note: Results of Functest on AArch64 Colorado 1.0 can be seen at
-`fuel-res-armband`_
+
+Results of Functest on AArch64 Colorado 1.0
+
++---------------------+---------+---------+----------------------+
+|  Scenario           | Scoring | Success |  Results             |
+|                     |         | rate    |                      |
++=====================+=========+=========+======================+
+| nosdn               |  18/18  |  100%   | `fuel-arm_res-29`_   |
++---------------------+---------+---------+----------------------+
+| odl_l2              |  21/21  |  100%   | `fuel-arm_res-24`_   |
++---------------------+---------+---------+----------------------+
+| odl_l2-noha         |  17/18  |   94%   | `fuel-arm-res-30`_   |
++---------------------+---------+---------+----------------------+
+| odl_l3              |  14/18  |   78%   | `fuel-arm-res-28`_   |
++---------------------+---------+---------+----------------------+
+
 
 joid
 ----
@@ -586,7 +600,13 @@ Useful links
 
 .. _`fuel-res-123`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-123
 
-.. _`fuel-res-armband`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/
+.. _`fuel-arm_res-29`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/29/console
+
+.. _`fuel-arm_res-24`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/24/console
+
+.. _`fuel-arm_res-30`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/30/console
+
+.. _`fuel-arm_res-28`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/28/console
 
 .. _`joid-res-102`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-102
 
