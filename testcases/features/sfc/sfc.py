@@ -140,7 +140,7 @@ def main():
     sg_id = os_utils.create_security_group_full(neutron_client,
                                                 SECGROUP_NAME, SECGROUP_DESCR)
 
-    # boot INTANCE
+    # boot INSTANCE
     logger.info("Creating instance '%s'..." % INSTANCE_NAME)
     logger.debug(
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
