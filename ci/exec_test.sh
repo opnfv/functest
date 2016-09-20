@@ -63,7 +63,7 @@ function odl_tests(){
 function sfc_prepare(){
     ids=($(neutron security-group-list|grep default|awk '{print $2}'))
     for id in ${ids[@]}; do
-        if ! neutron security-group-show $id|grep 22 &>/dev/null; then
+        if ! neutron security-group-show $id|grep "22/tcp" &>/dev/null; then
             neutron security-group-rule-create --protocol tcp \
                 --port-range-min 22 --port-range-max 22 --direction ingress $id
             neutron security-group-rule-create --protocol tcp \
