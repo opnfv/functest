@@ -2,7 +2,6 @@ import os
 import subprocess
 import sys
 import time
-
 import argparse
 import paramiko
 
@@ -140,315 +139,337 @@ def main():
     sg_id = os_utils.create_security_group_full(neutron_client,
                                                 SECGROUP_NAME, SECGROUP_DESCR)
 
-    # boot INTANCE
-    logger.info("Creating instance '%s'..." % INSTANCE_NAME)
-    logger.debug(
-        "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
-        "network=%s \n" % (INSTANCE_NAME, FLAVOR, image_id, network_id))
-    instance = os_utils.create_instance_and_wait_for_active(FLAVOR,
-                                                            image_id,
-                                                            network_id,
-                                                            INSTANCE_NAME)
+    iterator = 0
+    while(iterator < 6):
+        # boot INSTANCE
+        logger.info("Creating instance '%s'..." % INSTANCE_NAME)
+        logger.debug(
+            "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
+            "network=%s \n" % (INSTANCE_NAME, FLAVOR, image_id, network_id))
+        instance = os_utils.create_instance_and_wait_for_active(FLAVOR,
+                                                                image_id,
+                                                                network_id,
+                                                                INSTANCE_NAME)
 
-    if instance is None:
-        logger.error("Error while booting instance.")
+        if instance is None:
+            logger.error("Error while booting instance.")
         sys.exit(-1)
-    # Retrieve IP of INSTANCE
-    instance_ip = instance.networks.get(NET_NAME)[0]
-    logger.debug("Instance '%s' got private ip '%s'." %
-                 (INSTANCE_NAME, instance_ip))
+        # Retrieve IP of INSTANCE
+        instance_ip = instance.networks.get(NET_NAME)[0]
+        logger.debug("Instance '%s' got private ip '%s'." %
+                     (INSTANCE_NAME, instance_ip))
 
-    logger.info("Adding '%s' to security group '%s'..."
-                % (INSTANCE_NAME, SECGROUP_NAME))
-    os_utils.add_secgroup_to_instance(nova_client, instance.id, sg_id)
+        logger.info("Adding '%s' to security group '%s'..."
+                    % (INSTANCE_NAME, SECGROUP_NAME))
+        os_utils.add_secgroup_to_instance(nova_client, instance.id, sg_id)
 
-    logger.info("Creating floating IP for VM '%s'..." % INSTANCE_NAME)
-    floatip_dic = os_utils.create_floating_ip(neutron_client)
-    floatip_client = floatip_dic['fip_addr']
-    # floatip_id = floatip_dic['fip_id']
+        logger.info("Creating floating IP for VM '%s'..." % INSTANCE_NAME)
+        floatip_dic = os_utils.create_floating_ip(neutron_client)
+        floatip_client = floatip_dic['fip_addr']
+        # floatip_id = floatip_dic['fip_id']
 
-    if floatip_client is None:
-        logger.error("Cannot create floating IP.")
+        if floatip_client is None:
+            logger.error("Cannot create floating IP.")
+            sys.exit(-1)
+        logger.info("Floating IP created: '%s'" % floatip_client)
+
+        logger.info("Associating floating ip: '%s' to VM '%s' "
+                    % (floatip_client, INSTANCE_NAME))
+        if not os_utils.add_floating_ip(nova_client,
+                                        instance.id,
+                                        floatip_client):
+            logger.error("Cannot associate floating IP to VM.")
+            sys.exit(-1)
+
+    # STARTING SECOND VM (server) ###
+
+        # boot INTANCE
+        logger.info("Creating instance '%s'..." % INSTANCE_NAME)
+        logger.debug(
+            "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
+            "network=%s \n" % (INSTANCE_NAME, FLAVOR, image_id, network_id))
+        instance_2 = os_utils.create_instance_and_wait_for_active(FLAVOR,
+                                                                  image_id,
+                                                                  network_id,
+                                                                  INSTANCE_NAME_2)
+
+        if instance_2 is None:
+            logger.error("Error while booting instance.")
         sys.exit(-1)
-    logger.info("Floating IP created: '%s'" % floatip_client)
+        # Retrieve IP of INSTANCE
+        instance_ip_2 = instance_2.networks.get(NET_NAME)[0]
+        logger.debug("Instance '%s' got private ip '%s'." %
+                    (INSTANCE_NAME_2, instance_ip_2))
 
-    logger.info("Associating floating ip: '%s' to VM '%s' "
-                % (floatip_client, INSTANCE_NAME))
-    if not os_utils.add_floating_ip(nova_client, instance.id, floatip_client):
-        logger.error("Cannot associate floating IP to VM.")
-        sys.exit(-1)
+        logger.info("Adding '%s' to security group '%s'..."
+                    % (INSTANCE_NAME_2, SECGROUP_NAME))
+        os_utils.add_secgroup_to_instance(nova_client, instance_2.id, sg_id)
 
-# STARTING SECOND VM (server) ###
+        logger.info("Creating floating IP for VM '%s'..." % INSTANCE_NAME_2)
+        floatip_dic = os_utils.create_floating_ip(neutron_client)
+        floatip_server = floatip_dic['fip_addr']
+        # floatip_id = floatip_dic['fip_id']
 
-    # boot INTANCE
-    logger.info("Creating instance '%s'..." % INSTANCE_NAME)
-    logger.debug(
-        "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
-        "network=%s \n" % (INSTANCE_NAME, FLAVOR, image_id, network_id))
-    instance_2 = os_utils.create_instance_and_wait_for_active(FLAVOR,
-                                                              image_id,
-                                                              network_id,
-                                                              INSTANCE_NAME_2)
+        if floatip_server is None:
+            logger.error("Cannot create floating IP.")
+            sys.exit(-1)
+        logger.info("Floating IP created: '%s'" % floatip_server)
 
-    if instance_2 is None:
-        logger.error("Error while booting instance.")
-        sys.exit(-1)
-    # Retrieve IP of INSTANCE
-    instance_ip_2 = instance_2.networks.get(NET_NAME)[0]
-    logger.debug("Instance '%s' got private ip '%s'." %
-                 (INSTANCE_NAME_2, instance_ip_2))
+        logger.info("Associating floating ip: '%s' to VM '%s' "
+                    % (floatip_server, INSTANCE_NAME_2))
 
-    logger.info("Adding '%s' to security group '%s'..."
-                % (INSTANCE_NAME_2, SECGROUP_NAME))
-    os_utils.add_secgroup_to_instance(nova_client, instance_2.id, sg_id)
+        if not os_utils.add_floating_ip(nova_client,
+                                        instance_2.id,
+                                        floatip_server):
+            logger.error("Cannot associate floating IP to VM.")
+            sys.exit(-1)
 
-    logger.info("Creating floating IP for VM '%s'..." % INSTANCE_NAME_2)
-    floatip_dic = os_utils.create_floating_ip(neutron_client)
-    floatip_server = floatip_dic['fip_addr']
-    # floatip_id = floatip_dic['fip_id']
+        # CREATION OF THE 2 SF ####
 
-    if floatip_server is None:
-        logger.error("Cannot create floating IP.")
-        sys.exit(-1)
-    logger.info("Floating IP created: '%s'" % floatip_server)
+        tacker_script = "%s/testcases/features/sfc/%s" % \
+                        (FUNCTEST_REPO, TACKER_SCRIPT)
+        logger.info("Executing tacker script: '%s'" % tacker_script)
+        subprocess.call(tacker_script, shell=True)
 
-    logger.info("Associating floating ip: '%s' to VM '%s' "
-                % (floatip_server, INSTANCE_NAME_2))
+        # SSH CALL TO START HTTP SERVER
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-    if not os_utils.add_floating_ip(nova_client,
-                                    instance_2.id,
-                                    floatip_server):
-        logger.error("Cannot associate floating IP to VM.")
-        sys.exit(-1)
+        try:
+            ssh.connect(floatip_server, username="root",
+                        password="opnfv", timeout=2)
+            command = "python -m SimpleHTTPServer 80 > /dev/null 2>&1 &"
+            logger.info("Starting HTTP server")
+            (stdin, stdout, stderr) = ssh.exec_command(command)
+        except:
+            logger.debug("Waiting for %s..." % floatip_server)
+            time.sleep(6)
+            # timeout -= 1
 
-    # CREATION OF THE 2 SF ####
+        instances = nova_client.servers.list(search_opts={'all_tenants': 1})
+        ips = []
+        try:
+            for instance in instances:
+                if "server" not in instance.name:
+                    if "client" not in instance.name:
+                        logger.debug(
+                            "This is the instance name: %s " % instance.name)
+                        floatip_dic = os_utils.create_floating_ip(neutron_client)
+                        floatip = floatip_dic['fip_addr']
+                        ips.append(floatip)
+                        instance.add_floating_ip(floatip)
+        except:
+            logger.debug("Problems assigning floating IP to SFs")
 
-    tacker_script = "%s/testcases/features/sfc/%s" % \
-                    (FUNCTEST_REPO, TACKER_SCRIPT)
-    logger.info("Executing tacker script: '%s'" % tacker_script)
-    subprocess.call(tacker_script, shell=True)
+        # If no IPs were obtained, then we cant continue
+        if not ips:
+            logger.error('Failed to obtain IPs, cant continue, exiting')
+            return
 
-    # SSH CALL TO START HTTP SERVER
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        logger.info("Waiting 60 seconds for floating IP assignment")
+        for j in range(0, 6):
+            logger.debug("Test starting in"
+                         " {0} seconds".format(str((6 - j) * 10)))
+            time.sleep(10)
 
-    try:
-        ssh.connect(floatip_server, username="root",
-                    password="opnfv", timeout=2)
-        command = "python -m SimpleHTTPServer 80 > /dev/null 2>&1 &"
-        logger.info("Starting HTTP server")
-        (stdin, stdout, stderr) = ssh.exec_command(command)
-    except:
-        logger.debug("Waiting for %s..." % floatip_server)
-        time.sleep(6)
-        # timeout -= 1
+        logger.debug("Floating IPs for SFs: %s..." % ips)
 
-    instances = nova_client.servers.list(search_opts={'all_tenants': 1})
-    ips = []
-    try:
-        for instance in instances:
-            if "server" not in instance.name:
-                if "client" not in instance.name:
-                    logger.debug(
-                        "This is the instance name: %s " % instance.name)
-                    floatip_dic = os_utils.create_floating_ip(neutron_client)
-                    floatip = floatip_dic['fip_addr']
-                    ips.append(floatip)
-                    instance.add_floating_ip(floatip)
-    except:
-        logger.debug("Problems assigning floating IP to SFs")
+        # SSH TO START THE VXLAN_TOOL ON SF1
+        logger.info("Configuring the SFs")
+        try:
+            ssh.connect(ips[0], username="root",
+                        password="opnfv", timeout=2)
+            command = ("nohup python vxlan_tool.py -i eth0 "
+                       "-d forward -v off -b 80 > /dev/null 2>&1 &")
+            (stdin, stdout, stderr) = ssh.exec_command(command)
+        except:
+            logger.debug("Waiting for %s..." % ips[0])
+            time.sleep(6)
+            # timeout -= 1
 
-    # If no IPs were obtained, then we cant continue
-    if not ips:
-        logger.error('Failed to obtain IPs, cant continue, exiting')
-        return
-
-    logger.info("Waiting 60 seconds for floating IP assignment")
-    for j in range(0, 6):
-        logger.debug("Test starting in {0} seconds".format(str((6 - j) * 10)))
-        time.sleep(10)
-
-    logger.debug("Floating IPs for SFs: %s..." % ips)
-
-    # SSH TO START THE VXLAN_TOOL ON SF1
-    logger.info("Configuring the SFs")
-    try:
-        ssh.connect(ips[0], username="root",
-                    password="opnfv", timeout=2)
-        command = ("nohup python vxlan_tool.py -i eth0 "
-                   "-d forward -v off -b 80 > /dev/null 2>&1 &")
-        (stdin, stdout, stderr) = ssh.exec_command(command)
-    except:
-        logger.debug("Waiting for %s..." % ips[0])
-        time.sleep(6)
-        # timeout -= 1
-
-    try:
-        while 1:
-            (stdin, stdout, stderr) = ssh.exec_command(
-                "ps aux | grep \"vxlan_tool.py\" | grep -v grep")
+        try:
+            n = 0
+            while 1:
+                (stdin, stdout, stderr) = ssh.exec_command(
+                    "ps aux | grep \"vxlan_tool.py\" | grep -v grep")
             if len(stdout.readlines()) > 0:
                 logger.debug("HTTP firewall started")
                 break
             else:
+                n += 1
+                if (n > 7):
+                    break
                 logger.debug("HTTP firewall not started")
                 time.sleep(3)
-    except Exception:
-        logger.exception("vxlan_tool not started in SF1")
+        except Exception:
+            logger.exception("vxlan_tool not started in SF1")
 
-    # SSH TO START THE VXLAN_TOOL ON SF2
-    try:
-        ssh.connect(ips[1], username="root",
-                    password="opnfv", timeout=2)
-        command = ("nohup python vxlan_tool.py -i eth0 "
-                   "-d forward -v off -b 22 > /dev/null 2>&1 &")
-        (stdin, stdout, stderr) = ssh.exec_command(command)
-    except:
-        logger.debug("Waiting for %s..." % ips[1])
-        time.sleep(6)
-        # timeout -= 1
+        # SSH TO START THE VXLAN_TOOL ON SF2
+        try:
+            ssh.connect(ips[1], username="root",
+                        password="opnfv", timeout=2)
+            command = ("nohup python vxlan_tool.py -i eth0 "
+                       "-d forward -v off -b 22 > /dev/null 2>&1 &")
+            (stdin, stdout, stderr) = ssh.exec_command(command)
+        except:
+            logger.debug("Waiting for %s..." % ips[1])
+            time.sleep(6)
+            # timeout -= 1
 
-    try:
-        while 1:
-            (stdin, stdout, stderr) = ssh.exec_command(
-                "ps aux | grep \"vxlan_tool.py\" | grep -v grep")
-            if len(stdout.readlines()) > 0:
-                logger.debug("SSH firewall started")
-                break
+        try:
+            n = 0
+            while 1:
+                (stdin, stdout, stderr) = ssh.exec_command(
+                    "ps aux | grep \"vxlan_tool.py\" | grep -v grep")
+                if len(stdout.readlines()) > 0:
+                    logger.debug("SSH firewall started")
+                    break
+                else:
+                    n += 1
+                    if (n > 7):
+                        break
+                    logger.debug("SSH firewall not started")
+                    time.sleep(3)
+        except Exception:
+            logger.exception("vxlan_tool not started in SF2")
+
+        # SSH to modify the classification flows in compute
+
+        contr_cmd3 = ("sshpass -p r00tme ssh " + ssh_options + " "
+                      "root@10.20.0.2 'ssh " + ip_compute + " "
+                      "'bash correct_classifier.bash''")
+        logger.info("Executing script to modify the classi: '%s'" % contr_cmd3)
+        process = subprocess.Popen(contr_cmd3,
+                                   shell=True,
+                                   stdout=subprocess.PIPE)
+
+        i = 0
+
+        # SSH TO EXECUTE cmd_client
+        logger.info("TEST STARTED")
+        try:
+            ssh.connect(floatip_client, username="root",
+                        password="opnfv", timeout=2)
+            command = "nc -w 5 -zv " + instance_ip_2 + " 22 2>&1"
+            (stdin, stdout, stderr) = ssh.exec_command(command)
+
+            # WRITE THE CORRECT WAY TO DO LOGGING
+            if "timed out" in stdout.readlines()[0]:
+                logger.info('\033[92m' + "TEST 1 [PASSED] "
+                            "==> SSH BLOCKED" + '\033[0m')
+                i = i + 1
+                json_results.update({"Test 1: SSH Blocked": "Passed"})
             else:
-                logger.debug("SSH firewall not started")
-                time.sleep(3)
-    except Exception:
-        logger.exception("vxlan_tool not started in SF2")
+                logger.error('\033[91m' + "TEST 1 [FAILED] "
+                             "==> SSH NOT BLOCKED" + '\033[0m')
+                status = "FAIL"
+                json_results.update({"Test 1: SSH Blocked": "Failed"})
+                failures += 1
+        except:
+            logger.debug("Waiting for %s..." % floatip_client)
+            time.sleep(6)
+            # timeout -= 1
 
-    # SSH to modify the classification flows in compute
+        # SSH TO EXECUTE cmd_client
+        try:
+            ssh.connect(floatip_client, username="root",
+                        password="opnfv", timeout=2)
+            command = "nc -w 5 -zv " + instance_ip_2 + " 80 2>&1"
+            (stdin, stdout, stderr) = ssh.exec_command(command)
 
-    contr_cmd3 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
-                  " 'ssh " + ip_compute + " 'bash correct_classifier.bash''")
-    logger.info("Executing script to modify the classi: '%s'" % contr_cmd3)
-    process = subprocess.Popen(contr_cmd3,
-                               shell=True,
-                               stdout=subprocess.PIPE)
+            if "succeeded" in stdout.readlines()[0]:
+                logger.info('\033[92m' + "TEST 2 [PASSED] "
+                            "==> HTTP WORKS" + '\033[0m')
+                i = i + 1
+                json_results.update({"Test 2: HTTP works": "Passed"})
+            else:
+                logger.error('\033[91m' + "TEST 2 [FAILED] "
+                             "==> HTTP BLOCKED" + '\033[0m')
+                status = "FAIL"
+                json_results.update({"Test 2: HTTP works": "Failed"})
+                failures += 1
+        except:
+            logger.debug("Waiting for %s..." % floatip_client)
+            time.sleep(6)
+            # timeout -= 1
 
-    i = 0
+        # CHANGE OF CLASSIFICATION #
+        logger.info("Changing the classification")
+        tacker_classi = "%s/testcases/features/sfc/%s" % \
+                        (FUNCTEST_REPO, TACKER_CHANGECLASSI)
+        subprocess.call(tacker_classi, shell=True)
 
-    # SSH TO EXECUTE cmd_client
-    logger.info("TEST STARTED")
-    try:
-        ssh.connect(floatip_client, username="root",
-                    password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + instance_ip_2 + " 22 2>&1"
-        (stdin, stdout, stderr) = ssh.exec_command(command)
+        logger.info("Wait for ODL to update the classification rules in OVS")
+        time.sleep(10)
 
-        # WRITE THE CORRECT WAY TO DO LOGGING
-        if "timed out" in stdout.readlines()[0]:
-            logger.info('\033[92m' + "TEST 1 [PASSED] "
-                        "==> SSH BLOCKED" + '\033[0m')
-            i = i + 1
-            json_results.update({"Test 1: SSH Blocked": "Passed"})
+        # SSH to modify the classification flows in compute
+
+        contr_cmd4 = ("sshpass -p r00tme ssh " + ssh_options + " "
+                      "root@10.20.0.2 'ssh " + ip_compute + " "
+                      "'bash correct_classifier.bash''")
+        logger.info("Executing script to modify the classi: '%s'" % contr_cmd4)
+        process = subprocess.Popen(contr_cmd4,
+                                   shell=True,
+                                   stdout=subprocess.PIPE)
+
+        # SSH TO EXECUTE cmd_client
+
+        try:
+            ssh.connect(floatip_client, username="root",
+                        password="opnfv", timeout=2)
+            command = "nc -w 5 -zv " + instance_ip_2 + " 80 2>&1"
+            (stdin, stdout, stderr) = ssh.exec_command(command)
+
+            if "timed out" in stdout.readlines()[0]:
+                logger.info('\033[92m' + "TEST 3 [PASSED] "
+                            "==> HTTP BLOCKED" + '\033[0m')
+                i = i + 1
+                json_results.update({"Test 3: HTTP Blocked": "Passed"})
+            else:
+                logger.error('\033[91m' + "TEST 3 [FAILED] "
+                             "==> HTTP NOT BLOCKED" + '\033[0m')
+                status = "FAIL"
+                json_results.update({"Test 3: HTTP Blocked": "Failed"})
+                failures += 1
+        except:
+            logger.debug("Waiting for %s..." % floatip_client)
+            time.sleep(6)
+            # timeout -= 1
+
+        # SSH TO EXECUTE cmd_client
+        try:
+            ssh.connect(floatip_client, username="root",
+                        password="opnfv", timeout=2)
+            command = "nc -w 5 -zv " + instance_ip_2 + " 22 2>&1"
+            (stdin, stdout, stderr) = ssh.exec_command(command)
+
+            if "succeeded" in stdout.readlines()[0]:
+                logger.info('\033[92m' + "TEST 4 [PASSED] "
+                            "==> SSH WORKS" + '\033[0m')
+                i = i + 1
+                json_results.update({"Test 4: SSH works": "Passed"})
+            else:
+                logger.error('\033[91m' + "TEST 4 [FAILED] "
+                             "==> SSH BLOCKED" + '\033[0m')
+                status = "FAIL"
+                json_results.update({"Test 4: SSH works": "Failed"})
+                failures += 1
+        except:
+            logger.debug("Waiting for %s..." % floatip_client)
+            time.sleep(6)
+            # timeout -= 1
+
+        iterator += 1
+        if i == 4:
+            for x in range(0, 5):
+                logger.info('\033[92m' + "SFC TEST WORKED"
+                            " :) \n" + '\033[0m')
+            break
         else:
-            logger.error('\033[91m' + "TEST 1 [FAILED] "
-                         "==> SSH NOT BLOCKED" + '\033[0m')
-            status = "FAIL"
-            json_results.update({"Test 1: SSH Blocked": "Failed"})
-            failures += 1
-    except:
-        logger.debug("Waiting for %s..." % floatip_client)
-        time.sleep(6)
-        # timeout -= 1
-
-    # SSH TO EXECUTE cmd_client
-    try:
-        ssh.connect(floatip_client, username="root",
-                    password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + instance_ip_2 + " 80 2>&1"
-        (stdin, stdout, stderr) = ssh.exec_command(command)
-
-        if "succeeded" in stdout.readlines()[0]:
-            logger.info('\033[92m' + "TEST 2 [PASSED] "
-                        "==> HTTP WORKS" + '\033[0m')
-            i = i + 1
-            json_results.update({"Test 2: HTTP works": "Passed"})
-        else:
-            logger.error('\033[91m' + "TEST 2 [FAILED] "
-                         "==> HTTP BLOCKED" + '\033[0m')
-            status = "FAIL"
-            json_results.update({"Test 2: HTTP works": "Failed"})
-            failures += 1
-    except:
-        logger.debug("Waiting for %s..." % floatip_client)
-        time.sleep(6)
-        # timeout -= 1
-
-    # CHANGE OF CLASSIFICATION #
-    logger.info("Changing the classification")
-    tacker_classi = "%s/testcases/features/sfc/%s" % \
-                    (FUNCTEST_REPO, TACKER_CHANGECLASSI)
-    subprocess.call(tacker_classi, shell=True)
-
-    logger.info("Wait for ODL to update the classification rules in OVS")
-    time.sleep(10)
-
-    # SSH to modify the classification flows in compute
-
-    contr_cmd4 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
-                  " 'ssh " + ip_compute + " 'bash correct_classifier.bash''")
-    logger.info("Executing script to modify the classi: '%s'" % contr_cmd4)
-    process = subprocess.Popen(contr_cmd4,
-                               shell=True,
-                               stdout=subprocess.PIPE)
-
-    # SSH TO EXECUTE cmd_client
-
-    try:
-        ssh.connect(floatip_client, username="root",
-                    password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + instance_ip_2 + " 80 2>&1"
-        (stdin, stdout, stderr) = ssh.exec_command(command)
-
-        if "timed out" in stdout.readlines()[0]:
-            logger.info('\033[92m' + "TEST 3 [PASSED] "
-                        "==> HTTP BLOCKED" + '\033[0m')
-            i = i + 1
-            json_results.update({"Test 3: HTTP Blocked": "Passed"})
-        else:
-            logger.error('\033[91m' + "TEST 3 [FAILED] "
-                         "==> HTTP NOT BLOCKED" + '\033[0m')
-            status = "FAIL"
-            json_results.update({"Test 3: HTTP Blocked": "Failed"})
-            failures += 1
-    except:
-        logger.debug("Waiting for %s..." % floatip_client)
-        time.sleep(6)
-        # timeout -= 1
-
-    # SSH TO EXECUTE cmd_client
-    try:
-        ssh.connect(floatip_client, username="root",
-                    password="opnfv", timeout=2)
-        command = "nc -w 5 -zv " + instance_ip_2 + " 22 2>&1"
-        (stdin, stdout, stderr) = ssh.exec_command(command)
-
-        if "succeeded" in stdout.readlines()[0]:
-            logger.info('\033[92m' + "TEST 4 [PASSED] "
-                        "==> SSH WORKS" + '\033[0m')
-            i = i + 1
-            json_results.update({"Test 4: SSH works": "Passed"})
-        else:
-            logger.error('\033[91m' + "TEST 4 [FAILED] "
-                         "==> SSH BLOCKED" + '\033[0m')
-            status = "FAIL"
-            json_results.update({"Test 4: SSH works": "Failed"})
-            failures += 1
-    except:
-        logger.debug("Waiting for %s..." % floatip_client)
-        time.sleep(6)
-        # timeout -= 1
-
-    if i == 4:
-        for x in range(0, 5):
-            logger.info('\033[92m' + "SFC TEST WORKED"
-                        " :) \n" + '\033[0m')
+            logger.debug("Iterating again!")
+            delete = ("bash delete.sh")
+            subprocess.call(delete, shell=True, stderr=subprocess.PIPE)
+            time.sleep(10)
 
     if args.report:
         stop_time = time.time()
