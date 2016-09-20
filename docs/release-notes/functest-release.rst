@@ -276,11 +276,11 @@ Apex
 +------------------+---------+---------+-------------------+
 | odl_l3           |  15/18  |    83%  | `apex-res-176`_   |
 +------------------+---------+---------+-------------------+
-| odl_l2-bgpvpn    |  14/18  |    78%  |     ??            |
+| odl_l2-bgpvpn    |  14/18  |    78%  | `apex-res-235`_   |
 +------------------+---------+---------+-------------------+
 | odl_l2-fdio-noha |  12/15  |    80%  | `apex-res-6`_     |
 +------------------+---------+---------+-------------------+
-| odl_l2-sfc-noha  |  18/21  |    86%  |     ??            |
+| odl_l2-sfc-noha  |  18/21  |    86%  | `apex-res-217`_   |
 +------------------+---------+---------+-------------------+
 
 Compass
@@ -296,7 +296,7 @@ Compass
 +------------------+---------+---------+-------------------+
 | odl_l3           |  9/12   |    75%  | `compass-res-73`_ |
 +------------------+---------+---------+-------------------+
-| odl_l2-moon      |  9/18   |      %  |    ??             |
+| odl_l2-moon      |  15/18  |    83%  | `compass-res-567`_|
 +------------------+---------+---------+-------------------+
 | onos-ha          |  15/15  |   100%  | `compass-res-77`_ |
 +------------------+---------+---------+-------------------+
@@ -324,17 +324,13 @@ Fuel
 +---------------------+---------+---------+-------------------+
 | nosdn-ovs-noha      |  15/15  |  100%   | `fuel-res-162`_   |
 +---------------------+---------+---------+-------------------+
-| odl_l2-sfc          |  21/21  |  100%   |                   |
-+---------------------+---------+---------+-------------------+
-| odl_l2-sfc-noha     |  16/18  |   88%   |                   |
-+---------------------+---------+---------+-------------------+
 | odl_l2              |  21/21  |  100%   |  `fuel-res-123`_  |
 +---------------------+---------+---------+-------------------+
 | odl_l2-noha         |  17/18  |   94%   | `fuel-res-155`_   |
 +---------------------+---------+---------+-------------------+
-| odl_l2-bgpvpn       |  17/18  |   94%   | `fuel-res-119`_   |
+| odl_l2-bgpvpn       |  14/18  |   18%   | `fuel-res-119`_   |
 +---------------------+---------+---------+-------------------+
-| odl_l2-bgpvpn-noha  |  15/15  |  100%   | `fuel-res-160`_   |
+| odl_l2-bgpvpn-noha  |  14/15  |   93%   | `fuel-res-160`_   |
 +---------------------+---------+---------+-------------------+
 | odl_l3              |  15/18  |   67%   | `fuel-res-115`_   |
 +---------------------+---------+---------+-------------------+
@@ -344,7 +340,7 @@ Fuel
 +---------------------+---------+---------+-------------------+
 | onos-noha           |  18/18  |  100%   | `fuel-res-166`_   |
 +---------------------+---------+---------+-------------------+
-| onos-sfc            |  24/24  |  100%   | fuel-res-124`_    |
+| onos-sfc            |  24/24  |  100%   | `fuel-res-124`_   |
 +---------------------+---------+---------+-------------------+
 | onos-sfc-noha       |  21/21  |  100%   | `fuel-res-129`_   |
 +---------------------+---------+---------+-------------------+
@@ -383,7 +379,7 @@ Joid
 +---------------------+---------+---------+-----------------+
 | nosdn-lxd-noha      |  12/12  |  100%   | `joid-res-91`_  |
 +---------------------+---------+---------+-----------------+
-| odl_l2              |  19/21  |   91%   | `joid-res-103`_ |
+| odl_l2              |  21/21  |  100%   | `joid-res-103`_ |
 +---------------------+---------+---------+-----------------+
 | onos                |  21/21  |  100%   | `joid-res-99`_  |
 +---------------------+---------+---------+-----------------+
@@ -494,27 +490,12 @@ Open JIRA tickets
 +------------------+-----------------------------------------------+
 |   JIRA           |         Description                           |
 +==================+===============================================+
-| `FUNCTEST-419`_  |  do not try to Remove docker                  |
-|                  |  image opnfv/functest:<none>                  |
-|                  |  reported by joid on Intel POD                |
-|                  |  may impact CI                                |
-|                  |  not reproducible                             |
-+------------------+-----------------------------------------------+
 | `FUNCTEST-446`_  |  Cleanup ODL-SFC output in Functest execution |
 |                  |  Impact on odl_l2-sfc scenarios               |
-+------------------+-----------------------------------------------+
-| `FUNCTEST-450`_  |  Functest is Failing to get the token using   |
-|                  |  keystone client                              |
 +------------------+-----------------------------------------------+
 | `FUNCTEST-454`_  |  Cleanup failures when using HA networks in   |
 |                  |  Neutron                                      |
 +------------------+-----------------------------------------------+
-| `FUNCTEST-460`_  |  Wrong image format used in rally cases       |
-+------------------+-----------------------------------------------+
-| `FUNCTEST-462`_  |  OLD test fails after forcing the clone       |
-|                  |  release/beryllium-sr3 branch                 |
-+------------------+-----------------------------------------------+
-
 
 Useful links
 ============
@@ -541,17 +522,9 @@ Useful links
 
  - Functest developer guide: http://artifacts.opnfv.org/functest/colorado/docs/devguide/index.html
 
-.. _`FUNCTEST-419` : https://jira.opnfv.org/browse/FUNCTEST-419
-
 .. _`FUNCTEST-446` : https://jira.opnfv.org/browse/FUNCTEST-446
 
-.. _`FUNCTEST-450` : https://jira.opnfv.org/browse/FUNCTEST-450
-
 .. _`FUNCTEST-454` : https://jira.opnfv.org/browse/FUNCTEST-454
-
-.. _`FUNCTEST-460` : https://jira.opnfv.org/browse/FUNCTEST-460
-
-.. _`FUNCTEST-462` : https://jira.opnfv.org/browse/FUNCTEST-462
 
 .. _`apex-res-6` : http://testresults.opnfv.org/test/api/v1/results?build_tag=bd-push-daily-colorado-6
 
@@ -560,6 +533,10 @@ Useful links
 .. _`apex-res-175`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-175
 
 .. _`apex-res-176`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-176
+
+.. _`apex-res-217`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-217
+
+.. _`apex-res-235`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-235
 
 .. _`compass-res-55`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-colorado-55
 
@@ -570,6 +547,8 @@ Useful links
 .. _`compass-res-76`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-colorado-76
 
 .. _`compass-res-77`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-colorado-77
+
+.. _`compass-res-567`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-master-567
 
 .. _`fuel-res-129`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-129
 
