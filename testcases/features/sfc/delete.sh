@@ -1,12 +1,3 @@
-apt-get install -y git-core
-git clone https://gerrit.opnfv.org/gerrit/fuel fuel
-pushd fuel
-git checkout ad0dd57
-popd
-mv fuel/prototypes/sfc_tacker/poc.tacker-up.sh .
-bash poc.tacker-up.sh
-
-cat <<EOF > delete.sh
 tacker sfc-classifier-delete red_http
 tacker sfc-classifier-delete blue_ssh
 tacker sfc-classifier-delete red_ssh
@@ -23,11 +14,5 @@ heat stack-delete sfc --y
 heat stack-delete sfc_test1 --y
 #openstack stack delete sfc_test2 --y
 heat stack-delete sfc_test2 --y
-nova delete server
 nova delete client
-EOF
-
-chmod +x delete.sh
-
-source tackerc
-openstack flavor create custom --ram 1500 --disk 10 --public
+nova delete server
