@@ -60,6 +60,18 @@ function odl_tests(){
     fi
 }
 
+function sfc_prepare(){
+    ids=($(neutron security-group-list|grep default|awk '{print $2}'))
+    for id in ${ids[@]}; do
+        if ! neutron security-group-show $id|grep 22 &>/dev/null; then
+            neutron security-group-rule-create --protocol tcp \
+                --port-range-min 22 --port-range-max 22 --direction ingress $id
+            neutron security-group-rule-create --protocol tcp \
+                --port-range-min 22 --port-range-max 22 --direction egress $id
+        fi
+    done
+}
+
 function run_test(){
     test_name=$1
     serial_flag=""
@@ -200,6 +212,10 @@ done
 echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/openstack.creds to run the test.."
 source ${FUNCTEST_CONF_DIR}/openstack.creds
 
+# ODL Boron workaround to create additional flow rules to allow port 22 TCP
+if [[ $DEPLOY_SCENARIO == *"odl_l2-sfc"* ]]; then
+    sfc_prepare
+fi
 
 # Run test
 run_test $TEST
