@@ -97,9 +97,9 @@ Deliverables
 Software
 --------
 
- - The Functest Docker image: * TODO link *
+ - The Functest Docker image: https://hub.docker.com/r/opnfv/functest (tag: ** TODO **)
 
- - The testapi Docker image: * TODO link *
+ - The testapi Docker image: https://hub.docker.com/r/opnfv/testapi (tag:latest)
 
 
 Documents
@@ -167,13 +167,19 @@ precised, the scenario is a HA scenario):
 +---------------------+---------+---------+---------+---------+
 |   nosdn-noha        |         |         |    X    |    X    |
 +---------------------+---------+---------+---------+---------+
+|   kvm               |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   kvm-noha          |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   lxd               |         |         |         |    X    |
++---------------------+---------+---------+---------+---------+
+|   lxd-noha          |         |         |         |    X    |
++---------------------+---------+---------+---------+---------+
+|   ovs-noha (dpdk)   |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
 |   odl_l2            |    X    |    X    |    X    |    X    |
 +---------------------+---------+---------+---------+---------+
 |   odl_l2-noha       |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l3            |    X    |    X    |    X    |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l3-noha       |         |         |    X    |         |
 +---------------------+---------+---------+---------+---------+
 |   odl_l2-bgpvpn     |    X    |         |    X    |         |
 +---------------------+---------+---------+---------+---------+
@@ -183,9 +189,11 @@ precised, the scenario is a HA scenario):
 +---------------------+---------+---------+---------+---------+
 |   odl_l2-moon       |         |    X    |         |         |
 +---------------------+---------+---------+---------+---------+
-|   odl_l2-sfc        |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
 |   odl_l2-sfc-noha   |    X    |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   odl_l3            |    X    |    X    |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   odl_l3-noha       |         |         |    X    |         |
 +---------------------+---------+---------+---------+---------+
 |   onos              |         |    X    |    X    |    X    |
 +---------------------+---------+---------+---------+---------+
@@ -195,17 +203,7 @@ precised, the scenario is a HA scenario):
 +---------------------+---------+---------+---------+---------+
 |   onos-sfc-noha     |         |         |    X    |         |
 +---------------------+---------+---------+---------+---------+
-|   ovs-noha (dpdk)   |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-|   kvm               |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-|   kvm-noha          |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
 |   multisite         |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-|   lxd               |         |         |         |    X    |
-+---------------------+---------+---------+---------+---------+
-|   lxd-noha          |         |         |         |    X    |
 +---------------------+---------+---------+---------+---------+
 
 In Colorado, the functional tests have been sliced in 6 different
@@ -280,7 +278,7 @@ Apex
 +------------------+---------+---------+-------------------+
 | odl_l2-fdio-noha |  12/15  |    80%  | `apex-res-6`_     |
 +------------------+---------+---------+-------------------+
-| odl_l2-sfc-noha  |  18/21  |    86%  | `apex-res-217`_   |
+| odl_l2-sfc-noha  |  18/24  |    75%  | `apex-res-217`_   |
 +------------------+---------+---------+-------------------+
 
 Compass
@@ -300,7 +298,7 @@ Compass
 +------------------+---------+---------+-------------------+
 | onos-ha          |  15/15  |   100%  | `compass-res-77`_ |
 +------------------+---------+---------+-------------------+
-| onos-sfc-ha      |  16/18  |   100%  | `compass-res-76`_ |
+| onos-sfc-ha      |  17/18  |    95%  | `compass-res-76`_ |
 +------------------+---------+---------+-------------------+
 
 Note: all the Compass tests for Colorado have been executed on virtual
@@ -322,17 +320,21 @@ Fuel
 +---------------------+---------+---------+-------------------+
 | nosdn-kvm-noha      |  15/15  |  100%   | `fuel-res-161`_   |
 +---------------------+---------+---------+-------------------+
+| nosdn-ovs           |  12/18  |   67%*  |  `fuel-res-213`_  |
++---------------------+---------+---------+-------------------+
 | nosdn-ovs-noha      |  15/15  |  100%   | `fuel-res-162`_   |
 +---------------------+---------+---------+-------------------+
 | odl_l2              |  21/21  |  100%   |  `fuel-res-123`_  |
 +---------------------+---------+---------+-------------------+
 | odl_l2-noha         |  17/18  |   94%   | `fuel-res-155`_   |
 +---------------------+---------+---------+-------------------+
-| odl_l2-bgpvpn       |  14/18  |   18%   | `fuel-res-119`_   |
+| odl_l2-bgpvpn       |  14/18  |   78%   | `fuel-res-119`_   |
 +---------------------+---------+---------+-------------------+
 | odl_l2-bgpvpn-noha  |  14/15  |   93%   | `fuel-res-160`_   |
 +---------------------+---------+---------+-------------------+
-| odl_l3              |  15/18  |   67%   | `fuel-res-115`_   |
+| odl_l2-sfc-noha     |   6/21  |   29%   | `fuel-res-219`_   |
++---------------------+---------+---------+-------------------+
+| odl_l3              |  15/18  |   83%   | `fuel-res-115`_   |
 +---------------------+---------+---------+-------------------+
 | odl_l3-noha         |  12/15  |   80%   | `fuel-res-164`_   |
 +---------------------+---------+---------+-------------------+
@@ -347,6 +349,7 @@ Fuel
 | multisite           |  N.R    |  100%   | `fuel-res-8`_     |
 +---------------------+---------+---------+-------------------+
 
+*: all results passed, lacking iterations to reach the full score
 
 Results of Functest on AArch64 Colorado 1.0
 
@@ -550,35 +553,39 @@ Useful links
 
 .. _`compass-res-567`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-master-567
 
-.. _`fuel-res-129`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-129
-
-.. _`fuel-res-154`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-154
-
-.. _`fuel-res-128`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-128
-
-.. _`fuel-res-161`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-161
-
-.. _`fuel-res-162`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-162
-
-.. _`fuel-res-119`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-119
-
-.. _`fuel-res-160`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-160
+.. _`fuel-res-8`: https://build.opnfv.org/ci/view/functest/job/functest-fuel-virtual-suite-colorado/lastSuccessfulBuild/console
 
 .. _`fuel-res-115`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-115
 
 .. _`fuel-res-117`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-117
 
+.. _`fuel-res-119`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-119
+
+.. _`fuel-res-123`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-123
+
 .. _`fuel-res-124`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-124
 
-.. _`fuel-res-8`: https://build.opnfv.org/ci/view/functest/job/functest-fuel-virtual-suite-colorado/lastSuccessfulBuild/console
+.. _`fuel-res-128`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-128
+
+.. _`fuel-res-129`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-129
+
+.. _`fuel-res-154`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-154
+
+.. _`fuel-res-155`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-155
+
+.. _`fuel-res-160`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-160
+
+.. _`fuel-res-161`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-161
+
+.. _`fuel-res-162`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-162
 
 .. _`fuel-res-164`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-164
 
 .. _`fuel-res-166`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-166
 
-.. _`fuel-res-155`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-155
+.. _`fuel-res-213`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-213
 
-.. _`fuel-res-123`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-123
+.. _`fuel-res-219`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-219
 
 .. _`fuel-arm-res-29`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/29/console
 
@@ -588,11 +595,7 @@ Useful links
 
 .. _`fuel-arm-res-28`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/28/console
 
-.. _`joid-res-102`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-102
-
 .. _`joid-res-93`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-93
-
-.. _`joid-res-104`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-104
 
 .. _`joid-res-91`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-91
 
@@ -600,4 +603,8 @@ Useful links
 
 .. _`joid-res-97`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-97
 
+.. _`joid-res-102`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-102
+
 .. _`joid-res-103`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-103
+
+.. _`joid-res-104`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-104
