@@ -149,6 +149,21 @@ def main():
     sg_id = os_utils.create_security_group_full(neutron_client,
                                                 SECGROUP_NAME, SECGROUP_DESCR)
 
+    sg_id = os_utils.create_security_group_full(neutron_client,
+                                                SECGROUP_NAME, SECGROUP_DESCR)
+
+    secgroups = os_utils.get_security_groups(neutron_client)
+
+    for sg in secgroups:
+        os_utils.create_secgroup_rule(neutron_client, sg['id'],
+                                      'ingress', 'tcp',
+                                      port_range_min=22,
+                                      port_range_max=22)
+        os_utils.create_secgroup_rule(neutron_client, sg['id'],
+                                      'egress', 'tcp',
+                                      port_range_min=22,
+                                      port_range_max=22)
+
     # boot INSTANCE
     logger.info("Creating instance '%s'..." % INSTANCE_NAME)
     logger.debug(
@@ -289,11 +304,11 @@ def main():
         time.sleep(3)
         r += 1
 
-    logger.info("SSH connectivity to the SFs established")
-
     if not all(check):
         logger.error("Cannot establish SSH connection to the SFs")
         sys.exit(1)
+
+    logger.info("SSH connectivity to the SFs established")
 
     # SSH TO START THE VXLAN_TOOL ON SF1
     logger.info("Configuring the SFs")

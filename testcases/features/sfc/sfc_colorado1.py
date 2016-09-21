@@ -51,6 +51,16 @@ TACKER_SCRIPT = 'sfc_tacker.bash'
 TEARDOWN_SCRIPT = "sfc_teardown.bash"
 TACKER_CHANGECLASSI = "sfc_change_classi.bash"
 
+ssh_options = '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+
+
+def check_ssh(ip):
+    cmd = "sshpass -p opnfv ssh " + ssh_options + " -q " + ip + " exit"
+    success = subprocess.call(cmd, shell=True) == 0
+    if not success:
+        logger.debug("Wating for SSH connectivity in SF with IP: %s" % ip)
+    return success
+
 
 def main():
 
@@ -62,7 +72,6 @@ def main():
     start_time = time.time()
     json_results = {}
 
-    ssh_options = '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
     contr_cmd = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
                  " 'fuel node'|grep controller|awk '{print $10}'")
     logger.info("Executing script to get ip_server: '%s'" % contr_cmd)
@@ -138,6 +147,18 @@ def main():
 
     sg_id = os_utils.create_security_group_full(neutron_client,
                                                 SECGROUP_NAME, SECGROUP_DESCR)
+
+    secgroups = os_utils.get_security_groups(neutron_client)
+
+    for sg in secgroups:
+        os_utils.create_secgroup_rule(neutron_client, sg['id'],
+                                      'ingress', 'tcp',
+                                      port_range_min=22,
+                                      port_range_max=22)
+        os_utils.create_secgroup_rule(neutron_client, sg['id'],
+                                      'egress', 'tcp',
+                                      port_range_min=22,
+                                      port_range_max=22)
 
     iterator = 0
     while(iterator < 6):
@@ -268,13 +289,29 @@ def main():
             logger.error('Failed to obtain IPs, cant continue, exiting')
             return
 
-        logger.info("Waiting 60 seconds for floating IP assignment")
-        for j in range(0, 6):
-            logger.debug("Test starting in"
-                         " {0} seconds".format(str((6 - j) * 10)))
-            time.sleep(10)
-
         logger.debug("Floating IPs for SFs: %s..." % ips)
+
+        # Check SSH connectivity to VNFs
+        r = 0
+        retries = 100
+        check = [False, False]
+
+        logger.info("Checking SSH connectivity to the SFs with ips {0}"
+                    .format(str(ips)))
+        while r < retries and not all(check):
+            try:
+                check = [check_ssh(ips[0]), check_ssh(ips[1])]
+            except Exception:
+                logger.exception("SSH check failed")
+                check = [False, False]
+            time.sleep(3)
+            r += 1
+
+        if not all(check):
+            logger.error("Cannot establish SSH connection to the SFs")
+            sys.exit(1)
+
+        logger.info("SSH connectivity to the SFs established")
 
         # SSH TO START THE VXLAN_TOOL ON SF1
         logger.info("Configuring the SFs")
