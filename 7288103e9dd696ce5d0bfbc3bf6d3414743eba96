@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_53b5292f",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-21T09:17:38Z",
+      "side": 1,
+      "message": "please give a meaningful name rather than \u00271/2/3\u0027",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 32
+      },
+      "revId": "7288103e9dd696ce5d0bfbc3bf6d3414743eba96",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_73b06543",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-21T09:17:38Z",
+      "side": 1,
+      "message": "if SSH can not be connected, does it necessary to do the following process? I think here we should give an exit, right?",
+      "revId": "7288103e9dd696ce5d0bfbc3bf6d3414743eba96",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
