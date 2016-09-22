@@ -174,6 +174,7 @@ def main():
 
         if instance is None:
             logger.error("Error while booting instance.")
+            iterator += 1
             continue
         # Retrieve IP of INSTANCE
         instance_ip = instance.networks.get(NET_NAME)[0]
@@ -191,6 +192,7 @@ def main():
 
         if floatip_client is None:
             logger.error("Cannot create floating IP.")
+            iterator += 1
             continue
         logger.info("Floating IP created: '%s'" % floatip_client)
 
@@ -200,6 +202,7 @@ def main():
                                         instance.id,
                                         floatip_client):
             logger.error("Cannot associate floating IP to VM.")
+            iterator += 1
             continue
 
     # STARTING SECOND VM (server) ###
@@ -217,6 +220,7 @@ def main():
 
         if instance_2 is None:
             logger.error("Error while booting instance.")
+            iterator += 1
             continue
         # Retrieve IP of INSTANCE
         instance_ip_2 = instance_2.networks.get(NET_NAME)[0]
@@ -234,6 +238,7 @@ def main():
 
         if floatip_server is None:
             logger.error("Cannot create floating IP.")
+            iterator += 1
             continue
         logger.info("Floating IP created: '%s'" % floatip_server)
 
@@ -244,6 +249,7 @@ def main():
                                         instance_2.id,
                                         floatip_server):
             logger.error("Cannot associate floating IP to VM.")
+            iterator += 1
             continue
 
         # CREATION OF THE 2 SF ####
@@ -309,6 +315,7 @@ def main():
 
         if not all(check):
             logger.error("Cannot establish SSH connection to the SFs")
+            iterator += 1
             continue
 
         logger.info("SSH connectivity to the SFs established")
