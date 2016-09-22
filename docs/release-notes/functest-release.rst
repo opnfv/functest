@@ -608,3 +608,4 @@ Useful links
 .. _`joid-res-103`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-103
 
 .. _`joid-res-104`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-104
+
