@@ -160,6 +160,8 @@ def main():
                                       port_range_min=22,
                                       port_range_max=22)
 
+    os_utils.get_or_create_flavor('custom', 1500, 10, 1, public=True)
+
     iterator = 0
     while(iterator < 6):
         # boot INSTANCE

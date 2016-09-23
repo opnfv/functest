@@ -161,6 +161,8 @@ def main():
                                       port_range_min=22,
                                       port_range_max=22)
 
+    os_utils.get_or_create_flavor('custom', 1500, 10, 1, public=True)
+
     # boot INSTANCE
     logger.info("Creating instance '%s'..." % INSTANCE_NAME)
     logger.debug(
