@@ -159,6 +159,14 @@ def main():
                                       'egress', 'tcp',
                                       port_range_min=22,
                                       port_range_max=22)
+        os_utils.create_secgroup_rule(neutron_client, sg['id'],
+                                      'ingress', 'tcp',
+                                      port_range_min=80,
+                                      port_range_max=80)
+        os_utils.create_secgroup_rule(neutron_client, sg['id'],
+                                      'egress', 'tcp',
+                                      port_range_min=80,
+                                      port_range_max=80)
 
     iterator = 0
     while(iterator < 6):
