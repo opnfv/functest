@@ -34,6 +34,24 @@
       "revId": "27664373693c1245a216e4f8febabc04c7447ac5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_b77020dd",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-27T07:45:42Z",
+      "side": 1,
+      "message": "I mean how about exit here, just as exit when one of the following steps fails",
+      "parentUuid": "1a76adc5_d7c91c27",
+      "revId": "27664373693c1245a216e4f8febabc04c7447ac5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
