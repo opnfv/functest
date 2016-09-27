@@ -14,13 +14,12 @@ import os
 import click
 
 import functest.ci.tier_builder as tb
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_utils as ft_utils
 
+CONF = config_functest.CONF
 
-FUNCTEST_CONF_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_conf')
-ENV_FILE = FUNCTEST_CONF_DIR + "/env_active"
-FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
+ENV_FILE = CONF.functest_conf_dir + "/env_active"
 
 
 class CliTier:
@@ -66,8 +65,8 @@ class CliTier:
         else:
             if noclean:
                 cmd = ("python %s/ci/run_tests.py "
-                       "-n -t %s" % (FUNCTEST_REPO, tiername))
+                       "-n -t %s" % (ft_utils.FUNCTEST_REPO, tiername))
             else:
                 cmd = ("python %s/ci/run_tests.py "
-                       "-t %s" % (FUNCTEST_REPO, tiername))
+                       "-t %s" % (ft_utils.FUNCTEST_REPO, tiername))
             ft_utils.execute_command(cmd)
