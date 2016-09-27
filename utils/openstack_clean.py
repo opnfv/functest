@@ -21,16 +21,16 @@
 #
 
 import time
-import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as ft_utils
-import functest.utils.openstack_utils as os_utils
+
 import yaml
 
+import functest.utils.config_functest as config_functest
+import functest.utils.functest_logger as ft_logger
+import functest.utils.openstack_utils as os_utils
+
+CONF = config_functest.CONF
 
 logger = ft_logger.Logger("openstack_clean").getLogger()
-
-OS_SNAPSHOT_FILE = \
-    ft_utils.get_functest_config("general.openstack.snapshot_file")
 
 
 def separator():
@@ -380,11 +380,12 @@ def main():
     cinder_client = os_utils.get_cinder_client()
 
     try:
-        with open(OS_SNAPSHOT_FILE) as f:
+        with open(CONF.os_snapshot_file) as f:
             snapshot_yaml = yaml.safe_load(f)
     except Exception:
         logger.info("The file %s does not exist. The OpenStack snapshot must"
-                    " be created first. Aborting cleanup." % OS_SNAPSHOT_FILE)
+                    " be created first. Aborting cleanup." %
+                    CONF.os_snapshot_file)
         exit(0)
 
     default_images = snapshot_yaml.get('images')
