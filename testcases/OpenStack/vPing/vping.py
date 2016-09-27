@@ -33,9 +33,6 @@ parser.add_argument("-m", "--mode", default='ssh',
 
 args = parser.parse_args()
 
-""" logging declaration """
-logger = None
-
 
 def main():
     if args.mode == 'ssh':
@@ -43,7 +40,6 @@ def main():
     else:
         case = 'vping_userdata'
 
-    global logger
     logger = ft_logger.Logger(case).getLogger()
 
     util.init(logger)
