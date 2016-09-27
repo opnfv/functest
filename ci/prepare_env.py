@@ -22,9 +22,13 @@ import sys
 import argparse
 import yaml
 
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+
+CONF = config_functest.CONF
+
 
 actions = ['start', 'check']
 parser = argparse.ArgumentParser()
@@ -51,20 +55,8 @@ CONFIG_PATCH_PATH = os.path.join(os.path.dirname(
 with open(CONFIG_PATCH_PATH) as f:
     functest_patch_yaml = yaml.safe_load(f)
 
-FUNCTEST_CONF_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_conf')
 
-
-FUNCTEST_DATA_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data')
-FUNCTEST_RESULTS_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_results')
-DEPLOYMENT_MAME = \
-    ft_utils.get_functest_config('rally.deployment_name')
-TEMPEST_REPO_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_repo_tempest')
-
-ENV_FILE = FUNCTEST_CONF_DIR + "/env_active"
+ENV_FILE = CONF.functest_conf_dir + "/env_active"
 
 
 def print_separator():
@@ -126,17 +118,17 @@ def check_env_variables():
 def create_directories():
     print_separator()
     logger.info("Creating needed directories...")
-    if not os.path.exists(FUNCTEST_CONF_DIR):
-        os.makedirs(FUNCTEST_CONF_DIR)
-        logger.info("    %s created." % FUNCTEST_CONF_DIR)
+    if not os.path.exists(CONF.functest_conf_dir):
+        os.makedirs(CONF.functest_conf_dir)
+        logger.info("    %s created." % CONF.functest_conf_dir)
     else:
-        logger.debug("   %s already exists." % FUNCTEST_CONF_DIR)
+        logger.debug("   %s already exists." % CONF.functest_conf_dir)
 
-    if not os.path.exists(FUNCTEST_DATA_DIR):
-        os.makedirs(FUNCTEST_DATA_DIR)
-        logger.info("    %s created." % FUNCTEST_DATA_DIR)
+    if not os.path.exists(CONF.functest_data_dir):
+        os.makedirs(CONF.functest_data_dir)
+        logger.info("    %s created." % CONF.functest_data_dir)
     else:
-        logger.debug("   %s already exists." % FUNCTEST_DATA_DIR)
+        logger.debug("   %s already exists." % CONF.functest_data_dir)
 
 
 def source_rc_file():
@@ -192,7 +184,7 @@ def patch_config_file():
     for key in functest_patch_yaml:
         if key in CI_SCENARIO:
             new_functest_yaml = dict(ft_utils.merge_dicts(
-                ft_utils.get_functest_yaml(), functest_patch_yaml[key]))
+                CONF.functest_yaml, functest_patch_yaml[key]))
             updated = True
 
     if updated:
@@ -223,19 +215,21 @@ def install_rally():
     logger.info("Creating Rally environment...")
 
     cmd = "rally deployment destroy opnfv-rally"
-    ft_utils.execute_command(cmd, exit_on_error=False,
+    ft_utils.execute_command(cmd,
+                             exit_on_error=False,
                              error_msg=("Deployment %s does not exist."
-                                        % DEPLOYMENT_MAME), verbose=False)
+                                        % CONF.rally_deployment_name),
+                             verbose=False)
     rally_conf = os_utils.get_credentials_for_rally()
     with open('rally_conf.json', 'w') as fp:
         json.dump(rally_conf, fp)
     cmd = "rally deployment create --file=rally_conf.json --name="
-    cmd += DEPLOYMENT_MAME
+    cmd += CONF.rally_deployment_name
     ft_utils.execute_command(cmd,
                              error_msg="Problem creating Rally deployment")
 
     logger.info("Installing tempest from existing repo...")
-    cmd = ("rally verify install --source " + TEMPEST_REPO_DIR +
+    cmd = ("rally verify install --source " + CONF.tempest_repo +
            " --system-wide")
     ft_utils.execute_command(cmd,
                              error_msg="Problem installing Tempest.")
