@@ -44,7 +44,7 @@ class Logger:
             ch.setLevel(logging.INFO)
         self.logger.addHandler(ch)
 
-        hdlr = logging.FileHandler('/home/opnfv/functest/results/functest.log')
+        hdlr = logging.FileHandler('./functest.log')
         hdlr.setFormatter(formatter)
         hdlr.setLevel(logging.DEBUG)
         self.logger.addHandler(hdlr)
