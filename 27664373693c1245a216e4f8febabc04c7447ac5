@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_17f0f48f",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-27T01:24:31Z",
+      "side": 1,
+      "message": "if the flavor is not exist and create failed, is it meaningful to go on running the test? I think in this case, the test will fail any way.",
+      "revId": "27664373693c1245a216e4f8febabc04c7447ac5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
