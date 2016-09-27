@@ -22,9 +22,13 @@ import sys
 import argparse
 import yaml
 
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+
+CONF = config_functest.CONF
+
 
 actions = ['start', 'check']
 parser = argparse.ArgumentParser()
@@ -51,18 +55,12 @@ CONFIG_PATCH_PATH = os.path.join(os.path.dirname(
 with open(CONFIG_PATCH_PATH) as f:
     functest_patch_yaml = yaml.safe_load(f)
 
-FUNCTEST_CONF_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_conf')
+FUNCTEST_CONF_DIR = CONF.functest_conf_dir
+FUNCTEST_DATA_DIR = CONF.functest_data_dir
 
-
-FUNCTEST_DATA_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data')
-FUNCTEST_RESULTS_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_results')
-DEPLOYMENT_MAME = \
-    ft_utils.get_functest_config('rally.deployment_name')
-TEMPEST_REPO_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_repo_tempest')
+FUNCTEST_RESULTS_DIR = CONF.results_dir
+DEPLOYMENT_MAME = CONF.rally_deployment_name
+TEMPEST_REPO_DIR = CONF.tempest_repo
 
 ENV_FILE = FUNCTEST_CONF_DIR + "/env_active"
 
@@ -192,7 +190,7 @@ def patch_config_file():
     for key in functest_patch_yaml:
         if key in CI_SCENARIO:
             new_functest_yaml = dict(ft_utils.merge_dicts(
-                ft_utils.get_functest_yaml(), functest_patch_yaml[key]))
+                CONF.functest_yaml, functest_patch_yaml[key]))
             updated = True
 
     if updated:

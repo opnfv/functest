@@ -17,7 +17,10 @@ import os
 import re
 import time
 
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_utils as ft_utils
+
+CONF = config_functest.CONF
 
 
 class foundation:
@@ -54,30 +57,21 @@ class foundation:
         """
         Get Default Parameters value
         """
-        self.Result_DB = str(
-            ft_utils.get_functest_config('results.test_db_url'))
-        self.masterusername = str(
-            ft_utils.get_functest_config('ONOS.general.onosbench_username'))
-        self.masterpassword = str(
-            ft_utils.get_functest_config('ONOS.general.onosbench_password'))
-        self.agentusername = str(
-            ft_utils.get_functest_config('ONOS.general.onoscli_username'))
-        self.agentpassword = str(
-            ft_utils.get_functest_config('ONOS.general.onoscli_password'))
-        self.runtimeout = \
-            ft_utils.get_functest_config('ONOS.general.runtimeout')
-        self.OCT = str(ft_utils.get_functest_config('ONOS.environment.OCT'))
-        self.OC1 = str(ft_utils.get_functest_config('ONOS.environment.OC1'))
-        self.OC2 = str(ft_utils.get_functest_config('ONOS.environment.OC2'))
-        self.OC3 = str(ft_utils.get_functest_config('ONOS.environment.OC3'))
-        self.OCN = str(ft_utils.get_functest_config('ONOS.environment.OCN'))
-        self.OCN2 = str(ft_utils.get_functest_config('ONOS.environment.OCN2'))
-        self.installer_master = str(
-            ft_utils.get_functest_config('ONOS.environment.installer_master'))
-        self.installer_master_username = str(ft_utils.get_functest_config(
-            'ONOS.environment.installer_master_username'))
-        self.installer_master_password = str(ft_utils.get_functest_config(
-            'ONOS.environment.installer_master_password'))
+        self.Result_DB = str(CONF.db_url)
+        self.masterusername = str(CONF.onos_bench_username)
+        self.masterpassword = str(CONF.onos_bench_password)
+        self.agentusername = str(CONF.onos_cli_username)
+        self.agentpassword = str(CONF.onos_cli_password)
+        self.runtimeout = CONF.onos_run_timeout
+        self.OCT = str(CONF.onos_env_oct)
+        self.OC1 = str(CONF.onos_env_oc1)
+        self.OC2 = str(CONF.onos_env_oc2)
+        self.OC3 = str(CONF.onos_env_oc3)
+        self.OCN = str(CONF.onos_env_ocn)
+        self.OCN2 = str(CONF.onos_env_ocn2)
+        self.installer_master = str(CONF.onos_installer)
+        self.installer_master_username = str(CONF.onos_installer_username)
+        self.installer_master_password = str(CONF.onos_installer_password)
         self.hosts = [self.OC1, self.OCN, self.OCN2]
         self.localhost = self.OCT
 
