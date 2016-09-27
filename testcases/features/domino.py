@@ -14,12 +14,13 @@
 # 0.3: add report flag to push results when needed
 #
 
-import argparse
 import time
 
-import functest.utils.config_functest as CONF
+import argparse
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
+from functest.utils.config_functest import ConfigFunctest as CONF
 
 parser = argparse.ArgumentParser()
 
@@ -29,10 +30,8 @@ parser.add_argument("-r", "--report",
 args = parser.parse_args()
 
 
-DOMINO_REPO = \
-    CONF.get_functest_config('general.directories.dir_repo_domino')
-RESULTS_DIR = \
-    CONF.get_functest_config('general.directories.dir_results')
+DOMINO_REPO = CONF.domino_repo
+RESULTS_DIR = CONF.results_dir
 
 logger = ft_logger.Logger("domino").getLogger()
 

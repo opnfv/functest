@@ -13,14 +13,14 @@
 # 0.2: measure test duration and publish results under json format
 #
 #
-import argparse
 import os
 import time
 
-import functest.utils.config_functest as CONF
+import argparse
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
-
+from functest.utils.config_functest import ConfigFunctest as CONF
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
@@ -28,12 +28,10 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-functest_yaml = CONF.get_functest_yaml()
+functest_yaml = CONF.functest_yaml
 
-DOCTOR_REPO = \
-    CONF.get_functest_config('general.directories.dir_repo_doctor')
-RESULTS_DIR = \
-    CONF.get_functest_config('general.directories.dir_results')
+DOCTOR_REPO = CONF.doctor_repo
+RESULTS_DIR = CONF.results_dir
 
 logger = ft_logger.Logger("doctor").getLogger()
 

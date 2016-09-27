@@ -9,20 +9,20 @@
 #
 # Maintainer : jose.lausuch@ericsson.com
 #
-import argparse
 import json
 import os
 import subprocess
 import time
 
-import functest.utils.config_functest as CONF
+import argparse
+import keystoneclient.v2_0.client as ksclient
+import novaclient.client as nvclient
+from neutronclient.v2_0 import client as ntclient
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as openstack_utils
-import keystoneclient.v2_0.client as ksclient
-from neutronclient.v2_0 import client as ntclient
-import novaclient.client as nvclient
-
+from functest.utils.config_functest import ConfigFunctest as CONF
 
 parser = argparse.ArgumentParser()
 
@@ -33,34 +33,28 @@ parser.add_argument("-r", "--report",
 args = parser.parse_args()
 
 
-dirs = CONF.get_functest_config('general.directories')
-PROMISE_REPO = dirs.get('dir_repo_promise')
-RESULTS_DIR = CONF.get_functest_config('general.directories.dir_results')
+PROMISE_REPO = CONF.promise_repo
+RESULTS_DIR = CONF.results_dir
 
-TENANT_NAME = CONF.get_functest_config('promise.tenant_name')
-TENANT_DESCRIPTION = \
-    CONF.get_functest_config('promise.tenant_description')
-USER_NAME = ft_utils.get_functest_config('promise.user_name')
-USER_PWD = CONF.get_functest_config('promise.user_pwd')
-IMAGE_NAME = CONF.get_functest_config('promise.image_name')
-FLAVOR_NAME = CONF.get_functest_config('promise.flavor_name')
-FLAVOR_VCPUS = CONF.get_functest_config('promise.flavor_vcpus')
-FLAVOR_RAM = CONF.get_functest_config('promise.flavor_ram')
-FLAVOR_DISK = CONF.get_functest_config('promise.flavor_disk')
+TENANT_NAME = CONF.promise_tenant_name
+TENANT_DESCRIPTION = CONF.promise_tenant_description
+USER_NAME = CONF.promise_username
+USER_PWD = CONF.promise_password
+IMAGE_NAME = CONF.promise_image_name
+FLAVOR_NAME = CONF.promise_flavor_name
+FLAVOR_VCPUS = CONF.promise_flavor_cpus
+FLAVOR_RAM = CONF.promise_flavor_ram
+FLAVOR_DISK = CONF.promise_flavor_disk
 
 
-GLANCE_IMAGE_FILENAME = \
-    CONF.get_functest_config('general.openstack.image_file_name')
-GLANCE_IMAGE_FORMAT = \
-    CONF.get_functest_config('general.openstack.image_disk_format')
-GLANCE_IMAGE_PATH = \
-    CONF.get_functest_config('general.directories.dir_functest_data') + \
-    "/" + GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_FILENAME = CONF.os_image_file
+GLANCE_IMAGE_FORMAT = CONF.os_image_format
+GLANCE_IMAGE_PATH = CONF.functest_data_dir + "/" + GLANCE_IMAGE_FILENAME
 
-NET_NAME = CONF.get_functest_config('promise.network_name')
-SUBNET_NAME = CONF.get_functest_config('promise.subnet_name')
-SUBNET_CIDR = CONF.get_functest_config('promise.subnet_cidr')
-ROUTER_NAME = CONF.get_functest_config('promise.router_name')
+NET_NAME = CONF.promise_network_name
+SUBNET_NAME = CONF.promise_subnet_name
+SUBNET_CIDR = CONF.promise_subnet_cidr
+ROUTER_NAME = CONF.promise_router_name
 
 
 """ logging configuration """

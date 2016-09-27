@@ -15,11 +15,10 @@ import os
 import re
 import shutil
 
-import functest.utils.config_functest as CONF
-import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_logger as ft_logger
-from run_tempest import configure_tempest
+from functest.utils.config_functest import ConfigFunctest as CONF
 from run_tempest import TEMPEST_RESULTS_DIR
+from run_tempest import configure_tempest
 
 logger = ft_logger.Logger("multisite").getLogger()
 
@@ -57,12 +56,8 @@ def configure_tempest_multisite(deployment_dir):
         kingbird_conf_path = "/etc/kingbird/kingbird.conf"
         installer_type = os.getenv('INSTALLER_TYPE', 'Unknown')
         installer_ip = os.getenv('INSTALLER_IP', 'Unknown')
-        installer_username = CONF.get_functest_config(
-            "multisite." + installer_type +
-            "_environment.installer_username")
-        installer_password = CONF.get_functest_config(
-            "multisite." + installer_type +
-            "_environment.installer_password")
+        installer_username = CONF.multisite_installer_username(installer_type)
+        installer_password = CONF.multisite_installer_password(installer_type)
 
         ssh_options = "-o UserKnownHostsFile=/dev/null -o \
             StrictHostKeyChecking=no"
@@ -118,7 +113,7 @@ def main():
     if not os.path.exists(TEMPEST_RESULTS_DIR):
         os.makedirs(TEMPEST_RESULTS_DIR)
 
-    deployment_dir = CONF.get_deployment_dir()
+    deployment_dir = CONF.rally_deployment_dir
     configure_tempest_multisite(deployment_dir)
 
 

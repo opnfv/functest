@@ -7,41 +7,35 @@ import time
 import paramiko
 from scp import SCPClient
 
-import functest.utils.config_functest as CONF
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+from functest.utils.config_functest import ConfigFunctest as CONF
+
 FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
 
-NAME_VM_1 = CONF.get_functest_config('vping.vm_name_1')
-NAME_VM_2 = CONF.get_functest_config('vping.vm_name_2')
+NAME_VM_1 = CONF.vping_vm_name_1
+NAME_VM_2 = CONF.vping_vm_name_2
 
 VM_BOOT_TIMEOUT = 180
 VM_DELETE_TIMEOUT = 100
-PING_TIMEOUT = CONF.get_functest_config('vping.ping_timeout')
+PING_TIMEOUT = CONF.vping_ping_timeout
 
-GLANCE_IMAGE_NAME = CONF.get_functest_config('vping.image_name')
-GLANCE_IMAGE_FILENAME = \
-    CONF.get_functest_config('general.openstack.image_file_name')
-GLANCE_IMAGE_FORMAT = \
-    CONF.get_functest_config('general.openstack.image_disk_format')
-GLANCE_IMAGE_PATH = \
-    CONF.get_functest_config('general.directories.dir_functest_data') + \
-    "/" + GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_NAME = CONF.vping_image_name
+GLANCE_IMAGE_FILENAME = CONF.os_image_file
+GLANCE_IMAGE_FORMAT = CONF.os_image_format
+GLANCE_IMAGE_PATH = CONF.functest_data_dir + "/" + GLANCE_IMAGE_FILENAME
 
 
-FLAVOR = CONF.get_functest_config('vping.vm_flavor')
+FLAVOR = CONF.vping_flavor
 
 # NEUTRON Private Network parameters
-PRIVATE_NET_NAME = \
-    CONF.get_functest_config('vping.vping_private_net_name')
-PRIVATE_SUBNET_NAME = \
-    CONF.get_functest_config('vping.vping_private_subnet_name')
-PRIVATE_SUBNET_CIDR = \
-    CONF.get_functest_config('vping.vping_private_subnet_cidr')
-ROUTER_NAME = CONF.get_functest_config('vping.vping_router_name')
+PRIVATE_NET_NAME = CONF.vping_private_net_name
+PRIVATE_SUBNET_NAME = CONF.vping_private_subnet_name
+PRIVATE_SUBNET_CIDR = CONF.vping_private_subnet_cidr
+ROUTER_NAME = CONF.vping_router_name
 
-SECGROUP_NAME = CONF.get_functest_config('vping.vping_sg_name')
-SECGROUP_DESCR = CONF.get_functest_config('vping.vping_sg_descr')
+SECGROUP_NAME = CONF.vping_sg_name
+SECGROUP_DESCR = CONF.vping_sg_descr
 
 
 neutron_client = None

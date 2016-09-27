@@ -25,10 +25,10 @@ import argparse
 import iniparse
 import yaml
 
-import functest.utils.config_functest as CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+from functest.utils.config_functest import ConfigFunctest as CONF
 
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
          'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
@@ -74,8 +74,7 @@ logger = ft_logger.Logger("run_rally").getLogger()
 
 
 HOME = os.environ['HOME'] + "/"
-RALLY_DIR = ft_utils.FUNCTEST_REPO + '/' + \
-            CONF.get_functest_config('general.directories.dir_rally')
+RALLY_DIR = ft_utils.FUNCTEST_REPO + '/' + CONF.rally_test_repo
 TEMPLATE_DIR = RALLY_DIR + "scenario/templates"
 SUPPORT_DIR = RALLY_DIR + "scenario/support"
 TEMP_DIR = RALLY_DIR + "var"
@@ -87,27 +86,19 @@ TENANTS_AMOUNT = 3
 ITERATIONS_AMOUNT = 10
 CONCURRENCY = 4
 
-RESULTS_DIR = \
-    CONF.get_functest_config('general.directories.dir_rally_res')
-TEMPEST_CONF_FILE = \
-    CONF.get_functest_config('general.directories.dir_results') + \
-    '/tempest/tempest.conf'
-TEST_DB = CONF.get_functest_config('results.test_db_url')
+RESULTS_DIR = CONF.rally_result_dir
+TEMPEST_CONF_FILE = CONF.results_dir + '/tempest/tempest.conf'
+TEST_DB = CONF.db_url
 
-PRIVATE_NET_NAME = CONF.get_functest_config('rally.network_name')
-PRIVATE_SUBNET_NAME = CONF.get_functest_config('rally.subnet_name')
-PRIVATE_SUBNET_CIDR = CONF.get_functest_config('rally.subnet_cidr')
-ROUTER_NAME = CONF.get_functest_config('rally.router_name')
+PRIVATE_NET_NAME = CONF.rally_network_name
+PRIVATE_SUBNET_NAME = CONF.rally_subnet_name
+PRIVATE_SUBNET_CIDR = CONF.rally_subnet_cidr
+ROUTER_NAME = CONF.rally_router_name
 
-GLANCE_IMAGE_NAME = \
-    CONF.get_functest_config('general.openstack.image_name')
-GLANCE_IMAGE_FILENAME = \
-    CONF.get_functest_config('general.openstack.image_file_name')
-GLANCE_IMAGE_FORMAT = \
-    CONF.get_functest_config('general.openstack.image_disk_format')
-GLANCE_IMAGE_PATH = \
-    CONF.get_functest_config('general.directories.dir_functest_data') + \
-    "/" + GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_NAME = CONF.os_image_name
+GLANCE_IMAGE_FILENAME = CONF.os_image_file
+GLANCE_IMAGE_FORMAT = CONF.os_image_format
+GLANCE_IMAGE_PATH = CONF.functest_data_dir + "/" + GLANCE_IMAGE_FILENAME
 
 CINDER_VOLUME_TYPE_NAME = "volume_test"
 

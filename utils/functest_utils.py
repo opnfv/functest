@@ -22,7 +22,7 @@ import yaml
 from git import Repo
 
 import functest.utils.functest_logger as ft_logger
-from functest.utils.config_functest import get_db_url
+from functest.utils.config_functest import ConfigFunctest as CONF
 
 logger = ft_logger.Logger("functest_utils").getLogger()
 
@@ -167,7 +167,7 @@ def logger_test_results(project, case_name, status, details):
         "details:\t%(d)s\n"
         % {'p': project,
             'n': case_name,
-            'db': get_db_url(),
+            'db': CONF.db_url,
             'pod': pod_name,
             'v': version,
             's': scenario,
@@ -182,7 +182,7 @@ def push_results_to_db(project, case_name,
     POST results to the Result target DB
     """
     # Retrieve params from CI and conf
-    url = get_db_url() + "/results"
+    url = CONF.db_url + "/results"
 
     try:
         installer = os.environ['INSTALLER_TYPE']
@@ -335,22 +335,6 @@ def get_criteria_by_test(testname):
 #               YAML UTILS
 #
 # -----------------------------------------------------------
-def get_parameter_from_yaml(parameter, file):
-    """
-    Returns the value of a given parameter in file.yaml
-    parameter must be given in string format with dots
-    Example: general.openstack.image_name
-    """
-    with open(file) as f:
-        file_yaml = yaml.safe_load(f)
-    f.close()
-    value = file_yaml
-    for element in parameter.split("."):
-        value = value.get(element)
-        if value is None:
-            raise ValueError("The parameter %s is not defined in"
-                             " config_functest.yaml" % parameter)
-    return value
 
 
 def check_success_rate(case_name, success_rate):

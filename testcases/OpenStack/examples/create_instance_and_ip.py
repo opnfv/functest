@@ -10,14 +10,14 @@
 # This script boots an instance and assigns a floating ip
 #
 
-import argparse
 import os
 import sys
 
-import functest.utils.config_functest as CONF
+import argparse
+
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+from functest.utils.config_functest import ConfigFunctest as CONF
 
 parser = argparse.ArgumentParser()
 
@@ -34,30 +34,23 @@ HOME = os.environ['HOME'] + "/"
 
 VM_BOOT_TIMEOUT = 180
 
-INSTANCE_NAME = CONF.get_functest_config("example.example_vm_name")
-FLAVOR = CONF.get_functest_config("example.example_flavor")
-IMAGE_NAME = CONF.get_functest_config("example.example_image_name")
-IMAGE_FILENAME = \
-    CONF.get_functest_config("general.openstack.image_file_name")
-IMAGE_FORMAT = \
-    CONF.get_functest_config("general.openstack.image_disk_format")
-IMAGE_PATH = \
-    CONF.get_functest_config("general.directories.dir_functest_data") + \
-    "/" + IMAGE_FILENAME
+INSTANCE_NAME = CONF.example_vm_name
+FLAVOR = CONF.example_flavor
+IMAGE_NAME = CONF.example_image_name
+IMAGE_FILENAME = CONF.os_image_file
+IMAGE_FORMAT = CONF.os_image_format
+IMAGE_PATH = CONF.functest_data_dir + "/" + IMAGE_FILENAME
 
 # NEUTRON Private Network parameters
 
-NET_NAME = CONF.get_functest_config("example.example_private_net_name")
-SUBNET_NAME = \
-    CONF.get_functest_config("example.example_private_subnet_name")
-SUBNET_CIDR = \
-    CONF.get_functest_config("example.example_private_subnet_cidr")
-ROUTER_NAME = CONF.get_functest_config("example.example_router_name")
+NET_NAME = CONF.example_private_net_name
+SUBNET_NAME = CONF.example_private_subnet_name
+SUBNET_CIDR = CONF.example_private_subnet_cidr
+ROUTER_NAME = CONF.example_router_name
+SECGROUP_NAME = CONF.example_sg_name
+SECGROUP_DESCR = CONF.example_sg_descr
 
-SECGROUP_NAME = CONF.get_functest_config("example.example_sg_name")
-SECGROUP_DESCR = CONF.get_functest_config("example.example_sg_descr")
-
-TEST_DB = CONF.get_functest_config("results.test_db_url")
+TEST_DB = CONF.db_url
 
 
 def main():
