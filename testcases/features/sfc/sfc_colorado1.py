@@ -168,6 +168,12 @@ def main():
                                       port_range_min=80,
                                       port_range_max=80)
 
+    _, custom_flv_id = os_utils.get_or_create_flavor(
+        'custom', 1500, 10, 1, public=True)
+    if not custom_flv_id:
+        logger.error("Failed to create custom flavor")
+        sys.exit(1)
+
     iterator = 0
     while(iterator < 6):
         # boot INSTANCE

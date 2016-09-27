@@ -211,9 +211,10 @@ def get_flavor_id_by_ram_range(nova_client, min_ram, max_ram):
     return id
 
 
-def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
+def create_flavor(nova_client, flavor_name, ram, disk, vcpus, public=True):
     try:
-        flavor = nova_client.flavors.create(flavor_name, ram, vcpus, disk)
+        flavor = nova_client.flavors.create(
+            flavor_name, ram, vcpus, disk, is_public=public)
         try:
             extra_specs = ft_utils.get_functest_config(
                 'general.flavor_extra_specs')
@@ -229,7 +230,7 @@ def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
     return flavor.id
 
 
-def get_or_create_flavor(flavor_name, ram, disk, vcpus):
+def get_or_create_flavor(flavor_name, ram, disk, vcpus, public=True):
     flavor_exists = False
     nova_client = get_nova_client()
 
@@ -240,7 +241,8 @@ def get_or_create_flavor(flavor_name, ram, disk, vcpus):
     else:
         logger.info("Creating flavor '%s' with '%s' RAM, '%s' disk size, "
                     "'%s' vcpus..." % (flavor_name, ram, disk, vcpus))
-        flavor_id = create_flavor(nova_client, flavor_name, ram, disk, vcpus)
+        flavor_id = create_flavor(
+            nova_client, flavor_name, ram, disk, vcpus, public=public)
         if not flavor_id:
             logger.error("Failed to create flavor '%s'..." % (flavor_name))
         else:
