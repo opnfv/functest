@@ -22,9 +22,12 @@ import time
 import argparse
 from neutronclient.v2_0 import client as neutronclient
 
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as openstack_utils
+
+CONF = config_functest.CONF
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--testcase", help="Testcase name")
@@ -35,27 +38,13 @@ args = parser.parse_args()
 logger = ft_logger.Logger("onos").getLogger()
 
 # onos parameters
-TEST_DB = ft_utils.get_functest_config("results.test_db_url")
-ONOS_REPO_PATH = \
-    ft_utils.get_functest_config("general.directories.dir_repos")
-ONOS_CONF_DIR = \
-    ft_utils.get_functest_config("general.directories.dir_functest_conf")
-
-ONOSCI_PATH = ONOS_REPO_PATH + "/"
 starttime = datetime.datetime.now()
 
 HOME = os.environ['HOME'] + "/"
 INSTALLER_TYPE = os.environ['INSTALLER_TYPE']
 DEPLOY_SCENARIO = os.environ['DEPLOY_SCENARIO']
-ONOSCI_PATH = ONOS_REPO_PATH + "/"
-GLANCE_IMAGE_NAME = ft_utils.get_functest_config("onos_sfc.image_name")
-GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config("onos_sfc.image_file_name")
-GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config("general.directories.dir_functest_data") + \
-    "/" + GLANCE_IMAGE_FILENAME
-SFC_PATH = ft_utils.FUNCTEST_REPO + "/" + \
-           ft_utils.get_functest_config("general.directories.dir_onos_sfc")
+GLANCE_IMAGE_PATH = CONF.functest_data_dir + "/" + CONF.onos_sfc_image_file
+SFC_PATH = ft_utils.FUNCTEST_REPO + "/" + CONF.onos_sfc_repo
 
 
 def RunScript(testname):
@@ -64,7 +53,7 @@ def RunScript(testname):
     Parameters:
     testname: ONOS Testcase Name
     """
-    runtest = ONOSCI_PATH + "onos/TestON/bin/cli.py run " + testname
+    runtest = CONF.repos_dir + "/onos/TestON/bin/cli.py run " + testname
     logger.debug("Run script " + testname)
     os.system(runtest)
 
@@ -75,13 +64,13 @@ def DownloadCodes(url="https://github.com/wuwenbin2/OnosSystemTest.git"):
     Parameters:
     url: github url
     """
-    downloadcode = "git clone " + url + " " + ONOSCI_PATH + "OnosSystemTest"
+    downloadcode = "git clone " + url + " " + CONF.repos_dir + "/OnosSystemTest"
     logger.debug("Download Onos Teston codes " + url)
     os.system(downloadcode)
 
 
 def GetResult():
-    LOGPATH = ONOSCI_PATH + "onos/TestON/logs"
+    LOGPATH = CONF.repos_dir + "/onos/TestON/logs"
     cmd = "grep -rnh " + "Fail" + " " + LOGPATH
     Resultbuffer = os.popen(cmd).read()
     # duration = datetime.datetime.now() - starttime
@@ -163,7 +152,7 @@ def SetOnosIpForJoid():
 
 
 def CleanOnosTest():
-    TESTONPATH = ONOSCI_PATH + "onos/"
+    TESTONPATH = CONF.repos_dir + "/onos/"
     cmd = "rm -rf " + TESTONPATH
     os.system(cmd)
     time.sleep(2)
@@ -173,14 +162,14 @@ def CleanOnosTest():
 def CreateImage():
     glance_client = openstack_utils.get_glance_client()
     image_id = openstack_utils.create_glance_image(glance_client,
-                                                   GLANCE_IMAGE_NAME,
+                                                   CONF.onos_sfc_image_name,
                                                    GLANCE_IMAGE_PATH)
     EXIT_CODE = -1
     if not image_id:
         logger.error("Failed to create a Glance image...")
         return(EXIT_CODE)
     logger.debug("Image '%s' with ID=%s created successfully."
-                 % (GLANCE_IMAGE_NAME, image_id))
+                 % (CONF.onos_sfc_image_name, image_id))
 
 
 def SfcTest():

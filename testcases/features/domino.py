@@ -14,31 +14,29 @@
 # 0.3: add report flag to push results when needed
 #
 
-import argparse
 import time
 
+import argparse
+
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
-parser = argparse.ArgumentParser()
+CONF = config_functest.CONF
 
+parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
                     help="Create json result file",
                     action="store_true")
 args = parser.parse_args()
 
 
-DOMINO_REPO = \
-    ft_utils.get_functest_config('general.directories.dir_repo_domino')
-RESULTS_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_results')
-
 logger = ft_logger.Logger("domino").getLogger()
 
 
 def main():
-    cmd = 'cd %s && ./tests/run_multinode.sh' % DOMINO_REPO
-    log_file = RESULTS_DIR + "/domino.log"
+    cmd = 'cd %s && ./tests/run_multinode.sh' % CONF.domino_repo
+    log_file = CONF.results_dir + "/domino.log"
     start_time = time.time()
 
     ret = ft_utils.execute_command(cmd,

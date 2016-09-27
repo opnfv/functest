@@ -13,13 +13,16 @@
 # 0.2: measure test duration and publish results under json format
 #
 #
-import argparse
 import os
 import time
 
+import argparse
+
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 
+CONF = config_functest.CONF
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
@@ -27,12 +30,8 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-functest_yaml = functest_utils.get_functest_yaml()
+functest_yaml = CONF.functest_yaml
 
-DOCTOR_REPO = \
-    functest_utils.get_functest_config('general.directories.dir_repo_doctor')
-RESULTS_DIR = \
-    functest_utils.get_functest_config('general.directories.dir_results')
 
 logger = ft_logger.Logger("doctor").getLogger()
 
@@ -45,8 +44,8 @@ def main():
     if 'doctor' in functest_yaml and 'image_name' in functest_yaml['doctor']:
         os.environ["IMAGE_NAME"] = functest_yaml['doctor']['image_name']
 
-    cmd = 'cd %s/tests && ./run.sh' % DOCTOR_REPO
-    log_file = RESULTS_DIR + "/doctor.log"
+    cmd = 'cd %s/tests && ./run.sh' % CONF.doctor_repo
+    log_file = CONF.results_dir + "/doctor.log"
 
     start_time = time.time()
 

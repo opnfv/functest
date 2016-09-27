@@ -7,41 +7,18 @@ import time
 import paramiko
 from scp import SCPClient
 
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
 
-NAME_VM_1 = ft_utils.get_functest_config('vping.vm_name_1')
-NAME_VM_2 = ft_utils.get_functest_config('vping.vm_name_2')
+CONF = config_functest.CONF
+
+FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
 
 VM_BOOT_TIMEOUT = 180
 VM_DELETE_TIMEOUT = 100
-PING_TIMEOUT = ft_utils.get_functest_config('vping.ping_timeout')
 
-GLANCE_IMAGE_NAME = ft_utils.get_functest_config('vping.image_name')
-GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config('general.openstack.image_file_name')
-GLANCE_IMAGE_FORMAT = \
-    ft_utils.get_functest_config('general.openstack.image_disk_format')
-GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data') + \
-    "/" + GLANCE_IMAGE_FILENAME
-
-
-FLAVOR = ft_utils.get_functest_config('vping.vm_flavor')
-
-# NEUTRON Private Network parameters
-PRIVATE_NET_NAME = \
-    ft_utils.get_functest_config('vping.vping_private_net_name')
-PRIVATE_SUBNET_NAME = \
-    ft_utils.get_functest_config('vping.vping_private_subnet_name')
-PRIVATE_SUBNET_CIDR = \
-    ft_utils.get_functest_config('vping.vping_private_subnet_cidr')
-ROUTER_NAME = ft_utils.get_functest_config('vping.vping_router_name')
-
-SECGROUP_NAME = ft_utils.get_functest_config('vping.vping_sg_name')
-SECGROUP_DESCR = ft_utils.get_functest_config('vping.vping_sg_descr')
-
+GLANCE_IMAGE_PATH = CONF.functest_data_dir + "/" + CONF.os_image_file
 
 neutron_client = None
 glance_client = None
@@ -63,11 +40,11 @@ def check_repo_exist():
 
 
 def get_vmname_1():
-    return NAME_VM_1
+    return CONF.vping_vm_name_1
 
 
 def get_vmname_2():
-    return NAME_VM_2
+    return CONF.vping_vm_name_2
 
 
 def init(vping_logger):
@@ -103,14 +80,14 @@ def waitVmActive(nova, vm):
 
 def create_security_group():
     sg_id = os_utils.get_security_group_id(neutron_client,
-                                           SECGROUP_NAME)
+                                           CONF.vping_sg_name)
     if sg_id != '':
-        logger.info("Using existing security group '%s'..." % SECGROUP_NAME)
+        logger.info("Using existing security group '%s'..." % CONF.vping_sg_name)
     else:
-        logger.info("Creating security group  '%s'..." % SECGROUP_NAME)
+        logger.info("Creating security group  '%s'..." % CONF.vping_sg_name)
         SECGROUP = os_utils.create_security_group(neutron_client,
-                                                  SECGROUP_NAME,
-                                                  SECGROUP_DESCR)
+                                                  CONF.vping_sg_name,
+                                                  CONF.vping_sg_descr)
         if not SECGROUP:
             logger.error("Failed to create the security group...")
             return False
@@ -121,14 +98,14 @@ def create_security_group():
                      % (SECGROUP['name'], sg_id))
 
         logger.debug("Adding ICMP rules in security group '%s'..."
-                     % SECGROUP_NAME)
+                     % CONF.vping_sg_name)
         if not os_utils.create_secgroup_rule(neutron_client, sg_id,
                                              'ingress', 'icmp'):
             logger.error("Failed to create the security group rule...")
             return False
 
         logger.debug("Adding SSH rules in security group '%s'..."
-                     % SECGROUP_NAME)
+                     % CONF.vping_sg_name)
         if not os_utils.create_secgroup_rule(neutron_client, sg_id,
                                              'ingress', 'tcp',
                                              '22', '22'):
@@ -143,9 +120,9 @@ def create_security_group():
 
 
 def create_image():
-    _, image_id = os_utils.get_or_create_image(GLANCE_IMAGE_NAME,
+    _, image_id = os_utils.get_or_create_image(CONF.vping_image_name,
                                                GLANCE_IMAGE_PATH,
-                                               GLANCE_IMAGE_FORMAT)
+                                               CONF.os_image_format)
     if not image_id:
         exit(-1)
 
@@ -157,11 +134,11 @@ def get_flavor():
 
     # Check if the given flavor exists
     try:
-        flavor = nova_client.flavors.find(name=FLAVOR)
-        logger.info("Using existing Flavor '%s'..." % FLAVOR)
+        flavor = nova_client.flavors.find(name=CONF.vping_flavor)
+        logger.info("Using existing Flavor '%s'..." % CONF.vping_flavor)
         return flavor
     except:
-        logger.error("Flavor '%s' not found." % FLAVOR)
+        logger.error("Flavor '%s' not found." % CONF.vping_flavor)
         logger.info("Available flavors are: ")
         pMsg(nova_client.flavor.list())
         exit(EXIT_CODE)
@@ -171,10 +148,10 @@ def create_network_full():
     EXIT_CODE = -1
 
     network_dic = os_utils.create_network_full(neutron_client,
-                                               PRIVATE_NET_NAME,
-                                               PRIVATE_SUBNET_NAME,
-                                               ROUTER_NAME,
-                                               PRIVATE_SUBNET_CIDR)
+                                               CONF.vping_private_net_name,
+                                               CONF.vping_private_subnet_name,
+                                               CONF.vping_router_name,
+                                               CONF.vping_private_subnet_cidr)
 
     if not network_dic:
         logger.error(
@@ -187,7 +164,7 @@ def create_network_full():
 def delete_exist_vms():
     servers = nova_client.servers.list()
     for server in servers:
-        if server.name == NAME_VM_1 or server.name == NAME_VM_2:
+        if server.name == CONF.vping_vm_name_1 or server.name == CONF.vping_vm_name_2:
             logger.info("Instance %s found. Deleting..." % server.name)
             server.delete()
 
@@ -210,7 +187,7 @@ def boot_vm(case, name, image_id, flavor, network_id, test_ip, sg_id):
     config['nics'] = [{"net-id": network_id}]
     if is_userdata(case):
         config['config_drive'] = True
-        if name == NAME_VM_2:
+        if name == CONF.vping_vm_name_2:
             u = ("#!/bin/sh\n\n"
                  "while true; do\n"
                  " ping -c 1 %s 2>&1 >/dev/null\n"
@@ -244,21 +221,21 @@ def boot_vm(case, name, image_id, flavor, network_id, test_ip, sg_id):
 
 
 def get_test_ip(vm):
-    test_ip = vm.networks.get(PRIVATE_NET_NAME)[0]
+    test_ip = vm.networks.get(CONF.vping_private_net_name)[0]
     logger.debug("Instance '%s' got %s" % (vm.name, test_ip))
     return test_ip
 
 
 def add_secgroup(vmname, vm_id, sg_id):
     logger.info("Adding '%s' to security group '%s'..." %
-                (vmname, SECGROUP_NAME))
+                (vmname, CONF.vping_sg_name))
     os_utils.add_secgroup_to_instance(nova_client, vm_id, sg_id)
 
 
 def add_float_ip(vm):
     EXIT_CODE = -1
 
-    logger.info("Creating floating IP for VM '%s'..." % NAME_VM_2)
+    logger.info("Creating floating IP for VM '%s'..." % CONF.vping_vm_name_2)
     floatip_dic = os_utils.create_floating_ip(neutron_client)
     floatip = floatip_dic['fip_addr']
 
@@ -268,7 +245,7 @@ def add_float_ip(vm):
     logger.info("Floating IP created: '%s'" % floatip)
 
     logger.info("Associating floating ip: '%s' to VM '%s' "
-                % (floatip, NAME_VM_2))
+                % (floatip, CONF.vping_vm_name_2))
     if not os_utils.add_floating_ip(nova_client, vm.id, floatip):
         logger.error("Cannot associate floating IP to VM.")
         exit(EXIT_CODE)
@@ -289,7 +266,7 @@ def establish_ssh(vm, floatip):
     nolease = False
     got_ip = False
     discover_count = 0
-    cidr_first_octet = PRIVATE_SUBNET_CIDR.split('.')[0]
+    cidr_first_octet = CONF.vping_private_subnet_cidr.split('.')[0]
     while timeout > 0:
         try:
             ssh.connect(floatip, username=username,
@@ -308,7 +285,7 @@ def establish_ssh(vm, floatip):
                 discover_count and not got_ip):
             discover_count += 1
             logger.debug("Console-log '%s': Sending discover..."
-                         % NAME_VM_2)
+                         % CONF.vping_vm_name_2)
 
         # check if eth0 got an ip,the line looks like this:
         # "inet addr:192.168."....
@@ -316,13 +293,13 @@ def establish_ssh(vm, floatip):
         if "inet addr:" + cidr_first_octet in console_log and not got_ip:
             got_ip = True
             logger.debug("The instance '%s' succeeded to get the IP "
-                         "from the dhcp agent." % NAME_VM_2)
+                         "from the dhcp agent." % CONF.vping_vm_name_2)
 
         # if dhcp doesnt work,it shows "No lease, failing".The test will fail
         if "No lease, failing" in console_log and not nolease and not got_ip:
             nolease = True
             logger.debug("Console-log '%s': No lease, failing..."
-                         % NAME_VM_2)
+                         % CONF.vping_vm_name_2)
             logger.info("The instance failed to get an IP from the "
                         "DHCP agent. The test will probably timeout...")
 
@@ -372,7 +349,7 @@ def do_vping_ssh(ssh, test_ip):
                 flag = True
                 break
 
-            elif sec == PING_TIMEOUT:
+            elif sec == CONF.vping_ping_timeout:
                 logger.info("Timeout reached.")
                 flag = True
                 break
@@ -400,7 +377,7 @@ def do_vping_userdata(vm, test_ip):
               metadata_tries > 5):
             EXIT_CODE = -2
             break
-        elif sec == PING_TIMEOUT:
+        elif sec == CONF.vping_ping_timeout:
             logger.info("Timeout reached.")
             break
         elif sec % 10 == 0:
