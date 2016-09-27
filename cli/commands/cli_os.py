@@ -12,16 +12,14 @@ import os
 
 import click
 
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 
+CONF = config_functest.CONF
 
-FUNCTEST_CONF_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_conf')
 RC_FILE = os.getenv('creds')
-OS_SNAPSHOT_FILE = \
-    ft_utils.get_functest_config("general.openstack.snapshot_file")
 
 
 class CliOpenStack:
@@ -84,7 +82,7 @@ class CliOpenStack:
 
     def snapshot_create(self):
         self.ping_endpoint()
-        if os.path.isfile(OS_SNAPSHOT_FILE):
+        if os.path.isfile(CONF.os_snapshot_file):
             answer = raw_input("It seems there is already an OpenStack "
                                "snapshot. Do you want to overwrite it with "
                                "the current OpenStack status? [y|n]\n")
@@ -100,18 +98,18 @@ class CliOpenStack:
         os_snapshot.main()
 
     def snapshot_show(self):
-        if not os.path.isfile(OS_SNAPSHOT_FILE):
+        if not os.path.isfile(CONF.os_snapshot_file):
             click.echo("There is no OpenStack snapshot created. To create "
                        "one run the command "
                        "'functest openstack snapshot-create'")
             return
-        with open(OS_SNAPSHOT_FILE, 'r') as yaml_file:
+        with open(CONF.os_snapshot_file, 'r') as yaml_file:
             click.echo("\n%s"
                        % yaml_file.read())
 
     def clean(self):
         self.ping_endpoint()
-        if not os.path.isfile(OS_SNAPSHOT_FILE):
+        if not os.path.isfile(CONF.os_snapshot_file):
             click.echo("Not possible to clean OpenStack without a snapshot. "
                        "This could cause problems. "
                        "Run first the command "

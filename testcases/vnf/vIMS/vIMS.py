@@ -24,14 +24,16 @@ import novaclient.client as nvclient
 import requests
 from neutronclient.v2_0 import client as ntclient
 
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 from clearwater import clearwater
 from orchestrator import orchestrator
 
-pp = pprint.PrettyPrinter(indent=4)
+CONF = config_functest.CONF
 
+pp = pprint.PrettyPrinter(indent=4)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
@@ -48,39 +50,9 @@ logger = ft_logger.Logger("vIMS").getLogger()
 
 
 # Cloudify parameters
-VIMS_DIR = ft_utils.FUNCTEST_REPO + '/' + \
-           ft_utils.get_functest_config('general.directories.dir_vIMS')
+VIMS_DIR = ft_utils.FUNCTEST_REPO + '/' + CONF.vims_test_dir
 
-VIMS_DATA_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_vIMS_data') + \
-    '/'
-VIMS_TEST_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_repo_vims_test') + \
-    '/'
-DB_URL = \
-    ft_utils.get_functest_config('results.test_db_url')
-
-TENANT_NAME = \
-    ft_utils.get_functest_config('vIMS.general.tenant_name')
-TENANT_DESCRIPTION = \
-    ft_utils.get_functest_config('vIMS.general.tenant_description')
-IMAGES = \
-    ft_utils.get_functest_config('vIMS.general.images')
-
-CFY_MANAGER_BLUEPRINT = \
-    ft_utils.get_functest_config('vIMS.cloudify.blueprint')
-CFY_MANAGER_REQUIERMENTS = \
-    ft_utils.get_functest_config('vIMS.cloudify.requierments')
-CFY_INPUTS = ft_utils.get_functest_config('vIMS.cloudify.inputs')
-
-CW_BLUEPRINT = \
-    ft_utils.get_functest_config('vIMS.clearwater.blueprint')
-CW_DEPLOYMENT_NAME = \
-    ft_utils.get_functest_config('vIMS.clearwater.deployment-name')
-CW_INPUTS = \
-    ft_utils.get_functest_config('vIMS.clearwater.inputs')
-CW_REQUIERMENTS = \
-    ft_utils.get_functest_config('vIMS.clearwater.requierments')
+VIMS_DATA_DIR = CONF.vims_data_dir + '/'
 
 CFY_DEPLOYMENT_DURATION = 0
 CW_DEPLOYMENT_DURATION = 0
@@ -145,8 +117,10 @@ def test_clearwater():
                      "cloudify manager server !")
 
     api_url = "http://" + mgr_ip + "/api/v2"
-    dep_outputs = requests.get(api_url + "/deployments/" +
-                               CW_DEPLOYMENT_NAME + "/outputs")
+    dep_outputs = requests.get(api_url +
+                               "/deployments/" +
+                               CONF.vims_clearwater_deployment_name +
+                               "/outputs")
     dns_ip = dep_outputs.json()['outputs']['dns_ip']
     ellis_ip = dep_outputs.json()['outputs']['ellis_ip']
 
@@ -197,8 +171,9 @@ def test_clearwater():
         script = ('echo -e "nameserver ' + dns_ip + resolvconf +
                   '" > /etc/resolv.conf; ')
         script += 'source /etc/profile.d/rvm.sh; '
-        script += 'cd ' + VIMS_TEST_DIR + '; '
-        script += ('rake test[' + CW_INPUTS["public_domain"] +
+        script += 'cd ' + CONF.vims_repo + '; '
+        script += ('rake test[' +
+                   CONF.vims_clearwater_inputs["public_domain"] +
                    '] SIGNUP_CODE="secret"')
 
         cmd = "/bin/bash -c '" + script + "'"
@@ -218,7 +193,7 @@ def test_clearwater():
         vims_test_result = ""
         try:
             logger.debug("Trying to load test results")
-            with open(VIMS_TEST_DIR + "temp.json") as f:
+            with open(CONF.vims_repo + "/temp.json") as f:
                 vims_test_result = json.load(f)
             f.close()
         except:
@@ -246,7 +221,7 @@ def test_clearwater():
                                     RESULTS)
 
         try:
-            os.remove(VIMS_TEST_DIR + "temp.json")
+            os.remove(CONF.vims_repo + "/temp.json")
         except:
             logger.error("Deleting file failed")
 
@@ -271,10 +246,10 @@ def main():
                      ks_creds['username'])
 
     tenant_id = os_utils.create_tenant(
-        keystone, TENANT_NAME, TENANT_DESCRIPTION)
+        keystone, CONF.vims_tenant_name, CONF.vims_tenant_description)
     if not tenant_id:
         step_failure("init", "Error : Failed to create " +
-                     TENANT_NAME + " tenant")
+                     CONF.vims_tenant_name + " tenant")
 
     roles_name = ["admin", "Admin"]
     role_id = ''
@@ -289,32 +264,36 @@ def main():
         logger.error("Error : Failed to add %s on tenant" %
                      ks_creds['username'])
 
-    user_id = os_utils.create_user(
-        keystone, TENANT_NAME, TENANT_NAME, None, tenant_id)
+    user_id = os_utils.create_user(keystone,
+                                   CONF.vims_tenant_name,
+                                   CONF.vims_tenant_name,
+                                   None,
+                                   tenant_id)
     if not user_id:
-        logger.error("Error : Failed to create %s user" % TENANT_NAME)
+        logger.error("Error : Failed to create %s user" %
+                     CONF.vims_tenant_name)
 
     logger.info("Update OpenStack creds informations")
     ks_creds.update({
-        "username": TENANT_NAME,
-        "password": TENANT_NAME,
-        "tenant_name": TENANT_NAME,
+        "username": CONF.vims_tenant_name,
+        "password": CONF.vims_tenant_name,
+        "tenant_name": CONF.vims_tenant_name,
     })
 
     nt_creds.update({
-        "tenant_name": TENANT_NAME,
+        "tenant_name": CONF.vims_tenant_name,
     })
 
     nv_creds.update({
-        "project_id": TENANT_NAME,
+        "project_id": CONF.vims_tenant_name,
     })
 
     logger.info("Upload some OS images if it doesn't exist")
     glance = os_utils.get_glance_client()
 
-    for img in IMAGES.keys():
-        image_name = IMAGES[img]['image_name']
-        image_url = IMAGES[img]['image_url']
+    for img in CONF.vims_images.keys():
+        image_name = CONF.vims_images[img]['image_name']
+        image_url = CONF.vims_images[img]['image_url']
 
         image_id = os_utils.get_image_id(glance, image_name)
 
@@ -337,13 +316,14 @@ def main():
     if not os_utils.update_sg_quota(neutron, tenant_id, 50, 100):
         step_failure(
             "init",
-            "Failed to update security group quota for tenant " + TENANT_NAME)
+            "Failed to update security group quota for tenant " +
+            CONF.vims_tenant_name)
 
     # ############### CLOUDIFY INITIALISATION ################
     public_auth_url = keystone.service_catalog.url_for(
         service_type='identity', endpoint_type='publicURL')
 
-    cfy = orchestrator(VIMS_DATA_DIR, CFY_INPUTS)
+    cfy = orchestrator(VIMS_DATA_DIR, CONF.vims_cloudify_inputs)
 
     cfy.set_credentials(username=ks_creds['username'], password=ks_creds[
                         'password'], tenant_name=ks_creds['tenant_name'],
@@ -354,10 +334,10 @@ def main():
 
     flavor_name = "m1.large"
     flavor_id = os_utils.get_flavor_id(nova, flavor_name)
-    for requirement in CFY_MANAGER_REQUIERMENTS:
+    for requirement in CONF.vims_cloudify_requierments:
         if requirement == 'ram_min':
             flavor_id = os_utils.get_flavor_id_by_ram_range(
-                nova, CFY_MANAGER_REQUIERMENTS['ram_min'], 10000)
+                nova, CONF.vims_cloudify_requierments['ram_min'], 10000)
 
     if flavor_id == '':
         logger.error(
@@ -373,10 +353,10 @@ def main():
 
     image_name = "centos_7"
     image_id = os_utils.get_image_id(glance, image_name)
-    for requirement in CFY_MANAGER_REQUIERMENTS:
+    for requirement in CONF.vims_cloudify_requierments:
         if requirement == 'os_image':
             image_id = os_utils.get_image_id(
-                glance, CFY_MANAGER_REQUIERMENTS['os_image'])
+                glance, CONF.vims_cloudify_requierments['os_image'])
 
     if image_id == '':
         step_failure(
@@ -407,8 +387,8 @@ def main():
     cmd = VIMS_DIR + "create_venv.sh " + VIMS_DATA_DIR
     ft_utils.execute_command(cmd)
 
-    cfy.download_manager_blueprint(
-        CFY_MANAGER_BLUEPRINT['url'], CFY_MANAGER_BLUEPRINT['branch'])
+    cfy.download_manager_blueprint(CONF.vims_cloudify_blueprint['url'],
+                                   CONF.vims_cloudify_blueprint['branch'])
 
     # ############### CLOUDIFY DEPLOYMENT ################
     start_time_ts = time.time()
@@ -428,17 +408,17 @@ def main():
 
     # ############### CLEARWATER INITIALISATION ################
 
-    cw = clearwater(CW_INPUTS, cfy, logger)
+    cw = clearwater(CONF.vims_clearwater_inputs, cfy, logger)
 
     logger.info("Collect flavor id for all clearwater vm")
     nova = nvclient.Client("2", **nv_creds)
 
     flavor_name = "m1.small"
     flavor_id = os_utils.get_flavor_id(nova, flavor_name)
-    for requirement in CW_REQUIERMENTS:
+    for requirement in CONF.vims_cloudify_requierments:
         if requirement == 'ram_min' and flavor_id == '':
             flavor_id = os_utils.get_flavor_id_by_ram_range(
-                nova, CW_REQUIERMENTS['ram_min'], 4500)
+                nova, CONF.vims_cloudify_requierments['ram_min'], 4500)
 
     if flavor_id == '':
         logger.error(
@@ -454,10 +434,10 @@ def main():
 
     image_name = "ubuntu_14.04"
     image_id = os_utils.get_image_id(glance, image_name)
-    for requirement in CW_REQUIERMENTS:
+    for requirement in CONF.vims_cloudify_requierments:
         if requirement == 'os_image':
             image_id = os_utils.get_image_id(
-                glance, CW_REQUIERMENTS['os_image'])
+                glance, CONF.vims_cloudify_requierments['os_image'])
 
     if image_id == '':
         step_failure(
@@ -480,7 +460,7 @@ def main():
         datetime.datetime.fromtimestamp(start_time_ts).strftime(
             '%Y-%m-%d %H:%M:%S')))
 
-    error = cw.deploy_vnf(CW_BLUEPRINT)
+    error = cw.deploy_vnf(CONF.vims_clearwater_blueprint)
     if error:
         step_failure("vIMS", error)
 
@@ -509,27 +489,29 @@ def main():
 
     keystone = ksclient.Client(**ks_creds)
 
-    logger.info("Removing %s tenant .." % CFY_INPUTS['keystone_tenant_name'])
+    logger.info("Removing %s tenant .." %
+                CONF.vims_cloudify_inputs['keystone_tenant_name'])
     tenant_id = os_utils.get_tenant_id(
-        keystone, CFY_INPUTS['keystone_tenant_name'])
+        keystone, CONF.vims_cloudify_inputs['keystone_tenant_name'])
     if tenant_id == '':
         logger.error("Error : Failed to get id of %s tenant" %
-                     CFY_INPUTS['keystone_tenant_name'])
+                     CONF.vims_cloudify_inputs['keystone_tenant_name'])
     else:
         if not os_utils.delete_tenant(keystone, tenant_id):
             logger.error("Error : Failed to remove %s tenant" %
-                         CFY_INPUTS['keystone_tenant_name'])
+                         CONF.vims_cloudify_inputs['keystone_tenant_name'])
 
-    logger.info("Removing %s user .." % CFY_INPUTS['keystone_username'])
+    logger.info("Removing %s user .." %
+                CONF.vims_cloudify_inputs['keystone_username'])
     user_id = os_utils.get_user_id(
-        keystone, CFY_INPUTS['keystone_username'])
+        keystone, CONF.vims_cloudify_inputs['keystone_username'])
     if user_id == '':
         logger.error("Error : Failed to get id of %s user" %
-                     CFY_INPUTS['keystone_username'])
+                     CONF.vims_cloudify_inputs['keystone_username'])
     else:
         if not os_utils.delete_user(keystone, user_id):
             logger.error("Error : Failed to remove %s user" %
-                         CFY_INPUTS['keystone_username'])
+                         CONF.vims_cloudify_inputs['keystone_username'])
 
 
 if __name__ == '__main__':

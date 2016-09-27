@@ -21,7 +21,10 @@ import requests
 import yaml
 from git import Repo
 
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_logger as ft_logger
+
+CONF = config_functest.CONF
 
 logger = ft_logger.Logger("functest_utils").getLogger()
 
@@ -146,13 +149,6 @@ def get_build_tag():
     return build_tag
 
 
-def get_db_url():
-    """
-    Returns DB URL
-    """
-    return get_functest_config('results.test_db_url')
-
-
 def logger_test_results(project, case_name, status, details):
     pod_name = get_pod_name()
     scenario = get_scenario()
@@ -173,7 +169,7 @@ def logger_test_results(project, case_name, status, details):
         "details:\t%(d)s\n"
         % {'p': project,
             'n': case_name,
-            'db': get_db_url(),
+            'db': CONF.db_url,
             'pod': pod_name,
             'v': version,
             's': scenario,
@@ -188,7 +184,7 @@ def push_results_to_db(project, case_name,
     POST results to the Result target DB
     """
     # Retrieve params from CI and conf
-    url = get_db_url() + "/results"
+    url = CONF.db_url + "/results"
 
     try:
         installer = os.environ['INSTALLER_TYPE']
@@ -321,26 +317,6 @@ def execute_command(cmd, info=False, error_msg="",
     return returncode
 
 
-def get_deployment_dir():
-    """
-    Returns current Rally deployment directory
-    """
-    deployment_name = get_functest_config('rally.deployment_name')
-    rally_dir = get_functest_config('general.directories.dir_rally_inst')
-    cmd = ("rally deployment list | awk '/" + deployment_name +
-           "/ {print $2}'")
-    p = subprocess.Popen(cmd, shell=True,
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT)
-    deployment_uuid = p.stdout.readline().rstrip()
-    if deployment_uuid == "":
-        logger.error("Rally deployment not found.")
-        exit(-1)
-    deployment_dir = (rally_dir + "/tempest/for-deployment-" +
-                      deployment_uuid)
-    return deployment_dir
-
-
 def get_dict_by_test(testname):
     with open(get_testcases_file()) as f:
         testcases_yaml = yaml.safe_load(f)
@@ -366,27 +342,6 @@ def get_criteria_by_test(testname):
 #               YAML UTILS
 #
 # -----------------------------------------------------------
-def get_parameter_from_yaml(parameter, file):
-    """
-    Returns the value of a given parameter in file.yaml
-    parameter must be given in string format with dots
-    Example: general.openstack.image_name
-    """
-    with open(file) as f:
-        file_yaml = yaml.safe_load(f)
-    f.close()
-    value = file_yaml
-    for element in parameter.split("."):
-        value = value.get(element)
-        if value is None:
-            raise ValueError("The parameter %s is not defined in"
-                             " config_functest.yaml" % parameter)
-    return value
-
-
-def get_functest_config(parameter):
-    yaml_ = os.environ["CONFIG_FUNCTEST_YAML"]
-    return get_parameter_from_yaml(parameter, yaml_)
 
 
 def check_success_rate(case_name, success_rate):
@@ -440,10 +395,3 @@ def check_test_result(test_name, ret, start_time, stop_time):
 
 def get_testcases_file():
     return FUNCTEST_REPO + "/ci/testcases.yaml"
-
-
-def get_functest_yaml():
-    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-        functest_yaml = yaml.safe_load(f)
-    f.close()
-    return functest_yaml

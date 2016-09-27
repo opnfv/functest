@@ -25,9 +25,12 @@ import argparse
 import iniparse
 import yaml
 
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+
+CONF = config_functest.CONF
 
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
          'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
@@ -73,8 +76,7 @@ logger = ft_logger.Logger("run_rally").getLogger()
 
 
 HOME = os.environ['HOME'] + "/"
-RALLY_DIR = ft_utils.FUNCTEST_REPO + '/' + \
-            ft_utils.get_functest_config('general.directories.dir_rally')
+RALLY_DIR = ft_utils.FUNCTEST_REPO + '/' + CONF.rally_test_repo
 SANITY_MODE_DIR = RALLY_DIR + "scenario/sanity"
 FULL_MODE_DIR = RALLY_DIR + "scenario/full"
 TEMPLATE_DIR = RALLY_DIR + "scenario/templates"
@@ -88,28 +90,8 @@ TENANTS_AMOUNT = 3
 ITERATIONS_AMOUNT = 10
 CONCURRENCY = 4
 
-RESULTS_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_rally_res')
-TEMPEST_CONF_FILE = \
-    ft_utils.get_functest_config('general.directories.dir_results') + \
-    '/tempest/tempest.conf'
-TEST_DB = ft_utils.get_functest_config('results.test_db_url')
-
-PRIVATE_NET_NAME = ft_utils.get_functest_config('rally.network_name')
-PRIVATE_SUBNET_NAME = ft_utils.get_functest_config('rally.subnet_name')
-PRIVATE_SUBNET_CIDR = ft_utils.get_functest_config('rally.subnet_cidr')
-ROUTER_NAME = ft_utils.get_functest_config('rally.router_name')
-
-GLANCE_IMAGE_NAME = \
-    ft_utils.get_functest_config('general.openstack.image_name')
-GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config('general.openstack.image_file_name')
-GLANCE_IMAGE_FORMAT = \
-    ft_utils.get_functest_config('general.openstack.image_disk_format')
-GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data') + \
-    "/" + GLANCE_IMAGE_FILENAME
-
+TEMPEST_CONF_FILE = CONF.results_dir + '/tempest/tempest.conf'
+GLANCE_IMAGE_PATH = CONF.functest_data_dir + "/" + CONF.os_image_file
 CINDER_VOLUME_TYPE_NAME = "volume_test"
 
 
@@ -162,10 +144,10 @@ def live_migration_supported():
 
 def build_task_args(test_file_name):
     task_args = {'service_list': [test_file_name]}
-    task_args['image_name'] = GLANCE_IMAGE_NAME
+    task_args['image_name'] = CONF.os_image_name
     task_args['flavor_name'] = FLAVOR_NAME
     task_args['glance_image_location'] = GLANCE_IMAGE_PATH
-    task_args['glance_image_format'] = GLANCE_IMAGE_FORMAT
+    task_args['glance_image_format'] = CONF.os_image_format
     task_args['tmpl_dir'] = TEMPLATE_DIR
     task_args['sup_dir'] = SUPPORT_DIR
     task_args['users_amount'] = USERS_AMOUNT
@@ -423,12 +405,14 @@ def run_task(test_name):
         return
 
     # check for result directory and create it otherwise
-    if not os.path.exists(RESULTS_DIR):
-        logger.debug('{} does not exist, we create it.'.format(RESULTS_DIR))
-        os.makedirs(RESULTS_DIR)
+    if not os.path.exists(CONF.rally_result_dir):
+        logger.debug('{} does not exist, we create it.'.format(
+            CONF.rally_result_dir))
+        os.makedirs(CONF.rally_result_dir)
 
     # write html report file
-    report_file_name = '{}opnfv-{}.html'.format(RESULTS_DIR, test_name)
+    report_file_name = '{}opnfv-{}.html'.format(CONF.rally_result_dir,
+                                                test_name)
     cmd_line = "rally task report {} --out {}".format(task_id,
                                                       report_file_name)
 
@@ -440,12 +424,13 @@ def run_task(test_name):
     logger.debug('running command line : {}'.format(cmd_line))
     cmd = os.popen(cmd_line)
     json_results = cmd.read()
-    with open('{}opnfv-{}.json'.format(RESULTS_DIR, test_name), 'w') as f:
+    with open('{}opnfv-{}.json'
+              .format(CONF.rally_result_dir, test_name), 'w') as f:
         logger.debug('saving json file')
         f.write(json_results)
 
     with open('{}opnfv-{}.json'
-              .format(RESULTS_DIR, test_name)) as json_file:
+              .format(CONF.rally_result_dir, test_name)) as json_file:
         json_data = json.load(json_file)
 
     """ parse JSON operation result """
@@ -500,17 +485,17 @@ def main():
     else:
         logger.debug("Using existing volume type(s)...")
 
-    image_exists, image_id = os_utils.get_or_create_image(GLANCE_IMAGE_NAME,
+    image_exists, image_id = os_utils.get_or_create_image(CONF.os_image_name,
                                                           GLANCE_IMAGE_PATH,
-                                                          GLANCE_IMAGE_FORMAT)
+                                                          CONF.os_image_format)
     if not image_id:
         exit(-1)
 
-    logger.debug("Creating network '%s'..." % PRIVATE_NET_NAME)
-    network_dict = os_utils.create_shared_network_full(PRIVATE_NET_NAME,
-                                                       PRIVATE_SUBNET_NAME,
-                                                       ROUTER_NAME,
-                                                       PRIVATE_SUBNET_CIDR)
+    logger.debug("Creating network '%s'..." % CONF.rally_network_name)
+    network_dict = os_utils.create_shared_network_full(CONF.rally_network_name,
+                                                       CONF.rally_subnet_name,
+                                                       CONF.rally_router_name,
+                                                       CONF.rally_subnet_cidr)
     if not network_dict:
         exit(1)
 
@@ -608,7 +593,7 @@ def main():
 
     if not image_exists:
         logger.debug("Deleting image '%s' with ID '%s'..."
-                     % (GLANCE_IMAGE_NAME, image_id))
+                     % (CONF.os_image_name, image_id))
         if not os_utils.delete_glance_image(nova_client, image_id):
             logger.error("Error deleting the glance image")
 
