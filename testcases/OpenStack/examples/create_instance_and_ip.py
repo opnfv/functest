@@ -13,6 +13,8 @@
 import argparse
 import os
 import sys
+
+import functest.utils.config_functest as CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
@@ -32,30 +34,30 @@ HOME = os.environ['HOME'] + "/"
 
 VM_BOOT_TIMEOUT = 180
 
-INSTANCE_NAME = ft_utils.get_functest_config("example.example_vm_name")
-FLAVOR = ft_utils.get_functest_config("example.example_flavor")
-IMAGE_NAME = ft_utils.get_functest_config("example.example_image_name")
+INSTANCE_NAME = CONF.get_functest_config("example.example_vm_name")
+FLAVOR = CONF.get_functest_config("example.example_flavor")
+IMAGE_NAME = CONF.get_functest_config("example.example_image_name")
 IMAGE_FILENAME = \
-    ft_utils.get_functest_config("general.openstack.image_file_name")
+    CONF.get_functest_config("general.openstack.image_file_name")
 IMAGE_FORMAT = \
-    ft_utils.get_functest_config("general.openstack.image_disk_format")
+    CONF.get_functest_config("general.openstack.image_disk_format")
 IMAGE_PATH = \
-    ft_utils.get_functest_config("general.directories.dir_functest_data") + \
+    CONF.get_functest_config("general.directories.dir_functest_data") + \
     "/" + IMAGE_FILENAME
 
 # NEUTRON Private Network parameters
 
-NET_NAME = ft_utils.get_functest_config("example.example_private_net_name")
+NET_NAME = CONF.get_functest_config("example.example_private_net_name")
 SUBNET_NAME = \
-    ft_utils.get_functest_config("example.example_private_subnet_name")
+    CONF.get_functest_config("example.example_private_subnet_name")
 SUBNET_CIDR = \
-    ft_utils.get_functest_config("example.example_private_subnet_cidr")
-ROUTER_NAME = ft_utils.get_functest_config("example.example_router_name")
+    CONF.get_functest_config("example.example_private_subnet_cidr")
+ROUTER_NAME = CONF.get_functest_config("example.example_router_name")
 
-SECGROUP_NAME = ft_utils.get_functest_config("example.example_sg_name")
-SECGROUP_DESCR = ft_utils.get_functest_config("example.example_sg_descr")
+SECGROUP_NAME = CONF.get_functest_config("example.example_sg_name")
+SECGROUP_DESCR = CONF.get_functest_config("example.example_sg_descr")
 
-TEST_DB = ft_utils.get_functest_config("results.test_db_url")
+TEST_DB = CONF.get_functest_config("results.test_db_url")
 
 
 def main():

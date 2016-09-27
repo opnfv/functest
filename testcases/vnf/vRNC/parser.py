@@ -17,6 +17,7 @@
 import argparse
 import time
 
+import functest.utils.config_functest as CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 
@@ -28,9 +29,9 @@ parser.add_argument("-r", "--report",
 args = parser.parse_args()
 
 PARSER_REPO = \
-    functest_utils.get_functest_config('general.directories.dir_repo_parser')
+    CONF.get_functest_config('general.directories.dir_repo_parser')
 RESULTS_DIR = \
-    functest_utils.get_functest_config('general.directories.dir_results')
+    CONF.get_functest_config('general.directories.dir_results')
 
 logger = ft_logger.Logger("parser").getLogger()
 

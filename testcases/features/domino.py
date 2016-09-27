@@ -17,6 +17,7 @@
 import argparse
 import time
 
+import functest.utils.config_functest as CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
@@ -29,9 +30,9 @@ args = parser.parse_args()
 
 
 DOMINO_REPO = \
-    ft_utils.get_functest_config('general.directories.dir_repo_domino')
+    CONF.get_functest_config('general.directories.dir_repo_domino')
 RESULTS_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_results')
+    CONF.get_functest_config('general.directories.dir_results')
 
 logger = ft_logger.Logger("domino").getLogger()
 

@@ -22,6 +22,7 @@ import sys
 import argparse
 import yaml
 
+import functest.utils.config_functest as CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
@@ -52,17 +53,17 @@ with open(CONFIG_PATCH_PATH) as f:
     functest_patch_yaml = yaml.safe_load(f)
 
 FUNCTEST_CONF_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_conf')
+    CONF.get_functest_config('general.directories.dir_functest_conf')
 
 
 FUNCTEST_DATA_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data')
+    CONF.get_functest_config('general.directories.dir_functest_data')
 FUNCTEST_RESULTS_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_results')
+    CONF.get_functest_config('general.directories.dir_results')
 DEPLOYMENT_MAME = \
     ft_utils.get_functest_config('rally.deployment_name')
 TEMPEST_REPO_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_repo_tempest')
+    CONF.get_functest_config('general.directories.dir_repo_tempest')
 
 ENV_FILE = FUNCTEST_CONF_DIR + "/env_active"
 
@@ -192,7 +193,7 @@ def patch_config_file():
     for key in functest_patch_yaml:
         if key in CI_SCENARIO:
             new_functest_yaml = dict(ft_utils.merge_dicts(
-                ft_utils.get_functest_yaml(), functest_patch_yaml[key]))
+                CONF.get_functest_yaml(), functest_patch_yaml[key]))
             updated = True
 
     if updated:

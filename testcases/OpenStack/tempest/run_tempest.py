@@ -24,6 +24,7 @@ import time
 import argparse
 import yaml
 
+import functest.utils.config_functest as CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
@@ -58,64 +59,64 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("run_tempest").getLogger()
 
-TEST_DB = ft_utils.get_functest_config('results.test_db_url')
+TEST_DB = CONF.get_functest_config('results.test_db_url')
 
 MODE = "smoke"
 GLANCE_IMAGE_NAME = \
-    ft_utils.get_functest_config('general.openstack.image_name')
+    CONF.get_functest_config('general.openstack.image_name')
 GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config('general.openstack.image_file_name')
+    CONF.get_functest_config('general.openstack.image_file_name')
 GLANCE_IMAGE_FORMAT = \
-    ft_utils.get_functest_config('general.openstack.image_disk_format')
+    CONF.get_functest_config('general.openstack.image_disk_format')
 GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data') + \
+    CONF.get_functest_config('general.directories.dir_functest_data') + \
     "/" + GLANCE_IMAGE_FILENAME
 IMAGE_ID = None
 IMAGE_ID_ALT = None
 
 FLAVOR_NAME = \
-    ft_utils.get_functest_config('general.openstack.flavor_name')
-FLAVOR_RAM = ft_utils.get_functest_config('general.openstack.flavor_ram')
-FLAVOR_DISK = ft_utils.get_functest_config('general.openstack.flavor_disk')
-FLAVOR_VCPUS = ft_utils.get_functest_config('general.openstack.flavor_vcpus')
+    CONF.get_functest_config('general.openstack.flavor_name')
+FLAVOR_RAM = CONF.get_functest_config('general.openstack.flavor_ram')
+FLAVOR_DISK = CONF.get_functest_config('general.openstack.flavor_disk')
+FLAVOR_VCPUS = CONF.get_functest_config('general.openstack.flavor_vcpus')
 FLAVOR_ID = None
 FLAVOR_ID_ALT = None
 
 PRIVATE_NET_NAME = \
-    ft_utils.get_functest_config('tempest.private_net_name')
+    CONF.get_functest_config('tempest.private_net_name')
 PRIVATE_SUBNET_NAME = \
-    ft_utils.get_functest_config('tempest.private_subnet_name')
+    CONF.get_functest_config('tempest.private_subnet_name')
 PRIVATE_SUBNET_CIDR = \
-    ft_utils.get_functest_config('tempest.private_subnet_cidr')
+    CONF.get_functest_config('tempest.private_subnet_cidr')
 ROUTER_NAME = \
-    ft_utils.get_functest_config('tempest.router_name')
+    CONF.get_functest_config('tempest.router_name')
 TENANT_NAME = \
-    ft_utils.get_functest_config('tempest.identity.tenant_name')
+    CONF.get_functest_config('tempest.identity.tenant_name')
 TENANT_DESCRIPTION = \
-    ft_utils.get_functest_config('tempest.identity.tenant_description')
+    CONF.get_functest_config('tempest.identity.tenant_description')
 USER_NAME = \
-    ft_utils.get_functest_config('tempest.identity.user_name')
+    CONF.get_functest_config('tempest.identity.user_name')
 USER_PASSWORD = \
-    ft_utils.get_functest_config('tempest.identity.user_password')
+    CONF.get_functest_config('tempest.identity.user_password')
 SSH_TIMEOUT = \
-    ft_utils.get_functest_config('tempest.validation.ssh_timeout')
+    CONF.get_functest_config('tempest.validation.ssh_timeout')
 USE_CUSTOM_IMAGES = \
-    ft_utils.get_functest_config('tempest.use_custom_images')
+    CONF.get_functest_config('tempest.use_custom_images')
 USE_CUSTOM_FLAVORS = \
-    ft_utils.get_functest_config('tempest.use_custom_flavors')
+    CONF.get_functest_config('tempest.use_custom_flavors')
 
 DEPLOYMENT_MAME = \
-    ft_utils.get_functest_config('rally.deployment_name')
+    CONF.get_functest_config('rally.deployment_name')
 RALLY_INSTALLATION_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_rally_inst')
+    CONF.get_functest_config('general.directories.dir_rally_inst')
 
 RESULTS_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_results')
+    CONF.get_functest_config('general.directories.dir_results')
 TEMPEST_RESULTS_DIR = RESULTS_DIR + '/tempest'
 
 REPO_PATH = ft_utils.FUNCTEST_REPO + '/'
 TEST_LIST_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_tempest_cases')
+    CONF.get_functest_config('general.directories.dir_tempest_cases')
 TEMPEST_CUSTOM = REPO_PATH + TEST_LIST_DIR + 'test_list.txt'
 TEMPEST_BLACKLIST = REPO_PATH + TEST_LIST_DIR + 'blacklist.txt'
 TEMPEST_DEFCORE = REPO_PATH + TEST_LIST_DIR + 'defcore_req.txt'
@@ -444,7 +445,7 @@ def main():
     if not os.path.exists(TEMPEST_RESULTS_DIR):
         os.makedirs(TEMPEST_RESULTS_DIR)
 
-    deployment_dir = ft_utils.get_deployment_dir()
+    deployment_dir = CONF.get_deployment_dir()
     create_tempest_resources()
 
     if "" == args.conf:

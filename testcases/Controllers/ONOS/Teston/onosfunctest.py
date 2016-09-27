@@ -22,6 +22,7 @@ import time
 import argparse
 from neutronclient.v2_0 import client as neutronclient
 
+import functest.utils.config_functest as CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as openstack_utils
@@ -35,11 +36,11 @@ args = parser.parse_args()
 logger = ft_logger.Logger("onos").getLogger()
 
 # onos parameters
-TEST_DB = ft_utils.get_functest_config("results.test_db_url")
+TEST_DB = CONF.get_functest_config("results.test_db_url")
 ONOS_REPO_PATH = \
-    ft_utils.get_functest_config("general.directories.dir_repos")
+    CONF.get_functest_config("general.directories.dir_repos")
 ONOS_CONF_DIR = \
-    ft_utils.get_functest_config("general.directories.dir_functest_conf")
+    CONF.get_functest_config("general.directories.dir_functest_conf")
 
 ONOSCI_PATH = ONOS_REPO_PATH + "/"
 starttime = datetime.datetime.now()
@@ -48,14 +49,14 @@ HOME = os.environ['HOME'] + "/"
 INSTALLER_TYPE = os.environ['INSTALLER_TYPE']
 DEPLOY_SCENARIO = os.environ['DEPLOY_SCENARIO']
 ONOSCI_PATH = ONOS_REPO_PATH + "/"
-GLANCE_IMAGE_NAME = ft_utils.get_functest_config("onos_sfc.image_name")
+GLANCE_IMAGE_NAME = CONF.get_functest_config("onos_sfc.image_name")
 GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config("onos_sfc.image_file_name")
+    CONF.get_functest_config("onos_sfc.image_file_name")
 GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config("general.directories.dir_functest_data") + \
+    CONF.get_functest_config("general.directories.dir_functest_data") + \
     "/" + GLANCE_IMAGE_FILENAME
 SFC_PATH = ft_utils.FUNCTEST_REPO + "/" + \
-           ft_utils.get_functest_config("general.directories.dir_onos_sfc")
+           CONF.get_functest_config("general.directories.dir_onos_sfc")
 
 
 def RunScript(testname):

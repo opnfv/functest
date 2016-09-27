@@ -25,6 +25,7 @@ import argparse
 import iniparse
 import yaml
 
+import functest.utils.config_functest as CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
@@ -74,7 +75,7 @@ logger = ft_logger.Logger("run_rally").getLogger()
 
 HOME = os.environ['HOME'] + "/"
 RALLY_DIR = ft_utils.FUNCTEST_REPO + '/' + \
-            ft_utils.get_functest_config('general.directories.dir_rally')
+            CONF.get_functest_config('general.directories.dir_rally')
 TEMPLATE_DIR = RALLY_DIR + "scenario/templates"
 SUPPORT_DIR = RALLY_DIR + "scenario/support"
 TEMP_DIR = RALLY_DIR + "var"
@@ -87,25 +88,25 @@ ITERATIONS_AMOUNT = 10
 CONCURRENCY = 4
 
 RESULTS_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_rally_res')
+    CONF.get_functest_config('general.directories.dir_rally_res')
 TEMPEST_CONF_FILE = \
-    ft_utils.get_functest_config('general.directories.dir_results') + \
+    CONF.get_functest_config('general.directories.dir_results') + \
     '/tempest/tempest.conf'
-TEST_DB = ft_utils.get_functest_config('results.test_db_url')
+TEST_DB = CONF.get_functest_config('results.test_db_url')
 
-PRIVATE_NET_NAME = ft_utils.get_functest_config('rally.network_name')
-PRIVATE_SUBNET_NAME = ft_utils.get_functest_config('rally.subnet_name')
-PRIVATE_SUBNET_CIDR = ft_utils.get_functest_config('rally.subnet_cidr')
-ROUTER_NAME = ft_utils.get_functest_config('rally.router_name')
+PRIVATE_NET_NAME = CONF.get_functest_config('rally.network_name')
+PRIVATE_SUBNET_NAME = CONF.get_functest_config('rally.subnet_name')
+PRIVATE_SUBNET_CIDR = CONF.get_functest_config('rally.subnet_cidr')
+ROUTER_NAME = CONF.get_functest_config('rally.router_name')
 
 GLANCE_IMAGE_NAME = \
-    ft_utils.get_functest_config('general.openstack.image_name')
+    CONF.get_functest_config('general.openstack.image_name')
 GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config('general.openstack.image_file_name')
+    CONF.get_functest_config('general.openstack.image_file_name')
 GLANCE_IMAGE_FORMAT = \
-    ft_utils.get_functest_config('general.openstack.image_disk_format')
+    CONF.get_functest_config('general.openstack.image_disk_format')
 GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data') + \
+    CONF.get_functest_config('general.directories.dir_functest_data') + \
     "/" + GLANCE_IMAGE_FILENAME
 
 CINDER_VOLUME_TYPE_NAME = "volume_test"

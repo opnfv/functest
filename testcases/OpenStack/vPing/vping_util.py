@@ -7,40 +7,41 @@ import time
 import paramiko
 from scp import SCPClient
 
+import functest.utils.config_functest as CONF
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
 
-NAME_VM_1 = ft_utils.get_functest_config('vping.vm_name_1')
-NAME_VM_2 = ft_utils.get_functest_config('vping.vm_name_2')
+NAME_VM_1 = CONF.get_functest_config('vping.vm_name_1')
+NAME_VM_2 = CONF.get_functest_config('vping.vm_name_2')
 
 VM_BOOT_TIMEOUT = 180
 VM_DELETE_TIMEOUT = 100
-PING_TIMEOUT = ft_utils.get_functest_config('vping.ping_timeout')
+PING_TIMEOUT = CONF.get_functest_config('vping.ping_timeout')
 
-GLANCE_IMAGE_NAME = ft_utils.get_functest_config('vping.image_name')
+GLANCE_IMAGE_NAME = CONF.get_functest_config('vping.image_name')
 GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config('general.openstack.image_file_name')
+    CONF.get_functest_config('general.openstack.image_file_name')
 GLANCE_IMAGE_FORMAT = \
-    ft_utils.get_functest_config('general.openstack.image_disk_format')
+    CONF.get_functest_config('general.openstack.image_disk_format')
 GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data') + \
+    CONF.get_functest_config('general.directories.dir_functest_data') + \
     "/" + GLANCE_IMAGE_FILENAME
 
 
-FLAVOR = ft_utils.get_functest_config('vping.vm_flavor')
+FLAVOR = CONF.get_functest_config('vping.vm_flavor')
 
 # NEUTRON Private Network parameters
 PRIVATE_NET_NAME = \
-    ft_utils.get_functest_config('vping.vping_private_net_name')
+    CONF.get_functest_config('vping.vping_private_net_name')
 PRIVATE_SUBNET_NAME = \
-    ft_utils.get_functest_config('vping.vping_private_subnet_name')
+    CONF.get_functest_config('vping.vping_private_subnet_name')
 PRIVATE_SUBNET_CIDR = \
-    ft_utils.get_functest_config('vping.vping_private_subnet_cidr')
-ROUTER_NAME = ft_utils.get_functest_config('vping.vping_router_name')
+    CONF.get_functest_config('vping.vping_private_subnet_cidr')
+ROUTER_NAME = CONF.get_functest_config('vping.vping_router_name')
 
-SECGROUP_NAME = ft_utils.get_functest_config('vping.vping_sg_name')
-SECGROUP_DESCR = ft_utils.get_functest_config('vping.vping_sg_descr')
+SECGROUP_NAME = CONF.get_functest_config('vping.vping_sg_name')
+SECGROUP_DESCR = CONF.get_functest_config('vping.vping_sg_descr')
 
 
 neutron_client = None

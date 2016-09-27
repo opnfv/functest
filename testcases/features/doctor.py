@@ -17,6 +17,7 @@ import argparse
 import os
 import time
 
+import functest.utils.config_functest as CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 
@@ -27,12 +28,12 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-functest_yaml = functest_utils.get_functest_yaml()
+functest_yaml = CONF.get_functest_yaml()
 
 DOCTOR_REPO = \
-    functest_utils.get_functest_config('general.directories.dir_repo_doctor')
+    CONF.get_functest_config('general.directories.dir_repo_doctor')
 RESULTS_DIR = \
-    functest_utils.get_functest_config('general.directories.dir_results')
+    CONF.get_functest_config('general.directories.dir_results')
 
 logger = ft_logger.Logger("doctor").getLogger()
 

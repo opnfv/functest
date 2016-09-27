@@ -14,12 +14,13 @@ import os
 import click
 
 import functest.ci.tier_builder as tb
+import functest.utils.config_functest as CONF
 import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_vacation as vacation
 
 
 FUNCTEST_CONF_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_conf')
+    CONF.get_functest_config('general.directories.dir_functest_conf')
 ENV_FILE = FUNCTEST_CONF_DIR + "/env_active"
 FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
 

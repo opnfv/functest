@@ -21,6 +21,8 @@
 #
 
 import time
+
+import functest.utils.config_functest as CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
@@ -30,7 +32,7 @@ import yaml
 logger = ft_logger.Logger("openstack_clean").getLogger()
 
 OS_SNAPSHOT_FILE = \
-    ft_utils.get_functest_config("general.openstack.snapshot_file")
+    CONF.get_functest_config("general.openstack.snapshot_file")
 
 
 def separator():

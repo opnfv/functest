@@ -24,6 +24,7 @@ import novaclient.client as nvclient
 import requests
 from neutronclient.v2_0 import client as ntclient
 
+import functest.utils.config_functest as CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
@@ -49,38 +50,38 @@ logger = ft_logger.Logger("vIMS").getLogger()
 
 # Cloudify parameters
 VIMS_DIR = ft_utils.FUNCTEST_REPO + '/' + \
-           ft_utils.get_functest_config('general.directories.dir_vIMS')
+           CONF.get_functest_config('general.directories.dir_vIMS')
 
 VIMS_DATA_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_vIMS_data') + \
+    CONF.get_functest_config('general.directories.dir_vIMS_data') + \
     '/'
 VIMS_TEST_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_repo_vims_test') + \
+    CONF.get_functest_config('general.directories.dir_repo_vims_test') + \
     '/'
 DB_URL = \
-    ft_utils.get_functest_config('results.test_db_url')
+    CONF.get_functest_config('results.test_db_url')
 
 TENANT_NAME = \
-    ft_utils.get_functest_config('vIMS.general.tenant_name')
+    CONF.get_functest_config('vIMS.general.tenant_name')
 TENANT_DESCRIPTION = \
-    ft_utils.get_functest_config('vIMS.general.tenant_description')
+    CONF.get_functest_config('vIMS.general.tenant_description')
 IMAGES = \
-    ft_utils.get_functest_config('vIMS.general.images')
+    CONF.get_functest_config('vIMS.general.images')
 
 CFY_MANAGER_BLUEPRINT = \
-    ft_utils.get_functest_config('vIMS.cloudify.blueprint')
+    CONF.get_functest_config('vIMS.cloudify.blueprint')
 CFY_MANAGER_REQUIERMENTS = \
-    ft_utils.get_functest_config('vIMS.cloudify.requierments')
-CFY_INPUTS = ft_utils.get_functest_config('vIMS.cloudify.inputs')
+    CONF.get_functest_config('vIMS.cloudify.requierments')
+CFY_INPUTS = CONF.get_functest_config('vIMS.cloudify.inputs')
 
 CW_BLUEPRINT = \
-    ft_utils.get_functest_config('vIMS.clearwater.blueprint')
+    CONF.get_functest_config('vIMS.clearwater.blueprint')
 CW_DEPLOYMENT_NAME = \
-    ft_utils.get_functest_config('vIMS.clearwater.deployment-name')
+    CONF.get_functest_config('vIMS.clearwater.deployment-name')
 CW_INPUTS = \
-    ft_utils.get_functest_config('vIMS.clearwater.inputs')
+    CONF.get_functest_config('vIMS.clearwater.inputs')
 CW_REQUIERMENTS = \
-    ft_utils.get_functest_config('vIMS.clearwater.requierments')
+    CONF.get_functest_config('vIMS.clearwater.requierments')
 
 CFY_DEPLOYMENT_DURATION = 0
 CW_DEPLOYMENT_DURATION = 0

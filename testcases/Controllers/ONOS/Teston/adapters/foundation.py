@@ -17,6 +17,7 @@ import os
 import re
 import time
 
+import functest.utils.config_functest as CONF
 import functest.utils.functest_utils as ft_utils
 
 
@@ -55,28 +56,28 @@ class foundation:
         Get Default Parameters value
         """
         self.Result_DB = str(
-            ft_utils.get_functest_config('results.test_db_url'))
+            CONF.get_functest_config('results.test_db_url'))
         self.masterusername = str(
-            ft_utils.get_functest_config('ONOS.general.onosbench_username'))
+            CONF.get_functest_config('ONOS.general.onosbench_username'))
         self.masterpassword = str(
-            ft_utils.get_functest_config('ONOS.general.onosbench_password'))
+            CONF.get_functest_config('ONOS.general.onosbench_password'))
         self.agentusername = str(
-            ft_utils.get_functest_config('ONOS.general.onoscli_username'))
+            CONF.get_functest_config('ONOS.general.onoscli_username'))
         self.agentpassword = str(
-            ft_utils.get_functest_config('ONOS.general.onoscli_password'))
+            CONF.get_functest_config('ONOS.general.onoscli_password'))
         self.runtimeout = \
-            ft_utils.get_functest_config('ONOS.general.runtimeout')
-        self.OCT = str(ft_utils.get_functest_config('ONOS.environment.OCT'))
-        self.OC1 = str(ft_utils.get_functest_config('ONOS.environment.OC1'))
-        self.OC2 = str(ft_utils.get_functest_config('ONOS.environment.OC2'))
-        self.OC3 = str(ft_utils.get_functest_config('ONOS.environment.OC3'))
-        self.OCN = str(ft_utils.get_functest_config('ONOS.environment.OCN'))
-        self.OCN2 = str(ft_utils.get_functest_config('ONOS.environment.OCN2'))
+            CONF.get_functest_config('ONOS.general.runtimeout')
+        self.OCT = str(CONF.get_functest_config('ONOS.environment.OCT'))
+        self.OC1 = str(CONF.get_functest_config('ONOS.environment.OC1'))
+        self.OC2 = str(CONF.get_functest_config('ONOS.environment.OC2'))
+        self.OC3 = str(CONF.get_functest_config('ONOS.environment.OC3'))
+        self.OCN = str(CONF.get_functest_config('ONOS.environment.OCN'))
+        self.OCN2 = str(CONF.get_functest_config('ONOS.environment.OCN2'))
         self.installer_master = str(
-            ft_utils.get_functest_config('ONOS.environment.installer_master'))
-        self.installer_master_username = str(ft_utils.get_functest_config(
+            CONF.get_functest_config('ONOS.environment.installer_master'))
+        self.installer_master_username = str(CONF.get_functest_config(
             'ONOS.environment.installer_master_username'))
-        self.installer_master_password = str(ft_utils.get_functest_config(
+        self.installer_master_password = str(CONF.get_functest_config(
             'ONOS.environment.installer_master_password'))
         self.hosts = [self.OC1, self.OCN, self.OCN2]
         self.localhost = self.OCT
