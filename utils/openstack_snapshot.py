@@ -19,18 +19,15 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-
-import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as ft_utils
-import functest.utils.openstack_utils as os_utils
 import yaml
 
+import functest.utils.config_functest as config_functest
+import functest.utils.functest_logger as ft_logger
+import functest.utils.openstack_utils as os_utils
+
+CONF = config_functest.CONF
 
 logger = ft_logger.Logger("openstack_snapshot").getLogger()
-
-
-OS_SNAPSHOT_FILE = \
-    ft_utils.get_functest_config("general.openstack.snapshot_file")
 
 
 def separator():
@@ -153,7 +150,7 @@ def main():
     snapshot.update(get_users(keystone_client))
     snapshot.update(get_tenants(keystone_client))
 
-    with open(OS_SNAPSHOT_FILE, 'w+') as yaml_file:
+    with open(CONF.os_snapshot_file, 'w+') as yaml_file:
         yaml_file.write(yaml.safe_dump(snapshot, default_flow_style=False))
         yaml_file.seek(0)
         logger.debug("Openstack Snapshot found in the deployment:\n%s"

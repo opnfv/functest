@@ -24,9 +24,12 @@ import time
 import argparse
 import yaml
 
+import functest.utils.config_functest as config_functest
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+
+CONF = config_functest.CONF
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',
@@ -58,67 +61,21 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("run_tempest").getLogger()
 
-TEST_DB = ft_utils.get_functest_config('results.test_db_url')
-
 MODE = "smoke"
-GLANCE_IMAGE_NAME = \
-    ft_utils.get_functest_config('general.openstack.image_name')
-GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config('general.openstack.image_file_name')
-GLANCE_IMAGE_FORMAT = \
-    ft_utils.get_functest_config('general.openstack.image_disk_format')
-GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data') + \
-    "/" + GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_PATH = CONF.functest_data_dir + "/" + CONF.os_image_file
 IMAGE_ID = None
 IMAGE_ID_ALT = None
 
-FLAVOR_NAME = \
-    ft_utils.get_functest_config('general.openstack.flavor_name')
-FLAVOR_RAM = ft_utils.get_functest_config('general.openstack.flavor_ram')
-FLAVOR_DISK = ft_utils.get_functest_config('general.openstack.flavor_disk')
-FLAVOR_VCPUS = ft_utils.get_functest_config('general.openstack.flavor_vcpus')
 FLAVOR_ID = None
 FLAVOR_ID_ALT = None
 
-PRIVATE_NET_NAME = \
-    ft_utils.get_functest_config('tempest.private_net_name')
-PRIVATE_SUBNET_NAME = \
-    ft_utils.get_functest_config('tempest.private_subnet_name')
-PRIVATE_SUBNET_CIDR = \
-    ft_utils.get_functest_config('tempest.private_subnet_cidr')
-ROUTER_NAME = \
-    ft_utils.get_functest_config('tempest.router_name')
-TENANT_NAME = \
-    ft_utils.get_functest_config('tempest.identity.tenant_name')
-TENANT_DESCRIPTION = \
-    ft_utils.get_functest_config('tempest.identity.tenant_description')
-USER_NAME = \
-    ft_utils.get_functest_config('tempest.identity.user_name')
-USER_PASSWORD = \
-    ft_utils.get_functest_config('tempest.identity.user_password')
-SSH_TIMEOUT = \
-    ft_utils.get_functest_config('tempest.validation.ssh_timeout')
-USE_CUSTOM_IMAGES = \
-    ft_utils.get_functest_config('tempest.use_custom_images')
-USE_CUSTOM_FLAVORS = \
-    ft_utils.get_functest_config('tempest.use_custom_flavors')
 
-DEPLOYMENT_MAME = \
-    ft_utils.get_functest_config('rally.deployment_name')
-RALLY_INSTALLATION_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_rally_inst')
-
-RESULTS_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_results')
-TEMPEST_RESULTS_DIR = RESULTS_DIR + '/tempest'
+TEMPEST_RESULTS_DIR = CONF.results_dir + '/tempest'
 
 REPO_PATH = ft_utils.FUNCTEST_REPO + '/'
-TEST_LIST_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_tempest_cases')
-TEMPEST_CUSTOM = REPO_PATH + TEST_LIST_DIR + 'test_list.txt'
-TEMPEST_BLACKLIST = REPO_PATH + TEST_LIST_DIR + 'blacklist.txt'
-TEMPEST_DEFCORE = REPO_PATH + TEST_LIST_DIR + 'defcore_req.txt'
+TEMPEST_CUSTOM = REPO_PATH + CONF.tempest_cases_dir + 'test_list.txt'
+TEMPEST_BLACKLIST = REPO_PATH + CONF.tempest_cases_dir + 'blacklist.txt'
+TEMPEST_DEFCORE = REPO_PATH + CONF.tempest_cases_dir + 'defcore_req.txt'
 TEMPEST_RAW_LIST = TEMPEST_RESULTS_DIR + '/test_raw_list.txt'
 TEMPEST_LIST = TEMPEST_RESULTS_DIR + '/test_list.txt'
 
@@ -150,42 +107,48 @@ def create_tempest_resources():
 
     logger.debug("Creating tenant and user for Tempest suite")
     tenant_id = os_utils.create_tenant(keystone_client,
-                                       TENANT_NAME,
-                                       TENANT_DESCRIPTION)
+                                       CONF.tempest_tenant_name,
+                                       CONF.tempest_tenant_description)
     if not tenant_id:
-        logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
+        logger.error("Error : Failed to create %s tenant" %
+                     CONF.tempest_tenant_name)
 
-    user_id = os_utils.create_user(keystone_client, USER_NAME, USER_PASSWORD,
-                                   None, tenant_id)
+    user_id = os_utils.create_user(keystone_client,
+                                   CONF.tempest_username,
+                                   CONF.tempest_password,
+                                   None,
+                                   tenant_id)
     if not user_id:
-        logger.error("Error : Failed to create %s user" % USER_NAME)
+        logger.error("Error : Failed to create %s user" %
+                     CONF.tempest_username)
 
     logger.debug("Creating private network for Tempest suite")
-    network_dic = os_utils.create_shared_network_full(PRIVATE_NET_NAME,
-                                                      PRIVATE_SUBNET_NAME,
-                                                      ROUTER_NAME,
-                                                      PRIVATE_SUBNET_CIDR)
+    network_dic = \
+        os_utils.create_shared_network_full(CONF.tempest_private_net_name,
+                                            CONF.tempest_private_subnet_name,
+                                            CONF.tempest_router_name,
+                                            CONF.tempest_private_subnet_cidr)
     if not network_dic:
         exit(1)
 
-    if USE_CUSTOM_IMAGES:
+    if CONF.tempest_use_custom_images:
         # adding alternative image should be trivial should we need it
         logger.debug("Creating image for Tempest suite")
         global IMAGE_ID
-        _, IMAGE_ID = os_utils.get_or_create_image(GLANCE_IMAGE_NAME,
+        _, IMAGE_ID = os_utils.get_or_create_image(CONF.os_image_name,
                                                    GLANCE_IMAGE_PATH,
-                                                   GLANCE_IMAGE_FORMAT)
+                                                   CONF.os_image_format)
         if not IMAGE_ID:
             exit(-1)
 
-    if USE_CUSTOM_FLAVORS:
+    if CONF.tempest_use_custom_flavors:
         # adding alternative flavor should be trivial should we need it
         logger.debug("Creating flavor for Tempest suite")
         global FLAVOR_ID
-        _, FLAVOR_ID = os_utils.get_or_create_flavor(FLAVOR_NAME,
-                                                     FLAVOR_RAM,
-                                                     FLAVOR_DISK,
-                                                     FLAVOR_VCPUS)
+        _, FLAVOR_ID = os_utils.get_or_create_flavor(CONF.os_flavor_name,
+                                                     CONF.os_flavor_ram,
+                                                     CONF.os_flavor_disk,
+                                                     CONF.os_flavor_vcpus)
         if not FLAVOR_ID:
             exit(-1)
 
@@ -213,21 +176,21 @@ def configure_tempest(deployment_dir):
     logger.debug("Updating selected tempest.conf parameters...")
     config = ConfigParser.RawConfigParser()
     config.read(tempest_conf_file)
-    config.set('compute', 'fixed_network_name', PRIVATE_NET_NAME)
-    if USE_CUSTOM_IMAGES:
+    config.set('compute', 'fixed_network_name', CONF.tempest_private_net_name)
+    if CONF.tempest_use_custom_images:
         if IMAGE_ID is not None:
             config.set('compute', 'image_ref', IMAGE_ID)
         if IMAGE_ID_ALT is not None:
             config.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
-    if USE_CUSTOM_FLAVORS:
+    if CONF.tempest_use_custom_flavors:
         if FLAVOR_ID is not None:
             config.set('compute', 'flavor_ref', FLAVOR_ID)
         if FLAVOR_ID_ALT is not None:
             config.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
-    config.set('identity', 'tenant_name', TENANT_NAME)
-    config.set('identity', 'username', USER_NAME)
-    config.set('identity', 'password', USER_PASSWORD)
-    config.set('validation', 'ssh_timeout', SSH_TIMEOUT)
+    config.set('identity', 'tenant_name', CONF.tempest_tenant_name)
+    config.set('identity', 'username', CONF.tempest_username)
+    config.set('identity', 'password', CONF.tempest_password)
+    config.set('validation', 'ssh_timeout', CONF.tempest_ssh_timeout)
 
     if os.getenv('OS_ENDPOINT_TYPE') is not None:
         services_list = ['compute', 'volume', 'image', 'network',
@@ -444,7 +407,7 @@ def main():
     if not os.path.exists(TEMPEST_RESULTS_DIR):
         os.makedirs(TEMPEST_RESULTS_DIR)
 
-    deployment_dir = ft_utils.get_deployment_dir()
+    deployment_dir = CONF.rally_deployment_dir
     create_tempest_resources()
 
     if "" == args.conf:
