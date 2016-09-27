@@ -15,12 +15,13 @@ import sys
 import time
 
 from cinderclient import client as cinderclient
-import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as ft_utils
 from glanceclient import client as glanceclient
 from keystoneclient.v2_0 import client as keystoneclient
 from neutronclient.v2_0 import client as neutronclient
 from novaclient import client as novaclient
+
+from functest.utils.config_functest import ConfigFunctest as CONF
+import functest.utils.functest_logger as ft_logger
 
 logger = ft_logger.Logger("openstack_utils").getLogger()
 
@@ -215,8 +216,7 @@ def create_flavor(nova_client, flavor_name, ram, disk, vcpus):
     try:
         flavor = nova_client.flavors.create(flavor_name, ram, vcpus, disk)
         try:
-            extra_specs = ft_utils.get_functest_config(
-                'general.flavor_extra_specs')
+            extra_specs = CONF.flavor_extra_specs
             flavor.set_keys(extra_specs)
         except ValueError:
             # flavor extra specs are not configured, therefore skip the update
@@ -945,8 +945,7 @@ def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
                 logger.info("Creating image '%s' from '%s'..." % (image_name,
                                                                   file_path))
             try:
-                properties = ft_utils.get_functest_config(
-                    'general.image_properties')
+                properties = CONF.image_properties
             except ValueError:
                 # image properties are not configured
                 # therefore don't add any properties

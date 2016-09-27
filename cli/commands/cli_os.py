@@ -15,13 +15,12 @@ import click
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
+from functest.utils.config_functest import ConfigFunctest as CONF
 
 
-FUNCTEST_CONF_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_conf')
+FUNCTEST_CONF_DIR = CONF.functest_conf_dir
 RC_FILE = os.getenv('creds')
-OS_SNAPSHOT_FILE = \
-    ft_utils.get_functest_config("general.openstack.snapshot_file")
+OS_SNAPSHOT_FILE = CONF.os_snapshot_file
 
 
 class CliOpenStack:
