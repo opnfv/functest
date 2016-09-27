@@ -16,6 +16,24 @@
       "revId": "27664373693c1245a216e4f8febabc04c7447ac5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d7c91c27",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5579
+      },
+      "writtenOn": "2016-09-27T06:15:49Z",
+      "side": 1,
+      "message": "The problem is that the creation is running in the tacker deployment phase (set-up-tacker). This deployment script is a POC / workaround for the tacker-fuel-plugin. \nIf you want to run the test using the tacker-fuel-plugin, the flavor creation logic will not run at all, which is a semantic mistake, because the flavor is a runtime entity, not a deployment time entity.",
+      "parentUuid": "1a76adc5_17f0f48f",
+      "revId": "27664373693c1245a216e4f8febabc04c7447ac5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
