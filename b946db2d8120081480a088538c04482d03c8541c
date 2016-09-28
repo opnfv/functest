@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_9db42383",
+        "filename": "utils/functest_logger.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-09-28T10:03:04Z",
+      "side": 1,
+      "message": "Is it safe?",
+      "revId": "b946db2d8120081480a088538c04482d03c8541c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
