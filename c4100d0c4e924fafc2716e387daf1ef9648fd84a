@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_2c8e027a",
+        "filename": "ci/prepare_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-29T13:23:49Z",
+      "side": 1,
+      "message": "If we keep this way (CONF.functest_conf_dir), I would even remove these global variables here and put CONF.functest_conf_dir directly in the code instead of FUNCTEST_CONF_DIR, since they have almost the same length.",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_eceb2a11",
+        "filename": "ci/prepare_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-29T13:23:49Z",
+      "side": 1,
+      "message": "For example:\nENV_FILE \u003d CONF.functest_conf_dir + \"/env_active\"",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_0cf1c601",
+        "filename": "ci/prepare_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-29T13:23:49Z",
+      "side": 1,
+      "message": "Same here, instead of FUNCTEST_CONF_DIR, CONF.functest_data_dir",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_2cc28234",
+        "filename": "testcases/Controllers/ONOS/Teston/adapters/foundation.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-29T13:23:49Z",
+      "side": 1,
+      "message": "you do it here, you don\u0027t declare this variables as global, you use them directly inside the functions. So, the other scripts should behave similar in my opinion.",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_ac7a1275",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-29T13:23:49Z",
+      "side": 1,
+      "message": "To be safer, I would check that the env var and the file exists.\n\nif not os.path.isfile(config_functest) ...",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_cc7f4e65",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-29T13:23:49Z",
+      "side": 1,
+      "message": "why not calling this function get_functest_yaml ?",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_ec848a5f",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-09-29T13:23:49Z",
+      "side": 1,
+      "message": "The only thing I don\u0027t like about this class is that whenever we need to add a new line in config_functest.yaml we also need to add it here... 2 places to be maintained for the same thing...",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
