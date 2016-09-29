@@ -16,6 +16,24 @@
       "revId": "b946db2d8120081480a088538c04482d03c8541c",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_b8380d3e",
+        "filename": "utils/functest_logger.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-29T01:58:29Z",
+      "side": 1,
+      "message": "Sorry, my mistake, it is for local test purpose, I will revert it to the original one",
+      "parentUuid": "1a76adc5_9db42383",
+      "revId": "b946db2d8120081480a088538c04482d03c8541c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
