@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_afe684ae",
+        "filename": "ci/prepare_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-30T07:37:16Z",
+      "side": 1,
+      "message": "I agree. I just don\u0027t want to change the original implementation. Anyway I will change them according to your opinion",
+      "parentUuid": "1a76adc5_2c8e027a",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_eceb2a11",
         "filename": "ci/prepare_env.py",
         "patchSetId": 3
@@ -104,6 +122,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_8f01483a",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-30T07:37:16Z",
+      "side": 1,
+      "message": "get_functest_yaml is no longer exist, I delete it, everywhere use get_functest_yaml will use functest_yaml instead",
+      "parentUuid": "1a76adc5_cc7f4e65",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_ec848a5f",
         "filename": "utils/config_functest.py",
         "patchSetId": 3
@@ -115,6 +151,24 @@
       "writtenOn": "2016-09-29T13:23:49Z",
       "side": 1,
       "message": "The only thing I don\u0027t like about this class is that whenever we need to add a new line in config_functest.yaml we also need to add it here... 2 places to be maintained for the same thing...",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_8f8868c6",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-09-30T07:37:16Z",
+      "side": 1,
+      "message": "Yes, but lots of configurations are used multiple places, when we change one property, we need to search all over the project. In this way the upstream use is independent from the configuration implementation, conform to decouple. And I think the code of getting properties all over the project is very ugly. :)",
+      "parentUuid": "1a76adc5_ec848a5f",
       "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
