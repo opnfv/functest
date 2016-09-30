@@ -1,0 +1,42 @@
+  HeatStacks.create_update_delete_stack:
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/autoscaling_policy.yaml.template"
+        updated_template_path: "{{ tmpl_dir }}/updated_autoscaling_policy_inplace.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  HeatStacks.create_check_delete_stack:
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  HeatStacks.create_suspend_resume_delete_stack:
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  HeatStacks.list_stacks_and_resources:
+    -
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}

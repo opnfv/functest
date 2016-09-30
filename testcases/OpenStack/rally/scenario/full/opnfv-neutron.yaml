@@ -1,7 +1,3 @@
-{# all scenarios included only in full mode #}
-
-{% if full_mode %}
-
   NeutronNetworks.create_and_update_networks:
     -
       args:
@@ -88,8 +84,6 @@
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
-
-{% endif %}
 
   NeutronNetworks.create_and_delete_networks:
     -

@@ -75,6 +75,11 @@ logger = ft_logger.Logger("run_rally").getLogger()
 HOME = os.environ['HOME'] + "/"
 RALLY_DIR = ft_utils.FUNCTEST_REPO + '/' + \
             ft_utils.get_functest_config('general.directories.dir_rally')
+if args.sanity:
+    RALLY_SCENARIO_DIR = RALLY_DIR + "scenario/sanity"
+else:
+    RALLY_SCENARIO_DIR = RALLY_DIR + "scenario/full"
+
 TEMPLATE_DIR = RALLY_DIR + "scenario/templates"
 SUPPORT_DIR = RALLY_DIR + "scenario/support"
 TEMP_DIR = RALLY_DIR + "var"
@@ -173,10 +178,8 @@ def build_task_args(test_file_name):
     task_args['concurrency'] = CONCURRENCY
 
     if args.sanity:
-        task_args['full_mode'] = False
         task_args['smoke'] = True
     else:
-        task_args['full_mode'] = True
         task_args['smoke'] = args.smoke
 
     ext_net = os_utils.get_external_net(neutron_client)
@@ -316,7 +319,7 @@ def apply_blacklist(case_file_name, result_file_name):
 
 
 def prepare_test_list(test_name):
-    scenario_file_name = '{}opnfv-{}.yaml'.format(RALLY_DIR + "scenario/",
+    scenario_file_name = '{}opnfv-{}.yaml'.format(RALLY_SCENARIO_DIR + "/",
                                                   test_name)
     if not os.path.exists(scenario_file_name):
         logger.info("The scenario '%s' does not exist." % scenario_file_name)
