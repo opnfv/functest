@@ -88,6 +88,57 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_9476aa05",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-05T19:26:14Z",
+      "side": 1,
+      "message": "I would have deleted that.",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_741786a4",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-05T19:26:14Z",
+      "side": 1,
+      "message": "please add it in ConfigFunctest",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_94e46aad",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-05T19:26:14Z",
+      "side": 1,
+      "message": "object is useless, isn\u0027t it?",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_ac7a1275",
         "filename": "utils/config_functest.py",
         "patchSetId": 3
@@ -169,6 +220,23 @@
       "side": 1,
       "message": "Yes, but lots of configurations are used multiple places, when we change one property, we need to search all over the project. In this way the upstream use is independent from the configuration implementation, conform to decouple. And I think the code of getting properties all over the project is very ugly. :)",
       "parentUuid": "1a76adc5_ec848a5f",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_541282b5",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-05T19:26:14Z",
+      "side": 1,
+      "message": "They could be defined as staticmethods.\nCould they be factorized?",
       "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
