@@ -105,6 +105,23 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_54ee028d",
+        "filename": "testcases/vnf/vRNC/parser.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-05T19:27:38Z",
+      "side": 1,
+      "message": "Please respect the openstack guidelines. The first import order was better.",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_741786a4",
         "filename": "utils/config_functest.py",
         "patchSetId": 3
