@@ -16,7 +16,7 @@ ODL_SFC_LOG=/home/opnfv/functest/results/odl-sfc.log
 ODL_SFC_DIR=${FUNCTEST_REPO_DIR}/testcases/features/sfc
 
 # Split the output to the log file and redirect STDOUT and STDERR to /dev/null
-bash ${ODL_SFC_DIR}/server_presetup_CI.bash |& \
+bash ${ODL_SFC_DIR}/fetch_tackerc.bash |& \
     tee -a ${ODL_SFC_LOG} 1>/dev/null 2>&1
 
 # Get return value from PIPESTATUS array (bash specific feature)
