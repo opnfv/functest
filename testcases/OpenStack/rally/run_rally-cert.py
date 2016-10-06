@@ -75,6 +75,8 @@ logger = ft_logger.Logger("run_rally").getLogger()
 HOME = os.environ['HOME'] + "/"
 RALLY_DIR = ft_utils.FUNCTEST_REPO + '/' + \
             ft_utils.get_functest_config('general.directories.dir_rally')
+SANITY_MODE_DIR = RALLY_DIR + "scenario/sanity"
+FULL_MODE_DIR = RALLY_DIR + "scenario/full"
 TEMPLATE_DIR = RALLY_DIR + "scenario/templates"
 SUPPORT_DIR = RALLY_DIR + "scenario/support"
 TEMP_DIR = RALLY_DIR + "var"
@@ -173,10 +175,8 @@ def build_task_args(test_file_name):
     task_args['concurrency'] = CONCURRENCY
 
     if args.sanity:
-        task_args['full_mode'] = False
         task_args['smoke'] = True
     else:
-        task_args['full_mode'] = True
         task_args['smoke'] = args.smoke
 
     ext_net = os_utils.get_external_net(neutron_client)
@@ -319,8 +319,16 @@ def prepare_test_list(test_name):
     scenario_file_name = '{}opnfv-{}.yaml'.format(RALLY_DIR + "scenario/",
                                                   test_name)
     if not os.path.exists(scenario_file_name):
-        logger.info("The scenario '%s' does not exist." % scenario_file_name)
-        exit(-1)
+        if args.sanity:
+            scenario_file_name = '{}opnfv-{}.yaml'.format(SANITY_MODE_DIR +
+                                                          "/", test_name)
+        else:
+            scenario_file_name = '{}opnfv-{}.yaml'.format(FULL_MODE_DIR +
+                                                          "/", test_name)
+        if not os.path.exists(scenario_file_name):
+            logger.info("The scenario '%s' does not exist."
+                        % scenario_file_name)
+            exit(-1)
 
     logger.debug('Scenario fetched from : {}'.format(scenario_file_name))
     test_file_name = '{}opnfv-{}.yaml'.format(TEMP_DIR + "/", test_name)
