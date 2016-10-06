@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_5774c49b",
+        "filename": "testcases/features/sfc/server_presetup_CI.bash",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1580
+      },
+      "writtenOn": "2016-10-06T08:35:55Z",
+      "side": 1,
+      "message": "I recommend the use of subshell notation $() instead of backticks ``",
+      "revId": "6e6858c74ac42bd127bde2040dea0271464ff7d5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
