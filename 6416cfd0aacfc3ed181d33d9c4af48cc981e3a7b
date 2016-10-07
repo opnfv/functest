@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_7abf6dd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1401
+      },
+      "writtenOn": "2016-10-07T16:12:17Z",
+      "side": 1,
+      "message": "dpdk not dpsk",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "6416cfd0aacfc3ed181d33d9c4af48cc981e3a7b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
