@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_65a10ea9",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-09T01:37:26Z",
+      "side": 1,
+      "message": "why? config_functest.CONF is used and cann\u0027t be imported directly, because it is an object, according  to openstack import rule, I cannot come up with a method using it but not doing it in this way, and in openstack code, they always use it like this.",
+      "parentUuid": "dad5f5cf_9476aa05",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_54ee028d",
         "filename": "testcases/vnf/vRNC/parser.py",
         "patchSetId": 3
@@ -116,6 +134,24 @@
       "writtenOn": "2016-10-05T19:27:38Z",
       "side": 1,
       "message": "Please respect the openstack guidelines. The first import order was better.",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_45b08af4",
+        "filename": "testcases/vnf/vRNC/parser.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-09T01:37:26Z",
+      "side": 1,
+      "message": "I didn\u0027t reorganize the import manually, I always use pycharm shortcut key, maybe because in my OS, argparse is considered as a third part library.",
+      "parentUuid": "dad5f5cf_54ee028d",
       "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -139,6 +175,24 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_e5941e46",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-09T01:37:26Z",
+      "side": 1,
+      "message": "this method maybe will be used in parsing testcases.yaml later, so I prefer to leave it here for now.",
+      "parentUuid": "dad5f5cf_741786a4",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_94e46aad",
         "filename": "utils/config_functest.py",
         "patchSetId": 3
@@ -150,6 +204,24 @@
       "writtenOn": "2016-10-05T19:26:14Z",
       "side": 1,
       "message": "object is useless, isn\u0027t it?",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_65b6eede",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-09T01:37:26Z",
+      "side": 1,
+      "message": "I think It is all about coding habits, not a wrong way. If not subclass any class(including object) obviously, It will inherit object implicitly in python3, and lead to an old-style class in python2. And I prefer to using it in this way, according to http://stackoverflow.com/questions/4015417/python-class-inherits-object",
+      "parentUuid": "dad5f5cf_94e46aad",
       "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -254,6 +326,24 @@
       "writtenOn": "2016-10-05T19:26:14Z",
       "side": 1,
       "message": "They could be defined as staticmethods.\nCould they be factorized?",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_25ab068b",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-09T01:37:26Z",
+      "side": 1,
+      "message": "\u0027self\u0027 is used, in this way I don\u0027t know how to make it a staticmethod. Maybe you can tell me how?\n\nNaming is quite arbitrary, how to factorize them?",
+      "parentUuid": "dad5f5cf_541282b5",
       "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
