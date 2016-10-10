@@ -123,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_8b876161",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-10T16:24:32Z",
+      "side": 1,
+      "message": "Agree. I have read your previous reviews.\nI thought CONF was quite useless as functest_yaml \u003d config_functest.CONF.functest_yaml was not so far.",
+      "parentUuid": "dad5f5cf_65a10ea9",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_54ee028d",
         "filename": "testcases/vnf/vRNC/parser.py",
         "patchSetId": 3
@@ -187,6 +205,41 @@
       "side": 1,
       "message": "this method maybe will be used in parsing testcases.yaml later, so I prefer to leave it here for now.",
       "parentUuid": "dad5f5cf_741786a4",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_4b817949",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-10T16:24:32Z",
+      "side": 1,
+      "message": "I\u0027m sorry I don\u0027t see the purpose. You can define it as static method.",
+      "parentUuid": "dad5f5cf_e5941e46",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_eb95cd88",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-10T16:24:32Z",
+      "side": 1,
+      "message": "!!!",
       "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -344,6 +397,24 @@
       "side": 1,
       "message": "\u0027self\u0027 is used, in this way I don\u0027t know how to make it a staticmethod. Maybe you can tell me how?\n\nNaming is quite arbitrary, how to factorize them?",
       "parentUuid": "dad5f5cf_541282b5",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_2b7c3572",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-10T16:24:32Z",
+      "side": 1,
+      "message": "That was just a proposal. We could have defined static methods instead of getters. Or you could load all the variables in only one parsing. Else the object is quite useless isn\u0027t it? Maybe I\u0027m wrong...",
+      "parentUuid": "dad5f5cf_25ab068b",
       "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
