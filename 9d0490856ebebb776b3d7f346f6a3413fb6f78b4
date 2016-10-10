@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dad5f5cf_cb8c8982",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-10T16:26:41Z",
+      "side": 1,
+      "message": "to remove?",
+      "revId": "9d0490856ebebb776b3d7f346f6a3413fb6f78b4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_0b9371a4",
         "filename": "utils/config_functest.py",
         "patchSetId": 5
