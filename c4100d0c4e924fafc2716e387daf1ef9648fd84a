@@ -436,6 +436,24 @@
       "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_6b123db6",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-11T03:12:03Z",
+      "side": 1,
+      "message": "load all the variables in only one parsing will make that parsing method very huge, so I don\u0027t think it is a good idea.\nUsing getter maybe a little reduplicate, but looks very clear",
+      "parentUuid": "dad5f5cf_2b7c3572",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
