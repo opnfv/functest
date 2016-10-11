@@ -13,8 +13,8 @@ from robot.api import ExecutionResult, ResultVisitor
 from robot.errors import RobotError
 from robot.utils.robottime import timestamp_to_secs
 
+import functest.core.TestCasesBase as TestCasesBase
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as op_utils
 
 
@@ -39,7 +39,7 @@ class ODLResultVisitor(ResultVisitor):
         return self._data
 
 
-class ODLTestCases:
+class ODLTestCases(TestCasesBase.TestCasesBase):
 
     repos = "/home/opnfv/repos/"
     odl_test_repo = repos + "odl_test/"
@@ -47,6 +47,9 @@ class ODLTestCases:
     basic_suite_dir = odl_test_repo + "csit/suites/integration/basic/"
     res_dir = '/home/opnfv/functest/results/odl/'
     logger = ft_logger.Logger("opendaylight").getLogger()
+
+    def __init__(self):
+        self.case_name = "odl"
 
     @classmethod
     def copy_opnf_testcases(cls):
@@ -81,9 +84,19 @@ class ODLTestCases:
             cls.logger.error("Cannot set ODL creds: %s" % str(e))
             return False
 
-    @classmethod
-    def run(cls, **kwargs):
-        dirs = [cls.basic_suite_dir, cls.neutron_suite_dir]
+    def parse_results(self):
+        result = ExecutionResult(self.res_dir + 'output.xml')
+        visitor = ODLResultVisitor()
+        result.visit(visitor)
+        self.criteria = result.suite.status
+        self.start_time = timestamp_to_secs(result.suite.starttime)
+        self.stop_time = timestamp_to_secs(result.suite.endtime)
+        self.details = {}
+        self.details['description'] = result.suite.name
+        self.details['tests'] = visitor.get_data()
+
+    def main(self, **kwargs):
+        dirs = [self.basic_suite_dir, self.neutron_suite_dir]
         try:
             odlusername = kwargs['odlusername']
             odlpassword = kwargs['odlpassword']
@@ -96,35 +109,41 @@ class ODLTestCases:
                          'PORT:' + kwargs['odlwebport'],
                          'RESTCONFPORT:' + kwargs['odlrestconfport']]
         except KeyError as e:
-            cls.logger.error("Cannot run ODL testcases. Please check "
-                             "%s" % str(e))
+            self.logger.error("Cannot run ODL testcases. Please check "
+                              "%s" % str(e))
             return False
-        if (cls.copy_opnf_testcases() and
-                cls.set_robotframework_vars(odlusername, odlpassword)):
+        if (self.copy_opnf_testcases() and
+                self.set_robotframework_vars(odlusername, odlpassword)):
             try:
-                os.makedirs(cls.res_dir)
+                os.makedirs(self.res_dir)
             except OSError:
                 pass
-            stdout_file = cls.res_dir + 'stdout.txt'
+            stdout_file = self.res_dir + 'stdout.txt'
             with open(stdout_file, 'w+') as stdout:
                 run(*dirs, variable=variables,
-                    output=cls.res_dir + 'output.xml',
+                    output=self.res_dir + 'output.xml',
                     log='NONE',
                     report='NONE',
                     stdout=stdout)
                 stdout.seek(0, 0)
-                cls.logger.info("\n" + stdout.read())
-            cls.logger.info("ODL results were successfully generated")
+                self.logger.info("\n" + stdout.read())
+            self.logger.info("ODL results were successfully generated")
+            try:
+                self.parse_results()
+                self.logger.info("ODL results were successfully parsed")
+            except RobotError as e:
+                self.logger.error("Run tests before publishing: %s" %
+                                  e.message)
+                return self.EX_RUN_ERROR
             try:
                 os.remove(stdout_file)
             except OSError:
                 pass
-            return True
+            return self.EX_OK
         else:
-            return False
+            return self.EX_RUN_ERROR
 
-    @classmethod
-    def functest_run(cls):
+    def run(self):
         kclient = op_utils.get_keystone_client()
         keystone_url = kclient.service_catalog.url_for(
             service_type='identity', endpoint_type='publicURL')
@@ -154,34 +173,12 @@ class ODLTestCases:
             else:
                 kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
         except KeyError as e:
-            cls.logger.error("Cannot run ODL testcases. Please check env var: "
-                             "%s" % str(e))
-            return False
+            self.logger.error("Cannot run ODL testcases. "
+                              "Please check env var: "
+                              "%s" % str(e))
+            return self.EX_RUN_ERROR
 
-        return cls.run(**kwargs)
-
-    @classmethod
-    def push_to_db(cls):
-        try:
-            result = ExecutionResult(cls.res_dir + 'output.xml')
-            visitor = ODLResultVisitor()
-            result.visit(visitor)
-            start_time = timestamp_to_secs(result.suite.starttime)
-            stop_time = timestamp_to_secs(result.suite.endtime)
-            details = {}
-            details['description'] = result.suite.name
-            details['tests'] = visitor.get_data()
-            if not ft_utils.push_results_to_db(
-                    "functest", "odl", start_time, stop_time,
-                    result.suite.status, details):
-                cls.logger.error("Cannot push ODL results to DB")
-                return False
-            else:
-                cls.logger.info("ODL results were successfully pushed to DB")
-                return True
-        except RobotError as e:
-            cls.logger.error("Run tests before publishing: %s" % e.message)
-
+        return self.main(**kwargs)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -220,8 +217,9 @@ if __name__ == '__main__':
                         action='store_true')
 
     args = vars(parser.parse_args())
-    if not ODLTestCases.run(**args):
-        sys.exit(os.EX_SOFTWARE)
+    odl = ODLTestCases()
+    result = odl.main(**args)
+    if result != TestCasesBase.TestCasesBase.EX_OK:
+        sys.exit(result)
     if args['pushtodb']:
-        sys.exit(not ODLTestCases.push_to_db())
-    sys.exit(os.EX_OK)
+        sys.exit(odl.push_to_db())
