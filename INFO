@@ -2,8 +2,8 @@ Project: Base System Functionality Testing Project (functest)
 Project Creation Date: January 20, 2015
 Project Category: Integration & Testing
 Lifecycle State: Incubation
-Primary Contact: Morgan Richomme (morgan.richomme@orange.com)
-Project Lead: Morgan Richomme (morgan.richomme@orange.com)
+Primary Contact: Jose Lausuch (jose.lausuch@ericsson.com)
+Project Lead: Jose lausuch (jose.lausuch@ericsson.com) 
 Jira Project Name: Base System Functionality Testing Project
 Jira Project Prefix: FUNCTEST
 Mailing list tag: [functest]
@@ -31,5 +31,5 @@ Link(s) to approval of additional committers:
 http://lists.opnfv.org/pipermail/opnfv-tech-discuss/2015-April/001971.html
 http://ircbot.wl.linuxfoundation.org/meetings/opnfv-testperf/2015/opnfv-testperf.2015-09-29-13.00.html
 http://ircbot.wl.linuxfoundation.org/meetings/opnfv-testperf/2016/opnfv-testperf.2016-03-01-08.00.html
-
+http://ircbot.wl.linuxfoundation.org/meetings/opnfv-functest/2016/opnfv-functest.2016-10-11-08.01.html
 
