@@ -17,5 +17,10 @@ sshpass -p r00tme scp $ssh_options correct_classifier.bash ${INSTALLER_IP}:/root
 sshpass -p r00tme ssh $ssh_options root@${INSTALLER_IP} 'scp correct_classifier.bash '"$ip"':/root'
 
 sshpass -p r00tme ssh $ssh_options root@${INSTALLER_IP} 'ssh root@'"$ip"' ifconfig br-int up'
+output=$(sshpass -p r00tme ssh $ssh_options root@${INSTALLER_IP} 'ssh root@'"$ip"' ip route | \
+cut -d" " -f1 | grep 11.0.0.0' ; exit 0)
+
+if [ -z "$output" ]; then
 sshpass -p r00tme ssh $ssh_options root@${INSTALLER_IP} 'ssh root@'"$ip"' ip route add 11.0.0.0/24 \
 dev br-int'
+fi
