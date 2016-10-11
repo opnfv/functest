@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_66883423",
+        "filename": "core/TestCasesBase.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-11T14:36:05Z",
+      "side": 1,
+      "message": "I think it\u0027s printed by ft_utils.push_results_to_db. Could you please confirm?",
+      "parentUuid": "dad5f5cf_a6b85c2b",
+      "revId": "d516b95eb674d5f7ccdb259df80cc73123aa4840",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_460e5036",
         "filename": "core/TestCasesBaseTesting.py",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2016-10-11T09:38:03Z",
       "side": 1,
       "message": "maybe make sense to create a test directity to collect all the unit tests\nI would suggest to create test/core/TestCasesBases.py (not sure Testing is needed if we adopt a structure only for unit tests",
+      "revId": "d516b95eb674d5f7ccdb259df80cc73123aa4840",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_c69b2071",
+        "filename": "core/TestCasesBaseTesting.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-11T14:36:05Z",
+      "side": 1,
+      "message": "I agree. What\u0027s your proposal? To create a directory functest/tests/unit/ as neutron? I could create the directories required here if you want.",
+      "parentUuid": "dad5f5cf_460e5036",
       "revId": "d516b95eb674d5f7ccdb259df80cc73123aa4840",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
