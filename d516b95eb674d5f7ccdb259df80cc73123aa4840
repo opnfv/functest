@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_460e5036",
+        "filename": "core/TestCasesBaseTesting.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-10-11T09:38:03Z",
+      "side": 1,
+      "message": "maybe make sense to create a test directity to collect all the unit tests\nI would suggest to create test/core/TestCasesBases.py (not sure Testing is needed if we adopt a structure only for unit tests",
+      "revId": "d516b95eb674d5f7ccdb259df80cc73123aa4840",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
