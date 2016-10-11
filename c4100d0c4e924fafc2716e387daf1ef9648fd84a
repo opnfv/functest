@@ -141,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_4bec19c8",
+        "filename": "testcases/features/doctor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-11T02:28:39Z",
+      "side": 1,
+      "message": "1. CONF is used not only with functest_yaml\u003dconfig_functest.CONF.functest_yaml.\n2. functest_yaml\u003dCONF.functest_yaml is specified.\nBoth 1\u00262 is used in this way due to: 1) it is referenced many times, to eliminate reduplicate. 2) to eliminate flake8 violation.",
+      "parentUuid": "dad5f5cf_8b876161",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_54ee028d",
         "filename": "testcases/vnf/vRNC/parser.py",
         "patchSetId": 3
