@@ -27,7 +27,7 @@ HOME = os.environ['HOME'] + "/"
 
 VM_BOOT_TIMEOUT = 180
 INSTANCE_NAME = "client"
-FLAVOR = "m1.small"
+FLAVOR = "custom"
 IMAGE_NAME = "sf_nsh_colorado"
 IMAGE_FILENAME = "sf_nsh_colorado.qcow2"
 IMAGE_FORMAT = "qcow2"

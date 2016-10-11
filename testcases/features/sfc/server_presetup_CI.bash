@@ -8,6 +8,6 @@ pushd $BASEDIR
 ip=$(sshpass -p r00tme ssh $ssh_options root@${INSTALLER_IP} 'fuel node'|grep controller|awk '{print $10}' | head -1)
 echo $ip
 
-shpass -p r00tme scp $ssh_options delete.sh ${INSTALLER_IP}:/root
+sshpass -p r00tme scp $ssh_options delete.sh ${INSTALLER_IP}:/root
 sshpass -p r00tme ssh $ssh_options root@${INSTALLER_IP} 'scp '"$ip"':/root/tackerc .'
 sshpass -p r00tme scp $ssh_options ${INSTALLER_IP}:/root/tackerc $BASEDIR
