@@ -316,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_ab1fc5b6",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-11T03:24:48Z",
+      "side": 1,
+      "message": "If config_functest.yaml is not exist, it will throw out an exception. For the current framework even if we check it, nothing else more we can do about it. I suggest to leave it like this(like the old version did), and we take it into consideration during the topic \u0027Create Functest exception class inherited from a generic OPNFV test exception class\u0027. What do you think?",
+      "parentUuid": "1a76adc5_ac7a1275",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_cc7f4e65",
         "filename": "utils/config_functest.py",
         "patchSetId": 3
