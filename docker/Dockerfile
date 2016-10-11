@@ -78,29 +78,29 @@ RUN chmod 700 /root/.ssh
 RUN git config --global http.sslVerify false
 
 # OPNFV repositories
-RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
-RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${repos_dir}/copper
-RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
-RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
-RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${repos_dir}/domino
-RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${repos_dir}/parser
-RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
-RUN git clone -b $BRANCH https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
-RUN git clone https://github.com/opnfv/promise ${repos_dir}/promise
-RUN git clone https://gerrit.opnfv.org/gerrit/securityscanning ${repos_dir}/securityscanning
-RUN git clone https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${repos_dir}/copper
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${repos_dir}/domino
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${repos_dir}/parser
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
+RUN git clone --depth 1 https://github.com/opnfv/promise ${repos_dir}/promise
+RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${repos_dir}/securityscanning
+RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
 
 
 # OpenStack repositories
-RUN git clone -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${repos_dir}/bgpvpn
-RUN git clone -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${repos_dir}/kingbird
-RUN git clone -b $RALLY_TAG https://github.com/openstack/rally.git ${repos_dir}/rally
-RUN git clone -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${repos_dir}/tempest
+RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${repos_dir}/bgpvpn
+RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${repos_dir}/kingbird
+RUN git clone --depth 1 -b $RALLY_TAG https://github.com/openstack/rally.git ${repos_dir}/rally
+RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${repos_dir}/tempest
 
 # other repositories
-RUN git clone -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${repos_dir}/odl_test
-RUN git clone -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
-RUN git clone https://github.com/wuwenbin2/OnosSystemTest.git ${repos_dir}/onos
+RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${repos_dir}/odl_test
+RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
+RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${repos_dir}/onos
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt
