@@ -490,6 +490,24 @@
       "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_9a048c16",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-12T09:01:54Z",
+      "side": 1,
+      "message": "I don\u0027t think so. Please have a look how OpenStack manages configs (see oslo.config).",
+      "parentUuid": "dad5f5cf_265a2c84",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
