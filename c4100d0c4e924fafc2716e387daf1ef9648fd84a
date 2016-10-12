@@ -472,6 +472,24 @@
       "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_265a2c84",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-12T02:48:42Z",
+      "side": 1,
+      "message": "I think now it meets your requirement which not loading the whole yaml when accessing only one attribute. and keep my concept that do not load all the attributes at the very beginning since only a few of them will be used in a testcase.",
+      "parentUuid": "dad5f5cf_2b7c3572",
+      "revId": "c4100d0c4e924fafc2716e387daf1ef9648fd84a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
