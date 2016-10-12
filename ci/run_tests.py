@@ -9,6 +9,7 @@
 #
 
 import datetime
+import importlib
 import os
 import re
 import sys
@@ -23,7 +24,6 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 import functest.utils.openstack_utils as os_utils
-import functest.testcases.Controllers.ODL.OpenDaylightTesting as odl_test
 
 
 parser = argparse.ArgumentParser()
@@ -84,6 +84,19 @@ def update_test_info(test_name, result, duration):
                          "duration": duration})
 
 
+def get_run_dict_if_defined(testname):
+    try:
+        dict = ft_utils.get_dict_by_test(testname)
+        if not dict:
+            logger.error("Cannot get {}'s config options".format(testname))
+        elif 'run' in dict:
+            return dict['run']
+        return None
+    except Exception:
+        logger.exception("Cannot get {}'s config options".format(testname))
+        return None
+
+
 def run_test(test, tier_name):
     global OVERALL_RESULT, EXECUTED_TEST_CASES
     result_str = "PASS"
@@ -102,14 +115,27 @@ def run_test(test, tier_name):
     if REPORT_FLAG:
         flags += " -r"
 
-    if test_name == 'odl':
-        odl = odl_test.ODLTestCases()
-        result = odl.run()
-        if result == TestCasesBase.TestCasesBase.EX_OK and REPORT_FLAG:
-            result = odl.push_to_db()
+    result = TestCasesBase.TestCasesBase.EX_RUN_ERROR
+    run_dict = get_run_dict_if_defined(test_name)
+    if run_dict:
+        try:
+            module = importlib.import_module(run_dict['module'])
+            cls = getattr(module, run_dict['class'])
+            test_case = cls()
+            result = test_case.run()
+            if result == TestCasesBase.TestCasesBase.EX_OK and REPORT_FLAG:
+                result = test_case.push_to_db()
+        except ImportError:
+            logger.exception("Cannot import module {}".format(
+                run_dict['module']))
+        except AttributeError:
+            logger.exception("Cannot get class {}".format(
+                run_dict['class']))
     else:
         cmd = ("%s%s" % (EXEC_SCRIPT, flags))
-        logger.debug("Executing command '%s'" % cmd)
+        logger.info("Executing command {} because {} "
+                    "doesn't implement the new framework".format(
+                        cmd, test_name))
         result = ft_utils.execute_command(cmd)
 
     if CLEAN_FLAG:
