@@ -343,16 +343,23 @@ def get_deployment_dir():
     return deployment_dir
 
 
-def get_criteria_by_test(testname):
+def get_dict_by_test(testname):
     with open(get_testcases_file()) as f:
         testcases_yaml = yaml.safe_load(f)
 
     for dic_tier in testcases_yaml.get("tiers"):
         for dic_testcase in dic_tier['testcases']:
             if dic_testcase['name'] == testname:
-                return dic_testcase['criteria']
+                return dic_testcase
 
     logger.error('Project %s is not defined in testcases.yaml' % testname)
+    return None
+
+
+def get_criteria_by_test(testname):
+    dict = get_dict_by_test(testname)
+    if dict:
+        return dict['criteria']
     return None
 
 
