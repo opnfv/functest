@@ -92,6 +92,9 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: 'odl'
+                run:
+                    module: 'functest.testcases.Controllers.ODL.OpenDaylightTesting'
+                    class: 'ODLTestCases'
 
             -
                 name: onos
