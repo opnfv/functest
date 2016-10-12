@@ -219,7 +219,7 @@ def main():
     logger.info("Creating instance '%s'..." % INSTANCE_NAME)
     logger.debug(
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
-        "network=%s \n" % (INSTANCE_NAME, FLAVOR, image_id, network_id))
+        "network=%s \n" % (INSTANCE_NAME_2, FLAVOR, image_id, network_id))
     instance_2 = os_utils.create_instance_and_wait_for_active(FLAVOR,
                                                               image_id,
                                                               network_id,
