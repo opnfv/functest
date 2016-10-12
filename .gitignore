@@ -3,6 +3,8 @@
 .*.sw?
 .project
 .pydevproject
+*.json
+!/docs/**/*.json
 /docs_build/
 /docs_output/
 /releng/
