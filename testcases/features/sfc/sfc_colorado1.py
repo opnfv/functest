@@ -81,15 +81,6 @@ def main():
                                stderr=subprocess.PIPE)
     ip_server = process.stdout.readline().rstrip()
 
-    contr_cmd2 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
-                  " 'fuel node'|grep compute|awk '{print $10}'")
-    logger.info("Executing script to get ip_compute: '%s'" % contr_cmd2)
-    process = subprocess.Popen(contr_cmd2,
-                               shell=True,
-                               stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
-    ip_compute = process.stdout.readline().rstrip()
-
     iptable_cmd1 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
                     " ssh " + ip_server + " iptables -P INPUT ACCEPT ")
     iptable_cmd2 = ("sshpass -p r00tme ssh " + ssh_options + " root@10.20.0.2"
@@ -225,7 +216,7 @@ def main():
         logger.info("Creating instance '%s'..." % INSTANCE_NAME)
         logger.debug(
             "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
-            "network=%s \n" % (INSTANCE_NAME, FLAVOR, image_id, network_id))
+            "network=%s \n" % (INSTANCE_NAME_2, FLAVOR, image_id, network_id))
         instance_2 = os_utils.create_instance_and_wait_for_active(
             FLAVOR,
             image_id,
@@ -393,16 +384,6 @@ def main():
         except Exception:
             logger.exception("vxlan_tool not started in SF2")
 
-        # SSH to modify the classification flows in compute
-
-        contr_cmd3 = ("sshpass -p r00tme ssh " + ssh_options + " "
-                      "root@10.20.0.2 'ssh " + ip_compute + " "
-                      "'bash correct_classifier.bash''")
-        logger.info("Executing script to modify the classi: '%s'" % contr_cmd3)
-        process = subprocess.Popen(contr_cmd3,
-                                   shell=True,
-                                   stdout=subprocess.PIPE)
-
         i = 0
 
         # SSH TO EXECUTE cmd_client
@@ -460,17 +441,7 @@ def main():
         subprocess.call(tacker_classi, shell=True)
 
         logger.info("Wait for ODL to update the classification rules in OVS")
-        time.sleep(10)
-
-        # SSH to modify the classification flows in compute
-
-        contr_cmd4 = ("sshpass -p r00tme ssh " + ssh_options + " "
-                      "root@10.20.0.2 'ssh " + ip_compute + " "
-                      "'bash correct_classifier.bash''")
-        logger.info("Executing script to modify the classi: '%s'" % contr_cmd4)
-        process = subprocess.Popen(contr_cmd4,
-                                   shell=True,
-                                   stdout=subprocess.PIPE)
+        time.sleep(100)
 
         # SSH TO EXECUTE cmd_client
 
