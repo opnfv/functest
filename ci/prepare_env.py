@@ -223,7 +223,7 @@ def install_rally():
     logger.info("Creating Rally environment...")
 
     cmd = "rally deployment destroy opnfv-rally"
-    ft_utils.execute_command(cmd, exit_on_error=False,
+    ft_utils.execute_command(cmd,
                              error_msg=("Deployment %s does not exist."
                                         % DEPLOYMENT_MAME), verbose=False)
     rally_conf = os_utils.get_credentials_for_rally()

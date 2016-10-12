@@ -47,7 +47,7 @@ class CliOpenStack:
 
     def show_credentials(self):
         cmd = "env|grep OS_"
-        ft_utils.execute_command(cmd, exit_on_error=False, verbose=False)
+        ft_utils.execute_command(cmd, verbose=False)
         click.echo("")
 
     def fetch_credentials(self):

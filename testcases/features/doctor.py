@@ -52,7 +52,6 @@ def main():
 
     ret = functest_utils.execute_command(cmd,
                                          info=True,
-                                         exit_on_error=False,
                                          output_file=log_file)
 
     stop_time = time.time()

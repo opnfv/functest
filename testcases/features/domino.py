@@ -42,7 +42,6 @@ def main():
     start_time = time.time()
 
     ret = ft_utils.execute_command(cmd,
-                                   exit_on_error=False,
                                    output_file=log_file)
 
     stop_time = time.time()
