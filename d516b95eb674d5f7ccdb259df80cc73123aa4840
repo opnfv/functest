@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_065b6855",
+        "filename": "core/TestCasesBase.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-12T08:02:31Z",
+      "side": 1,
+      "message": "We could change it in other review as this one is not related to ft_utils. I don\u0027t see the direct added value but it could make sense in the global refactoring.\nOnly one try can be dangerous as all the errors aren\u0027t managed in only one manner but it depends on the case.",
+      "parentUuid": "dad5f5cf_461170ab",
+      "revId": "d516b95eb674d5f7ccdb259df80cc73123aa4840",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_460e5036",
         "filename": "core/TestCasesBaseTesting.py",
         "patchSetId": 7
@@ -101,6 +119,24 @@
       "writtenOn": "2016-10-12T01:51:53Z",
       "side": 1,
       "message": "I don\u0027t think it is a good idea to put it here since it will only be used when running unittest.",
+      "revId": "d516b95eb674d5f7ccdb259df80cc73123aa4840",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_a657fc25",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-12T08:02:31Z",
+      "side": 1,
+      "message": "I agree but some devs will use container to run unittests. I think Jose asked to install it during yesterday\u0027s meeting. As I don\u0027t think it uses too much disk space, I list it anyway.",
+      "parentUuid": "dad5f5cf_06236806",
       "revId": "d516b95eb674d5f7ccdb259df80cc73123aa4840",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
