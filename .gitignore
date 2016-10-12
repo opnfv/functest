@@ -3,6 +3,7 @@
 .*.sw?
 .project
 .pydevproject
+/ci/rally_conf.json
 /docs_build/
 /docs_output/
 /releng/
