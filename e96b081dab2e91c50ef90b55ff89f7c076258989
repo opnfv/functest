@@ -1,0 +1,10 @@
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Verified+1: Morgan Richomme <morgan.richomme@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Verified+1: Cedric Ollivier <ollivier.cedric@gmail.com>
+Code-Review+2: Cedric Ollivier <ollivier.cedric@gmail.com>
+Submitted-by: Cedric Ollivier <ollivier.cedric@gmail.com>
+Submitted-at: Thu, 13 Oct 2016 08:27:54 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/23067
+Project: functest
+Branch: refs/heads/stable/colorado
