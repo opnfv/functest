@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_fd403237",
+        "filename": "testcases/Controllers/ODL/OpenDaylightTesting.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-13T01:39:42Z",
+      "side": 1,
+      "message": "if self.res_dir not exist, will the following work success? I see it bases on this dir",
+      "revId": "dd0bdff330875c523792aae6c40747ec6094589e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_bd4aaa53",
+        "filename": "testcases/Controllers/ODL/OpenDaylightTesting.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-13T01:39:42Z",
+      "side": 1,
+      "message": "for try in one method?",
+      "revId": "dd0bdff330875c523792aae6c40747ec6094589e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
