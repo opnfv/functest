@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dad5f5cf_f0cdb987",
+        "filename": "ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-10-13T15:00:09Z",
+      "side": 1,
+      "message": "Is the value of TestCasesBase.EX_OK 0?",
+      "revId": "dd0bdff330875c523792aae6c40747ec6094589e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_fd403237",
         "filename": "testcases/Controllers/ODL/OpenDaylightTesting.py",
         "patchSetId": 2
@@ -49,6 +66,24 @@
       "side": 1,
       "message": "It\u0027s passed as makedirs raises OSError if directory already exists. I could check what happen if disk is full or if root can\u0027t create the directory.",
       "parentUuid": "dad5f5cf_10c15d80",
+      "revId": "dd0bdff330875c523792aae6c40747ec6094589e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_90a6adc0",
+        "filename": "testcases/Controllers/ODL/OpenDaylightTesting.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-10-13T15:00:09Z",
+      "side": 1,
+      "message": "It\u0027s ok like this. Python 3.4 has a similar function that mkdir -p  in bash, but here we need to use the try-except",
+      "parentUuid": "dad5f5cf_10e4fd0b",
       "revId": "dd0bdff330875c523792aae6c40747ec6094589e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
