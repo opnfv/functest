@@ -28,6 +28,15 @@ logger = ft_logger.Logger("openstack_utils").getLogger()
 # *********************************************
 #   CREDENTIALS
 # *********************************************
+class MissingEnvVar(Exception):
+
+    def __init__(self, var):
+        self.var = var
+
+    def __str__(self):
+        return str.format("Please set the mandatory env var: {}", self.var)
+
+
 def check_credentials():
     """
     Check if the OpenStack credentials (openrc) are sourced
@@ -51,8 +60,7 @@ def get_credentials(service):
     envvars = ('OS_USERNAME', 'OS_PASSWORD', 'OS_AUTH_URL', 'OS_TENANT_NAME')
     for envvar in envvars:
         if os.getenv(envvar) is None:
-            logger.error("'%s' is not exported as an env variable." % envvar)
-            exit(-1)
+            raise MissingEnvVar(envvar)
 
     # Unfortunately, each of the OpenStack client will request slightly
     # different entries in their credentials dict.
