@@ -51,6 +51,24 @@
       "revId": "dd0bdff330875c523792aae6c40747ec6094589e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_10487d2c",
+        "filename": "testcases/Controllers/ODL/OpenDaylightTesting.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-13T13:15:06Z",
+      "side": 1,
+      "message": "In this case it\u0027s not justified as the first instructions cannot raise exceptions... Maybe true when  get_keystone_client will raise an exception.",
+      "parentUuid": "dad5f5cf_bd4aaa53",
+      "revId": "dd0bdff330875c523792aae6c40747ec6094589e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
