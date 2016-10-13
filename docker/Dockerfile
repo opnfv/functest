@@ -28,7 +28,7 @@ FROM ubuntu:14.04
 MAINTAINER Jose Lausuch <jose.lausuch@ericsson.com>
 LABEL version="0.1" description="OPNFV Functest Docker container"
 
-ARG BRANCH=master
+ARG BRANCH=stable/colorado
 ARG TEMPEST_TAG=12.2.0
 ARG RALLY_TAG=0.5.0
 ARG ODL_TAG=release/beryllium-sr3
