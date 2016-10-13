@@ -52,18 +52,13 @@ class ODLTestCases:
     def copy_opnf_testcases(cls):
         opnfv_testcases_dir = (os.path.dirname(os.path.abspath(__file__)) +
                                "/custom_tests/neutron/")
-        files = [opnfv_testcases_dir + "001__reachability.robot",
-                 opnfv_testcases_dir + "040__delete_ports.robot",
-                 opnfv_testcases_dir + "050__delete_subnets.robot",
-                 opnfv_testcases_dir + "060__delete_networks.robot"]
-        for f in files:
-            try:
-                shutil.copy(f, cls.neutron_suite_dir)
-            except IOError as e:
-                cls.logger.error(
-                    "Cannot copy OPNFV's testcases to ODL directory: "
-                    "%s" % str(e))
-                return False
+        file = opnfv_testcases_dir + "001__reachability.robot"
+        try:
+            shutil.copy(file, cls.neutron_suite_dir)
+        except IOError as e:
+            cls.logger.error(
+                "Cannot copy OPNFV's testcase to ODL directory: %s" % str(e))
+            return False
         return True
 
     @classmethod
