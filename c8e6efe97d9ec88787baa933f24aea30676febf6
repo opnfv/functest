@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_7d2682bc",
+        "filename": ".gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-13T01:25:59Z",
+      "side": 1,
+      "message": "when will the file be created? can we place it to /home/opnfv/functest?",
+      "revId": "c8e6efe97d9ec88787baa933f24aea30676febf6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
