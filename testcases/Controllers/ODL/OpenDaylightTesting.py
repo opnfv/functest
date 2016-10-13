@@ -144,19 +144,19 @@ class ODLTestCases(TestCasesBase.TestCasesBase):
             return self.EX_RUN_ERROR
 
     def run(self):
-        kclient = op_utils.get_keystone_client()
-        keystone_url = kclient.service_catalog.url_for(
-            service_type='identity', endpoint_type='publicURL')
-        neutron_url = kclient.service_catalog.url_for(
-            service_type='network', endpoint_type='publicURL')
-        kwargs = {'keystoneip': urlparse.urlparse(keystone_url).hostname}
-        kwargs['neutronip'] = urlparse.urlparse(neutron_url).hostname
-        kwargs['odlip'] = kwargs['neutronip']
-        kwargs['odlwebport'] = '8080'
-        kwargs['odlrestconfport'] = '8181'
-        kwargs['odlusername'] = 'admin'
-        kwargs['odlpassword'] = 'admin'
         try:
+            kclient = op_utils.get_keystone_client()
+            keystone_url = kclient.service_catalog.url_for(
+                service_type='identity', endpoint_type='publicURL')
+            neutron_url = kclient.service_catalog.url_for(
+                service_type='network', endpoint_type='publicURL')
+            kwargs = {'keystoneip': urlparse.urlparse(keystone_url).hostname}
+            kwargs['neutronip'] = urlparse.urlparse(neutron_url).hostname
+            kwargs['odlip'] = kwargs['neutronip']
+            kwargs['odlwebport'] = '8080'
+            kwargs['odlrestconfport'] = '8181'
+            kwargs['odlusername'] = 'admin'
+            kwargs['odlpassword'] = 'admin'
             installer_type = os.environ['INSTALLER_TYPE']
             kwargs['osusername'] = os.environ['OS_USERNAME']
             kwargs['ostenantname'] = os.environ['OS_TENANT_NAME']
@@ -176,6 +176,9 @@ class ODLTestCases(TestCasesBase.TestCasesBase):
             self.logger.error("Cannot run ODL testcases. "
                               "Please check env var: "
                               "%s" % str(e))
+            return self.EX_RUN_ERROR
+        except Exception:
+            self.logger.exception("Cannot run ODL testcases.")
             return self.EX_RUN_ERROR
 
         return self.main(**kwargs)
