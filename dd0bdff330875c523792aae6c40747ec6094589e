@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_10e4fd0b",
+        "filename": "testcases/Controllers/ODL/OpenDaylightTesting.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-13T14:29:44Z",
+      "side": 1,
+      "message": "It\u0027s passed as makedirs raises OSError if directory already exists. I could check what happen if disk is full or if root can\u0027t create the directory.",
+      "parentUuid": "dad5f5cf_10c15d80",
+      "revId": "dd0bdff330875c523792aae6c40747ec6094589e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_bd4aaa53",
         "filename": "testcases/Controllers/ODL/OpenDaylightTesting.py",
         "patchSetId": 2
