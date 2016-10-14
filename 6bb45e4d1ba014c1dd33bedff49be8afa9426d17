@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Jose Lausuch <jose.lausuch@ericsson.com>
+Code-Review+2: Cedric Ollivier <ollivier.cedric@gmail.com>
+Code-Review+1: Ray Paik <rpaik@linuxfoundation.org>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Fri, 14 Oct 2016 09:13:38 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/23121
+Project: functest
+Branch: refs/heads/master
