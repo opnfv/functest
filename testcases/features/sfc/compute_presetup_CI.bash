@@ -9,9 +9,10 @@ BASEDIR=`dirname $0`
 INSTALLER_IP=${INSTALLER_IP:-10.20.0.2}
 
 pushd $BASEDIR
-ip=`sshpass -p r00tme ssh $ssh_options root@${INSTALLER_IP} 'fuel node'|grep compute|\
-awk '{print $10}' | head -1`
+#ip=`sshpass -p r00tme ssh $ssh_options root@${INSTALLER_IP} 'fuel node'|grep compute|\
+#awk '{print $10}' | head -1`
 
+ip=$1
 echo $ip
 #sshpass -p r00tme scp $ssh_options correct_classifier.bash ${INSTALLER_IP}:/root
 #sshpass -p r00tme ssh $ssh_options root@${INSTALLER_IP} 'scp correct_classifier.bash '"$ip"':/root'
