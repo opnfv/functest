@@ -14,18 +14,18 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="../css/reveal.css">
-		<link rel="stylesheet" href="../css/theme/OPNFV-Berlin.css" id="theme">
+		<link rel="stylesheet" href="../../../css/reveal.css">
+		<link rel="stylesheet" href="../../../css/theme/OPNFV-Berlin.css" id="theme">
 
 		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="../lib/css/zenburn.css">
+		<link rel="stylesheet" href="../../../lib/css/zenburn.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement( 'link' );
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../../css/print/pdf.css' : '../../../css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
 
@@ -40,7 +40,7 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 
-				<section data-background="../img/title-bg-berlin.png" data-background-transition="none">
+				<section data-background="../../../img/title-bg-berlin.png" data-background-transition="none">
                      <br><br><br><br><br>
                      <h1>From Arno to Colorado</h1>
                      <h3>Functest: Many rivers to cross</h3>
@@ -68,7 +68,7 @@
 
 				<section data-markdown>
 					# The dream team
-					![team](../img/teamSummitBerlin.png)
+					![team](../../../img/teamSummitBerlin.png)
 				</section>
 
 				<section>
@@ -151,13 +151,13 @@
 					</section>
 				<section>
 					<h3>Jiras</h3>
-					<img height="200"  data-src="../img/jiras.png" alt="Jiras">
-					<img height="200"  data-src="../img/jiras2.png" alt="Jiras">
+					<img height="200"  data-src="../../../img/jiras.png" alt="Jiras">
+					<img height="200"  data-src="../../../img/jiras2.png" alt="Jiras">
 				</section>
 
 				<section>
 					<h3>Brahmaputra Scenario matrix</h3>
-					<img width="800"  data-src="../img/matrix.png" alt="Jiras">
+					<img width="800"  data-src="../../../img/matrix.png" alt="Jiras">
 				</section>
 
 				<section>
@@ -239,7 +239,7 @@
 
 				<section>
 					<h3>Automatic reporting</h3>
-					<img height="400"  data-src="../img/reporting.png" alt="Reporting">
+					<img height="400"  data-src="../../../img/reporting.png" alt="Reporting">
 					<br><a href="http://testresults.opnfv.org/reporting/functest/release/master/index-status-fuel.html">Validated scenarios for Colorado</a>
 				</section>
 
@@ -272,17 +272,17 @@
 
 				<section>
 					<h3>Thank you</h3>
-					<img width="600"  data-src="../img/colorado.png" alt="tests">
+					<img width="600"  data-src="../../../img/colorado.png" alt="tests">
 				</section>
 
 			</div>
             <div class='footer'>
-				 <img src="../img/logo-OPNFV-Berlin.png" alt="OPNFV logo"> 
+				 <img src="../../../img/logo-OPNFV-Berlin.png" alt="OPNFV logo"> 
 	        </div>
 		</div>
 
-		<script src="../lib/js/head.min.js"></script>
-		<script src="../js/reveal.js"></script>
+		<script src="../../../lib/js/head.min.js"></script>
+		<script src="../../../js/reveal.js"></script>
 
 		<script>
 
@@ -298,12 +298,12 @@
 
 				// Optional reveal.js plugins
 				dependencies: [
-					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: '../plugin/zoom-js/zoom.js', async: true },
-					{ src: '../plugin/notes/notes.js', async: true }
+					{ src: '../../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../../plugin/notes/notes.js', async: true }
 				]
 			});
 
