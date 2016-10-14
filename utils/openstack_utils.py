@@ -158,11 +158,10 @@ def get_glance_client():
     return glanceclient.Client(1, glance_endpoint,
                                token=keystone_client.auth_token)
 
+
 # *********************************************
 #   NOVA
 # *********************************************
-
-
 def get_instances(nova_client):
     try:
         instances = nova_client.servers.list(search_opts={'all_tenants': 1})
