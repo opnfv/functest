@@ -174,7 +174,8 @@ def main():
     instance = os_utils.create_instance_and_wait_for_active(FLAVOR,
                                                             image_id,
                                                             network_id,
-                                                            INSTANCE_NAME)
+                                                            INSTANCE_NAME,
+                                                            av_zone='nova')
 
     if instance is None:
         logger.error("Error while booting instance.")
@@ -214,7 +215,8 @@ def main():
     instance_2 = os_utils.create_instance_and_wait_for_active(FLAVOR,
                                                               image_id,
                                                               network_id,
-                                                              INSTANCE_NAME_2)
+                                                              INSTANCE_NAME_2,
+                                                              av_zone='nova')
 
     if instance_2 is None:
         logger.error("Error while booting instance.")

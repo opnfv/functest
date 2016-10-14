@@ -172,10 +172,12 @@ def main():
         logger.debug(
             "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
             "network=%s \n" % (INSTANCE_NAME, FLAVOR, image_id, network_id))
-        instance = os_utils.create_instance_and_wait_for_active(FLAVOR,
-                                                                image_id,
-                                                                network_id,
-                                                                INSTANCE_NAME)
+        instance = os_utils.create_instance_and_wait_for_active(
+            FLAVOR,
+            image_id,
+            network_id,
+            INSTANCE_NAME,
+            av_zone='nova')
 
         if instance is None:
             logger.error("Error while booting instance.")
@@ -221,7 +223,8 @@ def main():
             FLAVOR,
             image_id,
             network_id,
-            INSTANCE_NAME_2)
+            INSTANCE_NAME_2,
+            av_zone='nova')
 
         if instance_2 is None:
             logger.error("Error while booting instance.")
