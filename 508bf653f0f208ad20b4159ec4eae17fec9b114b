@@ -22,6 +22,30 @@
       "revId": "508bf653f0f208ad20b4159ec4eae17fec9b114b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_b3dadb15",
+        "filename": "testcases/features/sfc/compute_presetup_CI.bash",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2091
+      },
+      "writtenOn": "2016-10-14T09:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_10107d4d",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 81
+      },
+      "revId": "508bf653f0f208ad20b4159ec4eae17fec9b114b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
