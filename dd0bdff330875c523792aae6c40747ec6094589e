@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_ce76d206",
+        "filename": "ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-15T18:36:31Z",
+      "side": 1,
+      "message": "I think so. Yes it\u0027s better to check if equal to EX_OK. Let\u0027s fix right after all patches about framework are merged.",
+      "parentUuid": "dad5f5cf_f0cdb987",
+      "revId": "dd0bdff330875c523792aae6c40747ec6094589e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_fd403237",
         "filename": "testcases/Controllers/ODL/OpenDaylightTesting.py",
         "patchSetId": 2
