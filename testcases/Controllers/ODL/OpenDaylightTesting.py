@@ -9,12 +9,12 @@ import shutil
 import sys
 import urlparse
 
-from robot import run
 from robot.api import ExecutionResult, ResultVisitor
 from robot.errors import RobotError
+import robot.run
 from robot.utils.robottime import timestamp_to_secs
 
-import functest.core.TestCasesBase as TestCasesBase
+from functest.core import TestCasesBase
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as op_utils
 
@@ -56,9 +56,9 @@ class ODLTestCases(TestCasesBase.TestCasesBase):
     def copy_opnf_testcases(cls):
         opnfv_testcases_dir = (os.path.dirname(os.path.abspath(__file__)) +
                                "/custom_tests/neutron/")
-        file = opnfv_testcases_dir + "001__reachability.robot"
+        f = opnfv_testcases_dir + "001__reachability.robot"
         try:
-            shutil.copy(file, cls.neutron_suite_dir)
+            shutil.copy(f, cls.neutron_suite_dir)
         except IOError as e:
             cls.logger.error(
                 "Cannot copy OPNFV's testcase to ODL directory: %s" % str(e))
@@ -107,7 +107,7 @@ class ODLTestCases(TestCasesBase.TestCasesBase):
         except KeyError as e:
             self.logger.error("Cannot run ODL testcases. Please check "
                               "%s" % str(e))
-            return False
+            return self.EX_RUN_ERROR
         if (self.copy_opnf_testcases() and
                 self.set_robotframework_vars(odlusername, odlpassword)):
             try:
@@ -119,11 +119,11 @@ class ODLTestCases(TestCasesBase.TestCasesBase):
                     return self.EX_RUN_ERROR
             stdout_file = self.res_dir + 'stdout.txt'
             with open(stdout_file, 'w+') as stdout:
-                run(*dirs, variable=variables,
-                    output=self.res_dir + 'output.xml',
-                    log='NONE',
-                    report='NONE',
-                    stdout=stdout)
+                robot.run(*dirs, variable=variables,
+                          output=self.res_dir + 'output.xml',
+                          log='NONE',
+                          report='NONE',
+                          stdout=stdout)
                 stdout.seek(0, 0)
                 self.logger.info("\n" + stdout.read())
             self.logger.info("ODL results were successfully generated")
@@ -137,7 +137,7 @@ class ODLTestCases(TestCasesBase.TestCasesBase):
             try:
                 os.remove(stdout_file)
             except OSError:
-                pass
+                self.logger.warning("Cannot remove {}".format(stdout_file))
             return self.EX_OK
         else:
             return self.EX_RUN_ERROR
@@ -156,7 +156,9 @@ class ODLTestCases(TestCasesBase.TestCasesBase):
             kwargs['odlrestconfport'] = '8181'
             kwargs['odlusername'] = 'admin'
             kwargs['odlpassword'] = 'admin'
-            installer_type = os.environ['INSTALLER_TYPE']
+            installer_type = None
+            if 'INSTALLER_TYPE' in os.environ:
+                installer_type = os.environ['INSTALLER_TYPE']
             kwargs['osusername'] = os.environ['OS_USERNAME']
             kwargs['ostenantname'] = os.environ['OS_TENANT_NAME']
             kwargs['ospassword'] = os.environ['OS_PASSWORD']
@@ -220,8 +222,11 @@ if __name__ == '__main__':
 
     args = vars(parser.parse_args())
     odl = ODLTestCases()
-    result = odl.main(**args)
-    if result != TestCasesBase.TestCasesBase.EX_OK:
-        sys.exit(result)
-    if args['pushtodb']:
-        sys.exit(odl.push_to_db())
+    try:
+        result = odl.main(**args)
+        if result != TestCasesBase.TestCasesBase.EX_OK:
+            sys.exit(result)
+        if args['pushtodb']:
+            sys.exit(odl.push_to_db())
+    except Exception:
+        sys.exit(TestCasesBase.TestCasesBase.EX_RUN_ERROR)
