@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+2: Serena Feng <feng.xiaowei@zte.com.cn>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-by: Cedric Ollivier <ollivier.cedric@gmail.com>
+Submitted-at: Mon, 17 Oct 2016 07:10:10 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/23027
+Project: functest
+Branch: refs/heads/master
