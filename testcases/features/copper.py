@@ -43,7 +43,6 @@ def main():
 
     log_file = RESULTS_DIR + "/copper.log"
     ret_val = functest_utils.execute_command(cmd,
-                                             exit_on_error=False,
                                              output_file=log_file)
 
     stop_time = time.time()

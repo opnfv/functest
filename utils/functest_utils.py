@@ -289,7 +289,7 @@ def get_ci_envvars():
     return ci_env_var
 
 
-def execute_command(cmd, exit_on_error=True, info=False, error_msg="",
+def execute_command(cmd, info=False, error_msg="",
                     verbose=True, output_file=None):
     if not error_msg:
         error_msg = ("The command '%s' failed." % cmd)
@@ -317,8 +317,6 @@ def execute_command(cmd, exit_on_error=True, info=False, error_msg="",
     if returncode != 0:
         if verbose:
             logger.error(error_msg)
-        if exit_on_error:
-            sys.exit(1)
 
     return returncode
 
