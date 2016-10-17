@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_9261dad5",
+        "filename": "testcases/vnf/vRouter/create_venv.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-10-17T12:30:12Z",
+      "side": 1,
+      "message": "does this mean that cloudify python module is installed only in the venv? Is there any way to have it preinstalled to avoid this step?",
+      "revId": "21f2728a19c9c6cb2cd7e06c936bb1c59e12657a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_32aa6ed5",
+        "filename": "testcases/vnf/vRouter/orchestrator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-10-17T12:30:12Z",
+      "side": 1,
+      "message": "there is already a function to execute commands in functest_utils. Do you you could reuse it? https://git.opnfv.org/cgit/functest/tree/utils/functest_utils.py#n292",
+      "revId": "21f2728a19c9c6cb2cd7e06c936bb1c59e12657a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_d2ae82e7",
+        "filename": "testcases/vnf/vRouter/orchestrator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-10-17T12:30:12Z",
+      "side": 1,
+      "message": "if this is just cloning a repository, you could just add it to the dockerfile as we do for any other repo, and remove this:\nhttps://git.opnfv.org/cgit/functest/tree/docker/Dockerfile",
+      "revId": "21f2728a19c9c6cb2cd7e06c936bb1c59e12657a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
