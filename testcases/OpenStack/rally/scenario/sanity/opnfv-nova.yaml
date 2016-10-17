@@ -1,5 +1,3 @@
-{% if live_migration %}
-
   NovaServers.boot_and_live_migrate_server:
     - args:
         {{ vm_params(image_name, flavor_name) }}
@@ -43,8 +41,6 @@
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
-
-{% endif %}
 
   NovaKeypair.boot_and_delete_server_with_keypair:
     -

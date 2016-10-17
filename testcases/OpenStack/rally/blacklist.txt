@@ -1,8 +1,18 @@
--
-    scenarios:
-        - os-nosdn-lxd-ha
-        - os-nosdn-lxd-noha
-    installers:
-        - joid
-    tests:
-        - NovaServers.boot_server_from_volume_and_delete
+scenario:
+    -
+        scenarios:
+            - os-nosdn-lxd-ha
+            - os-nosdn-lxd-noha
+        installers:
+            - joid
+        tests:
+            - NovaServers.boot_server_from_volume_and_delete
+
+functionality:
+    -
+        functions:
+            - no_live_migration
+        tests:
+            - NovaServers.boot_and_live_migrate_server
+            - NovaServers.boot_server_attach_created_volume_and_live_migrate
+            - NovaServers.boot_server_from_volume_and_live_migrate

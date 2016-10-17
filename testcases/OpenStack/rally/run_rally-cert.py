@@ -187,7 +187,6 @@ def build_task_args(test_file_name):
 
     net_id = network_dict['net_id']
     task_args['netid'] = str(net_id)
-    task_args['live_migration'] = live_migration_supported()
 
     auth_url = os.getenv('OS_AUTH_URL')
     if auth_url is not None:
@@ -273,30 +272,60 @@ def get_cmd_output(proc):
     return result
 
 
+def excl_scenario():
+    black_tests = []
+
+    try:
+        with open(BLACKLIST_FILE, 'r') as black_list_file:
+            black_list_yaml = yaml.safe_load(black_list_file)
+
+        installer_type = os.getenv('INSTALLER_TYPE')
+        deploy_scenario = os.getenv('DEPLOY_SCENARIO')
+        if (bool(installer_type) * bool(deploy_scenario)):
+            if 'scenario' in black_list_yaml.keys():
+                for item in black_list_yaml['scenario']:
+                    scenarios = item['scenarios']
+                    installers = item['installers']
+                    if (deploy_scenario in scenarios and
+                            installer_type in installers):
+                        tests = item['tests']
+                        black_tests.extend(tests)
+    except:
+        logger.debug("Scenario exclusion not applied.")
+
+    return black_tests
+
+
+def excl_func():
+    black_tests = []
+    func_list = []
+
+    try:
+        with open(BLACKLIST_FILE, 'r') as black_list_file:
+            black_list_yaml = yaml.safe_load(black_list_file)
+
+        if not live_migration_supported():
+            func_list.append("no_live_migration")
+
+        if 'functionality' in black_list_yaml.keys():
+            for item in black_list_yaml['functionality']:
+                functions = item['functions']
+                for func in func_list:
+                    if func in functions:
+                        tests = item['tests']
+                        black_tests.extend(tests)
+    except:
+        logger.debug("Functionality exclusion not applied.")
+
+    return black_tests
+
+
 def apply_blacklist(case_file_name, result_file_name):
     logger.debug("Applying blacklist...")
     cases_file = open(case_file_name, 'r')
     result_file = open(result_file_name, 'w')
-    black_tests = []
 
-    try:
-        installer_type = os.getenv('INSTALLER_TYPE')
-        deploy_scenario = os.getenv('DEPLOY_SCENARIO')
-        if (bool(installer_type) * bool(deploy_scenario)):
-            # if INSTALLER_TYPE and DEPLOY_SCENARIO are set we read the file
-            with open(BLACKLIST_FILE, 'r') as black_list_file:
-                black_list_yaml = yaml.safe_load(black_list_file)
-
-            for item in black_list_yaml:
-                scenarios = item['scenarios']
-                installers = item['installers']
-                if (deploy_scenario in scenarios and
-                        installer_type in installers):
-                    tests = item['tests']
-                    black_tests.extend(tests)
-    except:
-        black_tests = []
-        logger.debug("Blacklisting not applied.")
+    black_tests = list(set(excl_func() + excl_scenario()))
 
     include = True
     for cases_line in cases_file:
