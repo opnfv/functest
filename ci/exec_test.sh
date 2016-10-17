@@ -109,6 +109,9 @@ function run_test(){
         "vims")
             python ${FUNCTEST_REPO_DIR}/testcases/vnf/vIMS/vIMS.py $clean_flag $report
         ;;
+        "vrouter")
+            python ${FUNCTEST_REPO_DIR}/testcases/vnf/vRouter/vRouter.py $clean_flag $report
+        ;;
         "rally_full")
             python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/rally/run_rally-cert.py $clean_flag all $report
         ;;
