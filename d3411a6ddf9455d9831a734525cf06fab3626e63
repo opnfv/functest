@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_12264a69",
+        "filename": "tests/cli/test_cli.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-17T14:42:03Z",
+      "side": 1,
+      "message": "self.assertEqual(result.exit_code, 0)",
+      "revId": "d3411a6ddf9455d9831a734525cf06fab3626e63",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
