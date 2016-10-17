@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_8f9215f5",
+        "filename": "testcases/features/sfc/tacker_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-10-17T08:28:19Z",
+      "side": 1,
+      "message": "can you add the license header according to https://wiki.opnfv.org/display/DEV/Contribution+Guidelines?",
+      "revId": "e2e76d59f56a23a6fdfd31f983aaa0a41bbdb694",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
