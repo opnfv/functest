@@ -25,7 +25,11 @@ import functest.utils.functest_logger as ft_logger
 
 logger = ft_logger.Logger("functest_utils").getLogger()
 
-REPOS_DIR = os.getenv('repos_dir')
+if os.getenv('repos_dir') is not None:
+    REPOS_DIR = os.getenv('repos_dir')
+else:
+    REPOS_DIR = "."
+
 FUNCTEST_REPO = ("%s/functest" % REPOS_DIR)
 
 
