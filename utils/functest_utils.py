@@ -25,7 +25,11 @@ import functest.utils.functest_logger as ft_logger
 
 logger = ft_logger.Logger("functest_utils").getLogger()
 
-REPOS_DIR = os.getenv('repos_dir')
+if os.getenv('repos_dir') is not None:
+    REPOS_DIR = os.getenv('repos_dir')
+else:
+    REPOS_DIR = "."
+
 FUNCTEST_REPO = ("%s/functest" % REPOS_DIR)
 
 
@@ -380,7 +384,10 @@ def get_parameter_from_yaml(parameter, file):
 
 
 def get_functest_config(parameter):
-    yaml_ = os.environ["CONFIG_FUNCTEST_YAML"]
+    try:
+        yaml_ = os.environ["CONFIG_FUNCTEST_YAML"]
+    except:
+        yaml_ = "./functest/ci/config_functest.yaml"
     return get_parameter_from_yaml(parameter, yaml_)
 
 
