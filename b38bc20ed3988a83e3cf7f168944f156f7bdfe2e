@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9adffdf1_b58c0881",
+        "filename": "tests/cli/test_cli.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-10-18T07:34:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9adffdf1_f208662f",
+      "revId": "b38bc20ed3988a83e3cf7f168944f156f7bdfe2e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adffdf1_92055a16",
         "filename": "tests/cli/test_cli.py",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9adffdf1_35f818e5",
+        "filename": "tests/cli/test_cli.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-10-18T07:34:15Z",
+      "side": 1,
+      "message": "I used assertIn, assertEqual will work but need to manipulate the output to transform it into a list.",
+      "parentUuid": "9adffdf1_92055a16",
+      "revId": "b38bc20ed3988a83e3cf7f168944f156f7bdfe2e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adffdf1_b202de09",
         "filename": "tests/cli/test_cli.py",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2016-10-18T06:55:43Z",
       "side": 1,
       "message": "self.assertIn() ?",
+      "revId": "b38bc20ed3988a83e3cf7f168944f156f7bdfe2e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_d5dc2c77",
+        "filename": "tests/cli/test_cli.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-10-18T07:34:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9adffdf1_b202de09",
       "revId": "b38bc20ed3988a83e3cf7f168944f156f7bdfe2e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
