@@ -16,6 +16,24 @@
       "revId": "42ac1f89a292c2ac74d1555700e13fb1d7d84800",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_1809892c",
+        "filename": "cli/commands/cli_os.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-10-18T16:05:09Z",
+      "side": 1,
+      "message": "yes, not very useful...\nremove it",
+      "parentUuid": "9adffdf1_58ff1102",
+      "revId": "42ac1f89a292c2ac74d1555700e13fb1d7d84800",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
