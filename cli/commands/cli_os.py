@@ -46,9 +46,9 @@ class CliOpenStack:
             exit(0)
 
     def show_credentials(self):
-        cmd = "env|grep OS_"
-        ft_utils.execute_command(cmd, verbose=False)
-        click.echo("")
+        for key, value in os.environ.items():
+            if key.startswith('OS_'):
+                click.echo("{}={}".format(key, value))
 
     def fetch_credentials(self):
         if os.path.isfile(RC_FILE):
