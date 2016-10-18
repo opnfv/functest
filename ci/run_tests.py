@@ -17,12 +17,14 @@ import argparse
 
 import functest.ci.generate_report as generate_report
 import functest.ci.tier_builder as tb
+import functest.core.TestCasesBase as TestCasesBase
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 import functest.utils.openstack_utils as os_utils
-from functest.testcases.Controllers.ODL.OpenDaylightTesting import ODLTestCases
+import functest.testcases.Controllers.ODL.OpenDaylightTesting as odl_test
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--test", dest="test", action='store',
@@ -101,10 +103,10 @@ def run_test(test, tier_name):
         flags += " -r"
 
     if test_name == 'odl':
-        result = ODLTestCases.functest_run()
-        if result and REPORT_FLAG:
-            result = ODLTestCases.push_to_db()
-        result = not result
+        odl = odl_test.ODLTestCases()
+        result = odl.run()
+        if result == TestCasesBase.TestCasesBase.EX_OK and REPORT_FLAG:
+            result = odl.push_to_db()
     else:
         cmd = ("%s%s" % (EXEC_SCRIPT, flags))
         logger.debug("Executing command '%s'" % cmd)
