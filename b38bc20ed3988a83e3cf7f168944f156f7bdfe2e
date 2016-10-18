@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_f208662f",
+        "filename": "tests/cli/test_cli.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-18T06:55:43Z",
+      "side": 1,
+      "message": "self.assertNotEqual() or self.assertIsNot()?",
+      "revId": "b38bc20ed3988a83e3cf7f168944f156f7bdfe2e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_92055a16",
+        "filename": "tests/cli/test_cli.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-18T06:55:43Z",
+      "side": 1,
+      "message": "self.assertListEqual() ?",
+      "revId": "b38bc20ed3988a83e3cf7f168944f156f7bdfe2e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_b202de09",
+        "filename": "tests/cli/test_cli.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-18T06:55:43Z",
+      "side": 1,
+      "message": "self.assertIn() ?",
+      "revId": "b38bc20ed3988a83e3cf7f168944f156f7bdfe2e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
