@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_15e714e6",
+        "filename": "tests/cli/test_cli.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-18T13:08:43Z",
+      "side": 1,
+      "message": "You could test TestCasesBase.TestCasesBase.EX_OK till exit codes are defined in releng",
+      "revId": "ccea8fe13f6d533a4c3f21a1ad5a01c9b0d28099",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_95da2416",
+        "filename": "tests/cli/test_cli.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-10-18T13:08:43Z",
+      "side": 1,
+      "message": "You could test TestCasesBase.TestCasesBase.EX_RUN_ERROR till exit codes are defined in releng",
+      "revId": "ccea8fe13f6d533a4c3f21a1ad5a01c9b0d28099",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
