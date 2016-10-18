@@ -53,6 +53,7 @@ git \
 gcc \
 wget \
 python-dev \
+python-mock \
 python-pip \
 bundler \
 postgresql \
