@@ -331,7 +331,7 @@ def apply_blacklist(case_file_name, result_file_name):
     for cases_line in cases_file:
         if include:
             for black_tests_line in black_tests:
-                if black_tests_line == cases_line.strip().rstrip(':'):
+                if re.search(black_tests_line, cases_line.strip().rstrip(':')):
                     include = False
                     break
             else:
@@ -366,6 +366,17 @@ def prepare_test_list(test_name):
         os.makedirs(TEMP_DIR)
 
     apply_blacklist(scenario_file_name, test_file_name)
+    return test_file_name
+
+
+def file_is_empty(file_name):
+    try:
+        if os.stat(file_name).st_size > 0:
+            return False
+    except:
+        pass
+
+    return True
 
 
 def run_task(test_name):
@@ -383,7 +394,10 @@ def run_task(test_name):
         logger.error("Task file '%s' does not exist." % task_file)
         exit(-1)
 
-    prepare_test_list(test_name)
+    file_name = prepare_test_list(test_name)
+    if file_is_empty(file_name):
+        logger.info('No tests for scenario "{}"'.format(test_name))
+        return
 
     cmd_line = ("rally task start --abort-on-sla-failure " +
                 "--task {} ".format(task_file) +
@@ -410,7 +424,7 @@ def run_task(test_name):
 
     # check for result directory and create it otherwise
     if not os.path.exists(RESULTS_DIR):
-        logger.debug('%s does not exist, we create it.'.format(RESULTS_DIR))
+        logger.debug('{} does not exist, we create it.'.format(RESULTS_DIR))
         os.makedirs(RESULTS_DIR)
 
     # write html report file
@@ -550,7 +564,12 @@ def main():
     total_duration_str = time.strftime("%H:%M:%S", time.gmtime(total_duration))
     total_duration_str2 = "{0:<10}".format(total_duration_str)
     total_nb_tests_str = "{0:<13}".format(total_nb_tests)
-    success_rate = "{:0.2f}".format(total_success / len(SUMMARY))
+
+    if len(SUMMARY):
+        success_rate = total_success / len(SUMMARY)
+    else:
+        success_rate = 100
+    success_rate = "{:0.2f}".format(success_rate)
     success_rate_str = "{0:<10}".format(str(success_rate) + '%')
     report += "+===================+============+===============+===========+"
     report += "\n"
