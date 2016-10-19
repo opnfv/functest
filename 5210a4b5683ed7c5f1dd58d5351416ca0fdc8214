@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_38ec8dc7",
+        "filename": "run_tests.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-10-19T08:15:11Z",
+      "side": 1,
+      "message": "whitespaces.",
+      "revId": "5210a4b5683ed7c5f1dd58d5351416ca0fdc8214",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_18e749e6",
+        "filename": "setup.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-10-19T08:15:11Z",
+      "side": 1,
+      "message": "EMC? :)",
+      "revId": "5210a4b5683ed7c5f1dd58d5351416ca0fdc8214",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_d8d0e1f9",
+        "filename": "tests/__init__.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-10-19T08:15:11Z",
+      "side": 1,
+      "message": "Not needed for blank files.",
+      "revId": "5210a4b5683ed7c5f1dd58d5351416ca0fdc8214",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
