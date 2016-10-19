@@ -4,7 +4,7 @@ import logging
 import mock
 import unittest
 
-import TestCasesBase
+from functest.core import TestCasesBase
 
 
 class TestCasesBaseTesting(unittest.TestCase):
