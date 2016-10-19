@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_a39e1262",
+        "filename": "docker/requirements.pip",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-10-19T19:11:47Z",
+      "side": 1,
+      "message": "this client is automatically installed when installing python-openstackclient. Why do you add it here?",
+      "revId": "afcf519c7a4eff290e8fb038636ff6a4312aeaaf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
