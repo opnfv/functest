@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_58a151a8",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-19T06:49:34Z",
+      "side": 1,
+      "message": "I guess if...else... is introduced because repos_dir is not set in unittest env, But change the original code for unittest\u0027s sake is not a good idea",
+      "revId": "58fddec81c9e2400645c85ed0a75ab8ae4b5fb12",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_78a695c3",
+        "filename": "utils/functest_utils.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-19T06:49:34Z",
+      "side": 1,
+      "message": "same to above",
+      "revId": "58fddec81c9e2400645c85ed0a75ab8ae4b5fb12",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
