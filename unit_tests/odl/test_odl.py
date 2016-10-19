@@ -28,8 +28,9 @@ class ODLTestCasesTesting(unittest.TestCase):
     _odl_password = "admin"
 
     def setUp(self):
-        if "INSTALLER_TYPE" in os.environ:
-            del os.environ["INSTALLER_TYPE"]
+        for var in ("INSTALLER_TYPE", "SDN_CONTROLLER", "SDN_CONTROLLER_IP"):
+            if var in os.environ:
+                del os.environ[var]
         os.environ["OS_USERNAME"] = self._os_username
         os.environ["OS_PASSWORD"] = self._os_password
         os.environ["OS_TENANT_NAME"] = self._os_tenantname
@@ -55,11 +56,6 @@ class ODLTestCasesTesting(unittest.TestCase):
     @mock.patch('fileinput.input', return_value=[])
     def test_set_robotframework_vars(self, args):
         self.assertTrue(self.test.set_robotframework_vars())
-
-    def _test_run_missing_env_var(self, var):
-        del os.environ[var]
-        self.assertEqual(self.test.run(),
-                         TestCasesBase.TestCasesBase.EX_RUN_ERROR)
 
     @classmethod
     def _fake_url_for(cls, service_type='identity', **kwargs):
@@ -267,6 +263,11 @@ class ODLTestCasesTesting(unittest.TestCase):
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(TestCasesBase.TestCasesBase.EX_OK, *args)
 
+    def _test_run_missing_env_var(self, var):
+        del os.environ[var]
+        self.assertEqual(self.test.run(),
+                         TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+
     def _test_run(self, status=TestCasesBase.TestCasesBase.EX_OK,
                   exception=None, odlip="127.0.0.3", odlwebport="8080"):
         with mock.patch('functest.utils.openstack_utils.get_keystone_client',
@@ -307,6 +308,12 @@ class ODLTestCasesTesting(unittest.TestCase):
                            odlip=self._sdn_controller_ip,
                            odlwebport=self._odl_webport)
 
+    def test_run_missing_sdn_controller_ip(self):
+        with mock.patch('functest.utils.openstack_utils.get_keystone_client',
+                        return_value=self._get_fake_keystone_client()):
+            self.assertEqual(self.test.run(),
+                             TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+
     def test_run_without_installer_type(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         self._test_run(TestCasesBase.TestCasesBase.EX_OK,
@@ -318,11 +325,25 @@ class ODLTestCasesTesting(unittest.TestCase):
         self._test_run(TestCasesBase.TestCasesBase.EX_OK,
                        odlip=self._neutron_ip, odlwebport='8282')
 
+    def test_run_apex_missing_sdn_controller_ip(self):
+        with mock.patch('functest.utils.openstack_utils.get_keystone_client',
+                        return_value=self._get_fake_keystone_client()):
+            os.environ["INSTALLER_TYPE"] = "apex"
+            self.assertEqual(self.test.run(),
+                             TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+
     def test_run_apex(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         os.environ["INSTALLER_TYPE"] = "apex"
         self._test_run(TestCasesBase.TestCasesBase.EX_OK,
                        odlip=self._sdn_controller_ip, odlwebport='8181')
+
+    def test_run_joid_missing_sdn_controller(self):
+        with mock.patch('functest.utils.openstack_utils.get_keystone_client',
+                        return_value=self._get_fake_keystone_client()):
+            os.environ["INSTALLER_TYPE"] = "joid"
+            self.assertEqual(self.test.run(),
+                             TestCasesBase.TestCasesBase.EX_RUN_ERROR)
 
     def test_run_joid(self):
         os.environ["SDN_CONTROLLER"] = self._sdn_controller_ip
