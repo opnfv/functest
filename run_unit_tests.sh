@@ -18,7 +18,8 @@ pip install -e .
 # unit tests
 nosetests --with-xunit \
          --with-coverage \
-         --cover-package=functest\
+         --cover-package=functest.core.TestCasesBase \
+         --cover-package=functest.testcases.Controllers.ODL.OpenDaylightTesting \
          --cover-xml \
          unit_tests
 
