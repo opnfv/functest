@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_5e885922",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-10-20T11:31:59Z",
+      "side": 1,
+      "message": "I suggest mock can also be installed here,\nand manage all the 3rd lib in test-requirements.pip",
+      "revId": "b56e69f7e3d4fb567864a30d3ef6196cf2ec24af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
