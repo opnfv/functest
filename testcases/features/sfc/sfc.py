@@ -208,7 +208,7 @@ def main():
 # STARTING SECOND VM (server) ###
 
     # boot INTANCE
-    logger.info("Creating instance '%s'..." % INSTANCE_NAME)
+    logger.info("Creating instance '%s'..." % INSTANCE_NAME_2)
     logger.debug(
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
         "network=%s \n" % (INSTANCE_NAME_2, FLAVOR, image_id, network_id))

@@ -215,7 +215,7 @@ def main():
     # STARTING SECOND VM (server) ###
 
         # boot INTANCE
-        logger.info("Creating instance '%s'..." % INSTANCE_NAME)
+        logger.info("Creating instance '%s'..." % INSTANCE_NAME_2)
         logger.debug(
             "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
             "network=%s \n" % (INSTANCE_NAME_2, FLAVOR, image_id, network_id))
@@ -500,10 +500,14 @@ def main():
                             " :) \n" + '\033[0m')
             break
         else:
-            logger.debug("Iterating again!")
+            logger.info("Iterating again!")
             delete = ("bash delete.sh")
-            subprocess.call(delete, shell=True, stderr=subprocess.PIPE)
-            time.sleep(10)
+            try:
+                subprocess.call(delete, shell=True, stderr=subprocess.PIPE)
+                time.sleep(10)
+            except Exception, e:
+                logger.error("Problem when executing the delete.sh")
+                logger.error("Problem %s" % e)
 
     if args.report:
         stop_time = time.time()
