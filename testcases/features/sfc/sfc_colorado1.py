@@ -20,6 +20,7 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("ODL_SFC").getLogger()
 
+FUNCTEST_RESULTS_DIR = '/home/opnfv/functest/results/'
 FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
 
 HOME = os.environ['HOME'] + "/"
