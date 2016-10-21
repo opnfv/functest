@@ -8,6 +8,8 @@ import paramiko
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+import SSHUtils as ssh_utils
+import ovs_utils
 
 parser = argparse.ArgumentParser()
 
@@ -114,6 +116,16 @@ def main():
     nova_client = os_utils.get_nova_client()
     neutron_client = os_utils.get_neutron_client()
     glance_client = os_utils.get_glance_client()
+
+    ovs_logger = ovs_utils.OVSLogger(FUNCTEST_RESULTS_DIR)
+    jumphost = {
+        'ip': '10.20.0.2',
+        'username': 'root',
+        'password': 'r00tme'
+    }
+    controller_client = ssh_utils.get_ssh_client(ip_server,
+                                                 'root',
+                                                 jumphost=jumphost)
 
 # Download the image
 
@@ -416,8 +428,18 @@ def main():
                 i = i + 1
                 json_results.update({"Test 1: SSH Blocked": "Passed"})
             else:
-                logger.error('\033[91m' + "TEST 1 [FAILED] "
-                             "==> SSH NOT BLOCKED" + '\033[0m')
+                timestamp = time.strftime("%Y%m%d-%H%M%S")
+                error = ('\033[91m' + "TEST 1 [FAILED] "
+                         "==> SSH NOT BLOCKED" + '\033[0m')
+                logger.error(error)
+                ovs_logger.ofctl_dump_flows(controller_client,
+                                            timestamp=timestamp)
+                ovs_logger.vsctl_show(controller_client,
+                                      timestamp=timestamp)
+
+                dumpdir = os.path.join(ovs_logger.ovs_dir, timestamp)
+                with open(os.path.join(dumpdir, 'error'), 'w') as f:
+                    f.write(error)
                 status = "FAIL"
                 json_results.update({"Test 1: SSH Blocked": "Failed"})
                 failures += 1
@@ -439,8 +461,17 @@ def main():
                 i = i + 1
                 json_results.update({"Test 2: HTTP works": "Passed"})
             else:
-                logger.error('\033[91m' + "TEST 2 [FAILED] "
-                             "==> HTTP BLOCKED" + '\033[0m')
+                error = ('\033[91m' + "TEST 2 [FAILED] "
+                         "==> HTTP BLOCKED" + '\033[0m')
+                logger.error(error)
+                ovs_logger.ofctl_dump_flows(controller_client,
+                                            timestamp=timestamp)
+                ovs_logger.vsctl_show(controller_client,
+                                      timestamp=timestamp)
+
+                dumpdir = os.path.join(ovs_logger.ovs_dir, timestamp)
+                with open(os.path.join(dumpdir, 'error'), 'w') as f:
+                    f.write(error)
                 status = "FAIL"
                 json_results.update({"Test 2: HTTP works": "Failed"})
                 failures += 1
@@ -482,8 +513,17 @@ def main():
                 i = i + 1
                 json_results.update({"Test 3: HTTP Blocked": "Passed"})
             else:
-                logger.error('\033[91m' + "TEST 3 [FAILED] "
-                             "==> HTTP NOT BLOCKED" + '\033[0m')
+                error = ('\033[91m' + "TEST 3 [FAILED] "
+                         "==> HTTP NOT BLOCKED" + '\033[0m')
+                logger.error(error)
+                ovs_logger.ofctl_dump_flows(controller_client,
+                                            timestamp=timestamp)
+                ovs_logger.vsctl_show(controller_client,
+                                      timestamp=timestamp)
+
+                dumpdir = os.path.join(ovs_logger.ovs_dir, timestamp)
+                with open(os.path.join(dumpdir, 'error'), 'w') as f:
+                    f.write(error)
                 status = "FAIL"
                 json_results.update({"Test 3: HTTP Blocked": "Failed"})
                 failures += 1
@@ -505,8 +545,17 @@ def main():
                 i = i + 1
                 json_results.update({"Test 4: SSH works": "Passed"})
             else:
-                logger.error('\033[91m' + "TEST 4 [FAILED] "
-                             "==> SSH BLOCKED" + '\033[0m')
+                error = ('\033[91m' + "TEST 4 [FAILED] "
+                         "==> SSH BLOCKED" + '\033[0m')
+                logger.error(error)
+                ovs_logger.ofctl_dump_flows(controller_client,
+                                            timestamp=timestamp)
+                ovs_logger.vsctl_show(controller_client,
+                                      timestamp=timestamp)
+
+                dumpdir = os.path.join(ovs_logger.ovs_dir, timestamp)
+                with open(os.path.join(dumpdir, 'error'), 'w') as f:
+                    f.write(error)
                 status = "FAIL"
                 json_results.update({"Test 4: SSH works": "Failed"})
                 failures += 1
