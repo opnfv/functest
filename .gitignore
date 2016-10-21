@@ -8,3 +8,9 @@ rally_conf.json
 /docs_output/
 /releng/
 .idea
+.coverage
+cover
+coverage.xml
+nosetests.xml
+functest.egg-info
+*venv
