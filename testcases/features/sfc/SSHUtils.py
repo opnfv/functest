@@ -16,16 +16,16 @@ import os
 logger = rl.Logger('SSHUtils').getLogger()
 
 
-def get_ssh_client(hostname, username, password=None, jumphost=None):
+def get_ssh_client(hostname, username, password=None, proxy=None):
     client = None
     try:
-        if jumphost is None:
+        if proxy is None:
             client = paramiko.SSHClient()
         else:
-            client = JumpHostHopClient()
-            client.configure_jump_host(jumphost['ip'],
-                                       jumphost['username'],
-                                       jumphost['password'])
+            client = ProxyHopClient()
+            client.configure_jump_host(proxy['ip'],
+                                       proxy['username'],
+                                       proxy['password'])
 
         if client is None:
             raise Exception('Could not connect to client')
@@ -62,30 +62,30 @@ def put_file(ssh_conn, src, dest):
         return None
 
 
-class JumpHostHopClient(paramiko.SSHClient):
+class ProxyHopClient(paramiko.SSHClient):
     '''
-    Connect to a remote server using a jumphost hop
+    Connect to a remote server using a proxy hop
     '''
     def __init__(self, *args, **kwargs):
-        self.logger = rl.Logger("JumpHostHopClient").getLogger()
-        self.jumphost_ssh = None
-        self.jumphost_transport = None
-        self.jumphost_channel = None
-        self.jumphost_ip = None
-        self.jumphost_ssh_key = None
+        self.logger = rl.Logger("ProxyHopClient").getLogger()
+        self.proxy_ssh = None
+        self.proxy_transport = None
+        self.proxy_channel = None
+        self.proxy_ip = None
+        self.proxy_ssh_key = None
         self.local_ssh_key = os.path.join(os.getcwd(), 'id_rsa')
-        super(JumpHostHopClient, self).__init__(*args, **kwargs)
+        super(ProxyHopClient, self).__init__(*args, **kwargs)
 
     def configure_jump_host(self, jh_ip, jh_user, jh_pass,
                             jh_ssh_key='/root/.ssh/id_rsa'):
-        self.jumphost_ip = jh_ip
-        self.jumphost_ssh_key = jh_ssh_key
-        self.jumphost_ssh = paramiko.SSHClient()
-        self.jumphost_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        self.jumphost_ssh.connect(jh_ip,
-                                  username=jh_user,
-                                  password=jh_pass)
-        self.jumphost_transport = self.jumphost_ssh.get_transport()
+        self.proxy_ip = jh_ip
+        self.proxy_ssh_key = jh_ssh_key
+        self.proxy_ssh = paramiko.SSHClient()
+        self.proxy_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        self.proxy_ssh.connect(jh_ip,
+                               username=jh_user,
+                               password=jh_pass)
+        self.proxy_transport = self.proxy_ssh.get_transport()
 
     def connect(self, hostname, port=22, username='root', password=None,
                 pkey=None, key_filename=None, timeout=None, allow_agent=True,
@@ -93,28 +93,28 @@ class JumpHostHopClient(paramiko.SSHClient):
                 gss_kex=False, gss_deleg_creds=True, gss_host=None,
                 banner_timeout=None):
         try:
-            if self.jumphost_ssh is None:
+            if self.proxy_ssh is None:
                 raise Exception('You must configure the jump '
                                 'host before calling connect')
 
-            get_file_res = get_file(self.jumphost_ssh,
-                                    self.jumphost_ssh_key,
+            get_file_res = get_file(self.proxy_ssh,
+                                    self.proxy_ssh_key,
                                     self.local_ssh_key)
             if get_file_res is None:
                 raise Exception('Could\'t fetch SSH key from jump host')
-            jumphost_key = (paramiko.RSAKey
-                            .from_private_key_file(self.local_ssh_key))
+            proxy_key = (paramiko.RSAKey
+                         .from_private_key_file(self.local_ssh_key))
 
-            self.jumphost_channel = self.jumphost_transport.open_channel(
+            self.proxy_channel = self.proxy_transport.open_channel(
                 "direct-tcpip",
                 (hostname, 22),
-                (self.jumphost_ip, 22))
+                (self.proxy_ip, 22))
 
             self.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            super(JumpHostHopClient, self).connect(hostname,
-                                                   username=username,
-                                                   pkey=jumphost_key,
-                                                   sock=self.jumphost_channel)
+            super(ProxyHopClient, self).connect(hostname,
+                                                username=username,
+                                                pkey=proxy_key,
+                                                sock=self.proxy_channel)
             os.remove(self.local_ssh_key)
         except Exception, e:
             self.logger.error(e)
