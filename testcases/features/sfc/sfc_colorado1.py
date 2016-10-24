@@ -552,6 +552,8 @@ def main():
         else:
             logger.info("Iterating again!")
             delete = ("bash delete.sh")
+            tacker_script = "bash %s/testcases/features/sfc/delete.sh" % \
+                            (FUNCTEST_REPO)
             try:
                 subprocess.call(delete, shell=True, stderr=subprocess.PIPE)
                 time.sleep(10)
