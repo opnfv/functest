@@ -200,7 +200,7 @@ def is_ssh(case):
     return case == 'vping_ssh'
 
 
-def boot_vm(case, name, image_id, flavor, network_id, test_ip, sg_id):
+def boot_vm(case, name, image_id, flavor, network_id, test_ip):
     EXIT_CODE = -1
 
     config = dict()
@@ -208,6 +208,7 @@ def boot_vm(case, name, image_id, flavor, network_id, test_ip, sg_id):
     config['flavor'] = flavor
     config['image'] = image_id
     config['nics'] = [{"net-id": network_id}]
+    config['security_groups'] = [SECGROUP_NAME]
     if is_userdata(case):
         config['config_drive'] = True
         if name == NAME_VM_2:
@@ -237,8 +238,6 @@ def boot_vm(case, name, image_id, flavor, network_id, test_ip, sg_id):
         exit(EXIT_CODE)
     else:
         logger.info("Instance '%s' is ACTIVE." % name)
-
-    add_secgroup(name, vm.id, sg_id)
 
     return vm
 
