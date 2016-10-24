@@ -10,21 +10,30 @@
 import functest.utils.functest_logger as rl
 import os
 import time
+import shutil
 
 logger = rl.Logger('ovs_utils').getLogger()
 
 
 class OVSLogger(object):
-    def __init__(self, basedir):
-        self.ovs_dir = os.path.join(basedir, 'odl-sfc/ovs')
+    def __init__(self, basedir, ft_resdir):
+        self.ovs_dir = basedir
+        self.ft.resdir = ft_resdir
         self.__mkdir_p(self.ovs_dir)
 
     def __mkdir_p(self, dirpath):
         if not os.path.exists(dirpath):
             os.makedirs(dirpath)
 
-    def __ssh_host(self, ssh_conn):
-        return ssh_conn.get_transport().getpeername()[0]
+    def __ssh_host(self, ssh_conn, host_prefix='10.20.0'):
+        try:
+            _, stdout, _ = ssh_conn.exec_command('hostname -I')
+            hosts = stdout.readline().strip().split(' ')
+            found_host = [h for h in hosts if h.startswith(host_prefix)][0]
+            return found_host
+            # return ssh_conn.get_transport().getpeername()[0]
+        except Exception, e:
+            logger.error(e)
 
     def __dump_to_file(self, operation, host, text, timestamp=None):
         ts = (timestamp if timestamp is not None
@@ -50,6 +59,13 @@ class OVSLogger(object):
             logger.error('[__remote_command(ssh_client, {0})]: {1}'
                          .format(cmd, e))
             return None
+
+    def create_artifact_archive(self):
+        shutil.make_archive(self.ovs_dir,
+                            'zip',
+                            root_dir=os.path.dirname(self.ovs_dir),
+                            base_dir=self.ovs_dir)
+        shutil.copy2('{0}.zip'.format(self.ovs_dir), self.ft_resdir)
 
     def ofctl_dump_flows(self, ssh_conn, br='br-int',
                          choose_table=None, timestamp=None):
@@ -78,3 +94,25 @@ class OVSLogger(object):
         except Exception, e:
             logger.error('[vsctl_show(ssh_client)]: {0}'.format(e))
             return None
+
+    def dump_ovs_logs(self, controller_clients, compute_clients,
+                      related_error=None, timestamp=None):
+        if timestamp is None:
+            timestamp = time.strftime("%Y%m%d-%H%M%S")
+
+        for controller_client in controller_clients:
+            self.ofctl_dump_flows(controller_client,
+                                  timestamp=timestamp)
+            self.vsctl_show(controller_client,
+                            timestamp=timestamp)
+
+        for compute_client in compute_clients:
+            self.ofctl_dump_flows(compute_client,
+                                  timestamp=timestamp)
+            self.vsctl_show(compute_client,
+                            timestamp=timestamp)
+
+        if related_error is not None:
+            dumpdir = os.path.join(self.ovs_dir, timestamp)
+            with open(os.path.join(dumpdir, 'error'), 'w') as f:
+                f.write(related_error)
