@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9adffdf1_fbd03af9",
+        "filename": "testcases/features/sfc/ovs_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-10-24T10:02:21Z",
+      "side": 1,
+      "message": "I think this comment can be deleted",
+      "revId": "af0f5629803d84f6f3f5ad0642556b98a9ce1fe1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adffdf1_3be7a2e6",
         "filename": "testcases/features/sfc/sfc_colorado1.py",
         "patchSetId": 1
