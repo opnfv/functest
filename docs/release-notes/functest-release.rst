@@ -206,6 +206,17 @@ precised, the scenario is a HA scenario):
 |   multisite         |         |         |    X    |         |
 +---------------------+---------+---------+---------+---------+
 
+For Colorado 2.0, the following scenarios have been released:
+
++---------------------+---------+---------+---------+---------+
+|    Scenario         |  Apex   | Compass |  Fuel   |   Joid  |
++=====================+=========+=========+=========+=========+
+|   onos-nofeature    |    X    |    X    |    X    |    X    |
++---------------------+---------+---------+---------+---------+
+|   odl_l2-sfc-ha     |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+
+
 In Colorado, the functional tests have been sliced in 6 different
 categories:
 
@@ -280,6 +291,9 @@ Apex
 +------------------+---------+---------+-------------------+
 | odl_l2-sfc-noha  |  18/24  |    75%  | `apex-res-217`_   |
 +------------------+---------+---------+-------------------+
+| onos-nofeature-ha|  20/21  |    95%  | `apex-res-423`_   |
++------------------+---------+---------+-------------------+
+
 
 Compass
 -------
@@ -299,6 +313,8 @@ Compass
 | onos-ha          |  15/15  |   100%  | `compass-res-77`_ |
 +------------------+---------+---------+-------------------+
 | onos-sfc-ha      |  17/18  |    95%  | `compass-res-76`_ |
++------------------+---------+---------+-------------------+
+| onos-nofeature-ha|  15/15  |   100%  | `compass-res-285`_|
 +------------------+---------+---------+-------------------+
 
 Note: all the Compass tests for Colorado have been executed on virtual
@@ -334,6 +350,8 @@ Fuel
 +---------------------+---------+---------+-------------------+
 | odl_l2-sfc-noha     |   6/21  |   29%   | `fuel-res-219`_   |
 +---------------------+---------+---------+-------------------+
+| odl_l2-sfc-ha       |  16/21  |   76%   | `fuel-res-376`_   |
++---------------------+---------+---------+-------------------+
 | odl_l3              |  15/18  |   83%   | `fuel-res-115`_   |
 +---------------------+---------+---------+-------------------+
 | odl_l3-noha         |  12/15  |   80%   | `fuel-res-164`_   |
@@ -345,6 +363,8 @@ Fuel
 | onos-sfc            |  24/24  |  100%   | `fuel-res-124`_   |
 +---------------------+---------+---------+-------------------+
 | onos-sfc-noha       |  21/21  |  100%   | `fuel-res-129`_   |
++---------------------+---------+---------+-------------------+
+| onos-nofeature-ha   |  18/18  |  100%   | `fuel-res-492`_   |
 +---------------------+---------+---------+-------------------+
 | multisite           |  N.R    |  100%   | `fuel-res-8`_     |
 +---------------------+---------+---------+-------------------+
@@ -387,6 +407,8 @@ Joid
 | onos                |  21/21  |  100%   | `joid-res-99`_  |
 +---------------------+---------+---------+-----------------+
 | onos-sfc            |  24/24  |  100%   | `joid-res-97`_  |
++---------------------+---------+---------+-----------------+
+| onos-nofeature-ha   |  21/21  |  100%   | `joid-res-345`_ |
 +---------------------+---------+---------+-----------------+
 
 It is highly recommended to install a json viewer in your browser
@@ -541,6 +563,8 @@ Useful links
 
 .. _`apex-res-235`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-235
 
+.. _`apex-res-423`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-423
+
 .. _`compass-res-55`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-colorado-55
 
 .. _`compass-res-59`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-colorado-59
@@ -552,6 +576,8 @@ Useful links
 .. _`compass-res-77`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-colorado-77
 
 .. _`compass-res-567`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-master-567
+
+.. _`compass-res-285`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-master-285
 
 .. _`fuel-res-8`: https://build.opnfv.org/ci/view/functest/job/functest-fuel-virtual-suite-colorado/lastSuccessfulBuild/console
 
@@ -587,6 +613,10 @@ Useful links
 
 .. _`fuel-res-219`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-219
 
+.. _`fuel-res-376`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-376
+
+.. _`fuel-res-492`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-492
+
 .. _`fuel-arm-res-29`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/29/console
 
 .. _`fuel-arm-res-24`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/24/console
@@ -608,4 +638,6 @@ Useful links
 .. _`joid-res-103`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-103
 
 .. _`joid-res-104`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-104
+
+.. _`joid-res-345`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-345
 
