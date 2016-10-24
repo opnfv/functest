@@ -55,7 +55,7 @@ def main():
 
     network_id = util.create_network_full()
 
-    sg_id = util.create_security_group()
+    util.create_security_group()
 
     util.delete_exist_vms()
 
@@ -69,16 +69,14 @@ def main():
                        image_id,
                        flavor,
                        network_id,
-                       None,
-                       sg_id)
+                       None)
     test_ip = util.get_test_ip(vm1)
     vm2 = util.boot_vm(case,
                        vmname_2,
                        image_id,
                        flavor,
                        network_id,
-                       test_ip,
-                       sg_id)
+                       test_ip)
 
     EXIT_CODE, stop_time = util.do_vping(case, vm2, test_ip)
     details = util.check_result(EXIT_CODE,
