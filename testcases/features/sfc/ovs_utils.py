@@ -18,7 +18,7 @@ logger = rl.Logger('ovs_utils').getLogger()
 class OVSLogger(object):
     def __init__(self, basedir, ft_resdir):
         self.ovs_dir = basedir
-        self.ft.resdir = ft_resdir
+        self.ft_resdir = ft_resdir
         self.__mkdir_p(self.ovs_dir)
 
     def __mkdir_p(self, dirpath):
