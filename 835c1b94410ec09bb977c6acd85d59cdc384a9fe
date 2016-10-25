@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_aeacb28d",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-10-25T05:15:28Z",
+      "side": 1,
+      "message": "onos is already mentioned in the table below\nnofeature was not mentioned by default as well as ha to simplify the table\nbut onos-nofeature-ha was already there in Colorado 1.0 for all the installers except apex",
+      "revId": "835c1b94410ec09bb977c6acd85d59cdc384a9fe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_4eb506cc",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-10-25T05:15:28Z",
+      "side": 1,
+      "message": "onos-sfc could also be added for apex, they reached 20/24\nonly issue linked to SFC...and copper \nONOS SFC tests seem OK with compass/fuel:joid \u003d\u003e so maybe no need to mention. Moreover David did not mention it during the TSC meeting.",
+      "revId": "835c1b94410ec09bb977c6acd85d59cdc384a9fe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_eec95a5b",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-10-25T05:15:28Z",
+      "side": 1,
+      "message": "you can remove onos-nofeature-ha \u003d onos-ha",
+      "revId": "835c1b94410ec09bb977c6acd85d59cdc384a9fe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_0ec7fe46",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-10-25T05:15:28Z",
+      "side": 1,
+      "message": "idem same onos \u003d onos-nofeature-ha",
+      "revId": "835c1b94410ec09bb977c6acd85d59cdc384a9fe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_aec35237",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-10-25T05:15:28Z",
+      "side": 1,
+      "message": "onos \u003d onos-nofeature-ha",
+      "revId": "835c1b94410ec09bb977c6acd85d59cdc384a9fe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
