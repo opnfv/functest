@@ -43,19 +43,6 @@ class ODLTestCasesTesting(unittest.TestCase):
         os.environ["OS_TENANT_NAME"] = self._os_tenantname
         self.test = OpenDaylightTesting.ODLTestCases()
 
-    @mock.patch('shutil.copy', side_effect=Exception())
-    def test_copy_opnf_testcases_exception(self, *args):
-        with self.assertRaises(Exception):
-            self.test.copy_opnf_testcases()
-
-    @mock.patch('shutil.copy', side_effect=IOError())
-    def test_copy_opnf_testcases_ioerror(self, *args):
-        self.assertFalse(self.test.copy_opnf_testcases())
-
-    @mock.patch('shutil.copy')
-    def test_copy_opnf_testcases(self, *args):
-        self.assertTrue(self.test.copy_opnf_testcases())
-
     @mock.patch('fileinput.input', side_effect=Exception())
     def test_set_robotframework_vars_failed(self, *args):
         self.assertFalse(self.test.set_robotframework_vars())
@@ -159,57 +146,41 @@ class ODLTestCasesTesting(unittest.TestCase):
     def test_main_missing_odlrestconfport(self):
         self._test_main_missing_keyword('odlrestconfport')
 
-    def test_main_copy_opnf_testcases_failed(self):
-        with mock.patch.object(self.test, 'copy_opnf_testcases',
-                               return_value=False):
-            self._test_main(TestCasesBase.TestCasesBase.EX_RUN_ERROR)
-            self.test.copy_opnf_testcases.assert_called_once_with()
-
     def test_main_set_robotframework_vars_failed(self):
-        with mock.patch.object(self.test, 'copy_opnf_testcases',
-                               return_value=True), \
-                mock.patch.object(self.test, 'set_robotframework_vars',
-                                  return_value=False):
+        with mock.patch.object(self.test, 'set_robotframework_vars',
+                               return_value=False):
             self._test_main(TestCasesBase.TestCasesBase.EX_RUN_ERROR)
             self.test.set_robotframework_vars.assert_called_once_with(
                 self._odl_username, self._odl_password)
 
     @mock.patch('os.makedirs', side_effect=Exception)
     def test_main_makedirs_exception(self, mock_method):
-        with mock.patch.object(self.test,
-                               'copy_opnf_testcases', return_value=True), \
-                mock.patch.object(self.test, 'set_robotframework_vars',
-                                  return_value=True), \
+        with mock.patch.object(self.test, 'set_robotframework_vars',
+                               return_value=True), \
                 self.assertRaises(Exception):
             self._test_main(TestCasesBase.TestCasesBase.EX_RUN_ERROR,
                             mock_method)
 
     @mock.patch('os.makedirs', side_effect=OSError)
     def test_main_makedirs_oserror(self, mock_method):
-        with mock.patch.object(self.test,
-                               'copy_opnf_testcases', return_value=True), \
-                mock.patch.object(self.test, 'set_robotframework_vars',
-                                  return_value=True):
+        with mock.patch.object(self.test, 'set_robotframework_vars',
+                               return_value=True):
             self._test_main(TestCasesBase.TestCasesBase.EX_RUN_ERROR,
                             mock_method)
 
     @mock.patch('robot.run', side_effect=RobotError)
     @mock.patch('os.makedirs')
     def test_main_robot_run_failed(self, *args):
-        with mock.patch.object(self.test, 'copy_opnf_testcases',
+        with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'set_robotframework_vars',
-                                  return_value=True), \
                 self.assertRaises(RobotError):
             self._test_main(TestCasesBase.TestCasesBase.EX_RUN_ERROR, *args)
 
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
     def test_main_parse_results_failed(self, *args):
-        with mock.patch.object(self.test, 'copy_opnf_testcases',
+        with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'set_robotframework_vars',
-                                  return_value=True), \
                 mock.patch.object(self.test, 'parse_results',
                                   side_effect=RobotError):
             self._test_main(TestCasesBase.TestCasesBase.EX_RUN_ERROR, *args)
@@ -218,10 +189,8 @@ class ODLTestCasesTesting(unittest.TestCase):
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
     def test_main_remove_exception(self, *args):
-        with mock.patch.object(self.test, 'copy_opnf_testcases',
+        with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'set_robotframework_vars',
-                                  return_value=True), \
                 mock.patch.object(self.test, 'parse_results'), \
                 self.assertRaises(Exception):
             self._test_main(TestCasesBase.TestCasesBase.EX_OK, *args)
@@ -230,10 +199,8 @@ class ODLTestCasesTesting(unittest.TestCase):
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
     def test_main(self, *args):
-        with mock.patch.object(self.test, 'copy_opnf_testcases',
+        with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'set_robotframework_vars',
-                                  return_value=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(TestCasesBase.TestCasesBase.EX_OK, *args)
 
@@ -241,10 +208,8 @@ class ODLTestCasesTesting(unittest.TestCase):
     @mock.patch('robot.run')
     @mock.patch('os.makedirs', side_effect=OSError(errno.EEXIST, ''))
     def test_main_makedirs_oserror17(self, *args):
-        with mock.patch.object(self.test, 'copy_opnf_testcases',
+        with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'set_robotframework_vars',
-                                  return_value=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(TestCasesBase.TestCasesBase.EX_OK, *args)
 
@@ -252,10 +217,8 @@ class ODLTestCasesTesting(unittest.TestCase):
     @mock.patch('robot.run', return_value=1)
     @mock.patch('os.makedirs')
     def test_main_testcases_in_failure(self, *args):
-        with mock.patch.object(self.test, 'copy_opnf_testcases',
+        with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'set_robotframework_vars',
-                                  return_value=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(TestCasesBase.TestCasesBase.EX_OK, *args)
 
@@ -263,10 +226,8 @@ class ODLTestCasesTesting(unittest.TestCase):
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
     def test_main_remove_oserror(self, *args):
-        with mock.patch.object(self.test, 'copy_opnf_testcases',
+        with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'set_robotframework_vars',
-                                  return_value=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(TestCasesBase.TestCasesBase.EX_OK, *args)
 
