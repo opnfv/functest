@@ -4,7 +4,6 @@ import argparse
 import fileinput
 import os
 import re
-import shutil
 import sys
 import urlparse
 
@@ -49,19 +48,6 @@ class ODLTestCases:
     logger = ft_logger.Logger("opendaylight").getLogger()
 
     @classmethod
-    def copy_opnf_testcases(cls):
-        opnfv_testcases_dir = (os.path.dirname(os.path.abspath(__file__)) +
-                               "/custom_tests/neutron/")
-        file = opnfv_testcases_dir + "001__reachability.robot"
-        try:
-            shutil.copy(file, cls.neutron_suite_dir)
-        except IOError as e:
-            cls.logger.error(
-                "Cannot copy OPNFV's testcase to ODL directory: %s" % str(e))
-            return False
-        return True
-
-    @classmethod
     def set_robotframework_vars(cls, odlusername="admin", odlpassword="admin"):
         odl_variables_files = cls.odl_test_repo + 'csit/variables/Variables.py'
         try:
@@ -94,8 +80,7 @@ class ODLTestCases:
             cls.logger.error("Cannot run ODL testcases. Please check "
                              "%s" % str(e))
             return False
-        if (cls.copy_opnf_testcases() and
-                cls.set_robotframework_vars(odlusername, odlpassword)):
+        if cls.set_robotframework_vars(odlusername, odlpassword):
             try:
                 os.makedirs(cls.res_dir)
             except OSError:
