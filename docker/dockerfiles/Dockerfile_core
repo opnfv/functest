@@ -1,0 +1,39 @@
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Apache License, Version 2.0
+# which accompanies this distribution, and is available at
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+
+FROM opnfv/functest:base
+MAINTAINER Jose Lausuch <jose.lausuch@ericsson.com>
+LABEL version="4.0" description="OPNFV Functest Docker Core image"
+
+ARG BRANCH=master
+ARG TEMPEST_TAG=12.2.0
+ARG RALLY_TAG=0.5.0
+ARG ODL_TAG=release/beryllium-sr3
+ARG OPENSTACK_TAG=stable/mitaka
+
+# Packaged dependencies
+apt-get install -y \
+gcc \
+python-mock \
+--no-install-recommends
+
+# OpenStack repositories
+RUN git clone --depth 1 -b $RALLY_TAG https://github.com/openstack/rally.git ${repos_dir}/rally
+RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${repos_dir}/tempest
+
+# SDN controller repositories
+RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${repos_dir}/odl_test
+RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${repos_dir}/onos
+
+RUN pip install -r ${repos_dir}/functest/docker/requirements/core.pip
+RUN pip install -r ${repos_dir}/rally/requirements.txt
+RUN pip install -r ${repos_dir}/tempest/requirements.txt
+
+RUN ${repos_dir}/rally/install_rally.sh --yes
+
+ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img /home/opnfv/functest/data/
+ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-lxc.tar.gz /home/opnfv/functest/data/
+ADD http://205.177.226.237:9999/onosfw/firewall_block_image.img /home/opnfv/functest/data/

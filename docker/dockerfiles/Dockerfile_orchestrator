@@ -1,0 +1,20 @@
+########################################
+#   Docker orchestrator for FUNCTEST
+########################################
+# Purpose: orchestrate the Functest execution
+#          by managing the creation of the
+#          needed containers
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Apache License, Version 2.0
+# which accompanies this distribution, and is available at
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+
+FROM opnfv/functest:base
+MAINTAINER Jose Lausuch <jose.lausuch@ericsson.com>
+LABEL version="4.0" description="OPNFV Functest Docker orchestrator"
+
+# Packaged dependencies
+apt-get install docker --no-install-recommends
+
+RUN pip install -r ${repos_dir}/functest/docker/requirements/ochestrator.pip
