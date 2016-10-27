@@ -1,0 +1,51 @@
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Apache License, Version 2.0
+# which accompanies this distribution, and is available at
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+
+FROM opnfv/functest:base
+MAINTAINER Jose Lausuch <jose.lausuch@ericsson.com>
+LABEL version="4.1" description="OPNFV Functest Docker Features image"
+
+ARG BRANCH=master
+ARG KINGBIRD_TAG=0.2.2
+ARG OPENSTACK_TAG=stable/mitaka
+
+# Packaged dependencies
+RUN apt-get install -y \
+gcc \
+bundler \
+postgresql \
+crudini \
+ruby1.9.1-dev \
+--no-install-recommends
+
+# OPNFV repositories
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${repos_dir}/copper
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${repos_dir}/domino
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${repos_dir}/parser
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
+RUN git clone --depth 1 https://github.com/opnfv/promise ${repos_dir}/promise
+RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${repos_dir}/securityscanning
+
+# OpenStack repositories
+RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${repos_dir}/bgpvpn
+RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${repos_dir}/kingbird
+
+RUN pip install -r ${repos_dir}/functest/docker/requirements/features.pip
+
+RUN /bin/bash ${repos_dir}/parser/tests/parser_install.sh ${repos_dir}
+RUN /bin/bash -c ". /home/opnfv/repos/functest/testcases/features/sfc/tacker_client_install.sh"
+RUN cd ${repos_dir}/bgpvpn && pip install .
+RUN cd ${repos_dir}/kingbird && pip install -e .
+RUN cd ${repos_dir}/moon/moonclient/ && python setup.py install
+
+# Promise requirements
+RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -'
+RUN sudo apt-get install -y nodejs
+RUN cd ${repos_dir}/promise && sudo npm -g install npm@latest
+RUN cd ${repos_dir}/promise && npm install
