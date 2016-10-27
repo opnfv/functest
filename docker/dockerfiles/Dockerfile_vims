@@ -1,0 +1,31 @@
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Apache License, Version 2.0
+# which accompanies this distribution, and is available at
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+
+FROM opnfv/functest:base
+MAINTAINER Jose Lausuch <jose.lausuch@ericsson.com>
+LABEL version="4.0" description="OPNFV Functest Docker container"
+
+ARG VIMS_TAG=stable
+
+RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
+
+RUN pip install -r ${repos_dir}/functest/docker/requirements/vims.pip
+
+RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+RUN curl -L https://get.rvm.io | bash -s stable
+
+RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
+    && cd /home/opnfv/repos/vims-test \
+    && rvm autolibs enable"
+RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
+    && cd /home/opnfv/repos/vims-test \
+    && rvm install 1.9.3"
+RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
+    && cd /home/opnfv/repos/vims-test \
+    && rvm use 1.9.3"
+RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
+    && cd /home/opnfv/repos/vims-test \
+    && bundle install"

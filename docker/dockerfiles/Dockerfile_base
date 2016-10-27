@@ -1,0 +1,67 @@
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Apache License, Version 2.0
+# which accompanies this distribution, and is available at
+# http://wwwa.apache.org/licenses/LICENSE-2.0
+#
+
+FROM ubuntu:14.04
+MAINTAINER Jose Lausuch <jose.lausuch@ericsson.com>
+LABEL version="4.0" description="OPNFV Functest Docker Base image"
+
+ARG BRANCH=master
+ENV HOME /home/opnfv
+ENV repos_dir /home/opnfv/repos
+ENV creds /home/opnfv/functest/conf/openstack.creds
+ENV TERM xterm
+ENV COLORTERM gnome-terminal
+ENV PYTHONPATH $PYTHONPATH:/home/opnfv/repos/
+ENV CONFIG_FUNCTEST_YAML /home/opnfv/repos/functest/ci/config_functest.yaml
+WORKDIR /home/opnfv
+
+# Packaged dependencies
+RUN apt-get update && apt-get install -y \
+ssh \
+sshpass \
+curl \
+git \
+wget \
+python-dev \
+python-pip \
+build-essential \
+libpq-dev \
+libxslt-dev \
+libssl-dev \
+libgmp3-dev \
+libxml2-dev \
+libffi-dev \
+--no-install-recommends
+
+RUN pip install --upgrade pip
+
+RUN mkdir -p ${repos_dir}
+RUN mkdir -p /home/opnfv/functest/results
+RUN mkdir -p /home/opnfv/functest/conf
+RUN mkdir -p /root/.ssh
+RUN chmod 700 /root/.ssh
+
+RUN git config --global http.sslVerify false
+
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
+RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
+
+RUN find ${repos_dir}/functest -name "*.py" |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755
+RUN find ${repos_dir}/functest -name "*.sh" |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
+
+ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img /home/opnfv/functest/data/
+ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-lxc.tar.gz /home/opnfv/functest/data/
+
+RUN pip install -r ${repos_dir}/functest/docker/requirements/base.pip
+
+RUN echo "set nocompatible \n\
+set backspace=2" \
+>> /home/opnfv/.vimrc
+RUN echo set nocompatible >> /home/opnfv/.exrc
+RUN echo "alias ll='ls -lh' \n\
+. /home/opnfv/repos/functest/cli/functest-complete.sh" \
+>> /home/opnfv/.bashrc
+RUN cd ${repos_dir}/functest/cli && pip install .
