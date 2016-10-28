@@ -3,11 +3,15 @@ set -o errexit
 set -o pipefail
 
 echo "Running unit tests..."
-cd .
+
+if [ -z $WORKSPACE ]
+then
+    WORKSPACE="$HOME"
+fi
 
 # start vitual env
-virtualenv ./functest_venv
-source ./functest_venv/bin/activate
+virtualenv $WORKSPACE/functest_venv
+source $WORKSPACE/functest_venv/bin/activate
 
 # install python packages
 easy_install -U setuptools
@@ -22,5 +26,8 @@ nosetests --with-xunit \
          --cover-package=functest.testcases.Controllers.ODL.OpenDaylightTesting \
          --cover-xml \
          unit_tests
+rc=$?
 
 deactivate
+
+exit $rc
