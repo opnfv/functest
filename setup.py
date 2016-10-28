@@ -19,6 +19,4 @@ setup(
     install_requires=["coverage==4.1",
                       "mock==1.3.0",
                       "nose==1.3.7"],
-    entry_points={
-    }
 )
