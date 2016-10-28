@@ -23,3 +23,6 @@ nosetests --with-xunit \
          unit_tests
 
 deactivate
+rc=$?
+
+exit $rc
