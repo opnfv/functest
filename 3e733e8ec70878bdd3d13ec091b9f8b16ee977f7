@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_53d37c38",
+        "filename": "docs/release-notes/functest-release.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-10-28T07:55:55Z",
+      "side": 1,
+      "message": "I think there are other tickets open for Colorado 2.0...",
+      "revId": "3e733e8ec70878bdd3d13ec091b9f8b16ee977f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
