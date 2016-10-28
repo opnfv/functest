@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_b3f8a04a",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-10-28T11:45:32Z",
+      "side": 1,
+      "message": "isn\u0027t this taking the return value of \"deactivate\" command? Shouldn\u0027t it be the unit tests command?",
+      "revId": "2dc0295678ca87ddb662bc5bdf835350d8a13586",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
