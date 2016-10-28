@@ -3,7 +3,6 @@ set -o errexit
 set -o pipefail
 
 echo "Running unit tests..."
-cd .
 
 # start vitual env
 virtualenv ./functest_venv
@@ -22,5 +21,8 @@ nosetests --with-xunit \
          --cover-package=functest.testcases.Controllers.ODL.OpenDaylightTesting \
          --cover-xml \
          unit_tests
+rc=$?
 
 deactivate
+
+exit $rc
