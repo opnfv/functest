@@ -154,6 +154,14 @@ def main():
 
     for sg in secgroups:
         os_utils.create_secgroup_rule(neutron_client, sg['id'],
+                                      'ingress', 'udp',
+                                      port_range_min=67,
+                                      port_range_max=68)
+        os_utils.create_secgroup_rule(neutron_client, sg['id'],
+                                      'egress', 'udp',
+                                      port_range_min=67,
+                                      port_range_max=68)
+        os_utils.create_secgroup_rule(neutron_client, sg['id'],
                                       'ingress', 'tcp',
                                       port_range_min=22,
                                       port_range_max=22)
