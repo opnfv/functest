@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_e2396cd9",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-11-02T10:27:42Z",
+      "side": 1,
+      "message": "Is it defined?",
+      "range": {
+        "startLine": 460,
+        "startChar": 18,
+        "endLine": 460,
+        "endChar": 19
+      },
+      "revId": "1c5bed6a6eb5c538ec73380046bb4ac1e8765018",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a23364f5",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-11-02T10:27:42Z",
+      "side": 1,
+      "message": "We could create config exceptions.",
+      "revId": "1c5bed6a6eb5c538ec73380046bb4ac1e8765018",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c230f0ea",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-11-02T10:27:42Z",
+      "side": 1,
+      "message": "we could create config exceptions",
+      "revId": "1c5bed6a6eb5c538ec73380046bb4ac1e8765018",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_4225e0a9",
+        "filename": "utils/config_functest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-11-02T10:27:42Z",
+      "side": 1,
+      "message": "This could raise exceptions",
+      "range": {
+        "startLine": 476,
+        "startChar": 9,
+        "endLine": 476,
+        "endChar": 10
+      },
+      "revId": "1c5bed6a6eb5c538ec73380046bb4ac1e8765018",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
