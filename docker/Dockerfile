@@ -53,7 +53,6 @@ git \
 gcc \
 wget \
 python-dev \
-python-mock \
 python-pip \
 bundler \
 postgresql \
@@ -124,6 +123,10 @@ RUN /bin/bash -c ". /home/opnfv/repos/functest/testcases/features/sfc/tacker_cli
 RUN cd ${repos_dir}/bgpvpn && pip install .
 RUN cd ${repos_dir}/kingbird && pip install -e .
 RUN cd ${repos_dir}/moon/moonclient/ && python setup.py install
+
+# SNAPS integration
+RUN git clone --depth 1 https://gerrit.cablelabs.com/snaps-provisioning ${repos_dir}/snaps
+RUN pip install -e ${repos_dir}/snaps/
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd /home/opnfv/repos/vims-test \
