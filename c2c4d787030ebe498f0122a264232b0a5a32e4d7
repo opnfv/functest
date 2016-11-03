@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_d6e1959b",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 24
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-11-03T16:28:20Z",
+      "side": 1,
+      "message": "we must fix logger instead",
+      "revId": "c2c4d787030ebe498f0122a264232b0a5a32e4d7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_b6e409ad",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 24
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-11-03T16:28:20Z",
+      "side": 1,
+      "message": "Is it really required?",
+      "revId": "c2c4d787030ebe498f0122a264232b0a5a32e4d7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_96f30d73",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 24
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-11-03T16:28:20Z",
+      "side": 1,
+      "message": "1 line?",
+      "revId": "c2c4d787030ebe498f0122a264232b0a5a32e4d7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_76eea18d",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 24
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-11-03T16:28:20Z",
+      "side": 1,
+      "message": "They can be cleaned.",
+      "revId": "c2c4d787030ebe498f0122a264232b0a5a32e4d7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
