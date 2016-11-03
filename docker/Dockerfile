@@ -107,7 +107,8 @@ RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt
 RUN pip install -r ${repos_dir}/tempest/requirements.txt
 
-RUN find ${repos_dir}/functest -name "*.py" |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755
+RUN find ${repos_dir}/functest -name "*.py" \
+    -not -path *unit_tests* |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755
 RUN find ${repos_dir}/functest -name "*.sh" |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
 
 RUN /bin/bash ${repos_dir}/parser/tests/parser_install.sh ${repos_dir}
