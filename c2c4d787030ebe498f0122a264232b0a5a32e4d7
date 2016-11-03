@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_f601313a",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 24
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-03T16:43:06Z",
+      "side": 1,
+      "message": "you can remove the if-else condition, mkdir -p won\u0027t do anything if it already exists",
+      "parentUuid": "5ac10518_b6e409ad",
+      "revId": "c2c4d787030ebe498f0122a264232b0a5a32e4d7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_96f30d73",
         "filename": "run_unit_tests.sh",
         "patchSetId": 24
