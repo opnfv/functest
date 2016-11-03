@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_b64889cd",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-11-03T15:53:45Z",
+      "side": 1,
+      "message": "we should modify logger instead.",
+      "revId": "69ff35165ed9acdbfbae35bbef396fe996b86f3c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_761221b6",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-11-03T15:53:45Z",
+      "side": 1,
+      "message": "755",
+      "revId": "69ff35165ed9acdbfbae35bbef396fe996b86f3c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
