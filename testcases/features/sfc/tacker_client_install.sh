@@ -21,7 +21,7 @@ ____EOF
 
 function envSetup() {
     apt-get install -y python-all debhelper fakeroot
-    pip install --upgrade python-keystoneclient==1.7.4
+    #pip install --upgrade python-keystoneclient==1.7.4
     chkPPkg stdeb
 }
 
