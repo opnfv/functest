@@ -408,6 +408,7 @@ def main():
 
     # SSH TO EXECUTE cmd_client
     logger.info("TEST STARTED")
+    time.sleep(70)
     try:
         ssh.connect(floatip_client, username="root",
                     password="opnfv", timeout=2)
