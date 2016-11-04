@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_ec395ed9",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1331
+      },
+      "writtenOn": "2016-11-04T12:55:28Z",
+      "side": 1,
+      "message": "Sure. Will do that. Can I submit a incremental separate patch?  Or do you like this to be part of this patch itself since its not affecting the functionality?",
+      "parentUuid": "5ac10518_b9571a26",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 27
+      },
+      "revId": "e0de0402bea10850bc42c478960512c68018348a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_f95da249",
         "filename": "testcases/features/sfc/sfc.py",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-04T12:24:53Z",
       "side": 1,
       "message": "Change of functionality here. In this change https://gerrit.opnfv.org/gerrit/#/c/22215/ we added ssh checking. There have been cases were ping works while ssh does not. I think this should be left the way it was",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 23
+      },
+      "revId": "e0de0402bea10850bc42c478960512c68018348a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_2c20c69a",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1331
+      },
+      "writtenOn": "2016-11-04T12:55:28Z",
+      "side": 1,
+      "message": "I agree with you. Even I have noticed that. I think its because it has not started sshd yet. It takes just a few  additional seconds after ping works. Logic is such a way that it waits for all the instance to boot up, by the time it is waiting for 4th VM other 3 vms might have sshd up and more over I perform ssh operations on VM\u0027s which booted first and hence I feel ssh failing is unlikely here and it will be additional check which might not be required. If you insist I can add that.",
+      "parentUuid": "5ac10518_f95da249",
       "range": {
         "startLine": 282,
         "startChar": 0,
@@ -82,6 +130,30 @@
       "writtenOn": "2016-11-04T12:24:53Z",
       "side": 1,
       "message": "These are not called multiple times. I think these should be left inline in the main, not separate functions. This way  the test logic is separated from the testcase workflow and you need to constantly scroll up / down to understand what is happening.",
+      "range": {
+        "startLine": 365,
+        "startChar": 0,
+        "endLine": 415,
+        "endChar": 0
+      },
+      "revId": "e0de0402bea10850bc42c478960512c68018348a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_4c2512aa",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1331
+      },
+      "writtenOn": "2016-11-04T12:55:28Z",
+      "side": 1,
+      "message": "Sure if not liked I will change it. Purpose was to distinguish each test cases and I felt test cases might grow further and main function might be clumsy.",
+      "parentUuid": "5ac10518_39448a73",
       "range": {
         "startLine": 365,
         "startChar": 0,
