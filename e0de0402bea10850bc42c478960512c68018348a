@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_4c73d2b1",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5579
+      },
+      "writtenOn": "2016-11-04T13:17:25Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong opinion on this. Whatever you think is easier for you. I can also do it in after this patch is merged.",
+      "parentUuid": "5ac10518_ec395ed9",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 27
+      },
+      "revId": "e0de0402bea10850bc42c478960512c68018348a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_f95da249",
         "filename": "testcases/features/sfc/sfc.py",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I agree with you. Even I have noticed that. I think its because it has not started sshd yet. It takes just a few  additional seconds after ping works. Logic is such a way that it waits for all the instance to boot up, by the time it is waiting for 4th VM other 3 vms might have sshd up and more over I perform ssh operations on VM\u0027s which booted first and hence I feel ssh failing is unlikely here and it will be additional check which might not be required. If you insist I can add that.",
       "parentUuid": "5ac10518_f95da249",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 23
+      },
+      "revId": "e0de0402bea10850bc42c478960512c68018348a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8c79ba95",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 5579
+      },
+      "writtenOn": "2016-11-04T13:17:25Z",
+      "side": 1,
+      "message": "It was already implemented. Just swap ping with the check_ssh logic. It doesn\u0027t have to do so much with the ssh daemon. It has to do with the security group rules which are under active development in OpenDaylight and sometimes break or with missing flows. When we go into the tests we need to ssh into the instances, so I think it\u0027s good defensive coding to check for ssh before we attempt that.",
+      "parentUuid": "5ac10518_2c20c69a",
       "range": {
         "startLine": 282,
         "startChar": 0,
@@ -154,6 +202,30 @@
       "side": 1,
       "message": "Sure if not liked I will change it. Purpose was to distinguish each test cases and I felt test cases might grow further and main function might be clumsy.",
       "parentUuid": "5ac10518_39448a73",
+      "range": {
+        "startLine": 365,
+        "startChar": 0,
+        "endLine": 415,
+        "endChar": 0
+      },
+      "revId": "e0de0402bea10850bc42c478960512c68018348a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_2c6e86ca",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 5579
+      },
+      "writtenOn": "2016-11-04T13:17:25Z",
+      "side": 1,
+      "message": "This was more an opinionated comment. I think it\u0027s easier for me to see the workflow inline and have some comments to separate each testcase. We can always split them in different testcases if they grow any further.",
+      "parentUuid": "5ac10518_4c2512aa",
       "range": {
         "startLine": 365,
         "startChar": 0,
