@@ -18,14 +18,11 @@ fi
 # Create log dir if needed
 # log shall be disabled during unit tests
 # fix to be done in Logger
-if [ ! -d "/home/opnfv/functest/results" ]
-then
-    echo "Create dummy log file...."
-    sudo mkdir -p /home/opnfv/functest/results/odl
-    sudo touch /home/opnfv/functest/results/functest.log
-    sudo touch /home/opnfv/functest/results/odl/stdout.txt
-    sudo chmod -Rf a+rw /home/opnfv
-fi
+echo "Create dummy log file...."
+sudo mkdir -p /home/opnfv/functest/results/odl
+sudo touch /home/opnfv/functest/results/functest.log
+sudo touch /home/opnfv/functest/results/odl/stdout.txt
+sudo chmod -Rf a+rw /home/opnfv
 
 # Either Workspace is set (CI)
 # then useless log files must belong to jenkins:jenkins
