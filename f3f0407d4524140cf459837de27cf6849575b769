@@ -1,0 +1,8 @@
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Manuel Buil <manuel.buil@ericsson.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Fri, 04 Nov 2016 15:32:22 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/23901
+Project: functest
+Branch: refs/heads/master
