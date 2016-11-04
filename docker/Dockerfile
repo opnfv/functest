@@ -104,6 +104,7 @@ RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwat
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${repos_dir}/onos
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
+RUN cd ${repos_dir}/kingbird && pip install -e .
 RUN pip install -r ${repos_dir}/rally/requirements.txt
 RUN pip install -r ${repos_dir}/tempest/requirements.txt
 
@@ -122,7 +123,6 @@ RUN curl -L https://get.rvm.io | bash -s stable
 
 RUN /bin/bash -c ". /home/opnfv/repos/functest/testcases/features/sfc/tacker_client_install.sh"
 RUN cd ${repos_dir}/bgpvpn && pip install .
-RUN cd ${repos_dir}/kingbird && pip install -e .
 RUN cd ${repos_dir}/moon/moonclient/ && python setup.py install
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \

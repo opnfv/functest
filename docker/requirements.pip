@@ -12,7 +12,7 @@ gitpython==1.0.1
 python-openstackclient==2.3.0
 python-ceilometerclient==1.5.1
 python-keystoneclient==2.3.1
-python-neutronclient==4.1.1
+python-neutronclient==5.1.0
 virtualenv==1.11.4
 pexpect==4.0
 requests==2.8.0
