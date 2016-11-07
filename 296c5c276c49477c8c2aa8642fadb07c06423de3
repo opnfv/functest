@@ -1,0 +1,10 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Michael Polenchuk <mpolenchuk@mirantis.com>
+Code-Review+1: Fedor Zhadaev <fzhadaev@mirantis.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Mon, 07 Nov 2016 17:24:56 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/24019
+Project: functest
+Branch: refs/heads/master
