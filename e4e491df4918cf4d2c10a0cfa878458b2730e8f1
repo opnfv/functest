@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_0f929c57",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2091
+      },
+      "writtenOn": "2016-11-07T10:10:13Z",
+      "side": 1,
+      "message": "FLAVOR \u003d \"custom\". Small requires too much disk space",
+      "revId": "e4e491df4918cf4d2c10a0cfa878458b2730e8f1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
