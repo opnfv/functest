@@ -25,25 +25,9 @@ sudo touch /home/opnfv/functest/results/odl/stdout.txt
 sudo chmod -Rf a+rw /home/opnfv
 
 # Either Workspace is set (CI)
-# then useless log files must belong to jenkins:jenkins
-# or it is local tests and we do not care
 if [ -z $WORKSPACE ]
 then
     WORKSPACE="."
-else
-    sudo chown -Rf jenkins:jenkins /home/opnfv
-    # as we import the module from the home repo
-    # and in jenkins the name is different
-    # functest-verify-master != functest
-    # make some ugly adjustments...
-    cd $WORKSPACE
-    export PYTHONPATH="${PYTHONPATH}:$WORKSPACE"
-    cd ..
-
-    if [ ! -d "./functest" ]
-    then
-    ln -s functest-verify-master functest
-    fi
 fi
 
 
@@ -74,7 +58,7 @@ nosetests --with-xunit \
          --cover-package=functest.testcases.Controllers.ODL.OpenDaylightTesting \
          --cover-xml \
          --cover-html \
-         unit_tests
+         functest/tests/unit
 rc=$?
 
 deactivate
@@ -82,13 +66,6 @@ deactivate
 # *******
 # clean
 # *******
-# First as we had to start the test from ..
-# Push the results upstream for jenkins
-if [ $WORKSPACE != "." ]
-then
-    mv coverage.xml nosetests.xml $WORKSPACE
-fi
-
 # Clean useless logs
 if [ -d "/home/opnfv/functest/results" ]
 then
