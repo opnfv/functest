@@ -26,10 +26,10 @@ class foundation:
 
         # currentpath = os.getcwd()
         REPO_PATH = ft_utils.FUNCTEST_REPO + '/'
-        currentpath = REPO_PATH + 'testcases/Controllers/ONOS/Teston/CI'
+        currentpath = REPO_PATH + 'opnfv_tests/Controllers/ONOS/Teston/CI'
         self.cipath = currentpath
         self.logdir = os.path.join(currentpath, 'log')
-        self.workhome = currentpath[0: currentpath.rfind('testcases') - 1]
+        self.workhome = currentpath[0: currentpath.rfind('opnfv_tests') - 1]
         self.Result_DB = ''
         filename = time.strftime('%Y-%m-%d-%H-%M-%S') + '.log'
         self.logfilepath = os.path.join(self.logdir, filename)

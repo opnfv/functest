@@ -43,7 +43,7 @@ SUBNET_CIDR = "11.0.0.0/24"
 ROUTER_NAME = "example-router"
 SECGROUP_NAME = "example-sg"
 SECGROUP_DESCR = "Example Security group"
-SFC_TEST_DIR = REPO_PATH + "/testcases/features/sfc/"
+SFC_TEST_DIR = REPO_PATH + "/opnfv_tests/features/sfc/"
 TACKER_SCRIPT = SFC_TEST_DIR + "sfc_tacker.bash"
 TACKER_CHANGECLASSI = SFC_TEST_DIR + "sfc_change_classi.bash"
 ssh_options = '-q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'

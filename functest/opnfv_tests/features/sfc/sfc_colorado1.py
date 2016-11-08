@@ -302,7 +302,7 @@ def main():
 
         # CREATION OF THE 2 SF ####
 
-        tacker_script = "%s/testcases/features/sfc/%s" % \
+        tacker_script = "%s/opnfv_tests/features/sfc/%s" % \
                         (FUNCTEST_REPO, TACKER_SCRIPT)
         logger.info("Executing tacker script: '%s'" % tacker_script)
         subprocess.call(tacker_script, shell=True)
@@ -492,7 +492,7 @@ def main():
 
         # CHANGE OF CLASSIFICATION #
         logger.info("Changing the classification")
-        tacker_classi = "%s/testcases/features/sfc/%s" % \
+        tacker_classi = "%s/opnfv_tests/features/sfc/%s" % \
                         (FUNCTEST_REPO, TACKER_CHANGECLASSI)
         subprocess.call(tacker_classi, shell=True)
 
@@ -568,7 +568,7 @@ def main():
             break
         else:
             logger.info("Iterating again!")
-            delete = "bash %s/testcases/features/sfc/delete.sh" % \
+            delete = "bash %s/opnfv_tests/features/sfc/delete.sh" % \
                      (FUNCTEST_REPO)
             try:
                 subprocess.call(delete, shell=True, stderr=subprocess.PIPE)

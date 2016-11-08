@@ -16,7 +16,7 @@ import unittest
 from robot.errors import RobotError
 
 from functest.core import TestCasesBase
-from functest.testcases.Controllers.ODL import OpenDaylightTesting
+from functest.opnfv_tests.Controllers.ODL import OpenDaylightTesting
 
 
 class ODLTestCasesTesting(unittest.TestCase):

@@ -13,7 +13,7 @@
 #
 
 ODL_SFC_LOG=/home/opnfv/functest/results/odl-sfc.log
-ODL_SFC_DIR=${FUNCTEST_REPO_DIR}/testcases/features/sfc
+ODL_SFC_DIR=${FUNCTEST_REPO_DIR}/opnfv_tests/features/sfc
 
 # Split the output to the log file and redirect STDOUT and STDERR to /dev/null
 bash ${ODL_SFC_DIR}/server_presetup_CI.bash |& \

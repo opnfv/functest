@@ -93,7 +93,7 @@ tiers:
                     installer: ''
                     scenario: 'odl'
                 run:
-                    module: 'functest.testcases.Controllers.ODL.OpenDaylightTesting'
+                    module: 'functest.opnfv_tests.Controllers.ODL.OpenDaylightTesting'
                     class: 'ODLTestCases'
 
             -

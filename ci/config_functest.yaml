@@ -1,13 +1,13 @@
 general:
     directories:
         # Relative to the path where the repo is cloned:
-        dir_vping:         testcases/OpenStack/vPing/
-        dir_odl:           testcases/Controllers/ODL/
-        dir_rally:         testcases/OpenStack/rally/
-        dir_tempest_cases: testcases/OpenStack/tempest/custom_tests/
-        dir_vIMS:          testcases/vnf/vIMS/
-        dir_onos:          testcases/Controllers/ONOS/Teston/
-        dir_onos_sfc:           testcases/Controllers/ONOS/Sfc/
+        dir_vping:         functest/opnfv_tests/OpenStack/vPing/
+        dir_odl:           functest/opnfv_tests/Controllers/ODL/
+        dir_rally:         functest/opnfv_tests/OpenStack/rally/
+        dir_tempest_cases: functest/opnfv_tests/OpenStack/tempest/custom_tests/
+        dir_vIMS:          functest/opnfv_tests/vnf/vIMS/
+        dir_onos:          functest/opnfv_tests/Controllers/ONOS/Teston/
+        dir_onos_sfc:      functest/opnfv_tests/Controllers/ONOS/Sfc/
 
         # Absolute path
         dir_repos:          /home/opnfv/repos

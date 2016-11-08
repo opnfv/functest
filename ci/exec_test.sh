@@ -37,6 +37,7 @@ if [[ "${CI_DEBUG,,}" == "true" ]];then
 fi
 
 FUNCTEST_REPO_DIR=${repos_dir}/functest
+FUNCTEST_TEST_DIR=${repos_dir}/functest/functest/opnfv_tests
 FUNCTEST_CONF_DIR=/home/opnfv/functest/conf
 
 export PYTHONUNBUFFERED=1
@@ -81,39 +82,39 @@ function run_test(){
 
     case $test_name in
         "healthcheck")
-            ${FUNCTEST_REPO_DIR}/testcases/OpenStack/healthcheck/healthcheck.sh
+            ${FUNCTEST_TEST_DIR}/OpenStack/healthcheck/healthcheck.sh
         ;;
         "vping_ssh")
-            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/vPing/vping.py -m ssh $report
+            python ${FUNCTEST_TEST_DIR}/OpenStack/vPing/vping.py -m ssh $report
         ;;
         "vping_userdata")
-            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/vPing/vping.py -m userdata $report
+            python ${FUNCTEST_TEST_DIR}/OpenStack/vPing/vping.py -m userdata $report
         ;;
         "odl")
             odl_tests
             [[ "$report" == "-r" ]] && args=-p
-            ${FUNCTEST_REPO_DIR}/testcases/Controllers/ODL/OpenDaylightTesting.py \
+            ${FUNCTEST_TEST_DIR}/Controllers/ODL/OpenDaylightTesting.py \
                 --keystoneip $keystone_ip --neutronip $neutron_ip \
                 --osusername ${OS_USERNAME} --ostenantname ${OS_TENANT_NAME} \
                 --ospassword ${OS_PASSWORD} \
                 --odlip $odl_ip --odlwebport $odl_port ${args}
         ;;
         "tempest_smoke_serial")
-            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/run_tempest.py \
+            python ${FUNCTEST_TEST_DIR}/OpenStack/tempest/run_tempest.py \
                 $clean_flag -s -m smoke $report
         ;;
         "tempest_full_parallel")
-            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/run_tempest.py \
+            python ${FUNCTEST_TEST_DIR}/OpenStack/tempest/run_tempest.py \
                 $serial_flag $clean_flag -m full $report
         ;;
         "vims")
-            python ${FUNCTEST_REPO_DIR}/testcases/vnf/vIMS/vIMS.py $clean_flag $report
+            python ${FUNCTEST_TEST_DIR}/vnf/vIMS/vIMS.py $clean_flag $report
         ;;
         "rally_full")
-            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/rally/run_rally-cert.py $clean_flag all $report
+            python ${FUNCTEST_TEST_DIR}/OpenStack/rally/run_rally-cert.py $clean_flag all $report
         ;;
         "rally_sanity")
-            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/rally/run_rally-cert.py \
+            python ${FUNCTEST_TEST_DIR}/OpenStack/rally/run_rally-cert.py \
                 $clean_flag --sanity all $report
         ;;
         "bgpvpn")
@@ -121,17 +122,17 @@ function run_test(){
             python ${sdnvpn_repo_dir}/run_tests.py $report
         ;;
         "onos")
-            python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/onosfunctest.py
+            python ${FUNCTEST_TEST_DIR}/Controllers/ONOS/Teston/onosfunctest.py
         ;;
         "onos_sfc")
-            python ${FUNCTEST_REPO_DIR}/testcases/Controllers/ONOS/Teston/onosfunctest.py -t sfc
+            python ${FUNCTEST_TEST_DIR}/Controllers/ONOS/Teston/onosfunctest.py -t sfc
         ;;
         "promise")
-            python ${FUNCTEST_REPO_DIR}/testcases/features/promise.py $report
+            python ${FUNCTEST_TEST_DIR}/features/promise.py $report
             sleep 10 # to let the instances terminate
         ;;
         "doctor")
-            python ${FUNCTEST_REPO_DIR}/testcases/features/doctor.py $report
+            python ${FUNCTEST_TEST_DIR}/features/doctor.py $report
         ;;
         "ovno")
             # suite under rewritting for colorado
@@ -144,29 +145,29 @@ function run_test(){
             python ${repos_dir}/securityscanning/security_scan.py --config ${repos_dir}/securityscanning/config.ini
         ;;
         "copper")
-            python ${FUNCTEST_REPO_DIR}/testcases/features/copper.py $report
+            python ${FUNCTEST_TEST_DIR}/features/copper.py $report
         ;;
         "moon")
             python ${repos_dir}/moon/tests/run_tests.py $report
         ;;
         "multisite")
-            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/gen_tempest_conf.py
-            python ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/run_tempest.py \
+            python ${FUNCTEST_TEST_DIR}/OpenStack/tempest/gen_tempest_conf.py
+            python ${FUNCTEST_TEST_DIR}/OpenStack/tempest/run_tempest.py \
                 $clean_flag -s -m feature_multisite $report \
-                -c ${FUNCTEST_REPO_DIR}/testcases/OpenStack/tempest/tempest_multisite.conf
+                -c ${FUNCTEST_TEST_DIR}/OpenStack/tempest/tempest_multisite.conf
         ;;
         "domino")
-            python ${FUNCTEST_REPO_DIR}/testcases/features/domino.py $report
+            python ${FUNCTEST_TEST_DIR}/features/domino.py $report
         ;;
         "odl-sfc")
-            ODL_SFC_DIR=${FUNCTEST_REPO_DIR}/testcases/features/sfc
+            ODL_SFC_DIR=${FUNCTEST_TEST_DIR}/features/sfc
             # pass FUNCTEST_REPO_DIR inside prepare_odl_sfc.bash
             FUNCTEST_REPO_DIR=${FUNCTEST_REPO_DIR} python ${ODL_SFC_DIR}/prepare_odl_sfc.py || exit $?
             source ${ODL_SFC_DIR}/tackerc
             python ${ODL_SFC_DIR}/sfc_colorado1.py $report
         ;;
         "parser")
-            python ${FUNCTEST_REPO_DIR}/testcases/vnf/vRNC/parser.py $report
+            python ${FUNCTEST_TEST_DIR}/vnf/vRNC/parser.py $report
         ;;
         *)
             echo "The test case '${test_name}' does not exist."

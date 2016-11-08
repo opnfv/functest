@@ -33,7 +33,7 @@ __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
 # Global vars
 INSTALLER_IP = os.getenv('INSTALLER_IP')
 oscapbin = 'sudo /bin/oscap'
-functest_dir = '%s/testcases/security_scan/' % ft_utils.FUNCTEST_REPO
+functest_dir = '%s/opnfv_tests/security_scan/' % ft_utils.FUNCTEST_REPO
 
 # Apex Spefic var needed to query Undercloud
 if os.getenv('OS_AUTH_URL') is None:
