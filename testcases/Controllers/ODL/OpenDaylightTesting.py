@@ -12,7 +12,6 @@ import errno
 import fileinput
 import os
 import re
-import shutil
 import sys
 import urlparse
 
@@ -60,19 +59,6 @@ class ODLTestCases(TestCasesBase.TestCasesBase):
         self.case_name = "odl"
 
     @classmethod
-    def copy_opnf_testcases(cls):
-        opnfv_testcases_dir = (os.path.dirname(os.path.abspath(__file__)) +
-                               "/custom_tests/neutron/")
-        f = opnfv_testcases_dir + "001__reachability.robot"
-        try:
-            shutil.copy(f, cls.neutron_suite_dir)
-        except IOError as e:
-            cls.logger.error(
-                "Cannot copy OPNFV's testcase to ODL directory: %s" % str(e))
-            return False
-        return True
-
-    @classmethod
     def set_robotframework_vars(cls, odlusername="admin", odlpassword="admin"):
         odl_variables_files = cls.odl_test_repo + 'csit/variables/Variables.py'
         try:
@@ -115,8 +101,7 @@ class ODLTestCases(TestCasesBase.TestCasesBase):
             self.logger.error("Cannot run ODL testcases. Please check "
                               "%s" % str(e))
             return self.EX_RUN_ERROR
-        if (self.copy_opnf_testcases() and
-                self.set_robotframework_vars(odlusername, odlpassword)):
+        if self.set_robotframework_vars(odlusername, odlpassword):
             try:
                 os.makedirs(self.res_dir)
             except OSError as e:
