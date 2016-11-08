@@ -223,7 +223,8 @@ info "Testing Nova API..."
 # This delay should be removed after resolving Jira case APEX-149.
 # The purpose is to give some time to populate openflow rules
 # by SDN controller in case of odl_l2 scenario.
-sleep 60
+wait_time=$(cat ${YAML_FILE} | shyaml get-value healthcheck.wait_time 2> /dev/null || true)
+sleep ${wait_time}
 
 
 # Check if flavor exists
