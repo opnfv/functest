@@ -10,6 +10,7 @@ import re
 import json
 import SSHUtils as ssh_utils
 import ovs_utils
+import thread
 
 parser = argparse.ArgumentParser()
 
@@ -401,6 +402,32 @@ def check_ssh(ips, retries=100):
 
     return False
 
+# Measure the time it takes to update the classification rules
+
+
+def capture_time_log(compute_clients):
+    ovs_logger = ovs_utils.OVSLogger(
+        os.path.join(os.getcwd(), 'ovs-logs'),
+        "test")
+    i = 0
+    first_RSP = ""
+    start_time = time.time()
+    while True:
+        output = ovs_logger.ofctl_time_counter(compute_clients[0])
+        rsps = output.split('\n')
+        if not i:
+            first_RSP = rsps[0]
+            i = i + 1
+        if(first_RSP != rsps[0]):
+            if (rsps[0] == rsps[1]):
+                stop_time = time.time()
+                logger.info("classification rules updated")
+                difference = stop_time - start_time
+                logger.info("It took %s seconds" % difference)
+                break
+        time.sleep(1)
+    return
+
 
 def main():
     installer_type = os.environ.get("INSTALLER_TYPE")
@@ -454,6 +481,13 @@ def main():
         nova_client, SERVER, FLAVOR, image_id, network_id, sg_id)
 
     subprocess.call(TACKER_SCRIPT, shell=True)
+
+    # Start measuring the time it takes to implement the classification rules
+    try:
+        thread.start_new_thread(capture_time_log, (compute_clients,))
+    except Exception, e:
+        logger.error("Unable to start the thread that counts time %s" % e)
+
     server_ip, client_ip, sf1, sf2 = get_floating_ips(
         nova_client, neutron_client)
 
@@ -497,6 +531,13 @@ def main():
 
     logger.info("Changing the classification")
     subprocess.call(TACKER_CHANGECLASSI, shell=True)
+
+    #Start measuring the time it takes to implement the classification rules
+    try:
+        thread.start_new_thread(capture_time_log, (compute_clients,))
+    except Exception, e:
+        logger.error("Unable to start the thread that counts time %s" % e)
+
     logger.info("Wait for ODL to update the classification rules in OVS")
     time.sleep(100)
 

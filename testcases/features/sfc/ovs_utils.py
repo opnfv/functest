@@ -115,3 +115,14 @@ class OVSLogger(object):
             dumpdir = os.path.join(self.ovs_dir, timestamp)
             with open(os.path.join(dumpdir, 'error'), 'w') as f:
                 f.write(related_error)
+
+    def ofctl_time_counter(self, ssh_conn):
+        try:
+            cmd = ("ovs-ofctl -O Openflow13 dump-flows br-int table=11 | "
+                   "grep NXM_NX_NSP | cut -d, -f13 | cut -d: -f2 | "
+                   "cut -d- -f1")
+            output = self.__remote_cmd(ssh_conn, cmd)
+            return output
+        except Exception, e:
+            logger.error('Error when countering %s' % e)
+            return None
