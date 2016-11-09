@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_202207ba",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1331
+      },
+      "writtenOn": "2016-11-09T17:20:37Z",
+      "side": 1,
+      "message": "How about this?\n\ndef capture_time_log(compute_clients):\n    ovs_logger \u003d ovs_utils.OVSLogger(\n        os.path.join(os.getcwd(), \u0027ovs-logs\u0027),\n        \"test\")\n    start_time \u003d time.time()\n    first_rsp \u003d ovs_logger.ofctl_time_counter(compute_clients[0])[0]\n\n    while True:\n      rsps \u003d ovs_logger.ofctl_time_counter(compute_clients[0])\n      if(first_rsp !\u003d rsps[0]) and rsps[0] \u003d\u003d rsps[1]:\n        difference \u003d time.time() - start_time\n        logger.info(\"classification rules updated\")\n        logger.info(\"It took %s seconds\" % difference)\n        break\n      time.sleep(1)",
+      "range": {
+        "startLine": 408,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 10
+      },
+      "revId": "6fb788de77cf4b0c07044101a8af3ee6a3981189",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
