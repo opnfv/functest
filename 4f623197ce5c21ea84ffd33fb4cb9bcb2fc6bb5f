@@ -46,6 +46,29 @@
       "revId": "4f623197ce5c21ea84ffd33fb4cb9bcb2fc6bb5f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e08cff81",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1331
+      },
+      "writtenOn": "2016-11-09T17:20:37Z",
+      "side": 1,
+      "message": "If time it takes to update classification rules can be measured, I believe the same time can be used here to to wait instead of 100 sec?",
+      "range": {
+        "startLine": 542,
+        "startChar": 3,
+        "endLine": 542,
+        "endChar": 19
+      },
+      "revId": "4f623197ce5c21ea84ffd33fb4cb9bcb2fc6bb5f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
