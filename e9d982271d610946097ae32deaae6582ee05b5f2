@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_603a4f38",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2016-11-09T11:31:33Z",
+      "side": 1,
+      "message": "should this comment be updated or removed?",
+      "revId": "e9d982271d610946097ae32deaae6582ee05b5f2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
