@@ -22,6 +22,30 @@
       "revId": "4f623197ce5c21ea84ffd33fb4cb9bcb2fc6bb5f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_802bbbea",
+        "filename": "testcases/features/sfc/ovs_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 2091
+      },
+      "writtenOn": "2016-11-09T16:56:14Z",
+      "side": 1,
+      "message": "You mean calling the command: \"ovs-ofctl -O Openflow13 dump-flows br-int table\u003d11\" and then filter using python methods?",
+      "parentUuid": "5ac10518_20f687d8",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 33
+      },
+      "revId": "4f623197ce5c21ea84ffd33fb4cb9bcb2fc6bb5f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
