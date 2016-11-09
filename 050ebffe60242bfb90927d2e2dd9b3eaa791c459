@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_80d3bb37",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 5579
+      },
+      "writtenOn": "2016-11-09T08:31:10Z",
+      "side": 1,
+      "message": "Did not saw this before. You silently do eval JSON code to create a python object. That really shouldn\u0027t go into stable/colorado",
+      "range": {
+        "startLine": 420,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 19
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
