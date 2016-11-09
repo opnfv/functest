@@ -2,6 +2,431 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ac10518_20e4470c",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "can\u0027t this just be minimized to return ignore_stderr?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 24
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c0f0e3cb",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "fold these into one line, `if ingore and not output:`",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 23
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e0eddff0",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "This is a docstring. The convention for python docstrings is to put them in triple quotes under the function, eg\ndef foo():\n\"\"\"Foo does bar\"\"\"\nThese docstrings are read by python and by tools so some IDEs display them when autocompleting and such.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 43
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_80badbdf",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "docstring",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 45
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a0bfd7cf",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "docstring",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 34
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_40b4f3f1",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "docstring",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 48
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_60b9efe8",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "docstring",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 32
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_00ceeb83",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "docstring",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 45
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_20cbe773",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "this return is not needed",
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c0c78363",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "just `return n_dict[\"net_id\"]`, less code this way",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 21
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e0c4ff60",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a0a6f7bf",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "I\u0027d name this create_security_group. Right now the name makes it seem similar to setup_ingress_egress_secgroup which modifies existing secgroups.",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 25
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_00958b3f",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "docstring",
+      "range": {
+        "startLine": 312,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 63
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_20920758",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "docstring",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 41
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c09ea363",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 364,
+        "startChar": 6,
+        "endLine": 364,
+        "endChar": 10
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e09b9f70",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 372,
+        "startChar": 4,
+        "endLine": 372,
+        "endChar": 10
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_80889b23",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "docstring",
+      "range": {
+        "startLine": 385,
+        "startChar": 0,
+        "endLine": 385,
+        "endChar": 32
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_007cab1f",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "ing",
+      "range": {
+        "startLine": 409,
+        "startChar": 38,
+        "endLine": 409,
+        "endChar": 40
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_609ecf58",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-11-09T08:58:04Z",
+      "side": 1,
+      "message": "what George said. it is quite unfortunate that python evals JSON because it looks like python dicts. The json module should be used for this.",
+      "range": {
+        "startLine": 422,
+        "startChar": 11,
+        "endLine": 422,
+        "endChar": 25
+      },
+      "revId": "050ebffe60242bfb90927d2e2dd9b3eaa791c459",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_80d3bb37",
         "filename": "testcases/features/sfc/sfc.py",
         "patchSetId": 1
