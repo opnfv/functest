@@ -164,7 +164,7 @@ function run_test(){
             # pass FUNCTEST_REPO_DIR inside prepare_odl_sfc.bash
             FUNCTEST_REPO_DIR=${FUNCTEST_REPO_DIR} python ${ODL_SFC_DIR}/prepare_odl_sfc.py || exit $?
             source ${ODL_SFC_DIR}/tackerc
-            python ${ODL_SFC_DIR}/sfc_colorado1.py $report
+            python ${ODL_SFC_DIR}/sfc.py $report
         ;;
         "parser")
             python ${FUNCTEST_TEST_DIR}/vnf/vRNC/parser.py $report
