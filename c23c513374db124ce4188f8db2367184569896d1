@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_9e5ebbe8",
+        "filename": "functest/opnfv_tests/features/sfc/prepare_odl_sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-10T16:11:41Z",
+      "side": 1,
+      "message": "does os.path.join takes care of the slash at the beginning of functest/opnfv_tests/features/sfc ?",
+      "revId": "c23c513374db124ce4188f8db2367184569896d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
