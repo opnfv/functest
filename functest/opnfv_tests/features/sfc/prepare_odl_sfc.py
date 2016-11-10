@@ -33,7 +33,8 @@ except:
     INSTALLER_IP = "10.20.0.2"
 
 os.environ['ODL_SFC_LOG'] = "/home/opnfv/functest/results/odl-sfc.log"
-os.environ['ODL_SFC_DIR'] = FUNCTEST_REPO_DIR + "/opnfv_tests/features/sfc"
+os.environ['ODL_SFC_DIR'] = os.path.join(FUNCTEST_REPO_DIR,
+                                         "functest/opnfv_tests/features/sfc")
 
 command = os.environ['ODL_SFC_DIR'] + ("/server_presetup_CI.bash | "
                                        "tee -a ${ODL_SFC_LOG} "
