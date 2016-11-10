@@ -14,10 +14,12 @@ import os
 import re
 import sys
 
+sys.path.append("..")
+
 import argparse
 
-import functest.ci.generate_report as generate_report
-import functest.ci.tier_builder as tb
+import ci.generate_report as generate_report
+import ci.tier_builder as tb
 import functest.core.TestCasesBase as TestCasesBase
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils

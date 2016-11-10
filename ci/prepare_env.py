@@ -19,6 +19,8 @@ import re
 import subprocess
 import sys
 
+sys.path.append("..")
+
 import argparse
 import yaml
 
