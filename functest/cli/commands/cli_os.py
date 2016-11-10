@@ -79,7 +79,7 @@ class CliOpenStack:
 
     def check(self):
         self.ping_endpoint()
-        cmd = ft_utils.FUNCTEST_REPO + "/ci/check_os.sh"
+        cmd = ft_utils.FUNCTEST_REPO + "/functest/ci/check_os.sh"
         ft_utils.execute_command(cmd, verbose=False)
 
     def snapshot_create(self):

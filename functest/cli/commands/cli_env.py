@@ -19,6 +19,7 @@ FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
 
 
 class CliEnv:
+
     def __init__(self):
         pass
 
@@ -36,7 +37,7 @@ class CliEnv:
                 else:
                     answer = raw_input("Invalid answer. Please type [y|n]\n")
 
-        cmd = ("python %s/ci/prepare_env.py start" % FUNCTEST_REPO)
+        cmd = ("python %s/functest/ci/prepare_env.py start" % FUNCTEST_REPO)
         ft_utils.execute_command(cmd)
 
     def show(self):
