@@ -22,6 +22,30 @@
       "revId": "6fb788de77cf4b0c07044101a8af3ee6a3981189",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e02b9f92",
+        "filename": "testcases/features/sfc/sfc.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 2091
+      },
+      "writtenOn": "2016-11-10T08:32:26Z",
+      "side": 1,
+      "message": "Yes, good idea! But I would like to see the CI pipeline working before doing so. It has been several months without having it working. I suggest we do this first, check that CI works and then we add what you suggest as a second patch",
+      "parentUuid": "5ac10518_202207ba",
+      "range": {
+        "startLine": 408,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 10
+      },
+      "revId": "6fb788de77cf4b0c07044101a8af3ee6a3981189",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
