@@ -24,8 +24,7 @@ logger = ft_logger.Logger("ODL_SFC").getLogger()
 
 FUNCTEST_RESULTS_DIR = '/home/opnfv/functest/results/odl-sfc'
 FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
-REPO_PATH = os.environ['repos_dir'] + '/functest/'
-HOME = os.environ['HOME'] + "/"
+REPO_PATH = os.path.join(os.environ['repos_dir'], 'functest/')
 CLIENT = "client"
 SERVER = "server"
 FLAVOR = "custom"
@@ -33,7 +32,7 @@ IMAGE_NAME = "sf_nsh_colorado"
 IMAGE_FILENAME = "sf_nsh_colorado.qcow2"
 IMAGE_FORMAT = "qcow2"
 IMAGE_DIR = "/home/opnfv/functest/data"
-IMAGE_PATH = IMAGE_DIR + "/" + IMAGE_FILENAME
+IMAGE_PATH = os.path.join(IMAGE_DIR, IMAGE_FILENAME)
 IMAGE_URL = "http://artifacts.opnfv.org/sfc/demo/" + IMAGE_FILENAME
 
 # NEUTRON Private Network parameters
@@ -43,7 +42,7 @@ SUBNET_CIDR = "11.0.0.0/24"
 ROUTER_NAME = "example-router"
 SECGROUP_NAME = "example-sg"
 SECGROUP_DESCR = "Example Security group"
-SFC_TEST_DIR = REPO_PATH + "/opnfv_tests/features/sfc/"
+SFC_TEST_DIR = os.path.join(REPO_PATH, "functest/opnfv_tests/features/sfc/")
 TACKER_SCRIPT = SFC_TEST_DIR + "sfc_tacker.bash"
 TACKER_CHANGECLASSI = SFC_TEST_DIR + "sfc_change_classi.bash"
 ssh_options = '-q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
