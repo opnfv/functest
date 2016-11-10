@@ -43,7 +43,7 @@ logger = ft_logger.Logger("run_tests").getLogger()
 
 
 """ global variables """
-EXEC_SCRIPT = ("%s/ci/exec_test.sh" % ft_utils.FUNCTEST_REPO)
+EXEC_SCRIPT = ("%s/functest/ci/exec_test.sh" % ft_utils.FUNCTEST_REPO)
 CLEAN_FLAG = True
 REPORT_FLAG = False
 EXECUTED_TEST_CASES = []
