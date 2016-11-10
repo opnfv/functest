@@ -149,6 +149,6 @@ set backspace=2" \
 >> /home/opnfv/.vimrc
 RUN echo set nocompatible >> /home/opnfv/.exrc
 RUN echo "alias ll='ls -lh' \n\
-. /home/opnfv/repos/functest/cli/functest-complete.sh" \
+. /home/opnfv/repos/functest/functest/cli/functest-complete.sh" \
 >> /home/opnfv/.bashrc
-RUN cd ${repos_dir}/functest/cli && pip install .
+RUN cd ${repos_dir}/functest/functest/cli && pip install .
