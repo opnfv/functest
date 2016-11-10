@@ -1,0 +1,328 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_bbe2a9d3",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "Will we still need exec_test.sh? Does CLI fully implement the logic of this script?",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_fbc0312c",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "The path here will have problem if the cloned project is not called \"functest\". It would be better to set the FUNCTEST_REPO_DIR at the beginning of running the project.\nUse a command to get the path name instead of hard coding it will bring more flexibility.\nCUR_DIR\u003d\"$( cd \"$( dirname \"${BASH_SOURCE[0]}\" )\" ; pwd )\"",
+      "range": {
+        "startLine": 39,
+        "startChar": 31,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_9bdd6d17",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "1. just the same as the previous comment\n2. is \"opnfv_tests\" the final name? It is better than \"testcases\":)",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_dbda1517",
+        "filename": "ci/exec_test.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "I think the path here can also be retrieved from environment parameter.",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_db48d5ce",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "This line should be removed as the functest module will be installed to dist-packages and the python will search there.",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_3b3c792f",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "Per previous comment, an environment parameter is needed here, say, $FUNCTEST_REPO, so the value here could be\n${FUNCTEST_REPO}/functest/opnfv_tests/features/sfc/tacker_client_install.sh",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_fb4591b3",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "This line can be changed to \nRUN cd ${FUNCTEST_REPO} \u0026\u0026 pip install .\nthis line should be moved forward to make sure functest module is installed before running other steps.",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_7b11a1ab",
+        "filename": "functest/opnfv_tests/Controllers/ONOS/Teston/adapters/foundation.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "We might need a Constants class to save all the constants instead of putting the FUNCTEST_REPO in ft_utils.",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_1b265d17",
+        "filename": "functest/opnfv_tests/features/sfc/prepare_odl_sfc.bash",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "ODL_SFC_DIR\u003d${FUNCTEST_TEST_DIR}/features/sfc",
+      "range": {
+        "startLine": 16,
+        "startChar": 14,
+        "endLine": 16,
+        "endChar": 31
+      },
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_db1f75b6",
+        "filename": "functest/opnfv_tests/features/sfc/prepare_odl_sfc.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "We might need a wise way to load the path in case the project cloned does not call \"functest\"",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_3b231907",
+        "filename": "functest/opnfv_tests/features/sfc/prepare_odl_sfc.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "os.environ[\u0027ODL_SFC_DIR\u0027] \u003d FUNCTEST_REPO_DIR + \"/functest/opnfv_tests/features/sfc\"",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_fb1cb1c3",
+        "filename": "functest/opnfv_tests/features/sfc/sfc.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "SFC_TEST_DIR \u003d REPO_PATH + \"/functest/opnfv_tests/features/sfc/\"",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_9b79edfe",
+        "filename": "functest/opnfv_tests/features/sfc/sfc_colorado1.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "tacker_script \u003d \"%s/functest/opnfv_tests/features/sfc/%s\" % \\\n                        (FUNCTEST_REPO, TACKER_SCRIPT)",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_bb7e29e3",
+        "filename": "functest/opnfv_tests/features/sfc/sfc_colorado1.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "tacker_classi \u003d \"%s/functest/opnfv_tests/features/sfc/%s\" % \\\n                        (FUNCTEST_REPO, TACKER_CHANGECLASSI)",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_5b8385cc",
+        "filename": "functest/opnfv_tests/features/sfc/sfc_colorado1.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "delete \u003d \"bash %s/functest/opnfv_tests/features/sfc/delete.sh\" % \\\n                     (FUNCTEST_REPO)",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_1b6dfd32",
+        "filename": "functest/opnfv_tests/features/sfc/sfc_colorado1.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "How about setting a value like FUNCTEST_FEATURE\u003dos.getcwd()?\nThen the values\ndelete \u003d \"bash %s/delete.sh\" % FUNCTEST_FEATURE",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_3b6a391b",
+        "filename": "functest/opnfv_tests/security_scan/security_scan.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "functest_dir \u003d os.getcwd()",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_db769506",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-10T11:22:33Z",
+      "side": 1,
+      "message": "Problem will occur if the cloned project is not called \"functest\"",
+      "revId": "107e61635c2ab1feb5263380ea63e21cf2e6e65b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
