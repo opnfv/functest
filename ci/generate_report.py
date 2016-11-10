@@ -2,6 +2,7 @@ import json
 import os
 import re
 import urllib2
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 

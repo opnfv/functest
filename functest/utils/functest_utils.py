@@ -439,7 +439,7 @@ def check_test_result(test_name, ret, start_time, stop_time):
 
 
 def get_testcases_file():
-    return FUNCTEST_REPO + "/ci/testcases.yaml"
+    return FUNCTEST_REPO + "/functest/ci/testcases.yaml"
 
 
 def get_functest_yaml():
