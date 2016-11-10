@@ -109,7 +109,7 @@ def check_env_variables():
 
     if CI_SCENARIO is None:
         logger.warning("The env variable 'DEPLOY_SCENARIO' is not defined. "
-                       "Setting CE_SCENARIO=undefined.")
+                       "Setting CI_SCENARIO=undefined.")
         CI_SCENARIO = "undefined"
     else:
         logger.info("    DEPLOY_SCENARIO=%s" % CI_SCENARIO)
@@ -205,7 +205,7 @@ def patch_config_file():
 def verify_deployment():
     print_separator()
     logger.info("Verifying OpenStack services...")
-    cmd = ("%s/ci/check_os.sh" % ft_utils.FUNCTEST_REPO)
+    cmd = ("%s/functest/ci/check_os.sh" % ft_utils.FUNCTEST_REPO)
 
     logger.debug("Executing command: %s" % cmd)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
