@@ -339,7 +339,7 @@ def transfer_ping_script(ssh, floatip):
     logger.info("Trying to transfer ping.sh to %s..." % floatip)
     scp = SCPClient(ssh.get_transport())
 
-    ping_script = FUNCTEST_REPO + "/opnfv_tests/OpenStack/vPing/ping.sh"
+    ping_script = FUNCTEST_REPO + "/functest/opnfv_tests/OpenStack/vPing/ping.sh"
     try:
         scp.put(ping_script, "~/")
     except:
