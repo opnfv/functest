@@ -10,9 +10,10 @@
 pyyaml==3.10
 gitpython==1.0.1
 python-openstackclient==2.3.0
-python-ceilometerclient==1.5.1
-python-keystoneclient==3.6.0
-python-neutronclient==4.1.1
+python-ceilometerclient==2.6.2
+python-keystoneclient==3.5.0
+python-neutronclient==6.0.0
+python-congressclient==1.5.0
 virtualenv==1.11.4
 pexpect==4.0
 requests==2.8.0
@@ -24,7 +25,6 @@ Flask==0.10.1
 xmltodict==0.9.2
 scp==0.10.2
 paramiko==1.16.0
-python-congressclient==1.3.0
 subprocess32
 shyaml
 dnspython
