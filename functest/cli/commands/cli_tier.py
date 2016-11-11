@@ -65,9 +65,9 @@ class CliTier:
                        "Run first 'functest env prepare'")
         else:
             if noclean:
-                cmd = ("python %s/ci/run_tests.py "
+                cmd = ("python %s/functest/ci/run_tests.py "
                        "-n -t %s" % (FUNCTEST_REPO, tiername))
             else:
-                cmd = ("python %s/ci/run_tests.py "
+                cmd = ("python %s/functest/ci/run_tests.py "
                        "-t %s" % (FUNCTEST_REPO, tiername))
             ft_utils.execute_command(cmd)
