@@ -16,6 +16,24 @@
       "revId": "c23c513374db124ce4188f8db2367184569896d1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_01482c5a",
+        "filename": "functest/opnfv_tests/features/sfc/prepare_odl_sfc.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5579
+      },
+      "writtenOn": "2016-11-11T07:08:24Z",
+      "side": 1,
+      "message": "Yes. In fact if you put a slash like \n/functest/opnfv_tests...\nit will think that\u0027s the root directory.",
+      "parentUuid": "5ac10518_9e5ebbe8",
+      "revId": "c23c513374db124ce4188f8db2367184569896d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
