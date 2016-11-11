@@ -160,11 +160,13 @@ function run_test(){
             python ${FUNCTEST_TEST_DIR}/features/domino.py $report
         ;;
         "odl-sfc")
+        	pip install --upgrade python-keystoneclient==1.7.4
             ODL_SFC_DIR=${FUNCTEST_TEST_DIR}/features/sfc
             # pass FUNCTEST_REPO_DIR inside prepare_odl_sfc.bash
             FUNCTEST_REPO_DIR=${FUNCTEST_REPO_DIR} python ${ODL_SFC_DIR}/prepare_odl_sfc.py || exit $?
             source ${ODL_SFC_DIR}/tackerc
             python ${ODL_SFC_DIR}/sfc.py $report
+            pip install --upgrade python-keystoneclient==3.5.0
         ;;
         "parser")
             python ${FUNCTEST_TEST_DIR}/vnf/vRNC/parser.py $report
