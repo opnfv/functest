@@ -416,7 +416,7 @@ def capture_time_log(compute_clients):
         if not i:
             first_RSP = rsps[0]
             i = i + 1
-        if(first_RSP != rsps[0]):
+        if(first_RSP != rsps[0] and len(rsps) > 1):
             if (rsps[0] == rsps[1]):
                 stop_time = time.time()
                 logger.info("classification rules updated")
