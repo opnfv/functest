@@ -30,7 +30,7 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 
 ARG BRANCH=stable/colorado
 ARG TEMPEST_TAG=12.2.0
-ARG RALLY_TAG=0.5.0
+ARG RALLY_TAG=0.3.2
 ARG ODL_TAG=release/beryllium-sr3
 ARG OPENSTACK_TAG=stable/mitaka
 ARG KINGBIRD_TAG=0.2.2
@@ -102,9 +102,9 @@ RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integr
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${repos_dir}/onos
 
-RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 RUN pip install -r ${repos_dir}/rally/requirements.txt
 RUN pip install -r ${repos_dir}/tempest/requirements.txt
+RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 
 RUN find ${repos_dir}/functest -name "*.py" |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755
 RUN find ${repos_dir}/functest -name "*.sh" |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
