@@ -30,7 +30,7 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 
 ARG BRANCH=stable/colorado
 ARG TEMPEST_TAG=12.2.0
-ARG RALLY_TAG=0.3.2
+ARG RALLY_TAG=0.5.0
 ARG ODL_TAG=release/beryllium-sr3
 ARG OPENSTACK_TAG=stable/mitaka
 ARG KINGBIRD_TAG=0.2.2
@@ -104,7 +104,6 @@ RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${repos_
 
 RUN pip install -r ${repos_dir}/rally/requirements.txt
 RUN pip install -r ${repos_dir}/tempest/requirements.txt
-RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
 
 RUN find ${repos_dir}/functest -name "*.py" |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755
 RUN find ${repos_dir}/functest -name "*.sh" |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
@@ -123,6 +122,8 @@ RUN /bin/bash -c ". /home/opnfv/repos/functest/testcases/features/sfc/tacker_cli
 RUN cd ${repos_dir}/bgpvpn && pip install .
 #RUN cd ${repos_dir}/kingbird && pip install -e .
 RUN cd ${repos_dir}/moon/moonclient/ && python setup.py install
+
+RUN pip install --upgrade -r ${repos_dir}/functest/docker/requirements.pip
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd /home/opnfv/repos/vims-test \
