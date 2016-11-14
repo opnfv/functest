@@ -414,15 +414,20 @@ def capture_time_log(compute_clients):
     while True:
         rsps = ovs_logger.ofctl_time_counter(compute_clients[0])
         if not i:
-            first_RSP = rsps[0]
-            i = i + 1
-        if(first_RSP != rsps[0] and len(rsps) > 1):
-            if (rsps[0] == rsps[1]):
-                stop_time = time.time()
-                logger.info("classification rules updated")
-                difference = stop_time - start_time
-                logger.info("It took %s seconds" % difference)
-                break
+            if len(rsps) > 0:
+                first_RSP = rsps[0]
+                i = i + 1
+            else:
+                first_RSP = 0
+                i = i + 1
+        if (len(rsps) > 1):
+            if(first_RSP != rsps[0]):
+                if (rsps[0] == rsps[1]):
+                    stop_time = time.time()
+                    logger.info("classification rules updated")
+                    difference = stop_time - start_time
+                    logger.info("It took %s seconds" % difference)
+                    break
         time.sleep(1)
     return
 
