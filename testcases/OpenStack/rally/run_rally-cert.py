@@ -239,7 +239,7 @@ def get_output(proc, test_name):
             except ValueError:
                 logger.info('Percentage error: %s, %s' % (percentage, line))
             nb_totals += 1
-        elif "Full duration" in line:
+        elif "Full duration: " in line:
             duration = line.split(': ')[1]
             try:
                 overall_duration += float(duration)
