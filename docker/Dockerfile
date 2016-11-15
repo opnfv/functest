@@ -43,7 +43,10 @@ ENV COLORTERM gnome-terminal
 ENV PYTHONPATH $PYTHONPATH:/home/opnfv/repos/
 ENV CONFIG_FUNCTEST_YAML /home/opnfv/repos/functest/functest/ci/config_functest.yaml
 ENV PYTHONPATH $PYTHONPATH:/home/opnfv/repos/:/home/opnfv/repos/functest
+ENV VIRTUAL_ENVS_DIR /home/opnfv/functest/virtual_envs
+
 WORKDIR /home/opnfv
+COPY . ${repos_dir}/functest
 
 # Packaged dependencies
 RUN apt-get update && apt-get install -y \
@@ -69,18 +72,21 @@ crudini \
 ruby1.9.1-dev \
 --no-install-recommends
 
-RUN pip install --upgrade pip
 
-RUN mkdir -p ${repos_dir}
-RUN mkdir -p /home/opnfv/functest/results
-RUN mkdir -p /home/opnfv/functest/conf
-RUN mkdir -p /root/.ssh
-RUN chmod 700 /root/.ssh
+RUN mkdir -p ${repos_dir} \
+    && mkdir -p /home/opnfv/functest/results \
+    && mkdir -p /home/opnfv/functest/conf \
+    && mkdir -p /root/.ssh \
+    && chmod 700 /root/.ssh \
+    && mkdir -p ${VIRTUAL_ENVS_DIR}
+
+RUN pip install --upgrade pip \
+    && pip install virtualenv
 
 RUN git config --global http.sslVerify false
 
 # OPNFV repositories
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
+#RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${repos_dir}/copper
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
@@ -104,16 +110,33 @@ RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integr
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${repos_dir}/onos
 
+# configure functest
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
-RUN pip install -r ${repos_dir}/rally/requirements.txt
-RUN pip install -r ${repos_dir}/tempest/requirements.txt
-
 RUN find ${repos_dir}/functest -name "*.py" \
     -not -path *unit_tests* |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755
 RUN find ${repos_dir}/functest -name "*.sh" |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
 
-RUN /bin/bash ${repos_dir}/parser/tests/parser_install.sh ${repos_dir}
+# config rally
+# comment now as rally is using venv itself
+#RUN pip install -r ${repos_dir}/rally/requirements.txt
 RUN ${repos_dir}/rally/install_rally.sh --yes
+
+# config tempest
+ENV TEMPEST_VENV_DIR=${VIRTUAL_ENVS_DIR}/tempest
+RUN virtualenv ${TEMPEST_VENV_DIR} \
+    && cd ${TEMPEST_VENV_DIR} \
+    && . bin/activate \
+    && pip install --upgrade pip \
+    && pip install -r ${repos_dir}/tempest/requirements.txt \
+    && deactivate
+
+# config parser
+ENV PARSER_VENV_DIR=${VIRTUAL_ENVS_DIR}/parser
+RUN virtualenv ${PARSER_VENV_DIR} \
+    && cd ${PARSER_VENV_DIR} \
+    && . bin/activate \
+    && /bin/bash ${repos_dir}/parser/tests/parser_install.sh ${repos_dir} \
+    && deactivate
 
 ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img /home/opnfv/functest/data/
 ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-lxc.tar.gz /home/opnfv/functest/data/
@@ -122,10 +145,48 @@ ADD http://205.177.226.237:9999/onosfw/firewall_block_image.img /home/opnfv/func
 RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 RUN curl -L https://get.rvm.io | bash -s stable
 
-RUN /bin/bash -c ". /home/opnfv/repos/functest/functest/opnfv_tests/features/sfc/tacker_client_install.sh"
-RUN cd ${repos_dir}/bgpvpn && pip install .
-#RUN cd ${repos_dir}/kingbird && pip install -e .
-RUN cd ${repos_dir}/moon/moonclient/ && python setup.py install
+# configure tacker client
+ENV TACKER_CLIENT_VENV_DIR=${VIRTUAL_ENVS_DIR}/tacker
+RUN virtualenv ${TACKER_CLIENT_VENV_DIR} \
+    && cd ${TACKER_CLIENT_VENV_DIR} \
+    && . bin/activate \
+    && pip install --upgrade pip \
+#    && /bin/bash -c ". /home/opnfv/repos/functest/functest/opnfv_tests/features/sfc/tacker_client_install.sh" \
+    && deactivate
+
+# configure bgpvpn
+ENV BGPVPN_VENV_DIR=${VIRTUAL_ENVS_DIR}/bgpvpn
+RUN virtualenv ${BGPVPN_VENV_DIR} \
+    && cd ${BGPVPN_VENV_DIR} \
+    && . bin/activate \
+    && pip install --upgrade pip \
+#    && cd ${repos_dir}/bgpvpn && pip install . \
+    && deactivate
+
+# configure kingbird
+ENV KINGBIRD_VENV_DIR=${VIRTUAL_ENVS_DIR}/kingbird
+RUN virtualenv ${KINGBIRD_VENV_DIR} \
+    && cd ${KINGBIRD_VENV_DIR} \
+    && . bin/activate \
+    && pip install --upgrade pip \
+    && cd ${repos_dir}/kingbird && pip install -e . \
+    && deactivate
+
+# configure moonclient
+ENV MOONCLIENT_VENV_DIR=${VIRTUAL_ENVS_DIR}/moonclient
+RUN virtualenv ${MOONCLIENT_VENV_DIR} \
+    && cd ${MOONCLIENT_VENV_DIR} \
+    && . bin/activate \
+    && pip install --upgrade pip \
+#    && cd ${repos_dir}/moon/moonclient/ && python setup.py install \
+    && deactivate
+
+# config promise
+RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -' \
+    && sudo apt-get install -y nodejs \
+    && cd ${repos_dir}/promise \
+    && sudo npm -g install npm@latest \
+    && npm install
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd /home/opnfv/repos/vims-test \
@@ -136,14 +197,10 @@ RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd /home/opnfv/repos/vims-test \
     && rvm use 1.9.3"
-RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd /home/opnfv/repos/vims-test \
-    && bundle install"
+#RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
+#    && cd /home/opnfv/repos/vims-test \
+#    && bundle install"
 
-RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -'
-RUN sudo apt-get install -y nodejs
-RUN cd ${repos_dir}/promise && sudo npm -g install npm@latest
-RUN cd ${repos_dir}/promise && npm install
 
 RUN echo "set nocompatible \n\
 set backspace=2" \
