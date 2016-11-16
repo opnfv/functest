@@ -24,6 +24,7 @@ general:
         dir_repo_ovno:      /home/opnfv/repos/ovno
         dir_repo_parser:    /home/opnfv/repos/parser
         dir_repo_domino:    /home/opnfv/repos/domino
+        dir_repo_vRouter:   /home/opnfv/repos/vrouter
         dir_functest:       /home/opnfv/functest
         dir_results:        /home/opnfv/functest/results
         dir_functest_conf:  /home/opnfv/functest/conf
@@ -31,6 +32,7 @@ general:
         dir_functest_data:  /home/opnfv/functest/data
         dir_vIMS_data:      /home/opnfv/functest/data/vIMS
         dir_rally_inst:     /home/opnfv/.rally
+        dir_vRouter_data:   /home/opnfv/functest/data/vRouter
 
     openstack:
         snapshot_file: /home/opnfv/functest/conf/openstack_snapshot.yaml
@@ -183,7 +185,65 @@ promise:
     subnet_name: promise-subnet
     subnet_cidr: 192.168.121.0/24
     router_name: promise-router
-
+vRouter:
+    general:
+        tenant_name: vRouter
+        tenant_description: vRouter Testing
+        images:
+            centos:
+                image_url: 'http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1510.qcow2'
+                image_name: centos_7
+            vyos:
+                os_type: 'vyos'
+                image_url: 'https://sourceforge.net/projects/ool-opnfv/files/vyos-1.1.7.img'
+                image_name: vyos1.1.7
+                user: 'vyos'
+                pass: 'vyos'
+        test_data:
+            url: 'https://github.com/oolorg/opnfv-vnf-data.git'
+            branch: 'master'
+        reboot_wait: 30
+        protocol_stable_wait: 60
+        command_wait: 1
+        ssh_connect_timeout: 15
+        ssh_connect_retry_count: 20
+        ssh_receive_buffer: 10240
+    cloudify:
+        blueprint:
+            url: https://github.com/boucherv-orange/cloudify-manager-blueprints.git
+            branch: "3.3.1-build"
+        requierments:
+            ram_min: 8000
+            os_image: centos_7
+        inputs:
+            keystone_username: ""
+            keystone_password: ""
+            keystone_tenant_name: ""
+            keystone_url: ""
+            manager_public_key_name: 'manager-kp'
+            agent_public_key_name: 'agent-kp'
+            image_id: ""
+            flavor_id: "3"
+            external_network_name: ""
+            ssh_user: centos
+            agents_user: ubuntu
+    vnf_topology:
+        blueprint:
+            file_name: 'openstack-blueprint.yaml'
+            destination_folder: "opnfv-vnf-vyos-blueprint"
+            url: https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git
+            branch: "master"
+            blueprint_name: "vnftest_bp"
+            deployment_name: "vnftest_vyos"
+        requierments:
+            ram_min: 4000
+            os_image: vyos1.1.7
+        inputs:
+            external_network_name: ""
+            reference_vnf_flavor_id: ""
+            reference_vnf_image_id: ""
+            target_vnf_flavor_id: ""
+            target_vnf_image_id: ""
 example:
     example_vm_name: example-vm
     example_flavor: m1.small
