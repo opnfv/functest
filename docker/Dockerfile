@@ -40,9 +40,7 @@ ENV repos_dir /home/opnfv/repos
 ENV creds /home/opnfv/functest/conf/openstack.creds
 ENV TERM xterm
 ENV COLORTERM gnome-terminal
-ENV PYTHONPATH $PYTHONPATH:/home/opnfv/repos/
 ENV CONFIG_FUNCTEST_YAML /home/opnfv/repos/functest/functest/ci/config_functest.yaml
-ENV PYTHONPATH $PYTHONPATH:/home/opnfv/repos/:/home/opnfv/repos/functest
 WORKDIR /home/opnfv
 
 # Packaged dependencies
@@ -105,6 +103,7 @@ RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwat
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${repos_dir}/onos
 
 RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
+RUN cd ${repos_dir}/functest && pip install .
 RUN pip install -r ${repos_dir}/rally/requirements.txt
 RUN pip install -r ${repos_dir}/tempest/requirements.txt
 
@@ -156,4 +155,3 @@ RUN echo set nocompatible >> /home/opnfv/.exrc
 RUN echo "alias ll='ls -lh' \n\
 . /home/opnfv/repos/functest/functest/cli/functest-complete.sh" \
 >> /home/opnfv/.bashrc
-RUN cd ${repos_dir}/functest/functest/cli && pip install .
