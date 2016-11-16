@@ -64,7 +64,7 @@ libgmp3-dev \
 libxml2-dev \
 libffi-dev \
 crudini \
-ruby1.9.1-dev \
+ruby-dev \
 --no-install-recommends
 
 RUN pip install --upgrade pip
