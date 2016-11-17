@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_a70e0333",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-17T16:27:59Z",
+      "side": 1,
+      "message": "I think it is retireved dynamically, no?",
+      "revId": "2b6b1308bc9619f10279138d005b7bfd5b1a72db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e7040b17",
+        "filename": "functest/ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-17T16:27:59Z",
+      "side": 1,
+      "message": "my understanding is that you have 2 suites\n- 1 full\n- 1 if no fip\n\nthe target system must have fip ...so snaps-no-fip should not be called in pharos context. You keep it for possible local test in non Pharos Lab?",
+      "revId": "2b6b1308bc9619f10279138d005b7bfd5b1a72db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e41de974",
+        "filename": "functest/ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-17T16:27:59Z",
+      "side": 1,
+      "message": "mkdir -p $results_dir/snaps would not be quicker?",
+      "revId": "2b6b1308bc9619f10279138d005b7bfd5b1a72db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_2403f110",
+        "filename": "functest/ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-17T16:27:59Z",
+      "side": 1,
+      "message": "are they unit tests?\nusually this section is more dealing with functional tests \nunit tests are more for testing the framework\nprobably just a wording issue..but is is surprising to see unit test here",
+      "revId": "2b6b1308bc9619f10279138d005b7bfd5b1a72db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c7ff8f00",
+        "filename": "functest/ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-17T16:27:59Z",
+      "side": 1,
+      "message": "what is this hardcoded IP?",
+      "revId": "2b6b1308bc9619f10279138d005b7bfd5b1a72db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8709872e",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-17T16:27:59Z",
+      "side": 1,
+      "message": "declared this way, both tests will be run as there is no constraints neither on the installer nor the scenario.\n\nit means that some tests will be done twice\nwould it make sense in exec_test to check if fip is available then run only the accurate version?",
+      "revId": "2b6b1308bc9619f10279138d005b7bfd5b1a72db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
