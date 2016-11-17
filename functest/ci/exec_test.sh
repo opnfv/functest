@@ -84,6 +84,18 @@ function run_test(){
         "healthcheck")
             ${FUNCTEST_TEST_DIR}/OpenStack/healthcheck/healthcheck.sh
         ;;
+        "snaps-all")
+            ext_net=$(cat ${CONFIG_FUNCTEST_YAML} | shyaml get-value snaps.external_network_name 2> /dev/null || true)
+            results_dir=$(cat ${CONFIG_FUNCTEST_YAML} | shyaml get-value general.directories.dir_results 2> /dev/null || true)
+            mkdir -p $results_dir/snaps
+            python $repos_dir/snaps/snaps/unit_test_suite.py -e $creds -n $ext_net -k &> $results_dir/snaps/all-tests-log.out
+        ;;
+        "snaps-no-fip")
+            ext_net=$(cat ${CONFIG_FUNCTEST_YAML} | shyaml get-value snaps.external_network_name 2> /dev/null || true)
+            results_dir=$(cat ${CONFIG_FUNCTEST_YAML} | shyaml get-value general.directories.dir_results 2> /dev/null || true)
+            mkdir -p $results_dir/snaps
+            python $repos_dir/snaps/snaps/unit_test_suite.py -e $creds -n $ext_net -k -f &> $results_dir/snaps/test-no-fip-log.out
+        ;;
         "vping_ssh")
             python ${FUNCTEST_TEST_DIR}/OpenStack/vPing/vping.py -m ssh $report
         ;;

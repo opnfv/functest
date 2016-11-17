@@ -20,6 +20,34 @@ tiers:
                     scenario: '^((?!lxd).)*$'
 
     -
+        name: snaps
+        order: 0
+        ci_loop: '(daily)|(weekly)'
+        description : >-
+            PyTests included with the SNAPS library for keystone, glance, neutron, and nova.
+        testcases:
+            -
+                name: snaps-all
+                criteria: 'status == "PASS"'
+                blocking: true
+                description: >-
+                    This test case runs the entire suite of SNAPS tests.
+
+                dependencies:
+                    installer: ''
+                    scenario: ''
+            -
+                name: snaps-no-fip
+                criteria: 'status == "PASS"'
+                blocking: true
+                description: >-
+                    This test case runs all of the SNAPS tests that do not check to see if Floating IPs work.
+
+                dependencies:
+                    installer: ''
+                    scenario: ''
+
+    -
         name: smoke
         order: 1
         ci_loop: '(daily)|(weekly)'

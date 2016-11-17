@@ -58,6 +58,9 @@ healthcheck:
     disk_format: qcow2
     wait_time: 60
 
+snaps:
+    external_network_name: external
+
 vping:
     ping_timeout:   200
     vm_flavor: m1.tiny # adapt to your environment
