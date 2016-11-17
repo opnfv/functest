@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_67101b4f",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-17T16:32:47Z",
+      "side": 1,
+      "message": "right, and this will work only for apex, in other installers, the external network has a different name...",
+      "parentUuid": "5ac10518_a70e0333",
+      "revId": "2b6b1308bc9619f10279138d005b7bfd5b1a72db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_e7040b17",
         "filename": "functest/ci/exec_test.sh",
         "patchSetId": 1
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_071d9766",
+        "filename": "functest/ci/exec_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-17T16:32:47Z",
+      "side": 1,
+      "message": "it is missleading. It\u0027s not like our unit tests. My understanding is that it refers to simple api calls tests. Steven can explain better.",
+      "parentUuid": "5ac10518_2403f110",
+      "revId": "2b6b1308bc9619f10279138d005b7bfd5b1a72db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_c7ff8f00",
         "filename": "functest/ci/exec_test.sh",
         "patchSetId": 1
@@ -98,6 +134,24 @@
       "writtenOn": "2016-11-17T16:27:59Z",
       "side": 1,
       "message": "declared this way, both tests will be run as there is no constraints neither on the installer nor the scenario.\n\nit means that some tests will be done twice\nwould it make sense in exec_test to check if fip is available then run only the accurate version?",
+      "revId": "2b6b1308bc9619f10279138d005b7bfd5b1a72db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e72bab80",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-17T16:32:47Z",
+      "side": 1,
+      "message": "my proposal to Steven is that we execute the snaps-full (with fips) and put the same constraint as vping_ssh",
+      "parentUuid": "5ac10518_8709872e",
       "revId": "2b6b1308bc9619f10279138d005b7bfd5b1a72db",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
