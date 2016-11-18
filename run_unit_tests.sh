@@ -55,7 +55,7 @@ nosetests --with-xunit \
          --with-coverage \
          --cover-erase \
          --cover-package=functest.core.TestCasesBase \
-         --cover-package=functest.testcases.Controllers.ODL.OpenDaylightTesting \
+         --cover-package=functest.opnfv_tests.Controllers.ODL.OpenDaylightTesting \
          --cover-xml \
          --cover-html \
          functest/tests/unit

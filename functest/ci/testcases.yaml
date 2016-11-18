@@ -192,6 +192,9 @@ tiers:
                 dependencies:
                     installer: 'joid'
                     scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.features.domino'
+                    class: 'DominoCases'
             -
                 name: odl-sfc
                 criteria: 'status == "PASS"'

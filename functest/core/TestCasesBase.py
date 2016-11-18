@@ -21,10 +21,9 @@ class TestCasesBase(object):
 
     logger = ft_logger.Logger(__name__).getLogger()
 
-    project = "functest"
-
     def __init__(self):
         self.details = {}
+        self.project_name = "functest"
         self.case_name = ""
         self.criteria = ""
         self.start_time = ""
@@ -36,12 +35,13 @@ class TestCasesBase(object):
 
     def push_to_db(self):
         try:
+            assert self.project_name
             assert self.case_name
             assert self.criteria
             assert self.start_time
             assert self.stop_time
             if ft_utils.push_results_to_db(
-                    TestCasesBase.project, self.case_name, self.start_time,
+                    self.project_name, self.case_name, self.start_time,
                     self.stop_time, self.criteria, self.details):
                 self.logger.info("The results were successfully pushed to DB")
                 return TestCasesBase.EX_OK
