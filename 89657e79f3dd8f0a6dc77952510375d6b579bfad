@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_e765eb45",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_userdata.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-18T08:21:40Z",
+      "side": 1,
+      "message": "would be possible to add the constants from https://gerrit.opnfv.org/gerrit/#/c/24517/ if we merge it",
+      "revId": "89657e79f3dd8f0a6dc77952510375d6b579bfad",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
