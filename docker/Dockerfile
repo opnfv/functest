@@ -86,7 +86,7 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${repo
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${repos_dir}/parser
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
-RUN git clone --depth 1 https://github.com/opnfv/promise ${repos_dir}/promise
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${repos_dir}/promise
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${repos_dir}/securityscanning
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
 
@@ -146,7 +146,7 @@ RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
 RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -'
 RUN sudo apt-get install -y nodejs
 RUN cd ${repos_dir}/promise && sudo npm -g install npm@latest
-RUN cd ${repos_dir}/promise && npm install
+RUN cd ${repos_dir}/promise/source && npm install
 
 RUN echo "set nocompatible \n\
 set backspace=2" \
