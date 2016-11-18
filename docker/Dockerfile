@@ -87,6 +87,7 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${repo
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${repos_dir}/promise
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sfc ${repos_dir}/sfc
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${repos_dir}/securityscanning
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
 
