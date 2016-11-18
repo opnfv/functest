@@ -37,6 +37,9 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: '^((?!bgpvpn|odl_l3).)*$'
+                run:
+                    module: 'functest.opnfv_tests.OpenStack.vPing.vping_ssh'
+                    class: 'VPingSSH'
 
             -
                 name: vping_userdata
@@ -48,6 +51,9 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: '^((?!lxd).)*$'
+                run:
+                    module: 'functest.opnfv_tests.OpenStack.vPing.vping_userdata'
+                    class: 'VPingUserdata'
 
             -
                 name: tempest_smoke_serial
