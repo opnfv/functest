@@ -85,10 +85,10 @@ function run_test(){
             ${FUNCTEST_TEST_DIR}/OpenStack/healthcheck/healthcheck.sh
         ;;
         "vping_ssh")
-            python ${FUNCTEST_TEST_DIR}/OpenStack/vPing/vping.py -m ssh $report
+            python ${FUNCTEST_TEST_DIR}/OpenStack/vPing/vping_ssh.py $report
         ;;
         "vping_userdata")
-            python ${FUNCTEST_TEST_DIR}/OpenStack/vPing/vping.py -m userdata $report
+            python ${FUNCTEST_TEST_DIR}/OpenStack/vPing/vping_userdata.py $report
         ;;
         "odl")
             odl_tests
