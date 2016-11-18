@@ -16,6 +16,24 @@
       "revId": "89657e79f3dd8f0a6dc77952510375d6b579bfad",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a7d603c4",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_userdata.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-18T08:50:24Z",
+      "side": 1,
+      "message": "EXIT_CODE will only be used in parser_result, it will not be reflected to the upstream. \nExit code to the upstream now use os.EX_XXX, when the constants patch merged, I will using the constants defined there",
+      "parentUuid": "5ac10518_e765eb45",
+      "revId": "89657e79f3dd8f0a6dc77952510375d6b579bfad",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
