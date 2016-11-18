@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_1a1ace6e",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-18T10:38:55Z",
+      "side": 1,
+      "message": "shall we not remove this line...",
+      "revId": "56adcb061ed41d66c8b5827aeb0a0af73cc8ee20",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
