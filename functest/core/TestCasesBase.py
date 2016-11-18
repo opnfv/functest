@@ -24,6 +24,7 @@ class TestCasesBase(object):
     project = "functest"
 
     def __init__(self):
+        self.functest_repo = ft_utils.FUNCTEST_REPO
         self.details = {}
         self.case_name = ""
         self.criteria = ""

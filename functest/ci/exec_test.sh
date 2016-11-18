@@ -84,12 +84,6 @@ function run_test(){
         "healthcheck")
             ${FUNCTEST_TEST_DIR}/OpenStack/healthcheck/healthcheck.sh
         ;;
-        "vping_ssh")
-            python ${FUNCTEST_TEST_DIR}/OpenStack/vPing/vping.py -m ssh $report
-        ;;
-        "vping_userdata")
-            python ${FUNCTEST_TEST_DIR}/OpenStack/vPing/vping.py -m userdata $report
-        ;;
         "odl")
             odl_tests
             [[ "$report" == "-r" ]] && args=-p
