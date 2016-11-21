@@ -21,16 +21,14 @@
 #
 
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 import yaml
-
+import functest.utils.functest_constants as ft_constants
 
 logger = ft_logger.Logger("openstack_snapshot").getLogger()
 
 
-OS_SNAPSHOT_FILE = \
-    ft_utils.get_functest_config("general.openstack.snapshot_file")
+OS_SNAPSHOT_FILE = ft_constants.OPENSTACK_SNAPSHOT_FILE
 
 
 def separator():

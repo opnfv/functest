@@ -141,8 +141,8 @@ class environment(connection):
             result = self.CheckSshNoPasswd(host)
             if not result:
                 self.logger.info(
-                        "ssh login failed,try to copy master publickey" +
-                        "to agent " + str(host))
+                    "ssh login failed,try to copy master publickey" +
+                    "to agent " + str(host))
                 self.CopyPublicKey(host)
         self.OnosPushKeys(handle, "onos-push-keys " + self.OCT, masterpass)
         self.OnosPushKeys(handle, "onos-push-keys " + self.OC1, agentpass)

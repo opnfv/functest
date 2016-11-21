@@ -112,7 +112,7 @@ class Sfc_fun:
         data = '{"auth": {"tenantName": "admin",  "passwordCredentials":\
                { "username": "admin", "password": "console"}}}'
         headers = {"Accept": "application/json"}
-        response = requests.post(url, headers=headers,  data=data)
+        response = requests.post(url, headers=headers, data=data)
         if (response.status_code == OK):
             json1_data = json.loads(response.content)
             self.logger.debug(response.status_code)
@@ -132,12 +132,12 @@ class Sfc_fun:
         if self.admin_state_up != '':
             Dicdata['admin_state_up'] = self.admin_state_up
         Dicdata = {'network': Dicdata}
-        data = json.dumps(Dicdata,  indent=4)
+        data = json.dumps(Dicdata, indent=4)
         url = 'http://' + self.neutron_hostname + \
             ':9696/' + self.osver + '/networks'
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
-        response = requests.post(url, headers=headers,  data=data)
+        response = requests.post(url, headers=headers, data=data)
         if (response.status_code == CREATED):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
@@ -167,7 +167,7 @@ class Sfc_fun:
             ':9696/' + self.osver + '/subnets'
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
-        response = requests.post(url, headers=headers,  data=data)
+        response = requests.post(url, headers=headers, data=data)
 
         if (response.status_code == CREATED):
             self.logger.debug(response.status_code)
@@ -200,7 +200,7 @@ class Sfc_fun:
                 ':9696/' + self.osver + '/ports'
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
-            response = requests.post(url, headers=headers,  data=data)
+            response = requests.post(url, headers=headers, data=data)
 
             if (response.status_code == CREATED):
                 self.logger.debug(response.status_code)
@@ -220,7 +220,7 @@ class Sfc_fun:
         url = 'http://' + self.glance_hostname + \
             ':9292/v2/images?name=TestSfcVm'
         headers = {"Accept": "application/json", "Content-Type": "application/\
-                    octet-stream",  "X-Auth-Token": self.token_id}
+                    octet-stream", "X-Auth-Token": self.token_id}
         response = requests.get(url, headers=headers)
         if (response.status_code == OK):
             self.logger.debug(response.status_code)
@@ -271,7 +271,7 @@ class Sfc_fun:
                    self.tenant_id + '/servers')
             headers = {"Accept": "application/json", "Content-Type":
                        "application/json", "X-Auth-Token": self.token_id}
-            response = requests.post(url, headers=headers,  data=data)
+            response = requests.post(url, headers=headers, data=data)
             if (response.status_code == ACCEPTED):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
@@ -294,7 +294,7 @@ class Sfc_fun:
             url = 'http://' + \
                   self.nova_hostname + \
                 ':8774/v2.1/servers/detail?name=vm' + str(y)
-            headers = {"Accept": "application/json",  "X-Auth-Token":
+            headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
             response = requests.get(url, headers=headers)
             if (response.status_code == OK):
@@ -334,7 +334,7 @@ class Sfc_fun:
                 '/sfc/port_pairs'
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
-            response = requests.post(url, headers=headers,  data=data)
+            response = requests.post(url, headers=headers, data=data)
             if (response.status_code == CREATED):
                 info = "Creation of Port Pair PP" + str(p) + \
                        " is successful"
@@ -380,7 +380,7 @@ class Sfc_fun:
                   '/sfc/port_pair_groups'
             headers = {"Accept": "application/json", "X-Auth-Token":
                        self.token_id}
-            response = requests.post(url, headers=headers,  data=data)
+            response = requests.post(url, headers=headers, data=data)
             if (response.status_code == CREATED):
                 info = "Creation of Port Group PG" + str(p) + \
                     "is successful"
@@ -429,7 +429,7 @@ class Sfc_fun:
               '/sfc/flow_classifiers'
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
-        response = requests.post(url, headers=headers,  data=data)
+        response = requests.post(url, headers=headers, data=data)
         if (response.status_code == CREATED):
             json1_data = json.loads(response.content)
             self.flow_class_if = json1_data['flow_classifier']['id']
@@ -460,7 +460,7 @@ class Sfc_fun:
         headers = {"Accept": "application/json",
                    "Content-Type": "application/json",
                    "X-Auth-Token": self.token_id}
-        response = requests.post(url, headers=headers,  data=data)
+        response = requests.post(url, headers=headers, data=data)
         if (response.status_code == CREATED):
             self.logger.debug("Creation of PORT CHAIN is successful")
             json1_data = json.loads(response.content)
@@ -474,7 +474,7 @@ class Sfc_fun:
         time.sleep(5)
         response = requests.get('http://' + self.onos_hostname +
                                 ':8181/onos/v1/flows',
-                                auth=("karaf",  "karaf"))
+                                auth=("karaf", "karaf"))
         if (response.status_code == OK):
             self.logger.debug("Flow is successfully Queries")
             json1_data = json.loads(response.content)
@@ -503,7 +503,7 @@ class Sfc_fun:
             self.osver + '/routers.json'
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
-        response = requests.post(url, headers=headers,  data=data)
+        response = requests.post(url, headers=headers, data=data)
         if (response.status_code == CREATED):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
@@ -544,7 +544,7 @@ class Sfc_fun:
               '/routers/' + self.router_id + '/add_router_interface'
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
-        response = requests.put(url, headers=headers,  data=data)
+        response = requests.put(url, headers=headers, data=data)
         if (response.status_code == OK):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
@@ -565,7 +565,7 @@ class Sfc_fun:
               '/routers/' + self.router_id
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
-        response = requests.put(url, headers=headers,  data=data)
+        response = requests.put(url, headers=headers, data=data)
         if (response.status_code == OK):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
@@ -584,7 +584,7 @@ class Sfc_fun:
             url = 'http://' + self.nova_hostname + ':8774/v2.1/os-floating-ips'
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
-            response = requests.post(url, headers=headers,  data=data)
+            response = requests.post(url, headers=headers, data=data)
             if (response.status_code == OK):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
@@ -606,7 +606,7 @@ class Sfc_fun:
                   self.vm[ip_num] + '/action'
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
-            response = requests.post(url, headers=headers,  data=data)
+            response = requests.post(url, headers=headers, data=data)
             if(response.status_code == ACCEPTED):
                 self.logger.debug(response.status_code)
                 self.logger.debug(response.content)
@@ -625,12 +625,12 @@ class Sfc_fun:
             hostname = self.vm_public_ip[0]
             username = "cirros"
             password = "cubswin:)"
-            s.login(hostname,  username,  password)
+            s.login(hostname, username, password)
             s.sendline("ping -c 5 " + str(self.port_ip[2]))
             s.prompt()             # match the prompt
 
-            ping_re = re.search("transmitted.*received",  s.before).group()
-            x = re.split('\s+',  ping_re)
+            ping_re = re.search("transmitted.*received", s.before).group()
+            x = re.split('\s+', ping_re)
             if (x[1] >= "1"):
                 self.logger.info("Ping is Successfull")
             else:
@@ -641,7 +641,7 @@ class Sfc_fun:
             hostname = self.vm_public_ip[1]
             username = "cirros"
             password = "cubswin:)"
-            s.login(hostname,  username,  password)
+            s.login(hostname, username, password)
             s.sendline('sudo ./firewall')
             s.prompt()
             output_pack = s.before
@@ -672,7 +672,7 @@ class Sfc_fun:
         if result0 == 0 and result1 == 0:
             time.sleep(300)
             queue1 = Queue()
-            p1 = Process(target=vm1,  args=(queue1, ))
+            p1 = Process(target=vm1, args=(queue1, ))
             p1.start()
             p2 = Process(target=vm0)
             p2.start()
@@ -699,7 +699,7 @@ class Sfc_fun:
         """Check the PC SF Map Stats in the ONOS."""
         response = requests.get('http://' + self.onos_hostname +
                                 ':8181/onos/vtn/portChainSfMap/' +
-                                self.PC_id, auth=("karaf",  "karaf"))
+                                self.PC_id, auth=("karaf", "karaf"))
         if (response.status_code == OK):
             self.logger.info("portChainSfMap is successfully Queries")
             return(response.status_code)
@@ -753,7 +753,7 @@ class Sfc_fun:
 
     def deletePortPair(self):
         """Deletion of Portpair."""
-        for p in range(1,  2):
+        for p in range(1, 2):
             url = 'http://' + self.neutron_hostname + ':9696/' + self.osver + \
                   '/sfc/port_pairs/' + self.port_pair_id[0]
             headers = {"Accept": "application/json",
@@ -806,7 +806,7 @@ class Sfc_fun:
               '/routers/' + self.router_id
         headers = {"Accept": "application/json",
                    "X-Auth-Token": self.token_id}
-        response = requests.put(url, headers=headers,  data=data)
+        response = requests.put(url, headers=headers, data=data)
         if (response.status_code == OK):
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
@@ -819,11 +819,11 @@ class Sfc_fun:
                   '/remove_router_interface.json'
             headers = {"Accept": "application/json",
                        "X-Auth-Token": self.token_id}
-            response = requests.put(url, headers=headers,  data=data)
+            response = requests.put(url, headers=headers, data=data)
             if (response.status_code == OK):
                 url = ('http://' + self.neutron_hostname + ':9696/' +
                        self.osver + '/routers/' + self.router_id)
-                headers = {"Accept": "application/json",  "X-Auth-Token":
+                headers = {"Accept": "application/json", "X-Auth-Token":
                            self.token_id}
                 response = requests.delete(url, headers=headers)
                 if (response.status_code == NO_CONTENT):
