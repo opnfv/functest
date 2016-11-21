@@ -11,11 +11,10 @@
 #
 
 import argparse
-import os
 import sys
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+import functest.utils.functest_constants as ft_constants
 
 parser = argparse.ArgumentParser()
 
@@ -28,34 +27,27 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("create_instance_and_ip").getLogger()
 
-HOME = os.environ['HOME'] + "/"
+HOME = ft_constants.HOME + "/"
 
 VM_BOOT_TIMEOUT = 180
 
-INSTANCE_NAME = ft_utils.get_functest_config("example.example_vm_name")
-FLAVOR = ft_utils.get_functest_config("example.example_flavor")
-IMAGE_NAME = ft_utils.get_functest_config("example.example_image_name")
-IMAGE_FILENAME = \
-    ft_utils.get_functest_config("general.openstack.image_file_name")
-IMAGE_FORMAT = \
-    ft_utils.get_functest_config("general.openstack.image_disk_format")
-IMAGE_PATH = \
-    ft_utils.get_functest_config("general.directories.dir_functest_data") + \
+EXAMPLE_INSTANCE_NAME = ft_constants.EXAMPLE_INSTANCE_NAME
+EXAMPLE_FLAVOR = ft_constants.EXAMPLE_FLAVOR
+EXAMPLE_IMAGE_NAME = ft_constants.EXAMPLE_IMAGE_NAME
+IMAGE_FILENAME = ft_constants.GLANCE_IMAGE_FILENAME
+IMAGE_FORMAT = ft_constants.GLANCE_IMAGE_FORMAT
+IMAGE_PATH = ft_constants.FUNCTEST_DATA_DIR + \
     "/" + IMAGE_FILENAME
 
 # NEUTRON Private Network parameters
 
-NET_NAME = ft_utils.get_functest_config("example.example_private_net_name")
-SUBNET_NAME = \
-    ft_utils.get_functest_config("example.example_private_subnet_name")
-SUBNET_CIDR = \
-    ft_utils.get_functest_config("example.example_private_subnet_cidr")
-ROUTER_NAME = ft_utils.get_functest_config("example.example_router_name")
+EXAMPLE_PRIVATE_NET_NAME = ft_constants.EXAMPLE_PRIVATE_NET_NAME
+EXAMPLE_PRIVATE_SUBNET_NAME = ft_constants.EXAMPLE_PRIVATE_SUBNET_NAME
+EXAMPLE_PRIVATE_SUBNET_CIDR = ft_constants.EXAMPLE_PRIVATE_SUBNET_CIDR
+EXAMPLE_ROUTER_NAME = ft_constants.EXAMPLE_ROUTER_NAME
 
-SECGROUP_NAME = ft_utils.get_functest_config("example.example_sg_name")
-SECGROUP_DESCR = ft_utils.get_functest_config("example.example_sg_descr")
-
-TEST_DB = ft_utils.get_functest_config("results.test_db_url")
+EXAMPLE_SECGROUP_NAME = ft_constants.EXAMPLE_SECGROUP_NAME
+EXAMPLE_SECGROUP_DESCR = ft_constants.EXAMPLE_SECGROUP_DESCR
 
 
 def main():
@@ -65,17 +57,17 @@ def main():
     glance_client = os_utils.get_glance_client()
 
     image_id = os_utils.create_glance_image(glance_client,
-                                            IMAGE_NAME,
+                                            EXAMPLE_IMAGE_NAME,
                                             IMAGE_PATH,
                                             disk=IMAGE_FORMAT,
                                             container="bare",
                                             public=True)
 
     network_dic = os_utils.create_network_full(neutron_client,
-                                               NET_NAME,
-                                               SUBNET_NAME,
-                                               ROUTER_NAME,
-                                               SUBNET_CIDR)
+                                               EXAMPLE_PRIVATE_NET_NAME,
+                                               EXAMPLE_PRIVATE_SUBNET_NAME,
+                                               EXAMPLE_ROUTER_NAME,
+                                               EXAMPLE_PRIVATE_SUBNET_CIDR)
     if not network_dic:
         logger.error(
             "There has been a problem when creating the neutron network")
@@ -84,31 +76,34 @@ def main():
     network_id = network_dic["net_id"]
 
     sg_id = os_utils.create_security_group_full(neutron_client,
-                                                SECGROUP_NAME, SECGROUP_DESCR)
+                                                EXAMPLE_SECGROUP_NAME,
+                                                EXAMPLE_SECGROUP_DESCR)
 
     # boot INTANCE
-    logger.info("Creating instance '%s'..." % INSTANCE_NAME)
+    logger.info("Creating instance '%s'..." % EXAMPLE_INSTANCE_NAME)
     logger.debug(
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
-        "network=%s \n" % (INSTANCE_NAME, FLAVOR, image_id, network_id))
-    instance = os_utils.create_instance_and_wait_for_active(FLAVOR,
-                                                            image_id,
-                                                            network_id,
-                                                            INSTANCE_NAME)
+        "network=%s \n"
+        % (EXAMPLE_INSTANCE_NAME, EXAMPLE_FLAVOR, image_id, network_id))
+    instance = \
+        os_utils.create_instance_and_wait_for_active(EXAMPLE_FLAVOR,
+                                                     image_id,
+                                                     network_id,
+                                                     EXAMPLE_INSTANCE_NAME)
 
     if instance is None:
         logger.error("Error while booting instance.")
         sys.exit(-1)
     # Retrieve IP of INSTANCE
-    instance_ip = instance.networks.get(NET_NAME)[0]
+    instance_ip = instance.networks.get(EXAMPLE_PRIVATE_NET_NAME)[0]
     logger.debug("Instance '%s' got private ip '%s'." %
-                 (INSTANCE_NAME, instance_ip))
+                 (EXAMPLE_INSTANCE_NAME, instance_ip))
 
     logger.info("Adding '%s' to security group '%s'..."
-                % (INSTANCE_NAME, SECGROUP_NAME))
+                % (EXAMPLE_INSTANCE_NAME, EXAMPLE_SECGROUP_NAME))
     os_utils.add_secgroup_to_instance(nova_client, instance.id, sg_id)
 
-    logger.info("Creating floating IP for VM '%s'..." % INSTANCE_NAME)
+    logger.info("Creating floating IP for VM '%s'..." % EXAMPLE_INSTANCE_NAME)
     floatip_dic = os_utils.create_floating_ip(neutron_client)
     floatip = floatip_dic['fip_addr']
     # floatip_id = floatip_dic['fip_id']
@@ -119,12 +114,13 @@ def main():
     logger.info("Floating IP created: '%s'" % floatip)
 
     logger.info("Associating floating ip: '%s' to VM '%s' "
-                % (floatip, INSTANCE_NAME))
+                % (floatip, EXAMPLE_INSTANCE_NAME))
     if not os_utils.add_floating_ip(nova_client, instance.id, floatip):
         logger.error("Cannot associate floating IP to VM.")
         sys.exit(-1)
 
     sys.exit(0)
+
 
 if __name__ == '__main__':
     main()

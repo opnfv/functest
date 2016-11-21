@@ -24,23 +24,23 @@ from keystoneclient.auth.identity import v2
 from novaclient import client
 
 import connect
-import functest.utils.functest_utils as ft_utils
+import functest.utils.functest_constants as ft_constants
 
 __version__ = 0.1
 __author__ = 'Luke Hinds (lhinds@redhat.com)'
 __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
 
 # Global vars
-INSTALLER_IP = os.getenv('INSTALLER_IP')
+INSTALLER_IP = ft_constants.CI_INSTALLER_IP
 oscapbin = 'sudo /bin/oscap'
-functest_dir = '%s/opnfv_tests/security_scan/' % ft_utils.FUNCTEST_REPO
+functest_dir = '%s/security_scan/' % ft_constants.FUNCTEST_TEST_DIR
 
 # Apex Spefic var needed to query Undercloud
-if os.getenv('OS_AUTH_URL') is None:
+if ft_constants.OS_AUTH_URL is None:
     connect.logger.error(" Enviroment variable OS_AUTH_URL is not set")
     sys.exit(0)
 else:
-    OS_AUTH_URL = os.getenv('OS_AUTH_URL')
+    OS_AUTH_URL = ft_constants.OS_AUTH_URL
 
 # args
 parser = argparse.ArgumentParser(description='OPNFV OpenSCAP Scanner')
@@ -69,6 +69,10 @@ auth = v2.Password(auth_url=OS_AUTH_URL,
                    tenant_name='admin')
 sess = session.Session(auth=auth)
 nova = client.Client(2, session=sess)
+
+
+class GlobalVariables:
+    tmpdir = ""
 
 
 def run_tests(host, nodetype):
@@ -133,13 +137,12 @@ def internet_check(host, nodetype):
 
 def createfiles(host, port, user, localkey):
     import connect
-    global tmpdir
     localpath = functest_dir + 'scripts/createfiles.py'
     remotepath = '/tmp/createfiles.py'
     com = 'python /tmp/createfiles.py'
     connect = connect.ConnectionManager(host, port, user, localkey,
                                         localpath, remotepath, com)
-    tmpdir = connect.remotescript()
+    GlobalVariables.tmpdir = connect.remotescript()
 
 
 def install_pkg(host, port, user, localkey):
@@ -160,18 +163,20 @@ def run_scanner(host, port, user, localkey, nodetype):
     if scantype == 'xccdf':
         cpe = cfgparse.get(nodetype, 'cpe')
         com = '{0} xccdf eval --profile {1} --results {2}/{3}' \
-              ' --report {2}/{4} --cpe {5} {6}'.format(oscapbin,
-                                                       profile,
-                                                       tmpdir.rstrip(),
-                                                       results,
-                                                       report,
-                                                       cpe,
-                                                       secpolicy)
+              ' --report {2}/{4}' \
+              ' --cpe {5} {6}'.format(oscapbin,
+                                      profile,
+                                      GlobalVariables.tmpdir.rstrip(),
+                                      results,
+                                      report,
+                                      cpe,
+                                      secpolicy)
         connect = connect.ConnectionManager(host, port, user, localkey, com)
         connect.remotecmd()
     elif scantype == 'oval':
         com = '{0} oval eval --results {1}/{2} '
-        '--report {1}/{3} {4}'.format(oscapbin, tmpdir.rstrip(),
+        '--report {1}/{3} {4}'.format(oscapbin,
+                                      GlobalVariables.tmpdir.rstrip(),
                                       results, report, secpolicy)
         connect = connect.ConnectionManager(host, port, user, localkey, com)
         connect.remotecmd()
@@ -191,7 +196,7 @@ def post_tasks(host, port, user, localkey, nodetype):
     os.makedirs(dl_folder, 0755)
     report = cfgparse.get(nodetype, 'report')
     results = cfgparse.get(nodetype, 'results')
-    reportfile = '{0}/{1}'.format(tmpdir.rstrip(), report)
+    reportfile = '{0}/{1}'.format(GlobalVariables.tmpdir.rstrip(), report)
     connect = connect.ConnectionManager(host, port, user, localkey, dl_folder,
                                         reportfile, report, results)
     connect.download_reports()
@@ -206,7 +211,7 @@ def removepkg(host, port, user, localkey, nodetype):
 
 def cleandir(host, port, user, localkey, nodetype):
     import connect
-    com = 'sudo rm -r {0}'.format(tmpdir.rstrip())
+    com = 'sudo rm -r {0}'.format(GlobalVariables.tmpdir.rstrip())
     connect = connect.ConnectionManager(host, port, user, localkey, com)
     connect.remotecmd()
 

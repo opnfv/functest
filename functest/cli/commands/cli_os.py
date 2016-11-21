@@ -15,19 +15,18 @@ import click
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
+import functest.utils.functest_constants as ft_constants
 
 
-FUNCTEST_CONF_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_conf')
-RC_FILE = os.getenv('creds')
-OS_SNAPSHOT_FILE = \
-    ft_utils.get_functest_config("general.openstack.snapshot_file")
+FUNCTEST_CONF_DIR = ft_constants.FUNCTEST_CONF_DIR
+OPENSTACK_RC_FILE = ft_constants.OPENSTACK_CREDS
+OPENSTACK_SNAPSHOT_FILE = ft_constants.OPENSTACK_SNAPSHOT_FILE
 
 
 class CliOpenStack:
 
     def __init__(self):
-        self.os_auth_url = os.getenv('OS_AUTH_URL')
+        self.os_auth_url = ft_constants.OS_AUTH_URL
         self.endpoint_ip = None
         self.endpoint_port = None
         if self.os_auth_url is not None:
@@ -51,7 +50,7 @@ class CliOpenStack:
                 click.echo("{}={}".format(key, value))
 
     def fetch_credentials(self):
-        if os.path.isfile(RC_FILE):
+        if os.path.isfile(OPENSTACK_RC_FILE):
             answer = raw_input("It seems the RC file is already present. "
                                "Do you want to overwrite it? [y|n]\n")
             while True:
@@ -62,29 +61,30 @@ class CliOpenStack:
                 else:
                     answer = raw_input("Invalid answer. Please type [y|n]\n")
 
-        CI_INSTALLER_TYPE = os.getenv('INSTALLER_TYPE')
+        CI_INSTALLER_TYPE = ft_constants.CI_INSTALLER_TYPE
         if CI_INSTALLER_TYPE is None:
             click.echo("The environment variable 'INSTALLER_TYPE' is not"
                        "defined. Please export it")
-        CI_INSTALLER_IP = os.getenv('INSTALLER_IP')
+        CI_INSTALLER_IP = ft_constants.CI_INSTALLER_IP
         if CI_INSTALLER_IP is None:
             click.echo("The environment variable 'INSTALLER_IP' is not"
                        "defined. Please export it")
-        cmd = ("/home/opnfv/repos/releng/utils/fetch_os_creds.sh "
-               "-d %s -i %s -a %s"
-               % (RC_FILE, CI_INSTALLER_TYPE, CI_INSTALLER_IP))
+        cmd = ft_constants.REPOS_DIR + \
+            ("/releng/utils/fetch_os_creds.sh "
+             "-d %s -i %s -a %s"
+             % (OPENSTACK_RC_FILE, CI_INSTALLER_TYPE, CI_INSTALLER_IP))
         click.echo("Fetching credentials from installer node '%s' with IP=%s.."
                    % (CI_INSTALLER_TYPE, CI_INSTALLER_IP))
         ft_utils.execute_command(cmd, verbose=False)
 
     def check(self):
         self.ping_endpoint()
-        cmd = ft_utils.FUNCTEST_REPO + "/functest/ci/check_os.sh"
+        cmd = ft_constants.FUNCTEST_REPO_DIR + "/functest/ci/check_os.sh"
         ft_utils.execute_command(cmd, verbose=False)
 
     def snapshot_create(self):
         self.ping_endpoint()
-        if os.path.isfile(OS_SNAPSHOT_FILE):
+        if os.path.isfile(OPENSTACK_SNAPSHOT_FILE):
             answer = raw_input("It seems there is already an OpenStack "
                                "snapshot. Do you want to overwrite it with "
                                "the current OpenStack status? [y|n]\n")
@@ -100,18 +100,18 @@ class CliOpenStack:
         os_snapshot.main()
 
     def snapshot_show(self):
-        if not os.path.isfile(OS_SNAPSHOT_FILE):
+        if not os.path.isfile(OPENSTACK_SNAPSHOT_FILE):
             click.echo("There is no OpenStack snapshot created. To create "
                        "one run the command "
                        "'functest openstack snapshot-create'")
             return
-        with open(OS_SNAPSHOT_FILE, 'r') as yaml_file:
+        with open(OPENSTACK_SNAPSHOT_FILE, 'r') as yaml_file:
             click.echo("\n%s"
                        % yaml_file.read())
 
     def clean(self):
         self.ping_endpoint()
-        if not os.path.isfile(OS_SNAPSHOT_FILE):
+        if not os.path.isfile(OPENSTACK_SNAPSHOT_FILE):
             click.echo("Not possible to clean OpenStack without a snapshot. "
                        "This could cause problems. "
                        "Run first the command "

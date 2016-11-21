@@ -29,6 +29,7 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 from clearwater import clearwater
 from orchestrator import orchestrator
+import functest.utils.functest_constants as ft_constants
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -48,39 +49,21 @@ logger = ft_logger.Logger("vIMS").getLogger()
 
 
 # Cloudify parameters
-VIMS_DIR = ft_utils.FUNCTEST_REPO + '/' + \
-           ft_utils.get_functest_config('general.directories.dir_vIMS')
+VIMS_DIR = os.path.join(ft_constants.FUNCTEST_TEST_DIR, 'vnf/vIMS/')
+VIMS_DATA_DIR = ft_constants.VIMS_DATA_DIR
+VIMS_TEST_DIR = ft_constants.VIMS_TEST_DIR
+VIMS_TENANT_NAME = ft_constants.VIMS_TENANT_NAME
+VIMS_TENANT_DESCRIPTION = ft_constants.VIMS_TENANT_DESCRIPTION
+VIMS_IMAGES = ft_constants.VIMS_IMAGES
 
-VIMS_DATA_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_vIMS_data') + \
-    '/'
-VIMS_TEST_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_repo_vims_test') + \
-    '/'
-DB_URL = \
-    ft_utils.get_functest_config('results.test_db_url')
+CFY_MANAGER_BLUEPRINT = ft_constants.CFY_MANAGER_BLUEPRINT
+CFY_MANAGER_REQUIERMENTS = ft_constants.CFY_MANAGER_REQUIERMENTS
+CFY_INPUTS = ft_constants.CFY_INPUTS
 
-TENANT_NAME = \
-    ft_utils.get_functest_config('vIMS.general.tenant_name')
-TENANT_DESCRIPTION = \
-    ft_utils.get_functest_config('vIMS.general.tenant_description')
-IMAGES = \
-    ft_utils.get_functest_config('vIMS.general.images')
-
-CFY_MANAGER_BLUEPRINT = \
-    ft_utils.get_functest_config('vIMS.cloudify.blueprint')
-CFY_MANAGER_REQUIERMENTS = \
-    ft_utils.get_functest_config('vIMS.cloudify.requierments')
-CFY_INPUTS = ft_utils.get_functest_config('vIMS.cloudify.inputs')
-
-CW_BLUEPRINT = \
-    ft_utils.get_functest_config('vIMS.clearwater.blueprint')
-CW_DEPLOYMENT_NAME = \
-    ft_utils.get_functest_config('vIMS.clearwater.deployment-name')
-CW_INPUTS = \
-    ft_utils.get_functest_config('vIMS.clearwater.inputs')
-CW_REQUIERMENTS = \
-    ft_utils.get_functest_config('vIMS.clearwater.requierments')
+CW_BLUEPRINT = ft_constants.CW_BLUEPRINT
+CW_DEPLOYMENT_NAME = ft_constants.CW_DEPLOYMENT_NAME
+CW_INPUTS = ft_constants.CW_INPUTS
+CW_REQUIERMENTS = ft_constants.CW_REQUIERMENTS
 
 CFY_DEPLOYMENT_DURATION = 0
 CW_DEPLOYMENT_DURATION = 0
@@ -92,7 +75,7 @@ RESULTS = {'orchestrator': {'duration': 0, 'result': ''},
 
 
 def download_and_add_image_on_glance(glance, image_name, image_url):
-    dest_path = VIMS_DATA_DIR + "tmp/"
+    dest_path = os.path.join(VIMS_DATA_DIR, "tmp/")
     if not os.path.exists(dest_path):
         os.makedirs(dest_path)
     file_name = image_url.rsplit('/')[-1]
@@ -216,9 +199,10 @@ def test_clearwater():
             logger.debug(result)
 
         vims_test_result = ""
+        tempFile = os.path.join(VIMS_TEST_DIR, "temp.json")
         try:
             logger.debug("Trying to load test results")
-            with open(VIMS_TEST_DIR + "temp.json") as f:
+            with open(tempFile) as f:
                 vims_test_result = json.load(f)
             f.close()
         except:
@@ -246,7 +230,7 @@ def test_clearwater():
                                     RESULTS)
 
         try:
-            os.remove(VIMS_TEST_DIR + "temp.json")
+            os.remove(tempFile)
         except:
             logger.error("Deleting file failed")
 
@@ -271,10 +255,10 @@ def main():
                      ks_creds['username'])
 
     tenant_id = os_utils.create_tenant(
-        keystone, TENANT_NAME, TENANT_DESCRIPTION)
+        keystone, VIMS_TENANT_NAME, VIMS_TENANT_DESCRIPTION)
     if not tenant_id:
         step_failure("init", "Error : Failed to create " +
-                     TENANT_NAME + " tenant")
+                     VIMS_TENANT_NAME + " tenant")
 
     roles_name = ["admin", "Admin"]
     role_id = ''
@@ -290,31 +274,31 @@ def main():
                      ks_creds['username'])
 
     user_id = os_utils.create_user(
-        keystone, TENANT_NAME, TENANT_NAME, None, tenant_id)
+        keystone, VIMS_TENANT_NAME, VIMS_TENANT_NAME, None, tenant_id)
     if not user_id:
-        logger.error("Error : Failed to create %s user" % TENANT_NAME)
+        logger.error("Error : Failed to create %s user" % VIMS_TENANT_NAME)
 
     logger.info("Update OpenStack creds informations")
     ks_creds.update({
-        "username": TENANT_NAME,
-        "password": TENANT_NAME,
-        "tenant_name": TENANT_NAME,
+        "username": VIMS_TENANT_NAME,
+        "password": VIMS_TENANT_NAME,
+        "tenant_name": VIMS_TENANT_NAME,
     })
 
     nt_creds.update({
-        "tenant_name": TENANT_NAME,
+        "tenant_name": VIMS_TENANT_NAME,
     })
 
     nv_creds.update({
-        "project_id": TENANT_NAME,
+        "project_id": VIMS_TENANT_NAME,
     })
 
     logger.info("Upload some OS images if it doesn't exist")
     glance = os_utils.get_glance_client()
 
-    for img in IMAGES.keys():
-        image_name = IMAGES[img]['image_name']
-        image_url = IMAGES[img]['image_url']
+    for img in VIMS_IMAGES.keys():
+        image_name = VIMS_IMAGES[img]['image_name']
+        image_url = VIMS_IMAGES[img]['image_url']
 
         image_id = os_utils.get_image_id(glance, image_name)
 
@@ -337,7 +321,8 @@ def main():
     if not os_utils.update_sg_quota(neutron, tenant_id, 50, 100):
         step_failure(
             "init",
-            "Failed to update security group quota for tenant " + TENANT_NAME)
+            "Failed to update security group quota for tenant " +
+            VIMS_TENANT_NAME)
 
     # ############### CLOUDIFY INITIALISATION ################
     public_auth_url = keystone.service_catalog.url_for(

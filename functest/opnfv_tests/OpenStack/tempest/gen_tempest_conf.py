@@ -18,8 +18,12 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_logger as ft_logger
 from run_tempest import configure_tempest
 from run_tempest import TEMPEST_RESULTS_DIR
+import functest.utils.functest_constants as ft_constants
 
-logger = ft_logger.Logger("multisite").getLogger()
+logger = ft_logger.Logger("gen_tempest_conf").getLogger()
+
+CI_INSTALLER_TYPE = ft_constants.CI_INSTALLER_TYPE
+CI_INSTALLER_IP = ft_constants.CI_INSTALLER_IP
 
 
 def configure_tempest_multisite(deployment_dir):
@@ -30,16 +34,16 @@ def configure_tempest_multisite(deployment_dir):
     configure_tempest(deployment_dir)
 
     logger.debug("Finding tempest.conf file...")
-    tempest_conf_file = deployment_dir + "/tempest.conf"
-    if not os.path.isfile(tempest_conf_file):
+    tempest_conf_old = os.path.join(deployment_dir, '/tempest.conf')
+    if not os.path.isfile(tempest_conf_old):
         logger.error("Tempest configuration file %s NOT found."
-                     % tempest_conf_file)
+                     % tempest_conf_old)
         exit(-1)
 
     # Copy tempest.conf to /home/opnfv/functest/results/tempest/
     cur_path = os.path.split(os.path.realpath(__file__))[0]
-    shutil.copyfile(tempest_conf_file, cur_path + '/tempest_multisite.conf')
-    tempest_conf_file = cur_path + "/tempest_multisite.conf"
+    tempest_conf_file = os.path.join(cur_path, '/tempest_multisite.conf')
+    shutil.copyfile(tempest_conf_old, tempest_conf_file)
 
     logger.debug("Updating selected tempest.conf parameters...")
     config = ConfigParser.RawConfigParser()
@@ -49,12 +53,12 @@ def configure_tempest_multisite(deployment_dir):
     cmd = "openstack endpoint show kingbird | grep publicurl |\
            awk '{print $4}' | awk -F '/' '{print $4}'"
     kingbird_api_version = os.popen(cmd).read()
-    if os.environ.get("INSTALLER_TYPE") == 'fuel':
+    if CI_INSTALLER_TYPE == 'fuel':
         # For MOS based setup, the service is accessible
         # via bind host
         kingbird_conf_path = "/etc/kingbird/kingbird.conf"
-        installer_type = os.getenv('INSTALLER_TYPE', 'Unknown')
-        installer_ip = os.getenv('INSTALLER_IP', 'Unknown')
+        installer_type = CI_INSTALLER_TYPE
+        installer_ip = CI_INSTALLER_IP
         installer_username = ft_utils.get_functest_config(
             "multisite." + installer_type +
             "_environment.installer_username")

@@ -19,7 +19,7 @@ import time
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
-
+import functest.utils.functest_constants as ft_constants
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
@@ -27,10 +27,8 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-PARSER_REPO = \
-    functest_utils.get_functest_config('general.directories.dir_repo_parser')
-RESULTS_DIR = \
-    functest_utils.get_functest_config('general.directories.dir_results')
+PARSER_REPO = ft_constants.PARSER_REPO
+RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
 
 logger = ft_logger.Logger("parser").getLogger()
 
@@ -66,6 +64,7 @@ def main():
                                           status,
                                           details)
     exit(ret)
+
 
 if __name__ == '__main__':
     main()
