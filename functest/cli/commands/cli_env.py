@@ -13,9 +13,7 @@ import click
 import git
 
 import functest.utils.functest_utils as ft_utils
-
-ENV_FILE = "/home/opnfv/functest/conf/env_active"
-FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
+import functest.utils.functest_constants as ft_constants
 
 
 class CliEnv:
@@ -30,44 +28,45 @@ class CliEnv:
                                "it again? [y|n]\n")
             while True:
                 if answer.lower() in ["y", "yes"]:
-                    os.remove(ENV_FILE)
+                    os.remove(ft_constants.ENV_FILE)
                     break
                 elif answer.lower() in ["n", "no"]:
                     return
                 else:
                     answer = raw_input("Invalid answer. Please type [y|n]\n")
 
-        cmd = ("python %s/functest/ci/prepare_env.py start" % FUNCTEST_REPO)
+        cmd = ("python %s/functest/ci/prepare_env.py start" %
+               ft_constants.FUNCTEST_REPO_DIR)
         ft_utils.execute_command(cmd)
 
     def show(self):
-        CI_INSTALLER_TYPE = os.getenv('INSTALLER_TYPE')
+        CI_INSTALLER_TYPE = ft_constants.CI_INSTALLER_TYPE
         if CI_INSTALLER_TYPE is None:
             CI_INSTALLER_TYPE = "Unknown"
-        CI_INSTALLER_IP = os.getenv('INSTALLER_IP')
+        CI_INSTALLER_IP = ft_constants.CI_INSTALLER_IP
         if CI_INSTALLER_IP is None:
             CI_INSTALLER_IP = "Unknown"
         CI_INSTALLER = ("%s, %s" % (CI_INSTALLER_TYPE, CI_INSTALLER_IP))
 
-        CI_SCENARIO = os.getenv('DEPLOY_SCENARIO')
+        CI_SCENARIO = ft_constants.CI_SCENARIO
         if CI_SCENARIO is None:
             CI_SCENARIO = "Unknown"
 
-        CI_NODE = os.getenv('NODE_NAME')
+        CI_NODE = ft_constants.CI_NODE
         if CI_NODE is None:
             CI_NODE = "Unknown"
 
-        repo = git.Repo(FUNCTEST_REPO)
+        repo = git.Repo(ft_constants.FUNCTEST_REPO_DIR)
         branch = repo.head.reference
         GIT_BRANCH = branch.name
         GIT_HASH = branch.commit.hexsha
 
-        CI_BUILD_TAG = os.getenv('BUILD_TAG')
+        CI_BUILD_TAG = ft_constants.CI_BUILD_TAG
         if CI_BUILD_TAG is not None:
             CI_BUILD_TAG = CI_BUILD_TAG.lstrip(
                 "jenkins-").lstrip("functest").lstrip("-")
 
-        CI_DEBUG = os.getenv('CI_DEBUG')
+        CI_DEBUG = ft_constants.CI_DEBUG
         if CI_DEBUG is None:
             CI_DEBUG = "false"
 
@@ -93,7 +92,7 @@ class CliEnv:
 
     def status(self, verbose=True):
         ret_val = 0
-        if not os.path.isfile(ENV_FILE):
+        if not os.path.isfile(ft_constants.ENV_FILE):
             if verbose:
                 click.echo("Functest environment is not installed.\n")
             ret_val = 1

@@ -25,6 +25,8 @@ from neutronclient.v2_0 import client as neutronclient
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as openstack_utils
+import functest.utils.functest_constants as ft_constants
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--testcase", help="Testcase name")
@@ -35,27 +37,15 @@ args = parser.parse_args()
 logger = ft_logger.Logger("onos").getLogger()
 
 # onos parameters
-TEST_DB = ft_utils.get_functest_config("results.test_db_url")
-ONOS_REPO_PATH = \
-    ft_utils.get_functest_config("general.directories.dir_repos")
-ONOS_CONF_DIR = \
-    ft_utils.get_functest_config("general.directories.dir_functest_conf")
-
-ONOSCI_PATH = ONOS_REPO_PATH + "/"
+ONOSCI_PATH = ft_constants.REPOS_DIR + "/"
 starttime = datetime.datetime.now()
 
-HOME = os.environ['HOME'] + "/"
-INSTALLER_TYPE = os.environ['INSTALLER_TYPE']
-DEPLOY_SCENARIO = os.environ['DEPLOY_SCENARIO']
-ONOSCI_PATH = ONOS_REPO_PATH + "/"
-GLANCE_IMAGE_NAME = ft_utils.get_functest_config("onos_sfc.image_name")
-GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config("onos_sfc.image_file_name")
-GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config("general.directories.dir_functest_data") + \
-    "/" + GLANCE_IMAGE_FILENAME
-SFC_PATH = ft_utils.FUNCTEST_REPO + "/" + \
-           ft_utils.get_functest_config("general.directories.dir_onos_sfc")
+INSTALLER_TYPE = ft_constants.CI_INSTALLER_TYPE
+ONOS_SFC_IMAGE_NAME = ft_constants.ONOS_SFC_IMAGE_NAME
+ONOS_SFC_IMAGE_PATH = os.path.join(ft_constants.FUNCTEST_DATA_DIR,
+                                   ft_constants.ONOS_SFC_IMAGE_FILENAME)
+ONOS_SFC_PATH = os.path.join(ft_constants.FUNCTEST_REPO_DIR,
+                             ft_constants.ONOS_SFC_RELATIVE_PATH)
 
 
 def RunScript(testname):
@@ -173,18 +163,18 @@ def CleanOnosTest():
 def CreateImage():
     glance_client = openstack_utils.get_glance_client()
     image_id = openstack_utils.create_glance_image(glance_client,
-                                                   GLANCE_IMAGE_NAME,
-                                                   GLANCE_IMAGE_PATH)
+                                                   ONOS_SFC_IMAGE_NAME,
+                                                   ONOS_SFC_IMAGE_PATH)
     EXIT_CODE = -1
     if not image_id:
         logger.error("Failed to create a Glance image...")
         return(EXIT_CODE)
     logger.debug("Image '%s' with ID=%s created successfully."
-                 % (GLANCE_IMAGE_NAME, image_id))
+                 % (ONOS_SFC_IMAGE_NAME, image_id))
 
 
 def SfcTest():
-    cmd = "python " + SFC_PATH + "Sfc.py"
+    cmd = "python " + ONOS_SFC_PATH + "/Sfc.py"
     logger.debug("Run sfc tests")
     os.system(cmd)
 
@@ -197,8 +187,8 @@ def GetIp(type):
 
 
 def Replace(before, after):
-    file = "Sfc_fun.py"
-    cmd = "sed -i 's/" + before + "/" + after + "/g' " + SFC_PATH + file
+    file = "/Sfc_fun.py"
+    cmd = "sed -i 's/" + before + "/" + after + "/g' " + ONOS_SFC_PATH + file
     os.system(cmd)
 
 
@@ -207,7 +197,7 @@ def SetSfcConf():
     Replace("neutron_ip", GetIp("neutron"))
     Replace("nova_ip", GetIp("nova"))
     Replace("glance_ip", GetIp("glance"))
-    pwd = os.environ['OS_PASSWORD']
+    pwd = ft_constants.OS_PASSWORD
     Replace("console", pwd)
     creds_neutron = openstack_utils.get_credentials("neutron")
     neutron_client = neutronclient.Client(**creds_neutron)
@@ -265,6 +255,7 @@ def main():
         SfcTest()
     else:
         OnosTest()
+
 
 if __name__ == '__main__':
     main()

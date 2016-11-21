@@ -151,7 +151,7 @@ tiers:
                 dependencies:
                     installer: '(fuel)|(apex)'
                     scenario: 'bgpvpn'
-                 run:
+                run:
                     module: 'functest.opnfv_tests.features.sdnvpn'
                     class: 'SDNVPN'
 
