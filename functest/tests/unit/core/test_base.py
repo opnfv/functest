@@ -25,7 +25,7 @@ class TestCasesBaseTesting(unittest.TestCase):
         self.test.start_time = "1"
         self.test.stop_time = "2"
         self.test.criteria = "100"
-        self.test.details = {"Hello":  "World"}
+        self.test.details = {"Hello": "World"}
 
     def test_run_unimplemented(self):
         self.assertEqual(self.test.run(),

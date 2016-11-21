@@ -16,20 +16,20 @@ import click
 import functest.ci.tier_builder as tb
 import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_vacation as vacation
+import functest.utils.functest_constants as ft_constants
 
-
-FUNCTEST_CONF_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_functest_conf')
+FUNCTEST_CONF_DIR = ft_constants.FUNCTEST_CONF_DIR
 ENV_FILE = FUNCTEST_CONF_DIR + "/env_active"
-FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
+FUNCTEST_REPO = ft_constants.FUNCTEST_REPO_DIR
 
 
 class CliTestcase:
 
     def __init__(self):
-        CI_INSTALLER_TYPE = os.getenv('INSTALLER_TYPE')
-        CI_SCENARIO = os.getenv('DEPLOY_SCENARIO')
-        testcases = ft_utils.get_testcases_file()
+        CI_INSTALLER_TYPE = ft_constants.CI_INSTALLER_TYPE
+        CI_SCENARIO = ft_constants.CI_SCENARIO
+        testcases = ft_constants.FUNCTEST_TESTCASES_YAML
+
         self.tiers = tb.TierBuilder(CI_INSTALLER_TYPE, CI_SCENARIO, testcases)
 
     def list(self):

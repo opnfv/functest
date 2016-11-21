@@ -1,10 +1,10 @@
 import json
-import os
 import re
 import urllib2
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
+import functest.utils.functest_constants as ft_constants
 
 
 COL_1_LEN = 25
@@ -15,8 +15,15 @@ COL_5_LEN = 75
 
 # If we run from CI (Jenkins) we will push the results to the DB
 # and then we can print the url to the specific test result
-IS_CI_RUN = False
-BUILD_TAG = None
+
+
+class GlobalVariables:
+    IS_CI_RUN = ft_constants.IS_CI_RUN
+    BUILD_TAG = ft_constants.CI_BUILD_TAG
+    INSTALLER = ft_constants.CI_INSTALLER_TYPE
+    CI_LOOP = ft_constants.CI_LOOP
+    SCENARIO = ft_constants.CI_SCENARIO
+
 
 logger = ft_logger.Logger("generate_report").getLogger()
 
@@ -34,7 +41,8 @@ def init(tiers_to_run):
 
 
 def get_results_from_db():
-    url = ft_utils.get_db_url() + '/results?build_tag=' + BUILD_TAG
+    url = ft_utils.get_db_url() + '/results?build_tag=' \
+        + GlobalVariables.BUILD_TAG
     logger.debug("Query to rest api: %s" % url)
     try:
         data = json.load(urllib2.urlopen(url))
@@ -61,7 +69,7 @@ def print_line(w1, w2='', w3='', w4='', w5=''):
            '| ' + w2.ljust(COL_2_LEN - 1) +
            '| ' + w3.ljust(COL_3_LEN - 1) +
            '| ' + w4.ljust(COL_4_LEN - 1))
-    if IS_CI_RUN:
+    if GlobalVariables.IS_CI_RUN:
         str += ('| ' + w5.ljust(COL_5_LEN - 1))
     str += '|\n'
     return str
@@ -69,7 +77,7 @@ def print_line(w1, w2='', w3='', w4='', w5=''):
 
 def print_line_no_columns(str):
     TOTAL_LEN = COL_1_LEN + COL_2_LEN + COL_3_LEN + COL_4_LEN + 2
-    if IS_CI_RUN:
+    if GlobalVariables.IS_CI_RUN:
         TOTAL_LEN += COL_5_LEN + 1
     return ('| ' + str.ljust(TOTAL_LEN) + "|\n")
 
@@ -79,21 +87,16 @@ def print_separator(char="=", delimiter="+"):
            delimiter + char * COL_2_LEN +
            delimiter + char * COL_3_LEN +
            delimiter + char * COL_4_LEN)
-    if IS_CI_RUN:
+    if GlobalVariables.IS_CI_RUN:
         str += (delimiter + char * COL_5_LEN)
     str += '+\n'
     return str
 
 
 def main(args):
-    global BUILD_TAG, IS_CI_RUN
     executed_test_cases = args
 
-    BUILD_TAG = os.getenv("BUILD_TAG")
-    if BUILD_TAG is not None:
-        IS_CI_RUN = True
-
-    if IS_CI_RUN:
+    if GlobalVariables.IS_CI_RUN:
         results = get_results_from_db()
         if results is not None:
             for test in executed_test_cases:
@@ -102,19 +105,15 @@ def main(args):
                              "result": data['result']})
 
     TOTAL_LEN = COL_1_LEN + COL_2_LEN + COL_3_LEN + COL_4_LEN
-    if IS_CI_RUN:
+    if GlobalVariables.IS_CI_RUN:
         TOTAL_LEN += COL_5_LEN
     MID = TOTAL_LEN / 2
 
-    INSTALLER = os.getenv('INSTALLER_TYPE', 'unknown')
-    CI_LOOP = os.getenv('CI_LOOP')
-    SCENARIO = os.getenv('DEPLOY_SCENARIO')
-    CI_LOOP = None
-    if BUILD_TAG is not None:
-        if re.search("daily", BUILD_TAG) is not None:
-            CI_LOOP = "daily"
+    if GlobalVariables.BUILD_TAG is not None:
+        if re.search("daily", GlobalVariables.BUILD_TAG) is not None:
+            GlobalVariables.CI_LOOP = "daily"
         else:
-            CI_LOOP = "weekly"
+            GlobalVariables.CI_LOOP = "weekly"
 
     str = ''
     str += print_separator('=', delimiter="=")
@@ -122,16 +121,20 @@ def main(args):
     str += print_separator('=', delimiter="=")
     str += print_line_no_columns(' ')
     str += print_line_no_columns(" Deployment description:")
-    str += print_line_no_columns("   INSTALLER: %s" % INSTALLER)
-    if SCENARIO is not None:
-        str += print_line_no_columns("   SCENARIO:  %s" % SCENARIO)
-    if BUILD_TAG is not None:
-        str += print_line_no_columns("   BUILD TAG: %s" % BUILD_TAG)
-    if CI_LOOP is not None:
-        str += print_line_no_columns("   CI LOOP:   %s" % CI_LOOP)
+    str += print_line_no_columns("   INSTALLER: %s"
+                                 % GlobalVariables.INSTALLER)
+    if GlobalVariables.SCENARIO is not None:
+        str += print_line_no_columns("   SCENARIO:  %s"
+                                     % GlobalVariables.SCENARIO)
+    if GlobalVariables.BUILD_TAG is not None:
+        str += print_line_no_columns("   BUILD TAG: %s"
+                                     % GlobalVariables.BUILD_TAG)
+    if GlobalVariables.CI_LOOP is not None:
+        str += print_line_no_columns("   CI LOOP:   %s"
+                                     % GlobalVariables.CI_LOOP)
     str += print_line_no_columns(' ')
     str += print_separator('=')
-    if IS_CI_RUN:
+    if GlobalVariables.IS_CI_RUN:
         str += print_line('TEST CASE', 'TIER', 'DURATION', 'RESULT', 'URL')
     else:
         str += print_line('TEST CASE', 'TIER', 'DURATION', 'RESULT')

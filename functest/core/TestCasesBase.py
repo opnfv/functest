@@ -11,6 +11,7 @@ import os
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
+import functest.utils.functest_constants as ft_constants
 
 
 class TestCasesBase(object):
@@ -23,7 +24,7 @@ class TestCasesBase(object):
     logger = ft_logger.Logger(__name__).getLogger()
 
     def __init__(self):
-        self.functest_repo = ft_utils.FUNCTEST_REPO
+        self.functest_repo = ft_constants.FUNCTEST_REPO_DIR
         self.details = {}
         self.project_name = "functest"
         self.case_name = ""
