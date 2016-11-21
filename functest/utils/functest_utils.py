@@ -25,9 +25,6 @@ import functest.utils.functest_logger as ft_logger
 
 logger = ft_logger.Logger("functest_utils").getLogger()
 
-REPOS_DIR = os.getenv('repos_dir')
-FUNCTEST_REPO = ("%s/functest" % REPOS_DIR)
-
 
 # ----------------------------------------------------------
 #
@@ -342,7 +339,7 @@ def get_deployment_dir():
 
 
 def get_dict_by_test(testname):
-    with open(get_testcases_file()) as f:
+    with open(get_testcases_file_dir()) as f:
         testcases_yaml = yaml.safe_load(f)
 
     for dic_tier in testcases_yaml.get("tiers"):
@@ -438,8 +435,8 @@ def check_test_result(test_name, ret, start_time, stop_time):
     return status, details
 
 
-def get_testcases_file():
-    return FUNCTEST_REPO + "/functest/ci/testcases.yaml"
+def get_testcases_file_dir():
+    return os.getenv('FUNCTEST_TESTCASES_YAML')
 
 
 def get_functest_yaml():
@@ -447,3 +444,7 @@ def get_functest_yaml():
         functest_yaml = yaml.safe_load(f)
     f.close()
     return functest_yaml
+
+
+def print_separator():
+    logger.info("==============================================")

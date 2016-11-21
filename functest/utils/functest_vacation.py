@@ -22,16 +22,16 @@ def main():
         body = '~FUNTEST'
         ind = 0
         while key != 27:
-            win.addstr(0, 44, ' Score: '+str(len(snake)-len(body))+' ')
+            win.addstr(0, 44, ' Score: ' + str(len(snake) - len(body)) + ' ')
             win.timeout(140 - 2 * len(snake))
             getkey = win.getch()
             key = key if getkey == -1 else getkey
             snake.insert(
-                0, [snake[0][0]+(key == KEY_RIGHT and 1 or
-                                 key == KEY_LEFT and -1),
-                    snake[0][1]+(key == KEY_DOWN and 1 or
-                                 key == KEY_UP and -1)])
-            win.addch(snake[len(snake)-1][1], snake[len(snake)-1][0], ' ')
+                0, [snake[0][0] + (key == KEY_RIGHT and 1 or
+                                   key == KEY_LEFT and -1),
+                    snake[0][1] + (key == KEY_DOWN and 1 or
+                                   key == KEY_UP and -1)])
+            win.addch(snake[len(snake) - 1][1], snake[len(snake) - 1][0], ' ')
             if win.inch(snake[0][1], snake[0][0]) & 255 == 32:
                 snake.pop()
             elif win.inch(snake[0][1], snake[0][0]) & 255 == ord('@'):
@@ -48,5 +48,6 @@ def main():
 
     print '\nSnake.PY-26lines by Kris Cieslak (defaultset.blogspot.com).'
     print 'OPNFV adaptation by Functest dream team.'
-    print 'Thanks for playing, your score: '+str(len(snake)-len(body)-1)+'.'
+    print 'Thanks for playing, your score: ' + \
+          str(len(snake) - len(body) - 1) + '.'
     print 'Find and fix more bugs in your real OPNFV setup!\n'
