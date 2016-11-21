@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_9d40f857",
+        "filename": "functest/utils/functest_constants.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-21T13:47:59Z",
+      "side": 1,
+      "message": "for generic info, I created a constants.py in releng\nand one of the var I put was this one :)\nhttps://gerrit.opnfv.org/gerrit/#/c/24517/\n\nmaybe it makes sense to inherit for generic parameter and avoid double declaration..",
+      "revId": "1beaab1ef1697685b9284e93bd4c579202c4b118",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_3d2544c2",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-21T13:47:59Z",
+      "side": 1,
+      "message": "will fail\ntestcases dir has been renamed opnfv_tests (but theoretically fix merged in https://gerrit.opnfv.org/gerrit/#/c/24561/1/run_unit_tests.sh",
+      "revId": "1beaab1ef1697685b9284e93bd4c579202c4b118",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
