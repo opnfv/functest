@@ -28,6 +28,7 @@ import yaml
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+import functest.utils.functest_constants as ft_constants
 
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
          'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
@@ -61,7 +62,6 @@ parser.add_argument("-z", "--sanity",
 
 args = parser.parse_args()
 
-network_dict = {}
 
 if args.verbose:
     RALLY_STDERR = subprocess.STDOUT
@@ -69,18 +69,17 @@ else:
     RALLY_STDERR = open(os.devnull, 'w')
 
 """ logging configuration """
-logger = ft_logger.Logger("run_rally").getLogger()
+logger = ft_logger.Logger("run_rally-cert").getLogger()
 
-
-HOME = os.environ['HOME'] + "/"
-RALLY_DIR = ft_utils.FUNCTEST_REPO + '/' + \
-            ft_utils.get_functest_config('general.directories.dir_rally')
-SANITY_MODE_DIR = RALLY_DIR + "scenario/sanity"
-FULL_MODE_DIR = RALLY_DIR + "scenario/full"
-TEMPLATE_DIR = RALLY_DIR + "scenario/templates"
-SUPPORT_DIR = RALLY_DIR + "scenario/support"
-TEMP_DIR = RALLY_DIR + "var"
-BLACKLIST_FILE = RALLY_DIR + "blacklist.txt"
+RALLY_DIR = os.path.join(ft_constants.FUNCTEST_REPO_DIR,
+                         ft_constants.RALLY_RELATIVE_PATH)
+RALLY_SCENARIO_DIR = os.path.join(RALLY_DIR, "scenario")
+SANITY_MODE_DIR = os.path.join(RALLY_SCENARIO_DIR, "sanity")
+FULL_MODE_DIR = os.path.join(RALLY_SCENARIO_DIR, "full")
+TEMPLATE_DIR = os.path.join(RALLY_SCENARIO_DIR, "templates")
+SUPPORT_DIR = os.path.join(RALLY_SCENARIO_DIR, "support")
+TEMP_DIR = os.path.join(RALLY_DIR, "var")
+BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.txt")
 
 FLAVOR_NAME = "m1.tiny"
 USERS_AMOUNT = 2
@@ -88,33 +87,27 @@ TENANTS_AMOUNT = 3
 ITERATIONS_AMOUNT = 10
 CONCURRENCY = 4
 
-RESULTS_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_rally_res')
-TEMPEST_CONF_FILE = \
-    ft_utils.get_functest_config('general.directories.dir_results') + \
-    '/tempest/tempest.conf'
-TEST_DB = ft_utils.get_functest_config('results.test_db_url')
+RESULTS_DIR = os.path.join(ft_constants.FUNCTEST_RESULTS_DIR, 'rally')
+TEMPEST_CONF_FILE = os.path.join(ft_constants.FUNCTEST_RESULTS_DIR,
+                                 'tempest/tempest.conf')
 
-PRIVATE_NET_NAME = ft_utils.get_functest_config('rally.network_name')
-PRIVATE_SUBNET_NAME = ft_utils.get_functest_config('rally.subnet_name')
-PRIVATE_SUBNET_CIDR = ft_utils.get_functest_config('rally.subnet_cidr')
-ROUTER_NAME = ft_utils.get_functest_config('rally.router_name')
+RALLY_PRIVATE_NET_NAME = ft_constants.RALLY_PRIVATE_NET_NAME
+RALLY_PRIVATE_SUBNET_NAME = ft_constants.RALLY_PRIVATE_SUBNET_NAME
+RALLY_PRIVATE_SUBNET_CIDR = ft_constants.RALLY_PRIVATE_SUBNET_CIDR
+RALLY_ROUTER_NAME = ft_constants.RALLY_ROUTER_NAME
 
-GLANCE_IMAGE_NAME = \
-    ft_utils.get_functest_config('general.openstack.image_name')
-GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config('general.openstack.image_file_name')
-GLANCE_IMAGE_FORMAT = \
-    ft_utils.get_functest_config('general.openstack.image_disk_format')
-GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data') + \
-    "/" + GLANCE_IMAGE_FILENAME
-
+GLANCE_IMAGE_NAME = ft_constants.GLANCE_IMAGE_NAME
+GLANCE_IMAGE_FILENAME = ft_constants.GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_FORMAT = ft_constants.GLANCE_IMAGE_FORMAT
+GLANCE_IMAGE_PATH = os.path.join(ft_constants.FUNCTEST_DATA_DIR,
+                                 GLANCE_IMAGE_FILENAME)
 CINDER_VOLUME_TYPE_NAME = "volume_test"
 
 
-SUMMARY = []
-neutron_client = None
+class GlobalVariables:
+    SUMMARY = []
+    neutron_client = None
+    network_dict = {}
 
 
 def get_task_id(cmd_raw):
@@ -179,16 +172,16 @@ def build_task_args(test_file_name):
     else:
         task_args['smoke'] = args.smoke
 
-    ext_net = os_utils.get_external_net(neutron_client)
+    ext_net = os_utils.get_external_net(GlobalVariables.neutron_client)
     if ext_net:
         task_args['floating_network'] = str(ext_net)
     else:
         task_args['floating_network'] = ''
 
-    net_id = network_dict['net_id']
+    net_id = GlobalVariables.network_dict['net_id']
     task_args['netid'] = str(net_id)
 
-    auth_url = os.getenv('OS_AUTH_URL')
+    auth_url = ft_constants.OS_AUTH_URL
     if auth_url is not None:
         task_args['request_url'] = auth_url.rsplit(":", 1)[0]
     else:
@@ -198,7 +191,6 @@ def build_task_args(test_file_name):
 
 
 def get_output(proc, test_name):
-    global SUMMARY
     result = ""
     nb_tests = 0
     overall_duration = 0.0
@@ -255,7 +247,7 @@ def get_output(proc, test_name):
                         'overall_duration': overall_duration,
                         'nb_tests': nb_tests,
                         'success': success_avg}
-    SUMMARY.append(scenario_summary)
+    GlobalVariables.SUMMARY.append(scenario_summary)
 
     logger.debug("\n" + result)
 
@@ -279,8 +271,8 @@ def excl_scenario():
         with open(BLACKLIST_FILE, 'r') as black_list_file:
             black_list_yaml = yaml.safe_load(black_list_file)
 
-        installer_type = os.getenv('INSTALLER_TYPE')
-        deploy_scenario = os.getenv('DEPLOY_SCENARIO')
+        installer_type = ft_constants.CI_INSTALLER_TYPE
+        deploy_scenario = ft_constants.CI_SCENARIO
         if (bool(installer_type) * bool(deploy_scenario)):
             if 'scenario' in black_list_yaml.keys():
                 for item in black_list_yaml['scenario']:
@@ -345,22 +337,24 @@ def apply_blacklist(case_file_name, result_file_name):
 
 
 def prepare_test_list(test_name):
-    scenario_file_name = '{}opnfv-{}.yaml'.format(RALLY_DIR + "scenario/",
-                                                  test_name)
+    test_yaml_file_name = 'opnfv-{}.yaml'.format(test_name)
+    scenario_file_name = os.path.join(RALLY_SCENARIO_DIR, test_yaml_file_name)
+
     if not os.path.exists(scenario_file_name):
         if args.sanity:
-            scenario_file_name = '{}opnfv-{}.yaml'.format(SANITY_MODE_DIR +
-                                                          "/", test_name)
+            scenario_file_name = os.path.join(SANITY_MODE_DIR,
+                                              test_yaml_file_name)
         else:
-            scenario_file_name = '{}opnfv-{}.yaml'.format(FULL_MODE_DIR +
-                                                          "/", test_name)
+            scenario_file_name = os.path.join(FULL_MODE_DIR,
+                                              test_yaml_file_name)
+
         if not os.path.exists(scenario_file_name):
             logger.info("The scenario '%s' does not exist."
                         % scenario_file_name)
             exit(-1)
 
     logger.debug('Scenario fetched from : {}'.format(scenario_file_name))
-    test_file_name = '{}opnfv-{}.yaml'.format(TEMP_DIR + "/", test_name)
+    test_file_name = os.path.join(TEMP_DIR, test_yaml_file_name)
 
     if not os.path.exists(TEMP_DIR):
         os.makedirs(TEMP_DIR)
@@ -385,11 +379,10 @@ def run_task(test_name):
     # :param test_name: name for the rally test
     # :return: void
     #
-    global SUMMARY
     logger.info('Starting test scenario "{}" ...'.format(test_name))
     start_time = time.time()
 
-    task_file = '{}task.yaml'.format(RALLY_DIR)
+    task_file = os.path.join(RALLY_DIR, 'task.yaml')
     if not os.path.exists(task_file):
         logger.error("Task file '%s' does not exist." % task_file)
         exit(-1)
@@ -428,9 +421,10 @@ def run_task(test_name):
         os.makedirs(RESULTS_DIR)
 
     # write html report file
-    report_file_name = '{}opnfv-{}.html'.format(RESULTS_DIR, test_name)
+    report_html_name = 'opnfv-{}.html'.format(test_name)
+    report_html_dir = os.path.join(RESULTS_DIR, report_html_name)
     cmd_line = "rally task report {} --out {}".format(task_id,
-                                                      report_file_name)
+                                                      report_html_dir)
 
     logger.debug('running command line : {}'.format(cmd_line))
     os.popen(cmd_line)
@@ -440,12 +434,13 @@ def run_task(test_name):
     logger.debug('running command line : {}'.format(cmd_line))
     cmd = os.popen(cmd_line)
     json_results = cmd.read()
-    with open('{}opnfv-{}.json'.format(RESULTS_DIR, test_name), 'w') as f:
+    report_json_name = 'opnfv-{}.json'.format(test_name)
+    report_json_dir = os.path.join(RESULTS_DIR, report_json_name)
+    with open(report_json_dir, 'w') as f:
         logger.debug('saving json file')
         f.write(json_results)
 
-    with open('{}opnfv-{}.json'
-              .format(RESULTS_DIR, test_name)) as json_file:
+    with open(report_json_dir) as json_file:
         json_data = json.load(json_file)
 
     """ parse JSON operation result """
@@ -469,12 +464,9 @@ def run_task(test_name):
 
 
 def main():
-    global SUMMARY
-    global network_dict
-    global neutron_client
 
-    nova_client = os_utils.get_nova_client()
-    neutron_client = os_utils.get_neutron_client()
+    GlobalVariables.nova_client = os_utils.get_nova_client()
+    GlobalVariables.neutron_client = os_utils.get_neutron_client()
     cinder_client = os_utils.get_cinder_client()
 
     start_time = time.time()
@@ -484,7 +476,7 @@ def main():
         logger.error('argument not valid')
         exit(-1)
 
-    SUMMARY = []
+    GlobalVariables.SUMMARY = []
 
     volume_types = os_utils.list_volume_types(cinder_client,
                                               private=False)
@@ -506,12 +498,13 @@ def main():
     if not image_id:
         exit(-1)
 
-    logger.debug("Creating network '%s'..." % PRIVATE_NET_NAME)
-    network_dict = os_utils.create_shared_network_full(PRIVATE_NET_NAME,
-                                                       PRIVATE_SUBNET_NAME,
-                                                       ROUTER_NAME,
-                                                       PRIVATE_SUBNET_CIDR)
-    if not network_dict:
+    logger.debug("Creating network '%s'..." % RALLY_PRIVATE_NET_NAME)
+    GlobalVariables.network_dict = \
+        os_utils.create_shared_network_full(RALLY_PRIVATE_NET_NAME,
+                                            RALLY_PRIVATE_SUBNET_NAME,
+                                            RALLY_ROUTER_NAME,
+                                            RALLY_PRIVATE_SUBNET_CIDR)
+    if not GlobalVariables.network_dict:
         exit(1)
 
     if args.test_name == "all":
@@ -541,7 +534,7 @@ def main():
     total_duration = 0.0
     total_nb_tests = 0
     total_success = 0.0
-    for s in SUMMARY:
+    for s in GlobalVariables.SUMMARY:
         name = "{0:<17}".format(s['test_name'])
         duration = float(s['overall_duration'])
         total_duration += duration
@@ -565,8 +558,8 @@ def main():
     total_duration_str2 = "{0:<10}".format(total_duration_str)
     total_nb_tests_str = "{0:<13}".format(total_nb_tests)
 
-    if len(SUMMARY):
-        success_rate = total_success / len(SUMMARY)
+    if len(GlobalVariables.SUMMARY):
+        success_rate = total_success / len(GlobalVariables.SUMMARY)
     else:
         success_rate = 100
     success_rate = "{:0.2f}".format(success_rate)
@@ -609,7 +602,8 @@ def main():
     if not image_exists:
         logger.debug("Deleting image '%s' with ID '%s'..."
                      % (GLANCE_IMAGE_NAME, image_id))
-        if not os_utils.delete_glance_image(nova_client, image_id):
+        if not os_utils.delete_glance_image(GlobalVariables.nova_client,
+                                            image_id):
             logger.error("Error deleting the glance image")
 
     if not volume_types:
