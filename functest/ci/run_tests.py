@@ -21,6 +21,7 @@ import functest.ci.tier_builder as tb
 import functest.core.TestCasesBase as TestCasesBase
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
+import functest.utils.functest_constants as ft_constants
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 import functest.utils.openstack_utils as os_utils
@@ -43,14 +44,17 @@ logger = ft_logger.Logger("run_tests").getLogger()
 
 
 """ global variables """
-EXEC_SCRIPT = ("%s/functest/ci/exec_test.sh" % ft_utils.FUNCTEST_REPO)
-CLEAN_FLAG = True
-REPORT_FLAG = False
-EXECUTED_TEST_CASES = []
+EXEC_SCRIPT = ("%s/functest/ci/exec_test.sh" % ft_constants.FUNCTEST_REPO_DIR)
 
 # This will be the return code of this script. If any of the tests fails,
 # this variable will change to -1
-OVERALL_RESULT = 0
+
+
+class GlobalVariables:
+    EXECUTED_TEST_CASES = []
+    OVERALL_RESULT = 0
+    CLEAN_FLAG = True
+    REPORT_FLAG = False
 
 
 def print_separator(str, count=45):
@@ -61,12 +65,26 @@ def print_separator(str, count=45):
 
 
 def source_rc_file():
-    rc_file = os.getenv('creds')
+    rc_file = ft_constants.OPENSTACK_CREDS
     if not os.path.isfile(rc_file):
         logger.error("RC file %s does not exist..." % rc_file)
         sys.exit(1)
     logger.debug("Sourcing the OpenStack RC file...")
-    os_utils.source_credentials(rc_file)
+    creds = os_utils.source_credentials(rc_file)
+    for key, value in creds.iteritems():
+        if re.search("OS_", key):
+            if key == 'OS_AUTH_URL':
+                ft_constants.OS_AUTH_URL = value
+            elif key == 'OS_USERNAME':
+                ft_constants.OS_USERNAME = value
+            elif key == 'OS_TENANT_NAME':
+                ft_constants.OS_TENANT_NAME = value
+            elif key == 'OS_PASSWORD':
+                ft_constants.OS_PASSWORD = value
+    logger.debug("OS_AUTH_URL:%s" % ft_constants.OS_AUTH_URL)
+    logger.debug("OS_USERNAME:%s" % ft_constants.OS_USERNAME)
+    logger.debug("OS_TENANT_NAME:%s" % ft_constants.OS_TENANT_NAME)
+    logger.debug("OS_PASSWORD:%s" % ft_constants.OS_PASSWORD)
 
 
 def generate_os_snapshot():
@@ -78,7 +96,7 @@ def cleanup():
 
 
 def update_test_info(test_name, result, duration):
-    for test in EXECUTED_TEST_CASES:
+    for test in GlobalVariables.EXECUTED_TEST_CASES:
         if test['test_name'] == test_name:
             test.update({"result": result,
                          "duration": duration})
@@ -98,7 +116,6 @@ def get_run_dict_if_defined(testname):
 
 
 def run_test(test, tier_name):
-    global OVERALL_RESULT, EXECUTED_TEST_CASES
     result_str = "PASS"
     start = datetime.datetime.now()
     test_name = test.get_name()
@@ -108,11 +125,11 @@ def run_test(test, tier_name):
     print_separator("=")
     logger.debug("\n%s" % test)
 
-    if CLEAN_FLAG:
+    if GlobalVariables.CLEAN_FLAG:
         generate_os_snapshot()
 
     flags = (" -t %s" % (test_name))
-    if REPORT_FLAG:
+    if GlobalVariables.REPORT_FLAG:
         flags += " -r"
 
     result = TestCasesBase.TestCasesBase.EX_RUN_ERROR
@@ -123,7 +140,8 @@ def run_test(test, tier_name):
             cls = getattr(module, run_dict['class'])
             test_case = cls()
             result = test_case.run()
-            if result == TestCasesBase.TestCasesBase.EX_OK and REPORT_FLAG:
+            if result == TestCasesBase.TestCasesBase.EX_OK and \
+               GlobalVariables.REPORT_FLAG:
                 result = test_case.push_to_db()
         except ImportError:
             logger.exception("Cannot import module {}".format(
@@ -138,7 +156,7 @@ def run_test(test, tier_name):
                         cmd, test_name))
         result = ft_utils.execute_command(cmd)
 
-    if CLEAN_FLAG:
+    if GlobalVariables.CLEAN_FLAG:
         cleanup()
     end = datetime.datetime.now()
     duration = (end - start).seconds
@@ -156,7 +174,7 @@ def run_test(test, tier_name):
                             "execution.")
                 # if it is a single test we don't print the whole results table
                 update_test_info(test_name, result_str, duration_str)
-                generate_report.main(EXECUTED_TEST_CASES)
+                generate_report.main(GlobalVariables.EXECUTED_TEST_CASES)
             logger.info("Execution exit value: %s" % OVERALL_RESULT)
             sys.exit(OVERALL_RESULT)
 
@@ -180,9 +198,8 @@ def run_tier(tier):
 
 
 def run_all(tiers):
-    global EXECUTED_TEST_CASES
     summary = ""
-    BUILD_TAG = os.getenv('BUILD_TAG')
+    BUILD_TAG = ft_constants.CI_BUILD_TAG
     if BUILD_TAG is not None and re.search("daily", BUILD_TAG) is not None:
         CI_LOOP = "daily"
     else:
@@ -199,28 +216,26 @@ def run_all(tiers):
                            tier.get_test_names()))
 
     logger.info("Tests to be executed:%s" % summary)
-    EXECUTED_TEST_CASES = generate_report.init(tiers_to_run)
+    GlobalVariables.EXECUTED_TEST_CASES = generate_report.init(tiers_to_run)
     for tier in tiers_to_run:
         run_tier(tier)
 
-    generate_report.main(EXECUTED_TEST_CASES)
+    generate_report.main(GlobalVariables.EXECUTED_TEST_CASES)
 
 
 def main():
-    global CLEAN_FLAG
-    global REPORT_FLAG
 
-    CI_INSTALLER_TYPE = os.getenv('INSTALLER_TYPE')
-    CI_SCENARIO = os.getenv('DEPLOY_SCENARIO')
+    CI_INSTALLER_TYPE = ft_constants.CI_INSTALLER_TYPE
+    CI_SCENARIO = ft_constants.CI_SCENARIO
 
-    file = ft_utils.get_testcases_file()
+    file = ft_constants.FUNCTEST_TESTCASES_YAML
     _tiers = tb.TierBuilder(CI_INSTALLER_TYPE, CI_SCENARIO, file)
 
     if args.noclean:
-        CLEAN_FLAG = False
+        GlobalVariables.CLEAN_FLAG = False
 
     if args.report:
-        REPORT_FLAG = True
+        GlobalVariables.REPORT_FLAG = True
 
     if args.test:
         source_rc_file()
@@ -242,8 +257,9 @@ def main():
     else:
         run_all(_tiers)
 
-    logger.info("Execution exit value: %s" % OVERALL_RESULT)
-    sys.exit(OVERALL_RESULT)
+    logger.info("Execution exit value: %s" % GlobalVariables.OVERALL_RESULT)
+    sys.exit(GlobalVariables.OVERALL_RESULT)
+
 
 if __name__ == '__main__':
     main()
