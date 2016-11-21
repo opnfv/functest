@@ -17,5 +17,6 @@ logger = ft_logger.Logger("multisite").getLogger()
 def main():
     logger.info("multisite OK")
 
+
 if __name__ == '__main__':
     main()
