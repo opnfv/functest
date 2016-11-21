@@ -17,6 +17,7 @@ import os
 import re
 import time
 
+import functest.utils.functest_constants as ft_constants
 import functest.utils.functest_utils as ft_utils
 
 
@@ -25,8 +26,8 @@ class foundation:
     def __init__(self):
 
         # currentpath = os.getcwd()
-        REPO_PATH = ft_utils.FUNCTEST_REPO + '/'
-        currentpath = REPO_PATH + 'opnfv_tests/Controllers/ONOS/Teston/CI'
+        currentpath = \
+            ft_constants.FUNCTEST_TEST_DIR + '/Controllers/ONOS/Teston/CI'
         self.cipath = currentpath
         self.logdir = os.path.join(currentpath, 'log')
         self.workhome = currentpath[0: currentpath.rfind('opnfv_tests') - 1]
@@ -54,30 +55,23 @@ class foundation:
         """
         Get Default Parameters value
         """
-        self.Result_DB = str(
-            ft_utils.get_functest_config('results.test_db_url'))
-        self.masterusername = str(
-            ft_utils.get_functest_config('ONOS.general.onosbench_username'))
-        self.masterpassword = str(
-            ft_utils.get_functest_config('ONOS.general.onosbench_password'))
-        self.agentusername = str(
-            ft_utils.get_functest_config('ONOS.general.onoscli_username'))
-        self.agentpassword = str(
-            ft_utils.get_functest_config('ONOS.general.onoscli_password'))
-        self.runtimeout = \
-            ft_utils.get_functest_config('ONOS.general.runtimeout')
-        self.OCT = str(ft_utils.get_functest_config('ONOS.environment.OCT'))
-        self.OC1 = str(ft_utils.get_functest_config('ONOS.environment.OC1'))
-        self.OC2 = str(ft_utils.get_functest_config('ONOS.environment.OC2'))
-        self.OC3 = str(ft_utils.get_functest_config('ONOS.environment.OC3'))
-        self.OCN = str(ft_utils.get_functest_config('ONOS.environment.OCN'))
-        self.OCN2 = str(ft_utils.get_functest_config('ONOS.environment.OCN2'))
-        self.installer_master = str(
-            ft_utils.get_functest_config('ONOS.environment.installer_master'))
-        self.installer_master_username = str(ft_utils.get_functest_config(
-            'ONOS.environment.installer_master_username'))
-        self.installer_master_password = str(ft_utils.get_functest_config(
-            'ONOS.environment.installer_master_password'))
+        self.Result_DB = str(ft_utils.get_db_url())
+        self.masterusername = str(ft_constants.ONOSBENCH_USERNAME)
+        self.masterpassword = str(ft_constants.ONOSBENCH_PASSWORD)
+        self.agentusername = str(ft_constants.ONOSCLI_USERNAME)
+        self.agentpassword = str(ft_constants.ONOSCLI_PASSWORD)
+        self.runtimeout = ft_constants.ONOS_RUNTIMEOUT
+        self.OCT = str(ft_constants.ONOS_OCT)
+        self.OC1 = str(ft_constants.ONOS_OC1)
+        self.OC2 = str(ft_constants.ONOS_OC2)
+        self.OC3 = str(ft_constants.ONOS_OC3)
+        self.OCN = str(ft_constants.ONOS_OCN)
+        self.OCN2 = str(ft_constants.ONOS_OCN2)
+        self.installer_master = str(ft_constants.ONOS_INSTALLER_MASTER)
+        self.installer_master_username = \
+            str(ft_constants.ONOS_INSTALLER_MASTER_USERNAME)
+        self.installer_master_password = \
+            ft_constants.ONOS_INSTALLER_MASTER_PASSWORD
         self.hosts = [self.OC1, self.OCN, self.OCN2]
         self.localhost = self.OCT
 

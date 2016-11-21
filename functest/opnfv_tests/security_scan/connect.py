@@ -15,9 +15,10 @@ import socket
 import paramiko
 
 import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_constants as ft_constants
 
 # add installer IP from env
-INSTALLER_IP = os.getenv('INSTALLER_IP')
+INSTALLER_IP = ft_constants.CI_INSTALLER_IP
 
 # Set up loggers
 logger = ft_logger.Logger("security_scan").getLogger()

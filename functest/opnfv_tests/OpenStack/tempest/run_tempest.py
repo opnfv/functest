@@ -27,6 +27,7 @@ import yaml
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+import functest.utils.functest_constants as ft_constants
 
 modes = ['full', 'smoke', 'baremetal', 'compute', 'data_processing',
          'identity', 'image', 'network', 'object_storage', 'orchestration',
@@ -58,69 +59,50 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("run_tempest").getLogger()
 
-TEST_DB = ft_utils.get_functest_config('results.test_db_url')
-
-MODE = "smoke"
-GLANCE_IMAGE_NAME = \
-    ft_utils.get_functest_config('general.openstack.image_name')
-GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config('general.openstack.image_file_name')
-GLANCE_IMAGE_FORMAT = \
-    ft_utils.get_functest_config('general.openstack.image_disk_format')
-GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data') + \
+GLANCE_IMAGE_NAME = ft_constants.GLANCE_IMAGE_NAME
+GLANCE_IMAGE_FILENAME = ft_constants.GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_FORMAT = ft_constants.GLANCE_IMAGE_FORMAT
+GLANCE_IMAGE_PATH = ft_constants.FUNCTEST_DATA_DIR + \
     "/" + GLANCE_IMAGE_FILENAME
-IMAGE_ID = None
 IMAGE_ID_ALT = None
 
-FLAVOR_NAME = \
-    ft_utils.get_functest_config('general.openstack.flavor_name')
-FLAVOR_RAM = ft_utils.get_functest_config('general.openstack.flavor_ram')
-FLAVOR_DISK = ft_utils.get_functest_config('general.openstack.flavor_disk')
-FLAVOR_VCPUS = ft_utils.get_functest_config('general.openstack.flavor_vcpus')
-FLAVOR_ID = None
+FLAVOR_NAME = ft_constants.FLAVOR_NAME
+FLAVOR_RAM = ft_constants.FLAVOR_RAM
+FLAVOR_DISK = ft_constants.FLAVOR_DISK
+FLAVOR_VCPUS = ft_constants.FLAVOR_VCPUS
 FLAVOR_ID_ALT = None
 
-PRIVATE_NET_NAME = \
-    ft_utils.get_functest_config('tempest.private_net_name')
-PRIVATE_SUBNET_NAME = \
-    ft_utils.get_functest_config('tempest.private_subnet_name')
-PRIVATE_SUBNET_CIDR = \
-    ft_utils.get_functest_config('tempest.private_subnet_cidr')
-ROUTER_NAME = \
-    ft_utils.get_functest_config('tempest.router_name')
-TENANT_NAME = \
-    ft_utils.get_functest_config('tempest.identity.tenant_name')
-TENANT_DESCRIPTION = \
-    ft_utils.get_functest_config('tempest.identity.tenant_description')
-USER_NAME = \
-    ft_utils.get_functest_config('tempest.identity.user_name')
-USER_PASSWORD = \
-    ft_utils.get_functest_config('tempest.identity.user_password')
-SSH_TIMEOUT = \
-    ft_utils.get_functest_config('tempest.validation.ssh_timeout')
-USE_CUSTOM_IMAGES = \
-    ft_utils.get_functest_config('tempest.use_custom_images')
-USE_CUSTOM_FLAVORS = \
-    ft_utils.get_functest_config('tempest.use_custom_flavors')
+TEMPEST_PRIVATE_NET_NAME = ft_constants.TEMPEST_PRIVATE_NET_NAME
+TEMPEST_PRIVATE_SUBNET_NAME = ft_constants.TEMPEST_PRIVATE_SUBNET_NAME
+TEMPEST_PRIVATE_SUBNET_CIDR = ft_constants.TEMPEST_PRIVATE_SUBNET_CIDR
+TEMPEST_ROUTER_NAME = ft_constants.TEMPEST_ROUTER_NAME
+TEMPEST_TENANT_NAME = ft_constants.TEMPEST_TENANT_NAME
+TEMPEST_TENANT_DESCRIPTION = ft_constants.TEMPEST_TENANT_DESCRIPTION
+TEMPEST_USER_NAME = ft_constants.TEMPEST_USER_NAME
+TEMPEST_USER_PASSWORD = ft_constants.TEMPEST_USER_PASSWORD
+TEMPEST_SSH_TIMEOUT = ft_constants.TEMPEST_SSH_TIMEOUT
+TEMPEST_USE_CUSTOM_IMAGES = ft_constants.TEMPEST_USE_CUSTOM_IMAGES
+TEMPEST_USE_CUSTOM_FLAVORS = ft_constants.TEMPEST_USE_CUSTOM_FLAVORS
 
-DEPLOYMENT_MAME = \
-    ft_utils.get_functest_config('rally.deployment_name')
-RALLY_INSTALLATION_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_rally_inst')
+RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
+TEMPEST_RESULTS_DIR = os.path.join(RESULTS_DIR, 'tempest')
 
-RESULTS_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_results')
-TEMPEST_RESULTS_DIR = RESULTS_DIR + '/tempest'
+REPO_PATH = ft_constants.FUNCTEST_REPO_DIR
+TEMPEST_TEST_LIST_DIR = ft_constants.TEMPEST_TEST_LIST_DIR
+TEMPEST_CUSTOM = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
+                              'test_list.txt')
+TEMPEST_BLACKLIST = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
+                                 'blacklist.txt')
+TEMPEST_DEFCORE = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
+                               'defcore_req.txt')
+TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
+TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
 
-REPO_PATH = ft_utils.FUNCTEST_REPO + '/'
-TEST_LIST_DIR = \
-    ft_utils.get_functest_config('general.directories.dir_tempest_cases')
-TEMPEST_CUSTOM = REPO_PATH + TEST_LIST_DIR + 'test_list.txt'
-TEMPEST_BLACKLIST = REPO_PATH + TEST_LIST_DIR + 'blacklist.txt'
-TEMPEST_DEFCORE = REPO_PATH + TEST_LIST_DIR + 'defcore_req.txt'
-TEMPEST_RAW_LIST = TEMPEST_RESULTS_DIR + '/test_raw_list.txt'
-TEMPEST_LIST = TEMPEST_RESULTS_DIR + '/test_list.txt'
+
+class GlobalVariables:
+    IMAGE_ID = None
+    FLAVOR_ID = None
+    MODE = "smoke"
 
 
 def get_info(file_result):
@@ -150,43 +132,41 @@ def create_tempest_resources():
 
     logger.debug("Creating tenant and user for Tempest suite")
     tenant_id = os_utils.create_tenant(keystone_client,
-                                       TENANT_NAME,
-                                       TENANT_DESCRIPTION)
+                                       TEMPEST_TENANT_NAME,
+                                       TEMPEST_TENANT_DESCRIPTION)
     if not tenant_id:
-        logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
+        logger.error("Error : Failed to create %s tenant"
+                     % TEMPEST_TENANT_NAME)
 
-    user_id = os_utils.create_user(keystone_client, USER_NAME, USER_PASSWORD,
+    user_id = os_utils.create_user(keystone_client, TEMPEST_USER_NAME,
+                                   TEMPEST_USER_PASSWORD,
                                    None, tenant_id)
     if not user_id:
-        logger.error("Error : Failed to create %s user" % USER_NAME)
+        logger.error("Error : Failed to create %s user" % TEMPEST_USER_NAME)
 
     logger.debug("Creating private network for Tempest suite")
-    network_dic = os_utils.create_shared_network_full(PRIVATE_NET_NAME,
-                                                      PRIVATE_SUBNET_NAME,
-                                                      ROUTER_NAME,
-                                                      PRIVATE_SUBNET_CIDR)
+    network_dic = \
+        os_utils.create_shared_network_full(TEMPEST_PRIVATE_NET_NAME,
+                                            TEMPEST_PRIVATE_SUBNET_NAME,
+                                            TEMPEST_ROUTER_NAME,
+                                            TEMPEST_PRIVATE_SUBNET_CIDR)
     if not network_dic:
         exit(1)
 
-    if USE_CUSTOM_IMAGES:
+    if TEMPEST_USE_CUSTOM_IMAGES:
         # adding alternative image should be trivial should we need it
         logger.debug("Creating image for Tempest suite")
-        global IMAGE_ID
-        _, IMAGE_ID = os_utils.get_or_create_image(GLANCE_IMAGE_NAME,
-                                                   GLANCE_IMAGE_PATH,
-                                                   GLANCE_IMAGE_FORMAT)
-        if not IMAGE_ID:
+        _, GlobalVariables.IMAGE_ID = os_utils.get_or_create_image(
+            GLANCE_IMAGE_NAME, GLANCE_IMAGE_PATH, GLANCE_IMAGE_FORMAT)
+        if not GlobalVariables.IMAGE_ID:
             exit(-1)
 
-    if USE_CUSTOM_FLAVORS:
+    if TEMPEST_USE_CUSTOM_FLAVORS:
         # adding alternative flavor should be trivial should we need it
         logger.debug("Creating flavor for Tempest suite")
-        global FLAVOR_ID
-        _, FLAVOR_ID = os_utils.get_or_create_flavor(FLAVOR_NAME,
-                                                     FLAVOR_RAM,
-                                                     FLAVOR_DISK,
-                                                     FLAVOR_VCPUS)
-        if not FLAVOR_ID:
+        _, GlobalVariables.FLAVOR_ID = os_utils.get_or_create_flavor(
+            FLAVOR_NAME, FLAVOR_RAM, FLAVOR_DISK, FLAVOR_VCPUS)
+        if not GlobalVariables.FLAVOR_ID:
             exit(-1)
 
 
@@ -213,23 +193,23 @@ def configure_tempest(deployment_dir):
     logger.debug("Updating selected tempest.conf parameters...")
     config = ConfigParser.RawConfigParser()
     config.read(tempest_conf_file)
-    config.set('compute', 'fixed_network_name', PRIVATE_NET_NAME)
-    if USE_CUSTOM_IMAGES:
-        if IMAGE_ID is not None:
-            config.set('compute', 'image_ref', IMAGE_ID)
+    config.set('compute', 'fixed_network_name', TEMPEST_PRIVATE_NET_NAME)
+    if TEMPEST_USE_CUSTOM_IMAGES:
+        if GlobalVariables.IMAGE_ID is not None:
+            config.set('compute', 'image_ref', GlobalVariables.IMAGE_ID)
         if IMAGE_ID_ALT is not None:
             config.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
-    if USE_CUSTOM_FLAVORS:
-        if FLAVOR_ID is not None:
-            config.set('compute', 'flavor_ref', FLAVOR_ID)
+    if TEMPEST_USE_CUSTOM_FLAVORS:
+        if GlobalVariables.FLAVOR_ID is not None:
+            config.set('compute', 'flavor_ref', GlobalVariables.FLAVOR_ID)
         if FLAVOR_ID_ALT is not None:
             config.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
-    config.set('identity', 'tenant_name', TENANT_NAME)
-    config.set('identity', 'username', USER_NAME)
-    config.set('identity', 'password', USER_PASSWORD)
-    config.set('validation', 'ssh_timeout', SSH_TIMEOUT)
+    config.set('identity', 'tenant_name', TEMPEST_TENANT_NAME)
+    config.set('identity', 'username', TEMPEST_USER_NAME)
+    config.set('identity', 'password', TEMPEST_USER_PASSWORD)
+    config.set('validation', 'ssh_timeout', TEMPEST_SSH_TIMEOUT)
 
-    if os.getenv('OS_ENDPOINT_TYPE') is not None:
+    if ft_constants.OS_ENDPOINT_TYPE is not None:
         services_list = ['compute', 'volume', 'image', 'network',
                          'data-processing', 'object-storage', 'orchestration']
         sections = config.sections()
@@ -237,7 +217,7 @@ def configure_tempest(deployment_dir):
             if service not in sections:
                 config.add_section(service)
             config.set(service, 'endpoint_type',
-                       os.environ.get("OS_ENDPOINT_TYPE"))
+                       ft_constants.OS_ENDPOINT_TYPE)
 
     with open(tempest_conf_file, 'wb') as config_file:
         config.write(config_file)
@@ -283,8 +263,8 @@ def apply_tempest_blacklist():
     result_file = open(TEMPEST_LIST, 'w')
     black_tests = []
     try:
-        installer_type = os.getenv('INSTALLER_TYPE')
-        deploy_scenario = os.getenv('DEPLOY_SCENARIO')
+        installer_type = ft_constants.CI_INSTALLER_TYPE
+        deploy_scenario = ft_constants.CI_SCENARIO
         if (bool(installer_type) * bool(deploy_scenario)):
             # if INSTALLER_TYPE and DEPLOY_SCENARIO are set we read the file
             black_list_file = open(TEMPEST_BLACKLIST)
@@ -325,9 +305,9 @@ def run_tempest(OPTION):
 
     header = ("Tempest environment:\n"
               "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
-              (os.getenv('INSTALLER_TYPE', 'Unknown'),
-               os.getenv('DEPLOY_SCENARIO', 'Unknown'),
-               os.getenv('NODE_NAME', 'Unknown'),
+              (ft_constants.CI_INSTALLER_TYPE,
+               ft_constants.CI_SCENARIO,
+               ft_constants.CI_NODE,
                time.strftime("%a %b %d %H:%M:%S %Z %Y")))
 
     f_stdout = open(TEMPEST_RESULTS_DIR + "/tempest.log", 'w+')
@@ -434,7 +414,6 @@ def run_tempest(OPTION):
 
 
 def main():
-    global MODE
 
     if not (args.mode in modes):
         logger.error("Tempest mode not valid. "
@@ -448,19 +427,19 @@ def main():
     create_tempest_resources()
 
     if "" == args.conf:
-        MODE = ""
+        GlobalVariables.MODE = ""
         configure_tempest(deployment_dir)
     else:
-        MODE = " --tempest-config " + args.conf
+        GlobalVariables.MODE = " --tempest-config " + args.conf
 
     generate_test_list(deployment_dir, args.mode)
     apply_tempest_blacklist()
 
-    MODE += " --tests-file " + TEMPEST_LIST
+    GlobalVariables.MODE += " --tests-file " + TEMPEST_LIST
     if args.serial:
-        MODE += " --concur 1"
+        GlobalVariables.MODE += " --concur 1"
 
-    ret_val = run_tempest(MODE)
+    ret_val = run_tempest(GlobalVariables.MODE)
     if ret_val != 0:
         sys.exit(-1)
 
