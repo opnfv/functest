@@ -1,15 +1,16 @@
 general:
     directories:
         # Relative to the path where the repo is cloned:
-        dir_vping:         functest/opnfv_tests/OpenStack/vPing/
-        dir_odl:           functest/opnfv_tests/Controllers/ODL/
-        dir_rally:         functest/opnfv_tests/OpenStack/rally/
-        dir_tempest_cases: functest/opnfv_tests/OpenStack/tempest/custom_tests/
-        dir_vIMS:          functest/opnfv_tests/vnf/vIMS/
-        dir_onos:          functest/opnfv_tests/Controllers/ONOS/Teston/
-        dir_onos_sfc:      functest/opnfv_tests/Controllers/ONOS/Sfc/
+        dir_vping:         functest/opnfv_tests/OpenStack/vPing
+        dir_odl:           functest/opnfv_tests/Controllers/ODL
+        dir_rally:         functest/opnfv_tests/OpenStack/rally
+        dir_tempest_cases: functest/opnfv_tests/OpenStack/tempest/custom_tests
+        dir_vIMS:          functest/opnfv_tests/vnf/vIMS
+        dir_onos:          functest/opnfv_tests/Controllers/ONOS/Teston
+        dir_onos_sfc:      functest/opnfv_tests/Controllers/ONOS/Sfc
 
         # Absolute path
+        dir_home:           /home/opnfv
         dir_repos:          /home/opnfv/repos
         dir_repo_functest:  /home/opnfv/repos/functest
         dir_repo_rally:     /home/opnfv/repos/rally
@@ -25,14 +26,15 @@ general:
         dir_repo_parser:    /home/opnfv/repos/parser
         dir_repo_domino:    /home/opnfv/repos/domino
         dir_functest:       /home/opnfv/functest
+        dir_functest_test:  /home/opnfv/repos/functest/functest/opnfv_tests
         dir_results:        /home/opnfv/functest/results
         dir_functest_conf:  /home/opnfv/functest/conf
-        dir_rally_res:      /home/opnfv/functest/results/rally/
         dir_functest_data:  /home/opnfv/functest/data
-        dir_vIMS_data:      /home/opnfv/functest/data/vIMS
+        dir_vIMS_data:      /home/opnfv/functest/data/vIMS/
         dir_rally_inst:     /home/opnfv/.rally
 
     openstack:
+        creds: /home/opnfv/functest/conf/openstack.creds
         snapshot_file: /home/opnfv/functest/conf/openstack_snapshot.yaml
 
         image_name: Cirros-0.3.4
@@ -72,6 +74,7 @@ vping:
     vping_sg_descr: Security group for vPing test case
 
 onos_sfc:
+    image_base_url: http://artifacts.opnfv.org/sfc/demo
     image_name: TestSfcVm
     image_file_name: firewall_block_image.img
 
@@ -103,10 +106,10 @@ vIMS:
         tenant_description: vIMS Functionality Testing
         images:
             ubuntu:
-                image_url: 'http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img'
+                image_url: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
                 image_name: ubuntu_14.04
             centos:
-                image_url: 'http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1510.qcow2'
+                image_url: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1510.qcow2
                 image_name: centos_7
     cloudify:
         blueprint:
@@ -132,7 +135,7 @@ vIMS:
             file_name: 'openstack-blueprint.yaml'
             name: "clearwater-opnfv"
             destination_folder: "opnfv-cloudify-clearwater"
-            url: 'https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git'
+            url: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git
             branch: "stable"
         deployment-name: 'clearwater-opnfv'
         requierments:

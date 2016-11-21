@@ -6,6 +6,7 @@ import time
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+import functest.utils.functest_constants as ft_constants
 import re
 import json
 import SSHUtils as ssh_utils
@@ -23,18 +24,17 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("ODL_SFC").getLogger()
 
-FUNCTEST_RESULTS_DIR = '/home/opnfv/functest/results/odl-sfc'
-FUNCTEST_REPO = ft_utils.FUNCTEST_REPO
-REPO_PATH = os.path.join(os.environ['repos_dir'], 'functest/')
+FUNCTEST_RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR + '/odl-sfc'
+FUNCTEST_REPO = ft_constants.FUNCTEST_REPO_DIR
 CLIENT = "client"
 SERVER = "server"
 FLAVOR = "custom"
 IMAGE_NAME = "sf_nsh_colorado"
 IMAGE_FILENAME = "sf_nsh_colorado.qcow2"
 IMAGE_FORMAT = "qcow2"
-IMAGE_DIR = "/home/opnfv/functest/data"
-IMAGE_PATH = os.path.join(IMAGE_DIR, IMAGE_FILENAME)
-IMAGE_URL = "http://artifacts.opnfv.org/sfc/demo/" + IMAGE_FILENAME
+IMAGE_DIR = ft_constants.FUNCTEST_DATA_DIR
+IMAGE_PATH = IMAGE_DIR + '/' + IMAGE_FILENAME
+IMAGE_URL = os.path.join(ft_constants.ONOS_SFC_IMAGE_BASE_URL, IMAGE_FILENAME)
 
 # NEUTRON Private Network parameters
 NET_NAME = "example-net"
@@ -43,7 +43,7 @@ SUBNET_CIDR = "11.0.0.0/24"
 ROUTER_NAME = "example-router"
 SECGROUP_NAME = "example-sg"
 SECGROUP_DESCR = "Example Security group"
-SFC_TEST_DIR = os.path.join(REPO_PATH, "functest/opnfv_tests/features/sfc/")
+SFC_TEST_DIR = ft_constants.FUNCTEST_TEST_DIR + '/features/sfc/'
 TACKER_SCRIPT = SFC_TEST_DIR + "sfc_tacker.bash"
 TACKER_CHANGECLASSI = SFC_TEST_DIR + "sfc_change_classi.bash"
 ssh_options = '-q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
@@ -109,7 +109,7 @@ def run_cmd_on_compute(cmd):
 
 
 def run_cmd_on_fm(cmd, username="root", passwd="r00tme"):
-    ip = os.environ.get("INSTALLER_IP")
+    ip = ft_constants.CI_INSTALLER_IP
     ssh_cmd = "sshpass -p %s ssh %s %s@%s %s" % (
         passwd, ssh_options, username, ip, cmd)
     return run_cmd(ssh_cmd)
@@ -127,7 +127,7 @@ def run_cmd_remote(ip, cmd, username="root", passwd="opnfv"):
 
 
 def get_openstack_node_ips(role):
-    fuel_env = os.environ.get("FUEL_ENV")
+    fuel_env = ft_constants.FUEL_ENV
     if fuel_env is not None:
         cmd = "fuel2 node list -f json -e %s" % fuel_env
     else:
@@ -408,32 +408,27 @@ def capture_time_log(ovs_logger, compute_clients):
     while True:
         rsps = ovs_logger.ofctl_time_counter(compute_clients[0])
         if not i:
-            if len(rsps) > 0:
-                first_RSP = rsps[0]
-                i = i + 1
-            else:
-                first_RSP = 0
-                i = i + 1
-        if (len(rsps) > 1):
-            if(first_RSP != rsps[0]):
-                if (rsps[0] == rsps[1]):
-                    stop_time = time.time()
-                    logger.info("classification rules updated")
-                    difference = stop_time - start_time
-                    logger.info("It took %s seconds" % difference)
-                    break
+            first_RSP = rsps[0]
+            i = i + 1
+        if(first_RSP != rsps[0]):
+            if (rsps[0] == rsps[1]):
+                stop_time = time.time()
+                logger.info("classification rules updated")
+                difference = stop_time - start_time
+                logger.info("It took %s seconds" % difference)
+                break
         time.sleep(1)
     return
 
 
 def main():
-    installer_type = os.environ.get("INSTALLER_TYPE")
+    installer_type = ft_constants.CI_INSTALLER_TYPE
     if installer_type != "fuel":
         logger.error(
             '\033[91mCurrently supported only Fuel Installer type\033[0m')
         sys.exit(1)
 
-    installer_ip = os.environ.get("INSTALLER_IP")
+    installer_ip = ft_constants.CI_INSTALLER_IP
     if not installer_ip:
         logger.error(
             '\033[91minstaller ip is not set\033[0m')
@@ -442,7 +437,7 @@ def main():
         sys.exit(1)
 
     env_list = run_cmd_on_fm("fuel2 env list -f json")
-    fuel_env = os.environ.get("FUEL_ENV")
+    fuel_env = ft_constants.FUEL_ENV
     if len(eval(env_list)) > 1 and fuel_env is None:
         out = run_cmd_on_fm("fuel env")
         logger.error(
