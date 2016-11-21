@@ -264,13 +264,13 @@ Example::
 
 Functest includes a cleaning mechanism in order to remove all the OpenStack
 resources except those present before running any test. The script
-*$repos_dir/functest/utils/generate_defaults.py* is called once when setting up
+*$REPOS_DIR/functest/functest/utils/generate_defaults.py* is called once when setting up
 the Functest environment (i.e. CLI command 'functest env prepare') to snapshot
 all the OpenStack resources (images, networks, volumes, security groups, tenants,
 users) so that an eventual cleanup does not remove any of these defaults.
 
 The script **clean_openstack.py** which is located in
-*$repos_dir/functest/utils/* is normally called after a test execution. It is
+*$REPOS_DIR/functest/functest/utils/* is normally called after a test execution. It is
 in charge of cleaning the OpenStack resources that are not specified in the
 defaults file generated previously which is stored in
 */home/opnfv/functest/conf/os_defaults.yaml* in the Functest docker container.
@@ -289,7 +289,7 @@ full Functest execution.
 Although the Functest CLI provides an easy way to run any test, it is possible to
 do a direct call to the desired test script. For example:
 
-    python $repos_dir/functest/testcases/OpenStack/vPing/vPing_ssh.py -d
+    python $REPOS_DIR/functest/functest/opnfv_tests/OpenStack/vPing/vPing_ssh.py -d
 
 
 Automated testing
@@ -325,7 +325,7 @@ variables:
    * mode = (ha|noha)
 
 The constraints per test case are defined in the Functest configuration file
-*/home/opnfv/repos/functest/ci/testcases.yaml*::
+*/home/opnfv/repos/functest/functest/ci/testcases.yaml*::
 
  tiers:
     -
