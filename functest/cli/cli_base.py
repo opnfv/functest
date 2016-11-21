@@ -22,6 +22,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 def cli():
     pass
 
+
 _env = CliEnv()
 _openstack = CliOpenStack()
 _testcase = CliTestcase()
