@@ -785,7 +785,7 @@ Dockerfile
 This file lists the repositories (internal or external) to be cloned in
 the Functest container. You can also add external packages::
 
- RUN git clone https://gerrit.opnfv.org/gerrit/<your project> ${repos_dir}/<your project>
+ RUN git clone https://gerrit.opnfv.org/gerrit/<your project> ${REPOS_DIR}/<your project>
 
 testcases.yaml
 --------------

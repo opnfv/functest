@@ -25,7 +25,7 @@
 
 import time
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
+import functest.utils.functest_utils as ft_utils
 from Sfc_fun import Sfc_fun
 
 logger = ft_logger.Logger("sfc").getLogger()
@@ -81,7 +81,7 @@ def ConfigSfc():
     logger.info(
         "Testcase 4 : Configure Port Chain and verify flows are added")
     logger.info("4.1 Creation of Port Chain")
-    check(Sfc_obj.createPortChain, CREATED,  "Creation of Port Chain")
+    check(Sfc_obj.createPortChain, CREATED, "Creation of Port Chain")
 
 
 def VerifySfcTraffic():
@@ -152,13 +152,13 @@ def PushDB(status, info):
         # ONOS SFC success criteria = all tests OK
         duration = round(stop_time - start_time, 1)
         logger.info("Result is " + status)
-        functest_utils.push_results_to_db("functest",
-                                          "onos_sfc",
-                                          start_time,
-                                          stop_time,
-                                          status,
-                                          details={'duration': duration,
-                                                   'error': info})
+        ft_utils.push_results_to_db("functest",
+                                    "onos_sfc",
+                                    start_time,
+                                    stop_time,
+                                    status,
+                                    details={'duration': duration,
+                                             'error': info})
     except:
         logger.error("Error pushing results into Database")
 

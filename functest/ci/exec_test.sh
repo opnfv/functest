@@ -127,18 +127,18 @@ function run_test(){
         "ovno")
             # suite under rewritting for colorado
             # no need to run anything until refactoring done
-            # ${repos_dir}/ovno/Testcases/RunTests.sh
+            # ${REPOS_DIR}/ovno/Testcases/RunTests.sh
         ;;
         "security_scan")
             echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/stackrc for undercloud .."
             source ${FUNCTEST_CONF_DIR}/stackrc
-            python ${repos_dir}/securityscanning/security_scan.py --config ${repos_dir}/securityscanning/config.ini
+            python ${REPOS_DIR}/securityscanning/security_scan.py --config ${REPOS_DIR}/securityscanning/config.ini
         ;;
         "copper")
             python ${FUNCTEST_TEST_DIR}/features/copper.py $report
         ;;
         "moon")
-            python ${repos_dir}/moon/tests/run_tests.py $report
+            python ${REPOS_DIR}/moon/tests/run_tests.py $report
         ;;
         "multisite")
             python ${FUNCTEST_TEST_DIR}/OpenStack/tempest/gen_tempest_conf.py
@@ -147,7 +147,8 @@ function run_test(){
                 -c ${FUNCTEST_TEST_DIR}/OpenStack/tempest/tempest_multisite.conf
         ;;
         "odl-sfc")
-            ODL_SFC_DIR=${repos_dir}/sfc/tests/functest/odl-sfc
+            ODL_SFC_DIR=${REPOS_DIR}/sfc/tests/functest/odl-sfc
+            # pass FUNCTEST_REPO_DIR inside prepare_odl_sfc.bash
             FUNCTEST_REPO_DIR=${FUNCTEST_REPO_DIR} python ${ODL_SFC_DIR}/prepare_odl_sfc.py || exit $?
             source ${ODL_SFC_DIR}/tackerc
             python ${ODL_SFC_DIR}/sfc.py $report
@@ -196,8 +197,8 @@ done
 
 
 # Source credentials
-echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/openstack.creds to run the test.."
-source ${FUNCTEST_CONF_DIR}/openstack.creds
+echo "Sourcing Credentials ${creds} to run the test.."
+source ${creds}
 
 # ODL Boron workaround to create additional flow rules to allow port 22 TCP
 if [[ $DEPLOY_SCENARIO == *"odl_l2-sfc"* ]]; then
