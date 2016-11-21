@@ -20,7 +20,7 @@ import time
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
-
+import functest.utils.functest_constants as ft_constants
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
@@ -28,16 +28,14 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-COPPER_REPO = \
-    functest_utils.get_functest_config('general.directories.dir_repo_copper')
-RESULTS_DIR = \
-    functest_utils.get_functest_config('general.directories.dir_results')
+COPPER_REPO_DIR = ft_constants.COPPER_REPO_DIR
+RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
 
 logger = ft_logger.Logger("copper").getLogger()
 
 
 def main():
-    cmd = "%s/tests/run.sh %s/tests" % (COPPER_REPO, COPPER_REPO)
+    cmd = "%s/tests/run.sh %s/tests" % (COPPER_REPO_DIR, COPPER_REPO_DIR)
 
     start_time = time.time()
 
@@ -79,6 +77,7 @@ def main():
         sys.exit(-1)
 
     sys.exit(0)
+
 
 if __name__ == '__main__':
     main()

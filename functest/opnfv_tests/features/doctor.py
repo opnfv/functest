@@ -19,7 +19,7 @@ import time
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
-
+import functest.utils.functest_constants as ft_constants
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-r", "--report",
@@ -29,10 +29,8 @@ args = parser.parse_args()
 
 functest_yaml = functest_utils.get_functest_yaml()
 
-DOCTOR_REPO = \
-    functest_utils.get_functest_config('general.directories.dir_repo_doctor')
-RESULTS_DIR = \
-    functest_utils.get_functest_config('general.directories.dir_results')
+DOCTOR_REPO_DIR = ft_constants.DOCTOR_REPO_DIR
+RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
 
 logger = ft_logger.Logger("doctor").getLogger()
 
@@ -45,7 +43,7 @@ def main():
     if 'doctor' in functest_yaml and 'image_name' in functest_yaml['doctor']:
         os.environ["IMAGE_NAME"] = functest_yaml['doctor']['image_name']
 
-    cmd = 'cd %s/tests && ./run.sh' % DOCTOR_REPO
+    cmd = 'cd %s/tests && ./run.sh' % DOCTOR_REPO_DIR
     log_file = RESULTS_DIR + "/doctor.log"
 
     start_time = time.time()
@@ -85,6 +83,7 @@ def main():
         logger.info("Doctor results pushed to DB")
 
     exit(exit_code)
+
 
 if __name__ == '__main__':
     main()
