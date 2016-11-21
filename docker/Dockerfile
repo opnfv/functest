@@ -12,7 +12,7 @@
 #    $ docker run -t -i \
 #      -e "INSTALLER_TYPE=fuel|apex|compass|joid \
 #      -e "INSTALLER_IP=10.20.0.2" \
-#      -v $(pwd)/config_functest.yaml:/home/opnfv/repos/functest/ci/config_functest.yaml
+#      -v $(pwd)/config_functest.yaml:/home/opnfv/repos/functest/functest/ci/config_functest.yaml
 #      opnfv/functest /bin/bash
 #
 # NOTE: providing config_functest.yaml is optional. If not provided, it will
@@ -36,12 +36,21 @@ ARG OPENSTACK_TAG=stable/mitaka
 ARG KINGBIRD_TAG=0.2.2
 ARG VIMS_TAG=stable
 ENV HOME /home/opnfv
-ENV repos_dir /home/opnfv/repos
-ENV creds /home/opnfv/functest/conf/openstack.creds
+ENV FUNCTEST_BASE_DIR ${HOME}/functest
+ENV REPOS_DIR ${HOME}/repos
+ENV FUNCTEST_CONF_DIR ${FUNCTEST_BASE_DIR}/conf
+ENV FUNCTEST_DATA_DIR ${FUNCTEST_BASE_DIR}/data
+ENV FUNCTEST_RESULTS_DIR ${FUNCTEST_BASE_DIR}/results
+ENV creds ${FUNCTEST_CONF_DIR}/openstack.creds
+ENV FUNCTEST_REPO_NAME functest
+ENV FUNCTEST_REPO_DIR ${REPOS_DIR}/${FUNCTEST_REPO_NAME}
+ENV FUNCTEST_TEST_DIR ${FUNCTEST_REPO_DIR}/functest/opnfv_tests
 ENV TERM xterm
 ENV COLORTERM gnome-terminal
-ENV CONFIG_FUNCTEST_YAML /home/opnfv/repos/functest/functest/ci/config_functest.yaml
-WORKDIR /home/opnfv
+ENV CONFIG_FUNCTEST_YAML ${FUNCTEST_REPO_DIR}/functest/ci/config_functest.yaml
+ENV FUNCTEST_TESTCASES_YAML ${FUNCTEST_REPO_DIR}/functest/ci/testcases.yaml
+
+WORKDIR ${HOME}
 
 # Packaged dependencies
 RUN apt-get update && apt-get install -y \
@@ -64,94 +73,89 @@ libgmp3-dev \
 libxml2-dev \
 libffi-dev \
 crudini \
-ruby-dev \
+ruby1.9.1-dev \
 --no-install-recommends
 
 RUN pip install --upgrade pip
 
-RUN mkdir -p ${repos_dir}
-RUN mkdir -p /home/opnfv/functest/results
-RUN mkdir -p /home/opnfv/functest/conf
+RUN mkdir -p ${REPOS_DIR}
+RUN mkdir -p ${FUNCTEST_BASE_DIR}/results
+RUN mkdir -p ${FUNCTEST_BASE_DIR}/conf
 RUN mkdir -p /root/.ssh
 RUN chmod 700 /root/.ssh
 
 RUN git config --global http.sslVerify false
 
 # OPNFV repositories
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${repos_dir}/functest
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${repos_dir}/copper
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/moon ${repos_dir}/moon
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${repos_dir}/sdnvpn
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${repos_dir}/domino
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${repos_dir}/parser
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${repos_dir}/doctor
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/ovno ${repos_dir}/ovno
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${repos_dir}/promise
-RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${repos_dir}/securityscanning
-RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${repos_dir}/releng
-
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${FUNCTEST_REPO_DIR}
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${REPOS_DIR}/copper
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/moon ${REPOS_DIR}/moon
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${REPOS_DIR}/sdnvpn
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${REPOS_DIR}/domino
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${REPOS_DIR}/parser
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${REPOS_DIR}/doctor
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/ovno ${REPOS_DIR}/ovno
+RUN git clone --depth 1 https://github.com/opnfv/promise ${REPOS_DIR}/promise
+RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${REPOS_DIR}/securityscanning
+RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${REPOS_DIR}/releng
 
 # OpenStack repositories
-RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${repos_dir}/bgpvpn
-RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${repos_dir}/kingbird
-RUN git clone --depth 1 -b $RALLY_TAG https://github.com/openstack/rally.git ${repos_dir}/rally
-RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${repos_dir}/tempest
+RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${REPOS_DIR}/bgpvpn
+#RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${REPOS_DIR}/kingbird
+RUN git clone --depth 1 -b $RALLY_TAG https://github.com/openstack/rally.git ${REPOS_DIR}/rally
+RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${REPOS_DIR}/tempest
 
 # other repositories
-RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${repos_dir}/odl_test
-RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${repos_dir}/vims-test
-RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${repos_dir}/onos
+RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${REPOS_DIR}/odl_test
+RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_DIR}/vims-test
+RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
 
-RUN pip install -r ${repos_dir}/functest/docker/requirements.pip
-RUN cd ${repos_dir}/functest && pip install .
-RUN pip install -r ${repos_dir}/rally/requirements.txt
-RUN pip install -r ${repos_dir}/tempest/requirements.txt
+RUN pip install -r ${FUNCTEST_REPO_DIR}/docker/requirements.pip
+RUN cd ${FUNCTEST_REPO_DIR} && pip install .
+RUN pip install -r ${REPOS_DIR}/rally/requirements.txt
+RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
 
-RUN find ${repos_dir}/functest -name "*.py" \
+RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
     -not -path *unit_tests* |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755
-RUN find ${repos_dir}/functest -name "*.sh" |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
+RUN find ${FUNCTEST_REPO_DIR} -name "*.sh" |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
 
-RUN /bin/bash ${repos_dir}/parser/tests/parser_install.sh ${repos_dir}
-RUN ${repos_dir}/rally/install_rally.sh --yes
+RUN /bin/bash ${REPOS_DIR}/parser/tests/parser_install.sh ${REPOS_DIR}
+RUN ${REPOS_DIR}/rally/install_rally.sh --yes
 
-ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img /home/opnfv/functest/data/
-ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-lxc.tar.gz /home/opnfv/functest/data/
-ADD http://205.177.226.237:9999/onosfw/firewall_block_image.img /home/opnfv/functest/data/
+ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img ${FUNCTEST_BASE_DIR}/data/
+ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-lxc.tar.gz ${FUNCTEST_BASE_DIR}/data/
+ADD http://205.177.226.237:9999/onosfw/firewall_block_image.img ${FUNCTEST_BASE_DIR}/data/
 
 RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 RUN curl -L https://get.rvm.io | bash -s stable
 
-# SNAPS integration
-RUN git clone --depth 1 https://gerrit.cablelabs.com/snaps-provisioning ${repos_dir}/snaps
-RUN pip install -e ${repos_dir}/snaps/
-
-RUN /bin/bash -c ". /home/opnfv/repos/functest/functest/opnfv_tests/features/sfc/tacker_client_install.sh"
-RUN cd ${repos_dir}/bgpvpn && pip install .
-#RUN cd ${repos_dir}/kingbird && pip install -e .
-RUN cd ${repos_dir}/moon/moonclient/ && python setup.py install
+RUN /bin/bash -c ". ${FUNCTEST_REPO_DIR}/functest/opnfv_tests/features/sfc/tacker_client_install.sh"
+RUN cd ${REPOS_DIR}/bgpvpn && pip install .
+#RUN cd ${REPOS_DIR}/kingbird && pip install -e .
+RUN cd ${REPOS_DIR}/moon/moonclient/ && python setup.py install
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd /home/opnfv/repos/vims-test \
+    && cd ${REPOS_DIR}/vims-test \
     && rvm autolibs enable"
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd /home/opnfv/repos/vims-test \
+    && cd ${REPOS_DIR}/vims-test \
     && rvm install 1.9.3"
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd /home/opnfv/repos/vims-test \
+    && cd ${REPOS_DIR}/vims-test \
     && rvm use 1.9.3"
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd /home/opnfv/repos/vims-test \
+    && cd ${REPOS_DIR}/vims-test \
     && bundle install"
 
 RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -'
 RUN sudo apt-get install -y nodejs
-RUN cd ${repos_dir}/promise && sudo npm -g install npm@latest
-RUN cd ${repos_dir}/promise/source && npm install
+RUN cd ${REPOS_DIR}/promise && sudo npm -g install npm@latest
+RUN cd ${REPOS_DIR}/promise && npm install
 
 RUN echo "set nocompatible \n\
 set backspace=2" \
->> /home/opnfv/.vimrc
-RUN echo set nocompatible >> /home/opnfv/.exrc
+>> ${HOME}/.vimrc
+RUN echo set nocompatible >> ${HOME}/.exrc
 RUN echo "alias ll='ls -lh' \n\
-. /home/opnfv/repos/functest/functest/cli/functest-complete.sh" \
->> /home/opnfv/.bashrc
+. ${FUNCTEST_REPO_DIR}/functest/cli/functest-complete.sh" \
+>> ${HOME}/.bashrc

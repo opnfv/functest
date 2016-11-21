@@ -21,13 +21,12 @@ import time
 from functest.core import TestCasesBase
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
+import functest.utils.functest_constants as ft_constants
 
 
 class DominoCases(TestCasesBase.TestCasesBase):
-    DOMINO_REPO = \
-        ft_utils.get_functest_config('general.directories.dir_repo_domino')
-    RESULTS_DIR = \
-        ft_utils.get_functest_config('general.directories.dir_results')
+    DOMINO_REPO = ft_constants.DOMINO_REPO
+    RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
     logger = ft_logger.Logger("domino").getLogger()
 
     def __init__(self):
@@ -64,6 +63,7 @@ class DominoCases(TestCasesBase.TestCasesBase):
     def run(self):
         kwargs = {}
         return self.main(**kwargs)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

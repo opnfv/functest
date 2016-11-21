@@ -48,6 +48,7 @@ pip install -e $WORKSPACE
 
 python $WORKSPACE/setup.py develop
 
+export CONFIG_FUNCTEST_YAML=$(pwd)/functest/ci/config_functest.yaml
 # unit tests
 # TODO: remove cover-erase
 # To be deleted when all functest packages will be listed
@@ -55,7 +56,7 @@ nosetests --with-xunit \
          --with-coverage \
          --cover-erase \
          --cover-package=functest.core.TestCasesBase \
-         --cover-package=functest.opnfv_tests.Controllers.ODL.OpenDaylightTesting \
+         --cover-package=functest.testcases.Controllers.ODL.OpenDaylightTesting \
          --cover-xml \
          --cover-html \
          functest/tests/unit
