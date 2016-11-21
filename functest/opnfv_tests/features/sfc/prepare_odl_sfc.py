@@ -15,6 +15,7 @@ import sys
 import subprocess
 import paramiko
 import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_constants as ft_constants
 
 logger = ft_logger.Logger("ODL_SFC").getLogger()
 
@@ -23,18 +24,16 @@ try:
 except:
     logger.debug("FUNCTEST_REPO_DIR does not exist!!!!!")
 
-FUNCTEST_REPO_DIR = "/home/opnfv/repos/functest"
+FUNCTEST_REPO_DIR = ft_constants.FUNCTEST_REPO_DIR
 
 try:
-    INSTALLER_IP = os.environ['INSTALLER_IP']
-
+    INSTALLER_IP = ft_constants.CI_INSTALLER_IP
 except:
     logger.debug("INSTALLER_IP does not exist. We create 10.20.0.2")
     INSTALLER_IP = "10.20.0.2"
 
-os.environ['ODL_SFC_LOG'] = "/home/opnfv/functest/results/odl-sfc.log"
-os.environ['ODL_SFC_DIR'] = os.path.join(FUNCTEST_REPO_DIR,
-                                         "functest/opnfv_tests/features/sfc")
+os.environ['ODL_SFC_LOG'] = ft_constants.FUNCTEST_RESULTS_DIR + "/odl-sfc.log"
+os.environ['ODL_SFC_DIR'] = ft_constants.FUNCTEST_TEST_DIR + "/features/sfc"
 
 command = os.environ['ODL_SFC_DIR'] + ("/server_presetup_CI.bash | "
                                        "tee -a ${ODL_SFC_LOG} "

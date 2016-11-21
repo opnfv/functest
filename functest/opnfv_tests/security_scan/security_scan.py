@@ -24,23 +24,23 @@ from keystoneclient.auth.identity import v2
 from novaclient import client
 
 import connect
-import functest.utils.functest_utils as ft_utils
+import functest.utils.functest_constants as ft_constants
 
 __version__ = 0.1
 __author__ = 'Luke Hinds (lhinds@redhat.com)'
 __url__ = 'https://wiki.opnfv.org/display/functest/Functest+Security'
 
 # Global vars
-INSTALLER_IP = os.getenv('INSTALLER_IP')
+INSTALLER_IP = ft_constants.CI_INSTALLER_IP
 oscapbin = 'sudo /bin/oscap'
-functest_dir = '%s/opnfv_tests/security_scan/' % ft_utils.FUNCTEST_REPO
+functest_dir = '%s/security_scan/' % ft_constants.FUNCTEST_TEST_DIR
 
 # Apex Spefic var needed to query Undercloud
-if os.getenv('OS_AUTH_URL') is None:
+if ft_constants.OS_AUTH_URL is None:
     connect.logger.error(" Enviroment variable OS_AUTH_URL is not set")
     sys.exit(0)
 else:
-    OS_AUTH_URL = os.getenv('OS_AUTH_URL')
+    OS_AUTH_URL = ft_constants.OS_AUTH_URL
 
 # args
 parser = argparse.ArgumentParser(description='OPNFV OpenSCAP Scanner')
@@ -69,6 +69,10 @@ auth = v2.Password(auth_url=OS_AUTH_URL,
                    tenant_name='admin')
 sess = session.Session(auth=auth)
 nova = client.Client(2, session=sess)
+
+
+class GlobalVariables:
+    tmpdir = ""
 
 
 def run_tests(host, nodetype):
@@ -133,13 +137,12 @@ def internet_check(host, nodetype):
 
 def createfiles(host, port, user, localkey):
     import connect
-    global tmpdir
     localpath = functest_dir + 'scripts/createfiles.py'
     remotepath = '/tmp/createfiles.py'
     com = 'python /tmp/createfiles.py'
     connect = connect.ConnectionManager(host, port, user, localkey,
                                         localpath, remotepath, com)
-    tmpdir = connect.remotescript()
+    GlobalVariables.tmpdir = connect.remotescript()
 
 
 def install_pkg(host, port, user, localkey):

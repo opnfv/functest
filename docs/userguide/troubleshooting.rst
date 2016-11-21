@@ -44,8 +44,8 @@ These test cases can be run inside the container, using new Functest CLI as foll
 
 The Functest CLI is designed to route a call to the corresponding internal
 python scripts, located in paths:
-*$repos_dir/functest/testcases/vPing/CI/libraries/vPing_ssh.py* and
-*$repos_dir/functest/testcases/vPing/CI/libraries/vPing_userdata.py*
+*$REPOS_DIR/functest/testcases/vPing/CI/libraries/vPing_ssh.py* and
+*$REPOS_DIR/functest/testcases/vPing/CI/libraries/vPing_userdata.py*
 
 Notes:
   #. In this Colorado Funtest Userguide, the use of the Functest CLI is
@@ -125,7 +125,7 @@ This test case creates a floating IP on the external network and assigns it to
 the second instance **opnfv-vping-2**. The purpose of this is to establish
 a SSH connection to that instance and SCP a script that will ping the first
 instance. This script is located in the repository under
-*$repos_dir/functest/testcases/OpenStack/vPing/ping.sh* and takes an IP as
+*$REPOS_DIR/functest/testcases/OpenStack/vPing/ping.sh* and takes an IP as
 a parameter. When the SCP is completed, the test will do an SSH call to that script
 inside the second instance. Some problems can happen here::
 
@@ -263,7 +263,7 @@ lead to errors in Rally as well.
 It is possible to run only one Rally scenario, instead of the whole suite.
 To do that, call the alternative python script as follows::
 
-  python $repos_dir/functest/testcases/OpenStack/rally/run_rally-cert.py -h
+  python $REPOS_DIR/functest/testcases/OpenStack/rally/run_rally-cert.py -h
   usage: run_rally-cert.py [-h] [-d] [-r] [-s] [-v] [-n] test_name
 
   positional arguments:
@@ -282,7 +282,7 @@ To do that, call the alternative python script as follows::
 
 For example, to run the Glance scenario with debug information::
 
-  python $repos_dir/functest/testcases/OpenStack/rally/run_rally-cert.py -d glance
+  python $REPOS_DIR/functest/testcases/OpenStack/rally/run_rally-cert.py -d glance
 
 Possible scenarios are:
  * authenticate
@@ -297,7 +297,7 @@ Possible scenarios are:
  * vm
 
 To know more about what those scenarios are doing, they are defined in directory:
-*$repos_dir/functest/testcases/OpenStack/rally/scenario*
+*$REPOS_DIR/functest/testcases/OpenStack/rally/scenario*
 For more info about Rally scenario definition please refer to the Rally official
 documentation. `[3]`_
 
