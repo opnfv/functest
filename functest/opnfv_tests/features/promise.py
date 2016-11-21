@@ -21,7 +21,7 @@ import functest.utils.openstack_utils as openstack_utils
 import keystoneclient.v2_0.client as ksclient
 from neutronclient.v2_0 import client as ntclient
 import novaclient.client as nvclient
-
+import functest.utils.functest_constants as ft_constants
 
 parser = argparse.ArgumentParser()
 
@@ -32,34 +32,29 @@ parser.add_argument("-r", "--report",
 args = parser.parse_args()
 
 
-dirs = ft_utils.get_functest_config('general.directories')
-PROMISE_REPO = dirs.get('dir_repo_promise')
-RESULTS_DIR = ft_utils.get_functest_config('general.directories.dir_results')
+PROMISE_REPO_DIR = ft_constants.PROMISE_REPO_DIR
+RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
 
-TENANT_NAME = ft_utils.get_functest_config('promise.tenant_name')
-TENANT_DESCRIPTION = \
-    ft_utils.get_functest_config('promise.tenant_description')
-USER_NAME = ft_utils.get_functest_config('promise.user_name')
-USER_PWD = ft_utils.get_functest_config('promise.user_pwd')
-IMAGE_NAME = ft_utils.get_functest_config('promise.image_name')
-FLAVOR_NAME = ft_utils.get_functest_config('promise.flavor_name')
-FLAVOR_VCPUS = ft_utils.get_functest_config('promise.flavor_vcpus')
-FLAVOR_RAM = ft_utils.get_functest_config('promise.flavor_ram')
-FLAVOR_DISK = ft_utils.get_functest_config('promise.flavor_disk')
+PROMISE_TENANT_NAME = ft_constants.PROMISE_TENANT_NAME
+TENANT_DESCRIPTION = ft_constants.TENANT_DESCRIPTION
+PROMISE_USER_NAME = ft_constants.PROMISE_USER_NAME
+PROMISE_USER_PWD = ft_constants.PROMISE_USER_PWD
+PROMISE_IMAGE_NAME = ft_constants.PROMISE_IMAGE_NAME
+PROMISE_FLAVOR_NAME = ft_constants.PROMISE_FLAVOR_NAME
+PROMISE_FLAVOR_VCPUS = ft_constants.PROMISE_FLAVOR_VCPUS
+PROMISE_FLAVOR_RAM = ft_constants.PROMISE_FLAVOR_RAM
+PROMISE_FLAVOR_DISK = ft_constants.PROMISE_FLAVOR_DISK
 
 
-GLANCE_IMAGE_FILENAME = \
-    ft_utils.get_functest_config('general.openstack.image_file_name')
-GLANCE_IMAGE_FORMAT = \
-    ft_utils.get_functest_config('general.openstack.image_disk_format')
-GLANCE_IMAGE_PATH = \
-    ft_utils.get_functest_config('general.directories.dir_functest_data') + \
-    "/" + GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_FILENAME = ft_constants.GLANCE_IMAGE_FILENAME
+GLANCE_IMAGE_FORMAT = ft_constants.GLANCE_IMAGE_FORMAT
+GLANCE_IMAGE_PATH = os.path.join(ft_constants.FUNCTEST_DATA_DIR,
+                                 GLANCE_IMAGE_FILENAME)
 
-NET_NAME = ft_utils.get_functest_config('promise.network_name')
-SUBNET_NAME = ft_utils.get_functest_config('promise.subnet_name')
-SUBNET_CIDR = ft_utils.get_functest_config('promise.subnet_cidr')
-ROUTER_NAME = ft_utils.get_functest_config('promise.router_name')
+PROMISE_NET_NAME = ft_constants.PROMISE_NET_NAME
+PROMISE_SUBNET_NAME = ft_constants.PROMISE_SUBNET_NAME
+PROMISE_SUBNET_CIDR = ft_constants.PROMISE_SUBNET_CIDR
+PROMISE_ROUTER_NAME = ft_constants.PROMISE_ROUTER_NAME
 
 
 """ logging configuration """
@@ -81,13 +76,14 @@ def main():
                      ks_creds['username'])
         exit(-1)
 
-    logger.info("Creating tenant '%s'..." % TENANT_NAME)
+    logger.info("Creating tenant '%s'..." % PROMISE_TENANT_NAME)
     tenant_id = openstack_utils.create_tenant(
-        keystone, TENANT_NAME, TENANT_DESCRIPTION)
+        keystone, PROMISE_TENANT_NAME, TENANT_DESCRIPTION)
     if not tenant_id:
-        logger.error("Error : Failed to create %s tenant" % TENANT_NAME)
+        logger.error("Error : Failed to create %s tenant"
+                     % PROMISE_TENANT_NAME)
         exit(-1)
-    logger.debug("Tenant '%s' created successfully." % TENANT_NAME)
+    logger.debug("Tenant '%s' created successfully." % PROMISE_TENANT_NAME)
 
     roles_name = ["admin", "Admin"]
     role_id = ''
@@ -99,90 +95,91 @@ def main():
         logger.error("Error : Failed to get id for %s role" % role_name)
         exit(-1)
 
-    logger.info("Adding role '%s' to tenant '%s'..." % (role_id, TENANT_NAME))
+    logger.info("Adding role '%s' to tenant '%s'..."
+                % (role_id, PROMISE_TENANT_NAME))
     if not openstack_utils.add_role_user(keystone, user_id,
                                          role_id, tenant_id):
         logger.error("Error : Failed to add %s on tenant %s" %
-                     (ks_creds['username'], TENANT_NAME))
+                     (ks_creds['username'], PROMISE_TENANT_NAME))
         exit(-1)
     logger.debug("Role added successfully.")
 
-    logger.info("Creating user '%s'..." % USER_NAME)
+    logger.info("Creating user '%s'..." % PROMISE_USER_NAME)
     user_id = openstack_utils.create_user(
-        keystone, USER_NAME, USER_PWD, None, tenant_id)
+        keystone, PROMISE_USER_NAME, PROMISE_USER_PWD, None, tenant_id)
 
     if not user_id:
-        logger.error("Error : Failed to create %s user" % USER_NAME)
+        logger.error("Error : Failed to create %s user" % PROMISE_USER_NAME)
         exit(-1)
-    logger.debug("User '%s' created successfully." % USER_NAME)
+    logger.debug("User '%s' created successfully." % PROMISE_USER_NAME)
 
     logger.info("Updating OpenStack credentials...")
     ks_creds.update({
-        "username": TENANT_NAME,
-        "password": TENANT_NAME,
-        "tenant_name": TENANT_NAME,
+        "username": PROMISE_TENANT_NAME,
+        "password": PROMISE_TENANT_NAME,
+        "tenant_name": PROMISE_TENANT_NAME,
     })
 
     nt_creds.update({
-        "tenant_name": TENANT_NAME,
+        "tenant_name": PROMISE_TENANT_NAME,
     })
 
     nv_creds.update({
-        "project_id": TENANT_NAME,
+        "project_id": PROMISE_TENANT_NAME,
     })
 
     glance = openstack_utils.get_glance_client()
     nova = nvclient.Client("2", **nv_creds)
 
-    logger.info("Creating image '%s' from '%s'..." % (IMAGE_NAME,
+    logger.info("Creating image '%s' from '%s'..." % (PROMISE_IMAGE_NAME,
                                                       GLANCE_IMAGE_PATH))
     image_id = openstack_utils.create_glance_image(glance,
-                                                   IMAGE_NAME,
+                                                   PROMISE_IMAGE_NAME,
                                                    GLANCE_IMAGE_PATH)
     if not image_id:
         logger.error("Failed to create the Glance image...")
         exit(-1)
-    logger.debug("Image '%s' with ID '%s' created successfully." % (IMAGE_NAME,
-                                                                    image_id))
-    flavor_id = openstack_utils.get_flavor_id(nova, FLAVOR_NAME)
+    logger.debug("Image '%s' with ID '%s' created successfully."
+                 % (PROMISE_IMAGE_NAME, image_id))
+    flavor_id = openstack_utils.get_flavor_id(nova, PROMISE_FLAVOR_NAME)
     if flavor_id == '':
-        logger.info("Creating flavor '%s'..." % FLAVOR_NAME)
+        logger.info("Creating flavor '%s'..." % PROMISE_FLAVOR_NAME)
         flavor_id = openstack_utils.create_flavor(nova,
-                                                  FLAVOR_NAME,
-                                                  FLAVOR_RAM,
-                                                  FLAVOR_DISK,
-                                                  FLAVOR_VCPUS)
+                                                  PROMISE_FLAVOR_NAME,
+                                                  PROMISE_FLAVOR_RAM,
+                                                  PROMISE_FLAVOR_DISK,
+                                                  PROMISE_FLAVOR_VCPUS)
         if not flavor_id:
             logger.error("Failed to create the Flavor...")
             exit(-1)
         logger.debug("Flavor '%s' with ID '%s' created successfully." %
-                     (FLAVOR_NAME, flavor_id))
+                     (PROMISE_FLAVOR_NAME, flavor_id))
     else:
         logger.debug("Using existing flavor '%s' with ID '%s'..."
-                     % (FLAVOR_NAME, flavor_id))
+                     % (PROMISE_FLAVOR_NAME, flavor_id))
 
     neutron = ntclient.Client(**nt_creds)
 
     network_dic = openstack_utils.create_network_full(neutron,
-                                                      NET_NAME,
-                                                      SUBNET_NAME,
-                                                      ROUTER_NAME,
-                                                      SUBNET_CIDR)
+                                                      PROMISE_NET_NAME,
+                                                      PROMISE_SUBNET_NAME,
+                                                      PROMISE_ROUTER_NAME,
+                                                      PROMISE_SUBNET_CIDR)
     if not network_dic:
         logger.error("Failed to create the private network...")
         exit(-1)
 
     logger.info("Exporting environment variables...")
     os.environ["NODE_ENV"] = "functest"
-    os.environ["OS_TENANT_NAME"] = TENANT_NAME
-    os.environ["OS_USERNAME"] = USER_NAME
-    os.environ["OS_PASSWORD"] = USER_PWD
+    os.environ["OS_PASSWORD"] = PROMISE_USER_PWD
     os.environ["OS_TEST_IMAGE"] = image_id
     os.environ["OS_TEST_FLAVOR"] = flavor_id
     os.environ["OS_TEST_NETWORK"] = network_dic["net_id"]
+    os.environ["OS_TENANT_NAME"] = PROMISE_TENANT_NAME
+    os.environ["OS_USERNAME"] = PROMISE_USER_NAME
 
-    os.chdir(PROMISE_REPO + '/source/')
-    results_file_name = RESULTS_DIR + '/' + 'promise-results.json'
+    os.chdir(PROMISE_REPO_DIR + '/source/')
+    results_file_name = os.path.join(RESULTS_DIR, 'promise-results.json')
     results_file = open(results_file_name, 'w+')
     cmd = 'npm run -s test -- --reporter json'
 
