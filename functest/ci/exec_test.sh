@@ -168,9 +168,6 @@ function run_test(){
             python ${ODL_SFC_DIR}/sfc.py $report
             pip install --upgrade python-keystoneclient==3.5.0
         ;;
-        "parser")
-            python ${FUNCTEST_TEST_DIR}/vnf/vRNC/parser.py $report
-        ;;
         *)
             echo "The test case '${test_name}' does not exist."
             exit 1
