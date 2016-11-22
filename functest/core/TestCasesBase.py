@@ -23,7 +23,7 @@ class TestCasesBase(object):
 
     def __init__(self):
         self.details = {}
-        self.project_name = "functest"
+        self.project_name = ""
         self.case_name = ""
         self.criteria = ""
         self.start_time = ""
