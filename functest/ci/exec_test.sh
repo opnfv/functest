@@ -153,9 +153,6 @@ function run_test(){
             source ${ODL_SFC_DIR}/tackerc
             python ${ODL_SFC_DIR}/sfc.py $report
         ;;
-        "parser")
-            python ${FUNCTEST_TEST_DIR}/vnf/vRNC/parser.py $report
-        ;;
         *)
             echo "The test case '${test_name}' does not exist."
             exit 1
