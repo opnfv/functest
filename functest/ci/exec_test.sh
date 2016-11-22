@@ -156,9 +156,6 @@ function run_test(){
                 $clean_flag -s -m feature_multisite $report \
                 -c ${FUNCTEST_TEST_DIR}/OpenStack/tempest/tempest_multisite.conf
         ;;
-        "domino")
-            python ${FUNCTEST_TEST_DIR}/features/domino.py $report
-        ;;
         "odl-sfc")
             pip install --upgrade python-keystoneclient==1.7.4
             ODL_SFC_DIR=${FUNCTEST_TEST_DIR}/features/sfc
