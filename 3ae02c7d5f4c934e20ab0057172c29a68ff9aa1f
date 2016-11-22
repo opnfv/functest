@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_d33191a3",
+        "filename": "functest/opnfv_tests/features/sfc/sfc.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-22T12:28:32Z",
+      "side": 0,
+      "message": "For example, this code shouldn\u0027t be changed. There must be a missalignment with master..",
+      "revId": "3ae02c7d5f4c934e20ab0057172c29a68ff9aa1f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
