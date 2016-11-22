@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_53acc1ed",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-22T10:51:58Z",
+      "side": 1,
+      "message": "add header:\n#!/usr/bin/python\n#\n# Copyright (c) 2015 All rights reserved\n# This program and the accompanying materials\n# are made available under the terms of the Apache License, Version 2.0\n# which accompanies this distribution, and is available at\n#\n# http://www.apache.org/licenses/LICENSE-2.0",
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_f3b84d2c",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_ssh.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-22T10:51:58Z",
+      "side": 1,
+      "message": "add header:\n#!/usr/bin/python\n#\n# Copyright (c) 2015 All rights reserved\n# This program and the accompanying materials\n# are made available under the terms of the Apache License, Version 2.0\n# which accompanies this distribution, and is available at\n#\n# http://www.apache.org/licenses/LICENSE-2.0",
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_737c5d73",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_ssh.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-22T10:51:58Z",
+      "side": 1,
+      "message": "would this also work?\nimport functest.opnfv_tests.OpenStack.vPing.vping_base ?",
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_b382c550",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_userdata.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-22T10:51:58Z",
+      "side": 1,
+      "message": "add header:\n#!/usr/bin/python\n#\n# Copyright (c) 2015 All rights reserved\n# This program and the accompanying materials\n# are made available under the terms of the Apache License, Version 2.0\n# which accompanies this distribution, and is available at\n#\n# http://www.apache.org/licenses/LICENSE-2.0",
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
