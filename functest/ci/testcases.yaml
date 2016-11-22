@@ -222,7 +222,10 @@ tiers:
                 dependencies:
                     installer: 'fuel'
                     scenario: '^((?!bgpvpn|noha).)*$'
-                    
+                run:
+                    module: 'functest.opnfv_tests.vnf.vRNC.parser'
+                    class: 'Parser'
+
     -
         name: openstack
         order: 4
