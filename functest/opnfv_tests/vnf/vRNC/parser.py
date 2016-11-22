@@ -14,57 +14,65 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import argparse
+import sys
 import time
 
+import argparse
+
+import functest.core.TestCasesBase as base
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
-import functest.utils.functest_constants as ft_constants
-
-parser = argparse.ArgumentParser()
-parser.add_argument("-r", "--report",
-                    help="Create json result file",
-                    action="store_true")
-args = parser.parse_args()
-
-PARSER_REPO = ft_constants.PARSER_REPO
-RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
-
-logger = ft_logger.Logger("parser").getLogger()
+import functest.utils.functest_utils as ft_utils
 
 
-def main():
-    project = 'parser'
-    case_name = 'parser-basics'
-    cmd = 'cd %s/tests && ./functest_run.sh' % PARSER_REPO
+class Parser(base.TestCasesBase):
+    def __init__(self):
+        super(Parser, self).__init__()
+        self.project_name = "parser"
+        self.case_name = "parser-basics"
+        self.parser_repo = self.get_conf('general.directories.dir_repo_parser')
+        self.results_dir = self.get_conf('general.directories.dir_results')
+        self.logger = ft_logger.Logger("parser").getLogger()
+        self.log_file = self.results_dir + '/parser.log'
 
-    start_time = time.time()
-    log_file = RESULTS_DIR + "/parser.log"
-    ret = functest_utils.execute_command(cmd,
-                                         info=True,
-                                         output_file=log_file)
-    stop_time = time.time()
+    def run(self, **kwargs):
+        cmd = 'cd %s/tests && ./functest_run.sh' % self.parser_repo
 
-    status, details = functest_utils.check_test_result(project,
-                                                       ret,
-                                                       start_time,
-                                                       stop_time)
+        self.start_time = time.time()
+        ret = ft_utils.execute_command(cmd,
+                                       info=True,
+                                       output_file=self.log_file)
+        self.stop_time = time.time()
 
-    functest_utils.logger_test_results(project,
-                                       case_name,
-                                       status,
-                                       details)
+        self.criteria, details = ft_utils.check_test_result(self.project_name,
+                                                            ret,
+                                                            self.start_time,
+                                                            self.stop_time)
 
-    if args.report:
-        logger.debug("Report Parser Results to DB......")
-        functest_utils.push_results_to_db(project,
-                                          case_name,
-                                          start_time,
-                                          stop_time,
-                                          status,
-                                          details)
-    exit(ret)
+        ft_utils.logger_test_results(self.project_name,
+                                     self.case_name,
+                                     self.criteria,
+                                     details)
+
+        return ret
+
+    @staticmethod
+    def get_conf(parameter):
+        return ft_utils.get_functest_config(parameter)
+
 
 
 if __name__ == '__main__':
-    main()
+    args_parser = argparse.ArgumentParser()
+    args_parser.add_argument("-r", "--report",
+                             help="Create json result file",
+                             action="store_true")
+    args = vars(args_parser.parse_args())
+    parser = Parser()
+    try:
+        result = parser.run(**args)
+        if result != base.TestCasesBase.EX_OK:
+            sys.exit(result)
+        if args['report']:
+            sys.exit(parser.push_to_db())
+    except Exception:
+        sys.exit(base.TestCasesBase.EX_RUN_ERROR)
