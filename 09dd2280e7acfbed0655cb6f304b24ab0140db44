@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_53f601d9",
+        "filename": "docs/userguide/troubleshooting.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-22T12:38:53Z",
+      "side": 1,
+      "message": "Good catch. Let me fix it",
+      "parentUuid": "5ac10518_93f8e9e6",
+      "revId": "09dd2280e7acfbed0655cb6f304b24ab0140db44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_53da8179",
         "filename": "functest/ci/config_functest.yaml",
         "patchSetId": 6
@@ -47,6 +65,24 @@
       "writtenOn": "2016-11-22T11:21:22Z",
       "side": 1,
       "message": "did you delete rally_res on purpose?",
+      "revId": "09dd2280e7acfbed0655cb6f304b24ab0140db44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_33f9f5c8",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-22T12:38:53Z",
+      "side": 1,
+      "message": "Yes, the rally result dir will be calculated in the code\nRESULTS_DIR \u003d os.path.join(ft_constants.FUNCTEST_RESULTS_DIR, \u0027rally\u0027)",
+      "parentUuid": "5ac10518_53da8179",
       "revId": "09dd2280e7acfbed0655cb6f304b24ab0140db44",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
