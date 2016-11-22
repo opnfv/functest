@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+1: Peter Lee <peter@corenova.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Tue, 22 Nov 2016 16:42:31 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/24685
+Project: functest
+Branch: refs/heads/stable/colorado
