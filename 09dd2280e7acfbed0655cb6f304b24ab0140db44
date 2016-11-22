@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_93f8e9e6",
+        "filename": "docs/userguide/troubleshooting.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-22T11:21:22Z",
+      "side": 1,
+      "message": "now this path is different:\n\n$REPOS_DIR/functest/functest/opnfv_tests/vPing/ ...",
+      "revId": "09dd2280e7acfbed0655cb6f304b24ab0140db44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_53da8179",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-22T11:21:22Z",
+      "side": 1,
+      "message": "did you delete rally_res on purpose?",
+      "revId": "09dd2280e7acfbed0655cb6f304b24ab0140db44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
