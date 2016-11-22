@@ -181,7 +181,7 @@ def main():
     os.environ["OS_TEST_FLAVOR"] = flavor_id
     os.environ["OS_TEST_NETWORK"] = network_dic["net_id"]
 
-    os.chdir(PROMISE_REPO)
+    os.chdir(PROMISE_REPO + '/source/')
     results_file_name = RESULTS_DIR + '/' + 'promise-results.json'
     results_file = open(results_file_name, 'w+')
     cmd = 'npm run -s test -- --reporter json'
