@@ -8,6 +8,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import os
+import sys
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
@@ -23,11 +24,13 @@ class TestCasesBase(object):
 
     def __init__(self):
         self.details = {}
-        self.project_name = "functest"
+        self.project_name = ""
         self.case_name = ""
         self.criteria = ""
         self.start_time = ""
         self.stop_time = ""
+
+        self.results_dir = self.get_conf('general.directories.dir_results')
 
     def run(self, **kwargs):
         self.logger.error("Run must be implemented")
@@ -51,3 +54,38 @@ class TestCasesBase(object):
         except Exception:
             self.logger.exception("The results cannot be pushed to DB")
             return TestCasesBase.EX_PUSH_TO_DB_ERROR
+
+    @classmethod
+    def main(project_cls, args_parser, **kwargs):
+        args = vars(args_parser.parse_args())
+        project_obj = project_cls()
+        try:
+            result = project_obj.run(**args)
+            if result != TestCasesBase.EX_OK:
+                sys.exit(result)
+            if args['report']:
+                sys.exit(project_obj.push_to_db())
+        except Exception:
+            sys.exit(TestCasesBase.EX_RUN_ERROR)
+
+    @staticmethod
+    def get_conf(parameter):
+        return ft_utils.get_functest_config(parameter)
+
+    @staticmethod
+    def parser_results(test_name, ret, start_time, stop_time):
+        def get_criteria_value():
+            return \
+                ft_utils.get_criteria_by_test(test_name).split('==')[1].strip()
+
+        status = 'FAIL'
+        if str(ret) == get_criteria_value():
+            status = 'PASS'
+
+        details = {
+            'timestart': start_time,
+            'duration': round(stop_time - start_time, 1),
+            'status': status,
+        }
+
+        return status, details
