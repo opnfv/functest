@@ -16,6 +16,24 @@
       "revId": "32efcccb9ac10b8105ff00dfe5c5b04b4a8575e1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_0e8dac7b",
+        "filename": "functest/opnfv_tests/features/domino.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-23T01:08:36Z",
+      "side": 1,
+      "message": "push_to_db?? if you mean this function, it is inherited from TestcasesBase.",
+      "parentUuid": "5ac10518_f354cdcb",
+      "revId": "32efcccb9ac10b8105ff00dfe5c5b04b4a8575e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
