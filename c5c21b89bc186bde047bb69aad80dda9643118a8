@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_513118eb",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2016-11-23T16:04:11Z",
+      "side": 1,
+      "message": "If this file was moved to the project\u0027s root directory, this line could be replaced with \nADD . ${FUNCTEST_REPO_DIR}/functest\nwhich would allow us to perform builds on the real source instead of the previously committed revision. Please see FUNCTEST-554. A change such as this would require a change to the CI jobs but could make sense to implement now seeing the scope of this patch.",
+      "revId": "c5c21b89bc186bde047bb69aad80dda9643118a8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_7141b438",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2016-11-23T16:04:11Z",
+      "side": 1,
+      "message": "Love that you\u0027ve gathered up all of these globals into a class making them not only easier to track down, but also in a place that will make it easier to refactor them out in the future!",
+      "revId": "c5c21b89bc186bde047bb69aad80dda9643118a8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_314b2c5b",
+        "filename": "functest/cli/commands/cli_os.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2016-11-23T16:04:11Z",
+      "side": 1,
+      "message": "This variable could just be removed and leveraged the way it was set but  the way you have it is fine too. I just love removing lines of code :)",
+      "revId": "c5c21b89bc186bde047bb69aad80dda9643118a8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
