@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_69ca2aa3",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_ssh.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-23T08:59:50Z",
+      "side": 1,
+      "message": "I agree, but if move it to the common config, it means other files using it will need to change accordingly, so I will do it in another patch.",
+      "parentUuid": "5ac10518_c9eebe22",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_6eb470f2",
         "filename": "functest/opnfv_tests/OpenStack/vPing/vping_ssh.py",
         "patchSetId": 4
@@ -129,6 +153,30 @@
       "writtenOn": "2016-11-23T03:58:27Z",
       "side": 1,
       "message": "1. How about using os.path.join\nping_script \u003d os.path.join(self.functest_repo, \"functest/opnfv_tests/OpenStack/vPing/ping.sh\")\n\n2. If the ping.sh is at the same path, how about using relative path instead of absolute path? \nOne thing to think about, we may need to make sure there is little chance that ping.sh will be moved to other place. If there is a chance, the current implementation will also not support the change. We may need a wise way to do it.",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 71
+      },
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_496f2e93",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_ssh.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-23T08:59:50Z",
+      "side": 1,
+      "message": "1) good idea, and the flake8 violation can be solved beautifully\n2) relative path don\u0027t work, because this script cannot be run in this path. I suggest using dir_vping.",
+      "parentUuid": "5ac10518_6eb470f2",
       "range": {
         "startLine": 113,
         "startChar": 8,
