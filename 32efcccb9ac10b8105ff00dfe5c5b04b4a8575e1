@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ac10518_6941ca0a",
+        "filename": "functest/opnfv_tests/features/domino.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-23T08:54:11Z",
+      "side": 1,
+      "message": "I would recommend to use os.path.join here",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "32efcccb9ac10b8105ff00dfe5c5b04b4a8575e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_f354cdcb",
         "filename": "functest/opnfv_tests/features/domino.py",
         "patchSetId": 2
