@@ -31,6 +31,7 @@ class DominoCases(TestCasesBase.TestCasesBase):
     logger = ft_logger.Logger("domino").getLogger()
 
     def __init__(self):
+        super(DominoCases, self).__init__()
         self.project_name = "domino"
         self.case_name = "domino-multinode"
 
@@ -70,7 +71,7 @@ if __name__ == '__main__':
     parser.add_argument("-r", "--report",
                         help="Create json result file",
                         action="store_true")
-    args = parser.parse_args()
+    args = vars(parser.parse_args())
     domino = DominoCases()
     try:
         result = domino.main(**args)

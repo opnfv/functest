@@ -156,9 +156,6 @@ function run_test(){
                 $clean_flag -s -m feature_multisite $report \
                 -c ${FUNCTEST_TEST_DIR}/OpenStack/tempest/tempest_multisite.conf
         ;;
-        "domino")
-            python ${FUNCTEST_TEST_DIR}/features/domino.py $report
-        ;;
         "odl-sfc")
             ODL_SFC_DIR=${repos_dir}/sfc/tests/functest/odl-sfc
             FUNCTEST_REPO_DIR=${FUNCTEST_REPO_DIR} python ${ODL_SFC_DIR}/prepare_odl_sfc.py || exit $?
