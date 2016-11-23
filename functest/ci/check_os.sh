@@ -37,7 +37,12 @@ if [ $RETVAL -ne 0 ]; then
 fi
 echo "  ...OK"
 
-adminURL=$(openstack catalog show  identity |grep adminURL|awk '{print $4}')
+adminURL=$(openstack catalog show  identity |awk '/admin/ {print $4}')
+if [ -z ${adminURL} ]; then
+    echo "ERROR: Cannot determine the admin URL."
+    openstack catalog show identity
+    exit 1
+fi
 adminIP=$(echo $adminURL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
 adminPort=$(echo $adminURL|sed 's/^.*://'|sed 's/.[^\/]*$//')
 echo ">>Verifying connectivity to the admin endpoint $adminIP:$adminPort..."
