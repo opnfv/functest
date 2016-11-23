@@ -111,10 +111,6 @@ function run_test(){
             python ${FUNCTEST_TEST_DIR}/OpenStack/rally/run_rally-cert.py \
                 $clean_flag --sanity all $report
         ;;
-        "bgpvpn")
-            sdnvpn_repo_dir=${repos_dir}/sdnvpn/test/functest/
-            python ${sdnvpn_repo_dir}/run_tests.py $report
-        ;;
         "onos")
             python ${FUNCTEST_TEST_DIR}/Controllers/ONOS/Teston/onosfunctest.py
         ;;
