@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_4ec1747f",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_ssh.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-23T01:17:30Z",
+      "side": 1,
+      "message": "yes, both of them work, since vping_base/vping_userdata/vping_ssh are in the same module, I prefer using short path",
+      "parentUuid": "5ac10518_737c5d73",
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_b382c550",
         "filename": "functest/opnfv_tests/OpenStack/vPing/vping_userdata.py",
         "patchSetId": 4
