@@ -71,6 +71,52 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_4e1df40e",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_ssh.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-23T03:58:27Z",
+      "side": 1,
+      "message": "Will the username and password used by other module?\nif yes, it should be accessible by other module\n\nor are they bundled with a specific image?\nif yes, it should be passed in from configuration file along with the image name\n\nThe rough idea is, try to avoid using hardcoded information especially authentication information as it will cause security issue.",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_6eb470f2",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_ssh.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-23T03:58:27Z",
+      "side": 1,
+      "message": "1. How about using os.path.join\nping_script \u003d os.path.join(self.functest_repo, \"functest/opnfv_tests/OpenStack/vPing/ping.sh\")\n\n2. If the ping.sh is at the same path, how about using relative path instead of absolute path? \nOne thing to think about, we may need to make sure there is little chance that ping.sh will be moved to other place. If there is a chance, the current implementation will also not support the change. We may need a wise way to do it.",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 71
+      },
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_b382c550",
         "filename": "functest/opnfv_tests/OpenStack/vPing/vping_userdata.py",
         "patchSetId": 4
@@ -82,6 +128,52 @@
       "writtenOn": "2016-11-22T10:51:58Z",
       "side": 1,
       "message": "add header:\n#!/usr/bin/python\n#\n# Copyright (c) 2015 All rights reserved\n# This program and the accompanying materials\n# are made available under the terms of the Apache License, Version 2.0\n# which accompanies this distribution, and is available at\n#\n# http://www.apache.org/licenses/LICENSE-2.0",
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_4ea09490",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_userdata.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-23T03:58:27Z",
+      "side": 1,
+      "message": "How about using os.EX_** code instead of -1 or defining our own code at the base class? The rough idea is, making the code meaningful such as (just a random example)\nNOT_RUN \u003d -1\n\nWhen there is an -1 exit code, it just means error, but it does not helpful to debug.",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_aeb6d8da",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_userdata.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-23T03:58:27Z",
+      "side": 1,
+      "message": "As vping_base.parse_result is relying on -2 to make further decision. it enforce the reason to making the code more readable and understandable.",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 48,
+        "endChar": 30
+      },
       "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
