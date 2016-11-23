@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_c9eebe22",
+        "filename": "functest/opnfv_tests/OpenStack/vPing/vping_ssh.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-23T08:36:14Z",
+      "side": 1,
+      "message": "I agree in having it in common config (yaml). Although the image will be always the same, the cirros...",
+      "parentUuid": "5ac10518_4e1df40e",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "4a9ae9ed2222b94a85b0d23c21333f0d4f134d71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_6eb470f2",
         "filename": "functest/opnfv_tests/OpenStack/vPing/vping_ssh.py",
         "patchSetId": 4
