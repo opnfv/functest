@@ -196,7 +196,7 @@ tiers:
                     module: 'functest.opnfv_tests.features.domino'
                     class: 'DominoCases'
             -
-                name: odl-sfc
+                name: odl_sfc
                 criteria: 'status == "PASS"'
                 blocking: false
                 description: >-
@@ -204,6 +204,9 @@ tiers:
                 dependencies:
                     installer: '(apex)|(fuel)'
                     scenario: 'odl_l2-sfc'
+                run:
+                    module: 'functest.opnfv_tests.features.odl_sfc'
+                    class: 'OpenDaylightSFC'
             -
                 name: onos_sfc
                 criteria: 'status == "PASS"'
@@ -222,7 +225,7 @@ tiers:
                 dependencies:
                     installer: 'fuel'
                     scenario: '^((?!bgpvpn|noha).)*$'
-                    
+
     -
         name: openstack
         order: 4
