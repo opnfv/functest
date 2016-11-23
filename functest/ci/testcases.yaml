@@ -103,7 +103,15 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: ''
-
+            -
+                name: tempest_odl_serial
+                criteria: 'success_rate == 100%'
+                blocking: false
+                description: >-
+                    sdfasdfa
+                dependencies:
+                    installer: 'odl-pipeline'
+                    scenario: ''
             -
                 name: rally_sanity
                 criteria: 'success_rate == 100%'
@@ -249,6 +257,9 @@ tiers:
                 dependencies:
                     installer: '(apex)|(fuel)'
                     scenario: 'odl_l2-sfc'
+                run:
+                    module: 'functest.opnfv_tests.features.odl_sfc'
+                    class: 'OpenDaylightSFC'
             -
                 name: onos_sfc
                 criteria: 'status == "PASS"'
