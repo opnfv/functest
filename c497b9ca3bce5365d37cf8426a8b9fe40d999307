@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_71af74e4",
+        "filename": "functest/ci/check_os.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4291
+      },
+      "writtenOn": "2016-11-23T16:45:37Z",
+      "side": 1,
+      "message": "awk \u0027/admin:/ {print $4}\u0027)",
+      "range": {
+        "startLine": 42,
+        "startChar": 49,
+        "endLine": 42,
+        "endChar": 77
+      },
+      "revId": "c497b9ca3bce5365d37cf8426a8b9fe40d999307",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
