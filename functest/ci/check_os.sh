@@ -38,6 +38,9 @@ fi
 echo "  ...OK"
 
 adminURL=$(openstack catalog show  identity |grep adminURL|awk '{print $4}')
+if [ -z ${adminURL} ]; then
+    adminURL=$(openstack catalog show  identity |grep admin|awk '{print $4}')
+fi
 adminIP=$(echo $adminURL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
 adminPort=$(echo $adminURL|sed 's/^.*://'|sed 's/.[^\/]*$//')
 echo ">>Verifying connectivity to the admin endpoint $adminIP:$adminPort..."
