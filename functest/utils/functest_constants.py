@@ -280,3 +280,7 @@ CW_REQUIERMENTS = \
     get_value('vIMS.clearwater.requierments', 'CW_REQUIERMENTS')
 PARSER_REPO = \
     get_value('general.directories.dir_repo_parser', 'PARSER_REPO')
+SDNVPN_REPO_DIR = \
+    get_value('general.directories.dir_repo_sdnvpn', 'SDNVPN_REPO_DIR')
+SFC_REPO_DIR = \
+    get_value('general.directories.dir_repo_sfc', 'SFC_REPO_DIR')

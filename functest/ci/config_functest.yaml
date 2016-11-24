@@ -25,6 +25,8 @@ general:
         dir_repo_ovno:      /home/opnfv/repos/ovno
         dir_repo_parser:    /home/opnfv/repos/parser
         dir_repo_domino:    /home/opnfv/repos/domino
+        dir_repo_sdnvpn:    /home/opnfv/repos/sdnvpn
+        dir_repo_sfc:       /home/opnfv/repos/sfc
         dir_functest:       /home/opnfv/functest
         dir_functest_test:  /home/opnfv/repos/functest/functest/opnfv_tests
         dir_results:        /home/opnfv/functest/results
