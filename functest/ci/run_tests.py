@@ -124,7 +124,7 @@ def run_test(test, tier_name):
             test_case = cls()
             result = test_case.run()
             if result != TestCasesBase.TestCasesBase.EX_SKIP and REPORT_FLAG:
-                result = test_case.push_to_db()
+                test_case.push_to_db()
         except ImportError:
             logger.exception("Cannot import module {}".format(
                 run_dict['module']))
