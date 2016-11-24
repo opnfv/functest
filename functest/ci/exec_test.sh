@@ -36,8 +36,8 @@ if [[ "${CI_DEBUG,,}" == "true" ]];then
     debug="--debug"
 fi
 
-FUNCTEST_REPO_DIR=${repos_dir}/functest
-FUNCTEST_TEST_DIR=${repos_dir}/functest/functest/opnfv_tests
+FUNCTEST_REPO_DIR=${REPOS_DIR}/functest
+FUNCTEST_TEST_DIR=${REPOS_DIR}/functest/functest/opnfv_tests
 FUNCTEST_CONF_DIR=/home/opnfv/functest/conf
 
 export PYTHONUNBUFFERED=1
