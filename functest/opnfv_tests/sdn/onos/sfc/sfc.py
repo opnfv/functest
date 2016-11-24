@@ -26,10 +26,10 @@
 import time
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
-from Sfc_fun import Sfc_fun
+from sfc_onos import SfcOnos
 
 logger = ft_logger.Logger("sfc").getLogger()
-Sfc_obj = Sfc_fun()
+Sfc_obj = SfcOnos()
 
 OK = 200
 CREATED = 201

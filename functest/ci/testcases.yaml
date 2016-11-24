@@ -38,7 +38,7 @@ tiers:
                     installer: ''
                     scenario: '^((?!bgpvpn|odl_l3).)*$'
                 run:
-                    module: 'functest.opnfv_tests.OpenStack.vPing.vping_ssh'
+                    module: 'functest.opnfv_tests.openstack.vping.vping_ssh'
                     class: 'VPingSSH'
 
             -
@@ -52,7 +52,7 @@ tiers:
                     installer: ''
                     scenario: '^((?!lxd).)*$'
                 run:
-                    module: 'functest.opnfv_tests.OpenStack.vPing.vping_userdata'
+                    module: 'functest.opnfv_tests.openstack.vping.vping_userdata'
                     class: 'VPingUserdata'
 
             -
@@ -99,8 +99,8 @@ tiers:
                     installer: ''
                     scenario: 'odl'
                 run:
-                    module: 'functest.opnfv_tests.Controllers.ODL.OpenDaylightTesting'
-                    class: 'ODLTestCases'
+                    module: 'functest.opnfv_tests.sdn.odl.odl'
+                    class: 'ODLTests'
 
             -
                 name: onos
@@ -153,7 +153,7 @@ tiers:
                     scenario: 'bgpvpn'
                 run:
                     module: 'functest.opnfv_tests.features.sdnvpn'
-                    class: 'SDNVPN'
+                    class: 'SdnVpnTests'
 
             -
                 name: security_scan
@@ -203,7 +203,7 @@ tiers:
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.features.domino'
-                    class: 'DominoCases'
+                    class: 'DominoTests'
             -
                 name: odl-sfc
                 criteria: 'status == "PASS"'
@@ -232,7 +232,7 @@ tiers:
                     installer: 'fuel'
                     scenario: '^((?!bgpvpn|noha).)*$'
                 run:
-                    module: 'functest.opnfv_tests.vnf.vRNC.parser'
+                    module: 'functest.opnfv_tests.vnf.rnc.parser'
                     class: 'Parser'
     -
         name: openstack

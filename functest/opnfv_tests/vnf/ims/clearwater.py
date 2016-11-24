@@ -12,7 +12,7 @@
 ########################################################################
 
 
-class clearwater:
+class Clearwater:
 
     def __init__(self, inputs={}, orchestrator=None, logger=None):
         self.config = inputs

@@ -20,7 +20,7 @@ import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
 
-class SDNVPN(TestCasesBase.TestCasesBase):
+class SdnVpnTests(TestCasesBase.TestCasesBase):
     SDNVPN_REPO = ft_constants.SDNVPN_REPO_DIR
     SDNVPN_REPO_TESTS = os.path.join(SDNVPN_REPO, "tests/functest")
     RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR

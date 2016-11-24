@@ -75,3 +75,4 @@ if __name__ == '__main__':
             sys.exit(parser.push_to_db())
     except Exception:
         sys.exit(base.TestCasesBase.EX_RUN_ERROR)
+
