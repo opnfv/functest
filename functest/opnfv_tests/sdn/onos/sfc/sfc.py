@@ -26,7 +26,7 @@
 import time
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
-from Sfc_fun import Sfc_fun
+from sfc_fun import sfc_fun
 
 logger = ft_logger.Logger("sfc").getLogger()
 Sfc_obj = Sfc_fun()

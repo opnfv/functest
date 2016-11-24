@@ -16,7 +16,7 @@ import unittest
 from robot.errors import RobotError
 
 from functest.core import TestCasesBase
-from functest.opnfv_tests.Controllers.ODL import OpenDaylightTesting
+from functest.opnfv_tests.sdn.odl import odl
 from functest.utils import functest_constants as ft_constants
 
 
@@ -39,7 +39,7 @@ class ODLTestCasesTesting(unittest.TestCase):
         ft_constants.OS_USERNAME = self._os_username
         ft_constants.OS_PASSWORD = self._os_password
         ft_constants.OS_TENANT_NAME = self._os_tenantname
-        self.test = OpenDaylightTesting.ODLTestCases()
+        self.test = odl.ODLTestCases()
 
     @mock.patch('fileinput.input', side_effect=Exception())
     def test_set_robotframework_vars_failed(self, *args):
@@ -85,7 +85,7 @@ class ODLTestCasesTesting(unittest.TestCase):
     def _test_main(self, status, *args):
         kwargs = self._get_main_kwargs()
         self.assertEqual(self.test.main(**kwargs), status)
-        odl_res_dir = OpenDaylightTesting.ODLTestCases.res_dir
+        odl_res_dir = odl.ODLTestCases.res_dir
         if len(args) > 0:
             args[0].assert_called_once_with(odl_res_dir)
         if len(args) > 1:
@@ -99,8 +99,8 @@ class ODLTestCasesTesting(unittest.TestCase):
                         'RESTCONFPORT:{}'.format(self._odl_restconfport)]
             output_file = os.path.join(odl_res_dir, 'output.xml')
             args[1].assert_called_once_with(
-                OpenDaylightTesting.ODLTestCases.basic_suite_dir,
-                OpenDaylightTesting.ODLTestCases.neutron_suite_dir,
+                odl.ODLTestCases.basic_suite_dir,
+                odl.ODLTestCases.neutron_suite_dir,
                 log='NONE',
                 output=output_file,
                 report='NONE',

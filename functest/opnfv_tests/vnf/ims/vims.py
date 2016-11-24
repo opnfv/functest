@@ -49,7 +49,7 @@ logger = ft_logger.Logger("vIMS").getLogger()
 
 
 # Cloudify parameters
-VIMS_DIR = os.path.join(ft_constants.FUNCTEST_TEST_DIR, 'vnf/vIMS/')
+VIMS_DIR = os.path.join(ft_constants.FUNCTEST_TEST_DIR, 'vnf/ims/')
 VIMS_DATA_DIR = ft_constants.VIMS_DATA_DIR
 VIMS_TEST_DIR = ft_constants.VIMS_TEST_DIR
 VIMS_TENANT_NAME = ft_constants.VIMS_TENANT_NAME
