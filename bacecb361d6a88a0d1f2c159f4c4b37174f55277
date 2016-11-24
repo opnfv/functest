@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_512cb8ab",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-24T06:48:48Z",
+      "side": 1,
+      "message": "do we really need to expose so many configurations? I think only one config_functest.yaml is enough\nIn this way we need to maintain the configurations at least in two places",
+      "revId": "bacecb361d6a88a0d1f2c159f4c4b37174f55277",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_f1184486",
+        "filename": "functest/utils/functest_constants.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-24T06:48:48Z",
+      "side": 1,
+      "message": "almost all the information have been processed in functest_utils",
+      "revId": "bacecb361d6a88a0d1f2c159f4c4b37174f55277",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_111e3071",
+        "filename": "functest/utils/functest_constants.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-24T06:48:48Z",
+      "side": 1,
+      "message": "in none SDN scenario, there will be an exception, right?",
+      "revId": "bacecb361d6a88a0d1f2c159f4c4b37174f55277",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
