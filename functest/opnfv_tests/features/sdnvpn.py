@@ -20,14 +20,14 @@ import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
 
-class SDNVPN(TestCasesBase.TestCasesBase):
+class SdnVpnTests(TestCasesBase.TestCasesBase):
     SDNVPN_REPO = ft_constants.SDNVPN_REPO_DIR
     SDNVPN_REPO_TESTS = os.path.join(SDNVPN_REPO, "tests/functest")
     RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
     logger = ft_logger.Logger("sdnvpn").getLogger()
 
     def __init__(self):
-        super(SDNVPN, self).__init__()
+        super(SdnVpnTests, self).__init__()
         self.project_name = "sdnvpn"
         self.case_name = "bgpvpn"
 
@@ -69,7 +69,7 @@ if __name__ == '__main__':
                         help="Create json result file",
                         action="store_true")
     args = vars(parser.parse_args())
-    sdnvpn = SDNVPN()
+    sdnvpn = SdnVpnTests()
     try:
         result = sdnvpn.main(**args)
         if result != TestCasesBase.TestCasesBase.EX_OK:
