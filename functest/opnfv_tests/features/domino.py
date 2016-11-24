@@ -15,6 +15,7 @@
 # 0.4: refactoring to match Test abstraction class
 
 import argparse
+import os
 import sys
 import time
 
@@ -25,8 +26,6 @@ import functest.utils.functest_constants as ft_constants
 
 
 class DominoTests(TestCasesBase.TestCasesBase):
-    DOMINO_REPO = ft_constants.DOMINO_REPO
-    RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
     logger = ft_logger.Logger("domino").getLogger()
 
     def __init__(self):
@@ -35,8 +34,10 @@ class DominoTests(TestCasesBase.TestCasesBase):
         self.case_name = "domino-multinode"
 
     def main(self, **kwargs):
-        cmd = 'cd %s && ./tests/run_multinode.sh' % self.DOMINO_REPO
-        log_file = self.RESULTS_DIR + "/domino.log"
+        cmd = ('cd %s && ./tests/run_multinode.sh' %
+               ft_constants.DOMINO_REPO_DIR)
+        log_file = os.path.join(
+            ft_constants.FUNCTEST_RESULTS_DIR, "domino.log")
         start_time = time.time()
 
         ret = ft_utils.execute_command(cmd,
