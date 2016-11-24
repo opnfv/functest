@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_d481764b",
+        "filename": "functest/core/umbrella.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-24T07:22:45Z",
+      "side": 1,
+      "message": "Umbrella sounds a bit strange\nit is an extension of TestCaseBase for Feature project\nwould it make sense to call it FeatureBase or something like that?\n\nI imagine something similar for VNF onboarding (as soon as I find some time) which will also declare new functions such as deploy_orchestrator, depoloy_nfv, run_vnf_test ...",
+      "revId": "a79a20dc659a2dda0af4a2f708796dee9e241f2c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_34b9da2e",
+        "filename": "functest/core/umbrella.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-24T07:22:45Z",
+      "side": 1,
+      "message": "\u0027details\u0027 is a bit confusing for me\nin the DB we have start_time, stop_time and status out of the details section\n\nso we do not need duration (as we have already start and stop time)\nand criteria is a global status \u003d\u003e no need to put it in the details",
+      "revId": "a79a20dc659a2dda0af4a2f708796dee9e241f2c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_3490fa94",
+        "filename": "functest/core/umbrella.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-24T07:22:45Z",
+      "side": 1,
+      "message": "shall we had something for the dashboard here to precise hat kind of graphs a feature project would like to show?",
+      "revId": "a79a20dc659a2dda0af4a2f708796dee9e241f2c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
