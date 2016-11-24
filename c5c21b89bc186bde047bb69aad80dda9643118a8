@@ -50,6 +50,24 @@
       "revId": "c5c21b89bc186bde047bb69aad80dda9643118a8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_91cb0072",
+        "filename": "functest/cli/commands/cli_os.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-24T01:12:37Z",
+      "side": 1,
+      "message": "Good catch, Steve. I will remove it.",
+      "parentUuid": "5ac10518_314b2c5b",
+      "revId": "c5c21b89bc186bde047bb69aad80dda9643118a8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
