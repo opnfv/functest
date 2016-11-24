@@ -20,6 +20,7 @@ class TestCasesBase(object):
     EX_RUN_ERROR = os.EX_SOFTWARE
     EX_PUSH_TO_DB_ERROR = os.EX_SOFTWARE - 1
     EX_SKIP = os.EX_SOFTWARE - 2
+    EX_TEST_FAIL = os.EX_SOFTWARE - 3
 
     logger = ft_logger.Logger(__name__).getLogger()
 
