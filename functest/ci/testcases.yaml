@@ -151,6 +151,9 @@ tiers:
                 dependencies:
                     installer: '(fuel)|(apex)'
                     scenario: 'bgpvpn'
+                 run:
+                    module: 'functest.opnfv_tests.features.sdnvpn'
+                    class: 'SDNVPN'
 
             -
                 name: security_scan
@@ -228,7 +231,7 @@ tiers:
                 dependencies:
                     installer: 'fuel'
                     scenario: '^((?!bgpvpn|noha).)*$'
-                    
+
     -
         name: openstack
         order: 4
