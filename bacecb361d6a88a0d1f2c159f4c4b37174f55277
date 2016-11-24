@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_34e79a42",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-24T07:40:58Z",
+      "side": 1,
+      "message": "paths here are handled as ENV, which actually can be obtained from config_functest.yaml. we can manage it only in config_functest.yaml, no need to add another config place",
+      "parentUuid": "5ac10518_7441a238",
+      "revId": "bacecb361d6a88a0d1f2c159f4c4b37174f55277",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_f1184486",
         "filename": "functest/utils/functest_constants.py",
         "patchSetId": 14
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "os.getenv will returen None instead of KeyError.",
       "parentUuid": "5ac10518_111e3071",
+      "revId": "bacecb361d6a88a0d1f2c159f4c4b37174f55277",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_54e4a63a",
+        "filename": "functest/utils/functest_constants.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-24T07:40:58Z",
+      "side": 1,
+      "message": "in this case, some env which is a must-be-set will use None instead?",
+      "parentUuid": "5ac10518_7468c2ba",
       "revId": "bacecb361d6a88a0d1f2c159f4c4b37174f55277",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
