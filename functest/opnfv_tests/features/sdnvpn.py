@@ -21,8 +21,8 @@ import functest.utils.functest_utils as ft_utils
 
 
 class SDNVPN(TestCasesBase.TestCasesBase):
-    SDNVPN_REPO = ft_constants.SDNVPN_REPO_DIR
-    SDNVPN_REPO_TESTS = os.path.join(SDNVPN_REPO, "tests/functest")
+    SDNVPN_REPO_TESTS = os.path.join(
+        ft_constants.SDNVPN_REPO_DIR, "tests/functest")
     RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
     logger = ft_logger.Logger("sdnvpn").getLogger()
 

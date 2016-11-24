@@ -90,12 +90,12 @@ OPENSTACK_CREDS = \
 OPENSTACK_SNAPSHOT_FILE = \
     get_value('general.openstack.snapshot_file', 'OPENSTACK_SNAPSHOT_FILE')
 
-DOMINO_REPO = \
-    get_value('general.directories.dir_repo_domino', 'DOMINO_REPO')
-SDNVPN_REPO = \
-    get_value('general.directories.dir_repo_sdnvpn', 'SDNVPN_REPO')
-SFC_REPO = \
-    get_value('general.directories.dir_repo_sfc', 'SFC_REPO')
+DOMINO_REPO_DIR = \
+    get_value('general.directories.dir_repo_domino', 'DOMINO_REPO_DIR')
+SDNVPN_REPO_DIR = \
+    get_value('general.directories.dir_repo_sdnvpn', 'SDNVPN_REPO_DIR')
+SFC_REPO_DIR = \
+    get_value('general.directories.dir_repo_sfc', 'SFC_REPO_DIR')
 
 ONOS_SFC_IMAGE_NAME = \
     get_value('onos_sfc.image_name', 'ONOS_SFC_IMAGE_NAME')
@@ -283,5 +283,5 @@ CW_INPUTS = \
     get_value('vIMS.clearwater.inputs', 'CW_INPUTS')
 CW_REQUIERMENTS = \
     get_value('vIMS.clearwater.requierments', 'CW_REQUIERMENTS')
-PARSER_REPO = \
-    get_value('general.directories.dir_repo_parser', 'PARSER_REPO')
+PARSER_REPO_DIR = \
+    get_value('general.directories.dir_repo_parser', 'PARSER_REPO_DIR')

@@ -27,19 +27,16 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-PARSER_REPO = ft_constants.PARSER_REPO
-RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
-
 logger = ft_logger.Logger("parser").getLogger()
 
 
 def main():
     project = 'parser'
     case_name = 'parser-basics'
-    cmd = 'cd %s/tests && ./functest_run.sh' % PARSER_REPO
+    cmd = 'cd %s/tests && ./functest_run.sh' % ft_constants.PARSER_REPO_DIR
 
     start_time = time.time()
-    log_file = RESULTS_DIR + "/parser.log"
+    log_file = os.path.join(ft_constants.FUNCTEST_RESULTS_DIR,  "parser.log")
     ret = functest_utils.execute_command(cmd,
                                          info=True,
                                          output_file=log_file)
