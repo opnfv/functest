@@ -83,6 +83,7 @@ class ODLTestCases(TestCasesBase.TestCasesBase):
         self.details = {}
         self.details['description'] = result.suite.name
         self.details['tests'] = visitor.get_data()
+        return self.criteria
 
     def main(self, **kwargs):
         dirs = [self.basic_suite_dir, self.neutron_suite_dir]
@@ -120,8 +121,10 @@ class ODLTestCases(TestCasesBase.TestCasesBase):
                 self.logger.info("\n" + stdout.read())
             self.logger.info("ODL results were successfully generated")
             try:
-                self.parse_results()
+                test_res = self.parse_results()
                 self.logger.info("ODL results were successfully parsed")
+                if test_res is not "PASS":
+                    return self.EX_RUN_ERROR
             except RobotError as e:
                 self.logger.error("Run tests before publishing: %s" %
                                   e.message)
