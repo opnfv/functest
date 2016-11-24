@@ -27,8 +27,8 @@ from neutronclient.v2_0 import client as ntclient
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-from clearwater import clearwater
-from orchestrator import orchestrator
+from clearwater import Clearwater
+from orchestrator import Orchestrator
 import functest.utils.functest_constants as ft_constants
 
 pp = pprint.PrettyPrinter(indent=4)
@@ -49,7 +49,7 @@ logger = ft_logger.Logger("vIMS").getLogger()
 
 
 # Cloudify parameters
-VIMS_DIR = os.path.join(ft_constants.FUNCTEST_TEST_DIR, 'vnf/vIMS/')
+VIMS_DIR = os.path.join(ft_constants.FUNCTEST_TEST_DIR, 'vnf/ims/')
 VIMS_DATA_DIR = ft_constants.VIMS_DATA_DIR
 VIMS_TEST_DIR = ft_constants.VIMS_TEST_DIR
 VIMS_TENANT_NAME = ft_constants.VIMS_TENANT_NAME
@@ -328,7 +328,7 @@ def main():
     public_auth_url = keystone.service_catalog.url_for(
         service_type='identity', endpoint_type='publicURL')
 
-    cfy = orchestrator(VIMS_DATA_DIR, CFY_INPUTS)
+    cfy = Orchestrator(VIMS_DATA_DIR, CFY_INPUTS)
 
     cfy.set_credentials(username=ks_creds['username'], password=ks_creds[
                         'password'], tenant_name=ks_creds['tenant_name'],
@@ -413,7 +413,7 @@ def main():
 
     # ############### CLEARWATER INITIALISATION ################
 
-    cw = clearwater(CW_INPUTS, cfy, logger)
+    cw = Clearwater(CW_INPUTS, cfy, logger)
 
     logger.info("Collect flavor id for all clearwater vm")
     nova = nvclient.Client("2", **nv_creds)

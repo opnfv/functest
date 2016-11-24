@@ -24,13 +24,13 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_constants as ft_constants
 
 
-class DominoCases(TestCasesBase.TestCasesBase):
+class DominoTests(TestCasesBase.TestCasesBase):
     DOMINO_REPO = ft_constants.DOMINO_REPO
     RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
     logger = ft_logger.Logger("domino").getLogger()
 
     def __init__(self):
-        super(DominoCases, self).__init__()
+        super(DominoTests, self).__init__()
         self.project_name = "domino"
         self.case_name = "domino-multinode"
 
@@ -72,7 +72,7 @@ if __name__ == '__main__':
                         help="Create json result file",
                         action="store_true")
     args = vars(parser.parse_args())
-    domino = DominoCases()
+    domino = DominoTests()
     try:
         result = domino.main(**args)
         if result != TestCasesBase.TestCasesBase.EX_OK:

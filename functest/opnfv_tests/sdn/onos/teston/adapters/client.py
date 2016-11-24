@@ -15,17 +15,17 @@ import pexpect
 import requests
 import time
 
-from environment import environment
+from environment import Environment
 import functest.utils.functest_logger as ft_logger
 
 
-class client(environment):
+class Client(environment):
 
     logger = ft_logger.Logger("client").getLogger()
 
     def __init__(self):
         environment.__init__(self)
-        self.loginfo = environment()
+        self.loginfo = Environment()
         self.testcase = ''
 
     def RunScript(self, handle, testname, timeout=300):

@@ -47,7 +47,7 @@ class ODLResultVisitor(ResultVisitor):
         return self._data
 
 
-class ODLTestCases(TestCasesBase.TestCasesBase):
+class ODLTests(TestCasesBase.TestCasesBase):
 
     repos = ft_constants.REPOS_DIR
     odl_test_repo = os.path.join(repos, "odl_test")
@@ -230,7 +230,7 @@ if __name__ == '__main__':
                         action='store_true')
 
     args = vars(parser.parse_args())
-    odl = ODLTestCases()
+    odl = ODLTests()
     try:
         result = odl.main(**args)
         if result != TestCasesBase.TestCasesBase.EX_OK:
