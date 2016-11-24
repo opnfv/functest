@@ -418,23 +418,6 @@ def merge_dicts(dict1, dict2):
             yield (k, dict2[k])
 
 
-def check_test_result(test_name, ret, start_time, stop_time):
-    def get_criteria_value():
-        return get_criteria_by_test(test_name).split('==')[1].strip()
-
-    status = 'FAIL'
-    if str(ret) == get_criteria_value():
-        status = 'PASS'
-
-    details = {
-        'timestart': start_time,
-        'duration': round(stop_time - start_time, 1),
-        'status': status,
-    }
-
-    return status, details
-
-
 def get_testcases_file_dir():
     return "/home/opnfv/repos/functest/functest/ci/testcases.yaml"
 
