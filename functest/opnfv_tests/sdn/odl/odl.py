@@ -47,7 +47,7 @@ class ODLResultVisitor(ResultVisitor):
         return self._data
 
 
-class ODLTestCases(TestCasesBase.TestCasesBase):
+class ODLTests(TestCasesBase.TestCasesBase):
 
     repos = ft_constants.REPOS_DIR
     odl_test_repo = os.path.join(repos, "odl_test")

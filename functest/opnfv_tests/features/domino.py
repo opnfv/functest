@@ -24,7 +24,7 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_constants as ft_constants
 
 
-class DominoCases(TestCasesBase.TestCasesBase):
+class DominoTests(TestCasesBase.TestCasesBase):
     DOMINO_REPO = ft_constants.DOMINO_REPO
     RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
     logger = ft_logger.Logger("domino").getLogger()

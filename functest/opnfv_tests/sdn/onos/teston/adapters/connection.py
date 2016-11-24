@@ -17,17 +17,17 @@ import os
 import pexpect
 import re
 
-from foundation import foundation
+from foundation import Foundation
 import functest.utils.functest_logger as ft_logger
 
 
-class connection(foundation):
+class Connection(foundation):
 
     logger = ft_logger.Logger("connection").getLogger()
 
     def __init__(self):
         foundation.__init__(self)
-        self.loginfo = foundation()
+        self.loginfo = Foundation()
 
     def AddKnownHost(self, handle, ipaddr, username, password):
         """
