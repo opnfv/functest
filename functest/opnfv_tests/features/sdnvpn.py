@@ -21,9 +21,8 @@ import functest.utils.functest_utils as ft_utils
 
 
 class SdnVpnTests(TestCasesBase.TestCasesBase):
-    SDNVPN_REPO = ft_constants.SDNVPN_REPO_DIR
-    SDNVPN_REPO_TESTS = os.path.join(SDNVPN_REPO, "tests/functest")
-    RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
+    SDNVPN_REPO_TESTS = os.path.join(
+        ft_constants.SDNVPN_REPO_DIR, "tests/functest")
     logger = ft_logger.Logger("sdnvpn").getLogger()
 
     def __init__(self):
@@ -34,7 +33,8 @@ class SdnVpnTests(TestCasesBase.TestCasesBase):
     def main(self, **kwargs):
         os.chdir(self.SDNVPN_REPO_TESTS)
         cmd = 'run_tests.py'
-        log_file = os.path.join(self.RESULTS_DIR, "sdnvpn.log")
+        log_file = os.path.join(
+            ft_constants.FUNCTEST_RESULTS_DIR, "sdnvpn.log")
         start_time = time.time()
 
         ret = ft_utils.execute_command(cmd,

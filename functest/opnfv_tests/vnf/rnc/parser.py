@@ -14,28 +14,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import os
 import sys
 import time
 
 import argparse
 
 import functest.core.TestCasesBase as base
+import functest.utils.functest_constants as ft_constants
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
 
 class Parser(base.TestCasesBase):
+
     def __init__(self):
         super(Parser, self).__init__()
         self.project_name = "parser"
         self.case_name = "parser-basics"
-        self.parser_repo = self.get_conf('general.directories.dir_repo_parser')
-        self.results_dir = self.get_conf('general.directories.dir_results')
         self.logger = ft_logger.Logger("parser").getLogger()
-        self.log_file = self.results_dir + '/parser.log'
+        self.log_file = os.path.join(
+            ft_constants.FUNCTEST_RESULTS_DIR,  "parser.log")
 
     def run(self, **kwargs):
-        cmd = 'cd %s/tests && ./functest_run.sh' % self.parser_repo
+        cmd = 'cd %s/tests && ./functest_run.sh' % ft_constants.PARSER_REPO_DIR
 
         self.start_time = time.time()
         ret = ft_utils.execute_command(cmd,
