@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_7441a238",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-24T07:16:08Z",
+      "side": 1,
+      "message": "I agree that we need to put more thought to some env variable. A jira work item is created about this.\nhttps://jira.opnfv.org/browse/FUNCTEST-619\n\nThis patch only handles path instead of deciding which variable to be exposed.",
+      "parentUuid": "5ac10518_512cb8ab",
+      "revId": "bacecb361d6a88a0d1f2c159f4c4b37174f55277",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_f1184486",
         "filename": "functest/utils/functest_constants.py",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_d473b6af",
+        "filename": "functest/utils/functest_constants.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-24T07:16:08Z",
+      "side": 1,
+      "message": "The variables have been moved out from functest_utils. \nThe main idea is to put all global variables within this module instead of spreading them everywhere. \nThe functest_utils originally does not take care of all global variables. The functions here in functest_constants can be put within functest_utils while it will make functest_utils to complicated to be maintained.",
+      "parentUuid": "5ac10518_f1184486",
+      "revId": "bacecb361d6a88a0d1f2c159f4c4b37174f55277",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_111e3071",
         "filename": "functest/utils/functest_constants.py",
         "patchSetId": 14
@@ -47,6 +83,24 @@
       "writtenOn": "2016-11-24T06:48:48Z",
       "side": 1,
       "message": "in none SDN scenario, there will be an exception, right?",
+      "revId": "bacecb361d6a88a0d1f2c159f4c4b37174f55277",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_7468c2ba",
+        "filename": "functest/utils/functest_constants.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-24T07:16:08Z",
+      "side": 1,
+      "message": "os.getenv will returen None instead of KeyError.",
+      "parentUuid": "5ac10518_111e3071",
       "revId": "bacecb361d6a88a0d1f2c159f4c4b37174f55277",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
