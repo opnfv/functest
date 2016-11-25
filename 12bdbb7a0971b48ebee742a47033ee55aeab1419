@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_5a692d8a",
+        "filename": "functest/core/TestCasesBase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-25T09:23:11Z",
+      "side": 1,
+      "message": "interesting, yesterday I published a patch for ODL because test fail status was not reporting, I used the status EX_RUN_ERROR and did not create a new one...\nfor me EX_RUN_ERROR \u003d test failed\nEX_PUSH_TO_DB_ERROR \u003d test OK but not possible to push results to DB\nEX_SKIP \u003d test initiated but not run\n\nnot sure we need a new state\n\nmoreover\nwe should try to use the constants (need another patch) https://git.opnfv.org/releng/tree/modules/opnfv/utils/constants.py\nhopefully it would help all the test project to force some alignment",
+      "revId": "12bdbb7a0971b48ebee742a47033ee55aeab1419",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
