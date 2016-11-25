@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_9ac1d582",
+        "filename": "functest/core/umbrella.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-25T09:00:12Z",
+      "side": 1,
+      "message": "I see you already have some implementation in domino, so I will adopt it here",
+      "parentUuid": "5ac10518_b712ac60",
+      "revId": "a79a20dc659a2dda0af4a2f708796dee9e241f2c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_f77914fd",
         "filename": "functest/core/umbrella.py",
         "patchSetId": 2
