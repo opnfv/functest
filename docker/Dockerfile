@@ -114,7 +114,7 @@ RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integr
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_DIR}/vims-test
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
 
-RUN pip install -r ${FUNCTEST_REPO_DIR}/docker/requirements.pip
+RUN pip install -r ${FUNCTEST_REPO_DIR}/requirements.txt
 RUN cd ${FUNCTEST_REPO_DIR} && pip install .
 RUN pip install -r ${REPOS_DIR}/rally/requirements.txt
 RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
