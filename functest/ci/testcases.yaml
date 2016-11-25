@@ -24,7 +24,7 @@ tiers:
         order: 1
         ci_loop: '(daily)|(weekly)'
         description : >-
-            Set of basic Functional tests to validate the OpenStack deployment.
+            Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
             -
                 name: vping_ssh
@@ -79,14 +79,6 @@ tiers:
                     installer: ''
                     scenario: '^((?!bgpvpn).)*$'
 
-    -
-        name: sdn_suites
-        order: 2
-        ci_loop: '(daily)|(weekly)'
-        description : >-
-            Test suites corresponding to the different
-            SDN Controllers existing in OPNFV.
-        testcases:
             -
                 name: odl
                 criteria: 'success_rate == 100%'
@@ -116,7 +108,7 @@ tiers:
 
     -
         name: features
-        order: 3
+        order: 2
         ci_loop: '(daily)|(weekly)'
         description : >-
             Test suites from feature projects
@@ -236,7 +228,7 @@ tiers:
                     class: 'Parser'
     -
         name: openstack
-        order: 4
+        order: 3
         ci_loop: 'weekly'
         description : >-
             Extensive testing of OpenStack API.
@@ -266,7 +258,7 @@ tiers:
 
     -
         name: vnf
-        order: 5
+        order: 4
         ci_loop: 'weekly'
         description : >-
             Collection of VNF test cases.
