@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_d78898e9",
+        "filename": "functest/opnfv_tests/features/domino.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-25T01:09:38Z",
+      "side": 1,
+      "message": "How about using os.path.join to come up with the log path?\n log_file \u003d os.path.join(ft_constants.FUNCTEST_RESULTS_DIR, \"domino.log\")",
+      "revId": "fadab724777cbd56d612fafd8068794f67590239",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_776d2432",
+        "filename": "functest/opnfv_tests/vnf/vRNC/parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-25T01:09:38Z",
+      "side": 1,
+      "message": "How about using os.path.join here\nlog_file \u003d os.path.join(ft_constants.FUNCTEST_RESULTS_DIR,  \"parser.log\")",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 64
+      },
+      "revId": "fadab724777cbd56d612fafd8068794f67590239",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
