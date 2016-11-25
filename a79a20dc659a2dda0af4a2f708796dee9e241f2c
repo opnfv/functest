@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_3720fcf6",
+        "filename": "functest/core/umbrella.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-25T01:05:43Z",
+      "side": 1,
+      "message": "+1 for the naming change. Umbrella does not show the real feature it is delivering.",
+      "parentUuid": "5ac10518_f4b6f2db",
+      "revId": "a79a20dc659a2dda0af4a2f708796dee9e241f2c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_34b9da2e",
         "filename": "functest/core/umbrella.py",
         "patchSetId": 2
@@ -66,6 +84,47 @@
       "side": 1,
       "message": "+1",
       "parentUuid": "5ac10518_34b9da2e",
+      "revId": "a79a20dc659a2dda0af4a2f708796dee9e241f2c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_571d88bc",
+        "filename": "functest/core/umbrella.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-25T01:05:43Z",
+      "side": 1,
+      "message": "How will we use the result? For my understanding, if we show the duration more often than the starttime and endtime, it would be better that we do the calculation and push it to the downstream. \nDo we need to return the running result? I think it\u0027s yes. So the \u0027status\u0027 is needed.\nHowever, in ft_utils.logger_test_results(self.project_name,\n                                     self.case_name,\n                                     self.criteria,\n                                     self.details), it passed in self.criteria along with self.details, duplication needs to be removed.",
+      "parentUuid": "5ac10518_34b9da2e",
+      "revId": "a79a20dc659a2dda0af4a2f708796dee9e241f2c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_f77914fd",
+        "filename": "functest/core/umbrella.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-25T01:05:43Z",
+      "side": 1,
+      "message": "How about using os.path.join to handle the path value instead of using string format?\n\nreturn os.path.join(dir, self.project_name)",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 57
+      },
       "revId": "a79a20dc659a2dda0af4a2f708796dee9e241f2c",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
