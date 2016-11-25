@@ -15,69 +15,61 @@
 # limitations under the License.
 #
 import argparse
+import os
 import sys
 import time
 
+from functest.core import TestCasesBase
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
+import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_constants as ft_constants
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-r", "--report",
-                    help="Create json result file",
-                    action="store_true")
-args = parser.parse_args()
 
-COPPER_REPO_DIR = ft_constants.COPPER_REPO_DIR
-RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
+class CopperTests(TestCasesBase.TestCasesBase):
+    logger = ft_logger.Logger("copper").getLogger()
 
-logger = ft_logger.Logger("copper").getLogger()
+    def __init__(self):
+        super(CopperTests, self).__init__()
+        self.project_name = "copper"
+        self.case_name = "copper-notification"
 
+    def main(self, **kwargs):
+        cmd = "%s/tests/run.sh %s/tests" % (ft_constants.COPPER_REPO_DIR,
+                                            ft_constants.COPPER_REPO_DIR)
+        log_file = os.path.join(
+            ft_constants.FUNCTEST_RESULTS_DIR, "copper.log")
+        start_time = time.time()
+        ret = ft_utils.execute_command(cmd,
+                                       output_file=log_file)
 
-def main():
-    cmd = "%s/tests/run.sh %s/tests" % (COPPER_REPO_DIR, COPPER_REPO_DIR)
+        stop_time = time.time()
+        if ret == 0:
+            self.logger.info("COPPER PASSED")
+            test_status = 'PASS'
+        else:
+            self.logger.info("COPPER FAILED")
+            test_status = 'FAIL'
+        self.criteria = test_status
+        self.start_time = start_time
+        self.stop_time = stop_time
+        self.details = {}
 
-    start_time = time.time()
-
-    log_file = RESULTS_DIR + "/copper.log"
-    ret_val = functest_utils.execute_command(cmd,
-                                             output_file=log_file)
-
-    stop_time = time.time()
-    duration = round(stop_time - start_time, 1)
-    if ret_val == 0:
-        logger.info("COPPER PASSED")
-        test_status = 'PASS'
-    else:
-        logger.info("COPPER FAILED")
-        test_status = 'FAIL'
-
-    details = {
-        'timestart': start_time,
-        'duration': duration,
-        'status': test_status,
-    }
-    functest_utils.logger_test_results("Copper",
-                                       "copper-notification",
-                                       details['status'], details)
-    try:
-        if args.report:
-            functest_utils.push_results_to_db("copper",
-                                              "copper-notification",
-                                              start_time,
-                                              stop_time,
-                                              details['status'],
-                                              details)
-            logger.info("COPPER results pushed to DB")
-    except:
-        logger.error("Error pushing results into Database '%s'"
-                     % sys.exc_info()[0])
-
-    if ret_val != 0:
-        sys.exit(-1)
-
-    sys.exit(0)
-
+    def run(self):
+        kwargs = {}
+        return self.main(**kwargs)
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-r", "--report",
+                        help="Create json result file",
+                        action="store_true")
+    args = vars(parser.parse_args())
+    copper = CopperTests()
+    try:
+        result = copper.main(**args)
+        if result != TestCasesBase.TestCasesBase.EX_OK:
+            sys.exit(result)
+        if args['report']:
+            sys.exit(copper.push_to_db())
+    except Exception:
+        sys.exit(TestCasesBase.TestCasesBase.EX_RUN_ERROR)
