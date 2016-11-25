@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_3aad4189",
+        "filename": "functest/opnfv_tests/features/domino.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-25T13:51:23Z",
+      "side": 1,
+      "message": "s/DominoCases/DominoTests",
+      "revId": "48172387eea12f4ecda284083c25e24c4b0d29e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_9aa0f591",
+        "filename": "functest/opnfv_tests/features/domino.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-25T13:51:23Z",
+      "side": 1,
+      "message": "s/DominoCases/DominoTests",
+      "revId": "48172387eea12f4ecda284083c25e24c4b0d29e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_5aaa8d71",
+        "filename": "functest/opnfv_tests/features/sdnvpn.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-25T13:51:23Z",
+      "side": 1,
+      "message": "s/SDNVPN/SdnVpnTests",
+      "revId": "48172387eea12f4ecda284083c25e24c4b0d29e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_fab6d9db",
+        "filename": "functest/opnfv_tests/features/sdnvpn.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-25T13:51:23Z",
+      "side": 1,
+      "message": "s/SDNVPN/SdnVpnTests",
+      "revId": "48172387eea12f4ecda284083c25e24c4b0d29e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_9a79d531",
+        "filename": "functest/opnfv_tests/sdn/odl/odl.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-25T13:51:23Z",
+      "side": 1,
+      "message": "s/ODLTestCases/ODLTests",
+      "revId": "48172387eea12f4ecda284083c25e24c4b0d29e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
