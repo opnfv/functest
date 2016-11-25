@@ -222,6 +222,10 @@ tiers:
                 dependencies:
                     installer: '(apex)|(joid)'
                     scenario: '^((?!fdio|lxd).)*$'
+                run:
+                    module: 'functest.opnfv_tests.feature.copper'
+                    class: 'Copper'
+
             -
                 name: moon
                 criteria: 'status == "PASS"'
