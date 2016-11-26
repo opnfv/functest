@@ -16,6 +16,24 @@
       "revId": "12bdbb7a0971b48ebee742a47033ee55aeab1419",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_85d176fd",
+        "filename": "functest/core/TestCasesBase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-26T08:31:30Z",
+      "side": 1,
+      "message": "agree, but we must figure out how to integrate code in releng into functest first, for now, I don\u0027t know how to use them.",
+      "parentUuid": "5ac10518_5a692d8a",
+      "revId": "12bdbb7a0971b48ebee742a47033ee55aeab1419",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
