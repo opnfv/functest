@@ -82,7 +82,7 @@ function run_test(){
 
     case $test_name in
         "healthcheck")
-            ${FUNCTEST_TEST_DIR}/OpenStack/healthcheck/healthcheck.sh
+            ${FUNCTEST_TEST_DIR}/openstack/healthcheck/healthcheck.sh
         ;;
         "odl")
             odl_tests
