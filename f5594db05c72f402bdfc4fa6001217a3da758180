@@ -51,6 +51,24 @@
       "revId": "f5594db05c72f402bdfc4fa6001217a3da758180",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8bcae54d",
+        "filename": "functest/opnfv_tests/vnf/rnc/parser.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-28T08:35:33Z",
+      "side": 1,
+      "message": "this is shell command, there\u0027s no os.chdir() there, and I tested it, it failed\n2016-11-28 08:33:48,332 - functest_utils - ERROR - The command \u0027os.chdir(/home/opnfv/repos/parser/tests) \u0026\u0026 ./functest_run.sh\u0027 failed.",
+      "parentUuid": "5ac10518_ab6561e2",
+      "revId": "f5594db05c72f402bdfc4fa6001217a3da758180",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
