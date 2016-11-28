@@ -69,6 +69,24 @@
       "revId": "f5594db05c72f402bdfc4fa6001217a3da758180",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_eb8849e9",
+        "filename": "functest/opnfv_tests/vnf/rnc/parser.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-11-28T09:11:10Z",
+      "side": 1,
+      "message": "it\u0027s not a bash command, it\u0027s python. the idea would be:\n\nos.chdir(\"%s/tests\" % self.repo)\nexecute command.\n\nBut since we are not executing this command here, we could pass the working directory to the super class as another argument.",
+      "parentUuid": "5ac10518_8bcae54d",
+      "revId": "f5594db05c72f402bdfc4fa6001217a3da758180",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
