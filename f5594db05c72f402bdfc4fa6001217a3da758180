@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_cb99cd6f",
+        "filename": "functest/core/feature_base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-28T08:29:00Z",
+      "side": 1,
+      "message": "it dose not mean we skip this this test, it means this test is not executed. I don\u0027t understand the logical either,  I just follow the original implementation",
+      "parentUuid": "5ac10518_8b68a5bb",
+      "revId": "f5594db05c72f402bdfc4fa6001217a3da758180",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_ab6561e2",
         "filename": "functest/opnfv_tests/vnf/rnc/parser.py",
         "patchSetId": 5
