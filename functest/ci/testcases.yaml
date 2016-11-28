@@ -67,6 +67,9 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
+                    class: 'TempestSmoke'
 
             -
                 name: rally_sanity
@@ -176,7 +179,7 @@ tiers:
                     installer: 'compass'
                     scenario: '(odl)*(moon)'
             -
-                name: multisite
+                name:
                 criteria: 'success_rate == 100%'
                 blocking: false
                 description: >-
@@ -184,6 +187,10 @@ tiers:
                 dependencies:
                     installer: '(fuel)|(compass)'
                     scenario: 'multisite'
+                run:
+                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
+                    class: 'TempestMultisite'
+
             -
                 name: domino
                 criteria: 'status == "PASS"'
@@ -244,6 +251,9 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
+                    class: 'TempestFull'
 
             -
                 name: rally_full
