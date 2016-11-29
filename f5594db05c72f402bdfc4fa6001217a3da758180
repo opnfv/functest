@@ -87,6 +87,24 @@
       "revId": "f5594db05c72f402bdfc4fa6001217a3da758180",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_3a1d3cbe",
+        "filename": "functest/opnfv_tests/vnf/rnc/parser.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-11-29T06:47:55Z",
+      "side": 1,
+      "message": "OK, but I don\u0027t think it is necessary to do it in this way. many integrations may not need cd/os.chdir, they can just execute their tests directly, such as \u0027sh self.repo/tests/functest_run.sh\u0027. And  if we use os.chdir, we must chdir back again after the execution.",
+      "parentUuid": "5ac10518_eb8849e9",
+      "revId": "f5594db05c72f402bdfc4fa6001217a3da758180",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
