@@ -41,23 +41,18 @@ class SdnVpnTests(TestCasesBase.TestCasesBase):
                                        output_file=log_file)
 
         stop_time = time.time()
-        duration = round(stop_time - start_time, 1)
-        if ret == 0 and duration > 1:
+        if ret == 0:
             self.logger.info("%s OK" % self.case_name)
             status = 'PASS'
-        elif ret == 0 and duration <= 1:
-            self.logger.info("%s TEST SKIPPED" % self.case_name)
-            status = 'SKIP'
         else:
             self.logger.info("%s FAILED" % self.case_name)
             status = "FAIL"
 
         # report status only if tests run (FAIL OR PASS)
-        if status is not "SKIP":
-            self.criteria = status
-            self.start_time = start_time
-            self.stop_time = stop_time
-            self.details = {}
+        self.criteria = status
+        self.start_time = start_time
+        self.stop_time = stop_time
+        self.details = {}
 
     def run(self):
         kwargs = {}

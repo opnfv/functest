@@ -15,57 +15,51 @@
 # 0.4: refactoring to match Test abstraction class
 
 import argparse
-import os
 import sys
 import time
 
 from functest.core import TestCasesBase
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
-import functest.utils.functest_constants as ft_constants
 
 
-class DominoTests(TestCasesBase.TestCasesBase):
+class DominoCases(TestCasesBase.TestCasesBase):
+    DOMINO_REPO = \
+        ft_utils.get_functest_config('general.directories.dir_repo_domino')
+    RESULTS_DIR = \
+        ft_utils.get_functest_config('general.directories.dir_results')
     logger = ft_logger.Logger("domino").getLogger()
 
     def __init__(self):
-        super(DominoTests, self).__init__()
+        super(DominoCases, self).__init__()
         self.project_name = "domino"
         self.case_name = "domino-multinode"
 
     def main(self, **kwargs):
-        cmd = ('cd %s && ./tests/run_multinode.sh' %
-               ft_constants.DOMINO_REPO_DIR)
-        log_file = os.path.join(
-            ft_constants.FUNCTEST_RESULTS_DIR, "domino.log")
+        cmd = 'cd %s && ./tests/run_multinode.sh' % self.DOMINO_REPO
+        log_file = self.RESULTS_DIR + "/domino.log"
         start_time = time.time()
 
         ret = ft_utils.execute_command(cmd,
                                        output_file=log_file)
 
         stop_time = time.time()
-        duration = round(stop_time - start_time, 1)
-        if ret == 0 and duration > 1:
+        if ret == 0:
             self.logger.info("domino OK")
             status = 'PASS'
-        elif ret == 0 and duration <= 1:
-            self.logger.info("domino TEST SKIPPED")
-            status = 'SKIP'
         else:
             self.logger.info("domino FAILED")
             status = "FAIL"
 
         # report status only if tests run (FAIL OR PASS)
-        if status is not "SKIP":
-            self.criteria = status
-            self.start_time = start_time
-            self.stop_time = stop_time
-            self.details = {}
+        self.criteria = status
+        self.start_time = start_time
+        self.stop_time = stop_time
+        self.details = {}
 
     def run(self):
         kwargs = {}
         return self.main(**kwargs)
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -73,7 +67,7 @@ if __name__ == '__main__':
                         help="Create json result file",
                         action="store_true")
     args = vars(parser.parse_args())
-    domino = DominoTests()
+    domino = DominoCases()
     try:
         result = domino.main(**args)
         if result != TestCasesBase.TestCasesBase.EX_OK:
