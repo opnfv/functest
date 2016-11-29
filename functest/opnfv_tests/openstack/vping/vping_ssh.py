@@ -119,8 +119,8 @@ class VPingSSH(vping_base.VPingBase):
     def transfer_ping_script(self, ssh, floatip):
         self.logger.info("Trying to transfer ping.sh to %s..." % floatip)
         scp = SCPClient(ssh.get_transport())
-
-        ping_script = os.path.join(self.repo, "ping.sh")
+        local_path = self.functest_repo + "/" + self.repo
+        ping_script = os.path.join(local_path, "ping.sh")
         try:
             scp.put(ping_script, "~/")
         except:
