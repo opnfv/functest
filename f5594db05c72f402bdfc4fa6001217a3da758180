@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_6eca2251",
+        "filename": "functest/core/feature_base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-11-30T13:07:27Z",
+      "side": 1,
+      "message": "we can remove the SKIPPED statement as we decide to exclude thsi state\nso just \nif ret \u003d\u003d 0:\n .... PASS\nelse:\n .... FAIL",
+      "revId": "f5594db05c72f402bdfc4fa6001217a3da758180",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_ab6561e2",
         "filename": "functest/opnfv_tests/vnf/rnc/parser.py",
         "patchSetId": 5
