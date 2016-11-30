@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ac10518_c987900e",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-11-30T19:27:24Z",
+      "side": 1,
+      "message": "Pep8 forbids \\ in most cases (only with... could be allowed).",
+      "revId": "3e3c96b2aa15d7757f281ce00518a67e2a1225a9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_29c89473",
         "filename": "functest/core/TestCasesBase.py",
         "patchSetId": 19
