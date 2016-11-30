@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_708685bb",
+        "filename": "functest/opnfv_tests/features/domino.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-30T00:55:04Z",
+      "side": 1,
+      "message": "For current code consistency, I would suggest to call functest.utils.functest_constants to return the value\n\nimport functest.utils.functest_constants as ft_constants\nDOMINO_REPO \u003d \\\n       ft_constants.DOMINO_REPO_DIR\nRESULTS_DIR \u003d \\\n        ft_constants.FUNCTEST_RESULTS_DIR",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 71
+      },
+      "revId": "a7aad29ad96e67a637b15e1257282d847e78e8b2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_3090fdeb",
+        "filename": "functest/opnfv_tests/features/domino.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-11-30T00:55:04Z",
+      "side": 1,
+      "message": "I would use os.path.join to come up with path\nimport os\nlog_file \u003d os.path.join(self.RESULTS_DIR, \"domino.log\")",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "a7aad29ad96e67a637b15e1257282d847e78e8b2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
