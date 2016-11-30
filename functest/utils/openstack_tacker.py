@@ -15,7 +15,7 @@
 from tackerclient.v1_0 import client as tackerclient
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
-import yaml
+import time
 
 logger = ft_logger.Logger("tacker_utils").getLogger()
 
@@ -33,6 +33,7 @@ def get_id_from_name(tacker_client, resource_type, resource_name):
         req_params = {'fields': 'id', 'name': resource_name}
         endpoint = '/{0}s'.format(resource_type)
         resp = tacker_client.get(endpoint, params=req_params)
+        endpoint = endpoint.replace('-', '_')
         return resp[endpoint[1:]][0]['id']
     except Exception, e:
         logger.error("Error [get_id_from_name(tacker_client, "
@@ -53,7 +54,7 @@ def get_sfc_id(tacker_client, sfc_name):
 
 
 def get_sfc_classifier_id(tacker_client, sfc_clf_name):
-    return get_id_from_name(tacker_client, 'sfc_classifier', sfc_clf_name)
+    return get_id_from_name(tacker_client, 'sfc-classifier', sfc_clf_name)
 
 
 def list_vnfds(tacker_client, verbose=False):
@@ -72,11 +73,13 @@ def create_vnfd(tacker_client, tosca_file=None):
         vnfd_body = {}
         if tosca_file is not None:
             with open(tosca_file) as tosca_fd:
-                vnfd_body = yaml.safe_load(tosca_fd)
-        return tacker_client.create_vnfd(body=vnfd_body)
+                vnfd_body = tosca_fd.read()
+            logger.error(vnfd_body)
+        return tacker_client.create_vnfd(
+            body={"vnfd": {"attributes": {"vnfd": vnfd_body}}})
     except Exception, e:
-        logger.error("Error [create_vnfd(tacker_client, '%s')]: %s"
-                     % (tosca_file, e))
+        logger.exception("Error [create_vnfd(tacker_client, '%s')]: %s"
+                         % (tosca_file, e))
         return None
 
 
@@ -123,6 +126,38 @@ def create_vnf(tacker_client, vnf_name, vnfd_id=None, vnfd_name=None):
     except Exception, e:
         logger.error("error [create_vnf(tacker_client, '%s', '%s', '%s')]: %s"
                      % (vnf_name, vnfd_id, vnfd_name, e))
+        return None
+
+
+def wait_for_vnf(tacker_client, vnf_id=None, vnf_name=None):
+    try:
+        _id = None
+        if vnf_id is not None:
+            _id = vnf_id
+        elif vnf_name is not None:
+            while _id is None:
+                try:
+                    _id = get_vnf_id(tacker_client, vnf_name)
+                except:
+                    logger.error("Bazinga")
+        else:
+            raise Exception('You must specify vnf_id or vnf_name')
+        while True:
+            vnf = [v for v in list_vnfs(tacker_client, verbose=True)['vnfs']
+                   if v['id'] == _id]
+            vnf = vnf[0]
+            logger.info('Waiting for vnf {0}'.format(str(vnf)))
+            if vnf['status'] == 'ERROR':
+                raise Exception('Error when booting vnf %s' % _id)
+            elif vnf['status'] == 'PENDING_CREATE':
+                time.sleep(3)
+                continue
+            else:
+                break
+        return _id
+    except Exception, e:
+        logger.error("error [wait_for_vnf(tacker_client, '%s', '%s')]: %s"
+                     % (vnf_id, vnf_name, e))
         return None
 
 
@@ -224,11 +259,13 @@ def create_sfc_classifier(tacker_client, sfc_clf_name, sfc_id=None,
         else:
             if sfc_name is None:
                 raise Exception('You need to provide an SFC id or name')
-            sfc_clf_body['sfc']['chain'] = get_sfc_id(tacker_client, sfc_name)
+            sfc_clf_body['sfc_classifier']['chain'] = get_sfc_id(
+                tacker_client, sfc_name)
         return tacker_client.create_sfc_classifier(body=sfc_clf_body)
     except Exception, e:
-        logger.error("error [create_sfc_classifier(tacker_client, '%s', '%s', "
-                     "'%s')]: %s" % (sfc_clf_name, sfc_id, sfc_name, match, e))
+        logger.error("error [create_sfc_classifier(tacker_client, '%s', '%s',"
+                     " '%s', '%s')]: '%s'"
+                     % (sfc_clf_name, sfc_id, sfc_name, str(match), e))
         return None
 
 
