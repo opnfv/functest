@@ -5,6 +5,7 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import logging
 import testcase as base
 import unittest
 import time
@@ -17,8 +18,8 @@ class PyTestSuiteRunner(base.TestCase):
     """
     def __init__(self, **kwargs):
         super(PyTestSuiteRunner, self).__init__(**kwargs)
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.suite = None
-        self.logger = None
 
     def run(self, **kwargs):
         """
