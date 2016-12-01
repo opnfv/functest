@@ -436,7 +436,7 @@ def check_test_result(test_name, ret, start_time, stop_time):
 
 
 def get_testcases_file_dir():
-    return "/home/opnfv/repos/functest/functest/ci/testcases.yaml"
+    return get_functest_config('general.functest.testcases_yaml')
 
 
 def get_functest_yaml():
