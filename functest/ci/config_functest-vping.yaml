@@ -11,40 +11,40 @@ general:
         # Absolute path
         home:               /home/opnfv
         repos:              /home/opnfv/repos
-        repo_functest:      /home/opnfv/repos/functest
-        dir_repo_rally:     /home/opnfv/repos/rally
-        repo_tempest:       /home/opnfv/repos/tempest
-        dir_repo_releng:    /home/opnfv/repos/releng
-        repo_vims_test:     /home/opnfv/repos/vnfs/vims-test
-        repo_sdnvpn:        /home/opnfv/repos/sdnvpn
-        repo_sfc:           /home/opnfv/repos/sfc
-        repo_onos:          /home/opnfv/repos/onos
-        repo_promise:       /home/opnfv/repos/promise
-        repo_netready:      /home/opnfv/repos/netready
-        repo_barometer:     /home/opnfv/repos/barometer
-        repo_doctor:        /home/opnfv/repos/doctor
-        repo_copper:        /home/opnfv/repos/copper
-        repo_parser:        /home/opnfv/repos/parser
-        repo_domino:        /home/opnfv/repos/domino
-        repo_snaps:         /home/opnfv/repos/snaps
-        repo_opera:         /home/opnfv/repos/opera
-        repo_fds:           /home/opnfv/repos/fds
-        repo_securityscan:  /home/opnfv/repos/securityscanning
-        repo_vrouter:       /home/opnfv/repos/vnfs/vrouter
+        repo_functest:      /root/dev/git/functest-root/functest
+        dir_repo_rally:     /root/dev/git/rally
+        repo_tempest:       /root/dev/git/tempest
+        dir_repo_releng:    /root/dev/git/releng
+        repo_vims_test:     /root/dev/git/vnfs/vims-test
+        repo_sdnvpn:        /root/dev/git/sdnvpn
+        repo_sfc:           /root/dev/git/sfc
+        repo_onos:          /root/dev/git/onos
+        repo_promise:       /root/dev/git/promise
+        repo_netready:      /root/dev/git/netready
+        repo_barometer:     /root/dev/git/barometer
+        repo_doctor:        /root/dev/git/doctor
+        repo_copper:        /root/dev/git/copper
+        repo_parser:        /root/dev/git/parser
+        repo_domino:        /root/dev/git/domino
+        repo_snaps:         /root/dev/git/snaps
+        repo_opera:         /root/dev/git/opera
+        repo_fds:           /root/dev/git/fds
+        repo_securityscan:  /root/dev/git/securityscanning
+        repo_vrouter:       /root/dev/git/vnfs/vrouter
         functest:           /home/opnfv/functest
-        functest_test:      /home/opnfv/repos/functest/functest/opnfv_tests
+        functest_test:      /root/dev/git/functest-root/functest/opnfv_tests
         results:            /home/opnfv/functest/results
-        functest_logging_cfg:   /home/opnfv/repos/functest/functest/ci/logging.json
+        functest_logging_cfg:   /root/dev/git/functest-root/functest/ci/logging.json
         functest_conf:      /home/opnfv/functest/conf
         functest_data:      /home/opnfv/functest/data
         ims_data:           /home/opnfv/functest/data/ims/
         rally_inst:         /home/opnfv/.rally
-        repo_kingbird:      /home/opnfv/repos/kingbird
-        refstack_client:    /home/opnfv/repos/refstack-client
+        repo_kingbird:      /root/dev/git/kingbird
+        refstack_client:    /root/dev/git/refstack-client
 
     openstack:
-        creds: /home/opnfv/functest/conf/openstack.creds
-        snapshot_file: /home/opnfv/functest/conf/openstack_snapshot.yaml
+        creds: /root/dev/git/functest-root/functest/conf/openstack.creds
+        snapshot_file: /root/dev/git/functest-root/functest/conf/openstack_snapshot.yaml
 
         image_name: Cirros-0.3.5
         image_name_alt: Cirros-0.3.5-1
@@ -71,10 +71,10 @@ general:
         neutron_router_name: functest-router
 
     functest:
-        testcases_yaml: /home/opnfv/repos/functest/functest/ci/testcases.yaml
+        testcases_yaml: /root/dev/git/functest-root/functest/functest/ci/testcases.yaml
 
 healthcheck:
-    disk_image: /home/opnfv/functest/data/cirros-0.3.5-x86_64-disk.img
+    disk_image: /root/dev/git/functest-root/data/cirros-0.3.5-x86_64-disk.img
     disk_format: qcow2
     wait_time: 60
 
