@@ -7,278 +7,249 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import os
-import pprint
-import time
 from datetime import datetime
+import os
+import time
+import uuid
 
-import functest.core.testcase as testcase
-import functest.utils.openstack_utils as os_utils
+from functest.core.testcase_base import TestcaseBase
+from functest.core.testcase import TestCase
+from functest.utils import functest_utils
 from functest.utils.constants import CONST
 
+from snaps.openstack import create_flavor
+from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
+from snaps.openstack.create_network import NetworkSettings, SubnetSettings
+from snaps.openstack.tests import openstack_tests
+from snaps.openstack.utils import deploy_utils, nova_utils
 
-class VPingBase(testcase.TestCase):
+
+class VPingBase(TestCase):
+    """
+    Base class for vPing tests that check connectivity between two VMs shared
+    internal network.
+    This class is responsible for creating the image, internal network.
+    """
     def __init__(self, **kwargs):
         super(VPingBase, self).__init__(**kwargs)
+
         self.logger = None
-        self.functest_repo = CONST.dir_repo_functest
-        self.repo = CONST.dir_vping
-        self.vm1_name = CONST.vping_vm_name_1
-        self.vm2_name = CONST.vping_vm_name_2
-        self.vm_boot_timeout = 180
-        self.vm_delete_timeout = 100
-        self.ping_timeout = CONST.vping_ping_timeout
+        self.functest_repo = CONST.__getattribute__('dir_repo_functest')
+        self.guid = ''
+        if CONST.__getattribute__('vping_unique_names'):
+            self.guid = '-' + str(uuid.uuid4())
 
-        self.image_name = CONST.vping_image_name
-        self.image_filename = CONST.openstack_image_file_name
-        self.image_format = CONST.openstack_image_disk_format
-        self.image_username = CONST.openstack_image_username
-        self.image_password = CONST.openstack_image_password
-        self.image_path = os.path.join(CONST.dir_functest_data,
-                                       self.image_filename)
+        self.os_creds = openstack_tests.get_credentials(
+            os_env_file=CONST.__getattribute__('openstack_creds'))
 
-        self.flavor_name = CONST.vping_vm_flavor
+        self.repo = CONST.__getattribute__('dir_vping')
+
+        self.image_creator = None
+        self.network_creator = None
+        self.flavor_creator = None
+        self.router_creator = None
+        self.sg_creator = None
+        self.kp_creator = None
+        self.vm1_creator = None
+        self.vm2_creator = None
+
+        self.self_cleanup = CONST.__getattribute__('vping_cleanup_objects')
+
+        # Image constants
+        self.image_name =\
+            CONST.__getattribute__('vping_image_name') + self.guid
+
+        # VM constants
+        self.vm1_name = CONST.__getattribute__('vping_vm_name_1') + self.guid
+        self.vm2_name = CONST.__getattribute__('vping_vm_name_2') + self.guid
+        self.vm_boot_timeout = CONST.__getattribute__('vping_vm_boot_timeout')
+        self.vm_delete_timeout =\
+            CONST.__getattribute__('vping_vm_delete_timeout')
+        self.vm_ssh_connect_timeout = CONST.vping_vm_ssh_connect_timeout
+        self.ping_timeout = CONST.__getattribute__('vping_ping_timeout')
+        self.flavor_name = 'vping-flavor' + self.guid
 
         # NEUTRON Private Network parameters
-        self.private_net_name = CONST.vping_private_net_name
-        self.private_subnet_name = CONST.vping_private_subnet_name
-        self.private_subnet_cidr = CONST.vping_private_subnet_cidr
-        self.router_name = CONST.vping_router_name
-        self.sg_name = CONST.vping_sg_name
-        self.sg_desc = CONST.vping_sg_desc
-        self.neutron_client = os_utils.get_neutron_client()
-        self.glance_client = os_utils.get_glance_client()
-        self.nova_client = os_utils.get_nova_client()
+        self.private_net_name =\
+            CONST.__getattribute__('vping_private_net_name') + self.guid
+        self.private_subnet_name =\
+            CONST.__getattribute__('vping_private_subnet_name') + self.guid
+        self.private_subnet_cidr =\
+            CONST.__getattribute__('vping_private_subnet_cidr')
 
-    def run(self, **kwargs):
-        if not self.check_repo_exist():
-            return testcase.TestCase.EX_RUN_ERROR
+        scenario = functest_utils.get_scenario()
 
-        image_id = self.create_image()
-        if not image_id:
-            return testcase.TestCase.EX_RUN_ERROR
+        self.flavor_metadata = create_flavor.MEM_PAGE_SIZE_ANY
+        if 'ovs' in scenario or 'fdio' in scenario:
+            self.flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
 
-        flavor = self.get_flavor()
-        if not flavor:
-            return testcase.TestCase.EX_RUN_ERROR
+        self.cirros_image_config = None
 
-        network_id = self.create_network_full()
-        if not network_id:
-            return testcase.TestCase.EX_RUN_ERROR
+        # Move this configuration option up for all tests to leverage
+        if hasattr(CONST, 'snaps_images_cirros'):
+            self.cirros_image_config = CONST.__getattribute__(
+                'snaps_images_cirros')
 
-        sg_id = self.create_security_group()
-        if not sg_id:
-            return testcase.TestCase.EX_RUN_ERROR
+    def run(self):
+        """
+        Begins the test execution which should originate from the subclass
+        """
 
-        self.delete_exist_vms()
+        if not os.path.exists(self.functest_repo):
+            raise Exception(
+                "Functest repository not found '%s'" % self.functest_repo)
+
+        self.logger.info('Begin virtual environment setup')
 
         self.start_time = time.time()
         self.logger.info("vPing Start Time:'%s'" % (
             datetime.fromtimestamp(self.start_time).strftime(
                 '%Y-%m-%d %H:%M:%S')))
 
-        vm1 = self.boot_vm(self.vm1_name,
-                           image_id,
-                           flavor,
-                           network_id,
-                           None,
-                           sg_id)
-        if not vm1:
-            return testcase.TestCase.EX_RUN_ERROR
+        self.__delete_exist_vms()
 
-        test_ip = self.get_test_ip(vm1)
-        vm2 = self.boot_vm(self.vm2_name,
-                           image_id,
-                           flavor,
-                           network_id,
-                           test_ip,
-                           sg_id)
-        if not vm2:
-            return testcase.TestCase.EX_RUN_ERROR
+        # TODO - Create SNAPS-OO test helper method for creating images.
+        image_base_name = self.image_name + '-' + str(self.guid)
 
-        EXIT_CODE = self.do_vping(vm2, test_ip)
-        if EXIT_CODE == testcase.TestCase.EX_RUN_ERROR:
-            return EXIT_CODE
+        os_image_settings = openstack_tests.cirros_image_settings(
+            image_base_name, image_metadata=self.cirros_image_config)
+        self.logger.info("Creating image with name: '%s'" % self.image_name)
+
+        self.image_creator = deploy_utils.create_image(
+            self.os_creds, os_image_settings)
+
+        self.logger.info(
+            "Creating network with name: '%s'" % self.private_net_name)
+        self.network_creator = deploy_utils.create_network(
+            self.os_creds,
+            NetworkSettings(name=self.private_net_name,
+                            subnet_settings=[SubnetSettings(
+                                name=self.private_subnet_name,
+                                cidr=self.private_subnet_cidr)]))
+
+        self.logger.info(
+            "Creating flavor with name: '%s'" % self.flavor_name)
+        self.flavor_creator = OpenStackFlavor(
+            self.os_creds,
+            FlavorSettings(name=self.flavor_name, ram=512, disk=1, vcpus=1,
+                           metadata=self.flavor_metadata))
+        self.flavor_creator.create()
+
+    def _execute(self):
+        """
+        Method called by subclasses after environment has been setup
+        :return: the exit code
+        """
+        self.logger.info('Begin test execution')
+
+        test_ip = self.vm1_creator.get_port_ip(
+            self.vm1_creator.instance_settings.port_settings[0].name)
+
+        if self.vm1_creator.vm_active(
+                block=True) and self.vm2_creator.vm_active(block=True):
+            exit_code = self._do_vping(self.vm2_creator, test_ip)
+        else:
+            raise Exception('VMs never became active')
+
+        if exit_code == TestcaseBase.EX_RUN_ERROR:
+            return exit_code
 
         self.stop_time = time.time()
-        self.parse_result(EXIT_CODE,
-                          self.start_time,
-                          self.stop_time)
-        return testcase.TestCase.EX_OK
+        self.__parse_result(exit_code, self.start_time, self.stop_time)
+        return TestcaseBase.EX_OK
 
-    def boot_vm_preparation(self, config, vmname, test_ip):
-        pass
+    def _cleanup(self):
+        """
+        Cleanup all OpenStack objects. Should be called on completion
+        :return:
+        """
+        if self.self_cleanup:
+            if self.vm2_creator:
+                self.logger.info(
+                    "Deleting VM 2 instance with name: '%s'"
+                    % self.vm2_creator.instance_settings.name)
+                self.vm2_creator.clean()
+            if self.vm1_creator:
+                self.logger.info(
+                    "Deleting VM 1 instance with name: '%s'"
+                    % self.vm1_creator.instance_settings.name)
+                self.vm1_creator.clean()
+            if self.router_creator:
+                self.logger.info(
+                    "Deleting router instance with name: '%s'"
+                    % self.router_creator.router_settings.name)
+                self.router_creator.clean()
+            if self.kp_creator:
+                self.logger.info(
+                    "Deleting keypair with name: '%s'"
+                    % self.kp_creator.keypair_settings.name)
+                self.kp_creator.clean()
+            if self.sg_creator:
+                self.logger.info(
+                    "Deleting security group with name: '%s'"
+                    % self.sg_creator.sec_grp_settings.name)
+                self.sg_creator.clean()
+            if self.network_creator:
+                self.logger.info(
+                    "Deleting network with name: '%s'"
+                    % self.network_creator.network_settings.name)
+                self.network_creator.clean()
+            if self.image_creator:
+                self.logger.info(
+                    "Deleting image with name: '%s'"
+                    % self.image_creator.image_settings.name)
+                self.image_creator.clean()
+            if self.flavor_creator:
+                self.logger.info(
+                    "Deleting flavor with name: '%s'"
+                    % self.flavor_name)
+                self.flavor_creator.clean()
 
-    def do_vping(self, vm, test_ip):
+    def _do_vping(self, vm_creator, test_ip):
+        """
+        Method to be implemented by subclasses
+        Begins the real test after the OpenStack environment has been setup
+        :param vm_creator: the SNAPS VM instance creator object
+        :param test_ip: the IP to which the VM needs to issue the ping
+        :return: T/F
+        """
         raise NotImplementedError('vping execution is not implemented')
 
-    def check_repo_exist(self):
-        if not os.path.exists(self.functest_repo):
-            self.logger.error("Functest repository not found '%s'"
-                              % self.functest_repo)
-            return False
-        return True
-
-    def create_image(self):
-        _, image_id = os_utils.get_or_create_image(self.image_name,
-                                                   self.image_path,
-                                                   self.image_format)
-        if not image_id:
-            return None
-
-        return image_id
-
-    def get_flavor(self):
-        try:
-            flavor = self.nova_client.flavors.find(name=self.flavor_name)
-            self.logger.info("Using existing Flavor '%s'..."
-                             % self.flavor_name)
-            return flavor
-        except:
-            self.logger.error("Flavor '%s' not found." % self.flavor_name)
-            self.logger.info("Available flavors are: ")
-            self.pMsg(self.nova_client.flavor.list())
-            return None
-
-    def create_network_full(self):
-        network_dic = os_utils.create_network_full(self.neutron_client,
-                                                   self.private_net_name,
-                                                   self.private_subnet_name,
-                                                   self.router_name,
-                                                   self.private_subnet_cidr)
-
-        if not network_dic:
-            self.logger.error(
-                "There has been a problem when creating the neutron network")
-            return None
-        network_id = network_dic["net_id"]
-        return network_id
-
-    def create_security_group(self):
-        sg_id = os_utils.get_security_group_id(self.neutron_client,
-                                               self.sg_name)
-        if sg_id != '':
-            self.logger.info("Using existing security group '%s'..."
-                             % self.sg_name)
-        else:
-            self.logger.info("Creating security group  '%s'..."
-                             % self.sg_name)
-            SECGROUP = os_utils.create_security_group(self.neutron_client,
-                                                      self.sg_name,
-                                                      self.sg_desc)
-            if not SECGROUP:
-                self.logger.error("Failed to create the security group...")
-                return None
-
-            sg_id = SECGROUP['id']
-
-            self.logger.debug("Security group '%s' with ID=%s created "
-                              "successfully." % (SECGROUP['name'], sg_id))
-
-            self.logger.debug("Adding ICMP rules in security group '%s'..."
-                              % self.sg_name)
-            if not os_utils.create_secgroup_rule(self.neutron_client, sg_id,
-                                                 'ingress', 'icmp'):
-                self.logger.error("Failed to create security group rule...")
-                return None
-
-            self.logger.debug("Adding SSH rules in security group '%s'..."
-                              % self.sg_name)
-            if not os_utils.create_secgroup_rule(self.neutron_client, sg_id,
-                                                 'ingress', 'tcp',
-                                                 '22', '22'):
-                self.logger.error("Failed to create security group rule...")
-                return None
-
-            if not os_utils.create_secgroup_rule(
-                    self.neutron_client, sg_id, 'egress', 'tcp', '22', '22'):
-                self.logger.error("Failed to create security group rule...")
-                return None
-        return sg_id
-
-    def delete_exist_vms(self):
-        servers = self.nova_client.servers.list()
+    def __delete_exist_vms(self):
+        """
+        Cleans any existing VMs using the same name.
+        """
+        nova_client = nova_utils.nova_client(self.os_creds)
+        servers = nova_client.servers.list()
         for server in servers:
             if server.name == self.vm1_name or server.name == self.vm2_name:
                 self.logger.info("Deleting instance %s..." % server.name)
                 server.delete()
 
-    def boot_vm(self, vmname, image_id, flavor, network_id, test_ip, sg_id):
-        config = dict()
-        config['name'] = vmname
-        config['flavor'] = flavor
-        config['image'] = image_id
-        config['nics'] = [{"net-id": network_id}]
-        self.boot_vm_preparation(config, vmname, test_ip)
-        self.logger.info("Creating instance '%s'..." % vmname)
-        self.logger.debug("Configuration: %s" % config)
-        vm = self.nova_client.servers.create(**config)
-
-        # wait until VM status is active
-        if not self.waitVmActive(self.nova_client, vm):
-            vm_status = os_utils.get_instance_status(self.nova_client, vm)
-            self.logger.error("Instance '%s' cannot be booted. Status is '%s'"
-                              % (vmname, vm_status))
-            return None
-        else:
-            self.logger.info("Instance '%s' is ACTIVE." % vmname)
-
-        self.add_secgroup(vmname, vm.id, sg_id)
-
-        return vm
-
-    def waitVmActive(self, nova, vm):
-        # sleep and wait for VM status change
-        sleep_time = 3
-        count = self.vm_boot_timeout / sleep_time
-        while True:
-            status = os_utils.get_instance_status(nova, vm)
-            self.logger.debug("Status: %s" % status)
-            if status == "ACTIVE":
-                return True
-            if status == "ERROR" or status == "error":
-                return False
-            if count == 0:
-                self.logger.debug("Booting a VM timed out...")
-                return False
-            count -= 1
-            time.sleep(sleep_time)
-        return False
-
-    def add_secgroup(self, vmname, vm_id, sg_id):
-        self.logger.info("Adding '%s' to security group '%s'..." %
-                         (vmname, self.sg_name))
-        os_utils.add_secgroup_to_instance(self.nova_client, vm_id, sg_id)
-
-    def get_test_ip(self, vm):
-        test_ip = vm.networks.get(self.private_net_name)[0]
-        self.logger.debug("Instance '%s' got %s" % (vm.name, test_ip))
-        return test_ip
-
-    def parse_result(self, code, start_time, stop_time):
+    def __parse_result(self, code, start_time, stop_time):
+        """
+        Populates self.details and self.criteria for reporting
+        :param code: the exit code to parse
+        :param start_time: the time the test was started
+        :param stop_time: the time the test ended
+        """
         test_status = "FAIL"
+        duration = round(stop_time - start_time, 1)
+
         if code == 0:
             self.logger.info("vPing OK")
-            duration = round(stop_time - start_time, 1)
             self.logger.info("vPing duration:'%s'" % duration)
             test_status = "PASS"
         elif code == -2:
-            duration = 0
             self.logger.info("Userdata is not supported in nova boot. "
                              "Aborting test...")
         else:
-            duration = 0
             self.logger.error("vPing FAILED")
 
         self.details = {'timestart': start_time,
                         'duration': duration,
                         'status': test_status}
         self.result = test_status
-
-    @staticmethod
-    def pMsg(msg):
-        """pretty printing"""
-        pprint.PrettyPrinter(indent=4).pprint(msg)
 
 
 class VPingMain(object):
@@ -291,6 +262,6 @@ class VPingMain(object):
             if result != VPingBase.EX_OK:
                 return result
             if kwargs['report']:
-                return self.vping.push_to_db()
+                return self.vping.publish_report()
         except Exception:
             return VPingBase.EX_RUN_ERROR

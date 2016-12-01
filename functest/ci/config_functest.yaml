@@ -49,6 +49,8 @@ general:
         image_name: Cirros-0.3.5
         image_name_alt: Cirros-0.3.5-1
         image_file_name:  cirros-0.3.5-x86_64-disk.img
+        image_url: http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+        image_user: cirros
         image_disk_format:  qcow2
         image_username:  cirros
         image_password:  cubswin:)
@@ -71,14 +73,23 @@ general:
     functest:
         testcases_yaml: /home/opnfv/repos/functest/functest/ci/testcases.yaml
 
-healthcheck:
-    disk_image: /home/opnfv/functest/data/cirros-0.3.5-x86_64-disk.img
-    disk_format: qcow2
-    wait_time: 60
-
 snaps:
     use_keystone: True
     use_floating_ips: False
+#    images:
+#      cirros:
+#        disk_url: http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+        # ARM
+#        disk_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-disk.img
+#        kernel_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-kernel
+#        ramdisk_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-initramfs
+#        extra_properties:
+#            os_command_line: root=/dev/vdb1 rw rootwait console=tty0 console=ttyS0 console=ttyAMA0
+#            hw_video_model: vga
+#      ubuntu:
+#        disk_url: http://uec-images.ubuntu.com/releases/trusty/14.04/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+#      centos:
+#        disk_url: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
 
 vping:
     ping_timeout:   200
@@ -92,6 +103,14 @@ vping:
     router_name: vping-router
     sg_name: vPing-sg
     sg_desc: Security group for vPing test case
+    keypair_name: vPing-keypair
+    keypair_priv_file: /tmp/vPing-keypair
+    keypair_pub_file: /tmp/vPing-keypair.pub
+    vm_boot_timeout: 180
+    vm_delete_timeout: 100
+    vm_ssh_connect_timeout: 60
+    cleanup_objects: True
+    unique_names: True
 
 onos_sfc:
     image_base_url: http://artifacts.opnfv.org/sfc/demo
