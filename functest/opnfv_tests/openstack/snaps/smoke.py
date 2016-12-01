@@ -28,11 +28,9 @@ class SnapsSmoke(SnapsTestRunner):
 
         self.suite = unittest.TestSuite()
 
-        # The snaps smoke test uses the same config as the
-        # snaps_health_check suite, so reuse it here
-        image_custom_config = None
-        if hasattr(CONST, 'snaps_health_check'):
-            image_custom_config = CONST.__getattribute__('snaps_health_check')
+        image_config = None
+        if hasattr(CONST, 'snaps_images_cirros'):
+            image_config = CONST.__getattribute__('snaps_images_cirros')
 
         # Tests requiring floating IPs leverage files contained within the
         # SNAPS repository and are found relative to that path
@@ -47,5 +45,5 @@ class SnapsSmoke(SnapsTestRunner):
             ext_net_name=self.ext_net_name,
             use_keystone=self.use_keystone,
             flavor_metadata=self.flavor_metadata,
-            image_metadata=image_custom_config,
+            image_metadata=image_config,
             use_floating_ips=self.use_fip)
