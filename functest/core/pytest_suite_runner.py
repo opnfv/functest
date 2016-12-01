@@ -5,6 +5,7 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import logging
 import testcase as base
 import unittest
 import time
@@ -17,8 +18,9 @@ class PyTestSuiteRunner(base.TestCase):
     """
     def __init__(self, **kwargs):
         super(PyTestSuiteRunner, self).__init__(**kwargs)
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.suite = None
-        self.logger = None
+        self.success = None
 
     def run(self, **kwargs):
         """
@@ -45,7 +47,7 @@ class PyTestSuiteRunner(base.TestCase):
         # we shall distinguish Execution Error from FAIL results
         # TestCase.EX_RUN_ERROR means that the test case was not run
         # not that it was run but the result was FAIL
-        exit_code = base.TestCase.EX_OK
+        self.success = base.TestCase.EX_OK
         if ((result.errors and len(result.errors) > 0)
                 or (result.failures and len(result.failures) > 0)):
             self.logger.info("%s FAILED" % self.case_name)
@@ -55,4 +57,7 @@ class PyTestSuiteRunner(base.TestCase):
             self.result = 'PASS'
 
         self.details = {}
-        return exit_code
+        return self.success
+
+    def is_successful(self):
+        return self.success
