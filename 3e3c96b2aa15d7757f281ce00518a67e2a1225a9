@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_898668b8",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-01T00:35:59Z",
+      "side": 1,
+      "message": "Good catch. There are many backslashes used in functest. Are you suggesting to use Python\u0027s implied line continuation inside parentheses, brackets and braces?\n\nhttps://www.python.org/dev/peps/pep-0008/#maximum-line-length\n\nThe preferred way of wrapping long lines is by using Python\u0027s implied line continuation inside parentheses, brackets and braces. Long lines can be broken over multiple lines by wrapping expressions in parentheses. These should be used in preference to using a backslash for line continuation.",
+      "parentUuid": "5ac10518_c987900e",
+      "revId": "3e3c96b2aa15d7757f281ce00518a67e2a1225a9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_29c89473",
         "filename": "functest/core/TestCasesBase.py",
         "patchSetId": 19
@@ -47,6 +65,24 @@
       "writtenOn": "2016-11-30T19:10:24Z",
       "side": 1,
       "message": "Why? It\u0027s useless in TestCaseBase",
+      "revId": "3e3c96b2aa15d7757f281ce00518a67e2a1225a9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_29aad419",
+        "filename": "functest/core/TestCasesBase.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-01T00:35:59Z",
+      "side": 1,
+      "message": "I am not sure why functest_repo is here. The edition here is just to update the importing module.",
+      "parentUuid": "5ac10518_69ce9c85",
       "revId": "3e3c96b2aa15d7757f281ce00518a67e2a1225a9",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
