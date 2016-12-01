@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_7f23ae05",
+        "filename": "functest/utils/openstack/demo_neutron.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-01T15:06:11Z",
+      "side": 1,
+      "message": "is this demo or could it be considered as functional tests?",
+      "revId": "ed703a9652bbec6db600cb22d30d86a12a671e0a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
