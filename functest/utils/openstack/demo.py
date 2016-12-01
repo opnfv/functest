@@ -8,7 +8,6 @@
 import os
 import glance
 import nova
-# import neutron
 import keystone
 import cinder
 import functest.utils.functest_logger as ft_logger
@@ -18,6 +17,10 @@ logger = ft_logger.Logger("demo").getLogger()
 GLANCE_IMAGE_FILENAME = ft_constants.GLANCE_IMAGE_FILENAME
 GLANCE_IMAGE_PATH = os.path.join(ft_constants.FUNCTEST_DATA_DIR,
                                  GLANCE_IMAGE_FILENAME)
+FLAVOR_NAME = ft_constants.FLAVOR_NAME
+FLAVOR_RAM = ft_constants.FLAVOR_RAM
+FLAVOR_DISK = ft_constants.FLAVOR_DISK
+FLAVOR_VCPUS = ft_constants.FLAVOR_VCPUS
 
 
 def print_separator(id, service):
@@ -27,7 +30,6 @@ def print_separator(id, service):
 def main():
     glance_client = glance.get_glance_client()
     keystone_client = keystone.get_keystone_client()
-    # neutron_client = neutron.get_neutron_client()
     nova_client = nova.get_nova_client()
     cinder_client = cinder.get_cinder_client()
 
@@ -49,9 +51,6 @@ def main():
     image_data = glance.get_image_data_by_id(glance_client, image_id)
     logger.info("image_data: %s " % image_data)
 
-    deleted = glance.delete_image_by_id(glance_client, image_id)
-    logger.info("deleted: %s" % deleted)
-
     print_separator(2, 'Keystone')
     users = keystone.get_users(keystone_client)
     logger.info("all users: %s" % users)
@@ -62,7 +61,25 @@ def main():
     else:
         logger.info("no user exists")
 
-    print_separator(3, 'Nova')
+    print_separator(4, 'Nova')
+    flavor_id = nova.create_flavor(nova_client,
+                                   FLAVOR_NAME,
+                                   FLAVOR_RAM,
+                                   FLAVOR_DISK,
+                                   FLAVOR_VCPUS)
+    logger.info('flavor_id: %s' % flavor_id)
+
+    floating_ips = nova.get_floating_ips(nova_client)
+    if floating_ips:
+        logger.info('First floating ip: %s' % floating_ips[0])
+    else:
+        logger.info('No floating ip')
+
+    # instance = nova.create_instance(FLAVOR_NAME,
+    #                                 image_id,
+    #                                 network_id)
+    # logger.info('Instance: %s' % instance)
+
     instances = nova.get_instances(nova_client)
     logger.info("all instances: %s" % instances)
 
@@ -72,19 +89,16 @@ def main():
     else:
         logger.info("no instance exists")
 
-    print_separator(4, 'Neutron')
-    # networks = neutron.get_network_list(neutron_client)
-    # logger.info("all networks: %s" % networks)
-
-    # routers = neutron.get_router_list(neutron_client)
-    # logger.info("all routers: %s" % routers)
-
     print_separator(5, 'Cinder')
     volumes = cinder.get_volumes(cinder_client)
     logger.info("all volumes: %s" % volumes)
 
     volume_types = cinder.list_volume_types(cinder_client)
     logger.info("all volume_types: %s" % volume_types)
+
+    print_separator(6, 'Cleanup - Mixed')
+    deleted = glance.delete_image_by_id(glance_client, image_id)
+    logger.info("deleted: %s" % deleted)
 
 
 if __name__ == '__main__':

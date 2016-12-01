@@ -7,6 +7,7 @@
 #
 import os
 
+import neutronclient.neutron.client as neutron_client
 import utils
 import functest.utils.functest_logger as ft_logger
 
@@ -14,9 +15,6 @@ logger = ft_logger.Logger("neutron").getLogger()
 
 DEFAULT_API_VERSION = '2'
 API_NAME = 'network'
-API_VERSIONS = {
-    '2': 'neutronclient.v2_0.client'
-}
 
 
 def get_client_version():
@@ -30,36 +28,22 @@ def get_client_version():
 
 def get_neutron_client():
     creds_neutron = utils.get_credentials('neutron')
-    neutron_client_cls = utils.get_client_class(
-        API_NAME,
-        get_client_version(),
-        API_VERSIONS)
-    logger.debug('Instantiating network client: %s', neutron_client_cls)
-    return neutron_client_cls.Client(**creds_neutron)
+    return neutron_client.Client(get_client_version(), **creds_neutron)
 
 
 def get_network_list(neutron_client):
     network_list = neutron_client.list_networks()['networks']
-    if len(network_list) == 0:
-        return None
-    else:
-        return network_list
+    return network_list
 
 
 def get_router_list(neutron_client):
     router_list = neutron_client.list_routers()['routers']
-    if len(router_list) == 0:
-        return None
-    else:
-        return router_list
+    return router_list
 
 
 def get_port_list(neutron_client):
     port_list = neutron_client.list_ports()['ports']
-    if len(port_list) == 0:
-        return None
-    else:
-        return port_list
+    return port_list
 
 
 def get_network_id(neutron_client, network_name):
