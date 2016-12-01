@@ -49,6 +49,8 @@ general:
         image_name: Cirros-0.3.5
         image_name_alt: Cirros-0.3.5-1
         image_file_name:  cirros-0.3.5-x86_64-disk.img
+        image_url: http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+        image_user: cirros
         image_disk_format:  qcow2
         image_username:  cirros
         image_password:  cubswin:)
@@ -92,6 +94,14 @@ vping:
     router_name: vping-router
     sg_name: vPing-sg
     sg_desc: Security group for vPing test case
+    keypair_name: vPing-keypair
+    keypair_priv_file: /tmp/vPing-keypair
+    keypair_pub_file: /tmp/vPing-keypair.pub
+    vm_boot_timeout: 180
+    vm_delete_timeout: 100
+    vm_ssh_connect_timeout: 60
+    cleanup_objects: True
+    unique_names: True
 
 onos_sfc:
     image_base_url: http://artifacts.opnfv.org/sfc/demo
