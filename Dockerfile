@@ -90,7 +90,7 @@ RUN chmod 700 /root/.ssh
 RUN git config --global http.sslVerify false
 
 # OPNFV repositories
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${REPOS_DIR}/functest
+COPY . ${REPOS_DIR}/functest
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${REPOS_DIR}/copper
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/moon ${REPOS_DIR}/moon
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${REPOS_DIR}/sdnvpn
