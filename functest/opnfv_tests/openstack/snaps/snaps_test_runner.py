@@ -16,9 +16,7 @@ from snaps.openstack.tests import openstack_tests
 
 class SnapsTestRunner(PyTestSuiteRunner):
     """
-    This test executes the SNAPS Python Test case SimpleHealthCheck which
-    creates a VM with a single port with an IPv4 address that is assigned by
-    DHCP. This test then validates the expected IP with the actual
+    This test executes the SNAPS Python Tests
     """
     def __init__(self, **kwargs):
         super(SnapsTestRunner, self).__init__(**kwargs)
