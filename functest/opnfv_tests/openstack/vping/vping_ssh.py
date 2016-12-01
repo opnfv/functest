@@ -7,22 +7,33 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import argparse
 import os
-import re
+from scp import SCPClient
 import sys
 import time
 
-import argparse
-import paramiko
-from scp import SCPClient
+from snaps.openstack.create_instance import FloatingIpSettings, \
+    VmInstanceSettings
+from snaps.openstack.create_keypairs import KeypairSettings
+from snaps.openstack.create_network import PortSettings
+from snaps.openstack.create_router import RouterSettings
+from snaps.openstack.create_security_group import Direction, Protocol, \
+    SecurityGroupSettings, SecurityGroupRuleSettings
+from snaps.openstack.utils import deploy_utils
 
+from functest.core.testcase_base import TestcaseBase
+from functest.opnfv_tests.openstack.snaps import snaps_utils
+from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
-import functest.utils.openstack_utils as os_utils
 import vping_base
-import functest.core.testcase as testcase
 
 
 class VPingSSH(vping_base.VPingBase):
+    """
+    Class to execute the vPing test using a Floating IP to connect to one VM
+    to issue the ping command to the second
+    """
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -30,101 +41,123 @@ class VPingSSH(vping_base.VPingBase):
         super(VPingSSH, self).__init__(**kwargs)
         self.logger = ft_logger.Logger(self.case_name).getLogger()
 
-    def do_vping(self, vm, test_ip):
-        floatip = self.add_float_ip(vm)
-        if not floatip:
-            return testcase.TestCase.EX_RUN_ERROR
-        ssh = self.establish_ssh(vm, floatip)
-        if not ssh:
-            return testcase.TestCase.EX_RUN_ERROR
-        if not self.transfer_ping_script(ssh, floatip):
-            return testcase.TestCase.EX_RUN_ERROR
-        return self.do_vping_ssh(ssh, test_ip)
+        self.kp_name = CONST.vping_keypair_name + self.guid
+        self.kp_priv_file = CONST.vping_keypair_priv_file
+        self.kp_pub_file = CONST.vping_keypair_pub_file
+        self.router_name = CONST.vping_router_name + self.guid
+        self.sg_name = CONST.vping_sg_name + self.guid
+        self.sg_desc = CONST.vping_sg_desc
 
-    def add_float_ip(self, vm):
-        self.logger.info("Creating floating IP for VM '%s'..." % self.vm2_name)
-        floatip_dic = os_utils.create_floating_ip(self.neutron_client)
-        floatip = floatip_dic['fip_addr']
+        self.ext_net_name = snaps_utils.get_ext_net_name()
 
-        if floatip is None:
-            self.logger.error("Cannot create floating IP.")
-            return None
-        self.logger.info("Floating IP created: '%s'" % floatip)
+    def run(self):
+        """
+        Sets up the OpenStack keypair, router, security group, and VM instance
+        objects then validates the ping.
+        :return: the exit code from the super.execute() method
+        """
+        try:
+            super(VPingSSH, self).run()
 
-        self.logger.info("Associating floating ip: '%s' to VM '%s' "
-                         % (floatip, self.vm2_name))
-        if not os_utils.add_floating_ip(self.nova_client, vm.id, floatip):
-            self.logger.error("Cannot associate floating IP to VM.")
-            return None
+            self.logger.info("Creating keypair with name: '%s'" % self.kp_name)
+            self.kp_creator = deploy_utils.create_keypair(
+                self.os_creds,
+                KeypairSettings(name=self.kp_name,
+                                private_filepath=self.kp_priv_file,
+                                public_filepath=self.kp_pub_file))
 
-        return floatip
+            # Creating router to external network
+            self.logger.info("Creating router with name: '%s'"
+                             % self.router_name)
+            net_set = self.network_creator.network_settings
+            sub_set = [net_set.subnet_settings[0].name]
+            self.router_creator = deploy_utils.create_router(
+                self.os_creds,
+                RouterSettings(
+                    name=self.router_name,
+                    external_gateway=self.ext_net_name,
+                    internal_subnets=sub_set))
 
-    def establish_ssh(self, vm, floatip):
-        self.logger.info("Trying to establish SSH connection to %s..."
-                         % floatip)
-        ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            # Creating Instance 1
+            port1_settings = PortSettings(
+                name=self.vm1_name + '-vPingPort',
+                network_name=self.network_creator.network_settings.name)
+            instance1_settings = VmInstanceSettings(
+                name=self.vm1_name, flavor=self.flavor_name,
+                vm_boot_timeout=self.vm_boot_timeout,
+                vm_delete_timeout=self.vm_delete_timeout,
+                ssh_connect_timeout=self.vm_ssh_connect_timeout,
+                port_settings=[port1_settings])
 
-        timeout = 50
-        nolease = False
-        got_ip = False
-        discover_count = 0
-        cidr_first_octet = self.private_subnet_cidr.split('.')[0]
-        while timeout > 0:
-            try:
-                ssh.connect(floatip, username=self.image_username,
-                            password=self.image_password, timeout=2)
-                self.logger.debug("SSH connection established to %s."
-                                  % floatip)
-                break
-            except:
-                self.logger.debug("Waiting for %s..." % floatip)
-                time.sleep(6)
-                timeout -= 1
+            self.logger.info(
+                "Creating VM 1 instance with name: '%s'"
+                % instance1_settings.name)
+            self.vm1_creator = deploy_utils.create_vm_instance(
+                self.os_creds,
+                instance1_settings,
+                self.image_creator.image_settings,
+                keypair_creator=self.kp_creator)
 
-            console_log = vm.get_console_output()
+            # Creating Instance 2
+            self.sg_creator = self.__create_security_group()
 
-            # print each "Sending discover" captured on the console log
-            if (len(re.findall("Sending discover", console_log)) >
-                    discover_count and not got_ip):
-                discover_count += 1
-                self.logger.debug("Console-log '%s': Sending discover..."
-                                  % self.vm2_name)
+            port2_settings = PortSettings(
+                name=self.vm2_name + '-vPingPort',
+                network_name=self.network_creator.network_settings.name)
+            instance2_settings = VmInstanceSettings(
+                name=self.vm2_name, flavor=self.flavor_name,
+                vm_boot_timeout=self.vm_boot_timeout,
+                vm_delete_timeout=self.vm_delete_timeout,
+                ssh_connect_timeout=self.vm_ssh_connect_timeout,
+                port_settings=[port2_settings],
+                security_group_names=[self.sg_creator.sec_grp_settings.name],
+                floating_ip_settings=[FloatingIpSettings(
+                    name=self.vm2_name + '-FIPName',
+                    port_name=port2_settings.name,
+                    router_name=self.router_creator.router_settings.name)])
 
-            # check if eth0 got an ip,the line looks like this:
-            # "inet addr:192.168."....
-            # if the dhcp agent fails to assing ip, this line will not appear
-            if "inet addr:" + cidr_first_octet in console_log and not got_ip:
-                got_ip = True
-                self.logger.debug("The instance '%s' succeeded to get the IP "
-                                  "from the dhcp agent." % self.vm2_name)
+            self.logger.info(
+                "Creating VM 2 instance with name: '%s'"
+                % instance2_settings.name)
+            self.vm2_creator = deploy_utils.create_vm_instance(
+                self.os_creds,
+                instance2_settings,
+                self.image_creator.image_settings,
+                keypair_creator=self.kp_creator)
 
-            # if dhcp not work,it shows "No lease, failing".The test will fail
-            if ("No lease, failing" in console_log and
-                not nolease and
-                    not got_ip):
-                nolease = True
-                self.logger.debug("Console-log '%s': No lease, failing..."
-                                  % self.vm2_name)
-                self.logger.info("The instance failed to get an IP from DHCP "
-                                 "agent. The test will probably timeout...")
+            return self._execute()
+        except Exception as e:
+            self.logger.error('Unexpected error running test - ' + e.message)
+            return TestcaseBase.EX_RUN_ERROR
+        finally:
+            self._cleanup()
 
-        if timeout == 0:  # 300 sec timeout (5 min)
-            self.logger.error("Cannot establish connection to IP '%s'. "
-                              "Aborting" % floatip)
-            return None
-        return ssh
+    def _do_vping(self, vm_creator, test_ip):
+        """
+        Override from super
+        """
+        if vm_creator.vm_ssh_active(block=True):
+            ssh = vm_creator.ssh_client()
+            if not self.__transfer_ping_script(ssh):
+                return TestcaseBase.EX_RUN_ERROR
+            return self.__do_vping_ssh(ssh, test_ip)
+        else:
+            return -1
 
-    def transfer_ping_script(self, ssh, floatip):
-        self.logger.info("Trying to transfer ping.sh to %s..." % floatip)
+    def __transfer_ping_script(self, ssh):
+        """
+        Uses SCP to copy the ping script via the SSH client
+        :param ssh: the SSH client
+        :return:
+        """
+        self.logger.info("Trying to transfer ping.sh")
         scp = SCPClient(ssh.get_transport())
         local_path = self.functest_repo + "/" + self.repo
         ping_script = os.path.join(local_path, "ping.sh")
         try:
             scp.put(ping_script, "~/")
         except:
-            self.logger.error("Cannot SCP the file '%s' to VM '%s'"
-                              % (ping_script, floatip))
+            self.logger.error("Cannot SCP the file '%s'" % ping_script)
             return False
 
         cmd = 'chmod 755 ~/ping.sh'
@@ -134,8 +167,14 @@ class VPingSSH(vping_base.VPingBase):
 
         return True
 
-    def do_vping_ssh(self, ssh, test_ip):
-        EXIT_CODE = -1
+    def __do_vping_ssh(self, ssh, test_ip):
+        """
+        Pings the test_ip via the SSH client
+        :param ssh: the SSH client used to issue the ping command
+        :param test_ip: the IP for the ping command to use
+        :return: exit_code (int)
+        """
+        exit_code = -1
         self.logger.info("Waiting for ping...")
 
         sec = 0
@@ -150,7 +189,7 @@ class VPingSSH(vping_base.VPingBase):
             for line in output:
                 if "vPing OK" in line:
                     self.logger.info("vPing detected!")
-                    EXIT_CODE = 0
+                    exit_code = 0
                     flag = True
                     break
 
@@ -162,7 +201,35 @@ class VPingSSH(vping_base.VPingBase):
                 break
             self.logger.debug("Pinging %s. Waiting for response..." % test_ip)
             sec += 1
-        return EXIT_CODE
+        return exit_code
+
+    def __create_security_group(self):
+        """
+        Configures and deploys an OpenStack security group object
+        :return: the creator object
+        """
+        sg_rules = list()
+        sg_rules.append(
+            SecurityGroupRuleSettings(sec_grp_name=self.sg_name,
+                                      direction=Direction.ingress,
+                                      protocol=Protocol.icmp))
+        sg_rules.append(
+            SecurityGroupRuleSettings(sec_grp_name=self.sg_name,
+                                      direction=Direction.ingress,
+                                      protocol=Protocol.tcp, port_range_min=22,
+                                      port_range_max=22))
+        sg_rules.append(
+            SecurityGroupRuleSettings(sec_grp_name=self.sg_name,
+                                      direction=Direction.egress,
+                                      protocol=Protocol.tcp, port_range_min=22,
+                                      port_range_max=22))
+
+        self.logger.info("Security group with name: '%s'" % self.sg_name)
+        return deploy_utils.create_security_group(self.os_creds,
+                                                  SecurityGroupSettings(
+                                                      name=self.sg_name,
+                                                      description=self.sg_desc,
+                                                      rule_settings=sg_rules))
 
 
 if __name__ == '__main__':
