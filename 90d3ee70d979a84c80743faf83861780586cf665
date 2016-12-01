@@ -16,6 +16,24 @@
       "revId": "90d3ee70d979a84c80743faf83861780586cf665",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_690c5c43",
+        "filename": "functest/core/TestCasesBase.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-01T01:07:41Z",
+      "side": 1,
+      "message": "After looking the git log, the change was introduced in the patch\nhttps://gerrit.opnfv.org/gerrit/#/c/24541/6/functest/core/TestCasesBase.py\n\nThe self.functest_repo will be used by vping",
+      "parentUuid": "5ac10518_499c006a",
+      "revId": "90d3ee70d979a84c80743faf83861780586cf665",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
