@@ -23,14 +23,15 @@ class HealthCheck(SnapsTestRunner):
     """
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
-            kwargs["case_name"] = "snaps_health_check"
+            kwargs["case_name"] = "snaps_images_cirros"
         super(HealthCheck, self).__init__(**kwargs)
 
         self.suite = unittest.TestSuite()
 
         image_custom_config = None
-        if hasattr(CONST, 'snaps_health_check'):
-            image_custom_config = CONST.__getattribute__('snaps_health_check')
+
+        if hasattr(CONST, 'snaps_images_cirros'):
+            image_custom_config = CONST.__getattribute__('snaps_images_cirros')
         self.suite.addTest(
             OSIntegrationTestCase.parameterize(
                 SimpleHealthCheck, os_creds=self.os_creds,
