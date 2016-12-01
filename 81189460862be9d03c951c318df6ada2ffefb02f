@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_84796f31",
+        "filename": "functest/tests/unit/utils/test_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-01T05:48:52Z",
+      "side": 1,
+      "message": "why three testcases are needed since two is enough(OK and KO)",
+      "revId": "81189460862be9d03c951c318df6ada2ffefb02f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
