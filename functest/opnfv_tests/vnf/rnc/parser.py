@@ -20,13 +20,13 @@ import time
 
 import argparse
 
-import functest.core.TestCasesBase as base
+from functest.core.testcase_base import TestcaseBase
 import functest.utils.functest_constants as ft_constants
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
 
-class Parser(base.TestCasesBase):
+class Parser(TestcaseBase):
 
     def __init__(self):
         super(Parser, self).__init__()
@@ -71,9 +71,9 @@ if __name__ == '__main__':
     parser = Parser()
     try:
         result = parser.run(**args)
-        if result != base.TestCasesBase.EX_OK:
+        if result != TestcaseBase.EX_OK:
             sys.exit(result)
         if args['report']:
             sys.exit(parser.push_to_db())
     except Exception:
-        sys.exit(base.TestCasesBase.EX_RUN_ERROR)
+        sys.exit(TestcaseBase.EX_RUN_ERROR)

@@ -20,7 +20,7 @@ from robot.errors import RobotError
 import robot.run
 from robot.utils.robottime import timestamp_to_secs
 
-from functest.core import TestCasesBase
+from functest.core.testcase_base import TestcaseBase
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as op_utils
 import functest.utils.functest_constants as ft_constants
@@ -47,7 +47,7 @@ class ODLResultVisitor(ResultVisitor):
         return self._data
 
 
-class ODLTests(TestCasesBase.TestCasesBase):
+class ODLTests(TestcaseBase):
 
     repos = ft_constants.REPOS_DIR
     odl_test_repo = os.path.join(repos, "odl_test")
@@ -233,9 +233,9 @@ if __name__ == '__main__':
     odl = ODLTests()
     try:
         result = odl.main(**args)
-        if result != TestCasesBase.TestCasesBase.EX_OK:
+        if result != TestcaseBase.EX_OK:
             sys.exit(result)
         if args['pushtodb']:
             sys.exit(odl.push_to_db())
     except Exception:
-        sys.exit(TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+        sys.exit(TestcaseBase.EX_RUN_ERROR)
