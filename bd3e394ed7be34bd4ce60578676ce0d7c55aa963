@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_622c729a",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-02T07:22:15Z",
+      "side": 1,
+      "message": "according to import rule of OpenStack, import module not objects",
+      "revId": "bd3e394ed7be34bd4ce60578676ce0d7c55aa963",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
