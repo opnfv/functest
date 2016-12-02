@@ -367,19 +367,19 @@ Fuel
 
 *: all results passed, lacking iterations to reach the full score
 
-Results of Functest on AArch64 Colorado 1.0
+Results of Functest on AArch64 Colorado 3.0
 
 +---------------------+---------+---------+----------------------+
 |  Scenario           | Scoring | Success |  Results             |
 |                     |         | rate    |                      |
 +=====================+=========+=========+======================+
-| nosdn               |  18/18  |  100%   | `fuel-arm-res-29`_   |
+| nosdn               |  18/18  |  100%   | `fuel-arm-res-128`_   |
 +---------------------+---------+---------+----------------------+
-| odl_l2              |  21/21  |  100%   | `fuel-arm-res-24`_   |
+| odl_l2              |  21/21  |  100%   | `fuel-arm-res-122`_   |
 +---------------------+---------+---------+----------------------+
-| odl_l2-noha         |  17/18  |   94%   | `fuel-arm-res-30`_   |
+| odl_l2-noha         |  18/18  |  100%   | `fuel-arm-res-129`_   |
 +---------------------+---------+---------+----------------------+
-| odl_l3              |  14/18  |   78%   | `fuel-arm-res-28`_   |
+| odl_l3              |  17/18  |   95%   | `fuel-arm-res-135`_   |
 +---------------------+---------+---------+----------------------+
 
 
@@ -611,13 +611,13 @@ Useful links
 
 .. _`fuel-res-492`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-492
 
-.. _`fuel-arm-res-29`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/29/console
+.. _`fuel-arm-res-128`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/128/console
 
-.. _`fuel-arm-res-24`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/24/console
+.. _`fuel-arm-res-122`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/122/console
 
-.. _`fuel-arm-res-30`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/30/console
+.. _`fuel-arm-res-129`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/129/console
 
-.. _`fuel-arm-res-28`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/28/console
+.. _`fuel-arm-res-135`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/135/console
 
 .. _`joid-res-93`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-93
 
