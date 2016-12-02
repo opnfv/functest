@@ -62,8 +62,8 @@ logger = ft_logger.Logger("run_tempest").getLogger()
 GLANCE_IMAGE_NAME = ft_constants.GLANCE_IMAGE_NAME
 GLANCE_IMAGE_FILENAME = ft_constants.GLANCE_IMAGE_FILENAME
 GLANCE_IMAGE_FORMAT = ft_constants.GLANCE_IMAGE_FORMAT
-GLANCE_IMAGE_PATH = ft_constants.FUNCTEST_DATA_DIR + \
-    "/" + GLANCE_IMAGE_FILENAME
+os.path.join(ft_constants.FUNCTEST_DATA_DIR, GLANCE_IMAGE_FILENAME)
+
 IMAGE_ID_ALT = None
 
 FLAVOR_NAME = ft_constants.FLAVOR_NAME
