@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_9fd8d91e",
+        "filename": "Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-02T01:43:15Z",
+      "side": 1,
+      "message": "I would prefer COPY to ADD\n\nhttps://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/\n\nAlthough ADD and COPY are functionally similar, generally speaking, COPY is preferred. That",
+      "revId": "4f5bb895a946d9126f892e4fcb0986fff2ccd4b9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
