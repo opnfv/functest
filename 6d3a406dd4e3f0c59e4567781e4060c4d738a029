@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_c289a6cb",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T12:53:44Z",
+      "side": 1,
+      "message": "you don\u0027t need the \"+\" when having the string in parenthesis and quotes.",
+      "revId": "6d3a406dd4e3f0c59e4567781e4060c4d738a029",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
