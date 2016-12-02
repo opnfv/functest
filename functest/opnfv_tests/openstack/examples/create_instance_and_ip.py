@@ -36,8 +36,7 @@ EXAMPLE_FLAVOR = ft_constants.EXAMPLE_FLAVOR
 EXAMPLE_IMAGE_NAME = ft_constants.EXAMPLE_IMAGE_NAME
 IMAGE_FILENAME = ft_constants.GLANCE_IMAGE_FILENAME
 IMAGE_FORMAT = ft_constants.GLANCE_IMAGE_FORMAT
-IMAGE_PATH = ft_constants.FUNCTEST_DATA_DIR + \
-    "/" + IMAGE_FILENAME
+IMAGE_PATH = ft_constants.FUNCTEST_DATA_DIR + "/" + IMAGE_FILENAME
 
 # NEUTRON Private Network parameters
 
@@ -85,11 +84,10 @@ def main():
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
         "network=%s \n"
         % (EXAMPLE_INSTANCE_NAME, EXAMPLE_FLAVOR, image_id, network_id))
-    instance = \
-        os_utils.create_instance_and_wait_for_active(EXAMPLE_FLAVOR,
-                                                     image_id,
-                                                     network_id,
-                                                     EXAMPLE_INSTANCE_NAME)
+    instance = os_utils.create_instance_and_wait_for_active(EXAMPLE_FLAVOR,
+                                                            image_id,
+                                                            network_id,
+                                                            EXAMPLE_INSTANCE_NAME)
 
     if instance is None:
         logger.error("Error while booting instance.")

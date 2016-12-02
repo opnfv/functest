@@ -26,8 +26,8 @@ class Foundation:
     def __init__(self):
 
         # currentpath = os.getcwd()
-        currentpath = \
-            ft_constants.FUNCTEST_TEST_DIR + '/sdn/onos/teston/ci'
+        currentpath = (ft_constants.FUNCTEST_TEST_DIR +
+                       '/sdn/onos/teston/ci')
         self.cipath = currentpath
         self.logdir = os.path.join(currentpath, 'log')
         self.workhome = currentpath[0: currentpath.rfind('opnfv_tests') - 1]
