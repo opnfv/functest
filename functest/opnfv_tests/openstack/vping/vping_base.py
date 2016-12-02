@@ -24,6 +24,7 @@ class VPingBase(TestCasesBase.TestCasesBase):
 
         super(VPingBase, self).__init__()
         self.logger = None
+        self.functest_repo = ft_constants.FUNCTEST_REPO_DIR
         self.repo = get_conf('general.directories.dir_vping')
         self.vm1_name = get_conf('vping.vm_name_1')
         self.vm2_name = get_conf('vping.vm_name_2')

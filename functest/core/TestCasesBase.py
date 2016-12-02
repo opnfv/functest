@@ -23,7 +23,6 @@ class TestCasesBase(object):
     logger = ft_logger.Logger(__name__).getLogger()
 
     def __init__(self):
-        self.functest_repo = ft_constants.FUNCTEST_REPO_DIR
         self.details = {}
         self.project_name = "functest"
         self.case_name = ""
