@@ -15,7 +15,7 @@ import unittest
 
 from robot.errors import RobotError
 
-from functest.core import TestCasesBase
+import functest.core.testcase_base as testcase_base
 from functest.opnfv_tests.sdn.odl import odl
 from functest.utils import functest_constants as ft_constants
 
@@ -113,7 +113,7 @@ class ODLTesting(unittest.TestCase):
     def _test_main_missing_keyword(self, key):
         kwargs = self._get_main_kwargs(key)
         self.assertEqual(self.test.main(**kwargs),
-                         TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+                         testcase_base.TestcaseBase.EX_RUN_ERROR)
 
     def test_main_missing_odlusername(self):
         self._test_main_missing_keyword('odlusername')
@@ -148,7 +148,7 @@ class ODLTesting(unittest.TestCase):
     def test_main_set_robotframework_vars_failed(self):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=False):
-            self._test_main(TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+            self._test_main(testcase_base.TestcaseBase.EX_RUN_ERROR)
             self.test.set_robotframework_vars.assert_called_once_with(
                 self._odl_username, self._odl_password)
 
@@ -157,14 +157,14 @@ class ODLTesting(unittest.TestCase):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 self.assertRaises(Exception):
-            self._test_main(TestCasesBase.TestCasesBase.EX_RUN_ERROR,
+            self._test_main(testcase_base.TestcaseBase.EX_RUN_ERROR,
                             mock_method)
 
     @mock.patch('os.makedirs', side_effect=OSError)
     def test_main_makedirs_oserror(self, mock_method):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True):
-            self._test_main(TestCasesBase.TestCasesBase.EX_RUN_ERROR,
+            self._test_main(testcase_base.TestcaseBase.EX_RUN_ERROR,
                             mock_method)
 
     @mock.patch('robot.run', side_effect=RobotError)
@@ -173,7 +173,7 @@ class ODLTesting(unittest.TestCase):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 self.assertRaises(RobotError):
-            self._test_main(TestCasesBase.TestCasesBase.EX_RUN_ERROR, *args)
+            self._test_main(testcase_base.TestcaseBase.EX_RUN_ERROR, *args)
 
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
@@ -182,7 +182,7 @@ class ODLTesting(unittest.TestCase):
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results',
                                   side_effect=RobotError):
-            self._test_main(TestCasesBase.TestCasesBase.EX_RUN_ERROR, *args)
+            self._test_main(testcase_base.TestcaseBase.EX_RUN_ERROR, *args)
 
     @mock.patch('os.remove', side_effect=Exception)
     @mock.patch('robot.run')
@@ -192,7 +192,7 @@ class ODLTesting(unittest.TestCase):
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results'), \
                 self.assertRaises(Exception):
-            self._test_main(TestCasesBase.TestCasesBase.EX_OK, *args)
+            self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
     @mock.patch('os.remove')
     @mock.patch('robot.run')
@@ -202,7 +202,7 @@ class ODLTesting(unittest.TestCase):
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results',
                                   return_value="PASS"):
-            self._test_main(TestCasesBase.TestCasesBase.EX_OK, *args)
+            self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
     @mock.patch('os.remove')
     @mock.patch('robot.run')
@@ -212,7 +212,7 @@ class ODLTesting(unittest.TestCase):
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results',
                                   return_value="PASS"):
-            self._test_main(TestCasesBase.TestCasesBase.EX_OK, *args)
+            self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
     @mock.patch('os.remove')
     @mock.patch('robot.run', return_value=1)
@@ -222,7 +222,7 @@ class ODLTesting(unittest.TestCase):
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results',
                                   return_value="PASS"):
-            self._test_main(TestCasesBase.TestCasesBase.EX_OK, *args)
+            self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
     @mock.patch('os.remove', side_effect=OSError)
     @mock.patch('robot.run')
@@ -232,7 +232,7 @@ class ODLTesting(unittest.TestCase):
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results',
                                   return_value="PASS"):
-            self._test_main(TestCasesBase.TestCasesBase.EX_OK, *args)
+            self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
     def _test_run_missing_env_var(self, var):
         if var == 'OS_USERNAME':
@@ -243,9 +243,9 @@ class ODLTesting(unittest.TestCase):
             ft_constants.OS_TENANT_NAME = None
 
         self.assertEqual(self.test.run(),
-                         TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+                         testcase_base.TestcaseBase.EX_RUN_ERROR)
 
-    def _test_run(self, status=TestCasesBase.TestCasesBase.EX_OK,
+    def _test_run(self, status=testcase_base.TestcaseBase.EX_OK,
                   exception=None, odlip="127.0.0.3", odlwebport="8080"):
         with mock.patch('functest.utils.openstack_utils.get_keystone_client',
                         return_value=self._get_fake_keystone_client()):
@@ -274,7 +274,7 @@ class ODLTesting(unittest.TestCase):
     def test_run_main_false(self):
         ft_constants.CI_INSTALLER_TYPE = None
         ft_constants.SDN_CONTROLLER_IP = self._sdn_controller_ip
-        self._test_run(TestCasesBase.TestCasesBase.EX_RUN_ERROR,
+        self._test_run(testcase_base.TestcaseBase.EX_RUN_ERROR,
                        odlip=self._sdn_controller_ip,
                        odlwebport=self._odl_webport)
 
@@ -282,7 +282,7 @@ class ODLTesting(unittest.TestCase):
         ft_constants.CI_INSTALLER_TYPE = None
         ft_constants.SDN_CONTROLLER_IP = self._sdn_controller_ip
         with self.assertRaises(Exception):
-            self._test_run(status=TestCasesBase.TestCasesBase.EX_RUN_ERROR,
+            self._test_run(status=testcase_base.TestcaseBase.EX_RUN_ERROR,
                            exception=Exception(),
                            odlip=self._sdn_controller_ip,
                            odlwebport=self._odl_webport)
@@ -293,18 +293,18 @@ class ODLTesting(unittest.TestCase):
             ft_constants.CI_INSTALLER_TYPE = None
             ft_constants.SDN_CONTROLLER_IP = None
             self.assertEqual(self.test.run(),
-                             TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+                             testcase_base.TestcaseBase.EX_RUN_ERROR)
 
     def test_run_without_installer_type(self):
         ft_constants.SDN_CONTROLLER_IP = self._sdn_controller_ip
         ft_constants.CI_INSTALLER_TYPE = None
-        self._test_run(TestCasesBase.TestCasesBase.EX_OK,
+        self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._sdn_controller_ip,
                        odlwebport=self._odl_webport)
 
     def test_run_fuel(self):
         ft_constants.CI_INSTALLER_TYPE = "fuel"
-        self._test_run(TestCasesBase.TestCasesBase.EX_OK,
+        self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._neutron_ip, odlwebport='8282')
 
     def test_run_apex_missing_sdn_controller_ip(self):
@@ -313,12 +313,12 @@ class ODLTesting(unittest.TestCase):
             ft_constants.CI_INSTALLER_TYPE = "apex"
             ft_constants.SDN_CONTROLLER_IP = None
             self.assertEqual(self.test.run(),
-                             TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+                             testcase_base.TestcaseBase.EX_RUN_ERROR)
 
     def test_run_apex(self):
         ft_constants.SDN_CONTROLLER_IP = self._sdn_controller_ip
         ft_constants.CI_INSTALLER_TYPE = "apex"
-        self._test_run(TestCasesBase.TestCasesBase.EX_OK,
+        self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._sdn_controller_ip, odlwebport='8181')
 
     def test_run_joid_missing_sdn_controller(self):
@@ -327,18 +327,18 @@ class ODLTesting(unittest.TestCase):
             ft_constants.CI_INSTALLER_TYPE = "joid"
             ft_constants.SDN_CONTROLLER = None
             self.assertEqual(self.test.run(),
-                             TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+                             testcase_base.TestcaseBase.EX_RUN_ERROR)
 
     def test_run_joid(self):
         ft_constants.SDN_CONTROLLER = self._sdn_controller_ip
         ft_constants.CI_INSTALLER_TYPE = "joid"
-        self._test_run(TestCasesBase.TestCasesBase.EX_OK,
+        self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._sdn_controller_ip,
                        odlwebport=self._odl_webport)
 
     def test_run_compass(self, *args):
         ft_constants.CI_INSTALLER_TYPE = "compass"
-        self._test_run(TestCasesBase.TestCasesBase.EX_OK,
+        self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._neutron_ip, odlwebport='8181')
 
 
