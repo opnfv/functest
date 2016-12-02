@@ -196,7 +196,7 @@ class Environment(Connection):
 
     def ChangeTestCasePara(self, testcase, user, password):
         """
-        When running test script, there's something need \
+        When running test script, there's something need
         to change in every test folder's *.param & *.topo files
         user: onos&compute node user
         password: onos&compute node password

@@ -26,10 +26,8 @@ import functest.utils.functest_utils as ft_utils
 
 
 class DominoCases(TestCasesBase.TestCasesBase):
-    DOMINO_REPO = \
-        ft_constants.DOMINO_REPO_DIR
-    RESULTS_DIR = \
-        ft_constants.FUNCTEST_RESULTS_DIR
+    DOMINO_REPO = ft_constants.DOMINO_REPO_DIR
+    RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
     logger = ft_logger.Logger("domino").getLogger()
 
     def __init__(self):
