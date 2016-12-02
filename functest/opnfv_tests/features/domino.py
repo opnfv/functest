@@ -19,13 +19,13 @@ import os
 import sys
 import time
 
-from functest.core import TestCasesBase
+import functest.core.testcase_base as testcase_base
 import functest.utils.functest_constants as ft_constants
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
 
-class DominoCases(TestCasesBase.TestCasesBase):
+class DominoCases(testcase_base.TestcaseBase):
     DOMINO_REPO = \
         ft_constants.DOMINO_REPO_DIR
     RESULTS_DIR = \
@@ -72,9 +72,9 @@ if __name__ == '__main__':
     domino = DominoCases()
     try:
         result = domino.main(**args)
-        if result != TestCasesBase.TestCasesBase.EX_OK:
+        if result != testcase_base.TestcaseBase.EX_OK:
             sys.exit(result)
         if args['report']:
             sys.exit(domino.push_to_db())
     except Exception:
-        sys.exit(TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+        sys.exit(testcase_base.TestcaseBase.EX_RUN_ERROR)

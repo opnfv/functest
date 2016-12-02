@@ -14,13 +14,13 @@ import os
 import sys
 import time
 
-from functest.core import TestCasesBase
+import functest.core.testcase_base as testcase_base
 import functest.utils.functest_constants as ft_constants
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
 
-class SdnVpnTests(TestCasesBase.TestCasesBase):
+class SdnVpnTests(testcase_base.TestcaseBase):
     SDNVPN_REPO_TESTS = os.path.join(
         ft_constants.SDNVPN_REPO_DIR, "tests/functest")
     logger = ft_logger.Logger("sdnvpn").getLogger()
@@ -58,6 +58,7 @@ class SdnVpnTests(TestCasesBase.TestCasesBase):
         kwargs = {}
         return self.main(**kwargs)
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-r", "--report",
@@ -67,9 +68,9 @@ if __name__ == '__main__':
     sdnvpn = SdnVpnTests()
     try:
         result = sdnvpn.main(**args)
-        if result != TestCasesBase.TestCasesBase.EX_OK:
+        if result != testcase_base.TestcaseBase.EX_OK:
             sys.exit(result)
         if args['report']:
             sys.exit(sdnvpn.push_to_db())
     except Exception:
-        sys.exit(TestCasesBase.TestCasesBase.EX_RUN_ERROR)
+        sys.exit(testcase_base.TestcaseBase.EX_RUN_ERROR)

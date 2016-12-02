@@ -18,7 +18,7 @@ import argparse
 
 import functest.ci.generate_report as generate_report
 import functest.ci.tier_builder as tb
-import functest.core.TestCasesBase as TestCasesBase
+import functest.core.testcase_base as testcase_base
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_constants as ft_constants
@@ -132,7 +132,7 @@ def run_test(test, tier_name):
     if GlobalVariables.REPORT_FLAG:
         flags += " -r"
 
-    result = TestCasesBase.TestCasesBase.EX_RUN_ERROR
+    result = testcase_base.TestcaseBase.EX_RUN_ERROR
     run_dict = get_run_dict_if_defined(test_name)
     if run_dict:
         try:

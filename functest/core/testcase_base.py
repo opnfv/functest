@@ -14,7 +14,7 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_constants as ft_constants
 
 
-class TestCasesBase(object):
+class TestcaseBase(object):
 
     EX_OK = os.EX_OK
     EX_RUN_ERROR = os.EX_SOFTWARE
@@ -33,7 +33,7 @@ class TestCasesBase(object):
 
     def run(self, **kwargs):
         self.logger.error("Run must be implemented")
-        return TestCasesBase.EX_RUN_ERROR
+        return TestcaseBase.EX_RUN_ERROR
 
     def push_to_db(self):
         try:
@@ -46,10 +46,10 @@ class TestCasesBase(object):
                     self.project_name, self.case_name, self.start_time,
                     self.stop_time, self.criteria, self.details):
                 self.logger.info("The results were successfully pushed to DB")
-                return TestCasesBase.EX_OK
+                return TestcaseBase.EX_OK
             else:
                 self.logger.error("The results cannot be pushed to DB")
-                return TestCasesBase.EX_PUSH_TO_DB_ERROR
+                return TestcaseBase.EX_PUSH_TO_DB_ERROR
         except Exception:
             self.logger.exception("The results cannot be pushed to DB")
-            return TestCasesBase.EX_PUSH_TO_DB_ERROR
+            return TestcaseBase.EX_PUSH_TO_DB_ERROR
