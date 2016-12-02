@@ -16,6 +16,23 @@
       "revId": "6d3a406dd4e3f0c59e4567781e4060c4d738a029",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_82939ef9",
+        "filename": "functest/opnfv_tests/openstack/examples/create_instance_and_ip.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T12:55:35Z",
+      "side": 1,
+      "message": "you can do something like this\n\n\n    instance \u003d os_utils.create_instance_and_wait_for_active(\n                        EXAMPLE_FLAVOR,\n                        image_id,\n                        network_id,\n                        EXAMPLE_INSTANCE_NAME)",
+      "revId": "6d3a406dd4e3f0c59e4567781e4060c4d738a029",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
