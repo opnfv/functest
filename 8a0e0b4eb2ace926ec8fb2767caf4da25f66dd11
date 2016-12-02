@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_251514f1",
+        "filename": "functest/ci/generate_report.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_c5969094",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_e5938ca1",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-12-02T15:35:41Z",
       "side": 1,
       "message": "ft_constants.OPENSTACK_CREDS \u003d (\"/home/opnfv/functest/conf/\"\n                                \"openstack.creds\")",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c5f9b0c9",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_e5938ca1",
       "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_e5f62cd7",
+        "filename": "functest/cli/commands/cli_os.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_a58d847d",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_45eaa010",
         "filename": "functest/opnfv_tests/openstack/examples/create_instance_and_ip.py",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2016-12-02T15:35:41Z",
       "side": 1,
       "message": "import os\n\nIMAGE_PATH \u003d os.path.join(ft_constants.FUNCTEST_DATA_DIR, IMAGE_FILENAME)",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_452dc045",
+        "filename": "functest/opnfv_tests/openstack/examples/create_instance_and_ip.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_45eaa010",
       "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_252c3447",
+        "filename": "functest/opnfv_tests/openstack/tempest/gen_tempest_conf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_25f994e9",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_e5daac77",
         "filename": "functest/opnfv_tests/openstack/tempest/gen_tempest_conf.py",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2016-12-02T15:35:41Z",
       "side": 1,
       "message": "remove the \"+\"",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_0527b865",
+        "filename": "functest/opnfv_tests/openstack/tempest/gen_tempest_conf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_e5daac77",
       "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_65323ca9",
+        "filename": "functest/opnfv_tests/openstack/tempest/gen_tempest_conf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_65d6bc51",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_05cb38a6",
         "filename": "functest/opnfv_tests/openstack/tempest/run_tempest.py",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2016-12-02T15:35:41Z",
       "side": 1,
       "message": "os.path.join(ft_constants.FUNCTEST_DATA_DIR, GLANCE_IMAGE_FILENAME)",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c520d04b",
+        "filename": "functest/opnfv_tests/openstack/tempest/run_tempest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_05cb38a6",
       "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_e51dcc10",
+        "filename": "functest/opnfv_tests/sdn/onos/sfc/sfc_onos.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_05425810",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_25475421",
         "filename": "functest/opnfv_tests/sdn/onos/sfc/sfc_onos.py",
         "patchSetId": 3
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_851ac815",
+        "filename": "functest/opnfv_tests/sdn/onos/sfc/sfc_onos.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_25475421",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_c54bf029",
         "filename": "functest/opnfv_tests/sdn/onos/sfc/sfc_onos.py",
         "patchSetId": 3
@@ -200,6 +380,24 @@
       "writtenOn": "2016-12-02T15:35:41Z",
       "side": 1,
       "message": "same as previous scripts, use %s",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_05ded83f",
+        "filename": "functest/opnfv_tests/sdn/onos/sfc/sfc_onos.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_c54bf029",
       "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -240,6 +438,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_e5a06c92",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestrator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_8555e8c7",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_a55264db",
         "filename": "functest/utils/functest_vacation.py",
         "patchSetId": 3
@@ -251,6 +467,24 @@
       "writtenOn": "2016-12-02T15:35:41Z",
       "side": 1,
       "message": "print (\u0027Thanks for playing, your score: %s.\u0027 %(str(len(snake) - len(body) - 1)))",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_65bc7cbc",
+        "filename": "functest/utils/functest_vacation.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-02T16:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_a55264db",
       "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
