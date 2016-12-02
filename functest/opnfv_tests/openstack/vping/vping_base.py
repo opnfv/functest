@@ -13,6 +13,7 @@ import time
 from datetime import datetime
 
 import functest.utils.functest_utils as ft_utils
+import functest.utils.functest_constants as ft_constants
 import functest.utils.openstack_utils as os_utils
 from functest.core import TestCasesBase
 
@@ -24,6 +25,7 @@ class VPingBase(TestCasesBase.TestCasesBase):
 
         super(VPingBase, self).__init__()
         self.logger = None
+        self.functest_repo = ft_constants.FUNCTEST_REPO_DIR
         self.repo = get_conf('general.directories.dir_vping')
         self.vm1_name = get_conf('vping.vm_name_1')
         self.vm2_name = get_conf('vping.vm_name_2')
