@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_c2f9a6c9",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-02T09:11:47Z",
+      "side": 1,
+      "message": "the reason I put self.functest_repo in TestCasesBase is because it will not only be used by vping, I don\u0027t want to access it by \u0027general.directory.functest\u0027 everywhere. Since we already have functest_constants to manage all the envs and configurations I don\u0027t think self.functest_repo is needed any more, just use ft_constants.FUNCTEST_REPO_DIR directly. or else put self.repo(vping repo directory) here.",
+      "revId": "01342c5f655727314dd2fb2e6bc5bc5c9dba2969",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
