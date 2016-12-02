@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_05d258d2",
+        "filename": "functest/opnfv_tests/openstack/tempest/run_tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T19:00:27Z",
+      "side": 1,
+      "message": "typo:\n\nGLANCE_IMAGE_PATH \u003d  os.path.join(ft_constants.FUNCTEST_DATA_DIR, GLANCE_IMAGE_FILENAME)",
+      "revId": "74ad30b8325e36ea2b381d859431322dc4875a08",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c5dbf0eb",
+        "filename": "functest/utils/functest_vacation.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T19:00:27Z",
+      "side": 1,
+      "message": "one way to avoid this \"\\\" is:\n\n    from curses import initscr, curs_set, newwin, endwin\n    from curses import KEY_RIGHT, KEY_LEFT, KEY_DOWN, KEY_UP\n\n\nhttps://www.python.org/dev/peps/pep-0328/#rationale-for-parentheses",
+      "revId": "74ad30b8325e36ea2b381d859431322dc4875a08",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
