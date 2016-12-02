@@ -68,10 +68,11 @@ class CliOpenStack:
         if CI_INSTALLER_IP is None:
             click.echo("The environment variable 'INSTALLER_IP' is not"
                        "defined. Please export it")
-        cmd = ft_constants.REPOS_DIR + \
-            ("/releng/utils/fetch_os_creds.sh "
-             "-d %s -i %s -a %s"
-             % (OPENSTACK_RC_FILE, CI_INSTALLER_TYPE, CI_INSTALLER_IP))
+        cmd = ("%s/releng/utils/fetch_os_creds.sh -d %s -i %s -a %s"
+               % (ft_constants.REPOS_DIR,
+                  OPENSTACK_RC_FILE,
+                  CI_INSTALLER_TYPE,
+                  CI_INSTALLER_IP))
         click.echo("Fetching credentials from installer node '%s' with IP=%s.."
                    % (CI_INSTALLER_TYPE, CI_INSTALLER_IP))
         ft_utils.execute_command(cmd, verbose=False)

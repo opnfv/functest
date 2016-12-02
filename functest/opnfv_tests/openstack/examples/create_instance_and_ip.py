@@ -11,7 +11,9 @@
 #
 
 import argparse
+import os
 import sys
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
 import functest.utils.functest_constants as ft_constants
@@ -36,8 +38,7 @@ EXAMPLE_FLAVOR = ft_constants.EXAMPLE_FLAVOR
 EXAMPLE_IMAGE_NAME = ft_constants.EXAMPLE_IMAGE_NAME
 IMAGE_FILENAME = ft_constants.GLANCE_IMAGE_FILENAME
 IMAGE_FORMAT = ft_constants.GLANCE_IMAGE_FORMAT
-IMAGE_PATH = ft_constants.FUNCTEST_DATA_DIR + \
-    "/" + IMAGE_FILENAME
+IMAGE_PATH = os.path.join(ft_constants.FUNCTEST_DATA_DIR, IMAGE_FILENAME)
 
 # NEUTRON Private Network parameters
 

@@ -1,6 +1,6 @@
 from os import environ
-from curses import initscr, curs_set, newwin, endwin,\
-    KEY_RIGHT, KEY_LEFT, KEY_DOWN, KEY_UP
+from curses import initscr, curs_set, newwin, endwin
+from curses import KEY_RIGHT, KEY_LEFT, KEY_DOWN, KEY_UP
 from random import randrange
 
 
@@ -48,6 +48,6 @@ def main():
 
     print '\nSnake.PY-26lines by Kris Cieslak (defaultset.blogspot.com).'
     print 'OPNFV adaptation by Functest dream team.'
-    print 'Thanks for playing, your score: ' + \
-          str(len(snake) - len(body) - 1) + '.'
+    score = str(len(snake) - len(body) - 1)
+    print ('Thanks for playing, your score: %s.' % score)
     print 'Find and fix more bugs in your real OPNFV setup!\n'
