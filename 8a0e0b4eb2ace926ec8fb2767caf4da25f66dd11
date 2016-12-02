@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_c5969094",
+        "filename": "functest/ci/generate_report.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "url \u003d \"%s/results?build_tag\u003d%s\" %(ft_utils.get_db_url(), GlobalVariables.BUILD_TAG)\n\nor\n\nurl \u003d (\u0027%s/results?build_tag\u003d%s\u0027, %(ft_utils.get_db_url(), GlobalVariables.BUILD_TAG))",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e5938ca1",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "ft_constants.OPENSTACK_CREDS \u003d (\"/home/opnfv/functest/conf/\"\n                                \"openstack.creds\")",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a58d847d",
+        "filename": "functest/cli/commands/cli_os.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "cmd \u003d (\"%s/releng/utils/fetch_os_creds.sh -d %s -i %s -a %s\"\n       % (ft_constants.REPOS_DIR,\n          OPENSTACK_RC_FILE,\n          CI_INSTALLER_TYPE,\n          CI_INSTALLER_IP))",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_45eaa010",
+        "filename": "functest/opnfv_tests/openstack/examples/create_instance_and_ip.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "import os\n\nIMAGE_PATH \u003d os.path.join(ft_constants.FUNCTEST_DATA_DIR, IMAGE_FILENAME)",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_25f994e9",
+        "filename": "functest/opnfv_tests/openstack/tempest/gen_tempest_conf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "remove the \"+\"",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e5daac77",
+        "filename": "functest/opnfv_tests/openstack/tempest/gen_tempest_conf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "remove the \"+\"",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_65d6bc51",
+        "filename": "functest/opnfv_tests/openstack/tempest/gen_tempest_conf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "kingbird_endpoint_url \u003d \"http://%s:%s/\" % (bind_host, bind_port)",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_05cb38a6",
+        "filename": "functest/opnfv_tests/openstack/tempest/run_tempest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "os.path.join(ft_constants.FUNCTEST_DATA_DIR, GLANCE_IMAGE_FILENAME)",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_25d0b44f",
+        "filename": "functest/opnfv_tests/sdn/onos/sfc/sfc_onos.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "remove the \"+\"",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_05425810",
+        "filename": "functest/opnfv_tests/sdn/onos/sfc/sfc_onos.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "url \u003d \u0027http://%s:5000/%s/tokens\u0027 % (self.osver, self.keystone_hostname)",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_25475421",
+        "filename": "functest/opnfv_tests/sdn/onos/sfc/sfc_onos.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "data \u003d (\u0027{\"auth\": {\"tenantName\": \"admin\", \"passwordCredentials\":\u0027\n        \u0027{ \"username\": \"admin\", \"password\": \"console\"}}}\u0027",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c54bf029",
+        "filename": "functest/opnfv_tests/sdn/onos/sfc/sfc_onos.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "same as previous scripts, use %s",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e5486c2f",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "currentpath \u003d \u0027%s/sdn/onos/teston/ci\u0027 % ft_constants.FUNCTEST_TEST_DIR",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8555e8c7",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestrator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "destination_folder \u003d os.path.join(self.testcase_dir, blueprint[\u0027destination_folder\u0027])",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a55264db",
+        "filename": "functest/utils/functest_vacation.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-02T15:35:41Z",
+      "side": 1,
+      "message": "print (\u0027Thanks for playing, your score: %s.\u0027 %(str(len(snake) - len(body) - 1)))",
+      "revId": "8a0e0b4eb2ace926ec8fb2767caf4da25f66dd11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
