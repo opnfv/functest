@@ -8,7 +8,9 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import logging
+import mock
 import unittest
+import urllib2
 
 from functest.utils import functest_utils
 
@@ -18,12 +20,25 @@ class FunctestUtilsTesting(unittest.TestCase):
     logging.disable(logging.CRITICAL)
 
     def setUp(self):
-        self.test = functest_utils
+        self.url = 'http://www.opnfv.org/'
+        self.timeout = 5
 
-    def test_check_internet_connectivity(self):
-        self.assertTrue(self.test.check_internet_connectivity())
-# TODO
-# ...
+    @mock.patch('urllib2.urlopen',
+                side_effect=urllib2.URLError('no host given'))
+    def test_check_internet_connectivity_failed(self, mock_method):
+        self.assertFalse(functest_utils.check_internet_connectivity())
+        mock_method.assert_called_once_with(self.url, timeout=self.timeout)
+
+    @mock.patch('urllib2.urlopen')
+    def test_check_internet_connectivity_default(self, mock_method):
+        self.assertTrue(functest_utils.check_internet_connectivity())
+        mock_method.assert_called_once_with(self.url, timeout=self.timeout)
+
+    @mock.patch('urllib2.urlopen')
+    def test_check_internet_connectivity_debian(self, mock_method):
+        self.url = "https://www.debian.org/"
+        self.assertTrue(functest_utils.check_internet_connectivity(self.url))
+        mock_method.assert_called_once_with(self.url, timeout=self.timeout)
 
 
 if __name__ == "__main__":
