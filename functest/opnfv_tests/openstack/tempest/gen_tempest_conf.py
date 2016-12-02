@@ -50,8 +50,8 @@ def configure_tempest_multisite(deployment_dir):
     config.read(tempest_conf_file)
 
     config.set('service_available', 'kingbird', 'true')
-    cmd = "openstack endpoint show kingbird | grep publicurl |\
-           awk '{print $4}' | awk -F '/' '{print $4}'"
+    cmd = ("openstack endpoint show kingbird | grep publicurl |" +
+           "awk '{print $4}' | awk -F '/' '{print $4}'")
     kingbird_api_version = os.popen(cmd).read()
     if CI_INSTALLER_TYPE == 'fuel':
         # For MOS based setup, the service is accessible
@@ -66,8 +66,8 @@ def configure_tempest_multisite(deployment_dir):
             "multisite." + installer_type +
             "_environment.installer_password")
 
-        ssh_options = "-o UserKnownHostsFile=/dev/null -o \
-            StrictHostKeyChecking=no"
+        ssh_options = ("-o UserKnownHostsFile=/dev/null -o " +
+                       "StrictHostKeyChecking=no")
 
         # Get the controller IP from the fuel node
         cmd = 'sshpass -p %s ssh 2>/dev/null %s %s@%s \
@@ -76,8 +76,7 @@ def configure_tempest_multisite(deployment_dir):
                                                ssh_options,
                                                installer_username,
                                                installer_ip)
-        multisite_controller_ip = \
-            "".join(os.popen(cmd).read().split())
+        multisite_controller_ip = "".join(os.popen(cmd).read().split())
 
         # Login to controller and get bind host details
         cmd = 'sshpass -p %s ssh 2>/dev/null  %s %s@%s "ssh %s \\" \
@@ -94,8 +93,8 @@ def configure_tempest_multisite(deployment_dir):
         # Extract ip address from the bind details
         bind_host = re.findall(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}",
                                bind_details)[0]
-        kingbird_endpoint_url = "http://" + bind_host + ":" + bind_port + \
-                                "/"
+        kingbird_endpoint_url = ("http://" + bind_host + ":" +
+                                 bind_port + "/")
     else:
         cmd = "openstack endpoint show kingbird | grep publicurl |\
                awk '{print $4}' | awk -F '/' '{print $3}'"

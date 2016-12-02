@@ -138,8 +138,8 @@ class Orchestrator:
                                              bp_name, dep_name):
         self.logger.info("Downloading the {0} blueprint".format(
             blueprint['file_name']))
-        destination_folder = self.testcase_dir + \
-            blueprint['destination_folder']
+        destination_folder = (self.testcase_dir +
+                              blueprint['destination_folder'])
         download_result = self._download_blueprints(blueprint['url'],
                                                     blueprint['branch'],
                                                     destination_folder)
