@@ -225,7 +225,7 @@ def delete_sfc(tacker_client, sfc_id=None, sfc_name=None):
         return None
 
 
-def list_sfc_clasifiers(tacker_client, verbose=False):
+def list_sfc_classifiers(tacker_client, verbose=False):
     try:
         sfc_clfs = tacker_client.list_sfc_classifiers(retrieve_all=True)
         if not verbose:
