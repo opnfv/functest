@@ -9,6 +9,8 @@
 #       - Neutron networks, subnets and ports
 #       - Routers
 #       - Users and tenants
+#       - VNFDs and VNFs
+#       - SFCs and SFC classifiers
 #
 # Author:
 #    jose.lausuch@ericsson.com
@@ -23,6 +25,7 @@
 import time
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
+import functest.utils.openstack_tacker as os_tacker
 import yaml
 import functest.utils.functest_constants as ft_constants
 
@@ -369,6 +372,109 @@ def remove_tenants(keystone_client, default_tenants):
                          "NOT be deleted.")
 
 
+def remove_vnfds(tacker_client, default_vnfds):
+    logger.debug("Removing VNFDs...")
+    vnfds = os_tacker.list_vnfds(tacker_client, verbose=True)['vnfds']
+    if vnfds is None:
+        logger.debug("There are no VNFDs in the deployment. ")
+        return
+
+    for vnfd in vnfds:
+        vnfd_name = vnfd['name']
+        vnfd_id = vnfd['id']
+        logger.debug("'%s', ID=%s " % (vnfd_name, vnfd_id))
+        if (vnfd_id not in default_vnfds and
+                vnfd_name not in default_vnfds.values()):
+            logger.debug(" Removing '%s'..." % vnfd_name)
+            deleted = os_tacker.delete_vnfd(tacker_client, vnfd_id=vnfd_id)
+            if deleted is not None:
+                logger.debug("  > Done!")
+            else:
+                logger.error("There has been a problem removing the "
+                             "VNFD '%s'(%s)..." % (vnfd_name, vnfd_id))
+        else:
+            logger.debug("   > this is a default VNFD and will "
+                         "NOT be deleted.")
+
+
+def remove_vnfs(tacker_client, default_vnfs):
+    logger.debug("Removing VNFs...")
+    vnfs = os_tacker.list_vnfs(tacker_client, verbose=True)['vnfs']
+    if vnfs is None:
+        logger.debug("There are no VNFs in the deployment. ")
+        return
+
+    for vnf in vnfs:
+        vnf_name = vnf['name']
+        vnf_id = vnf['id']
+        logger.debug("'%s', ID=%s " % (vnf_name, vnf_id))
+        if (vnf_id not in default_vnfs and
+                vnf_name not in default_vnfs.values()):
+            logger.debug(" Removing '%s'..." % vnf_name)
+            deleted = os_tacker.delete_vnf(tacker_client, vnf_id=vnf_id)
+            if deleted is not None:
+                logger.debug("  > Done!")
+            else:
+                logger.error("There has been a problem removing the "
+                             "VNF '%s'(%s)..." % (vnf_name, vnf_id))
+        else:
+            logger.debug("   > this is a default VNF and will "
+                         "NOT be deleted.")
+
+
+def remove_sfcs(tacker_client, default_sfcs):
+    logger.debug("Removing SFCs...")
+    sfcs = os_tacker.list_sfcs(tacker_client, verbose=True)['sfcs']
+    if sfcs is None:
+        logger.debug("There are no SFCs in the deployment. ")
+        return
+
+    for sfc in sfcs:
+        sfc_name = sfc['name']
+        sfc_id = sfc['id']
+        logger.debug("'%s', ID=%s " % (sfc_name, sfc_id))
+        if (sfc_id not in default_sfcs and
+                sfc_name not in default_sfcs.values()):
+            logger.debug(" Removing '%s'..." % sfc_name)
+            deleted = os_tacker.delete_sfc(tacker_client, sfc_id=sfc_id)
+            if deleted is not None:
+                logger.debug("  > Done!")
+            else:
+                logger.error("There has been a problem removing the "
+                             "SFC '%s'(%s)..." % (sfc_name, sfc_id))
+        else:
+            logger.debug("   > this is a default SFC and will "
+                         "NOT be deleted.")
+
+
+def remove_sfc_classifiers(tacker_client, default_sfc_classifiers):
+    logger.debug("Removing SFC classifiers...")
+    sfc_clfs = os_tacker.list_sfc_classifiers(
+        tacker_client, verbose=True)['sfc_classfiers']
+    if sfc_clfs is None:
+        logger.debug("There are no SFC classifiers in the deployment. ")
+        return
+
+    for sfc_clf in sfc_clfs:
+        sfc_clf_name = sfc_clf['name']
+        sfc_clf_id = sfc_clf['id']
+        logger.debug("'%s', ID=%s " % (sfc_clf_name, sfc_clf_id))
+        if (sfc_clf_id not in default_sfc_classifiers and
+                sfc_clf_name not in default_sfc_classifiers.values()):
+            logger.debug(" Removing '%s'..." % sfc_clf_name)
+            deleted = os_tacker.delete_sfc_classifier(
+                tacker_client, sfc_clf_id=sfc_clf_id)
+            if deleted is not None:
+                logger.debug("  > Done!")
+            else:
+                logger.error("There has been a problem removing the "
+                             "SFC classifier '%s'(%s)..."
+                             % (sfc_clf_name, sfc_clf_id))
+        else:
+            logger.debug("   > this is a default SFC classifier and will "
+                         "NOT be deleted.")
+
+
 def main():
     logger.info("Cleaning OpenStack resources...")
 
@@ -376,6 +482,7 @@ def main():
     neutron_client = os_utils.get_neutron_client()
     keystone_client = os_utils.get_keystone_client()
     cinder_client = os_utils.get_cinder_client()
+    tacker_client = os_tacker.get_tacker_client()
 
     try:
         with open(OS_SNAPSHOT_FILE) as f:
@@ -394,6 +501,10 @@ def main():
     default_floatingips = snapshot_yaml.get('floatingips')
     default_users = snapshot_yaml.get('users')
     default_tenants = snapshot_yaml.get('tenants')
+    default_vnfds = snapshot_yaml.get('vnfds')
+    default_vnfs = snapshot_yaml.get('vnfs')
+    default_sfcs = snapshot_yaml.get('sfcs')
+    default_sfc_classifiers = snapshot_yaml.get('sfc_classifiers')
 
     if not os_utils.check_credentials():
         logger.error("Please source the openrc credentials and run "
@@ -415,6 +526,16 @@ def main():
     remove_users(keystone_client, default_users)
     separator()
     remove_tenants(keystone_client, default_tenants)
+    separator()
+    # Note: Delete in this order
+    # 1. Classifiers, 2. SFCs, 3. VNFs, 4. VNFDs
+    remove_sfc_classifiers(tacker_client, default_sfc_classifiers)
+    separator()
+    remove_sfcs(tacker_client, default_sfcs)
+    separator()
+    remove_vnfs(tacker_client, default_vnfs)
+    separator()
+    remove_vnfds(tacker_client, default_vnfds)
     separator()
 
 
