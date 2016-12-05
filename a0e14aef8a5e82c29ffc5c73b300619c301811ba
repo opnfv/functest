@@ -16,6 +16,24 @@
       "revId": "a0e14aef8a5e82c29ffc5c73b300619c301811ba",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_b30cee43",
+        "filename": "functest/utils/openstack_clean.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5579
+      },
+      "writtenOn": "2016-12-05T13:44:01Z",
+      "side": 1,
+      "message": "Done, both here and in the snapshot patch",
+      "parentUuid": "5ac10518_b3770ed4",
+      "revId": "a0e14aef8a5e82c29ffc5c73b300619c301811ba",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
