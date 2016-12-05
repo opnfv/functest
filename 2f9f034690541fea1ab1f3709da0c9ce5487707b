@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ac10518_28d729c3",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-05T01:47:52Z",
+      "side": 1,
+      "message": "how about using os.path.join(ft_constants.FUNCTEST_CONF_DIR, \u0027openstack.creds\u0027) substitute the hardcoding implementation?",
+      "revId": "2f9f034690541fea1ab1f3709da0c9ce5487707b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_48ef1588",
+        "filename": "functest/utils/functest_constants.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-05T01:47:52Z",
+      "side": 1,
+      "message": "why are these two and the two from 231 left?\nwe can use the follow method to remove \u0027/\u0027\nONOS_INSTALLER_MASTER_USERNAME \u003d get_value(\n    \u0027ONOS.environment.installer_master_username\u0027,\n    \u0027ONOS_INSTALLER_MASTER_USERNAME\u0027\n)",
+      "revId": "2f9f034690541fea1ab1f3709da0c9ce5487707b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_884e5dc0",
         "filename": "functest/utils/functest_vacation.py",
         "patchSetId": 7
