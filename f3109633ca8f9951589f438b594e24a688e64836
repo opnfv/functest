@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_7381a68e",
+        "filename": "functest/utils/openstack_snapshot.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-05T14:48:12Z",
+      "side": 1,
+      "message": "same than for the clean, I would be more precise by explicitely putting tacker as other VNF, VNFD could be used in Functest",
+      "revId": "f3109633ca8f9951589f438b594e24a688e64836",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
