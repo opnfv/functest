@@ -50,6 +50,24 @@
       "revId": "2f9f034690541fea1ab1f3709da0c9ce5487707b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_1304e279",
+        "filename": "functest/utils/functest_vacation.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-05T11:09:24Z",
+      "side": 1,
+      "message": "it was done to avoid the Pep8 rule on \\...\nwhat woudl be your suggestion assuming that this file is not the most important of the repo :)",
+      "parentUuid": "5ac10518_884e5dc0",
+      "revId": "2f9f034690541fea1ab1f3709da0c9ce5487707b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
