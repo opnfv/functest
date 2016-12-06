@@ -57,26 +57,26 @@ WORKDIR ${HOME}
 
 # Packaged dependencies
 RUN apt-get update && apt-get install -y \
-ssh \
-sshpass \
+build-essential \
+bundler \
+crudini \
 curl \
-git \
 gcc \
-wget \
+git \
+libffi-dev \
+libgmp3-dev \
+libpq-dev \
+libssl-dev \
+libxml2-dev \
+libxslt-dev \
 python-dev \
 python-mock \
 python-pip \
-bundler \
 postgresql \
-build-essential \
-libpq-dev \
-libxslt-dev \
-libssl-dev \
-libgmp3-dev \
-libxml2-dev \
-libffi-dev \
-crudini \
 ruby1.9.1-dev \
+ssh \
+sshpass \
+wget \
 --no-install-recommends
 
 RUN pip install --upgrade pip
