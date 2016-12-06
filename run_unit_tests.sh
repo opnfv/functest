@@ -43,7 +43,9 @@ source $WORKSPACE/functest_venv/bin/activate
 # install python packages
 easy_install -U setuptools
 easy_install -U pip
-pip install -r $WORKSPACE/requirements.txt
+pip install -r $WORKSPACE/test-requirements.txt
+
+
 pip install -e $WORKSPACE
 
 python $WORKSPACE/setup.py develop
