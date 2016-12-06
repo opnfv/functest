@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+1: Manuel Buil <manuelbuil87@gmail.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Tue, 06 Dec 2016 12:36:08 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/25479
+Project: functest
+Branch: refs/heads/master
