@@ -27,3 +27,4 @@ subprocess32
 shyaml
 dnspython
 Pillow==3.3.0
+click==6.6
