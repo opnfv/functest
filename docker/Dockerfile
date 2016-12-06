@@ -52,7 +52,6 @@ ENV creds ${FUNCTEST_CONF_DIR}/openstack.creds
 ENV TERM xterm
 ENV COLORTERM gnome-terminal
 
-
 WORKDIR ${HOME}
 
 # Packaged dependencies
@@ -81,11 +80,11 @@ wget \
 
 RUN pip install --upgrade pip
 
-RUN mkdir -p ${REPOS_DIR}
-RUN mkdir -p ${FUNCTEST_BASE_DIR}/results
-RUN mkdir -p ${FUNCTEST_BASE_DIR}/conf
-RUN mkdir -p /root/.ssh
-RUN chmod 700 /root/.ssh
+RUN mkdir -p ${REPOS_DIR} \
+    && mkdir -p ${FUNCTEST_BASE_DIR}/results \
+    && mkdir -p ${FUNCTEST_BASE_DIR}/conf \
+    && mkdir -p /root/.ssh \
+    && chmod 700 /root/.ssh
 
 RUN git config --global http.sslVerify false
 
@@ -114,14 +113,16 @@ RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integr
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_DIR}/vims-test
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
 
-RUN pip install -r ${FUNCTEST_REPO_DIR}/requirements.txt
-RUN cd ${FUNCTEST_REPO_DIR} && pip install .
+RUN cd ${FUNCTEST_REPO_DIR} \
+    && pip install -r requirements.txt \
+    && pip install .
+
 RUN pip install -r ${REPOS_DIR}/rally/requirements.txt
 RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
 
 RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
-    -not -path *unit_tests* |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755
-RUN find ${FUNCTEST_REPO_DIR} -name "*.sh" |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
+    -not -path *unit_tests* |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755 \
+    && find ${FUNCTEST_REPO_DIR} -name "*.sh" |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
 
 RUN /bin/bash ${REPOS_DIR}/parser/tests/parser_install.sh ${REPOS_DIR}
 RUN ${REPOS_DIR}/rally/install_rally.sh --yes
@@ -155,10 +156,10 @@ RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd ${REPOS_DIR}/vims-test \
     && bundle install"
 
-RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -'
-RUN sudo apt-get install -y nodejs
-RUN cd ${REPOS_DIR}/promise && sudo npm -g install npm@latest
-RUN cd ${REPOS_DIR}/promise/source && npm install
+RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -' \
+    && sudo apt-get install -y nodejs \
+    && cd ${REPOS_DIR}/promise && sudo npm -g install npm@latest \
+    && cd ${REPOS_DIR}/promise/source && npm install
 
 RUN echo "set nocompatible \n\
 set backspace=2" \
