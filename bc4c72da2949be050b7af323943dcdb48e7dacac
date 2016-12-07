@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_28ef2489",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-07T19:08:32Z",
+      "side": 1,
+      "message": "this is valid only for Apex.",
+      "revId": "bc4c72da2949be050b7af323943dcdb48e7dacac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
