@@ -109,6 +109,28 @@ rally:
     subnet_cidr: 192.168.140.0/24
     router_name: rally-router
 
+vnf:
+    aaa:
+        tenant_name: aaa
+        tenant_description: Freeradius server
+        tenant_image: ubuntu_14.04
+    juju_epc:
+        tenant_name: epc
+        tenant_description: OAI EPC deployed with Juju
+        tenant_image: ubuntu_14.04
+    orchestra:
+        tenant_name: orchestra
+        tenant_description: vWhatever deployed with Open-O
+        tenant_image: Centos_7
+    opera:
+        tenant_name: opera
+        tenant_description: vWhatever deployed with Openbaton
+        tenant_image: Centos_7
+    cloudify_ims:
+        tenant_name: cloudify_ims
+        tenant_description: vIMS
+        tenant_image: ubuntu_14.04
+
 vIMS:
     general:
         tenant_name: vIMS
