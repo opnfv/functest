@@ -109,17 +109,31 @@ rally:
     subnet_cidr: 192.168.140.0/24
     router_name: rally-router
 
+vnf:
+    aaa:
+        tenant_name: aaa
+        tenant_description: Freeradius server
+        tenant_images: {}
+    juju_epc:
+        tenant_name: epc
+        tenant_description: OAI EPC deployed with Juju
+        tenant_images: {}
+    orchestra:
+        tenant_name: orchestra
+        tenant_description: vWhatever deployed with Open-O
+        tenant_images: {}
+    opera:
+        tenant_name: opera
+        tenant_description: vWhatever deployed with Openbaton
+        tenant_images: {}
+    cloudify_ims:
+        tenant_name: cloudify_ims
+        tenant_description: vIMS
+        tenant_images:
+            ubuntu_14.04: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+            centos_7: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1510.qcow2
+
 vIMS:
-    general:
-        tenant_name: vIMS
-        tenant_description: vIMS Functionality Testing
-        images:
-            ubuntu:
-                image_url: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
-                image_name: ubuntu_14.04
-            centos:
-                image_url: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1510.qcow2
-                image_name: centos_7
     cloudify:
         blueprint:
             url: https://github.com/boucherv-orange/cloudify-manager-blueprints.git
