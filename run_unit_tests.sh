@@ -41,14 +41,10 @@ virtualenv $WORKSPACE/functest_venv
 source $WORKSPACE/functest_venv/bin/activate
 
 # install python packages
-easy_install -U setuptools
-easy_install -U pip
+sudo apt-get install -y build-essential python-dev python-pip
+pip install --upgrade pip
 pip install -r $WORKSPACE/test-requirements.txt
-
-
-pip install -e $WORKSPACE
-
-python $WORKSPACE/setup.py develop
+pip install $WORKSPACE
 
 export CONFIG_FUNCTEST_YAML=$(pwd)/functest/ci/config_functest.yaml
 # unit tests
