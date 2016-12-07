@@ -26,7 +26,6 @@ general:
         dir_repo_ovno:      /home/opnfv/repos/ovno
         dir_repo_parser:    /home/opnfv/repos/parser
         dir_repo_domino:    /home/opnfv/repos/domino
-        dir_repo_snaps:     /home/opnfv/repos/snaps
         dir_functest:       /home/opnfv/functest
         dir_functest_test:  /home/opnfv/repos/functest/functest/opnfv_tests
         dir_results:        /home/opnfv/functest/results
@@ -64,10 +63,6 @@ healthcheck:
     disk_image: /home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img
     disk_format: qcow2
     wait_time: 60
-
-snaps:
-    use_keystone: True
-    use_floating_ips: False
 
 vping:
     ping_timeout:   200
@@ -108,6 +103,28 @@ rally:
     subnet_name: rally-subnet
     subnet_cidr: 192.168.140.0/24
     router_name: rally-router
+
+vnf:
+    aaa:
+        tenant_name: aaa
+        tenant_description: Freeradius server
+        tenant_image: ubuntu_14.04
+    juju_epc:
+        tenant_name: epc
+        tenant_description: OAI EPC deployed with Juju
+        tenant_image: ubuntu_14.04
+    orchestra:
+        tenant_name: orchestra
+        tenant_description: vWhatever deployed with Open-O
+        tenant_image: Centos_7
+    opera:
+        tenant_name: opera
+        tenant_description: vWhatever deployed with Openbaton
+        tenant_image: Centos_7
+    cloudify_ims:
+        tenant_name: cloudify_ims
+        tenant_description: vIMS
+        tenant_image: ubuntu_14.04
 
 vIMS:
     general:

@@ -67,6 +67,7 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: ''
+
             -
                 name: rally_sanity
                 criteria: 'success_rate == 100%'
@@ -104,62 +105,6 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: 'onos'
-
-            -
-                name: connection_check
-                criteria: 'status == "PASS"'
-                blocking: true
-                description: >-
-                    This test case verifies the retrieval of OpenStack clients:
-                    Keystone, Glance, Neutron and Nova and may perform some
-                    simple queries. When the config value of
-                    snaps.use_keystone is True, functest must have access to
-                    the cloud's private network.
-
-                dependencies:
-                    installer: ''
-                    scenario: ''
-                run:
-                    module: 'functest.opnfv_tests.openstack.snaps.connection_check'
-                    class: 'ConnectionCheck'
-
-            -
-                name: api_check
-                criteria: 'status == "PASS"'
-                blocking: true
-                description: >-
-                    This test case verifies the retrieval of OpenStack clients:
-                    Keystone, Glance, Neutron and Nova and may perform some
-                    simple queries. When the config value of
-                    snaps.use_keystone is True, functest must have access to
-                    the cloud's private network.
-
-                dependencies:
-                    installer: ''
-                    scenario: ''
-                run:
-                    module: 'functest.opnfv_tests.openstack.snaps.api_check'
-                    class: 'ApiCheck'
-
-            -
-                name: snaps_smoke
-                criteria: 'status == "PASS"'
-                blocking: true
-                description: >-
-                    This test case contains tests that setup and destroy
-                    environments with VMs with and without Floating IPs
-                    with a newly created user and project. Set the config
-                    value snaps.use_floating_ips (True|False) to toggle
-                    this functionality. When the config value of
-                    snaps.use_keystone is True, functest must have access to
-                    the cloud's private network.
-
-                dependencies:
-                    installer: ''
-                    scenario: ''
-                run:
-                    module: 'functest.opnfv_tests.openstack.snaps.smoke'
-                    class: 'SnapsSmoke'
 
     -
         name: features
@@ -221,10 +166,6 @@ tiers:
                 dependencies:
                     installer: '(apex)|(joid)'
                     scenario: '^((?!fdio|lxd).)*$'
-                run:
-                    module: 'functest.opnfv_tests.feature.copper'
-                    class: 'Copper'
-
             -
                 name: moon
                 criteria: 'status == "PASS"'
@@ -252,9 +193,6 @@ tiers:
                 dependencies:
                     installer: '(apex)|(fuel)'
                     scenario: 'odl_l2-sfc'
-                run:
-                    module: 'functest.opnfv_tests.features.odl_sfc'
-                    class: 'OpenDaylightSFC'
             -
                 name: onos_sfc
                 criteria: 'status == "PASS"'
@@ -277,7 +215,7 @@ tiers:
                     module: 'functest.opnfv_tests.vnf.rnc.parser'
                     class: 'Parser'
     -
-        name: components
+        name: openstack
         order: 3
         ci_loop: 'weekly'
         description : >-
@@ -323,3 +261,67 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: '(ocl)|(nosdn)|^(os-odl)((?!bgpvpn).)*$'
+            -
+                name: aaa
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    Test suite from Parser project.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.vnf.aaa.aaa'
+                    class: 'AaaVnf'
+
+            -
+                name: juju_epc
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    Test suite from OAI project, vEPC deployed with Juju.
+                dependencies:
+                    installer: 'unknown'
+                    scenario: 'unknown'
+                run:
+                    module: 'functest.opnfv_tests.vnf.epc.epc'
+                    class: 'EpcVnf'
+
+            -
+                name: orchestra
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    VNF deployment with OpenBaton (Orchestra)
+                dependencies:
+                    installer: 'unknown'
+                    scenario: 'unknown'
+                run:
+                    module: 'functest.opnfv_tests.vnf.orchestra.vwhatever'
+                    class: 'EpcVnf'
+
+            -
+                name: opera
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    VNF deployment with Open-O (Opera)
+                dependencies:
+                    installer: 'unknown'
+                    scenario: 'unknown'
+                run:
+                    module: 'functest.opnfv_tests.vnf.opera.vwhatever'
+                    class: 'EpcVnf'
+
+            -
+                name: cloudify_ims
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    Evolution of vIMS
+                dependencies:
+                    installer: 'unknown'
+                    scenario: 'unknown'
+                run:
+                    module: 'functest.opnfv_tests.vnf.cloudify.ims'
+                    class: 'ImsVnf'
