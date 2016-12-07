@@ -244,11 +244,6 @@ VIMS_DATA_DIR = get_value('general.directories.dir_vIMS_data',
                           'VIMS_DATA_DIR')
 VIMS_TEST_DIR = get_value('general.directories.dir_repo_vims_test',
                           'VIMS_TEST_DIR')
-VIMS_TENANT_NAME = get_value('vIMS.general.tenant_name',
-                             'VIMS_TENANT_NAME')
-VIMS_TENANT_DESCRIPTION = get_value('vIMS.general.tenant_description',
-                                    'VIMS_TENANT_DESCRIPTION')
-VIMS_IMAGES = get_value('vIMS.general.images', 'VIMS_IMAGES')
 CFY_MANAGER_BLUEPRINT = get_value('vIMS.cloudify.blueprint',
                                   'CFY_MANAGER_BLUEPRINT')
 CFY_MANAGER_REQUIERMENTS = get_value('vIMS.cloudify.requierments',
@@ -262,3 +257,16 @@ CW_REQUIERMENTS = get_value('vIMS.clearwater.requierments',
                             'CW_REQUIERMENTS')
 PARSER_REPO_DIR = get_value('general.directories.dir_repo_parser',
                             'PARSER_REPO_DIR')
+
+
+def getVnfTenantName(vnf):
+    return get_value('vnf.' + vnf + '.tenant_name', "VNF_NAME")
+
+
+def getVnfTenantDescription(vnf):
+    return get_value("vnf." + vnf + ".tenant_description",
+                     "VNF_DESCRIPTION")
+
+
+def getVnfImages(vnf):
+    return get_value("vnf." + vnf + ".tenant_images", "VNF_IMAGES")
