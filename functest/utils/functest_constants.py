@@ -263,3 +263,16 @@ CW_REQUIERMENTS = get_value('vIMS.clearwater.requierments',
                             'CW_REQUIERMENTS')
 PARSER_REPO_DIR = get_value('general.dir.repo_parser',
                             'PARSER_REPO_DIR')
+
+
+def getVnfTenantName(vnf):
+    return get_value('vnf.' + vnf + '.tenant_name', "VNF_NAME")
+
+
+def getVnfTenantDescription(vnf):
+    return get_value("vnf." + vnf + ".tenant_description",
+                     "VNF_DESCRIPTION")
+
+
+def getVnfImage(vnf):
+    return get_value("vnf." + vnf + ".tenant_image", "VNF_IMAGE")
