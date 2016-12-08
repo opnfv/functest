@@ -14,15 +14,22 @@ import subprocess
 import sys
 import time
 
+from oslo_utils import importutils
 from cinderclient import client as cinderclient
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 from glanceclient import client as glanceclient
-from keystoneclient.v2_0 import client as keystoneclient
 from neutronclient.v2_0 import client as neutronclient
 from novaclient import client as novaclient
 
 logger = ft_logger.Logger("openstack_utils").getLogger()
+
+DEFAULT_API_VERSION = '2'
+KEYSTONE_API_VERSIONS = {
+    '2': 'keystoneclient.v2_0.client',
+    '3': 'keystoneclient.v3.client',
+}
+KEYSTONE_API_NAME = 'identity'
 
 
 # *********************************************
@@ -149,17 +156,57 @@ def get_credentials_for_rally():
     return rally_conf
 
 
+def get_client_class(api_name, version, version_map):
+    """Returns the client class for the requested API version
+
+    :param api_name: the name of the API, e.g. 'compute', 'image', etc
+    :param version: the requested API version
+    :param version_map: a dict of client classes keyed by version
+    :rtype: a client class for the requested API version
+    """
+    try:
+        client_path = version_map[str(version)]
+    except (KeyError, ValueError):
+        logger.error("Invalid {} client version {}. \
+            It must be one of: {}".format(api_name, version, version_map))
+
+    return importutils.import_class(client_path)
+
+
 # *********************************************
 #   CLIENTS
 # *********************************************
+def get_keystone_client_version():
+    api_version = os.getenv('OS_IDENTITY_API_VERSION')
+    if api_version is not None:
+        logger.info("OS_IDENTITY_API_VERSION is set in env as '%s'",
+                    api_version)
+        return api_version
+    return DEFAULT_API_VERSION
+
+
 def get_keystone_client():
-    creds_keystone = get_credentials("keystone")
-    return keystoneclient.Client(**creds_keystone)
+    creds_keystone = get_credentials('keystone')
+    keystoneclient_cls = get_client_class(
+        KEYSTONE_API_NAME,
+        get_keystone_client_version(),
+        KEYSTONE_API_VERSIONS)
+    logger.debug('Instantiating identity client: %s', keystoneclient_cls)
+    return keystoneclient_cls.Client(**creds_keystone)
+
+
+def get_nova_client_version():
+    api_version = os.getenv('OS_COMPUTE_API_VERSION')
+    if api_version is not None:
+        logger.info("OS_COMPUTE_API_VERSION is set in env as '%s'",
+                    api_version)
+        return api_version
+    return DEFAULT_API_VERSION
 
 
 def get_nova_client():
-    creds_nova = get_credentials("nova")
-    return novaclient.Client('2', **creds_nova)
+    creds_nova = utils.get_credentials('nova')
+    return nova_client.Client(get_nova_client_version(), **creds_nova)
 
 
 def get_cinder_client():
@@ -175,16 +222,25 @@ def get_neutron_client():
     return neutronclient.Client(**creds_neutron)
 
 
+def get_glance_client_version():
+    api_version = os.getenv('OS_IMAGE_API_VERSION')
+    if api_version is not None:
+        logger.info("OS_IMAGE_API_VERSION is set in env as '%s'", api_version)
+        return api_version
+    return DEFAULT_API_VERSION
+
+
 def get_glance_client():
     keystone_client = get_keystone_client()
     glance_endpoint_type = 'publicURL'
     os_endpoint_type = os.getenv('OS_ENDPOINT_TYPE')
     if os_endpoint_type is not None:
         glance_endpoint_type = os_endpoint_type
-    glance_endpoint = keystone_client.service_catalog.url_for(
+    glance_endpoint = keystoneclient.service_catalog.url_for(
         service_type='image', endpoint_type=glance_endpoint_type)
-    return glanceclient.Client(1, glance_endpoint,
-                               token=keystone_client.auth_token)
+
+    return glance_client.Client(get_glance_client_version(), glance_endpoint,
+                                token=keystone_client.auth_token)
 
 
 # *********************************************
