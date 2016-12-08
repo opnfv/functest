@@ -53,6 +53,7 @@ export CONFIG_FUNCTEST_YAML=$(pwd)/functest/ci/config_functest.yaml
 nosetests --with-xunit \
          --with-coverage \
          --cover-erase \
+         --cover-tests \
          --cover-package=functest.core.testcase_base \
          --cover-package=functest.opnfv_tests.sdn.odl.odl \
          --cover-xml \
