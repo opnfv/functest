@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_1e32a210",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-08T16:14:40Z",
+      "side": 1,
+      "message": "should we update this to v3?",
+      "revId": "77458d72140c0e2a4ffc608bb36f64249abf2777",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
