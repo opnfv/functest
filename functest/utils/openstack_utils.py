@@ -113,7 +113,14 @@ def source_credentials(rc_file):
 
 def get_credentials_for_rally():
     creds = get_credentials("keystone")
-    admin_keys = ['username', 'tenant_name', 'password']
+    keystone_api_version = os.getenv('OS_IDENTITY_API_VERSION')
+    if (keystone_api_version is None or
+            keystone_api_version == '2'):
+        admin_keys = ['username', 'tenant_name', 'password']
+    else:
+        admin_keys = ['username', 'password', 'user_domain_name',
+                      'project_name', 'project_domain_name']
+
     endpoint_types = [('internalURL', 'internal'),
                       ('publicURL', 'public'), ('adminURL', 'admin')]
     if 'endpoint_type' in creds.keys():
