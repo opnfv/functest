@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_3e9bde19",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-08T15:14:35Z",
+      "side": 1,
+      "message": "I think we also need to update this. For example, in Newton, OS_TENANT_NAME is not required any more.",
+      "revId": "c87bc545f66fb2e1c66b058cc79265010732392c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
