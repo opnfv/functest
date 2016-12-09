@@ -142,7 +142,7 @@ def run_test(test, tier_name):
             result = test_case.run()
             if (result == testcase_base.TestcaseBase.EX_OK and
                     GlobalVariables.REPORT_FLAG):
-                result = test_case.push_to_db()
+                test_case.push_to_db()
         except ImportError:
             logger.exception("Cannot import module {}".format(
                 run_dict['module']))
