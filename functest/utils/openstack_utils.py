@@ -15,21 +15,20 @@ import sys
 import time
 
 from oslo_utils import importutils
+from keystoneauth1 import loading
+from keystoneauth1 import session
 from cinderclient import client as cinderclient
+from glanceclient import client as glanceclient
+from novaclient import client as novaclient
+from keystoneclient import client as keystoneclient
+from neutronclient.neutron import client as neutronclient
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
-from glanceclient import client as glanceclient
-from neutronclient.v2_0 import client as neutronclient
-from novaclient import client as novaclient
 
 logger = ft_logger.Logger("openstack_utils").getLogger()
 
 DEFAULT_API_VERSION = '2'
-KEYSTONE_API_VERSIONS = {
-    '2': 'keystoneclient.v2_0.client',
-    '3': 'keystoneclient.v3.client',
-}
-KEYSTONE_API_NAME = 'identity'
 
 
 # *********************************************
@@ -52,14 +51,8 @@ def check_credentials():
     return all(map(lambda v: v in os.environ and os.environ[v], env_vars))
 
 
-def get_credentials(service):
-    """Returns a creds dictionary filled with the following keys:
-    * username
-    * password/api_key (depending on the service)
-    * tenant_name/project_id (depending on the service)
-    * auth_url
-    :param service: a string indicating the name of the service
-                    requesting the credentials.
+def get_credentials():
+    """Returns a creds dictionary filled with parsed from env
     """
     creds = {}
 
@@ -80,19 +73,11 @@ def get_credentials(service):
         if os.getenv(envvar) is None:
             raise MissingEnvVar(envvar)
 
-    # Unfortunately, each of the OpenStack client will request slightly
-    # different entries in their credentials dict.
-    if service.lower() in ("nova", "cinder"):
-        password = "api_key"
-        tenant = "project_id"
-    else:
-        password = "password"
-
     # The most common way to pass these info to the script is to do it through
     # environment variables.
     creds.update({
         "username": os.environ.get("OS_USERNAME"),
-        password: os.environ.get("OS_PASSWORD"),
+        "password": os.environ.get("OS_PASSWORD"),
         "auth_url": os.environ.get("OS_AUTH_URL"),
         tenant: os.environ.get(tenant_env)
     })
@@ -139,8 +124,15 @@ def source_credentials(rc_file):
 
 
 def get_credentials_for_rally():
-    creds = get_credentials("keystone")
-    admin_keys = ['username', 'tenant_name', 'password']
+    creds = get_credentials()
+    keystone_api_version = os.getenv('OS_IDENTITY_API_VERSION')
+    if (keystone_api_version is None or
+            keystone_api_version == '2'):
+        admin_keys = ['username', 'tenant_name', 'password']
+    else:
+        admin_keys = ['username', 'password', 'user_domain_name',
+                      'project_name', 'project_domain_name']
+
     endpoint_types = [('internalURL', 'internal'),
                       ('publicURL', 'public'), ('adminURL', 'admin')]
     if 'endpoint_type' in creds.keys():
@@ -156,26 +148,28 @@ def get_credentials_for_rally():
     return rally_conf
 
 
-def get_client_class(api_name, version, version_map):
-    """Returns the client class for the requested API version
+def get_session_auth():
+    loader = loading.get_plugin_loader('password')
+    creds = get_credentials()
+    auth = loader.load_from_options(**creds)
+    return auth
 
-    :param api_name: the name of the API, e.g. 'compute', 'image', etc
-    :param version: the requested API version
-    :param version_map: a dict of client classes keyed by version
-    :rtype: a client class for the requested API version
-    """
-    try:
-        client_path = version_map[str(version)]
-    except (KeyError, ValueError):
-        logger.error("Invalid {} client version {}. \
-            It must be one of: {}".format(api_name, version, version_map))
 
-    return importutils.import_class(client_path)
+def get_endpoint(service_type, endpoint_type='publicURL'):
+    auth = get_session_auth()
+    return get_session().get_endpoint(auth=auth,
+                                      service_type=service_type,
+                                      endpoint_type=endpoint_type)
 
 
 # *********************************************
 #   CLIENTS
 # *********************************************
+def get_session():
+    auth = get_session_auth()
+    return session.Session(auth=auth)
+
+
 def get_keystone_client_version():
     api_version = os.getenv('OS_IDENTITY_API_VERSION')
     if api_version is not None:
@@ -186,13 +180,8 @@ def get_keystone_client_version():
 
 
 def get_keystone_client():
-    creds_keystone = get_credentials('keystone')
-    keystoneclient_cls = get_client_class(
-        KEYSTONE_API_NAME,
-        get_keystone_client_version(),
-        KEYSTONE_API_VERSIONS)
-    logger.debug('Instantiating identity client: %s', keystoneclient_cls)
-    return keystoneclient_cls.Client(**creds_keystone)
+    sess = get_session()
+    return keystoneclient.Client(get_keystone_client_version(), session=sess)
 
 
 def get_nova_client_version():
@@ -205,21 +194,36 @@ def get_nova_client_version():
 
 
 def get_nova_client():
-    creds_nova = utils.get_credentials('nova')
-    return nova_client.Client(get_nova_client_version(), **creds_nova)
+    sess = get_session()
+    return novaclient.Client(get_nova_client_version(), session=sess)
+
+
+def get_cinder_client_version():
+    api_version = os.getenv('OS_VOLUME_API_VERSION')
+    if api_version is not None:
+        logger.info("OS_VOLUME_API_VERSION is set in env as '%s'",
+                    api_version)
+        return api_version
+    return DEFAULT_API_VERSION
 
 
 def get_cinder_client():
-    creds_cinder = get_credentials("cinder")
-    creds_cinder.update({
-        "service_type": "volume"
-    })
-    return cinderclient.Client('2', **creds_cinder)
+    sess = get_session()
+    return cinderclient.Client(get_cinder_client_version(), session=sess)
+
+
+def get_neutron_client_version():
+    api_version = os.getenv('OS_NETWORK_API_VERSION')
+    if api_version is not None:
+        logger.info("OS_NETWORK_API_VERSION is set in env as '%s'",
+                    api_version)
+        return api_version
+    return DEFAULT_API_VERSION
 
 
 def get_neutron_client():
-    creds_neutron = get_credentials("neutron")
-    return neutronclient.Client(**creds_neutron)
+    sess = get_session()
+    return neutronclient.Client(get_neutron_client_version(), session=sess)
 
 
 def get_glance_client_version():
@@ -231,16 +235,8 @@ def get_glance_client_version():
 
 
 def get_glance_client():
-    keystone_client = get_keystone_client()
-    glance_endpoint_type = 'publicURL'
-    os_endpoint_type = os.getenv('OS_ENDPOINT_TYPE')
-    if os_endpoint_type is not None:
-        glance_endpoint_type = os_endpoint_type
-    glance_endpoint = keystoneclient.service_catalog.url_for(
-        service_type='image', endpoint_type=glance_endpoint_type)
-
-    return glance_client.Client(get_glance_client_version(), glance_endpoint,
-                                token=keystone_client.auth_token)
+    sess = get_session()
+    return glanceclient.Client(get_glance_client_version(), session=sess)
 
 
 # *********************************************
@@ -1016,38 +1012,29 @@ def get_image_id(glance_client, image_name):
 
 
 def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
-                        container="bare", public=True):
+                        container="bare", public="public"):
     if not os.path.isfile(file_path):
         logger.error("Error: file %s does not exist." % file_path)
         return None
     try:
         image_id = get_image_id(glance_client, image_name)
         if image_id != '':
-            if logger:
-                logger.info("Image %s already exists." % image_name)
+            logger.info("Image %s already exists." % image_name)
         else:
-            if logger:
-                logger.info("Creating image '%s' from '%s'..." % (image_name,
-                                                                  file_path))
-            try:
-                properties = ft_utils.get_functest_config(
-                    'general.image_properties')
-            except ValueError:
-                # image properties are not configured
-                # therefore don't add any properties
-                properties = {}
-            with open(file_path) as fimage:
-                image = glance_client.images.create(name=image_name,
-                                                    is_public=public,
-                                                    disk_format=disk,
-                                                    container_format=container,
-                                                    properties=properties,
-                                                    data=fimage)
+            logger.info("Creating image '%s' from '%s'..." % (image_name,
+                                                              file_path))
+
+            image = glance_client.images.create(name=image_name,
+                                                visibility=public,
+                                                disk_format=disk,
+                                                container_format=container)
             image_id = image.id
+            with open(file_path) as image_data:
+                glance_client.images.upload(image_id, image_data)
         return image_id
     except Exception, e:
         logger.error("Error [create_glance_image(glance_client, '%s', '%s', "
-                     "'%s')]: %s" % (image_name, file_path, str(public), e))
+                     "'%s')]: %s" % (image_name, file_path, public, e))
         return None
 
 
