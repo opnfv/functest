@@ -26,6 +26,7 @@ general:
         dir_repo_ovno:      /home/opnfv/repos/ovno
         dir_repo_parser:    /home/opnfv/repos/parser
         dir_repo_domino:    /home/opnfv/repos/domino
+        dir_repo_snaps:     /home/opnfv/repos/snaps
         dir_functest:       /home/opnfv/functest
         dir_functest_test:  /home/opnfv/repos/functest/functest/opnfv_tests
         dir_results:        /home/opnfv/functest/results
@@ -63,6 +64,10 @@ healthcheck:
     disk_image: /home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img
     disk_format: qcow2
     wait_time: 60
+
+snaps:
+    use_keystone: True
+    use_floating_ips: False
 
 vping:
     ping_timeout:   200
