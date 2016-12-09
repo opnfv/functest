@@ -7,12 +7,12 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-from functest.core import TestCasesBase
+import testcase_base as base
 import unittest
 import time
 
 
-class PyTestSuiteRunner(TestCasesBase.TestCasesBase):
+class PyTestSuiteRunner(base.TestcaseBase):
     """
     This superclass is designed to execute pre-configured unittest.TestSuite()
     objects
@@ -25,9 +25,9 @@ class PyTestSuiteRunner(TestCasesBase.TestCasesBase):
         """
         Starts test execution from the functest framework
         """
-        start_time = time.time()
+        self.start_time = time.time()
         result = unittest.TextTestRunner(verbosity=2).run(self.suite)
-        end_time = time.time()
+        self.stop_time = time.time()
 
         if result.errors:
             self.logger.error('Number of errors in test suite - ' +
@@ -45,12 +45,11 @@ class PyTestSuiteRunner(TestCasesBase.TestCasesBase):
                 or (result.failures and len(result.failures) > 0):
             self.logger.info("%s FAILED" % self.case_name)
             self.criteria = 'FAIL'
-            exit_code = TestCasesBase.TestCasesBase.EX_RUN_ERROR
+            exit_code = base.TestcaseBase.EX_RUN_ERROR
         else:
             self.logger.info("%s OK" % self.case_name)
-            exit_code = TestCasesBase.TestCasesBase.EX_OK
+            exit_code = base.TestcaseBase.EX_OK
+            self.criteria = 'PASS'
 
-        self.details = {'timestart': start_time,
-                        'duration': round(end_time - start_time, 1),
-                        'status': self.criteria}
+        self.details = {}
         return exit_code
