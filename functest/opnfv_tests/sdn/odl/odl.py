@@ -146,11 +146,8 @@ class ODLTests(testcase_base.TestcaseBase):
 
     def run(self):
         try:
-            kclient = op_utils.get_keystone_client()
-            keystone_url = kclient.service_catalog.url_for(
-                service_type='identity', endpoint_type='publicURL')
-            neutron_url = kclient.service_catalog.url_for(
-                service_type='network', endpoint_type='publicURL')
+            keystone_url = op_utils.get_endpoint(service_type='identity')
+            neutron_url = op_utils.get_endpoint(service_type='network')
             kwargs = {'keystoneip': urlparse.urlparse(keystone_url).hostname}
             kwargs['neutronip'] = urlparse.urlparse(neutron_url).hostname
             kwargs['odlip'] = kwargs['neutronip']
