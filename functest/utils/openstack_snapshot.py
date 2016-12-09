@@ -9,6 +9,8 @@
 #       - Neutron networks, subnets and ports
 #       - Routers
 #       - Users and tenants
+#       - Tacker VNFDs and VNFs
+#       - Tacker SFCs and SFC classifiers
 #
 # Author:
 #    jose.lausuch@ericsson.com
@@ -62,7 +64,7 @@ def get_volumes(cinder_client):
     volumes = os_utils.get_volumes(cinder_client)
     if volumes is not None:
         for volume in volumes:
-            dic_volumes.update({volume.id: volume.display_name})
+            dic_volumes.update({volume.id: volume.name})
     return {'volumes': dic_volumes}
 
 
@@ -149,7 +151,7 @@ def main():
     snapshot.update(get_security_groups(neutron_client))
     snapshot.update(get_floatinips(nova_client))
     snapshot.update(get_users(keystone_client))
-    snapshot.update(get_tenants(keystone_client))
+    # snapshot.update(get_tenants(keystone_client))
 
     with open(OS_SNAPSHOT_FILE, 'w+') as yaml_file:
         yaml_file.write(yaml.safe_dump(snapshot, default_flow_style=False))
