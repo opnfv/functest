@@ -16,6 +16,24 @@
       "revId": "c87bc545f66fb2e1c66b058cc79265010732392c",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_41bccbbb",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-09T01:38:18Z",
+      "side": 1,
+      "message": "I think our code should support both Mitaka and Newton. For most of the Mitaka environments, they are using Keystone_v2 and for Newton, they are using keystone_v3. The credential retrieve issue is addressed in patch \nhttps://gerrit.opnfv.org/gerrit/#/c/25665/1/functest/utils/openstack_utils.py",
+      "parentUuid": "5ac10518_3e9bde19",
+      "revId": "c87bc545f66fb2e1c66b058cc79265010732392c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
