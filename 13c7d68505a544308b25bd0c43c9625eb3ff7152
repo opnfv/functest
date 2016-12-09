@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_fcb55ecd",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-12-09T09:55:30Z",
+      "side": 1,
+      "message": "This should be made clearer imo.\nYou can do \n`hosts \u003d nova_client.aggregates.get(aggregate_id).hosts`\nbefore the comprehension which will make the comprehension\n`for host in hosts`",
+      "range": {
+        "startLine": 493,
+        "startChar": 0,
+        "endLine": 494,
+        "endChar": 72
+      },
+      "revId": "13c7d68505a544308b25bd0c43c9625eb3ff7152",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
