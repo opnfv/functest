@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_7cb64e3f",
+        "filename": "functest/core/pytest_suite_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-09T07:43:13Z",
+      "side": 1,
+      "message": "I think self.criteria shall be set to PASS here",
+      "revId": "d334e0e1e56d265c95d79c551c315add252e58cd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_bcacb6ee",
+        "filename": "functest/core/pytest_suite_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-09T07:43:13Z",
+      "side": 1,
+      "message": "I am not sure this is needed as the data are already available in the core of the results\nit will be redundant\ndetails could refer to additional stuff such as error logs (like in Tempest) or other metrics but start/stop/criteria are now in the core of the results and not needed in details anymore",
+      "revId": "d334e0e1e56d265c95d79c551c315add252e58cd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
