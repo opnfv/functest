@@ -14,6 +14,8 @@ import os
 import re
 import sys
 import urlparse
+from keystoneauth1 import session
+from keystoneauth1 import loading
 
 from robot.api import ExecutionResult, ResultVisitor
 from robot.errors import RobotError
@@ -146,11 +148,16 @@ class ODLTests(testcase_base.TestcaseBase):
 
     def run(self):
         try:
-            kclient = op_utils.get_keystone_client()
-            keystone_url = kclient.service_catalog.url_for(
-                service_type='identity', endpoint_type='publicURL')
-            neutron_url = kclient.service_catalog.url_for(
-                service_type='network', endpoint_type='publicURL')
+            loader = loading.get_plugin_loader('password')
+            creds = op_utils.get_credentials()
+            auth = loader.load_from_options(**creds)
+            sess = op_utils.get_session()
+            keystone_url = sess.get_endpoint(auth=auth,
+                                             service_type='identity',
+                                             endpoint_type='publicURL')
+            neutron_url = sess.get_endpoint(auth=auth,
+                                            service_type='network',
+                                            endpoint_type='publicURL')
             kwargs = {'keystoneip': urlparse.urlparse(keystone_url).hostname}
             kwargs['neutronip'] = urlparse.urlparse(neutron_url).hostname
             kwargs['odlip'] = kwargs['neutronip']
