@@ -124,6 +124,7 @@ def run_test(test, tier_name):
     logger.info("Running test case '%s'..." % test_name)
     print_separator("=")
     logger.debug("\n%s" % test)
+    source_rc_file()
 
     if GlobalVariables.CLEAN_FLAG:
         generate_os_snapshot()
