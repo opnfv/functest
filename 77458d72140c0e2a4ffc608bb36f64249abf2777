@@ -16,6 +16,24 @@
       "revId": "77458d72140c0e2a4ffc608bb36f64249abf2777",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a17c8f21",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-09T00:31:12Z",
+      "side": 1,
+      "message": "I am taking step by step and don\u0027t want to make a patch very large. In this patch, I only updated the credential retrieve. I am working on another patch to update the client.",
+      "parentUuid": "5ac10518_1e32a210",
+      "revId": "77458d72140c0e2a4ffc608bb36f64249abf2777",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
