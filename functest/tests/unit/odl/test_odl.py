@@ -60,12 +60,8 @@ class ODLTesting(unittest.TestCase):
             return None
 
     @classmethod
-    def _get_fake_keystone_client(cls):
-        kclient = mock.Mock()
-        kclient.service_catalog = mock.Mock()
-        kclient.service_catalog.url_for = mock.Mock(
-            side_effect=cls._fake_url_for)
-        return kclient
+    def _get_fake_endpoint(cls):
+        return cls._fake_url_for
 
     def _get_main_kwargs(self, key=None):
         kwargs = {'odlusername': self._odl_username,
@@ -247,8 +243,8 @@ class ODLTesting(unittest.TestCase):
 
     def _test_run(self, status=testcase_base.TestcaseBase.EX_OK,
                   exception=None, odlip="127.0.0.3", odlwebport="8080"):
-        with mock.patch('functest.utils.openstack_utils.get_keystone_client',
-                        return_value=self._get_fake_keystone_client()):
+        with mock.patch('functest.utils.openstack_utils.get_endpoint',
+                        return_value=self._get_fake_endpoint()):
             if exception:
                 self.test.main = mock.Mock(side_effect=exception)
             else:
@@ -288,8 +284,8 @@ class ODLTesting(unittest.TestCase):
                            odlwebport=self._odl_webport)
 
     def test_run_missing_sdn_controller_ip(self):
-        with mock.patch('functest.utils.openstack_utils.get_keystone_client',
-                        return_value=self._get_fake_keystone_client()):
+        with mock.patch('functest.utils.openstack_utils.get_endpoint',
+                        return_value=self._get_fake_endpoint()):
             ft_constants.CI_INSTALLER_TYPE = None
             ft_constants.SDN_CONTROLLER_IP = None
             self.assertEqual(self.test.run(),
@@ -308,8 +304,8 @@ class ODLTesting(unittest.TestCase):
                        odlip=self._neutron_ip, odlwebport='8282')
 
     def test_run_apex_missing_sdn_controller_ip(self):
-        with mock.patch('functest.utils.openstack_utils.get_keystone_client',
-                        return_value=self._get_fake_keystone_client()):
+        with mock.patch('functest.utils.openstack_utils.get_endpoint',
+                        return_value=self._get_fake_endpoint()):
             ft_constants.CI_INSTALLER_TYPE = "apex"
             ft_constants.SDN_CONTROLLER_IP = None
             self.assertEqual(self.test.run(),
@@ -322,8 +318,8 @@ class ODLTesting(unittest.TestCase):
                        odlip=self._sdn_controller_ip, odlwebport='8181')
 
     def test_run_joid_missing_sdn_controller(self):
-        with mock.patch('functest.utils.openstack_utils.get_keystone_client',
-                        return_value=self._get_fake_keystone_client()):
+        with mock.patch('functest.utils.openstack_utils.get_endpoint',
+                        return_value=self._get_fake_endpoint()):
             ft_constants.CI_INSTALLER_TYPE = "joid"
             ft_constants.SDN_CONTROLLER = None
             self.assertEqual(self.test.run(),
