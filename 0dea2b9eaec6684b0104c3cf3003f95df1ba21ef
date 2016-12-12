@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_edf846e7",
+        "filename": "functest/opnfv_tests/features/odl_sfc.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-12T12:27:11Z",
+      "side": 1,
+      "message": "The module has been refactored into testcase_base",
+      "revId": "0dea2b9eaec6684b0104c3cf3003f95df1ba21ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8ddd0273",
+        "filename": "functest/opnfv_tests/features/odl_sfc.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-12T12:27:11Z",
+      "side": 1,
+      "message": "The class name has been refactored into TestcaseBase",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "0dea2b9eaec6684b0104c3cf3003f95df1ba21ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_adda3e76",
+        "filename": "functest/opnfv_tests/features/odl_sfc.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-12T12:27:11Z",
+      "side": 1,
+      "message": "Do we need to support SKIP status? Per previous discussion, there is no testcase that is as SKIP.",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "0dea2b9eaec6684b0104c3cf3003f95df1ba21ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_4de71a41",
+        "filename": "functest/opnfv_tests/features/odl_sfc.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-12T12:27:11Z",
+      "side": 1,
+      "message": "The class name has been refactored into TestcaseBase",
+      "range": {
+        "startLine": 74,
+        "startChar": 21,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "0dea2b9eaec6684b0104c3cf3003f95df1ba21ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_6de4563b",
+        "filename": "functest/opnfv_tests/features/odl_sfc.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-12T12:27:11Z",
+      "side": 1,
+      "message": "The class name has been refactored into TestcaseBase",
+      "range": {
+        "startLine": 79,
+        "startChar": 17,
+        "endLine": 79,
+        "endChar": 44
+      },
+      "revId": "0dea2b9eaec6684b0104c3cf3003f95df1ba21ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
