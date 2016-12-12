@@ -88,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_4d6cfa9c",
+        "filename": "functest/opnfv_tests/features/odl_sfc.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-12T13:31:04Z",
+      "side": 1,
+      "message": "in line with helen, status SKIP to be removed\nit is either PASS or FAIL\nto disable the case \u003d\u003e testcases.yaml",
+      "parentUuid": "5ac10518_adda3e76",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "0dea2b9eaec6684b0104c3cf3003f95df1ba21ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_4de71a41",
         "filename": "functest/opnfv_tests/features/odl_sfc.py",
         "patchSetId": 7
