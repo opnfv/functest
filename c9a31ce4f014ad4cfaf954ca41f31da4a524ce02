@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_52bedb00",
+        "filename": "functest/utils/config.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-12T03:59:28Z",
+      "side": 1,
+      "message": "How about leveraging the logging instead of print?",
+      "range": {
+        "startLine": 22,
+        "startChar": 18,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_b2c13f82",
+        "filename": "functest/utils/constants.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-12T03:59:28Z",
+      "side": 1,
+      "message": "There are some cases that env variables will be updated during the process. e.g. OS_** parameters will be updated once RC file is sourced. In this case, const.OS_** should be updated.\nHow about adding functions to support this?",
+      "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
