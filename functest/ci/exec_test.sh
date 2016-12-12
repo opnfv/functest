@@ -147,11 +147,7 @@ function run_test(){
                 -c ${FUNCTEST_TEST_DIR}/openstack/tempest/tempest_multisite.conf
         ;;
         "odl-sfc")
-            ODL_SFC_DIR=${REPOS_DIR}/sfc/tests/functest/odl-sfc
-            # pass FUNCTEST_REPO_DIR inside prepare_odl_sfc.bash
-            FUNCTEST_REPO_DIR=${FUNCTEST_REPO_DIR} python ${ODL_SFC_DIR}/prepare_odl_sfc.py || exit $?
-            source ${ODL_SFC_DIR}/tackerc
-            python ${ODL_SFC_DIR}/sfc.py $report
+            python ${ODL_SFC_DIR}/run_tests.py $report
         ;;
         *)
             echo "The test case '${test_name}' does not exist."
