@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_4d55dac4",
+        "filename": "functest/opnfv_tests/features/odl_sfc.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5579
+      },
+      "writtenOn": "2016-12-12T13:06:05Z",
+      "side": 1,
+      "message": "Can this be moved into a configuration file?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 69
+      },
+      "revId": "0dea2b9eaec6684b0104c3cf3003f95df1ba21ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_adda3e76",
         "filename": "functest/opnfv_tests/features/odl_sfc.py",
         "patchSetId": 7
