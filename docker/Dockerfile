@@ -43,6 +43,7 @@ ARG FUNCTEST_DATA_DIR=${FUNCTEST_BASE_DIR}/data
 ARG FUNCTEST_RESULTS_DIR=${FUNCTEST_BASE_DIR}/results
 ARG FUNCTEST_REPO_DIR=${REPOS_DIR}/functest
 ARG FUNCTEST_TEST_DIR=${FUNCTEST_REPO_DIR}/functest/opnfv_tests
+ARG RELENG_MODULE_DIR=${REPOS_DIR}/releng/modules
 
 # Environment variables
 ENV HOME /home/opnfv
@@ -115,6 +116,9 @@ RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_
 
 RUN cd ${FUNCTEST_REPO_DIR} \
     && pip install -r requirements.txt \
+    && pip install .
+
+RUN cd ${RELENG_MODULE_DIR} \
     && pip install .
 
 RUN pip install -r ${REPOS_DIR}/rally/requirements.txt
