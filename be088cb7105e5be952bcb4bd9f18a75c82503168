@@ -1,0 +1,10 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Romanos Skiadas <rski@intracom-telecom.com>
+Code-Review+1: Manuel Buil <manuelbuil87@gmail.com>
+Code-Review+1: vijayendra radhakrishna <vradhakrishna@mvista.com>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Tue, 13 Dec 2016 12:21:43 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/25675
+Project: functest
+Branch: refs/heads/master
