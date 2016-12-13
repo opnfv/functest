@@ -393,13 +393,13 @@ def create_floating_ip(neutron_client):
     return {'fip_addr': fip_addr, 'fip_id': fip_id}
 
 
-def add_floating_ip(nova_client, server_id, floatingip_id):
+def add_floating_ip(nova_client, server_id, floatingip_addr):
     try:
-        nova_client.servers.add_floating_ip(server_id, floatingip_id)
+        nova_client.servers.add_floating_ip(server_id, floatingip_addr)
         return True
     except Exception, e:
         logger.error("Error [add_floating_ip(nova_client, '%s', '%s')]: %s"
-                     % (server_id, floatingip_id, e))
+                     % (server_id, floatingip_addr, e))
         return False
 
 
