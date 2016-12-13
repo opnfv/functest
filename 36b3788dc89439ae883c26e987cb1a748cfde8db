@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_c8069720",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5579
+      },
+      "writtenOn": "2016-12-13T14:37:54Z",
+      "side": 1,
+      "message": "where\u0027s OpenDaylightSFC now?",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 44
+      },
+      "revId": "36b3788dc89439ae883c26e987cb1a748cfde8db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
