@@ -21,6 +21,9 @@ import requests
 import yaml
 from git import Repo
 
+import time
+import functools
+
 import functest.utils.functest_logger as ft_logger
 
 logger = ft_logger.Logger("functest_utils").getLogger()
@@ -431,3 +434,17 @@ def get_functest_yaml():
 
 def print_separator():
     logger.info("==============================================")
+
+
+def timethis(func):
+    """Measure the time it takes for a function to complete"""
+    @functools.wraps(func)
+    def timed(*args, **kwargs):
+        ts = time.time()
+        result = func(*args, **kwargs)
+        te = time.time()
+        elapsed = '{0}'.format(te - ts)
+        logger.info('{f}(*{a}, **{kw}) took: {t} sec'.format(
+            f=func.__name__, a=args, kw=kwargs, t=elapsed))
+        return result, elapsed
+    return timed
