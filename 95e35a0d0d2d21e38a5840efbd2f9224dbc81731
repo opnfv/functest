@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_cbf2119a",
+        "filename": "docs/internship/testapi_evolution/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-13T20:01:39Z",
+      "side": 1,
+      "message": "Test API evolution",
+      "revId": "95e35a0d0d2d21e38a5840efbd2f9224dbc81731",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_2bf4f585",
+        "filename": "docs/internship/unit_tests/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-13T20:01:39Z",
+      "side": 1,
+      "message": "Unit tests",
+      "revId": "95e35a0d0d2d21e38a5840efbd2f9224dbc81731",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8b7ac9ef",
+        "filename": "docs/internship/vnf_catalog/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-13T20:01:39Z",
+      "side": 1,
+      "message": "is this right?I guess Kumar is not an \"entity\" who can have legal copyrights :)",
+      "revId": "95e35a0d0d2d21e38a5840efbd2f9224dbc81731",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_0bf9f97f",
+        "filename": "docs/internship/vnf_catalog/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-13T20:01:39Z",
+      "side": 1,
+      "message": "I would rather say \"We\" :)",
+      "revId": "95e35a0d0d2d21e38a5840efbd2f9224dbc81731",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_ebed8db8",
+        "filename": "docs/internship/vnf_catalog/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-13T20:01:39Z",
+      "side": 1,
+      "message": "the \"list\" line breaks if you use a new line. Not sure how to fix it without making the line longer.\nhttp://artifacts.opnfv.org/functest/review/25903/internship_vnf_catalog/index.html#curation-phase",
+      "revId": "95e35a0d0d2d21e38a5840efbd2f9224dbc81731",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_ab7d45e9",
+        "filename": "docs/internship/vnf_catalog/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-13T20:01:39Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we be more objective? This sentence looks like a dissertation. Is that the purpose of this doc?",
+      "revId": "95e35a0d0d2d21e38a5840efbd2f9224dbc81731",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
