@@ -16,6 +16,24 @@
       "revId": "91e01cd5f5579d6abcd134955e7a6be54ee1921f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e8ecb3f5",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2016-12-13T12:14:02Z",
+      "side": 1,
+      "message": "Yeah, this calls the floating_ips api instead of servers",
+      "parentUuid": "5ac10518_e81593e5",
+      "revId": "91e01cd5f5579d6abcd134955e7a6be54ee1921f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
