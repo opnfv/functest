@@ -142,7 +142,7 @@ RUN curl -L https://get.rvm.io | bash -s stable
 RUN git clone --depth 1 https://gerrit.cablelabs.com/snaps-provisioning ${REPOS_DIR}/snaps
 RUN pip install -e ${REPOS_DIR}/snaps/
 
-RUN /bin/bash -c ". ${REPOS_DIR}/sfc/tests/functest/odl-sfc/tacker_client_install.sh"
+RUN /bin/bash -c ". ${REPOS_DIR}/sfc/tests/functest/odl-sfc/setup_scripts/tacker_client_install.sh"
 RUN cd ${REPOS_DIR}/bgpvpn && pip install .
 #RUN cd ${REPOS_DIR}/kingbird && pip install -e .
 RUN cd ${REPOS_DIR}/moon/moonclient/ && python setup.py install
