@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_e5185e77",
+        "filename": "functest/opnfv_tests/features/odl_sfc.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-12-13T05:03:53Z",
+      "side": 1,
+      "message": "Does everyone agree on this?",
+      "parentUuid": "5ac10518_edf846e7",
+      "revId": "0dea2b9eaec6684b0104c3cf3003f95df1ba21ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_8ddd0273",
         "filename": "functest/opnfv_tests/features/odl_sfc.py",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2016-12-12T12:27:11Z",
       "side": 1,
       "message": "The class name has been refactored into TestcaseBase",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "0dea2b9eaec6684b0104c3cf3003f95df1ba21ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a52a567c",
+        "filename": "functest/opnfv_tests/features/odl_sfc.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-12-13T05:03:53Z",
+      "side": 1,
+      "message": "same question",
+      "parentUuid": "5ac10518_8ddd0273",
       "range": {
         "startLine": 23,
         "startChar": 22,
@@ -100,6 +142,30 @@
       "side": 1,
       "message": "in line with helen, status SKIP to be removed\nit is either PASS or FAIL\nto disable the case \u003d\u003e testcases.yaml",
       "parentUuid": "5ac10518_adda3e76",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "0dea2b9eaec6684b0104c3cf3003f95df1ba21ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_85271ab6",
+        "filename": "functest/opnfv_tests/features/odl_sfc.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-12-13T05:03:53Z",
+      "side": 1,
+      "message": "The",
+      "parentUuid": "5ac10518_4d6cfa9c",
       "range": {
         "startLine": 47,
         "startChar": 7,
