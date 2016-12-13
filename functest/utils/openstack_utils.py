@@ -245,6 +245,45 @@ def get_flavor_id_by_ram_range(nova_client, min_ram, max_ram):
     return id
 
 
+def get_aggregates(nova_client):
+    try:
+        aggregates = nova_client.aggregates.list()
+        return aggregates
+    except Exception, e:
+        logger.error("Error [get_aggregates(nova_client)]: %s" % e)
+        return None
+
+
+def get_aggregate_id(nova_client, aggregate_name):
+    try:
+        aggregates = get_aggregates(nova_client)
+        _id = [ag.id for ag in aggregates if ag.name == aggregate_name][0]
+        return _id
+    except Exception, e:
+        logger.error("Error [get_aggregate_id(nova_client, %s)]:"
+                     " %s" % (aggregate_name, e))
+        return None
+
+
+def get_availability_zones(nova_client):
+    try:
+        availability_zones = nova_client.availability_zones.list()
+        return availability_zones
+    except Exception, e:
+        logger.error("Error [get_availability_zones(nova_client)]: %s" % e)
+        return None
+
+
+def get_availability_zone_names(nova_client):
+    try:
+        az_names = [az.zoneName for az in get_availability_zones(nova_client)]
+        return az_names
+    except Exception, e:
+        logger.error("Error [get_availability_zone_names(nova_client)]:"
+                     " %s" % e)
+        return None
+
+
 def create_flavor(nova_client, flavor_name, ram, disk, vcpus, public=True):
     try:
         flavor = nova_client.flavors.create(
@@ -305,6 +344,40 @@ def get_hypervisors(nova_client):
         return nodes
     except Exception, e:
         logger.error("Error [get_hypervisors(nova_client)]: %s" % e)
+        return None
+
+
+def create_aggregate(nova_client, aggregate_name, av_zone):
+    try:
+        nova_client.aggregates.create(aggregate_name, av_zone)
+        return True
+    except Exception, e:
+        logger.error("Error [create_aggregate(nova_client, %s, %s)]: %s"
+                     % (aggregate_name, av_zone, e))
+        return None
+
+
+def add_host_to_aggregate(nova_client, aggregate_name, compute_host):
+    try:
+        aggregate_id = get_aggregate_id(nova_client, aggregate_name)
+        nova_client.aggregates.add_host(aggregate_id, compute_host)
+        return True
+    except Exception, e:
+        logger.error("Error [add_host_to_aggregate(nova_client, %s, %s)]: %s"
+                     % (aggregate_name, compute_host, e))
+        return None
+
+
+def create_aggregate_with_host(
+        nova_client, aggregate_name, av_zone, compute_host):
+    try:
+        create_aggregate(nova_client, aggregate_name, av_zone)
+        add_host_to_aggregate(nova_client, aggregate_name, compute_host)
+        return True
+    except Exception, e:
+        logger.error("Error [create_aggregate_with_host("
+                     "nova_client, %s, %s, %s)]: %s"
+                     % (aggregate_name, av_zone, compute_host, e))
         return None
 
 
@@ -427,6 +500,36 @@ def delete_floating_ip(nova_client, floatingip_id):
     except Exception, e:
         logger.error("Error [delete_floating_ip(nova_client, '%s')]: %s"
                      % (floatingip_id, e))
+        return False
+
+
+def remove_host_from_aggregate(nova_client, aggregate_name, compute_host):
+    try:
+        aggregate_id = get_aggregate_id(nova_client, aggregate_name)
+        nova_client.aggregates.remove_host(aggregate_id, compute_host)
+        return True
+    except Exception, e:
+        logger.error("Error [remove_host_from_aggregate(nova_client, %s, %s)]:"
+                     " %s" % (aggregate_name, compute_host, e))
+        return False
+
+
+def remove_hosts_from_aggregate(nova_client, aggregate_name):
+    aggregate_id = get_aggregate_id(nova_client, aggregate_name)
+    hosts = nova_client.aggregates.get(aggregate_id).hosts
+    assert(
+        all(remove_host_from_aggregate(nova_client, aggregate_name, host)
+            for host in hosts))
+
+
+def delete_aggregate(nova_client, aggregate_name):
+    try:
+        remove_hosts_from_aggregate(nova_client, aggregate_name)
+        nova_client.aggregates.delete(aggregate_name)
+        return True
+    except Exception, e:
+        logger.error("Error [delete_aggregate(nova_client, %s)]: %s"
+                     % (aggregate_name, e))
         return False
 
 
