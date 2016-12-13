@@ -271,7 +271,7 @@ tiers:
                     module: 'functest.opnfv_tests.vnf.rnc.parser'
                     class: 'Parser'
     -
-        name: openstack
+        name: components
         order: 3
         ci_loop: 'weekly'
         description : >-
