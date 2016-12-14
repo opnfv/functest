@@ -67,7 +67,6 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: ''
-
             -
                 name: rally_sanity
                 criteria: 'success_rate == 100%'
@@ -253,6 +252,9 @@ tiers:
                 dependencies:
                     installer: '(apex)|(fuel)'
                     scenario: 'odl_l2-sfc'
+                run:
+                    module: 'functest.opnfv_tests.features.odl_sfc'
+                    class: 'OpenDaylightSFC'
             -
                 name: onos_sfc
                 criteria: 'status == "PASS"'

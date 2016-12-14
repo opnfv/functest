@@ -61,17 +61,7 @@ function odl_tests(){
     fi
 }
 
-function sfc_prepare(){
-    ids=($(neutron security-group-list|grep default|awk '{print $2}'))
-    for id in ${ids[@]}; do
-        if ! neutron security-group-show $id|grep "22/tcp" &>/dev/null; then
-            neutron security-group-rule-create --protocol tcp \
-                --port-range-min 22 --port-range-max 22 --direction ingress $id
-            neutron security-group-rule-create --protocol tcp \
-                --port-range-min 22 --port-range-max 22 --direction egress $id
-        fi
-    done
-}
+
 
 function run_test(){
     test_name=$1
@@ -146,13 +136,6 @@ function run_test(){
                 $clean_flag -s -m feature_multisite $report \
                 -c ${FUNCTEST_TEST_DIR}/openstack/tempest/tempest_multisite.conf
         ;;
-        "odl-sfc")
-            ODL_SFC_DIR=${REPOS_DIR}/sfc/tests/functest/odl-sfc
-            # pass FUNCTEST_REPO_DIR inside prepare_odl_sfc.bash
-            FUNCTEST_REPO_DIR=${FUNCTEST_REPO_DIR} python ${ODL_SFC_DIR}/prepare_odl_sfc.py || exit $?
-            source ${ODL_SFC_DIR}/tackerc
-            python ${ODL_SFC_DIR}/sfc.py $report
-        ;;
         *)
             echo "The test case '${test_name}' does not exist."
             exit 1
@@ -197,10 +180,6 @@ done
 echo "Sourcing Credentials ${creds} to run the test.."
 source ${creds}
 
-# ODL Boron workaround to create additional flow rules to allow port 22 TCP
-if [[ $DEPLOY_SCENARIO == *"odl_l2-sfc"* ]]; then
-    sfc_prepare
-fi
 
 # Run test
 run_test $TEST
