@@ -22,6 +22,7 @@ class ConnectionCheck(PyTestSuiteRunner):
         super(ConnectionCheck, self).__init__()
 
         self.suite = unittest.TestSuite()
+        self.case_name = "connection_check"
         creds_file = ft_utils.get_functest_config('general.openstack.creds')
         use_key = ft_utils.get_functest_config('snaps.use_keystone')
         ext_net_name = snaps_utils.get_ext_net_name()

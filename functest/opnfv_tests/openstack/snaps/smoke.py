@@ -23,6 +23,7 @@ class SnapsSmoke(PyTestSuiteRunner):
         super(SnapsSmoke, self).__init__()
 
         self.suite = unittest.TestSuite()
+        self.case_name = "snaps_smoke"
         creds_file = ft_utils.get_functest_config('general.openstack.creds')
         use_key = ft_utils.get_functest_config('snaps.use_keystone')
         use_fip = ft_utils.get_functest_config('snaps.use_floating_ips')
