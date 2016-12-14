@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_cef1bfce",
+        "filename": "docs/internship/vnf_catalog/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-14T07:22:51Z",
+      "side": 1,
+      "message": "general comment for Kumar to use impersonnal way to describe the work for a final report (important for a PHD...:)\nfor a draft the main idea is to keep track of the goals",
+      "parentUuid": "5ac10518_0bf9f97f",
+      "revId": "95e35a0d0d2d21e38a5840efbd2f9224dbc81731",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_ebed8db8",
         "filename": "docs/internship/vnf_catalog/index.rst",
         "patchSetId": 3
@@ -87,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_2ee3a306",
+        "filename": "docs/internship/vnf_catalog/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-14T07:22:51Z",
+      "side": 1,
+      "message": "yes maybe an issue here\nrecommendation \u003d\u003e simplify the statement and the use of bullet\nit helps for text clarity",
+      "parentUuid": "5ac10518_ebed8db8",
+      "revId": "95e35a0d0d2d21e38a5840efbd2f9224dbc81731",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_ab7d45e9",
         "filename": "docs/internship/vnf_catalog/index.rst",
         "patchSetId": 3
@@ -98,6 +134,24 @@
       "writtenOn": "2016-12-13T20:01:39Z",
       "side": 1,
       "message": "Shouldn\u0027t we be more objective? This sentence looks like a dissertation. Is that the purpose of this doc?",
+      "revId": "95e35a0d0d2d21e38a5840efbd2f9224dbc81731",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_4ede2f41",
+        "filename": "docs/internship/vnf_catalog/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-14T07:22:51Z",
+      "side": 1,
+      "message": "I will let Kumar change :)",
+      "parentUuid": "5ac10518_ab7d45e9",
       "revId": "95e35a0d0d2d21e38a5840efbd2f9224dbc81731",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
