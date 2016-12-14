@@ -104,6 +104,23 @@
       "revId": "3e3c96b2aa15d7757f281ce00518a67e2a1225a9",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_39e3ef06",
+        "filename": "functest/tests/unit/odl/test_odl.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2016-12-14T12:28:12Z",
+      "side": 1,
+      "message": "I disagree with this modification. Here importing ft_constants breaks UT (as yaml is not set in env) and obliges to set lot of stuff which ODL UT doesn\u0027t care.",
+      "revId": "3e3c96b2aa15d7757f281ce00518a67e2a1225a9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
