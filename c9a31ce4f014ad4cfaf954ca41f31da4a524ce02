@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_0e034743",
+        "filename": "functest/utils/config.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-14T09:04:21Z",
+      "side": 1,
+      "message": "print here is only introduced for developing purpose. If we add log here, it will print very attribute, then the log will flood, I don\u0027t think it is a good idea, I will delete print later",
+      "parentUuid": "5ac10518_52bedb00",
+      "range": {
+        "startLine": 22,
+        "startChar": 18,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_f246e722",
         "filename": "functest/utils/constants.py",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2016-12-12T04:09:54Z",
       "side": 1,
       "message": "How about naming it as Constants?",
+      "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_2ed723c1",
+        "filename": "functest/utils/constants.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-14T09:04:21Z",
+      "side": 1,
+      "message": "always stuck with naming like Constant/Constants/Const, I choose Constants at the first time, then change it to Constant, since you also think Constants is better, I will return to Constants :)",
+      "parentUuid": "5ac10518_f246e722",
       "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_cee53fa9",
+        "filename": "functest/utils/constants.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-14T09:04:21Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t take this case into consideration, I will look into this problem as soon as possible",
+      "parentUuid": "5ac10518_924be32a",
+      "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_d2416b0c",
         "filename": "functest/utils/constants.py",
         "patchSetId": 1
@@ -88,6 +148,30 @@
       "writtenOn": "2016-12-12T04:09:54Z",
       "side": 1,
       "message": "As the process of reading the env variables is a bit implicit, i.e. it\u0027s hard to know how many env variables are there and what their values are, a function is needed to show the variables and values.",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 46
+      },
+      "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8eef3787",
+        "filename": "functest/utils/constants.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-14T09:04:21Z",
+      "side": 1,
+      "message": "Suggestion accepted, I will add it later",
+      "parentUuid": "5ac10518_d2416b0c",
       "range": {
         "startLine": 16,
         "startChar": 4,
