@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_6ba3dd4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-14T19:31:51Z",
+      "side": 1,
+      "message": "s/Jira/JIRA",
+      "revId": "1ad405d88c004b54c55b8efacd710e022eeaac28",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
