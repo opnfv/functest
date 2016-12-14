@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_4e838f04",
+        "filename": "docs/internship/security_group/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-14T07:35:01Z",
+      "side": 1,
+      "message": "I would put as \u0027History\u0027 to make it consistent",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 15
+      },
+      "revId": "1657e4ac4f62d876b857fdc48254382c5ec6e727",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_6eaf6b95",
+        "filename": "docs/internship/security_group/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-14T07:35:01Z",
+      "side": 1,
+      "message": "I would put February :-)",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "1657e4ac4f62d876b857fdc48254382c5ec6e727",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
