@@ -146,6 +146,9 @@ RUN pip install -e ${REPOS_DIR}/snaps/
 RUN /bin/bash -c ". ${REPOS_DIR}/sfc/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
 RUN cd ${REPOS_DIR}/sfc/tests && pip install .
 
+# SDNVPN integration
+RUN cd ${REPOS_DIR}/sdnvpn && pip install .
+
 RUN cd ${REPOS_DIR}/bgpvpn && pip install .
 #RUN cd ${REPOS_DIR}/kingbird && pip install -e .
 RUN cd ${REPOS_DIR}/moon/moonclient/ && python setup.py install
