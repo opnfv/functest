@@ -192,8 +192,7 @@ class ODLTesting(unittest.TestCase):
     def test_main(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'parse_results',
-                                  return_value="PASS"):
+                mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
     @mock.patch('os.remove')
@@ -202,8 +201,7 @@ class ODLTesting(unittest.TestCase):
     def test_main_makedirs_oserror17(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'parse_results',
-                                  return_value="PASS"):
+                mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
     @mock.patch('os.remove')
@@ -212,8 +210,7 @@ class ODLTesting(unittest.TestCase):
     def test_main_testcases_in_failure(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'parse_results',
-                                  return_value="PASS"):
+                mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
     @mock.patch('os.remove', side_effect=OSError)
@@ -222,8 +219,7 @@ class ODLTesting(unittest.TestCase):
     def test_main_remove_oserror(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'parse_results',
-                                  return_value="PASS"):
+                mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
     def _test_run_missing_env_var(self, var):
