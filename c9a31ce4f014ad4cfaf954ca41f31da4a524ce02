@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_fffea7ad",
+        "filename": "functest/utils/constants.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-15T09:03:14Z",
+      "side": 1,
+      "message": "@Helen, I looked into this issue right now, it is already supported by Python itself. When an attribute needs to be changed, just do \u0027Const.need_change_attr\u003dnew_value\u0027; When adding one, just: \u0027Const.new_attr\u003dvalue\u0027; When it comes to delete, just \u0027del Const.deleted_attr\u0027",
+      "parentUuid": "5ac10518_924be32a",
+      "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_d2416b0c",
         "filename": "functest/utils/constants.py",
         "patchSetId": 1
@@ -171,6 +189,30 @@
       "writtenOn": "2016-12-14T09:04:21Z",
       "side": 1,
       "message": "Suggestion accepted, I will add it later",
+      "parentUuid": "5ac10518_d2416b0c",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 46
+      },
+      "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_bf301f9f",
+        "filename": "functest/utils/constants.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-15T09:03:14Z",
+      "side": 1,
+      "message": "Python already provide the function by using Const.__dict__, it will output all the attribute and values in the format of dict",
       "parentUuid": "5ac10518_d2416b0c",
       "range": {
         "startLine": 16,
