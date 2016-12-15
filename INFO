@@ -3,14 +3,15 @@ Project Creation Date: January 20, 2015
 Project Category: Integration & Testing
 Lifecycle State: Incubation
 Primary Contact: Jose Lausuch (jose.lausuch@ericsson.com)
-Project Lead: Jose lausuch (jose.lausuch@ericsson.com) 
+Project Lead: Jose lausuch (jose.lausuch@ericsson.com)
 Jira Project Name: Base System Functionality Testing Project
 Jira Project Prefix: FUNCTEST
 Mailing list tag: [functest]
-IRC: Server:freenode.net Channel:#opnfv-testperf
+IRC: Server:freenode.net Channel:#opnfv-functest
 Repository: functest
 
 Committers:
+yaohelan@huawei.com
 serena.feng.711@gmail.com
 ollivier.cedric@gmail.com
 jose.lausuch@ericsson.com
