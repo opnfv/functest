@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: George Paraskevopoulos <geopar@intracom-telecom.com>
+Code-Review+1: Jose Lausuch <jose.lausuch@ericsson.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Thu, 15 Dec 2016 14:20:08 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/25959
+Project: functest
+Branch: refs/heads/master
