@@ -335,10 +335,6 @@ The API can described as follows. For detailed information, please go to
 
  Authentication: opnfv/api@opnfv
 
-Please notes that POST/DELETE/PUT operations for test or study purpose via
-swagger website is not allowed, because it will change the real data in
-the database.
-
 Version:
 
  +--------+--------------------------+-----------------------------------------+
@@ -503,16 +499,38 @@ Scenarios:
 
 
 The code of the API is hosted in the releng repository `[6]`_.
+The static documentation of the API can be found at `[17]`_.
 The test API has been dockerized and may be installed locally in your
 lab. See `[15]`_ for details.
 
 The deployment of the test API has been automated.
 A jenkins job manages:
   * the unit tests of the test api
-  * the cration of a new docker file
+  * the creation of a new docker file
   * the deployment of the new test api
   * the archive of the old test api
   * the backup of the Mongo DB
+
+Test API Authorization
+~~~~~~~~~~~~~~~~~~~~~~
+
+PUT/DELETE/POST operations of the testapi now require token based authorization. The token needs
+to be added in the request using a header 'X-Auth-Token' for access to the database.
+
+e.g::
+    headers['X-Auth-Token']
+
+The value of the header i.e the token can be accessed in the jenkins environment variable *TestApiToken*.
+The token value is added as a masked password.
+
+.. code-block:: python
+    
+    headers['X-Auth-Token'] = os.environ.get('TestApiToken')
+
+The above example is in Python. Token based authentication has been added so that only ci pods jenkins job
+can have access to the database.
+
+Please note that currently token authorization is implemented but is not yet enabled.
 
   Automatic reporting
   ===================
@@ -959,6 +977,8 @@ _`[14]`: https://git.opnfv.org/cgit/releng/tree/jjb/functest/functest-daily.sh
 _`[15]`: https://git.opnfv.org/cgit/releng/tree/utils/test/result_collection_api/README.rst
 
 _`[16]`: https://git.opnfv.org/cgit/releng/tree/utils/test/scripts/mongo_to_elasticsearch.py
+
+_`[17]`: http://artifacts.opnfv.org/releng/docs/testapi.html
 
 OPNFV main site: http://www.opnfv.org
 
