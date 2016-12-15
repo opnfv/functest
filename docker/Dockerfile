@@ -144,7 +144,7 @@ RUN pip install -e ${REPOS_DIR}/snaps/
 
 # SFC integration
 RUN /bin/bash -c ". ${REPOS_DIR}/sfc/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
-RUN cd ${REPOS_DIR}/sfc/tests && pip install .
+RUN cd ${REPOS_DIR}/sfc && pip install .
 
 RUN cd ${REPOS_DIR}/bgpvpn && pip install .
 #RUN cd ${REPOS_DIR}/kingbird && pip install -e .
