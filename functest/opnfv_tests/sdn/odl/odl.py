@@ -60,6 +60,7 @@ class ODLTests(testcase_base.TestcaseBase):
     logger = ft_logger.Logger("opendaylight").getLogger()
 
     def __init__(self):
+        testcase_base.TestcaseBase.__init__(self)
         self.case_name = "odl"
 
     @classmethod
@@ -89,7 +90,6 @@ class ODLTests(testcase_base.TestcaseBase):
         self.details = {}
         self.details['description'] = result.suite.name
         self.details['tests'] = visitor.get_data()
-        return self.criteria
 
     def main(self, **kwargs):
         dirs = [self.basic_suite_dir, self.neutron_suite_dir]
@@ -128,10 +128,8 @@ class ODLTests(testcase_base.TestcaseBase):
                 self.logger.info("\n" + stdout.read())
             self.logger.info("ODL results were successfully generated")
             try:
-                test_res = self.parse_results()
+                self.parse_results()
                 self.logger.info("ODL results were successfully parsed")
-                if test_res is not "PASS":
-                    return self.EX_RUN_ERROR
             except RobotError as e:
                 self.logger.error("Run tests before publishing: %s" %
                                   e.message)

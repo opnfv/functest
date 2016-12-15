@@ -24,7 +24,7 @@ class TestcaseBaseTesting(unittest.TestCase):
         self.test.case_name = "base"
         self.test.start_time = "1"
         self.test.stop_time = "2"
-        self.test.criteria = "100"
+        self.test.criteria = "PASS"
         self.test.details = {"Hello": "World"}
 
     def test_run_unimplemented(self):
@@ -81,6 +81,21 @@ class TestcaseBaseTesting(unittest.TestCase):
         mock_function.assert_called_once_with(
             self.test.project, self.test.case_name, self.test.start_time,
             self.test.stop_time, self.test.criteria, self.test.details)
+
+    def test_check_criteria_missing(self):
+        self.test.criteria = None
+        self.assertEqual(self.test.check_criteria(),
+                         testcase_base.TestcaseBase.EX_TESTCASE_FAILED)
+
+    def test_check_criteria_failed(self):
+        self.test.criteria = 'FAILED'
+        self.assertEqual(self.test.check_criteria(),
+                         testcase_base.TestcaseBase.EX_TESTCASE_FAILED)
+
+    def test_check_criteria_pass(self):
+        self.test.criteria = 'PASS'
+        self.assertEqual(self.test.check_criteria(),
+                         testcase_base.TestcaseBase.EX_OK)
 
 
 if __name__ == "__main__":
