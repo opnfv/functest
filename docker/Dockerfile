@@ -125,7 +125,7 @@ RUN pip install -r ${REPOS_DIR}/rally/requirements.txt
 RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
 
 RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
-    -not -path *unit_tests* |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755 \
+    -not -path "*tests/unit*" |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755 \
     && find ${FUNCTEST_REPO_DIR} -name "*.sh" |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
 
 RUN /bin/bash ${REPOS_DIR}/parser/tests/parser_install.sh ${REPOS_DIR}
