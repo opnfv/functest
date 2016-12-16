@@ -21,7 +21,7 @@ logger = ft_logger.Logger("tacker_utils").getLogger()
 
 
 def get_tacker_client():
-    creds_tacker = os_utils.get_credentials('tacker')
+    creds_tacker = os_utils.get_credentials()
     return tackerclient.Client(**creds_tacker)
 
 
