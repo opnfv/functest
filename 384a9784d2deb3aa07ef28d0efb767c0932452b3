@@ -70,6 +70,24 @@
       "revId": "384a9784d2deb3aa07ef28d0efb767c0932452b3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_ce3bfa9a",
+        "filename": "functest/utils/openstack_tacker.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-16T08:55:38Z",
+      "side": 1,
+      "message": "Upgrading to upstream sounds awesome as it will make the tackerclient back to the main road again.\n\nI would not agree with deleting the line as it will break this function. I would prefer to leave it here as is.\n\nOnce we decide to enable tacker, a separate patch is needed to handle the case.",
+      "parentUuid": "5ac10518_8ece52b3",
+      "revId": "384a9784d2deb3aa07ef28d0efb767c0932452b3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
