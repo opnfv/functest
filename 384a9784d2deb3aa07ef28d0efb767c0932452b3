@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_ce03fa0b",
+        "filename": "functest/utils/openstack_tacker.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-16T07:17:12Z",
+      "side": 1,
+      "message": "hmmm was it not specific to tacker? same creds?",
+      "revId": "384a9784d2deb3aa07ef28d0efb767c0932452b3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
