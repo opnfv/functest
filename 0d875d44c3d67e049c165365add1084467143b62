@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_da065920",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-16T07:15:19Z",
+      "side": 1,
+      "message": "maybe to be adapted later / jenkins plugin for multi state exit\nbut until it is clear, it is a good way to please jenkins according to Coloraod behavior",
+      "revId": "0d875d44c3d67e049c165365add1084467143b62",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
