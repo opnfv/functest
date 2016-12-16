@@ -16,6 +16,24 @@
       "revId": "384a9784d2deb3aa07ef28d0efb767c0932452b3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_0e8ca27e",
+        "filename": "functest/utils/openstack_tacker.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5579
+      },
+      "writtenOn": "2016-12-16T08:08:36Z",
+      "side": 1,
+      "message": "Correct. To use tacker (at least trozet\u0027s fork) we need to source a modified credentials file with different TENANT_NAME, ENDPOINT_URL etc.\nThe way we handle it in the SFC testcase is we fetch the new credentials and override the openrc. This will break tacker operations.",
+      "parentUuid": "5ac10518_ce03fa0b",
+      "revId": "384a9784d2deb3aa07ef28d0efb767c0932452b3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
