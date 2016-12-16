@@ -15,9 +15,8 @@ import unittest
 
 from robot.errors import RobotError
 
-import functest.core.testcase_base as testcase_base
+from functest.core import testcase_base
 from functest.opnfv_tests.sdn.odl import odl
-from functest.utils import functest_constants as ft_constants
 
 
 class ODLTesting(unittest.TestCase):
@@ -36,9 +35,12 @@ class ODLTesting(unittest.TestCase):
     _odl_password = "admin"
 
     def setUp(self):
-        ft_constants.OS_USERNAME = self._os_username
-        ft_constants.OS_PASSWORD = self._os_password
-        ft_constants.OS_TENANT_NAME = self._os_tenantname
+        for var in ("INSTALLER_TYPE", "SDN_CONTROLLER", "SDN_CONTROLLER_IP"):
+            if var in os.environ:
+                del os.environ[var]
+        os.environ["OS_USERNAME"] = self._os_username
+        os.environ["OS_PASSWORD"] = self._os_password
+        os.environ["OS_TENANT_NAME"] = self._os_tenantname
         self.test = odl.ODLTests()
 
     @mock.patch('fileinput.input', side_effect=Exception())
@@ -77,9 +79,9 @@ class ODLTesting(unittest.TestCase):
     def _test_main(self, status, *args):
         kwargs = self._get_main_kwargs()
         self.assertEqual(self.test.main(**kwargs), status)
-        odl_res_dir = odl.ODLTests.res_dir
         if len(args) > 0:
-            args[0].assert_called_once_with(odl_res_dir)
+            args[0].assert_called_once_with(
+                odl.ODLTests.res_dir)
         if len(args) > 1:
             variable = ['KEYSTONE:{}'.format(self._keystone_ip),
                         'NEUTRON:{}'.format(self._neutron_ip),
@@ -89,18 +91,17 @@ class ODLTesting(unittest.TestCase):
                         'ODL_SYSTEM_IP:{}'.format(self._sdn_controller_ip),
                         'PORT:{}'.format(self._odl_webport),
                         'RESTCONFPORT:{}'.format(self._odl_restconfport)]
-            output_file = os.path.join(odl_res_dir, 'output.xml')
             args[1].assert_called_once_with(
                 odl.ODLTests.basic_suite_dir,
                 odl.ODLTests.neutron_suite_dir,
                 log='NONE',
-                output=output_file,
+                output=odl.ODLTests.res_dir + 'output.xml',
                 report='NONE',
                 stdout=mock.ANY,
                 variable=variable)
         if len(args) > 2:
-            stdout_file = os.path.join(odl_res_dir, 'stdout.txt')
-            args[2].assert_called_with(stdout_file)
+            args[2].assert_called_with(
+                odl.ODLTests.res_dir + 'stdout.txt')
 
     def _test_main_missing_keyword(self, key):
         kwargs = self._get_main_kwargs(key)
@@ -223,21 +224,16 @@ class ODLTesting(unittest.TestCase):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
     def _test_run_missing_env_var(self, var):
-        if var == 'OS_USERNAME':
-            ft_constants.OS_USERNAME = None
-        elif var == 'OS_PASSWORD':
-            ft_constants.OS_PASSWORD = None
-        elif var == 'OS_TENANT_NAME':
-            ft_constants.OS_TENANT_NAME = None
-
-        self.assertEqual(self.test.run(),
-                         testcase_base.TestcaseBase.EX_RUN_ERROR)
+        with mock.patch('functest.utils.openstack_utils.get_endpoint',
+                        side_effect=self._fake_url_for):
+            del os.environ[var]
+            self.assertEqual(self.test.run(),
+                             testcase_base.TestcaseBase.EX_RUN_ERROR)
 
     def _test_run(self, status=testcase_base.TestcaseBase.EX_OK,
                   exception=None, odlip="127.0.0.3", odlwebport="8080"):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        side_effect=[self._fake_url_for('identity'),
-                                     self._fake_url_for('network')]):
+                        side_effect=self._fake_url_for):
             if exception:
                 self.test.main = mock.Mock(side_effect=exception)
             else:
@@ -261,66 +257,64 @@ class ODLTesting(unittest.TestCase):
         self._test_run_missing_env_var("OS_TENANT_NAME")
 
     def test_run_main_false(self):
-        ft_constants.CI_INSTALLER_TYPE = None
-        ft_constants.SDN_CONTROLLER_IP = self._sdn_controller_ip
+        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         self._test_run(testcase_base.TestcaseBase.EX_RUN_ERROR,
                        odlip=self._sdn_controller_ip,
                        odlwebport=self._odl_webport)
 
     def test_run_main_exception(self):
-        ft_constants.CI_INSTALLER_TYPE = None
-        ft_constants.SDN_CONTROLLER_IP = self._sdn_controller_ip
         with self.assertRaises(Exception):
+            os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
             self._test_run(status=testcase_base.TestcaseBase.EX_RUN_ERROR,
                            exception=Exception(),
                            odlip=self._sdn_controller_ip,
                            odlwebport=self._odl_webport)
 
     def test_run_missing_sdn_controller_ip(self):
-        ft_constants.CI_INSTALLER_TYPE = None
-        ft_constants.SDN_CONTROLLER_IP = None
-        self.assertEqual(self.test.run(),
-                         testcase_base.TestcaseBase.EX_RUN_ERROR)
+        with mock.patch('functest.utils.openstack_utils.get_endpoint',
+                        side_effect=self._fake_url_for):
+            self.assertEqual(self.test.run(),
+                             testcase_base.TestcaseBase.EX_RUN_ERROR)
 
     def test_run_without_installer_type(self):
-        ft_constants.SDN_CONTROLLER_IP = self._sdn_controller_ip
-        ft_constants.CI_INSTALLER_TYPE = None
+        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._sdn_controller_ip,
                        odlwebport=self._odl_webport)
 
     def test_run_fuel(self):
-        ft_constants.CI_INSTALLER_TYPE = "fuel"
+        os.environ["INSTALLER_TYPE"] = "fuel"
         self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._neutron_ip, odlwebport='8282')
 
     def test_run_apex_missing_sdn_controller_ip(self):
-        ft_constants.CI_INSTALLER_TYPE = "apex"
-        ft_constants.SDN_CONTROLLER_IP = None
-        self.assertEqual(self.test.run(),
-                         testcase_base.TestcaseBase.EX_RUN_ERROR)
+        with mock.patch('functest.utils.openstack_utils.get_endpoint',
+                        side_effect=self._fake_url_for):
+            os.environ["INSTALLER_TYPE"] = "apex"
+            self.assertEqual(self.test.run(),
+                             testcase_base.TestcaseBase.EX_RUN_ERROR)
 
     def test_run_apex(self):
-        ft_constants.SDN_CONTROLLER_IP = self._sdn_controller_ip
-        ft_constants.CI_INSTALLER_TYPE = "apex"
+        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
+        os.environ["INSTALLER_TYPE"] = "apex"
         self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._sdn_controller_ip, odlwebport='8181')
 
     def test_run_joid_missing_sdn_controller(self):
-        ft_constants.CI_INSTALLER_TYPE = "joid"
-        ft_constants.SDN_CONTROLLER = None
-        self.assertEqual(self.test.run(),
-                         testcase_base.TestcaseBase.EX_RUN_ERROR)
+        with mock.patch('functest.utils.openstack_utils.get_endpoint',
+                        side_effect=self._fake_url_for):
+            os.environ["INSTALLER_TYPE"] = "joid"
+            self.assertEqual(self.test.run(),
+                             testcase_base.TestcaseBase.EX_RUN_ERROR)
 
     def test_run_joid(self):
-        ft_constants.SDN_CONTROLLER = self._sdn_controller_ip
-        ft_constants.CI_INSTALLER_TYPE = "joid"
+        os.environ["SDN_CONTROLLER"] = self._sdn_controller_ip
+        os.environ["INSTALLER_TYPE"] = "joid"
         self._test_run(testcase_base.TestcaseBase.EX_OK,
-                       odlip=self._sdn_controller_ip,
-                       odlwebport=self._odl_webport)
+                       odlip=self._sdn_controller_ip, odlwebport='8080')
 
     def test_run_compass(self, *args):
-        ft_constants.CI_INSTALLER_TYPE = "compass"
+        os.environ["INSTALLER_TYPE"] = "compass"
         self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._neutron_ip, odlwebport='8181')
 
