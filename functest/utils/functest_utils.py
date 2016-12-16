@@ -291,34 +291,45 @@ def get_ci_envvars():
 
 def execute_command(cmd, info=False, error_msg="",
                     verbose=True, output_file=None):
-    if not error_msg:
-        error_msg = ("The command '%s' failed." % cmd)
+    msg_err = ("The command '%s' failed." % cmd) if not\
+        error_msg else error_msg
     msg_exec = ("Executing command: '%s'" % cmd)
     if verbose:
         if info:
             logger.info(msg_exec)
         else:
             logger.debug(msg_exec)
-    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT)
-    if output_file:
-        f = open(output_file, "w")
-    for line in iter(p.stdout.readline, b''):
-        if output_file:
-            f.write(line)
-        else:
-            line = line.replace('\n', '')
-            print line
-            sys.stdout.flush()
-    if output_file:
-        f.close()
-    p.stdout.close()
-    returncode = p.wait()
-    if returncode != 0:
-        if verbose:
-            logger.error(error_msg)
 
-    return returncode
+    if output_file:
+        with open(output_file, 'w') as output:
+            try:
+                p = subprocess.Popen(cmd, shell=True,
+                                     stdout=output, stderr=output)
+            except Exception:
+                logger.error("subprocess exec cmd: %s failed, file: %s"
+                             % cmd, output_file)
+            rc = p.wait()
+    else:
+        try:
+            p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+        except Exception:
+            logger.error("subprocess exec cmd : %s failed" % cmd)
+
+        (stdout, stderr) = p.communicate()
+        rc = p.returncode
+        if rc == 0:
+            for line in stdout.splitlines():
+                print line
+                sys.stdout.flush()
+        else:
+            print stderr
+            sys.stdout.flush()
+
+    if verbose and rc != 0:
+        logger.error(msg_err)
+
+    return rc
 
 
 def get_deployment_dir():
