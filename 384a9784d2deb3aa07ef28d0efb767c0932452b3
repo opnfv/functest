@@ -34,6 +34,24 @@
       "revId": "384a9784d2deb3aa07ef28d0efb767c0932452b3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_6ef446f2",
+        "filename": "functest/utils/openstack_tacker.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-16T08:33:14Z",
+      "side": 1,
+      "message": "Can you help to provide the RC file for tacker? The reason why I update here is, the get_credentials() has been refactored. \nHow about implementing get_credentials here in openstack_tacker to handle the case you mentioned?\nI don\u0027t think adding the complexity to os_utils.get_credentials() to handle tacker or not is an option.",
+      "parentUuid": "5ac10518_0e8ca27e",
+      "revId": "384a9784d2deb3aa07ef28d0efb767c0932452b3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
