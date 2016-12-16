@@ -11,7 +11,7 @@ import logging
 import mock
 import unittest
 
-import functest.core.testcase_base as testcase_base
+from functest.core import testcase_base
 
 
 class TestcaseBaseTesting(unittest.TestCase):
