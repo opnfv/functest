@@ -108,7 +108,7 @@ tiers:
             -
                 name: connection_check
                 criteria: 'status == "PASS"'
-                blocking: true
+                blocking: false
                 description: >-
                     This test case verifies the retrieval of OpenStack clients:
                     Keystone, Glance, Neutron and Nova and may perform some
@@ -126,7 +126,7 @@ tiers:
             -
                 name: api_check
                 criteria: 'status == "PASS"'
-                blocking: true
+                blocking: false
                 description: >-
                     This test case verifies the retrieval of OpenStack clients:
                     Keystone, Glance, Neutron and Nova and may perform some
@@ -144,7 +144,7 @@ tiers:
             -
                 name: snaps_smoke
                 criteria: 'status == "PASS"'
-                blocking: true
+                blocking: false
                 description: >-
                     This test case contains tests that setup and destroy
                     environments with VMs with and without Floating IPs
