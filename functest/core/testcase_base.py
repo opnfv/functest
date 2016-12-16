@@ -18,6 +18,7 @@ class TestcaseBase(object):
     EX_OK = os.EX_OK
     EX_RUN_ERROR = os.EX_SOFTWARE
     EX_PUSH_TO_DB_ERROR = os.EX_SOFTWARE - 1
+    EX_TESTCASE_FAILED = os.EX_SOFTWARE - 2
 
     logger = ft_logger.Logger(__name__).getLogger()
 
@@ -28,6 +29,15 @@ class TestcaseBase(object):
         self.criteria = ""
         self.start_time = ""
         self.stop_time = ""
+
+    def check_criteria(self):
+        try:
+            assert self.criteria
+            if self.criteria == 'PASS':
+                return TestcaseBase.EX_OK
+        except:
+            self.logger.error("Please run test before checking the results")
+        return TestcaseBase.EX_TESTCASE_FAILED
 
     def run(self, **kwargs):
         self.logger.error("Run must be implemented")
