@@ -35,7 +35,7 @@ class ODLResultVisitor(ResultVisitor):
         output['name'] = test.name
         output['parent'] = test.parent.name
         output['status'] = test.status
-        output['startime'] = test.starttime
+        output['starttime'] = test.starttime
         output['endtime'] = test.endtime
         output['critical'] = test.critical
         output['text'] = test.message
