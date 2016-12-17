@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_91a3d74e",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-17T22:23:44Z",
+      "side": 1,
+      "message": "shall we indicate TempestSmokeSerial\nI think it could make sense to have also TempestSmokeParallel\n(save time, test possible issues due to concurrnt acces)",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_318a23c0",
+        "filename": "functest/opnfv_tests/openstack/tempest/__init__.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-17T22:23:44Z",
+      "side": 1,
+      "message": "right chmod? I always hesitate...",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_118fe7cd",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-17T22:23:44Z",
+      "side": 1,
+      "message": "not possible to do it in configure_tempest?",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_f1933bf8",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-17T22:23:44Z",
+      "side": 1,
+      "message": "we do not really use all these modes...shall we document it?",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_51856fab",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-17T22:23:44Z",
+      "side": 1,
+      "message": "maybe use constants (from releng module? - I did not do it on my patch yet because I was not sure how to do it....)",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
