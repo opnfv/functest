@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_f1fc9b40",
+        "filename": "functest/tests/unit/cli/commands/test_cli_testcase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2016-12-17T22:05:19Z",
+      "side": 1,
+      "message": "just for consistency ...we changed the case recently and put Testcase instead of TestCase...",
+      "revId": "23a055a5d9c00c26337aaa3de4d25fa33f10b6de",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
