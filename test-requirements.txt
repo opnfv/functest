@@ -5,6 +5,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
+click==6.6
 coverage==4.1
 dnspython==1.15.0
 gitpython==1.0.1
