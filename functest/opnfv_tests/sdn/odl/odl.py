@@ -20,10 +20,9 @@ from robot.errors import RobotError
 import robot.run
 from robot.utils.robottime import timestamp_to_secs
 
-import functest.core.testcase_base as testcase_base
+from functest.core import testcase_base
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as op_utils
-import functest.utils.functest_constants as ft_constants
 
 
 class ODLResultVisitor(ResultVisitor):
@@ -49,14 +48,13 @@ class ODLResultVisitor(ResultVisitor):
 
 class ODLTests(testcase_base.TestcaseBase):
 
-    repos = ft_constants.REPOS_DIR
+    repos = "/home/opnfv/repos/"
     odl_test_repo = os.path.join(repos, "odl_test")
     neutron_suite_dir = os.path.join(odl_test_repo,
                                      "csit/suites/openstack/neutron")
     basic_suite_dir = os.path.join(odl_test_repo,
                                    "csit/suites/integration/basic")
-    res_dir = os.path.join(ft_constants.FUNCTEST_RESULTS_DIR, "odl")
-
+    res_dir = '/home/opnfv/functest/results/odl/'
     logger = ft_logger.Logger("opendaylight").getLogger()
 
     def __init__(self):
@@ -80,8 +78,8 @@ class ODLTests(testcase_base.TestcaseBase):
             return False
 
     def parse_results(self):
-        output_dir = os.path.join(self.res_dir, 'output.xml')
-        result = ExecutionResult(output_dir)
+        xml_file = os.path.join(self.res_dir, 'output.xml')
+        result = ExecutionResult(xml_file)
         visitor = ODLResultVisitor()
         result.visit(visitor)
         self.criteria = result.suite.status
@@ -153,29 +151,23 @@ class ODLTests(testcase_base.TestcaseBase):
             kwargs['odlrestconfport'] = '8181'
             kwargs['odlusername'] = 'admin'
             kwargs['odlpassword'] = 'admin'
-
-            installer_type = ft_constants.CI_INSTALLER_TYPE
-            kwargs['osusername'] = ft_constants.OS_USERNAME
-            kwargs['ostenantname'] = ft_constants.OS_TENANT_NAME
-            kwargs['ospassword'] = ft_constants.OS_PASSWORD
-
+            installer_type = None
+            if 'INSTALLER_TYPE' in os.environ:
+                installer_type = os.environ['INSTALLER_TYPE']
+            kwargs['osusername'] = os.environ['OS_USERNAME']
+            kwargs['ostenantname'] = os.environ['OS_TENANT_NAME']
+            kwargs['ospassword'] = os.environ['OS_PASSWORD']
             if installer_type == 'fuel':
                 kwargs['odlwebport'] = '8282'
             elif installer_type == 'apex':
-                if ft_constants.SDN_CONTROLLER_IP is None:
-                    return self.EX_RUN_ERROR
-                kwargs['odlip'] = ft_constants.SDN_CONTROLLER_IP
+                kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
                 kwargs['odlwebport'] = '8181'
             elif installer_type == 'joid':
-                if ft_constants.SDN_CONTROLLER is None:
-                    return self.EX_RUN_ERROR
-                kwargs['odlip'] = ft_constants.SDN_CONTROLLER
+                kwargs['odlip'] = os.environ['SDN_CONTROLLER']
             elif installer_type == 'compass':
                 kwargs['odlwebport'] = '8181'
             else:
-                if ft_constants.SDN_CONTROLLER_IP is None:
-                    return self.EX_RUN_ERROR
-                kwargs['odlip'] = ft_constants.SDN_CONTROLLER_IP
+                kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
         except KeyError as e:
             self.logger.error("Cannot run ODL testcases. "
                               "Please check env var: "
