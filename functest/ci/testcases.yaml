@@ -222,7 +222,7 @@ tiers:
                     installer: '(apex)|(joid)'
                     scenario: '^((?!fdio|lxd).)*$'
                 run:
-                    module: 'functest.opnfv_tests.feature.copper'
+                    module: 'functest.opnfv_tests.features.copper'
                     class: 'Copper'
 
             -
