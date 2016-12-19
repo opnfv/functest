@@ -167,6 +167,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_47fe0d3a",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-19T09:36:26Z",
+      "side": 1,
+      "message": "In line with Serena\nexecute_command() is recommended instead of calling subprocess directly",
+      "parentUuid": "5ac10518_445a8b51",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_e4585758",
         "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
         "patchSetId": 6
@@ -195,6 +213,24 @@
       "writtenOn": "2016-12-17T22:23:44Z",
       "side": 1,
       "message": "maybe use constants (from releng module? - I did not do it on my patch yet because I was not sure how to do it....)",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a796d1ee",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-19T09:36:26Z",
+      "side": 1,
+      "message": "releng is installed as package and I think it\u0027s ok to import the releng modules just like others.\ne.g. from releng import ***",
+      "parentUuid": "5ac10518_51856fab",
       "revId": "6fa6da70ba01258144131cd310615f839a298a74",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
