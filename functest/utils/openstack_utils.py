@@ -42,74 +42,63 @@ class MissingEnvVar(Exception):
         return str.format("Please set the mandatory env var: {}", self.var)
 
 
+def is_keystone_v3():
+    keystone_api_version = os.getenv('OS_IDENTITY_API_VERSION')
+    if (keystone_api_version is None or
+            keystone_api_version == '2'):
+        return False
+    else:
+        return True
+
+
+def get_rc_env_vars():
+    keystone_v3 = is_keystone_v3()
+    env_vars = ['OS_AUTH_URL', 'OS_USERNAME', 'OS_PASSWORD']
+    if keystone_v3 is False:
+        env_vars.extend(['OS_TENANT_NAME'])
+    else:
+        env_vars.extend(['OS_PROJECT_NAME',
+                         'OS_USER_DOMAIN_NAME',
+                         'OS_PROJECT_DOMAIN_NAME'])
+    return env_vars
+
+
 def check_credentials():
     """
     Check if the OpenStack credentials (openrc) are sourced
     """
-    env_vars = ['OS_AUTH_URL', 'OS_USERNAME', 'OS_PASSWORD', 'OS_TENANT_NAME']
+    env_vars = get_rc_env_vars()
     return all(map(lambda v: v in os.environ and os.environ[v], env_vars))
+
+
+def get_env_cred_dict():
+    env_cred_dict = {
+        'OS_USERNAME': 'username',
+        'OS_PASSWORD': 'password',
+        'OS_AUTH_URL': 'auth_url',
+        'OS_TENANT_NAME': 'tenant_name',
+        'OS_USER_DOMAIN_NAME': 'user_domain_name',
+        'OS_PROJECT_DOMAIN_NAME': 'project_domain_name',
+        'OS_PROJECT_NAME': 'project_name',
+        'OS_ENDPOINT_TYPE': 'endpoint_type',
+        'OS_REGION_NAME': 'region_name'
+    }
+    return env_cred_dict
 
 
 def get_credentials():
     """Returns a creds dictionary filled with parsed from env
     """
     creds = {}
+    env_vars = get_rc_env_vars()
+    env_cred_dict = get_env_cred_dict()
 
-    keystone_api_version = os.getenv('OS_IDENTITY_API_VERSION')
-    if (keystone_api_version is None or
-            keystone_api_version == '2'):
-        keystone_v3 = False
-        tenant_env = 'OS_TENANT_NAME'
-        tenant = 'tenant_name'
-    else:
-        keystone_v3 = True
-        tenant_env = 'OS_PROJECT_NAME'
-        tenant = 'project_name'
-
-    # Check that the env vars exists:
-    envvars = ('OS_USERNAME', 'OS_PASSWORD', 'OS_AUTH_URL', tenant_env)
-    for envvar in envvars:
+    for envvar in env_vars:
         if os.getenv(envvar) is None:
             raise MissingEnvVar(envvar)
-
-    # The most common way to pass these info to the script is to do it through
-    # environment variables.
-    creds.update({
-        "username": os.environ.get("OS_USERNAME"),
-        "password": os.environ.get("OS_PASSWORD"),
-        "auth_url": os.environ.get("OS_AUTH_URL"),
-        tenant: os.environ.get(tenant_env)
-    })
-    if keystone_v3:
-        if os.getenv('OS_USER_DOMAIN_NAME') is not None:
-            creds.update({
-                "user_domain_name": os.getenv('OS_USER_DOMAIN_NAME')
-            })
-        if os.getenv('OS_PROJECT_DOMAIN_NAME') is not None:
-            creds.update({
-                "project_domain_name": os.getenv('OS_PROJECT_DOMAIN_NAME')
-            })
-
-    if os.getenv('OS_ENDPOINT_TYPE') is not None:
-        creds.update({
-            "endpoint_type": os.environ.get("OS_ENDPOINT_TYPE")
-        })
-    if os.getenv('OS_REGION_NAME') is not None:
-        creds.update({
-            "region_name": os.environ.get("OS_REGION_NAME")
-        })
-    cacert = os.environ.get("OS_CACERT")
-    if cacert is not None:
-        # each openstack client uses differnt kwargs for this
-        creds.update({"cacert": cacert,
-                      "ca_cert": cacert,
-                      "https_ca_cert": cacert,
-                      "https_cacert": cacert,
-                      "ca_file": cacert})
-        creds.update({"insecure": "True", "https_insecure": "True"})
-        if not os.path.isfile(cacert):
-            logger.info("WARNING: The 'OS_CACERT' environment variable is "
-                        "set to %s but the file does not exist." % cacert)
+        else:
+            creds_key = env_cred_dict.get(envvar)
+            creds.update({creds_key: os.getenv(envvar)})
     return creds
 
 
@@ -124,26 +113,28 @@ def source_credentials(rc_file):
 
 def get_credentials_for_rally():
     creds = get_credentials()
-    keystone_api_version = os.getenv('OS_IDENTITY_API_VERSION')
-    if (keystone_api_version is None or
-            keystone_api_version == '2'):
-        admin_keys = ['username', 'tenant_name', 'password']
-    else:
-        admin_keys = ['username', 'password', 'user_domain_name',
-                      'project_name', 'project_domain_name']
+    env_cred_dict = get_env_cred_dict()
+    rally_conf = {"type": "ExistingCloud", "admin": {}}
+    for key in creds:
+        if key == 'auth_url':
+            rally_conf[key] = creds[key]
+        else:
+            rally_conf['admin'][key] = creds[key]
 
     endpoint_types = [('internalURL', 'internal'),
                       ('publicURL', 'public'), ('adminURL', 'admin')]
-    if 'endpoint_type' in creds.keys():
+
+    endpoint_type = os.getenv('OS_ENDPOINT_TYPE')
+    if endpoint_type is not None:
+        cred_key = env_cred_dict.get('OS_ENDPOINT_TYPE')
         for k, v in endpoint_types:
-            if creds['endpoint_type'] == k:
-                creds['endpoint_type'] = v
-    rally_conf = {"type": "ExistingCloud", "admin": {}}
-    for key in creds:
-        if key in admin_keys:
-            rally_conf['admin'][key] = creds[key]
-        else:
-            rally_conf[key] = creds[key]
+            if endpoint_type == k:
+                rally_conf[cred_key] = v
+
+    region_name = os.getenv('OS_REGION_NAME')
+    if region_name is not None:
+        cred_key = env_cred_dict.get('OS_REGION_NAME')
+        rally_conf[cred_key] = region_name
     return rally_conf
 
 
