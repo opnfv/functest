@@ -36,6 +36,63 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_a4648f22",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-19T03:29:04Z",
+      "side": 1,
+      "message": "ft_constants.FUNCTEST_RESULTS_DIR appears twice in one join?",
+      "range": {
+        "startLine": 24,
+        "startChar": 30,
+        "endLine": 24,
+        "endChar": 63
+      },
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_64130767",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-19T03:29:04Z",
+      "side": 1,
+      "message": "same to above",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_84163354",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-19T03:29:04Z",
+      "side": 1,
+      "message": "same to above",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_118fe7cd",
         "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
         "patchSetId": 6
@@ -70,6 +127,63 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_c41c3b7a",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-19T03:29:04Z",
+      "side": 1,
+      "message": "when will else branch be reached? I think there\u0027s no chance it will be executed now?",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 16
+      },
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_445a8b51",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-19T03:29:04Z",
+      "side": 1,
+      "message": "we already have execute_command() in functest_utils.py, can we use it here?",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e4585758",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-19T03:29:04Z",
+      "side": 1,
+      "message": "same to above",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_51856fab",
         "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
         "patchSetId": 6
@@ -81,6 +195,57 @@
       "writtenOn": "2016-12-17T22:23:44Z",
       "side": 1,
       "message": "maybe use constants (from releng module? - I did not do it on my patch yet because I was not sure how to do it....)",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c4351bf8",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-19T03:29:04Z",
+      "side": 1,
+      "message": "I am not very sure, but I think we don\u0027t need to override run() here.",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_643c67e3",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-19T03:29:04Z",
+      "side": 1,
+      "message": "same to above",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_843f13d6",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-19T03:29:04Z",
+      "side": 1,
+      "message": "same to above",
       "revId": "6fa6da70ba01258144131cd310615f839a298a74",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
