@@ -50,10 +50,12 @@ class CliTestcase:
             click.echo("Functest environment is not ready. "
                        "Run first 'functest env prepare'")
         else:
-            if noclean:
-                cmd = ("python %s/functest/ci/run_tests.py "
-                       "-n -t %s" % (ft_constants.FUNCTEST_REPO_DIR, testname))
-            else:
-                cmd = ("python %s/functest/ci/run_tests.py "
-                       "-t %s" % (ft_constants.FUNCTEST_REPO_DIR, testname))
-            ft_utils.execute_command(cmd)
+            tests = testname.split(",")
+            for test in tests:
+                if noclean:
+                    cmd = ("python %s/functest/ci/run_tests.py "
+                           "-n -t %s" % (ft_constants.FUNCTEST_REPO_DIR, test))
+                else:
+                    cmd = ("python %s/functest/ci/run_tests.py "
+                           "-t %s" % (ft_constants.FUNCTEST_REPO_DIR, test))
+                ft_utils.execute_command(cmd)
