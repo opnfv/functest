@@ -59,6 +59,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_82586333",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-19T10:46:10Z",
+      "side": 1,
+      "message": "TYPO. I will correct it.",
+      "parentUuid": "5ac10518_a4648f22",
+      "range": {
+        "startLine": 24,
+        "startChar": 30,
+        "endLine": 24,
+        "endChar": 63
+      },
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_64130767",
         "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
         "patchSetId": 6
@@ -110,6 +134,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_e251270f",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-19T10:46:10Z",
+      "side": 1,
+      "message": "I didn\u0027t want to change the logic of the workflow, the way Viktor did it was working. We might change some things later on, but I\u0027d like to have a first patch that works using the same code but refactored using the new template",
+      "parentUuid": "5ac10518_118fe7cd",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_f1933bf8",
         "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
         "patchSetId": 6
@@ -138,6 +180,30 @@
       "writtenOn": "2016-12-19T03:29:04Z",
       "side": 1,
       "message": "when will else branch be reached? I think there\u0027s no chance it will be executed now?",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 16
+      },
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_623d37bb",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-19T10:46:10Z",
+      "side": 1,
+      "message": "you are right. I can remove it since we are limiting the script to not have input parameters.",
+      "parentUuid": "5ac10518_c41c3b7a",
       "range": {
         "startLine": 118,
         "startChar": 12,
@@ -185,6 +251,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_22472f4d",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-19T10:46:10Z",
+      "side": 1,
+      "message": "This is an improvement of the code. In this patch I just wanted to refactor the code to use TestcaseBase and didn\u0027t want to change the logic or the way things are done.  It can get a bit messy all the changes in 1 patch.",
+      "parentUuid": "5ac10518_445a8b51",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_e4585758",
         "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
         "patchSetId": 6
@@ -196,6 +280,24 @@
       "writtenOn": "2016-12-19T03:29:04Z",
       "side": 1,
       "message": "same to above",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c2750b99",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-19T10:46:10Z",
+      "side": 1,
+      "message": "I\u0027ll do it in a later patch. Thanks for the suggestion.",
+      "parentUuid": "5ac10518_e4585758",
       "revId": "6fa6da70ba01258144131cd310615f839a298a74",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -237,6 +339,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_e2784791",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-19T10:46:10Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll try",
+      "parentUuid": "5ac10518_a796d1ee",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_c4351bf8",
         "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
         "patchSetId": 6
@@ -248,6 +368,24 @@
       "writtenOn": "2016-12-19T03:29:04Z",
       "side": 1,
       "message": "I am not very sure, but I think we don\u0027t need to override run() here.",
+      "revId": "6fa6da70ba01258144131cd310615f839a298a74",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_826f03c5",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-19T10:46:10Z",
+      "side": 1,
+      "message": "you re right. run is a public method by the parent class and if we don\u0027t do anything special, it doesn\u0027t need to be overwritten and called back to the parent.",
+      "parentUuid": "5ac10518_c4351bf8",
       "revId": "6fa6da70ba01258144131cd310615f839a298a74",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
