@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_e4db7719",
+        "filename": "functest/utils/config.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-19T02:42:00Z",
+      "side": 1,
+      "message": "sounds good.",
+      "parentUuid": "5ac10518_0e034743",
+      "range": {
+        "startLine": 22,
+        "startChar": 18,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_f246e722",
         "filename": "functest/utils/constants.py",
         "patchSetId": 1
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "always stuck with naming like Constant/Constants/Const, I choose Constants at the first time, then change it to Constant, since you also think Constants is better, I will return to Constants :)",
       "parentUuid": "5ac10518_f246e722",
+      "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_64ff8768",
+        "filename": "functest/utils/constants.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-19T02:42:00Z",
+      "side": 1,
+      "message": "Yeah, naming is a headache.",
+      "parentUuid": "5ac10518_2ed723c1",
       "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -149,6 +191,24 @@
       "side": 1,
       "message": "@Helen, I looked into this issue right now, it is already supported by Python itself. When an attribute needs to be changed, just do \u0027Const.need_change_attr\u003dnew_value\u0027; When adding one, just: \u0027Const.new_attr\u003dvalue\u0027; When it comes to delete, just \u0027del Const.deleted_attr\u0027",
       "parentUuid": "5ac10518_924be32a",
+      "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_44f4cb86",
+        "filename": "functest/utils/constants.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-19T02:42:00Z",
+      "side": 1,
+      "message": "good to know it is supported",
+      "parentUuid": "5ac10518_fffea7ad",
       "revId": "c9a31ce4f014ad4cfaf954ca41f31da4a524ce02",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
