@@ -83,14 +83,6 @@ function run_test(){
                 --ospassword ${OS_PASSWORD} \
                 --odlip $odl_ip --odlwebport $odl_port ${args}
         ;;
-        "tempest_smoke_serial")
-            python ${FUNCTEST_TEST_DIR}/openstack/tempest/run_tempest.py \
-                $clean_flag -s -m smoke $report
-        ;;
-        "tempest_full_parallel")
-            python ${FUNCTEST_TEST_DIR}/openstack/tempest/run_tempest.py \
-                $serial_flag $clean_flag -m full $report
-        ;;
         "vims")
             python ${FUNCTEST_TEST_DIR}/vnf/ims/vims.py $clean_flag $report
         ;;
@@ -129,12 +121,6 @@ function run_test(){
         ;;
         "moon")
             python ${REPOS_DIR}/moon/tests/run_tests.py $report
-        ;;
-        "multisite")
-            python ${FUNCTEST_TEST_DIR}/openstack/tempest/gen_tempest_conf.py
-            python ${FUNCTEST_TEST_DIR}/openstack/tempest/run_tempest.py \
-                $clean_flag -s -m feature_multisite $report \
-                -c ${FUNCTEST_TEST_DIR}/openstack/tempest/tempest_multisite.conf
         ;;
         *)
             echo "The test case '${test_name}' does not exist."
