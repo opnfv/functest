@@ -15,7 +15,7 @@ import urllib2
 from functest.utils import functest_utils
 
 
-class FunctestUtilsTesting(unittest.TestCase):
+class FunctestUtilsTestCase(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
