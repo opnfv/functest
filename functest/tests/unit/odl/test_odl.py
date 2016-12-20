@@ -13,7 +13,9 @@ import mock
 import os
 import unittest
 
+from keystoneauth1.exceptions import auth_plugins
 from robot.errors import RobotError
+from robot.result import testcase
 
 from functest.core import testcase_base
 from functest.opnfv_tests.sdn.odl import odl
@@ -42,6 +44,33 @@ class ODLTesting(unittest.TestCase):
         os.environ["OS_PASSWORD"] = self._os_password
         os.environ["OS_TENANT_NAME"] = self._os_tenantname
         self.test = odl.ODLTests()
+
+    def test_empty_visitor(self):
+        visitor = odl.ODLResultVisitor()
+        self.assertFalse(visitor.get_data())
+
+    def test_visitor(self):
+        visitor = odl.ODLResultVisitor()
+        data = {'name': 'foo',
+                'parent': 'bar',
+                'status': 'PASS',
+                'starttime': "20161216 16:00:00.000",
+                'endtime': "20161216 16:00:01.000",
+                'elapsedtime': 1000,
+                'text': 'Hello, World!',
+                'critical': True}
+        test = testcase.TestCase(name=data['name'],
+                                 status=data['status'],
+                                 message=data['text'],
+                                 starttime=data['starttime'],
+                                 endtime=data['endtime'])
+        test.parent = mock.Mock()
+        config = {'name': data['parent'],
+                  'criticality.test_is_critical.return_value': data[
+                      'critical']}
+        test.parent.configure_mock(**config)
+        visitor.visit_test(test)
+        self.assertEqual(visitor.get_data(), [data])
 
     @mock.patch('fileinput.input', side_effect=Exception())
     def test_set_robotframework_vars_failed(self, *args):
@@ -246,6 +275,12 @@ class ODLTesting(unittest.TestCase):
                 odlusername=self._odl_username, odlwebport=odlwebport,
                 ospassword=self._os_password, ostenantname=self._os_tenantname,
                 osusername=self._os_username)
+
+    def test_run_exception(self):
+        with mock.patch('functest.utils.openstack_utils.get_endpoint',
+                        side_effect=auth_plugins.MissingAuthPlugin()):
+            self.assertEqual(self.test.run(),
+                             testcase_base.TestcaseBase.EX_RUN_ERROR)
 
     def test_run_missing_os_username(self):
         self._test_run_missing_env_var("OS_USERNAME")
