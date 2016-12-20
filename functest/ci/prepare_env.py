@@ -136,7 +136,9 @@ def source_rc_file():
         if ft_constants.CI_INSTALLER_TYPE not in ft_constants.INSTALLERS:
             logger.error("Cannot fetch credentials. INSTALLER_TYPE=%s is "
                          "not a valid OPNFV installer. Available "
-                         "installers are : %s." % ft_constants.INSTALLERS)
+                         "installers are : %s." %
+                         (ft_constants.CI_INSTALLER_TYPE,
+                          ft_constants.INSTALLERS))
             sys.exit("Wrong INSTALLER_TYPE.")
 
         cmd = ("/home/opnfv/repos/releng/utils/fetch_os_creds.sh "
