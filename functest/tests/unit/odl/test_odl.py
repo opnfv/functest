@@ -19,7 +19,7 @@ from functest.core import testcase_base
 from functest.opnfv_tests.sdn.odl import odl
 
 
-class ODLTesting(unittest.TestCase):
+class ODLTestCase(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
@@ -55,9 +55,9 @@ class ODLTesting(unittest.TestCase):
     def _fake_url_for(cls, service_type='identity', **kwargs):
         if service_type == 'identity':
             return "http://{}:5000/v2.0".format(
-                ODLTesting._keystone_ip)
+                ODLTestCase._keystone_ip)
         elif service_type == 'network':
-            return "http://{}:9696".format(ODLTesting._neutron_ip)
+            return "http://{}:9696".format(ODLTestCase._neutron_ip)
         else:
             return None
 
