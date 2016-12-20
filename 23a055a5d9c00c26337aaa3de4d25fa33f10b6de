@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_7de87ab4",
+        "filename": "functest/tests/unit/cli/commands/test_cli_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-20T08:35:53Z",
+      "side": 1,
+      "message": "I would recall the last comment.\nHow about the renaming it as \u0027CliEnvTestCase\u0027?",
+      "parentUuid": "5ac10518_5dd9fe81",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "23a055a5d9c00c26337aaa3de4d25fa33f10b6de",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_f1fc9b40",
         "filename": "functest/tests/unit/cli/commands/test_cli_testcase.py",
         "patchSetId": 3
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_9debe6af",
+        "filename": "functest/tests/unit/cli/commands/test_cli_testcase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-20T08:35:53Z",
+      "side": 1,
+      "message": "I would recall the last comment.\nHow about the renaming it as \u0027CliTestcaseTestCase\u0027?",
+      "parentUuid": "5ac10518_bdd10259",
+      "revId": "23a055a5d9c00c26337aaa3de4d25fa33f10b6de",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_ddd40e49",
         "filename": "functest/tests/unit/cli/commands/test_cli_tier.py",
         "patchSetId": 3
@@ -77,6 +119,47 @@
         "endLine": 17,
         "endChar": 20
       },
+      "revId": "23a055a5d9c00c26337aaa3de4d25fa33f10b6de",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_3dd2f200",
+        "filename": "functest/tests/unit/cli/commands/test_cli_tier.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-20T08:35:53Z",
+      "side": 1,
+      "message": "I would recall the last comment.\nHow about the renaming it as \u0027CliTierTestCase\u0027?",
+      "parentUuid": "5ac10518_ddd40e49",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 20
+      },
+      "revId": "23a055a5d9c00c26337aaa3de4d25fa33f10b6de",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_5dcd7e5c",
+        "filename": "functest/tests/unit/cli/test_cli_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-20T08:35:53Z",
+      "side": 1,
+      "message": "How about renaming it as \u0027CliBaseTestCase\u0027",
       "revId": "23a055a5d9c00c26337aaa3de4d25fa33f10b6de",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
