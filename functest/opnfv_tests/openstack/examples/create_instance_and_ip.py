@@ -33,7 +33,7 @@ HOME = ft_constants.HOME + "/"
 
 VM_BOOT_TIMEOUT = 180
 
-EXAMPLE_INSTANCE_NAME = ft_constants.EXAMPLE_INSTANCE_NAME
+INSTANCE_NAME = ft_constants.INSTANCE_NAME
 EXAMPLE_FLAVOR = ft_constants.EXAMPLE_FLAVOR
 EXAMPLE_IMAGE_NAME = ft_constants.EXAMPLE_IMAGE_NAME
 IMAGE_FILENAME = ft_constants.GLANCE_IMAGE_FILENAME
@@ -81,16 +81,15 @@ def main():
                                                 EXAMPLE_SECGROUP_DESCR)
 
     # boot INTANCE
-    logger.info("Creating instance '%s'..." % EXAMPLE_INSTANCE_NAME)
+    logger.info("Creating instance '%s'..." % INSTANCE_NAME)
     logger.debug(
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
         "network=%s \n"
-        % (EXAMPLE_INSTANCE_NAME, EXAMPLE_FLAVOR, image_id, network_id))
-    instance = \
-        os_utils.create_instance_and_wait_for_active(EXAMPLE_FLAVOR,
-                                                     image_id,
-                                                     network_id,
-                                                     EXAMPLE_INSTANCE_NAME)
+        % (INSTANCE_NAME, EXAMPLE_FLAVOR, image_id, network_id))
+    instance = os_utils.create_instance_and_wait_for_active(EXAMPLE_FLAVOR,
+                                                            image_id,
+                                                            network_id,
+                                                            INSTANCE_NAME)
 
     if instance is None:
         logger.error("Error while booting instance.")
@@ -98,13 +97,13 @@ def main():
     # Retrieve IP of INSTANCE
     instance_ip = instance.networks.get(EXAMPLE_PRIVATE_NET_NAME)[0]
     logger.debug("Instance '%s' got private ip '%s'." %
-                 (EXAMPLE_INSTANCE_NAME, instance_ip))
+                 (INSTANCE_NAME, instance_ip))
 
     logger.info("Adding '%s' to security group '%s'..."
-                % (EXAMPLE_INSTANCE_NAME, EXAMPLE_SECGROUP_NAME))
+                % (INSTANCE_NAME, EXAMPLE_SECGROUP_NAME))
     os_utils.add_secgroup_to_instance(nova_client, instance.id, sg_id)
 
-    logger.info("Creating floating IP for VM '%s'..." % EXAMPLE_INSTANCE_NAME)
+    logger.info("Creating floating IP for VM '%s'..." % INSTANCE_NAME)
     floatip_dic = os_utils.create_floating_ip(neutron_client)
     floatip = floatip_dic['fip_addr']
     # floatip_id = floatip_dic['fip_id']
@@ -115,7 +114,7 @@ def main():
     logger.info("Floating IP created: '%s'" % floatip)
 
     logger.info("Associating floating ip: '%s' to VM '%s' "
-                % (floatip, EXAMPLE_INSTANCE_NAME))
+                % (floatip, INSTANCE_NAME))
     if not os_utils.add_floating_ip(nova_client, instance.id, floatip):
         logger.error("Cannot associate floating IP to VM.")
         sys.exit(-1)
