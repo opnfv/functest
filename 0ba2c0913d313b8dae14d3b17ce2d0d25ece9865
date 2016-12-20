@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_a23f9fd5",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-20T02:22:08Z",
+      "side": 1,
+      "message": "I would go with the os.path.join instead of the hard combination.",
+      "range": {
+        "startLine": 197,
+        "startChar": 24,
+        "endLine": 197,
+        "endChar": 71
+      },
+      "revId": "0ba2c0913d313b8dae14d3b17ce2d0d25ece9865",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_4226fbcf",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-20T02:22:08Z",
+      "side": 1,
+      "message": "I would go with the os.path.join instead of the hard combination.",
+      "range": {
+        "startLine": 199,
+        "startChar": 12,
+        "endLine": 199,
+        "endChar": 65
+      },
+      "revId": "0ba2c0913d313b8dae14d3b17ce2d0d25ece9865",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_6221b7b3",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-20T02:22:08Z",
+      "side": 1,
+      "message": "I would go with the os.path.join instead of the hard combination.",
+      "range": {
+        "startLine": 200,
+        "startChar": 21,
+        "endLine": 200,
+        "endChar": 72
+      },
+      "revId": "0ba2c0913d313b8dae14d3b17ce2d0d25ece9865",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
