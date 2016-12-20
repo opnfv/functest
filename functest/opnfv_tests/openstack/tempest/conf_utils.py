@@ -12,18 +12,19 @@ import os
 import re
 import shutil
 
-import functest.utils.functest_constants as ft_constants
+from functest.utils.config import CONF
+from functest.utils.env import ENV
 import functest.utils.functest_utils as ft_utils
 import opnfv.utils.constants as releng_constants
 
 
 IMAGE_ID_ALT = None
 FLAVOR_ID_ALT = None
-REPO_PATH = ft_constants.FUNCTEST_REPO_DIR
-GLANCE_IMAGE_PATH = os.path.join(ft_constants.FUNCTEST_DATA_DIR,
-                                 ft_constants.GLANCE_IMAGE_FILENAME)
-TEMPEST_TEST_LIST_DIR = ft_constants.TEMPEST_TEST_LIST_DIR
-TEMPEST_RESULTS_DIR = os.path.join(ft_constants.FUNCTEST_RESULTS_DIR,
+REPO_PATH = CONF.directories_dir_repo_functest
+GLANCE_IMAGE_PATH = os.path.join(CONF.directories_dir_functest_data,
+                                 CONF.openstack_image_file_name)
+TEMPEST_TEST_LIST_DIR = CONF.directories_dir_tempest_cases
+TEMPEST_RESULTS_DIR = os.path.join(CONF.directories_dir_results,
                                    'tempest')
 TEMPEST_CUSTOM = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
                               'test_list.txt')
@@ -34,8 +35,10 @@ TEMPEST_DEFCORE = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
 TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
 
-CI_INSTALLER_TYPE = ft_constants.CI_INSTALLER_TYPE
-CI_INSTALLER_IP = ft_constants.CI_INSTALLER_IP
+CI_INSTALLER_TYPE = ENV.INSTALLER_TYPE
+CI_INSTALLER_IP = ENV.INSTALLER_IP
+CI_SCENARIO = ENV.DEPLOY_SCENARIO
+CI_NODE = ENV.NODE_NAME
 
 
 def configure_tempest(logger, deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
@@ -63,24 +66,24 @@ def configure_tempest(logger, deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
     config.set(
         'compute',
         'fixed_network_name',
-        ft_constants.TEMPEST_PRIVATE_NET_NAME)
-    if ft_constants.TEMPEST_USE_CUSTOM_IMAGES:
+        CONF.tempest_private_net_name)
+    if CONF.tempest_use_custom_images:
         if IMAGE_ID is not None:
             config.set('compute', 'image_ref', IMAGE_ID)
         if IMAGE_ID_ALT is not None:
             config.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
-    if ft_constants.TEMPEST_USE_CUSTOM_FLAVORS:
+    if CONF.tempest_use_custom_flavors:
         if FLAVOR_ID is not None:
             config.set('compute', 'flavor_ref', FLAVOR_ID)
         if FLAVOR_ID_ALT is not None:
             config.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
-    config.set('identity', 'tenant_name', ft_constants.TEMPEST_TENANT_NAME)
-    config.set('identity', 'username', ft_constants.TEMPEST_USER_NAME)
-    config.set('identity', 'password', ft_constants.TEMPEST_USER_PASSWORD)
+    config.set('identity', 'tenant_name', CONF.tempest_identity_tenant_name)
+    config.set('identity', 'username', CONF.tempest_identity_user_name)
+    config.set('identity', 'password', CONF.tempest_identity_user_password)
     config.set(
-        'validation', 'ssh_timeout', ft_constants.TEMPEST_SSH_TIMEOUT)
+        'validation', 'ssh_timeout', CONF.tempest_validation_ssh_timeout)
 
-    if ft_constants.OS_ENDPOINT_TYPE is not None:
+    if ENV.OS_ENDPOINT_TYPE is not None:
         services_list = ['compute',
                          'volume',
                          'image',
@@ -93,7 +96,7 @@ def configure_tempest(logger, deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
             if service not in sections:
                 config.add_section(service)
             config.set(service, 'endpoint_type',
-                       ft_constants.OS_ENDPOINT_TYPE)
+                       ENV.OS_ENDPOINT_TYPE)
 
     with open(tempest_conf_file, 'wb') as config_file:
         config.write(config_file)
@@ -132,12 +135,12 @@ def configure_tempest_multisite(logger, deployment_dir):
     cmd = ("openstack endpoint show kingbird | grep publicurl |"
            "awk '{print $4}' | awk -F '/' '{print $4}'")
     kingbird_api_version = os.popen(cmd).read()
-    if CI_INSTALLER_TYPE == 'fuel':
+    installer_type = CI_INSTALLER_TYPE
+    installer_ip = CI_INSTALLER_IP
+    if installer_type == 'fuel' and installer_ip is not None:
         # For MOS based setup, the service is accessible
         # via bind host
         kingbird_conf_path = "/etc/kingbird/kingbird.conf"
-        installer_type = CI_INSTALLER_TYPE
-        installer_ip = CI_INSTALLER_IP
         installer_username = ft_utils.get_functest_config(
             "multisite." + installer_type +
             "_environment.installer_username")
