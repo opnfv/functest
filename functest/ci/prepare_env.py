@@ -27,6 +27,8 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 import functest.utils.functest_constants as ft_constants
 
+from opnfv.utils import constants as opnfv_constants
+
 actions = ['start', 'check']
 parser = argparse.ArgumentParser()
 parser.add_argument("action", help="Possible actions are: "
@@ -136,7 +138,9 @@ def source_rc_file():
         if ft_constants.CI_INSTALLER_TYPE not in ft_constants.INSTALLERS:
             logger.error("Cannot fetch credentials. INSTALLER_TYPE=%s is "
                          "not a valid OPNFV installer. Available "
-                         "installers are : %s." % ft_constants.INSTALLERS)
+                         "installers are : %s." %
+                         (ft_constants.CI_INSTALLER_TYPE,
+                          opnfv_constants.INSTALLERS))
             sys.exit("Wrong INSTALLER_TYPE.")
 
         cmd = ("/home/opnfv/repos/releng/utils/fetch_os_creds.sh "
