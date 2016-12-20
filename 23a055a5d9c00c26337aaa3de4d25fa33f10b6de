@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ac10518_5dd9fe81",
+        "filename": "functest/tests/unit/cli/commands/test_cli_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-20T03:48:39Z",
+      "side": 1,
+      "message": "How about renaming it as \u0027TestCliEnv\u0027?",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "23a055a5d9c00c26337aaa3de4d25fa33f10b6de",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_f1fc9b40",
         "filename": "functest/tests/unit/cli/commands/test_cli_testcase.py",
         "patchSetId": 3
@@ -13,6 +36,47 @@
       "writtenOn": "2016-12-17T22:05:19Z",
       "side": 1,
       "message": "just for consistency ...we changed the case recently and put Testcase instead of TestCase...",
+      "revId": "23a055a5d9c00c26337aaa3de4d25fa33f10b6de",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_bdd10259",
+        "filename": "functest/tests/unit/cli/commands/test_cli_testcase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-20T03:48:39Z",
+      "side": 1,
+      "message": "How about renaming it as \u0027TestCliTestcase\u0027?",
+      "parentUuid": "5ac10518_f1fc9b40",
+      "revId": "23a055a5d9c00c26337aaa3de4d25fa33f10b6de",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_ddd40e49",
+        "filename": "functest/tests/unit/cli/commands/test_cli_tier.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-20T03:48:39Z",
+      "side": 1,
+      "message": "How about renaming it as \u0027TestCliTier\u0027?",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 20
+      },
       "revId": "23a055a5d9c00c26337aaa3de4d25fa33f10b6de",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
