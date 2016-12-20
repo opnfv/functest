@@ -64,11 +64,12 @@ def main():
                                             container="bare",
                                             public=True)
 
-    network_dic = os_utils.create_network_full(neutron_client,
-                                               EXAMPLE_PRIVATE_NET_NAME,
-                                               EXAMPLE_PRIVATE_SUBNET_NAME,
-                                               EXAMPLE_ROUTER_NAME,
-                                               EXAMPLE_PRIVATE_SUBNET_CIDR)
+    network_dic = os_utils.create_network_full(
+                    neutron_client,
+                    EXAMPLE_PRIVATE_NET_NAME,
+                    EXAMPLE_PRIVATE_SUBNET_NAME,
+                    EXAMPLE_ROUTER_NAME,
+                    EXAMPLE_PRIVATE_SUBNET_CIDR)
     if not network_dic:
         logger.error(
             "There has been a problem when creating the neutron network")
@@ -86,11 +87,11 @@ def main():
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
         "network=%s \n"
         % (EXAMPLE_INSTANCE_NAME, EXAMPLE_FLAVOR, image_id, network_id))
-    instance = \
-        os_utils.create_instance_and_wait_for_active(EXAMPLE_FLAVOR,
-                                                     image_id,
-                                                     network_id,
-                                                     EXAMPLE_INSTANCE_NAME)
+    instance = os_utils.create_instance_and_wait_for_active(
+                EXAMPLE_FLAVOR,
+                image_id,
+                network_id,
+                EXAMPLE_INSTANCE_NAME)
 
     if instance is None:
         logger.error("Error while booting instance.")

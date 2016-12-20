@@ -41,8 +41,8 @@ class PyTestSuiteRunner(base.TestcaseBase):
             for test, message in result.failures:
                 self.logger.error(str(test) + " FAILED with " + message)
 
-        if (result.errors and len(result.errors) > 0) \
-                or (result.failures and len(result.failures) > 0):
+        if ((result.errors and len(result.errors) > 0)
+                or (result.failures and len(result.failures) > 0)):
             self.logger.info("%s FAILED" % self.case_name)
             self.criteria = 'FAIL'
             exit_code = base.TestcaseBase.EX_RUN_ERROR
