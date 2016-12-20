@@ -18,10 +18,10 @@ import yaml
 
 import conf_utils
 import functest.core.testcase_base as testcase_base
+from functest.utils.config import CONF
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-import functest.utils.functest_constants as ft_constants
 import opnfv.utils.constants as releng_constants
 
 """ logging configuration """
@@ -48,47 +48,48 @@ class TempestCommon(testcase_base.TestcaseBase):
         logger.debug("Creating tenant and user for Tempest suite")
         tenant_id = os_utils.create_tenant(
             keystone_client,
-            ft_constants.TEMPEST_TENANT_NAME,
-            ft_constants.TEMPEST_TENANT_DESCRIPTION)
+            CONF.tempest_identity_tenant_name,
+            CONF.tempest_identity_tenant_description)
         if not tenant_id:
             logger.error("Error : Failed to create %s tenant"
-                         % ft_constants.TEMPEST_TENANT_NAME)
+                         % CONF.tempest_identity_tenant_name)
 
-        user_id = os_utils.create_user(keystone_client,
-                                       ft_constants.TEMPEST_USER_NAME,
-                                       ft_constants.TEMPEST_USER_PASSWORD,
-                                       None, tenant_id)
+        user_id = os_utils.create_user(
+            keystone_client,
+            CONF.tempest_identity_user_name,
+            CONF.tempest_identity_user_password,
+            None, tenant_id)
         if not user_id:
             logger.error("Error : Failed to create %s user" %
-                         ft_constants.TEMPEST_USER_NAME)
+                         CONF.tempest_identity_user_name)
 
         logger.debug("Creating private network for Tempest suite")
         network_dic = \
             os_utils.create_shared_network_full(
-                ft_constants.TEMPEST_PRIVATE_NET_NAME,
-                ft_constants.TEMPEST_PRIVATE_SUBNET_NAME,
-                ft_constants.TEMPEST_ROUTER_NAME,
-                ft_constants.TEMPEST_PRIVATE_SUBNET_CIDR)
+                CONF.tempest_private_net_name,
+                CONF.tempest_private_subnet_name,
+                CONF.tempest_router_name,
+                CONF.tempest_private_subnet_cidr)
         if not network_dic:
             return releng_constants.EXIT_RUN_ERROR
 
-        if ft_constants.TEMPEST_USE_CUSTOM_IMAGES:
+        if CONF.tempest_use_custom_images:
             # adding alternative image should be trivial should we need it
             logger.debug("Creating image for Tempest suite")
             _, self.IMAGE_ID = os_utils.get_or_create_image(
-                ft_constants.GLANCE_IMAGE_NAME, conf_utils.GLANCE_IMAGE_PATH,
-                ft_constants.GLANCE_IMAGE_FORMAT)
+                CONF.openstack_image_name, conf_utils.GLANCE_IMAGE_PATH,
+                CONF.openstack_image_disk_format)
             if not self.IMAGE_ID:
                 return releng_constants.EXIT_RUN_ERROR
 
-        if ft_constants.TEMPEST_USE_CUSTOM_FLAVORS:
+        if CONF.tempest_use_custom_flavors:
             # adding alternative flavor should be trivial should we need it
             logger.debug("Creating flavor for Tempest suite")
             _, self.FLAVOR_ID = os_utils.get_or_create_flavor(
-                ft_constants.FLAVOR_NAME,
-                ft_constants.FLAVOR_RAM,
-                ft_constants.FLAVOR_DISK,
-                ft_constants.FLAVOR_VCPUS)
+                CONF.openstack_flavor_name,
+                CONF.openstack_flavor_ram,
+                CONF.openstack_flavor_disk,
+                CONF.openstack_flavor_vcpus)
             if not self.FLAVOR_ID:
                 return releng_constants.EXIT_RUN_ERROR
 
@@ -128,8 +129,8 @@ class TempestCommon(testcase_base.TestcaseBase):
         result_file = open(conf_utils.TEMPEST_LIST, 'w')
         black_tests = []
         try:
-            installer_type = ft_constants.CI_INSTALLER_TYPE
-            deploy_scenario = ft_constants.CI_SCENARIO
+            installer_type = conf_utils.CI_INSTALLER_IP
+            deploy_scenario = conf_utils.CI_SCENARIO
             if (bool(installer_type) * bool(deploy_scenario)):
                 # if INSTALLER_TYPE and DEPLOY_SCENARIO are set we read the
                 # file
@@ -189,9 +190,9 @@ class TempestCommon(testcase_base.TestcaseBase):
 
         header = ("Tempest environment:\n"
                   "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
-                  (ft_constants.CI_INSTALLER_TYPE,
-                   ft_constants.CI_SCENARIO,
-                   ft_constants.CI_NODE,
+                  (conf_utils.CI_INSTALLER_TYPE,
+                   conf_utils.CI_SCENARIO,
+                   conf_utils.CI_NODE,
                    time.strftime("%a %b %d %H:%M:%S %Z %Y")))
 
         f_stdout = open(conf_utils.TEMPEST_RESULTS_DIR + "/tempest.log", 'w+')
