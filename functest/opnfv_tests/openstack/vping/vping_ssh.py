@@ -101,9 +101,9 @@ class VPingSSH(vping_base.VPingBase):
                                   "from the dhcp agent." % self.vm2_name)
 
             # if dhcp not work,it shows "No lease, failing".The test will fail
-            if "No lease, failing" in console_log \
-                    and not nolease \
-                    and not got_ip:
+            if ("No lease, failing" in console_log
+                and not nolease
+                and not got_ip):
                 nolease = True
                 self.logger.debug("Console-log '%s': No lease, failing..."
                                   % self.vm2_name)

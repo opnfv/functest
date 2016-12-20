@@ -86,11 +86,10 @@ def main():
         "Configuration:\n name=%s \n flavor=%s \n image=%s \n "
         "network=%s \n"
         % (EXAMPLE_INSTANCE_NAME, EXAMPLE_FLAVOR, image_id, network_id))
-    instance = \
-        os_utils.create_instance_and_wait_for_active(EXAMPLE_FLAVOR,
-                                                     image_id,
-                                                     network_id,
-                                                     EXAMPLE_INSTANCE_NAME)
+    instance = os_utils.create_instance_and_wait_for_active(EXAMPLE_FLAVOR,
+                                                            image_id,
+                                                            network_id,
+                                                            EXAMPLE_INSTANCE_NAME)
 
     if instance is None:
         logger.error("Error while booting instance.")
