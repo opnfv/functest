@@ -14,7 +14,7 @@ import unittest
 from functest.core import testcase_base
 
 
-class TestcaseBaseTesting(unittest.TestCase):
+class TestcaseBaseTestCase(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 

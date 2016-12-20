@@ -19,7 +19,7 @@ from functest.core import testcase_base
 from functest.opnfv_tests.sdn.odl import odl
 
 
-class ODLTesting(unittest.TestCase):
+class ODLTestCase(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
