@@ -36,9 +36,9 @@ class VPingBase(testcase_base.TestcaseBase):
         self.image_name = get_conf('vping.image_name')
         self.image_filename = get_conf('general.openstack.image_file_name')
         self.image_format = get_conf('general.openstack.image_disk_format')
-        self.image_path = \
-            "%s/%s" % (get_conf('general.directories.dir_functest_data'),
-                       self.image_filename)
+        self.image_path = ("%s/%s" %
+                           (get_conf('general.directories.dir_functest_data'),
+                            self.image_filename))
 
         self.flavor_name = get_conf('vping.vm_flavor')
 
