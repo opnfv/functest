@@ -326,7 +326,7 @@ def get_deployment_dir():
     Returns current Rally deployment directory
     """
     deployment_name = get_functest_config('rally.deployment_name')
-    rally_dir = get_functest_config('general.directories.dir_rally_inst')
+    rally_dir = get_functest_config('general.dir.dir_rally_inst')
     cmd = ("rally deployment list | awk '/" + deployment_name +
            "/ {print $2}'")
     p = subprocess.Popen(cmd, shell=True,
