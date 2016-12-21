@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_13836605",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-21T11:01:36Z",
+      "side": 1,
+      "message": "I would suggest to switch \u0027import yaml\u0027 and the blank line to make the standard module a group",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 11
+      },
+      "revId": "7b7485f382ecc51306e59560866e71d579f930bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_3386a214",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-21T11:01:36Z",
+      "side": 1,
+      "message": "I would suggest to remove the blank line here to make the local import a group",
+      "revId": "7b7485f382ecc51306e59560866e71d579f930bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_93c43641",
+        "filename": "functest/utils/config.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-21T11:01:36Z",
+      "side": 1,
+      "message": "I would put the message as \u0027Environment variable CONFIG_FUNCTEST_YAML is not defined\u0027",
+      "range": {
+        "startLine": 9,
+        "startChar": 29,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "7b7485f382ecc51306e59560866e71d579f930bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_b3bff2a9",
+        "filename": "functest/utils/config.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-21T11:01:36Z",
+      "side": 1,
+      "message": "Can we find a better meaningful name to indicate the function?",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 19
+      },
+      "revId": "7b7485f382ecc51306e59560866e71d579f930bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_53dece12",
+        "filename": "functest/utils/openstack_clean.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-21T11:01:36Z",
+      "side": 1,
+      "message": "Is the blank line needed here?",
+      "revId": "7b7485f382ecc51306e59560866e71d579f930bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
