@@ -33,7 +33,7 @@ class SnapsSmoke(PyTestSuiteRunner):
         # SNAPS repository and are found relative to that path
         if use_fip:
             snaps_dir = ft_utils.get_functest_config(
-                'general.directories.dir_repo_snaps') + '/snaps'
+                'general.dir.dir_repo_snaps') + '/snaps'
             os.chdir(snaps_dir)
 
         test_suite_builder.add_openstack_integration_tests(
