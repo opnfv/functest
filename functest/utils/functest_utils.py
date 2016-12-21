@@ -182,6 +182,25 @@ def logger_test_results(project, case_name, status, details):
             'd': details})
 
 
+def write_results_to_file(project, case_name, start_date,
+                          stop_date, criteria, details):
+    file_path = get_db_url()
+
+    test_start = dt.fromtimestamp(start_date).strftime('%Y-%m-%d %H:%M:%S')
+    test_stop = dt.fromtimestamp(stop_date).strftime('%Y-%m-%d %H:%M:%S')
+
+    params = {"project_name": project, "case_name": case_name,
+              "criteria": criteria, "start_date": test_start,
+              "stop_date": test_stop, "details": details}
+    try:
+        with open(file_path, "w") as outfile:
+            json.dump(params, outfile)
+        return True
+    except Exception as e:
+        logger.error("write result data into a file failed: %s" % e)
+        return False
+
+
 def push_results_to_db(project, case_name,
                        start_date, stop_date, criteria, details):
     """
