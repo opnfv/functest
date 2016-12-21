@@ -130,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_53056e78",
+        "filename": "functest/utils/config.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-21T11:12:14Z",
+      "side": 1,
+      "message": "I couldn\u0027t find one for now, because env_active is not the only thing which will be set here, and I am thinking to config it in config_functest.yaml, so maybe this is a temporary solution.",
+      "parentUuid": "5ac10518_b3bff2a9",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 19
+      },
+      "revId": "7b7485f382ecc51306e59560866e71d579f930bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_53dece12",
         "filename": "functest/utils/openstack_clean.py",
         "patchSetId": 3
