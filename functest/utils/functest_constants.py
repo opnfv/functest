@@ -89,7 +89,7 @@ OPENSTACK_SNAPSHOT_FILE = get_value('general.openstack.snapshot_file',
 
 DOMINO_REPO_DIR = get_value('general.dir.dir_repo_domino',
                             'DOMINO_REPO_DIR')
-SDNVPN_REPO_DIR = get_value('general.dir.dir_repo_sdnvpn',
+SDNVPN_REPO_DIR = get_value('general.dir.repo_sdnvpn',
                             'SDNVPN_REPO_DIR')
 SFC_REPO_DIR = get_value('general.dir.repo_sfc',
                          'SFC_REPO_DIR')
