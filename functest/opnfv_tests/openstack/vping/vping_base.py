@@ -13,39 +13,37 @@ import time
 from datetime import datetime
 
 import functest.core.testcase_base as testcase_base
-import functest.utils.constants as constants
 import functest.utils.openstack_utils as os_utils
-
-CONSTS = constants.CONST
+from functest.utils.constants import CONST
 
 
 class VPingBase(testcase_base.TestcaseBase):
     def __init__(self):
         super(VPingBase, self).__init__()
         self.logger = None
-        self.functest_repo = CONSTS.dir_repo_functest
-        self.repo = CONSTS.dir_vping
-        self.vm1_name = CONSTS.vping_vm_name_1
-        self.vm2_name = CONSTS.vping_vm_name_2
+        self.functest_repo = CONST.dir_repo_functest
+        self.repo = CONST.dir_vping
+        self.vm1_name = CONST.vping_vm_name_1
+        self.vm2_name = CONST.vping_vm_name_2
         self.vm_boot_timeout = 180
         self.vm_delete_timeout = 100
-        self.ping_timeout = CONSTS.vping_ping_timeout
+        self.ping_timeout = CONST.vping_ping_timeout
 
-        self.image_name = CONSTS.vping_image_name
-        self.image_filename = CONSTS.openstack_image_file_name
-        self.image_format = CONSTS.openstack_image_disk_format
-        self.image_path = os.path.join(CONSTS.dir_functest_data,
+        self.image_name = CONST.vping_image_name
+        self.image_filename = CONST.openstack_image_file_name
+        self.image_format = CONST.openstack_image_disk_format
+        self.image_path = os.path.join(CONST.dir_functest_data,
                                        self.image_filename)
 
-        self.flavor_name = CONSTS.vping_vm_flavor
+        self.flavor_name = CONST.vping_vm_flavor
 
         # NEUTRON Private Network parameters
-        self.private_net_name = CONSTS.vping_private_net_name
-        self.private_subnet_name = CONSTS.vping_private_subnet_name
-        self.private_subnet_cidr = CONSTS.vping_private_subnet_cidr
-        self.router_name = CONSTS.vping_router_name
-        self.sg_name = CONSTS.vping_sg_name
-        self.sg_desc = CONSTS.vping_sg_desc
+        self.private_net_name = CONST.vping_private_net_name
+        self.private_subnet_name = CONST.vping_private_subnet_name
+        self.private_subnet_cidr = CONST.vping_private_subnet_cidr
+        self.router_name = CONST.vping_router_name
+        self.sg_name = CONST.vping_sg_name
+        self.sg_desc = CONST.vping_sg_desc
         self.neutron_client = os_utils.get_neutron_client()
         self.glance_client = os_utils.get_glance_client()
         self.nova_client = os_utils.get_nova_client()
