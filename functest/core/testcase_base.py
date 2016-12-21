@@ -19,6 +19,7 @@ class TestcaseBase(object):
     EX_RUN_ERROR = os.EX_SOFTWARE
     EX_PUSH_TO_DB_ERROR = os.EX_SOFTWARE - 1
     EX_TESTCASE_FAILED = os.EX_SOFTWARE - 2
+    EX_WRITE_TO_FILE_ERROR = os.EX_SOFTWARE - 1
 
     logger = ft_logger.Logger(__name__).getLogger()
 
@@ -43,7 +44,29 @@ class TestcaseBase(object):
         self.logger.error("Run must be implemented")
         return TestcaseBase.EX_RUN_ERROR
 
-    def push_to_db(self):
+    def publish_report(self, args):
+        if not args:
+            self.push_to_db("")
+        elif args.lower().startswith("http:///") or \
+                args.lower().startswith("https:///"):
+            self.push_to_db(args)
+        elif args.lower().startswith("file:///"):
+            self.write_to_file(args)
+        else:
+            self.logger.error("Please give a valid parameter for -r")
+
+    def write_to_file(self, path):
+        if ft_utils.write_results_to_file(path, self.project_name,
+                                          self.case_name, self.start_time,
+                                          self.stop_time, self.criteria,
+                                          self.details):
+            self.logger.info("The results were successfully written to a file")
+            return TestcaseBase.EX_OK
+        else:
+            self.logger.error("wrtie results to a file failed")
+            return TestcaseBase.EX_WRITE_TO_FILE_ERROR
+
+    def push_to_db(self, url):
         try:
             assert self.project_name
             assert self.case_name
@@ -51,7 +74,7 @@ class TestcaseBase(object):
             assert self.start_time
             assert self.stop_time
             if ft_utils.push_results_to_db(
-                    self.project_name, self.case_name, self.start_time,
+                    url, self.project_name, self.case_name, self.start_time,
                     self.stop_time, self.criteria, self.details):
                 self.logger.info("The results were successfully pushed to DB")
                 return TestcaseBase.EX_OK

@@ -131,7 +131,10 @@ def run_test(test, tier_name):
 
     flags = (" -t %s" % (test_name))
     if GlobalVariables.REPORT_FLAG:
-        flags += " -r"
+        if args.report:
+            flags += "-r %s" % str(args.report)
+        else:
+            flags += " -r"
 
     result = testcase_base.TestcaseBase.EX_RUN_ERROR
     run_dict = get_run_dict_if_defined(test_name)
@@ -143,7 +146,7 @@ def run_test(test, tier_name):
             result = test_case.run()
             if result == testcase_base.TestcaseBase.EX_OK:
                 if GlobalVariables.REPORT_FLAG:
-                    test_case.push_to_db()
+                    test_case.publish_report(args.report)
                 result = test_case.check_criteria()
         except ImportError:
             logger.exception("Cannot import module {}".format(
