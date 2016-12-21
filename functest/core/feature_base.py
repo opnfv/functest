@@ -11,7 +11,7 @@ class FeatureBase(base.TestcaseBase):
         self.project_name = project
         self.case_name = case
         self.cmd = cmd
-        self.repo = self.get_conf('general.directories.{}'.format(repo))
+        self.repo = self.get_conf('general.dir.{}'.format(repo))
         self.result_file = self.get_result_file()
         self.logger = ft_logger.Logger(project).getLogger()
 
@@ -44,7 +44,7 @@ class FeatureBase(base.TestcaseBase):
         return exit_code
 
     def get_result_file(self):
-        dir = self.get_conf('general.directories.dir_results')
+        dir = self.get_conf('general.dir.results')
         return "{}/{}.log".format(dir, self.project_name)
 
     def log_results(self):
