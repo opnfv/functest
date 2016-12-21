@@ -20,15 +20,16 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
+import yaml
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
-import yaml
-import functest.utils.functest_constants as ft_constants
+from functest.utils.constants import CONST
 
 logger = ft_logger.Logger("openstack_snapshot").getLogger()
 
 
-OS_SNAPSHOT_FILE = ft_constants.OPENSTACK_SNAPSHOT_FILE
+OS_SNAPSHOT_FILE = CONST.openstack_snapshot_file
 
 
 def separator():

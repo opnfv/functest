@@ -16,11 +16,12 @@
 #
 
 import functest.core.feature_base as base
+from functest.utils.constants import CONST
 
 
 class Parser(base.FeatureBase):
     def __init__(self):
         super(Parser, self).__init__(project='parser',
                                      case='parser-basics',
-                                     repo='dir_repo_parser')
+                                     repo=CONST.dir_repo_parser)
         self.cmd = 'cd %s/tests && ./functest_run.sh' % self.repo
