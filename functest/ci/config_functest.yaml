@@ -1,7 +1,7 @@
 general:
     dir:
         # Relative to the path where the repo is cloned:
-        vping:         functest/opnfv_tests/openstack/vping
+        vping:             functest/opnfv_tests/openstack/vping
         dir_odl:           functest/opnfv_tests/sdn/odl
         dir_rally:         functest/opnfv_tests/openstack/rally
         dir_tempest_cases: functest/opnfv_tests/openstack/tempest/custom_tests
@@ -12,13 +12,13 @@ general:
         # Absolute path
         dir_home:           /home/opnfv
         dir_repos:          /home/opnfv/repos
-        repo_functest:  /home/opnfv/repos/functest
+        repo_functest:      /home/opnfv/repos/functest
         dir_repo_rally:     /home/opnfv/repos/rally
         dir_repo_tempest:   /home/opnfv/repos/tempest
         dir_repo_releng:    /home/opnfv/repos/releng
         dir_repo_vims_test: /home/opnfv/repos/vims-test
         dir_repo_sdnvpn:    /home/opnfv/repos/sdnvpn
-        dir_repo_sfc:       /home/opnfv/repos/sfc
+        repo_sfc:           /home/opnfv/repos/sfc
         dir_repo_onos:      /home/opnfv/repos/onos
         dir_repo_promise:   /home/opnfv/repos/promise
         dir_repo_doctor:    /home/opnfv/repos/doctor
@@ -27,11 +27,11 @@ general:
         dir_repo_parser:    /home/opnfv/repos/parser
         dir_repo_domino:    /home/opnfv/repos/domino
         dir_repo_snaps:     /home/opnfv/repos/snaps
-        functest:       /home/opnfv/functest
-        functest_test:  /home/opnfv/repos/functest/functest/opnfv_tests
-        results:        /home/opnfv/functest/results
-        functest_conf:  /home/opnfv/functest/conf
-        functest_data:  /home/opnfv/functest/data
+        functest:           /home/opnfv/functest
+        functest_test:      /home/opnfv/repos/functest/functest/opnfv_tests
+        results:            /home/opnfv/functest/results
+        functest_conf:      /home/opnfv/functest/conf
+        functest_data:      /home/opnfv/functest/data
         dir_vIMS_data:      /home/opnfv/functest/data/vIMS/
         dir_rally_inst:     /home/opnfv/.rally
 
