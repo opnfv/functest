@@ -7,7 +7,6 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-
 import functest.core.feature_base as base
 
 
@@ -17,4 +16,5 @@ class OpenDaylightSFC(base.FeatureBase):
         super(OpenDaylightSFC, self).__init__(project='sfc',
                                               case='functest-odl-sfc"',
                                               repo='dir_repo_sfc')
-        self.cmd = 'cd %s/tests/functest && python ./run_tests.py' % self.repo
+        dir_sfc_functest = '{}/sfc/tests/functest'.format(self.repo)
+        self.cmd = 'cd %s && python ./run_tests.py' % dir_sfc_functest
