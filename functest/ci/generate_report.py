@@ -2,9 +2,11 @@ import json
 import re
 import urllib2
 
+import functest.utils.constants as constants
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
-import functest.utils.functest_constants as ft_constants
+
+CONST = constants.CONST
 
 
 COL_1_LEN = 25
@@ -18,11 +20,11 @@ COL_5_LEN = 75
 
 
 class GlobalVariables:
-    IS_CI_RUN = ft_constants.IS_CI_RUN
-    BUILD_TAG = ft_constants.CI_BUILD_TAG
-    INSTALLER = ft_constants.CI_INSTALLER_TYPE
-    CI_LOOP = ft_constants.CI_LOOP
-    SCENARIO = ft_constants.CI_SCENARIO
+    IS_CI_RUN = CONST.IS_CI_RUN
+    BUILD_TAG = CONST.BUILD_TAG
+    INSTALLER = CONST.INSTALLER_TYPE
+    CI_LOOP = CONST.CI_LOOP
+    SCENARIO = CONST.DEPLOY_SCENARIO
 
 
 logger = ft_logger.Logger("generate_report").getLogger()

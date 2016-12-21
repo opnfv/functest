@@ -2,7 +2,8 @@ import os
 
 default_envs = {
     'NODE_NAME': 'unknown_pod',
-    'CI_DEBUG': 'true'
+    'CI_DEBUG': 'true',
+    'DEPLOY_SCENARIO': 'os-nosdn-nofeature-ha',
 }
 
 

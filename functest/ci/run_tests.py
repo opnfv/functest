@@ -8,23 +8,25 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
+import argparse
 import datetime
 import importlib
 import os
 import re
 import sys
 
-import argparse
-
 import functest.ci.generate_report as generate_report
 import functest.ci.tier_builder as tb
 import functest.core.testcase_base as testcase_base
+import functest.utils.constants as constants
+import functest.utils.functest_constants as ft_constants
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
-import functest.utils.functest_constants as ft_constants
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 import functest.utils.openstack_utils as os_utils
+
+CONST = constants.CONST
 
 
 parser = argparse.ArgumentParser()
@@ -44,7 +46,7 @@ logger = ft_logger.Logger("run_tests").getLogger()
 
 
 """ global variables """
-EXEC_SCRIPT = ("%s/functest/ci/exec_test.sh" % ft_constants.FUNCTEST_REPO_DIR)
+EXEC_SCRIPT = ("%s/functest/ci/exec_test.sh" % CONST.dir_repo_functest)
 
 # This will be the return code of this script. If any of the tests fails,
 # this variable will change to -1
@@ -65,7 +67,7 @@ def print_separator(str, count=45):
 
 
 def source_rc_file():
-    rc_file = ft_constants.OPENSTACK_CREDS
+    rc_file = CONST.openstack_creds
     if not os.path.isfile(rc_file):
         logger.error("RC file %s does not exist..." % rc_file)
         sys.exit(1)
@@ -75,16 +77,20 @@ def source_rc_file():
         if re.search("OS_", key):
             if key == 'OS_AUTH_URL':
                 ft_constants.OS_AUTH_URL = value
+                CONST.OS_AUTH_URL = value
             elif key == 'OS_USERNAME':
                 ft_constants.OS_USERNAME = value
+                CONST.OS_USERNAME = value
             elif key == 'OS_TENANT_NAME':
                 ft_constants.OS_TENANT_NAME = value
+                CONST.OS_TENANT_NAME = value
             elif key == 'OS_PASSWORD':
                 ft_constants.OS_PASSWORD = value
-    logger.debug("OS_AUTH_URL:%s" % ft_constants.OS_AUTH_URL)
-    logger.debug("OS_USERNAME:%s" % ft_constants.OS_USERNAME)
-    logger.debug("OS_TENANT_NAME:%s" % ft_constants.OS_TENANT_NAME)
-    logger.debug("OS_PASSWORD:%s" % ft_constants.OS_PASSWORD)
+                CONST.OS_PASSWORD = value
+    logger.debug("OS_AUTH_URL:%s" % CONST.OS_AUTH_URL)
+    logger.debug("OS_USERNAME:%s" % CONST.OS_USERNAME)
+    logger.debug("OS_TENANT_NAME:%s" % CONST.OS_TENANT_NAME)
+    logger.debug("OS_PASSWORD:%s" % CONST.OS_PASSWORD)
 
 
 def generate_os_snapshot():
@@ -201,7 +207,7 @@ def run_tier(tier):
 
 def run_all(tiers):
     summary = ""
-    BUILD_TAG = ft_constants.CI_BUILD_TAG
+    BUILD_TAG = CONST.BUILD_TAG
     if BUILD_TAG is not None and re.search("daily", BUILD_TAG) is not None:
         CI_LOOP = "daily"
     else:
@@ -227,10 +233,10 @@ def run_all(tiers):
 
 def main():
 
-    CI_INSTALLER_TYPE = ft_constants.CI_INSTALLER_TYPE
-    CI_SCENARIO = ft_constants.CI_SCENARIO
+    CI_INSTALLER_TYPE = CONST.INSTALLER_TYPE
+    CI_SCENARIO = CONST.DEPLOY_SCENARIO
 
-    file = ft_constants.FUNCTEST_TESTCASES_YAML
+    file = CONST.functest_testcases_yaml
     _tiers = tb.TierBuilder(CI_INSTALLER_TYPE, CI_SCENARIO, file)
 
     if args.noclean:

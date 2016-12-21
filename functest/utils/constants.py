@@ -1,5 +1,6 @@
 import config
 import env
+import os
 
 
 class Constants(object):
@@ -9,6 +10,11 @@ class Constants(object):
         for env_n, env_v in env.ENV.__dict__.iteritems():
             self.__setattr__(env_n, env_v)
 
+        if hasattr(self, 'BUILD_TAG') and self.BUILD_TAG:
+            self.IS_CI_RUN = True
+        else:
+            self.IS_CI_RUN = False
+        self.env_active = os.path.join(self.dir_functest_conf, "env_active")
 
 CONST = Constants()
 
