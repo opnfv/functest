@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_13b126e1",
+        "filename": "functest/ci/generate_report.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-21T13:37:05Z",
+      "side": 1,
+      "message": "no need to have GlobalVariables. \nWe could use directly in the code CONST.X",
+      "revId": "9e4a777e4a64e64439cacde852086b74f2eb6bb7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
