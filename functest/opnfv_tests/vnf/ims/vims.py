@@ -19,10 +19,7 @@ import subprocess
 import time
 
 import argparse
-import keystoneclient.v2_0.client as ksclient
-import novaclient.client as nvclient
 import requests
-from neutronclient.v2_0 import client as ntclient
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
@@ -242,17 +239,15 @@ def main():
     if not os.path.exists(VIMS_DATA_DIR):
         os.makedirs(VIMS_DATA_DIR)
 
-    ks_creds = os_utils.get_credentials("keystone")
-    nv_creds = os_utils.get_credentials("nova")
-    nt_creds = os_utils.get_credentials("neutron")
+    new_user_creds = os_utils.get_credentials()
 
     logger.info("Prepare OpenStack plateform (create tenant and user)")
-    keystone = ksclient.Client(**ks_creds)
+    keystone = os_utils.get_keystone_client()
 
-    user_id = os_utils.get_user_id(keystone, ks_creds['username'])
+    user_id = os_utils.get_user_id(keystone, new_user_creds['username'])
     if user_id == '':
         step_failure("init", "Error : Failed to get id of " +
-                     ks_creds['username'])
+                     new_user_creds['username'])
 
     tenant_id = os_utils.create_tenant(
         keystone, VIMS_TENANT_NAME, VIMS_TENANT_DESCRIPTION)
@@ -271,7 +266,7 @@ def main():
 
     if not os_utils.add_role_user(keystone, user_id, role_id, tenant_id):
         logger.error("Error : Failed to add %s on tenant" %
-                     ks_creds['username'])
+                     new_user_creds['username'])
 
     user_id = os_utils.create_user(
         keystone, VIMS_TENANT_NAME, VIMS_TENANT_NAME, None, tenant_id)
@@ -279,18 +274,10 @@ def main():
         logger.error("Error : Failed to create %s user" % VIMS_TENANT_NAME)
 
     logger.info("Update OpenStack creds informations")
-    ks_creds.update({
+    new_user_creds.update({
         "username": VIMS_TENANT_NAME,
         "password": VIMS_TENANT_NAME,
-        "tenant_name": VIMS_TENANT_NAME,
-    })
-
-    nt_creds.update({
-        "tenant_name": VIMS_TENANT_NAME,
-    })
-
-    nv_creds.update({
-        "project_id": VIMS_TENANT_NAME,
+        "tenant": VIMS_TENANT_NAME,
     })
 
     logger.info("Upload some OS images if it doesn't exist")
@@ -314,10 +301,8 @@ def main():
                 "Error : Failed to find or upload required OS "
                 "image for this deployment")
 
-    nova = nvclient.Client("2", **nv_creds)
-
     logger.info("Update security group quota for this tenant")
-    neutron = ntclient.Client(**nt_creds)
+    neutron = os_utils.get_neutron_client(new_user_creds)
     if not os_utils.update_sg_quota(neutron, tenant_id, 50, 100):
         step_failure(
             "init",
@@ -325,17 +310,22 @@ def main():
             VIMS_TENANT_NAME)
 
     # ############### CLOUDIFY INITIALISATION ################
-    public_auth_url = keystone.service_catalog.url_for(
-        service_type='identity', endpoint_type='publicURL')
+    public_auth_url = os_utils.get_endpoint('identity')
 
     cfy = Orchestrator(VIMS_DATA_DIR, CFY_INPUTS)
 
-    cfy.set_credentials(username=ks_creds['username'], password=ks_creds[
-                        'password'], tenant_name=ks_creds['tenant_name'],
+    if 'tenant_name' in new_user_creds.keys():
+        tenant_name = new_user_creds['tenant_name']
+    elif 'project_name' in new_user_creds.keys():
+        tenant_name = new_user_creds['project_name']
+
+    cfy.set_credentials(username=new_user_creds['username'],
+                        password=new_user_creds['password'],
+                        tenant_name=tenant_name,
                         auth_url=public_auth_url)
 
     logger.info("Collect flavor id for cloudify manager server")
-    nova = nvclient.Client("2", **nv_creds)
+    nova = os_utils.get_nova_client(new_user_creds)
 
     flavor_name = "m1.large"
     flavor_id = os_utils.get_flavor_id(nova, flavor_name)
@@ -416,7 +406,6 @@ def main():
     cw = Clearwater(CW_INPUTS, cfy, logger)
 
     logger.info("Collect flavor id for all clearwater vm")
-    nova = nvclient.Client("2", **nv_creds)
 
     flavor_name = "m1.small"
     flavor_id = os_utils.get_flavor_id(nova, flavor_name)
@@ -489,10 +478,6 @@ def main():
     # ############## GENERAL CLEANUP ################
     if args.noclean:
         exit(0)
-
-    ks_creds = os_utils.get_credentials("keystone")
-
-    keystone = ksclient.Client(**ks_creds)
 
     logger.info("Removing %s tenant .." % CFY_INPUTS['keystone_tenant_name'])
     tenant_id = os_utils.get_tenant_id(

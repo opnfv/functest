@@ -86,7 +86,7 @@ def get_env_cred_dict():
     return env_cred_dict
 
 
-def get_credentials():
+def get_credentials(other_creds={}):
     """Returns a creds dictionary filled with parsed from env
     """
     creds = {}
@@ -99,6 +99,50 @@ def get_credentials():
         else:
             creds_key = env_cred_dict.get(envvar)
             creds.update({creds_key: os.getenv(envvar)})
+
+    # The most common way to pass these info to the script is to do it through
+    # environment variables.
+    creds.update({
+        "username": os.environ.get("OS_USERNAME"),
+        "password": os.environ.get("OS_PASSWORD"),
+        "auth_url": os.environ.get("OS_AUTH_URL"),
+        tenant: os.environ.get(tenant_env)
+    })
+
+    if "tenant" in other_creds.keys():
+        other_creds[tenant] = other_creds.pop("tenant")
+    creds.update(other_creds)
+
+    if keystone_v3:
+        if os.getenv('OS_USER_DOMAIN_NAME') is not None:
+            creds.update({
+                "user_domain_name": os.getenv('OS_USER_DOMAIN_NAME')
+            })
+        if os.getenv('OS_PROJECT_DOMAIN_NAME') is not None:
+            creds.update({
+                "project_domain_name": os.getenv('OS_PROJECT_DOMAIN_NAME')
+            })
+
+    if os.getenv('OS_ENDPOINT_TYPE') is not None:
+        creds.update({
+            "endpoint_type": os.environ.get("OS_ENDPOINT_TYPE")
+        })
+    if os.getenv('OS_REGION_NAME') is not None:
+        creds.update({
+            "region_name": os.environ.get("OS_REGION_NAME")
+        })
+    cacert = os.environ.get("OS_CACERT")
+    if cacert is not None:
+        # each openstack client uses differnt kwargs for this
+        creds.update({"cacert": cacert,
+                      "ca_cert": cacert,
+                      "https_ca_cert": cacert,
+                      "https_cacert": cacert,
+                      "ca_file": cacert})
+        creds.update({"insecure": "True", "https_insecure": "True"})
+        if not os.path.isfile(cacert):
+            logger.info("WARNING: The 'OS_CACERT' environment variable is "
+                        "set to %s but the file does not exist." % cacert)
     return creds
 
 
@@ -138,9 +182,9 @@ def get_credentials_for_rally():
     return rally_conf
 
 
-def get_session_auth():
+def get_session_auth(other_creds={}):
     loader = loading.get_plugin_loader('password')
-    creds = get_credentials()
+    creds = get_credentials(other_creds)
     auth = loader.load_from_options(**creds)
     return auth
 
@@ -152,8 +196,8 @@ def get_endpoint(service_type, endpoint_type='publicURL'):
                                       endpoint_type=endpoint_type)
 
 
-def get_session():
-    auth = get_session_auth()
+def get_session(other_creds={}):
+    auth = get_session_auth(other_creds)
     return session.Session(auth=auth)
 
 
@@ -169,8 +213,8 @@ def get_keystone_client_version():
     return DEFAULT_API_VERSION
 
 
-def get_keystone_client():
-    sess = get_session()
+def get_keystone_client(other_creds={}):
+    sess = get_session(other_creds)
     return keystoneclient.Client(get_keystone_client_version(), session=sess)
 
 
@@ -183,8 +227,8 @@ def get_nova_client_version():
     return DEFAULT_API_VERSION
 
 
-def get_nova_client():
-    sess = get_session()
+def get_nova_client(other_creds={}):
+    sess = get_session(other_creds)
     return novaclient.Client(get_nova_client_version(), session=sess)
 
 
@@ -197,8 +241,8 @@ def get_cinder_client_version():
     return DEFAULT_API_VERSION
 
 
-def get_cinder_client():
-    sess = get_session()
+def get_cinder_client(other_creds={}):
+    sess = get_session(other_creds)
     return cinderclient.Client(get_cinder_client_version(), session=sess)
 
 
@@ -211,8 +255,8 @@ def get_neutron_client_version():
     return DEFAULT_API_VERSION
 
 
-def get_neutron_client():
-    sess = get_session()
+def get_neutron_client(other_creds={}):
+    sess = get_session(other_creds)
     return neutronclient.Client(get_neutron_client_version(), session=sess)
 
 
@@ -224,8 +268,8 @@ def get_glance_client_version():
     return DEFAULT_API_VERSION
 
 
-def get_glance_client():
-    sess = get_session()
+def get_glance_client(other_creds={}):
+    sess = get_session(other_creds)
     return glanceclient.Client(get_glance_client_version(), session=sess)
 
 
