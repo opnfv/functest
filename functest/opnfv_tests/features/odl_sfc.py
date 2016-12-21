@@ -9,6 +9,7 @@
 #
 
 import functest.core.feature_base as base
+from functest.utils.constants import CONST
 
 
 class OpenDaylightSFC(base.FeatureBase):
@@ -16,5 +17,5 @@ class OpenDaylightSFC(base.FeatureBase):
     def __init__(self):
         super(OpenDaylightSFC, self).__init__(project='sfc',
                                               case='functest-odl-sfc"',
-                                              repo='dir_repo_sfc')
-        self.cmd = 'cd %s/tests/functest && python ./run_tests.py' % self.repo
+                                              repo=CONST.dir_repo_sfc)
+        self.cmd = 'cd %s/sfc/tests/functest && python ./run_tests.py' % self.repo

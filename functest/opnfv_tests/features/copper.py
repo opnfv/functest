@@ -15,11 +15,12 @@
 # limitations under the License.
 #
 import functest.core.feature_base as base
+from functest.utils.constants import CONST
 
 
 class Copper(base.FeatureBase):
     def __init__(self):
         super(Copper, self).__init__(project='copper',
                                      case='copper-notification',
-                                     repo='dir_repo_copper')
+                                     repo=CONST.dir_repo_copper)
         self.cmd = "%s/tests/run.sh %s/tests" % (self.repo, self.repo)

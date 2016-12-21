@@ -78,7 +78,7 @@ FUNCTEST_TESTCASES_YAML = get_value('general.functest.testcases_yaml',
                                     'FUNCTEST_TESTCASES_YAML')
 RALLY_DEPLOYMENT_NAME = get_value('rally.deployment_name',
                                   'RALLY_DEPLOYMENT_NAME')
-TEMPEST_REPO_DIR = get_value('general.dir.dir_repo_tempest',
+TEMPEST_REPO_DIR = get_value('general.dir.repo_tempest',
                              'TEMPEST_REPO_DIR')
 
 ENV_FILE = os.path.join(FUNCTEST_CONF_DIR, "env_active")
@@ -91,7 +91,7 @@ DOMINO_REPO_DIR = get_value('general.dir.dir_repo_domino',
                             'DOMINO_REPO_DIR')
 SDNVPN_REPO_DIR = get_value('general.dir.dir_repo_sdnvpn',
                             'SDNVPN_REPO_DIR')
-SFC_REPO_DIR = get_value('general.dir.dir_repo_sfc',
+SFC_REPO_DIR = get_value('general.dir.repo_sfc',
                          'SFC_REPO_DIR')
 
 ONOS_SFC_IMAGE_NAME = get_value('onos_sfc.image_name',
@@ -219,7 +219,7 @@ PROMISE_ROUTER_NAME = get_value('promise.router_name',
                                 'PROMISE_ROUTER_NAME')
 DOCTOR_REPO_DIR = get_value('general.dir.dir_repo_doctor',
                             'DOCTOR_REPO_DIR')
-COPPER_REPO_DIR = get_value('general.dir.dir_repo_copper',
+COPPER_REPO_DIR = get_value('general.dir.repo_copper',
                             'COPPER_REPO_DIR')
 EXAMPLE_INSTANCE_NAME = get_value('example.example_vm_name',
                                   'EXAMPLE_INSTANCE_NAME')
@@ -260,5 +260,5 @@ CW_DEPLOYMENT_NAME = get_value('vIMS.clearwater.deployment-name',
 CW_INPUTS = get_value('vIMS.clearwater.inputs', 'CW_INPUTS')
 CW_REQUIERMENTS = get_value('vIMS.clearwater.requierments',
                             'CW_REQUIERMENTS')
-PARSER_REPO_DIR = get_value('general.dir.dir_repo_parser',
+PARSER_REPO_DIR = get_value('general.dir.repo_parser',
                             'PARSER_REPO_DIR')
