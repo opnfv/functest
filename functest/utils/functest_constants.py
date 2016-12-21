@@ -60,25 +60,25 @@ def get_value(functest_config_key, env_variable):
             return constant
 
 
-HOME = get_value('general.directories.dir_home', 'HOME')
-REPOS_DIR = get_value('general.directories.dir_repos', 'REPOS_DIR')
-FUNCTEST_BASE_DIR = get_value('general.directories.dir_functest',
+HOME = get_value('general.dir.dir_home', 'HOME')
+REPOS_DIR = get_value('general.dir.dir_repos', 'REPOS_DIR')
+FUNCTEST_BASE_DIR = get_value('general.dir.functest',
                               'FUNCTEST_BASE_DIR')
-FUNCTEST_REPO_DIR = get_value('general.directories.dir_repo_functest',
+FUNCTEST_REPO_DIR = get_value('general.dir.repo_functest',
                               'FUNCTEST_REPO_DIR')
-FUNCTEST_TEST_DIR = get_value('general.directories.dir_functest_test',
+FUNCTEST_TEST_DIR = get_value('general.dir.functest_test',
                               'FUNCTEST_TEST_DIR')
-FUNCTEST_CONF_DIR = get_value('general.directories.dir_functest_conf',
+FUNCTEST_CONF_DIR = get_value('general.dir.functest_conf',
                               'FUNCTEST_CONF_DIR')
-FUNCTEST_DATA_DIR = get_value('general.directories.dir_functest_data',
+FUNCTEST_DATA_DIR = get_value('general.dir.functest_data',
                               'FUNCTEST_DATA_DIR')
-FUNCTEST_RESULTS_DIR = get_value('general.directories.dir_results',
+FUNCTEST_RESULTS_DIR = get_value('general.dir.results',
                                  'FUNCTEST_RESULTS_DIR')
 FUNCTEST_TESTCASES_YAML = get_value('general.functest.testcases_yaml',
                                     'FUNCTEST_TESTCASES_YAML')
 RALLY_DEPLOYMENT_NAME = get_value('rally.deployment_name',
                                   'RALLY_DEPLOYMENT_NAME')
-TEMPEST_REPO_DIR = get_value('general.directories.dir_repo_tempest',
+TEMPEST_REPO_DIR = get_value('general.dir.dir_repo_tempest',
                              'TEMPEST_REPO_DIR')
 
 ENV_FILE = os.path.join(FUNCTEST_CONF_DIR, "env_active")
@@ -87,22 +87,22 @@ OPENSTACK_CREDS = get_value('general.openstack.creds', 'creds')
 OPENSTACK_SNAPSHOT_FILE = get_value('general.openstack.snapshot_file',
                                     'OPENSTACK_SNAPSHOT_FILE')
 
-DOMINO_REPO_DIR = get_value('general.directories.dir_repo_domino',
+DOMINO_REPO_DIR = get_value('general.dir.dir_repo_domino',
                             'DOMINO_REPO_DIR')
-SDNVPN_REPO_DIR = get_value('general.directories.dir_repo_sdnvpn',
+SDNVPN_REPO_DIR = get_value('general.dir.dir_repo_sdnvpn',
                             'SDNVPN_REPO_DIR')
-SFC_REPO_DIR = get_value('general.directories.dir_repo_sfc',
+SFC_REPO_DIR = get_value('general.dir.dir_repo_sfc',
                          'SFC_REPO_DIR')
 
 ONOS_SFC_IMAGE_NAME = get_value('onos_sfc.image_name',
                                 'ONOS_SFC_IMAGE_NAME')
 ONOS_SFC_IMAGE_FILENAME = get_value('onos_sfc.image_file_name',
                                     'ONOS_SFC_IMAGE_FILENAME')
-ONOS_SFC_RELATIVE_PATH = get_value('general.directories.dir_onos_sfc',
+ONOS_SFC_RELATIVE_PATH = get_value('general.dir.dir_onos_sfc',
                                    'ONOS_SFC_RELATIVE_PATH')
 ONOS_SFC_IMAGE_BASE_URL = get_value('onos_sfc.image_base_url',
                                     'ONOS_SFC_IMAGE_BASE_URL')
-RALLY_RELATIVE_PATH = get_value('general.directories.dir_rally',
+RALLY_RELATIVE_PATH = get_value('general.dir.dir_rally',
                                 'RALLY_RELATIVE_PATH')
 RALLY_PRIVATE_NET_NAME = get_value('rally.network_name',
                                    'RALLY_PRIVATE_NET_NAME')
@@ -111,7 +111,7 @@ RALLY_PRIVATE_SUBNET_NAME = get_value('rally.subnet_name',
 RALLY_PRIVATE_SUBNET_CIDR = get_value('rally.subnet_cidr',
                                       'RALLY_PRIVATE_SUBNET_CIDR')
 RALLY_ROUTER_NAME = get_value('rally.router_name', 'RALLY_ROUTER_NAME')
-RALLY_INSTALLATION_DIR = get_value('general.directories.dir_rally_inst',
+RALLY_INSTALLATION_DIR = get_value('general.dir.dir_rally_inst',
                                    'RALLY_INSTALLATION_DIR')
 GLANCE_IMAGE_NAME = get_value('general.openstack.image_name',
                               'GLANCE_IMAGE_NAME')
@@ -149,24 +149,24 @@ TEMPEST_USE_CUSTOM_IMAGES = get_value('tempest.use_custom_images',
                                       'TEMPEST_USE_CUSTOM_IMAGES')
 TEMPEST_USE_CUSTOM_FLAVORS = get_value('tempest.use_custom_flavors',
                                        'TEMPEST_USE_CUSTOM_FLAVORS')
-TEMPEST_TEST_LIST_DIR = get_value('general.directories.dir_tempest_cases',
+TEMPEST_TEST_LIST_DIR = get_value('general.dir.dir_tempest_cases',
                                   'TEMPEST_TEST_LIST_DIR')
 NAME_VM_1 = get_value('vping.vm_name_1', 'NAME_VM_1')
 NAME_VM_2 = get_value('vping.vm_name_2', 'NAME_VM_2')
 PING_TIMEOUT = get_value('vping.ping_timeout', 'PING_TIMEOUT')
 VPING__IMAGE_NAME = get_value('vping.image_name', 'VPING__IMAGE_NAME')
 VPING_VM_FLAVOR = get_value('vping.vm_flavor', 'VPING_VM_FLAVOR')
-VPING_PRIVATE_NET_NAME = get_value('vping.vping_private_net_name',
+VPING_PRIVATE_NET_NAME = get_value('vping.private_net_name',
                                    'VPING_PRIVATE_NET_NAME')
-VPING_PRIVATE_SUBNET_NAME = get_value('vping.vping_private_subnet_name',
+VPING_PRIVATE_SUBNET_NAME = get_value('vping.private_subnet_name',
                                       'VPING_PRIVATE_SUBNET_NAME')
-VPING_PRIVATE_SUBNET_CIDR = get_value('vping.vping_private_subnet_cidr',
+VPING_PRIVATE_SUBNET_CIDR = get_value('vping.private_subnet_cidr',
                                       'VPING_PRIVATE_SUBNET_CIDR')
-VPING_ROUTER_NAME = get_value('vping.vping_router_name',
+VPING_ROUTER_NAME = get_value('vping.router_name',
                               'VPING_ROUTER_NAME')
-VPING_SECGROUP_NAME = get_value('vping.vping_sg_name',
+VPING_SECGROUP_NAME = get_value('vping.sg_name',
                                 'VPING_SECGROUP_NAME')
-VPING_SECGROUP_DESCR = get_value('vping.vping_sg_descr',
+VPING_SECGROUP_DESCR = get_value('vping.sg_desc',
                                  'VPING_SECGROUP_DESCR')
 ONOSBENCH_USERNAME = get_value('ONOS.general.onosbench_username',
                                'ONOSBENCH_USERNAME')
@@ -192,7 +192,7 @@ ONOS_INSTALLER_MASTER_USERNAME = get_value(
 ONOS_INSTALLER_MASTER_PASSWORD = get_value(
     'ONOS.environment.installer_master_password',
     'ONOS_INSTALLER_MASTER_PASSWORD')
-PROMISE_REPO_DIR = get_value('general.directories.dir_repo_promise',
+PROMISE_REPO_DIR = get_value('general.dir.dir_repo_promise',
                              'PROMISE_REPO_DIR')
 PROMISE_TENANT_NAME = get_value('promise.tenant_name',
                                 'PROMISE_TENANT_NAME')
@@ -217,9 +217,9 @@ PROMISE_SUBNET_CIDR = get_value('promise.subnet_cidr',
                                 'PROMISE_SUBNET_CIDR')
 PROMISE_ROUTER_NAME = get_value('promise.router_name',
                                 'PROMISE_ROUTER_NAME')
-DOCTOR_REPO_DIR = get_value('general.directories.dir_repo_doctor',
+DOCTOR_REPO_DIR = get_value('general.dir.dir_repo_doctor',
                             'DOCTOR_REPO_DIR')
-COPPER_REPO_DIR = get_value('general.directories.dir_repo_copper',
+COPPER_REPO_DIR = get_value('general.dir.dir_repo_copper',
                             'COPPER_REPO_DIR')
 EXAMPLE_INSTANCE_NAME = get_value('example.example_vm_name',
                                   'EXAMPLE_INSTANCE_NAME')
@@ -240,9 +240,9 @@ EXAMPLE_SECGROUP_NAME = get_value('example.example_sg_name',
                                   'EXAMPLE_SECGROUP_NAME')
 EXAMPLE_SECGROUP_DESCR = get_value('example.example_sg_descr',
                                    'EXAMPLE_SECGROUP_DESCR')
-VIMS_DATA_DIR = get_value('general.directories.dir_vIMS_data',
+VIMS_DATA_DIR = get_value('general.dir.dir_vIMS_data',
                           'VIMS_DATA_DIR')
-VIMS_TEST_DIR = get_value('general.directories.dir_repo_vims_test',
+VIMS_TEST_DIR = get_value('general.dir.dir_repo_vims_test',
                           'VIMS_TEST_DIR')
 VIMS_TENANT_NAME = get_value('vIMS.general.tenant_name',
                              'VIMS_TENANT_NAME')
@@ -260,5 +260,5 @@ CW_DEPLOYMENT_NAME = get_value('vIMS.clearwater.deployment-name',
 CW_INPUTS = get_value('vIMS.clearwater.inputs', 'CW_INPUTS')
 CW_REQUIERMENTS = get_value('vIMS.clearwater.requierments',
                             'CW_REQUIERMENTS')
-PARSER_REPO_DIR = get_value('general.directories.dir_repo_parser',
+PARSER_REPO_DIR = get_value('general.dir.dir_repo_parser',
                             'PARSER_REPO_DIR')
