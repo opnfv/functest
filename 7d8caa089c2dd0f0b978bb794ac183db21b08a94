@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_532d6e45",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-21T09:52:24Z",
+      "side": 1,
+      "message": "I see this in the files:\n\nold mode 100755\nnew mode 100644\n\nThat is the opposite to what the arrows are saying",
+      "revId": "7d8caa089c2dd0f0b978bb794ac183db21b08a94",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
