@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_d3d15efc",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-21T11:08:15Z",
+      "side": 1,
+      "message": "yaml is not a standard module, it belongs to 3rd party library",
+      "parentUuid": "5ac10518_13836605",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 11
+      },
+      "revId": "7b7485f382ecc51306e59560866e71d579f930bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_3386a214",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2016-12-21T11:01:36Z",
       "side": 1,
       "message": "I would suggest to remove the blank line here to make the local import a group",
+      "revId": "7b7485f382ecc51306e59560866e71d579f930bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_f3cc9a63",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-21T11:08:15Z",
+      "side": 1,
+      "message": "if you mean opnfv.utils, after we install it, and not belong to functest, it is considered as 3rd part library, rather than local module",
+      "parentUuid": "5ac10518_3386a214",
       "revId": "7b7485f382ecc51306e59560866e71d579f930bb",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -99,6 +141,24 @@
       "writtenOn": "2016-12-21T11:01:36Z",
       "side": 1,
       "message": "Is the blank line needed here?",
+      "revId": "7b7485f382ecc51306e59560866e71d579f930bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_93dbd61a",
+        "filename": "functest/utils/openstack_clean.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-21T11:08:15Z",
+      "side": 1,
+      "message": "yes, standard library and 3rd part library belongs to different group",
+      "parentUuid": "5ac10518_53dece12",
       "revId": "7b7485f382ecc51306e59560866e71d579f930bb",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
