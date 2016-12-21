@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_13acc69f",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-21T10:06:20Z",
+      "side": 1,
+      "message": "it will be done during each feature project refactoring",
+      "parentUuid": "5ac10518_d3415e3a",
+      "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_933436df",
         "filename": "functest/core/feature_base.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-12-21T08:29:26Z",
       "side": 1,
       "message": "why not \n\nfrom functest.utils.conf import CONF\n\nself.repo \u003d CONF.directories_repo_functest",
+      "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_13b5a6ed",
+        "filename": "functest/core/feature_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-21T10:06:20Z",
+      "side": 1,
+      "message": "I will do it in another patch",
+      "parentUuid": "5ac10518_933436df",
       "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_33b8e2e4",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-21T10:06:20Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "5ac10518_73518a0d",
+      "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_13584631",
         "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_d3ce3e83",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-21T10:06:20Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "5ac10518_13584631",
+      "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_335b0230",
         "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2016-12-21T08:29:26Z",
       "side": 1,
       "message": "this would be then  \"CONST.dir_repo_functest\"",
+      "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_53a24eaf",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-21T10:06:20Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "5ac10518_335b0230",
       "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
