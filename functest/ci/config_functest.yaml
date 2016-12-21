@@ -1,7 +1,7 @@
 general:
-    directories:
+    dir:
         # Relative to the path where the repo is cloned:
-        dir_vping:         functest/opnfv_tests/openstack/vping
+        vping:         functest/opnfv_tests/openstack/vping
         dir_odl:           functest/opnfv_tests/sdn/odl
         dir_rally:         functest/opnfv_tests/openstack/rally
         dir_tempest_cases: functest/opnfv_tests/openstack/tempest/custom_tests
@@ -12,7 +12,7 @@ general:
         # Absolute path
         dir_home:           /home/opnfv
         dir_repos:          /home/opnfv/repos
-        dir_repo_functest:  /home/opnfv/repos/functest
+        repo_functest:  /home/opnfv/repos/functest
         dir_repo_rally:     /home/opnfv/repos/rally
         dir_repo_tempest:   /home/opnfv/repos/tempest
         dir_repo_releng:    /home/opnfv/repos/releng
@@ -27,11 +27,11 @@ general:
         dir_repo_parser:    /home/opnfv/repos/parser
         dir_repo_domino:    /home/opnfv/repos/domino
         dir_repo_snaps:     /home/opnfv/repos/snaps
-        dir_functest:       /home/opnfv/functest
-        dir_functest_test:  /home/opnfv/repos/functest/functest/opnfv_tests
-        dir_results:        /home/opnfv/functest/results
-        dir_functest_conf:  /home/opnfv/functest/conf
-        dir_functest_data:  /home/opnfv/functest/data
+        functest:       /home/opnfv/functest
+        functest_test:  /home/opnfv/repos/functest/functest/opnfv_tests
+        results:        /home/opnfv/functest/results
+        functest_conf:  /home/opnfv/functest/conf
+        functest_data:  /home/opnfv/functest/data
         dir_vIMS_data:      /home/opnfv/functest/data/vIMS/
         dir_rally_inst:     /home/opnfv/.rally
 
@@ -75,12 +75,12 @@ vping:
     vm_name_1: opnfv-vping-1
     vm_name_2: opnfv-vping-2
     image_name: functest-vping
-    vping_private_net_name: vping-net
-    vping_private_subnet_name: vping-subnet
-    vping_private_subnet_cidr: 192.168.130.0/24
-    vping_router_name: vping-router
-    vping_sg_name: vPing-sg
-    vping_sg_descr: Security group for vPing test case
+    private_net_name: vping-net
+    private_subnet_name: vping-subnet
+    private_subnet_cidr: 192.168.130.0/24
+    router_name: vping-router
+    sg_name: vPing-sg
+    sg_desc: Security group for vPing test case
 
 onos_sfc:
     image_base_url: http://artifacts.opnfv.org/sfc/demo
