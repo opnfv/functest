@@ -3,6 +3,7 @@ import time
 import testcase_base as base
 import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_logger as ft_logger
+from functest.utils.constants import CONST
 
 
 class FeatureBase(base.TestcaseBase):
@@ -11,7 +12,7 @@ class FeatureBase(base.TestcaseBase):
         self.project_name = project
         self.case_name = case
         self.cmd = cmd
-        self.repo = self.get_conf('general.dir.{}'.format(repo))
+        self.repo = CONST.__getattribute__(repo)
         self.result_file = self.get_result_file()
         self.logger = ft_logger.Logger(project).getLogger()
 
@@ -44,15 +45,10 @@ class FeatureBase(base.TestcaseBase):
         return exit_code
 
     def get_result_file(self):
-        dir = self.get_conf('general.dir.results')
-        return "{}/{}.log".format(dir, self.project_name)
+        return "{}/{}.log".format(CONST.dir_results, self.project_name)
 
     def log_results(self):
         ft_utils.logger_test_results(self.project_name,
                                      self.case_name,
                                      self.criteria,
                                      self.details)
-
-    @staticmethod
-    def get_conf(parameter):
-        return ft_utils.get_functest_config(parameter)
