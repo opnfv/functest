@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_d3415e3a",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-21T08:29:26Z",
+      "side": 1,
+      "message": "maybe not for this patch, but I\u0027d like the idea of getting rid of the prefix \"dir_\" in all the entries here...",
+      "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_933436df",
+        "filename": "functest/core/feature_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-21T08:29:26Z",
+      "side": 1,
+      "message": "why not \n\nfrom functest.utils.conf import CONF\n\nself.repo \u003d CONF.directories_repo_functest",
+      "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_73518a0d",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-21T08:29:26Z",
+      "side": 1,
+      "message": "from functest.utils.constants import CONST",
+      "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_13584631",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-21T08:29:26Z",
+      "side": 1,
+      "message": "no need for this",
+      "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_335b0230",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-21T08:29:26Z",
+      "side": 1,
+      "message": "this would be then  \"CONST.dir_repo_functest\"",
+      "revId": "ca19d3c3f0dfe58608b2503514daa8a917735eec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
