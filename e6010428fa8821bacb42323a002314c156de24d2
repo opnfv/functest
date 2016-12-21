@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_13e846b3",
+        "filename": "functest/tests/unit/ci/test_run_unit_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-21T11:04:44Z",
+      "side": 1,
+      "message": "Can we put this into a shared util module for unit test?",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
