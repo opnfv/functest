@@ -102,7 +102,7 @@ ONOS_SFC_RELATIVE_PATH = get_value('general.dir.dir_onos_sfc',
                                    'ONOS_SFC_RELATIVE_PATH')
 ONOS_SFC_IMAGE_BASE_URL = get_value('onos_sfc.image_base_url',
                                     'ONOS_SFC_IMAGE_BASE_URL')
-RALLY_RELATIVE_PATH = get_value('general.dir.dir_rally',
+RALLY_RELATIVE_PATH = get_value('general.dir.rally',
                                 'RALLY_RELATIVE_PATH')
 RALLY_PRIVATE_NET_NAME = get_value('rally.network_name',
                                    'RALLY_PRIVATE_NET_NAME')
@@ -111,7 +111,7 @@ RALLY_PRIVATE_SUBNET_NAME = get_value('rally.subnet_name',
 RALLY_PRIVATE_SUBNET_CIDR = get_value('rally.subnet_cidr',
                                       'RALLY_PRIVATE_SUBNET_CIDR')
 RALLY_ROUTER_NAME = get_value('rally.router_name', 'RALLY_ROUTER_NAME')
-RALLY_INSTALLATION_DIR = get_value('general.dir.dir_rally_inst',
+RALLY_INSTALLATION_DIR = get_value('general.dir.rally_inst',
                                    'RALLY_INSTALLATION_DIR')
 GLANCE_IMAGE_NAME = get_value('general.openstack.image_name',
                               'GLANCE_IMAGE_NAME')

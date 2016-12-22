@@ -1,9 +1,9 @@
 general:
     dir:
         # Relative to the path where the repo is cloned:
-        vping:         functest/opnfv_tests/openstack/vping
+        vping:             functest/opnfv_tests/openstack/vping
         dir_odl:           functest/opnfv_tests/sdn/odl
-        dir_rally:         functest/opnfv_tests/openstack/rally
+        rally:             functest/opnfv_tests/openstack/rally
         dir_tempest_cases: functest/opnfv_tests/openstack/tempest/custom_tests
         dir_vIMS:          functest/opnfv_tests/vnf/ims
         dir_onos:          functest/opnfv_tests/sdn/onos/teston
@@ -33,7 +33,7 @@ general:
         functest_conf:      /home/opnfv/functest/conf
         functest_data:      /home/opnfv/functest/data
         dir_vIMS_data:      /home/opnfv/functest/data/vIMS/
-        dir_rally_inst:     /home/opnfv/.rally
+        rally_inst:         /home/opnfv/.rally
 
     openstack:
         creds: /home/opnfv/functest/conf/openstack.creds
