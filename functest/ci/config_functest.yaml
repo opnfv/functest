@@ -3,8 +3,13 @@ general:
         # Relative to the path where the repo is cloned:
         vping:             functest/opnfv_tests/openstack/vping
         dir_odl:           functest/opnfv_tests/sdn/odl
+<<<<<<< HEAD
         dir_rally:         functest/opnfv_tests/openstack/rally
         tempest_cases:     functest/opnfv_tests/openstack/tempest/custom_tests
+=======
+        rally:             functest/opnfv_tests/openstack/rally
+        dir_tempest_cases: functest/opnfv_tests/openstack/tempest/custom_tests
+>>>>>>> afcbc7a... refactor rally using new constants provider
         dir_vIMS:          functest/opnfv_tests/vnf/ims
         dir_onos:          functest/opnfv_tests/sdn/onos/teston
         dir_onos_sfc:      functest/opnfv_tests/sdn/onos/sfc
