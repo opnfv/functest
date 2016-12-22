@@ -7,8 +7,9 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 import os
-import functest.utils.functest_utils as ft_utils
+
 import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as ft_utils
 
 logger = ft_logger.Logger("functest_constants").getLogger()
 
@@ -87,7 +88,7 @@ OPENSTACK_CREDS = get_value('general.openstack.creds', 'creds')
 OPENSTACK_SNAPSHOT_FILE = get_value('general.openstack.snapshot_file',
                                     'OPENSTACK_SNAPSHOT_FILE')
 
-DOMINO_REPO_DIR = get_value('general.dir.dir_repo_domino',
+DOMINO_REPO_DIR = get_value('general.dir.repo_domino',
                             'DOMINO_REPO_DIR')
 SDNVPN_REPO_DIR = get_value('general.dir.repo_sdnvpn',
                             'SDNVPN_REPO_DIR')
