@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_79a5e9b3",
+        "filename": "functest/opnfv_tests/features/sdnvpn.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-22T08:25:54Z",
+      "side": 1,
+      "message": "the only problem of doing it like this is that the output of the command is not showed in real time...",
+      "revId": "9ed0c2088646f497300e6048ced2e1b2fd87bdfe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
