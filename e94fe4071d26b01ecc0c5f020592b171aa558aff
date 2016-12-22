@@ -33,6 +33,29 @@
       "revId": "e94fe4071d26b01ecc0c5f020592b171aa558aff",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_797de9e6",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-22T09:55:28Z",
+      "side": 1,
+      "message": "I would not divide the import modules into four groups. Three groups are enough.\n- build-in modules\n- 3rd-party modules that are installed (in this way, releng should be in this group)\n- project internal modules",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "e94fe4071d26b01ecc0c5f020592b171aa558aff",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
