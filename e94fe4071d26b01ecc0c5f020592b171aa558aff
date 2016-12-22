@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_99f21599",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-22T09:07:39Z",
+      "side": 1,
+      "message": "why this blank line?",
+      "revId": "e94fe4071d26b01ecc0c5f020592b171aa558aff",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_f9f3199d",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-22T09:07:39Z",
+      "side": 1,
+      "message": "I would put this after all the functest imports, not here. In alphabetical order, Opnfv.utils should go after Functest.utils..",
+      "revId": "e94fe4071d26b01ecc0c5f020592b171aa558aff",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
