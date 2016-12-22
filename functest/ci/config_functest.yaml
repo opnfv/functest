@@ -25,7 +25,7 @@ general:
         repo_copper:    /home/opnfv/repos/copper
         dir_repo_ovno:      /home/opnfv/repos/ovno
         repo_parser:    /home/opnfv/repos/parser
-        dir_repo_domino:    /home/opnfv/repos/domino
+        repo_domino:    /home/opnfv/repos/domino
         dir_repo_snaps:     /home/opnfv/repos/snaps
         functest:       /home/opnfv/functest
         functest_test:  /home/opnfv/repos/functest/functest/opnfv_tests
