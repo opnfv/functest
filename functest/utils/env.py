@@ -9,7 +9,8 @@ default_envs = {
     'INSTALLER_TYPE': None,
     'INSTALLER_IP': None,
     'BUILD_TAG': None,
-    'OS_ENDPOINT_TYPE': None
+    'OS_ENDPOINT_TYPE': None,
+    'OS_AUTH_URL': None
 }
 
 

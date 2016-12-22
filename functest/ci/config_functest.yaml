@@ -11,13 +11,21 @@ general:
 
         # Absolute path
         dir_home:           /home/opnfv
+<<<<<<< HEAD
         dir_repos:          /home/opnfv/repos
+=======
+        repos:              /home/opnfv/repos
+>>>>>>> 0546f91... refactor cli module using new constants provider
         repo_functest:      /home/opnfv/repos/functest
         dir_repo_rally:     /home/opnfv/repos/rally
         repo_tempest:       /home/opnfv/repos/tempest
         dir_repo_releng:    /home/opnfv/repos/releng
         dir_repo_vims_test: /home/opnfv/repos/vims-test
+<<<<<<< HEAD
         repo_sdnvpn:        /home/opnfv/repos/sdnvpn
+=======
+        dir_repo_sdnvpn:    /home/opnfv/repos/sdnvpn
+>>>>>>> 0546f91... refactor cli module using new constants provider
         repo_sfc:           /home/opnfv/repos/sfc
         dir_repo_onos:      /home/opnfv/repos/onos
         dir_repo_promise:   /home/opnfv/repos/promise
