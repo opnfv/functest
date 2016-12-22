@@ -7,12 +7,14 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
+import functools
 import json
 import os
 import re
 import shutil
 import subprocess
 import sys
+import time
 import urllib2
 from datetime import datetime as dt
 
@@ -20,9 +22,6 @@ import dns.resolver
 import requests
 import yaml
 from git import Repo
-
-import time
-import functools
 
 import functest.utils.functest_logger as ft_logger
 

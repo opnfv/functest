@@ -15,20 +15,20 @@
 #
 """ tests configuration """
 
+import argparse
 import json
 import os
 import re
 import subprocess
 import time
 
-import argparse
 import iniparse
 import yaml
 
+from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-import functest.utils.functest_constants as ft_constants
 
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
          'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
@@ -71,8 +71,7 @@ else:
 """ logging configuration """
 logger = ft_logger.Logger("run_rally-cert").getLogger()
 
-RALLY_DIR = os.path.join(ft_constants.FUNCTEST_REPO_DIR,
-                         ft_constants.RALLY_RELATIVE_PATH)
+RALLY_DIR = os.path.join(CONST.dir_repo_functest, CONST.dir_rally)
 RALLY_SCENARIO_DIR = os.path.join(RALLY_DIR, "scenario")
 SANITY_MODE_DIR = os.path.join(RALLY_SCENARIO_DIR, "sanity")
 FULL_MODE_DIR = os.path.join(RALLY_SCENARIO_DIR, "full")
@@ -87,19 +86,19 @@ TENANTS_AMOUNT = 3
 ITERATIONS_AMOUNT = 10
 CONCURRENCY = 4
 
-RESULTS_DIR = os.path.join(ft_constants.FUNCTEST_RESULTS_DIR, 'rally')
-TEMPEST_CONF_FILE = os.path.join(ft_constants.FUNCTEST_RESULTS_DIR,
+RESULTS_DIR = os.path.join(CONST.dir_results, 'rally')
+TEMPEST_CONF_FILE = os.path.join(CONST.dir_results,
                                  'tempest/tempest.conf')
 
-RALLY_PRIVATE_NET_NAME = ft_constants.RALLY_PRIVATE_NET_NAME
-RALLY_PRIVATE_SUBNET_NAME = ft_constants.RALLY_PRIVATE_SUBNET_NAME
-RALLY_PRIVATE_SUBNET_CIDR = ft_constants.RALLY_PRIVATE_SUBNET_CIDR
-RALLY_ROUTER_NAME = ft_constants.RALLY_ROUTER_NAME
+RALLY_PRIVATE_NET_NAME = CONST.rally_network_name
+RALLY_PRIVATE_SUBNET_NAME = CONST.rally_subnet_name
+RALLY_PRIVATE_SUBNET_CIDR = CONST.rally_subnet_cidr
+RALLY_ROUTER_NAME = CONST.rally_router_name
 
-GLANCE_IMAGE_NAME = ft_constants.GLANCE_IMAGE_NAME
-GLANCE_IMAGE_FILENAME = ft_constants.GLANCE_IMAGE_FILENAME
-GLANCE_IMAGE_FORMAT = ft_constants.GLANCE_IMAGE_FORMAT
-GLANCE_IMAGE_PATH = os.path.join(ft_constants.FUNCTEST_DATA_DIR,
+GLANCE_IMAGE_NAME = CONST.openstack_image_name
+GLANCE_IMAGE_FILENAME = CONST.openstack_image_file_name
+GLANCE_IMAGE_FORMAT = CONST.openstack_image_disk_format
+GLANCE_IMAGE_PATH = os.path.join(CONST.dir_functest_data,
                                  GLANCE_IMAGE_FILENAME)
 CINDER_VOLUME_TYPE_NAME = "volume_test"
 
@@ -181,7 +180,7 @@ def build_task_args(test_file_name):
     net_id = GlobalVariables.network_dict['net_id']
     task_args['netid'] = str(net_id)
 
-    auth_url = ft_constants.OS_AUTH_URL
+    auth_url = CONST.OS_AUTH_URL
     if auth_url is not None:
         task_args['request_url'] = auth_url.rsplit(":", 1)[0]
     else:
@@ -271,8 +270,8 @@ def excl_scenario():
         with open(BLACKLIST_FILE, 'r') as black_list_file:
             black_list_yaml = yaml.safe_load(black_list_file)
 
-        installer_type = ft_constants.CI_INSTALLER_TYPE
-        deploy_scenario = ft_constants.CI_SCENARIO
+        installer_type = CONST.INSTALLER_TYPE
+        deploy_scenario = CONST.DEPLOY_SCENARIO
         if (bool(installer_type) * bool(deploy_scenario)):
             if 'scenario' in black_list_yaml.keys():
                 for item in black_list_yaml['scenario']:
