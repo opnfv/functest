@@ -7,12 +7,14 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
+import functools
 import json
 import os
 import re
 import shutil
 import subprocess
 import sys
+import time
 import urllib2
 from datetime import datetime as dt
 
@@ -20,9 +22,6 @@ import dns.resolver
 import requests
 import yaml
 from git import Repo
-
-import time
-import functools
 
 import functest.utils.functest_logger as ft_logger
 
@@ -319,6 +318,26 @@ def execute_command(cmd, info=False, error_msg="",
             logger.error(error_msg)
 
     return returncode
+
+
+def get_deployment_dir():
+    """
+    Returns current Rally deployment directory
+    """
+    deployment_name = get_functest_config('rally.deployment_name')
+    rally_dir = get_functest_config('general.dir.rally_inst')
+    cmd = ("rally deployment list | awk '/" + deployment_name +
+           "/ {print $2}'")
+    p = subprocess.Popen(cmd, shell=True,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
+    deployment_uuid = p.stdout.readline().rstrip()
+    if deployment_uuid == "":
+        logger.error("Rally deployment not found.")
+        exit(-1)
+    deployment_dir = (rally_dir + "/tempest/for-deployment-" +
+                      deployment_uuid)
+    return deployment_dir
 
 
 def get_dict_by_test(testname):

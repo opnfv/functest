@@ -7,8 +7,9 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 import os
-import functest.utils.functest_utils as ft_utils
+
 import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as ft_utils
 
 logger = ft_logger.Logger("functest_constants").getLogger()
 
@@ -102,7 +103,7 @@ ONOS_SFC_RELATIVE_PATH = get_value('general.dir.dir_onos_sfc',
                                    'ONOS_SFC_RELATIVE_PATH')
 ONOS_SFC_IMAGE_BASE_URL = get_value('onos_sfc.image_base_url',
                                     'ONOS_SFC_IMAGE_BASE_URL')
-RALLY_RELATIVE_PATH = get_value('general.dir.dir_rally',
+RALLY_RELATIVE_PATH = get_value('general.dir.rally',
                                 'RALLY_RELATIVE_PATH')
 RALLY_PRIVATE_NET_NAME = get_value('rally.network_name',
                                    'RALLY_PRIVATE_NET_NAME')
