@@ -12,18 +12,18 @@ import os
 import re
 import shutil
 
-import functest.utils.functest_constants as ft_constants
-import functest.utils.functest_utils as ft_utils
 import opnfv.utils.constants as releng_constants
 
+import functest.utils.functest_utils as ft_utils
+from functest.utils.constants import CONST
 
 IMAGE_ID_ALT = None
 FLAVOR_ID_ALT = None
-REPO_PATH = ft_constants.FUNCTEST_REPO_DIR
-GLANCE_IMAGE_PATH = os.path.join(ft_constants.FUNCTEST_DATA_DIR,
-                                 ft_constants.GLANCE_IMAGE_FILENAME)
-TEMPEST_TEST_LIST_DIR = ft_constants.TEMPEST_TEST_LIST_DIR
-TEMPEST_RESULTS_DIR = os.path.join(ft_constants.FUNCTEST_RESULTS_DIR,
+REPO_PATH = CONST.dir_repo_functest
+GLANCE_IMAGE_PATH = os.path.join(CONST.dir_functest_data,
+                                 CONST.openstack_image_file_name)
+TEMPEST_TEST_LIST_DIR = CONST.dir_tempest_cases
+TEMPEST_RESULTS_DIR = os.path.join(CONST.dir_results,
                                    'tempest')
 TEMPEST_CUSTOM = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
                               'test_list.txt')
@@ -34,8 +34,8 @@ TEMPEST_DEFCORE = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
 TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
 
-CI_INSTALLER_TYPE = ft_constants.CI_INSTALLER_TYPE
-CI_INSTALLER_IP = ft_constants.CI_INSTALLER_IP
+CI_INSTALLER_TYPE = CONST.INSTALLER_TYPE
+CI_INSTALLER_IP = CONST.INSTALLER_IP
 
 
 def configure_tempest(logger, deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
@@ -63,24 +63,24 @@ def configure_tempest(logger, deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
     config.set(
         'compute',
         'fixed_network_name',
-        ft_constants.TEMPEST_PRIVATE_NET_NAME)
-    if ft_constants.TEMPEST_USE_CUSTOM_IMAGES:
+        CONST.tempest_private_net_name)
+    if CONST.tempest_use_custom_images:
         if IMAGE_ID is not None:
             config.set('compute', 'image_ref', IMAGE_ID)
         if IMAGE_ID_ALT is not None:
             config.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
-    if ft_constants.TEMPEST_USE_CUSTOM_FLAVORS:
+    if CONST.tempest_use_custom_flavors:
         if FLAVOR_ID is not None:
             config.set('compute', 'flavor_ref', FLAVOR_ID)
         if FLAVOR_ID_ALT is not None:
             config.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
-    config.set('identity', 'tenant_name', ft_constants.TEMPEST_TENANT_NAME)
-    config.set('identity', 'username', ft_constants.TEMPEST_USER_NAME)
-    config.set('identity', 'password', ft_constants.TEMPEST_USER_PASSWORD)
+    config.set('identity', 'tenant_name', CONST.tempest_identity_tenant_name)
+    config.set('identity', 'username', CONST.tempest_identity_user_name)
+    config.set('identity', 'password', CONST.tempest_identity_user_password)
     config.set(
-        'validation', 'ssh_timeout', ft_constants.TEMPEST_SSH_TIMEOUT)
+        'validation', 'ssh_timeout', CONST.tempest_validation_ssh_timeout)
 
-    if ft_constants.OS_ENDPOINT_TYPE is not None:
+    if CONST.OS_ENDPOINT_TYPE is not None:
         services_list = ['compute',
                          'volume',
                          'image',
@@ -93,7 +93,7 @@ def configure_tempest(logger, deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
             if service not in sections:
                 config.add_section(service)
             config.set(service, 'endpoint_type',
-                       ft_constants.OS_ENDPOINT_TYPE)
+                       CONST.OS_ENDPOINT_TYPE)
 
     with open(tempest_conf_file, 'wb') as config_file:
         config.write(config_file)

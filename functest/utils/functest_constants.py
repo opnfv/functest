@@ -149,7 +149,7 @@ TEMPEST_USE_CUSTOM_IMAGES = get_value('tempest.use_custom_images',
                                       'TEMPEST_USE_CUSTOM_IMAGES')
 TEMPEST_USE_CUSTOM_FLAVORS = get_value('tempest.use_custom_flavors',
                                        'TEMPEST_USE_CUSTOM_FLAVORS')
-TEMPEST_TEST_LIST_DIR = get_value('general.dir.dir_tempest_cases',
+TEMPEST_TEST_LIST_DIR = get_value('general.dir.tempest_cases',
                                   'TEMPEST_TEST_LIST_DIR')
 NAME_VM_1 = get_value('vping.vm_name_1', 'NAME_VM_1')
 NAME_VM_2 = get_value('vping.vm_name_2', 'NAME_VM_2')
