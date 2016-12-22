@@ -11,7 +11,7 @@ general:
 
         # Absolute path
         dir_home:           /home/opnfv
-        dir_repos:          /home/opnfv/repos
+        repos:              /home/opnfv/repos
         repo_functest:      /home/opnfv/repos/functest
         dir_repo_rally:     /home/opnfv/repos/rally
         repo_tempest:       /home/opnfv/repos/tempest

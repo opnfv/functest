@@ -14,19 +14,17 @@ import os
 import click
 
 import functest.ci.tier_builder as tb
+from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_vacation as vacation
-import functest.utils.functest_constants as ft_constants
 
 
 class CliTestcase:
 
     def __init__(self):
-        CI_INSTALLER_TYPE = ft_constants.CI_INSTALLER_TYPE
-        CI_SCENARIO = ft_constants.CI_SCENARIO
-        testcases = ft_constants.FUNCTEST_TESTCASES_YAML
-
-        self.tiers = tb.TierBuilder(CI_INSTALLER_TYPE, CI_SCENARIO, testcases)
+        self.tiers = tb.TierBuilder(CONST.INSTALLER_TYPE,
+                                    CONST.DEPLOY_SCENARIO,
+                                    CONST.functest_testcases_yaml)
 
     def list(self):
         summary = ""
@@ -43,10 +41,11 @@ class CliTestcase:
 
         click.echo(description)
 
-    def run(self, testname, noclean=False):
+    @staticmethod
+    def run(testname, noclean=False):
         if testname == 'vacation':
             vacation.main()
-        elif not os.path.isfile(ft_constants.ENV_FILE):
+        elif not os.path.isfile(CONST.env_active):
             click.echo("Functest environment is not ready. "
                        "Run first 'functest env prepare'")
         else:
@@ -54,8 +53,8 @@ class CliTestcase:
             for test in tests:
                 if noclean:
                     cmd = ("python %s/functest/ci/run_tests.py "
-                           "-n -t %s" % (ft_constants.FUNCTEST_REPO_DIR, test))
+                           "-n -t %s" % (CONST.dir_repo_functest, test))
                 else:
                     cmd = ("python %s/functest/ci/run_tests.py "
-                           "-t %s" % (ft_constants.FUNCTEST_REPO_DIR, test))
+                           "-t %s" % (CONST.dir_repo_functest, test))
                 ft_utils.execute_command(cmd)
