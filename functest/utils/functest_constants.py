@@ -61,7 +61,7 @@ def get_value(functest_config_key, env_variable):
 
 
 HOME = get_value('general.dir.dir_home', 'HOME')
-REPOS_DIR = get_value('general.dir.dir_repos', 'REPOS_DIR')
+REPOS_DIR = get_value('general.dir.repos', 'REPOS_DIR')
 FUNCTEST_BASE_DIR = get_value('general.dir.functest',
                               'FUNCTEST_BASE_DIR')
 FUNCTEST_REPO_DIR = get_value('general.dir.repo_functest',
