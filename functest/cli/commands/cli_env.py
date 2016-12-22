@@ -12,8 +12,8 @@ import os
 import click
 import git
 
+from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
-import functest.utils.functest_constants as ft_constants
 
 
 class CliEnv:
@@ -28,7 +28,7 @@ class CliEnv:
                                "it again? [y|n]\n")
             while True:
                 if answer.lower() in ["y", "yes"]:
-                    os.remove(ft_constants.ENV_FILE)
+                    os.remove(CONST.env_active)
                     break
                 elif answer.lower() in ["n", "no"]:
                     return
@@ -36,39 +36,27 @@ class CliEnv:
                     answer = raw_input("Invalid answer. Please type [y|n]\n")
 
         cmd = ("python %s/functest/ci/prepare_env.py start" %
-               ft_constants.FUNCTEST_REPO_DIR)
+               CONST.dir_repo_functest)
         ft_utils.execute_command(cmd)
 
     def show(self):
-        CI_INSTALLER_TYPE = ft_constants.CI_INSTALLER_TYPE
-        if CI_INSTALLER_TYPE is None:
-            CI_INSTALLER_TYPE = "Unknown"
-        CI_INSTALLER_IP = ft_constants.CI_INSTALLER_IP
-        if CI_INSTALLER_IP is None:
-            CI_INSTALLER_IP = "Unknown"
-        CI_INSTALLER = ("%s, %s" % (CI_INSTALLER_TYPE, CI_INSTALLER_IP))
+        def _get_value(attr, default='Unknown'):
+            return attr if attr else default
 
-        CI_SCENARIO = ft_constants.CI_SCENARIO
-        if CI_SCENARIO is None:
-            CI_SCENARIO = "Unknown"
-
-        CI_NODE = ft_constants.CI_NODE
-        if CI_NODE is None:
-            CI_NODE = "Unknown"
-
-        repo = git.Repo(ft_constants.FUNCTEST_REPO_DIR)
+        install_type = _get_value(CONST.INSTALLER_TYPE)
+        installer_ip = _get_value(CONST.INSTALLER_IP)
+        installer_info = ("%s, %s" % (install_type, installer_ip))
+        scenario = _get_value(CONST.DEPLOY_SCENARIO)
+        node = _get_value(CONST.NODE_NAME)
+        repo = git.Repo(CONST.dir_repo_functest)
         branch = repo.head.reference
-        GIT_BRANCH = branch.name
-        GIT_HASH = branch.commit.hexsha
-
-        CI_BUILD_TAG = ft_constants.CI_BUILD_TAG
-        if CI_BUILD_TAG is not None:
-            CI_BUILD_TAG = CI_BUILD_TAG.lstrip(
+        git_branch = branch.name
+        git_hash = branch.commit.hexsha
+        is_debug = _get_value(CONST.CI_DEBUG, 'false')
+        build_tag = CONST.BUILD_TAG
+        if build_tag is not None:
+            build_tag = build_tag.lstrip(
                 "jenkins-").lstrip("functest").lstrip("-")
-
-        CI_DEBUG = ft_constants.CI_DEBUG
-        if CI_DEBUG is None:
-            CI_DEBUG = "false"
 
         STATUS = "not ready"
         if self.status(verbose=False) == 0:
@@ -77,14 +65,14 @@ class CliEnv:
         click.echo("+======================================================+")
         click.echo("| Functest Environment info                            |")
         click.echo("+======================================================+")
-        click.echo("|  INSTALLER: %s|" % CI_INSTALLER.ljust(41))
-        click.echo("|   SCENARIO: %s|" % CI_SCENARIO.ljust(41))
-        click.echo("|        POD: %s|" % CI_NODE.ljust(41))
-        click.echo("| GIT BRACNH: %s|" % GIT_BRANCH.ljust(41))
-        click.echo("|   GIT HASH: %s|" % GIT_HASH.ljust(41))
-        if CI_BUILD_TAG:
-            click.echo("|  BUILD TAG: %s|" % CI_BUILD_TAG.ljust(41))
-        click.echo("| DEBUG FLAG: %s|" % CI_DEBUG.ljust(41))
+        click.echo("|  INSTALLER: %s|" % installer_info.ljust(41))
+        click.echo("|   SCENARIO: %s|" % scenario.ljust(41))
+        click.echo("|        POD: %s|" % node.ljust(41))
+        click.echo("| GIT BRACNH: %s|" % git_branch.ljust(41))
+        click.echo("|   GIT HASH: %s|" % git_hash.ljust(41))
+        if build_tag:
+            click.echo("|  BUILD TAG: %s|" % build_tag.ljust(41))
+        click.echo("| DEBUG FLAG: %s|" % is_debug.ljust(41))
         click.echo("+------------------------------------------------------+")
         click.echo("|     STATUS: %s|" % STATUS.ljust(41))
         click.echo("+------------------------------------------------------+")
@@ -92,7 +80,7 @@ class CliEnv:
 
     def status(self, verbose=True):
         ret_val = 0
-        if not os.path.isfile(ft_constants.ENV_FILE):
+        if not os.path.isfile(CONST.env_active):
             if verbose:
                 click.echo("Functest environment is not installed.\n")
             ret_val = 1
