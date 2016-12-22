@@ -321,26 +321,6 @@ def execute_command(cmd, info=False, error_msg="",
     return returncode
 
 
-def get_deployment_dir():
-    """
-    Returns current Rally deployment directory
-    """
-    deployment_name = get_functest_config('rally.deployment_name')
-    rally_dir = get_functest_config('general.dir.dir_rally_inst')
-    cmd = ("rally deployment list | awk '/" + deployment_name +
-           "/ {print $2}'")
-    p = subprocess.Popen(cmd, shell=True,
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT)
-    deployment_uuid = p.stdout.readline().rstrip()
-    if deployment_uuid == "":
-        logger.error("Rally deployment not found.")
-        exit(-1)
-    deployment_dir = (rally_dir + "/tempest/for-deployment-" +
-                      deployment_uuid)
-    return deployment_dir
-
-
 def get_dict_by_test(testname):
     with open(get_testcases_file_dir()) as f:
         testcases_yaml = yaml.safe_load(f)

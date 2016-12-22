@@ -14,6 +14,7 @@ import shutil
 import subprocess
 import time
 
+import opnfv.utils.constants as releng_constants
 import yaml
 
 import conf_utils
@@ -21,8 +22,7 @@ import functest.core.testcase_base as testcase_base
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-import functest.utils.functest_constants as ft_constants
-import opnfv.utils.constants as releng_constants
+from functest.utils.constants import CONST
 
 """ logging configuration """
 logger = ft_logger.Logger("Tempest").getLogger()
@@ -36,9 +36,28 @@ class TempestCommon(testcase_base.TestcaseBase):
         self.OPTION = ""
         self.FLAVOR_ID = None
         self.IMAGE_ID = None
-        self.DEPLOYMENT_DIR = ft_utils.get_deployment_dir()
+        self.DEPLOYMENT_DIR = self.get_deployment_dir()
 
-    def read_file(self, filename):
+    @staticmethod
+    def get_deployment_dir():
+        """
+        Returns current Rally deployment directory
+        """
+        cmd = ("rally deployment list | awk '/" +
+               CONST.rally_deployment_name +
+               "/ {print $2}'")
+        p = subprocess.Popen(cmd, shell=True,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.STDOUT)
+        deployment_uuid = p.stdout.readline().rstrip()
+        if deployment_uuid == "":
+            logger.error("Rally deployment not found.")
+            exit(-1)
+        return os.path.join(CONST.dir_rally_inst,
+                            "tempest/for-deployment-" + deployment_uuid)
+
+    @staticmethod
+    def read_file(filename):
         with open(filename) as src:
             return [line.strip() for line in src.readlines()]
 
@@ -48,47 +67,47 @@ class TempestCommon(testcase_base.TestcaseBase):
         logger.debug("Creating tenant and user for Tempest suite")
         tenant_id = os_utils.create_tenant(
             keystone_client,
-            ft_constants.TEMPEST_TENANT_NAME,
-            ft_constants.TEMPEST_TENANT_DESCRIPTION)
+            CONST.tempest_identity_tenant_name,
+            CONST.tempest_identity_tenant_description)
         if not tenant_id:
             logger.error("Error : Failed to create %s tenant"
-                         % ft_constants.TEMPEST_TENANT_NAME)
+                         % CONST.tempest_identity_tenant_name)
 
         user_id = os_utils.create_user(keystone_client,
-                                       ft_constants.TEMPEST_USER_NAME,
-                                       ft_constants.TEMPEST_USER_PASSWORD,
+                                       CONST.tempest_identity_user_name,
+                                       CONST.tempest_identity_user_password,
                                        None, tenant_id)
         if not user_id:
             logger.error("Error : Failed to create %s user" %
-                         ft_constants.TEMPEST_USER_NAME)
+                         CONST.tempest_identity_user_name)
 
         logger.debug("Creating private network for Tempest suite")
         network_dic = \
             os_utils.create_shared_network_full(
-                ft_constants.TEMPEST_PRIVATE_NET_NAME,
-                ft_constants.TEMPEST_PRIVATE_SUBNET_NAME,
-                ft_constants.TEMPEST_ROUTER_NAME,
-                ft_constants.TEMPEST_PRIVATE_SUBNET_CIDR)
+                CONST.tempest_private_net_name,
+                CONST.tempest_private_subnet_name,
+                CONST.tempest_router_name,
+                CONST.tempest_private_subnet_cidr)
         if not network_dic:
             return releng_constants.EXIT_RUN_ERROR
 
-        if ft_constants.TEMPEST_USE_CUSTOM_IMAGES:
+        if CONST.tempest_use_custom_images:
             # adding alternative image should be trivial should we need it
             logger.debug("Creating image for Tempest suite")
             _, self.IMAGE_ID = os_utils.get_or_create_image(
-                ft_constants.GLANCE_IMAGE_NAME, conf_utils.GLANCE_IMAGE_PATH,
-                ft_constants.GLANCE_IMAGE_FORMAT)
+                CONST.openstack_image_name, conf_utils.GLANCE_IMAGE_PATH,
+                CONST.openstack_image_disk_format)
             if not self.IMAGE_ID:
                 return releng_constants.EXIT_RUN_ERROR
 
-        if ft_constants.TEMPEST_USE_CUSTOM_FLAVORS:
+        if CONST.tempest_use_custom_flavors:
             # adding alternative flavor should be trivial should we need it
             logger.debug("Creating flavor for Tempest suite")
             _, self.FLAVOR_ID = os_utils.get_or_create_flavor(
-                ft_constants.FLAVOR_NAME,
-                ft_constants.FLAVOR_RAM,
-                ft_constants.FLAVOR_DISK,
-                ft_constants.FLAVOR_VCPUS)
+                CONST.openstack_flavor_name,
+                CONST.openstack_flavor_ram,
+                CONST.openstack_flavor_disk,
+                CONST.openstack_flavor_vcpus)
             if not self.FLAVOR_ID:
                 return releng_constants.EXIT_RUN_ERROR
 
@@ -128,8 +147,8 @@ class TempestCommon(testcase_base.TestcaseBase):
         result_file = open(conf_utils.TEMPEST_LIST, 'w')
         black_tests = []
         try:
-            installer_type = ft_constants.CI_INSTALLER_TYPE
-            deploy_scenario = ft_constants.CI_SCENARIO
+            installer_type = CONST.INSTALLER_TYPE
+            deploy_scenario = CONST.DEPLOY_SCENARIO
             if (bool(installer_type) * bool(deploy_scenario)):
                 # if INSTALLER_TYPE and DEPLOY_SCENARIO are set we read the
                 # file
@@ -189,9 +208,9 @@ class TempestCommon(testcase_base.TestcaseBase):
 
         header = ("Tempest environment:\n"
                   "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
-                  (ft_constants.CI_INSTALLER_TYPE,
-                   ft_constants.CI_SCENARIO,
-                   ft_constants.CI_NODE,
+                  (CONST.INSTALLER_TYPE,
+                   CONST.DEPLOY_SCENARIO,
+                   CONST.NODE_NAME,
                    time.strftime("%a %b %d %H:%M:%S %Z %Y")))
 
         f_stdout = open(conf_utils.TEMPEST_RESULTS_DIR + "/tempest.log", 'w+')

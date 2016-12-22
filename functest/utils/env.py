@@ -8,7 +8,8 @@ default_envs = {
     'DEPLOY_TYPE': 'virt',
     'INSTALLER_TYPE': None,
     'INSTALLER_IP': None,
-    'BUILD_TAG': None
+    'BUILD_TAG': None,
+    'OS_ENDPOINT_TYPE': None
 }
 
 

@@ -111,7 +111,7 @@ RALLY_PRIVATE_SUBNET_NAME = get_value('rally.subnet_name',
 RALLY_PRIVATE_SUBNET_CIDR = get_value('rally.subnet_cidr',
                                       'RALLY_PRIVATE_SUBNET_CIDR')
 RALLY_ROUTER_NAME = get_value('rally.router_name', 'RALLY_ROUTER_NAME')
-RALLY_INSTALLATION_DIR = get_value('general.dir.dir_rally_inst',
+RALLY_INSTALLATION_DIR = get_value('general.dir.rally_inst',
                                    'RALLY_INSTALLATION_DIR')
 GLANCE_IMAGE_NAME = get_value('general.openstack.image_name',
                               'GLANCE_IMAGE_NAME')
@@ -149,7 +149,7 @@ TEMPEST_USE_CUSTOM_IMAGES = get_value('tempest.use_custom_images',
                                       'TEMPEST_USE_CUSTOM_IMAGES')
 TEMPEST_USE_CUSTOM_FLAVORS = get_value('tempest.use_custom_flavors',
                                        'TEMPEST_USE_CUSTOM_FLAVORS')
-TEMPEST_TEST_LIST_DIR = get_value('general.dir.dir_tempest_cases',
+TEMPEST_TEST_LIST_DIR = get_value('general.dir.tempest_cases',
                                   'TEMPEST_TEST_LIST_DIR')
 NAME_VM_1 = get_value('vping.vm_name_1', 'NAME_VM_1')
 NAME_VM_2 = get_value('vping.vm_name_2', 'NAME_VM_2')
