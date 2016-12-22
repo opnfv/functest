@@ -5,12 +5,14 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import functest.utils.functest_utils as ft_utils
+import os
+import unittest
+
+from snaps import test_suite_builder
+
 from functest.core.pytest_suite_runner import PyTestSuiteRunner
 from functest.opnfv_tests.openstack.snaps import snaps_utils
-from snaps import test_suite_builder
-import unittest
-import os
+from functest.utils.constants import CONST
 
 
 class SnapsSmoke(PyTestSuiteRunner):
@@ -24,18 +26,18 @@ class SnapsSmoke(PyTestSuiteRunner):
 
         self.suite = unittest.TestSuite()
         self.case_name = "snaps_smoke"
-        creds_file = ft_utils.get_functest_config('general.openstack.creds')
-        use_key = ft_utils.get_functest_config('snaps.use_keystone')
-        use_fip = ft_utils.get_functest_config('snaps.use_floating_ips')
+        use_fip = CONST.snaps_use_floating_ips
         ext_net_name = snaps_utils.get_ext_net_name()
 
         # Tests requiring floating IPs leverage files contained within the
         # SNAPS repository and are found relative to that path
         if use_fip:
-            snaps_dir = ft_utils.get_functest_config(
-                'general.dir.dir_repo_snaps') + '/snaps'
+            snaps_dir = CONST.dir_repo_snaps + '/snaps'
             os.chdir(snaps_dir)
 
         test_suite_builder.add_openstack_integration_tests(
-            self.suite, creds_file, ext_net_name, use_keystone=use_key,
+            self.suite,
+            CONST.openstack_creds,
+            ext_net_name,
+            use_keystone=CONST.snaps_use_keystone,
             use_floating_ips=use_fip)
