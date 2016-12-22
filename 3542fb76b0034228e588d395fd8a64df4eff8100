@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_d6d14cfc",
+        "filename": "functest/opnfv_tests/vnf/ims/vims.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-22T01:08:41Z",
+      "side": 1,
+      "message": "Does Orchestrator need to support v2 and v3?",
+      "range": {
+        "startLine": 324,
+        "startChar": 24,
+        "endLine": 324,
+        "endChar": 35
+      },
+      "revId": "3542fb76b0034228e588d395fd8a64df4eff8100",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
