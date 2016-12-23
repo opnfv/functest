@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_673b009d",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-23T11:38:57Z",
+      "side": 1,
+      "message": "conflict here",
+      "revId": "4640d6618e7fee42015ebf4ac8bf24ed453561b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
