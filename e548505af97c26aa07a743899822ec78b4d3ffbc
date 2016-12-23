@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_fcc5473d",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1090
+      },
+      "writtenOn": "2016-12-23T02:59:50Z",
+      "side": 1,
+      "message": "The parameter \"-r\" is just a flag to indicate whether sending report or not, you need to add something to receive a url from user input  with this parameter",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 73
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
