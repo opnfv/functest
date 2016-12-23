@@ -14,15 +14,14 @@ import shutil
 import subprocess
 import time
 
-import opnfv.utils.constants as releng_constants
 import yaml
 
 import conf_utils
 import functest.core.testcase_base as testcase_base
+from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-from functest.utils.constants import CONST
 
 """ logging configuration """
 logger = ft_logger.Logger("Tempest").getLogger()
@@ -31,7 +30,7 @@ logger = ft_logger.Logger("Tempest").getLogger()
 class TempestCommon(testcase_base.TestcaseBase):
 
     def __init__(self):
-        self.case_name = ""
+        super(TempestCommon, self).__init__()
         self.MODE = ""
         self.OPTION = ""
         self.FLAVOR_ID = None
@@ -89,7 +88,7 @@ class TempestCommon(testcase_base.TestcaseBase):
                 CONST.tempest_router_name,
                 CONST.tempest_private_subnet_cidr)
         if not network_dic:
-            return releng_constants.EXIT_RUN_ERROR
+            return testcase_base.TestcaseBase.EX_RUN_ERROR
 
         if CONST.tempest_use_custom_images:
             # adding alternative image should be trivial should we need it
@@ -98,7 +97,7 @@ class TempestCommon(testcase_base.TestcaseBase):
                 CONST.openstack_image_name, conf_utils.GLANCE_IMAGE_PATH,
                 CONST.openstack_image_disk_format)
             if not self.IMAGE_ID:
-                return releng_constants.EXIT_RUN_ERROR
+                return testcase_base.TestcaseBase.EX_RUN_ERROR
 
         if CONST.tempest_use_custom_flavors:
             # adding alternative flavor should be trivial should we need it
@@ -109,9 +108,9 @@ class TempestCommon(testcase_base.TestcaseBase):
                 CONST.openstack_flavor_disk,
                 CONST.openstack_flavor_vcpus)
             if not self.FLAVOR_ID:
-                return releng_constants.EXIT_RUN_ERROR
+                return testcase_base.TestcaseBase.EX_RUN_ERROR
 
-        return releng_constants.EXIT_OK
+        return testcase_base.TestcaseBase.EX_OK
 
     def generate_test_list(self, DEPLOYMENT_DIR):
         logger.debug("Generating test case list...")
@@ -125,7 +124,7 @@ class TempestCommon(testcase_base.TestcaseBase):
             else:
                 logger.error("Tempest test list file %s NOT found."
                              % conf_utils.TEMPEST_CUSTOM)
-                return releng_constants.EXIT_RUN_ERROR
+                return testcase_base.TestcaseBase.EX_RUN_ERROR
         else:
             if self.MODE == 'smoke':
                 testr_mode = "smoke"
@@ -139,7 +138,7 @@ class TempestCommon(testcase_base.TestcaseBase):
                    testr_mode + ">" + conf_utils.TEMPEST_RAW_LIST + ";cd")
             ft_utils.execute_command(cmd)
 
-        return releng_constants.EXIT_OK
+        return testcase_base.TestcaseBase.EX_OK
 
     def apply_tempest_blacklist(self):
         logger.debug("Applying tempest blacklist...")
@@ -175,30 +174,33 @@ class TempestCommon(testcase_base.TestcaseBase):
             else:
                 result_file.write(str(cases_line) + '\n')
         result_file.close()
-        return releng_constants.EXIT_OK
+        return testcase_base.TestcaseBase.EX_OK
 
     def run(self):
+
+        self.start_time = time.time()
+
         if not os.path.exists(conf_utils.TEMPEST_RESULTS_DIR):
             os.makedirs(conf_utils.TEMPEST_RESULTS_DIR)
 
         # Pre-configuration
         res = self.create_tempest_resources()
-        if res != releng_constants.EXIT_OK:
+        if res != testcase_base.TestcaseBase.EX_OK:
             return res
 
         res = conf_utils.configure_tempest(logger,
                                            self.DEPLOYMENT_DIR,
                                            self.IMAGE_ID,
                                            self.FLAVOR_ID)
-        if res != releng_constants.EXIT_OK:
+        if res != testcase_base.TestcaseBase.EX_OK:
             return res
 
         res = self.generate_test_list(self.DEPLOYMENT_DIR)
-        if res != releng_constants.EXIT_OK:
+        if res != testcase_base.TestcaseBase.EX_OK:
             return res
 
         res = self.apply_tempest_blacklist()
-        if res != releng_constants.EXIT_OK:
+        if res != testcase_base.TestcaseBase.EX_OK:
             return res
 
         self.OPTION += (" --tests-file %s " % conf_utils.TEMPEST_LIST)
@@ -271,23 +273,17 @@ class TempestCommon(testcase_base.TestcaseBase):
         except:
             success_rate = 0
 
-        if 'smoke' in self.MODE:
-            self.CASE_NAME = 'tempest_smoke_serial'
-        elif 'feature' in self.MODE:
-            self.CASE_NAME = self.MODE.replace(
-                "feature_", "")
-        else:
-            self.CASE_NAME = 'tempest_full_parallel'
-
-        status = ft_utils.check_success_rate(
-            self.CASE_NAME, success_rate)
+        self.criteria = ft_utils.check_success_rate(
+            self.case_name, success_rate)
         logger.info("Tempest %s success_rate is %s%%, is marked as %s"
-                    % (self.CASE_NAME, success_rate, status))
+                    % (self.case_name, success_rate, self.criteria))
 
-        if status == "PASS":
-            return releng_constants.EXIT_OK
+        self.stop_time = time.time()
+
+        if self.criteria == "PASS":
+            return testcase_base.TestcaseBase.EX_OK
         else:
-            return releng_constants.EXIT_RUN_ERROR
+            return testcase_base.TestcaseBase.EX_TESTCASE_FAILED
 
 
 class TempestSmokeSerial(TempestCommon):
