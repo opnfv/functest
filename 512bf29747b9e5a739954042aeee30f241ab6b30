@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_e7bff0fa",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2016-12-23T11:38:57Z",
+      "side": 1,
+      "message": "careful with this rebase conflict.",
+      "revId": "512bf29747b9e5a739954042aeee30f241ab6b30",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
