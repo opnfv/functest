@@ -48,10 +48,14 @@ class CliEnv:
         installer_info = ("%s, %s" % (install_type, installer_ip))
         scenario = _get_value(CONST.DEPLOY_SCENARIO)
         node = _get_value(CONST.NODE_NAME)
-        repo = git.Repo(CONST.dir_repo_functest)
-        branch = repo.head.reference
-        git_branch = branch.name
-        git_hash = branch.commit.hexsha
+        repo_h = git.Repo(CONST.dir_repo_functest).head
+        if repo_h.is_detached:
+            git_branch = 'detached from FETCH_HEAD'
+            git_hash = repo_h.commit.hexsha
+        else:
+            branch = repo_h.reference
+            git_branch = branch.name
+            git_hash = branch.commit.hexsha
         is_debug = _get_value(CONST.CI_DEBUG, 'false')
         build_tag = CONST.BUILD_TAG
         if build_tag is not None:
