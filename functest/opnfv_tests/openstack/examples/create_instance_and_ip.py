@@ -14,9 +14,9 @@ import argparse
 import os
 import sys
 
+from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
-import functest.utils.functest_constants as ft_constants
 
 parser = argparse.ArgumentParser()
 
@@ -29,26 +29,26 @@ args = parser.parse_args()
 """ logging configuration """
 logger = ft_logger.Logger("create_instance_and_ip").getLogger()
 
-HOME = ft_constants.HOME + "/"
+HOME = CONST.dir_home + "/"
 
 VM_BOOT_TIMEOUT = 180
 
-EXAMPLE_INSTANCE_NAME = ft_constants.EXAMPLE_INSTANCE_NAME
-EXAMPLE_FLAVOR = ft_constants.EXAMPLE_FLAVOR
-EXAMPLE_IMAGE_NAME = ft_constants.EXAMPLE_IMAGE_NAME
-IMAGE_FILENAME = ft_constants.GLANCE_IMAGE_FILENAME
-IMAGE_FORMAT = ft_constants.GLANCE_IMAGE_FORMAT
-IMAGE_PATH = os.path.join(ft_constants.FUNCTEST_DATA_DIR, IMAGE_FILENAME)
+EXAMPLE_INSTANCE_NAME = CONST.example_vm_name
+EXAMPLE_FLAVOR = CONST.example_flavor
+EXAMPLE_IMAGE_NAME = CONST.example_image_name
+IMAGE_FILENAME = CONST.openstack_image_file_name
+IMAGE_FORMAT = CONST.openstack_image_disk_format
+IMAGE_PATH = os.path.join(CONST.dir_functest_data, IMAGE_FILENAME)
 
 # NEUTRON Private Network parameters
 
-EXAMPLE_PRIVATE_NET_NAME = ft_constants.EXAMPLE_PRIVATE_NET_NAME
-EXAMPLE_PRIVATE_SUBNET_NAME = ft_constants.EXAMPLE_PRIVATE_SUBNET_NAME
-EXAMPLE_PRIVATE_SUBNET_CIDR = ft_constants.EXAMPLE_PRIVATE_SUBNET_CIDR
-EXAMPLE_ROUTER_NAME = ft_constants.EXAMPLE_ROUTER_NAME
+EXAMPLE_PRIVATE_NET_NAME = CONST.example_private_net_name
+EXAMPLE_PRIVATE_SUBNET_NAME = CONST.example_private_subnet_name
+EXAMPLE_PRIVATE_SUBNET_CIDR = CONST.example_private_subnet_cidr
+EXAMPLE_ROUTER_NAME = CONST.example_router_name
 
-EXAMPLE_SECGROUP_NAME = ft_constants.EXAMPLE_SECGROUP_NAME
-EXAMPLE_SECGROUP_DESCR = ft_constants.EXAMPLE_SECGROUP_DESCR
+EXAMPLE_SECGROUP_NAME = CONST.example_sg_name
+EXAMPLE_SECGROUP_DESCR = CONST.example_sg_desc
 
 
 def main():

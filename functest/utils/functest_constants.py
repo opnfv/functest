@@ -61,7 +61,7 @@ def get_value(functest_config_key, env_variable):
             return constant
 
 
-HOME = get_value('general.dir.dir_home', 'HOME')
+HOME = get_value('general.dir.home', 'HOME')
 REPOS_DIR = get_value('general.dir.repos', 'REPOS_DIR')
 FUNCTEST_BASE_DIR = get_value('general.dir.functest',
                               'FUNCTEST_BASE_DIR')
@@ -222,24 +222,24 @@ DOCTOR_REPO_DIR = get_value('general.dir.dir_repo_doctor',
                             'DOCTOR_REPO_DIR')
 COPPER_REPO_DIR = get_value('general.dir.repo_copper',
                             'COPPER_REPO_DIR')
-EXAMPLE_INSTANCE_NAME = get_value('example.example_vm_name',
+EXAMPLE_INSTANCE_NAME = get_value('example.vm_name',
                                   'EXAMPLE_INSTANCE_NAME')
-EXAMPLE_FLAVOR = get_value('example.example_flavor', 'EXAMPLE_FLAVOR')
-EXAMPLE_IMAGE_NAME = get_value('example.example_image_name',
+EXAMPLE_FLAVOR = get_value('example.flavor', 'EXAMPLE_FLAVOR')
+EXAMPLE_IMAGE_NAME = get_value('example.image_name',
                                'EXAMPLE_IMAGE_NAME')
-EXAMPLE_PRIVATE_NET_NAME = get_value('example.example_private_net_name',
+EXAMPLE_PRIVATE_NET_NAME = get_value('example.private_net_name',
                                      'EXAMPLE_PRIVATE_NET_NAME')
 EXAMPLE_PRIVATE_SUBNET_NAME = get_value(
-    'example.example_private_subnet_name',
+    'example.private_subnet_name',
     'EXAMPLE_PRIVATE_SUBNET_NAME')
 EXAMPLE_PRIVATE_SUBNET_CIDR = get_value(
-    'example.example_private_subnet_cidr',
+    'example.private_subnet_cidr',
     'EXAMPLE_PRIVATE_SUBNET_CIDR')
-EXAMPLE_ROUTER_NAME = get_value('example.example_router_name',
+EXAMPLE_ROUTER_NAME = get_value('example.router_name',
                                 'EXAMPLE_ROUTER_NAME')
-EXAMPLE_SECGROUP_NAME = get_value('example.example_sg_name',
+EXAMPLE_SECGROUP_NAME = get_value('example.sg_name',
                                   'EXAMPLE_SECGROUP_NAME')
-EXAMPLE_SECGROUP_DESCR = get_value('example.example_sg_descr',
+EXAMPLE_SECGROUP_DESCR = get_value('example.sg_desc',
                                    'EXAMPLE_SECGROUP_DESCR')
 VIMS_DATA_DIR = get_value('general.dir.dir_vIMS_data',
                           'VIMS_DATA_DIR')
