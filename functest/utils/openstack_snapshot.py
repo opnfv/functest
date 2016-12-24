@@ -150,7 +150,7 @@ def main():
     snapshot.update(get_security_groups(neutron_client))
     snapshot.update(get_floatinips(nova_client))
     snapshot.update(get_users(keystone_client))
-    # snapshot.update(get_tenants(keystone_client))
+    snapshot.update(get_tenants(keystone_client))
 
     with open(OS_SNAPSHOT_FILE, 'w+') as yaml_file:
         yaml_file.write(yaml.safe_dump(snapshot, default_flow_style=False))
