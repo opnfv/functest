@@ -86,7 +86,7 @@ def get_env_cred_dict():
     return env_cred_dict
 
 
-def get_credentials():
+def get_credentials(other_creds={}):
     """Returns a creds dictionary filled with parsed from env
     """
     creds = {}
@@ -99,6 +99,16 @@ def get_credentials():
         else:
             creds_key = env_cred_dict.get(envvar)
             creds.update({creds_key: os.getenv(envvar)})
+
+    if 'tenant' in other_creds.keys():
+        if is_keystone_v3():
+            tenant = 'project_name'
+        else:
+            tenant = 'tenant_name'
+        other_creds[tenant] = other_creds.pop('tenant')
+
+    creds.update(other_creds)
+
     return creds
 
 
@@ -138,9 +148,9 @@ def get_credentials_for_rally():
     return rally_conf
 
 
-def get_session_auth():
+def get_session_auth(other_creds={}):
     loader = loading.get_plugin_loader('password')
-    creds = get_credentials()
+    creds = get_credentials(other_creds)
     auth = loader.load_from_options(**creds)
     return auth
 
@@ -152,8 +162,8 @@ def get_endpoint(service_type, endpoint_type='publicURL'):
                                       endpoint_type=endpoint_type)
 
 
-def get_session():
-    auth = get_session_auth()
+def get_session(other_creds={}):
+    auth = get_session_auth(other_creds)
     return session.Session(auth=auth)
 
 
@@ -169,8 +179,8 @@ def get_keystone_client_version():
     return DEFAULT_API_VERSION
 
 
-def get_keystone_client():
-    sess = get_session()
+def get_keystone_client(other_creds={}):
+    sess = get_session(other_creds)
     return keystoneclient.Client(get_keystone_client_version(), session=sess)
 
 
@@ -183,8 +193,8 @@ def get_nova_client_version():
     return DEFAULT_API_VERSION
 
 
-def get_nova_client():
-    sess = get_session()
+def get_nova_client(other_creds={}):
+    sess = get_session(other_creds)
     return novaclient.Client(get_nova_client_version(), session=sess)
 
 
@@ -197,8 +207,8 @@ def get_cinder_client_version():
     return DEFAULT_API_VERSION
 
 
-def get_cinder_client():
-    sess = get_session()
+def get_cinder_client(other_creds={}):
+    sess = get_session(other_creds)
     return cinderclient.Client(get_cinder_client_version(), session=sess)
 
 
@@ -211,8 +221,8 @@ def get_neutron_client_version():
     return DEFAULT_API_VERSION
 
 
-def get_neutron_client():
-    sess = get_session()
+def get_neutron_client(other_creds={}):
+    sess = get_session(other_creds)
     return neutronclient.Client(get_neutron_client_version(), session=sess)
 
 
@@ -224,8 +234,8 @@ def get_glance_client_version():
     return DEFAULT_API_VERSION
 
 
-def get_glance_client():
-    sess = get_session()
+def get_glance_client(other_creds={}):
+    sess = get_session(other_creds)
     return glanceclient.Client(get_glance_client_version(), session=sess)
 
 
