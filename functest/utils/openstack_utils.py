@@ -1302,9 +1302,16 @@ def get_role_id(keystone_client, role_name):
 
 def create_tenant(keystone_client, tenant_name, tenant_description):
     try:
-        tenant = keystone_client.tenants.create(tenant_name,
-                                                tenant_description,
-                                                enabled=True)
+        if get_keystone_client_version() == '2':
+            tenant = keystone_client.tenants.create(tenant_name,
+                                                    tenant_description,
+                                                    enabled=True)
+        else:
+            tenant = keystone_client.projects.create(
+                name=tenant_name,
+                description=tenant_description,
+                domain="default",
+                enabled=True)
         return tenant.id
     except Exception, e:
         logger.error("Error [create_tenant(keystone_client, '%s', '%s')]: %s"
@@ -1315,9 +1322,18 @@ def create_tenant(keystone_client, tenant_name, tenant_description):
 def create_user(keystone_client, user_name, user_password,
                 user_email, tenant_id):
     try:
-        user = keystone_client.users.create(user_name, user_password,
-                                            user_email, tenant_id,
-                                            enabled=True)
+        if get_keystone_client_version() == '2':
+            user = keystone_client.users.create(user_name,
+                                                user_password,
+                                                user_email,
+                                                tenant_id,
+                                                enabled=True)
+        else:
+            user = keystone_client.users.create(name=user_name,
+                                                password=user_password,
+                                                email=user_email,
+                                                project_id=tenant_id,
+                                                enabled=True)
         return user.id
     except Exception, e:
         logger.error("Error [create_user(keystone_client, '%s', '%s', '%s'"
