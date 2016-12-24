@@ -418,7 +418,7 @@ def main():
     separator()
     remove_users(keystone_client, default_users)
     separator()
-    # TODO (Helen) tenant does not exist in V3
+     # TODO (Helen) tenant does not exist in V3
     # need to figure our anohter general verification point
     # remove_tenants(keystone_client, default_tenants)
     # separator()
