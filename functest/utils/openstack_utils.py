@@ -173,8 +173,8 @@ def get_session(other_creds={}):
 def get_keystone_client_version():
     api_version = os.getenv('OS_IDENTITY_API_VERSION')
     if api_version is not None:
-        logger.info("OS_IDENTITY_API_VERSION is set in env as '%s'",
-                    api_version)
+        logger.debug("OS_IDENTITY_API_VERSION is set in env as '%s'",
+                     api_version)
         return api_version
     return DEFAULT_API_VERSION
 
@@ -1302,9 +1302,16 @@ def get_role_id(keystone_client, role_name):
 
 def create_tenant(keystone_client, tenant_name, tenant_description):
     try:
-        tenant = keystone_client.tenants.create(tenant_name,
-                                                tenant_description,
-                                                enabled=True)
+        if get_keystone_client_version() == '2':
+            tenant = keystone_client.tenants.create(tenant_name,
+                                                    tenant_description,
+                                                    enabled=True)
+        else:
+            tenant = keystone_client.projects.create(
+                name=tenant_name,
+                description=tenant_description,
+                domain="default",
+                enabled=True)
         return tenant.id
     except Exception, e:
         logger.error("Error [create_tenant(keystone_client, '%s', '%s')]: %s"
@@ -1315,9 +1322,18 @@ def create_tenant(keystone_client, tenant_name, tenant_description):
 def create_user(keystone_client, user_name, user_password,
                 user_email, tenant_id):
     try:
-        user = keystone_client.users.create(user_name, user_password,
-                                            user_email, tenant_id,
-                                            enabled=True)
+        if get_keystone_client_version() == '2':
+            user = keystone_client.users.create(user_name,
+                                                user_password,
+                                                user_email,
+                                                tenant_id,
+                                                enabled=True)
+        else:
+            user = keystone_client.users.create(name=user_name,
+                                                password=user_password,
+                                                email=user_email,
+                                                project_id=tenant_id,
+                                                enabled=True)
         return user.id
     except Exception, e:
         logger.error("Error [create_user(keystone_client, '%s', '%s', '%s'"
@@ -1338,7 +1354,10 @@ def add_role_user(keystone_client, user_id, role_id, tenant_id):
 
 def delete_tenant(keystone_client, tenant_id):
     try:
-        keystone_client.tenants.delete(tenant_id)
+        if get_keystone_client_version() == '2':
+            keystone_client.tenants.delete(tenant_id)
+        else:
+            keystone_client.projects.delete(tenant_id)
         return True
     except Exception, e:
         logger.error("Error [delete_tenant(keystone_client, '%s')]: %s"
