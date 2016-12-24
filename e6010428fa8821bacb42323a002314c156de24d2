@@ -2,6 +2,253 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ac10518_a771e845",
+        "filename": "functest/tests/unit/ci/test_generate_report.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:43:04Z",
+      "side": 1,
+      "message": "This name is implicit. Could you come up with a more meaningful name?",
+      "range": {
+        "startLine": 13,
+        "startChar": 43,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_87762c3d",
+        "filename": "functest/tests/unit/ci/test_generate_report.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:43:04Z",
+      "side": 1,
+      "message": "Could you put this class in a test util?",
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_079a3c63",
+        "filename": "functest/tests/unit/ci/test_generate_report.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:43:04Z",
+      "side": 1,
+      "message": "There is a big refactor about the global variables. Could you update your patch to embrace the change?",
+      "range": {
+        "startLine": 36,
+        "startChar": 46,
+        "endLine": 36,
+        "endChar": 61
+      },
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_47904443",
+        "filename": "functest/tests/unit/ci/test_generate_report.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:43:04Z",
+      "side": 1,
+      "message": "I would suggest to use \u0027join\u0027 instead of \u0027+\u0027 and \u0027+\u003d\u0027 to avoid creating many new objects of \"TOTAL_LEN\"\n\nLENS \u003d [gr.COL_1_LEN, gr.COL_2_LEN]\nTOTAL_LEN \u003d \"\".join(LENS)",
+      "range": {
+        "startLine": 82,
+        "startChar": 18,
+        "endLine": 82,
+        "endChar": 20
+      },
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_67930050",
+        "filename": "functest/tests/unit/ci/test_generate_report.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:43:04Z",
+      "side": 1,
+      "message": "The same as previous comment",
+      "range": {
+        "startLine": 89,
+        "startChar": 17,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c7a3d49c",
+        "filename": "functest/tests/unit/ci/test_prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:43:04Z",
+      "side": 1,
+      "message": "Could you come up a more meaningful name? Using \u0027prepare_env\u0027 could be an option.",
+      "range": {
+        "startLine": 12,
+        "startChar": 39,
+        "endLine": 12,
+        "endChar": 41
+      },
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e79e1054",
+        "filename": "functest/tests/unit/ci/test_prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:43:04Z",
+      "side": 1,
+      "message": "Could you organize the import like below?\nThree groups\nbuilt-in modules such as os and sys\nthird-party modules you have installed in your environment, your project",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_279df859",
+        "filename": "functest/tests/unit/ci/test_prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:43:04Z",
+      "side": 1,
+      "message": "Could you put this class into test util?",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_87adcc8a",
+        "filename": "functest/tests/unit/ci/test_prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:43:04Z",
+      "side": 1,
+      "message": "There is a big refactoring about the global variables. Please update this patch to embrace the change.",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a7a80878",
+        "filename": "functest/tests/unit/ci/test_prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:43:04Z",
+      "side": 1,
+      "message": "I would recommend use str.format here instead of \u0027+\u003d\u0027 to avoid creating a new object\ncmd \u003d (\"rally deployment create --file\u003drally_conf.json --name\u003d{}\".format(ft_constants.RALLY_DEPLOYMENT_NAME))",
+      "range": {
+        "startLine": 268,
+        "startChar": 12,
+        "endLine": 268,
+        "endChar": 14
+      },
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_47b7e4d8",
+        "filename": "functest/tests/unit/ci/test_run_unit_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:43:04Z",
+      "side": 1,
+      "message": "Could you provide a meaningful name here?\n\nAlso, the file name should be \u0027test_run_tests.py\u0027, right?",
+      "range": {
+        "startLine": 12,
+        "startChar": 37,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "e6010428fa8821bacb42323a002314c156de24d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_13e846b3",
         "filename": "functest/tests/unit/ci/test_run_unit_test.py",
         "patchSetId": 1
