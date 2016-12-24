@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ac10518_e7c5b03d",
+        "filename": "functest/tests/unit/cli/commands/test_cli_env.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-24T02:47:55Z",
+      "side": 1,
+      "message": "Could you organize the import like below?\nThree groups\nbuilt-in modules such as os and sys\nthird-party modules you have installed in your environment, your project",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "23a055a5d9c00c26337aaa3de4d25fa33f10b6de",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_5dd9fe81",
         "filename": "functest/tests/unit/cli/commands/test_cli_env.py",
         "patchSetId": 3
