@@ -42,7 +42,14 @@ class CliTestcase:
         click.echo(description)
 
     @staticmethod
-    def run(testname, noclean=False):
+    def run(testname, noclean=False, report=False):
+
+        flags = ""
+        if noclean:
+            flags += "-n "
+        if report:
+            flags += "-r "
+
         if testname == 'vacation':
             vacation.main()
         elif not os.path.isfile(CONST.env_active):
@@ -51,10 +58,6 @@ class CliTestcase:
         else:
             tests = testname.split(",")
             for test in tests:
-                if noclean:
-                    cmd = ("python %s/functest/ci/run_tests.py "
-                           "-n -t %s" % (CONST.dir_repo_functest, test))
-                else:
-                    cmd = ("python %s/functest/ci/run_tests.py "
-                           "-t %s" % (CONST.dir_repo_functest, test))
+                cmd = ("python %s/functest/ci/run_tests.py "
+                       "%s -t %s" % (CONST.dir_repo_functest, flags, test))
                 ft_utils.execute_command(cmd)
