@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_029a2a63",
+        "filename": "functest/tests/unit/cli/commands/test_cli_env.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T02:03:31Z",
+      "side": 1,
+      "message": "Ashish,\nThere has been a big refactoring about the global variables.\nCould you help to update your patch accordingly?\nI left a general comment at patch 3\nPatch Set 3: Code-Review-1\n(1 comment)\nOnce this patch includes the latest change of global variables, the -1 will be removed.",
+      "range": {
+        "startLine": 16,
+        "startChar": 49,
+        "endLine": 16,
+        "endChar": 61
+      },
+      "revId": "944381faf92499316c1b8f447f1e1d726aeea70c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a271d645",
+        "filename": "functest/tests/unit/cli/commands/test_cli_testcase.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T02:03:31Z",
+      "side": 1,
+      "message": "Ashish,\nThere has been a big refactoring about the global variables.\nCould you help to update your patch accordingly?\n\nI left a general comment at patch 3\nPatch Set 3: Code-Review-1\n(1 comment)\nOnce this patch includes the latest change of global variables, the -1 will be removed.",
+      "range": {
+        "startLine": 15,
+        "startChar": 49,
+        "endLine": 15,
+        "endChar": 61
+      },
+      "revId": "944381faf92499316c1b8f447f1e1d726aeea70c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e277de39",
+        "filename": "functest/tests/unit/cli/commands/test_cli_testcase.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T02:03:31Z",
+      "side": 1,
+      "message": "Sorry for any inconvenience. I left a overall comment in patch 3 and it must be missed:)\n\nPatch Set 3:\nPlease hold the change of the class name by referring to the decision of https://gerrit.opnfv.org/gerrit/#/c/26285/.\nAlso, please update the run_unit_tests.sh to include the new unit test cases.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "944381faf92499316c1b8f447f1e1d726aeea70c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_229de659",
+        "filename": "functest/tests/unit/cli/commands/test_cli_tier.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T02:03:31Z",
+      "side": 1,
+      "message": "Ashish,\nThere has been a big refactoring about the global variables.\nCould you help to update your patch accordingly?\nI left a general comment at patch 3\nPatch Set 3: Code-Review-1\n(1 comment)\nOnce this patch includes the latest change of global variables, the -1 will be removed.",
+      "range": {
+        "startLine": 15,
+        "startChar": 49,
+        "endLine": 15,
+        "endChar": 61
+      },
+      "revId": "944381faf92499316c1b8f447f1e1d726aeea70c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_82adba8a",
+        "filename": "functest/tests/unit/cli/commands/test_cli_tier.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T02:03:31Z",
+      "side": 1,
+      "message": "Sorry for any inconvenience. I left a overall comment in patch 3 and it must be missed:)\nPatch Set 3:\nPlease hold the change of the class name by referring to the decision of https://gerrit.opnfv.org/gerrit/#/c/26285/.\nAlso, please update the run_unit_tests.sh to include the new unit test cases.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "944381faf92499316c1b8f447f1e1d726aeea70c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e29efe53",
+        "filename": "functest/tests/unit/cli/test_cli_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T02:03:31Z",
+      "side": 1,
+      "message": "Sorry for any inconvenience. I left a overall comment in patch 3 and it must be missed:)\nPatch Set 3:\nPlease hold the change of the class name by referring to the decision of https://gerrit.opnfv.org/gerrit/#/c/26285/.\nAlso, please update the run_unit_tests.sh to include the new unit test cases.",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "944381faf92499316c1b8f447f1e1d726aeea70c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_82761a3d",
+        "filename": "test-requirements.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T02:03:31Z",
+      "side": 1,
+      "message": "Could you put the package in alphabetical order?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "944381faf92499316c1b8f447f1e1d726aeea70c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
