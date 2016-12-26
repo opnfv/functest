@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_422d9245",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T00:35:12Z",
+      "side": 1,
+      "message": "I would insist on info as it is an easy sign to differentiate the openstack version in installer CI. Currently, some installers are using Mitaka and some are using Newton. Even for a single installer, some scenarios are using Newton and some are Mitaka. Once everything is evolved to Newton, it will make sense to use debug.",
+      "range": {
+        "startLine": 176,
+        "startChar": 15,
+        "endLine": 176,
+        "endChar": 20
+      },
+      "revId": "94c5ead4d05b36773b918e4bd30b09493f2f76cb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_6230ce9e",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T00:35:12Z",
+      "side": 1,
+      "message": "I would recommend to call is_keystone_v3() here.",
+      "range": {
+        "startLine": 1305,
+        "startChar": 11,
+        "endLine": 1305,
+        "endChar": 38
+      },
+      "revId": "94c5ead4d05b36773b918e4bd30b09493f2f76cb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_02278a65",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T00:35:12Z",
+      "side": 1,
+      "message": "I would recommend to call is_keystone_v3() here.",
+      "range": {
+        "startLine": 1325,
+        "startChar": 11,
+        "endLine": 1325,
+        "endChar": 38
+      },
+      "revId": "94c5ead4d05b36773b918e4bd30b09493f2f76cb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_222ac62c",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T00:35:12Z",
+      "side": 1,
+      "message": "I would recommend to call is_keystone_v3() here.",
+      "range": {
+        "startLine": 1357,
+        "startChar": 11,
+        "endLine": 1357,
+        "endChar": 38
+      },
+      "revId": "94c5ead4d05b36773b918e4bd30b09493f2f76cb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
