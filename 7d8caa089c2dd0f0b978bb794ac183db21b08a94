@@ -16,6 +16,24 @@
       "revId": "7d8caa089c2dd0f0b978bb794ac183db21b08a94",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_82db7a1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T02:35:40Z",
+      "side": 1,
+      "message": "These lines are all commit history info. I tried to find all the commits that changed the permission and list them for a reference.",
+      "parentUuid": "5ac10518_532d6e45",
+      "revId": "7d8caa089c2dd0f0b978bb794ac183db21b08a94",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
