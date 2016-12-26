@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_4d2703b7",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1469
+      },
+      "writtenOn": "2016-12-26T09:09:15Z",
+      "side": 1,
+      "message": "Ok. I will follow the rules.",
+      "parentUuid": "5ac10518_27ebb8b1",
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_e7f3709d",
         "filename": "functest/core/testcase_base.py",
         "patchSetId": 7
@@ -137,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_ad18e775",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1469
+      },
+      "writtenOn": "2016-12-26T09:09:15Z",
+      "side": 1,
+      "message": "Good suggestion. I will update it.",
+      "parentUuid": "5ac10518_82c4da40",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_27397841",
         "filename": "functest/core/testcase_base.py",
         "patchSetId": 7
@@ -148,6 +190,30 @@
       "writtenOn": "2016-12-24T03:11:34Z",
       "side": 1,
       "message": "When will the \u0027RESULTS_STORE\u0027 be set? My understanding will be passed in when calling \u0027run_test.py\u0027. Thus the logic in run_tests.py requires to be changed.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 67
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e207de1b",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1469
+      },
+      "writtenOn": "2016-12-26T09:09:15Z",
+      "side": 1,
+      "message": "I plan to pass \"RESULTS_STORE\" by using \"docker run -e RESUTLS_STORE\u003dfile:///....\"",
+      "parentUuid": "5ac10518_27397841",
       "range": {
         "startLine": 49,
         "startChar": 7,
@@ -194,6 +260,30 @@
       "writtenOn": "2016-12-23T02:59:50Z",
       "side": 1,
       "message": "The parameter \"-r\" is just a flag to indicate whether sending report or not, you need to add something to receive a url from user input  with this parameter",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 73
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_6d2aff7f",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1469
+      },
+      "writtenOn": "2016-12-26T09:09:15Z",
+      "side": 1,
+      "message": "URL is passed by os environ variable \"RESULTS_STORE\".",
+      "parentUuid": "5ac10518_fcc5473d",
       "range": {
         "startLine": 64,
         "startChar": 16,
@@ -323,6 +413,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_0d21fb9e",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1469
+      },
+      "writtenOn": "2016-12-26T09:09:15Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "5ac10518_672f80f7",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 32
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_07ff9c68",
         "filename": "functest/core/testcase_base.py",
         "patchSetId": 7
@@ -334,6 +448,30 @@
       "writtenOn": "2016-12-24T03:11:34Z",
       "side": 1,
       "message": "Typo here",
+      "range": {
+        "startLine": 77,
+        "startChar": 31,
+        "endLine": 77,
+        "endChar": 36
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_2d24f7ad",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1469
+      },
+      "writtenOn": "2016-12-26T09:09:15Z",
+      "side": 1,
+      "message": "I will fix it.",
+      "parentUuid": "5ac10518_07ff9c68",
       "range": {
         "startLine": 77,
         "startChar": 31,
@@ -380,6 +518,30 @@
       "writtenOn": "2016-12-26T02:14:56Z",
       "side": 1,
       "message": "If only \u0027w\u0027 is provided, each time when writing file, it will override the original contents, is that what you want? I think you need to provide \u0027a+w\u0027 with open operation.",
+      "range": {
+        "startLine": 196,
+        "startChar": 30,
+        "endLine": 196,
+        "endChar": 31
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_cd3a13cd",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1469
+      },
+      "writtenOn": "2016-12-26T09:09:15Z",
+      "side": 1,
+      "message": "You are right. I will modify it. Thank you!",
+      "parentUuid": "5ac10518_c27c2223",
       "range": {
         "startLine": 196,
         "startChar": 30,
