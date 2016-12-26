@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_82c85a75",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-26T02:14:56Z",
+      "side": 1,
+      "message": "I would suggest save all the test results to the same file. each time appends a new record to the end.",
+      "parentUuid": "5ac10518_e2e27e00",
+      "range": {
+        "startLine": 149,
+        "startChar": 20,
+        "endLine": 149,
+        "endChar": 46
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_27ebb8b1",
         "filename": "functest/core/testcase_base.py",
         "patchSetId": 7
@@ -53,6 +77,30 @@
       "writtenOn": "2016-12-24T03:11:34Z",
       "side": 1,
       "message": "As the app will either push data to DB or write data to file, I would suggest to refactor the EX_PUSH_DB_ERROR into EX_PUBLISH_DATA_ERROR instead of adding a new error here.",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_82c4da40",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-26T02:14:56Z",
+      "side": 1,
+      "message": "How about EX_PUBLISH_RESULT_FAILED",
+      "parentUuid": "5ac10518_e7f3709d",
       "range": {
         "startLine": 23,
         "startChar": 4,
@@ -157,6 +205,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_22b406d0",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-26T02:14:56Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "5ac10518_a7ed68b9",
+      "range": {
+        "startLine": 65,
+        "startChar": 36,
+        "endLine": 65,
+        "endChar": 48
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_87f2ac98",
         "filename": "functest/core/testcase_base.py",
         "patchSetId": 7
@@ -168,6 +240,30 @@
       "writtenOn": "2016-12-24T03:11:34Z",
       "side": 1,
       "message": "I would recommend to return EX_PUBLISH_DATA_ERROR to make the user know it failed because of publishing data and it is not other execution error.",
+      "range": {
+        "startLine": 68,
+        "startChar": 32,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e2c59e3d",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-26T02:14:56Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "5ac10518_87f2ac98",
       "range": {
         "startLine": 68,
         "startChar": 32,
@@ -242,6 +338,29 @@
         "startChar": 0,
         "endLine": 13,
         "endChar": 9
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c27c2223",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-26T02:14:56Z",
+      "side": 1,
+      "message": "If only \u0027w\u0027 is provided, each time when writing file, it will override the original contents, is that what you want? I think you need to provide \u0027a+w\u0027 with open operation.",
+      "range": {
+        "startLine": 196,
+        "startChar": 30,
+        "endLine": 196,
+        "endChar": 31
       },
       "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
