@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ac10518_e2e27e00",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1090
+      },
+      "writtenOn": "2016-12-26T01:12:08Z",
+      "side": 1,
+      "message": "this test result file may be override when running multiple test cases in a test tier with the same file name, the name of test result file may associate with the test case name to avoid this conflict",
+      "range": {
+        "startLine": 149,
+        "startChar": 20,
+        "endLine": 149,
+        "endChar": 46
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_27ebb8b1",
         "filename": "functest/core/testcase_base.py",
         "patchSetId": 7
