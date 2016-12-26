@@ -397,7 +397,7 @@ def main():
     default_security_groups = snapshot_yaml.get('secgroups')
     default_floatingips = snapshot_yaml.get('floatingips')
     default_users = snapshot_yaml.get('users')
-    # default_tenants = snapshot_yaml.get('tenants')
+    default_tenants = snapshot_yaml.get('tenants')
 
     if not os_utils.check_credentials():
         logger.error("Please source the openrc credentials and run "
@@ -418,10 +418,8 @@ def main():
     separator()
     remove_users(keystone_client, default_users)
     separator()
-    # TODO (Helen) tenant does not exist in V3
-    # need to figure our anohter general verification point
-    # remove_tenants(keystone_client, default_tenants)
-    # separator()
+    remove_tenants(keystone_client, default_tenants)
+    separator()
 
 
 if __name__ == '__main__':

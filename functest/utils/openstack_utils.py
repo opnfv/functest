@@ -52,14 +52,13 @@ def is_keystone_v3():
 
 
 def get_rc_env_vars():
-    keystone_v3 = is_keystone_v3()
     env_vars = ['OS_AUTH_URL', 'OS_USERNAME', 'OS_PASSWORD']
-    if keystone_v3 is False:
-        env_vars.extend(['OS_TENANT_NAME'])
-    else:
+    if is_keystone_v3():
         env_vars.extend(['OS_PROJECT_NAME',
                          'OS_USER_DOMAIN_NAME',
                          'OS_PROJECT_DOMAIN_NAME'])
+    else:
+        env_vars.extend(['OS_TENANT_NAME'])
     return env_vars
 
 
@@ -1254,7 +1253,10 @@ def delete_volume_type(cinder_client, volume_type):
 # *********************************************
 def get_tenants(keystone_client):
     try:
-        tenants = keystone_client.tenants.list()
+        if is_keystone_v3():
+            tenants = keystone_client.projects.list()
+        else:
+            tenants = keystone_client.tenants.list()
         return tenants
     except Exception, e:
         logger.error("Error [get_tenants(keystone_client)]: %s" % e)
@@ -1271,7 +1273,7 @@ def get_users(keystone_client):
 
 
 def get_tenant_id(keystone_client, tenant_name):
-    tenants = keystone_client.tenants.list()
+    tenants = get_tenants(keystone_client)
     id = ''
     for t in tenants:
         if t.name == tenant_name:
@@ -1281,7 +1283,7 @@ def get_tenant_id(keystone_client, tenant_name):
 
 
 def get_user_id(keystone_client, user_name):
-    users = keystone_client.users.list()
+    users = get_users(keystone_client)
     id = ''
     for u in users:
         if u.name == user_name:
@@ -1302,16 +1304,16 @@ def get_role_id(keystone_client, role_name):
 
 def create_tenant(keystone_client, tenant_name, tenant_description):
     try:
-        if get_keystone_client_version() == '2':
-            tenant = keystone_client.tenants.create(tenant_name,
-                                                    tenant_description,
-                                                    enabled=True)
-        else:
+        if is_keystone_v3():
             tenant = keystone_client.projects.create(
                 name=tenant_name,
                 description=tenant_description,
                 domain="default",
                 enabled=True)
+        else:
+            tenant = keystone_client.tenants.create(tenant_name,
+                                                    tenant_description,
+                                                    enabled=True)
         return tenant.id
     except Exception, e:
         logger.error("Error [create_tenant(keystone_client, '%s', '%s')]: %s"
@@ -1322,17 +1324,17 @@ def create_tenant(keystone_client, tenant_name, tenant_description):
 def create_user(keystone_client, user_name, user_password,
                 user_email, tenant_id):
     try:
-        if get_keystone_client_version() == '2':
-            user = keystone_client.users.create(user_name,
-                                                user_password,
-                                                user_email,
-                                                tenant_id,
-                                                enabled=True)
-        else:
+        if is_keystone_v3():
             user = keystone_client.users.create(name=user_name,
                                                 password=user_password,
                                                 email=user_email,
                                                 project_id=tenant_id,
+                                                enabled=True)
+        else:
+            user = keystone_client.users.create(user_name,
+                                                user_password,
+                                                user_email,
+                                                tenant_id,
                                                 enabled=True)
         return user.id
     except Exception, e:
@@ -1344,7 +1346,12 @@ def create_user(keystone_client, user_name, user_password,
 
 def add_role_user(keystone_client, user_id, role_id, tenant_id):
     try:
-        keystone_client.roles.add_user_role(user_id, role_id, tenant_id)
+        if is_keystone_v3():
+            keystone_client.roles.grant(role=role_id,
+                                        user=user_id,
+                                        project=tenant_id)
+        else:
+            keystone_client.roles.add_user_role(user_id, role_id, tenant_id)
         return True
     except Exception, e:
         logger.error("Error [add_role_user(keystone_client, '%s', '%s'"
@@ -1354,10 +1361,10 @@ def add_role_user(keystone_client, user_id, role_id, tenant_id):
 
 def delete_tenant(keystone_client, tenant_id):
     try:
-        if get_keystone_client_version() == '2':
-            keystone_client.tenants.delete(tenant_id)
-        else:
+        if is_keystone_v3():
             keystone_client.projects.delete(tenant_id)
+        else:
+            keystone_client.tenants.delete(tenant_id)
         return True
     except Exception, e:
         logger.error("Error [delete_tenant(keystone_client, '%s')]: %s"
