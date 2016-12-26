@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_c2d182fc",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-26T02:32:39Z",
+      "side": 1,
+      "message": "Saving all the results into a single file will make the JSON format invalid. A solution is needed to accommodate the case.",
+      "parentUuid": "5ac10518_82c85a75",
+      "range": {
+        "startLine": 149,
+        "startChar": 20,
+        "endLine": 149,
+        "endChar": 46
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_27ebb8b1",
         "filename": "functest/core/testcase_base.py",
         "patchSetId": 7
