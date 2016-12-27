@@ -114,7 +114,7 @@ function run_test(){
         "security_scan")
             echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/stackrc for undercloud .."
             source ${FUNCTEST_CONF_DIR}/stackrc
-            python ${REPOS_DIR}/securityscanning/security_scan.py --config ${REPOS_DIR}/securityscanning/config.ini
+            python ${FUNCTEST_TEST_DIR}/security_scan/security_scan.py --config ${FUNCTEST_TEST_DIR}/security_scan/config.ini
         ;;
         "copper")
             python ${FUNCTEST_TEST_DIR}/features/copper.py $report
