@@ -228,10 +228,11 @@ sleep ${wait_time}
 
 
 # Check if flavor exists
-if [[ -z $(nova flavor-list|grep $flavor) ]]; then
+if [[ -z $(openstack flavor list -f value -c Name | fgrep -x $flavor) ]]; then
     # if given flavor doesn't exist, we create one
     debug "Flavor $flavor doesn't exist. Creating a new flavor."
-    nova flavor-create --is-public false ${flavor} auto 512 1 1 --is-public True
+    openstack flavor create ${flavor} --id auto --ram 512 --disk 1 --vcpus 1
+    openstack flavor set ${flavor} --property hw:mem_page_size=any
 fi
 debug "Using flavor $flavor to boot the instances."
 
