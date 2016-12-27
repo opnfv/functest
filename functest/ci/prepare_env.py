@@ -21,7 +21,7 @@ import subprocess
 import sys
 
 import yaml
-from opnfv.utils import constants as opnfv_constants
+from opnfv.utils.constants import Constants
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
@@ -60,12 +60,12 @@ def check_env_variables():
         logger.warning("The env variable 'INSTALLER_TYPE' is not defined.")
         CONST.INSTALLER_TYPE = "undefined"
     else:
-        if CONST.INSTALLER_TYPE not in opnfv_constants.INSTALLERS:
+        if CONST.INSTALLER_TYPE not in Constants.INSTALLERS:
             logger.warning("INSTALLER_TYPE=%s is not a valid OPNFV installer. "
                            "Available OPNFV Installers are : %s. "
                            "Setting INSTALLER_TYPE=undefined."
                            % (CONST.INSTALLER_TYPE,
-                              opnfv_constants.INSTALLERS))
+                              Constants.INSTALLERS))
             CONST.INSTALLER_TYPE = "undefined"
         else:
             logger.info("    INSTALLER_TYPE=%s"
@@ -134,12 +134,12 @@ def source_rc_file():
             logger.error("The env variable CI_INSTALLER_IP must be provided in"
                          " order to fetch the credentials from the installer.")
             sys.exit("Missing CI_INSTALLER_IP.")
-        if CONST.INSTALLER_TYPE not in opnfv_constants.INSTALLERS:
+        if CONST.INSTALLER_TYPE not in Constants.INSTALLERS:
             logger.error("Cannot fetch credentials. INSTALLER_TYPE=%s is "
                          "not a valid OPNFV installer. Available "
                          "installers are : %s." %
                          (CONST.INSTALLER_TYPE,
-                          opnfv_constants.INSTALLERS))
+                          Constants.INSTALLERS))
             sys.exit("Wrong INSTALLER_TYPE.")
 
         cmd = ("/home/opnfv/repos/releng/utils/fetch_os_creds.sh "

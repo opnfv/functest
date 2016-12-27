@@ -283,7 +283,7 @@ class TempestCommon(testcase_base.TestcaseBase):
         if self.criteria == "PASS":
             return testcase_base.TestcaseBase.EX_OK
         else:
-            return testcase_base.TestcaseBase.EX_TESTCASE_FAILED
+            return testcase_base.TestcaseBase.EX_TEST_FAIL
 
 
 class TempestSmokeSerial(TempestCommon):
