@@ -11,7 +11,7 @@ set -o pipefail
 # clean it anyway
 if [ -d "/home/opnfv/functest/results" ]
 then
-    sudo rm -rf /home/opnfv/functest
+    sudo rm -rf /home/opnfv/functest/results
 fi
 
 # TODO clean that...
