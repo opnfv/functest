@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_cd3f7324",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-27T06:47:15Z",
+      "side": 1,
+      "message": "how about using is_write_file() or is_push_db() instead?",
+      "revId": "d3c686d158813daa788e040b51028664565dc133",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_2d395741",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-27T06:47:15Z",
+      "side": 1,
+      "message": "please don\u0027t use temp, too arbitrary and meaningless",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "d3c686d158813daa788e040b51028664565dc133",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_ed3a6f33",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-27T06:47:15Z",
+      "side": 1,
+      "message": "similar process in two methods, can we merge these two?",
+      "revId": "d3c686d158813daa788e040b51028664565dc133",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
