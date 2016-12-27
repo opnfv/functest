@@ -2,6 +2,13 @@
 set -o errexit
 set -o pipefail
 
+function clean_results_dir {
+    if [ -d "/home/opnfv/functest/results" ]
+    then
+        sudo rm -rf /home/opnfv/functest/results
+    fi
+}
+
 # ******************************
 # prepare the env for the tests
 # ******************************
@@ -9,10 +16,7 @@ set -o pipefail
 # should be done at the end
 # but in case of crash during unit test
 # clean it anyway
-if [ -d "/home/opnfv/functest/results" ]
-then
-    sudo rm -rf /home/opnfv/functest
-fi
+clean_results_dir
 
 # TODO clean that...
 # Create log dir if needed
@@ -67,9 +71,6 @@ deactivate
 # clean
 # *******
 # Clean useless logs
-if [ -d "/home/opnfv/functest/results" ]
-then
-    sudo rm -rf /home/opnfv/functest/results
-fi
+clean_results_dir
 
 exit $rc
