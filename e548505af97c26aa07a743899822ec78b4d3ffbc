@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_adec67f4",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2016-12-27T02:35:17Z",
+      "side": 1,
+      "message": "why it will make the JSON format invalid?\nwhen we executing \u0027mongo export\u0027, it will also save all the result into one single file in JSON format, and parsing it when \u0027mongo restore\u0027.\nWe can work it out by saving all the results into one single file, each result saving in a single line, and parsing line by line. Try the following code:\nfile \u003d \u0027./test.log\u0027\ndef write_file(contents):\n    with open(file, \"a+w\") as f:\n        f.write(json.dumps(contents))\n        f.write(\u0027\\n\u0027)\ndef parse_file():\n    with open(file, \u0027r\u0027) as f:\n        docs \u003d f.readlines()\n        for doc in docs:\n            json_doc \u003d json.loads(doc)\n            print json_doc",
+      "parentUuid": "5ac10518_c2d182fc",
+      "range": {
+        "startLine": 149,
+        "startChar": 20,
+        "endLine": 149,
+        "endChar": 46
+      },
+      "revId": "e548505af97c26aa07a743899822ec78b4d3ffbc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_27ebb8b1",
         "filename": "functest/core/testcase_base.py",
         "patchSetId": 7
