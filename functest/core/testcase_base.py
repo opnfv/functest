@@ -7,18 +7,13 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import os
+from opnfv.utils.constants import Constants
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
 
-class TestcaseBase(object):
-
-    EX_OK = os.EX_OK
-    EX_RUN_ERROR = os.EX_SOFTWARE
-    EX_PUSH_TO_DB_ERROR = os.EX_SOFTWARE - 1
-    EX_TESTCASE_FAILED = os.EX_SOFTWARE - 2
+class TestcaseBase(Constants):
 
     logger = ft_logger.Logger(__name__).getLogger()
 
@@ -37,7 +32,7 @@ class TestcaseBase(object):
                 return TestcaseBase.EX_OK
         except:
             self.logger.error("Please run test before checking the results")
-        return TestcaseBase.EX_TESTCASE_FAILED
+        return TestcaseBase.EX_TEST_FAIL
 
     def run(self, **kwargs):
         self.logger.error("Run must be implemented")
@@ -57,7 +52,7 @@ class TestcaseBase(object):
                 return TestcaseBase.EX_OK
             else:
                 self.logger.error("The results cannot be pushed to DB")
-                return TestcaseBase.EX_PUSH_TO_DB_ERROR
+                return TestcaseBase.EX_PUSH_RESULT_FAIL
         except Exception:
             self.logger.exception("The results cannot be pushed to DB")
-            return TestcaseBase.EX_PUSH_TO_DB_ERROR
+            return TestcaseBase.EX_PUSH_RESULT_FAIL

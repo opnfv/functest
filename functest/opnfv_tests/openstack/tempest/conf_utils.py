@@ -12,7 +12,7 @@ import os
 import re
 import shutil
 
-import opnfv.utils.constants as releng_constants
+from opnfv.utils.constants import Constants
 
 import functest.utils.functest_utils as ft_utils
 from functest.utils.constants import CONST
@@ -55,7 +55,7 @@ def configure_tempest(logger, deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
     if not os.path.isfile(tempest_conf_file):
         logger.error("Tempest configuration file %s NOT found."
                      % tempest_conf_file)
-        return releng_constants.EXIT_RUN_ERROR
+        return Constants.EX_RUN_ERROR
 
     logger.debug("Updating selected tempest.conf parameters...")
     config = ConfigParser.RawConfigParser()
@@ -102,7 +102,7 @@ def configure_tempest(logger, deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
     shutil.copyfile(
         tempest_conf_file, TEMPEST_RESULTS_DIR + '/tempest.conf')
 
-    return releng_constants.EXIT_OK
+    return Constants.EX_OK
 
 
 def configure_tempest_multisite(logger, deployment_dir):
@@ -117,7 +117,7 @@ def configure_tempest_multisite(logger, deployment_dir):
     if not os.path.isfile(tempest_conf_old):
         logger.error("Tempest configuration file %s NOT found."
                      % tempest_conf_old)
-        return releng_constants.EXIT_RUN_ERROR
+        return Constants.EX_RUN_ERROR
 
     # Copy tempest.conf to /home/opnfv/functest/results/tempest/
     cur_path = os.path.split(os.path.realpath(__file__))[0]
@@ -187,4 +187,4 @@ def configure_tempest_multisite(logger, deployment_dir):
     with open(tempest_conf_file, 'wb') as config_file:
         config.write(config_file)
 
-    return releng_constants.EXIT_OK
+    return Constants.EX_OK

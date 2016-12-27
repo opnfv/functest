@@ -35,7 +35,7 @@ class TestcaseBaseTesting(unittest.TestCase):
                 return_value=False)
     def _test_missing_attribute(self, mock_function):
         self.assertEqual(self.test.push_to_db(),
-                         testcase_base.TestcaseBase.EX_PUSH_TO_DB_ERROR)
+                         testcase_base.TestcaseBase.EX_PUSH_RESULT_FAIL)
         mock_function.assert_not_called()
 
     def test_missing_case_name(self):
@@ -68,7 +68,7 @@ class TestcaseBaseTesting(unittest.TestCase):
                 return_value=False)
     def test_push_to_db_failed(self, mock_function):
         self.assertEqual(self.test.push_to_db(),
-                         testcase_base.TestcaseBase.EX_PUSH_TO_DB_ERROR)
+                         testcase_base.TestcaseBase.EX_PUSH_RESULT_FAIL)
         mock_function.assert_called_once_with(
             self.test.project, self.test.case_name, self.test.start_time,
             self.test.stop_time, self.test.criteria, self.test.details)
@@ -85,12 +85,12 @@ class TestcaseBaseTesting(unittest.TestCase):
     def test_check_criteria_missing(self):
         self.test.criteria = None
         self.assertEqual(self.test.check_criteria(),
-                         testcase_base.TestcaseBase.EX_TESTCASE_FAILED)
+                         testcase_base.TestcaseBase.EX_TEST_FAIL)
 
     def test_check_criteria_failed(self):
         self.test.criteria = 'FAILED'
         self.assertEqual(self.test.check_criteria(),
-                         testcase_base.TestcaseBase.EX_TESTCASE_FAILED)
+                         testcase_base.TestcaseBase.EX_TEST_FAIL)
 
     def test_check_criteria_pass(self):
         self.test.criteria = 'PASS'
