@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_9c78be90",
+        "filename": "functest/tests/unit/utils/test_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-28T06:49:23Z",
+      "side": 1,
+      "message": "I would suggest the file name to be \u0027test_functest_utils.py\u0027",
+      "range": {
+        "startLine": 6,
+        "startChar": 11,
+        "endLine": 6,
+        "endChar": 40
+      },
+      "revId": "8c5a841feeffa93cb953224dda80e867c681a7e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
