@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_080d6990",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2016-12-28T02:29:20Z",
+      "side": 1,
+      "message": "Here is the coverage report. I did not find unit test cases for cli_os, do you leave it out on purpose? Also, the coverage rate is not high enough. If 100% is hard to achieve, how about making the threshold 85%?\n\nfunctest/cli/cli_base.py                   64      5    92%\nfunctest/cli/commands/cli_env.py           66     14    79%\nfunctest/cli/commands/cli_os.py            75     54    28%\nfunctest/cli/commands/cli_testcase.py      33      6    82%\nfunctest/cli/commands/cli_tier.py          35      8    77%",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "1436a37ce8b58e2c05ef1d03db79352401f42d39",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
