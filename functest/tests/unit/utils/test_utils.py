@@ -8,6 +8,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import logging
+import os
 import re
 import time
 import unittest
@@ -123,31 +124,35 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     @mock.patch('functest.utils.functest_utils.logger.error')
     def test_get_installer_type_failed(self, mock_logger_error):
-        with mock.patch.dict('functest.utils.functest_utils.os.environ',
-                             {}):
+        with mock.patch.dict(os.environ,
+                             {},
+                             clear=True):
             self.assertEqual(functest_utils.get_installer_type(),
                              "Unknown_installer")
             mock_logger_error.assert_called_once_with("Impossible to retrieve"
                                                       " the installer type")
 
     def test_get_installer_type_default(self):
-        with mock.patch.dict('functest.utils.functest_utils.os.environ',
-                             {'INSTALLER_TYPE': 'test_installer'}):
+        with mock.patch.dict(os.environ,
+                             {'INSTALLER_TYPE': 'test_installer'},
+                             clear=True):
             self.assertEqual(functest_utils.get_installer_type(),
                              self.installer)
 
     @mock.patch('functest.utils.functest_utils.logger.error')
     def test_get_scenario_failed(self, mock_logger_error):
-        with mock.patch.dict('functest.utils.functest_utils.os.environ',
-                             {}):
+        with mock.patch.dict(os.environ,
+                             {},
+                             clear=True):
             self.assertEqual(functest_utils.get_scenario(),
                              "Unknown_scenario")
             mock_logger_error.assert_called_once_with("Impossible to retrieve"
                                                       " the scenario")
 
     def test_get_scenario_default(self):
-        with mock.patch.dict('functest.utils.functest_utils.os.environ',
-                             {'DEPLOY_SCENARIO': 'test_scenario'}):
+        with mock.patch.dict(os.environ,
+                             {'DEPLOY_SCENARIO': 'test_scenario'},
+                             clear=True):
             self.assertEqual(functest_utils.get_scenario(),
                              self.scenario)
 
@@ -163,8 +168,9 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     @mock.patch('functest.utils.functest_utils.logger.error')
     def test_get_pod_name_failed(self, mock_logger_error):
-        with mock.patch.dict('functest.utils.functest_utils.os.environ',
-                             {}):
+        with mock.patch.dict(os.environ,
+                             {},
+                             clear=True):
             self.assertEqual(functest_utils.get_pod_name(),
                              "unknown-pod")
             mock_logger_error.assert_called_once_with("Unable to retrieve "
@@ -173,23 +179,26 @@ class FunctestUtilsTesting(unittest.TestCase):
                                                       "pod name 'unknown-pod'")
 
     def test_get_pod_name_default(self):
-        with mock.patch.dict('functest.utils.functest_utils.os.environ',
-                             {'NODE_NAME': 'test_node_name'}):
+        with mock.patch.dict(os.environ,
+                             {'NODE_NAME': 'test_node_name'},
+                             clear=True):
             self.assertEqual(functest_utils.get_pod_name(),
                              self.node_name)
 
     @mock.patch('functest.utils.functest_utils.logger.error')
     def test_get_build_tag_failed(self, mock_logger_error):
-        with mock.patch.dict('functest.utils.functest_utils.os.environ',
-                             {}):
+        with mock.patch.dict(os.environ,
+                             {},
+                             clear=True):
             self.assertEqual(functest_utils.get_build_tag(),
                              "unknown_build_tag")
             mock_logger_error.assert_called_once_with("Impossible to retrieve"
                                                       " the build tag")
 
     def test_get_build_tag_default(self):
-        with mock.patch.dict('functest.utils.functest_utils.os.environ',
-                             {'BUILD_TAG': self.build_tag}):
+        with mock.patch.dict(os.environ,
+                             {'BUILD_TAG': self.build_tag},
+                             clear=True):
             self.assertEqual(functest_utils.get_build_tag(),
                              self.build_tag)
 
@@ -241,14 +250,16 @@ class FunctestUtilsTesting(unittest.TestCase):
                'NODE_NAME': self.node_name,
                'BUILD_TAG': self.build_tag}
         dic.pop(var, None)
+        print ('-------dic:%s' % dic)
         return dic
 
     def _test_push_results_to_db_missing_env(self, env_var):
         dic = self._get_env_dict(env_var)
         with mock.patch('functest.utils.functest_utils.get_db_url',
                         return_value=self.db_url), \
-                mock.patch.dict('functest.utils.functest_utils.os.environ',
-                                dic), \
+                mock.patch.dict(os.environ,
+                                dic,
+                                clear=True), \
                 mock.patch('functest.utils.functest_utils.logger.error') \
                 as mock_logger_error:
             functest_utils.push_results_to_db(self.project, self.case_name,
@@ -275,8 +286,9 @@ class FunctestUtilsTesting(unittest.TestCase):
         dic['BUILD_TAG'] = 'incorrect_build_tag'
         with mock.patch('functest.utils.functest_utils.get_db_url',
                         return_value=self.db_url), \
-                mock.patch.dict('functest.utils.functest_utils.os.environ',
-                                dic), \
+                mock.patch.dict(os.environ,
+                                dic,
+                                clear=True), \
                 mock.patch('functest.utils.functest_utils.logger.error') \
                 as mock_logger_error:
             self.assertFalse(functest_utils.
@@ -292,8 +304,9 @@ class FunctestUtilsTesting(unittest.TestCase):
         dic = self._get_env_dict(None)
         with mock.patch('functest.utils.functest_utils.get_db_url',
                         return_value=self.db_url), \
-                mock.patch.dict('functest.utils.functest_utils.os.environ',
-                                dic), \
+                mock.patch.dict(os.environ,
+                                dic,
+                                clear=True), \
                 mock.patch('functest.utils.functest_utils.logger.error') \
                 as mock_logger_error, \
                 mock.patch('functest.utils.functest_utils.requests.post',
@@ -313,8 +326,9 @@ class FunctestUtilsTesting(unittest.TestCase):
         dic = self._get_env_dict(None)
         with mock.patch('functest.utils.functest_utils.get_db_url',
                         return_value=self.db_url), \
-                mock.patch.dict('functest.utils.functest_utils.os.environ',
-                                dic), \
+                mock.patch.dict(os.environ,
+                                dic,
+                                clear=True), \
                 mock.patch('functest.utils.functest_utils.logger.error') \
                 as mock_logger_error, \
                 mock.patch('functest.utils.functest_utils.requests.post',
@@ -330,8 +344,9 @@ class FunctestUtilsTesting(unittest.TestCase):
         dic = self._get_env_dict(None)
         with mock.patch('functest.utils.functest_utils.get_db_url',
                         return_value=self.db_url), \
-                mock.patch.dict('functest.utils.functest_utils.os.environ',
-                                dic), \
+                mock.patch.dict(os.environ,
+                                dic,
+                                clear=True), \
                 mock.patch('functest.utils.functest_utils.requests.post'):
             self.assertTrue(functest_utils.
                             push_results_to_db(self.project, self.case_name,
@@ -372,7 +387,7 @@ class FunctestUtilsTesting(unittest.TestCase):
         return var
 
     def test_get_ci_envvars_default(self):
-        with mock.patch('functest.utils.functest_utils.os.environ.get',
+        with mock.patch('os.environ.get',
                         side_effect=self._get_environ):
             dic = {"installer": self.installer,
                    "scenario": self.scenario}
@@ -542,7 +557,7 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     @mock.patch('functest.utils.functest_utils.get_parameter_from_yaml')
     def test_get_functest_config_default(self, mock_get_parameter_from_yaml):
-        with mock.patch.dict('functest.utils.functest_utils.os.environ',
+        with mock.patch.dict(os.environ,
                              {'CONFIG_FUNCTEST_YAML': self.config_yaml}):
             functest_utils.get_functest_config(self.parameter)
             mock_get_parameter_from_yaml. \
