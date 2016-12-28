@@ -54,15 +54,18 @@ class CliTier:
             click.echo("Test cases in tier '%s':\n %s\n" % (tiername, tests))
 
     @staticmethod
-    def run(tiername, noclean=False):
+    def run(tiername, noclean=False, report=False):
+
+        flags = ""
+        if noclean:
+            flags += "-n "
+        if report:
+            flags += "-r "
+
         if not os.path.isfile(CONST.env_active):
             click.echo("Functest environment is not ready. "
                        "Run first 'functest env prepare'")
         else:
-            if noclean:
-                cmd = ("python %s/functest/ci/run_tests.py "
-                       "-n -t %s" % (CONST.dir_repo_functest, tiername))
-            else:
-                cmd = ("python %s/functest/ci/run_tests.py "
-                       "-t %s" % (CONST.dir_repo_functest, tiername))
+            cmd = ("python %s/functest/ci/run_tests.py "
+                   "%s -t %s" % (CONST.dir_repo_functest, flags, tiername))
             ft_utils.execute_command(cmd)

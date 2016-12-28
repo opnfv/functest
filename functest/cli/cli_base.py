@@ -121,8 +121,11 @@ def testcase_show(testname):
 @click.option('-n', '--noclean', is_flag=True, default=False,
               help='The created openstack resources by the test'
               'will not be cleaned after the execution.')
-def testcase_run(testname, noclean):
-    _testcase.run(testname, noclean)
+@click.option('-r', '--report', is_flag=True, default=False,
+              help='Push results to the results DataBase. Only CI Pods'
+              'have rights to do that.')
+def testcase_run(testname, noclean, report):
+    _testcase.run(testname, noclean, report)
 
 
 @tier.command('list', help="Lists the available tiers.")
@@ -147,5 +150,8 @@ def tier_gettests(tiername):
 @click.option('-n', '--noclean', is_flag=True, default=False,
               help='The created openstack resources by the tests'
               'will not be cleaned after the execution.')
-def tier_run(tiername, noclean):
-    _tier.run(tiername, noclean)
+@click.option('-r', '--report', is_flag=True, default=False,
+              help='Push results to the results DataBase. Only CI Pods'
+              'have rights to do that.')
+def tier_run(tiername, noclean, report):
+    _tier.run(tiername, noclean, report)
