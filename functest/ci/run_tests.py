@@ -27,16 +27,7 @@ import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-t", "--test", dest="test", action='store',
-                    help="Test case or tier (group of tests) to be executed. "
-                    "It will run all the test if not specified.")
-parser.add_argument("-n", "--noclean", help="Do not clean OpenStack resources"
-                    " after running each test (default=false).",
-                    action="store_true")
-parser.add_argument("-r", "--report", help="Push results to database "
-                    "(default=false).", action="store_true")
-args = parser.parse_args()
-
+args = None
 
 """ logging configuration """
 logger = ft_logger.Logger("run_tests").getLogger()
@@ -261,4 +252,13 @@ def main():
 
 
 if __name__ == '__main__':
+    parser.add_argument("-t", "--test", dest="test", action='store',
+                        help="Test case or tier (group of tests) to be executed. "
+                        "It will run all the test if not specified.")
+    parser.add_argument("-n", "--noclean", help="Do not clean OpenStack resources"
+                        " after running each test (default=false).",
+                        action="store_true")
+    parser.add_argument("-r", "--report", help="Push results to database "
+                        "(default=false).", action="store_true")
+    args = parser.parse_args()
     main()
