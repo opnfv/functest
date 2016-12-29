@@ -26,17 +26,6 @@ import functest.utils.openstack_snapshot as os_snapshot
 import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-t", "--test", dest="test", action='store',
-                    help="Test case or tier (group of tests) to be executed. "
-                    "It will run all the test if not specified.")
-parser.add_argument("-n", "--noclean", help="Do not clean OpenStack resources"
-                    " after running each test (default=false).",
-                    action="store_true")
-parser.add_argument("-r", "--report", help="Push results to database "
-                    "(default=false).", action="store_true")
-args = parser.parse_args()
-
 
 """ logging configuration """
 logger = ft_logger.Logger("run_tests").getLogger()
@@ -47,6 +36,26 @@ EXEC_SCRIPT = ("%s/functest/ci/exec_test.sh" % CONST.dir_repo_functest)
 
 # This will be the return code of this script. If any of the tests fails,
 # this variable will change to -1
+
+
+class RunTestsParser():
+
+    def __init__(self):
+        self.parser = argparse.ArgumentParser()
+        self.parser.add_argument("-t", "--test", dest="test", action='store',
+                                 help="Test case or tier (group of tests) "
+                                 "to be executed. It will run all the test "
+                                 "if not specified.")
+        self.parser.add_argument("-n", "--noclean", help="Do not clean "
+                                 "OpenStack resources after running each "
+                                 "test (default=false).",
+                                 action="store_true")
+        self.parser.add_argument("-r", "--report", help="Push results to "
+                                 "database (default=false).",
+                                 action="store_true")
+
+    def parse_args(self, argv=[]):
+        return vars(self.parser.parse_args(argv))
 
 
 class GlobalVariables:
@@ -118,7 +127,7 @@ def get_run_dict_if_defined(testname):
         return None
 
 
-def run_test(test, tier_name):
+def run_test(test, tier_name, **args):
     result_str = "PASS"
     start = datetime.datetime.now()
     test_name = test.get_name()
@@ -222,7 +231,7 @@ def run_all(tiers):
     generate_report.main(GlobalVariables.EXECUTED_TEST_CASES)
 
 
-def main():
+def main(**args):
 
     CI_INSTALLER_TYPE = CONST.INSTALLER_TYPE
     CI_SCENARIO = CONST.DEPLOY_SCENARIO
@@ -242,7 +251,8 @@ def main():
             run_tier(_tiers.get_tier(args.test))
 
         elif _tiers.get_test(args.test):
-            run_test(_tiers.get_test(args.test), _tiers.get_tier(args.test))
+            run_test(_tiers.get_test(args.test), _tiers.get_tier(args.test),
+                     **args)
 
         elif args.test == "all":
             run_all(_tiers)
@@ -261,4 +271,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    parser = RunTestsParser()
+    args = parser.parse_args(sys.argv[1:])
+    main(**args)
