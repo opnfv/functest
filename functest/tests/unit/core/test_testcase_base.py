@@ -11,6 +11,7 @@ import logging
 import mock
 import unittest
 
+mock.patch('logging.FileHandler').start()  # noqa
 from functest.core import testcase_base
 
 

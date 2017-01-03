@@ -21,10 +21,7 @@ clean_results_dir
 # TODO clean that...
 # Create log dir if needed
 # log shall be disabled during unit tests
-# fix to be done in Logger
-echo "Create dummy log file...."
 sudo mkdir -p /home/opnfv/functest/results/odl
-sudo touch /home/opnfv/functest/results/functest.log
 sudo touch /home/opnfv/functest/results/odl/stdout.txt
 sudo chmod -Rf a+rw /home/opnfv
 
