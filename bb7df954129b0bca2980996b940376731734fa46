@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_555ea977",
+        "filename": "functest/tests/unit/odl/test_odl.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-03T11:19:38Z",
+      "side": 1,
+      "message": "there are so many same processes as to this, I would suggest providing a common method to do it, maybe in another patch",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 62
+      },
+      "revId": "bb7df954129b0bca2980996b940376731734fa46",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
