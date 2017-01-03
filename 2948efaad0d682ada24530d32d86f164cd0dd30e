@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ac10518_306f6bc7",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-03T17:06:16Z",
+      "side": 1,
+      "message": "please order them",
+      "revId": "2948efaad0d682ada24530d32d86f164cd0dd30e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_507237ae",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-03T17:06:16Z",
+      "side": 1,
+      "message": "useless?",
+      "revId": "2948efaad0d682ada24530d32d86f164cd0dd30e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_f06803bc",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-03T17:06:16Z",
+      "side": 1,
+      "message": "please use format()",
+      "revId": "2948efaad0d682ada24530d32d86f164cd0dd30e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_bfaa4c17",
         "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
         "patchSetId": 11
