@@ -195,6 +195,8 @@ class ODLTesting(unittest.TestCase):
     def test_main_robot_run_failed(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 self.assertRaises(RobotError):
             self._test_main(testcase_base.TestcaseBase.EX_RUN_ERROR, *args)
 
@@ -203,6 +205,8 @@ class ODLTesting(unittest.TestCase):
     def test_main_parse_results_failed(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 mock.patch.object(self.test, 'parse_results',
                                   side_effect=RobotError):
             self._test_main(testcase_base.TestcaseBase.EX_RUN_ERROR, *args)
@@ -223,6 +227,8 @@ class ODLTesting(unittest.TestCase):
     def test_main(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
@@ -232,6 +238,8 @@ class ODLTesting(unittest.TestCase):
     def test_main_makedirs_oserror17(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
@@ -241,6 +249,8 @@ class ODLTesting(unittest.TestCase):
     def test_main_testcases_in_failure(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
@@ -250,6 +260,8 @@ class ODLTesting(unittest.TestCase):
     def test_main_remove_oserror(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 

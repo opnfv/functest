@@ -18,13 +18,6 @@ function clean_results_dir {
 # clean it anyway
 clean_results_dir
 
-# TODO clean that...
-# Create log dir if needed
-# log shall be disabled during unit tests
-sudo mkdir -p /home/opnfv/functest/results/odl
-sudo touch /home/opnfv/functest/results/odl/stdout.txt
-sudo chmod -Rf a+rw /home/opnfv
-
 # Either Workspace is set (CI)
 if [ -z $WORKSPACE ]
 then
