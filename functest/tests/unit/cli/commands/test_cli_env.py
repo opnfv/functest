@@ -11,6 +11,7 @@ import unittest
 from git.exc import NoSuchPathError
 import mock
 
+mock.patch('logging.FileHandler').start()  # noqa
 from functest.cli.commands import cli_env
 from functest.utils.constants import CONST
 from functest.tests.unit import test_utils

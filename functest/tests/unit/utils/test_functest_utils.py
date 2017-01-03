@@ -18,6 +18,7 @@ import mock
 import requests
 
 from functest.tests.unit import test_utils
+mock.patch('logging.FileHandler').start()  # noqa
 from functest.utils import functest_utils
 
 
