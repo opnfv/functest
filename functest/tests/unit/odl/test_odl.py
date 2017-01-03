@@ -11,6 +11,7 @@ import errno
 import logging
 import mock
 import os
+import StringIO
 import unittest
 
 from keystoneauth1.exceptions import auth_plugins
@@ -78,8 +79,38 @@ class ODLTesting(unittest.TestCase):
         self.assertFalse(self.test.set_robotframework_vars())
 
     @mock.patch('fileinput.input', return_value=[])
-    def test_set_robotframework_vars(self, args):
+    def test_set_robotframework_vars_empty(self, args):
         self.assertTrue(self.test.set_robotframework_vars())
+
+    @mock.patch('sys.stdout', new_callable=StringIO.StringIO)
+    def _test_set_robotframework_vars(self, msg1, msg2, *args):
+        line = mock.MagicMock()
+        line.__iter__.return_value = [msg1]
+        with mock.patch('fileinput.input', return_value=line) as mock_method:
+            self.assertTrue(self.test.set_robotframework_vars())
+            mock_method.assert_called_once_with(
+                os.path.join(odl.ODLTests.odl_test_repo,
+                             'csit/variables/Variables.py'), inplace=True)
+            self.assertEqual(args[0].getvalue(), "{}\n".format(msg2))
+
+    def test_set_robotframework_vars_auth_default(self):
+        self._test_set_robotframework_vars("AUTH = []",
+                                           "AUTH = [u'admin', u'admin']")
+
+    def test_set_robotframework_vars_auth1(self):
+        self._test_set_robotframework_vars("AUTH1 = []", "AUTH1 = []")
+
+    @mock.patch('sys.stdout', new_callable=StringIO.StringIO)
+    def test_set_robotframework_vars_auth_foo(self, *args):
+        line = mock.MagicMock()
+        line.__iter__.return_value = ["AUTH = []"]
+        with mock.patch('fileinput.input', return_value=line) as mock_method:
+            self.assertTrue(self.test.set_robotframework_vars('foo', 'bar'))
+            mock_method.assert_called_once_with(
+                os.path.join(odl.ODLTests.odl_test_repo,
+                             'csit/variables/Variables.py'), inplace=True)
+            self.assertEqual(args[0].getvalue(),
+                             "AUTH = [u'{}', u'{}']\n".format('foo', 'bar'))
 
     @classmethod
     def _fake_url_for(cls, service_type='identity', **kwargs):
