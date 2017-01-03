@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_0e4a62ac",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-03T17:06:16Z",
+      "side": 1,
+      "message": "please follow OS coding rules",
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
