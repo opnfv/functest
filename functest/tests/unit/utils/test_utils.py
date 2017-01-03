@@ -12,6 +12,7 @@ import mock
 import unittest
 import urllib2
 
+mock.patch('logging.FileHandler').start()  # noqa
 from functest.utils import functest_utils
 
 

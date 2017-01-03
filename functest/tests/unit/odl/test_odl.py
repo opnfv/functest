@@ -17,6 +17,7 @@ from keystoneauth1.exceptions import auth_plugins
 from robot.errors import RobotError
 from robot.result import testcase
 
+mock.patch('logging.FileHandler').start()  # noqa
 from functest.core import testcase_base
 from functest.opnfv_tests.sdn.odl import odl
 
