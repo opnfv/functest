@@ -46,6 +46,17 @@ class ODLTesting(unittest.TestCase):
         os.environ["OS_PASSWORD"] = self._os_password
         os.environ["OS_TENANT_NAME"] = self._os_tenantname
         self.test = odl.ODLTests()
+        self.defaultargs = {'odlusername': self._odl_username,
+                            'odlpassword': self._odl_password,
+                            'keystoneip': self._keystone_ip,
+                            'neutronip': self._keystone_ip,
+                            'osusername': self._os_username,
+                            'ostenantname': self._os_tenantname,
+                            'ospassword': self._os_password,
+                            'odlip': self._keystone_ip,
+                            'odlwebport': self._odl_webport,
+                            'odlrestconfport': self._odl_restconfport,
+                            'pushtodb': False}
 
     def test_empty_visitor(self):
         visitor = odl.ODLResultVisitor()
@@ -396,6 +407,77 @@ class ODLTesting(unittest.TestCase):
         os.environ["INSTALLER_TYPE"] = "compass"
         self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._neutron_ip, odlwebport='8181')
+
+    def test_argparser_default(self):
+        parser = odl.ODLParser()
+        self.assertEqual(parser.parse_args(), self.defaultargs)
+
+    def test_argparser_basic(self):
+        self.defaultargs['neutronip'] = self._neutron_ip
+        self.defaultargs['odlip'] = self._sdn_controller_ip
+        parser = odl.ODLParser()
+        self.assertEqual(parser.parse_args(
+            ["--neutronip={}".format(self._neutron_ip),
+             "--odlip={}".format(self._sdn_controller_ip)
+             ]), self.defaultargs)
+
+    @mock.patch('sys.stderr', new_callable=StringIO.StringIO)
+    def test_argparser_fail(self, *args):
+        self.defaultargs['foo'] = 'bar'
+        parser = odl.ODLParser()
+        with self.assertRaises(SystemExit):
+            parser.parse_args(["--foo=bar"])
+
+    def _test_argparser(self, arg, value):
+        self.defaultargs[arg] = value
+        parser = odl.ODLParser()
+        self.assertEqual(parser.parse_args(["--{}={}".format(arg, value)]),
+                         self.defaultargs)
+
+    def test_argparser_odlusername(self):
+        self._test_argparser('odlusername', 'foo')
+
+    def test_argparser_odlpassword(self):
+        self._test_argparser('odlpassword', 'foo')
+
+    def test_argparser_keystoneip(self):
+        self._test_argparser('keystoneip', '127.0.0.4')
+
+    def test_argparser_neutronip(self):
+        self._test_argparser('neutronip', '127.0.0.4')
+
+    def test_argparser_osusername(self):
+        self._test_argparser('osusername', 'foo')
+
+    def test_argparser_ostenantname(self):
+        self._test_argparser('ostenantname', 'foo')
+
+    def test_argparser_ospassword(self):
+        self._test_argparser('ospassword', 'foo')
+
+    def test_argparser_odlip(self):
+        self._test_argparser('odlip', '127.0.0.4')
+
+    def test_argparser_odlwebport(self):
+        self._test_argparser('odlwebport', '80')
+
+    def test_argparser_odlrestconfport(self):
+        self._test_argparser('odlrestconfport', '80')
+
+    def test_argparser_pushtodb(self):
+        self.defaultargs['pushtodb'] = True
+        parser = odl.ODLParser()
+        self.assertEqual(parser.parse_args(["--{}".format('pushtodb')]),
+                         self.defaultargs)
+
+    def test_argparser_multiple_args(self):
+        self.defaultargs['neutronip'] = self._neutron_ip
+        self.defaultargs['odlip'] = self._sdn_controller_ip
+        parser = odl.ODLParser()
+        self.assertEqual(parser.parse_args(
+            ["--neutronip={}".format(self._neutron_ip),
+             "--odlip={}".format(self._sdn_controller_ip)
+             ]), self.defaultargs)
 
 
 if __name__ == "__main__":

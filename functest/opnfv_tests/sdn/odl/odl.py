@@ -180,44 +180,52 @@ class ODLTests(testcase_base.TestcaseBase):
         return self.main(**kwargs)
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-k', '--keystoneip',
-                        help='Keystone IP',
-                        default='127.0.0.1')
-    parser.add_argument('-n', '--neutronip',
-                        help='Neutron IP',
-                        default='127.0.0.1')
-    parser.add_argument('-a', '--osusername',
-                        help='Username for OpenStack',
-                        default='admin')
-    parser.add_argument('-b', '--ostenantname',
-                        help='Tenantname for OpenStack',
-                        default='admin')
-    parser.add_argument('-c', '--ospassword',
-                        help='Password for OpenStack',
-                        default='admin')
-    parser.add_argument('-o', '--odlip',
-                        help='OpenDaylight IP',
-                        default='127.0.0.1')
-    parser.add_argument('-w', '--odlwebport',
-                        help='OpenDaylight Web Portal Port',
-                        default='8080')
-    parser.add_argument('-r', '--odlrestconfport',
-                        help='OpenDaylight RESTConf Port',
-                        default='8181')
-    parser.add_argument('-d', '--odlusername',
-                        help='Username for ODL',
-                        default='admin')
-    parser.add_argument('-e', '--odlpassword',
-                        help='Password for ODL',
-                        default='admin')
-    parser.add_argument('-p', '--pushtodb',
-                        help='Push results to DB',
-                        action='store_true')
+class ODLParser():
 
-    args = vars(parser.parse_args())
+    def __init__(self):
+        self.parser = argparse.ArgumentParser()
+        self.parser.add_argument(
+            '-k', '--keystoneip', help='Keystone IP',
+            default='127.0.0.1')
+        self.parser.add_argument(
+            '-n', '--neutronip', help='Neutron IP',
+            default='127.0.0.1')
+        self.parser.add_argument(
+            '-a', '--osusername', help='Username for OpenStack',
+            default='admin')
+        self.parser.add_argument(
+            '-b', '--ostenantname', help='Tenantname for OpenStack',
+            default='admin')
+        self.parser.add_argument(
+            '-c', '--ospassword', help='Password for OpenStack',
+            default='admin')
+        self.parser.add_argument(
+            '-o', '--odlip', help='OpenDaylight IP',
+            default='127.0.0.1')
+        self.parser.add_argument(
+            '-w', '--odlwebport', help='OpenDaylight Web Portal Port',
+            default='8080')
+        self.parser.add_argument(
+            '-r', '--odlrestconfport', help='OpenDaylight RESTConf Port',
+            default='8181')
+        self.parser.add_argument(
+            '-d', '--odlusername', help='Username for ODL',
+            default='admin')
+        self.parser.add_argument(
+            '-e', '--odlpassword', help='Password for ODL',
+            default='admin')
+        self.parser.add_argument(
+            '-p', '--pushtodb', help='Push results to DB',
+            action='store_true')
+
+    def parse_args(self, argv=[]):
+        return vars(self.parser.parse_args(argv))
+
+
+if __name__ == '__main__':
     odl = ODLTests()
+    parser = ODLParser()
+    args = parser.parse_args(sys.argv[1:])
     try:
         result = odl.main(**args)
         if result != testcase_base.TestcaseBase.EX_OK:
