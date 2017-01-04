@@ -52,6 +52,7 @@ def is_keystone_v3():
 
 
 def get_rc_env_vars():
+<<<<<<< HEAD
     env_vars = ['OS_AUTH_URL', 'OS_USERNAME', 'OS_PASSWORD']
     if is_keystone_v3():
         env_vars.extend(['OS_PROJECT_NAME',
@@ -59,6 +60,16 @@ def get_rc_env_vars():
                          'OS_PROJECT_DOMAIN_NAME'])
     else:
         env_vars.extend(['OS_TENANT_NAME'])
+=======
+    keystone_v3 = is_keystone_v3()
+    env_vars = ['OS_AUTH_URL', 'OS_USERNAME', 'OS_PASSWORD']
+    if keystone_v3 is False:
+        env_vars.extend(['OS_TENANT_NAME'])
+    else:
+        env_vars.extend(['OS_PROJECT_NAME',
+                         'OS_USER_DOMAIN_NAME',
+                         'OS_PROJECT_DOMAIN_NAME'])
+>>>>>>> 815bfb5... Add VnfOnBoarding Abstraction
     return env_vars
 
 
@@ -1168,6 +1179,23 @@ def delete_glance_image(nova_client, image_id):
         logger.error("Error [delete_glance_image(nova_client, '%s')]: %s"
                      % (image_id, e))
         return False
+
+
+def download_and_add_image_on_glance(glance, image_name, image_url, dest_path):
+    if not os.path.exists(dest_path):
+        os.makedirs(dest_path)
+    file_name = image_url.rsplit('/')[-1]
+    if not ft_utils.download_url(image_url, dest_path):
+        logger.error("Failed to download image %s" % file_name)
+        return False
+
+    image = create_glance_image(
+        glance, image_name, dest_path + file_name)
+    if not image:
+        logger.error("Failed to upload image on glance")
+        return False
+
+    return image
 
 
 # *********************************************

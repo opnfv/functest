@@ -61,6 +61,7 @@ nosetests --with-xunit \
          --cover-package=functest.cli \
          --cover-package=functest.core.testcase_base \
          --cover-package=functest.opnfv_tests.sdn.odl.odl \
+         --cover-package=functest.utils \
          --cover-xml \
          --cover-html \
          functest/tests/unit
