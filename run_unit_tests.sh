@@ -2,22 +2,6 @@
 set -o errexit
 set -o pipefail
 
-function clean_results_dir {
-    if [ -d "/home/opnfv/functest/results" ]
-    then
-        sudo rm -rf /home/opnfv/functest/results
-    fi
-}
-
-# ******************************
-# prepare the env for the tests
-# ******************************
-# clean useless results dir
-# should be done at the end
-# but in case of crash during unit test
-# clean it anyway
-clean_results_dir
-
 # Either Workspace is set (CI)
 if [ -z $WORKSPACE ]
 then
@@ -58,11 +42,5 @@ nosetests --with-xunit \
 rc=$?
 
 deactivate
-
-# *******
-# clean
-# *******
-# Clean useless logs
-clean_results_dir
 
 exit $rc
