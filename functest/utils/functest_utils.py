@@ -7,178 +7,19 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-import functools
 import json
 import os
 import re
-import shutil
 import subprocess
 import sys
-import time
-import urllib2
 from datetime import datetime as dt
 
-import dns.resolver
 import requests
-import yaml
-from git import Repo
 
+from constants import CONST
 import functest.utils.functest_logger as ft_logger
 
 logger = ft_logger.Logger("functest_utils").getLogger()
-
-
-# ----------------------------------------------------------
-#
-#               INTERNET UTILS
-#
-# -----------------------------------------------------------
-def check_internet_connectivity(url='http://www.opnfv.org/'):
-    """
-    Check if there is access to the internet
-    """
-    try:
-        urllib2.urlopen(url, timeout=5)
-        return True
-    except urllib2.URLError:
-        return False
-
-
-def download_url(url, dest_path):
-    """
-    Download a file to a destination path given a URL
-    """
-    name = url.rsplit('/')[-1]
-    dest = dest_path + "/" + name
-    try:
-        response = urllib2.urlopen(url)
-    except (urllib2.HTTPError, urllib2.URLError):
-        return False
-
-    with open(dest, 'wb') as f:
-        shutil.copyfileobj(response, f)
-    return True
-
-
-# ----------------------------------------------------------
-#
-#               CI UTILS
-#
-# -----------------------------------------------------------
-def get_git_branch(repo_path):
-    """
-    Get git branch name
-    """
-    repo = Repo(repo_path)
-    branch = repo.active_branch
-    return branch.name
-
-
-def get_installer_type():
-    """
-    Get installer type (fuel, apex, joid, compass)
-    """
-    try:
-        installer = os.environ['INSTALLER_TYPE']
-    except KeyError:
-        logger.error("Impossible to retrieve the installer type")
-        installer = "Unknown_installer"
-
-    return installer
-
-
-def get_scenario():
-    """
-    Get scenario
-    """
-    try:
-        scenario = os.environ['DEPLOY_SCENARIO']
-    except KeyError:
-        logger.error("Impossible to retrieve the scenario")
-        scenario = "Unknown_scenario"
-
-    return scenario
-
-
-def get_version():
-    """
-    Get version
-    """
-    # Use the build tag to retrieve the version
-    # By default version is unknown
-    # if launched through CI the build tag has the following format
-    # jenkins-<project>-<installer>-<pod>-<job>-<branch>-<id>
-    # e.g. jenkins-functest-fuel-opnfv-jump-2-daily-master-190
-    # use regex to match branch info
-    rule = "daily-(.+?)-[0-9]*"
-    build_tag = get_build_tag()
-    m = re.search(rule, build_tag)
-    if m:
-        return m.group(1)
-    else:
-        return "unknown"
-
-
-def get_pod_name():
-    """
-    Get PoD Name from env variable NODE_NAME
-    """
-    try:
-        return os.environ['NODE_NAME']
-    except KeyError:
-        logger.error(
-            "Unable to retrieve the POD name from environment. " +
-            "Using pod name 'unknown-pod'")
-        return "unknown-pod"
-
-
-def get_build_tag():
-    """
-    Get build tag of jenkins jobs
-    """
-    try:
-        build_tag = os.environ['BUILD_TAG']
-    except KeyError:
-        logger.error("Impossible to retrieve the build tag")
-        build_tag = "unknown_build_tag"
-
-    return build_tag
-
-
-def get_db_url():
-    """
-    Returns DB URL
-    """
-    return get_functest_config('results.test_db_url')
-
-
-def logger_test_results(project, case_name, status, details):
-    pod_name = get_pod_name()
-    scenario = get_scenario()
-    version = get_version()
-    build_tag = get_build_tag()
-
-    logger.info(
-        "\n"
-        "****************************************\n"
-        "\t %(p)s/%(n)s results \n\n"
-        "****************************************\n"
-        "DB:\t%(db)s\n"
-        "pod:\t%(pod)s\n"
-        "version:\t%(v)s\n"
-        "scenario:\t%(s)s\n"
-        "status:\t%(c)s\n"
-        "build tag:\t%(b)s\n"
-        "details:\t%(d)s\n"
-        % {'p': project,
-            'n': case_name,
-            'db': get_db_url(),
-            'pod': pod_name,
-            'v': version,
-            's': scenario,
-            'c': status,
-            'b': build_tag,
-            'd': details})
 
 
 def push_results_to_db(project, case_name,
@@ -187,7 +28,7 @@ def push_results_to_db(project, case_name,
     POST results to the Result target DB
     """
     # Retrieve params from CI and conf
-    url = get_db_url() + "/results"
+    url = CONST.results_test_db_url + "/results"
 
     try:
         installer = os.environ['INSTALLER_TYPE']
@@ -256,38 +97,6 @@ def push_results_to_db(project, case_name,
         return True
 
 
-def get_resolvconf_ns():
-    """
-    Get nameservers from current resolv.conf
-    """
-    nameservers = []
-    rconf = open("/etc/resolv.conf", "r")
-    line = rconf.readline()
-    resolver = dns.resolver.Resolver()
-    while line:
-        ip = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
-        if ip:
-            resolver.nameservers = [str(ip)]
-            try:
-                result = resolver.query('opnfv.org')[0]
-                if result != "":
-                    nameservers.append(ip.group())
-            except dns.exception.Timeout:
-                pass
-        line = rconf.readline()
-    return nameservers
-
-
-def get_ci_envvars():
-    """
-    Get the CI env variables
-    """
-    ci_env_var = {
-        "installer": os.environ.get('INSTALLER_TYPE'),
-        "scenario": os.environ.get('DEPLOY_SCENARIO')}
-    return ci_env_var
-
-
 def execute_command(cmd, info=False, error_msg="",
                     verbose=True, output_file=None):
     if not error_msg:
@@ -320,110 +129,5 @@ def execute_command(cmd, info=False, error_msg="",
     return returncode
 
 
-def get_dict_by_test(testname):
-    with open(get_testcases_file_dir()) as f:
-        testcases_yaml = yaml.safe_load(f)
-
-    for dic_tier in testcases_yaml.get("tiers"):
-        for dic_testcase in dic_tier['testcases']:
-            if dic_testcase['name'] == testname:
-                return dic_testcase
-
-    logger.error('Project %s is not defined in testcases.yaml' % testname)
-    return None
-
-
-def get_criteria_by_test(testname):
-    dict = get_dict_by_test(testname)
-    if dict:
-        return dict['criteria']
-    return None
-
-
-# ----------------------------------------------------------
-#
-#               YAML UTILS
-#
-# -----------------------------------------------------------
-def get_parameter_from_yaml(parameter, file):
-    """
-    Returns the value of a given parameter in file.yaml
-    parameter must be given in string format with dots
-    Example: general.openstack.image_name
-    """
-    with open(file) as f:
-        file_yaml = yaml.safe_load(f)
-    f.close()
-    value = file_yaml
-    for element in parameter.split("."):
-        value = value.get(element)
-        if value is None:
-            raise ValueError("The parameter %s is not defined in"
-                             " config_functest.yaml" % parameter)
-    return value
-
-
-def get_functest_config(parameter):
-    yaml_ = os.environ["CONFIG_FUNCTEST_YAML"]
-    return get_parameter_from_yaml(parameter, yaml_)
-
-
-def check_success_rate(case_name, success_rate):
-    success_rate = float(success_rate)
-    criteria = get_criteria_by_test(case_name)
-
-    def get_criteria_value(op):
-        return float(criteria.split(op)[1].rstrip('%'))
-
-    status = 'FAIL'
-    ops = ['==', '>=']
-    for op in ops:
-        if op in criteria:
-            c_value = get_criteria_value(op)
-            if eval("%s %s %s" % (success_rate, op, c_value)):
-                status = 'PASS'
-            break
-
-    return status
-
-
-def merge_dicts(dict1, dict2):
-    for k in set(dict1.keys()).union(dict2.keys()):
-        if k in dict1 and k in dict2:
-            if isinstance(dict1[k], dict) and isinstance(dict2[k], dict):
-                yield (k, dict(merge_dicts(dict1[k], dict2[k])))
-            else:
-                yield (k, dict2[k])
-        elif k in dict1:
-            yield (k, dict1[k])
-        else:
-            yield (k, dict2[k])
-
-
-def get_testcases_file_dir():
-    return get_functest_config('general.functest.testcases_yaml')
-
-
-def get_functest_yaml():
-    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
-        functest_yaml = yaml.safe_load(f)
-    f.close()
-    return functest_yaml
-
-
 def print_separator():
     logger.info("==============================================")
-
-
-def timethis(func):
-    """Measure the time it takes for a function to complete"""
-    @functools.wraps(func)
-    def timed(*args, **kwargs):
-        ts = time.time()
-        result = func(*args, **kwargs)
-        te = time.time()
-        elapsed = '{0}'.format(te - ts)
-        logger.info('{f}(*{a}, **{kw}) took: {t} sec'.format(
-            f=func.__name__, a=args, kw=kwargs, t=elapsed))
-        return result, elapsed
-    return timed

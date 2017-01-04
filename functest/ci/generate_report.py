@@ -9,9 +9,8 @@ import json
 import re
 import urllib2
 
-import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as ft_utils
 from functest.utils.constants import CONST
+import functest.utils.functest_logger as ft_logger
 
 COL_1_LEN = 25
 COL_2_LEN = 15
@@ -39,7 +38,7 @@ def init(tiers_to_run):
 
 
 def get_results_from_db():
-    url = "%s/results?build_tag=%s" % (ft_utils.get_db_url(),
+    url = "%s/results?build_tag=%s" % (CONST.results_test_db_url,
                                        CONST.BUILD_TAG)
     logger.debug("Query to rest api: %s" % url)
     try:
@@ -56,7 +55,7 @@ def get_data(test, results):
     for test_db in results:
         if test['test_name'] in test_db['case_name']:
             id = test_db['_id']
-            url = ft_utils.get_db_url() + '/results/' + id
+            url = CONST.results_test_db_url + '/results/' + id
             test_result = test_db['criteria']
 
     return {"url": url, "result": test_result}
