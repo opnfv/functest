@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_2bacda9f",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-04T16:44:55Z",
+      "side": 1,
+      "message": "Please create a class. It helps testing.",
+      "revId": "70446775f7490ea353b210442ea7754665c89602",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
