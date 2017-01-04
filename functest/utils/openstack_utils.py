@@ -22,8 +22,8 @@ from novaclient import client as novaclient
 from keystoneclient import client as keystoneclient
 from neutronclient.neutron import client as neutronclient
 
+from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as ft_utils
 
 logger = ft_logger.Logger("openstack_utils").getLogger()
 
@@ -333,9 +333,7 @@ def create_flavor(nova_client, flavor_name, ram, disk, vcpus, public=True):
         flavor = nova_client.flavors.create(
             flavor_name, ram, vcpus, disk, is_public=public)
         try:
-            extra_specs = ft_utils.get_functest_config(
-                'general.flavor_extra_specs')
-            flavor.set_keys(extra_specs)
+            flavor.set_keys(CONST.flavor_extra_specs)
         except ValueError:
             # flavor extra specs are not configured, therefore skip the update
             pass

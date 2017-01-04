@@ -29,6 +29,7 @@ from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+from functest.utils.testcase import TCC
 
 tests = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
          'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
@@ -581,7 +582,7 @@ def main():
         case_name = "rally_full"
 
     # Evaluation of the success criteria
-    status = ft_utils.check_success_rate(case_name, success_rate)
+    status = TCC.check_success_rate(case_name, success_rate)
 
     exit_code = -1
     if status == "PASS":

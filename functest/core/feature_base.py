@@ -48,7 +48,29 @@ class FeatureBase(base.TestcaseBase):
         return "{}/{}.log".format(CONST.dir_results, self.project_name)
 
     def log_results(self):
-        ft_utils.logger_test_results(self.project_name,
-                                     self.case_name,
-                                     self.criteria,
-                                     self.details)
+        pod_name = CONST.POD_NAME
+        scenario = CONST.DEPLOY_SCENARIO
+        version = CONST.VERSION
+        build_tag = CONST.BUILD_TAG
+
+        self.logger.info(
+            "\n"
+            "****************************************\n"
+            "\t %(p)s/%(n)s results \n\n"
+            "****************************************\n"
+            "DB:\t%(db)s\n"
+            "pod:\t%(pod)s\n"
+            "version:\t%(v)s\n"
+            "scenario:\t%(s)s\n"
+            "status:\t%(c)s\n"
+            "build tag:\t%(b)s\n"
+            "details:\t%(d)s\n"
+            % {'p': self.project_name,
+                'n': self.case_name,
+                'db': CONST.results_test_db_url,
+                'pod': pod_name,
+                'v': version,
+                's': scenario,
+                'c': self.criteria,
+                'b': build_tag,
+                'd': self.details})

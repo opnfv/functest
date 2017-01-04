@@ -17,8 +17,8 @@ import os
 import re
 import time
 
+from functest.utils.constants import CONST
 import functest.utils.functest_constants as ft_constants
-import functest.utils.functest_utils as ft_utils
 
 
 class Foundation:
@@ -54,7 +54,7 @@ class Foundation:
         """
         Get Default Parameters value
         """
-        self.Result_DB = str(ft_utils.get_db_url())
+        self.Result_DB = str(CONST.results_test_db_url)
         self.masterusername = str(ft_constants.ONOSBENCH_USERNAME)
         self.masterpassword = str(ft_constants.ONOSBENCH_PASSWORD)
         self.agentusername = str(ft_constants.ONOSCLI_USERNAME)

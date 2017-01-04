@@ -17,6 +17,7 @@ import argparse
 import os
 import time
 
+from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as functest_utils
 import functest.utils.functest_constants as ft_constants
@@ -27,7 +28,7 @@ parser.add_argument("-r", "--report",
                     action="store_true")
 args = parser.parse_args()
 
-functest_yaml = functest_utils.get_functest_yaml()
+functest_yaml = CONST.functest_yaml
 
 DOCTOR_REPO_DIR = ft_constants.DOCTOR_REPO_DIR
 RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
@@ -70,9 +71,6 @@ def main():
     status = "FAIL"
     if details['status'] == "OK":
         status = "PASS"
-    functest_utils.logger_test_results("Doctor",
-                                       "doctor-notification",
-                                       status, details)
     if args.report:
         functest_utils.push_results_to_db("doctor",
                                           "doctor-notification",
