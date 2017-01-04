@@ -11,22 +11,26 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
 
+import argparse
 import datetime
 import json
 import os
 import pprint
+import re
+import shutil
 import subprocess
 import time
+import urllib2
 
-import argparse
+import dns.resolver
 import requests
 
+import functest.utils.functest_constants as ft_constants
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 from clearwater import Clearwater
 from orchestrator import Orchestrator
-import functest.utils.functest_constants as ft_constants
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -71,12 +75,28 @@ RESULTS = {'orchestrator': {'duration': 0, 'result': ''},
            'sig_test': {'duration': 0, 'result': ''}}
 
 
+def download_url(url, dest_path):
+    """
+    Download a file to a destination path given a URL
+    """
+    name = url.rsplit('/')[-1]
+    dest = dest_path + "/" + name
+    try:
+        response = urllib2.urlopen(url)
+    except (urllib2.HTTPError, urllib2.URLError):
+        return False
+
+    with open(dest, 'wb') as f:
+        shutil.copyfileobj(response, f)
+    return True
+
+
 def download_and_add_image_on_glance(glance, image_name, image_url):
     dest_path = os.path.join(VIMS_DATA_DIR, "tmp/")
     if not os.path.exists(dest_path):
         os.makedirs(dest_path)
     file_name = image_url.rsplit('/')[-1]
-    if not ft_utils.download_url(image_url, dest_path):
+    if not download_url(image_url, dest_path):
         logger.error("Failed to download image %s" % file_name)
         return False
 
@@ -108,6 +128,28 @@ def step_failure(step_name, error_msg):
 
 def set_result(step_name, duration=0, result=""):
     RESULTS[step_name] = {'duration': duration, 'result': result}
+
+
+def get_resolvconf_ns():
+    """
+    Get nameservers from current resolv.conf
+    """
+    nameservers = []
+    rconf = open("/etc/resolv.conf", "r")
+    line = rconf.readline()
+    resolver = dns.resolver.Resolver()
+    while line:
+        ip = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
+        if ip:
+            resolver.nameservers = [str(ip)]
+            try:
+                result = resolver.query('opnfv.org')[0]
+                if result != "":
+                    nameservers.append(ip.group())
+            except dns.exception.Timeout:
+                pass
+        line = rconf.readline()
+    return nameservers
 
 
 def test_clearwater():

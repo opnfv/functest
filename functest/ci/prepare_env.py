@@ -184,12 +184,25 @@ def source_rc_file():
     logger.debug("OS_PASSWORD:%s" % CONST.OS_PASSWORD)
 
 
+def merge_dicts(dict1, dict2):
+    for k in set(dict1.keys()).union(dict2.keys()):
+        if k in dict1 and k in dict2:
+            if isinstance(dict1[k], dict) and isinstance(dict2[k], dict):
+                yield (k, dict(merge_dicts(dict1[k], dict2[k])))
+            else:
+                yield (k, dict2[k])
+        elif k in dict1:
+            yield (k, dict1[k])
+        else:
+            yield (k, dict2[k])
+
+
 def patch_config_file():
     updated = False
     for key in functest_patch_yaml:
         if key in CONST.DEPLOY_SCENARIO:
-            new_functest_yaml = dict(ft_utils.merge_dicts(
-                ft_utils.get_functest_yaml(), functest_patch_yaml[key]))
+            new_functest_yaml = dict(merge_dicts(
+                CONST.functest_yaml, functest_patch_yaml[key]))
             updated = True
 
     if updated:

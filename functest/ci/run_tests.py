@@ -18,13 +18,14 @@ import sys
 import functest.ci.generate_report as generate_report
 import functest.ci.tier_builder as tb
 import functest.core.testcase_base as testcase_base
+from functest.utils.constants import CONST
 import functest.utils.functest_constants as ft_constants
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 import functest.utils.openstack_utils as os_utils
-from functest.utils.constants import CONST
+from functest.utils.testcase import TCC
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--test", dest="test", action='store',
@@ -107,7 +108,7 @@ def update_test_info(test_name, result, duration):
 
 def get_run_dict_if_defined(testname):
     try:
-        dict = ft_utils.get_dict_by_test(testname)
+        dict = TCC.get_dict_by_test(testname)
         if not dict:
             logger.error("Cannot get {}'s config options".format(testname))
         elif 'run' in dict:

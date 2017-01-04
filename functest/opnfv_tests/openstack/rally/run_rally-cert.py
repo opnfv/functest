@@ -25,6 +25,7 @@ import time
 import iniparse
 import yaml
 
+import functest.utils.testcase
 from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
@@ -581,7 +582,7 @@ def main():
         case_name = "rally_full"
 
     # Evaluation of the success criteria
-    status = ft_utils.check_success_rate(case_name, success_rate)
+    status = functest.utils.testcase.check_success_rate(case_name, success_rate)
 
     exit_code = -1
     if status == "PASS":

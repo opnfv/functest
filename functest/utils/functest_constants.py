@@ -8,6 +8,8 @@
 #
 import os
 
+import yaml
+
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
@@ -42,9 +44,32 @@ else:
 CONFIG_FUNCTEST_YAML = os.getenv("CONFIG_FUNCTEST_YAML")
 
 
+def get_parameter_from_yaml(parameter, file):
+    """
+    Returns the value of a given parameter in file.yaml
+    parameter must be given in string format with dots
+    Example: general.openstack.image_name
+    """
+    with open(file) as f:
+        file_yaml = yaml.safe_load(f)
+    f.close()
+    value = file_yaml
+    for element in parameter.split("."):
+        value = value.get(element)
+        if value is None:
+            raise ValueError("The parameter %s is not defined in"
+                             " config_functest.yaml" % parameter)
+    return value
+
+
+def get_functest_config(parameter):
+    yaml_ = os.environ["CONFIG_FUNCTEST_YAML"]
+    return get_parameter_from_yaml(parameter, yaml_)
+
+
 def get_value(functest_config_key, env_variable):
     try:
-        constant = ft_utils.get_functest_config(functest_config_key)
+        constant = get_functest_config(functest_config_key)
         # logger.debug("%s is defined in config_functest.yaml as [%s]"
         #             % (env_variable, constant))
         return constant

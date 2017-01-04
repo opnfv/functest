@@ -18,10 +18,12 @@ import yaml
 
 import conf_utils
 import functest.core.testcase_base as testcase_base
+import functest.utils.testcase
 from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
+from functest.utils.testcase import TCC
 
 """ logging configuration """
 logger = ft_logger.Logger("Tempest").getLogger()
@@ -273,8 +275,7 @@ class TempestCommon(testcase_base.TestcaseBase):
         except:
             success_rate = 0
 
-        self.criteria = ft_utils.check_success_rate(
-            self.case_name, success_rate)
+        self.criteria = TCC.check_success_rate(self.case_name, success_rate)
         logger.info("Tempest %s success_rate is %s%%, is marked as %s"
                     % (self.case_name, success_rate, self.criteria))
 

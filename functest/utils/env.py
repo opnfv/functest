@@ -24,6 +24,7 @@ class Environment(object):
                 self.__setattr__(k, v)
         self._set_ci_run()
         self._set_ci_loop()
+        self._set_version()
 
     def _set_ci_run(self):
         if self.BUILD_TAG:
@@ -36,6 +37,26 @@ class Environment(object):
             self.CI_LOOP = "daily"
         else:
             self.CI_LOOP = "weekly"
+
+    def _set_version(self):
+        """
+        Get version
+        """
+        # Use the build tag to retrieve the version
+        # By default version is unknown
+        # if launched through CI the build tag has the following format
+        # jenkins-<project>-<installer>-<pod>-<job>-<branch>-<id>
+        # e.g. jenkins-functest-fuel-opnfv-jump-2-daily-master-190
+        # use regex to match branch info
+        rule = "daily-(.+?)-[0-9]*"
+        if self.BUILD_TAG:
+            m = re.search(rule, self.BUILD_TAG)
+            if m:
+                self.VERSION = m.group(1)
+            else:
+                self.VERSION = "unknown"
+        else:
+            self.VERSION = "unknown"
 
 
 ENV = Environment()

@@ -875,7 +875,7 @@ You can also reuse a python function defined in functest_utils.py::
       POST results to the Result target DB
       """
       url = db_url + "/results"
-      installer = get_installer_type(logger)
+      installer = constants.CONST.installer_type
       params = {"project_name": "functest", "case_name": case_name,
                 "pod_name": pod_name, "installer": installer,
                 "version": version, "details": payload}
