@@ -231,7 +231,7 @@ class CliOpenStackTesting(unittest.TestCase):
         value = 'OS_VALUE'
         with mock.patch.dict(os.environ, {key: value}):
             self.cli_os.show_credentials()
-            mock_click_echo.assert_called_once_with("{}={}".format(key, value))
+            mock_click_echo.assert_any_call("{}={}".format(key, value))
 
 
 if __name__ == "__main__":
