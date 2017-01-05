@@ -22,12 +22,6 @@ clean_results_dir
 # Create log dir if needed
 # log shall be disabled during unit tests
 # fix to be done in Logger
-echo "Create dummy log file...."
-sudo mkdir -p /home/opnfv/functest/results/odl
-sudo touch /home/opnfv/functest/results/functest.log
-sudo touch /home/opnfv/functest/results/odl/stdout.txt
-sudo chmod -Rf a+rw /home/opnfv
-
 # Either Workspace is set (CI)
 if [ -z $WORKSPACE ]
 then
@@ -41,6 +35,7 @@ fi
 echo "Running unit tests..."
 
 # start vitual env
+echo $WORKSPACE
 virtualenv $WORKSPACE/functest_venv
 source $WORKSPACE/functest_venv/bin/activate
 
@@ -64,6 +59,7 @@ nosetests --with-xunit \
          --cover-package=functest.utils \
          --cover-xml \
          --cover-html \
+         --log-config=$(pwd)/functest/tests/unit/test_logging.ini \
          functest/tests/unit
 rc=$?
 

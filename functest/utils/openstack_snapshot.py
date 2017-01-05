@@ -19,7 +19,6 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-
 import yaml
 
 import functest.utils.functest_logger as ft_logger
