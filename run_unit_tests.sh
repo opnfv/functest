@@ -38,6 +38,7 @@ nosetests --with-xunit \
          --cover-package=functest.utils \
          --cover-xml \
          --cover-html \
+         --log-config=$(pwd)/functest/tests/unit/test_logging.ini \
          functest/tests/unit
 rc=$?
 

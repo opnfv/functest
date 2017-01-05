@@ -19,7 +19,6 @@ from robot.errors import DataError, RobotError
 from robot.result import testcase
 from robot.utils.robottime import timestamp_to_secs
 
-mock.patch('logging.FileHandler').start()  # noqa
 from functest.core import testcase_base
 from functest.opnfv_tests.sdn.odl import odl
 
