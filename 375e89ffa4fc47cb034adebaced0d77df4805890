@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_66d45920",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "The same question as Serena",
+      "parentUuid": "5ac10518_86862564",
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_6683f956",
         "filename": "functest/core/vnf_base.py",
         "patchSetId": 2
@@ -135,6 +153,202 @@
       "writtenOn": "2017-01-05T07:47:18Z",
       "side": 1,
       "message": "if create_user failed, will the test continue? shouldn\u0027t exit here?",
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_06e31506",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "In line with Serena, if the user does not exist, is it still meaningful to continue the remaining steps? \nI am not familiar with VNF deployment and all the questions are from general point of view which may be wrong :)",
+      "parentUuid": "5ac10518_6683f956",
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_46b83de5",
+        "filename": "functest/opnfv_tests/vnf/aaa/__init__.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "It would be recommend to create the file with 644 permission.",
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c6c3cd55",
+        "filename": "functest/opnfv_tests/vnf/aaa/aaa.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "It would be recommended to set the file permission as 644.",
+      "range": {
+        "startLine": 1,
+        "startChar": 6,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a6c80175",
+        "filename": "functest/opnfv_tests/vnf/aaa/aaa.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "what is the message behind ...?",
+      "range": {
+        "startLine": 42,
+        "startChar": 14,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_46afdd94",
+        "filename": "functest/opnfv_tests/vnf/ims/ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "I would recommend to reorganize the import like below\nThree groups\nbuilt-in modules such as os and sys\nthird-party modules you have installed in your environment, your project",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 37
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_0691d551",
+        "filename": "functest/opnfv_tests/vnf/ims/ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "\"+\" can be removed here with the help to bracket",
+      "range": {
+        "startLine": 76,
+        "startChar": 63,
+        "endLine": 76,
+        "endChar": 64
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c69aed6d",
+        "filename": "functest/opnfv_tests/vnf/ims/ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "I would suggest to use format to come up with the script.\nThere will be three script objects created in your way and it is not readable.",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 160,
+        "endChar": 73
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_868ce536",
+        "filename": "functest/opnfv_tests/vnf/ims/ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "I would recommend to use subprocess.Popen instead.",
+      "range": {
+        "startLine": 165,
+        "startChar": 20,
+        "endLine": 165,
+        "endChar": 34
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a676c13c",
+        "filename": "functest/opnfv_tests/vnf/ims/ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "I would suggest to use format to come up with the script.\nThere will be multiple script objects created in your way and it is not readable.",
+      "range": {
+        "startLine": 216,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 48
+      },
       "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -157,6 +371,76 @@
         "startChar": 6,
         "endLine": 17,
         "endChar": 26
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_6690d943",
+        "filename": "functest/tests/unit/core/test_vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "In line with Serena",
+      "parentUuid": "5ac10518_267df16e",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8693854e",
+        "filename": "functest/tests/unit/core/test_vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "Agree with you that this part is not needed as it is tested in its parent class.",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_269ad163",
+        "filename": "functest/utils/functest_constants.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T09:04:36Z",
+      "side": 1,
+      "message": "in functest/utils/constants.py\nIt will come up with name and there is not need for this function.",
+      "range": {
+        "startLine": 263,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 19
       },
       "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
