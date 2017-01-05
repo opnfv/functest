@@ -241,6 +241,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_06223501",
+        "filename": "functest/opnfv_tests/vnf/aaa/aaa.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T10:23:09Z",
+      "side": 1,
+      "message": "I am not sure what the exact problem. Cedric can give the answer.",
+      "parentUuid": "5ac10518_86086592",
+      "range": {
+        "startLine": 1,
+        "startChar": 6,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_a6c80175",
         "filename": "functest/opnfv_tests/vnf/aaa/aaa.py",
         "patchSetId": 2
@@ -276,6 +300,30 @@
       "side": 1,
       "message": "the idea was to have something before Xmas break...so everything was not implemented\n\nonly the framework was partially done\n\nhere the idea would be, once the freeradius is deployed..to make some tests on it...\n\nthe vnf onboarding as we did with vIMS is\n-create env\n- deploy orchestrator\n- deploy VNF (mandatory)\n- test VNF (mandatory)\n- clean",
       "parentUuid": "5ac10518_a6c80175",
+      "range": {
+        "startLine": 42,
+        "startChar": 14,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a62001f8",
+        "filename": "functest/opnfv_tests/vnf/aaa/aaa.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T10:23:09Z",
+      "side": 1,
+      "message": "Thank you for the explanation. I would recommend to put the exact message instead of three dots.",
+      "parentUuid": "5ac10518_862f05f6",
       "range": {
         "startLine": 42,
         "startChar": 14,
