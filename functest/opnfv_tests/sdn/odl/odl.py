@@ -15,7 +15,7 @@ import re
 import sys
 import urlparse
 
-from robot.api import ExecutionResult, ResultVisitor
+import robot.api
 from robot.errors import RobotError
 import robot.run
 from robot.utils.robottime import timestamp_to_secs
@@ -25,7 +25,7 @@ import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as op_utils
 
 
-class ODLResultVisitor(ResultVisitor):
+class ODLResultVisitor(robot.api.ResultVisitor):
 
     def __init__(self):
         self._data = []
@@ -79,7 +79,7 @@ class ODLTests(testcase_base.TestcaseBase):
 
     def parse_results(self):
         xml_file = os.path.join(self.res_dir, 'output.xml')
-        result = ExecutionResult(xml_file)
+        result = robot.api.ExecutionResult(xml_file)
         visitor = ODLResultVisitor()
         result.visit(visitor)
         self.criteria = result.suite.status

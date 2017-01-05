@@ -15,8 +15,9 @@ import StringIO
 import unittest
 
 from keystoneauth1.exceptions import auth_plugins
-from robot.errors import RobotError
+from robot.errors import DataError, RobotError
 from robot.result import testcase
+from robot.utils.robottime import timestamp_to_secs
 
 mock.patch('logging.FileHandler').start()  # noqa
 from functest.core import testcase_base
@@ -84,6 +85,27 @@ class ODLTesting(unittest.TestCase):
         test.parent.configure_mock(**config)
         visitor.visit_test(test)
         self.assertEqual(visitor.get_data(), [data])
+
+    @mock.patch('robot.api.ExecutionResult', side_effect=DataError)
+    def test_parse_results_raises_exceptions(self, *args):
+        with self.assertRaises(DataError):
+            self.test.parse_results()
+
+    def test_parse_results(self, *args):
+        config = {'name': 'dummy', 'starttime': '20161216 16:00:00.000',
+                  'endtime': '20161216 16:00:01.000', 'status': 'PASS'}
+        suite = mock.Mock()
+        suite.configure_mock(**config)
+        with mock.patch('robot.api.ExecutionResult',
+                        return_value=mock.Mock(suite=suite)):
+            self.test.parse_results()
+            self.assertEqual(self.test.criteria, config['status'])
+            self.assertEqual(self.test.start_time,
+                             timestamp_to_secs(config['starttime']))
+            self.assertEqual(self.test.stop_time,
+                             timestamp_to_secs(config['endtime']))
+            self.assertEqual(self.test.details,
+                             {'description': config['name'], 'tests': []})
 
     @mock.patch('fileinput.input', side_effect=Exception())
     def test_set_robotframework_vars_failed(self, *args):
