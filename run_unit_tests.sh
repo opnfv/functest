@@ -19,12 +19,7 @@ function clean_results_dir {
 clean_results_dir
 
 # TODO clean that...
-# Create log dir if needed
-# log shall be disabled during unit tests
-# fix to be done in Logger
-echo "Create dummy log file...."
 sudo mkdir -p /home/opnfv/functest/results/odl
-sudo touch /home/opnfv/functest/results/functest.log
 sudo touch /home/opnfv/functest/results/odl/stdout.txt
 sudo chmod -Rf a+rw /home/opnfv
 
@@ -64,6 +59,7 @@ nosetests --with-xunit \
          --cover-package=functest.utils \
          --cover-xml \
          --cover-html \
+         --log-config=$(pwd)/functest/tests/unit/test_logging.ini \
          functest/tests/unit
 rc=$?
 
