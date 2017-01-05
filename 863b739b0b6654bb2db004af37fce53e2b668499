@@ -16,6 +16,230 @@
       "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_86c065e1",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T11:48:42Z",
+      "side": 1,
+      "message": "Could you organize the import like below?\nThree groups\nbuilt-in modules such as os and sys\nthird-party modules you have installed in your environment, your project",
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_26b73188",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T11:48:42Z",
+      "side": 1,
+      "message": "Why changing the logging level here? I think the logging level is controlled in utils/functest_logger.py",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_46ba7d6f",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T11:48:42Z",
+      "side": 1,
+      "message": "Is the floating ip used? If yes, it is not internal network. For vping_userdata, it seems using internal network, right? \nI think the description here is not accurate.",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e6b0498d",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T11:48:42Z",
+      "side": 1,
+      "message": "same reason as above.",
+      "range": {
+        "startLine": 32,
+        "startChar": 54,
+        "endLine": 32,
+        "endChar": 70
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_06ac7534",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T11:48:42Z",
+      "side": 1,
+      "message": "There was a refactoring about the config by introducing utils/constants.py\nPlease import it and use the value accordingly.\nThere is not need for get_conf()\n\nI would suggest to pull the latest code and see the new implementation about vping_base",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c6a50d48",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T11:48:42Z",
+      "side": 1,
+      "message": "functest_constants will be deprecated once the refactoring is done",
+      "range": {
+        "startLine": 41,
+        "startChar": 29,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_a6aa4117",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T11:48:42Z",
+      "side": 1,
+      "message": "same comment as above",
+      "range": {
+        "startLine": 43,
+        "startChar": 11,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_66645922",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T11:48:42Z",
+      "side": 1,
+      "message": "Shall we check the existence of functest repo at the beginning of the execution?",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_2645f16f",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T11:48:42Z",
+      "side": 1,
+      "message": "the backslash is not recommended as it voilates pep8",
+      "range": {
+        "startLine": 24,
+        "startChar": 64,
+        "endLine": 24,
+        "endChar": 65
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_46483d87",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-05T11:48:42Z",
+      "side": 1,
+      "message": "please organize the importing with proper order",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
