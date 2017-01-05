@@ -217,6 +217,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_86086592",
+        "filename": "functest/opnfv_tests/vnf/aaa/aaa.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-05T09:35:09Z",
+      "side": 1,
+      "message": "here\u0027s a trivial question I want to ask for a very long time, what is the difference when the file mode is 644 or 755? will 755 cause any problem?",
+      "parentUuid": "5ac10518_c6c3cd55",
+      "range": {
+        "startLine": 1,
+        "startChar": 6,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_a6c80175",
         "filename": "functest/opnfv_tests/vnf/aaa/aaa.py",
         "patchSetId": 2
