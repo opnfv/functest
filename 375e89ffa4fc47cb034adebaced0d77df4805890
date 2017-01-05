@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_66a219b0",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-05T08:47:04Z",
+      "side": 1,
+      "message": "it is a basic sample for an AAA VNF (e.g free radius)\nAAA stands for Authentication, Authorization, and Accounting",
+      "parentUuid": "5ac10518_06ab15d7",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 7
+      },
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_a6b9e12f",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-01-05T07:47:18Z",
       "side": 1,
       "message": "please solve conflict",
+      "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_86a5c5b6",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-05T08:47:04Z",
+      "side": 1,
+      "message": "need a merge",
+      "parentUuid": "5ac10518_a6b9e12f",
       "revId": "375e89ffa4fc47cb034adebaced0d77df4805890",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
