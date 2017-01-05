@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ac10518_e6e7e910",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-05T08:37:46Z",
+      "side": 1,
+      "message": "I don\u0027t like stackoverflow ref in commit msg. I think the last part is sufficient.",
+      "revId": "8473d4eae1da4c50d3bdc945e41e9c24f95199c0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_46135d0d",
         "filename": "functest/ci/run_tests.py",
         "patchSetId": 4
@@ -25,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_86d70523",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-05T08:37:46Z",
+      "side": 1,
+      "message": "I agree. We should keep *args and **kwargs.",
+      "parentUuid": "5ac10518_46135d0d",
+      "range": {
+        "startLine": 130,
+        "startChar": 32,
+        "endLine": 130,
+        "endChar": 36
+      },
+      "revId": "8473d4eae1da4c50d3bdc945e41e9c24f95199c0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_a66c819d",
         "filename": "functest/ci/run_tests.py",
         "patchSetId": 4
@@ -36,6 +77,30 @@
       "writtenOn": "2017-01-05T08:22:59Z",
       "side": 1,
       "message": "I would put the code like\nargs[\u0027noclean\u0027]",
+      "range": {
+        "startLine": 242,
+        "startChar": 7,
+        "endLine": 242,
+        "endChar": 19
+      },
+      "revId": "8473d4eae1da4c50d3bdc945e41e9c24f95199c0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_26de5140",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-05T08:37:46Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "5ac10518_a66c819d",
       "range": {
         "startLine": 242,
         "startChar": 7,
@@ -134,6 +199,23 @@
         "endLine": 263,
         "endChar": 37
       },
+      "revId": "8473d4eae1da4c50d3bdc945e41e9c24f95199c0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_46e11dfd",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-05T08:37:46Z",
+      "side": 1,
+      "message": "sys.exit ?",
       "revId": "8473d4eae1da4c50d3bdc945e41e9c24f95199c0",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
