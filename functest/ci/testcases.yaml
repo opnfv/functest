@@ -70,6 +70,7 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestSmokeSerial'
+
             -
                 name: rally_sanity
                 criteria: 'success_rate == 100%'
@@ -214,7 +215,6 @@ tiers:
                 dependencies:
                     installer: 'apex'
                     scenario: '^((?!fdio).)*$'
-
             -
                 name: copper
                 criteria: 'status == "PASS"'
@@ -227,7 +227,6 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.features.copper'
                     class: 'Copper'
-
             -
                 name: moon
                 criteria: 'status == "PASS"'
@@ -315,6 +314,18 @@ tiers:
                     installer: ''
                     scenario: ''
 
+            -
+                name: orchestra
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    Test OpenBaton (Orchestra) stack
+                dependencies:
+                    installer: 'joid'
+                    scenario: 'unknown'
+                run:
+                    module: 'functest.opnfv_tests.features.orchestrator.orchestra'
+                    class: 'OpenbatonOrchestrator'
     -
         name: vnf
         order: 4
@@ -323,7 +334,7 @@ tiers:
             Collection of VNF test cases.
         testcases:
             -
-                name: vims
+                name: cloudify_ims
                 criteria: 'status == "PASS"'
                 blocking: false
                 description: >-
@@ -332,3 +343,67 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: '(ocl)|(nosdn)|^(os-odl)((?!bgpvpn).)*$'
+            -
+                name: aaa
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    Test suite from Parser project.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.vnf.aaa.aaa'
+                    class: 'AaaVnf'
+
+            -
+                name: juju_epc
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    Test suite from OAI project, vEPC deployed with Juju.
+                dependencies:
+                    installer: 'unknown'
+                    scenario: 'unknown'
+                run:
+                    module: 'functest.opnfv_tests.vnf.epc.epc'
+                    class: 'EpcVnf'
+
+            -
+                name: orchestra_ims
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    VNF deployment with OpenBaton (Orchestra)
+                dependencies:
+                    installer: 'unknown'
+                    scenario: 'unknown'
+                run:
+                    module: 'functest.opnfv_tests.vnf.ims.orchestra_ims'
+                    class: 'ImsVnf'
+
+            -
+                name: opera_ims
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    VNF deployment with Open-O (Opera)
+                dependencies:
+                    installer: 'unknown'
+                    scenario: 'unknown'
+                run:
+                    module: 'functest.opnfv_tests.vnf.ims.opera_ims'
+                    class: 'ImsVnf'
+
+            -
+                name: cloudify_ims
+                criteria: 'ret == 0'
+                blocking: false
+                description: >-
+                    Evolution of vIMS
+                dependencies:
+                    installer: 'unknown'
+                    scenario: 'unknown'
+                run:
+                    module: 'functest.opnfv_tests.vnf.cloudify_ims'
+                    class: 'ImsVnf'
