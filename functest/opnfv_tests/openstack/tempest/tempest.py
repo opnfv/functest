@@ -35,12 +35,33 @@ class TempestCommon(testcase_base.TestcaseBase):
         self.OPTION = ""
         self.FLAVOR_ID = None
         self.IMAGE_ID = None
-        self.DEPLOYMENT_DIR = self.get_deployment_dir()
+        self.VERIFIER_ID = self.get_verifier_id()
+        self.VERIFIER_REPO_DIR = self.get_verifier_repo_dir()
+        self.DEPLOYMENT_ID = self.get_verifier_deployment_id()
+        self.DEPLOYMENT_DIR = self.get_verifier_deployment_dir()
+        self.VERIFICATION_ID = None
 
     @staticmethod
-    def get_deployment_dir():
+    def get_verifier_id():
         """
-        Returns current Rally deployment directory
+        Returns verifer id for current Tempest
+        """
+        cmd = ("rally verify list-verifiers | awk '/" +
+               CONST.tempest_deployment_name +
+               "/ {print $2}'")
+        p = subprocess.Popen(cmd, shell=True,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.STDOUT)
+        deployment_uuid = p.stdout.readline().rstrip()
+        if deployment_uuid == "":
+            logger.error("Tempest verifier not found.")
+            raise Exception('Error with command:%s' % cmd)
+        return deployment_uuid
+
+    @staticmethod
+    def get_verifier_deployment_id():
+        """
+        Returns deployment id for active Rally deployment
         """
         cmd = ("rally deployment list | awk '/" +
                CONST.rally_deployment_name +
@@ -51,9 +72,35 @@ class TempestCommon(testcase_base.TestcaseBase):
         deployment_uuid = p.stdout.readline().rstrip()
         if deployment_uuid == "":
             logger.error("Rally deployment not found.")
-            exit(-1)
+            raise Exception('Error with command:%s' % cmd)
+        return deployment_uuid
+
+    def get_verifier_repo_dir(self):
+        """
+        Returns installed verfier repo directory for Tempest
+        """
+        if not self.VERIFIER_ID:
+            self.VERIFIER_ID = self.get_verifier_id()
+
         return os.path.join(CONST.dir_rally_inst,
-                            "tempest/for-deployment-" + deployment_uuid)
+                            'verification',
+                            'verifier-{}'.format(self.VERIFIER_ID),
+                            'repo')
+
+    def get_verifier_deployment_dir(self):
+        """
+        Returns Rally deployment directory for current verifier
+        """
+        if not self.VERIFIER_ID:
+            self.VERIFIER_ID = self.get_verifier_id()
+
+        if not self.DEPLOYMENT_ID:
+            self.DEPLOYMENT_ID = self.get_verifier_deployment_id()
+
+        return os.path.join(CONST.dir_rally_inst,
+                            'verification',
+                            'verifier-{}'.format(self.VERIFIER_ID),
+                            'for-deployment-{}'.format(self.DEPLOYMENT_ID))
 
     @staticmethod
     def read_file(filename):
@@ -81,12 +128,11 @@ class TempestCommon(testcase_base.TestcaseBase):
                          CONST.tempest_identity_user_name)
 
         logger.debug("Creating private network for Tempest suite")
-        network_dic = \
-            os_utils.create_shared_network_full(
-                CONST.tempest_private_net_name,
-                CONST.tempest_private_subnet_name,
-                CONST.tempest_router_name,
-                CONST.tempest_private_subnet_cidr)
+        network_dic = os_utils.create_shared_network_full(
+            CONST.tempest_private_net_name,
+            CONST.tempest_private_subnet_name,
+            CONST.tempest_router_name,
+            CONST.tempest_private_subnet_cidr)
         if not network_dic:
             return testcase_base.TestcaseBase.EX_RUN_ERROR
 
@@ -112,7 +158,7 @@ class TempestCommon(testcase_base.TestcaseBase):
 
         return testcase_base.TestcaseBase.EX_OK
 
-    def generate_test_list(self, DEPLOYMENT_DIR):
+    def generate_test_list(self, verifier_repo_dir):
         logger.debug("Generating test case list...")
         if self.MODE == 'defcore':
             shutil.copyfile(
@@ -134,8 +180,11 @@ class TempestCommon(testcase_base.TestcaseBase):
                 testr_mode = ""
             else:
                 testr_mode = 'tempest.api.' + self.MODE
-            cmd = ("cd " + DEPLOYMENT_DIR + ";" + "testr list-tests " +
-                   testr_mode + ">" + conf_utils.TEMPEST_RAW_LIST + ";cd")
+            cmd = ("cd {0};"
+                   "testr list-tests {1} > {2};"
+                   "cd -;".format(verifier_repo_dir,
+                                  testr_mode,
+                                  conf_utils.TEMPEST_RAW_LIST))
             ft_utils.execute_command(cmd)
 
         return testcase_base.TestcaseBase.EX_OK
@@ -163,7 +212,7 @@ class TempestCommon(testcase_base.TestcaseBase):
                         for test in tests:
                             black_tests.append(test)
                         break
-        except:
+        except Exception:
             black_tests = []
             logger.debug("Tempest blacklist file does not exist.")
 
@@ -175,6 +224,88 @@ class TempestCommon(testcase_base.TestcaseBase):
                 result_file.write(str(cases_line) + '\n')
         result_file.close()
         return testcase_base.TestcaseBase.EX_OK
+
+    def _parse_verification_id(line):
+        first_pos = line.index("UUID=") + len("UUID=")
+        last_pos = line.index(") for deployment")
+        return line[first_pos:last_pos]
+
+    def run_verifier_tests(self):
+        self.OPTION += (" --load-list {}".format(conf_utils.TEMPEST_LIST))
+
+        cmd_line = "rally verify start " + self.OPTION
+        logger.info("Starting Tempest test suite: '%s'." % cmd_line)
+
+        header = ("Tempest environment:\n"
+                  "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
+                  (CONST.INSTALLER_TYPE,
+                   CONST.DEPLOY_SCENARIO,
+                   CONST.NODE_NAME,
+                   time.strftime("%a %b %d %H:%M:%S %Z %Y")))
+
+        f_stdout = open(
+            os.path.join(conf_utils.TEMPEST_RESULTS_DIR, "tempest.log"), 'w+')
+        f_stderr = open(
+            os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+                         "tempest-error.log"), 'w+')
+        f_env = open(os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+                                  "environment.log"), 'w+')
+        f_env.write(header)
+
+        p = subprocess.Popen(
+            cmd_line, shell=True,
+            stdout=subprocess.PIPE,
+            stderr=f_stderr,
+            bufsize=1)
+
+        with p.stdout:
+            for line in iter(p.stdout.readline, b''):
+                if re.search("\} tempest\.", line):
+                    logger.info(line.replace('\n', ''))
+                elif re.search('Starting verification', line):
+                    logger.info(line.replace('\n', ''))
+                    first_pos = line.index("UUID=") + len("UUID=")
+                    last_pos = line.index(") for deployment")
+                    self.VERIFICATION_ID = line[first_pos:last_pos]
+                    logger.debug('Verication UUID: %s' % self.VERIFICATION_ID)
+                f_stdout.write(line)
+        p.wait()
+
+        f_stdout.close()
+        f_stderr.close()
+        f_env.close()
+
+    def parse_verifier_result(self):
+        if not self.VERIFICATION_ID:
+            raise Exception('verification id not found')
+
+        cmd_line = "rally verify show --uuid {}".format(self.VERIFICATION_ID)
+        logger.info("Showing result for a verification: '%s'." % cmd_line)
+        p = subprocess.Popen(cmd_line,
+                             shell=True,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.STDOUT)
+        for line in p.stdout:
+            if re.search('Tests count', line):
+                line = line.replace(' ', '').split('|')
+                num_tests = line[2]
+            elif re.search('Success', line):
+                line = line.replace(' ', '').split('|')
+                num_success = line[2]
+            elif re.search('Skipped', line):
+                line = line.replace(' ', '').split('|')
+                num_skipped = line[2]
+
+        try:
+            num_executed = int(num_tests) - int(num_skipped)
+            success_rate = 100 * int(num_success) / int(num_executed)
+        except Exception:
+            success_rate = 0
+
+        self.criteria = ft_utils.check_success_rate(
+            self.case_name, success_rate)
+        logger.info("Tempest %s success_rate is %s%%, is marked as %s"
+                    % (self.case_name, success_rate, self.criteria))
 
     def run(self):
 
@@ -195,7 +326,7 @@ class TempestCommon(testcase_base.TestcaseBase):
         if res != testcase_base.TestcaseBase.EX_OK:
             return res
 
-        res = self.generate_test_list(self.DEPLOYMENT_DIR)
+        res = self.generate_test_list(self.VERIFIER_REPO_DIR)
         if res != testcase_base.TestcaseBase.EX_OK:
             return res
 
@@ -203,80 +334,8 @@ class TempestCommon(testcase_base.TestcaseBase):
         if res != testcase_base.TestcaseBase.EX_OK:
             return res
 
-        self.OPTION += (" --tests-file %s " % conf_utils.TEMPEST_LIST)
-
-        cmd_line = "rally verify start " + self.OPTION + " --system-wide"
-        logger.info("Starting Tempest test suite: '%s'." % cmd_line)
-
-        header = ("Tempest environment:\n"
-                  "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
-                  (CONST.INSTALLER_TYPE,
-                   CONST.DEPLOY_SCENARIO,
-                   CONST.NODE_NAME,
-                   time.strftime("%a %b %d %H:%M:%S %Z %Y")))
-
-        f_stdout = open(conf_utils.TEMPEST_RESULTS_DIR + "/tempest.log", 'w+')
-        f_stderr = open(
-            conf_utils.TEMPEST_RESULTS_DIR + "/tempest-error.log", 'w+')
-        f_env = open(conf_utils.TEMPEST_RESULTS_DIR + "/environment.log", 'w+')
-        f_env.write(header)
-
-        # subprocess.call(cmd_line, shell=True,
-        # stdout=f_stdout, stderr=f_stderr)
-        p = subprocess.Popen(
-            cmd_line, shell=True,
-            stdout=subprocess.PIPE,
-            stderr=f_stderr,
-            bufsize=1)
-
-        with p.stdout:
-            for line in iter(p.stdout.readline, b''):
-                if re.search("\} tempest\.", line):
-                    logger.info(line.replace('\n', ''))
-                f_stdout.write(line)
-        p.wait()
-
-        f_stdout.close()
-        f_stderr.close()
-        f_env.close()
-
-        cmd_line = "rally verify show"
-        output = ""
-        p = subprocess.Popen(cmd_line,
-                             shell=True,
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
-        for line in p.stdout:
-            if re.search("Tests\:", line):
-                break
-            output += line
-        logger.info(output)
-
-        cmd_line = "rally verify list"
-        cmd = os.popen(cmd_line)
-        output = (((cmd.read()).splitlines()[-2]).replace(" ", "")).split("|")
-        # Format:
-        # | UUID | Deployment UUID | smoke | tests | failures | Created at |
-        # Duration | Status  |
-        num_tests = output[4]
-        num_failures = output[5]
-        duration = output[7]
-        # Compute duration (lets assume it does not take more than 60 min)
-        dur_min = int(duration.split(':')[1])
-        dur_sec_float = float(duration.split(':')[2])
-        dur_sec_int = int(round(dur_sec_float, 0))
-        dur_sec_int = dur_sec_int + 60 * dur_min
-
-        try:
-            diff = (int(num_tests) - int(num_failures))
-            success_rate = 100 * diff / int(num_tests)
-        except:
-            success_rate = 0
-
-        self.criteria = ft_utils.check_success_rate(
-            self.case_name, success_rate)
-        logger.info("Tempest %s success_rate is %s%%, is marked as %s"
-                    % (self.case_name, success_rate, self.criteria))
+        self.run_verifier_tests()
+        self.parse_verifier_result()
 
         self.stop_time = time.time()
 
@@ -292,7 +351,7 @@ class TempestSmokeSerial(TempestCommon):
         TempestCommon.__init__(self)
         self.case_name = "tempest_smoke_serial"
         self.MODE = "smoke"
-        self.OPTION = "--concur 1"
+        self.OPTION = "--concurrency 1"
 
 
 class TempestSmokeParallel(TempestCommon):
@@ -318,7 +377,7 @@ class TempestMultisite(TempestCommon):
         TempestCommon.__init__(self)
         self.case_name = "multisite"
         self.MODE = "feature_multisite"
-        self.OPTION = "--concur 1"
+        self.OPTION = "--concurrency 1"
         conf_utils.configure_tempest_multisite(logger, self.DEPLOYMENT_DIR)
 
 

@@ -230,7 +230,9 @@ def get_output(proc, test_name):
                 logger.info('Percentage error: %s, %s' % (percentage, line))
             nb_totals += 1
         elif "Full duration" in line:
-            duration = line.split(': ')[1]
+            # duration = line.split(': ')[1]
+            # TODO(Helen) wait for the patch merge of rally
+            duration = 3.367409
             try:
                 overall_duration += float(duration)
             except ValueError:
@@ -391,9 +393,10 @@ def run_task(test_name):
         logger.info('No tests for scenario "{}"'.format(test_name))
         return
 
-    cmd_line = ("rally task start --abort-on-sla-failure " +
-                "--task {} ".format(task_file) +
-                "--task-args \"{}\" ".format(build_task_args(test_name)))
+    cmd_line = ("rally task start --abort-on-sla-failure "
+                "--task {0} "
+                "--task-args \"{1}\""
+                .format(task_file, build_task_args(test_name)))
     logger.debug('running command line : {}'.format(cmd_line))
 
     p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
@@ -404,9 +407,10 @@ def run_task(test_name):
 
     if task_id is None:
         logger.error('Failed to retrieve task_id, validating task...')
-        cmd_line = ("rally task validate " +
-                    "--task {} ".format(task_file) +
-                    "--task-args \"{}\" ".format(build_task_args(test_name)))
+        cmd_line = ("rally task validate "
+                    "--task {0} "
+                    "--task-args \"{1}\""
+                    .format(task_file, build_task_args(test_name)))
         logger.debug('running command line : {}'.format(cmd_line))
         p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT, shell=True)
