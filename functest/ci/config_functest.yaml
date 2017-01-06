@@ -16,7 +16,7 @@ general:
         dir_repo_rally:     /home/opnfv/repos/rally
         repo_tempest:       /home/opnfv/repos/tempest
         dir_repo_releng:    /home/opnfv/repos/releng
-        dir_repo_vims_test: /home/opnfv/repos/vims-test
+        dir_repo_vims_test: /home/opnfv/repos/vims_test
         repo_sdnvpn:        /home/opnfv/repos/sdnvpn
         repo_sfc:           /home/opnfv/repos/sfc
         dir_repo_onos:      /home/opnfv/repos/onos
@@ -109,53 +109,64 @@ rally:
     subnet_cidr: 192.168.140.0/24
     router_name: rally-router
 
-vIMS:
-    general:
-        tenant_name: vIMS
-        tenant_description: vIMS Functionality Testing
-        images:
-            ubuntu:
-                image_url: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
-                image_name: ubuntu_14.04
-            centos:
-                image_url: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1510.qcow2
-                image_name: centos_7
-    cloudify:
-        blueprint:
-            url: https://github.com/boucherv-orange/cloudify-manager-blueprints.git
-            branch: "3.3.1-build"
-        requierments:
-            ram_min: 3000
-            os_image: centos_7
-        inputs:
-            keystone_username: ""
-            keystone_password: ""
-            keystone_tenant_name: ""
-            keystone_url: ""
-            manager_public_key_name: 'manager-kp'
-            agent_public_key_name: 'agent-kp'
-            image_id: ""
-            flavor_id: "3"
-            external_network_name: ""
-            ssh_user: centos
-            agents_user: ubuntu
-    clearwater:
-        blueprint:
-            file_name: 'openstack-blueprint.yaml'
-            name: "clearwater-opnfv"
-            destination_folder: "opnfv-cloudify-clearwater"
-            url: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git
-            branch: "stable"
-        deployment-name: 'clearwater-opnfv'
-        requierments:
-            ram_min: 1700
-            os_image: ubuntu_14.04
-        inputs:
-            image_id: ''
-            flavor_id: ''
-            agent_user: 'ubuntu'
-            external_network_name: ''
-            public_domain: clearwater.opnfv
+vnf:
+    aaa:
+        tenant_name: aaa
+        tenant_description: Freeradius server
+        tenant_images: {}
+    juju_epc:
+        tenant_name: epc
+        tenant_description: OAI EPC deployed with Juju
+        tenant_images: {}
+    cloudify_ims:
+        tenant_name: cloudify_ims
+        tenant_description: vIMS
+        tenant_images:
+            ubuntu_14.04: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+            centos_7: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1510.qcow2
+        cloudify:
+            blueprint:
+                url: https://github.com/boucherv-orange/cloudify-manager-blueprints.git
+                branch: "3.3.1-build"
+            requierments:
+                ram_min: 3000
+                os_image: centos_7
+            inputs:
+                keystone_username: ""
+                keystone_password: ""
+                keystone_tenant_name: ""
+                keystone_url: ""
+                manager_public_key_name: 'manager-kp'
+                agent_public_key_name: 'agent-kp'
+                image_id: ""
+                flavor_id: "3"
+                external_network_name: ""
+                ssh_user: centos
+                agents_user: ubuntu
+        clearwater:
+            blueprint:
+                file_name: 'openstack-blueprint.yaml'
+                name: "clearwater-opnfv"
+                destination_folder: "opnfv-cloudify-clearwater"
+                url: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git
+                branch: "stable"
+            deployment_name: 'clearwater-opnfv'
+            requirements:
+                ram_min: 1700
+                os_image: ubuntu_14.04
+            inputs:
+                image_id: ''
+                flavor_id: ''
+                agent_user: 'ubuntu'
+                external_network_name: ''
+                public_domain: clearwater.opnfv
+    orchestra_ims:
+        tenant_name: orchestra_ims
+        tenant_description: ims deployed with openbaton
+    opera_ims:
+        tenant_name: opera_ims
+        tenant_description: ims deployed with open-o
+
 ONOS:
     general:
         onosbench_username: 'root'
