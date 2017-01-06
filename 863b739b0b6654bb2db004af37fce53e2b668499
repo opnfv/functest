@@ -59,6 +59,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_69f3c99e",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-01-06T19:27:20Z",
+      "side": 1,
+      "message": "Nice catch. This was a failed attempt to address logging within third-party libraries as the log levels are getting set to WARN by the functest logger. Please see patch https://gerrit.opnfv.org/gerrit/#/c/25913/ and https://jira.opnfv.org/browse/FUNCTEST-658",
+      "parentUuid": "5ac10518_26b73188",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_46ba7d6f",
         "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
         "patchSetId": 9
@@ -70,6 +94,30 @@
       "writtenOn": "2017-01-05T11:48:42Z",
       "side": 1,
       "message": "Is the floating ip used? If yes, it is not internal network. For vping_userdata, it seems using internal network, right? \nI think the description here is not accurate.",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_89ee35b3",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-01-06T19:27:20Z",
+      "side": 1,
+      "message": "both userdata and ssh leverage the same internal network. The only difference is that ssh has a router tied to the public network.",
+      "parentUuid": "5ac10518_46ba7d6f",
       "range": {
         "startLine": 31,
         "startChar": 4,
@@ -128,6 +176,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_292dc1fe",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-01-06T19:27:20Z",
+      "side": 1,
+      "message": "This had been removed a few updates ago",
+      "parentUuid": "5ac10518_06ac7534",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_c6a50d48",
         "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
         "patchSetId": 9
@@ -139,6 +211,30 @@
       "writtenOn": "2017-01-05T11:48:42Z",
       "side": 1,
       "message": "functest_constants will be deprecated once the refactoring is done",
+      "range": {
+        "startLine": 41,
+        "startChar": 29,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_49304d56",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-01-06T19:27:20Z",
+      "side": 1,
+      "message": "This had been removed a few updates ago",
+      "parentUuid": "5ac10518_c6a50d48",
       "range": {
         "startLine": 41,
         "startChar": 29,
@@ -174,6 +270,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_e936d951",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-01-06T19:27:20Z",
+      "side": 1,
+      "message": "This had been removed a few updates ago",
+      "parentUuid": "5ac10518_a6aa4117",
+      "range": {
+        "startLine": 43,
+        "startChar": 11,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_66645922",
         "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
         "patchSetId": 9
@@ -185,6 +305,30 @@
       "writtenOn": "2017-01-05T11:48:42Z",
       "side": 1,
       "message": "Shall we check the existence of functest repo at the beginning of the execution?",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_093a4536",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-01-06T19:27:20Z",
+      "side": 1,
+      "message": "I was thinking that the start time and VM cleanup should occur first. Let me know which line in this method you\u0027d like me to perform this check?",
+      "parentUuid": "5ac10518_66645922",
       "range": {
         "startLine": 96,
         "startChar": 8,
@@ -220,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_a940d1a5",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-01-06T19:27:20Z",
+      "side": 1,
+      "message": "okee dokee",
+      "parentUuid": "5ac10518_2645f16f",
+      "range": {
+        "startLine": 24,
+        "startChar": 64,
+        "endLine": 24,
+        "endChar": 65
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_46483d87",
         "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
         "patchSetId": 9
@@ -231,6 +399,30 @@
       "writtenOn": "2017-01-05T11:48:42Z",
       "side": 1,
       "message": "please organize the importing with proper order",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_c93bdd36",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-01-06T19:27:20Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "5ac10518_46483d87",
       "range": {
         "startLine": 27,
         "startChar": 14,
