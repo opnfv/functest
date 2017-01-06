@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_e9b1f9e1",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-06T15:52:06Z",
+      "side": 1,
+      "message": "default value? I know this is out of scope.",
+      "revId": "9a375f5393545aebb8928caa4e684549aa74cccd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_49bb6dc4",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-06T15:52:06Z",
+      "side": 1,
+      "message": "I would have created a dedicated arg instead of kwargs (default value could be None)",
+      "revId": "9a375f5393545aebb8928caa4e684549aa74cccd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
