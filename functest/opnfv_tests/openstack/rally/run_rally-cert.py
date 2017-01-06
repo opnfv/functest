@@ -391,10 +391,11 @@ def run_task(test_name):
         logger.info('No tests for scenario "{}"'.format(test_name))
         return
 
-    cmd_line = ("rally task start --abort-on-sla-failure " +
-                "--task {} ".format(task_file) +
-                "--task-args \"{}\" ".format(build_task_args(test_name)))
-    logger.debug('running command line : {}'.format(cmd_line))
+    cmd_line = ("rally task start --abort-on-sla-failure "
+                "--task {0} "
+                "--task-args \"{1}\""
+                .format(task_file, build_task_args(test_name)))
+    logger.debug('running command line: {}'.format(cmd_line))
 
     p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
                          stderr=RALLY_STDERR, shell=True)
@@ -404,10 +405,11 @@ def run_task(test_name):
 
     if task_id is None:
         logger.error('Failed to retrieve task_id, validating task...')
-        cmd_line = ("rally task validate " +
-                    "--task {} ".format(task_file) +
-                    "--task-args \"{}\" ".format(build_task_args(test_name)))
-        logger.debug('running command line : {}'.format(cmd_line))
+        cmd_line = ("rally task validate "
+                    "--task {0} "
+                    "--task-args \"{1}\""
+                    .format(task_file, build_task_args(test_name)))
+        logger.debug('running command line: {}'.format(cmd_line))
         p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT, shell=True)
         output = get_cmd_output(p)
@@ -425,12 +427,12 @@ def run_task(test_name):
     cmd_line = "rally task report {} --out {}".format(task_id,
                                                       report_html_dir)
 
-    logger.debug('running command line : {}'.format(cmd_line))
+    logger.debug('running command line: {}'.format(cmd_line))
     os.popen(cmd_line)
 
     # get and save rally operation JSON result
     cmd_line = "rally task results %s" % task_id
-    logger.debug('running command line : {}'.format(cmd_line))
+    logger.debug('running command line: {}'.format(cmd_line))
     cmd = os.popen(cmd_line)
     json_results = cmd.read()
     report_json_name = 'opnfv-{}.json'.format(test_name)

@@ -88,6 +88,7 @@ onos_sfc:
     image_file_name: firewall_block_image.img
 
 tempest:
+    deployment_name: opnfv-tempest
     identity:
         tenant_name: tempest
         tenant_description: Tenant for Tempest test suite
