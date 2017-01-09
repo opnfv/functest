@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_8fb5d532",
+        "filename": "functest/tests/unit/utils/test_openstack_clean.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-09T09:40:04Z",
+      "side": 1,
+      "message": "Is it true?",
+      "revId": "0995f5125cd9902359fdb51b7279d989fb7324be",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
