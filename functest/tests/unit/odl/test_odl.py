@@ -11,12 +11,15 @@ import errno
 import logging
 import mock
 import os
+import StringIO
 import unittest
 
 from keystoneauth1.exceptions import auth_plugins
-from robot.errors import RobotError
+from robot.errors import DataError, RobotError
 from robot.result import testcase
+from robot.utils.robottime import timestamp_to_secs
 
+mock.patch('logging.FileHandler').start()  # noqa
 from functest.core import testcase_base
 from functest.opnfv_tests.sdn.odl import odl
 
@@ -44,6 +47,17 @@ class ODLTesting(unittest.TestCase):
         os.environ["OS_PASSWORD"] = self._os_password
         os.environ["OS_TENANT_NAME"] = self._os_tenantname
         self.test = odl.ODLTests()
+        self.defaultargs = {'odlusername': self._odl_username,
+                            'odlpassword': self._odl_password,
+                            'keystoneip': self._keystone_ip,
+                            'neutronip': self._keystone_ip,
+                            'osusername': self._os_username,
+                            'ostenantname': self._os_tenantname,
+                            'ospassword': self._os_password,
+                            'odlip': self._keystone_ip,
+                            'odlwebport': self._odl_webport,
+                            'odlrestconfport': self._odl_restconfport,
+                            'pushtodb': False}
 
     def test_empty_visitor(self):
         visitor = odl.ODLResultVisitor()
@@ -72,13 +86,64 @@ class ODLTesting(unittest.TestCase):
         visitor.visit_test(test)
         self.assertEqual(visitor.get_data(), [data])
 
+    @mock.patch('robot.api.ExecutionResult', side_effect=DataError)
+    def test_parse_results_raises_exceptions(self, *args):
+        with self.assertRaises(DataError):
+            self.test.parse_results()
+
+    def test_parse_results(self, *args):
+        config = {'name': 'dummy', 'starttime': '20161216 16:00:00.000',
+                  'endtime': '20161216 16:00:01.000', 'status': 'PASS'}
+        suite = mock.Mock()
+        suite.configure_mock(**config)
+        with mock.patch('robot.api.ExecutionResult',
+                        return_value=mock.Mock(suite=suite)):
+            self.test.parse_results()
+            self.assertEqual(self.test.criteria, config['status'])
+            self.assertEqual(self.test.start_time,
+                             timestamp_to_secs(config['starttime']))
+            self.assertEqual(self.test.stop_time,
+                             timestamp_to_secs(config['endtime']))
+            self.assertEqual(self.test.details,
+                             {'description': config['name'], 'tests': []})
+
     @mock.patch('fileinput.input', side_effect=Exception())
     def test_set_robotframework_vars_failed(self, *args):
         self.assertFalse(self.test.set_robotframework_vars())
 
     @mock.patch('fileinput.input', return_value=[])
-    def test_set_robotframework_vars(self, args):
+    def test_set_robotframework_vars_empty(self, args):
         self.assertTrue(self.test.set_robotframework_vars())
+
+    @mock.patch('sys.stdout', new_callable=StringIO.StringIO)
+    def _test_set_robotframework_vars(self, msg1, msg2, *args):
+        line = mock.MagicMock()
+        line.__iter__.return_value = [msg1]
+        with mock.patch('fileinput.input', return_value=line) as mock_method:
+            self.assertTrue(self.test.set_robotframework_vars())
+            mock_method.assert_called_once_with(
+                os.path.join(odl.ODLTests.odl_test_repo,
+                             'csit/variables/Variables.py'), inplace=True)
+            self.assertEqual(args[0].getvalue(), "{}\n".format(msg2))
+
+    def test_set_robotframework_vars_auth_default(self):
+        self._test_set_robotframework_vars("AUTH = []",
+                                           "AUTH = [u'admin', u'admin']")
+
+    def test_set_robotframework_vars_auth1(self):
+        self._test_set_robotframework_vars("AUTH1 = []", "AUTH1 = []")
+
+    @mock.patch('sys.stdout', new_callable=StringIO.StringIO)
+    def test_set_robotframework_vars_auth_foo(self, *args):
+        line = mock.MagicMock()
+        line.__iter__.return_value = ["AUTH = []"]
+        with mock.patch('fileinput.input', return_value=line) as mock_method:
+            self.assertTrue(self.test.set_robotframework_vars('foo', 'bar'))
+            mock_method.assert_called_once_with(
+                os.path.join(odl.ODLTests.odl_test_repo,
+                             'csit/variables/Variables.py'), inplace=True)
+            self.assertEqual(args[0].getvalue(),
+                             "AUTH = [u'{}', u'{}']\n".format('foo', 'bar'))
 
     @classmethod
     def _fake_url_for(cls, service_type='identity', **kwargs):
@@ -194,6 +259,8 @@ class ODLTesting(unittest.TestCase):
     def test_main_robot_run_failed(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 self.assertRaises(RobotError):
             self._test_main(testcase_base.TestcaseBase.EX_RUN_ERROR, *args)
 
@@ -202,6 +269,8 @@ class ODLTesting(unittest.TestCase):
     def test_main_parse_results_failed(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 mock.patch.object(self.test, 'parse_results',
                                   side_effect=RobotError):
             self._test_main(testcase_base.TestcaseBase.EX_RUN_ERROR, *args)
@@ -222,6 +291,8 @@ class ODLTesting(unittest.TestCase):
     def test_main(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
@@ -231,6 +302,8 @@ class ODLTesting(unittest.TestCase):
     def test_main_makedirs_oserror17(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
@@ -240,6 +313,8 @@ class ODLTesting(unittest.TestCase):
     def test_main_testcases_in_failure(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
@@ -249,6 +324,8 @@ class ODLTesting(unittest.TestCase):
     def test_main_remove_oserror(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
+                mock.patch.object(odl, 'open', mock.mock_open(),
+                                  create=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase_base.TestcaseBase.EX_OK, *args)
 
@@ -352,6 +429,77 @@ class ODLTesting(unittest.TestCase):
         os.environ["INSTALLER_TYPE"] = "compass"
         self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._neutron_ip, odlwebport='8181')
+
+    def test_argparser_default(self):
+        parser = odl.ODLParser()
+        self.assertEqual(parser.parse_args(), self.defaultargs)
+
+    def test_argparser_basic(self):
+        self.defaultargs['neutronip'] = self._neutron_ip
+        self.defaultargs['odlip'] = self._sdn_controller_ip
+        parser = odl.ODLParser()
+        self.assertEqual(parser.parse_args(
+            ["--neutronip={}".format(self._neutron_ip),
+             "--odlip={}".format(self._sdn_controller_ip)
+             ]), self.defaultargs)
+
+    @mock.patch('sys.stderr', new_callable=StringIO.StringIO)
+    def test_argparser_fail(self, *args):
+        self.defaultargs['foo'] = 'bar'
+        parser = odl.ODLParser()
+        with self.assertRaises(SystemExit):
+            parser.parse_args(["--foo=bar"])
+
+    def _test_argparser(self, arg, value):
+        self.defaultargs[arg] = value
+        parser = odl.ODLParser()
+        self.assertEqual(parser.parse_args(["--{}={}".format(arg, value)]),
+                         self.defaultargs)
+
+    def test_argparser_odlusername(self):
+        self._test_argparser('odlusername', 'foo')
+
+    def test_argparser_odlpassword(self):
+        self._test_argparser('odlpassword', 'foo')
+
+    def test_argparser_keystoneip(self):
+        self._test_argparser('keystoneip', '127.0.0.4')
+
+    def test_argparser_neutronip(self):
+        self._test_argparser('neutronip', '127.0.0.4')
+
+    def test_argparser_osusername(self):
+        self._test_argparser('osusername', 'foo')
+
+    def test_argparser_ostenantname(self):
+        self._test_argparser('ostenantname', 'foo')
+
+    def test_argparser_ospassword(self):
+        self._test_argparser('ospassword', 'foo')
+
+    def test_argparser_odlip(self):
+        self._test_argparser('odlip', '127.0.0.4')
+
+    def test_argparser_odlwebport(self):
+        self._test_argparser('odlwebport', '80')
+
+    def test_argparser_odlrestconfport(self):
+        self._test_argparser('odlrestconfport', '80')
+
+    def test_argparser_pushtodb(self):
+        self.defaultargs['pushtodb'] = True
+        parser = odl.ODLParser()
+        self.assertEqual(parser.parse_args(["--{}".format('pushtodb')]),
+                         self.defaultargs)
+
+    def test_argparser_multiple_args(self):
+        self.defaultargs['neutronip'] = self._neutron_ip
+        self.defaultargs['odlip'] = self._sdn_controller_ip
+        parser = odl.ODLParser()
+        self.assertEqual(parser.parse_args(
+            ["--neutronip={}".format(self._neutron_ip),
+             "--odlip={}".format(self._sdn_controller_ip)
+             ]), self.defaultargs)
 
 
 if __name__ == "__main__":

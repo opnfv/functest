@@ -2,32 +2,6 @@
 set -o errexit
 set -o pipefail
 
-function clean_results_dir {
-    if [ -d "/home/opnfv/functest/results" ]
-    then
-        sudo rm -rf /home/opnfv/functest/results
-    fi
-}
-
-# ******************************
-# prepare the env for the tests
-# ******************************
-# clean useless results dir
-# should be done at the end
-# but in case of crash during unit test
-# clean it anyway
-clean_results_dir
-
-# TODO clean that...
-# Create log dir if needed
-# log shall be disabled during unit tests
-# fix to be done in Logger
-echo "Create dummy log file...."
-sudo mkdir -p /home/opnfv/functest/results/odl
-sudo touch /home/opnfv/functest/results/functest.log
-sudo touch /home/opnfv/functest/results/odl/stdout.txt
-sudo chmod -Rf a+rw /home/opnfv
-
 # Either Workspace is set (CI)
 if [ -z $WORKSPACE ]
 then
@@ -68,11 +42,5 @@ nosetests --with-xunit \
 rc=$?
 
 deactivate
-
-# *******
-# clean
-# *******
-# Clean useless logs
-clean_results_dir
 
 exit $rc
