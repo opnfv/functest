@@ -15,6 +15,7 @@ import shutil
 import opnfv.utils.constants as releng_constants
 
 import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
 IMAGE_ID_ALT = None
@@ -129,9 +130,11 @@ def configure_tempest_multisite(logger, deployment_dir):
     config.read(tempest_conf_file)
 
     config.set('service_available', 'kingbird', 'true')
-    cmd = ("openstack endpoint show kingbird | grep publicurl |"
-           "awk '{print $4}' | awk -F '/' '{print $4}'")
-    kingbird_api_version = os.popen(cmd).read()
+    # cmd = ("openstack endpoint show kingbird | grep publicurl |"
+    #       "awk '{print $4}' | awk -F '/' '{print $4}'")
+    # kingbird_api_version = os.popen(cmd).read()
+    kingbird_api_version = os_utils.get_endpoint(service_type='kingbird')
+
     if CI_INSTALLER_TYPE == 'fuel':
         # For MOS based setup, the service is accessible
         # via bind host
@@ -172,9 +175,10 @@ def configure_tempest_multisite(logger, deployment_dir):
                                bind_details)[0]
         kingbird_endpoint_url = "http://%s:%s/" % (bind_host, bind_port)
     else:
-        cmd = "openstack endpoint show kingbird | grep publicurl |\
-               awk '{print $4}' | awk -F '/' '{print $3}'"
-        kingbird_endpoint_url = os.popen(cmd).read()
+        # cmd = "openstack endpoint show kingbird | grep publicurl |\
+        #       awk '{print $4}' | awk -F '/' '{print $3}'"
+        # kingbird_endpoint_url = os.popen(cmd).read()
+        kingbird_endpoint_url = os_utils.get_endpoint(service_type='kingbird')
 
     try:
         config.add_section("kingbird")
