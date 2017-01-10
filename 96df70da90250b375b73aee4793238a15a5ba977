@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_d2ab86d4",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-10T07:25:58Z",
+      "side": 1,
+      "message": "I would not vote for splitting the file into two parts. Whenever a logger is needed in Functest, the logging will be configured if the configuration is not done and a corresponding logger is returned.",
+      "parentUuid": "5ac10518_32768aa5",
+      "revId": "96df70da90250b375b73aee4793238a15a5ba977",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_af5f7140",
         "filename": "functest/utils/functest_logger.py",
         "patchSetId": 13
