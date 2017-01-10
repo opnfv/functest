@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_92309ee9",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-10T03:15:56Z",
+      "side": 1,
+      "message": "I think the role functest_logger.py serves is a gate for logging. It sets up the logging strategy for the whole at one time and every new logger can call the Logger class of it to leverage the existing logging setting.",
+      "parentUuid": "5ac10518_522b1682",
+      "revId": "96df70da90250b375b73aee4793238a15a5ba977",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_af5f7140",
         "filename": "functest/utils/functest_logger.py",
         "patchSetId": 13
