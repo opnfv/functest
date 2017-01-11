@@ -24,7 +24,7 @@ fi
 
 
 echo "Checking OpenStack endpoints:"
-publicURL=$OS_AUTH_URL
+publicURL=$(openstack catalog show  identity |awk '/public/ {print $4}')
 publicIP=$(echo $publicURL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
 publicPort=$(echo $publicURL|sed 's/^.*://'|sed 's/\/.*$//')
 echo ">>Verifying connectivity to the public endpoint $publicIP:$publicPort..."
