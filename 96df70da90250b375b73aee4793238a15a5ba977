@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_3dd2db5c",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-11T06:23:14Z",
+      "side": 1,
+      "message": "Splitting to two files will not change the functionality. The purpose is to make the code structure more reasonable, easy-understanding and  maintainable.",
+      "parentUuid": "5ac10518_d2ab86d4",
+      "revId": "96df70da90250b375b73aee4793238a15a5ba977",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_af5f7140",
         "filename": "functest/utils/functest_logger.py",
         "patchSetId": 13
