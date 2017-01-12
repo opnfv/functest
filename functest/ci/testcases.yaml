@@ -65,7 +65,7 @@ tiers:
                     Tempest automatically and depends on the parameters of
                     the OpenStack deplopyment.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!netvirt).)*$'
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
@@ -120,7 +120,7 @@ tiers:
                     the cloud's private network.
 
                 dependencies:
-                    installer: ''
+                    installer: '^((?!netvirt).)*$'
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.connection_check'
@@ -138,7 +138,7 @@ tiers:
                     the cloud's private network.
 
                 dependencies:
-                    installer: ''
+                    installer: '^((?!netvirt).)*$'
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.api_check'
@@ -158,7 +158,7 @@ tiers:
                     the cloud's private network.
 
                 dependencies:
-                    installer: ''
+                    installer: '^((?!netvirt).)*$'
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.smoke'
@@ -199,7 +199,7 @@ tiers:
                 description: >-
                     Test suite from SDNVPN project.
                 dependencies:
-                    installer: '(fuel)|(apex)'
+                    installer: '(fuel)|(apex)|(netvirt)'
                     scenario: 'bgpvpn'
                 run:
                     module: 'functest.opnfv_tests.features.sdnvpn'
@@ -298,7 +298,7 @@ tiers:
                     Tempest automatically and depends on the parameters of
                     the OpenStack deplopyment.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!netvirt).)*$'
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
@@ -312,7 +312,7 @@ tiers:
                     This test case runs the full suite of scenarios of the OpenStack
                     Rally suite using several threads and iterations.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!netvirt).)*$'
                     scenario: ''
 
     -
