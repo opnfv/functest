@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_dee38d03",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-12T15:46:03Z",
+      "side": 1,
+      "message": "should we put vIMS in the vnf category?",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_7ef299d3",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-12T15:46:03Z",
+      "side": 1,
+      "message": "duplicated? you change the name vims by cloudify_ims. Are you refering to the same testcase?",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_3ebc11dc",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-12T15:46:03Z",
+      "side": 1,
+      "message": "orchestra_ims and opera_ims look exactly the same. Is that wanted?",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
