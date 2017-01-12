@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_3e917147",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-12T16:06:43Z",
+      "side": 1,
+      "message": "what is the benefit of  moving the initialization to a external function instead of __init__() or a function inside the class?",
+      "revId": "b9db9ca943170ba11973de5583b38291cf6bfd00",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
