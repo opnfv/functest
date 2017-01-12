@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_feb1a9e1",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-12T16:18:58Z",
+      "side": 1,
+      "message": "I think installer and scenario would be also interesting for a document report. Why have you omitted them?",
+      "revId": "efa3970e6b192e35af2df6ba5e76da237728c6cd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
