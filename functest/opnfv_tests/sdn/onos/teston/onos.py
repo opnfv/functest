@@ -18,14 +18,15 @@ import datetime
 import os
 import re
 import time
+import urlparse
 
 import argparse
 from neutronclient.v2_0 import client as neutronclient
 
+import functest.utils.functest_constants as ft_constants
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as openstack_utils
-import functest.utils.functest_constants as ft_constants
 
 
 parser = argparse.ArgumentParser()
@@ -135,9 +136,9 @@ def GetResult():
 
 
 def SetOnosIp():
-    cmd = "openstack catalog show network | grep publicURL"
-    cmd_output = os.popen(cmd).read()
-    OC1 = re.search(r"\d+\.\d+\.\d+\.\d+", cmd_output).group()
+    # cmd = "openstack catalog show network | grep publicURL"
+    neutron_url = openstack_utils.get_endpoint(service_type='network')
+    OC1 = urlparse.urlparse(neutron_url).hostname
     os.environ['OC1'] = OC1
     time.sleep(2)
     logger.debug("ONOS IP is " + OC1)
@@ -180,10 +181,9 @@ def SfcTest():
 
 
 def GetIp(type):
-    cmd = "openstack catalog show " + type + " | grep publicURL"
-    cmd_output = os.popen(cmd).read()
-    ip = re.search(r"\d+\.\d+\.\d+\.\d+", cmd_output).group()
-    return ip
+    # cmd = "openstack catalog show " + type + " | grep publicURL"
+    url = openstack_utils.get_endpoint(service_type=type)
+    return urlparse.urlparse(url).hostname
 
 
 def Replace(before, after):
