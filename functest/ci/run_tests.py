@@ -170,7 +170,7 @@ def run_test(test, tier_name):
 
     if result != 0:
         logger.error("The test case '%s' failed. " % test_name)
-        OVERALL_RESULT = -1
+        GlobalVariables.OVERALL_RESULT = -1
         result_str = "FAIL"
 
         if test.is_blocking():
@@ -180,8 +180,9 @@ def run_test(test, tier_name):
                 # if it is a single test we don't print the whole results table
                 update_test_info(test_name, result_str, duration_str)
                 generate_report.main(GlobalVariables.EXECUTED_TEST_CASES)
-            logger.info("Execution exit value: %s" % OVERALL_RESULT)
-            sys.exit(OVERALL_RESULT)
+            logger.info("Execution exit value: %s" %
+                        GlobalVariables.OVERALL_RESULT)
+            sys.exit(GlobalVariables.OVERALL_RESULT)
 
     update_test_info(test_name, result_str, duration_str)
 
