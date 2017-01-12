@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_fea6890f",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-12T14:03:17Z",
+      "side": 1,
+      "message": "the installers are apex, joid, compass and fuel\nnot sure your regex will have any effect here\nif you want to exclude some Tempest case from the smoke it shall be configured at tempest level https://git.opnfv.org/functest/tree/functest/opnfv_tests/openstack/tempest/custom_tests\nor I missed something...in new pipelines...",
+      "revId": "5a6100a3d2265dddfce3f8595fce502662250bf6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
