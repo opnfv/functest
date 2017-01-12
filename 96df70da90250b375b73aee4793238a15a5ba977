@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_3862e93e",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-12T01:06:05Z",
+      "side": 1,
+      "message": "An ideal way is, calling functest_logger.setup_logging() at the beginning of an APP. In functest, the entry point would be CLI base. However, as the CI is still calling python module directly instead of leveraging CLI, if we put logging at CLI base, the logging configuration will not work for CI.\nThis is the main reason why setup_logging is called here. Once the setup_logging calling is put in a place where it deserves, there is no need to split the file.",
+      "parentUuid": "5ac10518_3dd2db5c",
+      "revId": "96df70da90250b375b73aee4793238a15a5ba977",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_af5f7140",
         "filename": "functest/utils/functest_logger.py",
         "patchSetId": 13
