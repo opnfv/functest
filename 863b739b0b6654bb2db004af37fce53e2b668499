@@ -341,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_521eb164",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-13T02:28:52Z",
+      "side": 1,
+      "message": "I was thinking, if the prerequisite of execution is not met, current environment should be untouched(e.g. _delete_exist_vms). In this way, I would put the checking right after entering the function. Anyway, I may have a wrong idea about the process.",
+      "parentUuid": "5ac10518_093a4536",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_2645f16f",
         "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
         "patchSetId": 9
