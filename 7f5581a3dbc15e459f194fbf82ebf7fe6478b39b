@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_72196d78",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-13T02:28:52Z",
+      "side": 1,
+      "message": "I would have listed the module in alphabetic order",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 73
+      },
+      "revId": "7f5581a3dbc15e459f194fbf82ebf7fe6478b39b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_322be583",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-13T02:28:52Z",
+      "side": 1,
+      "message": "Could you organize the import like below?\nThree groups\nbuilt-in modules such as os and sys\nthird-party modules you have installed in your environment, your project",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "7f5581a3dbc15e459f194fbf82ebf7fe6478b39b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
