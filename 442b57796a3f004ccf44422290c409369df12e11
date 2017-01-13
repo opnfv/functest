@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_95140345",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-13T20:26:48Z",
+      "side": 1,
+      "message": "this is the one that I say it is duplicated below.",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_7ef299d3",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 2
@@ -90,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_f50d4738",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-13T20:26:48Z",
+      "side": 1,
+      "message": "what I mean is that there are 2 test cases named the same way. That could cause errors.",
+      "parentUuid": "5ac10518_b2fef536",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_323c4593",
         "filename": "functest/core/vnf_base.py",
         "patchSetId": 2
@@ -125,6 +160,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "5ac10518_323c4593",
+      "range": {
+        "startLine": 15,
+        "startChar": 44,
+        "endLine": 15,
+        "endChar": 56
+      },
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_551e9b64",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-13T20:26:48Z",
+      "side": 1,
+      "message": "when you say \"Done\", does it mean you will upload a new patch?",
+      "parentUuid": "5ac10518_1297c9ed",
       "range": {
         "startLine": 15,
         "startChar": 44,
