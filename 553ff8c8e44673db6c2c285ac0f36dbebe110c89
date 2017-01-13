@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_f2879dd5",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-13T13:35:35Z",
+      "side": 1,
+      "message": "Although class inheritence can bring the benefit of inheriting member variables, it looks weired to make a testcase a child of a Constants type.\nIn this way, I would have proposed to group the variables in constants module.\ne.g. do not pay too much attention to the variable name\n# constants.py\nclass OPNFVTestcase(object):\n   EX_TEST_FAIL \u003d -1\n   EX_TEST_RUN \u003d 0\n\nclass OPNFVBuild(object):\n   installer_type \u003d []\n   release \u003d []",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "553ff8c8e44673db6c2c285ac0f36dbebe110c89",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
