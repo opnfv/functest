@@ -72,6 +72,137 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_323c4593",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-13T07:47:00Z",
+      "side": 1,
+      "message": "I would suggest to use constants directly here, or else another refactor work will need.",
+      "range": {
+        "startLine": 15,
+        "startChar": 44,
+        "endLine": 15,
+        "endChar": 56
+      },
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_d242a10f",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-13T07:47:00Z",
+      "side": 1,
+      "message": "EX_* will inherit from TestcaseBase, no need to assign them again",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_123909a4",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-13T07:47:00Z",
+      "side": 1,
+      "message": "run() method will inherit from TestcaseBase, no need to implement again",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_5256b1d3",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-13T07:47:00Z",
+      "side": 1,
+      "message": "why not step_failure() here?",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_72516dd7",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-13T07:47:00Z",
+      "side": 1,
+      "message": "why not step_failure() here?",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_126029a4",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-13T07:47:00Z",
+      "side": 1,
+      "message": "why not step_failure() here?",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_9273b97f",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-13T07:47:00Z",
+      "side": 1,
+      "message": "I would suggest using constants directly, functest_constants will be discard soon",
+      "range": {
+        "startLine": 17,
+        "startChar": 44,
+        "endLine": 17,
+        "endChar": 56
+      },
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_3ebc11dc",
         "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.py",
         "patchSetId": 2
