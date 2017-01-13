@@ -45,6 +45,30 @@
       "revId": "7f5581a3dbc15e459f194fbf82ebf7fe6478b39b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_f2a31d4d",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-01-13T14:55:05Z",
+      "side": 1,
+      "message": "Will do, thanks.",
+      "parentUuid": "5ac10518_322be583",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "7f5581a3dbc15e459f194fbf82ebf7fe6478b39b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
