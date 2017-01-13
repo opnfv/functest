@@ -16,6 +16,24 @@
       "revId": "b9db9ca943170ba11973de5583b38291cf6bfd00",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_7e07f91c",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-13T02:14:01Z",
+      "side": 1,
+      "message": "If putting the function inside __init__, whenever an instance is created, the function is called. In our case, only calling the function once is enough thus the way discussed is not suitable. \n\nIf putting the function inside a class, we may make it as staticmethod. I think module function and staticmethod are quite equivalent. If we want to strictly make everything into class based, setup_logging can be put as staticmethod.  Also, we have to make sure it is called somewhere.",
+      "parentUuid": "5ac10518_3e917147",
+      "revId": "b9db9ca943170ba11973de5583b38291cf6bfd00",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
