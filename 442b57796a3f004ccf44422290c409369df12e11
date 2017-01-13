@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_b2fef536",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-13T15:00:07Z",
+      "side": 1,
+      "message": "oops no duplicaiton",
+      "parentUuid": "5ac10518_9ed745ed",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_323c4593",
         "filename": "functest/core/vnf_base.py",
         "patchSetId": 2
@@ -95,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_1297c9ed",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-13T15:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_323c4593",
+      "range": {
+        "startLine": 15,
+        "startChar": 44,
+        "endLine": 15,
+        "endChar": 56
+      },
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_d242a10f",
         "filename": "functest/core/vnf_base.py",
         "patchSetId": 2
@@ -106,6 +148,24 @@
       "writtenOn": "2017-01-13T07:47:00Z",
       "side": 1,
       "message": "EX_* will inherit from TestcaseBase, no need to assign them again",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_72f88d49",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-13T15:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_d242a10f",
       "revId": "442b57796a3f004ccf44422290c409369df12e11",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -191,6 +251,30 @@
       "writtenOn": "2017-01-13T07:47:00Z",
       "side": 1,
       "message": "I would suggest using constants directly, functest_constants will be discard soon",
+      "range": {
+        "startLine": 17,
+        "startChar": 44,
+        "endLine": 17,
+        "endChar": 56
+      },
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_329a0515",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-13T15:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_9273b97f",
       "range": {
         "startLine": 17,
         "startChar": 44,
