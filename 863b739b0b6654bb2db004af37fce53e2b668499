@@ -365,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_d2a06145",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-01-13T14:55:05Z",
+      "side": 1,
+      "message": "I agree, thanks for explaining!",
+      "parentUuid": "5ac10518_521eb164",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "863b739b0b6654bb2db004af37fce53e2b668499",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_2645f16f",
         "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
         "patchSetId": 9
