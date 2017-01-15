@@ -410,7 +410,7 @@ class ODLTesting(unittest.TestCase):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         os.environ["INSTALLER_TYPE"] = "apex"
         self._test_run(testcase_base.TestcaseBase.EX_OK,
-                       odlip=self._sdn_controller_ip, odlwebport='8181')
+                       odlip=self._sdn_controller_ip, odlwebport='8081')
 
     def test_run_joid_missing_sdn_controller(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
