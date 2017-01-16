@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_68541a21",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-16T09:36:51Z",
+      "side": 1,
+      "message": "yep should be fixed by the new patchset",
+      "parentUuid": "5ac10518_95140345",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_7ef299d3",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 2
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "what I mean is that there are 2 test cases named the same way. That could cause errors.",
       "parentUuid": "5ac10518_b2fef536",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_08331615",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-16T09:36:51Z",
+      "side": 1,
+      "message": "yep should be fixed by the new patchset",
+      "parentUuid": "5ac10518_f50d4738",
       "revId": "442b57796a3f004ccf44422290c409369df12e11",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -196,6 +232,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_c83c2ee5",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-16T09:36:51Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "5ac10518_551e9b64",
+      "range": {
+        "startLine": 15,
+        "startChar": 44,
+        "endLine": 15,
+        "endChar": 56
+      },
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_d242a10f",
         "filename": "functest/core/vnf_base.py",
         "patchSetId": 2
@@ -248,6 +308,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_e83faad4",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-16T09:36:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_123909a4",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_5256b1d3",
         "filename": "functest/core/vnf_base.py",
         "patchSetId": 2
@@ -259,6 +337,24 @@
       "writtenOn": "2017-01-13T07:47:00Z",
       "side": 1,
       "message": "why not step_failure() here?",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_882626cd",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-16T09:36:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_5256b1d3",
       "revId": "442b57796a3f004ccf44422290c409369df12e11",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -282,6 +378,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_a821a2b5",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-16T09:36:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_72516dd7",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_126029a4",
         "filename": "functest/core/vnf_base.py",
         "patchSetId": 2
@@ -293,6 +407,24 @@
       "writtenOn": "2017-01-13T07:47:00Z",
       "side": 1,
       "message": "why not step_failure() here?",
+      "revId": "442b57796a3f004ccf44422290c409369df12e11",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_48303e01",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-16T09:36:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_126029a4",
       "revId": "442b57796a3f004ccf44422290c409369df12e11",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
