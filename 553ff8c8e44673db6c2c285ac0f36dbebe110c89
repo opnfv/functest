@@ -22,6 +22,30 @@
       "revId": "553ff8c8e44673db6c2c285ac0f36dbebe110c89",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_88faa6bb",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-16T02:23:56Z",
+      "side": 1,
+      "message": "what\u0027s the difference? we still will inherit OPNFVTestcase and OPNFVBuild, and still they are constant class, there\u0027s no substantive change just the naming.\nAnd I don\u0027t agree with separating them to two classes, too trivial.\nI agree do not pay much attention to the variable name, It should be ok as long as it is not very complex or will cause any misleading, and at the same time can convey our meaning.",
+      "parentUuid": "5ac10518_f2879dd5",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "553ff8c8e44673db6c2c285ac0f36dbebe110c89",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
