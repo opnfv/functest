@@ -29,12 +29,6 @@ import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
 actions = ['start', 'check']
-parser = argparse.ArgumentParser()
-parser.add_argument("action", help="Possible actions are: "
-                    "'{d[0]}|{d[1]}' ".format(d=actions))
-parser.add_argument("-d", "--debug", help="Debug mode", action="store_true")
-args = parser.parse_args()
-
 
 """ logging configuration """
 logger = ft_logger.Logger("prepare_env").getLogger()
@@ -46,6 +40,19 @@ CONFIG_PATCH_PATH = os.path.join(os.path.dirname(
 
 with open(CONFIG_PATCH_PATH) as f:
     functest_patch_yaml = yaml.safe_load(f)
+
+
+class PrepareEnvParser():
+
+    def __init__(self):
+        self.parser = argparse.ArgumentParser()
+        self.parser.add_argument("action", help="Possible actions are: "
+                                 "'{d[0]}|{d[1]}' ".format(d=actions))
+        self.parser.add_argument("-d", "--debug", help="Debug mode",
+                                 action="store_true")
+
+    def parse_args(self, argv=[]):
+        return vars(self.parser.parse_args(argv))
 
 
 def print_separator():
@@ -270,12 +277,12 @@ def check_environment():
     logger.info("Functest environment installed.")
 
 
-def main():
-    if not (args.action in actions):
+def main(**kwargs):
+    if not (kwargs['action'] in actions):
         logger.error('Argument not valid.')
         sys.exit()
 
-    if args.action == "start":
+    if kwargs['action'] == "start":
         logger.info("######### Preparing Functest environment #########\n")
         check_env_variables()
         create_directories()
@@ -289,11 +296,13 @@ def main():
 
         check_environment()
 
-    if args.action == "check":
+    if kwargs['action'] == "check":
         check_environment()
 
     exit(0)
 
 
 if __name__ == '__main__':
-    main()
+    parser = PrepareEnvParser()
+    args = parser.parse_args(sys.argv[1:])
+    main(**args)
