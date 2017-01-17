@@ -50,6 +50,8 @@ class ODLTests(testcase_base.TestcaseBase):
 
     repos = "/home/opnfv/repos/"
     odl_test_repo = os.path.join(repos, "odl_test")
+    netvirt_connectivity_suite_dir = \
+        os.path.join(odl_test_repo, "csit/suites/openstack/connectivity")
     neutron_suite_dir = os.path.join(odl_test_repo,
                                      "csit/suites/openstack/neutron")
     basic_suite_dir = os.path.join(odl_test_repo,
@@ -90,7 +92,8 @@ class ODLTests(testcase_base.TestcaseBase):
         self.details['tests'] = visitor.get_data()
 
     def main(self, **kwargs):
-        dirs = [self.basic_suite_dir, self.neutron_suite_dir]
+        dirs = [self.basic_suite_dir, self.neutron_suite_dir,
+                self.netvirt_connectivity_suite_dir]
         try:
             odlusername = kwargs['odlusername']
             odlpassword = kwargs['odlpassword']
