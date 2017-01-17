@@ -51,7 +51,7 @@ function odl_tests(){
         odl_port=8282
     elif [ "$INSTALLER_TYPE" == "apex" ]; then
         odl_ip=$SDN_CONTROLLER_IP
-        odl_port=8181
+        odl_port=8081
     elif [ "$INSTALLER_TYPE" == "joid" ]; then
         odl_ip=$SDN_CONTROLLER
     elif [ "$INSTALLER_TYPE" == "compass" ]; then
@@ -78,10 +78,15 @@ function run_test(){
             odl_tests
             [[ "$report" == "-r" ]] && args=-p
             ${FUNCTEST_TEST_DIR}/sdn/odl/odl.py \
-                --keystoneip $keystone_ip --neutronip $neutron_ip \
-                --osusername ${OS_USERNAME} --ostenantname ${OS_TENANT_NAME} \
+                --keystoneip $keystone_ip \
+                --neutronip $neutron_ip \
+                --odlip $odl_ip \
+                --odlrestconfport $odl_port \
+                --odlwebport $odl_port \
                 --ospassword ${OS_PASSWORD} \
-                --odlip $odl_ip --odlwebport $odl_port ${args}
+                --ostenantname ${OS_TENANT_NAME} \
+                --osusername ${OS_USERNAME} \
+                ${args}
         ;;
         "vims")
             python ${FUNCTEST_TEST_DIR}/vnf/ims/vims.py $clean_flag $report
