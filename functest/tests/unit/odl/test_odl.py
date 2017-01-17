@@ -188,6 +188,7 @@ class ODLTesting(unittest.TestCase):
             args[1].assert_called_once_with(
                 odl.ODLTests.basic_suite_dir,
                 odl.ODLTests.neutron_suite_dir,
+                odl.ODLTests.netvirt_connectivity_suite_dir,
                 log='NONE',
                 output=os.path.join(odl.ODLTests.res_dir, 'output.xml'),
                 report='NONE',
