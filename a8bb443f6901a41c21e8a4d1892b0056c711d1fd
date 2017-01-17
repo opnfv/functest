@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_66ba0b25",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-17T02:56:55Z",
+      "side": 1,
+      "message": "file starts with \u0027//\u0027 not \u0027///\u0027, if it a relative path, this check will fail",
+      "range": {
+        "startLine": 60,
+        "startChar": 63,
+        "endLine": 60,
+        "endChar": 71
+      },
+      "revId": "a8bb443f6901a41c21e8a4d1892b0056c711d1fd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
