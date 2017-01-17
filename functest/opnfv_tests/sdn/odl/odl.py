@@ -162,6 +162,7 @@ class ODLTests(testcase_base.TestcaseBase):
             elif installer_type == 'apex':
                 kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
                 kwargs['odlwebport'] = '8081'
+                kwargs['odlrestconfport'] = '8081'
             elif installer_type == 'joid':
                 kwargs['odlip'] = os.environ['SDN_CONTROLLER']
             elif installer_type == 'compass':

@@ -337,7 +337,8 @@ class ODLTesting(unittest.TestCase):
                              testcase_base.TestcaseBase.EX_RUN_ERROR)
 
     def _test_run(self, status=testcase_base.TestcaseBase.EX_OK,
-                  exception=None, odlip="127.0.0.3", odlwebport="8080"):
+                  exception=None, odlip="127.0.0.3", odlwebport="8080",
+                  odlrestconfport="8181"):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
                         side_effect=self._fake_url_for):
             if exception:
@@ -348,7 +349,7 @@ class ODLTesting(unittest.TestCase):
             self.test.main.assert_called_once_with(
                 keystoneip=self._keystone_ip, neutronip=self._neutron_ip,
                 odlip=odlip, odlpassword=self._odl_password,
-                odlrestconfport=self._odl_restconfport,
+                odlrestconfport=odlrestconfport,
                 odlusername=self._odl_username, odlwebport=odlwebport,
                 ospassword=self._os_password, ostenantname=self._os_tenantname,
                 osusername=self._os_username)
@@ -410,7 +411,8 @@ class ODLTesting(unittest.TestCase):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         os.environ["INSTALLER_TYPE"] = "apex"
         self._test_run(testcase_base.TestcaseBase.EX_OK,
-                       odlip=self._sdn_controller_ip, odlwebport='8081')
+                       odlip=self._sdn_controller_ip, odlwebport='8081',
+                       odlrestconfport='8081')
 
     def test_run_joid_missing_sdn_controller(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
