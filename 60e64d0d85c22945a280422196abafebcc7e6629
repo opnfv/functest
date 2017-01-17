@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_46526f14",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-17T02:52:53Z",
+      "side": 1,
+      "message": "I would suggest to use constants directly",
+      "range": {
+        "startLine": 17,
+        "startChar": 44,
+        "endLine": 17,
+        "endChar": 56
+      },
+      "revId": "60e64d0d85c22945a280422196abafebcc7e6629",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_e6583b34",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-17T02:52:53Z",
+      "side": 1,
+      "message": "I would suggest to use constants directly",
+      "range": {
+        "startLine": 17,
+        "startChar": 44,
+        "endLine": 17,
+        "endChar": 56
+      },
+      "revId": "60e64d0d85c22945a280422196abafebcc7e6629",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_6663ebdc",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestrator_cloudify.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-17T02:52:53Z",
+      "side": 1,
+      "message": "there are many scripts appear here, in the future I would suggest to turn to script files to manage them, which is more readable and maintainable.",
+      "revId": "60e64d0d85c22945a280422196abafebcc7e6629",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
