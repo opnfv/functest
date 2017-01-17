@@ -51,7 +51,7 @@ function odl_tests(){
         odl_port=8282
     elif [ "$INSTALLER_TYPE" == "apex" ]; then
         odl_ip=$SDN_CONTROLLER_IP
-        odl_port=8181
+        odl_port=8081
     elif [ "$INSTALLER_TYPE" == "joid" ]; then
         odl_ip=$SDN_CONTROLLER
     elif [ "$INSTALLER_TYPE" == "compass" ]; then
