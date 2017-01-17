@@ -90,9 +90,9 @@ tiers:
                 criteria: 'success_rate == 100%'
                 blocking: true
                 description: >-
-                    Test Suite for the OpenDaylight SDN Controller. It integrates
-                    some test suites from upstream using Robot as the test
-                    framework.
+                    Test Suite for the OpenDaylight SDN Controller. It
+                    integrates some test suites from upstream using
+                    Robot as the test framework.
                 dependencies:
                     installer: ''
                     scenario: 'odl'
@@ -103,6 +103,27 @@ tiers:
                         suites:
                             -  /home/opnfv/repos/odl_test/csit/suites/integration/basic
                             -  /home/opnfv/repos/odl_test/csit/suites/openstack/neutron
+
+            -
+                name: netvirt
+                criteria: 'success_rate == 100%'
+                blocking: true
+                description: >-
+                    Test Suite for the OpenDaylight SDN Controller when
+                    the NetVirt features are installed. It integrates
+                    some test suites from upstream using Robot as the
+                    test framework.
+                dependencies:
+                    installer: ''
+                    scenario: 'netvirt'
+                run:
+                    module: 'functest.opnfv_tests.sdn.odl.odl'
+                    class: 'ODLTests'
+                    args:
+                        suites:
+                            -  /home/opnfv/repos/odl_test/csit/suites/integration/basic
+                            -  /home/opnfv/repos/odl_test/csit/suites/openstack/neutron
+                            -  /home/opnfv/repos/odl_test/csit/suites/openstack/connectivity
 
             -
                 name: onos
