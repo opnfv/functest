@@ -47,11 +47,14 @@ function odl_tests(){
     neutron_ip=$(openstack catalog show network | grep publicURL | cut -f3 -d"/" | cut -f1 -d":")
     odl_ip=${neutron_ip}
     odl_port=8080
+    odl_restport=8181
     if [ "$INSTALLER_TYPE" == "fuel" ]; then
         odl_port=8282
+        odl_restport=8282
     elif [ "$INSTALLER_TYPE" == "apex" ]; then
         odl_ip=$SDN_CONTROLLER_IP
-        odl_port=8181
+        odl_port=8081
+        odl_restport=8081
     elif [ "$INSTALLER_TYPE" == "joid" ]; then
         odl_ip=$SDN_CONTROLLER
     elif [ "$INSTALLER_TYPE" == "compass" ]; then
@@ -78,10 +81,15 @@ function run_test(){
             odl_tests
             [[ "$report" == "-r" ]] && args=-p
             ${FUNCTEST_TEST_DIR}/sdn/odl/odl.py \
-                --keystoneip $keystone_ip --neutronip $neutron_ip \
-                --osusername ${OS_USERNAME} --ostenantname ${OS_TENANT_NAME} \
+                --keystoneip $keystone_ip \
+                --neutronip $neutron_ip \
+                --odlip $odl_ip \
+                --odlrestconfport $odl_restport \
+                --odlwebport $odl_port \
                 --ospassword ${OS_PASSWORD} \
-                --odlip $odl_ip --odlwebport $odl_port ${args}
+                --ostenantname ${OS_TENANT_NAME} \
+                --osusername ${OS_USERNAME} \
+                ${args}
         ;;
         "vims")
             python ${FUNCTEST_TEST_DIR}/vnf/ims/vims.py $clean_flag $report
