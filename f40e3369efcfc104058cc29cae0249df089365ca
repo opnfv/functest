@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_3c2bb483",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-01-17T18:21:50Z",
+      "side": 1,
+      "message": "Not sure but a quick confirmation?\nshould we not use \ndir_repo_vnf_tests: /home/opnfv/repos/vnfs\nand add\ndir_repo_vnf_tests/vims: /home/opnfv/repos/vnfs/vims\nSo that in future all vnfs are tested under a common path? \nor just leave as is if it\u0027s too much of an effort",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 55
+      },
+      "revId": "f40e3369efcfc104058cc29cae0249df089365ca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_5c3560d8",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-01-17T18:21:50Z",
+      "side": 1,
+      "message": "looks definitely better now with vnf composed of several required or optional bundles or artifacts or VDUs.",
+      "range": {
+        "startLine": 330,
+        "startChar": 14,
+        "endLine": 330,
+        "endChar": 17
+      },
+      "revId": "f40e3369efcfc104058cc29cae0249df089365ca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
