@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_d70daa38",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-18T16:07:07Z",
+      "side": 1,
+      "message": "Could you set choices too?\nhttps://docs.python.org/2/howto/argparse.html",
+      "revId": "47935c2fe486bce6d154589229c989271ebd0f08",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_b70a5e1f",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-18T16:07:07Z",
+      "side": 1,
+      "message": "please use return here.",
+      "revId": "47935c2fe486bce6d154589229c989271ebd0f08",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_7714f643",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-18T16:07:07Z",
+      "side": 1,
+      "message": "maybe useless if choices are set",
+      "revId": "47935c2fe486bce6d154589229c989271ebd0f08",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_970f222e",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-18T16:07:07Z",
+      "side": 1,
+      "message": "return",
+      "revId": "47935c2fe486bce6d154589229c989271ebd0f08",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_5719ba77",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-18T16:07:07Z",
+      "side": 1,
+      "message": "return",
+      "revId": "47935c2fe486bce6d154589229c989271ebd0f08",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
