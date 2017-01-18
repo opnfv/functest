@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_b7e81eb5",
+        "filename": "functest/opnfv_tests/sdn/odl/odl.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2919
+      },
+      "writtenOn": "2017-01-18T18:32:44Z",
+      "side": 1,
+      "message": "is this what you want? for some reason the previous\npatch didn\u0027t fail my IDE\u0027s code style checker. my bad.",
+      "range": {
+        "startLine": 53,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 76
+      },
+      "revId": "cd0296990e2be9d23fdd9a84c06822476d0e838d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
