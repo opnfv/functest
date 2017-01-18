@@ -234,32 +234,36 @@ def install_rally():
     rally_conf = os_utils.get_credentials_for_rally()
     with open('rally_conf.json', 'w') as fp:
         json.dump(rally_conf, fp)
-    cmd = "rally deployment create --file=rally_conf.json --name="
-    cmd += CONST.rally_deployment_name
+    cmd = ("rally deployment create "
+           "--file=rally_conf.json --name={}"
+           .format(CONST.rally_deployment_name))
     ft_utils.execute_command(cmd,
-                             error_msg="Problem creating Rally deployment")
-
-    logger.info("Installing tempest from existing repo...")
-    cmd = ("rally verify install --source " +
-           CONST.dir_repo_tempest +
-           " --system-wide")
-    ft_utils.execute_command(cmd,
-                             error_msg="Problem installing Tempest.")
+                             error_msg=("Problem while creating "
+                                        "Rally deployment"))
 
     cmd = "rally deployment check"
     ft_utils.execute_command(cmd,
                              error_msg=("OpenStack not responding or "
                                         "faulty Rally deployment."))
 
-    cmd = "rally show images"
+    cmd = "rally deployment list"
     ft_utils.execute_command(cmd,
                              error_msg=("Problem while listing "
-                                        "OpenStack images."))
+                                        "Rally deployment."))
 
-    cmd = "rally show flavors"
+    cmd = "rally plugin list | head -5"
     ft_utils.execute_command(cmd,
                              error_msg=("Problem while showing "
-                                        "OpenStack flavors."))
+                                        "Rally plugins."))
+
+
+def install_tempest():
+    logger.info("Installing tempest from existing repo...")
+    cmd = ("rally verify create-verifier --source {0} "
+           "--name {1} --type tempest"
+           .format(CONST.dir_repo_tempest, CONST.tempest_deployment_name))
+    ft_utils.execute_command(cmd,
+                             error_msg="Problem while installing Tempest.")
 
 
 def check_environment():
@@ -274,7 +278,7 @@ def check_environment():
             logger.error(msg_not_active)
             sys.exit(1)
 
-    logger.info("Functest environment installed.")
+    logger.info("Functest environment is installed.")
 
 
 def main(**kwargs):
@@ -290,6 +294,7 @@ def main(**kwargs):
         patch_config_file()
         verify_deployment()
         install_rally()
+        install_tempest()
 
         with open(CONST.env_active, "w") as env_file:
             env_file.write("1")
