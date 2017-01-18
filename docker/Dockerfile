@@ -81,6 +81,7 @@ wget \
 RUN pip install --upgrade pip
 
 RUN mkdir -p ${REPOS_DIR} \
+    && mkdir -p ${REPOS_DIR}/vnfs \
     && mkdir -p ${FUNCTEST_BASE_DIR}/results \
     && mkdir -p ${FUNCTEST_BASE_DIR}/conf \
     && mkdir -p /root/.ssh \
@@ -110,7 +111,7 @@ RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git
 
 # other repositories
 RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${REPOS_DIR}/odl_test
-RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_DIR}/vims-test
+RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_DIR}/vnfs/vims-test
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
 
 RUN cd ${FUNCTEST_REPO_DIR} \
