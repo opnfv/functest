@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_7c685c87",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-18T02:00:49Z",
+      "side": 1,
+      "message": "Sorry I forget here, please change dir_repo_vims_test to repo_vims_test, or else we need CONST.dir_dir_repo_vims_test to access it(two \u0027dir\u0027 appear in the attribute)",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "f40e3369efcfc104058cc29cae0249df089365ca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_5c3560d8",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 6
