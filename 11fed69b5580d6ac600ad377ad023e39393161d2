@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_37918e99",
+        "filename": "functest/ci/exec_test.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-18T16:39:09Z",
+      "side": 1,
+      "message": "I think you\u0027re mixing web port and restconf port.\nYou have to set a default value to odlrestconfport here and add it as arg l84.",
+      "revId": "11fed69b5580d6ac600ad377ad023e39393161d2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
