@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_f75f86e3",
+        "filename": "functest/opnfv_tests/sdn/odl/odl.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-01-18T16:59:56Z",
+      "side": 1,
+      "message": "Please use parenthesis as PEP8 recommends.\nhttps://www.python.org/dev/peps/pep-0008/#maximum-line-length",
+      "revId": "ca5f165b44260a69906d73d99ed03834140722c4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
