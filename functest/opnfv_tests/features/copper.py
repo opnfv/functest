@@ -22,4 +22,4 @@ class Copper(base.FeatureBase):
         super(Copper, self).__init__(project='copper',
                                      case='copper-notification',
                                      repo='dir_repo_copper')
-        self.cmd = 'cd %s/tests && ./run.sh' % self.repo
+        self.cmd = 'bash %s/tests/run.sh' % self.repo
