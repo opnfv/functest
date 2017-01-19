@@ -43,6 +43,7 @@ ARG FUNCTEST_RESULTS_DIR=${FUNCTEST_BASE_DIR}/results
 ARG FUNCTEST_REPO_DIR=${REPOS_DIR}/functest
 ARG FUNCTEST_TEST_DIR=${FUNCTEST_REPO_DIR}/functest/opnfv_tests
 ARG RELENG_MODULE_DIR=${REPOS_DIR}/releng/modules
+ARG REPOS_VNFS_DIR=${REPOS_DIR}/vnfs
 
 # Environment variables
 ENV HOME /home/opnfv
@@ -81,7 +82,7 @@ wget \
 RUN pip install --upgrade pip
 
 RUN mkdir -p ${REPOS_DIR} \
-    && mkdir -p ${REPOS_DIR}/vnfs \
+    && mkdir -p ${REPOS_VNFS_DIR} \
     && mkdir -p ${FUNCTEST_BASE_DIR}/results \
     && mkdir -p ${FUNCTEST_BASE_DIR}/conf \
     && mkdir -p /root/.ssh \
@@ -111,7 +112,7 @@ RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git
 
 # other repositories
 RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${REPOS_DIR}/odl_test
-RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_DIR}/vnfs/vims-test
+RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_VNFS_DIR}/vims-test
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
 
 RUN cd ${FUNCTEST_REPO_DIR} \
@@ -154,16 +155,16 @@ RUN cd ${REPOS_DIR}/bgpvpn && pip install .
 RUN cd ${REPOS_DIR}/moon/moonclient/ && python setup.py install
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd ${REPOS_DIR}/vims-test \
+    && cd ${REPOS_VNFS_DIR}/vims-test \
     && rvm autolibs enable"
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd ${REPOS_DIR}/vims-test \
+    && cd ${REPOS_VNFS_DIR}/vims-test \
     && rvm install 1.9.3"
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd ${REPOS_DIR}/vims-test \
+    && cd ${REPOS_VNFS_DIR}/vims-test \
     && rvm use 1.9.3"
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd ${REPOS_DIR}/vims-test \
+    && cd ${REPOS_VNFS_DIR}/vims-test \
     && bundle install"
 
 RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -' \
