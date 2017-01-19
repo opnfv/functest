@@ -241,20 +241,5 @@ EXAMPLE_SECGROUP_NAME = get_value('example.sg_name',
                                   'EXAMPLE_SECGROUP_NAME')
 EXAMPLE_SECGROUP_DESCR = get_value('example.sg_desc',
                                    'EXAMPLE_SECGROUP_DESCR')
-VIMS_DATA_DIR = get_value('general.dir.dir_vIMS_data',
-                          'VIMS_DATA_DIR')
-VIMS_TEST_DIR = get_value('general.dir.dir_repo_vims_test',
-                          'VIMS_TEST_DIR')
-CFY_MANAGER_BLUEPRINT = get_value('vIMS.cloudify.blueprint',
-                                  'CFY_MANAGER_BLUEPRINT')
-CFY_MANAGER_REQUIERMENTS = get_value('vIMS.cloudify.requierments',
-                                     'CFY_MANAGER_REQUIERMENTS')
-CFY_INPUTS = get_value('vIMS.cloudify.inputs', 'CFY_INPUTS')
-CW_BLUEPRINT = get_value('vIMS.clearwater.blueprint', 'CW_BLUEPRINT')
-CW_DEPLOYMENT_NAME = get_value('vIMS.clearwater.deployment-name',
-                               'CW_DEPLOYMENT_NAME')
-CW_INPUTS = get_value('vIMS.clearwater.inputs', 'CW_INPUTS')
-CW_REQUIERMENTS = get_value('vIMS.clearwater.requierments',
-                            'CW_REQUIERMENTS')
 PARSER_REPO_DIR = get_value('general.dir.repo_parser',
                             'PARSER_REPO_DIR')
