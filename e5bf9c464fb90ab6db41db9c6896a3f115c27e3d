@@ -69,6 +69,30 @@
       "revId": "e5bf9c464fb90ab6db41db9c6896a3f115c27e3d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_3ae8930f",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 6365
+      },
+      "writtenOn": "2017-01-19T04:48:59Z",
+      "side": 1,
+      "message": "Thanks Helen and Jose.\n    I\u0027m apologize that i read your comments just now, because i have some other things and do not focus on opnfv some days.\n    I will update it in recently.\n    Thank you very much for your kindly review.\nThanks~",
+      "parentUuid": "5ac10518_9ec0a52b",
+      "range": {
+        "startLine": 319,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 30
+      },
+      "revId": "e5bf9c464fb90ab6db41db9c6896a3f115c27e3d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
