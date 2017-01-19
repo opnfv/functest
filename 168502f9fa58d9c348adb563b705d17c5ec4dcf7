@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_7da4d5a5",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-19T09:56:07Z",
+      "side": 1,
+      "message": "shall we not create a sub section functest?\nIt would simplify the naming and avoid mix with onboarded feature projects...\n\nrather than \nfunctest_test\nrepo_functest\nfunctest_logging_cfg\nfunctest\nfunctest_conf\nfunctest_data\n\nfunctest\n    conf\n    data\n    logging_conf\n    test\n    repo\n    home\n\nnot in this patch but maybe a good idea for another patch...",
+      "revId": "168502f9fa58d9c348adb563b705d17c5ec4dcf7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_5da9d979",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-19T09:56:07Z",
+      "side": 1,
+      "message": "not sure to fully understand the condition",
+      "revId": "168502f9fa58d9c348adb563b705d17c5ec4dcf7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
