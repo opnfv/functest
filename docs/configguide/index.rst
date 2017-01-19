@@ -9,6 +9,21 @@ OPNFV FUNCTEST Configuration Guide
    :numbered:
    :maxdepth: 2
 
+Version history
+===============
+
++------------+----------+------------------+----------------------------------+
+| **Date**   | **Ver.** | **Author**       | **Comment**                      |
+|            |          |                  |                                  |
++------------+----------+------------------+----------------------------------+
+| 2016-08-17 | 1.0.0    | Juha Haapavirta  | Colorado release                 |
+|            |          | Column Gaynor    |                                  |
++------------+----------+------------------+----------------------------------+
+| 2017-01-19 | 1.0.1    | Morgan Richomme  | Adaptations for Danube           |
+|            |          |                  | * update testcase list           |
+|            |          |                  | * update docker command          |
++------------+----------+------------------+----------------------------------+
+
 Introduction
 ============
 This document describes how to install and configure Functest in OPNFV.
@@ -43,6 +58,7 @@ follows::
  |     |   |  -- healthcheck    |   |        |       |        |       |
  |     |   |  -- vPing_ssh      |   |        |       |        |       |
  |     |   |  -- vPing_userdata |   |        |       |        |       |
+ |     |   |  -- SNAPS_cases    |   |        |       |        |       |
  |     |   |  -- Tempest_smoke  |   |        |       |        |       |
  |     |   |  -- Rally_sanity   |   |        |       |        |       |
  |     |   |  -- Tempest_full   |   |        |       |        |       |
@@ -52,12 +68,13 @@ follows::
  |     |   |  -- odl            |   |        |       |        |       |
  |     |   |  -- onos           |   |        |       |        |       |
  |     |   |                    |   |        |       |        |       |
+ |     |   | - Features         |   |        |       |        |       |
+ |     |   |                    |   |        |       |        |       |
  |     |   | - VNF              |   |        |       |        |       |
- |     |   |  -- vIMS           |   |        |       |        |       |
  |     |   |                    |   |        |       |        |       |
  |     |   +--------------------+   |        |       |        |       |
- |     |                            +-------------------------+       |
- |     |    Functest Docker         |        |       |        |       |
+ |     |     Functest Docker        +-------------------------+       |
+ |     |                            |        |       |        |       |
  |     |                            +---------------------------------+
  |     |                            |        |       |        |       |
  |     +----------------------------+        |       |        |       |
@@ -107,7 +124,7 @@ The functional test cases are described in the Functest User Guide `[2]`_
 Prerequisites
 =============
 The OPNFV deployment is out of the scope of this document but it can be
-found in http://artifacts.opnfv.org/opnfvdocs/colorado/docs/configguide/index.html.
+found in http://docs.opnfv.org.
 The OPNFV platform is considered as the System Under Test (SUT) in this
 document.
 
@@ -217,15 +234,14 @@ container from Jenkins.
 
 Docker creation in set-functest-env builder `[3]`_::
 
-    envs="INSTALLER_TYPE=${INSTALLER_TYPE} -e INSTALLER_IP=${INSTALLER_IP} -e NODE_NAME=${NODE_NAME}"
+    envs="-e INSTALLER_TYPE=${INSTALLER_TYPE} -e INSTALLER_IP=${INSTALLER_IP} -e NODE_NAME=${NODE_NAME}"
     [...]
-    docker pull opnfv/functest:latest_stable
-    cmd="docker run -id -e $envs ${labconfig} ${sshkey} ${res_volume} opnfv/functest:latest_stable /bin/bash"
+    docker pull opnfv/functest:$DOCKER_TAG >/dev/null
+    cmd="sudo docker run -id ${envs} ${volumes} ${custom_params} ${TESTCASE_OPTIONS} opnfv/functest:${DOCKER_TAG} /bin/bash"
     echo "Functest: Running docker run command: ${cmd}"
-    ${cmd}
-    docker ps -a
+    ${cmd} >${redirect}
     sleep 5
-    container_id=$(docker ps | grep 'opnfv/functest:latest_stable' | awk '{print $1}' | head -1)
+    container_id=$(docker ps | grep "opnfv/functest:${DOCKER_TAG}" | awk '{print $1}' | head -1)
     echo "Container ID=${container_id}"
     if [ -z ${container_id} ]; then
         echo "Cannot find opnfv/functest container ID ${container_id}. Please check if it is existing."
@@ -235,43 +251,29 @@ Docker creation in set-functest-env builder `[3]`_::
     echo "Starting the container: docker start ${container_id}"
     docker start ${container_id}
     sleep 5
-    docker ps
-    if [ $(docker ps | grep 'opnfv/functest:latest_stable' | wc -l) == 0 ]; then
+    docker ps >${redirect}
+    if [ $(docker ps | grep "opnfv/functest:${DOCKER_TAG}" | wc -l) == 0 ]; then
         echo "The container opnfv/functest with ID=${container_id} has not been properly started. Exiting..."
         exit 1
     fi
-    cmd="${FUNCTEST_REPO_DIR}/docker/prepare_env.sh"
+
+    cmd="python ${FUNCTEST_REPO_DIR}/functest/ci/prepare_env.py start"
     echo "Executing command inside the docker: ${cmd}"
     docker exec ${container_id} ${cmd}
 
 
 Test execution in functest-all builder `[3]`_::
 
-  echo "Functest: run $FUNCTEST_SUITE_NAME"
-  cmd="${FUNCTEST_REPO_DIR}/docker/run_tests.sh --test $FUNCTEST_SUITE_NAME ${flag}"
-  container_id=$(docker ps -a | grep opnfv/functest | awk '{print $1}' | head -1)
-  docker exec $container_id $cmd
-
-Docker clean in functest-cleanup builder `[3]`_::
-
-    echo "Cleaning up docker containers/images..."
-    # Remove previous running containers if exist
-    if [[ ! -z $(docker ps -a | grep opnfv/functest) ]]; then
-    echo "Removing existing opnfv/functest containers..."
-    docker ps | grep opnfv/functest | awk '{print $1}' | xargs docker stop
-    docker ps -a | grep opnfv/functest | awk '{print $1}' | xargs docker rm
+    branch=${GIT_BRANCH##*/}
+    echo "Functest: run $FUNCTEST_SUITE_NAME on branch ${branch}"
+    cmd="functest testcase run $FUNCTEST_SUITE_NAME"
     fi
+    container_id=$(docker ps -a | grep opnfv/functest | awk '{print $1}' | head -1)
+    docker exec $container_id $cmd
+    ret_value=$?
+    exit $ret_value
 
-    # Remove existing images if exist
-    if [[ ! -z $(docker images | grep opnfv/functest) ]]; then
-    echo "Docker images to remove:"
-    docker images | head -1 && docker images | grep opnfv/functest
-    image_tags=($(docker images | grep opnfv/functest | awk '{print $2}'))
-    for tag in "${image_tags[@]}"; do
-        echo "Removing docker image opnfv/functest:$tag..."
-        docker rmi opnfv/functest:$tag
-    done
-    fi
+Docker clean in functest-cleanup builder `[3]`_ calling docker rm and docker rmi
 
 
 References
@@ -279,7 +281,7 @@ References
 .. _`[1]`: https://ask.openstack.org/en/question/68144/keystone-unable-to-use-the-public-endpoint/
 .. _`[2]`: http://artifacts.opnfv.org/functest/docs/userguide/index.html
 .. _`[3]`: https://git.opnfv.org/cgit/releng/tree/jjb/functest/functest-ci-jobs.yml
-.. _`[4]`: http://artifacts.opnfv.org/opnfvdocs/colorado/docs/configguide/index.html
+.. _`[4]`: http://artifacts.opnfv.org/functest/danube/docs/configguide/index.html
 
 
 OPNFV main site: opnfvmain_.
@@ -289,4 +291,4 @@ OPNFV functional test page: opnfvfunctest_.
 IRC support channel: #opnfv-functest
 
 .. _opnfvmain: http://www.opnfv.org
-.. _opnfvfunctest: https://wiki.opnfv.org/opnfv_functional_testing
+.. _opnfvfunctest: https://wiki.opnfv.org/functest

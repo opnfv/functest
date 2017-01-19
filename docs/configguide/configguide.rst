@@ -30,9 +30,9 @@ following docker command::
 
   [functester@jumphost ~]$ docker images
   REPOSITORY     TAG             IMAGE ID      CREATED      SIZE
-  opnfv/functest latest          8cd6683c32ae  2 weeks ago  1.611 GB
-  opnfv/functest colorado.1.0    94b78faa94f7  4 weeks ago  874.9 MB
-  hello-world    latest          94df4f0ce8a4  7 weeks ago    967 B
+  opnfv/functest latest          8cd6683c32ae  2 weeks ago  1.321 GB
+  opnfv/functest danube.1.0    13fa54a1b238  4 weeks ago  1.29 GB
+  opnfv/functest colorado.1.0    94b78faa94f7  9 weeks ago  968 MB
 
 The Functest docker container environment can -in principle- be also
 used with non-OPNFV official installers (e.g. 'devstack'), with the
@@ -104,9 +104,13 @@ recommended parameters for invoking docker container
        -e "INSTALLER_TYPE=<type>"
        # Use one of following apex, compass, fuel or joid
 
-  #. Functest needs to know the IP of the installer::
+  #. Functest needs to know the IP of some installers::
 
        -e "INSTALLER_IP=<Specific IP Address>"
+
+       This IP is needed to fetch RC file from deployment, fetch logs, ...
+       If not provided, there is no way to fetch the RC file. It must be
+       provided manually as a volume
 
   #. Credentials for accessing the Openstack.
      Most convenient way of passing them to container is by having a
@@ -138,12 +142,23 @@ recommended parameters for invoking docker container
                 If several features are pertinent then use the underscore
                 character '_' to separate each feature (e.g. ovs_kvm)
                 'nofeature' indicates no NFV feature is deployed
-       ha_mode is one of ( ha | noha )
+       ha_mode (high availability) is one of ( ha | noha )
 
      **NOTE:** Not all possible combinations of "DEPLOY_SCENARIO" are
      supported. The name passed in to the Functest Docker container
      must match the scenario used when the actual OPNFV platform was
      deployed. See release note to see the list of supported scenarios.
+
+     **NOTE:** The scenario name is mainly used to automatically detect
+     if a test suite is runnable or not (e.g. it will prevent ONOS test suite
+     to be run on ODL scenarios). If not set, Functest will try to run the
+     default test cases that might not include SDN controller or a specific
+     feature
+
+     **NOTE:** A HA scenario means that 3 OpenStack controller nodes are
+     deployed. It does not necessarily mean that the whole system is HA. See
+     installer release notes for details.
+
 
 Putting all above together, when using installer 'fuel' and an invented
 INSTALLER_IP of '10.20.0.2', the recommended command to create the
@@ -311,14 +326,25 @@ should now be in place::
         |   `-- results
         `-- repos
             |-- bgpvpn
+            |-- copper
             |-- doctor
+            |-- domino
             |-- functest
-            |-- odl_integration
+            |-- kingbird
+            |-- moon
+            |-- odl_test
             |-- onos
+            |-- ovno
+            |-- parser
             |-- promise
             |-- rally
             |-- releng
-            `-- vims-test
+            |-- sdnvpn
+            |-- securityscanning
+            |-- sfc
+            |-- tempest
+            |-- vims_test
+            `-- vnfs
 
 Underneath the '/home/opnfv/' directory, the Functest docker container
 includes two main directories:
@@ -339,24 +365,10 @@ follows::
 
   . |-- INFO
     |-- LICENSE
-    |-- __init__.py
-    |-- ci
-    |   |-- __init__.py
-    |   |-- check_os.sh
-    |   |-- config_functest.yaml
-    |   |-- generate_report.py
-    |   |-- exec_test.sh
-    |   |-- prepare_env.py
-    |   |-- run_tests.py
-    |   |-- testcases.yaml
-    |   |-- tier_builder.py
-    |   `-- tier_handler.py
-    |-- cli
-    |   |-- __init__.py
-    |   |-- cli_base.py
-    |   |-- commands
-    |   |-- functest-complete.sh
-    |   `-- setup.py
+    |-- requirements.txt
+    |-- run_unit_tests.sh
+    |-- setup.py
+    |-- test-requirements.txt
     |-- commons
     |   |-- ims
     |   |-- mobile
@@ -364,50 +376,96 @@ follows::
     |-- docker
     |   |-- Dockerfile
     |   |-- config_install_env.sh
-    |   `-- requirements.pip
+    |   `-- docker_remote_api
     |-- docs
     |   |-- com
     |   |-- configguide
     |   |-- devguide
     |   |-- images
+    |   |-- internship
     |   |-- release-notes
     |   |-- results
     |   `--userguide
-    |-- testcases
-    |   |-- __init__.py
-    |   |-- Controllers
-    |   |-- OpenStack
-    |   |-- features
-    |   |-- security_scan
-    |   `-- vnf
-    `-- utils
+    |-- functest
         |-- __init__.py
-        |-- functest_logger.py
-        |-- functest_utils.py
-        |-- openstack_clean.py
-        |-- openstack_snapshot.py
-        `-- openstack_utils.py
+        |-- ci
+        |   |-- __init__.py
+        |   |-- check_os.sh
+        |   |-- config_functest.yaml
+        |   |-- config_patch.yaml
+        |   |-- exec_test.sh
+        |   |-- generate_report.py
+        |   |-- prepare_env.py
+        |   |-- run_tests.py
+        |   |-- testcases.yaml
+        |   |-- tier_builder.py
+        |   `-- tier_handler.py
+        |-- cli
+        |   |-- __init__.py
+        |   |-- cli_base.py
+        |   |-- commands
+        |   |-- functest-complete.sh
+        |   `-- setup.py
+        |-- core
+        |   |-- __init__.py
+        |   |-- feature_base.py
+        |   |-- pytest_suite_runner.py
+        |   |-- testcase_base.py
+        |   |-- vnf_base.py
+        |-- opnfv_tests
+        |   |-- __init__.py
+        |   |-- features
+        |   |-- mano
+        |   |-- openstack
+        |   |-- sdn
+        |   |-- security_scan
+        |   `-- vnf
+        |-- tests
+        |   |-- __init__.py
+        |   `-- unit
+        `-- utils
+            |-- __init__.py
+            |-- config.py
+            |-- constants.py
+            |-- env.py
+            |-- functest_constants.py
+            |-- functest_logger.py
+            |-- functest_utils.py
+            |-- openstack
+            |-- openstack_clean.py
+            |-- openstack_snapshot.py
+            |-- openstack_tacker.py
+            `-- openstack_utils.py
+
 
     (Note: All *.pyc files removed from above list for brevity...)
 
-We may distinguish 7 different directories:
+We may distinguish several directories, the first level has 4 directories:
 
+* **commons**: This directory is dedicated for storage of traffic
+  profile or any other test inputs that could be reused by any test
+  project.
+* **docker**: This directory includes the needed files and tools to
+  build the Funtest Docker image.
+* **docs**: This directory includes documentation: Release Notes,
+  User Guide, Configuration Guide and Developer Guide. Test results
+  are also located in a sub--directory called 'results'.
+* **functest**: This directory contains all the code needed to run
+  functest internal cases and OPNFV onboarded feature or VNF test cases.
+
+Functest directory has 6 directories:
   * **ci**: This directory contains test structure definition files
     (e.g <filename>.yaml) and bash shell/python scripts used to
     configure and execute Functional tests. The test execution script
     can be executed under the control of Jenkins CI jobs.
   * **cli**: This directory holds the python based Functest CLI utility
     source code, which is based on the Python 'click' framework.
-  * **commons**: This directory is dedicated for storage of traffic
-    profile or any other test inputs that could be reused by any test
-    project.
-  * **docker**: This directory includes the needed files and tools to
-    build the Funtest Docker container image.
-  * **docs**: This directory includes documentation: Release Notes,
-    User Guide, Configuration Guide and Developer Guide. Test results
-    are also located in a sub--directory called 'results'.
-  * **testcases**: This directory includes the scripts required by
+  * **core**: This directory holds the python based Functest core
+      source code. Three abstraction classes have been created to ease
+      the integration of internal, feature or vnf cases.
+  * **opnfv_tests**: This directory includes the scripts required by
     Functest internal test cases and other feature projects test cases.
+  * **tests**: This directory includes the functest unit tests
   * **utils**: this directory holds Python source code for some general
     purpose helper utilities, which testers can also re-use in their
     own test code. See for an example the Openstack helper utility:
@@ -452,7 +510,7 @@ It is useful sometimes to remove a container if there are some problems::
 Use the *-f* option if the container is still running, it will force to
 destroy it::
 
-  docker -f rm <CONTAINER_ID>
+  docker rm -f <CONTAINER_ID>
 
 Check the Docker documentation dockerdocs_ for more information.
 
