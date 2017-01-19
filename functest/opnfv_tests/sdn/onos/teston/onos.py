@@ -175,7 +175,7 @@ def CreateImage():
 
 
 def SfcTest():
-    cmd = "python " + ONOS_SFC_PATH + "/Sfc.py"
+    cmd = "python " + ONOS_SFC_PATH + "/sfc.py"
     logger.debug("Run sfc tests")
     os.system(cmd)
 
@@ -187,7 +187,7 @@ def GetIp(type):
 
 
 def Replace(before, after):
-    file = "/Sfc_fun.py"
+    file = "/sfc_onos.py"
     cmd = "sed -i 's/" + before + "/" + after + "/g' " + ONOS_SFC_PATH + file
     os.system(cmd)
 
@@ -199,7 +199,7 @@ def SetSfcConf():
     Replace("glance_ip", GetIp("glance"))
     pwd = ft_constants.OS_PASSWORD
     Replace("console", pwd)
-    creds_neutron = openstack_utils.get_credentials("neutron")
+    creds_neutron = openstack_utils.get_credentials()
     neutron_client = neutronclient.Client(**creds_neutron)
     ext_net = openstack_utils.get_external_net(neutron_client)
     Replace("admin_floating_net", ext_net)
