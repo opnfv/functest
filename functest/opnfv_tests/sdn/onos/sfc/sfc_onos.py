@@ -232,8 +232,8 @@ class SfcOnos:
         else:
             return(response.status_code)
 
-        url = ("http://%s:8774//v2.1/%s/ports/"
-               "%s/flavors?name=m1.tiny" % (self.nova_hostname,
+        url = ("http://%s:8774/v2.1/%s/flavors?"
+               "name=m1.tiny" % (self.nova_hostname,
                                             self.tenant_id))
 
         headers = {"Accept": "application/json", "Content-Type":
@@ -344,7 +344,7 @@ class SfcOnos:
     def getPortPair(self):
         """Query the Portpair id value."""
         for p in range(0, 1):
-            url = ("http://%s:9696/%s/ports/"
+            url = ("http://%s:9696/%s/"
                    "sfc/port_pairs?name=PP1" % (self.neutron_hostname,
                                                 self.osver))
             headers = {"Accept": "application/json",
