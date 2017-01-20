@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ac10518_cb5c1ff0",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-20T07:48:48Z",
+      "side": 1,
+      "message": "I would say it\u0027s rare to call container image.\nI would have written like \u0027the Functest Docker image\u0027",
+      "range": {
+        "startLine": 445,
+        "startChar": 8,
+        "endLine": 445,
+        "endChar": 42
+      },
+      "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_6b4c0b43",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 1
@@ -30,6 +53,138 @@
       "writtenOn": "2017-01-20T07:22:26Z",
       "side": 1,
       "message": "tests is not aligned with ci/cli/opnfv_tests ?",
+      "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_eb06bbcd",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-20T07:48:48Z",
+      "side": 1,
+      "message": "I would have written as \u0027history\u0027",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 15
+      },
+      "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_ab10b301",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-20T07:48:48Z",
+      "side": 1,
+      "message": "Is a underscore needed here to make it consistent with others?\nSNAPS_cases",
+      "range": {
+        "startLine": 61,
+        "startChar": 17,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8bf5b7cc",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-20T07:48:48Z",
+      "side": 1,
+      "message": "Functest Docker Container?",
+      "range": {
+        "startLine": 77,
+        "startChar": 12,
+        "endLine": 77,
+        "endChar": 27
+      },
+      "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_ab275363",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-20T07:48:48Z",
+      "side": 1,
+      "message": "\"-e\" is missed here.\nenvs\u003d\"-e INSTALLER_TYPE\u003d${INSTALLER_TYPE} -e INSTALLER_IP\u003d${INSTALLER_IP} -e NODE_NAME\u003d${NODE_NAME}\"",
+      "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_eb2d5b47",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-20T07:48:48Z",
+      "side": 1,
+      "message": "I think --privileged\u003dtrue is not needed here in the command.\nPer my understanding, the functest container does not need extra power from the docker.\n\nhttps://docs.docker.com/engine/reference/commandline/run/\nThe --privileged flag gives all capabilities to the container, and it also lifts all the limitations enforced by the device cgroup controller. In other words, the container can then do almost everything that the host can do. This flag exists to allow special use-cases, like running Docker within Docker.",
+      "range": {
+        "startLine": 240,
+        "startChar": 25,
+        "endLine": 240,
+        "endChar": 43
+      },
+      "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_2b1b631c",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-20T07:48:48Z",
+      "side": 1,
+      "message": "A question which may be out of scope from this patch\nWhen will we plan to call the CLI in CI?",
+      "range": {
+        "startLine": 264,
+        "startChar": 8,
+        "endLine": 264,
+        "endChar": 74
+      },
       "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
