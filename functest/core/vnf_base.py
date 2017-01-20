@@ -152,14 +152,15 @@ class VnfOnBoardingBase(base.TestcaseBase):
 
         self.logger.info("Update OpenStack creds informations")
         self.creds.update({
-            "username": self.tenant_name,
-            "password": self.tenant_name,
             "tenant": self.tenant_name,
         })
-        self.glance_client = os_utils.get_glance_client(self.creds)
         self.neutron_client = os_utils.get_neutron_client(self.creds)
         self.nova_client = os_utils.get_nova_client(self.creds)
-
+        self.creds.update({
+            "username": self.tenant_name,
+            "password": self.tenant_name,
+        })
+        self.glance_client = os_utils.get_glance_client(self.creds)
         self.logger.info("Upload some OS images if it doesn't exist")
 
         temp_dir = os.path.join(self.data_dir, "tmp/")
