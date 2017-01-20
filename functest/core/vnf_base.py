@@ -35,6 +35,7 @@ class VnfOnBoardingBase(base.TestcaseBase):
         self.details['orchestrator'] = {}
         self.details['vnf'] = {}
         self.details['test_vnf'] = {}
+        self.images = {}
         try:
             self.tenant_name = CONST.__getattribute__(
                 'vnf_{}_tenant_name'.format(self.case_name))
@@ -44,7 +45,7 @@ class VnfOnBoardingBase(base.TestcaseBase):
             raise Exception("Unknown VNF case=" + self.case_name)
 
         try:
-            self.tenant_images = CONST.__getattribute__(
+            self.images = CONST.__getattribute__(
                 'vnf_{}_tenant_images'.format(self.case_name))
         except:
             self.logger.warn("No tenant image defined for this VNF")

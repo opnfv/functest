@@ -21,7 +21,7 @@ from functest.utils.constants import CONST
 
 class ImsVnf(vnf_base.VnfOnBoardingBase):
 
-    def __init__(self, project='functest', case='', repo='', cmd=''):
+    def __init__(self, project='functest', case='orchestra_ims', repo='', cmd=''):
         super(ImsVnf, self).__init__(project, case, repo, cmd)
         self.logger = ft_logger.Logger("vIMS").getLogger()
         self.case_dir = os.path.join(CONST.functest_test, 'vnf/ims/')
