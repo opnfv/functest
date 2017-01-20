@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_6b4c0b43",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-20T07:22:26Z",
+      "side": 1,
+      "message": "core is not aligned with ci/cli/opnfv_tests ?",
+      "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8b47f71c",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-20T07:22:26Z",
+      "side": 1,
+      "message": "tests is not aligned with ci/cli/opnfv_tests ?",
+      "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
