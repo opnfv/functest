@@ -25,7 +25,7 @@ import logging
 import os
 
 
-class Logger:
+class Logger(object):
     def __init__(self, logger_name):
 
         CI_DEBUG = os.getenv('CI_DEBUG')

@@ -16,7 +16,7 @@ ACCEPTED = 202
 NO_CONTENT = 204
 
 
-class SfcOnos:
+class SfcOnos(object):
     """Defines all the def function of SFC."""
 
     def __init__(self):

@@ -11,7 +11,7 @@ import tier_handler as th
 import yaml
 
 
-class TierBuilder:
+class TierBuilder(object):
 
     def __init__(self, ci_installer, ci_scenario, testcases_file):
         self.ci_installer = ci_installer

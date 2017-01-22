@@ -19,7 +19,7 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_vacation as vacation
 
 
-class CliTestcase:
+class CliTestcase(object):
 
     def __init__(self):
         self.tiers = tb.TierBuilder(CONST.INSTALLER_TYPE,

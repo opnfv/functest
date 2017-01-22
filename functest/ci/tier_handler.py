@@ -28,7 +28,7 @@ def split_text(text, max_len):
     return lines
 
 
-class Tier:
+class Tier(object):
 
     def __init__(self, name, order, ci_loop, description=""):
         self.tests_array = []
@@ -102,7 +102,7 @@ class Tier:
         return out
 
 
-class TestCase:
+class TestCase(object):
 
     def __init__(self, name, dependency, criteria, blocking, description=""):
         self.name = name
@@ -160,7 +160,7 @@ class TestCase:
         return out
 
 
-class Dependency:
+class Dependency(object):
 
     def __init__(self, installer, scenario):
         self.installer = installer

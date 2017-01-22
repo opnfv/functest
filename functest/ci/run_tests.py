@@ -38,7 +38,7 @@ EXEC_SCRIPT = ("%s/functest/ci/exec_test.sh" % CONST.dir_repo_functest)
 # this variable will change to -1
 
 
-class RunTestsParser():
+class RunTestsParser(object):
 
     def __init__(self):
         self.parser = argparse.ArgumentParser()

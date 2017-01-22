@@ -16,7 +16,7 @@ from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 
 
-class CliEnv:
+class CliEnv(object):
 
     def __init__(self):
         pass
