@@ -18,7 +18,7 @@ import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 
 
-class CliOpenStack:
+class CliOpenStack(object):
 
     def __init__(self):
         self.os_auth_url = CONST.OS_AUTH_URL

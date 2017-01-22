@@ -21,7 +21,7 @@ import functest.utils.functest_constants as ft_constants
 import functest.utils.functest_utils as ft_utils
 
 
-class Foundation:
+class Foundation(object):
 
     def __init__(self):
 
