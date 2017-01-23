@@ -93,13 +93,6 @@ function run_test(){
         "vims")
             python ${FUNCTEST_TEST_DIR}/vnf/ims/vims.py $clean_flag $report
         ;;
-        "rally_full")
-            python ${FUNCTEST_TEST_DIR}/openstack/rally/run_rally-cert.py $clean_flag all $report
-        ;;
-        "rally_sanity")
-            python ${FUNCTEST_TEST_DIR}/openstack/rally/run_rally-cert.py \
-                $clean_flag --sanity all $report
-        ;;
         "onos")
             python ${FUNCTEST_TEST_DIR}/sdn/onos/teston/onos.py
         ;;
