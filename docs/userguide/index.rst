@@ -8,17 +8,27 @@ OPNFV FUNCTEST user guide
 .. toctree::
    :maxdepth: 2
 
+Version history
+===============
++------------+----------+------------------+----------------------------------+
+| **Date**   | **Ver.** | **Author**       | **Comment**                      |
+|            |          |                  |                                  |
++------------+----------+------------------+----------------------------------+
+| 2016-08-17 | 1.0.0    | Juha Haapavirta  | Colorado release                 |
+|            |          | Column Gaynor    |                                  |
++------------+----------+------------------+----------------------------------+
+| 2017-01-23 | 1.0.1    | Morgan Richomme  | Adaptations for Danube           |
+|            |          |                  |                                  |
+|            |          |                  |                                  |
++------------+----------+------------------+----------------------------------+
+
 
 Introduction
 ============
 
 The goal of this document is to describe the OPNFV Functest test cases and to
-provide a procedure to execute them. In the OPNFV Colorado system release,
+provide a procedure to execute them. In the OPNFV Danube system release,
 a Functest CLI utility is introduced for easier execution of test procedures.
-
-An overview presentation has been created for the first OPNFV Summit `[4]`_.
-
-This document is a continuation of the OPNFV Functest Configuration Guide `[1]`_.
 
 **IMPORTANT**: It is assumed here that the Functest Docker container is already
 properly deployed and that all instructions described in this guide are to be
@@ -34,7 +44,7 @@ VIM (Virtualized Infrastructure Manager)
 Healthcheck
 ^^^^^^^^^^^
 In Colorado release a new Tier 'healthcheck' with one testcase 'healthcheck'
-is introduced. The healthcheck testcase verifies that some basic IP connectivity
+was introduced. The healthcheck testcase verifies that some basic IP connectivity
 and  essential operations of OpenStack functionality over the command line are
 working correctly.
 
@@ -174,7 +184,7 @@ The Tempest testcases are distributed accross two
 Tiers:
 
   * Smoke Tier - Test Case 'tempest_smoke_serial'
-  * Openstack Tier - Test case 'tempest_full_parallel'
+  * Components Tier - Test case 'tempest_full_parallel'
 
 NOTE: Test case 'tempest_smoke_serial' executes a defined set of tempest smoke
 tests with a single thread (i.e. serial mode). Test case 'tempest_full_parallel'
@@ -214,10 +224,43 @@ A basic SLA (stop test on errors) has been implemented.
 The Rally testcases are distributed accross two Tiers:
 
   * Smoke Tier - Test Case 'rally_sanity'
-  * Openstack Tier - Test case 'rally_full'
+  * Components Tier - Test case 'rally_full'
 
 NOTE: Test case 'rally_sanity' executes a limited number of Rally smoke test
 cases. Test case 'rally_full' executes the full defined set of Rally tests.
+
+SNAPS
+-----
+
+SNAPS stands for "SNA/NFV Application development Platform and Stack".
+This project seeks to develop baseline OpenStack NFV installations. It has been
+developed by Steven Pisarski and provided an object oriented library to perform
+functional and performance tests. It has been declined in several test suites in
+Functest.
+
+connection check
+^^^^^^^^^^^^^^^^
+Connection_check consists in 9 test cases (test duration < 5s) checking the
+connectivity with Glance, Keystone, Neutron, Nova and the external network.
+
+api_check
+^^^^^^^^^
+This test case verifies the retrieval of OpenStack clients: Keystone, Glance,
+Neutron and Nova and may perform some simple queries. When the config value of
+snaps.use_keystone is True, functest must have access to the cloud's private
+network.
+This suite consists in 49 tests (test duration< 2 minutes)
+
+Snaps_smoke
+^^^^^^^^^^^
+This test case contains tests that setup and destroy environments with VMs with
+and without Floating IPs with a newly created user and project. Set the config
+value snaps.use_floating_ips (True|False) to toggle this functionality. When
+the config value of snaps.use_keystone is True, functest must have access
+the cloud's private network.
+This suite consists in 38 tests (test duration < 10 minutes)
+
+More information on SNAPS can be found in  `[13]`_
 
 
 SDN Controllers
@@ -323,21 +366,19 @@ The test cases are described as follows:
 Features
 --------
 
-Most of the features have been developped by feature projects.
-Security_scan has been initiated in Functest repository but should soon
-be declared in its own repository as well.
-
 Please refer to the dedicated feature user guides for details:
 
- * bgpvpn: http://artifacts.opnfv.org/sdnvpn/colorado/docs/userguide/index.html
- * copper: http://artifacts.opnfv.org/copper/colorado/docs/userguide/index.html
- * doctor: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
+ * bgpvpn: http://artifacts.opnfv.org/sdnvpn/danube/docs/userguide/index.html
+ * copper: http://artifacts.opnfv.org/copper/danube/docs/userguide/index.html
+ * doctor: http://artifacts.opnfv.org/doctor/danube/userguide/index.html
  * domino: http://artifacts.opnfv.org/domino/docs/userguide-single/index.html
  * moon: http://artifacts.opnfv.org/moon/docs/userguide/index.html
  * multisites: http://artifacts.opnfv.org/multisite/docs/userguide/index.html
- * onos-sfc: http://artifacts.opnfv.org/onosfw/colorado/userguide/index.html
- * odl-sfc: http://artifacts.opnfv.org/sfc/colorado/userguide/index.html
- * promise: http://artifacts.opnfv.org/promise/colorado/docs/userguide/index.html
+ * onos-sfc: http://artifacts.opnfv.org/onosfw/danube/userguide/index.html
+ * odl-sfc: http://artifacts.opnfv.org/sfc/danube/userguide/index.html
+ * promise: http://artifacts.opnfv.org/danube/colorado/docs/userguide/index.html
+ * security_scan: http://artifacts.opnfv.org/security_scan/colorado/docs/userguide/index.html
+ * TODO
 
 security_scan
 ^^^^^^^^^^^^^
@@ -345,11 +386,12 @@ security_scan
 Security Scanning, is a project to insure security compliance and vulnerability
 checks, as part of an automated CI / CD platform delivery process.
 
-The project makes use of the existing SCAP format[6] to perform deep scanning of
-NFVi nodes, to insure they are hardened and free of known CVE reported vulnerabilities.
+The project makes use of the existing SCAP format `[6]`_ to perform deep
+scanning of NFVI nodes, to insure they are hardened and free of known CVE
+reported vulnerabilities.
 
 The SCAP content itself, is then consumed and run using an upstream opensource tool
-known as OpenSCAP[7].
+known as OpenSCAP `[7]`_.
 
 The OPNFV Security Group have developed the code that will called by the OPNFV Jenkins
 build platform, to perform a complete scan. Resulting reports are then copied to the
@@ -369,8 +411,7 @@ The current work flow is as follows:
   * If the config file value 'clean' is set to 'True' then the application installed in
     step 5 is removed, and all reports created at step 6 are deleted.
 
-At present, only the Apex installer is supported, with support for other installers due
-within D-release.
+Security scan is supported by Apex, TODO....
 
 
 
@@ -385,8 +426,8 @@ architectural framework for delivering IP multimedia services.
 
 vIMS has been integrated in Functest to demonstrate the capability to deploy a
 relatively complex NFV scenario on the OPNFV platform. The deployment of a complete
-functional VNF allows the test of most of the
-essential functions needed for a NFV platform.
+functional VNF allows the test of most of the essential functions needed for a
+NFV platform.
 
 The goal of this test suite consists of:
 
@@ -491,6 +532,7 @@ References
 .. _`[9]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml
 .. _`[11]`: http://robotframework.org/
 .. _`[12]`: http://artifacts.opnfv.org/parser/colorado/docs/userguide/index.html
+.. _`[13]`: TODO URL doc SNAPS
 
 OPNFV main site: opnfvmain_.
 
