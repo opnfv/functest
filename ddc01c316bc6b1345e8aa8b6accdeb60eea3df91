@@ -16,6 +16,24 @@
       "revId": "ddc01c316bc6b1345e8aa8b6accdeb60eea3df91",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_ecefb185",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-23T08:36:38Z",
+      "side": 1,
+      "message": "The debugging info is confusing as for v3, there is no OS_TENANT_NAME. Moreover it\u0027s incomplete and redundant. The print for the openrc will show the complete information instead.",
+      "parentUuid": "5ac10518_ac5be985",
+      "revId": "ddc01c316bc6b1345e8aa8b6accdeb60eea3df91",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
