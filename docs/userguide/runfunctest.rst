@@ -17,11 +17,6 @@ If any of the above steps are missing please refer to the Functest Config Guide
 as they are a prerequisite and all the commands explained in this section **must** be
 performed **inside the container**.
 
-Note: In Colorado release, the scripts **run_tests.sh** is now replaced with a
-new Functest CLI. One difference, is that tests run through the Functest CLI
-will always clean-up OpenStack resources. See the `Troubleshooting`_ section of this
-document, where this difference is discussed.
-
 The Functest CLI offers two commands (functest tier ...) and (functest testcase ... )
 for the execution of Test Tiers or Test Cases::
 
@@ -55,15 +50,13 @@ command::
       - 0. healthcheck:
              ['healthcheck']
       - 1. smoke:
-             ['vping_ssh', 'vping_userdata', 'tempest_smoke_serial', 'rally_sanity']
-      - 2. sdn_suites:
-             ['odl']
-      - 3. features:
+             ['vping_ssh', 'vping_userdata', 'tempest_smoke_serial', 'rally_sanity', 'connection_check', 'api_check', 'snaps_smoke', 'odl']
+      - 2. features:
              ['doctor', 'security_scan']
-      - 4. openstack:
+      - 3. components:
              ['tempest_full_parallel', 'rally_full']
-      - 5. vnf:
-             ['vims']
+      - 4. vnf:
+             ['cloudify_ims']
 
   and
 
@@ -71,6 +64,9 @@ command::
   healthcheck
   vping_ssh
   vping_userdata
+  connection_check
+  api_check
+  snaps_smoke
   tempest_smoke_serial
   rally_sanity
   odl
@@ -78,7 +74,7 @@ command::
   security_scan
   tempest_full_parallel
   rally_full
-  vims
+  cloudify_ims
 
 More specific details on specific Tiers or Test Cases can be seen wih the
 'show' command::
@@ -208,9 +204,9 @@ To execute a Test Tier or Test Case, the 'run' command is used::
 To list the test cases which are part of a specific Test Tier, the 'get-tests'
 command is used with 'functest tier'::
 
-  root@22e436918db0:~/repos/functest/ci# functest tier get-tests sdn_suites
-  Test cases in tier 'sdn_suites':
-   ['odl']
+  root@22e436918db0:~/repos/functest/ci# functest tier get-tests healthcheck
+  Test cases in tier 'healthcheck':
+   ['healthcheck']
 
 
 Please note that for some scenarios some test cases might not be launched.
@@ -230,37 +226,6 @@ two possibilities::
 
  *  Run a single Test Case, specified by a valid choice of <testcase_name>
  *  Run ALL test Test Cases (for all Tiers) by specifying <testcase_name> = 'all'
-
-Example::
-
-  root@22e436918db0:~/repos/functest/ci# functest testcase run all
-  Executing command: 'python /home/opnfv/repos/functest/ci/run_tests.py -t all'
-  2016-06-30 12:03:28,628 - run_tests - INFO - Sourcing the OpenStack RC file...
-  2016-06-30 12:03:28,634 - run_tests - INFO - Tiers to be executed:
-      - 0. healthcheck:
-             ['healthcheck']
-      - 1. smoke:
-             ['vping_ssh', 'vping_userdata', 'tempest_smoke_serial', 'rally_sanity']
-      - 2. sdn_suites:
-             ['odl']
-      - 3. features:
-             ['doctor', 'security_scan']
-      - 4. openstack:
-             ['tempest_full_parallel', 'rally_full']
-      - 5. vnf:
-             ['vims']
-  2016-06-30 12:03:28,634 - run_tests - INFO - ############################################
-  2016-06-30 12:03:28,635 - run_tests - INFO - Running tier 'healthcheck'
-  2016-06-30 12:03:28,635 - run_tests - INFO - ############################################
-  2016-06-30 12:03:28,635 - run_tests - INFO - ============================================
-  2016-06-30 12:03:28,635 - run_tests - INFO - Running test case 'healthcheck'...
-  2016-06-30 12:03:28,635 - run_tests - INFO - ============================================
-  2016-06-30 12:03:28,651 - healtcheck - INFO -  Testing Keystone API...
-  2016-06-30 12:03:36,676 - healtcheck - INFO -  ...Keystone OK!
-  2016-06-30 12:03:36,679 - healtcheck - INFO -  Testing Glance API...
-  :
-  :
-  etc.
 
 Functest includes a cleaning mechanism in order to remove all the OpenStack
 resources except those present before running any test. The script
@@ -304,19 +269,20 @@ once a week maximum) and the third job allows testing test suite by test suite s
 the test suite name. The user may also use either of these Jenkins jobs to execute
 the desired test suites.
 
-One of the most challenging task in the Colorado release consists
+One of the most challenging task in the Danube release consists
 in dealing with lots of scenarios and installers. Thus, when the tests are
 automatically started from CI, a basic algorithm has been created in order to
 detect whether a given test is runnable or not on the given scenario.
 Some Functest test suites cannot be systematically run (e.g. ODL suite can not
-be run on an ONOS scenario). Moreover since Colorado, we also introduce the
-notion of daily/weekly in order to save CI time and avoid running systematically
-long duration tests.
+be run on an ONOS scenario). The daily/weekly notion has been introduces in
+Colorado in order to save CI time and avoid running systematically
+long duration tests. It was not used in Colorado due to CI resource shortage.
+The mechanism remains however as part of the CI evolution.
 
 CI provides some useful information passed to the container as environment
 variables:
 
- * Installer (apex|compass|fuel|joid), stored in INSTALLER_TYPE
+ * Installer (apex|compass|daisy|fuel|joid), stored in INSTALLER_TYPE
  * Installer IP of the engine or VM running the actual deployment, stored in INSTALLER_IP
  * The scenario [controller]-[feature]-[mode], stored in DEPLOY_SCENARIO with
 
@@ -366,6 +332,9 @@ The constraints per test case are defined in the Functest configuration file
                 dependencies:
                     installer: ''
                     scenario: '^((?!bgpvpn|odl_l3).)*$'
+                run:
+                    module: 'functest.opnfv_tests.openstack.vping.vping_ssh'
+                    class: 'VPingSSH'
         ....
 
 We may distinguish 2 levels in the test case description:
@@ -383,6 +352,18 @@ For a given test case we defined:
   * blocking: if set to true, if the test is failed, the execution of the following tests is canceled
   * the description of the test case
   * the dependencies: a combination of 2 regex on the scenario and the installer name
+  * run: In Danube we introduced the notion of abstract class in order to harmonize the way to run internal, feature or vnf tests
+
+For further details on abstraction classes, see developper guide.
+
+Additional parameters have been added in the desription in the Database.
+The target is ti use the configuration stored in the Database and consider the
+local file as backup if the Database is not reachable.
+The additional fields related to a test case are:
+  * trust: we introduced this notion to put in place a mechanism of scenario promotion.
+  * Version: it indicates since which version you can run this test
+  * domains: the main domain covered by the test suite
+  * tags: a list of tags related to the test suite
 
 The order of execution is the one defined in the file if all test cases are selected.
 
@@ -390,13 +371,12 @@ In CI daily job the tests are executed in the following order:
 
   1) healthcheck (blocking)
   2) smoke: both vPings are blocking
-  3) SDN controller suites (blocking)
-  4) Feature project tests cases
+  3) Feature project tests cases
 
 In CI weekly job we add 2 tiers:
 
-  5) vIMS suite
-  6) Rally suite
+  4) VNFs (vIMS)
+  5) Components (Rally and Tempest long duration suites)
 
 As explained before, at the end of an automated execution, the OpenStack resources
 might be eventually removed.
