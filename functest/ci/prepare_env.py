@@ -184,11 +184,6 @@ def source_rc_file():
                 CONST.OS_TENANT_NAME = value
             elif key == 'OS_PASSWORD':
                 CONST.OS_PASSWORD = value
-    logger.debug("Used credentials: %s" % str)
-    logger.debug("OS_AUTH_URL:%s" % CONST.OS_AUTH_URL)
-    logger.debug("OS_USERNAME:%s" % CONST.OS_USERNAME)
-    logger.debug("OS_TENANT_NAME:%s" % CONST.OS_TENANT_NAME)
-    logger.debug("OS_PASSWORD:%s" % CONST.OS_PASSWORD)
 
 
 def patch_config_file():
