@@ -368,6 +368,30 @@
       "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_0ceebd22",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-23T02:07:06Z",
+      "side": 1,
+      "message": "Yes, totally agree with the point that we need to support both CLI and API.\nJust as I put the last comment here, API will be a solution for the docker slicing.\nhttps://wiki.opnfv.org/display/functest/Docker+images+slicing",
+      "parentUuid": "5ac10518_0679be92",
+      "range": {
+        "startLine": 264,
+        "startChar": 8,
+        "endLine": 264,
+        "endChar": 74
+      },
+      "revId": "28608ea8f7301652c403a064f04c9c703b19c8aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
