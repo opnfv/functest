@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_ccf755f4",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-01-23T02:10:44Z",
+      "side": 1,
+      "message": "The size of image opnfv/functest:colorado.3.0 should be 1.29 GB not 1.29 MB.",
+      "range": {
+        "startLine": 34,
+        "startChar": 59,
+        "endLine": 34,
+        "endChar": 67
+      },
+      "revId": "fe700f020ec07a830e7430e3e73feb57485573f6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
