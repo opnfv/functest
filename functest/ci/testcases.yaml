@@ -81,6 +81,9 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: '^((?!bgpvpn).)*$'
+                run:
+                    module: 'functest.opnfv_tests.openstack.rally.rally'
+                    class: 'RallySanity'
 
             -
                 name: odl
@@ -325,6 +328,9 @@ tiers:
                 dependencies:
                     installer: '^((?!netvirt).)*$'
                     scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.rally.rally'
+                    class: 'RallyFull'
 
     -
         name: vnf
