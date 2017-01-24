@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_560d333d",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-24T19:07:31Z",
+      "side": 1,
+      "message": "why have you removed this? what will this return then?",
+      "revId": "686e81a744ed39a4023afd89f005c2d7954359c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
