@@ -34,6 +34,40 @@
       "revId": "ddc01c316bc6b1345e8aa8b6accdeb60eea3df91",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_839fdb4f",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-24T06:29:07Z",
+      "side": 1,
+      "message": "As regards to OO, I would suggest to implement the differences in rallySanity and rallyFull separately, no more introduce self.mode check. A simple way, in rallyBase self.mode_dir \u003d\u0027\u0027, and in rallySanity set self.mode_dir \u003d sanity_mode_dir, in rallyFull set self.mode_dir\u003dfull_mode_dir.",
+      "revId": "ddc01c316bc6b1345e8aa8b6accdeb60eea3df91",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_03944b35",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-01-24T06:29:07Z",
+      "side": 1,
+      "message": "In rallyBase put an abstract _run_tests(), the actual implementation will be override in rallySanity and rallyFull, in this way there will be no if...else... check.",
+      "revId": "ddc01c316bc6b1345e8aa8b6accdeb60eea3df91",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
