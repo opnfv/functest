@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_16fd6b3a",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 6111
+      },
+      "writtenOn": "2017-01-24T17:35:38Z",
+      "side": 1,
+      "message": "Can we remove it as by default it is the end of function and there is no other statement after it?",
+      "parentUuid": "5ac10518_970f222e",
+      "revId": "47935c2fe486bce6d154589229c989271ebd0f08",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_5719ba77",
         "filename": "functest/ci/run_tests.py",
         "patchSetId": 8
