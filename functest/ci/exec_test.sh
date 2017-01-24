@@ -54,6 +54,10 @@ function odl_tests(){
         odl_ip=$SDN_CONTROLLER_IP
         odl_port=8081
         odl_restport=8081
+    elif [ "$INSTALLER_TYPE" == "netvirt" ]; then
+        odl_ip=$SDN_CONTROLLER_IP
+        odl_port=8081
+        odl_restport=8081
     elif [ "$INSTALLER_TYPE" == "joid" ]; then
         odl_ip=$SDN_CONTROLLER
     elif [ "$INSTALLER_TYPE" == "compass" ]; then

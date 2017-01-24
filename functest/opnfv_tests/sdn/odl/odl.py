@@ -164,7 +164,7 @@ class ODLTests(testcase_base.TestcaseBase):
             kwargs['ospassword'] = os.environ['OS_PASSWORD']
             if installer_type == 'fuel':
                 kwargs['odlwebport'] = '8282'
-            elif installer_type == 'apex':
+            elif installer_type == 'apex' or installer_type == 'netvirt':
                 kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
                 kwargs['odlwebport'] = '8081'
                 kwargs['odlrestconfport'] = '8081'
