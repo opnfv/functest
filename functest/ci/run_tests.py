@@ -269,7 +269,6 @@ def main(**kwargs):
         run_all(_tiers)
 
     logger.info("Execution exit value: %s" % GlobalVariables.OVERALL_RESULT)
-    sys.exit(GlobalVariables.OVERALL_RESULT)
 
 
 if __name__ == '__main__':

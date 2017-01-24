@@ -47,7 +47,8 @@ class PrepareEnvParser():
     def __init__(self):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument("action", help="Possible actions are: "
-                                 "'{d[0]}|{d[1]}' ".format(d=actions))
+                                 "'{d[0]}|{d[1]}' ".format(d=actions),
+                                 choices=actions)
         self.parser.add_argument("-d", "--debug", help="Debug mode",
                                  action="store_true")
 
@@ -284,7 +285,7 @@ def check_environment():
 def main(**kwargs):
     if not (kwargs['action'] in actions):
         logger.error('Argument not valid.')
-        sys.exit()
+        return
 
     if kwargs['action'] == "start":
         logger.info("######### Preparing Functest environment #########\n")
@@ -303,8 +304,6 @@ def main(**kwargs):
 
     if kwargs['action'] == "check":
         check_environment()
-
-    exit(0)
 
 
 if __name__ == '__main__':
