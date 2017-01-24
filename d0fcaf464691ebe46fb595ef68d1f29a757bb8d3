@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_f693ff4c",
+        "filename": "functest/tests/unit/odl/test_odl.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-24T14:05:36Z",
+      "side": 1,
+      "message": "I think you are missing \n\n    odlrestconfport\u003d\u00278081\u0027) \n\nlike in the apex case",
+      "revId": "d0fcaf464691ebe46fb595ef68d1f29a757bb8d3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
