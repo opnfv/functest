@@ -10,6 +10,7 @@
 
 import argparse
 import datetime
+import enum
 import importlib
 import os
 import re
@@ -35,7 +36,16 @@ logger = ft_logger.Logger("run_tests").getLogger()
 EXEC_SCRIPT = ("%s/functest/ci/exec_test.sh" % CONST.dir_repo_functest)
 
 # This will be the return code of this script. If any of the tests fails,
-# this variable will change to -1
+# this variable will change to Result.EX_ERROR
+
+
+class Result(enum.Enum):
+    EX_OK = os.EX_OK
+    EX_ERROR = -1
+
+
+class BlockingTestFailed(Exception):
+    pass
 
 
 class RunTestsParser():
@@ -60,7 +70,7 @@ class RunTestsParser():
 
 class GlobalVariables:
     EXECUTED_TEST_CASES = []
-    OVERALL_RESULT = 0
+    OVERALL_RESULT = Result.EX_OK
     CLEAN_FLAG = True
     REPORT_FLAG = False
 
@@ -75,8 +85,7 @@ def print_separator(str, count=45):
 def source_rc_file():
     rc_file = CONST.openstack_creds
     if not os.path.isfile(rc_file):
-        logger.error("RC file %s does not exist..." % rc_file)
-        sys.exit(1)
+        raise Exception("RC file %s does not exist..." % rc_file)
     logger.debug("Sourcing the OpenStack RC file...")
     os_utils.source_credentials(rc_file)
     for key, value in os.environ.iteritems():
@@ -179,19 +188,16 @@ def run_test(test, tier_name, testcases=None):
 
     if result != 0:
         logger.error("The test case '%s' failed. " % test_name)
-        GlobalVariables.OVERALL_RESULT = -1
+        GlobalVariables.OVERALL_RESULT = Result.EX_ERROR
         result_str = "FAIL"
 
         if test.is_blocking():
             if not testcases or testcases == "all":
-                logger.info("This test case is blocking. Aborting overall "
-                            "execution.")
                 # if it is a single test we don't print the whole results table
                 update_test_info(test_name, result_str, duration_str)
                 generate_report.main(GlobalVariables.EXECUTED_TEST_CASES)
-            logger.info("Execution exit value: %s" %
-                        GlobalVariables.OVERALL_RESULT)
-            sys.exit(GlobalVariables.OVERALL_RESULT)
+            raise BlockingTestFailed("The test case {} failed and is blocking"
+                                     .format(test.get_name()))
 
     update_test_info(test_name, result_str, duration_str)
 
@@ -246,33 +252,37 @@ def main(**kwargs):
     if kwargs['report']:
         GlobalVariables.REPORT_FLAG = True
 
-    if kwargs['test']:
-        source_rc_file()
-        if _tiers.get_tier(kwargs['test']):
-            run_tier(_tiers.get_tier(kwargs['test']))
-
-        elif _tiers.get_test(kwargs['test']):
-            run_test(_tiers.get_test(kwargs['test']),
-                     _tiers.get_tier(kwargs['test']),
-                     kwargs['test'])
-
-        elif kwargs['test'] == "all":
-            run_all(_tiers)
-
+    try:
+        if kwargs['test']:
+            source_rc_file()
+            if _tiers.get_tier(kwargs['test']):
+                GlobalVariables.EXECUTED_TEST_CASES = generate_report.init(
+                    [_tiers.get_tier(kwargs['test'])])
+                run_tier(_tiers.get_tier(kwargs['test']))
+            elif _tiers.get_test(kwargs['test']):
+                run_test(_tiers.get_test(kwargs['test']),
+                         _tiers.get_tier(kwargs['test']),
+                         kwargs['test'])
+            elif kwargs['test'] == "all":
+                run_all(_tiers)
+            else:
+                logger.error("Unknown test case or tier '%s', "
+                             "or not supported by "
+                             "the given scenario '%s'."
+                             % (kwargs['test'], CI_SCENARIO))
+                logger.debug("Available tiers are:\n\n%s"
+                             % _tiers)
+                return Result.EX_ERROR
         else:
-            logger.error("Unknown test case or tier '%s', or not supported by "
-                         "the given scenario '%s'."
-                         % (kwargs['test'], CI_SCENARIO))
-            logger.debug("Available tiers are:\n\n%s"
-                         % _tiers)
-    else:
-        run_all(_tiers)
-
+            run_all(_tiers)
+    except Exception as e:
+        logger.error(e)
+        GlobalVariables.OVERALL_RESULT = Result.EX_ERROR
     logger.info("Execution exit value: %s" % GlobalVariables.OVERALL_RESULT)
-    sys.exit(GlobalVariables.OVERALL_RESULT)
+    return GlobalVariables.OVERALL_RESULT
 
 
 if __name__ == '__main__':
     parser = RunTestsParser()
     args = parser.parse_args(sys.argv[1:])
-    main(**args)
+    sys.exit(main(**args).value)

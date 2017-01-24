@@ -47,7 +47,8 @@ class PrepareEnvParser():
     def __init__(self):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument("action", help="Possible actions are: "
-                                 "'{d[0]}|{d[1]}' ".format(d=actions))
+                                 "'{d[0]}|{d[1]}' ".format(d=actions),
+                                 choices=actions)
         self.parser.add_argument("-d", "--debug", help="Debug mode",
                                  action="store_true")
 
@@ -140,14 +141,14 @@ def source_rc_file():
         if CONST.INSTALLER_IP is None:
             logger.error("The env variable CI_INSTALLER_IP must be provided in"
                          " order to fetch the credentials from the installer.")
-            sys.exit("Missing CI_INSTALLER_IP.")
+            raise Exception("Missing CI_INSTALLER_IP.")
         if CONST.INSTALLER_TYPE not in opnfv_constants.INSTALLERS:
             logger.error("Cannot fetch credentials. INSTALLER_TYPE=%s is "
                          "not a valid OPNFV installer. Available "
                          "installers are : %s." %
                          (CONST.INSTALLER_TYPE,
                           opnfv_constants.INSTALLERS))
-            sys.exit("Wrong INSTALLER_TYPE.")
+            raise Exception("Wrong INSTALLER_TYPE.")
 
         cmd = ("/home/opnfv/repos/releng/utils/fetch_os_creds.sh "
                "-d %s -i %s -a %s"
@@ -159,15 +160,12 @@ def source_rc_file():
         output = p.communicate()[0]
         logger.debug("\n%s" % output)
         if p.returncode != 0:
-            logger.error("Failed to fetch credentials from installer.")
-            sys.exit(1)
+            raise Exception("Failed to fetch credentials from installer.")
     else:
         logger.info("RC file provided in %s."
                     % CONST.openstack_creds)
         if os.path.getsize(CONST.openstack_creds) == 0:
-            logger.error("The file %s is empty."
-                         % CONST.openstack_creds)
-            sys.exit(1)
+            raise Exception("The file %s is empty." % CONST.openstack_creds)
 
     logger.info("Sourcing the OpenStack RC file...")
     os_utils.source_credentials(
@@ -211,7 +209,7 @@ def verify_deployment():
         line = p.stdout.readline().rstrip()
         if "ERROR" in line:
             logger.error(line)
-            sys.exit("Problem while running 'check_os.sh'.")
+            raise Exception("Problem while running 'check_os.sh'.")
         logger.info(line)
 
 
@@ -270,46 +268,43 @@ def create_flavor():
 def check_environment():
     msg_not_active = "The Functest environment is not installed."
     if not os.path.isfile(CONST.env_active):
-        logger.error(msg_not_active)
-        sys.exit(1)
+        raise Exception(msg_not_active)
 
     with open(CONST.env_active, "r") as env_file:
         s = env_file.read()
         if not re.search("1", s):
-            logger.error(msg_not_active)
-            sys.exit(1)
+            raise Exception(msg_not_active)
 
     logger.info("Functest environment is installed.")
 
 
 def main(**kwargs):
-    if not (kwargs['action'] in actions):
-        logger.error('Argument not valid.')
-        sys.exit()
-
-    if kwargs['action'] == "start":
-        logger.info("######### Preparing Functest environment #########\n")
-        check_env_variables()
-        create_directories()
-        source_rc_file()
-        patch_config_file()
-        verify_deployment()
-        install_rally()
-        install_tempest()
-        create_flavor()
-
-        with open(CONST.env_active, "w") as env_file:
-            env_file.write("1")
-
-        check_environment()
-
-    if kwargs['action'] == "check":
-        check_environment()
-
-    exit(0)
+    try:
+        if not (kwargs['action'] in actions):
+            logger.error('Argument not valid.')
+            return -1
+        elif kwargs['action'] == "start":
+            logger.info("######### Preparing Functest environment #########\n")
+            check_env_variables()
+            create_directories()
+            source_rc_file()
+            patch_config_file()
+            verify_deployment()
+            install_rally()
+            install_tempest()
+            create_flavor()
+            with open(CONST.env_active, "w") as env_file:
+                env_file.write("1")
+            check_environment()
+        elif kwargs['action'] == "check":
+            check_environment()
+    except Exception as e:
+        logger.error(e)
+        return -1
+    return 0
 
 
 if __name__ == '__main__':
     parser = PrepareEnvParser()
     args = parser.parse_args(sys.argv[1:])
-    main(**args)
+    sys.exit(main(**args))
