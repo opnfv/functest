@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_e3dedf10",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-24T06:41:43Z",
+      "side": 1,
+      "message": "Yes, it makes sense. Let me submit a new patch.",
+      "parentUuid": "5ac10518_839fdb4f",
+      "revId": "ddc01c316bc6b1345e8aa8b6accdeb60eea3df91",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_03944b35",
         "filename": "functest/opnfv_tests/openstack/rally/rally.py",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "writtenOn": "2017-01-24T06:29:07Z",
       "side": 1,
       "message": "In rallyBase put an abstract _run_tests(), the actual implementation will be override in rallySanity and rallyFull, in this way there will be no if...else... check.",
+      "revId": "ddc01c316bc6b1345e8aa8b6accdeb60eea3df91",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_43c0132a",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-24T06:41:43Z",
+      "side": 1,
+      "message": "For both sanity and full, their test_name is set as all which means all test cases available should be executed in both cases.\nThe logic here is o leave the capability for the future to support run case like executing a single type of test, say nova.",
+      "parentUuid": "5ac10518_03944b35",
       "revId": "ddc01c316bc6b1345e8aa8b6accdeb60eea3df91",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
