@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_43eed3b5",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-24T07:18:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_839fdb4f",
+      "revId": "ddc01c316bc6b1345e8aa8b6accdeb60eea3df91",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_03944b35",
         "filename": "functest/opnfv_tests/openstack/rally/rally.py",
         "patchSetId": 2
