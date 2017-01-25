@@ -93,10 +93,6 @@ def source_rc_file():
             elif key == 'OS_PASSWORD':
                 ft_constants.OS_PASSWORD = value
                 CONST.OS_PASSWORD = value
-    logger.debug("OS_AUTH_URL:%s" % CONST.OS_AUTH_URL)
-    logger.debug("OS_USERNAME:%s" % CONST.OS_USERNAME)
-    logger.debug("OS_TENANT_NAME:%s" % CONST.OS_TENANT_NAME)
-    logger.debug("OS_PASSWORD:%s" % CONST.OS_PASSWORD)
 
 
 def generate_os_snapshot():
