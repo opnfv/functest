@@ -33,6 +33,41 @@
       "revId": "bfccebd901af6c314c7886d9e87bd36f49a6e7f8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_b971e8e1",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-25T07:59:23Z",
+      "side": 1,
+      "message": "license yes\n\ncopyrigth as we all signed a CLA, does not really make sense....\ngit history is enough",
+      "parentUuid": "5ac10518_394ad8ac",
+      "revId": "bfccebd901af6c314c7886d9e87bd36f49a6e7f8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_597804c4",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-25T07:59:23Z",
+      "side": 1,
+      "message": "do not know it will fix the issue reported in https://jira.opnfv.org/browse/FUNCTEST-709\n\nthe issue was coming from rally_sanity, when excluded from the reporting, the details on the tests are back.",
+      "revId": "bfccebd901af6c314c7886d9e87bd36f49a6e7f8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
