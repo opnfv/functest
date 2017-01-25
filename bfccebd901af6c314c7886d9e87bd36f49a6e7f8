@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_f9cbf01b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-01-25T07:05:01Z",
+      "side": 1,
+      "message": "FUNCTEST-543 can be closed with this change",
+      "revId": "bfccebd901af6c314c7886d9e87bd36f49a6e7f8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_394ad8ac",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-01-25T07:05:01Z",
+      "side": 1,
+      "message": "Should the copyright/license header be applied?",
+      "revId": "bfccebd901af6c314c7886d9e87bd36f49a6e7f8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
