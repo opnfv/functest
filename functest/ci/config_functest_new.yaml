@@ -1,0 +1,224 @@
+general:
+    dir:
+        # Relative to the path where the repo is cloned:
+        vping:             functest/opnfv_tests/openstack/vping
+        dirOdl:           functest/opnfv_tests/sdn/odl
+        rally:             functest/opnfv_tests/openstack/rally
+        tempestCases:     functest/opnfv_tests/openstack/tempest/custom_tests
+        dirVIMS:          functest/opnfv_tests/vnf/ims
+        dirOnos:          functest/opnfv_tests/sdn/onos/teston
+        dirOnosSfc:      functest/opnfv_tests/sdn/onos/sfc
+
+        # Absolute path
+        home:               /home/opnfv
+        repos:              /home/opnfv/repos
+        repoFunctest:      /home/opnfv/repos/functest
+        dir_repo_rally:     /home/opnfv/repos/rally
+        repoTempest:       /home/opnfv/repos/tempest
+        dir_repo_releng:    /home/opnfv/repos/releng
+        repoVimsTest:     /home/opnfv/repos/vnfs/vims-test
+        repoSdnvpn:        /home/opnfv/repos/sdnvpn
+        repoSfc:           /home/opnfv/repos/sfc
+        dir_repo_onos:      /home/opnfv/repos/onos
+        dir_repo_promise:   /home/opnfv/repos/promise
+        dir_repo_doctor:    /home/opnfv/repos/doctor
+        repoCopper:        /home/opnfv/repos/copper
+        dir_repo_ovno:      /home/opnfv/repos/ovno
+        repoParser:        /home/opnfv/repos/parser
+        repoDomino:        /home/opnfv/repos/domino
+        repo_snaps:         /home/opnfv/repos/snaps
+        functest:           /home/opnfv/functest
+        functestTest:      /home/opnfv/repos/functest/functest/opnfv_tests
+        results:            /home/opnfv/functest/results
+        functestLoggingCfg:   /home/opnfv/repos/functest/functest/ci/logging.json
+        functestConf:      /home/opnfv/functest/conf
+        functestData:      /home/opnfv/functest/data
+        dir_vIMS_data:      /home/opnfv/functest/data/vIMS/
+        rallyInst:         /home/opnfv/.rally
+
+    openstack:
+        creds: /home/opnfv/functest/conf/openstack.creds
+        snapshot_file: /home/opnfv/functest/conf/openstack_snapshot.yaml
+
+        image_name: Cirros-0.3.4
+        image_file_name:  cirros-0.3.4-x86_64-disk.img
+        image_disk_format:  qcow2
+
+        flavor_name: opnfv_flavor
+        flavor_ram: 512
+        flavor_disk: 1
+        flavor_vcpus: 1
+
+        # Private network for functest. Will be created by config_functest.py
+        neutron_private_net_name: functest-net
+        neutron_private_subnet_name: functest-subnet
+        neutron_private_subnet_cidr: 192.168.120.0/24
+        neutron_private_subnet_start: 192.168.120.2
+        neutron_private_subnet_end: 192.168.120.254
+        neutron_private_subnet_gateway: 192.168.120.254
+        neutron_router_name: functest-router
+
+    functest:
+        testcases_yaml: /home/opnfv/repos/functest/functest/ci/testcases.yaml
+
+healthcheck:
+    disk_image: /home/opnfv/functest/data/cirros-0.3.4-x86_64-disk.img
+    disk_format: qcow2
+    wait_time: 60
+
+snaps:
+    use_keystone: True
+    use_floating_ips: False
+
+vping:
+    ping_timeout:   200
+    vm_flavor: m1.tiny # adapt to your environment
+    vm_name_1: opnfv-vping-1
+    vm_name_2: opnfv-vping-2
+    image_name: functest-vping
+    private_net_name: vping-net
+    private_subnet_name: vping-subnet
+    private_subnet_cidr: 192.168.130.0/24
+    router_name: vping-router
+    sg_name: vPing-sg
+    sg_desc: Security group for vPing test case
+
+onos_sfc:
+    image_base_url: http://artifacts.opnfv.org/sfc/demo
+    image_name: TestSfcVm
+    image_file_name: firewall_block_image.img
+
+tempest:
+    deployment_name: opnfv-tempest
+    identity:
+        tenantName: tempest
+        tenant_description: Tenant for Tempest test suite
+        user_name: tempest
+        user_password: tempest
+    validation:
+        ssh_timeout: 130
+    private_net_name: tempest-net
+    private_subnet_name: tempest-subnet
+    private_subnet_cidr: 192.168.150.0/24
+    router_name: tempest-router
+    use_custom_images: False
+    use_custom_flavors: False
+
+rally:
+    deployment_name: opnfv-rally
+    network_name: rally-net
+    subnet_name: rally-subnet
+    subnet_cidr: 192.168.140.0/24
+    router_name: rally-router
+
+vnf:
+    aaa:
+        tenant_name: aaa
+        tenant_description: Freeradius server
+        tenant_images: {}
+    juju_epc:
+        tenant_name: epc
+        tenant_description: OAI EPC deployed with Juju
+        tenant_images: {}
+    cloudify_ims:
+        tenant_name: cloudify_ims
+        tenant_description: vIMS
+        tenant_images:
+            ubuntu_14.04: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+            centos_7: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1510.qcow2
+        cloudify:
+            blueprint:
+                url: https://github.com/boucherv-orange/cloudify-manager-blueprints.git
+                branch: "3.3.1-build"
+            requierments:
+                ram_min: 3000
+                os_image: centos_7
+            inputs:
+                keystone_username: ""
+                keystone_password: ""
+                keystone_tenant_name: ""
+                keystone_url: ""
+                manager_public_key_name: 'manager-kp'
+                agent_public_key_name: 'agent-kp'
+                image_id: ""
+                flavor_id: "3"
+                external_network_name: ""
+                ssh_user: centos
+                agents_user: ubuntu
+        clearwater:
+            blueprint:
+                file_name: 'openstack-blueprint.yaml'
+                name: "clearwater-opnfv"
+                destination_folder: "opnfv-cloudify-clearwater"
+                url: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git
+                branch: "stable"
+            deployment_name: 'clearwater-opnfv'
+            requirements:
+                ram_min: 1700
+                os_image: ubuntu_14.04
+            inputs:
+                image_id: ''
+                flavor_id: ''
+                agent_user: 'ubuntu'
+                external_network_name: ''
+                public_domain: clearwater.opnfv
+    orchestra_ims:
+        tenant_name: orchestra_ims
+        tenant_description: ims deployed with openbaton
+    opera_ims:
+        tenant_name: opera_ims
+        tenant_description: ims deployed with open-o
+
+ONOS:
+    general:
+        onosbench_username: 'root'
+        onosbench_password: 'root'
+        onoscli_username: 'root'
+        onoscli_password: 'root'
+        runtimeout: 300
+    environment:
+        OCT: '10.20.0.1'
+        OC1: '10.20.0.7'
+        OC2: '10.20.0.7'
+        OC3: '10.20.0.7'
+        OCN: '10.20.0.4'
+        OCN2: '10.20.0.5'
+        installer_master: '10.20.0.2'
+        installer_master_username: 'root'
+        installer_master_password: 'r00tme'
+multisite:
+    fuel:
+        installer_username: 'root'
+        installer_password: 'r00tme'
+    compass:
+        installer_username: 'root'
+        installer_password: 'root'
+        multisite_controller_ip: '10.1.0.50'
+promise:
+    tenant_name: promise
+    tenant_description: promise Functionality Testing
+    user_name: promiser
+    user_pwd: test
+    image_name: promise-img
+    flavor_name: promise-flavor
+    flavor_vcpus: 1
+    flavor_ram: 128
+    flavor_disk: 0
+    network_name: promise-net
+    subnet_name: promise-subnet
+    subnet_cidr: 192.168.121.0/24
+    router_name: promise-router
+
+example:
+    vm_name: example-vm
+    flavor: m1.small
+    image_name: functest-example-vm
+    private_net_name: example-net
+    private_subnet_name: example-subnet
+    private_subnet_cidr: 192.168.170.0/24
+    router_name: example-router
+    sg_name: example-sg
+    sg_desc: Example Security group
+
+results:
+    test_db_url: http://testresults.opnfv.org/test/api/v1
