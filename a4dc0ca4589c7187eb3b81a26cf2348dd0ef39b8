@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_aab424d1",
+        "filename": "functest/ci/config_functest_new.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-26T09:31:08Z",
+      "side": 1,
+      "message": "Only underscore of these fields is removed to go with the logic of code.\n\ntempest_cases --\u003e tempestCases\ndir_vIMS --\u003e dirVIMS\ndir_onos --\u003e dirOnos",
+      "range": {
+        "startLine": 4,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "a4dc0ca4589c7187eb3b81a26cf2348dd0ef39b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_8ae848b5",
+        "filename": "functest/utils/constants_new.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-01-26T09:31:08Z",
+      "side": 1,
+      "message": "In this way, different level of values can be accessed\nIn the original way, only CONST.ONOS_environment_OCT can be accessed.",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "a4dc0ca4589c7187eb3b81a26cf2348dd0ef39b8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
