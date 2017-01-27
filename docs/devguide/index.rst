@@ -13,7 +13,7 @@ Introduction
 
 Functest is a project dealing with functional testing.
 Functest produces its own internal test cases but can also be considered
-as a framework to support feature project testing.
+as a framework to support feature and VNF onboarding project testing.
 Functest developed a test API and defined a test collection framework
 that can be used by any OPNFV project.
 
@@ -60,17 +60,20 @@ Functest can be described as follow::
 
 Functest internal test cases
 ============================
-The internal test cases in Colorado are:
+The internal test cases in Danube are:
 
  * healthcheck
  * vping_ssh
  * vping_userdata
  * odl
+ * connection_check
+ * api_check
+ * snaps_smoke
  * tempest_smoke_serial
  * rally_sanity
  * tempest_full_parallel
  * rally_full
- * vims
+ * cloudify_ims
 
 By internal, we mean that this particular test cases have been
 developped and/or integrated by functest contributors and the associated
@@ -79,12 +82,12 @@ An internal case can be fully developped or a simple integration of
 upstream suites (e.g. Tempest/Rally developped in OpenStack are just
 integrated in Functest).
 The structure of this repository is detailed in `[1]`_.
-The main internal test cases are in the testcases subfolder of the
+The main internal test cases are in the opnfv_tests subfolder of the
 repository, the internal test cases are:
 
- * Controllers: odl, onos, ocl
- * OpenStack: healthcheck, vping_ssh, vping_userdata, tempest_*, rally_*
- * VNF: vims
+ * sdn: odl, onos
+ * openstack: healthcheck, vping_ssh, vping_userdata, tempest_*, rally_*, connection_check, api_check, snaps_smoke
+ * vnf: cloudify_ims
 
 If you want to create a new test case you will have to create a new
 folder under the testcases directory.
@@ -108,16 +111,14 @@ The external test cases are:
  * parser
  * domino
  * multisite
+ * opera_ims
+ * orchestra_ims
 
-
-Note that security_scan has been bootstraped in Functest but is
-considered as an external test case as it gets its own repository.
 
 The code to run these test cases may be directly in the repository of
-the project. We have also a **features** sub directory under testcases
+the project. We have also a **features** sub directory under opnfv_tests
 directory that may be used (it can be usefull if you want to reuse
 Functest library).
-
 
 Functest framework
 ==================
@@ -132,9 +133,88 @@ Since Colorado, test categories also known as tiers have been created to
 group similar tests, provide consistant sub-lists and at the end optimize
 test duration for CI (see How To section).
 
-see http://artifacts.opnfv.org/functest/docs/userguide/index.html for
-details.
+The definition of the tiers has been agreed by the testing working group.
 
+The tiers are:
+  * healthcheck
+  * smoke
+  * features
+  * components
+  * performance
+  * vnf
+  * stress
+
+Functest abstraction classes
+============================
+
+In order to harmonize test integration, 3 abstraction classes have been
+introduced in Danube:
+
+ * testcase_base: base for any test case
+ * feature_base: abstraction for feature project
+ * vnf_base: abstraction for vnf onboarding
+
+The goal is to unify the way to run test from Functest.
+
+feature_base and vnf_base inherit from testcase_base.
+
+              +-----------------------------------------+
+              |                                         |
+              |         Testcase_base                   |
+              |                                         |
+              |         - init()                        |
+              |         - run()                         |
+              |         - publish_report()              |
+              |         - check_criteria()              |
+              |                                         |
+              +-----------------------------------------+
+                     |                       |
+                     V                       V
+         +--------------------+   +--------------------------+
+         |                    |   |                          |
+         |    feature_base    |   |      vnf_base            |
+         |                    |   |                          |
+         |  - prepare()       |   |  - prepare()             |
+         |  - post()          |   |  - deploy_orchestrator() |
+         |  - parse_results() |   |  - deploy_vnf()          |
+         |                    |   |  - test_vnf()            |
+         |                    |   |  - clean()               |
+         |                    |   |  - execute()             |
+         |                    |   |                          |
+         +--------------------+   +--------------------------+
+
+
+Functest util classes
+=====================
+
+In order to simplify the creation of test cases, Functest develops some
+functions that can be used by any feature or internal test cases.
+Several features are supported such as logger, configuration management and
+Openstack capabilities (snapshot, clean, tacker,..).
+These functions can be found under <repo>/functest/utils and can be described as
+follows:
+
+functest/utils/
+|-- config.py
+|-- constants.py
+|-- env.py
+|-- functest_constants.py
+|-- functest_logger.py
+|-- functest_utils.py
+|-- openstack
+│   |-- cinder.py
+│   |-- glance.py
+│   |-- keystone.py
+│   |-- neutron.py
+│   `-- nova.py
+|-- openstack_clean.py
+|-- openstack_snapshot.py
+|-- openstack_tacker.py
+`-- openstack_utils.py
+
+Note that for Openstack, keystone v3 is now supported by default by compass,
+fuel and joid in Danube. All installers still support keysone v2 (deprecated in
+next version).
 
 Test collection framework
 =========================
@@ -415,47 +495,110 @@ Results:
  | GET    | /api/v1/results/{result_id}| Get the test result by result_id         |
  +--------+----------------------------+------------------------------------------+
 
+Scenarios:
 
-Dashboard:
+  +--------+----------------------------+-----------------------------------------+
+  | Method | Path                       | Description                             |
+  +========+============================+=========================================+
+  | GET    | /api/v1/scenarios          | Get the list of declared scenarios      |
+  +--------+----------------------------+-----------------------------------------+
+  | POST   | /api/v1/scenario           | Declare a new scenario                  |
+  +--------+----------------------------+-----------------------------------------+
+  | GET    | /api/v1/scenario?          | Get a declared scenario                 |
+  |        | <query conditions>         |                                         |
+  +--------+----------------------------+-----------------------------------------+
 
- +--------+----------------------------+-----------------------------------------+
- | Method | Path                       | Description                             |
- +========+============================+=========================================+
- | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
- |        |&project={project}          | {case} of the project {project}         |
- |        |&case={case}                |                                         |
- +--------+----------------------------+-----------------------------------------+
- | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
- |        |&project={project}          | {case} of the project {project}         |
- |        |&case={case}                | version {version}                       |
- |        |&version={version}          |                                         |
- +--------+----------------------------+-----------------------------------------+
- | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
- |        |&project={project}          | {case} of the project {project}         |
- |        |&case={case}                | since {days} days                       |
- |        |&period={days}              |                                         |
- +--------+----------------------------+-----------------------------------------+
- | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
- |        |&project={project}          | {case} of the project {project}         |
- |        |&case={case}                | installed by {installer}                |
- |        |&installer={installer}      |                                         |
- +--------+----------------------------+-----------------------------------------+
- | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
- |        |&project={project}          | {case} of the project {project}         |
- |        |&case={case}                | on POD {pod}                            |
- |        |&pod={pod}                  |                                         |
- +--------+----------------------------+-----------------------------------------+
- | GET    |/dashboard/v1/results?      | Get all the dashboard ready results of  |
- |        |&project={project}          | {case} of the project {project}         |
- |        |&case={case}                | and combined by other query conditions  |
- |        |&<query conditions>         | supported above.                        |
- +--------+----------------------------+-----------------------------------------+
- | GET    |/dashboard/v1/projects?     | Get all the dashboard ready projects    |
- +--------+----------------------------+-----------------------------------------+
 
 The code of the API is hosted in the releng repository `[6]`_.
 The test API has been dockerized and may be installed locally in your
 lab. See `[15]`_ for details.
+
+The deployment of the test API has been automated.
+A jenkins job manages:
+  * the unit tests of the test api
+  * the cration of a new docker file
+  * the deployment of the new test api
+  * the archive of the old test api
+  * the backup of the Mongo DB
+
+  Automatic reporting
+  ===================
+
+  An automatic reporting page has been created in order to provide a
+  consistant view of the scenarios.
+  In this page, each scenario is evaluated according to test criteria.
+  The code for the automatic reporting is available at `[8]`_.
+
+  The results are collected from the centralized database every day and,
+  per scenario. A score is calculated based on the results from the last
+  10 days. This score is the addition of single test scores. Each test
+  case has a success criteria reflected in the criteria field from the
+  results.
+
+  Considering an instance of a scenario os-odl_l2-nofeature-ha, the
+  scoring is the addition of the scores of all the runnable tests from the
+  categories (tiers healthcheck, smoke and features)
+  corresponding to this scenario.
+
+
+   +---------------------+---------+---------+---------+---------+
+   | Test                | Apex    | Compass | Fuel    |  Joid   |
+   +=====================+=========+=========+=========+=========+
+   | vPing_ssh           |    X    |    X    |    X    |    X    |
+   +---------------------+---------+---------+---------+---------+
+   | vPing_userdata      |    X    |    X    |    X    |    X    |
+   +---------------------+---------+---------+---------+---------+
+   | tempest_smoke_serial|    X    |    X    |    X    |    X    |
+   +---------------------+---------+---------+---------+---------+
+   | rally_sanity        |    X    |    X    |    X    |    X    |
+   +---------------------+---------+---------+---------+---------+
+   | odl                 |    X    |    X    |    X    |    X    |
+   +---------------------+---------+---------+---------+---------+
+   | promise             |         |         |    X    |    X    |
+   +---------------------+---------+---------+---------+---------+
+   | doctor              |    X    |         |    X    |         |
+   +---------------------+---------+---------+---------+---------+
+   | security_scan       |    X    |         |         |         |
+   +---------------------+---------+---------+---------+---------+
+   | parser              |         |         |    X    |         |
+   +---------------------+---------+---------+---------+---------+
+   | moon                |         |    X    |         |         |
+   +---------------------+---------+---------+---------+---------+
+   | copper              |    X    |         |         |    X    |
+   +---------------------+---------+---------+---------+---------+
+
+  All the testcases listed in the table are runnable on
+  os-odl_l2-nofeature scenarios.
+  If no result is available or if all the results are failed, the test
+  case get 0 point.
+  If it was succesfull at least once but not anymore during the 4 runs,
+  the case get 1 point (it worked once).
+  If at least 3 of the last 4 runs were successful, the case get 2 points.
+  If the last 4 runs of the test are successful, the test get 3 points.
+
+  In the example above, the target score for fuel/os-odl_l2-nofeature-ha
+  is 3x6 = 18 points.
+
+  The scenario is validated per installer when we got 3 points for all
+  individual test cases (e.g 18/18).
+  Please note that complex or long duration tests are not considered for
+  the scoring. The success criteria are not always easy to define and may
+  require specific hardware configuration. These results however provide
+  a good level of trust on the scenario.
+
+  A web page is automatically generated every day to display the status.
+  This page can be found at `[9]`_. For the status, click on Status menu,
+  you may also get feedback for vims and tempest_smoke_serial test cases.
+
+  Any validated scenario is stored in a local file on the web server. In
+  fact as we are using a sliding windows to get results, it may happen
+  that a successful scenarios is no more run (because considered as
+  stable) and then the number of iterations (4 needed) would not be
+  sufficient to get the green status.
+
+  Please note that other test cases (e.g. sfc_odl, bgpvpn, moon) need also
+  ODL configuration addons and as a consequence specific scenario.
+  There are not considered as runnable on the generic odl_l2 scenario.
 
 Dashboard
 =========
@@ -466,102 +609,18 @@ The results with dashboard method are post-processed from raw results.
 Please note that dashboard results are not stored. Only raw results are
 stored.
 
-Release Brahmaputra
--------------------
-
-Dashboard url: http://testresults.opnfv.org/dashboard/
-
-Release Colorado
-----------------
+Historically an home made dashbaord has been created.
 Since Colorado, it was decided to adopt ELK framework. Mongo DB results
 are extracted to feed Elasticsearch database (`[7]`_).
 
-Dashboard url: http://testresults.opnfv.org/kibana_dashboards/
-
-Credentials for a guest account: opnfvuser/kibana
-
-A script has been developped to build elasticsearch data set. This
+A script had been developped to build elasticsearch data set. This
 script can be found in `[16]`_.
 
+For Danube it was decided to integrated bitergia dashboard.
+Bitergia already provides a dashboard for code and infrastructure.
+A new Test tab will be added. The dataset will be built by consuming
+the test API.
 
-Automatic reporting
-===================
-
-An automatic reporting page has been created in order to provide a
-consistant view of the scenarios.
-In this page each scenario is evaluated according to test criteria.
-The code for the automatic reporting is available at `[8]`_.
-
-The results are collected from the centralized database every day and,
-per scenario. A score is calculated based on the results from the last
-50 days. This score is the addition of single test scores. Each test
-case has a success criteria reflected in the criteria field from the
-results.
-
-Considering an instance of a scenario os-odl_l2-nofeature-ha, the
-scoring is the addition of the scores of all the runnable tests from the
-categories (tiers healthcheck, smoke, controller and feature)
-corresponding to this scenario.
-
-
- +---------------------+---------+---------+---------+---------+
- | Test                | Apex    | Compass | Fuel    |  Joid   |
- +=====================+=========+=========+=========+=========+
- | vPing_ssh           |    X    |    X    |    X    |    X    |
- +---------------------+---------+---------+---------+---------+
- | vPing_userdata      |    X    |    X    |    X    |    X    |
- +---------------------+---------+---------+---------+---------+
- | tempest_smoke_serial|    X    |    X    |    X    |    X    |
- +---------------------+---------+---------+---------+---------+
- | rally_sanity        |    X    |    X    |    X    |    X    |
- +---------------------+---------+---------+---------+---------+
- | odl                 |    X    |    X    |    X    |    X    |
- +---------------------+---------+---------+---------+---------+
- | promise             |         |         |    X    |    X    |
- +---------------------+---------+---------+---------+---------+
- | doctor              |    X    |         |    X    |         |
- +---------------------+---------+---------+---------+---------+
- | security_scan       |    X    |         |         |         |
- +---------------------+---------+---------+---------+---------+
- | parser              |         |         |    X    |         |
- +---------------------+---------+---------+---------+---------+
- | moon                |         |    X    |         |         |
- +---------------------+---------+---------+---------+---------+
- | copper              |    X    |         |         |    X    |
- +---------------------+---------+---------+---------+---------+
-
-All the testcases listed in the table are runnable on
-os-odl_l2-nofeature scenarios.
-If no result is available or if all the results are failed, the test
-case get 0 point.
-If it was succesfull at least once but not anymore during the 4 runs,
-the case get 1 point (it worked once).
-If at least 3 of the last 4 runs were successful, the case get 2 points.
-If the last 4 runs of the test are successful, the test get 3 points.
-
-In the example above, the target score for fuel/os-odl_l2-nofeature-ha
-is 3x6 = 18 points.
-
-The scenario is validated per installer when we got 3 points for all
-individual test cases (e.g 18/18).
-Please note that complex or long duration tests are not considered for
-the scoring. The success criteria are not always easy to define and may
-require specific hardware configuration. These results however provide
-a good level of trust on the scenario.
-
-A web page is automatically generated every day to display the status.
-This page can be found at `[9]`_. For the status, click on Status menu,
-you may also get feedback for vims and tempest_smoke_serial test cases.
-
-Any validated scenario is stored in a local file on the web server. In
-fact as we are using a sliding windows to get results, it may happen
-that a successful scenarios is no more run (because considered as
-stable) and then the number of iterations (4 needed) would not be
-sufficient to get the green status.
-
-Please note that other test cases e.g. sfc_odl, bgpvpn, moon) need also
-ODL configuration addons and as a consequence specific scenario.
-There are not considered as runnable on the generic odl_l2 scenario.
 
 =======
 How TOs
@@ -776,7 +835,6 @@ repository. The Functest files to be modified are:
 
  * functest/docker/Dockerfile: get your code in Functest container
  * functest/ci/testcases.yaml: reference your test and its associated constraints
- * functest/ci/exec_test.sh: run your test from CI and CLI
 
 
 Dockerfile
@@ -810,25 +868,6 @@ If you are integrating test suites from a feature project, the default
 category is **features**.
 
 
-exec_test.sh
-------------
-
-This file is used to start your test. It is used in CI but also by the
-CLI.
-
-You just patch the file in git and add a line::
-
-
-    "<my_super_test_case>")
-        python ${FUNCTEST_REPO_DIR}/testcases/features/mycase.py
-    ;;
-
-
-Note you can use python or bash scripts (or any language assuming that
-the packages have been properly preinstalled but we recommand python or
-bash..).
-
-
 How to select my list of tests for CI?
 ======================================
 
@@ -841,6 +880,9 @@ Functest jenkins job)::
 
 
 Each case can be configured as daily and/or weekly task.
+Weekly tasks are used for long duration or experimental tests.
+Daily tasks correspond to the minimum set of test suites to validate a scenario.
+
 When executing run_tests.py, a check based on the jenkins build tag will
 be considered to detect whether it is a daily and/or a weekly test.
 
@@ -854,8 +896,8 @@ e.g.::
     cmd="python ${FUNCTEST_REPO_DIR}/ci/run_tests.py -t healthcheck,smoke ${flags}"
 
 This command will run all the test cases of the first 2 tiers, i.e.
-healthcheck, vping_ssh, vping_userdata, tempest_smoke_serial and
-rally_sanity.
+healthcheck, connection_check, api_check, vping_ssh, vping_userdata,
+snaps_somke, tempest_smoke_serial and rally_sanity.
 
 
 How to push your results into the Test Database
@@ -937,7 +979,5 @@ IRC support chan: #opnfv-functest
 _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
 
 _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
-
-_`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
 
 _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.yaml
