@@ -11,6 +11,7 @@ import ConfigParser
 import os
 import re
 import shutil
+import subprocess
 
 import opnfv.utils.constants as releng_constants
 
@@ -38,6 +39,69 @@ TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
 
 CI_INSTALLER_TYPE = CONST.INSTALLER_TYPE
 CI_INSTALLER_IP = CONST.INSTALLER_IP
+
+
+def get_verifier_id():
+    """
+    Returns verifer id for current Tempest
+    """
+    cmd = ("rally verify list-verifiers | awk '/" +
+           CONST.tempest_deployment_name +
+           "/ {print $2}'")
+    p = subprocess.Popen(cmd, shell=True,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
+    deployment_uuid = p.stdout.readline().rstrip()
+    if deployment_uuid == "":
+        logger.error("Tempest verifier not found.")
+        raise Exception('Error with command:%s' % cmd)
+    return deployment_uuid
+
+
+def get_verifier_deployment_id():
+    """
+    Returns deployment id for active Rally deployment
+    """
+    cmd = ("rally deployment list | awk '/" +
+           CONST.rally_deployment_name +
+           "/ {print $2}'")
+    p = subprocess.Popen(cmd, shell=True,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
+    deployment_uuid = p.stdout.readline().rstrip()
+    if deployment_uuid == "":
+        logger.error("Rally deployment not found.")
+        raise Exception('Error with command:%s' % cmd)
+    return deployment_uuid
+
+
+def get_verifier_repo_dir(verifier_id):
+    """
+    Returns installed verfier repo directory for Tempest
+    """
+    if not verifier_id:
+        verifier_id = get_verifier_id()
+
+    return os.path.join(CONST.dir_rally_inst,
+                        'verification',
+                        'verifier-{}'.format(verifier_id),
+                        'repo')
+
+
+def get_verifier_deployment_dir(verifier_id, deployment_id):
+    """
+    Returns Rally deployment directory for current verifier
+    """
+    if not verifier_id:
+        verifier_id = get_verifier_id()
+
+    if not deployment_id:
+        deployment_id = get_verifier_deployment_id()
+
+    return os.path.join(CONST.dir_rally_inst,
+                        'verification',
+                        'verifier-{}'.format(verifier_id),
+                        'for-deployment-{}'.format(deployment_id))
 
 
 def configure_tempest(logger, deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
