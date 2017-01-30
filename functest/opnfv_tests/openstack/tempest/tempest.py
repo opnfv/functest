@@ -35,72 +35,13 @@ class TempestCommon(testcase_base.TestcaseBase):
         self.OPTION = ""
         self.FLAVOR_ID = None
         self.IMAGE_ID = None
-        self.VERIFIER_ID = self.get_verifier_id()
-        self.VERIFIER_REPO_DIR = self.get_verifier_repo_dir()
-        self.DEPLOYMENT_ID = self.get_verifier_deployment_id()
-        self.DEPLOYMENT_DIR = self.get_verifier_deployment_dir()
+        self.VERIFIER_ID = conf_utils.get_verifier_id()
+        self.VERIFIER_REPO_DIR = conf_utils.get_verifier_repo_dir(
+            self.VERIFIER_REPO_DIR)
+        self.DEPLOYMENT_ID = conf_utils.get_verifier_deployment_id()
+        self.DEPLOYMENT_DIR = conf_utils.get_verifier_deployment_dir(
+            self.VERIFIER_ID, self.DEPLOYMENT_ID)
         self.VERIFICATION_ID = None
-
-    @staticmethod
-    def get_verifier_id():
-        """
-        Returns verifer id for current Tempest
-        """
-        cmd = ("rally verify list-verifiers | awk '/" +
-               CONST.tempest_deployment_name +
-               "/ {print $2}'")
-        p = subprocess.Popen(cmd, shell=True,
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.STDOUT)
-        deployment_uuid = p.stdout.readline().rstrip()
-        if deployment_uuid == "":
-            logger.error("Tempest verifier not found.")
-            raise Exception('Error with command:%s' % cmd)
-        return deployment_uuid
-
-    @staticmethod
-    def get_verifier_deployment_id():
-        """
-        Returns deployment id for active Rally deployment
-        """
-        cmd = ("rally deployment list | awk '/" +
-               CONST.rally_deployment_name +
-               "/ {print $2}'")
-        p = subprocess.Popen(cmd, shell=True,
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.STDOUT)
-        deployment_uuid = p.stdout.readline().rstrip()
-        if deployment_uuid == "":
-            logger.error("Rally deployment not found.")
-            raise Exception('Error with command:%s' % cmd)
-        return deployment_uuid
-
-    def get_verifier_repo_dir(self):
-        """
-        Returns installed verfier repo directory for Tempest
-        """
-        if not self.VERIFIER_ID:
-            self.VERIFIER_ID = self.get_verifier_id()
-
-        return os.path.join(CONST.dir_rally_inst,
-                            'verification',
-                            'verifier-{}'.format(self.VERIFIER_ID),
-                            'repo')
-
-    def get_verifier_deployment_dir(self):
-        """
-        Returns Rally deployment directory for current verifier
-        """
-        if not self.VERIFIER_ID:
-            self.VERIFIER_ID = self.get_verifier_id()
-
-        if not self.DEPLOYMENT_ID:
-            self.DEPLOYMENT_ID = self.get_verifier_deployment_id()
-
-        return os.path.join(CONST.dir_rally_inst,
-                            'verification',
-                            'verifier-{}'.format(self.VERIFIER_ID),
-                            'for-deployment-{}'.format(self.DEPLOYMENT_ID))
 
     @staticmethod
     def read_file(filename):
