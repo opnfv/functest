@@ -97,6 +97,8 @@ tempest:
         user_password: tempest
     validation:
         ssh_timeout: 130
+    object_storage:
+        operator_role: SwiftOperator
     private_net_name: tempest-net
     private_subnet_name: tempest-subnet
     private_subnet_cidr: 192.168.150.0/24

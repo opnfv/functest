@@ -30,7 +30,7 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 
 # Environment variables
 ARG BRANCH=master
-ARG TEMPEST_TAG=12.2.0
+ARG TEMPEST_TAG=14.0.0
 ARG ODL_TAG=release/beryllium-sr4
 ARG OPENSTACK_TAG=stable/mitaka
 ARG KINGBIRD_TAG=0.2.2

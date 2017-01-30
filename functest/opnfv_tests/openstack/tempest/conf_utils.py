@@ -82,6 +82,8 @@ def configure_tempest(logger, deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
     config.set('identity', 'password', CONST.tempest_identity_user_password)
     config.set(
         'validation', 'ssh_timeout', CONST.tempest_validation_ssh_timeout)
+    config.set('object-storage', 'operator_role',
+               CONST.tempest_object_storage_operator_role)
 
     if CONST.OS_ENDPOINT_TYPE is not None:
         services_list = ['compute',
