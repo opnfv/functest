@@ -21,7 +21,7 @@ general:
         repo_sfc:           /home/opnfv/repos/sfc
         dir_repo_onos:      /home/opnfv/repos/onos
         dir_repo_promise:   /home/opnfv/repos/promise
-        dir_repo_doctor:    /home/opnfv/repos/doctor
+        repo_doctor:        /home/opnfv/repos/doctor
         repo_copper:        /home/opnfv/repos/copper
         dir_repo_ovno:      /home/opnfv/repos/ovno
         repo_parser:        /home/opnfv/repos/parser

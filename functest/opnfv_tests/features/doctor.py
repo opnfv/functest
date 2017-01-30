@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright (c) 2015 All rights reserved
+# Copyright (c) 2017 All rights reserved
 # This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
@@ -13,77 +13,12 @@
 # 0.2: measure test duration and publish results under json format
 #
 #
-import argparse
-import os
-import time
-
-import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as functest_utils
-import functest.utils.functest_constants as ft_constants
-
-parser = argparse.ArgumentParser()
-parser.add_argument("-r", "--report",
-                    help="Create json result file",
-                    action="store_true")
-args = parser.parse_args()
-
-functest_yaml = functest_utils.get_functest_yaml()
-
-DOCTOR_REPO_DIR = ft_constants.DOCTOR_REPO_DIR
-RESULTS_DIR = ft_constants.FUNCTEST_RESULTS_DIR
-
-logger = ft_logger.Logger("doctor").getLogger()
+import functest.core.feature_base as base
 
 
-def main():
-    exit_code = -1
-
-    # if the image name is explicitly set for the doctor suite, set it as
-    # enviroment variable
-    if 'doctor' in functest_yaml and 'image_name' in functest_yaml['doctor']:
-        os.environ["IMAGE_NAME"] = functest_yaml['doctor']['image_name']
-
-    cmd = 'cd %s/tests && ./run.sh' % DOCTOR_REPO_DIR
-    log_file = RESULTS_DIR + "/doctor.log"
-
-    start_time = time.time()
-
-    ret = functest_utils.execute_command(cmd,
-                                         info=True,
-                                         output_file=log_file)
-
-    stop_time = time.time()
-    duration = round(stop_time - start_time, 1)
-    if ret == 0:
-        logger.info("Doctor test case OK")
-        test_status = 'OK'
-        exit_code = 0
-    else:
-        logger.info("Doctor test case FAILED")
-        test_status = 'NOK'
-
-    details = {
-        'timestart': start_time,
-        'duration': duration,
-        'status': test_status,
-    }
-    status = "FAIL"
-    if details['status'] == "OK":
-        status = "PASS"
-    functest_utils.logger_test_results("Doctor",
-                                       "doctor-notification",
-                                       status, details)
-    if args.report:
-        functest_utils.push_results_to_db("doctor",
-                                          "doctor-notification",
-                                          start_time,
-                                          stop_time,
-                                          status,
-                                          details)
-        logger.info("Doctor results pushed to DB")
-
-    exit(exit_code)
-
-
-if __name__ == '__main__':
-    main()
+class Doctor(base.FeatureBase):
+    def __init__(self):
+        super(Doctor, self).__init__(project='doctor',
+                                     case='doctor-notification',
+                                     repo='dir_repo_doctor')
+        self.cmd = 'cd %s/tests && ./run.sh' % self.repo
