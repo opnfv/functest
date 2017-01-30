@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_6ea6cfc3",
+        "filename": "docs/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-30T16:00:24Z",
+      "side": 1,
+      "message": "If we replace the shell healtcheck by SNAPs, this text  might change.",
+      "revId": "8f8ab0df8a3f7619becadbdc856e364dc9ed6864",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_8e9e9b62",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-30T16:00:24Z",
+      "side": 1,
+      "message": "if you move api_check and connection_check here, we can get rid of this.",
+      "revId": "8f8ab0df8a3f7619becadbdc856e364dc9ed6864",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_ee915f53",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-30T16:00:24Z",
+      "side": 1,
+      "message": "I guess these 2 checks from SNAPs belong to healthcheck tier, at least it\u0027s our plan for Danube.",
+      "revId": "8f8ab0df8a3f7619becadbdc856e364dc9ed6864",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_ae9b5771",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-30T16:00:24Z",
+      "side": 1,
+      "message": "s/category/tier\n\nAlthough it\u0027s clear for us, the users might understand that a category doesn\u0027t correspond to a tier..",
+      "revId": "8f8ab0df8a3f7619becadbdc856e364dc9ed6864",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_4e88b322",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-30T16:00:24Z",
+      "side": 1,
+      "message": "TODO: update image",
+      "revId": "8f8ab0df8a3f7619becadbdc856e364dc9ed6864",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_6e8d6f31",
+        "filename": "docs/userguide/introduction.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-30T16:00:24Z",
+      "side": 1,
+      "message": "I hope we don\u0027t make a mistake here... no news from Daisy yet..",
+      "revId": "8f8ab0df8a3f7619becadbdc856e364dc9ed6864",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_0e82ab00",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-30T16:00:24Z",
+      "side": 1,
+      "message": "same here, but we can update once we have it in CI",
+      "revId": "8f8ab0df8a3f7619becadbdc856e364dc9ed6864",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_2e876711",
+        "filename": "docs/userguide/runfunctest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-30T16:00:24Z",
+      "side": 1,
+      "message": "s/ti/to",
+      "revId": "8f8ab0df8a3f7619becadbdc856e364dc9ed6864",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
