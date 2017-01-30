@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_2bd679c6",
+        "filename": "functest/opnfv_tests/features/doctor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-01-30T10:20:39Z",
+      "side": 1,
+      "message": "Thank you for your comments.  \nYes, you are right",
+      "parentUuid": "1acb0d3e_6b09e194",
+      "revId": "23523afd892e8f624d5a80e1de42ecae8573cae4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_cbd015fa",
         "filename": "functest/opnfv_tests/features/doctor.py",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_2b88b9e6",
+        "filename": "functest/opnfv_tests/features/doctor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-01-30T10:20:39Z",
+      "side": 1,
+      "message": "Thank you for your comments.  \nI modified codes that Original code pushing the \"timestart and duration , status\". But I understood your comments.\nSo I will remove code for adding \"timestart and duration , status\".",
+      "parentUuid": "1acb0d3e_cbd015fa",
+      "revId": "23523afd892e8f624d5a80e1de42ecae8573cae4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_ebcdd15e",
         "filename": "functest/opnfv_tests/features/doctor.py",
         "patchSetId": 1
@@ -64,6 +100,24 @@
       "writtenOn": "2017-01-30T09:02:56Z",
       "side": 1,
       "message": "no need to put the status in details\ninheriting from featureBase, if you return 0 \u003d\u003e criteria will be set to PASS else it will be set to FAIL\nhttps://git.opnfv.org/functest/tree/functest/core/feature_base.py\nthis will be automatically pushed into the DB\n\nin the details section is it possible to indicate \"details\", error cause, any valuable indication\n\nso basically ere details could be {}\nall the info you want to share are in the main fields\n\nhowever if you want to display somehting particular in ELK (nb test run/failed/skipped time for convergence, ..logs) you can use it..",
+      "revId": "23523afd892e8f624d5a80e1de42ecae8573cae4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_eb695126",
+        "filename": "functest/opnfv_tests/features/doctor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-01-30T10:20:39Z",
+      "side": 1,
+      "message": "Thank you for your comments.  \nIt\u0027s same as thrird comment.",
+      "parentUuid": "1acb0d3e_ebcdd15e",
       "revId": "23523afd892e8f624d5a80e1de42ecae8573cae4",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
