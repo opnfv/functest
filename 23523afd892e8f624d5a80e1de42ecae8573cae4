@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_0b9ffd04",
+        "filename": "functest/opnfv_tests/features/doctor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-01-30T10:29:36Z",
+      "side": 1,
+      "message": "Thank you for your comments.\nI\u0027ll check how to modify source code.",
+      "parentUuid": "1acb0d3e_cbf7b58b",
+      "revId": "23523afd892e8f624d5a80e1de42ecae8573cae4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_6b09e194",
         "filename": "functest/opnfv_tests/features/doctor.py",
         "patchSetId": 1
@@ -135,6 +153,24 @@
       "writtenOn": "2017-01-30T09:02:56Z",
       "side": 1,
       "message": "functest_constants will be deprecated soon\nit is recommended to use CONST",
+      "revId": "23523afd892e8f624d5a80e1de42ecae8573cae4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_2ba43956",
+        "filename": "functest/utils/functest_constants.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-01-30T10:29:36Z",
+      "side": 1,
+      "message": "Thank you for your comments.\nI\u0027ll check how to modify source code.",
+      "parentUuid": "1acb0d3e_0bfe1d6c",
       "revId": "23523afd892e8f624d5a80e1de42ecae8573cae4",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
