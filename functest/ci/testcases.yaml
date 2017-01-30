@@ -195,6 +195,9 @@ tiers:
                 dependencies:
                     installer: 'apex'
                     scenario: '^((?!fdio).)*$'
+                run:
+                    module: 'functest.opnfv_tests.features.doctor'
+                    class: 'Doctor'
 
             -
                 name: bgpvpn
