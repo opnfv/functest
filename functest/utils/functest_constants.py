@@ -146,6 +146,8 @@ TEMPEST_USER_PASSWORD = get_value('tempest.identity.user_password',
                                   'TEMPEST_USER_PASSWORD')
 TEMPEST_SSH_TIMEOUT = get_value('tempest.validation.ssh_timeout',
                                 'TEMPEST_SSH_TIMEOUT')
+TEMPEST_OPERATOR_ROLE = get_value('tempest.object_storage.operator_role',
+                                  'TEMPEST_OPERATOR_ROLE')
 TEMPEST_USE_CUSTOM_IMAGES = get_value('tempest.use_custom_images',
                                       'TEMPEST_USE_CUSTOM_IMAGES')
 TEMPEST_USE_CUSTOM_FLAVORS = get_value('tempest.use_custom_flavors',
