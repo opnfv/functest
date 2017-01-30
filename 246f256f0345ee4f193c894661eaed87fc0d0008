@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_aec4b75f",
+        "filename": "functest/opnfv_tests/openstack/tempest/custom_tests/blacklist.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-30T15:23:29Z",
+      "side": 0,
+      "message": "+1 for removing this. BasicOps is a test that should be executed everywhere.",
+      "revId": "246f256f0345ee4f193c894661eaed87fc0d0008",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
