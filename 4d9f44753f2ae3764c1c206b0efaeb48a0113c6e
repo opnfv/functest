@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_b472c647",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-31T23:41:49Z",
+      "side": 1,
+      "message": "+1 to this section",
+      "revId": "4d9f44753f2ae3764c1c206b0efaeb48a0113c6e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_548fe223",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-31T23:41:49Z",
+      "side": 1,
+      "message": "I think we are not using these here... but they exist. If we remove them will update the doc again",
+      "revId": "4d9f44753f2ae3764c1c206b0efaeb48a0113c6e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_74945e37",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-31T23:41:49Z",
+      "side": 1,
+      "message": "s/supported/deployed",
+      "revId": "4d9f44753f2ae3764c1c206b0efaeb48a0113c6e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_14995a6e",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-31T23:41:49Z",
+      "side": 1,
+      "message": "this 2 sentences are not very clear. Maybe we could say: \n\nThe results showed on the dashboard are post processed from the Database, which only contains raw results.",
+      "revId": "4d9f44753f2ae3764c1c206b0efaeb48a0113c6e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_349ed657",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-31T23:41:49Z",
+      "side": 1,
+      "message": "historically? not sure if I understand this sentence",
+      "revId": "4d9f44753f2ae3764c1c206b0efaeb48a0113c6e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_d4a2f299",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-31T23:41:49Z",
+      "side": 1,
+      "message": "or just \"was developed\" or written :)",
+      "revId": "4d9f44753f2ae3764c1c206b0efaeb48a0113c6e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_f49fee4e",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-31T23:41:49Z",
+      "side": 1,
+      "message": "but this won\u0027t happen for Danube... Q2 said Ray...",
+      "revId": "4d9f44753f2ae3764c1c206b0efaeb48a0113c6e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
