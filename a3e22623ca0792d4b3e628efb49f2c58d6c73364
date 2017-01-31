@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1acb0d3e_74521e15",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-31T17:11:49Z",
+      "side": 1,
+      "message": "precise aarch64 architecture in the title",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_b1541822",
         "filename": "docker/Dockerfile.aarch64",
         "patchSetId": 1
@@ -36,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_14571a04",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-31T17:11:49Z",
+      "side": 1,
+      "message": "+1 with Alexandru",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_d15d244a",
         "filename": "docker/Dockerfile.aarch64",
         "patchSetId": 1
@@ -47,6 +81,57 @@
       "writtenOn": "2017-01-31T15:35:25Z",
       "side": 1,
       "message": "please update to AArch64 specific tag.",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_345c9625",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-31T17:11:49Z",
+      "side": 1,
+      "message": "+1",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_d440b237",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-31T17:11:49Z",
+      "side": 1,
+      "message": "could be customized as as far as I know armband does nto support all the installers so far",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_f43daebc",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-31T17:11:49Z",
+      "side": 1,
+      "message": "add armband team as maintainer",
       "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -87,6 +172,23 @@
         "endLine": 34,
         "endChar": 33
       },
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_944a2a54",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-01-31T17:11:49Z",
+      "side": 1,
+      "message": "also out of date, no?",
       "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
