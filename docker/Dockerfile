@@ -115,15 +115,15 @@ RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integr
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_VNFS_DIR}/vims-test
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
 
+RUN pip install -r ${REPOS_DIR}/rally/requirements.txt
+RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
+
 RUN cd ${FUNCTEST_REPO_DIR} \
     && pip install -r requirements.txt \
     && pip install .
 
 RUN cd ${RELENG_MODULE_DIR} \
     && pip install .
-
-RUN pip install -r ${REPOS_DIR}/rally/requirements.txt
-RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
 
 RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
     -not -path "*tests/unit*" |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755 \
