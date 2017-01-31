@@ -121,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_946b0a85",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-31T22:21:31Z",
+      "side": 1,
+      "message": "I would strongly suggest removing all this header since it\u0027s probably a bit outdated and we explain this very detailed in the documentation. \n\nPlease keep only the license header. Remove the rest.",
+      "parentUuid": "1acb0d3e_d440b237",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_f43daebc",
         "filename": "docker/Dockerfile.aarch64",
         "patchSetId": 1
@@ -178,6 +196,30 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_140f1ae3",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-31T22:21:31Z",
+      "side": 1,
+      "message": "Looks like, but this is the latest tag I can find in the repository that is meant for:\n\nhttps://git.opendaylight.org/gerrit/gitweb?p\u003dintegration%2Ftest.git;a\u003dshortlog;h\u003drefs%2Fheads%2Fmaster",
+      "parentUuid": "1acb0d3e_91579c26",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_944a2a54",
         "filename": "docker/Dockerfile.aarch64",
         "patchSetId": 1
@@ -195,6 +237,24 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_740a1ed4",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-31T22:21:31Z",
+      "side": 1,
+      "message": "yes, this is for SDNVPN project. I will check with the team and see if we can uplift to Newton. No worries for this patch",
+      "parentUuid": "1acb0d3e_944a2a54",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_f12140b5",
         "filename": "docker/Dockerfile.aarch64",
         "patchSetId": 1
@@ -206,6 +266,24 @@
       "writtenOn": "2017-01-31T15:35:25Z",
       "side": 1,
       "message": "If we are to fork the Dockerfile for AArch64, let\u0027s remove x86 images from it too ...",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_f4f5aecb",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-01-31T22:21:31Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "1acb0d3e_f12140b5",
       "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
