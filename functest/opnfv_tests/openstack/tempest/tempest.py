@@ -341,11 +341,6 @@ class TempestCommon(testcase_base.TestcaseBase):
 
         self.stop_time = time.time()
 
-        if self.criteria == "PASS":
-            return testcase_base.TestcaseBase.EX_OK
-        else:
-            return testcase_base.TestcaseBase.EX_TESTCASE_FAILED
-
 
 class TempestSmokeSerial(TempestCommon):
 

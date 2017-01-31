@@ -41,14 +41,18 @@ class PyTestSuiteRunner(base.TestcaseBase):
             for test, message in result.failures:
                 self.logger.error(str(test) + " FAILED with " + message)
 
+        # a result can be PASS or FAIL
+        # But in this case it means that the Execution was OK
+        # we shall distinguish Execution Error from FAIL results
+        # TestcaseBase.EX_RUN_ERROR means that the test case was not run
+        # not that it was run but the result was FAIL
+        exit_code = base.TestcaseBase.EX_OK
         if ((result.errors and len(result.errors) > 0)
                 or (result.failures and len(result.failures) > 0)):
             self.logger.info("%s FAILED" % self.case_name)
             self.criteria = 'FAIL'
-            exit_code = base.TestcaseBase.EX_RUN_ERROR
         else:
             self.logger.info("%s OK" % self.case_name)
-            exit_code = base.TestcaseBase.EX_OK
             self.criteria = 'PASS'
 
         self.details = {}
