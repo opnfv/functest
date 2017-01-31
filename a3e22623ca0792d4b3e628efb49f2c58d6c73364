@@ -16,6 +16,97 @@
       "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_3149088c",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-01-31T15:35:25Z",
+      "side": 1,
+      "message": "maybe we should Armband team (armband@enea.com) as a maintanier for AArch64?",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_d15d244a",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-01-31T15:35:25Z",
+      "side": 1,
+      "message": "please update to AArch64 specific tag.",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_f15aa04f",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-01-31T15:35:25Z",
+      "side": 1,
+      "message": "+ Armband as maintainer, description should include AArch64",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_91579c26",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-01-31T15:35:25Z",
+      "side": 1,
+      "message": "Jose: I know this is inherited, but isn\u0027t it out of date?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_f12140b5",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-01-31T15:35:25Z",
+      "side": 1,
+      "message": "If we are to fork the Dockerfile for AArch64, let\u0027s remove x86 images from it too ...",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
