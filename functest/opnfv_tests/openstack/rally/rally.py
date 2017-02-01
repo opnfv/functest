@@ -94,11 +94,8 @@ class RallyBase(testcase_base.TestcaseBase):
         else:
             task_args['netid'] = ''
 
-        auth_url = CONST.OS_AUTH_URL
-        if auth_url is not None:
-            task_args['request_url'] = auth_url.rsplit(":", 1)[0]
-        else:
-            task_args['request_url'] = ''
+        # get keystone auth endpoint
+        task_args['request_url'] = CONST.OS_AUTH_URL or ''
 
         return task_args
 
