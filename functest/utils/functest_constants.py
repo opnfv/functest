@@ -195,33 +195,6 @@ ONOS_INSTALLER_MASTER_USERNAME = get_value(
 ONOS_INSTALLER_MASTER_PASSWORD = get_value(
     'ONOS.environment.installer_master_password',
     'ONOS_INSTALLER_MASTER_PASSWORD')
-PROMISE_REPO_DIR = get_value('general.dir.dir_repo_promise',
-                             'PROMISE_REPO_DIR')
-PROMISE_TENANT_NAME = get_value('promise.tenant_name',
-                                'PROMISE_TENANT_NAME')
-TENANT_DESCRIPTION = get_value('promise.tenant_description',
-                               'TENANT_DESCRIPTION')
-PROMISE_USER_NAME = get_value('promise.user_name', 'PROMISE_USER_NAME')
-PROMISE_USER_PWD = get_value('promise.user_pwd', 'PROMISE_USER_PWD')
-PROMISE_IMAGE_NAME = get_value('promise.image_name',
-                               'PROMISE_IMAGE_NAME')
-PROMISE_FLAVOR_NAME = get_value('promise.flavor_name',
-                                'PROMISE_FLAVOR_NAME')
-PROMISE_FLAVOR_VCPUS = get_value('promise.flavor_vcpus',
-                                 'PROMISE_FLAVOR_VCPUS')
-PROMISE_FLAVOR_RAM = get_value('promise.flavor_ram',
-                               'PROMISE_FLAVOR_RAM')
-PROMISE_FLAVOR_DISK = get_value('promise.flavor_disk',
-                                'PROMISE_FLAVOR_DISK')
-PROMISE_NET_NAME = get_value('promise.network_name', 'PROMISE_NET_NAME')
-PROMISE_SUBNET_NAME = get_value('promise.subnet_name',
-                                'PROMISE_SUBNET_NAME')
-PROMISE_SUBNET_CIDR = get_value('promise.subnet_cidr',
-                                'PROMISE_SUBNET_CIDR')
-PROMISE_ROUTER_NAME = get_value('promise.router_name',
-                                'PROMISE_ROUTER_NAME')
-COPPER_REPO_DIR = get_value('general.dir.repo_copper',
-                            'COPPER_REPO_DIR')
 EXAMPLE_INSTANCE_NAME = get_value('example.vm_name',
                                   'EXAMPLE_INSTANCE_NAME')
 EXAMPLE_FLAVOR = get_value('example.flavor', 'EXAMPLE_FLAVOR')
