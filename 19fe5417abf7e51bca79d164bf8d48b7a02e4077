@@ -46,6 +46,30 @@
       "revId": "19fe5417abf7e51bca79d164bf8d48b7a02e4077",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_140cfa93",
+        "filename": "functest/opnfv_tests/features/doctor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 253
+      },
+      "writtenOn": "2017-02-01T06:46:48Z",
+      "side": 1,
+      "message": "Right, so you need to use repo\u003d\u0027repo_doctor\u0027 instead of repo\u003d\u0027dir_repo_doctor\u0027.",
+      "parentUuid": "1acb0d3e_94f1ca97",
+      "range": {
+        "startLine": 23,
+        "startChar": 43,
+        "endLine": 23,
+        "endChar": 58
+      },
+      "revId": "19fe5417abf7e51bca79d164bf8d48b7a02e4077",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
