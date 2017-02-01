@@ -70,6 +70,30 @@
       "revId": "19fe5417abf7e51bca79d164bf8d48b7a02e4077",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_54604235",
+        "filename": "functest/opnfv_tests/features/doctor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-02-01T07:41:32Z",
+      "side": 1,
+      "message": "Sorry I misunderstood your qutestion.\nPlease let me add more information.\n\n\"config_functest.yaml\" file is parsed using \"config.py\" and \"constants.py\"\n\nWe can use \"CONST\" object which have all data in \"config_functest.yaml\"\n\nIn \"config_functest.yaml\" data are as follws.\n\n    dir\n        repo_doctor:    /home/opnfv/repos/doctor\n        repo_copper:    /home/opnfv/repos/copper\n\n    openstack:\n        creds: /home/opnfv/functest/conf/openstack.creds\n        snapshot_file: /home/opnfv/functest/conf/openstack_snapshot.yaml\n\nIf you want to get \"dir, repo_doctor\" you should write python code as follws\n\n CONST.__getattribute__(\"dir_repo_doctor\")\n\nand ,If you want to get \"openstack, creds\" you should write python code as follws\n\n CONST.__getattribute__(\"openstack_creds\")\n\nSo, I set \"dir_repo_doctor\" to repo.",
+      "parentUuid": "1acb0d3e_140cfa93",
+      "range": {
+        "startLine": 23,
+        "startChar": 43,
+        "endLine": 23,
+        "endChar": 58
+      },
+      "revId": "19fe5417abf7e51bca79d164bf8d48b7a02e4077",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
