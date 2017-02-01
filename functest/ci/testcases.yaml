@@ -185,6 +185,9 @@ tiers:
                 dependencies:
                     installer: '(fuel)|(joid)'
                     scenario: ''
+                run:
+                     module: 'functest.opnfv_tests.features.promise'
+                     class: 'Promise'
 
             -
                 name: doctor
