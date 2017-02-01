@@ -22,6 +22,30 @@
       "revId": "19fe5417abf7e51bca79d164bf8d48b7a02e4077",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_94f1ca97",
+        "filename": "functest/opnfv_tests/features/doctor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-02-01T02:40:17Z",
+      "side": 1,
+      "message": "Thanks comments.\n\n\"repo_doctor\" is defined name of repo\u0027s directory \"home/opnfv/repos/doctor\" written in config_functest.yaml.\n\nFor example, \"cooper\" is defined \"repo_copper\" and \"sfc\" is defined \"repo_sfc\".\n\nIn order to have uniformity, I defined \"repo_doctor\".",
+      "parentUuid": "1acb0d3e_d4f7528b",
+      "range": {
+        "startLine": 23,
+        "startChar": 43,
+        "endLine": 23,
+        "endChar": 58
+      },
+      "revId": "19fe5417abf7e51bca79d164bf8d48b7a02e4077",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
