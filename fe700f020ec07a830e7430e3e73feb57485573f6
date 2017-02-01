@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_cc8755d6",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-01T08:00:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_ccf755f4",
+      "range": {
+        "startLine": 34,
+        "startChar": 59,
+        "endLine": 34,
+        "endChar": 67
+      },
+      "revId": "fe700f020ec07a830e7430e3e73feb57485573f6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_6cc5018d",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-23T02:34:14Z",
       "side": 1,
       "message": "\"docker rm -f \u003cCONTAINER_ID\u003e\" is valid.",
+      "range": {
+        "startLine": 509,
+        "startChar": 2,
+        "endLine": 509,
+        "endChar": 29
+      },
+      "revId": "fe700f020ec07a830e7430e3e73feb57485573f6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_6c6e6131",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-01T08:00:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_6cc5018d",
       "range": {
         "startLine": 509,
         "startChar": 2,
