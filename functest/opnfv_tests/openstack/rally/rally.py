@@ -533,11 +533,6 @@ class RallyBase(testcase_base.TestcaseBase):
             return testcase_base.TestcaseBase.EX_RUN_ERROR
         self.stop_time = time.time()
 
-        if self.criteria == "PASS":
-            return testcase_base.TestcaseBase.EX_OK
-        else:
-            return testcase_base.TestcaseBase.EX_TESTCASE_FAILED
-
 
 class RallySanity(RallyBase):
     def __init__(self):
