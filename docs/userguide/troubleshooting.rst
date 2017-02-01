@@ -48,9 +48,6 @@ python scripts, located in paths:
 *$REPOS_DIR/functest/functest/opnfv_tests/vPing/CI/libraries/vPing_userdata.py*
 
 Notes:
-  #. In this Colorado Funtest Userguide, the use of the Functest CLI is
-     emphasized. The Functest CLI replaces the earlier Bash shell script
-     *run_tests.sh*.
 
   #. There is one difference, between the Functest CLI based test case
      execution compared to the earlier used Bash shell script, which is
@@ -348,8 +345,8 @@ See OpenSCAP web site: https://www.open-scap.org/
 NFV
 ---
 
-vIMS
-^^^^
+cloudify_ims
+^^^^^^^^^^^^
 vIMS deployment may fail for several reasons, the most frequent ones are
 described in the following table:
 

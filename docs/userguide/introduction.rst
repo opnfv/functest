@@ -9,14 +9,26 @@ In the Continuous Integration pipeline, it is launched after an OPNFV fresh
 installation to validate and verify the basic functions of the
 infrastructure.
 
-The current list of test suites can be distributed over 4 main domains: VIM
+The current list of test suites can be distributed over 5 main domains: VIM
 (Virtualised Infrastructure Manager), Controllers (i.e. SDN Controllers),
-Features and VNF (Virtual Network Functions).
+Features, VNF (Virtual Network Functions) and MANO stacks.
+
+Functest test suites are also distributed in the OPNFV testing categories:
+healthcheck, smoke, features, components, performance, VNF, Stress tests.
+
+All the Healthcheck and smoke tests of a given scenario must be succesful to
+validate the scenario for the release.
 
 +-------------+---------------+----------------+----------------------------------+
 | Domain      | Tier          | Test case      | Comments                         |
 +=============+===============+================+==================================+
 | VIM         | healthcheck   | healthcheck    | Verify basic operation in VIM    |
+|             |               +----------------+----------------------------------+
+|             |               | connection     | Check OpenStack connectivity     |
+|             |               | _check         | through SNAPS framework          |
+|             |               +----------------+----------------------------------+
+|             |               | api_check      | Check OpenStack API through      |
+|             |               |                | SNAPS framework                  |
 |             +---------------+----------------+----------------------------------+
 |             | smoke         | vPing_SSH      | NFV "Hello World" using an SSH   |
 |             |               |                | connection to a destination VM   |
@@ -45,8 +57,11 @@ Features and VNF (Virtual Network Functions).
 |             |               +----------------+----------------------------------+
 |             |               | rally_sanity   | Run a subset of the OpenStack    |
 |             |               |                | Rally Test Suite in smoke mode   |
+|             |               +----------------+----------------------------------+
+|             |               | snaps_smoke    | Run a subset of the OpenStack    |
+|             |               |                | Rally Test Suite in smoke mode   |
 |             +---------------+----------------+----------------------------------+
-|             | openstack     | tempest_full   | Generate and run a full set of   |
+|             | components    | tempest_full   | Generate and run a full set of   |
 |             |               | \_parallel     | the OpenStack Tempest Test Suite.|
 |             |               |                | See the OpenStack reference test |
 |             |               |                | suite `[2]`_. The generated      |
@@ -57,7 +72,7 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | benchmarking OpenStack modules   |
 |             |               |                | See the Rally documents `[3]`_.  |
 +-------------+---------------+----------------+----------------------------------+
-| Controllers | sdn_suites    | odl            | Opendaylight Test suite          |
+| Controllers | smoke         | odl            | Opendaylight Test suite          |
 |             |               |                | Limited test suite to check the  |
 |             |               |                | basic neutron (Layer 2)          |
 |             |               |                | operations mainly based on       |
@@ -69,7 +84,7 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | See `ONOSFW User Guide`_  for    |
 |             |               |                | details.                         |
 +-------------+---------------+----------------+----------------------------------+
-| Features    | features      | Promise        | Resource reservation and         |
+| Features    | features      | promise        | Resource reservation and         |
 |             |               |                | management project to identify   |
 |             |               |                | NFV related requirements and     |
 |             |               |                | realize resource reservation for |
@@ -80,7 +95,7 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | See `Promise User Guide`_ for    |
 |             |               |                | details.                         |
 |             |               +----------------+----------------------------------+
-|             |               | Doctor         | Doctor platform, as of Colorado  |
+|             |               | doctor         | Doctor platform, as of Colorado  |
 |             |               |                | release, provides the three      |
 |             |               |                | features:                        |
 |             |               |                | * Immediate Notification         |
@@ -119,7 +134,7 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | See `Domino User Guide`_ for     |
 |             |               |                | details                          |
 |             |               +----------------+----------------------------------+
-|             |               | Copper         | Copper develops OPNFV platform   |
+|             |               | copper         | Copper develops OPNFV platform   |
 |             |               |                | support for policy management,   |
 |             |               |                | using open source projects such  |
 |             |               |                | as OpenStack Congress, focused   |
@@ -139,13 +154,17 @@ Features and VNF (Virtual Network Functions).
 |             |               |                | See `Moon User Guide`_ for       |
 |             |               |                | details                          |
 +-------------+---------------+----------------+----------------------------------+
-| VNF         | vnf           | vims           | Example of a real VNF deployment |
+| VNF         | vnf           | cloudify_ims   | Example of a real VNF deployment |
 |             |               |                | to show the NFV capabilities of  |
 |             |               |                | the platform. The IP Multimedia  |
 |             |               |                | Subsytem is a typical Telco test |
 |             |               |                | case, referenced by ETSI.        |
 |             |               |                | It provides a fully functional   |
 |             |               |                | VoIP System                      |
+|             |               +----------------+----------------------------------+
+|             |               | opera_ims      | vIMS deployment using openBaton  |
+|             |               +----------------+----------------------------------+
+|             |               | orchestra_ims  | vIMS deployment using open-O     |
 +             +---------------+----------------+----------------------------------+
 |             |               | parser         | Parser is an integration project |
 |             |               |                | which aims to provide            |
@@ -165,6 +184,8 @@ As shown in the above table, Functest is structured into different 'domains',
 Test cases also have an implicit execution order. For example, if the early
 'healthcheck' Tier testcase fails, or if there are any failures in the 'smoke'
 Tier testcases, there is little point to launch a full testcase execution round.
+
+In Danube, we merged smoke and sdn controller tiers in smoke tier.
 
 An overview of the Functest Structural Concept is depicted graphically below:
 
@@ -186,19 +207,24 @@ NoSQL database. The goal is to populate the database with results from different
 sources and scenarios and to show them on a `Functest Dashboard`_. A screenshot
 of a live Functest Dashboard is shown below:
 
-.. figure:: ../images/FunctestDashboardColorado.png
+** TODO **
+.. figure:: ../images/FunctestDashboardDanube.png
    :align: center
    :alt: Functest Dashboard
 
 
-There is no real notion of Test domain or Test coverage. Basic components
-(VIM, SDN controllers) are tested through their own suites. Feature projects
-also provide their own test suites with different ways of running their tests.
+Basic components (VIM, SDN controllers) are tested through their own suites.
+Feature projects also provide their own test suites with different ways of
+running their tests.
+
+The notion of domain has been introduced in the description of the test cases
+stored in the Database.
+This parameters as well as possible tags can be used for the Test case catalog.
 
 vIMS test case was integrated to demonstrate the capability to deploy a
 relatively complex NFV scenario on top of the OPNFV infrastructure.
 
-Functest considers OPNFV as a black box. As of Colorado release the OPNFV
+Functest considers OPNFV as a black box. As of Danube release the OPNFV
 offers a lot of potential combinations:
 
   * 3 controllers (OpenDaylight, ONOS, OpenContrail)
@@ -210,9 +236,9 @@ deployed features. The system uses the environment variables (INSTALLER_IP and
 DEPLOY_SCENARIO) to automatically determine the valid test cases, for each given
 environment.
 
-In the Colorado OPNFV System release a convenience Functest CLI utility is also
-introduced to simplify setting up the Functest evironment, management of the
-OpenStack environment (e.g. resource clean-up) and for executing tests.
+A convenience Functest CLI utility is also available to simplify setting up the
+Functest evironment, management of the OpenStack environment (e.g. resource
+clean-up) and for executing tests.
 The Functest CLI organised the testcase into logical Tiers, which contain in
 turn one or more testcases. The CLI allows execution of a single specified
 testcase, all test cases in a specified Tier, or the special case of execution
