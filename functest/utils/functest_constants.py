@@ -220,8 +220,6 @@ PROMISE_SUBNET_CIDR = get_value('promise.subnet_cidr',
                                 'PROMISE_SUBNET_CIDR')
 PROMISE_ROUTER_NAME = get_value('promise.router_name',
                                 'PROMISE_ROUTER_NAME')
-DOCTOR_REPO_DIR = get_value('general.dir.dir_repo_doctor',
-                            'DOCTOR_REPO_DIR')
 COPPER_REPO_DIR = get_value('general.dir.repo_copper',
                             'COPPER_REPO_DIR')
 EXAMPLE_INSTANCE_NAME = get_value('example.vm_name',
