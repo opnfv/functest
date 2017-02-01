@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_944d4ac7",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-01T08:00:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_f4ca8e6d",
+      "revId": "e7a37f323faaafef121e0ed25338a7c6721a8c8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_94c78a64",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-01-31T23:23:31Z",
       "side": 1,
       "message": "remove hello-world, it",
+      "revId": "e7a37f323faaafef121e0ed25338a7c6721a8c8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_b44ac6aa",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-01T08:00:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_94c78a64",
       "revId": "e7a37f323faaafef121e0ed25338a7c6721a8c8f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_54c7e212",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-01T08:00:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_14ab9a8a",
+      "revId": "e7a37f323faaafef121e0ed25338a7c6721a8c8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_1482ba00",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-01-31T23:23:31Z",
       "side": 1,
       "message": "I wouldn\u0027t say so. I would say: if not set, Functest will try to run the default test cases that might not include SDN controller of a specific feature (for instance.)",
+      "revId": "e7a37f323faaafef121e0ed25338a7c6721a8c8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_14e87a7b",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-01T08:00:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_1482ba00",
       "revId": "e7a37f323faaafef121e0ed25338a7c6721a8c8f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_b4f8864a",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-01T08:00:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_3487b611",
+      "revId": "e7a37f323faaafef121e0ed25338a7c6721a8c8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_d47bd227",
         "filename": "docs/configguide/configguide.rst",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_749a1e16",
+        "filename": "docs/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-01T08:00:21Z",
+      "side": 1,
+      "message": "yep, we could correct that on colorado...but nobody reads our doc :)",
+      "parentUuid": "1acb0d3e_d47bd227",
+      "revId": "e7a37f323faaafef121e0ed25338a7c6721a8c8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_f4784e2d",
         "filename": "docs/configguide/index.rst",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2017-01-31T23:23:31Z",
       "side": 1,
       "message": "I wonder if we really need to copy paste the same code that we already have in releng... We could adapt it for users without doing all this ugly things like ${redirect} and so on, which makes a good output in Jenkins, but it\u0027s way too complex for a user to execute it manually....",
+      "revId": "e7a37f323faaafef121e0ed25338a7c6721a8c8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_149f1a05",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-01T08:00:21Z",
+      "side": 1,
+      "message": "I simplified (remove the if for the different branches)\n\n+ remove the clean section, which is relatively standards",
+      "parentUuid": "1acb0d3e_f4784e2d",
       "revId": "e7a37f323faaafef121e0ed25338a7c6721a8c8f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
