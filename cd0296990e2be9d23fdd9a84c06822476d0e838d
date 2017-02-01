@@ -46,6 +46,30 @@
       "revId": "cd0296990e2be9d23fdd9a84c06822476d0e838d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_9f57a326",
+        "filename": "functest/opnfv_tests/sdn/odl/odl.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 334
+      },
+      "writtenOn": "2017-02-01T17:20:56Z",
+      "side": 1,
+      "message": "The outer parentheses here are redundant.  You can avoid using backslash by doing either of these:\nnetvirt_connectivity_suite_dir \u003d os.path.join(\n    \u0027blah\u0027, \"csit/suites/openstack/connectivity\")\n\nOR\n\nnetvirt_connectivity_suite_dir \u003d os.path.join(odl_test_repo,\n                                              \"csit/suites/\"\n                                                                  \"openstack/connectivity\")\n\n^align this last line with \"csit/suites/\" (gerrit messes up)",
+      "parentUuid": "5ac10518_da5e2f76",
+      "range": {
+        "startLine": 53,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 76
+      },
+      "revId": "cd0296990e2be9d23fdd9a84c06822476d0e838d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
