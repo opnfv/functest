@@ -238,10 +238,23 @@ class TempestCommon(testcase_base.TestcaseBase):
                 num_success = new_line[2]
             elif 'Skipped' in new_line:
                 num_skipped = new_line[2]
+            elif 'Failures' in new_line:
+                num_failures = new_line[2]
 
         try:
             num_executed = int(num_tests) - int(num_skipped)
             success_rate = 100 * int(num_success) / int(num_executed)
+            with open(os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+                                   "tempest.log"), 'r') as logfile:
+                output = logfile.read()
+
+            error_logs = ""
+            for match in re.findall('(.*?)[. ]*FAILED', output):
+                error_logs += match
+
+            self.details = {"tests": int(num_tests),
+                            "failures": int(num_failures),
+                            "errors": error_logs}
         except Exception:
             success_rate = 0
 
