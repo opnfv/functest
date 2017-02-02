@@ -13,6 +13,7 @@ import os
 import unittest
 
 from functest.core import testcase_base
+from functest.utils.constants import CONST
 
 
 class TestcaseBaseTesting(unittest.TestCase):
@@ -27,6 +28,8 @@ class TestcaseBaseTesting(unittest.TestCase):
         self.test.stop_time = "2"
         self.test.criteria = "PASS"
         self.test.details = {"Hello": "World"}
+        if "RESULTS_STORE" in os.environ:
+            del os.environ["RESULTS_STORE"]
 
     def test_run_unimplemented(self):
         self.assertEqual(self.test.run(),
@@ -98,6 +101,54 @@ class TestcaseBaseTesting(unittest.TestCase):
         self.test.criteria = 'PASS'
         self.assertEqual(self.test.check_criteria(),
                          testcase_base.TestcaseBase.EX_OK)
+
+    @mock.patch('functest.utils.functest_utils.write_results_to_file',
+                return_value=False)
+    def test_write_to_file_failed(self, mock_function):
+        self.assertEqual(self.test.write_to_file(),
+                         testcase_base.TestcaseBase.EX_PUBLISH_RESULT_FAILED)
+        mock_function.assert_called_once_with(
+            self.test.project, self.test.case_name, self.test.start_time,
+            self.test.stop_time, self.test.criteria, self.test.details)
+
+    @mock.patch('functest.utils.functest_utils.write_results_to_file',
+                return_value=True)
+    def test_write_to_file(self, mock_function):
+        self.assertEqual(self.test.write_to_file(),
+                         testcase_base.TestcaseBase.EX_OK)
+        mock_function.assert_called_once_with(
+            self.test.project, self.test.case_name, self.test.start_time,
+            self.test.stop_time, self.test.criteria, self.test.details)
+
+    def test_publish_report_no_conf(self):
+        CONST.results_test_db_url = None
+        self.assertEqual(self.test.publish_report(),
+                         testcase_base.TestcaseBase.EX_PUBLISH_RESULT_FAILED)
+
+    def test_publish_report_failed(self):
+        CONST.results_test_db_url = "ftp://whatever"
+        self.assertEqual(self.test.publish_report(),
+                         testcase_base.TestcaseBase.EX_PUBLISH_RESULT_FAILED)
+
+    @mock.patch('functest.core.testcase_base.TestcaseBase.push_to_db',
+                return_value=testcase_base.TestcaseBase.EX_OK)
+    def test_publish_report_http(self, mock_function):
+        CONST.results_test_db_url = "http://whatever"
+        self.test.publish_report()
+        self.assertTrue(mock_function.called)
+
+    @mock.patch('functest.core.testcase_base.TestcaseBase.write_to_file',
+                return_value=testcase_base.TestcaseBase.EX_OK)
+    def test_publish_report_file(self, mock_function):
+        CONST.results_test_db_url = "file://whatever"
+        self.test.publish_report()
+        self.assertTrue(mock_function.called)
+
+    def test_env_variable_result_store(self):
+        CONST.results_test_db_url = "ping"
+        os.environ["RESULTS_STORE"] = "pong"
+        self.test.publish_report()
+        self.assertTrue(CONST.results_test_db_url, "pong")
 
 
 if __name__ == "__main__":
