@@ -62,10 +62,10 @@ command::
 
   root@22e436918db0:~/repos/functest/ci# functest testcase list
   healthcheck
+  api_check
+  connection_check
   vping_ssh
   vping_userdata
-  connection_check
-  api_check
   snaps_smoke
   tempest_smoke_serial
   rally_sanity
