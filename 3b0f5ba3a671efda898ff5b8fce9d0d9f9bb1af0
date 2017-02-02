@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_fa911553",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-02T11:05:10Z",
+      "side": 1,
+      "message": "I think we can simplify\n\ntimestart, duration and timestop are already in the result main fields\nwe just need tests, failures and errors now",
+      "revId": "3b0f5ba3a671efda898ff5b8fce9d0d9f9bb1af0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
