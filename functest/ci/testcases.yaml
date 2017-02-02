@@ -99,6 +99,10 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.sdn.odl.odl'
                     class: 'ODLTests'
+                    args:
+                        suites:
+                            -  /home/opnfv/repos/odl_test/csit/suites/integration/basic
+                            -  /home/opnfv/repos/odl_test/csit/suites/openstack/neutron
 
             -
                 name: onos

@@ -346,6 +346,28 @@ class ODLTesting(unittest.TestCase):
                 self.test.main = mock.Mock(return_value=status)
             self.assertEqual(self.test.run(), status)
             self.test.main.assert_called_once_with(
+                odl.ODLTests.default_suites,
+                keystoneip=self._keystone_ip, neutronip=self._neutron_ip,
+                odlip=odlip, odlpassword=self._odl_password,
+                odlrestconfport=odlrestconfport,
+                odlusername=self._odl_username, odlwebport=odlwebport,
+                ospassword=self._os_password, ostenantname=self._os_tenantname,
+                osusername=self._os_username)
+
+    def _test_run_defining_multiple_suites(
+            self, suites,
+            status=testcase_base.TestcaseBase.EX_OK,
+            exception=None, odlip="127.0.0.3", odlwebport="8080",
+            odlrestconfport="8181"):
+        with mock.patch('functest.utils.openstack_utils.get_endpoint',
+                        side_effect=self._fake_url_for):
+            if exception:
+                self.test.main = mock.Mock(side_effect=exception)
+            else:
+                self.test.main = mock.Mock(return_value=status)
+            self.assertEqual(self.test.run(suites=suites), status)
+            self.test.main.assert_called_once_with(
+                suites,
                 keystoneip=self._keystone_ip, neutronip=self._neutron_ip,
                 odlip=odlip, odlpassword=self._odl_password,
                 odlrestconfport=odlrestconfport,
@@ -393,6 +415,14 @@ class ODLTesting(unittest.TestCase):
         self._test_run(testcase_base.TestcaseBase.EX_OK,
                        odlip=self._sdn_controller_ip,
                        odlwebport=self._odl_webport)
+
+    def test_run_redefining_suites(self):
+        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
+        self._test_run_defining_multiple_suites(
+            [odl.ODLTests.basic_suite_dir],
+            testcase_base.TestcaseBase.EX_OK,
+            odlip=self._sdn_controller_ip,
+            odlwebport=self._odl_webport)
 
     def test_run_fuel(self):
         os.environ["INSTALLER_TYPE"] = "fuel"
