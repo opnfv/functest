@@ -54,6 +54,7 @@ class ODLTests(testcase_base.TestcaseBase):
                                      "csit/suites/openstack/neutron")
     basic_suite_dir = os.path.join(odl_test_repo,
                                    "csit/suites/integration/basic")
+    default_suites = [basic_suite_dir, neutron_suite_dir]
     res_dir = '/home/opnfv/functest/results/odl/'
     logger = ft_logger.Logger("opendaylight").getLogger()
 
@@ -89,8 +90,7 @@ class ODLTests(testcase_base.TestcaseBase):
         self.details['description'] = result.suite.name
         self.details['tests'] = visitor.get_data()
 
-    def main(self, **kwargs):
-        dirs = [self.basic_suite_dir, self.neutron_suite_dir]
+    def main(self, suites=default_suites, **kwargs):
         try:
             odlusername = kwargs['odlusername']
             odlpassword = kwargs['odlpassword']
@@ -117,7 +117,7 @@ class ODLTests(testcase_base.TestcaseBase):
             stdout_file = os.path.join(self.res_dir, 'stdout.txt')
             output_dir = os.path.join(self.res_dir, 'output.xml')
             with open(stdout_file, 'w+') as stdout:
-                robot.run(*dirs, variable=variables,
+                robot.run(*suites, variable=variables,
                           output=output_dir,
                           log='NONE',
                           report='NONE',
@@ -140,8 +140,13 @@ class ODLTests(testcase_base.TestcaseBase):
         else:
             return self.EX_RUN_ERROR
 
-    def run(self):
+    def run(self, **kwargs):
         try:
+            suites = self.default_suites
+            try:
+                suites = kwargs["suites"]
+            except KeyError:
+                pass
             keystone_url = op_utils.get_endpoint(service_type='identity')
             neutron_url = op_utils.get_endpoint(service_type='network')
             kwargs = {'keystoneip': urlparse.urlparse(keystone_url).hostname}
@@ -178,7 +183,7 @@ class ODLTests(testcase_base.TestcaseBase):
             self.logger.exception("Cannot run ODL testcases.")
             return self.EX_RUN_ERROR
 
-        return self.main(**kwargs)
+        return self.main(suites, **kwargs)
 
 
 class ODLParser():
@@ -228,7 +233,7 @@ if __name__ == '__main__':
     parser = ODLParser()
     args = parser.parse_args(sys.argv[1:])
     try:
-        result = odl.main(**args)
+        result = odl.main(ODLTests.default_suites, **args)
         if result != testcase_base.TestcaseBase.EX_OK:
             sys.exit(result)
         if args['pushtodb']:
