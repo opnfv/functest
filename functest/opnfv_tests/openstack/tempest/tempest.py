@@ -166,7 +166,7 @@ class TempestCommon(testcase_base.TestcaseBase):
         result_file.close()
         return testcase_base.TestcaseBase.EX_OK
 
-    def _parse_verification_id(line):
+    def _parse_verification_id(self, line):
         first_pos = line.index("UUID=") + len("UUID=")
         last_pos = line.index(") for deployment")
         return line[first_pos:last_pos]
