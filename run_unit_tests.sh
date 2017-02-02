@@ -44,7 +44,7 @@ nosetests --with-xunit \
          --cover-package=functest.opnfv_tests.sdn.odl.odl \
          --cover-package=functest.opnfv_tests.vnf.ims \
          --cover-package=functest.utils \
-         --cover-package=functest.opnfv_tests.openstack.rally \
+         --cover-package=functest.opnfv_tests.openstack \
          --cover-xml \
          --cover-html \
          --log-config=$(pwd)/functest/tests/unit/test_logging.ini \
