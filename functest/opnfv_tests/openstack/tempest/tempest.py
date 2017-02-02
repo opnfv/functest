@@ -281,6 +281,10 @@ class TempestCommon(testcase_base.TestcaseBase):
 
         self.stop_time = time.time()
 
+        # If we are here, it means that the test case was successfully executed
+        # criteria is managed by the criteria Field
+        return testcase_base.TestcaseBase.EX_OK
+
 
 class TempestSmokeSerial(TempestCommon):
 

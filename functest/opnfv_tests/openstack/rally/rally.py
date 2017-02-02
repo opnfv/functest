@@ -530,6 +530,10 @@ class RallyBase(testcase_base.TestcaseBase):
             return testcase_base.TestcaseBase.EX_RUN_ERROR
         self.stop_time = time.time()
 
+        # If we are here, it means that the test case was successfully executed
+        # criteria is managed by the criteria Field
+        return testcase_base.TestcaseBase.EX_OK
+
 
 class RallySanity(RallyBase):
     def __init__(self):
