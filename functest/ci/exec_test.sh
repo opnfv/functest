@@ -90,21 +90,11 @@ function run_test(){
                 --osusername ${OS_USERNAME} \
                 ${args}
         ;;
-        "vims")
-            python ${FUNCTEST_TEST_DIR}/vnf/ims/vims.py $clean_flag $report
-        ;;
         "onos")
             python ${FUNCTEST_TEST_DIR}/sdn/onos/teston/onos.py
         ;;
         "onos_sfc")
             python ${FUNCTEST_TEST_DIR}/sdn/onos/teston/onos.py -t sfc
-        ;;
-        "promise")
-            python ${FUNCTEST_TEST_DIR}/features/promise.py $report
-            sleep 10 # to let the instances terminate
-        ;;
-        "doctor")
-            python ${FUNCTEST_TEST_DIR}/features/doctor.py $report
         ;;
         "ovno")
             # suite under rewritting for colorado
@@ -115,9 +105,6 @@ function run_test(){
             echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/stackrc for undercloud .."
             source ${FUNCTEST_CONF_DIR}/stackrc
             python ${FUNCTEST_TEST_DIR}/security_scan/security_scan.py --config ${FUNCTEST_TEST_DIR}/security_scan/config.ini
-        ;;
-        "copper")
-            python ${FUNCTEST_TEST_DIR}/features/copper.py $report
         ;;
         "moon")
             python ${REPOS_DIR}/moon/tests/run_tests.py $report
