@@ -160,11 +160,6 @@ class TempestCommon(testcase_base.TestcaseBase):
                 result_file.write(str(cases_line) + '\n')
         result_file.close()
 
-    def _parse_verification_id(line):
-        first_pos = line.index("UUID=") + len("UUID=")
-        last_pos = line.index(") for deployment")
-        return line[first_pos:last_pos]
-
     def run_verifier_tests(self):
         self.OPTION += (" --load-list {}".format(conf_utils.TEMPEST_LIST))
 
