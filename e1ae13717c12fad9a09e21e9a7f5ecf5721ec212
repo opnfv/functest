@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_4525eea9",
+        "filename": "docs/configguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-02T15:35:37Z",
+      "side": 0,
+      "message": "jumphost doesn\u0027t need connection to storage and private networks.",
+      "revId": "e1ae13717c12fad9a09e21e9a7f5ecf5721ec212",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
