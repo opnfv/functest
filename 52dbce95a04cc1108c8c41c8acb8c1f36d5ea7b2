@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_9ae6d143",
+        "filename": "functest/opnfv_tests/features/promise.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-02-02T04:21:25Z",
+      "side": 1,
+      "message": "Let me make two comments .\n\nFirst,In \"ci/config_functest.yaml\", you should modify definition of as follws.\nBecause The codes set dir_repo_promise to repo\n\n    dir \n        dir_repo_promise: /home/opnfv/repos/promise\n\n     ------\n     dir_repo_promise -\u003e  repo_promise: \n\nSecond, In \"util/functest_constants.py\" you should delete or modify as follows.\nBecasue, If you my First commets modify, dir_repo_promise is None.?So error will be occurs.\n\n\n    PROMISE_REPO_DIR \u003d get_value(\u0027general.dir.dir_repo_promise\u0027,\n                                 \u0027PROMISE_REPO_DIR\u0027)",
+      "range": {
+        "startLine": 22,
+        "startChar": 38,
+        "endLine": 22,
+        "endChar": 60
+      },
+      "revId": "52dbce95a04cc1108c8c41c8acb8c1f36d5ea7b2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
