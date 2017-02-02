@@ -148,7 +148,11 @@ def run_test(test, tier_name, testcases=None):
             module = importlib.import_module(run_dict['module'])
             cls = getattr(module, run_dict['class'])
             test_case = cls()
-            result = test_case.run()
+            try:
+                kwargs = run_dict['args']
+                result = test_case.run(**kwargs)
+            except KeyError:
+                result = test_case.run()
             if result == testcase_base.TestcaseBase.EX_OK:
                 if GlobalVariables.REPORT_FLAG:
                     test_case.publish_report()
