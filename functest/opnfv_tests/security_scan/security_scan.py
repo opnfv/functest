@@ -35,63 +35,40 @@ INSTALLER_IP = ft_constants.CI_INSTALLER_IP
 oscapbin = 'sudo /bin/oscap'
 functest_dir = '%s/security_scan/' % ft_constants.FUNCTEST_TEST_DIR
 
-# Apex Spefic var needed to query Undercloud
-if ft_constants.OS_AUTH_URL is None:
-    connect.logger.error(" Enviroment variable OS_AUTH_URL is not set")
-    sys.exit(0)
-else:
-    OS_AUTH_URL = ft_constants.OS_AUTH_URL
 
-# args
-parser = argparse.ArgumentParser(description='OPNFV OpenSCAP Scanner')
-parser.add_argument('--config', action='store', dest='cfgfile',
-                    help='Config file', required=True)
-args = parser.parse_args()
+class SecurityScanParser():
 
-# Config Parser
-cfgparse = SafeConfigParser()
-cfgparse.read(args.cfgfile)
+    def __init__(self):
+        self.parser = argparse.ArgumentParser(description='OPNFV OpenSCAP'
+                                                          ' Scanner')
+        self.parser.add_argument('--config', action='store', dest='cfgfile',
+                                 help='Config file', required=True)
 
-#  Grab Undercloud key
-remotekey = cfgparse.get('undercloud', 'remotekey')
-localkey = cfgparse.get('undercloud', 'localkey')
-setup = connect.SetUp(remotekey, localkey)
-setup.getockey()
-
-
-# Configure Nova Credentials
-com = 'sudo /usr/bin/hiera admin_password'
-setup = connect.SetUp(com)
-keypass = setup.keystonepass()
-auth = v2.Password(auth_url=OS_AUTH_URL,
-                   username='admin',
-                   password=str(keypass).rstrip(),
-                   tenant_name='admin')
-sess = session.Session(auth=auth)
-nova = client.Client(2, session=sess)
+    def parse_args(self, argv=[]):
+        return vars(self.parser.parse_args(argv))
 
 
 class GlobalVariables:
     tmpdir = ""
 
 
-def run_tests(host, nodetype):
+def run_tests(host, nodetype, cfgparse, localkey):
     user = cfgparse.get(nodetype, 'user')
     port = cfgparse.get(nodetype, 'port')
     connect.logger.info("Host: {0} Selected Profile: {1}".format(host,
                                                                  nodetype))
     connect.logger.info("Checking internet for package installation...")
-    if internet_check(host, nodetype):
+    if internet_check(host, nodetype, cfgparse, localkey):
         connect.logger.info("Internet Connection OK.")
         connect.logger.info("Creating temp file structure..")
         createfiles(host, port, user, localkey)
         connect.logger.debug("Installing OpenSCAP...")
         install_pkg(host, port, user, localkey)
         connect.logger.debug("Running scan...")
-        run_scanner(host, port, user, localkey, nodetype)
+        run_scanner(host, port, user, localkey, nodetype, cfgparse)
         clean = cfgparse.get(nodetype, 'clean')
         connect.logger.info("Post installation tasks....")
-        post_tasks(host, port, user, localkey, nodetype)
+        post_tasks(host, port, user, localkey, nodetype, cfgparse)
         if clean:
             connect.logger.info("Cleaning down environment....")
             connect.logger.debug("Removing OpenSCAP....")
@@ -103,23 +80,23 @@ def run_tests(host, nodetype):
         pass
 
 
-def nova_iterate():
+def nova_iterate(nova, cfgparse, localkey):
     # Find compute nodes, active with network on ctlplane
     for server in nova.servers.list():
         if server.status == 'ACTIVE' and 'compute' in server.name:
             networks = server.networks
             nodetype = 'compute'
             for host in networks['ctlplane']:
-                run_tests(host, nodetype)
+                run_tests(host, nodetype, cfgparse, localkey)
         # Find controller nodes, active with network on ctlplane
         elif server.status == 'ACTIVE' and 'controller' in server.name:
             networks = server.networks
             nodetype = 'controller'
             for host in networks['ctlplane']:
-                run_tests(host, nodetype)
+                run_tests(host, nodetype, cfgparse, localkey)
 
 
-def internet_check(host, nodetype):
+def internet_check(host, nodetype, cfgparse, localkey):
     import connect
     user = cfgparse.get(nodetype, 'user')
     port = cfgparse.get(nodetype, 'port')
@@ -152,7 +129,7 @@ def install_pkg(host, port, user, localkey):
     connect.remotecmd()
 
 
-def run_scanner(host, port, user, localkey, nodetype):
+def run_scanner(host, port, user, localkey, nodetype, cfgparse):
     import connect
     scantype = cfgparse.get(nodetype, 'scantype')
     profile = cfgparse.get(nodetype, 'profile')
@@ -186,7 +163,7 @@ def run_scanner(host, port, user, localkey, nodetype):
         connect.remotecmd()
 
 
-def post_tasks(host, port, user, localkey, nodetype):
+def post_tasks(host, port, user, localkey, nodetype, cfgparse):
     import connect
     # Create the download folder for functest dashboard and download reports
     reports_dir = cfgparse.get(nodetype, 'reports_dir')
@@ -217,4 +194,35 @@ def cleandir(host, port, user, localkey, nodetype):
 
 
 if __name__ == '__main__':
-    nova_iterate()
+    # Apex Spefic var needed to query Undercloud
+    if ft_constants.OS_AUTH_URL is None:
+        connect.logger.error(" Enviroment variable OS_AUTH_URL is not set")
+        sys.exit(0)
+    else:
+        OS_AUTH_URL = ft_constants.OS_AUTH_URL
+
+    parser = SecurityScanParser()
+    args = parser.parse_args(sys.argv[1:])
+
+    # Config Parser
+    cfgparse = SafeConfigParser()
+    cfgparse.read(args.cfgfile)
+
+    #  Grab Undercloud key
+    remotekey = cfgparse.get('undercloud', 'remotekey')
+    localkey = cfgparse.get('undercloud', 'localkey')
+    setup = connect.SetUp(remotekey, localkey)
+    setup.getockey()
+
+    # Configure Nova Credentials
+    com = 'sudo /usr/bin/hiera admin_password'
+    setup = connect.SetUp(com)
+    keypass = setup.keystonepass()
+    auth = v2.Password(auth_url=OS_AUTH_URL,
+                       username='admin',
+                       password=str(keypass).rstrip(),
+                       tenant_name='admin')
+    sess = session.Session(auth=auth)
+    nova = client.Client(2, session=sess)
+
+    nova_iterate(nova, cfgparse, localkey)
