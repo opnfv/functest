@@ -63,11 +63,11 @@ Functest internal test cases
 The internal test cases in Danube are:
 
  * healthcheck
+ * connection_check
+ * api_check
  * vping_ssh
  * vping_userdata
  * odl
- * connection_check
- * api_check
  * snaps_smoke
  * tempest_smoke_serial
  * rally_sanity
