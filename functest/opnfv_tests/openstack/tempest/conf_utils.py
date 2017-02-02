@@ -172,6 +172,9 @@ def configure_tempest(deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
         config.write(config_file)
 
     # Copy tempest.conf to /home/opnfv/functest/results/tempest/
+    if not os.path.exists(TEMPEST_RESULTS_DIR):
+        os.makedirs(TEMPEST_RESULTS_DIR)
+
     shutil.copyfile(tempest_conf_file,
                     os.path.join(TEMPEST_RESULTS_DIR, 'tempest.conf'))
 
