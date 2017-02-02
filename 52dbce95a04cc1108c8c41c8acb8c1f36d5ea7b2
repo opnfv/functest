@@ -22,6 +22,30 @@
       "revId": "52dbce95a04cc1108c8c41c8acb8c1f36d5ea7b2",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_5a5e29eb",
+        "filename": "functest/opnfv_tests/features/promise.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-02T08:20:23Z",
+      "side": 1,
+      "message": "thanks, done\nall promise var now in promise\nno need anymore to var in util/functest_constants\n\nfunctest_constants will be soon deprecated",
+      "parentUuid": "1acb0d3e_9ae6d143",
+      "range": {
+        "startLine": 22,
+        "startChar": 38,
+        "endLine": 22,
+        "endChar": 60
+      },
+      "revId": "52dbce95a04cc1108c8c41c8acb8c1f36d5ea7b2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
