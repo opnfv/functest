@@ -57,11 +57,11 @@ echo "  ...OK"
 
 
 echo "Checking OpenStack basic services:"
-commands=('openstack endpoint list' 'nova list' 'neutron net-list' \
-            'glance image-list' 'cinder list')
+commands=('openstack endpoint list' 'openstack server list' 'openstack network list' \
+            'openstack image list' 'openstack volume list')
 for cmd in "${commands[@]}"
 do
-    service=$(echo $cmd | awk '{print $1}')
+    service=$(echo $cmd | awk '{print $1, $2}')
     echo ">>Checking $service service..."
     $cmd &>/dev/null
     result=$?
