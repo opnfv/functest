@@ -146,25 +146,20 @@ class OSTackerTesting(unittest.TestCase):
                                                 tosca_file=None)
             self.assertEqual(resp, self.createvnfd)
 
-    @mock.patch('functest.utils.openstack_tacker.logger.error')
-    def test_create_vnfd_default(self, mock_logger_error):
+    def test_create_vnfd_default(self):
         with mock.patch.object(self.tacker_client, 'create_vnfd',
-                               return_value=self.createvnfd), \
-                mock.patch('__builtin__.open', mock.mock_open(read_data='1')) \
-                as m:
+                               return_value=self.createvnfd):
             resp = openstack_tacker.create_vnfd(self.tacker_client,
                                                 tosca_file=self.tosca_file)
-            m.assert_called_once_with(self.tosca_file)
-            mock_logger_error.assert_called_once_with('1')
             self.assertEqual(resp, self.createvnfd)
 
-    @mock.patch('functest.utils.openstack_tacker.logger.exception')
-    def test_create_vnfd_exception(self, mock_logger_excep):
+    @mock.patch('functest.utils.openstack_tacker.logger.error')
+    def test_create_vnfd_exception(self, mock_logger_error):
         with mock.patch.object(self.tacker_client, 'create_vnfd',
                                side_effect=Exception):
             resp = openstack_tacker.create_vnfd(self.tacker_client,
                                                 tosca_file=self.tosca_file)
-            mock_logger_excep.assert_called_once_with(test_utils.
+            mock_logger_error.assert_called_once_with(test_utils.
                                                       SubstrMatch("Error"
                                                                   " [create"
                                                                   "_vnfd("
