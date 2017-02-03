@@ -30,6 +30,7 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 
 # Environment variables
 ARG BRANCH=master
+ARG RALLY_TAG=0.8.1
 ARG TEMPEST_TAG=14.0.0
 ARG ODL_TAG=release/beryllium-sr4
 ARG OPENSTACK_TAG=stable/mitaka
@@ -107,7 +108,7 @@ RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${REPOS_DIR}/rele
 # OpenStack repositories
 RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${REPOS_DIR}/bgpvpn
 #RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${REPOS_DIR}/kingbird
-RUN git clone https://github.com/openstack/rally.git ${REPOS_DIR}/rally
+RUN git clone --depth 1 -b $RALLY_TAG https://github.com/openstack/rally.git ${REPOS_DIR}/rally
 RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${REPOS_DIR}/tempest
 
 # other repositories
