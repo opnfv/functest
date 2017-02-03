@@ -261,6 +261,14 @@ def install_tempest():
                              error_msg="Problem while installing Tempest.")
 
 
+def create_flavor():
+    os_utils.get_or_create_flavor('m1.tiny',
+                                  '512',
+                                  '1',
+                                  '1',
+                                  public=True)
+
+
 def check_environment():
     msg_not_active = "The Functest environment is not installed."
     if not os.path.isfile(CONST.env_active):
@@ -290,6 +298,7 @@ def main(**kwargs):
         verify_deployment()
         install_rally()
         install_tempest()
+        create_flavor()
 
         with open(CONST.env_active, "w") as env_file:
             env_file.write("1")
