@@ -74,12 +74,12 @@ def create_vnfd(tacker_client, tosca_file=None):
         if tosca_file is not None:
             with open(tosca_file) as tosca_fd:
                 vnfd_body = tosca_fd.read()
-            logger.error(vnfd_body)
+            logger.info('VNFD template:\n{0}'.format(vnfd_body))
         return tacker_client.create_vnfd(
             body={"vnfd": {"attributes": {"vnfd": vnfd_body}}})
     except Exception, e:
-        logger.exception("Error [create_vnfd(tacker_client, '%s')]: %s"
-                         % (tosca_file, e))
+        logger.error("Error [create_vnfd(tacker_client, '%s')]: %s"
+                     % (tosca_file, e))
         return None
 
 
