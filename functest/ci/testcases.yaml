@@ -18,6 +18,22 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: '^((?!lxd).)*$'
+            -
+                name: snaps_health_check
+                criteria: 'status == "PASS"'
+                blocking: false
+                description: >-
+                    This test case creates executes the SimpleHealthCheck
+                    Python test class which creates an, image, flavor, network,
+                    and Cirros VM instance and observes the console output to
+                    validate the single port obtains the correct IP address.
+
+                dependencies:
+                    installer: ''
+                    scenario: '^((?!lxd).)*$'
+                run:
+                    module: 'functest.opnfv_tests.openstack.snaps.health_check'
+                    class: 'HealthCheck'
 
     -
         name: smoke
