@@ -74,12 +74,12 @@ def create_vnfd(tacker_client, tosca_file=None):
         if tosca_file is not None:
             with open(tosca_file) as tosca_fd:
                 vnfd_body = tosca_fd.read()
-            logger.error(vnfd_body)
+            logger.info('VNFD template:\n{0}'.format(vnfd_body))
         return tacker_client.create_vnfd(
             body={"vnfd": {"attributes": {"vnfd": vnfd_body}}})
     except Exception, e:
-        logger.exception("Error [create_vnfd(tacker_client, '%s')]: %s"
-                         % (tosca_file, e))
+        logger.error("Error [create_vnfd(tacker_client, '%s')]: %s"
+                     % (tosca_file, e))
         return None
 
 
@@ -124,7 +124,8 @@ def create_vnf(tacker_client, vnf_name, vnfd_id=None, vnfd_name=None):
             vnf_body['vnf']['vnfd_id'] = get_vnfd_id(tacker_client, vnfd_name)
         return tacker_client.create_vnf(body=vnf_body)
     except Exception, e:
-        logger.error("error [create_vnf(tacker_client, '%s', '%s', '%s')]: %s"
+        logger.error("error [create_vnf(tacker_client,"
+                     " '%s', '%s', '%s')]: %s"
                      % (vnf_name, vnfd_id, vnfd_name, e))
         return None
 
@@ -206,7 +207,8 @@ def create_sfc(tacker_client, sfc_name,
                                         for name in chain_vnf_names]
         return tacker_client.create_sfc(body=sfc_body)
     except Exception, e:
-        logger.error("error [create_sfc(tacker_client, '%s', '%s', '%s')]: %s"
+        logger.error("error [create_sfc(tacker_client,"
+                     " '%s', '%s', '%s')]: %s"
                      % (sfc_name, chain_vnf_ids, chain_vnf_names, e))
         return None
 
@@ -263,8 +265,8 @@ def create_sfc_classifier(tacker_client, sfc_clf_name, sfc_id=None,
                 tacker_client, sfc_name)
         return tacker_client.create_sfc_classifier(body=sfc_clf_body)
     except Exception, e:
-        logger.error("error [create_sfc_classifier(tacker_client, '%s', '%s',"
-                     " '%s', '%s')]: '%s'"
+        logger.error("error [create_sfc_classifier(tacker_client,"
+                     " '%s', '%s','%s', '%s')]: '%s'"
                      % (sfc_clf_name, sfc_id, sfc_name, str(match), e))
         return None
 
