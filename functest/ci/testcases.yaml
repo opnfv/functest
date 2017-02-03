@@ -180,18 +180,18 @@ tiers:
             Test suites from feature projects
             integrated in functest
         testcases:
-            -
-                name: promise
-                criteria: 'success_rate == 100%'
-                blocking: false
-                description: >-
-                    Test suite from Promise project.
-                dependencies:
-                    installer: '(fuel)|(joid)'
-                    scenario: ''
-                run:
-                     module: 'functest.opnfv_tests.features.promise'
-                     class: 'Promise'
+#            -
+#                name: promise
+#                criteria: 'success_rate == 100%'
+#                blocking: false
+#                description: >-
+#                    Test suite from Promise project.
+#                dependencies:
+#                    installer: '(fuel)|(joid)'
+#                    scenario: ''
+#                run:
+#                     module: 'functest.opnfv_tests.features.promise'
+#                     class: 'Promise'
 
             -
                 name: doctor
