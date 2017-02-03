@@ -287,6 +287,24 @@
       "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_a00280b2",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-02-03T07:03:20Z",
+      "side": 1,
+      "message": "The cirros-0.3.4-x86_64-disk.img is used by rally and tempest. If it is removed, both tests will fail.",
+      "parentUuid": "1acb0d3e_f4f5aecb",
+      "revId": "a3e22623ca0792d4b3e628efb49f2c58d6c73364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
