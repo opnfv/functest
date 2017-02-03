@@ -23,17 +23,17 @@ echo "">$LOG_FILE
 exec 1<>$LOG_FILE
 
 info ()  {
-    echo -e "$(date '+%Y-%m-%d %H:%M:%S,%3N') - healtcheck - INFO - " "$*" | tee -a $LOG_FILE 1>&2
+    echo -e "$(date '+%Y-%m-%d %H:%M:%S,%3N') - healthcheck - INFO - " "$*" | tee -a $LOG_FILE 1>&2
 }
 
 debug ()  {
     if [[ "${CI_DEBUG,,}" == "true" ]]; then
-        echo -e "$(date '+%Y-%m-%d %H:%M:%S,%3N') - healtcheck - DEBUG - " "$*" | tee -a $LOG_FILE 1>&2
+        echo -e "$(date '+%Y-%m-%d %H:%M:%S,%3N') - healthcheck - DEBUG - " "$*" | tee -a $LOG_FILE 1>&2
     fi
 }
 
 error () {
-    echo -e "$(date '+%Y-%m-%d %H:%M:%S,%3N') - healtcheck - ERROR - " "$*" | tee -a $LOG_FILE 1>&2
+    echo -e "$(date '+%Y-%m-%d %H:%M:%S,%3N') - healthcheck - ERROR - " "$*" | tee -a $LOG_FILE 1>&2
     exit 1
 }
 
@@ -125,16 +125,16 @@ kernel_img=$(cat ${YAML_FILE} | shyaml get-value healthcheck.kernel_image 2> /de
 ramdisk_img=$(cat ${YAML_FILE} | shyaml get-value healthcheck.ramdisk_image 2> /dev/null || true)
 extra_properties=$(cat ${YAML_FILE} | shyaml get-value healthcheck.extra_properties 2> /dev/null || true)
 
-# Test if we need to create a 3part image
+# Test if we need to create a 3party image
 if [ "X$kernel_img" != "X" ]
 then
-    img_id=$(glance image-create --name ${kernel_image} --disk-format aki \
+    img_id=$(openstack image create ${kernel_image} --disk-format aki \
              --container-format bare < ${kernel_img} | awk '$2 == "id" { print $4 }')
     extra_opts="--property kernel_id=${img_id}"
 
     if [ "X$ramdisk_img" != "X" ]
     then
-        img_id=$(glance image-create --name ${ramdisk_image} --disk-format ari \
+        img_id=$(openstack image create ${ramdisk_image} --disk-format ari \
                  --container-format bare < ${ramdisk_img} | awk '$2 == "id" { print $4 }')
         extra_opts="$extra_opts --property ramdisk_id=${img_id}"
     fi
@@ -152,10 +152,10 @@ fi
 
 debug "image extra_properties=${extra_properties}"
 
-eval glance image-create --name ${image_1} --disk-format ${disk_format} --container-format bare \
+eval openstack image create ${image_1} --disk-format ${disk_format} --container-format bare \
              ${extra_opts} < ${disk_img}
 debug "image '${image_1}' created."
-eval glance image-create --name ${image_2} --disk-format ${disk_format} --container-format bare \
+eval openstack image create ${image_2} --disk-format ${disk_format} --container-format bare \
              ${extra_opts} < ${disk_img}
 debug "image '${image_2}' created."
 info "... Glance OK!"
