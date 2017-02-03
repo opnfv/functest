@@ -36,8 +36,8 @@ def get_id_from_name(tacker_client, resource_type, resource_name):
         endpoint = endpoint.replace('-', '_')
         return resp[endpoint[1:]][0]['id']
     except Exception, e:
-        logger.error("Error [get_id_from_name(tacker_client, "
-                     "resource_type, resource_name)]: %s" % e)
+        logger.exception("Error [get_id_from_name(tacker_client, "
+                         "resource_type, resource_name)]: %s" % e)
         return None
 
 
@@ -64,7 +64,7 @@ def list_vnfds(tacker_client, verbose=False):
             vnfds = [vnfd['id'] for vnfd in vnfds['vnfds']]
         return vnfds
     except Exception, e:
-        logger.error("Error [list_vnfds(tacker_client)]: %s" % e)
+        logger.exception("Error [list_vnfds(tacker_client)]: %s" % e)
         return None
 
 
@@ -74,7 +74,7 @@ def create_vnfd(tacker_client, tosca_file=None):
         if tosca_file is not None:
             with open(tosca_file) as tosca_fd:
                 vnfd_body = tosca_fd.read()
-            logger.error(vnfd_body)
+            logger.info('VNFD template:\n{0}'.format(vnfd_body))
         return tacker_client.create_vnfd(
             body={"vnfd": {"attributes": {"vnfd": vnfd_body}}})
     except Exception, e:
@@ -92,8 +92,8 @@ def delete_vnfd(tacker_client, vnfd_id=None, vnfd_name=None):
             vnfd = get_vnfd_id(tacker_client, vnfd_name)
         return tacker_client.delete_vnfd(vnfd)
     except Exception, e:
-        logger.error("Error [delete_vnfd(tacker_client, '%s', '%s')]: %s"
-                     % (vnfd_id, vnfd_name, e))
+        logger.exception("Error [delete_vnfd(tacker_client, '%s', '%s')]: %s"
+                         % (vnfd_id, vnfd_name, e))
         return None
 
 
@@ -104,7 +104,7 @@ def list_vnfs(tacker_client, verbose=False):
             vnfs = [vnf['id'] for vnf in vnfs['vnfs']]
         return vnfs
     except Exception, e:
-        logger.error("Error [list_vnfs(tacker_client)]: %s" % e)
+        logger.exception("Error [list_vnfs(tacker_client)]: %s" % e)
         return None
 
 
@@ -124,8 +124,9 @@ def create_vnf(tacker_client, vnf_name, vnfd_id=None, vnfd_name=None):
             vnf_body['vnf']['vnfd_id'] = get_vnfd_id(tacker_client, vnfd_name)
         return tacker_client.create_vnf(body=vnf_body)
     except Exception, e:
-        logger.error("error [create_vnf(tacker_client, '%s', '%s', '%s')]: %s"
-                     % (vnf_name, vnfd_id, vnfd_name, e))
+        logger.exception("error [create_vnf(tacker_client,"
+                         " '%s', '%s', '%s')]: %s"
+                         % (vnf_name, vnfd_id, vnfd_name, e))
         return None
 
 
@@ -139,7 +140,7 @@ def wait_for_vnf(tacker_client, vnf_id=None, vnf_name=None):
                 try:
                     _id = get_vnf_id(tacker_client, vnf_name)
                 except:
-                    logger.error("Bazinga")
+                    logger.exception("Bazinga")
         else:
             raise Exception('You must specify vnf_id or vnf_name')
         while True:
@@ -156,8 +157,8 @@ def wait_for_vnf(tacker_client, vnf_id=None, vnf_name=None):
                 break
         return _id
     except Exception, e:
-        logger.error("error [wait_for_vnf(tacker_client, '%s', '%s')]: %s"
-                     % (vnf_id, vnf_name, e))
+        logger.exception("error [wait_for_vnf(tacker_client, '%s', '%s')]: %s"
+                         % (vnf_id, vnf_name, e))
         return None
 
 
@@ -170,8 +171,8 @@ def delete_vnf(tacker_client, vnf_id=None, vnf_name=None):
             vnf = get_vnf_id(tacker_client, vnf_name)
         return tacker_client.delete_vnf(vnf)
     except Exception, e:
-        logger.error("Error [delete_vnf(tacker_client, '%s', '%s')]: %s"
-                     % (vnf_id, vnf_name, e))
+        logger.exception("Error [delete_vnf(tacker_client, '%s', '%s')]: %s"
+                         % (vnf_id, vnf_name, e))
         return None
 
 
@@ -182,7 +183,7 @@ def list_sfcs(tacker_client, verbose=False):
             sfcs = [sfc['id'] for sfc in sfcs['sfcs']]
         return sfcs
     except Exception, e:
-        logger.error("Error [list_sfcs(tacker_client)]: %s" % e)
+        logger.exception("Error [list_sfcs(tacker_client)]: %s" % e)
         return None
 
 
@@ -206,8 +207,9 @@ def create_sfc(tacker_client, sfc_name,
                                         for name in chain_vnf_names]
         return tacker_client.create_sfc(body=sfc_body)
     except Exception, e:
-        logger.error("error [create_sfc(tacker_client, '%s', '%s', '%s')]: %s"
-                     % (sfc_name, chain_vnf_ids, chain_vnf_names, e))
+        logger.exception("error [create_sfc(tacker_client,"
+                         " '%s', '%s', '%s')]: %s"
+                         % (sfc_name, chain_vnf_ids, chain_vnf_names, e))
         return None
 
 
@@ -220,8 +222,8 @@ def delete_sfc(tacker_client, sfc_id=None, sfc_name=None):
             sfc = get_sfc_id(tacker_client, sfc_name)
         return tacker_client.delete_sfc(sfc)
     except Exception, e:
-        logger.error("Error [delete_sfc(tacker_client, '%s', '%s')]: %s"
-                     % (sfc_id, sfc_name, e))
+        logger.exception("Error [delete_sfc(tacker_client, '%s', '%s')]: %s"
+                         % (sfc_id, sfc_name, e))
         return None
 
 
@@ -233,7 +235,7 @@ def list_sfc_classifiers(tacker_client, verbose=False):
                         for sfc_clf in sfc_clfs['sfc_classifiers']]
         return sfc_clfs
     except Exception, e:
-        logger.error("Error [list_sfc_classifiers(tacker_client)]: %s" % e)
+        logger.exception("Error [list_sfc_classifiers(tacker_client)]: %s" % e)
         return None
 
 
@@ -263,9 +265,9 @@ def create_sfc_classifier(tacker_client, sfc_clf_name, sfc_id=None,
                 tacker_client, sfc_name)
         return tacker_client.create_sfc_classifier(body=sfc_clf_body)
     except Exception, e:
-        logger.error("error [create_sfc_classifier(tacker_client, '%s', '%s',"
-                     " '%s', '%s')]: '%s'"
-                     % (sfc_clf_name, sfc_id, sfc_name, str(match), e))
+        logger.exception("error [create_sfc_classifier(tacker_client,"
+                         " '%s', '%s','%s', '%s')]: '%s'"
+                         % (sfc_clf_name, sfc_id, sfc_name, str(match), e))
         return None
 
 
@@ -281,6 +283,6 @@ def delete_sfc_classifier(tacker_client,
             sfc_clf = get_sfc_classifier_id(tacker_client, sfc_clf_name)
         return tacker_client.delete_sfc_classifier(sfc_clf)
     except Exception, e:
-        logger.error("Error [delete_sfc_classifier(tacker_client, '%s', "
-                     "'%s')]: %s" % (sfc_clf_id, sfc_clf_name, e))
+        logger.exception("Error [delete_sfc_classifier(tacker_client, '%s', "
+                         "'%s')]: %s" % (sfc_clf_id, sfc_clf_name, e))
         return None

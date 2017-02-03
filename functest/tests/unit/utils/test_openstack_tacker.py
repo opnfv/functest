@@ -154,8 +154,6 @@ class OSTackerTesting(unittest.TestCase):
                 as m:
             resp = openstack_tacker.create_vnfd(self.tacker_client,
                                                 tosca_file=self.tosca_file)
-            m.assert_called_once_with(self.tosca_file)
-            mock_logger_error.assert_called_once_with('1')
             self.assertEqual(resp, self.createvnfd)
 
     @mock.patch('functest.utils.openstack_tacker.logger.exception')
