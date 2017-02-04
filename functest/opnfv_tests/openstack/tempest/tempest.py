@@ -57,7 +57,7 @@ class TempestCommon(testcase_base.TestcaseBase):
             CONST.tempest_identity_tenant_name,
             CONST.tempest_identity_tenant_description)
         if not tenant_id:
-            logger.error("Error : Failed to create %s tenant"
+            logger.error("Failed to create %s tenant"
                          % CONST.tempest_identity_tenant_name)
 
         user_id = os_utils.create_user(keystone_client,
@@ -65,7 +65,7 @@ class TempestCommon(testcase_base.TestcaseBase):
                                        CONST.tempest_identity_user_password,
                                        None, tenant_id)
         if not user_id:
-            logger.error("Error : Failed to create %s user" %
+            logger.error("Failed to create %s user" %
                          CONST.tempest_identity_user_name)
 
         logger.debug("Creating private network for Tempest suite")
@@ -74,8 +74,8 @@ class TempestCommon(testcase_base.TestcaseBase):
             CONST.tempest_private_subnet_name,
             CONST.tempest_router_name,
             CONST.tempest_private_subnet_cidr)
-        if not network_dic:
-            return testcase_base.TestcaseBase.EX_RUN_ERROR
+        if network_dic is None:
+            raise Exception('Failed to create private network')
 
         if CONST.tempest_use_custom_images:
             # adding alternative image should be trivial should we need it
@@ -83,8 +83,8 @@ class TempestCommon(testcase_base.TestcaseBase):
             _, self.IMAGE_ID = os_utils.get_or_create_image(
                 CONST.openstack_image_name, conf_utils.GLANCE_IMAGE_PATH,
                 CONST.openstack_image_disk_format)
-            if not self.IMAGE_ID:
-                return testcase_base.TestcaseBase.EX_RUN_ERROR
+            if self.IMAGE_ID is None:
+                raise Exception('Failed to create image')
 
         if CONST.tempest_use_custom_flavors:
             # adding alternative flavor should be trivial should we need it
@@ -94,10 +94,8 @@ class TempestCommon(testcase_base.TestcaseBase):
                 CONST.openstack_flavor_ram,
                 CONST.openstack_flavor_disk,
                 CONST.openstack_flavor_vcpus)
-            if not self.FLAVOR_ID:
-                return testcase_base.TestcaseBase.EX_RUN_ERROR
-
-        return testcase_base.TestcaseBase.EX_OK
+            if self.FLAVOR_ID is None:
+                raise Exception('Failed to create flavor')
 
     def generate_test_list(self, verifier_repo_dir):
         logger.debug("Generating test case list...")
@@ -109,9 +107,8 @@ class TempestCommon(testcase_base.TestcaseBase):
                 shutil.copyfile(
                     conf_utils.TEMPEST_CUSTOM, conf_utils.TEMPEST_RAW_LIST)
             else:
-                logger.error("Tempest test list file %s NOT found."
-                             % conf_utils.TEMPEST_CUSTOM)
-                return testcase_base.TestcaseBase.EX_RUN_ERROR
+                raise Exception("Tempest test list file %s NOT found."
+                                % conf_utils.TEMPEST_CUSTOM)
         else:
             if self.MODE == 'smoke':
                 testr_mode = "smoke"
@@ -127,8 +124,6 @@ class TempestCommon(testcase_base.TestcaseBase):
                                   testr_mode,
                                   conf_utils.TEMPEST_RAW_LIST))
             ft_utils.execute_command(cmd)
-
-        return testcase_base.TestcaseBase.EX_OK
 
     def apply_tempest_blacklist(self):
         logger.debug("Applying tempest blacklist...")
@@ -164,7 +159,6 @@ class TempestCommon(testcase_base.TestcaseBase):
             else:
                 result_file.write(str(cases_line) + '\n')
         result_file.close()
-        return testcase_base.TestcaseBase.EX_OK
 
     def _parse_verification_id(line):
         first_pos = line.index("UUID=") + len("UUID=")
@@ -217,7 +211,7 @@ class TempestCommon(testcase_base.TestcaseBase):
         f_env.close()
 
     def parse_verifier_result(self):
-        if not self.VERIFICATION_ID:
+        if self.VERIFICATION_ID is None:
             raise Exception('Verification UUID not found')
 
         cmd_line = "rally verify show --uuid {}".format(self.VERIFICATION_ID)
@@ -270,27 +264,18 @@ class TempestCommon(testcase_base.TestcaseBase):
         if not os.path.exists(conf_utils.TEMPEST_RESULTS_DIR):
             os.makedirs(conf_utils.TEMPEST_RESULTS_DIR)
 
-        # Pre-configuration
-        res = self.create_tempest_resources()
-        if res != testcase_base.TestcaseBase.EX_OK:
-            return res
-
-        res = conf_utils.configure_tempest(self.DEPLOYMENT_DIR,
-                                           self.IMAGE_ID,
-                                           self.FLAVOR_ID)
-        if res != testcase_base.TestcaseBase.EX_OK:
-            return res
-
-        res = self.generate_test_list(self.VERIFIER_REPO_DIR)
-        if res != testcase_base.TestcaseBase.EX_OK:
-            return res
-
-        res = self.apply_tempest_blacklist()
-        if res != testcase_base.TestcaseBase.EX_OK:
-            return res
-
-        self.run_verifier_tests()
-        self.parse_verifier_result()
+        try:
+            self.create_tempest_resources()
+            conf_utils.configure_tempest(self.DEPLOYMENT_DIR,
+                                         self.IMAGE_ID,
+                                         self.FLAVOR_ID)
+            self.generate_test_list(self.VERIFIER_REPO_DIR)
+            self.apply_tempest_blacklist()
+            self.run_verifier_tests()
+            self.parse_verifier_result()
+        except Exception as e:
+            logger.error('Error with run: %s' % e)
+            return testcase_base.TestcaseBase.EX_RUN_ERROR
 
         self.stop_time = time.time()
 
