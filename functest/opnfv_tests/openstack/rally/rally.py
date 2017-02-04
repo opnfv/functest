@@ -525,14 +525,13 @@ class RallyBase(testcase_base.TestcaseBase):
             self._run_tests()
             self._generate_report()
             self._clean_up()
+            res = testcase_base.TestcaseBase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s' % e)
-            return testcase_base.TestcaseBase.EX_RUN_ERROR
-        self.stop_time = time.time()
+            res = testcase_base.TestcaseBase.EX_RUN_ERROR
 
-        # If we are here, it means that the test case was successfully executed
-        # criteria is managed by the criteria Field
-        return testcase_base.TestcaseBase.EX_OK
+        self.stop_time = time.time()
+        return res
 
 
 class RallySanity(RallyBase):
