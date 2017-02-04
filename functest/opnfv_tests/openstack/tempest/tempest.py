@@ -249,12 +249,16 @@ class TempestCommon(testcase_base.TestcaseBase):
                 output = logfile.read()
 
             error_logs = ""
-            for match in re.findall('(.*?)[. ]*FAILED', output):
+            for match in re.findall('(.*?)[. ]*fail ', output):
                 error_logs += match
+            skipped_testcase = ""
+            for match in re.findall('(.*?)[. ]*skip:', output):
+                skipped_testcase += match
 
             self.details = {"tests": int(num_tests),
                             "failures": int(num_failures),
-                            "errors": error_logs}
+                            "errors": error_logs,
+                            "skipped": skipped_testcase}
         except Exception:
             success_rate = 0
 
