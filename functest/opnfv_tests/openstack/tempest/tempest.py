@@ -249,7 +249,7 @@ class TempestCommon(testcase_base.TestcaseBase):
                 output = logfile.read()
 
             error_logs = ""
-            for match in re.findall('(.*?)[. ]*FAILED', output):
+            for match in re.findall('(.*?)[. ]*fail ', output):
                 error_logs += match
 
             self.details = {"tests": int(num_tests),
