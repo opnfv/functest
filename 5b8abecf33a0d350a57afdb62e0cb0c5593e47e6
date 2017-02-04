@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_375813fa",
+        "filename": "functest/ci/check_os.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-02-04T02:41:20Z",
+      "side": 1,
+      "message": "I would suggest to update this line as well.\nservice\u003d$(echo $cmd | awk \u0027{print $1,$2}\u0027)",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 43
+      },
+      "revId": "5b8abecf33a0d350a57afdb62e0cb0c5593e47e6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
