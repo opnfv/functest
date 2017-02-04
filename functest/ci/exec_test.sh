@@ -105,11 +105,6 @@ function run_test(){
             # no need to run anything until refactoring done
             # ${REPOS_DIR}/ovno/Testcases/RunTests.sh
         ;;
-        "security_scan")
-            echo "Sourcing Credentials ${FUNCTEST_CONF_DIR}/stackrc for undercloud .."
-            source ${FUNCTEST_CONF_DIR}/stackrc
-            python ${FUNCTEST_TEST_DIR}/security_scan/security_scan.py --config ${FUNCTEST_TEST_DIR}/security_scan/config.ini
-        ;;
         "moon")
             python ${REPOS_DIR}/moon/tests/run_tests.py $report
         ;;
