@@ -13,8 +13,6 @@ import re
 import shutil
 import subprocess
 
-import opnfv.utils.constants as releng_constants
-
 from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
@@ -114,12 +112,8 @@ def configure_tempest(deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
     given parameters
     """
     conf_verifier_result = configure_verifier(deployment_dir)
-    if conf_verifier_result == releng_constants.EXIT_RUN_ERROR:
-        return releng_constants.EXIT_RUN_ERROR
-    else:
-        configure_tempest_update_params(conf_verifier_result,
-                                        IMAGE_ID, FLAVOR_ID)
-        return releng_constants.EXIT_OK
+    configure_tempest_update_params(conf_verifier_result,
+                                    IMAGE_ID, FLAVOR_ID)
 
 
 def configure_tempest_update_params(tempest_conf_file,
@@ -191,15 +185,13 @@ def configure_verifier(deployment_dir):
         logger.info("Configuring the verifier...")
         cmd = "rally verify configure-verifier"
     ft_utils.execute_command(cmd)
-    logger.debug("Looking for tempest.conf file...")
 
+    logger.debug("Looking for tempest.conf file...")
     if not os.path.isfile(tempest_conf_file):
         logger.error("Tempest configuration file %s NOT found."
                      % tempest_conf_file)
-        return releng_constants.EXIT_RUN_ERROR
-
-    else:
-        return tempest_conf_file
+        raise Exception("Tempest configuration file %s NOT found."
+                        % tempest_conf_file)
 
 
 def configure_tempest_multisite(deployment_dir):
@@ -212,9 +204,8 @@ def configure_tempest_multisite(deployment_dir):
     logger.debug("Finding tempest.conf file...")
     tempest_conf_old = os.path.join(deployment_dir, 'tempest.conf')
     if not os.path.isfile(tempest_conf_old):
-        logger.error("Tempest configuration file %s NOT found."
-                     % tempest_conf_old)
-        return releng_constants.EXIT_RUN_ERROR
+        raise Exception("Tempest configuration file %s NOT found."
+                        % tempest_conf_old)
 
     # Copy tempest.conf to /home/opnfv/functest/results/tempest/
     cur_path = os.path.split(os.path.realpath(__file__))[0]
@@ -286,5 +277,3 @@ def configure_tempest_multisite(deployment_dir):
     config.set('kingbird', 'api_version', kingbird_api_version)
     with open(tempest_conf_file, 'wb') as config_file:
         config.write(config_file)
-
-    return releng_constants.EXIT_OK
