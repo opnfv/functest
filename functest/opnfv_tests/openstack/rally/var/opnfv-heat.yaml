@@ -1,0 +1,140 @@
+  HeatStacks.create_and_delete_stack:
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/default.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/server_with_ports.yaml.template"
+        parameters:
+          public_net: {{ floating_network }}
+          image: {{ image_name }}
+          flavor: {{ flavor_name }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/server_with_volume.yaml.template"
+        parameters:
+          image: {{ image_name }}
+          flavor: {{ flavor_name }}
+          network_id: {{ netid }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  HeatStacks.create_and_list_stack:
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/default.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  HeatStacks.create_update_delete_stack:
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
+        updated_template_path: "{{ tmpl_dir }}/updated_random_strings_add.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
+        updated_template_path: "{{ tmpl_dir }}/updated_random_strings_delete.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/resource_group.yaml.template"
+        updated_template_path: "{{ tmpl_dir }}/updated_resource_group_increase.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/autoscaling_policy.yaml.template"
+        updated_template_path: "{{ tmpl_dir }}/updated_autoscaling_policy_inplace.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/resource_group.yaml.template"
+        updated_template_path: "{{ tmpl_dir }}/updated_resource_group_reduce.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
+        updated_template_path: "{{ tmpl_dir }}/updated_random_strings_replace.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  HeatStacks.create_check_delete_stack:
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  HeatStacks.create_suspend_resume_delete_stack:
+    -
+      args:
+        template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  HeatStacks.list_stacks_and_resources:
+    -
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}

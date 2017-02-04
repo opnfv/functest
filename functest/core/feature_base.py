@@ -24,6 +24,7 @@ class FeatureBase(base.TestcaseBase):
         self.post()
         self.parse_results(ret)
         self.log_results()
+        self.logger.info("Test result is stored in '%s'" % self.result_file)
         return base.TestcaseBase.EX_OK
 
     def prepare(self, **kwargs):

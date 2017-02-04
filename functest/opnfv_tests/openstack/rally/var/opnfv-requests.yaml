@@ -1,0 +1,11 @@
+  HttpRequests.check_request:
+    -
+      args:
+        url: "{{ request_url }}"
+        method: "GET"
+        status_code: 200
+        allow_redirects: True
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
