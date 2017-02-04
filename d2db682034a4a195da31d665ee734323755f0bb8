@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_f7dccb76",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-02-04T01:10:10Z",
+      "side": 1,
+      "message": "Good catch.",
+      "range": {
+        "startLine": 291,
+        "startChar": 48,
+        "endLine": 291,
+        "endChar": 64
+      },
+      "revId": "d2db682034a4a195da31d665ee734323755f0bb8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
