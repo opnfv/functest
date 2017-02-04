@@ -223,10 +223,13 @@ tiers:
                 criteria: 'status == "PASS"'
                 blocking: false
                 description: >-
-                    Simple security Scan
+                    Simple Security Scan
                 dependencies:
                     installer: 'apex'
                     scenario: '^((?!fdio).)*$'
+                run:
+                    module: 'functest.opnfv_tests.features.security_scan'
+                    class: 'SecurityScan'
 #            -
 #                name: copper
 #                criteria: 'status == "PASS"'
