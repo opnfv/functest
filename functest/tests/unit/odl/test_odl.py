@@ -443,6 +443,20 @@ class ODLTesting(unittest.TestCase):
                        odlip=self._sdn_controller_ip, odlwebport='8081',
                        odlrestconfport='8081')
 
+    def test_run_netvirt_missing_sdn_controller_ip(self):
+        with mock.patch('functest.utils.openstack_utils.get_endpoint',
+                        side_effect=self._fake_url_for):
+            os.environ["INSTALLER_TYPE"] = "netvirt"
+            self.assertEqual(self.test.run(),
+                             testcase_base.TestcaseBase.EX_RUN_ERROR)
+
+    def test_run_netvirt(self):
+        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
+        os.environ["INSTALLER_TYPE"] = "netvirt"
+        self._test_run(testcase_base.TestcaseBase.EX_OK,
+                       odlip=self._sdn_controller_ip, odlwebport='8081',
+                       odlrestconfport='8081')
+
     def test_run_joid_missing_sdn_controller(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
                         side_effect=self._fake_url_for):
