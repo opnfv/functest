@@ -66,6 +66,7 @@ class RallyBase(testcase_base.TestcaseBase):
         self.cinder_client = os_utils.get_cinder_client()
         self.network_dict = {}
         self.volume_type = None
+        self.smoke = None
 
     def _build_task_args(self, test_file_name):
         task_args = {'service_list': [test_file_name]}
@@ -287,7 +288,7 @@ class RallyBase(testcase_base.TestcaseBase):
             cmd_line = ("rally task validate "
                         "--task {0} "
                         "--task-args \"{1}\""
-                        .format(task_file, self.__build_task_args(test_name)))
+                        .format(task_file, self._build_task_args(test_name)))
             logger.debug('running command line: {}'.format(cmd_line))
             p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
                                  stderr=subprocess.STDOUT, shell=True)
