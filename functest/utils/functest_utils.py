@@ -96,8 +96,9 @@ def get_scenario():
     try:
         scenario = os.environ['DEPLOY_SCENARIO']
     except KeyError:
-        logger.error("Impossible to retrieve the scenario")
-        scenario = "Unknown_scenario"
+        logger.info("Impossible to retrieve the scenario."
+                    "Use default os-nosdn-nofeature-noha")
+        scenario = "os-nosdn-nofeature-noha"
 
     return scenario
 
@@ -128,7 +129,7 @@ def get_pod_name():
     try:
         return os.environ['NODE_NAME']
     except KeyError:
-        logger.error(
+        logger.info(
             "Unable to retrieve the POD name from environment. " +
             "Using pod name 'unknown-pod'")
         return "unknown-pod"
@@ -141,8 +142,8 @@ def get_build_tag():
     try:
         build_tag = os.environ['BUILD_TAG']
     except KeyError:
-        logger.error("Impossible to retrieve the build tag")
-        build_tag = "unknown_build_tag"
+        logger.info("Impossible to retrieve the build tag")
+        build_tag = "none"
 
     return build_tag
 

@@ -131,15 +131,17 @@ class FunctestUtilsTesting(unittest.TestCase):
             self.assertEqual(functest_utils.get_installer_type(),
                              self.installer)
 
-    @mock.patch('functest.utils.functest_utils.logger.error')
-    def test_get_scenario_failed(self, mock_logger_error):
+    @mock.patch('functest.utils.functest_utils.logger.info')
+    def test_get_scenario_failed(self, mock_logger_info):
         with mock.patch.dict(os.environ,
                              {},
                              clear=True):
             self.assertEqual(functest_utils.get_scenario(),
-                             "Unknown_scenario")
-            mock_logger_error.assert_called_once_with("Impossible to retrieve"
-                                                      " the scenario")
+                             "os-nosdn-nofeature-noha")
+            mock_logger_info.assert_called_once_with("Impossible to retrieve "
+                                                     "the scenario.Use "
+                                                     "default "
+                                                     "os-nosdn-nofeature-noha")
 
     def test_get_scenario_default(self):
         with mock.patch.dict(os.environ,
@@ -158,17 +160,17 @@ class FunctestUtilsTesting(unittest.TestCase):
         mock_get_build_tag.return_value = "unknown_build_tag"
         self.assertEqual(functest_utils.get_version(), "unknown")
 
-    @mock.patch('functest.utils.functest_utils.logger.error')
-    def test_get_pod_name_failed(self, mock_logger_error):
+    @mock.patch('functest.utils.functest_utils.logger.info')
+    def test_get_pod_name_failed(self, mock_logger_info):
         with mock.patch.dict(os.environ,
                              {},
                              clear=True):
             self.assertEqual(functest_utils.get_pod_name(),
                              "unknown-pod")
-            mock_logger_error.assert_called_once_with("Unable to retrieve "
-                                                      "the POD name from "
-                                                      "environment. Using "
-                                                      "pod name 'unknown-pod'")
+            mock_logger_info.assert_called_once_with("Unable to retrieve "
+                                                     "the POD name from "
+                                                     "environment. Using "
+                                                     "pod name 'unknown-pod'")
 
     def test_get_pod_name_default(self):
         with mock.patch.dict(os.environ,
@@ -177,15 +179,15 @@ class FunctestUtilsTesting(unittest.TestCase):
             self.assertEqual(functest_utils.get_pod_name(),
                              self.node_name)
 
-    @mock.patch('functest.utils.functest_utils.logger.error')
-    def test_get_build_tag_failed(self, mock_logger_error):
+    @mock.patch('functest.utils.functest_utils.logger.info')
+    def test_get_build_tag_failed(self, mock_logger_info):
         with mock.patch.dict(os.environ,
                              {},
                              clear=True):
             self.assertEqual(functest_utils.get_build_tag(),
-                             "unknown_build_tag")
-            mock_logger_error.assert_called_once_with("Impossible to retrieve"
-                                                      " the build tag")
+                             "none")
+            mock_logger_info.assert_called_once_with("Impossible to retrieve"
+                                                     " the build tag")
 
     def test_get_build_tag_default(self):
         with mock.patch.dict(os.environ,
