@@ -67,6 +67,24 @@
       "revId": "ee21af78fbfc93e888acda121f08d2b216dd0159",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_ca724649",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1469
+      },
+      "writtenOn": "2017-02-06T03:00:40Z",
+      "side": 1,
+      "message": "These asserts are moved to function publish_report().",
+      "parentUuid": "1acb0d3e_ff9fc74e",
+      "revId": "ee21af78fbfc93e888acda121f08d2b216dd0159",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
