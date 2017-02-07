@@ -240,15 +240,6 @@ tiers:
 #                    module: 'functest.opnfv_tests.features.copper'
 #                    class: 'Copper'
             -
-                name: moon
-                criteria: 'status == "PASS"'
-                blocking: false
-                description: >-
-                    Security management system for OPNFV
-                dependencies:
-                    installer: 'compass'
-                    scenario: '(odl)*(moon)'
-            -
                 name: multisite
                 criteria: 'success_rate == 100%'
                 blocking: false

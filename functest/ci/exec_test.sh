@@ -110,9 +110,6 @@ function run_test(){
             source ${FUNCTEST_CONF_DIR}/stackrc
             python ${FUNCTEST_TEST_DIR}/security_scan/security_scan.py --config ${FUNCTEST_TEST_DIR}/security_scan/config.ini
         ;;
-        "moon")
-            python ${REPOS_DIR}/moon/tests/run_tests.py $report
-        ;;
         *)
             echo "The test case '${test_name}' does not exist."
             exit 1
