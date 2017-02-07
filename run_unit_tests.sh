@@ -5,7 +5,7 @@ set -o pipefail
 # Either Workspace is set (CI)
 if [ -z $WORKSPACE ]
 then
-    WORKSPACE="."
+    WORKSPACE=`pwd`
 fi
 
 
@@ -23,6 +23,13 @@ sudo apt-get install -y build-essential python-dev python-pip
 pip install --upgrade pip
 pip install -r $WORKSPACE/test-requirements.txt
 pip install $WORKSPACE
+
+#install releng
+cd $WORKSPACE/../
+git clone https://gerrit.opnfv.org/gerrit/releng
+pip install releng/modules/
+rm -fr releng
+cd $WORKSPACE
 
 export CONFIG_FUNCTEST_YAML=$(pwd)/functest/ci/config_functest.yaml
 # unit tests
