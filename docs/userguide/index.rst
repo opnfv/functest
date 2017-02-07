@@ -236,7 +236,7 @@ SNAPS stands for "SNA/NFV Application development Platform and Stack".
 This project seeks to develop baseline OpenStack NFV installations. It has been
 developed by Steven Pisarski and provided an object oriented library to perform
 functional and performance tests. It has been declined in several test suites in
-Functest.
+Functest, 2 are part of healthcheck tier, one belongs to smoke tier.
 
 connection check
 ^^^^^^^^^^^^^^^^
@@ -251,7 +251,7 @@ snaps.use_keystone is True, functest must have access to the cloud's private
 network.
 This suite consists in 49 tests (test duration< 2 minutes)
 
-Snaps_smoke
+snaps_smoke
 ^^^^^^^^^^^
 This test case contains tests that setup and destroy environments with VMs with
 and without Floating IPs with a newly created user and project. Set the config

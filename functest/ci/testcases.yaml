@@ -18,7 +18,41 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: '^((?!lxd).)*$'
+            -
+                name: connection_check
+                criteria: 'status == "PASS"'
+                blocking: true
+                description: >-
+                    This test case verifies the retrieval of OpenStack clients:
+                    Keystone, Glance, Neutron and Nova and may perform some
+                    simple queries. When the config value of
+                    snaps.use_keystone is True, functest must have access to
+                    the cloud's private network.
 
+                dependencies:
+                    installer: '^((?!netvirt).)*$'
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.snaps.connection_check'
+                    class: 'ConnectionCheck'
+
+            -
+                name: api_check
+                criteria: 'status == "PASS"'
+                blocking: true
+                description: >-
+                    This test case verifies the retrieval of OpenStack clients:
+                    Keystone, Glance, Neutron and Nova and may perform some
+                    simple queries. When the config value of
+                    snaps.use_keystone is True, functest must have access to
+                    the cloud's private network.
+
+                dependencies:
+                    installer: '^((?!netvirt).)*$'
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.snaps.api_check'
+                    class: 'ApiCheck'
     -
         name: smoke
         order: 1
@@ -116,41 +150,6 @@ tiers:
                     installer: ''
                     scenario: 'onos'
 
-            -
-                name: connection_check
-                criteria: 'status == "PASS"'
-                blocking: false
-                description: >-
-                    This test case verifies the retrieval of OpenStack clients:
-                    Keystone, Glance, Neutron and Nova and may perform some
-                    simple queries. When the config value of
-                    snaps.use_keystone is True, functest must have access to
-                    the cloud's private network.
-
-                dependencies:
-                    installer: '^((?!netvirt).)*$'
-                    scenario: ''
-                run:
-                    module: 'functest.opnfv_tests.openstack.snaps.connection_check'
-                    class: 'ConnectionCheck'
-
-            -
-                name: api_check
-                criteria: 'status == "PASS"'
-                blocking: false
-                description: >-
-                    This test case verifies the retrieval of OpenStack clients:
-                    Keystone, Glance, Neutron and Nova and may perform some
-                    simple queries. When the config value of
-                    snaps.use_keystone is True, functest must have access to
-                    the cloud's private network.
-
-                dependencies:
-                    installer: '^((?!netvirt).)*$'
-                    scenario: ''
-                run:
-                    module: 'functest.opnfv_tests.openstack.snaps.api_check'
-                    class: 'ApiCheck'
 
             -
                 name: snaps_smoke
