@@ -16,6 +16,24 @@
       "revId": "686e81a744ed39a4023afd89f005c2d7954359c6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_39a56204",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-07T13:20:35Z",
+      "side": 1,
+      "message": "Yes we should switch to return here and then sys.exit(main() at 277",
+      "parentUuid": "5ac10518_560d333d",
+      "revId": "686e81a744ed39a4023afd89f005c2d7954359c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }

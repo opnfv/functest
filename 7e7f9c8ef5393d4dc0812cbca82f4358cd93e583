@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_59aaaed5",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-07T13:20:35Z",
+      "side": 0,
+      "message": "same case here. Please return EX_OK or 0 instead",
+      "revId": "7e7f9c8ef5393d4dc0812cbca82f4358cd93e583",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
