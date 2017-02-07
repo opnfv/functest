@@ -77,7 +77,6 @@ RUN git config --global http.sslVerify false
 # OPNFV repositories
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${REPOS_DIR}/functest
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${REPOS_DIR}/copper
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/moon ${REPOS_DIR}/moon
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${REPOS_DIR}/sdnvpn
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${REPOS_DIR}/domino
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${REPOS_DIR}/parser
@@ -136,7 +135,6 @@ RUN cd ${REPOS_DIR}/sdnvpn && pip install .
 
 RUN cd ${REPOS_DIR}/bgpvpn && pip install .
 #RUN cd ${REPOS_DIR}/kingbird && pip install -e .
-RUN cd ${REPOS_DIR}/moon/moonclient/ && python setup.py install
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd ${REPOS_VNFS_DIR}/vims-test \

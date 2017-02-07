@@ -149,10 +149,6 @@ validate the scenario for the release.
 |             |               | multisites     | Multisites                       |
 |             |               |                | See `Multisite User Guide`_ for  |
 |             |               |                | details                          |
-|             |               +----------------+----------------------------------+
-|             |               | moon           | Security management system       |
-|             |               |                | See `Moon User Guide`_ for       |
-|             |               |                | details                          |
 +-------------+---------------+----------------+----------------------------------+
 | VNF         | vnf           | cloudify_ims   | Example of a real VNF deployment |
 |             |               |                | to show the NFV capabilities of  |
@@ -257,4 +253,3 @@ section `Executing the functest suites`_ of this document.
 .. _`Functest Dashboard`: http://testresults.opnfv.org/kibana_dashboards/
 .. _`SFC User Guide`: http://artifacts.opnfv.org/sfc/colorado/userguide/index.html
 .. _`Multisite User Guide`: http://artifacts.opnfv.org/multisite/docs/userguide/index.html
-.. _`Moon User Guide`: http://artifacts.opnfv.org/moon/docs/userguide/index.html

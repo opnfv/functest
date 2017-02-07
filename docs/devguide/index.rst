@@ -104,7 +104,6 @@ The external test cases are:
  * onos
  * bgpvpn
  * copper
- * moon
  * security_scan
  * sfc-odl
  * sfc-onos
@@ -556,8 +555,6 @@ A jenkins job manages:
    +---------------------+---------+---------+---------+---------+
    | parser              |         |         |    X    |         |
    +---------------------+---------+---------+---------+---------+
-   | moon                |         |    X    |         |         |
-   +---------------------+---------+---------+---------+---------+
    | copper              |    X    |         |         |    X    |
    +---------------------+---------+---------+---------+---------+
 
@@ -590,7 +587,7 @@ A jenkins job manages:
   stable) and then the number of iterations (4 needed) would not be
   sufficient to get the green status.
 
-  Please note that other test cases (e.g. sfc_odl, bgpvpn, moon) need also
+  Please note that other test cases (e.g. sfc_odl, bgpvpn) need also
   ODL configuration addons and as a consequence specific scenario.
   There are not considered as runnable on the generic odl_l2 scenario.
 

@@ -287,7 +287,7 @@ variables:
  * The scenario [controller]-[feature]-[mode], stored in DEPLOY_SCENARIO with
 
    * controller = (odl|onos|ocl|nosdn)
-   * feature = (ovs(dpdk)|kvm|sfc|bgpvpn|moon|multisites)
+   * feature = (ovs(dpdk)|kvm|sfc|bgpvpn|multisites)
    * mode = (ha|noha)
 
 The constraints per test case are defined in the Functest configuration file

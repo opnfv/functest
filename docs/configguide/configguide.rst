@@ -331,7 +331,6 @@ should now be in place::
             |-- domino
             |-- functest
             |-- kingbird
-            |-- moon
             |-- odl_test
             |-- onos
             |-- ovno

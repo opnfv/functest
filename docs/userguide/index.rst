@@ -372,7 +372,6 @@ Please refer to the dedicated feature user guides for details:
  * copper: http://artifacts.opnfv.org/copper/danube/docs/userguide/index.html
  * doctor: http://artifacts.opnfv.org/doctor/danube/userguide/index.html
  * domino: http://artifacts.opnfv.org/domino/docs/userguide-single/index.html
- * moon: http://artifacts.opnfv.org/moon/docs/userguide/index.html
  * multisites: http://artifacts.opnfv.org/multisite/docs/userguide/index.html
  * onos-sfc: http://artifacts.opnfv.org/onosfw/danube/userguide/index.html
  * odl-sfc: http://artifacts.opnfv.org/sfc/danube/userguide/index.html
