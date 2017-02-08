@@ -7,6 +7,7 @@
 
 import copy
 import logging
+import os
 import unittest
 
 import mock
@@ -353,18 +354,31 @@ class OSUtilsTesting(unittest.TestCase):
     def test_get_credentials_missing_endpoint_type(self):
         self._get_credentials_missing_env('OS_ENDPOINT_TYPE')
 
-    def test_source_credentials(self):
-        with mock.patch('functest.utils.openstack_utils.subprocess.Popen') \
-            as mock_subproc_popen, \
-                mock.patch('functest.utils.openstack_utils.os.environ'):
-            process_mock = mock.Mock()
-            attrs = {'communicate.return_value': ('OS_USER_NAME=test_name',
-                                                  'success')}
-            process_mock.configure_mock(**attrs)
-            mock_subproc_popen.return_value = process_mock
+    def _test_source_credentials(self, msg, key='OS_TENANT_NAME',
+                                 value='admin'):
+        try:
+            del os.environ[key]
+        except:
+            pass
+        f = 'rc_file'
+        with mock.patch('__builtin__.open', mock.mock_open(read_data=msg),
+                        create=True) as m:
+            m.return_value.__iter__ = lambda self: iter(self.readline, '')
+            openstack_utils.source_credentials(f)
+            m.assert_called_once_with(f, 'r')
+            self.assertEqual(os.environ[key], value)
 
-            self.assertDictEqual(openstack_utils.source_credentials('rc_file'),
-                                 {'OS_USER_NAME': 'test_name'})
+    def test_source_credentials(self):
+        self._test_source_credentials('OS_TENANT_NAME=admin')
+        self._test_source_credentials('OS_TENANT_NAME= admin')
+        self._test_source_credentials('OS_TENANT_NAME = admin')
+        self._test_source_credentials('OS_TENANT_NAME = "admin"')
+        self._test_source_credentials('export OS_TENANT_NAME=admin')
+        self._test_source_credentials('export OS_TENANT_NAME =admin')
+        self._test_source_credentials('export OS_TENANT_NAME = admin')
+        self._test_source_credentials('export OS_TENANT_NAME = "admin"')
+        self._test_source_credentials('OS_TENANT_NAME', value='')
+        self._test_source_credentials('export OS_TENANT_NAME', value='')
 
     @mock.patch('functest.utils.openstack_utils.os.getenv',
                 return_value=None)
