@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_bd361d02",
+        "filename": "functest/opnfv_tests/features/security_scan.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-08T08:17:32Z",
+      "side": 1,
+      "message": "what dose bash{0} and cd {1} mean?",
+      "revId": "193e49c0e5fe1b08641337e72daf9c245657f2b4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
