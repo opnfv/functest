@@ -10,7 +10,7 @@
 
 import os
 import os.path
-import subprocess
+import re
 import sys
 import time
 
@@ -112,12 +112,13 @@ def get_credentials(other_creds={}):
 
 
 def source_credentials(rc_file):
-    pipe = subprocess.Popen(". %s; env" % rc_file, stdout=subprocess.PIPE,
-                            shell=True)
-    output = pipe.communicate()[0]
-    env = dict((line.split("=", 1) for line in output.splitlines()))
-    os.environ.update(env)
-    return env
+    with open(rc_file, "r") as f:
+        for line in f:
+            var = line.rstrip('"\n').replace('export ', '').split("=")
+            key = re.sub(r'^ *| *$', '', var[0])
+            value = re.sub(r'^[" ]*|[ "]*$', '', "".join(var[1:]))
+            os.environ[key] = value
+    return os.environ
 
 
 def get_credentials_for_rally():
