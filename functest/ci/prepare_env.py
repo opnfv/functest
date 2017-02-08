@@ -170,12 +170,10 @@ def source_rc_file():
             sys.exit(1)
 
     logger.info("Sourcing the OpenStack RC file...")
-    creds = os_utils.source_credentials(
+    os_utils.source_credentials(
         CONST.openstack_creds)
-    str = ""
-    for key, value in creds.iteritems():
+    for key, value in os.environ.iteritems():
         if re.search("OS_", key):
-            str += "\n\t\t\t\t\t\t   " + key + "=" + value
             if key == 'OS_AUTH_URL':
                 CONST.OS_AUTH_URL = value
             elif key == 'OS_USERNAME':
