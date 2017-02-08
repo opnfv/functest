@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_207c4620",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-02-08T10:32:47Z",
+      "side": 1,
+      "message": "\"Calls rally verify and updates the generated tempest.conf with given parameters\"",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 37
+      },
+      "revId": "246125573451e6c78a4b6da4171ed1b77f1c9e5c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_4079522e",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-02-08T10:32:47Z",
+      "side": 1,
+      "message": "this will override any IMAGE_ID value, remove the none",
+      "range": {
+        "startLine": 121,
+        "startChar": 48,
+        "endLine": 121,
+        "endChar": 53
+      },
+      "revId": "246125573451e6c78a4b6da4171ed1b77f1c9e5c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_e075de32",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-02-08T10:32:47Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 121,
+        "startChar": 64,
+        "endLine": 121,
+        "endChar": 69
+      },
+      "revId": "246125573451e6c78a4b6da4171ed1b77f1c9e5c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_c0946239",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-02-08T10:32:47Z",
+      "side": 1,
+      "message": "this part can be removed to make the function name slightly more appropriate",
+      "range": {
+        "startLine": 181,
+        "startChar": 22,
+        "endLine": 181,
+        "endChar": 30
+      },
+      "revId": "246125573451e6c78a4b6da4171ed1b77f1c9e5c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_00734a4e",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-02-08T10:32:47Z",
+      "side": 1,
+      "message": "Execute rally verify configure-verifier, which generates tempest.conf",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 69
+      },
+      "revId": "246125573451e6c78a4b6da4171ed1b77f1c9e5c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
