@@ -2,26 +2,25 @@ import os
 
 import yaml
 
+import env
+
 
 class Config(object):
     def __init__(self):
-        if 'CONFIG_FUNCTEST_YAML' not in os.environ:
-            raise Exception('CONFIG_FUNCTEST_YAML not configed')
-        self.config_functest = os.environ['CONFIG_FUNCTEST_YAML']
         try:
-            with open(self.config_functest) as f:
+            with open(env.ENV.CONFIG_FUNCTEST_YAML) as f:
                 self.functest_yaml = yaml.safe_load(f)
                 self._parse(None, self.functest_yaml)
-        except:
-            raise Exception('Parse {} failed'.format(self.config_functest))
+        except Exception as error:
+            raise Exception('Parse config failed: {}'.format(str(error)))
         self._set_others()
 
     def _parse(self, attr_now, left_parametes):
         for param_n, param_v in left_parametes.iteritems():
             attr_further = self._get_attr_further(attr_now, param_n)
-            if not isinstance(param_v, dict):
+            if attr_further:
                 self.__setattr__(attr_further, param_v)
-            else:
+            if isinstance(param_v, dict):
                 self._parse(attr_further, param_v)
 
     def _get_attr_further(self, attr_now, next):
@@ -33,3 +32,8 @@ class Config(object):
 
 
 CONF = Config()
+
+if __name__ == "__main__":
+    print CONF.vnf_cloudify_ims
+    print CONF.vnf_cloudify_ims_tenant_images
+    print CONF.vnf_cloudify_ims_tenant_images_centos_7
