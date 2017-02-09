@@ -7,11 +7,9 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import os
 import time
 
 import inspect
-
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
@@ -161,30 +159,6 @@ class VnfOnBoardingBase(base.TestcaseBase):
             "username": self.tenant_name,
             "password": self.tenant_name,
         })
-        self.glance_client = os_utils.get_glance_client(self.creds)
-        self.logger.info("Upload some OS images if it doesn't exist")
-
-        temp_dir = os.path.join(self.data_dir, "tmp/")
-        for image_name, image_url in self.images.iteritems():
-            image_id = os_utils.get_image_id(self.glance_client, image_name)
-
-            if image_id == '':
-                self.logger.info("""%s image doesn't exist on glance repository. Try
-                downloading this image and upload on glance !""" % image_name)
-                image_id = os_utils.download_and_add_image_on_glance(
-                    self.glance_client, image_name, image_url, temp_dir)
-
-            if image_id == '':
-                self.step_failure(
-                    "Failed to find or upload required OS "
-                    "image for this deployment")
-
-        self.logger.info("Update security group quota for this tenant")
-
-        if not os_utils.update_sg_quota(self.neutron_client,
-                                        tenant_id, 50, 100):
-            self.step_failure("Failed to update security group quota" +
-                              " for tenant " + self.tenant_name)
 
     # orchestrator is not mandatory to dpeloy and test VNF
     def deploy_orchestrator(self, **kwargs):
