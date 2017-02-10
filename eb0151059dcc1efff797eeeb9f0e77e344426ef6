@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_b73cf694",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-10T09:04:55Z",
+      "side": 1,
+      "message": "why iterating in all the env variables instead of the ones we need?",
+      "revId": "eb0151059dcc1efff797eeeb9f0e77e344426ef6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
