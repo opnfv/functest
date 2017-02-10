@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_376fa694",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5579
+      },
+      "writtenOn": "2017-02-10T09:09:38Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be easier to inherit from logging.Logger instead of keeping a logger as a class field?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "93a64634f99a64009fe762fb69e774e3524cc9be",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
