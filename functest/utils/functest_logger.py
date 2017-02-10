@@ -28,42 +28,36 @@ import json
 
 from functest.utils.constants import CONST
 
-logger = logging.getLogger(__name__)
-
-
-def is_debug():
-    if CONST.CI_DEBUG and CONST.CI_DEBUG.lower() == "true":
-        return True
-    return False
-
-
-def setup_logging(default_path=CONST.dir_functest_logging_cfg,
-                  default_level=logging.INFO,
-                  env_key='LOG_CFG'):
-    path = default_path
-    value = os.getenv(env_key, None)
-    if value:
-        path = value
-    if os.path.exists(path):
-        with open(path, 'rt') as f:
-            config = json.load(f)
-            if (config['handlers'] and
-                    config['handlers']['console']):
-                stream_level = logging.INFO
-                if is_debug():
-                    stream_level = logging.DEBUG
-                config['handlers']['console']['level'] = stream_level
-            logging.config.dictConfig(config)
-    else:
-        logging.basicConfig(level=default_level)
-
-
-setup_logging()
-
 
 class Logger:
     def __init__(self, logger_name):
+        self.setup_logging()
         self.logger = logging.getLogger(logger_name)
 
     def getLogger(self):
         return self.logger
+
+    def is_debug(self):
+        if CONST.CI_DEBUG and CONST.CI_DEBUG.lower() == "true":
+            return True
+        return False
+
+    def setup_logging(self, default_path=CONST.dir_functest_logging_cfg,
+                      default_level=logging.INFO,
+                      env_key='LOG_CFG'):
+        path = default_path
+        value = os.getenv(env_key, None)
+        if value:
+            path = value
+        if os.path.exists(path):
+            with open(path, 'rt') as f:
+                config = json.load(f)
+                if (config['handlers'] and
+                        config['handlers']['console']):
+                    stream_level = logging.INFO
+                    if self.is_debug():
+                        stream_level = logging.DEBUG
+                    config['handlers']['console']['level'] = stream_level
+                logging.config.dictConfig(config)
+        else:
+            logging.basicConfig(level=default_level)
