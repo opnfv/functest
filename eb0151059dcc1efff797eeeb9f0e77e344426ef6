@@ -34,6 +34,24 @@
       "revId": "eb0151059dcc1efff797eeeb9f0e77e344426ef6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_972c5a4c",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-10T09:40:07Z",
+      "side": 1,
+      "message": "Does it change the first implementation?",
+      "parentUuid": "1acb0d3e_37f6c6d8",
+      "revId": "eb0151059dcc1efff797eeeb9f0e77e344426ef6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
