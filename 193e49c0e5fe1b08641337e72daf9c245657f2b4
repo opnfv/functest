@@ -52,6 +52,24 @@
       "revId": "193e49c0e5fe1b08641337e72daf9c245657f2b4",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_d748a2ce",
+        "filename": "functest/opnfv_tests/features/security_scan.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-10T11:21:49Z",
+      "side": 1,
+      "message": "self.cmd \u003d (\u0027bash {creds} \u0026\u0026 \u0027\n\t    \u0027cd {repo} \u0026\u0026 \u0027\n\t    \u0027python security_scan.py --config config.ini \u0026\u0026 \u0027\n\t    \u0027cd -\u0027.format(creds\u003dCONST.openstack_creds,\n\t\t\t  repo\u003dself.repo))",
+      "parentUuid": "1acb0d3e_97d3fa37",
+      "revId": "193e49c0e5fe1b08641337e72daf9c245657f2b4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
