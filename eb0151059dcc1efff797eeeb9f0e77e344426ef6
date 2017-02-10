@@ -16,6 +16,24 @@
       "revId": "eb0151059dcc1efff797eeeb9f0e77e344426ef6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_37f6c6d8",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-10T09:35:57Z",
+      "side": 1,
+      "message": "same question",
+      "parentUuid": "1acb0d3e_b73cf694",
+      "revId": "eb0151059dcc1efff797eeeb9f0e77e344426ef6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
