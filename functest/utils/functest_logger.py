@@ -58,9 +58,6 @@ def setup_logging(default_path=CONST.dir_functest_logging_cfg,
         logging.basicConfig(level=default_level)
 
 
-setup_logging()
-
-
 class Logger:
     def __init__(self, logger_name):
         self.logger = logging.getLogger(logger_name)

@@ -30,6 +30,7 @@ from functest.utils.constants import CONST
 
 actions = ['start', 'check']
 
+ft_logger.setup_logging()
 """ logging configuration """
 logger = ft_logger.Logger("prepare_env").getLogger()
 

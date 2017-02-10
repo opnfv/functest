@@ -20,7 +20,7 @@ class TestcaseBase(object):
     EX_RUN_ERROR = os.EX_SOFTWARE
     EX_PUBLISH_RESULT_FAILED = os.EX_SOFTWARE - 1
     EX_TESTCASE_FAILED = os.EX_SOFTWARE - 2
-
+    ft_logger.setup_logging()
     logger = ft_logger.Logger(__name__).getLogger()
 
     def __init__(self):

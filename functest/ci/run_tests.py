@@ -27,6 +27,7 @@ import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
 
+ft_logger.setup_logging()
 """ logging configuration """
 logger = ft_logger.Logger("run_tests").getLogger()
 

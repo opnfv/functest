@@ -26,7 +26,7 @@ from git import Repo
 from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 
-
+ft_logger.setup_logging()
 logger = ft_logger.Logger("functest_utils").getLogger()
 
 

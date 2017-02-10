@@ -25,6 +25,7 @@ from neutronclient.neutron import client as neutronclient
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
+
 logger = ft_logger.Logger("openstack_utils").getLogger()
 
 DEFAULT_API_VERSION = '2'
