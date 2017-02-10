@@ -52,6 +52,24 @@
       "revId": "eb0151059dcc1efff797eeeb9f0e77e344426ef6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_f7a91e7c",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-10T10:51:55Z",
+      "side": 1,
+      "message": "What do you mean? I am fine with this, but I\u0027m just wondering why the current implementation is wrong if it returns the creds as a dictionary to iterate here.",
+      "parentUuid": "1acb0d3e_972c5a4c",
+      "revId": "eb0151059dcc1efff797eeeb9f0e77e344426ef6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
