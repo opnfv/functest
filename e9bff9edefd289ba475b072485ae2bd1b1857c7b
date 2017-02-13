@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_a97d9db3",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-13T10:11:12Z",
+      "side": 1,
+      "message": "odl_netvirt_openstack",
+      "revId": "e9bff9edefd289ba475b072485ae2bd1b1857c7b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
