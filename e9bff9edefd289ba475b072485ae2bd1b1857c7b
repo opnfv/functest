@@ -16,6 +16,24 @@
       "revId": "e9bff9edefd289ba475b072485ae2bd1b1857c7b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_6c0a53d4",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-13T14:08:31Z",
+      "side": 1,
+      "message": "I would say that odl_netvirt is enough.\nOPNFV takes only openstack into account.",
+      "parentUuid": "dabed58f_a97d9db3",
+      "revId": "e9bff9edefd289ba475b072485ae2bd1b1857c7b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
