@@ -23,6 +23,7 @@ import requests
 import yaml
 from git import Repo
 
+from functest.utils import decorators
 import functest.utils.functest_logger as ft_logger
 
 logger = ft_logger.Logger("functest_utils").getLogger()
@@ -182,6 +183,7 @@ def logger_test_results(project, case_name, status, details):
             'd': details})
 
 
+@decorators.can_dump_request_to_file
 def push_results_to_db(project, case_name,
                        start_date, stop_date, criteria, details):
     """
