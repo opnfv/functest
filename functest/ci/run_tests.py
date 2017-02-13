@@ -78,8 +78,8 @@ def source_rc_file():
         logger.error("RC file %s does not exist..." % rc_file)
         sys.exit(1)
     logger.debug("Sourcing the OpenStack RC file...")
-    creds = os_utils.source_credentials(rc_file)
-    for key, value in creds.iteritems():
+    os_utils.source_credentials(rc_file)
+    for key, value in os.environ.iteritems():
         if re.search("OS_", key):
             if key == 'OS_AUTH_URL':
                 ft_constants.OS_AUTH_URL = value
