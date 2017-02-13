@@ -1,0 +1,39 @@
+tenant_images:
+    ubuntu_14.04: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+    centos_7: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-1510.qcow2
+cloudify:
+    blueprint:
+        url: https://github.com/boucherv-orange/cloudify-manager-blueprints.git
+        branch: '3.3.1-build'
+    requirements:
+        ram_min: 3000
+        os_image: centos_7
+    inputs:
+      keystone_username: ""
+      keystone_password: ""
+      keystone_tenant_name: ""
+      keystone_url: ""
+      manager_public_key_name: 'manager-kp'
+      agent_public_key_name: 'agent-kp'
+      image_id: ""
+      flavor_id: "3"
+      external_network_name: ""
+      ssh_user: centos
+      agents_user: ubuntu
+clearwater:
+    blueprint:
+        file_name: openstack-blueprint.yaml
+        name: clearwater-opnfv
+        destination_folder: opnfv-cloudify-clearwater
+        url: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git
+        branch: stable
+    deployment_name: clearwater-opnfv
+    requirements:
+        ram_min: 1700
+        os_image: ubuntu_14.04
+    inputs:
+        image_id: ''
+        flavor_id: ''
+        agent_user: ubuntu
+        external_network_name: ''
+        public_domain: clearwaterfv
