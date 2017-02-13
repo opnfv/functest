@@ -16,6 +16,24 @@
       "revId": "b789d2639e1c20e7626a2bc33132a7fa2c55a88c",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_89e69943",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-02-13T02:24:38Z",
+      "side": 1,
+      "message": "I believe this is a technical debate about returning code and exception. \nI would like to know which option are you in favor of?",
+      "parentUuid": "1acb0d3e_527cc072",
+      "revId": "b789d2639e1c20e7626a2bc33132a7fa2c55a88c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
