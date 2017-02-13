@@ -34,6 +34,24 @@
       "revId": "df8e07ba043bc150ae9640af2cee5c8c10ccc47b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e9cdd55e",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-13T08:09:32Z",
+      "side": 0,
+      "message": "this is not a comment about your change which is ok. Here we should return internal codes instead of external codes.",
+      "parentUuid": "dabed58f_e9d95584",
+      "revId": "df8e07ba043bc150ae9640af2cee5c8c10ccc47b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
