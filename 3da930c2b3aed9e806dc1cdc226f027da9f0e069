@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_1220929a",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6551
+      },
+      "writtenOn": "2017-02-14T11:39:49Z",
+      "side": 1,
+      "message": "since we are deploying latest version of openbaton also this link must be updated. the new link should be: \"http://marketplace.openbaton.org:8082/api/v1/nsds/fokus/OpenIMSCoreBind9FHoSS/3.2.0/json\"",
+      "revId": "3da930c2b3aed9e806dc1cdc226f027da9f0e069",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_f20ffe2c",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6551
+      },
+      "writtenOn": "2017-02-14T11:39:49Z",
+      "side": 1,
+      "message": "Here is the mistake, we used this image name for internal testing. It should be changed to \"ubuntu_14.04\". \n\nFor this reason the NFVO is not deployed and then the vnf deploy fails",
+      "revId": "3da930c2b3aed9e806dc1cdc226f027da9f0e069",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
