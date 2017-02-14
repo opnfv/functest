@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_78a0cdf4",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 5995
+      },
+      "writtenOn": "2017-02-14T21:15:06Z",
+      "side": 1,
+      "message": "Internally we previously decided our preference is:\ncriteria: \u0027status \u003d\u003d \"PASS\"\u0027",
+      "range": {
+        "startLine": 341,
+        "startChar": 16,
+        "endLine": 341,
+        "endChar": 48
+      },
+      "revId": "b39fe30b3f1946a8d1ce4dad21d5137af121cafa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_18a51104",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 5995
+      },
+      "writtenOn": "2017-02-14T21:15:06Z",
+      "side": 1,
+      "message": "Here\u0027s a mode detailed description we\u0027d like to publish (for now):\nTest suite for the Barometer project. Separate tests verify the proper configuration and functionality of the following collectd plugins: Ceilometer, Hugepages, Memory RAS (mcelog), and OVS Events.",
+      "range": {
+        "startLine": 344,
+        "startChar": 20,
+        "endLine": 344,
+        "endChar": 54
+      },
+      "revId": "b39fe30b3f1946a8d1ce4dad21d5137af121cafa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_b85e4511",
+        "filename": "functest/opnfv_tests/features/barometer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5995
+      },
+      "writtenOn": "2017-02-14T21:15:06Z",
+      "side": 1,
+      "message": "I think this should be:\nself.cmd \u003d \u0027cd %s \u0026\u0026 python ./tests/barometer_collectd.py\u0027 % self.repo",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 35
+      },
+      "revId": "b39fe30b3f1946a8d1ce4dad21d5137af121cafa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
