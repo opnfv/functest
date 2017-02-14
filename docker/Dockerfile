@@ -83,6 +83,7 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${REPO
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${REPOS_DIR}/doctor
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/ovno ${REPOS_DIR}/ovno
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${REPOS_DIR}/promise
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/barometer ${REPOS_DIR}/barometer
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sfc ${REPOS_DIR}/sfc
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${REPOS_DIR}/securityscanning
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${REPOS_DIR}/releng
@@ -106,6 +107,9 @@ RUN cd ${FUNCTEST_REPO_DIR} \
     && pip install .
 
 RUN cd ${RELENG_MODULE_DIR} \
+    && pip install .
+
+RUN cd ${REPOS_DIR}/barometer \
     && pip install .
 
 RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
