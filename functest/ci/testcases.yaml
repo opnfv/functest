@@ -443,3 +443,16 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.opera_ims'
                     class: 'ImsVnf'
+
+            -
+                name: vyos_vrouter
+                criteria: 'status == "PASS"'
+                blocking: false
+                description: >-
+                    This test case is vRouter testing.
+                dependencies:
+                    installer: 'fuel'
+                    scenario: 'nosdn-nofeature'
+                run:
+                    module: 'functest.opnfv_tests.vnf.router.vyos_vrouter'
+                    class: 'VrouterVnf'
