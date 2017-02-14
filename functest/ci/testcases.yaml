@@ -336,6 +336,18 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.features.orchestrator.orchestra'
                     class: 'OpenbatonOrchestrator'
+            -
+                name: barometer
+                criteria: 'success_rate == 100%'
+                blocking: false
+                description: >-
+                    Test suite from Barometer project.
+                dependencies:
+                    installer: ''
+                    scenario: 'barometer'
+                run:
+                     module: 'functest.opnfv_tests.features.barometer'
+                     class: 'Barometercollectd'
     -
         name: components
         order: 3
