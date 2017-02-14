@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_f2737ee5",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-14T13:57:36Z",
+      "side": 1,
+      "message": "you could place them together",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_b27d06b4",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-14T13:57:36Z",
+      "side": 1,
+      "message": "you could place the name of the project behind the name, for example:\n\nipv6_vrouter or something like that",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
