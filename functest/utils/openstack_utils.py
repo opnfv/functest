@@ -114,10 +114,12 @@ def get_credentials(other_creds={}):
 def source_credentials(rc_file):
     with open(rc_file, "r") as f:
         for line in f:
-            var = line.rstrip('"\n').replace(
-                'export ', '').replace("'", "").split("=")
-            key = re.sub(r'^ *| *$', '', var[0])
-            value = re.sub(r'^[" ]*|[ "]*$', '', "".join(var[1:]))
+            var = line.rstrip('"\n').replace('export ', '').split("=")
+            # The two next lines should be modified as soon as rc_file
+            # conforms with common rules. Be aware that it could induce
+            # issues if value starts with '
+            key = re.sub(r'^["\' ]*|[ \'"]*$', '', var[0])
+            value = re.sub(r'^["\' ]*|[ \'"]*$', '', "".join(var[1:]))
             os.environ[key] = value
 
 
