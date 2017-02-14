@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_bd8f17cc",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-14T19:40:46Z",
+      "side": 1,
+      "message": "yes, I missed this. It would be good to have stable tags. Master is ok, but it can cause problems when master is broken.",
+      "parentUuid": "dabed58f_3d5d67ea",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_1d58a3f9",
         "filename": "docker/Dockerfile",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-02-14T15:58:04Z",
       "side": 1,
       "message": "do you plan to add this in an OPNFV repo?\nno problem with external repo but it is usually easier to collaborate when the code is insourced",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_9d9253f5",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-14T19:40:46Z",
+      "side": 1,
+      "message": "+10",
+      "parentUuid": "dabed58f_1d58a3f9",
       "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
