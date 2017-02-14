@@ -336,6 +336,18 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.features.orchestrator.orchestra'
                     class: 'OpenbatonOrchestrator'
+            -
+                name: netready
+                criteria: 'success_rate == 100%'
+                blocking: false
+                description: >-
+                    Test suite from Netready project.
+                dependencies:
+                    installer: 'fuel'
+                    scenario: ''
+                run:
+                     module: 'functest.opnfv_tests.features.netready'
+                     class: 'GluonVping'
     -
         name: components
         order: 3
