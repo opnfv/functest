@@ -27,6 +27,7 @@ general:
         repo_domino:        /home/opnfv/repos/domino
         repo_snaps:         /home/opnfv/repos/snaps
         repo_securityscan:  /home/opnfv/repos/securityscanning
+        repo_vrouter:       /home/opnfv/repos/vrouter
         functest:           /home/opnfv/functest
         functest_test:      /home/opnfv/repos/functest/functest/opnfv_tests
         results:            /home/opnfv/functest/results
@@ -34,6 +35,7 @@ general:
         functest_conf:      /home/opnfv/functest/conf
         functest_data:      /home/opnfv/functest/data
         ims_data:           /home/opnfv/functest/data/ims/
+        vrouter_data:       /home/opnfv/functest/data/vRouter
         rally_inst:         /home/opnfv/.rally
 
     openstack:

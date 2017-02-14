@@ -19,6 +19,7 @@ ARG ODL_TAG=release/beryllium-sr4
 ARG OPENSTACK_TAG=stable/mitaka
 ARG KINGBIRD_TAG=0.2.2
 ARG VIMS_TAG=stable
+ARG VROUTER_TAG=master
 ARG REPOS_DIR=/home/opnfv/repos
 ARG FUNCTEST_BASE_DIR=/home/opnfv/functest
 ARG FUNCTEST_CONF_DIR=${FUNCTEST_BASE_DIR}/conf
@@ -96,6 +97,7 @@ RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git
 # other repositories
 RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${REPOS_DIR}/odl_test
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_VNFS_DIR}/vims-test
+RUN git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-functest-vrouter.git ${REPOS_VNFS_DIR}/vrouter
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
 
 RUN pip install -r ${REPOS_DIR}/rally/requirements.txt
