@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_d26c3a39",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-14T12:41:55Z",
+      "side": 1,
+      "message": "I don\u0027t know the dependencies to your test case. Can it run on any installer/scenario? If so, I will remove this which prevents from executing it since there is no barometer scenario.",
+      "revId": "072813fdae241f9df00bacf6240c3c31db7f588a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
