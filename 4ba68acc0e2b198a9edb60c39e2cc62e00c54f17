@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "dabed58f_3d5d67ea",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-14T15:58:04Z",
+      "side": 1,
+      "message": "linked to next topic\nas it is external do you plan to apply label in the future\nto be sure that what we release correspond to a given configuration?",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_1d58a3f9",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-14T15:58:04Z",
+      "side": 1,
+      "message": "do you plan to add this in an OPNFV repo?\nno problem with external repo but it is usually easier to collaborate when the code is insourced",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_f2737ee5",
         "filename": "functest/ci/config_functest.yaml",
         "patchSetId": 1
@@ -30,6 +64,23 @@
       "writtenOn": "2017-02-14T13:57:36Z",
       "side": 1,
       "message": "you could place the name of the project behind the name, for example:\n\nipv6_vrouter or something like that",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_7d63dfb1",
+        "filename": "functest/opnfv_tests/vnf/router/vrouter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-14T15:58:04Z",
+      "side": 1,
+      "message": "in the test results you will get only a PASS/FAIL\nregarding the type of test it would probably make sense to have more info in the details section",
       "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
