@@ -176,11 +176,6 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             cfy.set_nameservers(ns)
             self.logger.debug("Resolvconf set")
 
-        if 'compute' in self.nova_client.client.services_url:
-            cfy.set_nova_url(self.nova_client.client.services_url['compute'])
-        if self.neutron_client.httpclient.endpoint_url is not None:
-            cfy.set_neutron_url(self.neutron_client.httpclient.endpoint_url)
-
         self.logger.info("Prepare virtualenv for cloudify-cli")
         cmd = "chmod +x " + self.case_dir + "create_venv.sh"
         ft_utils.execute_command(cmd)
