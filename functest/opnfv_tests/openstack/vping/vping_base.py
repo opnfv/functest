@@ -289,6 +289,6 @@ class VPingMain(object):
             if result != VPingBase.EX_OK:
                 return result
             if kwargs['report']:
-                return self.vping.publish_report()
+                return self.vping.push_to_db()
         except Exception:
             return VPingBase.EX_RUN_ERROR

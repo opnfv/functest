@@ -23,9 +23,8 @@ import requests
 import yaml
 from git import Repo
 
-from functest.utils.constants import CONST
+from functest.utils import decorators
 import functest.utils.functest_logger as ft_logger
-
 
 logger = ft_logger.Logger("functest_utils").getLogger()
 
@@ -184,43 +183,14 @@ def logger_test_results(project, case_name, status, details):
             'd': details})
 
 
-def write_results_to_file(project, case_name, start_date,
-                          stop_date, criteria, details):
-    file_path = re.split(r'://', CONST.results_test_db_url)[1]
-
-    try:
-        installer = os.environ['INSTALLER_TYPE']
-        scenario = os.environ['DEPLOY_SCENARIO']
-        pod_name = os.environ['NODE_NAME']
-    except KeyError as e:
-        logger.error("Please set env var: " + str(e))
-        return False
-
-    test_start = dt.fromtimestamp(start_date).strftime('%Y-%m-%d %H:%M:%S')
-    test_stop = dt.fromtimestamp(stop_date).strftime('%Y-%m-%d %H:%M:%S')
-
-    params = {"project_name": project, "case_name": case_name,
-              "pod_name": pod_name, "installer": installer,
-              "scenario": scenario, "criteria": criteria,
-              "start_date": test_start, "stop_date": test_stop,
-              "details": details}
-    try:
-        with open(file_path, "a+w") as outfile:
-            json.dump(params, outfile)
-            outfile.write("\n")
-        return True
-    except Exception as e:
-        logger.error("write result data into a file failed: %s" % e)
-        return False
-
-
+@decorators.can_dump_request_to_file
 def push_results_to_db(project, case_name,
                        start_date, stop_date, criteria, details):
     """
     POST results to the Result target DB
     """
     # Retrieve params from CI and conf
-    url = CONST.results_test_db_url + "/results"
+    url = get_db_url() + "/results"
 
     try:
         installer = os.environ['INSTALLER_TYPE']

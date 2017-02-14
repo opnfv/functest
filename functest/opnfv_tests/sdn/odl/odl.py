@@ -237,6 +237,6 @@ if __name__ == '__main__':
         if result != testcase_base.TestcaseBase.EX_OK:
             sys.exit(result)
         if args['pushtodb']:
-            sys.exit(odl.publish_report())
+            sys.exit(odl.push_to_db())
     except Exception:
         sys.exit(testcase_base.TestcaseBase.EX_RUN_ERROR)

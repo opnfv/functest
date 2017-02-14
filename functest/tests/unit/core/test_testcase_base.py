@@ -9,7 +9,6 @@
 
 import logging
 import mock
-import os
 import unittest
 
 from functest.core import testcase_base
@@ -32,12 +31,11 @@ class TestcaseBaseTesting(unittest.TestCase):
         self.assertEqual(self.test.run(),
                          testcase_base.TestcaseBase.EX_RUN_ERROR)
 
-    @mock.patch.dict(os.environ, {})
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=False)
     def _test_missing_attribute(self, mock_function):
-        self.assertEqual(self.test.publish_report(),
-                         testcase_base.TestcaseBase.EX_PUBLISH_RESULT_FAILED)
+        self.assertEqual(self.test.push_to_db(),
+                         testcase_base.TestcaseBase.EX_PUSH_TO_DB_ERROR)
         mock_function.assert_not_called()
 
     def test_missing_case_name(self):
@@ -70,7 +68,7 @@ class TestcaseBaseTesting(unittest.TestCase):
                 return_value=False)
     def test_push_to_db_failed(self, mock_function):
         self.assertEqual(self.test.push_to_db(),
-                         testcase_base.TestcaseBase.EX_PUBLISH_RESULT_FAILED)
+                         testcase_base.TestcaseBase.EX_PUSH_TO_DB_ERROR)
         mock_function.assert_called_once_with(
             self.test.project, self.test.case_name, self.test.start_time,
             self.test.stop_time, self.test.criteria, self.test.details)
