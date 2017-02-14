@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_d8121958",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-14T20:24:40Z",
+      "side": 1,
+      "message": "not sure how to not hardcode these values... this will work only if the user/password are the defaults.. shall we provide that as another env variable?",
+      "revId": "9886535d617d95e7d2c2f294e79a7cd994fcd685",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
