@@ -20,6 +20,7 @@ general:
         repo_sfc:           /home/opnfv/repos/sfc
         dir_repo_onos:      /home/opnfv/repos/onos
         repo_promise:       /home/opnfv/repos/promise
+        repo_barometer:     /home/opnfv/repos/barometer
         repo_doctor:        /home/opnfv/repos/doctor
         repo_copper:        /home/opnfv/repos/copper
         dir_repo_ovno:      /home/opnfv/repos/ovno
