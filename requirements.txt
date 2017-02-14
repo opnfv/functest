@@ -29,3 +29,4 @@ shyaml
 dnspython
 Pillow==3.3.0
 click==6.6
+openbaton-cli==2.2.1-beta7
