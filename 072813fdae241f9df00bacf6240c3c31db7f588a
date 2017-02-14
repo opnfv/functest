@@ -16,6 +16,24 @@
       "revId": "072813fdae241f9df00bacf6240c3c31db7f588a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_fd36efe6",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 304
+      },
+      "writtenOn": "2017-02-14T14:40:55Z",
+      "side": 1,
+      "message": "HI Jose\nwe have a specific scenario: os-nosdn-kvm_ovs_dpdk_bar-ha\nfor the fuel installer only\nI\u0027m assuming the change here is:\ninstaller: \u0027fuel\u0027\nscenario: \u0027os-nosdn-kvm_ovs_dpdk_bar-ha\u0027",
+      "parentUuid": "dabed58f_d26c3a39",
+      "revId": "072813fdae241f9df00bacf6240c3c31db7f588a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
