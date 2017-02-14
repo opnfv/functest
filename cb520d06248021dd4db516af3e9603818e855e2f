@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_78ee8d24",
+        "filename": "functest/opnfv_tests/features/barometer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5995
+      },
+      "writtenOn": "2017-02-14T21:31:32Z",
+      "side": 1,
+      "message": "Is self.self.repo correct?!  Shouldn\u0027t actually be self.repo?\nWith self.repo, the overall length is 79 chars and fits in one line.",
+      "range": {
+        "startLine": 19,
+        "startChar": 20,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "cb520d06248021dd4db516af3e9603818e855e2f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
