@@ -111,8 +111,8 @@ def configure_tempest(deployment_dir, IMAGE_ID=None, FLAVOR_ID=None):
     Calls rally verify and updates the generated tempest.conf with
     given parameters
     """
-    conf_verifier_result = configure_verifier(deployment_dir)
-    configure_tempest_update_params(conf_verifier_result,
+    conf_file = configure_verifier(deployment_dir)
+    configure_tempest_update_params(conf_file,
                                     IMAGE_ID, FLAVOR_ID)
 
 
@@ -192,6 +192,8 @@ def configure_verifier(deployment_dir):
                      % tempest_conf_file)
         raise Exception("Tempest configuration file %s NOT found."
                         % tempest_conf_file)
+    else:
+        return tempest_conf_file
 
 
 def configure_tempest_multisite(deployment_dir):
