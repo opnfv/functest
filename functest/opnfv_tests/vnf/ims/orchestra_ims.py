@@ -36,8 +36,48 @@ def servertest(host, port):
             s.close()
             return True
 
+# ----------------------------------------------------------
+#
+#               UTILS
+#
+# -----------------------------------------------------------
+
+
+def get_config(parameter, file):
+    """
+    Returns the value of a given parameter in file.yaml
+    parameter must be given in string format with dots
+    Example: general.openstack.image_name
+    """
+    with open(file) as f:
+        file_yaml = yaml.safe_load(f)
+    f.close()
+    value = file_yaml
+    for element in parameter.split("."):
+        value = value.get(element)
+        if value is None:
+            raise ValueError("The parameter %s is not defined in"
+                             " reporting.yaml" % parameter)
+    return value
+
+
+def download_and_add_image_on_glance(glance, image_name,
+                                     image_url, data_dir):
+    dest_path = data_dir
+    if not os.path.exists(dest_path):
+        os.makedirs(dest_path)
+    file_name = image_url.rsplit('/')[-1]
+    if not ft_utils.download_url(image_url, dest_path):
+        return False
+    image = os_utils.create_glance_image(
+        glance, image_name, dest_path + file_name)
+    if not image:
+        return False
+    return image
+
 
 class ImsVnf(vnf_base.VnfOnBoardingBase):
+
     def __init__(self, project='functest', case='orchestra_ims',
                  repo='', cmd=''):
         super(ImsVnf, self).__init__(project, case, repo, cmd)
@@ -252,7 +292,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             "tenant": os_utils.get_credentials().get("tenant_name"),
             "username": os_utils.get_credentials().get("username"),
             "password": os_utils.get_credentials().get("password"),
-            "keyPair": "opnfv",
+            # "keyPair": "opnfv",
             # TODO change the keypair to correct value
             # or upload a correct one or remove it
             "securityGroups": [
@@ -296,12 +336,15 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         except NfvoException as e:
             self.step_failure(e.message)
 
-        if nsr is None:
-            self.step_failure("NSR not deployed correctly")
+        if nsr.get('code') is not None:
+            self.logger.error(
+                "vIMS cannot be deployed: %s -> %s" %
+                (nsr.get('code'), nsr.get('message')))
+            self.step_failure("vIMS cannot be deployed")
 
         i = 0
         self.logger.info("waiting NSR to go to active...")
-        while nsr.get("status") != 'ACTIVE':
+        while nsr.get("status") != 'ACTIVE' and nsr.get("status") != 'ERROR':
             i += 1
             if i == 100:
                 self.step_failure("After %s sec the nsr did not go to active.."
@@ -309,9 +352,14 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             time.sleep(5)
             nsr = json.loads(nsr_agent.find(nsr.get('id')))
 
-        deploy_vnf = {'status': "PASS", 'result': nsr}
+        if nsr.get("status") == 'ACTIVE':
+            deploy_vnf = {'status': "PASS", 'result': nsr}
+            self.logger.info("Deploy VNF: OK")
+        else:
+            deploy_vnf = {'status': "FAIL", 'result': nsr}
+            self.logger.error("Deploy VNF: ERROR")
+            self.step_failure("Deploy vIMS failed")
         self.ob_nsr_id = nsr.get("id")
-        self.logger.info("Deploy VNF: OK")
         return deploy_vnf
 
     def test_vnf(self):
@@ -350,41 +398,3 @@ if __name__ == '__main__':
     test.deploy_orchestrator()
     test.deploy_vnf()
     test.clean()
-
-
-# ----------------------------------------------------------
-#
-#               UTILS
-#
-# -----------------------------------------------------------
-def get_config(parameter, file):
-    """
-    Returns the value of a given parameter in file.yaml
-    parameter must be given in string format with dots
-    Example: general.openstack.image_name
-    """
-    with open(file) as f:
-        file_yaml = yaml.safe_load(f)
-    f.close()
-    value = file_yaml
-    for element in parameter.split("."):
-        value = value.get(element)
-        if value is None:
-            raise ValueError("The parameter %s is not defined in"
-                             " reporting.yaml" % parameter)
-    return value
-
-
-def download_and_add_image_on_glance(glance, image_name,
-                                     image_url, data_dir):
-    dest_path = data_dir
-    if not os.path.exists(dest_path):
-        os.makedirs(dest_path)
-    file_name = image_url.rsplit('/')[-1]
-    if not ft_utils.download_url(image_url, dest_path):
-        return False
-    image = os_utils.create_glance_image(
-        glance, image_name, dest_path + file_name)
-    if not image:
-        return False
-    return image
