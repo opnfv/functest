@@ -16,6 +16,24 @@
       "revId": "9886535d617d95e7d2c2f294e79a7cd994fcd685",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_b8d725ed",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-15T01:30:52Z",
+      "side": 1,
+      "message": "In this case, I\u0027m afraid we should.\nAnd as the number of variables increasing and each installer is different, I would recommend to create a installer_creds file to manage the variables needed to access to the installer just as we did to openstack_creds file.",
+      "parentUuid": "dabed58f_d8121958",
+      "revId": "9886535d617d95e7d2c2f294e79a7cd994fcd685",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
