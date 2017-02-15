@@ -278,7 +278,8 @@ def main(**kwargs):
     except Exception as e:
         logger.error(e)
         GlobalVariables.OVERALL_RESULT = Result.EX_ERROR
-    logger.info("Execution exit value: %s" % GlobalVariables.OVERALL_RESULT)
+    logger.info("Execution exit value: %s"
+                % GlobalVariables.OVERALL_RESULT.value)
     return GlobalVariables.OVERALL_RESULT
 
 
