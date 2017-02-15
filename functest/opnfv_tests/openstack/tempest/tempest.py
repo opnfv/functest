@@ -113,7 +113,7 @@ class TempestCommon(testcase_base.TestcaseBase):
             if self.MODE == 'smoke':
                 testr_mode = "smoke"
             elif self.MODE == 'feature_multisite':
-                testr_mode = " | grep -i kingbird "
+                testr_mode = "'[Kk]ingbird'"
             elif self.MODE == 'full':
                 testr_mode = ""
             else:
@@ -272,7 +272,8 @@ class TempestCommon(testcase_base.TestcaseBase):
             self.create_tempest_resources()
             conf_utils.configure_tempest(self.DEPLOYMENT_DIR,
                                          self.IMAGE_ID,
-                                         self.FLAVOR_ID)
+                                         self.FLAVOR_ID,
+                                         self.MODE)
             self.generate_test_list(self.VERIFIER_REPO_DIR)
             self.apply_tempest_blacklist()
             self.run_verifier_tests()
@@ -319,7 +320,6 @@ class TempestMultisite(TempestCommon):
         self.case_name = "multisite"
         self.MODE = "feature_multisite"
         self.OPTION = "--concurrency 1"
-        conf_utils.configure_tempest_multisite(self.DEPLOYMENT_DIR)
 
 
 class TempestCustom(TempestCommon):
