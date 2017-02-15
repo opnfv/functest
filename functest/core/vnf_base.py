@@ -67,8 +67,8 @@ class VnfOnBoardingBase(base.TestcaseBase):
                     res_orchestrator['result'])
                 self.details['orchestrator']['duration'] = round(
                     orchestrator_ready_time - self.start_time, 1)
-        except:
-            self.logger.warn("Problem with the Orchestrator")
+        except Exception:
+            self.logger.warn("Problem with the Orchestrator", exc_info=True)
 
         # Deploy VNF
         try:

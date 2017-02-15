@@ -270,7 +270,7 @@ def get_resolvconf_ns():
     while line:
         ip = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
         if ip:
-            resolver.nameservers = [str(ip)]
+            resolver.nameservers = [ip.group(0)]
             try:
                 result = resolver.query('opnfv.org')[0]
                 if result != "":
