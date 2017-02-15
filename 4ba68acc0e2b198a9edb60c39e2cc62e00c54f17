@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_b802c509",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-02-15T07:22:49Z",
+      "side": 1,
+      "message": "Thanks, You are right. I change the tags \"stable\".",
+      "parentUuid": "dabed58f_bd8f17cc",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_1d58a3f9",
         "filename": "docker/Dockerfile",
         "patchSetId": 1
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_e312ce57",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-02-15T07:22:49Z",
+      "side": 1,
+      "message": "Thank you. I appreciate the comment. Yes, I hope to add in OPNFV repo next step.\n\nWe developed vrouter test suite last year. Now source code of vrouter test is not small(about 2.5K Line),  I am concerned big commit. We will refactor and review for next step in this year.",
+      "parentUuid": "dabed58f_9d9253f5",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_f2737ee5",
         "filename": "functest/ci/config_functest.yaml",
         "patchSetId": 1
@@ -83,6 +119,24 @@
       "writtenOn": "2017-02-14T13:57:36Z",
       "side": 1,
       "message": "you could place them together",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_d80bf929",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-02-15T07:22:49Z",
+      "side": 1,
+      "message": "Thanks, I place \"vrouter_data\" in \"repo_vrouter\" together.",
+      "parentUuid": "dabed58f_f2737ee5",
       "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -124,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_f8083d2f",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-02-15T07:22:49Z",
+      "side": 1,
+      "message": "Thanks, This test is used vyos So, I change it \"vyos_vrouter\".",
+      "parentUuid": "dabed58f_fd6eef95",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_7d63dfb1",
         "filename": "functest/opnfv_tests/vnf/router/vrouter.py",
         "patchSetId": 1
@@ -135,6 +207,24 @@
       "writtenOn": "2017-02-14T15:58:04Z",
       "side": 1,
       "message": "in the test results you will get only a PASS/FAIL\nregarding the type of test it would probably make sense to have more info in the details section",
+      "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_98058116",
+        "filename": "functest/opnfv_tests/vnf/router/vrouter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-02-15T07:22:49Z",
+      "side": 1,
+      "message": "Thank you comment. I consider adding test details and how to get details information from result.",
+      "parentUuid": "dabed58f_7d63dfb1",
       "revId": "4ba68acc0e2b198a9edb60c39e2cc62e00c54f17",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
