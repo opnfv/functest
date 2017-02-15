@@ -108,7 +108,8 @@ def list_vnfs(tacker_client, verbose=False):
         return None
 
 
-def create_vnf(tacker_client, vnf_name, vnfd_id=None, vnfd_name=None):
+def create_vnf(tacker_client, vnf_name, vnfd_id=None,
+               vnfd_name=None, param_file=None):
     try:
         vnf_body = {
             'vnf': {
@@ -116,6 +117,10 @@ def create_vnf(tacker_client, vnf_name, vnfd_id=None, vnfd_name=None):
                 'name': vnf_name
             }
         }
+        if param_file is not None:
+            with open(param_file) as f:
+                params = f.read()
+            vnf_body['vnf']['attributes']['param_values'] = params
         if vnfd_id is not None:
             vnf_body['vnf']['vnfd_id'] = vnfd_id
         else:
