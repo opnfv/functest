@@ -108,10 +108,10 @@ RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
 
 RUN cd ${FUNCTEST_REPO_DIR} \
     && pip install -r requirements.txt \
-    && pip install .
+    && pip install -e .
 
 RUN cd ${RELENG_MODULE_DIR} \
-    && pip install .
+    && pip install -e .
 
 RUN cd ${REPOS_DIR}/barometer \
     && pip install .
@@ -133,12 +133,11 @@ RUN pip install -e ${REPOS_DIR}/snaps/
 
 # SFC integration
 RUN /bin/bash -c ". ${REPOS_DIR}/sfc/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
-RUN cd ${REPOS_DIR}/sfc && pip install .
+RUN cd ${REPOS_DIR}/sfc && pip install -e .
 
 # SDNVPN integration
-RUN cd ${REPOS_DIR}/sdnvpn && pip install .
-
-RUN cd ${REPOS_DIR}/bgpvpn && pip install .
+RUN cd ${REPOS_DIR}/sdnvpn && pip install -e .
+RUN cd ${REPOS_DIR}/bgpvpn && pip install -e .
 
 # Kingbird integration
 RUN cd ${REPOS_DIR}/kingbird && pip install -e .
