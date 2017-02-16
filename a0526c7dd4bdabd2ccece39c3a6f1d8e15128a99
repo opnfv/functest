@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_2858bef9",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 11
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 5995
+      },
+      "writtenOn": "2017-02-16T08:56:02Z",
+      "side": 1,
+      "message": "should need the \"-\" separator line above",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 16
+      },
+      "revId": "a0526c7dd4bdabd2ccece39c3a6f1d8e15128a99",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
