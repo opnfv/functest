@@ -1,0 +1,20 @@
+os:
+    general:
+        openstack:
+            image_name: TestVM
+            image_file_name:  cirros-d161201-aarch64-disk.img
+            image_password:  gocubsgo
+
+    healthcheck:
+        disk_image: /home/opnfv/functest/data/cirros-d161201-aarch64-disk.img
+        kernel_image: /home/opnfv/functest/data/cirros-d161201-aarch64-kernel
+        ramdisk_image: /home/opnfv/functest/data/cirros-d161201-aarch64-initramfs
+        extra_properties:
+            os_command_line: root=/dev/vda1 rw rootwait console=tty0 console=ttyS0 console=ttyAMA0
+            hw_video_model: vga
+
+    vping:
+        image_name: TestVM
+
+    doctor:
+        image_name: TestVM
