@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_48a41257",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-02-16T10:21:32Z",
+      "side": 1,
+      "message": "ok, thanks. My copy of releng was not up to date...",
+      "parentUuid": "dabed58f_28a51e04",
+      "revId": "9886535d617d95e7d2c2f294e79a7cd994fcd685",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_d8121958",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 2
