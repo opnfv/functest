@@ -19,6 +19,7 @@ import os
 import re
 import subprocess
 import sys
+import fileinput
 
 import yaml
 
@@ -34,14 +35,18 @@ actions = ['start', 'check']
 
 """ logging configuration """
 logger = ft_logger.Logger("prepare_env").getLogger()
-
+handler = None
+# set the architecture to default
+pod_arch = None
 
 CONFIG_FUNCTEST_PATH = CONST.CONFIG_FUNCTEST_YAML
 CONFIG_PATCH_PATH = os.path.join(os.path.dirname(
     CONFIG_FUNCTEST_PATH), "config_patch.yaml")
-
-with open(CONFIG_PATCH_PATH) as f:
-    functest_patch_yaml = yaml.safe_load(f)
+CONFIG_AARCH64_PATCH_PATH = os.path.join(os.path.dirname(
+    CONFIG_FUNCTEST_PATH), "config_aarch64_patch.yaml")
+RALLY_CONF_PATH = os.path.join("/etc/rally/rally.conf")
+RALLY_AARCH64_PATCH_PATH = os.path.join(os.path.dirname(
+    CONFIG_FUNCTEST_PATH), "rally_aarch64_patch.conf")
 
 
 class PrepareEnvParser():
@@ -107,6 +112,37 @@ def check_env_variables():
 
     if CONST.IS_CI_RUN:
         logger.info("    IS_CI_RUN=%s" % CONST.IS_CI_RUN)
+
+
+def get_deployment_handler():
+    global handler
+    installer_params_yaml = os.path.join(CONST.dir_repo_functest,
+                                         'functest/ci/installer_params.yaml')
+    if (CONST.INSTALLER_IP and CONST.INSTALLER_TYPE and
+            CONST.INSTALLER_TYPE in opnfv_constants.INSTALLERS):
+        installer_params = ft_utils.get_parameter_from_yaml(
+            CONST.INSTALLER_TYPE, installer_params_yaml)
+
+        user = installer_params.get('user', None)
+        password = installer_params.get('password', None)
+        pkey = installer_params.get('pkey', None)
+
+        try:
+            handler = factory.Factory.get_handler(
+                installer=CONST.INSTALLER_TYPE,
+                installer_ip=CONST.INSTALLER_IP,
+                installer_user=user,
+                installer_pwd=password,
+                pkey_file=pkey)
+        except Exception as e:
+            logger.debug("Cannot get deployment information. %s" % e)
+
+
+def get_pod_arch():
+    global pod_arch
+    global handler
+    if handler:
+        pod_arch = handler.get_arch()
 
 
 def create_directories():
@@ -184,12 +220,18 @@ def source_rc_file():
                 CONST.OS_PASSWORD = value
 
 
-def patch_config_file():
+def patch_config_file(patch_file_path, arch_filter=None):
+    if arch_filter and pod_arch not in arch_filter:
+        return
+
+    with open(patch_file_path) as f:
+        patch_file = yaml.safe_load(f)
+
     updated = False
-    for key in functest_patch_yaml:
+    for key in patch_file:
         if key in CONST.DEPLOY_SCENARIO:
             new_functest_yaml = dict(ft_utils.merge_dicts(
-                ft_utils.get_functest_yaml(), functest_patch_yaml[key]))
+                ft_utils.get_functest_yaml(), patch_file[key]))
             updated = True
 
     if updated:
@@ -217,6 +259,17 @@ def verify_deployment():
 
 def install_rally():
     print_separator()
+
+    if 'aarch64' in pod_arch:
+        logger.info("Apply aarch64 specific to rally config...")
+        with open(RALLY_AARCH64_PATCH_PATH, "r") as f:
+            rally_patch_conf = f.read()
+
+        for line in fileinput.input(RALLY_CONF_PATH, inplace=1):
+            print line,
+            if "cirros|testvm" in line:
+                print rally_patch_conf
+
     logger.info("Creating Rally environment...")
 
     cmd = "rally deployment destroy opnfv-rally"
@@ -281,29 +334,10 @@ def check_environment():
 
 
 def print_deployment_info():
-    installer_params_yaml = os.path.join(CONST.dir_repo_functest,
-                                         'functest/ci/installer_params.yaml')
-    if (CONST.INSTALLER_IP and CONST.INSTALLER_TYPE and
-            CONST.INSTALLER_TYPE in opnfv_constants.INSTALLERS):
-        installer_params = ft_utils.get_parameter_from_yaml(
-            CONST.INSTALLER_TYPE, installer_params_yaml)
-
-        user = installer_params.get('user', None)
-        password = installer_params.get('password', None)
-        pkey = installer_params.get('pkey', None)
-
-        try:
-            handler = factory.Factory.get_handler(
-                installer=CONST.INSTALLER_TYPE,
-                installer_ip=CONST.INSTALLER_IP,
-                installer_user=user,
-                installer_pwd=password,
-                pkey_file=pkey)
-            if handler:
-                logger.info('\n\nDeployment information:\n%s' %
-                            handler.get_deployment_info())
-        except Exception as e:
-            logger.debug("Cannot get deployment information. %s" % e)
+    global handler
+    if handler:
+        logger.info('\n\nDeployment information:\n%s' %
+                    handler.get_deployment_info())
 
 
 def main(**kwargs):
@@ -314,9 +348,12 @@ def main(**kwargs):
         elif kwargs['action'] == "start":
             logger.info("######### Preparing Functest environment #########\n")
             check_env_variables()
+            get_deployment_handler()
+            get_pod_arch()
             create_directories()
             source_rc_file()
-            patch_config_file()
+            patch_config_file(CONFIG_PATCH_PATH)
+            patch_config_file(CONFIG_AARCH64_PATCH_PATH, 'aarch64')
             verify_deployment()
             install_rally()
             install_tempest()
