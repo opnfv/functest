@@ -130,7 +130,7 @@ tiers:
                     Rally suite in smoke mode.
                 dependencies:
                     installer: ''
-                    scenario: '^((?!bgpvpn).)*$'
+                    scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.rally.rally'
                     class: 'RallySanity'
