@@ -52,6 +52,24 @@
       "revId": "9886535d617d95e7d2c2f294e79a7cd994fcd685",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_35a57b04",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-16T01:33:36Z",
+      "side": 1,
+      "message": "I agree that we can have it in another patch, so I give +2 at the first review :)",
+      "parentUuid": "dabed58f_23ca26a2",
+      "revId": "9886535d617d95e7d2c2f294e79a7cd994fcd685",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
