@@ -70,6 +70,23 @@
       "revId": "da6bcabf8c84f1891e39bf78b135c90e1f219136",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_4b5dece8",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-02-16T12:40:28Z",
+      "side": 1,
+      "message": "not a very realistic scenario, but if there are e.g. 10 verifiers matching grep opnfv-tempest , prepare env fails\n\n2017-02-16 12:17:48,312 - prepare_env - INFO - Installing tempest from existing repo...\n2017-02-16 12:17:49,881 - prepare_env - DEBUG - Tempest opnfv-tempest does not exist\n2017-02-16 12:17:49,882 - functest_utils - DEBUG - Executing command: \u0027rally verify create-verifier --source /home/opnfv/repos/tempest --name opnfv-tempest --type tempest\u0027\n2017-02-16 12:17:51.324 9679 INFO rally.api [-] Creating verifier \u0027opnfv-tempest\u0027.\nVerifier with name \u0027opnfv-tempest\u0027 already exists! Please, specify another name for verifier and try again.\n2017-02-16 12:17:51,457 - functest_utils - ERROR - Problem while installing Tempest.\n2017-02-16 12:17:51,458 - prepare_env - ERROR - Problem while installing Tempest.\n2017-02-16 12:17:51,508 - functest_utils - ERROR - The command \u0027python /home/opnfv/repos/functest/functest/ci/prepare_env.py start\u0027 failed.",
+      "revId": "da6bcabf8c84f1891e39bf78b135c90e1f219136",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
