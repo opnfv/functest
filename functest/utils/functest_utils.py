@@ -153,6 +153,28 @@ def get_db_url():
     """
     return get_functest_config('results.test_db_url')
 
+def get_pod_arch():
+    """
+    Get POD architecture from installer release
+    """
+
+    installer = os.environ['INSTALLER_TYPE']
+
+    if 'fuel' in installer:
+        installer_ip = os.environ['INSTALLER_IP']
+        ssh_options = ('-o UserKnownHostsFile=/dev/null '
+                       '-o StrictHostKeyChecking=no')
+        cmd = 'sshpass -p %s ssh 2>/dev/null %s %s@%s \
+               \'fuel2 release list | grep "|  $(fuel2 env list |grep operational \
+               | awk "{print \$8}") |"\'' % ('r00tme',
+                                             ssh_options,
+                                             'root',
+                                             installer_ip)
+        active_release = "".join(os.popen(cmd).read().split())
+        if "aarch64)" in active_release:
+            return "aarch64"
+
+    return "x86"
 
 def logger_test_results(project, case_name, status, details):
     pod_name = get_pod_name()
