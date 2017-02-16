@@ -52,6 +52,24 @@
       "revId": "da6bcabf8c84f1891e39bf78b135c90e1f219136",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_ab4a6853",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-16T11:32:08Z",
+      "side": 1,
+      "message": "we could add new parameter in execute_command(..., raise_exeption\u003dfalse)\n\nIf set to \u0027true\u0027, it will raise, otherwise, continue.",
+      "parentUuid": "dabed58f_08229ab9",
+      "revId": "da6bcabf8c84f1891e39bf78b135c90e1f219136",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
