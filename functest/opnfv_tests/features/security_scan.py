@@ -14,7 +14,7 @@ from functest.utils.constants import CONST
 
 class SecurityScan(base.FeatureBase):
     def __init__(self):
-        super(SecurityScan, self).__init__(project='security_scan',
+        super(SecurityScan, self).__init__(project='securityscanning',
                                            case='security_scan',
                                            repo='dir_repo_securityscan')
         self.cmd = ('bash {0} && '
