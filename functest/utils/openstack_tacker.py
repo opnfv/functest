@@ -118,6 +118,7 @@ def create_vnf(tacker_client, vnf_name, vnfd_id=None,
             }
         }
         if param_file is not None:
+            params = None
             with open(param_file) as f:
                 params = f.read()
             vnf_body['vnf']['attributes']['param_values'] = params
