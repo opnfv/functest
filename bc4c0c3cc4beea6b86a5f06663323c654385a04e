@@ -16,6 +16,24 @@
       "revId": "bc4c0c3cc4beea6b86a5f06663323c654385a04e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_d5a65f53",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-02-16T07:30:43Z",
+      "side": 1,
+      "message": "I fully agree, some refactoring is needed in the future.",
+      "parentUuid": "dabed58f_950a27d1",
+      "revId": "bc4c0c3cc4beea6b86a5f06663323c654385a04e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
