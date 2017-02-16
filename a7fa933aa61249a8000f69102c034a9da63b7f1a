@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_460f23e2",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-16T16:31:19Z",
+      "side": 1,
+      "message": "let\u0027s run this only on nosdn-nofeature scenarios as it done for cloudify_ims.\n\nhttps://gerrit.opnfv.org/gerrit/gitweb?p\u003dfunctest.git;a\u003dblob;f\u003dfunctest/ci/testcases.yaml;h\u003de692c0080bcce8db50469b92918c3b2388a7ab69;hb\u003d8de29e4130fe18398d59692a6fcb492321ad3c60#l370",
+      "revId": "a7fa933aa61249a8000f69102c034a9da63b7f1a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
