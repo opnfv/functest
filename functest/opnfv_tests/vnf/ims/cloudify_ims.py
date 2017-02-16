@@ -68,10 +68,10 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
     def deploy_orchestrator(self, **kwargs):
 
         self.logger.info("Additional pre-configuration steps")
-        self.neutron_client = os_utils.get_neutron_client(self.creds)
-        self.glance_client = os_utils.get_glance_client(self.creds)
-        self.keystone_client = os_utils.get_keystone_client(self.creds)
-        self.nova_client = os_utils.get_nova_client(self.creds)
+        self.neutron_client = os_utils.get_neutron_client(self.admin_creds)
+        self.glance_client = os_utils.get_glance_client(self.admin_creds)
+        self.keystone_client = os_utils.get_keystone_client(self.admin_creds)
+        self.nova_client = os_utils.get_nova_client(self.admin_creds)
 
         # needs some images
         self.logger.info("Upload some OS images if it doesn't exist")
