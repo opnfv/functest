@@ -150,12 +150,14 @@ class VnfOnBoardingBase(base.TestcaseBase):
             self.step_failure("Failed to create user ")
 
         self.logger.info("Update OpenStack creds informations")
+        self.admin_creds = self.creds.copy()
+        self.admin_creds.update({
+            "tenant": self.tenant_name
+        })
+        self.neutron_client = os_utils.get_neutron_client(self.admin_creds)
+        self.nova_client = os_utils.get_nova_client(self.admin_creds)
         self.creds.update({
             "tenant": self.tenant_name,
-        })
-        self.neutron_client = os_utils.get_neutron_client(self.creds)
-        self.nova_client = os_utils.get_nova_client(self.creds)
-        self.creds.update({
             "username": self.tenant_name,
             "password": self.tenant_name,
         })
