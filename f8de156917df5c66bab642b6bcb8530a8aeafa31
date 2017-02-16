@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_7504537e",
+        "filename": "functest/opnfv_tests/features/barometer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5995
+      },
+      "writtenOn": "2017-02-16T05:01:13Z",
+      "side": 1,
+      "message": "Must be restored as:\nret \u003d collectd.main(logger)",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "f8de156917df5c66bab642b6bcb8530a8aeafa31",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
