@@ -153,12 +153,6 @@ class VnfOnBoardingBase(base.TestcaseBase):
         self.creds.update({
             "tenant": self.tenant_name,
         })
-        self.neutron_client = os_utils.get_neutron_client(self.creds)
-        self.nova_client = os_utils.get_nova_client(self.creds)
-        self.creds.update({
-            "username": self.tenant_name,
-            "password": self.tenant_name,
-        })
 
     # orchestrator is not mandatory to dpeloy and test VNF
     def deploy_orchestrator(self, **kwargs):
