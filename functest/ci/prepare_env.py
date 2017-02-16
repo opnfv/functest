@@ -1,17 +1,10 @@
 #!/usr/bin/env python
 #
-# Author: Jose Lausuch (jose.lausuch@ericsson.com)
-#
-# Installs the Functest framework within the Docker container
-# and run the tests automatically
-#
-#
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-
 
 import argparse
 import json
@@ -222,20 +215,23 @@ def install_rally():
         "Deployment %s does not exist."
         % CONST.rally_deployment_name),
         verbose=False)
+
     rally_conf = os_utils.get_credentials_for_rally()
     with open('rally_conf.json', 'w') as fp:
         json.dump(rally_conf, fp)
     cmd = ("rally deployment create "
-           "--file=rally_conf.json --name={}"
+           "--file=rally_conf.json --name={0}"
            .format(CONST.rally_deployment_name))
-    ft_utils.execute_command(cmd,
-                             error_msg=("Problem while creating "
-                                        "Rally deployment"))
+    error_msg = "Problem while creating Rally deployment"
+    ret = ft_utils.execute_command(cmd, error_msg=error_msg)
+    if ret != 0:
+        raise Exception(error_msg)
 
     cmd = "rally deployment check"
-    ft_utils.execute_command(cmd,
-                             error_msg=("OpenStack not responding or "
-                                        "faulty Rally deployment."))
+    error_msg = "OpenStack not responding or faulty Rally deployment."
+    ret = ft_utils.execute_command(cmd, error_msg=error_msg)
+    if ret != 0:
+        raise Exception(error_msg)
 
     cmd = "rally deployment list"
     ft_utils.execute_command(cmd,
@@ -250,19 +246,32 @@ def install_rally():
 
 def install_tempest():
     logger.info("Installing tempest from existing repo...")
-    cmd = ("rally verify create-verifier --source {0} "
-           "--name {1} --type tempest"
-           .format(CONST.dir_repo_tempest, CONST.tempest_deployment_name))
-    ft_utils.execute_command(cmd,
-                             error_msg="Problem while installing Tempest.")
+    cmd = ("rally verify list-verifiers | "
+           "grep '{0}' | wc -l".format(CONST.tempest_deployment_name))
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+    while p.poll() is None:
+        line = p.stdout.readline().rstrip()
+        if '0' in line:
+            logger.debug("Tempest %s does not exist" %
+                         CONST.tempest_deployment_name)
+            cmd = ("rally verify create-verifier --source {0} "
+                   "--name {1} --type tempest"
+                   .format(CONST.dir_repo_tempest,
+                           CONST.tempest_deployment_name))
+            error_msg = "Problem while installing Tempest."
+            ret = ft_utils.execute_command(cmd, error_msg=error_msg)
+            if ret != 0:
+                raise Exception(error_msg)
 
 
 def create_flavor():
-    os_utils.get_or_create_flavor('m1.tiny',
-                                  '512',
-                                  '1',
-                                  '1',
-                                  public=True)
+    flavor_id = os_utils.get_or_create_flavor('m1.tiny',
+                                              '512',
+                                              '1',
+                                              '1',
+                                              public=True)
+    if flavor_id is None:
+        raise Exception('Failed to create flavor')
 
 
 def check_environment():
