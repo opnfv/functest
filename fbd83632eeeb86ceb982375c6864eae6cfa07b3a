@@ -16,6 +16,24 @@
       "revId": "fbd83632eeeb86ceb982375c6864eae6cfa07b3a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_7531b30a",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-02-16T10:11:10Z",
+      "side": 1,
+      "message": "Before fix, the directories are separate. I placed \"data\" directory in \"repos/vrouter/\" directory .",
+      "parentUuid": "dabed58f_3226f169",
+      "revId": "fbd83632eeeb86ceb982375c6864eae6cfa07b3a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
