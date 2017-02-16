@@ -115,9 +115,7 @@ RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
 RUN /bin/bash ${REPOS_DIR}/parser/tests/parser_install.sh ${REPOS_DIR}
 RUN ${REPOS_DIR}/rally/install_rally.sh --yes
 
-ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img ${FUNCTEST_BASE_DIR}/data/
-ADD http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-lxc.tar.gz ${FUNCTEST_BASE_DIR}/data/
-ADD http://205.177.226.237:9999/onosfw/firewall_block_image.img ${FUNCTEST_BASE_DIR}/data/
+RUN /bin/bash ${REPOS_DIR}/functest/docker/add_images.sh
 
 RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 RUN curl -L https://get.rvm.io | bash -s stable
