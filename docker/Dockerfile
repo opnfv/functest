@@ -108,10 +108,10 @@ RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
 
 RUN cd ${FUNCTEST_REPO_DIR} \
     && pip install -r requirements.txt \
-    && pip install .
+    && python setup.py develop
 
 RUN cd ${RELENG_MODULE_DIR} \
-    && pip install .
+    && python setup.py develop
 
 RUN cd ${REPOS_DIR}/barometer \
     && pip install .
@@ -133,15 +133,14 @@ RUN pip install -e ${REPOS_DIR}/snaps/
 
 # SFC integration
 RUN /bin/bash -c ". ${REPOS_DIR}/sfc/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
-RUN cd ${REPOS_DIR}/sfc && pip install .
+RUN cd ${REPOS_DIR}/sfc && python setup.py develop
 
 # SDNVPN integration
-RUN cd ${REPOS_DIR}/sdnvpn && pip install .
-
-RUN cd ${REPOS_DIR}/bgpvpn && pip install .
+RUN cd ${REPOS_DIR}/sdnvpn && python setup.py develop
+RUN cd ${REPOS_DIR}/bgpvpn && python setup.py develop
 
 # Kingbird integration
-RUN cd ${REPOS_DIR}/kingbird && pip install -e .
+RUN cd ${REPOS_DIR}/kingbird && pip setup.py develop
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd ${REPOS_VNFS_DIR}/vims-test \
