@@ -194,7 +194,8 @@ def list_sfcs(tacker_client, verbose=False):
 
 def create_sfc(tacker_client, sfc_name,
                chain_vnf_ids=None,
-               chain_vnf_names=None):
+               chain_vnf_names=None,
+               symmetrical=False):
     try:
         sfc_body = {
             'sfc': {
@@ -203,6 +204,8 @@ def create_sfc(tacker_client, sfc_name,
                 'chain': []
             }
         }
+        if symmetrical:
+            sfc_body['sfc']['symmetrical'] = True
         if chain_vnf_ids is not None:
             sfc_body['sfc']['chain'] = chain_vnf_ids
         else:
