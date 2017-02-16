@@ -19,6 +19,7 @@ import os
 import re
 import subprocess
 import sys
+import fileinput
 
 import yaml
 from opnfv.utils import constants as opnfv_constants
@@ -32,14 +33,24 @@ actions = ['start', 'check']
 
 """ logging configuration """
 logger = ft_logger.Logger("prepare_env").getLogger()
-
+# set the architecture to default
+pod_arch = 'x86'
 
 CONFIG_FUNCTEST_PATH = CONST.CONFIG_FUNCTEST_YAML
 CONFIG_PATCH_PATH = os.path.join(os.path.dirname(
     CONFIG_FUNCTEST_PATH), "config_patch.yaml")
+CONFIG_AARCH64_PATCH_PATH = os.path.join(os.path.dirname(
+    CONFIG_FUNCTEST_PATH), "config_aarch64_patch.yaml")
+RALLY_CONF_PATH = os.path.join("/etc/rally/rally.conf")
+RALLY_AARCH64_PATCH_PATH = os.path.join(os.path.dirname(
+    CONFIG_FUNCTEST_PATH), "rally_aarch64_patch.conf")
+
 
 with open(CONFIG_PATCH_PATH) as f:
     functest_patch_yaml = yaml.safe_load(f)
+
+with open(CONFIG_AARCH64_PATCH_PATH) as f:
+    functest_aarch64_patch_yaml = yaml.safe_load(f)
 
 
 class PrepareEnvParser():
@@ -105,6 +116,31 @@ def check_env_variables():
 
     if CONST.IS_CI_RUN:
         logger.info("    IS_CI_RUN=%s" % CONST.IS_CI_RUN)
+
+
+def get_pod_arch():
+    """
+    Get POD architecture from installer release
+    """
+
+    global pod_arch
+    if 'fuel' in CONST.INSTALLER_TYPE:
+        ssh_options = ('-o UserKnownHostsFile=/dev/null '
+                       '-o StrictHostKeyChecking=no')
+        cmd = ('sshpass -p %s ssh 2>/dev/null %s %s@%s '
+              '\'fuel2 release list | grep "|  '
+              '$(fuel2 env list |grep operational '
+              '| awk "{print \$8}") |"\'' % ("r00tme",
+                                             ssh_options,
+                                             "root",
+                                             CONST.INSTALLER_IP))
+        active_release = "".join(os.popen(cmd).read().split())
+
+        if "aarch64)" in active_release:
+
+            pod_arch = 'aarch64'
+
+    logger.info("    POD_ARCH=%s" % pod_arch)
 
 
 def create_directories():
@@ -182,12 +218,12 @@ def source_rc_file():
                 CONST.OS_PASSWORD = value
 
 
-def patch_config_file():
+def patch_config_file(patch_file):
     updated = False
-    for key in functest_patch_yaml:
+    for key in patch_file:
         if key in CONST.DEPLOY_SCENARIO:
             new_functest_yaml = dict(ft_utils.merge_dicts(
-                ft_utils.get_functest_yaml(), functest_patch_yaml[key]))
+                ft_utils.get_functest_yaml(), patch_file[key]))
             updated = True
 
     if updated:
@@ -195,6 +231,11 @@ def patch_config_file():
         with open(CONFIG_FUNCTEST_PATH, "w") as f:
             f.write(yaml.dump(new_functest_yaml, default_style='"'))
         f.close()
+
+
+def patch_arch_config(patch_file):
+    if 'aarch64' in pod_arch:
+        patch_config_file(patch_file)
 
 
 def verify_deployment():
@@ -215,6 +256,18 @@ def verify_deployment():
 
 def install_rally():
     print_separator()
+
+    if 'aarch64' in pod_arch:
+        logger.info("Apply aarch64 specific to rally config...")
+        with open(RALLY_AARCH64_PATCH_PATH, "r") as f:
+            rally_patch_conf = f.read()
+     f.close()
+
+     for line in fileinput.input(RALLY_CONF_PATH, inplace=1):
+        print line,
+        if "cirros|testvm" in line:
+            print rally_patch_conf
+
     logger.info("Creating Rally environment...")
 
     cmd = "rally deployment destroy opnfv-rally"
@@ -286,9 +339,11 @@ def main(**kwargs):
         elif kwargs['action'] == "start":
             logger.info("######### Preparing Functest environment #########\n")
             check_env_variables()
+            get_pod_arch()
             create_directories()
             source_rc_file()
-            patch_config_file()
+            patch_config_file(functest_patch_yaml)
+            patch_arch_config(functest_aarch64_patch_yaml)
             verify_deployment()
             install_rally()
             install_tempest()

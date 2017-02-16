@@ -36,6 +36,7 @@ ENV REPOS_DIR ${HOME}/repos
 ENV creds ${FUNCTEST_CONF_DIR}/openstack.creds
 ENV TERM xterm
 ENV COLORTERM gnome-terminal
+ENV CIRROS_AARCH64_URL http://download.cirros-cloud.net/daily/20160722/
 
 WORKDIR ${HOME}
 
@@ -115,6 +116,8 @@ RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
 
 RUN /bin/bash ${REPOS_DIR}/parser/tests/parser_install.sh ${REPOS_DIR}
 RUN ${REPOS_DIR}/rally/install_rally.sh --yes
+
+RUN /bin/bash ${REPOS_DIR}/functest/docker/add_images.sh
 
 RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 RUN curl -L https://get.rvm.io | bash -s stable
