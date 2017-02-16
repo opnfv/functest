@@ -32,14 +32,23 @@ actions = ['start', 'check']
 
 """ logging configuration """
 logger = ft_logger.Logger("prepare_env").getLogger()
-
+pod_arch = ft_utils.get_pod_arch()
 
 CONFIG_FUNCTEST_PATH = CONST.CONFIG_FUNCTEST_YAML
 CONFIG_PATCH_PATH = os.path.join(os.path.dirname(
     CONFIG_FUNCTEST_PATH), "config_patch.yaml")
+CONFIG_AARCH64_PATCH_PATH = os.path.join(os.path.dirname(
+    CONFIG_FUNCTEST_PATH), "config_aarch64_patch.yaml")
+RALLY_CONF_PATH = os.path.join("/etc/rally/rally.conf")
+RALLY_AARCH64_PATCH_PATH = os.path.join(os.path.dirname(
+    CONFIG_FUNCTEST_PATH), "rally_aarch64_patch.conf")
+
 
 with open(CONFIG_PATCH_PATH) as f:
     functest_patch_yaml = yaml.safe_load(f)
+
+with open(CONFIG_AARCH64_PATCH_PATH) as f:
+    functest_aarch64_patch_yaml = yaml.safe_load(f)
 
 
 class PrepareEnvParser():
@@ -105,6 +114,9 @@ def check_env_variables():
 
     if CONST.IS_CI_RUN:
         logger.info("    IS_CI_RUN=%s" % CONST.IS_CI_RUN)
+
+    if pod_arch:
+        logger.info("    POD_ARCH=%s" % pod_arch)
 
 
 def create_directories():
@@ -182,12 +194,12 @@ def source_rc_file():
                 CONST.OS_PASSWORD = value
 
 
-def patch_config_file():
+def patch_config_file(patch_file):
     updated = False
-    for key in functest_patch_yaml:
+    for key in patch_file:
         if key in CONST.DEPLOY_SCENARIO:
             new_functest_yaml = dict(ft_utils.merge_dicts(
-                ft_utils.get_functest_yaml(), functest_patch_yaml[key]))
+                ft_utils.get_functest_yaml(), patch_file[key]))
             updated = True
 
     if updated:
@@ -195,6 +207,11 @@ def patch_config_file():
         with open(CONFIG_FUNCTEST_PATH, "w") as f:
             f.write(yaml.dump(new_functest_yaml, default_style='"'))
         f.close()
+
+
+def patch_arch_config(patch_file):
+    if 'aarch64' in pod_arch:
+        patch_config_file(patch_file)
 
 
 def verify_deployment():
@@ -215,6 +232,25 @@ def verify_deployment():
 
 def install_rally():
     print_separator()
+
+    if 'aarch64' in pod_arch:
+        logger.info("Apply aarch64 specific to rally config...")
+        with open(RALLY_AARCH64_PATCH_PATH, "r") as f:
+            rally_patch_conf = f.read()
+
+        with open(RALLY_CONF_PATH, "r") as f:
+            rally_conf_file = f.readlines()
+            line_num = 1
+            for line in rally_conf_file:
+                if "cirros|testvm" in line:
+                    break
+                line_num += 1
+
+            rally_conf_file.insert(line_num, rally_patch_conf)
+
+        with open(RALLY_CONF_PATH, "w") as f:
+            f.write(''.join(rally_conf_file))
+
     logger.info("Creating Rally environment...")
 
     cmd = "rally deployment destroy opnfv-rally"
@@ -288,7 +324,8 @@ def main(**kwargs):
             check_env_variables()
             create_directories()
             source_rc_file()
-            patch_config_file()
+            patch_config_file(functest_patch_yaml)
+            patch_arch_config(functest_aarch64_patch_yaml)
             verify_deployment()
             install_rally()
             install_tempest()
