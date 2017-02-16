@@ -21,6 +21,8 @@ import subprocess
 import sys
 
 import yaml
+
+from opnfv.deployment import factory
 from opnfv.utils import constants as opnfv_constants
 
 import functest.utils.functest_logger as ft_logger
@@ -105,6 +107,27 @@ def check_env_variables():
 
     if CONST.IS_CI_RUN:
         logger.info("    IS_CI_RUN=%s" % CONST.IS_CI_RUN)
+
+
+def print_deployment_info():
+    handler = None
+    if CONST.INSTALLER_IP:
+        if CONST.INSTALLER_TYPE == 'apex':
+            pkey = '/root/.ssh/id_rsa'
+            if os.path.isfile(pkey):
+                handler = factory.Factory.get_handler(CONST.INSTALLER_TYPE,
+                                                      CONST.INSTALLER_IP,
+                                                      'stack',
+                                                      pkey_file=pkey)
+        elif CONST.INSTALLER_TYPE == 'fuel':
+            handler = factory.Factory.get_handler(CONST.INSTALLER_TYPE,
+                                                  CONST.INSTALLER_IP,
+                                                  'root',
+                                                  installer_pwd='r00tme')
+
+    if handler:
+        logger.info('\n\nDeployment information:\n%s' %
+                    handler.get_deployment_info())
 
 
 def create_directories():
@@ -286,6 +309,7 @@ def main(**kwargs):
         elif kwargs['action'] == "start":
             logger.info("######### Preparing Functest environment #########\n")
             check_env_variables()
+            print_deployment_info()
             create_directories()
             source_rc_file()
             patch_config_file()
