@@ -291,6 +291,13 @@ def get_ci_envvars():
     return ci_env_var
 
 
+def execute_command_raise(cmd, info=False, error_msg="",
+                          verbose=True, output_file=None):
+    ret = execute_command(cmd, info, error_msg, verbose, output_file)
+    if ret != 0:
+        raise Exception(error_msg)
+
+
 def execute_command(cmd, info=False, error_msg="",
                     verbose=True, output_file=None):
     if not error_msg:
