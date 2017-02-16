@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_689556e3",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-16T10:18:42Z",
+      "side": 1,
+      "message": "if cmd execute fail will raise exception everywhere, how about raise exception in execute_command?",
+      "revId": "da6bcabf8c84f1891e39bf78b135c90e1f219136",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
