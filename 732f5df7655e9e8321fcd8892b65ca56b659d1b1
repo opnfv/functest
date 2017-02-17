@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_77b9b2e8",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5559
+      },
+      "writtenOn": "2017-02-17T13:39:43Z",
+      "side": 1,
+      "message": "Jose thank you for reviewing.\n\nIn that module I see that an argument is added for pushing results into a database.\n\n        self.parser.add_argument(\n            \u0027-p\u0027, \u0027--pushtodb\u0027, help\u003d\u0027Push results to DB\u0027,\n            action\u003d\u0027store_true\u0027)\n\nWould results of robot tests in our fds repo be included?",
+      "parentUuid": "dabed58f_3799fb6e",
+      "range": {
+        "startLine": 190,
+        "startChar": 29,
+        "endLine": 190,
+        "endChar": 61
+      },
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_579eef57",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 1
