@@ -94,8 +94,11 @@ class ODLTests(testcase_base.TestcaseBase):
         try:
             odlusername = kwargs['odlusername']
             odlpassword = kwargs['odlpassword']
-            variables = ['KEYSTONE:' + kwargs['keystoneip'],
+            osauthurl = kwargs['osauthurl']
+            keystoneip = urlparse.urlparse(osauthurl).hostname
+            variables = ['KEYSTONE:' + keystoneip,
                          'NEUTRON:' + kwargs['neutronip'],
+                         'OS_AUTH_URL:"' + osauthurl + '"',
                          'OSUSERNAME:"' + kwargs['osusername'] + '"',
                          'OSTENANTNAME:"' + kwargs['ostenantname'] + '"',
                          'OSPASSWORD:"' + kwargs['ospassword'] + '"',
@@ -147,10 +150,8 @@ class ODLTests(testcase_base.TestcaseBase):
                 suites = kwargs["suites"]
             except KeyError:
                 pass
-            keystone_url = op_utils.get_endpoint(service_type='identity')
             neutron_url = op_utils.get_endpoint(service_type='network')
-            kwargs = {'keystoneip': urlparse.urlparse(keystone_url).hostname}
-            kwargs['neutronip'] = urlparse.urlparse(neutron_url).hostname
+            kwargs = {'neutronip': urlparse.urlparse(neutron_url).hostname}
             kwargs['odlip'] = kwargs['neutronip']
             kwargs['odlwebport'] = '8080'
             kwargs['odlrestconfport'] = '8181'
@@ -161,6 +162,7 @@ class ODLTests(testcase_base.TestcaseBase):
                 installer_type = os.environ['INSTALLER_TYPE']
             kwargs['osusername'] = os.environ['OS_USERNAME']
             kwargs['ostenantname'] = os.environ['OS_TENANT_NAME']
+            kwargs['osauthurl'] = os.environ['OS_AUTH_URL']
             kwargs['ospassword'] = os.environ['OS_PASSWORD']
             if installer_type == 'fuel':
                 kwargs['odlwebport'] = '8282'
