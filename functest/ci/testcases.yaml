@@ -176,6 +176,24 @@ tiers:
                             -  /home/opnfv/repos/odl_test/csit/suites/openstack/connectivity
 
             -
+                name: fds
+                criteria: 'success_rate == 100%'
+                blocking: true
+                description: >-
+                    Test Suite for the OpenDaylight SDN Controller when GBP features are
+                    installed. It integrates some test suites from upstream using
+                    Robot as the test framework.
+                dependencies:
+                    installer: '(apex)|(fuel)'
+                    scenario: 'odl'
+                run:
+                    module: 'functest.opnfv_tests.sdn.odl.odl'
+                    class: 'ODLTests'
+                    args:
+                        suites:
+                            -  /home/opnfv/repos/fds/testing/robot
+
+            -
                 name: onos
                 criteria: 'status == "PASS"'
                 blocking: true
