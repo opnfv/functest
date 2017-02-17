@@ -87,6 +87,24 @@
       "revId": "da6bcabf8c84f1891e39bf78b135c90e1f219136",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e11641f1",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-02-17T01:38:33Z",
+      "side": 1,
+      "message": "Good catch. I was not aware that there will be so many verifiers existing. I will update the logic to be wiser.",
+      "parentUuid": "dabed58f_4b5dece8",
+      "revId": "da6bcabf8c84f1891e39bf78b135c90e1f219136",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
