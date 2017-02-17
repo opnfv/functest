@@ -28,6 +28,7 @@ general:
         repo_parser:        /home/opnfv/repos/parser
         repo_domino:        /home/opnfv/repos/domino
         repo_snaps:         /home/opnfv/repos/snaps
+        repo_fds:           /home/opnfv/repos/fds
         repo_securityscan:  /home/opnfv/repos/securityscanning
         repo_vrouter:       /home/opnfv/repos/vrouter
         functest:           /home/opnfv/functest
@@ -74,6 +75,9 @@ healthcheck:
 snaps:
     use_keystone: True
     use_floating_ips: False
+
+fds:
+    vm_flavor: nfv
 
 vping:
     ping_timeout:   200
