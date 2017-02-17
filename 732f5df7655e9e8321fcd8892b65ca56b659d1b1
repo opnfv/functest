@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_f7a28399",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-17T10:20:26Z",
+      "side": 1,
+      "message": "if this is a test case that provides 1 or 0 change this to \n\n    criteria: \u0027status \u003d\u003d \"PASS\"\u0027",
+      "parentUuid": "dabed58f_0172757c",
+      "range": {
+        "startLine": 180,
+        "startChar": 27,
+        "endLine": 180,
+        "endChar": 47
+      },
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_c16bfd83",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-17T01:03:02Z",
       "side": 1,
       "message": "could this block others?",
+      "range": {
+        "startLine": 181,
+        "startChar": 26,
+        "endLine": 181,
+        "endChar": 30
+      },
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_5787cf0f",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-17T10:20:26Z",
+      "side": 1,
+      "message": "yes, please change to false. blocking test should be only smoke (basic testing).",
+      "parentUuid": "dabed58f_c16bfd83",
       "range": {
         "startLine": 181,
         "startChar": 26,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_d772df48",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-17T10:20:26Z",
+      "side": 1,
+      "message": "yes, odl_l2 and odl_l3, but you can specify. \nThe logic is :\n\nif \u0027odl\u0027 in scenario_name: then execute..\n\nwhich means that this is a regex filter of the complete scenario name. You can be more specific if you want.",
+      "parentUuid": "dabed58f_e1688189",
+      "range": {
+        "startLine": 188,
+        "startChar": 31,
+        "endLine": 188,
+        "endChar": 34
+      },
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_810505c4",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 1
@@ -94,6 +166,47 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_3799fb6e",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-17T10:20:26Z",
+      "side": 1,
+      "message": "this is the string that points to the module we have to run ODL test.\nhttps://git.opnfv.org/functest/tree/functest/opnfv_tests/sdn/odl/odl.py",
+      "parentUuid": "dabed58f_810505c4",
+      "range": {
+        "startLine": 190,
+        "startChar": 29,
+        "endLine": 190,
+        "endChar": 61
+      },
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_579eef57",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-17T10:20:26Z",
+      "side": 1,
+      "message": "and this is the class to be used in that module. \n\nThis is loaded in realtime by run_tests.py (our test runner) and it calls the run() method.",
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_a10a89d0",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 1
@@ -105,6 +218,30 @@
       "writtenOn": "2017-02-17T01:03:02Z",
       "side": 1,
       "message": "already in fds repo",
+      "range": {
+        "startLine": 194,
+        "startChar": 31,
+        "endLine": 194,
+        "endChar": 66
+      },
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_17a0778f",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-17T10:20:26Z",
+      "side": 1,
+      "message": "this is the argument that is pass the the ODL script.",
+      "parentUuid": "dabed58f_a10a89d0",
       "range": {
         "startLine": 194,
         "startChar": 31,
