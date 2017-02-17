@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_0172757c",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5559
+      },
+      "writtenOn": "2017-02-17T01:03:02Z",
+      "side": 1,
+      "message": "Is there a difference between success_rate \u003d 100% and PASS?",
+      "range": {
+        "startLine": 180,
+        "startChar": 27,
+        "endLine": 180,
+        "endChar": 47
+      },
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_c16bfd83",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5559
+      },
+      "writtenOn": "2017-02-17T01:03:02Z",
+      "side": 1,
+      "message": "could this block others?",
+      "range": {
+        "startLine": 181,
+        "startChar": 26,
+        "endLine": 181,
+        "endChar": 30
+      },
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e1688189",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5559
+      },
+      "writtenOn": "2017-02-17T01:03:02Z",
+      "side": 1,
+      "message": "is this a match for every *odl* scenario?",
+      "range": {
+        "startLine": 188,
+        "startChar": 31,
+        "endLine": 188,
+        "endChar": 34
+      },
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_810505c4",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5559
+      },
+      "writtenOn": "2017-02-17T01:03:02Z",
+      "side": 1,
+      "message": "is this going to publish/render test results?",
+      "range": {
+        "startLine": 190,
+        "startChar": 29,
+        "endLine": 190,
+        "endChar": 61
+      },
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_a10a89d0",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5559
+      },
+      "writtenOn": "2017-02-17T01:03:02Z",
+      "side": 1,
+      "message": "already in fds repo",
+      "range": {
+        "startLine": 194,
+        "startChar": 31,
+        "endLine": 194,
+        "endChar": 66
+      },
+      "revId": "732f5df7655e9e8321fcd8892b65ca56b659d1b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
