@@ -30,6 +30,7 @@ class ODLTesting(unittest.TestCase):
     _keystone_ip = "127.0.0.1"
     _neutron_ip = "127.0.0.2"
     _sdn_controller_ip = "127.0.0.3"
+    _os_auth_url = "http://{}:5000/v2.0".format(_keystone_ip)
     _os_tenantname = "admin"
     _os_username = "admin"
     _os_password = "admin"
@@ -42,14 +43,15 @@ class ODLTesting(unittest.TestCase):
         for var in ("INSTALLER_TYPE", "SDN_CONTROLLER", "SDN_CONTROLLER_IP"):
             if var in os.environ:
                 del os.environ[var]
+        os.environ["OS_AUTH_URL"] = self._os_auth_url
         os.environ["OS_USERNAME"] = self._os_username
         os.environ["OS_PASSWORD"] = self._os_password
         os.environ["OS_TENANT_NAME"] = self._os_tenantname
         self.test = odl.ODLTests()
         self.defaultargs = {'odlusername': self._odl_username,
                             'odlpassword': self._odl_password,
-                            'keystoneip': self._keystone_ip,
                             'neutronip': self._keystone_ip,
+                            'osauthurl': self._os_auth_url,
                             'osusername': self._os_username,
                             'ostenantname': self._os_tenantname,
                             'ospassword': self._os_password,
@@ -157,8 +159,8 @@ class ODLTesting(unittest.TestCase):
     def _get_main_kwargs(self, key=None):
         kwargs = {'odlusername': self._odl_username,
                   'odlpassword': self._odl_password,
-                  'keystoneip': self._keystone_ip,
                   'neutronip': self._neutron_ip,
+                  'osauthurl': self._os_auth_url,
                   'osusername': self._os_username,
                   'ostenantname': self._os_tenantname,
                   'ospassword': self._os_password,
@@ -178,6 +180,7 @@ class ODLTesting(unittest.TestCase):
         if len(args) > 1:
             variable = ['KEYSTONE:{}'.format(self._keystone_ip),
                         'NEUTRON:{}'.format(self._neutron_ip),
+                        'OS_AUTH_URL:"{}"'.format(self._os_auth_url),
                         'OSUSERNAME:"{}"'.format(self._os_username),
                         'OSTENANTNAME:"{}"'.format(self._os_tenantname),
                         'OSPASSWORD:"{}"'.format(self._os_password),
@@ -207,11 +210,11 @@ class ODLTesting(unittest.TestCase):
     def test_main_missing_odlpassword(self):
         self._test_main_missing_keyword('odlpassword')
 
-    def test_main_missing_keystoneip(self):
-        self._test_main_missing_keyword('keystoneip')
-
     def test_main_missing_neutronip(self):
         self._test_main_missing_keyword('neutronip')
+
+    def test_main_missing_osauthurl(self):
+        self._test_main_missing_keyword('osauthurl')
 
     def test_main_missing_osusername(self):
         self._test_main_missing_keyword('osusername')
@@ -347,10 +350,11 @@ class ODLTesting(unittest.TestCase):
             self.assertEqual(self.test.run(), status)
             self.test.main.assert_called_once_with(
                 odl.ODLTests.default_suites,
-                keystoneip=self._keystone_ip, neutronip=self._neutron_ip,
+                neutronip=self._neutron_ip,
                 odlip=odlip, odlpassword=self._odl_password,
                 odlrestconfport=odlrestconfport,
                 odlusername=self._odl_username, odlwebport=odlwebport,
+                osauthurl=self._os_auth_url,
                 ospassword=self._os_password, ostenantname=self._os_tenantname,
                 osusername=self._os_username)
 
@@ -368,10 +372,11 @@ class ODLTesting(unittest.TestCase):
             self.assertEqual(self.test.run(suites=suites), status)
             self.test.main.assert_called_once_with(
                 suites,
-                keystoneip=self._keystone_ip, neutronip=self._neutron_ip,
+                neutronip=self._neutron_ip,
                 odlip=odlip, odlpassword=self._odl_password,
                 odlrestconfport=odlrestconfport,
                 odlusername=self._odl_username, odlwebport=odlwebport,
+                osauthurl=self._os_auth_url,
                 ospassword=self._os_password, ostenantname=self._os_tenantname,
                 osusername=self._os_username)
 
@@ -380,6 +385,9 @@ class ODLTesting(unittest.TestCase):
                         side_effect=auth_plugins.MissingAuthPlugin()):
             self.assertEqual(self.test.run(),
                              testcase_base.TestcaseBase.EX_RUN_ERROR)
+
+    def test_run_missing_os_auth_url(self):
+        self._test_run_missing_env_var("OS_AUTH_URL")
 
     def test_run_missing_os_username(self):
         self._test_run_missing_env_var("OS_USERNAME")
@@ -507,8 +515,8 @@ class ODLTesting(unittest.TestCase):
     def test_argparser_odlpassword(self):
         self._test_argparser('odlpassword', 'foo')
 
-    def test_argparser_keystoneip(self):
-        self._test_argparser('keystoneip', '127.0.0.4')
+    def test_argparser_osauthurl(self):
+        self._test_argparser('osauthurl', '127.0.0.4')
 
     def test_argparser_neutronip(self):
         self._test_argparser('neutronip', '127.0.0.4')
