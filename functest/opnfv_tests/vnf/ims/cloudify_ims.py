@@ -130,8 +130,8 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         flavor_exist, flavor_id = os_utils.get_or_create_flavor(
             "m1.large",
             self.orchestrator['requirements']['ram_min'],
-            '1',
-            '1',
+            '50',
+            '2',
             public=True)
         self.logger.debug("Flavor id: %s" % flavor_id)
 
@@ -187,8 +187,12 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             self.orchestrator['blueprint']['url'],
             self.orchestrator['blueprint']['branch'])
 
-        cfy.deploy_manager()
-        return {'status': 'PASS', 'result': ''}
+        error = cfy.deploy_manager()
+        if error:
+            self.logger.error(error)
+            return {'status': 'FAIL', 'result': error}
+        else:
+            return {'status': 'PASS', 'result': ''}
 
     def deploy_vnf(self):
         cw = Clearwater(self.vnf.inputs, self.orchestrator.object, self.logger)
@@ -198,7 +202,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         flavor_exist, flavor_id = os_utils.get_or_create_flavor(
             "m1.small",
             self.vnf['requirements']['ram_min'],
-            '1',
+            '20',
             '1',
             public=True)
         self.logger.debug("Flavor id: %s" % flavor_id)
@@ -229,8 +233,12 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
 
         cw.set_external_network_name(ext_net)
 
-        cw.deploy_vnf()
-        return {'status': 'PASS', 'result': ''}
+        error = cw.deploy_vnf()
+        if error:
+            self.logger.error(error)
+            return {'status': 'FAIL', 'result': error}
+        else:
+            return {'status': 'PASS', 'result': ''}
 
     def test_vnf(self):
         script = "source {0}venv_cloudify/bin/activate; "

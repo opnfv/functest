@@ -114,6 +114,7 @@ class Orchestrator:
             cmd = "/bin/bash -c '" + script + "'"
             error = execute_command(cmd, self.logger)
             if error:
+                self.logger.error("Failed to deploy cloudify-manager")
                 return error
 
             self.logger.info("Cloudify-manager server is UP !")
@@ -171,6 +172,7 @@ class Orchestrator:
         cmd = "/bin/bash -c '" + script + "'"
         error = execute_command(cmd, self.logger, 2000)
         if error:
+            self.logger.error("Failed to deploy blueprint")
             return error
         self.logger.info("The deployment of {0} is ended".format(dep_name))
 
@@ -228,7 +230,4 @@ def execute_command(cmd, logger, timeout=1800):
             logger.error("Error when executing command %s" % cmd)
         f = open(output_file, 'r')
         lines = f.readlines()
-        result = lines[len(lines) - 3]
-        result += lines[len(lines) - 2]
-        result += lines[len(lines) - 1]
-        return result
+        return lines[-5:]

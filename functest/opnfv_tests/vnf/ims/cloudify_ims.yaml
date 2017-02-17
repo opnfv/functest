@@ -6,7 +6,7 @@ cloudify:
         url: https://github.com/boucherv-orange/cloudify-manager-blueprints.git
         branch: '3.3.1-build'
     requirements:
-        ram_min: 3000
+        ram_min: 4000
         os_image: centos_7
     inputs:
       keystone_username: ""
@@ -29,7 +29,7 @@ clearwater:
         branch: stable
     deployment_name: clearwater-opnfv
     requirements:
-        ram_min: 1700
+        ram_min: 2000
         os_image: ubuntu_14.04
     inputs:
         image_id: ''
