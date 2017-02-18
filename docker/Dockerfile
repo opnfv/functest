@@ -90,7 +90,7 @@ RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${REPOS_DIR}/rele
 
 # OpenStack repositories
 RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${REPOS_DIR}/bgpvpn
-#RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${REPOS_DIR}/kingbird
+RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${REPOS_DIR}/kingbird
 RUN git clone --depth 1 -b $RALLY_TAG https://github.com/openstack/rally.git ${REPOS_DIR}/rally
 RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${REPOS_DIR}/tempest
 
@@ -135,7 +135,12 @@ RUN cd ${REPOS_DIR}/sfc && pip install .
 RUN cd ${REPOS_DIR}/sdnvpn && pip install .
 
 RUN cd ${REPOS_DIR}/bgpvpn && pip install .
-#RUN cd ${REPOS_DIR}/kingbird && pip install -e .
+
+# Kingbird python client requirements alignment
+RUN /bin/bash -c ". ${FUNCTEST_REPO_DIR}/requirements_alignment.sh"
+
+# Kingbird integration
+RUN cd ${REPOS_DIR}/kingbird && pip install -e .
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd ${REPOS_VNFS_DIR}/vims-test \
