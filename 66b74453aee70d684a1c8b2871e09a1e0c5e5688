@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_3d48f92c",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-18T13:11:33Z",
+      "side": 1,
+      "message": "also,\n\n    if line \u003d\u003d \u00271\u0027:\n        logger.debug(\"Tempest exists....\")\n        break",
+      "revId": "66b74453aee70d684a1c8b2871e09a1e0c5e5688",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_1d4bb52c",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-18T13:11:33Z",
+      "side": 1,
+      "message": "it\u0027s safer to check: \n\n    if str(line) \u003d\u003d \u00270\u0027",
+      "revId": "66b74453aee70d684a1c8b2871e09a1e0c5e5688",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
