@@ -30,9 +30,11 @@ from functest.utils.constants import CONST
 
 
 class Logger:
+
     def __init__(self, logger_name):
         self.setup_logging()
         self.logger = logging.getLogger(logger_name)
+        logging.getLogger("paramiko").setLevel(logging.WARNING)
 
     def getLogger(self):
         return self.logger
