@@ -90,7 +90,7 @@ RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${REPOS_DIR}/rele
 
 # OpenStack repositories
 RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${REPOS_DIR}/bgpvpn
-#RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${REPOS_DIR}/kingbird
+RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${REPOS_DIR}/kingbird
 RUN git clone --depth 1 -b $RALLY_TAG https://github.com/openstack/rally.git ${REPOS_DIR}/rally
 RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${REPOS_DIR}/tempest
 
@@ -131,7 +131,23 @@ RUN cd ${REPOS_DIR}/sfc && pip install .
 RUN cd ${REPOS_DIR}/sdnvpn && pip install .
 
 RUN cd ${REPOS_DIR}/bgpvpn && pip install .
-#RUN cd ${REPOS_DIR}/kingbird && pip install -e .
+
+# Replace Kingbird python client requirements to Functest requirements
+RUN declare -a FUNCTEST_REQUIREMENTS
+RUN FUNCTEST_REQUIREMENTS=("python-openstackclient" \
+                           "python-keystoneclient" \
+                           "python-novaclient" \
+                           "python-cinderclient" \
+                           "python-neutronclient" \
+                           "python-ceilometerclient" )
+RUN for CLIENT_REQ in ${FUNCTEST_REQUIREMENTS[@]}; \
+    do \
+        FUNCTEST_CLIENT_REQ=$(grep $CLIENT_REQ $FUNCTEST_BASE_DIR/requirements.txt); \
+        if [ "$FUNCTEST_LIB_REQ" == "" ]; then continue; fi; \
+        REQ_LN=$(awk "/${CLIENT_REQ}/"'{ print NR; exit }' ${REPOS_DIR}/kingbird/requirements.txt); \
+        sed "${REQ_LN}c ${FUNCTEST_CLIENT_REQ}" -i ${REPOS_DIR}/kingbird/requirements.txt; \
+    done
+RUN cd ${REPOS_DIR}/kingbird && pip install -e .
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd ${REPOS_VNFS_DIR}/vims-test \
