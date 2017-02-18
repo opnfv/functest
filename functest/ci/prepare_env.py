@@ -21,12 +21,14 @@ import subprocess
 import sys
 
 import yaml
-from opnfv.utils import constants as opnfv_constants
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
+
+from opnfv.utils import constants as opnfv_constants
+from opnfv.deployment import factory
 
 actions = ['start', 'check']
 
@@ -278,6 +280,33 @@ def check_environment():
     logger.info("Functest environment is installed.")
 
 
+def print_deployment_info():
+    handler = None
+    installer_params_yaml = os.path.join(CONST.dir_repo_functest,
+                                         'functest/ci/installer_params.yaml')
+    if CONST.INSTALLER_IP and CONST.INSTALLER_TYPE:
+        installer_params = ft_utils.get_parameter_from_yaml(
+            CONST.INSTALLER_TYPE, installer_params_yaml)
+        user = installer_params['user']
+        if CONST.INSTALLER_TYPE == 'apex':
+            pkey = installer_params['pkey']
+            if os.path.isfile(pkey):
+                handler = factory.Factory.get_handler(CONST.INSTALLER_TYPE,
+                                                      CONST.INSTALLER_IP,
+                                                      user,
+                                                      pkey_file=pkey)
+        elif CONST.INSTALLER_TYPE == 'fuel':
+            pwd = installer_params['password']
+            handler = factory.Factory.get_handler(CONST.INSTALLER_TYPE,
+                                                  CONST.INSTALLER_IP,
+                                                  user,
+                                                  installer_pwd=pwd)
+
+    if handler:
+        logger.info('\n\nDeployment information:\n%s' %
+                    handler.get_deployment_info())
+
+
 def main(**kwargs):
     try:
         if not (kwargs['action'] in actions):
@@ -296,6 +325,7 @@ def main(**kwargs):
             with open(CONST.env_active, "w") as env_file:
                 env_file.write("1")
             check_environment()
+            print_deployment_info()
         elif kwargs['action'] == "check":
             check_environment()
     except Exception as e:
