@@ -85,6 +85,7 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${REPO
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/ovno ${REPOS_DIR}/ovno
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${REPOS_DIR}/promise
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sfc ${REPOS_DIR}/sfc
+RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/snaps ${REPOS_DIR}/snaps
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${REPOS_DIR}/securityscanning
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${REPOS_DIR}/releng
 
@@ -120,7 +121,6 @@ RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C
 RUN curl -L https://get.rvm.io | bash -s stable
 
 # SNAPS integration
-RUN git clone --depth 1 https://gerrit.cablelabs.com/snaps-provisioning ${REPOS_DIR}/snaps
 RUN pip install -e ${REPOS_DIR}/snaps/
 
 # SFC integration
