@@ -1,0 +1,16 @@
+apex:
+    ip: ''
+    user: 'stack'
+    pkey: '/root/.ssh/id_rsa'
+#compass:
+#    ip: ''
+#    user: 'root'
+#    password: 'root'
+fuel:
+    ip: '10.20.0.2'
+    user: 'root'
+    password: 'r00tme'
+#joid:
+#    ip: ''
+#    user: ''
+#    password: ''
