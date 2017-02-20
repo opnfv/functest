@@ -391,19 +391,19 @@ tiers:
         description : >-
             Collection of VNF test cases.
         testcases:
-            -
-                name: cloudify_ims
-                criteria: 'status == "PASS"'
-                blocking: false
-                description: >-
-                    This test case deploys an OpenSource vIMS solution from Clearwater
-                    using the Cloudify orchestrator. It also runs some signaling traffic.
-                dependencies:
-                    installer: ''
-                    scenario: 'nosdn-nofeature'
-                run:
-                    module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
-                    class: 'ImsVnf'
+#           -
+#               name: cloudify_ims
+#               criteria: 'status == "PASS"'
+#               blocking: false
+#               description: >-
+#                   This test case deploys an OpenSource vIMS solution from Clearwater
+#                   using the Cloudify orchestrator. It also runs some signaling traffic.
+#               dependencies:
+#                   installer: ''
+#                   scenario: 'nosdn-nofeature'
+#               run:
+#                   module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
+#                   class: 'ImsVnf'
             -
                 name: aaa
                 criteria: 'ret == 0'
