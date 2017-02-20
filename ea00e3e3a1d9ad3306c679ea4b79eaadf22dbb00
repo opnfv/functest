@@ -16,6 +16,24 @@
       "revId": "ea00e3e3a1d9ad3306c679ea4b79eaadf22dbb00",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_0bce0b84",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-20T11:06:19Z",
+      "side": 1,
+      "message": "ok, I will wrap this into a try-except block",
+      "parentUuid": "dabed58f_1d0c1542",
+      "revId": "ea00e3e3a1d9ad3306c679ea4b79eaadf22dbb00",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
