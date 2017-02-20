@@ -45,8 +45,17 @@ def get_vnfd_id(tacker_client, vnfd_name):
     return get_id_from_name(tacker_client, 'vnfd', vnfd_name)
 
 
-def get_vnf_id(tacker_client, vnf_name):
-    return get_id_from_name(tacker_client, 'vnf', vnf_name)
+def get_vnf_id(tacker_client, vnf_name, timeout=5):
+    vnf_id = None
+    while vnf_id is None and timeout >= 0:
+        try:
+            vnf_id = get_id_from_name(tacker_client, 'vnf', vnf_name)
+        except:
+            logger.info("Could not retrieve ID for vnf with name [%s]."
+                        " Retrying." % vnf_name)
+            time.sleep(1)
+            timeout -= 1
+    return vnf_id
 
 
 def get_sfc_id(tacker_client, sfc_name):
@@ -136,28 +145,23 @@ def create_vnf(tacker_client, vnf_name, vnfd_id=None,
         return None
 
 
-def wait_for_vnf(tacker_client, vnf_id=None, vnf_name=None):
+def wait_for_vnf(tacker_client, vnf_id=None, vnf_name=None, timeout=60):
     try:
-        _id = None
-        if vnf_id is not None:
-            _id = vnf_id
-        elif vnf_name is not None:
-            while _id is None:
-                try:
-                    _id = get_vnf_id(tacker_client, vnf_name)
-                except:
-                    logger.error("Bazinga")
-        else:
+        if vnf_id is None and vnf_name is None:
             raise Exception('You must specify vnf_id or vnf_name')
-        while True:
-            vnf = [v for v in list_vnfs(tacker_client, verbose=True)['vnfs']
-                   if v['id'] == _id]
-            vnf = vnf[0]
-            logger.info('Waiting for vnf {0}'.format(str(vnf)))
+        _id = get_vnf_id(tacker_client, vnf_name) if vnf_id is None else vnf_id
+
+        vnf = next((v for v in list_vnfs(tacker_client, verbose=True)['vnfs']
+                   if v['id'] == _id), None)
+        if vnf is None:
+            raise Exception("Could not retrieve VNF with ID [%s]" % _id)
+        logger.info('Waiting for vnf {0}'.format(str(vnf)))
+        while True and timeout >= 0:
             if vnf['status'] == 'ERROR':
                 raise Exception('Error when booting vnf %s' % _id)
             elif vnf['status'] == 'PENDING_CREATE':
                 time.sleep(3)
+                timeout -= 3
                 continue
             else:
                 break
