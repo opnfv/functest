@@ -387,7 +387,7 @@ tiers:
     -
         name: vnf
         order: 4
-        ci_loop: '(daily)|(weekly)'
+        ci_loop: 'weekly'
         description : >-
             Collection of VNF test cases.
         testcases:
@@ -400,7 +400,7 @@ tiers:
                     using the Cloudify orchestrator. It also runs some signaling traffic.
                 dependencies:
                     installer: ''
-                    scenario: 'nosdn-nofeature'
+                    scenario: '(ocl)|(nosdn)|^(os-odl)((?!bgpvpn).)*$'
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
                     class: 'ImsVnf'
@@ -411,8 +411,8 @@ tiers:
                 description: >-
                     Test suite from Parser project.
                 dependencies:
-                    installer: 'unknown'
-                    scenario: 'unknown'
+                    installer: ''
+                    scenario: ''
                 run:
                     module: 'functest.opnfv_tests.vnf.aaa.aaa'
                     class: 'AaaVnf'
