@@ -56,6 +56,23 @@
       "revId": "ea5886b541087b564df9b930742e3327e99805a1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_ab301f57",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-20T12:20:20Z",
+      "side": 1,
+      "message": "please hold on this. This ssh pass way is ugly and I have been working on a library to access the deployment directly. \n\nSee: https://gerrit.opnfv.org/gerrit/#/c/29033/\n\nhttps://git.opnfv.org/releng/tree/modules/opnfv/deployment/manager.py\n\nActually I already extract that information from the deployed nodes: http://paste.openstack.org/raw/599537/",
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
