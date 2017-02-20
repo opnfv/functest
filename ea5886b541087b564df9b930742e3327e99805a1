@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_dd051d15",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-20T02:16:29Z",
+      "side": 1,
+      "message": "I am not very sure of it, but I think these three images will only be used in aarch64, so it will only be needed in aarch64 docker images, am I right?",
+      "range": {
+        "startLine": 121,
+        "startChar": 67,
+        "endLine": 121,
+        "endChar": 74
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_fd02610a",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-20T02:16:29Z",
+      "side": 1,
+      "message": "I guess this function will only be used in prepare_env.py, so I would suggest to put it in that file. \nIf we adopt to OO completely, this file shouldn\u0027t be existed. and I guess with the evolution, one day it will be deleted.",
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_a0ffde00",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-20T02:16:29Z",
+      "side": 1,
+      "message": "I would suggest to use CONST to access the env variable rather than use ov.environ directly.",
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
