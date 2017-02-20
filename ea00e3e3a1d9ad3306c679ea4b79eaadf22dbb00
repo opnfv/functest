@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_1d0c1542",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-20T01:58:52Z",
+      "side": 1,
+      "message": "I wouldn\u0027t suggest to check the installer type again in here, since installer type will be checked in Factory",
+      "revId": "ea00e3e3a1d9ad3306c679ea4b79eaadf22dbb00",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
