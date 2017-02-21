@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_f18cca81",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 6433
+      },
+      "writtenOn": "2017-02-21T05:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_e67deeb2",
+      "revId": "e2553550d098ff33e203b2a313ea872d3582c774",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_864af281",
         "filename": "docs/devguide/index.rst",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2017-02-21T02:29:01Z",
       "side": 1,
       "message": "authentication -\u003e authorization\nauthentication \u003d login + password(who you are)\nauthorization \u003d permissions(what you are allow to do)",
+      "range": {
+        "startLine": 517,
+        "startChar": 66,
+        "endLine": 517,
+        "endChar": 80
+      },
+      "revId": "e2553550d098ff33e203b2a313ea872d3582c774",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_91e9ce1c",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 6433
+      },
+      "writtenOn": "2017-02-21T05:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_864af281",
       "range": {
         "startLine": 517,
         "startChar": 66,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_b1ee5221",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 6433
+      },
+      "writtenOn": "2017-02-21T05:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_065e0246",
+      "range": {
+        "startLine": 523,
+        "startChar": 90,
+        "endLine": 523,
+        "endChar": 102
+      },
+      "revId": "e2553550d098ff33e203b2a313ea872d3582c774",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_262226ba",
         "filename": "docs/devguide/index.rst",
         "patchSetId": 9
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_51f3560a",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 6433
+      },
+      "writtenOn": "2017-02-21T05:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_262226ba",
+      "range": {
+        "startLine": 529,
+        "startChar": 0,
+        "endLine": 529,
+        "endChar": 30
+      },
+      "revId": "e2553550d098ff33e203b2a313ea872d3582c774",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_c62eaaa5",
         "filename": "docs/devguide/index.rst",
         "patchSetId": 9
@@ -99,6 +189,24 @@
       "writtenOn": "2017-02-21T02:29:01Z",
       "side": 1,
       "message": "please indicate currently token authorization is implemented but haven\u0027t put into use yet.",
+      "revId": "e2553550d098ff33e203b2a313ea872d3582c774",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_71f8dae5",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 6433
+      },
+      "writtenOn": "2017-02-21T05:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_c62eaaa5",
       "revId": "e2553550d098ff33e203b2a313ea872d3582c774",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
