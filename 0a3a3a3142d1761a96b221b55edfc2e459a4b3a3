@@ -48,6 +48,47 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_8035f547",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-21T18:27:04Z",
+      "side": 1,
+      "message": "there is a util function that does this for you. \n\nhttps://gerrit.opnfv.org/gerrit/gitweb?p\u003dfunctest.git;a\u003dblob;f\u003dfunctest/utils/functest_utils.py;h\u003db2c36cff984f0cdbe02e1497976de2fb2ec62791;hb\u003dc66abf22ffef53fa42c4425d3dceec4289af622b#l351",
+      "parentUuid": "dabed58f_00bee5ff",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 51
+      },
+      "revId": "0a3a3a3142d1761a96b221b55edfc2e459a4b3a3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_c02bede9",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-21T18:27:04Z",
+      "side": 1,
+      "message": "this is too much hardcoded... I have proposed a nice way to put this configuration in a config file and make this agnostic to the isntaller type.\n\nCan you base this patch on this one?\n\nhttps://gerrit.opnfv.org/gerrit/#/c/29033/",
+      "revId": "0a3a3a3142d1761a96b221b55edfc2e459a4b3a3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_e0d5d143",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 6
@@ -59,6 +100,30 @@
       "writtenOn": "2017-02-21T16:23:12Z",
       "side": 1,
       "message": "I think this should be inside the with block",
+      "range": {
+        "startLine": 246,
+        "startChar": 8,
+        "endLine": 246,
+        "endChar": 17
+      },
+      "revId": "0a3a3a3142d1761a96b221b55edfc2e459a4b3a3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_204689c0",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-21T18:27:04Z",
+      "side": 1,
+      "message": "actually you don\u0027t need to close the file when using \"with open\"\nhttps://docs.python.org/2/tutorial/inputoutput.html#methods-of-file-objects\n\n\u003e\u003e\u003e with open(\u0027workfile\u0027, \u0027r\u0027) as f:\n...     read_data \u003d f.read()\n\u003e\u003e\u003e f.closed\nTrue",
+      "parentUuid": "dabed58f_e0d5d143",
       "range": {
         "startLine": 246,
         "startChar": 8,
