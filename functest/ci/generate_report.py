@@ -26,7 +26,7 @@ COL_5_LEN = 75
 logger = ft_logger.Logger("generate_report").getLogger()
 
 
-def init(tiers_to_run):
+def init(tiers_to_run=[]):
     test_cases_arr = []
     for tier in tiers_to_run:
         for test in tier.get_tests():
@@ -91,7 +91,7 @@ def print_separator(char="=", delimiter="+"):
     return str
 
 
-def main(args):
+def main(args=[]):
     executed_test_cases = args
 
     if CONST.IS_CI_RUN:
