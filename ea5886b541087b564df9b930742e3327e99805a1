@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "dabed58f_91054ec4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "function",
+      "range": {
+        "startLine": 13,
+        "startChar": 59,
+        "endLine": 13,
+        "endChar": 66
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_d7dade16",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "log in",
+      "range": {
+        "startLine": 14,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_b10ad2d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "Jose \u0026 functest cores: can we come up with an uniform approach of selecting the Fuel enviroment to run on?",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 61
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_dd051d15",
         "filename": "docker/Dockerfile",
         "patchSetId": 2
@@ -73,6 +142,237 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_510fd6e1",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "This is documented in the commit message.\nUnless Functest can work fully offline (w/o internet access during runtime), I suggest we later refactor functest to download these images only at runtime.",
+      "parentUuid": "dabed58f_c6054a15",
+      "range": {
+        "startLine": 121,
+        "startChar": 67,
+        "endLine": 121,
+        "endChar": 74
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_9704667f",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "Let\u0027s use a newer Cirros image for AArch64, that supports both AAVMF boot and all required DHCP options support:\nhttp://download.cirros-cloud.net/daily/20160722/\nThis observation applies to all references in this patch.\nAlso, it would be nice to extract the common prefix into an env variable.",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 108
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_31f6e2d8",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "If we add support for AArch64 pods using an x86 functest image, we should also support x86 with AArch64 functest, so let\u0027s add cirros x86 images here too.\nWe could extract the download of these images into a sh and just call it from both Dockerfiles?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 108
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_b7096a97",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "same version obs",
+      "range": {
+        "startLine": 5,
+        "startChar": 30,
+        "endLine": 5,
+        "endChar": 61
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_d102e6b3",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "Later, we will switch to AAVMF boot, which requires adding hw_firmware_type and short_id glance properties here, just fyi.",
+      "range": {
+        "startLine": 13,
+        "startChar": 12,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_57feee6c",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "We should move this inside one of the early called methods instead.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_712bfa30",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "Most of the stuff here comes from static job config, while this has to be read from the POD. Can we move it into a more appropriate location, if such a thing exists?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 49
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_f1ffeaa8",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "Let\u0027s merge this func into patch_config_file:\ndef patch_config_file(patch_file, arch_filter\u003dNone):\n    if arch_filter and not pod_arch in arch_filter:\n       return;\n    [...]",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 37
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_b1d89254",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "In this case, fileinput module from stdlib would make this easier to read:\n\nimport fileinput\nfor line in fileinput.input(RALLY_CONF_PATH, inplace\u003d1):\n   print line,\n   if \"cirros|testvm\" in line:\n       print rally_patch_conf\n\nIdea from: http://stackoverflow.com/questions/1325905/inserting-line-at-specified-position-of-a-text-file",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 252,
+        "endChar": 45
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_d7f17e96",
+        "filename": "functest/ci/rally_aarch64_patch.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "Just a heads up, if we will use AAVMF to boot the TestVM, the flavor RAM should be bumped to 256MB.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 28
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_fd02610a",
         "filename": "functest/utils/functest_utils.py",
         "patchSetId": 2
@@ -136,6 +436,46 @@
       "side": 1,
       "message": "Ok, that\u0027s great",
       "parentUuid": "dabed58f_ab301f57",
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_d1f0a6cb",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "We should add a comment about the weird \")\", it\u0027s relying on a convention we applied in Armband, where release names are ending with \" ... (aarch64)\" if all nodes inside the POD are aarch64, and later might be extended to \" ... (x86_64, aarch64)\", where the last arch in the list is the arch of compute nodes.",
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_71e21a05",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T06:23:53Z",
+      "side": 1,
+      "message": "I think the politically correct naming here would be x86_64",
+      "range": {
+        "startLine": 179,
+        "startChar": 12,
+        "endLine": 179,
+        "endChar": 15
+      },
       "revId": "ea5886b541087b564df9b930742e3327e99805a1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
