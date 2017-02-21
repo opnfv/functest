@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_c0d0cd55",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T16:23:12Z",
+      "side": 1,
+      "message": ":)",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 10
+      },
+      "revId": "0a3a3a3142d1761a96b221b55edfc2e459a4b3a3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_00bee5ff",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T16:23:12Z",
+      "side": 1,
+      "message": "Let\u0027s move these inside the function using them, they are not needed globally - we can pass the filename instead of contents; plus we should call f.close",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 51
+      },
+      "revId": "0a3a3a3142d1761a96b221b55edfc2e459a4b3a3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e0d5d143",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T16:23:12Z",
+      "side": 1,
+      "message": "I think this should be inside the with block",
+      "range": {
+        "startLine": 246,
+        "startChar": 8,
+        "endLine": 246,
+        "endChar": 17
+      },
+      "revId": "0a3a3a3142d1761a96b221b55edfc2e459a4b3a3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
