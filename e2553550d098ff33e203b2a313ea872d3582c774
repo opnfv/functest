@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_e67deeb2",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-21T02:29:01Z",
+      "side": 1,
+      "message": "I would suggest to use \"Test API Authorization\"",
+      "revId": "e2553550d098ff33e203b2a313ea872d3582c774",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_864af281",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-21T02:29:01Z",
+      "side": 1,
+      "message": "authentication -\u003e authorization\nauthentication \u003d login + password(who you are)\nauthorization \u003d permissions(what you are allow to do)",
+      "range": {
+        "startLine": 517,
+        "startChar": 66,
+        "endLine": 517,
+        "endChar": 80
+      },
+      "revId": "e2553550d098ff33e203b2a313ea872d3582c774",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_065e0246",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-21T02:29:01Z",
+      "side": 1,
+      "message": "TestApiToken -\u003e *TestApiToken*, add * prefix and suffix, make it a Italic",
+      "range": {
+        "startLine": 523,
+        "startChar": 90,
+        "endLine": 523,
+        "endChar": 102
+      },
+      "revId": "e2553550d098ff33e203b2a313ea872d3582c774",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_262226ba",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-21T02:29:01Z",
+      "side": 1,
+      "message": "please use the following way to write python code block, no need to explain it here.\n\n.. code:: python\n\n  headers[\u0027X-Auth-Token\u0027] \u003d os.environ.get(\u0027TestApiToken\u0027)\n\nrst specification please reference: http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html",
+      "range": {
+        "startLine": 529,
+        "startChar": 0,
+        "endLine": 529,
+        "endChar": 30
+      },
+      "revId": "e2553550d098ff33e203b2a313ea872d3582c774",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_c62eaaa5",
+        "filename": "docs/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-21T02:29:01Z",
+      "side": 1,
+      "message": "please indicate currently token authorization is implemented but haven\u0027t put into use yet.",
+      "revId": "e2553550d098ff33e203b2a313ea872d3582c774",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
