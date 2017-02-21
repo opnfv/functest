@@ -104,7 +104,6 @@ class OSUtilsTesting(unittest.TestCase):
                  'servers.create.return_value': self.instance,
                  'flavors.list.return_value': [self.flavor],
                  'flavors.find.return_value': self.flavor,
-                 'flavors.list.return_value': [self.flavor],
                  'servers.add_floating_ip.return_value': mock.Mock(),
                  'servers.force_delete.return_value': mock.Mock(),
                  'aggregates.list.return_value': [self.aggregate],
@@ -161,6 +160,15 @@ class OSUtilsTesting(unittest.TestCase):
                  'volumes.delete.return_value': mock.Mock()
                  }
         self.cinder_client.configure_mock(**attrs)
+
+        self.resource = mock.Mock()
+        attrs = {'id': 'resource_test_id',
+                 'name': 'resource_test_name'
+                 }
+
+        self.heat_client = mock.Mock()
+        attrs = {'resources.get.return_value': self.resource}
+        self.heat_client.configure_mock(**attrs)
 
         mock_obj = mock.Mock()
         attrs = {'id': 'tenant_id',
@@ -541,6 +549,36 @@ class OSUtilsTesting(unittest.TestCase):
             self.assertEqual(openstack_utils.get_glance_client(),
                              mock_glance_obj)
             mock_glan_client.assert_called_once_with('3',
+                                                     session=mock_session_obj)
+
+    @mock.patch('functest.utils.openstack_utils.os.getenv',
+                return_value=None)
+    def test_get_heat_client_version_missing_env(self, mock_os_getenv):
+        self.assertEqual(openstack_utils.get_heat_client_version(),
+                         openstack_utils.DEFAULT_HEAT_API_VERSION)
+
+    @mock.patch('functest.utils.openstack_utils.logger.info')
+    @mock.patch('functest.utils.openstack_utils.os.getenv', return_value='1')
+    def test_get_heat_client_version_default(self, mock_os_getenv,
+                                             mock_logger_info):
+        self.assertEqual(openstack_utils.get_heat_client_version(), '1')
+        mock_logger_info.assert_called_once_with(
+            "OS_ORCHESTRATION_API_VERSION is set in env as '%s'", '1')
+
+    def test_get_heat_client(self):
+        mock_heat_obj = mock.Mock()
+        mock_session_obj = mock.Mock()
+        with mock.patch('functest.utils.openstack_utils'
+                        '.get_heat_client_version', return_value='1'), \
+            mock.patch('functest.utils.openstack_utils'
+                       '.heatclient.Client',
+                       return_value=mock_heat_obj) \
+            as mock_heat_client, \
+            mock.patch('functest.utils.openstack_utils.get_session',
+                       return_value=mock_session_obj):
+            self.assertEqual(openstack_utils.get_heat_client(),
+                             mock_heat_obj)
+            mock_heat_client.assert_called_once_with('1',
                                                      session=mock_session_obj)
 
     def test_get_instances_default(self):
@@ -1698,6 +1736,24 @@ class OSUtilsTesting(unittest.TestCase):
         self.assertFalse(openstack_utils.
                          delete_user(Exception,
                                      'user_id'))
+        self.assertTrue(mock_logger_error.called)
+
+    def test_get_resource_default(self):
+        with mock.patch('functest.utils.openstack_utils.'
+                        'is_keystone_v3', return_value=True):
+            self.assertEqual(openstack_utils.
+                             get_resource(self.heat_client,
+                                          'stack_id',
+                                          'resource'),
+                             self.resource)
+
+    @mock.patch('functest.utils.openstack_utils.logger.error')
+    def test_get_resource_exception(self, mock_logger_error):
+        self.assertEqual(openstack_utils.
+                         get_resource(Exception,
+                                      'stack_id',
+                                      'resource'),
+                         None)
         self.assertTrue(mock_logger_error.called)
 
 
