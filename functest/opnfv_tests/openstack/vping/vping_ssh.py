@@ -62,7 +62,7 @@ class VPingSSH(vping_base.VPingBase):
         self.logger.info("Trying to establish SSH connection to %s..."
                          % floatip)
         username = 'cirros'
-        password = 'cubswin:)'
+        password = 'gocubsgo'
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 

@@ -629,7 +629,7 @@ class SfcOnos:
             s = pxssh.pxssh()
             hostname = self.vm_public_ip[0]
             username = "cirros"
-            password = "cubswin:)"
+            password = "gocubsgo"
             s.login(hostname,  username,  password)
             s.sendline("ping -c 5 " + str(self.port_ip[2]))
             s.prompt()             # match the prompt
@@ -645,7 +645,7 @@ class SfcOnos:
             s = pxssh.pxssh()
             hostname = self.vm_public_ip[1]
             username = "cirros"
-            password = "cubswin:)"
+            password = "gocubsgo"
             s.login(hostname,  username,  password)
             s.sendline('sudo ./firewall')
             s.prompt()
