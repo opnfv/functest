@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_37774e3c",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-02-21T17:08:31Z",
+      "side": 1,
+      "message": "Should the orchestra not use dependencies as installers like see Copper above as joid , Apex unless you directly orchestrate",
+      "revId": "3e921f50fb71ef93b441054c0444da5a4fa64b44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_57721a4a",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-02-21T17:08:31Z",
+      "side": 1,
+      "message": "Should opera not use depedndencies as installers like compass, joid etc. Is there a logic as to which one will be used depending on Scnario too? Plus do we assume here that if you specify scenario and or installer the VNF Deployment will not be direct but through installers. Plus can we also have [all] installers so that code can use it based on scenario etc.",
+      "revId": "3e921f50fb71ef93b441054c0444da5a4fa64b44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_80265567",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-02-21T17:08:31Z",
+      "side": 1,
+      "message": "Should it not include artifact or vnf package name that will be onboarded with its format like \u0027CASR\u0027, \u0027TGZ\". the \"case\" simply point to the vnf path. Baseclass should include this else each project will create their own way of delivering packages and standardizing that will become afterthought. Alternate would be to have an extended class beyond base class to include those instead of being hidden in Orchestration or installers.",
+      "revId": "3e921f50fb71ef93b441054c0444da5a4fa64b44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_001a6517",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-02-21T17:08:31Z",
+      "side": 1,
+      "message": "Should it not include artifact or vnf package name that will be onboarded with its format like \u0027CASR\u0027, \u0027TGZ\". the \"case\" simply point to the vnf path. Baseclass should include this else each project will create their own way of delivering packages and standardizing that will become afterthought. Alternate would be to have an extended class beyond base class to include those instead of being hidden in Orchestration or installers.",
+      "revId": "3e921f50fb71ef93b441054c0444da5a4fa64b44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
