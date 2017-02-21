@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_23e4533a",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T20:19:05Z",
+      "side": 1,
+      "message": "Sneaky function, at a quick read I thought it could only retrieve specific parameters and not full contents. Nice :)",
+      "parentUuid": "dabed58f_8035f547",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 51
+      },
+      "revId": "0a3a3a3142d1761a96b221b55edfc2e459a4b3a3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_c02bede9",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 6
@@ -124,6 +148,30 @@
       "side": 1,
       "message": "actually you don\u0027t need to close the file when using \"with open\"\nhttps://docs.python.org/2/tutorial/inputoutput.html#methods-of-file-objects\n\n\u003e\u003e\u003e with open(\u0027workfile\u0027, \u0027r\u0027) as f:\n...     read_data \u003d f.read()\n\u003e\u003e\u003e f.closed\nTrue",
       "parentUuid": "dabed58f_e0d5d143",
+      "range": {
+        "startLine": 246,
+        "startChar": 8,
+        "endLine": 246,
+        "endChar": 17
+      },
+      "revId": "0a3a3a3142d1761a96b221b55edfc2e459a4b3a3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_43c4e791",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-21T20:19:05Z",
+      "side": 1,
+      "message": "mea culpa, thanks!",
+      "parentUuid": "dabed58f_204689c0",
       "range": {
         "startLine": 246,
         "startChar": 8,
