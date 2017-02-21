@@ -111,9 +111,9 @@ class VnfOnBoardingBase(base.TestcaseBase):
         self.keystone_client = os_utils.get_keystone_client()
 
         self.logger.info("Prepare OpenStack plateform(create tenant and user)")
-        user_id = os_utils.get_user_id(self.keystone_client,
-                                       self.creds['username'])
-        if user_id == '':
+        admin_user_id = os_utils.get_user_id(self.keystone_client,
+                                             self.creds['username'])
+        if admin_user_id == '':
             self.step_failure("Failed to get id of " +
                               self.creds['username'])
 
@@ -133,7 +133,7 @@ class VnfOnBoardingBase(base.TestcaseBase):
             self.logger.error("Failed to get id for %s role" % role_name)
             self.step_failure("Failed to get role id of " + role_name)
 
-        if not os_utils.add_role_user(self.keystone_client, user_id,
+        if not os_utils.add_role_user(self.keystone_client, admin_user_id,
                                       role_id, tenant_id):
             self.logger.error("Failed to add %s on tenant" %
                               self.creds['username'])
@@ -148,6 +148,13 @@ class VnfOnBoardingBase(base.TestcaseBase):
         if not user_id:
             self.logger.error("Failed to create %s user" % self.tenant_name)
             self.step_failure("Failed to create user ")
+
+        if not os_utils.add_role_user(self.keystone_client, user_id,
+                                      role_id, tenant_id):
+            self.logger.error("Failed to add %s on tenant" %
+                              self.tenant_name)
+            self.step_failure("Failed to add %s on tenant" %
+                              self.tenant_name)
 
         self.logger.info("Update OpenStack creds informations")
         self.admin_creds = self.creds.copy()
