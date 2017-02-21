@@ -18,6 +18,7 @@ from keystoneauth1 import loading
 from keystoneauth1 import session
 from cinderclient import client as cinderclient
 from glanceclient import client as glanceclient
+from heatclient import client as heatclient
 from novaclient import client as novaclient
 from keystoneclient import client as keystoneclient
 from neutronclient.neutron import client as neutronclient
@@ -28,6 +29,7 @@ import functest.utils.functest_utils as ft_utils
 logger = ft_logger.Logger("openstack_utils").getLogger()
 
 DEFAULT_API_VERSION = '2'
+DEFAULT_HEAT_API_VERSION = '1'
 
 
 # *********************************************
@@ -239,6 +241,20 @@ def get_glance_client_version():
 def get_glance_client(other_creds={}):
     sess = get_session(other_creds)
     return glanceclient.Client(get_glance_client_version(), session=sess)
+
+
+def get_heat_client_version():
+    api_version = os.getenv('OS_ORCHESTRATION_API_VERSION')
+    if api_version is not None:
+        logger.info("OS_ORCHESTRATION_API_VERSION is set in env as '%s'",
+                    api_version)
+        return api_version
+    return DEFAULT_HEAT_API_VERSION
+
+
+def get_heat_client(other_creds={}):
+    sess = get_session(other_creds)
+    return heatclient.Client(get_heat_client_version(), session=sess)
 
 
 # *********************************************
@@ -1383,3 +1399,15 @@ def delete_user(keystone_client, user_id):
         logger.error("Error [delete_user(keystone_client, '%s')]: %s"
                      % (user_id, e))
         return False
+
+
+# *********************************************
+#   HEAT
+# *********************************************
+def get_resource(heat_client, stack_id, resource):
+    try:
+        resources = heat_client.resources.get(stack_id, resource)
+        return resources
+    except Exception, e:
+        logger.error("Error [get_resource]: %s" % e)
+        return None
