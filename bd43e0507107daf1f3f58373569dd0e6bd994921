@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_6c5d5de9",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-21T12:45:57Z",
+      "side": 1,
+      "message": "no need to copy anything. The file is already in the repo when building the image.\n\nAlso, this will fail if you look at how docker builds are done:\nhttps://git.opnfv.org/releng/tree/jjb/releng/opnfv-docker.sh#n55\n\nIt won\u0027t find the file.",
+      "revId": "bd43e0507107daf1f3f58373569dd0e6bd994921",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_ec686d89",
+        "filename": "docker/requirements_alignment.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-21T12:45:57Z",
+      "side": 1,
+      "message": "you can also use:\n \n    if [ -z $FUNCTEST_CLIENT_REQ ]; then",
+      "revId": "bd43e0507107daf1f3f58373569dd0e6bd994921",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
