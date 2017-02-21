@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_2331b3ec",
+        "filename": "functest/opnfv_tests/features/barometer.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5995
+      },
+      "writtenOn": "2017-02-21T19:45:42Z",
+      "side": 1,
+      "message": "Remove import in order to fix the violation brought-up by jenkins-ci after the previous patch set:\n\nFlake8 Violations: 2\nFirst 1 shown\n---\n ./functest/opnfv_tests/features/barometer.py:14:1: F401 \u0027functest.utils.functest_utils\u0027 imported but unused",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 54
+      },
+      "revId": "664a436e7da2abf73b21965cefd0b27858374141",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
