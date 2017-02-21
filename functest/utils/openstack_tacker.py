@@ -176,6 +176,9 @@ def wait_for_vnf(tacker_client, vnf_id=None, vnf_name=None, timeout=60):
             elif vnf['status'] == 'PENDING_CREATE':
                 time.sleep(3)
                 timeout -= 3
+
+        if (timeout < 0):
+            raise Exception('Timeout when booting vnf %s' % vnf['id'])
         return vnf['id']
     except Exception, e:
         logger.error("error [wait_for_vnf(tacker_client, '%s', '%s')]: %s"
