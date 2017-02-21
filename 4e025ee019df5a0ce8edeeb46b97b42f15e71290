@@ -22,6 +22,30 @@
       "revId": "4e025ee019df5a0ce8edeeb46b97b42f15e71290",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_633ecbba",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-21T19:54:32Z",
+      "side": 1,
+      "message": "right, it was needed before. I will remove it",
+      "parentUuid": "dabed58f_e32b9b80",
+      "range": {
+        "startLine": 284,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 18
+      },
+      "revId": "4e025ee019df5a0ce8edeeb46b97b42f15e71290",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
