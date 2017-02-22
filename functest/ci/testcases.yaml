@@ -348,6 +348,21 @@ tiers:
                 run:
                      module: 'functest.opnfv_tests.features.netready'
                      class: 'GluonVping'
+            -
+                name: barometer
+                criteria: 'status == "PASS"'
+                blocking: false
+                description: >-
+                    Test suite for the Barometer project. Separate tests verify the
+                    proper configuration and functionality of the following
+                    collectd plugins Ceilometer, Hugepages, Memory RAS (mcelog),
+                    and OVS Events
+                dependencies:
+                    installer: 'fuel'
+                    scenario: 'kvm_ovs_dpdk_bar'
+                run:
+                     module: 'functest.opnfv_tests.features.barometer'
+                     class: 'BarometerCollectd'
     -
         name: components
         order: 3
@@ -382,6 +397,22 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestDefcore'
+            -
+                name: tempest_custom
+                criteria: 'success_rate == 100%'
+                blocking: false
+                description: >-
+                    The test case allows running a customized list of tempest
+                    test cases defined in a file under
+                    /home/repos/functest/functest/opnfv_tests/openstack/
+                      /tempest/custom_tests/test_list.txt
+                    The file is empty and can be customized with the desired tests.
+                dependencies:
+                    installer: 'unknown'
+                    scenario: 'unknown'
+                run:
+                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
+                    class: 'TempestCustom'
 #            -
 #                name: rally_full
 #                criteria: 'success_rate >= 90%'
@@ -449,8 +480,8 @@ tiers:
                 description: >-
                     VNF deployment with OpenBaton (Orchestra)
                 dependencies:
-                    installer: 'unknown'
-                    scenario: 'unknown'
+                    installer: ''
+                    scenario: ''
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.orchestra_ims'
                     class: 'ImsVnf'
