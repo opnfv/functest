@@ -1,0 +1,4 @@
+# Set of RefStack tempest test cases not flagged and required. It only contains OpenStack core (no object storage) 
+# This approved guidelines (2016.07) are valid for Kilo, Liberty and Newton releases of OpenStack
+# The list can be generated using the Rest API from RefStack project:
+#

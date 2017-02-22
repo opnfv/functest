@@ -99,7 +99,7 @@ class TempestCommon(testcase_base.TestcaseBase):
 
     def generate_test_list(self, verifier_repo_dir):
         logger.debug("Generating test case list...")
-        if self.MODE == 'defcore':
+        if self.MODE == 'refstack':
             shutil.copyfile(
                 conf_utils.TEMPEST_DEFCORE, conf_utils.TEMPEST_RAW_LIST)
         elif self.MODE == 'custom':
@@ -329,3 +329,12 @@ class TempestCustom(TempestCommon):
         self.case_name = "tempest_custom"
         self.MODE = mode
         self.OPTION = option
+
+
+class TempestRefstack(TempestCommon):
+
+    def __init__(self):
+        TempestCommon.__init__(self)
+        self.case_name = "refstack"
+        self.MODE = "refstack"
+        self.OPTION = "--concurrency 1"

@@ -32,7 +32,7 @@ TEMPEST_CUSTOM = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
 TEMPEST_BLACKLIST = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
                                  'blacklist.txt')
 TEMPEST_DEFCORE = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
-                               'defcore_req.txt')
+                               'refstack_req.txt')
 TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
 
