@@ -10,6 +10,8 @@ from pexpect import pxssh
 
 import functest.utils.functest_logger as ft_logger
 
+from functest.utils.constants import CONST
+
 OK = 200
 CREATED = 201
 ACCEPTED = 202
@@ -99,6 +101,8 @@ class SfcOnos:
         self.ip_pool = 0
         self.vm_public_ip = []
         self.vm_public_id = []
+        self.cirros_username = CONST.openstack_image_username
+        self.cirros_password = CONST.openstack_image_password
         self.net_id1 = 0
         self.vm = []
         self.address = 0
@@ -628,9 +632,7 @@ class SfcOnos:
 
             s = pxssh.pxssh()
             hostname = self.vm_public_ip[0]
-            username = "cirros"
-            password = "cubswin:)"
-            s.login(hostname,  username,  password)
+            s.login(hostname,  self.cirros_username,  self.cirros_password)
             s.sendline("ping -c 5 " + str(self.port_ip[2]))
             s.prompt()             # match the prompt
 
@@ -644,9 +646,7 @@ class SfcOnos:
         def vm1(queue1):
             s = pxssh.pxssh()
             hostname = self.vm_public_ip[1]
-            username = "cirros"
-            password = "cubswin:)"
-            s.login(hostname,  username,  password)
+            s.login(hostname,  self.cirros_username,  self.cirros_password)
             s.sendline('sudo ./firewall')
             s.prompt()
             output_pack = s.before
