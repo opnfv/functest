@@ -369,7 +369,19 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestFullParallel'
-
+            -
+                name: tempest_defcore
+                criteria: 'success_rate == 100%'
+                blocking: false
+                description: >-
+                    This is the set of Tempest test cases created by OpenStack
+                    Interop Working Group for certification purposes.
+                dependencies:
+                    installer: ''
+                    scenario: 'nosdn-nofeature-ha'
+                run:
+                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
+                    class: 'TempestDefcore'
             -
                 name: rally_full
                 criteria: 'success_rate >= 90%'
