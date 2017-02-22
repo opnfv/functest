@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_63cecb5c",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 770
+      },
+      "writtenOn": "2017-02-22T01:41:12Z",
+      "side": 1,
+      "message": "ok. So  requirements_alignment.sh will be put under functest folder directly, and will be there through:\n\nRUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${REPOS_DIR}/functest\n\nBut to build docker image locally before this patch is merged, you have to use COPY command, otherwise git clone cannot dowanload the script in functest folder.",
+      "parentUuid": "dabed58f_6c5d5de9",
+      "revId": "bd43e0507107daf1f3f58373569dd0e6bd994921",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_ec686d89",
         "filename": "docker/requirements_alignment.sh",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-02-21T12:45:57Z",
       "side": 1,
       "message": "you can also use:\n \n    if [ -z $FUNCTEST_CLIENT_REQ ]; then",
+      "revId": "bd43e0507107daf1f3f58373569dd0e6bd994921",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_c3045780",
+        "filename": "docker/requirements_alignment.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 770
+      },
+      "writtenOn": "2017-02-22T01:41:12Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "dabed58f_ec686d89",
       "revId": "bd43e0507107daf1f3f58373569dd0e6bd994921",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
