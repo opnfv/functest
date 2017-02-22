@@ -329,3 +329,12 @@ class TempestCustom(TempestCommon):
         self.case_name = "tempest_custom"
         self.MODE = mode
         self.OPTION = option
+
+
+class TempestDefcore(TempestCommon):
+
+    def __init__(self):
+        TempestCommon.__init__(self)
+        self.case_name = "tempest_defcore"
+        self.MODE = "defcore"
+        self.OPTION = "--concurrency 1"
