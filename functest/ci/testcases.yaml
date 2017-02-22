@@ -8,26 +8,14 @@ tiers:
             operations in the VIM.
         testcases:
             -
-                name: healthcheck
-                criteria: 'status == "PASS"'
-                blocking: true
-                description: >-
-                    This test case verifies the basic OpenStack services like
-                    Keystone, Glance, Cinder, Neutron and Nova.
-
-                dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
-            -
                 name: snaps_health_check
                 criteria: 'status == "PASS"'
-                blocking: false
+                blocking: true
                 description: >-
                     This test case creates executes the SimpleHealthCheck
                     Python test class which creates an, image, flavor, network,
                     and Cirros VM instance and observes the console output to
                     validate the single port obtains the correct IP address.
-
                 dependencies:
                     installer: ''
                     scenario: '^((?!lxd).)*$'
