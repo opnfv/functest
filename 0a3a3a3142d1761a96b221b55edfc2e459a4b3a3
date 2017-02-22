@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_e37e3be4",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-22T01:13:20Z",
+      "side": 1,
+      "message": "I think the special process of aarch64 is too trivial, I would suggest to find a way and put them together.",
+      "parentUuid": "dabed58f_c0d0cd55",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 10
+      },
+      "revId": "0a3a3a3142d1761a96b221b55edfc2e459a4b3a3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_00bee5ff",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 6
