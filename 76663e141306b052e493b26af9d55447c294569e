@@ -22,6 +22,30 @@
       "revId": "76663e141306b052e493b26af9d55447c294569e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_799f5c04",
+        "filename": "functest/opnfv_tests/openstack/tempest/custom_tests/defcore_req.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-22T20:55:56Z",
+      "side": 1,
+      "message": "I know and I discussed this with Catherine. OPNFV Danube release is based on Newton. 2016.08 supports up to Newton, and 2017.01 supports up to Ocata, so I guess it would make more sense to keep 2016.08. \n\nWe will update it for the new OPNFV release though to the latest one supporting Ocata or Pike.",
+      "parentUuid": "dabed58f_f94d8cc5",
+      "range": {
+        "startLine": 2,
+        "startChar": 26,
+        "endLine": 2,
+        "endChar": 34
+      },
+      "revId": "76663e141306b052e493b26af9d55447c294569e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
