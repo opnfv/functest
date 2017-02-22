@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_b631630d",
+        "filename": "functest/opnfv_tests/vnf/router/vyos_vrouter.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-02-22T12:16:39Z",
+      "side": 1,
+      "message": "The overall process is quite similar to FeatureBase. Is it better to inherit from FeatureBase instead?",
+      "range": {
+        "startLine": 21,
+        "startChar": 17,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "089ee6b084cbac4ae30b4803a275d9b9e395d19a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_1655cf1c",
+        "filename": "functest/opnfv_tests/vnf/router/vyos_vrouter.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-02-22T12:16:39Z",
+      "side": 1,
+      "message": "os.path.join is suggested",
+      "range": {
+        "startLine": 50,
+        "startChar": 19,
+        "endLine": 50,
+        "endChar": 56
+      },
+      "revId": "089ee6b084cbac4ae30b4803a275d9b9e395d19a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
