@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_f94d8cc5",
+        "filename": "functest/opnfv_tests/openstack/tempest/custom_tests/defcore_req.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6707
+      },
+      "writtenOn": "2017-02-22T20:02:10Z",
+      "side": 1,
+      "message": "One suggestion: you may want to use the 2017.01 Guideline (which was just recently approved by the OpenStack Foundation Board of Directors and may not yet be reflected on the OpenStack Interop homepage yet) instead of 2016.08.  It\u0027s the most recent Guideline and has a few additional capabilities.  You can find it\u0027s test list here:\n\nhttps://refstack.openstack.org/api/v1/guidelines/2017.01/tests?target\u003dcompute\u0026type\u003drequired\u0026alias\u003dtrue\u0026flag\u003dfalse",
+      "range": {
+        "startLine": 2,
+        "startChar": 26,
+        "endLine": 2,
+        "endChar": 34
+      },
+      "revId": "76663e141306b052e493b26af9d55447c294569e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
