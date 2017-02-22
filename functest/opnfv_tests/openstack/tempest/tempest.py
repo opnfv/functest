@@ -324,11 +324,11 @@ class TempestMultisite(TempestCommon):
 
 class TempestCustom(TempestCommon):
 
-    def __init__(self, mode, option):
+    def __init__(self):
         TempestCommon.__init__(self)
         self.case_name = "tempest_custom"
-        self.MODE = mode
-        self.OPTION = option
+        self.MODE = "custom"
+        self.OPTION = "--concurrency 1"
 
 
 class TempestRefstack(TempestCommon):

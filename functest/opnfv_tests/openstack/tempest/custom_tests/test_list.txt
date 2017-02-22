@@ -1,0 +1,4 @@
+# This is an empty file to be filled up with the desired tempest test cases
+# Examples:
+#tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops
+#tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_network_basic_ops
