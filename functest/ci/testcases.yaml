@@ -383,6 +383,22 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestDefcore'
             -
+                name: tempest_custom
+                criteria: 'success_rate == 100%'
+                blocking: false
+                description: >-
+                    The test case allows running a customized list of tempest
+                    test cases defined in a file under
+                    /home/repos/functest/functest/opnfv_tests/openstack/
+                      /tempest/custom_tests/test_list.txt
+                    The file is empty and can be customized with the desired tests.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
+                    class: 'TempestCustom'
+            -
                 name: rally_full
                 criteria: 'success_rate >= 90%'
                 blocking: false
