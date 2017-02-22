@@ -7,6 +7,7 @@ from functest.utils.constants import CONST
 
 
 class FeatureBase(base.TestcaseBase):
+
     def __init__(self, project='functest', case='', repo='', cmd=''):
         super(FeatureBase, self).__init__()
         self.project_name = project
@@ -19,13 +20,20 @@ class FeatureBase(base.TestcaseBase):
     def run(self, **kwargs):
         self.prepare()
         self.start_time = time.time()
-        ret = ft_utils.execute_command(self.cmd, output_file=self.result_file)
+        ret = self.execute()
         self.stop_time = time.time()
         self.post()
         self.parse_results(ret)
         self.log_results()
         self.logger.info("Test result is stored in '%s'" % self.result_file)
         return base.TestcaseBase.EX_OK
+
+    def execute(self):
+        '''
+        Executer method that can be overwritten
+        By default it executes a shell command.
+        '''
+        return ft_utils.execute_command(self.cmd, output_file=self.result_file)
 
     def prepare(self, **kwargs):
         pass
