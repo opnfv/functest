@@ -46,6 +46,30 @@
       "revId": "c987fb9f8ced10b1ba813dff6e5b0b6e93112622",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_4f10864e",
+        "filename": "functest/utils/testcase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-02-23T09:06:54Z",
+      "side": 1,
+      "message": "I agree that making testcasebase very big will make it hard to be maintained.\nLook forward to your new idea.",
+      "parentUuid": "dabed58f_74352345",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "c987fb9f8ced10b1ba813dff6e5b0b6e93112622",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
