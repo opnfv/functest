@@ -285,25 +285,30 @@ def print_deployment_info():
                                          'functest/ci/installer_params.yaml')
     if (CONST.INSTALLER_IP and CONST.INSTALLER_TYPE and
             CONST.INSTALLER_TYPE in opnfv_constants.INSTALLERS):
-        installer_params = ft_utils.get_parameter_from_yaml(
-            CONST.INSTALLER_TYPE, installer_params_yaml)
-
-        user = installer_params.get('user', None)
-        password = installer_params.get('password', None)
-        pkey = installer_params.get('pkey', None)
-
         try:
-            handler = factory.Factory.get_handler(
-                installer=CONST.INSTALLER_TYPE,
-                installer_ip=CONST.INSTALLER_IP,
-                installer_user=user,
-                installer_pwd=password,
-                pkey_file=pkey)
-            if handler:
-                logger.info('\n\nDeployment information:\n%s' %
-                            handler.get_deployment_info())
-        except Exception as e:
-            logger.debug("Cannot get deployment information. %s" % e)
+            installer_params = ft_utils.get_parameter_from_yaml(
+                CONST.INSTALLER_TYPE, installer_params_yaml)
+        except ValueError as e:
+            logger.debug('Printing deployment info is not supported for %s' %
+                         CONST.INSTALLER_TYPE)
+            logger.debug(e)
+        else:
+            user = installer_params.get('user', None)
+            password = installer_params.get('password', None)
+            pkey = installer_params.get('pkey', None)
+
+            try:
+                handler = factory.Factory.get_handler(
+                    installer=CONST.INSTALLER_TYPE,
+                    installer_ip=CONST.INSTALLER_IP,
+                    installer_user=user,
+                    installer_pwd=password,
+                    pkey_file=pkey)
+                if handler:
+                    logger.info('\n\nDeployment information:\n%s' %
+                                handler.get_deployment_info())
+            except Exception as e:
+                logger.debug("Cannot get deployment information. %s" % e)
 
 
 def main(**kwargs):
