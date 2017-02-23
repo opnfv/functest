@@ -325,6 +325,18 @@ tiers:
                     module: 'functest.opnfv_tests.vnf.rnc.parser'
                     class: 'Parser'
             -
+                name: domino
+                criteria: 'status == "PASS"'
+                blocking: false
+                description: >-
+                    Test suite from Domino project.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.features.domino'
+                    class: 'Domino'
+            -
                 name: orchestra
                 criteria: 'ret == 0'
                 blocking: false
