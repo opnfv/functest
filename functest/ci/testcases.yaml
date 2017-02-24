@@ -452,8 +452,8 @@ tiers:
                 description: >-
                     VNF deployment with OpenBaton (Orchestra)
                 dependencies:
-                    installer: 'unknown'
-                    scenario: 'unknown'
+                    installer: ''
+                    scenario: ''
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.orchestra_ims'
                     class: 'ImsVnf'

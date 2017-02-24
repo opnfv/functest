@@ -133,6 +133,7 @@ vnf:
     orchestra_ims:
         tenant_name: orchestra_ims
         tenant_description: ims deployed with openbaton
+        config: orchestra_ims.yaml
     opera_ims:
         tenant_name: opera_ims
         tenant_description: ims deployed with open-o
