@@ -32,6 +32,8 @@ class VPingBase(testcase_base.TestcaseBase):
         self.image_name = CONST.vping_image_name
         self.image_filename = CONST.openstack_image_file_name
         self.image_format = CONST.openstack_image_disk_format
+        self.image_username = CONST.openstack_image_username
+        self.image_password = CONST.openstack_image_password
         self.image_path = os.path.join(CONST.dir_functest_data,
                                        self.image_filename)
 

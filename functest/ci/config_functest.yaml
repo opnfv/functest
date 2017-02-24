@@ -45,6 +45,8 @@ general:
         image_name: Cirros-0.3.4
         image_file_name:  cirros-0.3.4-x86_64-disk.img
         image_disk_format:  qcow2
+        image_username:  cirros
+        image_password:  cubswin:)
 
         flavor_name: opnfv_flavor
         flavor_ram: 512

@@ -61,8 +61,6 @@ class VPingSSH(vping_base.VPingBase):
     def establish_ssh(self, vm, floatip):
         self.logger.info("Trying to establish SSH connection to %s..."
                          % floatip)
-        username = 'cirros'
-        password = 'cubswin:)'
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
@@ -73,8 +71,8 @@ class VPingSSH(vping_base.VPingBase):
         cidr_first_octet = self.private_subnet_cidr.split('.')[0]
         while timeout > 0:
             try:
-                ssh.connect(floatip, username=username,
-                            password=password, timeout=2)
+                ssh.connect(floatip, username=self.image_username,
+                            password=self.image_password, timeout=2)
                 self.logger.debug("SSH connection established to %s."
                                   % floatip)
                 break
