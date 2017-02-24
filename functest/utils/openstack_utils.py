@@ -996,7 +996,9 @@ def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
                                              'port_range_max': port_range_max,
                                              'protocol': protocol}}
     else:
-        logger.error("Error [create_secgroup_rule(neutron_client, '%s', '%s', "
+        logger.warning("Impossible to create secgroup rule,"
+                       "the security group probably already exists")
+        logger.debug("Error [create_secgroup_rule(neutron_client, '%s', '%s', "
                      "'%s', '%s', '%s', '%s')]:" % (neutron_client,
                                                     sg_id, direction,
                                                     port_range_min,
@@ -1007,8 +1009,10 @@ def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
     try:
         neutron_client.create_security_group_rule(json_body)
         return True
-    except Exception, e:
-        logger.error("Error [create_secgroup_rule(neutron_client, '%s', '%s', "
+    except Exception as e:
+        logger.warning("Impossible to create_security_group_rule,"
+                       "security group rule probably already exists")
+        logger.debug("Error [create_secgroup_rule(neutron_client, '%s', '%s', "
                      "'%s', '%s', '%s', '%s')]: %s" % (neutron_client,
                                                        sg_id,
                                                        direction,
