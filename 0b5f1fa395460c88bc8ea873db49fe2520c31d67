@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_0aa7dc50",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-02-24T09:38:53Z",
+      "side": 1,
+      "message": "Functest can be run from both an aarch64 or a x86 jenkins slave in order to test an aarch64 POD. So the arm images are downloded in both dockerfiles\n\nThe x86 images are being downloaded in the arm functest image for consistency. Alex commented that we should allow running functest from an aarch64 jenkins slave on a x86 pod",
+      "parentUuid": "dabed58f_8a2bcc2f",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 72
+      },
+      "revId": "0b5f1fa395460c88bc8ea873db49fe2520c31d67",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_2ace6084",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_aa633019",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-02-24T09:38:53Z",
+      "side": 1,
+      "message": "The function inserts the custom arch config for rally. It takes the content of RALLY_CONF_PATH and reinserts each line in the same file. In addition it inserts the content of RALLY_AARCH64_PATCH_PATH after the line containing \"cirros|testvm\". \n\nThere is a comment from Alex regarding this approach on an earlier patch",
+      "parentUuid": "dabed58f_2ace6084",
+      "range": {
+        "startLine": 262,
+        "startChar": 6,
+        "endLine": 268,
+        "endChar": 38
+      },
+      "revId": "0b5f1fa395460c88bc8ea873db49fe2520c31d67",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_cabf84cf",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-24T06:20:11Z",
       "side": 1,
       "message": "I would suggest to put only one wrapped patch_config_file here\nIn the wrapped patch_config_file, it has the ability to decide which patch_config_file_logic to be called, aarch 64 or not. \n\nThere is no need to execute the same function two times.",
+      "range": {
+        "startLine": 350,
+        "startChar": 11,
+        "endLine": 351,
+        "endChar": 67
+      },
+      "revId": "0b5f1fa395460c88bc8ea873db49fe2520c31d67",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_ca68e4f7",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-02-24T09:38:53Z",
+      "side": 1,
+      "message": "In the case we are running against a x86 pod I want only CONFIG_PATCH_PATH applied. If we run against an aarch64 pod I want both CONFIG_PATCH_PATH and CONFIG_AARCH64_PATCH_PATH applied. Even if I move these 2 calls in a separate function, I still need to call the patch_config_file twice.",
+      "parentUuid": "dabed58f_cabf84cf",
       "range": {
         "startLine": 350,
         "startChar": 11,
