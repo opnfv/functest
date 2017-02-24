@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Cristina Pauna <cristina.pauna@enea.com>
+Code-Review+1: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Fri, 24 Feb 2017 10:33:31 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/29257
+Project: functest
+Branch: refs/heads/master
