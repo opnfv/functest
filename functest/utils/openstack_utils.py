@@ -996,25 +996,22 @@ def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
                                              'port_range_max': port_range_max,
                                              'protocol': protocol}}
     else:
-        logger.error("Error [create_secgroup_rule(neutron_client, '%s', '%s', "
-                     "'%s', '%s', '%s', '%s')]:" % (neutron_client,
-                                                    sg_id, direction,
-                                                    port_range_min,
-                                                    port_range_max,
-                                                    protocol),
-                     " Invalid values for port_range_min, port_range_max")
+        logger.debug('Invalid values in create_secgroup_rule: {}, {}, {}, {}, '
+                     '{}, {};  for '.format(neutron_client,
+                                            sg_id,
+                                            direction,
+                                            port_range_min,
+                                            port_range_max,
+                                            protocol))
         return False
     try:
         neutron_client.create_security_group_rule(json_body)
         return True
-    except Exception, e:
-        logger.error("Error [create_secgroup_rule(neutron_client, '%s', '%s', "
-                     "'%s', '%s', '%s', '%s')]: %s" % (neutron_client,
-                                                       sg_id,
-                                                       direction,
-                                                       port_range_min,
-                                                       port_range_max,
-                                                       protocol, e))
+    except Exception as e:
+        logger.warning("Impossible to create_security_group_rule,"
+                       "security group rule probably already exists")
+        logger.debug('Exception raised when security group creation attempt: '
+                     ' {}'.format(e))
         return False
 
 
