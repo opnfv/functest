@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_85465f22",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-02-24T14:43:00Z",
+      "side": 1,
+      "message": "ah, i found it out. it tries to format \"Invalid values for port...\" into the first string. I fixed it like so:\n\nlogger.debug(\"Error [create_secgroup_rule(neutron_client, \u0027%s\u0027, \u0027%s\u0027, \"\n                     \"\u0027%s\u0027, \u0027%s\u0027, \u0027%s\u0027, \u0027%s\u0027)]: Invalid values for \"\n                     \"port_range_min, port_range_max\",\n                     neutron_client,\n                     sg_id, direction,\n                     port_range_min,\n                     port_range_max,\n                     protocol)\n\nThe first argument to logging is the message, rest are strings to be formatted. explicitly formatting the string is weird, this way is better.",
+      "range": {
+        "startLine": 1001,
+        "startChar": 8,
+        "endLine": 1007,
+        "endChar": 74
+      },
+      "revId": "8099286561b1ad8d81e4b090af16ae3ddb9ce025",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_4548672d",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-02-24T14:43:00Z",
+      "side": 1,
+      "message": "better change the explicit formatting to arguments here too.",
+      "range": {
+        "startLine": 1015,
+        "startChar": 21,
+        "endLine": 1021,
+        "endChar": 68
+      },
+      "revId": "8099286561b1ad8d81e4b090af16ae3ddb9ce025",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
