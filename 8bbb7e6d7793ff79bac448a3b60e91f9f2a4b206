@@ -22,6 +22,30 @@
       "revId": "8bbb7e6d7793ff79bac448a3b60e91f9f2a4b206",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_0a4b5cb1",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-24T07:58:37Z",
+      "side": 1,
+      "message": "\u003ctempest_cases\u003e would be better, which is also defined in functest_config.yaml",
+      "parentUuid": "dabed58f_ea8fe873",
+      "range": {
+        "startLine": 392,
+        "startChar": 20,
+        "endLine": 393,
+        "endChar": 57
+      },
+      "revId": "8bbb7e6d7793ff79bac448a3b60e91f9f2a4b206",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
