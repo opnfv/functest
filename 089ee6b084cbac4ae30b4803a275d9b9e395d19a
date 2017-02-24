@@ -69,6 +69,30 @@
       "revId": "089ee6b084cbac4ae30b4803a275d9b9e395d19a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_0ab6fc3d",
+        "filename": "functest/opnfv_tests/vnf/router/vyos_vrouter.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-02-24T00:14:38Z",
+      "side": 1,
+      "message": "Thanks I\u0027ll modify source codes using \"os.path.join\".",
+      "parentUuid": "dabed58f_1655cf1c",
+      "range": {
+        "startLine": 50,
+        "startChar": 19,
+        "endLine": 50,
+        "endChar": 56
+      },
+      "revId": "089ee6b084cbac4ae30b4803a275d9b9e395d19a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
