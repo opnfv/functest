@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_4aacf4ed",
+        "filename": "functest/opnfv_tests/vnf/router/vyos_vrouter.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4343
+      },
+      "writtenOn": "2017-02-24T00:02:35Z",
+      "side": 1,
+      "message": "Sorry late. Thank you for your review.\nI made up my mind which to choose better.\n\nI will modify source code to inherit FeatureBase.\nThank you",
+      "parentUuid": "dabed58f_b631630d",
+      "range": {
+        "startLine": 21,
+        "startChar": 17,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "089ee6b084cbac4ae30b4803a275d9b9e395d19a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_1655cf1c",
         "filename": "functest/opnfv_tests/vnf/router/vyos_vrouter.py",
         "patchSetId": 4
