@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_ea8fe873",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-02-24T00:54:16Z",
+      "side": 1,
+      "message": "I would suggest to put the line as below\n\u003cdir_functest_repo\u003e/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt\n\nas the dir_functest_repo is configurable in yaml file",
+      "range": {
+        "startLine": 392,
+        "startChar": 20,
+        "endLine": 393,
+        "endChar": 57
+      },
+      "revId": "8bbb7e6d7793ff79bac448a3b60e91f9f2a4b206",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
