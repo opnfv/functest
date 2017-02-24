@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_aabc906d",
+        "filename": "functest/opnfv_tests/openstack/tempest/custom_tests/blacklist.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-02-24T09:06:29Z",
+      "side": 0,
+      "message": "thse failed, i have no idea what they are though",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 98
+      },
+      "revId": "18758a75e76e7f80d7be0c79b7044d404bd588bc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}

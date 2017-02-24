@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_aaeed089",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-02-24T09:06:29Z",
+      "side": 1,
+      "message": "let\u0027s have this too, im not sure what this expression means but bear im mind bgpvpn uses odl_l3",
+      "range": {
+        "startLine": 89,
+        "startChar": 34,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "2cd0192fdd2c636710a8cd3823536ebd7217e577",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
