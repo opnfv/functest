@@ -21,7 +21,7 @@ from git import Repo
 import functest.utils.functest_logger as ft_logger
 
 
-class Orchestrator:
+class Orchestrator(object):
 
     def __init__(self, testcase_dir, inputs={}):
         self.testcase_dir = testcase_dir

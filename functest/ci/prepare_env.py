@@ -37,7 +37,7 @@ with open(CONFIG_PATCH_PATH) as f:
     functest_patch_yaml = yaml.safe_load(f)
 
 
-class PrepareEnvParser():
+class PrepareEnvParser(object):
 
     def __init__(self):
         self.parser = argparse.ArgumentParser()

@@ -29,7 +29,7 @@ import json
 from functest.utils.constants import CONST
 
 
-class Logger:
+class Logger(object):
 
     def __init__(self, logger_name):
         self.setup_logging()

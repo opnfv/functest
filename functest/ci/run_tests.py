@@ -48,7 +48,7 @@ class BlockingTestFailed(Exception):
     pass
 
 
-class RunTestsParser():
+class RunTestsParser(object):
 
     def __init__(self):
         self.parser = argparse.ArgumentParser()

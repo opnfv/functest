@@ -186,7 +186,7 @@ class ODLTests(testcase_base.TestcaseBase):
         return self.main(suites, **kwargs)
 
 
-class ODLParser():
+class ODLParser(object):
 
     def __init__(self):
         self.parser = argparse.ArgumentParser()
