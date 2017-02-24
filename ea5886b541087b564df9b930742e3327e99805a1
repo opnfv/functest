@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_6c255daa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-02-24T09:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_91054ec4",
+      "range": {
+        "startLine": 13,
+        "startChar": 59,
+        "endLine": 13,
+        "endChar": 66
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_d7dade16",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2017-02-21T06:23:53Z",
       "side": 1,
       "message": "Jose \u0026 functest cores: can we come up with an uniform approach of selecting the Fuel enviroment to run on?",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 61
+      },
+      "revId": "ea5886b541087b564df9b930742e3327e99805a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_ec306dea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-02-24T09:38:53Z",
+      "side": 1,
+      "message": "The method described here is replaced by the mechanism implemented by https://gerrit.opnfv.org/gerrit/#/c/29099",
+      "parentUuid": "dabed58f_b10ad2d0",
       "range": {
         "startLine": 16,
         "startChar": 7,
