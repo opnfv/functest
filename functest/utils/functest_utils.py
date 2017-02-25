@@ -369,7 +369,7 @@ def get_parameter_from_yaml(parameter, file):
         value = value.get(element)
         if value is None:
             raise ValueError("The parameter %s is not defined in"
-                             " config_functest.yaml" % parameter)
+                             " %s" % (parameter, file))
     return value
 
 
