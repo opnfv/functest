@@ -22,6 +22,30 @@
       "revId": "2cd0192fdd2c636710a8cd3823536ebd7217e577",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_85ac1eef",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-25T19:37:42Z",
+      "side": 1,
+      "message": "this expression means that the test case won\u0027t be executed in odl_l3 scenarios or bgpvpn scenarios.\n\nI will enable it for bgpvpn.",
+      "parentUuid": "dabed58f_aaeed089",
+      "range": {
+        "startLine": 89,
+        "startChar": 34,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "2cd0192fdd2c636710a8cd3823536ebd7217e577",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
