@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_451dc6bc",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-26T23:29:34Z",
+      "side": 1,
+      "message": "This config should be re-used for snaps_simple_healthcheck. It is not more relevant for the shell healthcheck. See: https://gerrit.opnfv.org/gerrit/#/c/29255/",
+      "revId": "e8beddf81bad23a37c5865e1b5d284b8d5e05d4d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
