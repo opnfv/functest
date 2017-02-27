@@ -94,12 +94,6 @@ function run_test(){
                 --osusername ${OS_USERNAME} \
                 ${args}
         ;;
-        "onos")
-            python ${FUNCTEST_TEST_DIR}/sdn/onos/teston/onos.py
-        ;;
-        "onos_sfc")
-            python ${FUNCTEST_TEST_DIR}/sdn/onos/teston/onos.py -t sfc
-        ;;
         "ovno")
             # suite under rewritting for colorado
             # no need to run anything until refactoring done
