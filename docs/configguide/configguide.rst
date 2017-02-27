@@ -392,7 +392,6 @@ follows::
         |   |-- check_os.sh
         |   |-- config_functest.yaml
         |   |-- config_patch.yaml
-        |   |-- exec_test.sh
         |   |-- generate_report.py
         |   |-- prepare_env.py
         |   |-- run_tests.py
