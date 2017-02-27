@@ -32,13 +32,6 @@ from functest.utils.constants import CONST
 logger = ft_logger.Logger("run_tests").getLogger()
 
 
-""" global variables """
-EXEC_SCRIPT = ("%s/functest/ci/exec_test.sh" % CONST.dir_repo_functest)
-
-# This will be the return code of this script. If any of the tests fails,
-# this variable will change to Result.EX_ERROR
-
-
 class Result(enum.Enum):
     EX_OK = os.EX_OK
     EX_ERROR = -1
@@ -119,7 +112,7 @@ def update_test_info(test_name, result, duration):
                          "duration": duration})
 
 
-def get_run_dict_if_defined(testname):
+def get_run_dict(testname):
     try:
         dict = ft_utils.get_dict_by_test(testname)
         if not dict:
@@ -151,7 +144,7 @@ def run_test(test, tier_name, testcases=None):
         flags += " -r"
 
     result = testcase_base.TestcaseBase.EX_RUN_ERROR
-    run_dict = get_run_dict_if_defined(test_name)
+    run_dict = get_run_dict(test_name)
     if run_dict:
         try:
             module = importlib.import_module(run_dict['module'])
@@ -173,11 +166,7 @@ def run_test(test, tier_name, testcases=None):
             logger.exception("Cannot get class {}".format(
                 run_dict['class']))
     else:
-        cmd = ("%s%s" % (EXEC_SCRIPT, flags))
-        logger.info("Executing command {} because {} "
-                    "doesn't implement the new framework".format(
-                        cmd, test_name))
-        result = ft_utils.execute_command(cmd)
+        raise Exception("Cannot import the class for the test case.")
 
     if GlobalVariables.CLEAN_FLAG:
         cleanup()
