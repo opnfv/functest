@@ -195,8 +195,9 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             return {'status': 'PASS', 'result': ''}
 
     def deploy_vnf(self):
-        cw = Clearwater(self.vnf.inputs, self.orchestrator.object, self.logger)
-        self.vnf.object = cw
+        cw = Clearwater(self.vnf['inputs'], self.orchestrator['object'],
+                        self.logger)
+        self.vnf['object'] = cw
 
         self.logger.info("Collect flavor id for all clearwater vm")
         flavor_exist, flavor_id = os_utils.get_or_create_flavor(
@@ -215,7 +216,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         cw.set_flavor_id(flavor_id)
 
         # VMs image
-        if 'os_image' in self.vnf.requirements.keys():
+        if 'os_image' in self.vnf['requirements'].keys():
             image_id = os_utils.get_image_id(
                 self.glance_client, self.vnf['requirements']['os_image'])
             if image_id == '':
@@ -256,7 +257,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
 
         api_url = "http://" + mgr_ip + "/api/v2"
         dep_outputs = requests.get(api_url + "/deployments/" +
-                                   self.vnf.deployment_name + "/outputs")
+                                   self.vnf['deployment_name'] + "/outputs")
         dns_ip = dep_outputs.json()['outputs']['dns_ip']
         ellis_ip = dep_outputs.json()['outputs']['ellis_ip']
 
@@ -340,8 +341,8 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                 return {'status': 'FAIL', 'result': ''}
 
     def clean(self):
-        self.vnf.object.undeploy_vnf()
-        self.orchestrator.object.undeploy_manager()
+        self.vnf['object'].undeploy_vnf()
+        self.orchestrator['object'].undeploy_manager()
         super(ImsVnf, self).clean()
 
     def main(self, **kwargs):
