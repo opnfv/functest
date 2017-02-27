@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_e8b60fdc",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-02-27T08:47:49Z",
+      "side": 1,
+      "message": "what about __name__ ?",
+      "revId": "1c8cb9aa813b26931d798cb2fffafdbf843323a7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
