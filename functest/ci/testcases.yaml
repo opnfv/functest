@@ -174,7 +174,9 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: 'onos'
-
+                run:
+                    module: 'functest.opnfv_tests.sdn.onos.onos'
+                    class: 'Onos'
 
             -
                 name: snaps_smoke
@@ -300,6 +302,9 @@ tiers:
                 dependencies:
                     installer: ''
                     scenario: 'onos-sfc'
+                run:
+                    module: 'functest.opnfv_tests.sdn.onos.onos'
+                    class: 'OnosSfc'
             -
                 name: parser
                 criteria: 'ret == 0'

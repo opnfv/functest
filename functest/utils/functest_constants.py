@@ -94,15 +94,6 @@ SDNVPN_REPO_DIR = get_value('general.dir.repo_sdnvpn',
                             'SDNVPN_REPO_DIR')
 SFC_REPO_DIR = get_value('general.dir.repo_sfc',
                          'SFC_REPO_DIR')
-
-ONOS_SFC_IMAGE_NAME = get_value('onos_sfc.image_name',
-                                'ONOS_SFC_IMAGE_NAME')
-ONOS_SFC_IMAGE_FILENAME = get_value('onos_sfc.image_file_name',
-                                    'ONOS_SFC_IMAGE_FILENAME')
-ONOS_SFC_RELATIVE_PATH = get_value('general.dir.dir_onos_sfc',
-                                   'ONOS_SFC_RELATIVE_PATH')
-ONOS_SFC_IMAGE_BASE_URL = get_value('onos_sfc.image_base_url',
-                                    'ONOS_SFC_IMAGE_BASE_URL')
 RALLY_RELATIVE_PATH = get_value('general.dir.rally',
                                 'RALLY_RELATIVE_PATH')
 RALLY_PRIVATE_NET_NAME = get_value('rally.network_name',
