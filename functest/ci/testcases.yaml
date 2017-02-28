@@ -217,18 +217,18 @@ tiers:
                      module: 'functest.opnfv_tests.features.promise'
                      class: 'Promise'
 
-            -
-                name: doctor
-                criteria: 'status == "PASS"'
-                blocking: false
-                description: >-
-                    Test suite from Doctor project.
-                dependencies:
-                    installer: '(apex)|(fuel)|(joid)'
-                    scenario: '^((?!fdio).)*$'
-                run:
-                    module: 'functest.opnfv_tests.features.doctor'
-                    class: 'Doctor'
+#            -
+#                name: doctor
+#                criteria: 'status == "PASS"'
+#                blocking: false
+#                description: >-
+#                    Test suite from Doctor project.
+#                dependencies:
+#                    installer: '(apex)|(fuel)|(joid)'
+#                    scenario: '^((?!fdio).)*$'
+#                run:
+#                    module: 'functest.opnfv_tests.features.doctor'
+#                    class: 'Doctor'
 
             -
                 name: bgpvpn
