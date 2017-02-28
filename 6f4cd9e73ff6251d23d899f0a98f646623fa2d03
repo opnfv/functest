@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_f94d8373",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-28T11:25:23Z",
+      "side": 1,
+      "message": "This is redudant, imo. We can go with `CIRROS_AARCH64_TAG\u003d161201` here, or at least infer one from the other?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "6f4cd9e73ff6251d23d899f0a98f646623fa2d03",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_1953b718",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-02-28T11:25:23Z",
+      "side": 1,
+      "message": "${CIRROS_REPO_URL}/daily/20${CIRROS_AARCH64_TAG}/cirros-d${CIRROS_AARCH64_TAG}-aarch64-disk.img ?",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 95
+      },
+      "revId": "6f4cd9e73ff6251d23d899f0a98f646623fa2d03",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
