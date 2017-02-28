@@ -104,12 +104,18 @@ class Tier(object):
 
 class TestCase(object):
 
-    def __init__(self, name, dependency, criteria, blocking, description=""):
+    def __init__(self, name,
+                 dependency,
+                 criteria,
+                 blocking,
+                 clean_flag,
+                 description=""):
         self.name = name
         self.dependency = dependency
-        self.description = description
         self.criteria = criteria
         self.blocking = blocking
+        self.clean_flag = clean_flag
+        self.description = description
 
     @staticmethod
     def is_none(item):
@@ -137,6 +143,11 @@ class TestCase(object):
 
     def is_blocking(self):
         return self.blocking
+
+    def needs_clean(self):
+        if self.clean_flag.lower() == 'true':
+            return True
+        return False
 
     def __str__(self):
         lines = split_text(self.description, LINE_LENGTH - 6)
