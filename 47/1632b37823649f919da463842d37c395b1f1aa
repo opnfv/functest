@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Ulas Kozat <ulas.kozat@huawei.com>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Tue, 28 Feb 2017 07:30:52 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/29309
+Project: functest
+Branch: refs/heads/master
