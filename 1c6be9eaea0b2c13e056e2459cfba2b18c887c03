@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_4ee2c3a0",
+        "filename": "functest/utils/config.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2017-02-28T09:54:07Z",
+      "side": 1,
+      "message": "Why main part print the info of the ims ?",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 39,
+        "endChar": 54
+      },
+      "revId": "1c6be9eaea0b2c13e056e2459cfba2b18c887c03",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
