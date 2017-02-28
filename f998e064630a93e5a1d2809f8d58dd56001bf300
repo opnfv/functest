@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_aeab3f88",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-28T07:28:45Z",
+      "side": 1,
+      "message": "right I remove this misleading log\n\nthe first part of the method is just used to check the validity of the parameters\nthe debug log below is enough",
+      "parentUuid": "dabed58f_4ba71550",
+      "range": {
+        "startLine": 1000,
+        "startChar": 24,
+        "endLine": 1000,
+        "endChar": 66
+      },
+      "revId": "f998e064630a93e5a1d2809f8d58dd56001bf300",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_eb636918",
         "filename": "functest/utils/openstack_utils.py",
         "patchSetId": 4
