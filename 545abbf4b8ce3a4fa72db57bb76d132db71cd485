@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_b9586bfb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-28T13:38:22Z",
+      "side": 1,
+      "message": "Please remove \u0027.\u0027 in title.",
+      "revId": "545abbf4b8ce3a4fa72db57bb76d132db71cd485",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
