@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_ee185786",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-28T10:46:38Z",
+      "side": 1,
+      "message": "you could use format here.",
+      "revId": "946d6c4cbfa462289be934c1ebf5bfdb9bd54c3e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_0e1e0b71",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-28T10:46:38Z",
+      "side": 1,
+      "message": "fully duplicated",
+      "revId": "946d6c4cbfa462289be934c1ebf5bfdb9bd54c3e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
