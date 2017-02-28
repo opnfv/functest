@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_0e37eb00",
+        "filename": "functest/ci/exec_test.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-28T10:39:29Z",
+      "side": 0,
+      "message": "You could have defined a way to launch thenew python file (see ODL) for backward compatibility (or at least till exec_test.sh is removed).\n\nBut it\u0027s fine too.",
+      "revId": "8625d61b7ef8059ecaf3fb0613888de490d31715",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
