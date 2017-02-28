@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_d9b99fea",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-28T14:27:27Z",
+      "side": 1,
+      "message": "yep..the cleanest would be probably to review also the statement...\n\nif port_range_min is None and port_range_max is None:\n ....\nelif port_range_min is not None and port_range_max is not None:\n ...\nelse\n logger.debug(\"Parameters not correct....\")\n return False\n\n # concretely we can be in the else if port_range_min is None and port_range_max not None (or vice versa...)\nnot sure it can even happen.. \n\nI will try to propose something else\n   .",
+      "parentUuid": "dabed58f_f95ee3e8",
+      "revId": "b29a0e62b98a57fd7dde3aae96dc15379d16c595",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_193df78f",
         "filename": "functest/utils/openstack_utils.py",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-02-28T13:35:37Z",
       "side": 1,
       "message": "Or logging.exception(\"Impossible to create_security_group_rule\")",
+      "revId": "b29a0e62b98a57fd7dde3aae96dc15379d16c595",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_79ce7385",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-02-28T14:27:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_193df78f",
       "revId": "b29a0e62b98a57fd7dde3aae96dc15379d16c595",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
