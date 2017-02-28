@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_4ba71550",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-28T01:32:43Z",
+      "side": 1,
+      "message": "I think we can not tell whether sec group exist or not from here.",
+      "range": {
+        "startLine": 1000,
+        "startChar": 24,
+        "endLine": 1000,
+        "endChar": 66
+      },
+      "revId": "f998e064630a93e5a1d2809f8d58dd56001bf300",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_eb636918",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-02-28T01:32:43Z",
+      "side": 1,
+      "message": "could we check if the sec group exist first, if not, then create? I am not sure about it, maybe show_security_group_rule() could help to check the existence.",
+      "revId": "f998e064630a93e5a1d2809f8d58dd56001bf300",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
