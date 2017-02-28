@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_f90583c2",
+        "filename": "functest/tests/unit/ci/test_generate_report.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-28T13:45:47Z",
+      "side": 1,
+      "message": "[] could be used as default value for tiers_to_run in gen_report.init.\nThis is quite out of scope but it could be changed too.",
+      "revId": "b734d414ec43b7b41e7f678da174004ce278f99a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_59692f8a",
+        "filename": "functest/tests/unit/ci/test_generate_report.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-28T13:45:47Z",
+      "side": 1,
+      "message": "format?",
+      "revId": "b734d414ec43b7b41e7f678da174004ce278f99a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_996fa792",
+        "filename": "functest/tests/unit/ci/test_generate_report.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-28T13:45:47Z",
+      "side": 1,
+      "message": "useless",
+      "revId": "b734d414ec43b7b41e7f678da174004ce278f99a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_396c7b9c",
+        "filename": "functest/tests/unit/ci/test_generate_report.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-28T13:45:47Z",
+      "side": 1,
+      "message": "\u0027test_print_line\u0027",
+      "revId": "b734d414ec43b7b41e7f678da174004ce278f99a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_190bb7d7",
+        "filename": "functest/tests/unit/ci/test_generate_report.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-02-28T13:45:47Z",
+      "side": 1,
+      "message": "[] could be used as default value for args in gen_report.main.\nThis is quite out of scope but it could be changed too.",
+      "revId": "b734d414ec43b7b41e7f678da174004ce278f99a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
