@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_1437fe00",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-01T06:29:07Z",
+      "side": 1,
+      "message": "For odl.py, it also has 755 instead of 644",
+      "parentUuid": "dabed58f_349fa261",
+      "revId": "8a2afb79c168194992cb184f052fccc8417aace8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_ae3b3fea",
         "filename": "functest/opnfv_tests/sdn/onos/onos.py",
         "patchSetId": 6
