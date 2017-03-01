@@ -31,6 +31,7 @@ logger = ft_logger.Logger("prepare_env").getLogger()
 handler = None
 # set the architecture to default
 pod_arch = None
+arch_filter = 'aarch64'
 
 CONFIG_FUNCTEST_PATH = CONST.CONFIG_FUNCTEST_YAML
 CONFIG_PATCH_PATH = os.path.join(os.path.dirname(
@@ -115,24 +116,28 @@ def get_deployment_handler():
                                          'functest/ci/installer_params.yaml')
     if (CONST.INSTALLER_IP and CONST.INSTALLER_TYPE and
             CONST.INSTALLER_TYPE in opnfv_constants.INSTALLERS):
-        installer_params = ft_utils.get_parameter_from_yaml(
-            CONST.INSTALLER_TYPE, installer_params_yaml)
-
-        user = installer_params.get('user', None)
-        password = installer_params.get('password', None)
-        pkey = installer_params.get('pkey', None)
-
         try:
-            handler = factory.Factory.get_handler(
-                installer=CONST.INSTALLER_TYPE,
-                installer_ip=CONST.INSTALLER_IP,
-                installer_user=user,
-                installer_pwd=password,
-                pkey_file=pkey)
-            if handler:
-                pod_arch = handler.get_arch()
-        except Exception as e:
-            logger.debug("Cannot get deployment information. %s" % e)
+            installer_params = ft_utils.get_parameter_from_yaml(
+                CONST.INSTALLER_TYPE, installer_params_yaml)
+        except ValueError as e:
+            logger.debug('Printing deployment info is not supported for %s' %
+                         CONST.INSTALLER_TYPE)
+            logger.debug(e)
+        else:
+            user = installer_params.get('user', None)
+            password = installer_params.get('password', None)
+            pkey = installer_params.get('pkey', None)
+            try:
+                handler = factory.Factory.get_handler(
+                    installer=CONST.INSTALLER_TYPE,
+                    installer_ip=CONST.INSTALLER_IP,
+                    installer_user=user,
+                    installer_pwd=password,
+                    pkey_file=pkey)
+                if handler:
+                    pod_arch = handler.get_arch()
+            except Exception as e:
+                logger.debug("Cannot get deployment information. %s" % e)
 
 
 def create_directories():
@@ -196,8 +201,7 @@ def source_rc_file():
             raise Exception("The file %s is empty." % CONST.openstack_creds)
 
     logger.info("Sourcing the OpenStack RC file...")
-    os_utils.source_credentials(
-        CONST.openstack_creds)
+    os_utils.source_credentials(CONST.openstack_creds)
     for key, value in os.environ.iteritems():
         if re.search("OS_", key):
             if key == 'OS_AUTH_URL':
@@ -210,10 +214,15 @@ def source_rc_file():
                 CONST.OS_PASSWORD = value
 
 
-def patch_config_file(patch_file_path, arch_filter=None):
-    if arch_filter and pod_arch not in arch_filter:
-        return
+def patch_config_file():
+    patch_file(CONFIG_PATCH_PATH)
 
+    if pod_arch and pod_arch in arch_filter:
+        patch_file(CONFIG_AARCH64_PATCH_PATH)
+
+
+def patch_file(patch_file_path):
+    logger.debug('Updating file: %s', patch_file_path)
     with open(patch_file_path) as f:
         patch_file = yaml.safe_load(f)
 
@@ -250,7 +259,7 @@ def verify_deployment():
 def install_rally():
     print_separator()
 
-    if 'aarch64' in pod_arch:
+    if pod_arch and pod_arch in arch_filter:
         logger.info("Apply aarch64 specific to rally config...")
         with open(RALLY_AARCH64_PATCH_PATH, "r") as f:
             rally_patch_conf = f.read()
@@ -350,8 +359,7 @@ def main(**kwargs):
             get_deployment_handler()
             create_directories()
             source_rc_file()
-            patch_config_file(CONFIG_PATCH_PATH)
-            patch_config_file(CONFIG_AARCH64_PATCH_PATH, 'aarch64')
+            patch_config_file()
             verify_deployment()
             install_rally()
             install_tempest()
