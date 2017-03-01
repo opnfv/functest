@@ -22,6 +22,30 @@
       "revId": "ca6c9f7ab2e30466e8d522532cb3d90d60af80fa",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_b4e712e4",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-01T03:00:38Z",
+      "side": 1,
+      "message": "I updated the arch_filter to list and made \u0027aarch64\u0027 one element of it.",
+      "parentUuid": "dabed58f_549c9669",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "ca6c9f7ab2e30466e8d522532cb3d90d60af80fa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
