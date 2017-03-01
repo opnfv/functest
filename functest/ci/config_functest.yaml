@@ -5,8 +5,8 @@ general:
         dir_odl:           functest/opnfv_tests/sdn/odl
         rally:             functest/opnfv_tests/openstack/rally
         tempest_cases:     functest/opnfv_tests/openstack/tempest/custom_tests
-        dir_onos:          functest/opnfv_tests/sdn/onos/teston
-        dir_onos_sfc:      functest/opnfv_tests/sdn/onos/sfc
+        onos:              functest/opnfv_tests/sdn/onos/teston
+        onos_sfc:          functest/opnfv_tests/sdn/onos/sfc
 
         # Absolute path
         home:               /home/opnfv
@@ -18,7 +18,7 @@ general:
         repo_vims_test:     /home/opnfv/repos/vnfs/vims-test
         repo_sdnvpn:        /home/opnfv/repos/sdnvpn
         repo_sfc:           /home/opnfv/repos/sfc
-        dir_repo_onos:      /home/opnfv/repos/onos
+        repo_onos:          /home/opnfv/repos/onos
         repo_promise:       /home/opnfv/repos/promise
         repo_netready:      /home/opnfv/repos/netready
         repo_barometer:     /home/opnfv/repos/barometer
