@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_349fa261",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-01T02:41:03Z",
+      "side": 1,
+      "message": "I followed the permission setting of the old onos file.",
+      "parentUuid": "dabed58f_ee31370c",
+      "revId": "8a2afb79c168194992cb184f052fccc8417aace8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_ae3b3fea",
         "filename": "functest/opnfv_tests/sdn/onos/onos.py",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_d487260e",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-01T02:41:03Z",
+      "side": 1,
+      "message": "sure.",
+      "parentUuid": "dabed58f_ae3b3fea",
+      "revId": "8a2afb79c168194992cb184f052fccc8417aace8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_ce40f358",
         "filename": "functest/opnfv_tests/sdn/onos/onos.py",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-02-28T10:39:29Z",
       "side": 1,
       "message": "please use os.environ",
+      "revId": "8a2afb79c168194992cb184f052fccc8417aace8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_b482b2fe",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-01T02:41:03Z",
+      "side": 1,
+      "message": "Good point. \nThis patch mainly focuses on refactoring the structure by adopting the TestcaseBase. I did not change too many implementation details to avoid regression.",
+      "parentUuid": "dabed58f_ce40f358",
       "revId": "8a2afb79c168194992cb184f052fccc8417aace8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false

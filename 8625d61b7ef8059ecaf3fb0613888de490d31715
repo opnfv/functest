@@ -16,6 +16,24 @@
       "revId": "8625d61b7ef8059ecaf3fb0613888de490d31715",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_747c3a21",
+        "filename": "functest/ci/exec_test.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-01T02:41:03Z",
+      "side": 0,
+      "message": "Yes, to make the code backward compatible is important.\nI think once the onos is merged, the exec_test.sh is ready to be removed.",
+      "parentUuid": "dabed58f_0e37eb00",
+      "revId": "8625d61b7ef8059ecaf3fb0613888de490d31715",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
