@@ -234,4 +234,4 @@ _`[4]` : http://artifacts.opnfv.org/testapibackup.html
 
 _`[5]` : http://artifacts.opnfv.org/releng/docs/testapi.html
 
-_`[6]` : http://artifacts.opnfv.org/functest/review/26047/devguide/index.html#test-api-authorization
+_`[6]` : http://artifacts.opnfv.org/functest/docs/devguide/index.html#test-api-authorization
