@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_cebc6e6f",
+        "filename": "functest/tests/unit/ci/test_generate_report.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-03-01T22:35:20Z",
+      "side": 1,
+      "message": "you can use format here instead of appending strings with \u0027+\u0027.",
+      "revId": "26c9d12165a248fbfa9127b743822ff5b7c210b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
