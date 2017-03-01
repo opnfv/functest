@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_bfe84b7d",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-01T09:23:54Z",
+      "side": 1,
+      "message": "Please select 644 instead of 755 as it can\u0027t be executed directly.",
+      "revId": "682af5a45946f5454c52cb89c66e98782e961e80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_bfb60b89",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-01T09:23:54Z",
+      "side": 1,
+      "message": "Could we avoid forking here? We are calling python script inside a python script.",
+      "revId": "682af5a45946f5454c52cb89c66e98782e961e80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_dfbbbf70",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-01T09:23:54Z",
+      "side": 1,
+      "message": "That should be rewrittten.",
+      "revId": "682af5a45946f5454c52cb89c66e98782e961e80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_7fb0938b",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-01T09:23:54Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "682af5a45946f5454c52cb89c66e98782e961e80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_9fad4734",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-01T09:23:54Z",
+      "side": 1,
+      "message": "Idem",
+      "revId": "682af5a45946f5454c52cb89c66e98782e961e80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_3faa1b1a",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-01T09:23:54Z",
+      "side": 1,
+      "message": "Idem",
+      "revId": "682af5a45946f5454c52cb89c66e98782e961e80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
