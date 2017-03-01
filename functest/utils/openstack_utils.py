@@ -1001,36 +1001,43 @@ def create_security_group(neutron_client, sg_name, sg_description):
 
 def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
                          port_range_min=None, port_range_max=None):
-    if port_range_min is None and port_range_max is None:
-        json_body = {'security_group_rule': {'direction': direction,
-                                             'security_group_id': sg_id,
-                                             'protocol': protocol}}
-    elif port_range_min is not None and port_range_max is not None:
-        json_body = {'security_group_rule': {'direction': direction,
-                                             'security_group_id': sg_id,
-                                             'port_range_min': port_range_min,
-                                             'port_range_max': port_range_max,
-                                             'protocol': protocol}}
+    # We create a security group in 2 steps
+    # 1 - we check the format and set the json body accordingly
+    # 2 - we call neturon client to create the security group
+
+    # Format check
+    json_body = {'security_group_rule': {'direction': direction,
+                                         'security_group_id': sg_id,
+                                         'protocol': protocol}}
+    # parameters may be
+    # - both None => we do nothing
+    # - both Not None => we add them to the json description
+    # but one cannot be None is the other is not None
+    if (port_range_min is not None and port_range_max is not None):
+        # add port_range in json description
+        json_body['security_group_rule']['port_range_min'] = port_range_min
+        json_body['security_group_rule']['port_range_max'] = port_range_max
+        logger.debug("Security_group format set (port range included)")
     else:
-        logger.error("Error [create_secgroup_rule(neutron_client, '%s', '%s', "
-                     "'%s', '%s', '%s', '%s')]:" % (neutron_client,
-                                                    sg_id, direction,
-                                                    port_range_min,
-                                                    port_range_max,
-                                                    protocol),
-                     " Invalid values for port_range_min, port_range_max")
-        return False
+        # either both port range are set to None => do nothing
+        # or one is set but not the other => log it and return False
+        if port_range_min is None and port_range_max is None:
+            logger.debug("Security_group format set (no port range mentioned)")
+        else:
+            logger.error("Bad security group format."
+                         "One of the port range is not properly set:"
+                         "range min: {},"
+                         "range max: {}".format(port_range_min,
+                                                port_range_max))
+            return False
+
+    # Create security group using neutron client
     try:
         neutron_client.create_security_group_rule(json_body)
         return True
-    except Exception, e:
-        logger.error("Error [create_secgroup_rule(neutron_client, '%s', '%s', "
-                     "'%s', '%s', '%s', '%s')]: %s" % (neutron_client,
-                                                       sg_id,
-                                                       direction,
-                                                       port_range_min,
-                                                       port_range_max,
-                                                       protocol, e))
+    except:
+        logger.exception("Impossible to create_security_group_rule,"
+                         "security group rule probably already exists")
         return False
 
 
