@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_1fef1720",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-01T07:18:15Z",
+      "side": 1,
+      "message": "Where is supposed to run the tempest_custom? In the current implementation, if the installer or scenario is not set, installer will be set as None and scenario will be set as \u0027os-nosdn-nofeature-noha\u0027. With that said, tempest_custom will never be run, right?",
+      "range": {
+        "startLine": 411,
+        "startChar": 16,
+        "endLine": 412,
+        "endChar": 39
+      },
+      "revId": "11c1e6eab8e246bdfb5e8a6c8b4c2aed5a558a14",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
