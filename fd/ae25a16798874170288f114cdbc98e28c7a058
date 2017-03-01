@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Cedric Ollivier <ollivier.cedric@gmail.com>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Wed, 01 Mar 2017 09:12:17 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/29361
+Project: functest
+Branch: refs/heads/master
