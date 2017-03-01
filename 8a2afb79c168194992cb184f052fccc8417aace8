@@ -157,6 +157,24 @@
       "revId": "8a2afb79c168194992cb184f052fccc8417aace8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_7fa3b39e",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-03-01T08:38:35Z",
+      "side": 1,
+      "message": "I guess he means reading the file in a variable and use \n\nlog_file \u003d open(log_path, \u0027r\u0027)\n\u0027Execution time\u0027 in log.readlines()\nor find the line and look for characters 114:128\n....\n\nI am fine with this though, this patch is about adapting the test case to the new framework, not about improving the code.",
+      "parentUuid": "dabed58f_1f2cf798",
+      "revId": "8a2afb79c168194992cb184f052fccc8417aace8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
