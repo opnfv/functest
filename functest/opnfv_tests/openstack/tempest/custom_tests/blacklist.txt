@@ -1,22 +1,3 @@
--
-    scenarios:
-        - os-odl_l2-bgpvpn-ha
-        - os-odl_l2-bgpvpn-noha
-    installers:
-        - fuel
-        - apex
-    tests:
-        - tempest.api.compute.servers.test_create_server.ServersTestJSON.test_list_servers
-        - tempest.api.compute.servers.test_create_server.ServersTestJSON.test_verify_server_details
-        - tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_list_servers
-        - tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_verify_server_details
-        - tempest.api.compute.servers.test_server_actions.ServerActionsTestJSON.test_reboot_server_hard
-        - tempest.api.network.test_floating_ips.FloatingIPTestJSON.test_create_list_show_update_delete_floating_ip
-        - tempest.api.network.test_floating_ips.FloatingIPTestJSON.test_create_floating_ip_specifying_a_fixed_ip_address
-        - tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_network_basic_ops
-        - tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops
-        - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern.test_volume_boot_pattern
-        - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPatternV2.test_volume_boot_pattern
 
 -
     scenarios:
