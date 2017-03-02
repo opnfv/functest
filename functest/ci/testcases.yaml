@@ -71,7 +71,6 @@ tiers:
                 name: vping_ssh
                 criteria: 'status == "PASS"'
                 blocking: true
-                clean_flag: true
                 description: >-
                     This test case verifies: 1) SSH to an instance using floating
                     IPs over the public network. 2) Connectivity between 2 instances
@@ -87,7 +86,6 @@ tiers:
                 name: vping_userdata
                 criteria: 'status == "PASS"'
                 blocking: true
-                clean_flag: true
                 description: >-
                     This test case verifies:  1) Boot a VM with given userdata.
                     2) Connectivity between 2 instances over a private network.
@@ -101,7 +99,6 @@ tiers:
             -
                 name: tempest_smoke_serial
                 criteria: 'success_rate == 100%'
-                blocking: false
                 clean_flag: false
                 description: >-
                     This test case runs the smoke subset of the OpenStack
@@ -118,7 +115,6 @@ tiers:
             -
                 name: rally_sanity
                 criteria: 'success_rate == 100%'
-                blocking: false
                 clean_flag: false
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
@@ -176,7 +172,6 @@ tiers:
                 name: onos
                 criteria: 'status == "PASS"'
                 blocking: true
-                clean_flag: true
                 description: >-
                     Test Suite for the ONOS SDN Controller. It integrates
                     some test suites from upstream using TestON as the test
@@ -191,7 +186,6 @@ tiers:
             -
                 name: snaps_smoke
                 criteria: 'status == "PASS"'
-                blocking: false
                 clean_flag: false
                 description: >-
                     This test case contains tests that setup and destroy
@@ -220,8 +214,6 @@ tiers:
             -
                 name: promise
                 criteria: 'success_rate == 100%'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Test suite from Promise project.
                 dependencies:
@@ -234,8 +226,6 @@ tiers:
             -
                 name: doctor
                 criteria: 'status == "PASS"'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Test suite from Doctor project.
                 dependencies:
@@ -248,8 +238,6 @@ tiers:
             -
                 name: bgpvpn
                 criteria: 'status == "PASS"'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Test suite from SDNVPN project.
                 dependencies:
@@ -262,8 +250,6 @@ tiers:
             -
                 name: security_scan
                 criteria: 'status == "PASS"'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Simple Security Scan
                 dependencies:
@@ -275,8 +261,6 @@ tiers:
 #            -
 #                name: copper
 #                criteria: 'status == "PASS"'
-#                blocking: false
-#                clean_flag: true
 #                description: >-
 #                    Test suite for policy management based on OpenStack Congress
 #                dependencies:
@@ -288,7 +272,6 @@ tiers:
             -
                 name: multisite
                 criteria: 'success_rate == 100%'
-                blocking: false
                 clean_flag: false
                 description: >-
                     Test suite from kingbird
@@ -301,8 +284,6 @@ tiers:
             -
                 name: odl-sfc
                 criteria: 'status == "PASS"'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Test suite for odl-sfc to test two chains and two SFs
                 dependencies:
@@ -315,7 +296,6 @@ tiers:
                 name: onos_sfc
                 criteria: 'status == "PASS"'
                 blocking: true
-                clean_flag: true
                 description: >-
                     Test Suite for onos-sfc to test sfc function.
                 dependencies:
@@ -327,8 +307,6 @@ tiers:
             -
                 name: parser
                 criteria: 'ret == 0'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Test suite from Parser project.
                 dependencies:
@@ -340,8 +318,6 @@ tiers:
             -
                 name: domino
                 criteria: 'status == "PASS"'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Test suite from Domino project.
                 dependencies:
@@ -353,8 +329,6 @@ tiers:
             -
                 name: orchestra
                 criteria: 'ret == 0'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Test OpenBaton (Orchestra) stack
                 dependencies:
@@ -366,8 +340,6 @@ tiers:
             -
                 name: netready
                 criteria: 'status == "PASS"'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Test suite from Netready project.
                 dependencies:
@@ -379,8 +351,6 @@ tiers:
             -
                 name: barometer
                 criteria: 'status == "PASS"'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Test suite for the Barometer project. Separate tests verify the
                     proper configuration and functionality of the following
@@ -402,7 +372,6 @@ tiers:
 #            -
 #                name: tempest_full_parallel
 #                criteria: 'success_rate >= 80%'
-#                blocking: false
 #                clean_flag: false
 #                description: >-
 #                    The list of test cases is generated by
@@ -417,7 +386,6 @@ tiers:
             -
                 name: tempest_defcore
                 criteria: 'success_rate == 100%'
-                blocking: false
                 clean_flag: false
                 description: >-
                     This is the set of Tempest test cases created by OpenStack
@@ -431,7 +399,6 @@ tiers:
             -
                 name: tempest_custom
                 criteria: 'success_rate == 100%'
-                blocking: false
                 clean_flag: false
                 description: >-
                     The test case allows running a customized list of tempest
@@ -448,7 +415,6 @@ tiers:
 #            -
 #                name: rally_full
 #                criteria: 'success_rate >= 90%'
-#                blocking: false
 #                clean_flag: false
 #                description: >-
 #                    This test case runs the full suite of scenarios of the OpenStack
@@ -470,8 +436,6 @@ tiers:
             -
                 name: cloudify_ims
                 criteria: 'status == "PASS"'
-                blocking: false
-                clean_flag: true
                 description: >-
                     This test case deploys an OpenSource vIMS solution from Clearwater
                     using the Cloudify orchestrator. It also runs some signaling traffic.
@@ -484,8 +448,6 @@ tiers:
             -
                 name: aaa
                 criteria: 'ret == 0'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Test suite from Parser project.
                 dependencies:
@@ -498,8 +460,6 @@ tiers:
             -
                 name: juju_epc
                 criteria: 'ret == 0'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Test suite from OAI project, vEPC deployed with Juju.
                 dependencies:
@@ -512,8 +472,6 @@ tiers:
             -
                 name: orchestra_ims
                 criteria: 'ret == 0'
-                blocking: false
-                clean_flag: true
                 description: >-
                     VNF deployment with OpenBaton (Orchestra)
                 dependencies:
@@ -526,8 +484,6 @@ tiers:
             -
                 name: opera_ims
                 criteria: 'ret == 0'
-                blocking: false
-                clean_flag: true
                 description: >-
                     Evolution of vIMS
                 dependencies:
@@ -540,8 +496,6 @@ tiers:
             -
                 name: vyos_vrouter
                 criteria: 'status == "PASS"'
-                blocking: false
-                clean_flag: true
                 description: >-
                     This test case is vRouter testing.
                 dependencies:
