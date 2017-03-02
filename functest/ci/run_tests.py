@@ -143,7 +143,7 @@ def run_test(test, tier_name, testcases=None):
     logger.debug("\n%s" % test)
     source_rc_file()
 
-    if GlobalVariables.CLEAN_FLAG:
+    if test.needs_clean() and GlobalVariables.CLEAN_FLAG:
         generate_os_snapshot()
 
     flags = (" -t %s" % (test_name))
@@ -157,6 +157,7 @@ def run_test(test, tier_name, testcases=None):
             module = importlib.import_module(run_dict['module'])
             cls = getattr(module, run_dict['class'])
             test_case = cls()
+
             try:
                 kwargs = run_dict['args']
                 result = test_case.run(**kwargs)
@@ -179,8 +180,9 @@ def run_test(test, tier_name, testcases=None):
                         cmd, test_name))
         result = ft_utils.execute_command(cmd)
 
-    if GlobalVariables.CLEAN_FLAG:
+    if test.needs_clean() and GlobalVariables.CLEAN_FLAG:
         cleanup()
+
     end = datetime.datetime.now()
     duration = (end - start).seconds
     duration_str = ("%02d:%02d" % divmod(duration, 60))
