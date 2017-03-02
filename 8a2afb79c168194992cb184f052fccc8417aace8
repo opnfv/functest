@@ -175,6 +175,24 @@
       "revId": "8a2afb79c168194992cb184f052fccc8417aace8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_f12b5780",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-02T01:08:48Z",
+      "side": 1,
+      "message": "Yes, I understand your way. It is suitble for matching in a file. In the cases below, it involves grep a key in multiple files.",
+      "parentUuid": "dabed58f_7fa3b39e",
+      "revId": "8a2afb79c168194992cb184f052fccc8417aace8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
