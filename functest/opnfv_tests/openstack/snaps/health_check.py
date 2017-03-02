@@ -28,7 +28,12 @@ class HealthCheck(PyTestSuiteRunner):
         self.case_name = "snaps_health_check"
         ext_net_name = snaps_utils.get_ext_net_name()
 
+        image_custom_config = {}
+        if CONST.snaps_simple_healthcheck:
+            image_custom_config = CONST.snaps_simple_healthcheck
+
         self.suite.addTest(
             OSIntegrationTestCase.parameterize(
                 SimpleHealthCheck, CONST.openstack_creds, ext_net_name,
-                use_keystone=CONST.snaps_use_keystone))
+                use_keystone=CONST.snaps_use_keystone, 
+                image_metadata=image_custom_config))
