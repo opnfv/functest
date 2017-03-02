@@ -14,7 +14,7 @@ Introduction
 Functest is a project dealing with functional testing.
 Functest produces its own internal test cases but can also be considered
 as a framework to support feature and VNF onboarding project testing.
-Functest developed a test API and defined a test collection framework
+Functest developed a TestAPI and defined a test collection framework
 that can be used by any OPNFV project.
 
 Therefore there are many ways to contribute to Functest. You can:
@@ -260,9 +260,9 @@ The Test result management can be summarized as follows::
      |                      |
      +----------------------+
 
-Test API description
---------------------
-The Test API is used to declare pods, projects, test cases and test
+TestAPI description
+-------------------
+The TestAPI is used to declare pods, projects, test cases and test
 results. Pods are the pods used to run the tests.
 The results pushed in the database are related to pods, projects and
 cases. If you try to push results of test done on non referenced pod,
@@ -500,21 +500,21 @@ Scenarios:
 
 The code of the API is hosted in the releng repository `[6]`_.
 The static documentation of the API can be found at `[17]`_.
-The test API has been dockerized and may be installed locally in your
+The TestAPI has been dockerized and may be installed locally in your
 lab. See `[15]`_ for details.
 
-The deployment of the test API has been automated.
+The deployment of the TestAPI has been automated.
 A jenkins job manages:
-  * the unit tests of the test api
+  * the unit tests of the TestAPI
   * the creation of a new docker file
-  * the deployment of the new test api
-  * the archive of the old test api
+  * the deployment of the new TestAPI
+  * the archive of the old TestAPI
   * the backup of the Mongo DB
 
-Test API Authorization
-~~~~~~~~~~~~~~~~~~~~~~
+TestAPI Authorization
+~~~~~~~~~~~~~~~~~~~~~
 
-PUT/DELETE/POST operations of the testapi now require token based authorization. The token needs
+PUT/DELETE/POST operations of the TestAPI now require token based authorization. The token needs
 to be added in the request using a header 'X-Auth-Token' for access to the database.
 
 e.g::
@@ -627,7 +627,7 @@ script can be found in `[16]`_.
 For next versions, it was decided to integrated bitergia dashboard.
 Bitergia already provides a dashboard for code and infrastructure.
 A new Test tab will be added. The dataset will be built by consuming
-the test API.
+the TestAPI.
 
 
 =======

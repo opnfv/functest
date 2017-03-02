@@ -32,7 +32,7 @@ Version history
 +------------+----------+------------------+------------------------+
 
 OPNFV Colorado Release
-=========================
+======================
 
 Functest deals with functional testing of the OPNFV solution.
 It includes test cases developed within the project and test cases developed in
@@ -99,7 +99,7 @@ Software
 
  - The Functest Docker image: https://hub.docker.com/r/opnfv/functest (tag: colorado.1.0)
 
- - The testapi Docker image: https://hub.docker.com/r/opnfv/testapi (tag:colorado.1.0)
+ - The TestAPI Docker image: https://hub.docker.com/r/opnfv/testapi (tag:colorado.1.0)
 
 
 Documents
@@ -120,7 +120,7 @@ Feature evolution
 
  - refactoring of ODL functional tests (with upstream modifications)
 
- - refactoring of testapi (update, swagger documentation, dockerization)
+ - refactoring of TestAPI (update, swagger documentation, dockerization)
 
  - jenkins logs improvement
 

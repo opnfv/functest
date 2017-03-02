@@ -7,9 +7,9 @@ International License.
 You should have received a copy of the license along with this.
 If not, see <http://creativecommons.org/licenses/by/4.0/>.
 
-==================
-Test API evolution
-==================
+=================
+TestAPI evolution
+=================
 
 Author: Sakala Venkata Krishna Rohit
 Mentors: S. Feng, J.Lausuch, M.Richomme
@@ -17,10 +17,10 @@ Mentors: S. Feng, J.Lausuch, M.Richomme
 Abstract
 ========
 
-The testapi is used by all the test opnfv projects to report results.
+The TestAPI is used by all the test opnfv projects to report results.
 It is also used to declare projects, test cases and labs. A major refactoring
-has been done in Colorado with the introduction of swagger. The testapi is defined in Functest
-developer guide. The purpose of this project is to add more features to the testapi that automate
+has been done in Colorado with the introduction of swagger. The TestAPI is defined in Functest
+developer guide. The purpose of this project is to add more features to the TestAPI that automate
 the tasks that are done manually now, though there are tasks other than automation.
 
 Version history
@@ -48,33 +48,33 @@ documentation is as follows.
 Problem Statement:
 ------------------
 
-The problem statement could be divided into pending features that needed to be added into testapi
+The problem statement could be divided into pending features that needed to be added into TestAPI
 repo. The following were to be accomplished within the internship time frame.
 
-* **Add verification jenkins job for the testapi code**
+* **Add verification jenkins job for the TestAPI code**
     The purpose of this job is to verify whehter the unit tests are successful or not with the
     inclusion of the patchset submitted.
 
 * **Automatic update of opnfv/testapi docker image**
-    The docker image of testapi is hosted in the opnfv docker hub. To ensure that the testapi image
+    The docker image of TestAPI is hosted in the opnfv docker hub. To ensure that the TestAPI image
     is always updated with the repository, automatic updation of the image is necessary and a job
     is triggered whenever a new patch gets merged.
 
 * **Automation deployment of testresults.opnfv.org/test/ website**
-    In the same manner as the docker image of testapi is updated, the testapi website needs to be
+    In the same manner as the docker image of TestAPI is updated, the TestAPI website needs to be
     in sync with the repository code. So, a job has been added to the opnfv jenkins ci for the
     updation of the testresults website.
 
-* **Generate static documentation of testapi calls**
-    The purpose of this is to give an static/offline view of testapi. If someone wants to have a
-    look at the Restful apis of testapi, he/she does't need to go to the website, he can download
+* **Generate static documentation of TestAPI calls**
+    The purpose of this is to give an static/offline view of TestAPI. If someone wants to have a
+    look at the Restful APIs of TestAPI, he/she does't need to go to the website, he can download
     a html page and view it anytime.
 
-* **Backup MongoDB of testapi**
+* **Backup MongoDB of TestAPI**
     The mongoDB needs to be backed up every week. Till now it was done manually, but due to this
     internship, it is now automated using a jenkins job.
 
-* **Add token based authorization to the testapi calls**
+* **Add token based authorization to the TestAPI calls**
     The token based authorization was implemented to ensure that only ci_pods could access the
     database. Authentication has been added to only delete/put/post requests.
 
@@ -82,7 +82,7 @@ Curation Phase:
 ---------------
 
 The curation phase was the first 3 to 4 weeks of the internship. This phase was to get familiar
-with the testapi code and functionality and propose the solutions/tools for the tasks mentioned
+with the TestAPI code and functionality and propose the solutions/tools for the tasks mentioned
 above. Swagger codegen was choosen out of the four tools proposed `[3]`_ for generating static
 documentaion.
 
@@ -107,7 +107,7 @@ The progress and completion of the tasks is described in the below table.
 | **Date**                 | **Comment**                              |
 |                          |                                          |
 +--------------------------+------------------------------------------+
-| Nov 14th - Dec 31st      | Understand Testapi code and the          |
+| Nov 14th - Dec 31st      | Understand TestAPI code and the          |
 |                          | requirements.                            |
 +--------------------------+------------------------------------------+
 | Jan 1st  - Jan 7th       | Add jenkins job to create static         |
@@ -134,8 +134,8 @@ the internship. This section may help other developers in solving any errors cas
 code written as a part of this internship.
 
 
-Test Api
---------
+TestAPI
+-------
 
 What is the difference between defining data_file as "/etc/.." and "etc/.." in setup.cfg ?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -216,7 +216,7 @@ defined.
 What job style should be used when there is a situation like one build should trigger other builds
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 or when different build scripts need to be run on different machines ?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 MultiJob style should be used as it has phases where each phase can be taken as a build scipt and
 can have its own parameters by which one can define the SLAVE_LABEL parameter.
