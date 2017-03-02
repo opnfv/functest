@@ -19,7 +19,6 @@ import sys
 import functest.ci.generate_report as generate_report
 import functest.ci.tier_builder as tb
 import functest.core.testcase_base as testcase_base
-import functest.utils.functest_constants as ft_constants
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
@@ -91,16 +90,12 @@ def source_rc_file():
     for key, value in os.environ.iteritems():
         if re.search("OS_", key):
             if key == 'OS_AUTH_URL':
-                ft_constants.OS_AUTH_URL = value
                 CONST.OS_AUTH_URL = value
             elif key == 'OS_USERNAME':
-                ft_constants.OS_USERNAME = value
                 CONST.OS_USERNAME = value
             elif key == 'OS_TENANT_NAME':
-                ft_constants.OS_TENANT_NAME = value
                 CONST.OS_TENANT_NAME = value
             elif key == 'OS_PASSWORD':
-                ft_constants.OS_PASSWORD = value
                 CONST.OS_PASSWORD = value
 
 
