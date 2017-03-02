@@ -20,13 +20,41 @@ class OSCleanTesting(unittest.TestCase):
     def _get_instance(self, key):
         mock_obj = mock.Mock()
         attrs = {'id': 'id' + str(key), 'name': 'name' + str(key),
-                 'ip': 'ip' + str(key)}
+                 'ip': 'ip' + str(key), 'status': 'ACTIVE',
+                 'OS-EXT-STS:task_state': '-'}
+        mock_obj.configure_mock(**attrs)
+        return mock_obj
+
+    def _get_instance_deleted(self, key):
+        mock_obj = mock.Mock()
+        attrs = {'id': 'id' + str(key), 'name': 'name' + str(key),
+                 'ip': 'ip' + str(key), 'status': 'DELETED',
+                 'OS-EXT-STS:task_state': '-'}
+        mock_obj.configure_mock(**attrs)
+        return mock_obj
+
+    def _get_instance_deleting(self, key):
+        mock_obj = mock.Mock()
+        attrs = {'id': 'id' + str(key), 'name': 'name' + str(key),
+                 'ip': 'ip' + str(key), 'status': 'BUILD',
+                 'OS-EXT-STS:task_state': 'deleting'}
+        mock_obj.configure_mock(**attrs)
+        return mock_obj
+
+    def _get_instance_other(self, key):
+        mock_obj = mock.Mock()
+        attrs = {'id': 'id' + str(key), 'name': 'name' + str(key),
+                 'ip': 'ip' + str(key), 'status': 'BUILD',
+                 'OS-EXT-STS:task_state': 'networking'}
         mock_obj.configure_mock(**attrs)
         return mock_obj
 
     def setUp(self):
         self.client = mock.Mock()
         self.test_list = [self._get_instance(1), self._get_instance(2)]
+        self.deleted_list = [self._get_instance_deleted(5),
+                             self._get_instance_deleting(6)]
+        self.other_state_list = [self._get_instance_other(7)]
         self.update_list = {'id1': 'name1', 'id2': 'name2'}
         self.remove_list = {'id3': 'name3', 'id4': 'name4'}
         self.test_dict_list = [{'id': 'id1', 'name': 'name1', 'ip': 'ip1',
@@ -67,6 +95,33 @@ class OSCleanTesting(unittest.TestCase):
     def test_remove_instances_delete_success(self, mock_logger_debug):
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_instances', return_value=self.test_list), \
+                mock.patch('functest.utils.openstack_clean.os_utils'
+                           '.delete_instance', return_value=True):
+            openstack_clean.remove_instances(self.client, self.remove_list)
+            mock_logger_debug.assert_any_call("Removing Nova instances...")
+            mock_logger_debug.assert_any_call("  > Request sent.")
+            mock_logger_debug.assert_any_call(test_utils.RegexMatch("Removing"
+                                                                    " instance"
+                                                                    " '\s*\S+'"
+                                                                    " ..."))
+
+    @mock.patch('functest.utils.openstack_clean.logger.debug')
+    def test_remove_instances_pending_delete_success(self, mock_logger_debug):
+        with mock.patch('functest.utils.openstack_clean.os_utils'
+                        '.get_instances', return_value=self.deleted_list), \
+                mock.patch('functest.utils.openstack_clean.os_utils'
+                           '.delete_instance', return_value=True):
+            openstack_clean.remove_instances(self.client, self.remove_list)
+            mock_logger_debug.assert_any_call("Removing Nova instances...")
+            mock_logger_debug.test_utils.RegexMatch("Removing"
+                                                    " instance"
+                                                    " '\s*\S+'"
+                                                    " ...").assert_not_called()
+
+    @mock.patch('functest.utils.openstack_clean.logger.debug')
+    def test_remove_instances_other_delete_success(self, mock_logger_debug):
+        with mock.patch('functest.utils.openstack_clean.os_utils'
+                        '.get_instances', return_value=self.other_state_list), \
                 mock.patch('functest.utils.openstack_clean.os_utils'
                            '.delete_instance', return_value=True):
             openstack_clean.remove_instances(self.client, self.remove_list)
