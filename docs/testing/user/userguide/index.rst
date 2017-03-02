@@ -2,7 +2,7 @@
 .. http://creativecommons.org/licenses/by/4.0
 
 =========================
-OPNFV FUNCTEST user guide
+OPNFV FUNCTEST User Guide
 =========================
 
 .. toctree::
