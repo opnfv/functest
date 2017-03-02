@@ -197,7 +197,6 @@ functest/utils/
 |-- config.py
 |-- constants.py
 |-- env.py
-|-- functest_constants.py
 |-- functest_logger.py
 |-- functest_utils.py
 |-- openstack_clean.py
