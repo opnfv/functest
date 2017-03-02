@@ -432,6 +432,7 @@ tiers:
                 name: tempest_custom
                 criteria: 'success_rate == 100%'
                 blocking: false
+                clean_flag: false
                 description: >-
                     The test case allows running a customized list of tempest
                     test cases defined in a file under
