@@ -6,9 +6,9 @@ os:
             image_password:  gocubsgo
 
     snaps_simple_healthcheck:
-        disk_image: /home/opnfv/functest/data/cirros-d161201-aarch64-disk.img
-        kernel_image: /home/opnfv/functest/data/cirros-d161201-aarch64-kernel
-        ramdisk_image: /home/opnfv/functest/data/cirros-d161201-aarch64-initramfs
+        disk_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-disk.img
+        kernel_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-kernel
+        ramdisk_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-initramfs
         extra_properties:
             os_command_line: root=/dev/vdb1 rw rootwait console=tty0 console=ttyS0 console=ttyAMA0
             hw_video_model: vga
