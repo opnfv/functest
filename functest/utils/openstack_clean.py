@@ -49,9 +49,15 @@ def remove_instances(nova_client, default_instances):
     for instance in instances:
         instance_name = getattr(instance, 'name')
         instance_id = getattr(instance, 'id')
+        instance_status = getattr(instance, 'status')
+        instance_state = getattr(instance, 'OS-EXT-STS:task_state')
+
         logger.debug("'%s', ID=%s " % (instance_name, instance_id))
         if (instance_id not in default_instances and
-                instance_name not in default_instances.values()):
+                instance_name not in default_instances.values() and
+                instance_status == 'ACTIVE' and
+                (instance_status not in ('BUILD', 'DELETED') or
+                 instance_state != 'deleting')):
             logger.debug("Removing instance '%s' ..." % instance_id)
             if os_utils.delete_instance(nova_client, instance_id):
                 logger.debug("  > Request sent.")
