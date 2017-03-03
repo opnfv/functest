@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_c273dfaf",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-03-03T07:48:14Z",
+      "side": 1,
+      "message": "INFO is not too high, i\u0027d rather have the level always set to that instead of only when debug is true.",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 39
+      },
+      "revId": "99916df1cdf3cf0ce07ce0baa4faa8c71cdefe75",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
