@@ -23,6 +23,45 @@ from functest.utils.constants import CONST
 from org.openbaton.cli.agents.agents import MainAgent
 from org.openbaton.cli.errors.errors import NfvoException
 
+# ----------------------------------------------------------
+#
+#               UTILS
+#
+# -----------------------------------------------------------
+
+
+def get_config(parameter, file):
+    """
+    Returns the value of a given parameter in file.yaml
+    parameter must be given in string format with dots
+    Example: general.openstack.image_name
+    """
+    with open(file) as f:
+        file_yaml = yaml.safe_load(f)
+    f.close()
+    value = file_yaml
+    for element in parameter.split("."):
+        value = value.get(element)
+        if value is None:
+            raise ValueError("The parameter %s is not defined in"
+                             " %s" % (parameter, file))
+    return value
+
+
+def download_and_add_image_on_glance(glance, image_name,
+                                     image_url, data_dir):
+    dest_path = data_dir
+    if not os.path.exists(dest_path):
+        os.makedirs(dest_path)
+    file_name = image_url.rsplit('/')[-1]
+    if not ft_utils.download_url(image_url, dest_path):
+        return False
+    image = os_utils.create_glance_image(
+        glance, image_name, dest_path + file_name)
+    if not image:
+        return False
+    return image
+
 
 def servertest(host, port):
     args = socket.getaddrinfo(host, port, socket.AF_INET, socket.SOCK_STREAM)
@@ -38,6 +77,7 @@ def servertest(host, port):
 
 
 class ImsVnf(vnf_base.VnfOnBoardingBase):
+
     def __init__(self, project='functest', case='orchestra_ims',
                  repo='', cmd=''):
         super(ImsVnf, self).__init__(project, case, repo, cmd)
@@ -54,6 +94,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         self.ob_projectid = ""
         self.keystone_client = os_utils.get_keystone_client()
         self.ob_nsr_id = ""
+        self.nsr = None
         self.main_agent = None
         # vIMS Data directory creation
         if not os.path.exists(self.data_dir):
@@ -66,9 +107,14 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             raise Exception("Orchestra VNF config file not found")
         config_file = self.case_dir + self.config
         self.imagename = get_config("openbaton.imagename", config_file)
+        self.bootstrap_link = get_config("openbaton.bootstrap_link",
+                                         config_file)
+        self.bootstrap_config_link = get_config(
+            "openbaton.bootstrap_config_link", config_file)
         self.market_link = get_config("openbaton.marketplace_link",
                                       config_file)
         self.images = get_config("tenant_images", config_file)
+        self.ims_conf = get_config("vIMS", config_file)
 
     def deploy_orchestrator(self, **kwargs):
         self.logger.info("Additional pre-configuration steps")
@@ -77,6 +123,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         glance_client = os_utils.get_glance_client()
 
         # Import images if needed
+        # needs some images
         self.logger.info("Upload some OS images if it doesn't exist")
         temp_dir = os.path.join(self.data_dir, "tmp/")
         for image_name, image_url in self.images.iteritems():
@@ -106,9 +153,9 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                                                    "192.168.100.0/24")
 
         # orchestrator VM flavor
-        self.logger.info("Check medium Flavor is available, if not create one")
+        self.logger.info("Check if Flavor is available, if not create one")
         flavor_exist, flavor_id = os_utils.get_or_create_flavor(
-            "m1.medium",
+            "orchestra",
             "4096",
             '20',
             '2',
@@ -129,13 +176,14 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             self.logger.error("Cannot create floating IP.")
 
         userdata = "#!/bin/bash\n"
+        userdata += "echo \"Executing userdata...\"\n"
         userdata += "set -x\n"
         userdata += "set -e\n"
+        userdata += "echo \"Set nameserver to '8.8.8.8'...\"\n"
         userdata += "echo \"nameserver   8.8.8.8\" >> /etc/resolv.conf\n"
+        userdata += "echo \"Install curl...\"\n"
         userdata += "apt-get install curl\n"
-        userdata += ("echo \"rabbitmq_broker_ip=%s\" > ./config_file\n"
-                     % floatip)
-        userdata += "echo \"mysql=no\" >> ./config_file\n"
+        userdata += "echo \"Inject public key...\"\n"
         userdata += ("echo \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCuPXrV3"
                      "geeHc6QUdyUr/1Z+yQiqLcOskiEGBiXr4z76MK4abiFmDZ18OMQlc"
                      "fl0p3kS0WynVgyaOHwZkgy/DIoIplONVr2CKBKHtPK+Qcme2PVnCtv"
@@ -145,17 +193,30 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                      "7YAdalAnyD/jwCHuwIrUw/lxo7UdNCmaUxeobEYyyFA1YVXzpNFZya"
                      "XPGAAYIJwEq/ openbaton@opnfv\" >> /home/ubuntu/.ssh/aut"
                      "horized_keys\n")
-        userdata += "cat ./config_file\n"
-        userdata += ("curl -s http://get.openbaton.org/bootstrap "
-                     "> ./bootstrap\n")
+        userdata += "echo \"Download bootstrap...\"\n"
+        userdata += ("curl -s %s "
+                     "> ./bootstrap\n" % self.bootstrap_link)
+        userdata += ("curl -s %s"
+                     "> ./config_file\n" % self.bootstrap_config_link)
+        userdata += ("echo \"Disable usage of mysql...\"\n")
+        userdata += "sed -i s/mysql=.*/mysql=no/g /config_file\n"
+        userdata += ("echo \"Setting 'rabbitmq_broker_ip' to '%s'\"\n"
+                     % floatip)
+        userdata += ("sed -i s/rabbitmq_broker_ip=localhost/rabbitmq_broker_ip"
+                     "=%s/g /config_file\n" % floatip)
+        userdata += "echo \"Set autostart of components to 'false'\"\n"
         userdata += "export OPENBATON_COMPONENT_AUTOSTART=false\n"
+        userdata += "echo \"Execute bootstrap...\"\n"
         bootstrap = "sh ./bootstrap release -configFile=./config_file"
         userdata += bootstrap + "\n"
-
+        userdata += "echo \"Setting 'nfvo.plugin.timeout' to '300000'\"\n"
         userdata += ("echo \"nfvo.plugin.timeout=300000\" >> "
                      "/etc/openbaton/openbaton-nfvo.properties\n")
+        userdata += "echo \"Starting NFVO\"\n"
         userdata += "service openbaton-nfvo restart\n"
+        userdata += "echo \"Starting Generic VNFM\"\n"
         userdata += "service openbaton-vnfm-generic restart\n"
+        userdata += "echo \"...end of userdata...\"\n"
 
         sg_id = os_utils.create_security_group_full(neutron_client,
                                                     "orchestra-sec-group",
@@ -200,22 +261,22 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         self.logger.info("Associating floating ip: '%s' to VM '%s' "
                          % (floatip, "orchestra-openbaton"))
         if not os_utils.add_floating_ip(nova_client, instance.id, floatip):
-            self.logger.error("Cannot associate floating IP to VM.")
             self.step_failure("Cannot associate floating IP to VM.")
 
-        self.logger.info("Waiting for nfvo to be up and running...")
+        self.logger.info("Waiting for Open Baton NFVO to be up and running...")
         x = 0
         while x < 100:
             if servertest(floatip, "8080"):
                 break
             else:
-                self.logger.debug("openbaton is not started yet")
+                self.logger.debug(
+                    "Open Baton NFVO is not started yet (%ss)" %
+                    (x * 5))
                 time.sleep(5)
                 x += 1
 
         if x == 100:
-            self.logger.error("Openbaton is not started correctly")
-            self.step_failure("Openbaton is not started correctly")
+            self.step_failure("Open Baton is not started correctly")
 
         self.ob_ip = floatip
         self.ob_password = "openbaton"
@@ -223,10 +284,10 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         self.ob_https = False
         self.ob_port = "8080"
 
-        self.logger.info("Deploy orchestrator: OK")
+        self.logger.info("Deploy Open Baton NFVO: OK")
 
     def deploy_vnf(self):
-        self.logger.info("vIMS Deployment")
+        self.logger.info("Starting vIMS Deployment...")
 
         self.main_agent = MainAgent(nfvo_ip=self.ob_ip,
                                     nfvo_port=self.ob_port,
@@ -235,15 +296,16 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                                     username=self.ob_username,
                                     password=self.ob_password)
 
+        self.logger.info("Getting project 'default'...")
         project_agent = self.main_agent.get_agent("project", self.ob_projectid)
         for p in json.loads(project_agent.find()):
             if p.get("name") == "default":
                 self.ob_projectid = p.get("id")
+                self.logger.info("Found project 'default': %s" % p)
                 break
 
         self.logger.debug("project id: %s" % self.ob_projectid)
         if self.ob_projectid == "":
-            self.logger.error("Default project id was not found!")
             self.step_failure("Default project id was not found!")
 
         vim_json = {
@@ -252,9 +314,6 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             "tenant": os_utils.get_credentials().get("tenant_name"),
             "username": os_utils.get_credentials().get("username"),
             "password": os_utils.get_credentials().get("password"),
-            "keyPair": "opnfv",
-            # TODO change the keypair to correct value
-            # or upload a correct one or remove it
             "securityGroups": [
                 "default",
                 "orchestra-sec-group"
@@ -267,7 +326,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             }
         }
 
-        self.logger.debug("vim: %s" % vim_json)
+        self.logger.debug("Registering VIM: %s" % vim_json)
 
         self.main_agent.get_agent(
             "vim",
@@ -280,7 +339,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         try:
             self.logger.info("sending: %s" % self.market_link)
             nsd = market_agent.create(entity=self.market_link)
-            self.logger.info("Onboarded nsd: " + nsd.get("name"))
+            self.logger.info("Onboarded NSD: " + nsd.get("name"))
         except NfvoException as e:
             self.step_failure(e.message)
 
@@ -290,34 +349,77 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         if nsd_id is None:
             self.step_failure("NSD not onboarded correctly")
 
-        nsr = None
         try:
-            nsr = nsr_agent.create(nsd_id)
+            self.nsr = nsr_agent.create(nsd_id)
         except NfvoException as e:
             self.step_failure(e.message)
 
-        if nsr is None:
-            self.step_failure("NSR not deployed correctly")
+        if self.nsr.get('code') is not None:
+            self.logger.error(
+                "vIMS cannot be deployed: %s -> %s" %
+                (self.nsr.get('code'), self.nsr.get('message')))
+            self.step_failure("vIMS cannot be deployed")
 
         i = 0
-        self.logger.info("waiting NSR to go to active...")
-        while nsr.get("status") != 'ACTIVE':
+        self.logger.info("Waiting for NSR to go to ACTIVE...")
+        while self.nsr.get("status") != 'ACTIVE' and self.nsr.get(
+                "status") != 'ERROR':
             i += 1
-            if i == 100:
-                self.step_failure("After %s sec the nsr did not go to active.."
-                                  % 5 * 100)
+            if i == 150:
+                self.step_failure("After %s sec the NSR did not go to ACTIVE.."
+                                  % 5 * i)
             time.sleep(5)
-            nsr = json.loads(nsr_agent.find(nsr.get('id')))
+            self.nsr = json.loads(nsr_agent.find(self.nsr.get('id')))
 
-        deploy_vnf = {'status': "PASS", 'result': nsr}
-        self.ob_nsr_id = nsr.get("id")
-        self.logger.info("Deploy VNF: OK")
+        if self.nsr.get("status") == 'ACTIVE':
+            deploy_vnf = {'status': "PASS", 'result': self.nsr}
+            self.logger.info("Deploy VNF: OK")
+        else:
+            deploy_vnf = {'status': "FAIL", 'result': self.nsr}
+            self.step_failure("Deploy VNF: ERROR")
+        self.ob_nsr_id = self.nsr.get("id")
+        self.logger.info(
+            "Sleep for 60s to ensure that all services are up and running...")
+        time.sleep(60)
         return deploy_vnf
 
     def test_vnf(self):
         # Adaptations probably needed
         # code used for cloudify_ims
         # ruby client on jumphost calling the vIMS on the SUT
+        self.logger.info(
+            "Testing if %s works properly..." %
+            self.nsr.get('name'))
+        for vnfr in self.nsr.get('vnfr'):
+            self.logger.info(
+                "Checking ports %s of VNF %s" %
+                (self.ims_conf.get(
+                    vnfr.get('name')).get('ports'),
+                    vnfr.get('name')))
+            for vdu in vnfr.get('vdu'):
+                for vnfci in vdu.get('vnfc_instance'):
+                    self.logger.debug(
+                        "Checking ports of VNFC instance %s" %
+                        vnfci.get('hostname'))
+                    for floatingIp in vnfci.get('floatingIps'):
+                        self.logger.debug(
+                            "Testing %s:%s" %
+                            (vnfci.get('hostname'), floatingIp.get('ip')))
+                        for port in self.ims_conf.get(
+                                vnfr.get('name')).get('ports'):
+                            if servertest(floatingIp.get('ip'), port):
+                                self.logger.info(
+                                    "VNFC instance %s is reachable at %s:%s" %
+                                    (vnfci.get('hostname'),
+                                     floatingIp.get('ip'),
+                                     port))
+                            else:
+                                self.logger.error(
+                                    "VNFC instance %s is not reachable "
+                                    "at %s:%s" % (vnfci.get('hostname'),
+                                                  floatingIp.get('ip'), port))
+                                self.step_failure("Test VNF: ERROR")
+        self.logger.info("Test VNF: OK")
         return
 
     def clean(self):
@@ -349,42 +451,5 @@ if __name__ == '__main__':
     test = ImsVnf()
     test.deploy_orchestrator()
     test.deploy_vnf()
+    test.test_vnf()
     test.clean()
-
-
-# ----------------------------------------------------------
-#
-#               UTILS
-#
-# -----------------------------------------------------------
-def get_config(parameter, file):
-    """
-    Returns the value of a given parameter in file.yaml
-    parameter must be given in string format with dots
-    Example: general.openstack.image_name
-    """
-    with open(file) as f:
-        file_yaml = yaml.safe_load(f)
-    f.close()
-    value = file_yaml
-    for element in parameter.split("."):
-        value = value.get(element)
-        if value is None:
-            raise ValueError("The parameter %s is not defined in"
-                             " reporting.yaml" % parameter)
-    return value
-
-
-def download_and_add_image_on_glance(glance, image_name,
-                                     image_url, data_dir):
-    dest_path = data_dir
-    if not os.path.exists(dest_path):
-        os.makedirs(dest_path)
-    file_name = image_url.rsplit('/')[-1]
-    if not ft_utils.download_url(image_url, dest_path):
-        return False
-    image = os_utils.create_glance_image(
-        glance, image_name, dest_path + file_name)
-    if not image:
-        return False
-    return image
