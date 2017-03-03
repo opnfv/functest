@@ -46,6 +46,30 @@
       "revId": "99916df1cdf3cf0ce07ce0baa4faa8c71cdefe75",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_42e4cf3a",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-03-03T08:20:01Z",
+      "side": 1,
+      "message": "I got mixed up a bit, disregard my previous comment.\nINFO shows less information than WARNING, shouldn\u0027t the if be the other way around?",
+      "parentUuid": "dabed58f_a2f34b09",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 39
+      },
+      "revId": "99916df1cdf3cf0ce07ce0baa4faa8c71cdefe75",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
