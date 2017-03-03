@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_27744dfc",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-03T06:07:55Z",
+      "side": 1,
+      "message": "Ok, if it is useless, I will submit a new patch to delete it, it is not in this patch\u0027s scope.",
+      "parentUuid": "dabed58f_c4120fb4",
+      "revId": "a7a23dd19688fb537af84b3b1da087b35987fcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_840c1796",
         "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_c760d137",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-03T06:07:55Z",
+      "side": 1,
+      "message": "If it is useless, I will submit a new patch to delete it, it is not in this patch\u0027s scope",
+      "parentUuid": "dabed58f_840c1796",
+      "revId": "a7a23dd19688fb537af84b3b1da087b35987fcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_a4111bae",
         "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-03-02T15:48:46Z",
       "side": 1,
       "message": "please remove this too.",
+      "revId": "a7a23dd19688fb537af84b3b1da087b35987fcf9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e765d545",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-03T06:07:55Z",
+      "side": 1,
+      "message": "same to above",
+      "parentUuid": "dabed58f_a4111bae",
       "revId": "a7a23dd19688fb537af84b3b1da087b35987fcf9",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
