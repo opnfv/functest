@@ -22,6 +22,30 @@
       "revId": "99916df1cdf3cf0ce07ce0baa4faa8c71cdefe75",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_a2f34b09",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-03T08:15:24Z",
+      "side": 1,
+      "message": "Are you saying, setting the logging level of file the same as console?\n\nIf this is the case, I would say, in CI, the logging level is set as INFO and there will be no debugging info of Functest in functest.log if your idea is followed. \n\nHow about removing some item from the parent_loggers list?\n parent_loggers \u003d [\u0027git\u0027,\u0027keystoneauth\u0027, \u0027stevedore\u0027,  \u0027paramiko\u0027]",
+      "parentUuid": "dabed58f_c273dfaf",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 39
+      },
+      "revId": "99916df1cdf3cf0ce07ce0baa4faa8c71cdefe75",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
