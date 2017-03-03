@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dabed58f_8292c755",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-03-03T09:27:05Z",
+      "side": 1,
+      "message": "I think we need paramiko.transport and paramiko.transport.sftp  (see output)",
+      "revId": "99916df1cdf3cf0ce07ce0baa4faa8c71cdefe75",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_c273dfaf",
         "filename": "functest/utils/functest_logger.py",
         "patchSetId": 2
