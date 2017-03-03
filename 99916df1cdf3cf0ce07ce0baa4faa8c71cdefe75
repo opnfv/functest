@@ -94,6 +94,54 @@
       "revId": "99916df1cdf3cf0ce07ce0baa4faa8c71cdefe75",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_a2dd8b44",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-03T09:09:04Z",
+      "side": 1,
+      "message": "As the debug is showing too much info that we don\u0027t want, that\u0027s the main reason to set the modules in the list one level higher than Functest.",
+      "parentUuid": "dabed58f_e205c3c2",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 39
+      },
+      "revId": "99916df1cdf3cf0ce07ce0baa4faa8c71cdefe75",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e2d38336",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-03T09:09:04Z",
+      "side": 1,
+      "message": "INFO shows more information than WARNING.",
+      "parentUuid": "dabed58f_42e4cf3a",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 39
+      },
+      "revId": "99916df1cdf3cf0ce07ce0baa4faa8c71cdefe75",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
