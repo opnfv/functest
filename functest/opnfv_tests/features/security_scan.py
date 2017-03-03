@@ -17,8 +17,8 @@ class SecurityScan(base.FeatureBase):
         super(SecurityScan, self).__init__(project='securityscanning',
                                            case='security_scan',
                                            repo='dir_repo_securityscan')
-        self.cmd = ('bash {0} && '
+        self.cmd = ('. {0}/stackrc && '
                     'cd {1} && '
                     'python security_scan.py --config config.ini && '
-                    'cd -'.format(CONST.openstack_creds,
+                    'cd -'.format(CONST.dir_functest_conf,
                                   self.repo))
