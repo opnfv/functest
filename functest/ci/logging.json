@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "disable_existing_loggers": false,
+    "disable_existing_loggers": true,
     "formatters": {
         "standard": {
             "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -14,7 +14,7 @@
         },
         "file": {
             "level": "DEBUG",
-            "class": "logging.FileHandler",
+            "class": "logging.handlers.RotatingFileHandler",
             "formatter": "standard",
             "filename": "/home/opnfv/functest/results/functest.log"
         }
@@ -23,7 +23,7 @@
         "": {
             "handlers": ["console", "file"],
             "level": "DEBUG",
-            "propagate": "yes"
+            "propagate": true
         }
     }
 }

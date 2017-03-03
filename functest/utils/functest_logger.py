@@ -34,7 +34,6 @@ class Logger(object):
     def __init__(self, logger_name):
         self.setup_logging()
         self.logger = logging.getLogger(logger_name)
-        logging.getLogger("paramiko").setLevel(logging.WARNING)
 
     def getLogger(self):
         return self.logger
@@ -60,6 +59,26 @@ class Logger(object):
                     if self.is_debug():
                         stream_level = logging.DEBUG
                     config['handlers']['console']['level'] = stream_level
+
+                self.set_parent_logging(config['loggers'])
                 logging.config.dictConfig(config)
         else:
             logging.basicConfig(level=default_level)
+
+    def set_parent_logging(self, loggers):
+        parent_loggers = ['keystoneclient', 'heatclient', 'novaclient', 'git',
+                          'requests', 'keystoneauth', 'cinderclient',
+                          'stevedore', 'cinderclient', 'paramiko',
+                          'oslo_config', 'oslo_i18n', 'neutronclient',
+                          'glanceclient']
+        if self.is_debug():
+            log_level = logging.INFO
+        else:
+            log_level = logging.WARNING
+        logging_config = {
+            "handlers": ["console", "file"],
+            "level": log_level,
+            "propagate": True
+        }
+        for parent_logger in parent_loggers:
+            loggers[parent_logger] = logging_config
