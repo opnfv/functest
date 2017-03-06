@@ -81,6 +81,10 @@ def create_tempest_resources(use_custom_images=False,
     image_id_alt = ""
     flavor_id = ""
     flavor_id_alt = ""
+    extra_properties = {}
+    if hasattr(CONST, 'openstack_extra_properties'):
+        extra_properties = \
+            CONST.__getattribute__('openstack_extra_properties')
 
     if (CONST.__getattribute__('tempest_use_custom_images') or
        use_custom_images):
@@ -89,7 +93,8 @@ def create_tempest_resources(use_custom_images=False,
         _, image_id = os_utils.get_or_create_image(
             CONST.__getattribute__('openstack_image_name'),
             GLANCE_IMAGE_PATH,
-            CONST.__getattribute__('openstack_image_disk_format'))
+            CONST.__getattribute__('openstack_image_disk_format'),
+            extra_properties)
         if image_id is None:
             raise Exception('Failed to create image')
 
@@ -98,7 +103,8 @@ def create_tempest_resources(use_custom_images=False,
         _, image_id_alt = os_utils.get_or_create_image(
             CONST.__getattribute__('openstack_image_name_alt'),
             GLANCE_IMAGE_PATH,
-            CONST.__getattribute__('openstack_image_disk_format'))
+            CONST.__getattribute__('openstack_image_disk_format'),
+            extra_properties)
         if image_id_alt is None:
             raise Exception('Failed to create image')
 
