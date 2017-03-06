@@ -40,6 +40,10 @@ IMAGE_FILENAME = CONST.openstack_image_file_name
 IMAGE_FORMAT = CONST.openstack_image_disk_format
 IMAGE_PATH = os.path.join(CONST.dir_functest_data, IMAGE_FILENAME)
 
+IMAGE_EXTRA_PROPERTIES = {}
+if hasattr(CONST, 'openstack_extra_properties'):
+    IMAGE_EXTRA_PROPERTIES = CONST.openstack_extra_properties
+
 # NEUTRON Private Network parameters
 
 EXAMPLE_PRIVATE_NET_NAME = CONST.example_private_net_name
@@ -57,19 +61,21 @@ def main():
     neutron_client = os_utils.get_neutron_client()
     glance_client = os_utils.get_glance_client()
 
-    image_id = os_utils.create_glance_image(glance_client,
-                                            EXAMPLE_IMAGE_NAME,
-                                            IMAGE_PATH,
-                                            disk=IMAGE_FORMAT,
-                                            container="bare",
-                                            public=True)
+    image_id = os_utils.create_glance_image(
+        glance_client,
+        EXAMPLE_IMAGE_NAME,
+        IMAGE_PATH,
+        disk=IMAGE_FORMAT,
+        extra_properties=IMAGE_EXTRA_PROPERTIES,
+        container="bare",
+        public=True)
 
     network_dic = os_utils.create_network_full(
-                    neutron_client,
-                    EXAMPLE_PRIVATE_NET_NAME,
-                    EXAMPLE_PRIVATE_SUBNET_NAME,
-                    EXAMPLE_ROUTER_NAME,
-                    EXAMPLE_PRIVATE_SUBNET_CIDR)
+        neutron_client,
+        EXAMPLE_PRIVATE_NET_NAME,
+        EXAMPLE_PRIVATE_SUBNET_NAME,
+        EXAMPLE_ROUTER_NAME,
+        EXAMPLE_PRIVATE_SUBNET_CIDR)
     if not network_dic:
         logger.error(
             "There has been a problem when creating the neutron network")
@@ -88,10 +94,10 @@ def main():
         "network=%s \n"
         % (EXAMPLE_INSTANCE_NAME, EXAMPLE_FLAVOR, image_id, network_id))
     instance = os_utils.create_instance_and_wait_for_active(
-                EXAMPLE_FLAVOR,
-                image_id,
-                network_id,
-                EXAMPLE_INSTANCE_NAME)
+        EXAMPLE_FLAVOR,
+        image_id,
+        network_id,
+        EXAMPLE_INSTANCE_NAME)
 
     if instance is None:
         logger.error("Error while booting instance.")
