@@ -9,12 +9,12 @@ import unittest
 
 from snaps import test_suite_builder
 
-from functest.core.pytest_suite_runner import PyTestSuiteRunner
-from functest.opnfv_tests.openstack.snaps import snaps_utils
+from functest.opnfv_tests.openstack.snaps.snaps_test_runner import \
+    SnapsTestRunner
 from functest.utils.constants import CONST
 
 
-class ConnectionCheck(PyTestSuiteRunner):
+class ConnectionCheck(SnapsTestRunner):
     """
     This test executes the Python Tests included with the SNAPS libraries
     that simply obtain the different OpenStack clients and may perform
@@ -25,10 +25,9 @@ class ConnectionCheck(PyTestSuiteRunner):
 
         self.suite = unittest.TestSuite()
         self.case_name = "connection_check"
-        ext_net_name = snaps_utils.get_ext_net_name()
 
         test_suite_builder.add_openstack_client_tests(
             self.suite,
             CONST.openstack_creds,
-            ext_net_name,
+            self.ext_net_name,
             use_keystone=CONST.snaps_use_keystone)
