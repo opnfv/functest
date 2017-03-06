@@ -111,6 +111,10 @@ GLANCE_IMAGE_FILENAME = get_value('general.openstack.image_file_name',
                                   'GLANCE_IMAGE_FILENAME')
 GLANCE_IMAGE_FORMAT = get_value('general.openstack.image_disk_format',
                                 'GLANCE_IMAGE_FORMAT')
+GLANCE_IMAGE_HW_FIRMWARE_TYPE = get_value('general.openstack.image_hw_firmware_type',
+                                'GLANCE_IMAGE_HW_FIRMWARE_TYPE')
+GLANCE_IMAGE_SHORT_ID = get_value('general.openstack.image_short_id',
+                                'GLANCE_IMAGE_SHORT_ID')
 FLAVOR_NAME = get_value('general.openstack.flavor_name',
                         'FLAVOR_NAME')
 FLAVOR_RAM = get_value('general.openstack.flavor_ram',
