@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_f6f34408",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-03-06T14:36:48Z",
+      "side": 1,
+      "message": "We should wait for https://gerrit.opnfv.org/gerrit/#/c/29851/3/functest/ci/config_aarch64_patch.yaml to be merged first, and then rebase this change.",
+      "range": {
+        "startLine": 11,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "8732ecf2ce8383cc41dec1524170b3601a6f5985",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_76e75441",
+        "filename": "functest/opnfv_tests/openstack/examples/create_instance_and_ip.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-03-06T14:36:48Z",
+      "side": 1,
+      "message": "This is not very scalable, as adding new properties would require changing the code for each one.\nHow about we pass an \"extra_properties\" dict instead containing these 2?",
+      "range": {
+        "startLine": 66,
+        "startChar": 44,
+        "endLine": 67,
+        "endChar": 68
+      },
+      "revId": "8732ecf2ce8383cc41dec1524170b3601a6f5985",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_d6c16081",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-03-06T14:36:48Z",
+      "side": 1,
+      "message": "glance_extra_properties dict, also applicable below and in next files",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 71
+      },
+      "revId": "8732ecf2ce8383cc41dec1524170b3601a6f5985",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_d6dac077",
+        "filename": "functest/utils/functest_constants.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-03-06T14:36:48Z",
+      "side": 1,
+      "message": "Armband does not support ONOS yet, so I assume these are untested ...",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 62
+      },
+      "revId": "8732ecf2ce8383cc41dec1524170b3601a6f5985",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
