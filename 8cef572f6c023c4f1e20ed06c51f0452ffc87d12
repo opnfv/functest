@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_76c43440",
+        "filename": "functest/opnfv_tests/openstack/snaps/health_check.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-03-06T16:48:34Z",
+      "side": 1,
+      "message": "Well, this is now equiv to just \"image_custom_config \u003d CONST.snaps_simple_healthcheck\", in which case we could use it as-is in the below call :)",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 68
+      },
+      "revId": "8cef572f6c023c4f1e20ed06c51f0452ffc87d12",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
