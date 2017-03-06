@@ -40,6 +40,10 @@ IMAGE_FILENAME = CONST.openstack_image_file_name
 IMAGE_FORMAT = CONST.openstack_image_disk_format
 IMAGE_PATH = os.path.join(CONST.dir_functest_data, IMAGE_FILENAME)
 
+IMAGE_EXTRA_PROPERTIES=""
+if hasattr(CONST, 'openstack_extra_properties'):
+    IMAGE_EXTRA_PROPERTIES = CONST.openstack_extra_properties
+
 # NEUTRON Private Network parameters
 
 EXAMPLE_PRIVATE_NET_NAME = CONST.example_private_net_name
@@ -61,6 +65,7 @@ def main():
                                             EXAMPLE_IMAGE_NAME,
                                             IMAGE_PATH,
                                             disk=IMAGE_FORMAT,
+                                            extra_properties=IMAGE_EXTRA_PROPERTIES,
                                             container="bare",
                                             public=True)
 
