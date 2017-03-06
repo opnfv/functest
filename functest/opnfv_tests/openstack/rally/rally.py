@@ -34,6 +34,11 @@ class RallyBase(testcase_base.TestcaseBase):
     GLANCE_IMAGE_PATH = os.path.join(CONST.dir_functest_data,
                                      GLANCE_IMAGE_FILENAME)
     GLANCE_IMAGE_FORMAT = CONST.openstack_image_disk_format
+
+    GLANCE_IMAGE_EXTRA_PROPERTIES = {}
+    if hasattr(CONST, 'openstack_extra_properties'):
+        GLANCE_IMAGE_EXTRA_PROPERTIES = CONST.openstack_extra_properties
+
     FLAVOR_NAME = "m1.tiny"
 
     RALLY_DIR = os.path.join(CONST.dir_repo_functest, CONST.dir_rally)
@@ -74,6 +79,8 @@ class RallyBase(testcase_base.TestcaseBase):
         task_args['flavor_name'] = self.FLAVOR_NAME
         task_args['glance_image_location'] = self.GLANCE_IMAGE_PATH
         task_args['glance_image_format'] = self.GLANCE_IMAGE_FORMAT
+        task_args['glance_image_extra_properties'] = \
+            self.GLANCE_IMAGE_EXTRA_PROPERTIES
         task_args['tmpl_dir'] = self.TEMPLATE_DIR
         task_args['sup_dir'] = self.SUPPORT_DIR
         task_args['users_amount'] = self.USERS_AMOUNT
@@ -412,7 +419,8 @@ class RallyBase(testcase_base.TestcaseBase):
         self.image_exists, self.image_id = os_utils.get_or_create_image(
             self.GLANCE_IMAGE_NAME,
             self.GLANCE_IMAGE_PATH,
-            self.GLANCE_IMAGE_FORMAT)
+            self.GLANCE_IMAGE_FORMAT,
+            self.GLANCE_IMAGE_EXTRA_PROPERTIES)
         if self.image_id is None:
             raise Exception("Failed to get or create image '%s'" %
                             self.GLANCE_IMAGE_NAME)

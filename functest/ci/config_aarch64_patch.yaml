@@ -4,14 +4,17 @@ os:
             image_name: TestVM
             image_file_name:  cirros-d161201-aarch64-disk.img
             image_password:  gocubsgo
+            extra_properties:
+                 hw_firmware_type: uefi
+                 short_id: ubuntu16.04
 
     snaps_health_check:
         disk_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-disk.img
-        kernel_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-kernel
-        ramdisk_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-initramfs
         extra_properties:
             os_command_line: root=/dev/vdb1 rw rootwait console=tty0 console=ttyS0 console=ttyAMA0
             hw_video_model: vga
+            hw_firmware_type: uefi
+            short_id: ubuntu16.04
 
     vping:
         image_name: TestVM
