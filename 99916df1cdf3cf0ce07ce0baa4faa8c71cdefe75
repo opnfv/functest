@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_533fc325",
+        "filename": "functest/utils/functest_logger.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-06T01:25:27Z",
+      "side": 1,
+      "message": "Do you mean, paramiko.transport and paramiko.transport.sftp need to be removed? There are duplicated information of paramiko.transport and paramiko.transport.sftp in the output.",
+      "parentUuid": "dabed58f_8292c755",
+      "revId": "99916df1cdf3cf0ce07ce0baa4faa8c71cdefe75",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_c273dfaf",
         "filename": "functest/utils/functest_logger.py",
         "patchSetId": 2
