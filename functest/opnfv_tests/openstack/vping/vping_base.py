@@ -32,6 +32,8 @@ class VPingBase(testcase_base.TestcaseBase):
         self.image_name = CONST.vping_image_name
         self.image_filename = CONST.openstack_image_file_name
         self.image_format = CONST.openstack_image_disk_format
+        self.image_hw_firmware_type = CONST.openstack_image_hw_firmware_type
+        self.image_short_id = CONST.openstack_image_short_id
         self.image_username = CONST.openstack_image_username
         self.image_password = CONST.openstack_image_password
         self.image_path = os.path.join(CONST.dir_functest_data,
@@ -122,7 +124,9 @@ class VPingBase(testcase_base.TestcaseBase):
     def create_image(self):
         _, image_id = os_utils.get_or_create_image(self.image_name,
                                                    self.image_path,
-                                                   self.image_format)
+                                                   self.image_format,
+                                                   self.image_hw_firmware_type,
+                                                   self.image_short_id)
         if not image_id:
             return None
 

@@ -39,6 +39,8 @@ EXAMPLE_IMAGE_NAME = CONST.example_image_name
 IMAGE_FILENAME = CONST.openstack_image_file_name
 IMAGE_FORMAT = CONST.openstack_image_disk_format
 IMAGE_PATH = os.path.join(CONST.dir_functest_data, IMAGE_FILENAME)
+IMAGE_HW_FIRMWARE_TYPE = CONST.openstack_image_hw_firmware_type
+IMAGE_SHORT_ID = CONST.openstack_image_short_id
 
 # NEUTRON Private Network parameters
 
@@ -61,6 +63,8 @@ def main():
                                             EXAMPLE_IMAGE_NAME,
                                             IMAGE_PATH,
                                             disk=IMAGE_FORMAT,
+                                            hw_firmware_type=IMAGE_HW_FIRMWARE_TYPE,
+                                            short_id=IMAGE_SHORT_ID,
                                             container="bare",
                                             public=True)
 

@@ -1139,7 +1139,7 @@ def get_image_id(glance_client, image_name):
     return id
 
 
-def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
+def create_glance_image(glance_client, image_name, file_path, disk="qcow2",hw_firmware_type="", short_id="",
                         container="bare", public="public"):
     if not os.path.isfile(file_path):
         logger.error("Error: file %s does not exist." % file_path)
@@ -1155,7 +1155,9 @@ def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
             image = glance_client.images.create(name=image_name,
                                                 visibility=public,
                                                 disk_format=disk,
-                                                container_format=container)
+                                                container_format=container
+                                                hw_firmware_type=hw_firmware_type,
+                                                short_id=short_id)
             image_id = image.id
             with open(file_path) as image_data:
                 glance_client.images.upload(image_id, image_data)
@@ -1166,7 +1168,7 @@ def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
         return None
 
 
-def get_or_create_image(name, path, format):
+def get_or_create_image(name, path, format, hw_firmware_type, short_id):
     image_exists = False
     glance_client = get_glance_client()
 
@@ -1176,7 +1178,7 @@ def get_or_create_image(name, path, format):
         image_exists = True
     else:
         logger.info("Creating image '%s' from '%s'..." % (name, path))
-        image_id = create_glance_image(glance_client, name, path, format)
+        image_id = create_glance_image(glance_client, name, path, format, hw_firmware_type, short_id)
         if not image_id:
             logger.error("Failed to create a Glance image...")
         else:
