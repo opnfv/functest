@@ -4,6 +4,8 @@ os:
             image_name: TestVM
             image_file_name:  cirros-d161201-aarch64-disk.img
             image_password:  gocubsgo
+            image_hw_firmware_type: uefi
+            image_short_id: ubuntu16.04
 
     snaps_simple_healthcheck:
         disk_image: /home/opnfv/functest/data/cirros-d161201-aarch64-disk.img
@@ -12,6 +14,8 @@ os:
         extra_properties:
             os_command_line: root=/dev/vdb1 rw rootwait console=tty0 console=ttyS0 console=ttyAMA0
             hw_video_model: vga
+            hw_firmware_type: uefi
+            short_id: ubuntu16.04
 
     vping:
         image_name: TestVM
