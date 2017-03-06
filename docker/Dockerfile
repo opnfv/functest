@@ -54,6 +54,7 @@ libpq-dev \
 libssl-dev \
 libxml2-dev \
 libxslt-dev \
+libzmq3-dev \
 python-dev \
 python-mock \
 python-pip \
