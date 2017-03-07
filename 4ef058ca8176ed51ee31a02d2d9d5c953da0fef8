@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_9900f9ab",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-07T00:58:10Z",
+      "side": 1,
+      "message": "Yes, but I remember we discussed about CONST before,  it is ok to use it in this way, so here it is used as other files",
+      "parentUuid": "dabed58f_93121b61",
+      "revId": "4ef058ca8176ed51ee31a02d2d9d5c953da0fef8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_b3171f51",
         "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-03-06T07:59:02Z",
       "side": 1,
       "message": "you could use format().",
+      "revId": "4ef058ca8176ed51ee31a02d2d9d5c953da0fef8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_392d4d47",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-07T00:58:10Z",
+      "side": 1,
+      "message": "both % and format work, and it is not in this patch\u0027s scope, if you highly recommend, I think it is better to do it in a new patch",
+      "parentUuid": "dabed58f_b3171f51",
       "revId": "4ef058ca8176ed51ee31a02d2d9d5c953da0fef8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
