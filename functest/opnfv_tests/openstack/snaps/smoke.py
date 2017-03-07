@@ -28,6 +28,12 @@ class SnapsSmoke(SnapsTestRunner):
         self.case_name = "snaps_smoke"
         use_fip = CONST.snaps_use_floating_ips
 
+        # The snaps smoke test uses the same config as the
+        # snaps_health_check suite, so reuse it here
+        image_custom_config = None
+        if hasattr(CONST, 'snaps_health_check'):
+            image_custom_config = CONST.snaps_health_check
+
         # Tests requiring floating IPs leverage files contained within the
         # SNAPS repository and are found relative to that path
         if use_fip:
@@ -39,4 +45,5 @@ class SnapsSmoke(SnapsTestRunner):
             CONST.openstack_creds,
             self.ext_net_name,
             use_keystone=CONST.snaps_use_keystone,
+            image_metadata=image_custom_config,
             use_floating_ips=use_fip)
