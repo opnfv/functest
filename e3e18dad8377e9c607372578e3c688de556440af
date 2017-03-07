@@ -16,6 +16,24 @@
       "revId": "e3e18dad8377e9c607372578e3c688de556440af",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e2a5ba04",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5559
+      },
+      "writtenOn": "2017-03-07T19:01:01Z",
+      "side": 1,
+      "message": "Tests in /home/opnfv/repos/odl_test/csit/suites/integration/basic are not in scope of FDS. We would not prefer to involve them in our suites.",
+      "parentUuid": "dabed58f_42aa8f71",
+      "revId": "e3e18dad8377e9c607372578e3c688de556440af",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
