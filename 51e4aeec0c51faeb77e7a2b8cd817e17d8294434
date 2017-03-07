@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "dabed58f_42a126f7",
+        "filename": "functest/opnfv_tests/sdn/odl/odl.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5559
+      },
+      "writtenOn": "2017-03-07T19:01:01Z",
+      "side": 1,
+      "message": "I agree, but couldn\u0027t we keep both until other projects move towards OS_AUTH_URL?",
+      "parentUuid": "dabed58f_7309a730",
+      "revId": "51e4aeec0c51faeb77e7a2b8cd817e17d8294434",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_f309162d",
         "filename": "functest/opnfv_tests/sdn/odl/odl.py",
         "patchSetId": 7
