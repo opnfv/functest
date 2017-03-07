@@ -1,3 +1,5 @@
+.. _functest-releasenotes:
+
 **********************
 Functest Release Notes
 **********************
