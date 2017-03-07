@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_470b78d6",
+        "filename": "functest/core/pytest_suite_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-07T14:54:37Z",
+      "side": 1,
+      "message": "why removing the shebang?",
+      "revId": "3e1b520214f31d1b61ba2589f6faf6f85f8edca7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
