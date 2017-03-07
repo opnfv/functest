@@ -25,11 +25,8 @@ pip install -r $WORKSPACE/test-requirements.txt
 pip install $WORKSPACE
 
 #install releng
-cd $WORKSPACE/../
 git clone https://gerrit.opnfv.org/gerrit/releng
 pip install releng/modules/
-rm -fr releng
-cd $WORKSPACE
 
 export CONFIG_FUNCTEST_YAML=$(pwd)/functest/ci/config_functest.yaml
 # unit tests
