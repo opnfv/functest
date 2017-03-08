@@ -106,6 +106,17 @@ def get_verifier_deployment_dir(verifier_id, deployment_id):
                         'for-deployment-{}'.format(deployment_id))
 
 
+def get_repo_tag(repo):
+    """
+    Returns last tag of current branch
+    """
+    cmd = ("git -C {0} describe --abbrev=0 HEAD".format(repo))
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+    tag = p.stdout.readline().rstrip()
+
+    return str(tag)
+
+
 def backup_tempest_config(conf_file):
     """
     Copy config file to tempest results directory
@@ -276,3 +287,16 @@ def configure_tempest_multisite_params(tempest_conf_file):
         config.write(config_file)
 
     backup_tempest_config(tempest_conf_file)
+
+
+def install_verifier_ext(path):
+    """
+    Install extension to active verifier
+    """
+    logger.info("Installing verifier from existing repo...")
+    tag = get_repo_tag(path)
+    cmd = ("rally verify add-verifier-ext --source {0} "
+           "--version {1}"
+           .format(path, tag))
+    error_msg = ("Problem while adding verifier extension from %s" % path)
+    ft_utils.execute_command_raise(cmd, error_msg=error_msg)
