@@ -38,6 +38,7 @@ general:
         functest_data:      /home/opnfv/functest/data
         ims_data:           /home/opnfv/functest/data/ims/
         rally_inst:         /home/opnfv/.rally
+        repo_kingbird:      /home/opnfv/repos/kingbird
 
     openstack:
         creds: /home/opnfv/functest/conf/openstack.creds
