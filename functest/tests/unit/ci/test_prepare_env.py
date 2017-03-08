@@ -236,8 +236,10 @@ class PrepareEnvTesting(unittest.TestCase):
 
     @mock.patch('functest.ci.prepare_env.os_utils.get_credentials_for_rally')
     @mock.patch('functest.ci.prepare_env.logger.info')
+    @mock.patch('functest.ci.prepare_env.ft_utils.execute_command_raise')
     @mock.patch('functest.ci.prepare_env.ft_utils.execute_command')
-    def test_install_rally(self, mock_exec, mock_logger_info, mock_os_utils):
+    def test_install_rally(self, mock_exec, mock_exec_raise, mock_logger_info,
+                           mock_os_utils):
 
         mock_os_utils.return_value = self._get_rally_creds()
 
@@ -252,12 +254,12 @@ class PrepareEnvTesting(unittest.TestCase):
         cmd = "rally deployment create --file=rally_conf.json --name="
         cmd += CONST.rally_deployment_name
         error_msg = "Problem while creating Rally deployment"
-        mock_exec.assert_any_call(cmd, error_msg=error_msg)
+        mock_exec_raise.assert_any_call(cmd, error_msg=error_msg)
 
         cmd = "rally deployment check"
         error_msg = ("OpenStack not responding or "
                      "faulty Rally deployment.")
-        mock_exec.assert_any_call(cmd, error_msg=error_msg)
+        mock_exec_raise.assert_any_call(cmd, error_msg=error_msg)
 
         cmd = "rally deployment list"
         error_msg = ("Problem while listing "

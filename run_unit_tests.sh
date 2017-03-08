@@ -26,9 +26,10 @@ pip install $WORKSPACE
 
 #install releng
 cd $WORKSPACE/../
-git clone https://gerrit.opnfv.org/gerrit/releng
-pip install releng/modules/
-rm -fr releng
+rm -rf releng-unittests
+git clone https://gerrit.opnfv.org/gerrit/releng releng-unittests
+pip install releng-unittests/modules/
+rm -fr releng-unittests
 cd $WORKSPACE
 
 export CONFIG_FUNCTEST_YAML=$(pwd)/functest/ci/config_functest.yaml
@@ -39,6 +40,7 @@ nosetests --with-xunit \
          --with-coverage \
          --cover-erase \
          --cover-tests \
+         --cover-package=functest.ci \
          --cover-package=functest.cli \
          --cover-package=functest.core.testcase_base \
          --cover-package=functest.opnfv_tests.sdn.odl.odl \
