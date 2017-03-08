@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_0dd03f4f",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-08T07:17:49Z",
+      "side": 1,
+      "message": "I would suggest to remove the releng folder first if it exists. In this way, your patch will not be looped with patch 29991",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 17
+      },
+      "revId": "b974a21dbb899073e196f99eb684cf38ce5e3501",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
