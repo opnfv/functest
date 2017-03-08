@@ -320,6 +320,7 @@ class TempestMultisite(TempestCommon):
         self.case_name = "multisite"
         self.MODE = "feature_multisite"
         self.OPTION = "--concurrency 1"
+        conf_utils.install_verifier_ext(CONST.dir_repo_kingbird)
 
 
 class TempestCustom(TempestCommon):
