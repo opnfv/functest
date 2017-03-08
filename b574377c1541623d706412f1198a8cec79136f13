@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_ad7c9321",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-08T07:50:35Z",
+      "side": 1,
+      "message": "hmm...\nIf I do that locally I can widely delete my own working releng repo on which I may have pending fix\n\nit ius fine for CI but If I want to run the unit tests locally I think it is too dangerous\n\nI would check if releng already exists...if so we have a problem (it is maybe not up to date)",
+      "revId": "b574377c1541623d706412f1198a8cec79136f13",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
