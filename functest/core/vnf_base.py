@@ -79,7 +79,8 @@ class VnfOnBoardingBase(base.TestcaseBase):
             self.details['vnf']['result'] = res_deploy_vnf['result']
             self.details['vnf']['duration'] = round(
                 vnf_ready_time - orchestrator_ready_time, 1)
-        except:
+        except Exception:
+            self.logger.error("Error during VNF deployment", exc_info=True)
             raise Exception("Error during VNF deployment")
 
         # Test VNF
@@ -91,7 +92,8 @@ class VnfOnBoardingBase(base.TestcaseBase):
             self.details['test_vnf']['result'] = res_test_vnf['result']
             self.details['test_vnf']['duration'] = round(
                 test_vnf_done_time - vnf_ready_time, 1)
-        except:
+        except Exception:
+            self.logger.error("Error when running VNF tests", exc_info=True)
             raise Exception("Error when running VNF tests")
 
         # Clean the system
