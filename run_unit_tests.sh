@@ -39,6 +39,7 @@ nosetests --with-xunit \
          --with-coverage \
          --cover-erase \
          --cover-tests \
+         --cover-package=functest.ci \
          --cover-package=functest.cli \
          --cover-package=functest.core.testcase_base \
          --cover-package=functest.opnfv_tests.sdn.odl.odl \
