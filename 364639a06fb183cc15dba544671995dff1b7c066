@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_029fae53",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-08T01:38:05Z",
+      "side": 1,
+      "message": "The fix will not fix the issue \"fatal: destination path \u0027releng\u0027 already exists and is not an empty directory.\"\n\nI would suggest to check whether the releng folder exists, and remove the releng folder if it is there.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "364639a06fb183cc15dba544671995dff1b7c066",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
