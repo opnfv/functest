@@ -7,23 +7,21 @@
 #
 
 import argparse
+import fileinput
 import json
-import logging
 import logging.config
 import os
 import re
 import subprocess
 import sys
-import fileinput
 
+from opnfv.deployment import factory
+from opnfv.utils import constants as opnfv_constants
 import yaml
 
+from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-from functest.utils.constants import CONST
-
-from opnfv.utils import constants as opnfv_constants
-from opnfv.deployment import factory
 
 actions = ['start', 'check']
 
@@ -179,8 +177,8 @@ def source_rc_file():
         os.path.join(
             CONST.__getattribute__('dir_functest_conf'), 'openstack.creds')
 
-    if not os.path.isfile(CONST.__getattribute__('openstack_creds')):
-        logger.info("RC file not provided. "
+    if not is_valid_openrc():
+        logger.info("RC file not provided or invalid. "
                     "Fetching it from the installer...")
         if CONST.__getattribute__('INSTALLER_IP')is None:
             logger.error("The env variable 'INSTALLER_IP' must be provided in"
@@ -206,12 +204,6 @@ def source_rc_file():
         logger.debug("\n%s" % output)
         if p.returncode != 0:
             raise Exception("Failed to fetch credentials from installer.")
-    else:
-        logger.info("RC file provided in %s."
-                    % CONST.__getattribute__('openstack_creds'))
-        if os.path.getsize(CONST.__getattribute__('openstack_creds')) == 0:
-            raise Exception("The file %s is empty." %
-                            CONST.__getattribute__('openstack_creds'))
 
     logger.info("Sourcing the OpenStack RC file...")
     os_utils.source_credentials(CONST.__getattribute__('openstack_creds'))
@@ -225,6 +217,16 @@ def source_rc_file():
                 CONST.__setattr__('OS_TENANT_NAME', value)
             elif key == 'OS_PASSWORD':
                 CONST.__setattr__('OS_PASSWORD', value)
+
+
+def is_valid_openrc():
+    try:
+        os_utils.source_credentials(CONST.__getattribute__('openstack_creds'))
+    except Exception as error:
+        logger.info('invalid openrc file: {}'.format(str(error)))
+        return False
+    else:
+        return os.path.getsize(CONST.__getattribute__('openstack_creds')) > 0
 
 
 def patch_config_file():
