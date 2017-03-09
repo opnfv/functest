@@ -161,8 +161,8 @@ tiers:
                     some test suites from upstream using Robot as the
                     test framework.
                 dependencies:
-                    installer: ''
-                    scenario: 'netvirt'
+                    installer: 'apex'
+                    scenario: 'os-odl_l3-nofeature'
                 run:
                     module: 'functest.opnfv_tests.sdn.odl.odl'
                     class: 'ODLTests'
