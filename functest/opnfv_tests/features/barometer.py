@@ -8,8 +8,8 @@
 
 
 import functest.core.feature_base as base
-import functest.utils.functest_logger as ft_logger
 
+from functest.utils.constants import CONST
 from baro_tests import collectd
 
 
@@ -22,7 +22,7 @@ class BarometerCollectd(base.FeatureBase):
         super(BarometerCollectd, self).__init__(project='barometer',
                                                 case='barometercollectd',
                                                 repo='dir_repo_barometer')
-        self.logger = ft_logger.Logger("BarometerCollectd").getLogger()
+        self.result_file = "{}/functest.log".format(CONST.dir_results)
 
     def execute(self):
         return collectd.main(self.logger)
