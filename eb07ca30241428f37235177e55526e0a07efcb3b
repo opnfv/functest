@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_521a5318",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-09T10:39:51Z",
+      "side": 1,
+      "message": "I don\u0027t see the strong need to use embedded function\nI would put it as\n\ndef is_valid_openrc():\n\ttry:\n\t\tos_utils.source_credentials(CONST.openstack_creds)\n\texcept Exception as error:\n\t\tlogger.info(\u0027invalid openrc file: {}\u0027.format(str(error)))\n\t\treturn False\n\telse:\n\t\treturn os.path.getsize(CONST.openstack_creds) \u003e 0",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 68
+      },
+      "revId": "eb07ca30241428f37235177e55526e0a07efcb3b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
