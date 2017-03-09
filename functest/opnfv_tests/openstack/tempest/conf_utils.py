@@ -153,6 +153,8 @@ def configure_tempest_update_params(tempest_conf_file,
         'compute',
         'fixed_network_name',
         CONST.tempest_private_net_name)
+    config.set('compute', 'volume_device_name',
+               CONST.tempest_volume_device_name)
     if CONST.tempest_use_custom_images:
         if IMAGE_ID is not None:
             config.set('compute', 'image_ref', IMAGE_ID)

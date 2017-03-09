@@ -112,6 +112,7 @@ tempest:
     router_name: tempest-router
     use_custom_images: False
     use_custom_flavors: False
+    volume_device_name: vdc
 
 rally:
     deployment_name: opnfv-rally
