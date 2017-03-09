@@ -204,7 +204,7 @@ tiers:
 
                 dependencies:
                     installer: '^((?!netvirt).)*$'
-                    scenario: ''
+                    scenario: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.smoke'
                     class: 'SnapsSmoke'
@@ -351,19 +351,6 @@ tiers:
                     module: 'functest.opnfv_tests.features.domino'
                     class: 'Domino'
             -
-                name: orchestra
-                criteria: 'ret == 0'
-                blocking: false
-                clean_flag: true
-                description: >-
-                    Test OpenBaton (Orchestra) stack
-                dependencies:
-                    installer: 'joid'
-                    scenario: 'unknown'
-                run:
-                    module: 'functest.opnfv_tests.features.orchestrator.orchestra'
-                    class: 'OpenbatonOrchestrator'
-            -
                 name: netready
                 criteria: 'status == "PASS"'
                 blocking: false
@@ -481,34 +468,19 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
                     class: 'ImsVnf'
-            -
-                name: aaa
-                criteria: 'ret == 0'
-                blocking: false
-                clean_flag: true
-                description: >-
-                    Test suite from Parser project.
-                dependencies:
-                    installer: ''
-                    scenario: ''
-                run:
-                    module: 'functest.opnfv_tests.vnf.aaa.aaa'
-                    class: 'AaaVnf'
-
-            -
-                name: juju_epc
-                criteria: 'ret == 0'
-                blocking: false
-                clean_flag: true
-                description: >-
-                    Test suite from OAI project, vEPC deployed with Juju.
-                dependencies:
-                    installer: 'unknown'
-                    scenario: 'unknown'
-                run:
-                    module: 'functest.opnfv_tests.vnf.epc.epc'
-                    class: 'EpcVnf'
-
+#          -
+#               name: aaa
+#               criteria: 'ret == 0'
+#               blocking: false
+#               clean_flag: true
+#               description: >-
+#                   Test suite from Parser project.
+#               dependencies:
+#                   installer: ''
+#                   scenario: ''
+#               run:
+#                   module: 'functest.opnfv_tests.vnf.aaa.aaa'
+#                   class: 'AaaVnf'
             -
                 name: orchestra_ims
                 criteria: 'ret == 0'
