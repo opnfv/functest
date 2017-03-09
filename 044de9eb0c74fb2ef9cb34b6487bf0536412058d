@@ -45,6 +45,29 @@
       "revId": "044de9eb0c74fb2ef9cb34b6487bf0536412058d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_32323fa8",
+        "filename": "functest/opnfv_tests/features/barometer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-09T10:27:51Z",
+      "side": 1,
+      "message": "I would propose to overwrite run() of the parent class \u0027base.FeatureBase\u0027. In this way, a log file of barometer will be created automatically. It will be placed at CONST.dir_results/barometer.log",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "044de9eb0c74fb2ef9cb34b6487bf0536412058d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
