@@ -77,7 +77,7 @@ tempest.api.compute.servers.test_servers_negative.ServersNegativeTestJSON.test_u
 tempest.api.compute.test_quotas.QuotasTestJSON.test_get_default_quotas[id-9bfecac7-b966-4f47-913f-1a9e2c12134a]
 tempest.api.compute.test_quotas.QuotasTestJSON.test_get_quotas[id-f1ef0a97-dbbb-4cca-adc5-c9fbc4f76107]
 tempest.api.compute.test_versions.TestVersions.test_list_api_versions[id-6c0a0990-43b6-4529-9b61-5fd8daf7c55c]
-tempest.api.compute.volumes.test_attach_volume.AttachVolumeTestJSON.test_attach_detach_volume[id-52e9045a-e90d-4c0d-9087-79d657faffff]
+# tempest.api.compute.volumes.test_attach_volume.AttachVolumeTestJSON.test_attach_detach_volume[id-52e9045a-e90d-4c0d-9087-79d657faffff]
 tempest.api.compute.volumes.test_attach_volume.AttachVolumeTestJSON.test_list_get_volume_attachments[id-7fa563fe-f0f7-43eb-9e22-a1ece036b513]
 tempest.api.identity.v3.TestApiDiscovery.test_api_media_types[id-657c1970-4722-4189-8831-7325f3bc4265]
 tempest.api.identity.v3.TestApiDiscovery.test_api_version_resources[id-b9232f5e-d9e5-4d97-b96c-28d3db4de1bd]
