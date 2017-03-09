@@ -168,8 +168,8 @@ def source_rc_file():
                        "/home/opnfv/functest/conf/openstack.creds ...")
         os.path.join(CONST.dir_functest_conf, 'openstack.creds')
 
-    if not os.path.isfile(CONST.openstack_creds):
-        logger.info("RC file not provided. "
+    if not is_valid_openrc():
+        logger.info("RC file not provided or invalid. "
                     "Fetching it from the installer...")
         if CONST.INSTALLER_IP is None:
             logger.error("The env variable CI_INSTALLER_IP must be provided in"
@@ -194,11 +194,6 @@ def source_rc_file():
         logger.debug("\n%s" % output)
         if p.returncode != 0:
             raise Exception("Failed to fetch credentials from installer.")
-    else:
-        logger.info("RC file provided in %s."
-                    % CONST.openstack_creds)
-        if os.path.getsize(CONST.openstack_creds) == 0:
-            raise Exception("The file %s is empty." % CONST.openstack_creds)
 
     logger.info("Sourcing the OpenStack RC file...")
     os_utils.source_credentials(CONST.openstack_creds)
@@ -212,6 +207,16 @@ def source_rc_file():
                 CONST.OS_TENANT_NAME = value
             elif key == 'OS_PASSWORD':
                 CONST.OS_PASSWORD = value
+
+
+def is_valid_openrc():
+    try:
+        os_utils.source_credentials(CONST.openstack_creds)
+    except Exception as error:
+        logger.info('invalid openrc file: {}'.format(str(error)))
+        return False
+    else:
+        return os.path.getsize(CONST.openstack_creds) > 0
 
 
 def patch_config_file():
