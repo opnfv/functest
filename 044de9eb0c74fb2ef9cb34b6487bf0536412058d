@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_f20ee733",
+        "filename": "functest/opnfv_tests/features/barometer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6711
+      },
+      "writtenOn": "2017-03-09T08:08:06Z",
+      "side": 1,
+      "message": "import functest.utils.functest_logger as ft_logger\nmust be kept there",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "044de9eb0c74fb2ef9cb34b6487bf0536412058d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_d209632d",
+        "filename": "functest/opnfv_tests/features/barometer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6711
+      },
+      "writtenOn": "2017-03-09T08:08:06Z",
+      "side": 1,
+      "message": "self.logger \u003d ft_logger.Logger(\"BarometerCollectd\").getLogger()\nmust be kept there",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 70
+      },
+      "revId": "044de9eb0c74fb2ef9cb34b6487bf0536412058d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
