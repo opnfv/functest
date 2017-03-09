@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_52aa531a",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-09T13:15:10Z",
+      "side": 1,
+      "message": "@tomas, it seems the case has not been created in the Test DB (used for reporting)\ncases declared in http://testresults.opnfv.org/test/api/v1/projects/fastdatastacks/cases but not fds\nand not in http://testresults.opnfv.org/test/api/v1/projects/functest/cases\nI can do it for you\nwhere do you want to declare it? I assume in fastdatstacks\n\nBTW are the other cases declared in fastdatastacks accurate? we will use them to build a test case catalogue if they have no meaning, they must be cleaned",
+      "revId": "a44fb6ec7d50b94824c47c8cd5d3bcc34e0ba0a0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
