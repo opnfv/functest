@@ -22,6 +22,29 @@
       "revId": "d149647dbe5df634c106c56b73de58540f2b2568",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_7f0080aa",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-03-09T02:38:23Z",
+      "side": 1,
+      "message": "-z is to judge if the variable exists, if not exit, it is true. So the logic is not correct. Maybe \"-e\" is more resonable, just fyi..",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "d149647dbe5df634c106c56b73de58540f2b2568",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
