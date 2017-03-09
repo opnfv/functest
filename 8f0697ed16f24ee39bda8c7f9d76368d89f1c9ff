@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_f2b907ea",
+        "filename": "functest/opnfv_tests/features/barometer.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-09T10:53:01Z",
+      "side": 1,
+      "message": "I would put the 3rd party module before the local module.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "8f0697ed16f24ee39bda8c7f9d76368d89f1c9ff",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
