@@ -162,7 +162,7 @@ tiers:
                     test framework.
                 dependencies:
                     installer: ''
-                    scenario: 'netvirt'
+                    scenario: 'os-odl_l3-nofeature'
                 run:
                     module: 'functest.opnfv_tests.sdn.odl.odl'
                     class: 'ODLTests'
