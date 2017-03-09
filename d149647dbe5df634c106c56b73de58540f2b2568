@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_7f69608a",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-09T02:21:04Z",
+      "side": 1,
+      "message": "Please use -d to check whether a folder exists or not.\nAlso, there is no need to check the existence as command will do nothing if the folder is not there.\nJust \u0027rm -rf releng-unittests\u0027 is enough.",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 7
+      },
+      "revId": "d149647dbe5df634c106c56b73de58540f2b2568",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
