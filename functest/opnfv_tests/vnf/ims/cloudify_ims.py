@@ -234,7 +234,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
 
         cw.set_external_network_name(ext_net)
 
-        error = cw.deploy_vnf()
+        error = cw.deploy_vnf(self.vnf['blueprint'])
         if error:
             self.logger.error(error)
             return {'status': 'FAIL', 'result': error}
