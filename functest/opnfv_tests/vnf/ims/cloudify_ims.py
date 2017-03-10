@@ -280,6 +280,9 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             url = ellis_url + "session"
             rq = requests.post(url, data=params)
             cookies = rq.cookies
+        else:
+            self.step_failure("Unable to create an account for number" +
+                              " provision: %s" % rq.json()['reason'])
 
         url = ellis_url + "accounts/" + params['email'] + "/numbers"
         if cookies != "":
