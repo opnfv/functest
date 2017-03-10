@@ -13,7 +13,6 @@ import mock
 from functest.core import testcase_base
 from functest.opnfv_tests.openstack.tempest import tempest
 from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.utils.constants import CONST
 
 
 class OSTempestTesting(unittest.TestCase):
@@ -34,72 +33,6 @@ class OSTempestTesting(unittest.TestCase):
                        'conf_utils.get_verifier_deployment_dir',
                        return_value='test_verifier_deploy_dir'):
             self.tempestcommon = tempest.TempestCommon()
-
-    def test_create_tempest_resources_missing_network_dic(self):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'os_utils.get_keystone_client',
-                        return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.create_tenant',
-                       return_value='test_tenant_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.create_user',
-                       return_value='test_user_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.create_shared_network_full',
-                       return_value=None), \
-                self.assertRaises(Exception) as context:
-            self.tempestcommon.create_tempest_resources()
-            msg = 'Failed to create private network'
-            self.assertTrue(msg in context)
-
-    def test_create_tempest_resources_missing_image(self):
-        CONST.tempest_use_custom_images = 'test_image'
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'os_utils.get_keystone_client',
-                        return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.create_tenant',
-                       return_value='test_tenant_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.create_user',
-                       return_value='test_user_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.create_shared_network_full',
-                       return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.get_or_create_image',
-                       return_value=(mock.Mock(), None)), \
-                self.assertRaises(Exception) as context:
-            self.tempestcommon.create_tempest_resources()
-            msg = 'Failed to create image'
-            self.assertTrue(msg in context)
-
-    def test_create_tempest_resources_missing_flavor(self):
-        CONST.tempest_use_custom_images = 'test_image'
-        CONST.tempest_use_custom_flavors = 'test_flavour'
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'os_utils.get_keystone_client',
-                        return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.create_tenant',
-                       return_value='test_tenant_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.create_user',
-                       return_value='test_user_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.create_shared_network_full',
-                       return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.get_or_create_image',
-                       return_value=(mock.Mock(), 'image_id')), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(mock.Mock(), None)), \
-                self.assertRaises(Exception) as context:
-            self.tempestcommon.create_tempest_resources()
-            msg = 'Failed to create flavor'
-            self.assertTrue(msg in context)
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.logger.debug')
     def test_generate_test_list_defcore_mode(self, mock_logger_debug):
@@ -191,8 +124,9 @@ class OSTempestTesting(unittest.TestCase):
                         'os.path.exists', return_value=False), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'os.makedirs') as mock_os_makedirs, \
-            mock.patch.object(self.tempestcommon, 'create_tempest_resources',
-                              return_value=ret):
+            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                       'conf_utils.create_tempest_resources',
+                       return_value="image_and_flavor"):
             self.assertEqual(self.tempestcommon.run(),
                              ret)
             self.assertTrue(mock_os_makedirs.called)
@@ -204,9 +138,9 @@ class OSTempestTesting(unittest.TestCase):
                         'os.path.exists', return_value=False), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'os.makedirs') as mock_os_makedirs, \
-            mock.patch.object(self.tempestcommon,
-                              'create_tempest_resources',
-                              return_value=ret_ok), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                       'conf_utils.create_tempest_resources',
+                       return_value=ret_ok), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'conf_utils.configure_tempest',
                        return_value=ret):
@@ -221,8 +155,9 @@ class OSTempestTesting(unittest.TestCase):
                         'os.path.exists', return_value=False), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'os.makedirs') as mock_os_makedirs, \
-            mock.patch.object(self.tempestcommon, 'create_tempest_resources',
-                              return_value=ret_ok), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                       'conf_utils.create_tempest_resources',
+                       return_value=ret_ok), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'conf_utils.configure_tempest',
                        return_value=ret_ok), \
@@ -239,8 +174,9 @@ class OSTempestTesting(unittest.TestCase):
                         'os.path.exists', return_value=False), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'os.makedirs') as mock_os_makedirs, \
-            mock.patch.object(self.tempestcommon, 'create_tempest_resources',
-                              return_value=ret_ok), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                       'conf_utils.create_tempest_resources',
+                       return_value=ret_ok), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'conf_utils.configure_tempest',
                        return_value=ret_ok), \
@@ -252,15 +188,16 @@ class OSTempestTesting(unittest.TestCase):
                              ret)
             self.assertTrue(mock_os_makedirs.called)
 
-    def test_run_missing_default_criteria_pass(self):
+    def test_run_missing_parse_verifier_result(self):
+        ret = testcase_base.TestcaseBase.EX_RUN_ERROR
         ret_ok = testcase_base.TestcaseBase.EX_OK
-        self.tempestcommon.criteria = "PASS"
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                         'os.path.exists', return_value=False), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'os.makedirs') as mock_os_makedirs, \
-            mock.patch.object(self.tempestcommon, 'create_tempest_resources',
-                              return_value=ret_ok), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                       'conf_utils.create_tempest_resources',
+                       return_value=ret_ok), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'conf_utils.configure_tempest',
                        return_value=ret_ok), \
@@ -268,10 +205,12 @@ class OSTempestTesting(unittest.TestCase):
                               return_value=ret_ok), \
             mock.patch.object(self.tempestcommon, 'apply_tempest_blacklist',
                               return_value=ret_ok), \
-            mock.patch.object(self.tempestcommon, 'run_verifier_tests'), \
-                mock.patch.object(self.tempestcommon, 'parse_verifier_result'):
+            mock.patch.object(self.tempestcommon, 'run_verifier_tests',
+                              return_value=ret_ok), \
+            mock.patch.object(self.tempestcommon, 'parse_verifier_result',
+                              return_value=ret):
             self.assertEqual(self.tempestcommon.run(),
-                             ret_ok)
+                             ret)
             self.assertTrue(mock_os_makedirs.called)
 
 

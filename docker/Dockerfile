@@ -15,6 +15,7 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 ARG BRANCH=master
 ARG RALLY_TAG=0.8.1
 ARG TEMPEST_TAG=15.0.0
+ARG REFSTACK_TAG=15.0.0
 ARG ODL_TAG=release/beryllium-sr4
 ARG OPENSTACK_TAG=stable/mitaka
 ARG KINGBIRD_TAG=0.2.2
@@ -97,6 +98,7 @@ RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networkin
 RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${REPOS_DIR}/kingbird
 RUN git clone --depth 1 -b $RALLY_TAG https://github.com/openstack/rally.git ${REPOS_DIR}/rally
 RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${REPOS_DIR}/tempest
+RUN git clone https://github.com/openstack/refstack-client ${REPOS_DIR}/refstack-client
 
 # other repositories
 RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${REPOS_DIR}/odl_test
@@ -142,6 +144,9 @@ RUN cd ${REPOS_DIR}/bgpvpn && pip install -e .
 
 # Kingbird integration
 RUN cd ${REPOS_DIR}/kingbird && pip install -e .
+
+# refstack-client integration
+RUN cd ${REPOS_DIR}/refstack-client && ./setup_env -t ${REFSTACK_TAG}
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd ${REPOS_VNFS_DIR}/vims-test \
