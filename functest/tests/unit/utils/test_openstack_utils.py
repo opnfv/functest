@@ -28,7 +28,8 @@ class OSUtilsTesting(unittest.TestCase):
                 'OS_PROJECT_DOMAIN_NAME': os_prefix + 'project_domain_name',
                 'OS_PROJECT_NAME': os_prefix + 'project_name',
                 'OS_ENDPOINT_TYPE': os_prefix + 'endpoint_type',
-                'OS_REGION_NAME': os_prefix + 'region_name'}
+                'OS_REGION_NAME': os_prefix + 'region_name',
+                'OS_CACERT': os_prefix + 'cacert'}
 
     def _get_os_env_vars(self):
         return {'username': 'test_username', 'password': 'test_password',
