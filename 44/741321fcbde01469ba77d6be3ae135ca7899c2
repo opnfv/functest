@@ -1,0 +1,9 @@
+Code-Review+1: Helen Yao <yaohelan@huawei.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Juha Kosonen <juha.kosonen@nokia.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Fri, 10 Mar 2017 09:27:19 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/27949
+Project: functest
+Branch: refs/heads/master
