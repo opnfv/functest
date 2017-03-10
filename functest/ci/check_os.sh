@@ -63,7 +63,7 @@ fi
 
 echo "Checking OpenStack endpoints:"
 publicURL=$(openstack catalog show  identity |awk '/public/ {print $4}')
-publicIP=$(echo $publicURL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
+publicIP=$(echo $publicURL|sed 's/^.*http.*\:\/\///'|sed 's/.[^:]*$//')
 publicPort=$(echo $publicURL|sed 's/^.*://'|sed 's/\/.*$//')
 echo ">>Verifying connectivity to the public endpoint $publicIP:$publicPort..."
 verify_connectivity $publicIP $publicPort
@@ -81,7 +81,7 @@ if [ -z ${adminURL} ]; then
     openstack catalog show identity
     exit 1
 fi
-adminIP=$(echo $adminURL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
+adminIP=$(echo $adminURL|sed 's/^.*http.*\:\/\///'|sed 's/.[^:]*$//')
 adminPort=$(echo $adminURL|sed 's/^.*://'|sed 's/.[^\/]*$//')
 echo ">>Verifying connectivity to the admin endpoint $adminIP:$adminPort..."
 verify_connectivity $adminIP $adminPort
