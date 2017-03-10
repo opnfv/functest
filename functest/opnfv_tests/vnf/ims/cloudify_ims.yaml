@@ -36,4 +36,4 @@ clearwater:
         flavor_id: ''
         agent_user: ubuntu
         external_network_name: ''
-        public_domain: clearwaterfv
+        public_domain: clearwater.opnfv
