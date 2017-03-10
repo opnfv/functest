@@ -166,7 +166,8 @@ class TempestCommon(testcase_base.TestcaseBase):
         return line[first_pos:last_pos]
 
     def run_verifier_tests(self):
-        self.OPTION += (" --load-list {}".format(conf_utils.TEMPEST_LIST))
+        self.OPTION += (" --load-list {} --detailed"
+                        .format(conf_utils.TEMPEST_LIST))
 
         cmd_line = "rally verify start " + self.OPTION
         logger.info("Starting Tempest test suite: '%s'." % cmd_line)
