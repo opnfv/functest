@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_4bbe1a01",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-10T07:42:24Z",
+      "side": 1,
+      "message": "-b REFSTACK_TAG missing?\nyou need to clone all the repo, not possible to have a --depth 1 to be as light as possible",
+      "revId": "f02a5978d06574532e4975b4f56a700cc4ef46b5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_2b3de68f",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-10T07:42:24Z",
+      "side": 1,
+      "message": "need the full path or could you reuse functest_test already defined above and keep only the refstack part here",
+      "revId": "f02a5978d06574532e4975b4f56a700cc4ef46b5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_eb5d8eea",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-10T07:42:24Z",
+      "side": 1,
+      "message": "is refstack_tempest not duplicate information..\nI would remove tempest and adapt the files consuming this param",
+      "revId": "f02a5978d06574532e4975b4f56a700cc4ef46b5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_ab48f62d",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-10T07:42:24Z",
+      "side": 1,
+      "message": "if we add this test, shall we not remove tempest_defcore?\n\nmoreover you put it into the smoke section, i will move it to component as tempest_devcore\n\nhealthcheck, smoke, feature are used to validate the scenarios\n\ndefcore is used for certification, we may decide not to run systematically in daily job. It was explicitely request in Colorado to keep the scenario validation under control, with 250 tests we potentially add more than 40% additional time for each scenario",
+      "revId": "f02a5978d06574532e4975b4f56a700cc4ef46b5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_4b55bac4",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-10T07:42:24Z",
+      "side": 1,
+      "message": "Additionnaly the test case shall be declared in Test DB, probably rename existing tempest _defcore - I do not see the interest to have the same test run by 2 different clients",
+      "revId": "f02a5978d06574532e4975b4f56a700cc4ef46b5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_cb58cafc",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-10T07:42:24Z",
+      "side": 1,
+      "message": "see comment on copyright in other file",
+      "revId": "f02a5978d06574532e4975b4f56a700cc4ef46b5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_0b5fc2e6",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_conf.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-10T07:42:24Z",
+      "side": 1,
+      "message": "it is recommended not to put copyright here\nthe git version control is enough\n\nwe prepare to have one way to identify rather than a declarative (here in the header) and an automatic (in git)",
+      "revId": "f02a5978d06574532e4975b4f56a700cc4ef46b5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_2b6406b8",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_conf.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-10T07:42:24Z",
+      "side": 1,
+      "message": "Refstack_defcore or Tempest_defcore?",
+      "revId": "f02a5978d06574532e4975b4f56a700cc4ef46b5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
