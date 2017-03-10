@@ -43,6 +43,88 @@ CI_INSTALLER_IP = CONST.INSTALLER_IP
 logger = ft_logger.Logger("Tempest").getLogger()
 
 
+def create_tempest_resources(use_custom_images=False,
+                             use_custom_flavors=False):
+    keystone_client = os_utils.get_keystone_client()
+
+    logger.debug("Creating tenant and user for Tempest suite")
+    tenant_id = os_utils.create_tenant(
+        keystone_client,
+        CONST.tempest_identity_tenant_name,
+        CONST.tempest_identity_tenant_description)
+    if not tenant_id:
+        logger.error("Failed to create %s tenant"
+                     % CONST.tempest_identity_tenant_name)
+
+    user_id = os_utils.create_user(keystone_client,
+                                   CONST.tempest_identity_user_name,
+                                   CONST.tempest_identity_user_password,
+                                   None, tenant_id)
+    if not user_id:
+        logger.error("Failed to create %s user" %
+                     CONST.tempest_identity_user_name)
+
+    logger.debug("Creating private network for Tempest suite")
+    network_dic = os_utils.create_shared_network_full(
+        CONST.tempest_private_net_name,
+        CONST.tempest_private_subnet_name,
+        CONST.tempest_router_name,
+        CONST.tempest_private_subnet_cidr)
+    if network_dic is None:
+        raise Exception('Failed to create private network')
+
+    image_id = ""
+    image_id_alt = ""
+    flavor_id = ""
+    flavor_id_alt = ""
+
+    if CONST.tempest_use_custom_images or use_custom_images:
+        # adding alternative image should be trivial should we need it
+        logger.debug("Creating image for Tempest suite")
+        _, image_id = os_utils.get_or_create_image(
+            CONST.openstack_image_name, GLANCE_IMAGE_PATH,
+            CONST.openstack_image_disk_format)
+        if image_id is None:
+            raise Exception('Failed to create image')
+
+    if use_custom_images:
+        logger.debug("Creating 2nd image for Tempest suite")
+        _, image_id_alt = os_utils.get_or_create_image(
+            CONST.openstack_image_name_alt, GLANCE_IMAGE_PATH,
+            CONST.openstack_image_disk_format)
+        if image_id_alt is None:
+            raise Exception('Failed to create image')
+
+    if CONST.tempest_use_custom_flavors or use_custom_flavors:
+        # adding alternative flavor should be trivial should we need it
+        logger.debug("Creating flavor for Tempest suite")
+        _, flavor_id = os_utils.get_or_create_flavor(
+            CONST.openstack_flavor_name,
+            CONST.openstack_flavor_ram,
+            CONST.openstack_flavor_disk,
+            CONST.openstack_flavor_vcpus)
+        if flavor_id is None:
+            raise Exception('Failed to create flavor')
+
+    if use_custom_flavors:
+        logger.debug("Creating 2nd flavor for tempest_defcore")
+        _, flavor_id_alt = os_utils.get_or_create_flavor(
+            CONST.openstack_flavor_name_alt,
+            CONST.openstack_flavor_ram,
+            CONST.openstack_flavor_disk,
+            CONST.openstack_flavor_vcpus)
+        if flavor_id_alt is None:
+            raise Exception('Failed to create flavor')
+
+    image_and_flavor = {}
+    image_and_flavor['image_id'] = image_id
+    image_and_flavor['image_id_alt'] = image_id_alt
+    image_and_flavor['flavor_id'] = flavor_id
+    image_and_flavor['flavor_id_alt'] = flavor_id_alt
+
+    return image_and_flavor
+
+
 def get_verifier_id():
     """
     Returns verifer id for current Tempest
@@ -139,6 +221,34 @@ def configure_tempest(deployment_dir, IMAGE_ID=None, FLAVOR_ID=None,
                                     IMAGE_ID, FLAVOR_ID)
     if MODE == 'feature_multisite':
         configure_tempest_multisite_params(conf_file)
+
+
+def configure_tempest_defcore(deployment_dir, image_and_flavor):
+    """
+    Add/update needed parameters into tempest.conf file
+    """
+    conf_file = configure_verifier(deployment_dir)
+    configure_tempest_update_params(conf_file,
+                                    image_and_flavor.get("image_id"),
+                                    image_and_flavor.get("flavor_id"))
+
+    logger.debug("Updating selected tempest.conf parameters for defcore...")
+    config = ConfigParser.RawConfigParser()
+    config.read(conf_file)
+    type(image_and_flavor['image_id'])
+    config.set('compute', 'image_ref', image_and_flavor.get("image_id"))
+    config.set('compute', 'image_ref_alt',
+               image_and_flavor['image_id_alt'])
+    config.set('compute', 'flavor_ref', image_and_flavor.get("flavor_id"))
+    config.set('compute', 'flavor_ref_alt',
+               image_and_flavor['flavor_id_alt'])
+
+    with open(conf_file, 'wb') as config_file:
+        config.write(config_file)
+
+    confpath = os.path.join(CONST.dir_functest_test,
+                            CONST.refstack_tempest_conf_path)
+    shutil.copyfile(conf_file, confpath)
 
 
 def configure_tempest_update_params(tempest_conf_file,
