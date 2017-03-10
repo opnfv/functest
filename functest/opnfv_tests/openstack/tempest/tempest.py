@@ -21,7 +21,6 @@ from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
-import functest.utils.openstack_utils as os_utils
 
 """ logging configuration """
 logger = ft_logger.Logger("Tempest").getLogger()
@@ -33,8 +32,6 @@ class TempestCommon(testcase_base.TestcaseBase):
         super(TempestCommon, self).__init__()
         self.MODE = ""
         self.OPTION = ""
-        self.FLAVOR_ID = None
-        self.IMAGE_ID = None
         self.VERIFIER_ID = conf_utils.get_verifier_id()
         self.VERIFIER_REPO_DIR = conf_utils.get_verifier_repo_dir(
             self.VERIFIER_ID)
@@ -47,55 +44,6 @@ class TempestCommon(testcase_base.TestcaseBase):
     def read_file(filename):
         with open(filename) as src:
             return [line.strip() for line in src.readlines()]
-
-    def create_tempest_resources(self):
-        keystone_client = os_utils.get_keystone_client()
-
-        logger.debug("Creating tenant and user for Tempest suite")
-        tenant_id = os_utils.create_tenant(
-            keystone_client,
-            CONST.tempest_identity_tenant_name,
-            CONST.tempest_identity_tenant_description)
-        if not tenant_id:
-            logger.error("Failed to create %s tenant"
-                         % CONST.tempest_identity_tenant_name)
-
-        user_id = os_utils.create_user(keystone_client,
-                                       CONST.tempest_identity_user_name,
-                                       CONST.tempest_identity_user_password,
-                                       None, tenant_id)
-        if not user_id:
-            logger.error("Failed to create %s user" %
-                         CONST.tempest_identity_user_name)
-
-        logger.debug("Creating private network for Tempest suite")
-        network_dic = os_utils.create_shared_network_full(
-            CONST.tempest_private_net_name,
-            CONST.tempest_private_subnet_name,
-            CONST.tempest_router_name,
-            CONST.tempest_private_subnet_cidr)
-        if network_dic is None:
-            raise Exception('Failed to create private network')
-
-        if CONST.tempest_use_custom_images:
-            # adding alternative image should be trivial should we need it
-            logger.debug("Creating image for Tempest suite")
-            _, self.IMAGE_ID = os_utils.get_or_create_image(
-                CONST.openstack_image_name, conf_utils.GLANCE_IMAGE_PATH,
-                CONST.openstack_image_disk_format)
-            if self.IMAGE_ID is None:
-                raise Exception('Failed to create image')
-
-        if CONST.tempest_use_custom_flavors:
-            # adding alternative flavor should be trivial should we need it
-            logger.debug("Creating flavor for Tempest suite")
-            _, self.FLAVOR_ID = os_utils.get_or_create_flavor(
-                CONST.openstack_flavor_name,
-                CONST.openstack_flavor_ram,
-                CONST.openstack_flavor_disk,
-                CONST.openstack_flavor_vcpus)
-            if self.FLAVOR_ID is None:
-                raise Exception('Failed to create flavor')
 
     def generate_test_list(self, verifier_repo_dir):
         logger.debug("Generating test case list...")
@@ -265,11 +213,12 @@ class TempestCommon(testcase_base.TestcaseBase):
             os.makedirs(conf_utils.TEMPEST_RESULTS_DIR)
 
         try:
-            self.create_tempest_resources()
-            conf_utils.configure_tempest(self.DEPLOYMENT_DIR,
-                                         self.IMAGE_ID,
-                                         self.FLAVOR_ID,
-                                         self.MODE)
+            image_and_flavor = conf_utils.create_tempest_resources()
+            conf_utils.configure_tempest(
+                self.DEPLOYMENT_DIR,
+                IMAGE_ID=image_and_flavor.get("image_id"),
+                FLAVOR_ID=image_and_flavor.get("flavor_id"),
+                MODE=self.MODE)
             self.generate_test_list(self.VERIFIER_REPO_DIR)
             self.apply_tempest_blacklist()
             self.run_verifier_tests()
