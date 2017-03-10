@@ -258,7 +258,7 @@ tiers:
                 description: >-
                     Test suite from Doctor project.
                 dependencies:
-                    installer: '(apex)|(fuel)|(joid)'
+                    installer: '(apex)|(fuel)'
                     scenario: '^((?!fdio).)*$'
                 run:
                     module: 'functest.opnfv_tests.features.doctor'
