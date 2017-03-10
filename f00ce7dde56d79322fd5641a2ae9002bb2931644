@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_a6482d2e",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-10T13:09:13Z",
+      "side": 1,
+      "message": "the name of the var is a bit misleading.. link with rally here?",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 18
+      },
+      "revId": "f00ce7dde56d79322fd5641a2ae9002bb2931644",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
