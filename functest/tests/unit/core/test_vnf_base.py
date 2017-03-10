@@ -8,6 +8,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import logging
+import mock
 import unittest
 
 from functest.core import vnf_base
@@ -35,18 +36,19 @@ class VnfBaseTesting(unittest.TestCase):
                                           "result": "",
                                           "duration": 5}}
 
-    def test_deploy_vnf_unimplemented(self):
-        with self.assertRaises(Exception) as context:
-            self.test.deploy_vnf()
-        self.assertTrue('VNF not deployed' in context.exception)
+    @mock.patch('logging.Logger.error')
+    def test_deploy_vnf_unimplemented(self, mock):
+        self.test.deploy_vnf()
+        mock.assert_called_with('VNF must be deployed')
 
-    def test_test_vnf_unimplemented(self):
-        with self.assertRaises(Exception) as context:
-            self.test.test_vnf()()
-        self.assertTrue('VNF not tested' in context.exception)
+    @mock.patch('logging.Logger.error')
+    def test_test_vnf_unimplemented(self, mock):
+        self.test.test_vnf()
+        mock.assert_called_with('VNF must be tested')
 
     def test_parse_results(self):
         self.assertNotEqual(self.test.parse_results(), 0)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
