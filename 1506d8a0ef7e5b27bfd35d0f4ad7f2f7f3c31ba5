@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_e73662e7",
+        "filename": "functest/ci/check_os.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4609
+      },
+      "writtenOn": "2017-03-12T23:18:19Z",
+      "side": 1,
+      "message": "latest nc (nmap\u0027s netcat) command support https however, it requires \u0027--ssl\u0027 option. In addition, usual test lab does use self-signed certificate, so it also requires to include \u0027--ssl-trustfile \u003cpem file\u003e\u0027 option. Test lab does not signed key for it by 3rd-party hence it tends to use self-signed certificate for testing.\n\nCould you please let me know whether the diff does point it out, or another diff takes care of it?",
+      "range": {
+        "startLine": 21,
+        "startChar": 25,
+        "endLine": 21,
+        "endChar": 27
+      },
+      "revId": "1506d8a0ef7e5b27bfd35d0f4ad7f2f7f3c31ba5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
