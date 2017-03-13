@@ -46,6 +46,30 @@
       "revId": "1506d8a0ef7e5b27bfd35d0f4ad7f2f7f3c31ba5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_67303257",
+        "filename": "functest/ci/check_os.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-13T06:33:24Z",
+      "side": 1,
+      "message": "Please check out the latest patchset.\nopenssl is used to verify the SSL connectivity.",
+      "parentUuid": "9ab8dda7_e73662e7",
+      "range": {
+        "startLine": 21,
+        "startChar": 25,
+        "endLine": 21,
+        "endChar": 27
+      },
+      "revId": "1506d8a0ef7e5b27bfd35d0f4ad7f2f7f3c31ba5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
