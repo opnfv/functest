@@ -30,6 +30,14 @@ class HealthCheck(SnapsTestRunner):
         image_custom_config = None
         if hasattr(CONST, 'snaps_health_check'):
             image_custom_config = CONST.snaps_health_check
+            if ("extra_properties" in image_custom_config.keys()):
+                if ("hw_firmware_type" in image_custom_config['extra_properties'].keys() and
+                    image_custom_config['extra_properties']['hw_firmware_type'] == "uefi" and
+                    "short_id" in image_custom_config['extra_properties'].keys()):
+                    if ("kernel_url" in image_custom_config.keys()):
+                        image_custom_config.pop('kernel_url')
+                    if ("ramdisk_url" in image_custom_config.keys()):
+                        image_custom_config.pop('ramdisk_url')
 
         self.suite.addTest(
             OSIntegrationTestCase.parameterize(
