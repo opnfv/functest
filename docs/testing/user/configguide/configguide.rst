@@ -333,7 +333,6 @@ should now be in place::
             |-- kingbird
             |-- odl_test
             |-- onos
-            |-- ovno
             |-- parser
             |-- promise
             |-- rally
