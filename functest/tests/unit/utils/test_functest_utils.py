@@ -56,6 +56,7 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.testcase_dict = {'name': 'testname', 'criteria': self.criteria}
         self.parameter = 'general.openstack.image_name'
         self.config_yaml = 'test_config_yaml-'
+        self.db_url_env = 'http://foo/testdb'
         self.file_yaml = {'general': {'openstack': {'image_name':
                                                     'test_image_name'}}}
 
@@ -196,8 +197,17 @@ class FunctestUtilsTesting(unittest.TestCase):
             self.assertEqual(functest_utils.get_build_tag(),
                              self.build_tag)
 
+    def test_get_db_url_env_var(self):
+        with mock.patch.dict(os.environ,
+                             {'TEST_DB_URL': self.db_url_env,
+                              'CONFIG_FUNCTEST_YAML':
+                              "./functest/ci/config_functest.yaml"},
+                             clear=True):
+            self.assertEqual(functest_utils.get_db_url(),
+                             self.db_url_env)
+
     @mock.patch('functest.utils.functest_utils.get_functest_config')
-    def test_get_db_url(self, mock_get_functest_config):
+    def test_get_db_url_default(self, mock_get_functest_config):
         mock_get_functest_config.return_value = self.db_url
         self.assertEqual(functest_utils.get_db_url(), self.db_url)
         mock_get_functest_config.assert_called_once_with('results.test_db_url')

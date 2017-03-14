@@ -151,7 +151,15 @@ def get_db_url():
     """
     Returns DB URL
     """
-    return get_functest_config('results.test_db_url')
+    # TODO use CONST mechanism
+    try:
+        # if TEST_DB_URL declared in env variable, use it!
+        db_url = os.environ['TEST_DB_URL']
+    except KeyError:
+        logger.info("DB URL not declared as env variable,"
+                    "use local configuration")
+        db_url = get_functest_config('results.test_db_url')
+    return db_url
 
 
 def logger_test_results(project, case_name, status, details):
