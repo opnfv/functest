@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_8d4a2554",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-03-14T01:35:18Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "9ab8dda7_e73bc236",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 40
+      },
+      "revId": "b6a2038ebedd3d98b55f6483d004cbf59492b923",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_8748c6cd",
         "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-13T07:08:57Z",
       "side": 1,
       "message": "The error message seems not explicit for what is happening.\nHow about put it like\nlogger.error(\"Error with configuring tempest: %s\", e)",
+      "range": {
+        "startLine": 78,
+        "startChar": 26,
+        "endLine": 79,
+        "endChar": 33
+      },
+      "revId": "b6a2038ebedd3d98b55f6483d004cbf59492b923",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_ad47e94a",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-03-14T01:35:18Z",
+      "side": 1,
+      "message": "yep, can change the error info.",
+      "parentUuid": "9ab8dda7_8748c6cd",
       "range": {
         "startLine": 78,
         "startChar": 26,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_4d742d9c",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-03-14T01:35:18Z",
+      "side": 1,
+      "message": "will write a function to reuse before line 110. since functest cmd line not support \"input parm\", and we need to achieve this by directly running python refstack_client.py, use 2 different func  run_defcore run_defcore_default",
+      "parentUuid": "9ab8dda7_a745cab4",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "b6a2038ebedd3d98b55f6483d004cbf59492b923",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_4712ceb5",
         "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-13T07:08:57Z",
       "side": 1,
       "message": "In the main(), all exceptions have been caught and a return_code is returned. There will be no exception here. \nHow about exit directly with result of refstackclient.main(**args)",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 57
+      },
+      "revId": "b6a2038ebedd3d98b55f6483d004cbf59492b923",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_6d79f192",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-03-14T01:35:18Z",
+      "side": 1,
+      "message": "yep. however, future, will add pushDB here and then this is needed. will leave this. is this ok for u?",
+      "parentUuid": "9ab8dda7_4712ceb5",
       "range": {
         "startLine": 154,
         "startChar": 4,
