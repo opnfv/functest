@@ -45,5 +45,6 @@ class SnapsSmoke(SnapsTestRunner):
             CONST.openstack_creds,
             self.ext_net_name,
             use_keystone=CONST.snaps_use_keystone,
+            flavor_metadata=self.flavor_metadata,
             image_metadata=image_custom_config,
             use_floating_ips=use_fip)
