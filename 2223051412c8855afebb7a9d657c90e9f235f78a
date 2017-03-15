@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_61181a85",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-15T13:07:00Z",
+      "side": 1,
+      "message": "it is purely declarative...and not used concretely",
+      "revId": "2223051412c8855afebb7a9d657c90e9f235f78a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
