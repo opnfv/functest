@@ -35,6 +35,8 @@ TEMPEST_DEFCORE = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
                                'defcore_req.txt')
 TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
+REFSTACK_RESULTS_DIR = os.path.join(CONST.dir_results,
+                                    'refstack')
 
 CI_INSTALLER_TYPE = CONST.INSTALLER_TYPE
 CI_INSTALLER_IP = CONST.INSTALLER_IP
