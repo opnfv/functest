@@ -22,6 +22,23 @@
       "revId": "dc7f97a1e389a38dae993e1317edc7b4eac5284d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_b6b5f632",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-15T02:06:56Z",
+      "side": 1,
+      "message": "are we still using this method? I think it will be substituted by CONST.results_test_db_url, no?",
+      "revId": "dc7f97a1e389a38dae993e1317edc7b4eac5284d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
