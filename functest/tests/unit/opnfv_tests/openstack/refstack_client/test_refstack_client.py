@@ -49,19 +49,6 @@ class OSRefstackClientTesting(unittest.TestCase):
             self.refstackclient.run_defcore_default()
             m.assert_any_call(cmd)
 
-    def test_run_defcore(self):
-        config = 'tempest.conf'
-        testlist = 'testlist'
-        with mock.patch('functest.opnfv_tests.openstack.refstack_client.'
-                        'refstack_client.ft_utils.execute_command') as m:
-            cmd = ("cd {0};"
-                   "./refstack-client test -c {1} -v --test-list {2};"
-                   "cd -;".format(CONST.dir_refstack_client,
-                                  config,
-                                  testlist))
-            self.refstackclient.run_defcore(config, testlist)
-            m.assert_any_call(cmd)
-
     def _get_main_kwargs(self, key=None):
         kwargs = {'config': self._config,
                   'testlist': self._testlist}
