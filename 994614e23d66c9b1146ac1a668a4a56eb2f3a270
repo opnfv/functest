@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_013efeb8",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-15T08:42:26Z",
+      "side": 1,
+      "message": "Please put this module on the top to follow the alphabetical order.",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "994614e23d66c9b1146ac1a668a4a56eb2f3a270",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_a14a9253",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-15T08:42:26Z",
+      "side": 1,
+      "message": "I would suggest to set the CONST.dir_refstack_client to a local parameter instead of loading from CONST every time.\n self.REPO_DIR \u003d CONST.dir_refstack_client",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 55
+      },
+      "revId": "994614e23d66c9b1146ac1a668a4a56eb2f3a270",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_c147864a",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-15T08:42:26Z",
+      "side": 1,
+      "message": "Please use openstack_utils.source_rc_file() instead",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "994614e23d66c9b1146ac1a668a4a56eb2f3a270",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_61749a9c",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-15T08:42:26Z",
+      "side": 1,
+      "message": "The parameter name is not explicit. How about putting it as img_flavor_dict to indict it is a dict.",
+      "range": {
+        "startLine": 71,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "994614e23d66c9b1146ac1a668a4a56eb2f3a270",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_81798e95",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-15T08:42:26Z",
+      "side": 1,
+      "message": "Please update the name to indicate it is a dict",
+      "range": {
+        "startLine": 226,
+        "startChar": 46,
+        "endLine": 226,
+        "endChar": 62
+      },
+      "revId": "994614e23d66c9b1146ac1a668a4a56eb2f3a270",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
