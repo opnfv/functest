@@ -131,6 +131,21 @@ tiers:
                     class: 'RallySanity'
 
             -
+                name: refstack_defcore
+                criteria: 'success_rate == 100%'
+                blocking: false
+                clean_flag: false
+                description: >-
+                    This test case runs a sub group of tests of the OpenStack
+                    Defcore testcases by using refstack client.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.refstack_client.refstack_client'
+                    class: 'RefstackClient'
+
+            -
                 name: odl
                 criteria: 'success_rate == 100%'
                 blocking: true

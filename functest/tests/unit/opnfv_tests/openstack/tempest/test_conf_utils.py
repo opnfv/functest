@@ -18,6 +18,72 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    def test_create_tempest_resources_missing_network_dic(self):
+        with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                        'os_utils.get_keystone_client',
+                        return_value=mock.Mock()), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.create_tenant',
+                       return_value='test_tenant_id'), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.create_user',
+                       return_value='test_user_id'), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.create_shared_network_full',
+                       return_value=None), \
+                self.assertRaises(Exception) as context:
+            conf_utils.create_tempest_resources()
+            msg = 'Failed to create private network'
+            self.assertTrue(msg in context)
+
+    def test_create_tempest_resources_missing_image(self):
+        CONST.tempest_use_custom_images = 'test_image'
+        with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                        'os_utils.get_keystone_client',
+                        return_value=mock.Mock()), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.create_tenant',
+                       return_value='test_tenant_id'), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.create_user',
+                       return_value='test_user_id'), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.create_shared_network_full',
+                       return_value=mock.Mock()), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.get_or_create_image',
+                       return_value=(mock.Mock(), None)), \
+                self.assertRaises(Exception) as context:
+            conf_utils.create_tempest_resources()
+            msg = 'Failed to create image'
+            self.assertTrue(msg in context)
+
+    def test_create_tempest_resources_missing_flavor(self):
+        CONST.tempest_use_custom_images = 'test_image'
+        CONST.tempest_use_custom_flavors = 'test_flavour'
+        with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                        'os_utils.get_keystone_client',
+                        return_value=mock.Mock()), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.create_tenant',
+                       return_value='test_tenant_id'), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.create_user',
+                       return_value='test_user_id'), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.create_shared_network_full',
+                       return_value=mock.Mock()), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.get_or_create_image',
+                       return_value=(mock.Mock(), 'image_id')), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                       'os_utils.get_or_create_flavor',
+                       return_value=(mock.Mock(), None)), \
+                self.assertRaises(Exception) as context:
+            conf_utils.create_tempest_resources()
+            msg = 'Failed to create flavor'
+            self.assertTrue(msg in context)
+
     def test_get_verifier_id_missing_verifier(self):
         CONST.tempest_deployment_name = 'test_deploy_name'
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
