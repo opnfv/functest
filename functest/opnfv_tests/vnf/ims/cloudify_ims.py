@@ -9,20 +9,19 @@
 
 import json
 import os
-import requests
-import subprocess
 import sys
 import time
+
+import requests
 import yaml
 
 import functest.core.vnf_base as vnf_base
+from functest.opnfv_tests.vnf.ims.clearwater import Clearwater
+from functest.opnfv_tests.vnf.ims.orchestrator_cloudify import Orchestrator
+from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-
-from clearwater import Clearwater
-from functest.utils.constants import CONST
-from orchestrator_cloudify import Orchestrator
 
 
 class ImsVnf(vnf_base.VnfOnBoardingBase):
@@ -260,84 +259,12 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                                    self.vnf['deployment_name'] + "/outputs")
         dns_ip = dep_outputs.json()['outputs']['dns_ip']
         ellis_ip = dep_outputs.json()['outputs']['ellis_ip']
-
-        ellis_url = "http://" + ellis_ip + "/"
-        url = ellis_url + "accounts"
-
-        params = {"password": "functest",
-                  "full_name": "opnfv functest user",
-                  "email": "functest@opnfv.fr",
-                  "signup_code": "secret"}
-
-        rq = requests.post(url, data=params)
-        i = 20
-        while rq.status_code != 201 and i > 0:
-            rq = requests.post(url, data=params)
-            i = i - 1
-            time.sleep(10)
-
-        if rq.status_code == 201:
-            url = ellis_url + "session"
-            rq = requests.post(url, data=params)
-            cookies = rq.cookies
-        else:
-            self.step_failure("Unable to create an account for number" +
-                              " provision: %s" % rq.json()['reason'])
-
-        url = ellis_url + "accounts/" + params['email'] + "/numbers"
-        if cookies != "":
-            rq = requests.post(url, cookies=cookies)
-            i = 24
-            while rq.status_code != 200 and i > 0:
-                rq = requests.post(url, cookies=cookies)
-                i = i - 1
-                time.sleep(25)
-
-        if rq.status_code != 200:
-            self.step_failure("Unable to create a number: %s"
-                              % rq.json()['reason'])
-
-        nameservers = ft_utils.get_resolvconf_ns()
-        resolvconf = ""
-        for ns in nameservers:
-            resolvconf += "\nnameserver " + ns
+        self.config_ellis(ellis_ip)
 
         if dns_ip != "":
-            script = ('echo -e "nameserver ' + dns_ip + resolvconf +
-                      '" > /etc/resolv.conf; ')
-            script += 'source /etc/profile.d/rvm.sh; '
-            script += 'cd {0}; '
-            script += ('rake test[{1}] SIGNUP_CODE="secret"')
-
-            cmd = ("/bin/bash -c '" +
-                   script.format(self.data_dir, self.inputs["public_domain"]) +
-                   "'")
-            output_file = "output.txt"
-            f = open(output_file, 'w+')
-            subprocess.call(cmd, shell=True, stdout=f,
-                            stderr=subprocess.STDOUT)
-            f.close()
-
-            f = open(output_file, 'r')
-            result = f.read()
-            if result != "":
-                self.logger.debug(result)
-
-            vims_test_result = ""
-            tempFile = os.path.join(self.test_dir, "temp.json")
-            try:
-                self.logger.debug("Trying to load test results")
-                with open(tempFile) as f:
-                    vims_test_result = json.load(f)
-                f.close()
-            except:
-                self.logger.error("Unable to retrieve test results")
-
-            try:
-                os.remove(tempFile)
-            except:
-                self.logger.error("Deleting file failed")
-
+            vims_test_result = self.run_clearwater_live_test(
+                                    dns_ip,
+                                    self.inputs["public_domain"])
             if vims_test_result != '':
                 return {'status': 'PASS', 'result': vims_test_result}
             else:
