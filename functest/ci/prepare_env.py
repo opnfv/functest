@@ -312,7 +312,7 @@ def install_tempest():
             logger.debug("Tempest %s does not exist" %
                          CONST.tempest_deployment_name)
             cmd = ("rally verify create-verifier --source {0} "
-                   "--name {1} --type tempest"
+                   "--name {1} --type tempest --system-wide"
                    .format(CONST.dir_repo_tempest,
                            CONST.tempest_deployment_name))
             error_msg = "Problem while installing Tempest."
