@@ -1,0 +1,11 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Alexandru Avadanii <Alexandru.Avadanii@enea.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+1: Linda Wang <wangwulin@huawei.com>
+Code-Review+2: Helen Yao <yaohelan@huawei.com>
+Code-Review+1: Cristina Pauna <cristina.pauna@enea.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Thu, 16 Mar 2017 16:08:10 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/30549
+Project: functest
+Branch: refs/heads/master
