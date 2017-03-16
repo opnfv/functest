@@ -7,15 +7,19 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import json
+import inspect
+import os
+import subprocess
 import time
 
-import inspect
+import requests
 
-import functest.utils.functest_logger as ft_logger
-import functest.utils.openstack_utils as os_utils
-import functest.utils.functest_utils as ft_utils
-import testcase_base as base
+import functest.core.testcase_base as base
 from functest.utils.constants import CONST
+import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as os_utils
 
 
 class VnfOnBoardingBase(base.TestcaseBase):
@@ -233,3 +237,86 @@ class VnfOnBoardingBase(base.TestcaseBase):
         self.details[part]['result'] = error_msg
         self.logger.error("Step failure:{}".format(error_msg))
         return base.TestcaseBase.EX_TESTCASE_FAILED
+
+    def config_ellis(self, ellis_ip, signup_code='secret'):
+        account_url = 'http://{0}/accounts'.format(ellis_ip)
+        params = {"password": "functest",
+                  "full_name": "opnfv functest user",
+                  "email": "functest@opnfv.org",
+                  "signup_code": signup_code}
+
+        rq = {'status_code': 500}
+        i = 20
+        while rq.status_code != 201 and i > 0:
+            rq = requests.post(account_url, data=params)
+            i = i - 1
+            time.sleep(10)
+
+        if rq.status_code == 201:
+            session_url = 'http://{0}/session'.format(ellis_ip)
+            rq = requests.post(session_url, data=params)
+            cookies = rq.cookies
+        else:
+            self.step_failure("Unable to create an account for number"
+                              " provision: %s" % rq.json()['reason'])
+
+        number_url = 'http://{0}/accounts/{1}/numbers'.format(
+                     ellis_ip,
+                     params['email'])
+        if cookies != "":
+            rq = {'status_code': 500}
+            i = 24
+            while rq.status_code != 200 and i > 0:
+                rq = requests.post(number_url, cookies=cookies)
+                i = i - 1
+                time.sleep(25)
+
+        if rq.status_code != 200:
+            self.step_failure("Unable to create a number: %s"
+                              % rq.json()['reason'])
+
+    def run_clearwater_live_test(self, dns_ip,
+                                 public_domain, signup_code='secret'):
+        nameservers = ft_utils.get_resolvconf_ns()
+        resolvconf = ""
+        for ns in nameservers:
+            resolvconf += "\nnameserver " + ns
+
+        script = ('echo -e "nameserver {0}{1}" > /etc/resolv.conf;'
+                  'source /etc/profile.d/rvm.sh;'
+                  'cd {3};'
+                  'rake test[{4}] SIGNUP_CODE={5}').format(
+                    dns_ip,
+                    resolvconf,
+                    self.data_dir,
+                    public_domain,
+                    signup_code)
+
+        cmd = "/bin/bash -c '{0}'".format(script)
+        output_file = "output.txt"
+        f = open(output_file, 'w+')
+        subprocess.call(cmd, shell=True, stdout=f,
+                        stderr=subprocess.STDOUT)
+        f.close()
+
+        f = open(output_file, 'r')
+        result = f.read()
+        if result != "":
+            self.logger.debug(result)
+
+        vims_test_result = ""
+        tempFile = os.path.join(self.test_dir, "temp.json")
+        try:
+            self.logger.debug("Trying to load test results")
+            with open(tempFile) as f:
+                vims_test_result = json.load(f)
+            f.close()
+        except:
+            self.logger.error("Unable to retrieve test results")
+
+        try:
+            os.remove(tempFile)
+        except:
+            self.logger.error("Deleting file failed")
+
+        return vims_test_result
