@@ -7,15 +7,18 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import json
+import inspect
+import os
 import time
 
-import inspect
+import requests
 
-import functest.utils.functest_logger as ft_logger
-import functest.utils.openstack_utils as os_utils
-import functest.utils.functest_utils as ft_utils
-import testcase_base as base
+import functest.core.testcase_base as base
 from functest.utils.constants import CONST
+import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as os_utils
 
 
 class VnfOnBoardingBase(base.TestcaseBase):
@@ -29,7 +32,7 @@ class VnfOnBoardingBase(base.TestcaseBase):
         self.case_name = case
         self.cmd = cmd
         self.details = {}
-        self.data_dir = CONST.dir_functest_data
+        self.result_dir = CONST.dir_results
         self.details['orchestrator'] = {}
         self.details['vnf'] = {}
         self.details['test_vnf'] = {}
@@ -39,14 +42,14 @@ class VnfOnBoardingBase(base.TestcaseBase):
                 'vnf_{}_tenant_name'.format(self.case_name))
             self.tenant_description = CONST.__getattribute__(
                 'vnf_{}_tenant_description'.format(self.case_name))
-        except:
+        except Exception:
             # raise Exception("Unknown VNF case=" + self.case_name)
             self.logger.error("Unknown VNF case={}".format(self.case_name))
 
         try:
             self.images = CONST.__getattribute__(
                 'vnf_{}_tenant_images'.format(self.case_name))
-        except:
+        except Exception:
             self.logger.warn("No tenant image defined for this VNF")
 
     def execute(self):
@@ -234,7 +237,13 @@ class VnfOnBoardingBase(base.TestcaseBase):
 
     def step_failure(self, error_msg):
         part = inspect.stack()[1][3]
-        self.details[part]['status'] = 'FAIL'
-        self.details[part]['result'] = error_msg
-        self.logger.error("Step failure:{}".format(error_msg))
+        self.logger.error("Step '%s' failed: %s", part, error_msg)
+        try:
+            part_info = self.details[part]
+        except KeyError:
+            self.details[part] = {}
+            part_info = self.details[part]
+        part_info['status'] = 'FAIL'
+        part_info['result'] = error_msg
         raise Exception(error_msg)
+
