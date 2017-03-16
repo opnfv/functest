@@ -13,7 +13,7 @@ import mock
 from functest.opnfv_tests.vnf.ims import cloudify_ims
 
 
-class ImsVnfTesting(unittest.TestCase):
+class CloudifyImsTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
@@ -22,7 +22,7 @@ class ImsVnfTesting(unittest.TestCase):
                         'os.makedirs'), \
             mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
                        'get_config', return_value='config_value'):
-            self.ims_vnf = cloudify_ims.ImsVnf()
+            self.ims_vnf = cloudify_ims.CloudifyIms()
         self.neutron_client = mock.Mock()
         self.glance_client = mock.Mock()
         self.keystone_client = mock.Mock()
