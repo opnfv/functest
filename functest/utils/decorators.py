@@ -10,12 +10,14 @@ def can_dump_request_to_file(method):
     def dump_preparedrequest(request, **kwargs):
         parseresult = urlparse.urlparse(request.url)
         if parseresult.scheme == "file":
-            with open(parseresult.path.replace('/results', ''), 'a') as f:
+            filepath = parseresult.path[0:parseresult.path.rfind('/results')]
+            fileurl = "file://" + filepath
+            with open(filepath, 'a') as f:
                 headers = ""
                 for key in request.headers:
                     headers += key + " " + request.headers[key] + "\n"
                 message = "{} {}\n{}\n{}\n\n\n".format(
-                    request.method, request.url, headers, request.body)
+                    request.method, fileurl, headers, request.body)
                 f.write(message)
         return mock.Mock()
 
