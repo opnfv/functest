@@ -92,6 +92,7 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sfc ${REPOS_D
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/snaps ${REPOS_DIR}/snaps
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${REPOS_DIR}/securityscanning
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${REPOS_DIR}/releng
+RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/opera ${REPOS_DIR}/opera
 
 # OpenStack repositories
 RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${REPOS_DIR}/bgpvpn
@@ -118,6 +119,8 @@ RUN cd ${RELENG_MODULE_DIR} \
 
 RUN cd ${REPOS_DIR}/barometer \
     && pip install .
+
+RUN pip install ${REPOS_DIR}/opera
 
 RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
     -not -path "*tests/unit*" |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755 \
