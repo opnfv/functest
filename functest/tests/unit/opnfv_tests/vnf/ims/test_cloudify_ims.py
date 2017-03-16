@@ -13,7 +13,7 @@ import mock
 from functest.opnfv_tests.vnf.ims import cloudify_ims
 
 
-class ImsVnfTesting(unittest.TestCase):
+class CloudifyImsTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
@@ -22,7 +22,7 @@ class ImsVnfTesting(unittest.TestCase):
                         'os.makedirs'), \
             mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
                        'get_config', return_value='config_value'):
-            self.ims_vnf = cloudify_ims.ImsVnf()
+            self.ims_vnf = cloudify_ims.CloudifyIms()
         self.neutron_client = mock.Mock()
         self.glance_client = mock.Mock()
         self.keystone_client = mock.Mock()
@@ -419,94 +419,46 @@ class ImsVnfTesting(unittest.TestCase):
             self.ims_vnf.test_vnf()
             self.assertTrue(msg in context.exception)
 
-    def test_test_vnf_create_number_failure(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os.popen') as m, \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'requests.get'), \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'requests.post',
-                           return_value=self.mock_post), \
-                self.assertRaises(Exception) as context:
-            mock_obj = mock.Mock()
-            attrs = {'read.return_value': 'test_ip\n'}
-            mock_obj.configure_mock(**attrs)
-            m.return_value = mock_obj
-
-            self.ims_vnf.test_vnf()
-
-            msg = "Unable to create a number:"
-            self.assertTrue(msg in context.exception)
-
-    def _get_post_status(self, url, cookies='', data=''):
-        ellis_url = "http://test_ellis_ip/session"
-        if url == ellis_url:
-            return self.mock_post_200
-        return self.mock_post
-
     def test_test_vnf_fail(self):
         with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os.popen') as m, \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'requests.get') as mock_get, \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'requests.post',
-                           side_effect=self._get_post_status), \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'ft_utils.get_resolvconf_ns'), \
-                mock.patch('__builtin__.open', mock.mock_open()), \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'subprocess.call'), \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'os.remove'), \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'json.load', return_value=''):
-            mock_obj = mock.Mock()
-            attrs = {'read.return_value': 'test_ip\n'}
-            mock_obj.configure_mock(**attrs)
-            m.return_value = mock_obj
+                        'os.popen'), \
+            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
+                       'requests.get') as mock_get, \
+            mock.patch.object(self.ims_vnf, 'config_ellis'), \
+            mock.patch.object(self.ims_vnf,
+                              'run_clearwater_live_test') as clearwater_obj:
+                clearwater_obj.return_value = ''
 
-            mock_obj2 = mock.Mock()
-            attrs = {'json.return_value': {'outputs':
-                                           {'dns_ip': 'test_dns_ip',
-                                            'ellis_ip': 'test_ellis_ip'}}}
-            mock_obj2.configure_mock(**attrs)
-            mock_get.return_value = mock_obj2
+                mock_obj2 = mock.Mock()
+                attrs = {'json.return_value': {'outputs':
+                                               {'dns_ip': 'test_dns_ip',
+                                                'ellis_ip': 'test_ellis_ip'}}}
+                mock_obj2.configure_mock(**attrs)
+                mock_get.return_value = mock_obj2
 
-            self.assertEqual(self.ims_vnf.test_vnf(),
-                             {'status': 'FAIL', 'result': ''})
+                self.assertEqual(self.ims_vnf.test_vnf(),
+                                 {'status': 'FAIL', 'result': ''})
 
     def test_test_vnf_pass(self):
         with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os.popen') as m, \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'requests.get') as mock_get, \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'requests.post',
-                           side_effect=self._get_post_status), \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'ft_utils.get_resolvconf_ns'), \
-                mock.patch('__builtin__.open', mock.mock_open()), \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'subprocess.call'), \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'os.remove'), \
-                mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                           'json.load', return_value='vims_test_result'):
-            mock_obj = mock.Mock()
-            attrs = {'read.return_value': 'test_ip\n'}
-            mock_obj.configure_mock(**attrs)
-            m.return_value = mock_obj
+                        'os.popen'), \
+            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
+                       'requests.get') as mock_get, \
+            mock.patch.object(self.ims_vnf, 'config_ellis'), \
+            mock.patch.object(self.ims_vnf,
+                              'run_clearwater_live_test') as clearwater_obj:
+                clearwater_obj.return_value = 'vims_test_result'
 
-            mock_obj2 = mock.Mock()
-            attrs = {'json.return_value': {'outputs':
-                                           {'dns_ip': 'test_dns_ip',
-                                            'ellis_ip': 'test_ellis_ip'}}}
-            mock_obj2.configure_mock(**attrs)
-            mock_get.return_value = mock_obj2
+                mock_obj2 = mock.Mock()
+                attrs = {'json.return_value': {'outputs':
+                                               {'dns_ip': 'test_dns_ip',
+                                                'ellis_ip': 'test_ellis_ip'}}}
+                mock_obj2.configure_mock(**attrs)
+                mock_get.return_value = mock_obj2
 
-            self.assertEqual(self.ims_vnf.test_vnf(),
-                             {'status': 'PASS', 'result': 'vims_test_result'})
+                self.assertEqual(self.ims_vnf.test_vnf(),
+                                 {'status': 'PASS',
+                                  'result': 'vims_test_result'})
 
     def test_download_and_add_image_on_glance_incorrect_url(self):
         with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
