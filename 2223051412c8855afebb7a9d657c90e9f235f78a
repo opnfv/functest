@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_50b91de8",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-03-16T01:34:59Z",
+      "side": 1,
+      "message": "Here the criteria is used to judge whether this testcase is passed or failed. In the file refstack_client.py, line 140-141:\nself.criteria \u003d ft_utils.check_success_rate(\n    self.case_name, success_rate)\n\nIn the function ft_utils.check_success_rate, the criteria defined in testcases.yaml is considered as a benckmark. Only when the success_rate of the refstack_defcore is larger than or equal to the criteria, can it be marked as \"PASS\".",
+      "parentUuid": "9ab8dda7_61181a85",
+      "revId": "2223051412c8855afebb7a9d657c90e9f235f78a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_b06179d5",
         "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-03-15T21:12:22Z",
       "side": 1,
       "message": "as far as I understood \nit was requested to put the results also in details as we do for tempest (but we put only the error and the skip tests \u003d\u003e see http://testresults.opnfv.org/test/api/v1/results?case\u003dtempest_smoke_serial\u0026last\u003d10\n\ndetails: {\nfailures: 1,\ntests: 119,\nerrors: \"2017-03-16 03:46:21.519 391 INFO opnfv-tempest [-] {0} tempest.scenario.test_volume_boot_pattern.TestVolumeBootPatternV2.test_volume_boot_pattern\",\nskipped: \"2017-03-16 03:37:45.241 391 INFO opnfv-tempest [-] {0} tempest.api.object_storage.test_account_quotas.AccountQuotasTest2017-03-16 03:37:45.242 391 INFO opnfv-tempest [-] {0} tempest.api.object_storage.test_account_services.AccountTest2017-03-16 03:37:45.242 391 INFO opnfv-tempest [-] {0} tempest.api.object_storage.test_container_quotas.ContainerQuotasTest2017-03-16 03:37:45.243 391 INFO opnfv-tempest [-] {0} tempest.api.object_storage.test_container_services.ContainerTest2017-03-16 03:37:45.243 391 INFO opnfv-tempest [-] {0} tempest.api.object_storage.test_object_services.ObjectTest2017-03-16 03:42:48.805 391 INFO opnfv-tempest [-] {0} tempest.scenario.test_server_multinode.TestServerMultinode\"\n}\n\nit should be possible to reuse what has been done for tempest",
+      "revId": "2223051412c8855afebb7a9d657c90e9f235f78a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_90a6b5c0",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-03-16T01:34:59Z",
+      "side": 1,
+      "message": "Refstack_defcore is trigered by refstack client, which is different from tempest called by rally. Therefore, the key words of testcases passed, failed and skipped in  refstack_defcore are \"ok\", \"FAILED\" and \"SKIPPED\", however, they are \"success\", \"fail\"and \"skip\" for tempest. So it is unreasonable to reuse the the function parse_verifier_result in tempest.",
+      "parentUuid": "9ab8dda7_b06179d5",
       "revId": "2223051412c8855afebb7a9d657c90e9f235f78a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
