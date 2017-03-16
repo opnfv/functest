@@ -27,6 +27,7 @@ general:
         repo_parser:        /home/opnfv/repos/parser
         repo_domino:        /home/opnfv/repos/domino
         repo_snaps:         /home/opnfv/repos/snaps
+        repo_opera:         /home/opnfv/repos/opera
         repo_fds:           /home/opnfv/repos/fds
         repo_securityscan:  /home/opnfv/repos/securityscanning
         repo_vrouter:       /home/opnfv/repos/vnfs/vrouter
