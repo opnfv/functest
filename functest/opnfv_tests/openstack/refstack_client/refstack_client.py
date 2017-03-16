@@ -7,7 +7,10 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 import argparse
 import os
+import re
 import sys
+import subprocess
+import time
 
 from functest.core import testcase_base
 from functest.opnfv_tests.openstack.tempest import conf_utils
@@ -24,6 +27,7 @@ class RefstackClient(testcase_base.TestcaseBase):
 
     def __init__(self):
         super(RefstackClient, self).__init__()
+        self.case_name = "refstack_defcore"
         self.FUNCTEST_TEST = CONST.dir_functest_test
         self.CONF_PATH = CONST.refstack_tempest_conf_path
         self.DEFCORE_LIST = CONST.refstack_defcore_list
@@ -63,7 +67,80 @@ class RefstackClient(testcase_base.TestcaseBase):
                "cd -;".format(CONST.dir_refstack_client,
                               self.confpath,
                               self.defcorelist))
-        ft_utils.execute_command(cmd)
+        logger.info("Starting Refstack_defcore test case: '%s'." % cmd)
+
+        header = ("Tempest environment:\n"
+                  "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
+                  (CONST.INSTALLER_TYPE,
+                   CONST.DEPLOY_SCENARIO,
+                   CONST.NODE_NAME,
+                   time.strftime("%a %b %d %H:%M:%S %Z %Y")))
+
+        f_stdout = open(
+            os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+                         "refstack.log"), 'w+')
+        f_stderr = open(
+            os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+                         "refstack-error.log"), 'w+')
+        f_env = open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+                                  "environment.log"), 'w+')
+        f_env.write(header)
+
+        p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
+                             stderr=f_stderr, bufsize=1)
+
+        with p.stdout:
+            for line in iter(p.stdout.readline, b''):
+                if 'Tests' in line:
+                    break
+                logger.info(line.replace('\n', ''))
+                f_stdout.write(line)
+        p.wait()
+
+        f_stdout.close()
+        f_stderr.close()
+        f_env.close()
+
+    def parse_refstack_result(self):
+        try:
+            with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+                                   "refstack.log"), 'r') as logfile:
+                output = logfile.read()
+
+            for match in re.findall("Ran: (\d+) tests in (\d+\.\d{4}) sec.",
+                                    output):
+                num_tests = match[0]
+            for match in re.findall("- Passed: (\d+)", output):
+                num_success = match
+            for match in re.findall("- Skipped: (\d+)", output):
+                num_skipped = match
+            for match in re.findall("- Failed: (\d+)", output):
+                num_failures = match
+            success_testcases = ""
+            for match in re.findall(r"\{0\}(.*?)[. ]*ok", output):
+                success_testcases += match + ", "
+            failed_testcases = ""
+            for match in re.findall(r"\{0\}(.*?)[. ]*FAILED", output):
+                failed_testcases += match + ", "
+            skipped_testcases = ""
+            for match in re.findall(r"\{0\}(.*?)[. ]*SKIPPED:", output):
+                skipped_testcases += match + ", "
+
+            num_executed = int(num_tests) - int(num_skipped)
+            success_rate = 100 * int(num_success) / int(num_executed)
+
+            self.details = {"num_tests": int(num_tests),
+                            "num_failures": int(num_failures),
+                            "success": success_testcases,
+                            "failed": failed_testcases,
+                            "skipped": skipped_testcases}
+        except Exception:
+            success_rate = 0
+
+        self.criteria = ft_utils.check_success_rate(
+            self.case_name, success_rate)
+        logger.info("Testcase %s success_rate is %s%%, is marked as %s"
+                    % (self.case_name, success_rate, self.criteria))
 
     def defcore_env_prepare(self):
         try:
@@ -80,14 +157,21 @@ class RefstackClient(testcase_base.TestcaseBase):
         return res
 
     def run(self):
+        self.start_time = time.time()
+
+        if not os.path.exists(conf_utils.REFSTACK_RESULTS_DIR):
+            os.makedirs(conf_utils.REFSTACK_RESULTS_DIR)
+
         try:
             self.defcore_env_prepare()
             self.run_defcore_default()
+            self.parse_refstack_result()
             res = testcase_base.TestcaseBase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s', e)
             res = testcase_base.TestcaseBase.EX_RUN_ERROR
 
+        self.stop_time = time.time()
         return res
 
     def main(self, **kwargs):
