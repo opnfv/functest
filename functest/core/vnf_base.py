@@ -7,15 +7,18 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import json
+import inspect
+import os
 import time
 
-import inspect
+import requests
 
-import functest.utils.functest_logger as ft_logger
-import functest.utils.openstack_utils as os_utils
-import functest.utils.functest_utils as ft_utils
-import testcase_base as base
+import functest.core.testcase_base as base
 from functest.utils.constants import CONST
+import functest.utils.functest_logger as ft_logger
+import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as os_utils
 
 
 class VnfOnBoardingBase(base.TestcaseBase):
@@ -29,7 +32,7 @@ class VnfOnBoardingBase(base.TestcaseBase):
         self.case_name = case
         self.cmd = cmd
         self.details = {}
-        self.data_dir = CONST.dir_functest_data
+        self.result_dir = CONST.dir_results
         self.details['orchestrator'] = {}
         self.details['vnf'] = {}
         self.details['test_vnf'] = {}
@@ -39,14 +42,14 @@ class VnfOnBoardingBase(base.TestcaseBase):
                 'vnf_{}_tenant_name'.format(self.case_name))
             self.tenant_description = CONST.__getattribute__(
                 'vnf_{}_tenant_description'.format(self.case_name))
-        except:
+        except Exception:
             # raise Exception("Unknown VNF case=" + self.case_name)
             self.logger.error("Unknown VNF case={}".format(self.case_name))
 
         try:
             self.images = CONST.__getattribute__(
                 'vnf_{}_tenant_images'.format(self.case_name))
-        except:
+        except Exception:
             self.logger.warn("No tenant image defined for this VNF")
 
     def execute(self):
@@ -234,7 +237,102 @@ class VnfOnBoardingBase(base.TestcaseBase):
 
     def step_failure(self, error_msg):
         part = inspect.stack()[1][3]
-        self.details[part]['status'] = 'FAIL'
-        self.details[part]['result'] = error_msg
-        self.logger.error("Step failure:{}".format(error_msg))
+        self.logger.error("Step '%s' failed: %s", part, error_msg)
+        try:
+            part_info = self.details[part]
+        except KeyError:
+            self.details[part] = {}
+            part_info = self.details[part]
+        part_info['status'] = 'FAIL'
+        part_info['result'] = error_msg
         raise Exception(error_msg)
+
+    def config_ellis(self, ellis_ip, signup_code='secret'):
+        self.logger.info('Configure Ellis: %s', ellis_ip)
+        account_url = 'http://{0}/accounts'.format(ellis_ip)
+        params = {"password": "functest",
+                  "full_name": "opnfv functest user",
+                  "email": "functest@opnfv.org",
+                  "signup_code": signup_code}
+        rq = requests.post(account_url, data=params)
+        if rq.status_code != 201 and rq.status_code != 409:
+            raise Exception("Unable to create an account for number"
+                            " provision: %s" % rq.json()['reason'])
+        self.logger.info('Account is created on Ellis: %s', params)
+
+        session_url = 'http://{0}/session'.format(ellis_ip)
+        session_data = {
+            'username': params['email'],
+            'password': params['password']
+        }
+        rq = requests.post(session_url, data=session_data)
+        if rq.status_code != 201:
+            raise Exception('Failed to get cookie for Ellis')
+        cookies = rq.cookies
+        self.logger.info('')
+
+        self.logger.info('Create calling number on Ellis')
+        number_url = 'http://{0}/accounts/{1}/numbers'.format(
+                     ellis_ip,
+                     params['email'])
+        self.logger.info('Cookies: %s' % cookies)
+        rq = requests.post(number_url, cookies=cookies)
+
+        if rq.status_code != 200:
+            raise Exception("Unable to create a number: %s"
+                            % rq.json()['reason'])
+        else:
+            number_res = rq.json()
+            self.logger.info('Calling number is created: %s', number_res)
+
+    def run_clearwater_live_test(self, dns_ip, bono_ip, ellis_ip,
+                                 public_domain, signup_code='secret'):
+        self.logger.info('Run Clearwater live test')
+        nameservers = ft_utils.get_resolvconf_ns()
+        resolvconf = ""
+        for ns in nameservers:
+            resolvconf += "\nnameserver " + ns
+
+        script = ('echo -e "nameserver {0}{1}" > /etc/resolv.conf;'
+                  'source /etc/profile.d/rvm.sh;'
+                  'cd {2};'
+                  'rake test[{3}] SIGNUP_CODE={4}'
+                  ' PROXY={5} ELLIS={6}'
+                  ' --trace'
+                  .format(dns_ip,
+                          resolvconf,
+                          self.test_dir,
+                          public_domain,
+                          signup_code,
+                          bono_ip,
+                          ellis_ip))
+
+        cmd = "/bin/bash -c '{0}'".format(script)
+        self.logger.info(cmd)
+        output_file = os.path.join(self.result_dir, "output.txt")
+        ft_utils.execute_command(cmd,
+                                 error_msg='Error with live test',
+                                 output_file=output_file)
+
+        f = open(output_file, 'r')
+        result = f.read()
+        if result != "":
+            self.logger.debug(result)
+
+        vims_test_result = ""
+        tempFile = os.path.join(self.test_dir, "temp.json")
+        try:
+            self.logger.info("Trying to load test results")
+            with open(tempFile) as f:
+                vims_test_result = json.load(f)
+            f.close()
+        except Exception:
+            self.logger.error("Unable to retrieve test results")
+
+        try:
+            os.remove(tempFile)
+        except Exception:
+            self.logger.error("Deleting file failed")
+
+        return vims_test_result
+>>>>>>> Added test case for opera vims

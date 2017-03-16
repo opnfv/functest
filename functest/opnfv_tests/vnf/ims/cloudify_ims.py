@@ -7,42 +7,37 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import json
 import os
-import requests
-import subprocess
 import sys
 import time
+
+import requests
 import yaml
 
-import functest.core.vnf_base as vnf_base
+from functest.opnfv_tests.vnf.ims.clearwater import Clearwater
+import functest.opnfv_tests.vnf.ims.ims_base as ims_base
+from functest.opnfv_tests.vnf.ims.orchestrator_cloudify import Orchestrator
+from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 
-from clearwater import Clearwater
-from functest.utils.constants import CONST
-from orchestrator_cloudify import Orchestrator
 
-
-class ImsVnf(vnf_base.VnfOnBoardingBase):
+class CloudifyIms(ims_base.ImsOnBoardingBase):
 
     def __init__(self, project='functest', case='cloudify_ims',
                  repo='', cmd=''):
-        super(ImsVnf, self).__init__(project, case, repo, cmd)
-        self.logger = ft_logger.Logger("vIMS").getLogger()
-        self.case_dir = os.path.join(CONST.dir_functest_test, 'vnf/ims/')
-        self.data_dir = CONST.dir_ims_data
-        self.test_dir = CONST.dir_repo_vims_test
+        super(CloudifyIms, self).__init__(project, case, repo, cmd)
+        self.logger = ft_logger.Logger(__name__).getLogger()
 
         # Retrieve the configuration
         try:
             self.config = CONST.__getattribute__(
                 'vnf_{}_config'.format(self.case_name))
-        except:
+        except Exception:
             raise Exception("VNF config file not found")
 
-        config_file = self.case_dir + self.config
+        config_file = os.path.join(self.case_dir, self.config)
         self.orchestrator = dict(
             requirements=get_config("cloudify.requirements", config_file),
             blueprint=get_config("cloudify.blueprint", config_file),
@@ -61,10 +56,6 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         self.images = get_config("tenant_images", config_file)
         self.logger.info("Images needed for vIMS: %s" % self.images)
 
-        # vIMS Data directory creation
-        if not os.path.exists(self.data_dir):
-            os.makedirs(self.data_dir)
-
     def deploy_orchestrator(self, **kwargs):
 
         self.logger.info("Additional pre-configuration steps")
@@ -82,7 +73,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                 image_id = os_utils.get_image_id(self.glance_client,
                                                  image_name)
                 self.logger.debug("image_id: %s" % image_id)
-            except:
+            except Exception:
                 self.logger.error("Unexpected error: %s" % sys.exc_info()[0])
 
             if image_id == '':
@@ -177,10 +168,11 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             self.logger.debug("Resolvconf set")
 
         self.logger.info("Prepare virtualenv for cloudify-cli")
-        cmd = "chmod +x " + self.case_dir + "create_venv.sh"
+        venv_scrit_dir = os.path.join(self.case_dir, "create_venv.sh")
+        cmd = "chmod +x " + venv_scrit_dir
         ft_utils.execute_command(cmd)
         time.sleep(3)
-        cmd = self.case_dir + "create_venv.sh " + self.data_dir
+        cmd = venv_scrit_dir + " " + self.data_dir
         ft_utils.execute_command(cmd)
 
         cfy.download_manager_blueprint(
@@ -251,9 +243,10 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             self.logger.debug("Trying to get clearwater manager IP ... ")
             mgr_ip = os.popen(cmd).read()
             mgr_ip = mgr_ip.splitlines()[0]
-        except:
+        except Exception:
             self.step_failure("Unable to retrieve the IP of the "
                               "cloudify manager server !")
+<<<<<<< HEAD
 
         api_url = "http://" + mgr_ip + "/api/v2"
         dep_outputs = requests.get(api_url + "/deployments/" +
@@ -307,43 +300,26 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         resolvconf = ""
         for ns in nameservers:
             resolvconf += "\nnameserver " + ns
+=======
+        self.logger.info('Cloudify Manager: %s', mgr_ip)
+        api_url = 'http://{0}/api/v2/deployments/{1}/outputs'.format(
+                  mgr_ip, self.vnf['deployment_name'])
+        dep_outputs = requests.get(api_url)
+        self.logger.info(api_url)
+        outputs = dep_outputs.json()['outputs']
+        self.logger.info("Deployment outputs: %s", outputs)
+        dns_ip = outputs['dns_ip']
+        ellis_ip = outputs['ellis_ip']
+        bono_ip = outputs['bono_ip']
+        self.config_ellis(ellis_ip)
+>>>>>>> Added test case for opera vims
 
         if dns_ip != "":
-            script = ('echo -e "nameserver ' + dns_ip + resolvconf +
-                      '" > /etc/resolv.conf; ')
-            script += 'source /etc/profile.d/rvm.sh; '
-            script += 'cd {0}; '
-            script += ('rake test[{1}] SIGNUP_CODE="secret"')
-
-            cmd = ("/bin/bash -c '" +
-                   script.format(self.data_dir, self.inputs["public_domain"]) +
-                   "'")
-            output_file = "output.txt"
-            f = open(output_file, 'w+')
-            subprocess.call(cmd, shell=True, stdout=f,
-                            stderr=subprocess.STDOUT)
-            f.close()
-
-            f = open(output_file, 'r')
-            result = f.read()
-            if result != "":
-                self.logger.debug(result)
-
-            vims_test_result = ""
-            tempFile = os.path.join(self.test_dir, "temp.json")
-            try:
-                self.logger.debug("Trying to load test results")
-                with open(tempFile) as f:
-                    vims_test_result = json.load(f)
-                f.close()
-            except:
-                self.logger.error("Unable to retrieve test results")
-
-            try:
-                os.remove(tempFile)
-            except:
-                self.logger.error("Deleting file failed")
-
+            vims_test_result = self.run_clearwater_live_test(
+                dns_ip,
+                bono_ip,
+                ellis_ip,
+                self.inputs["public_domain"])
             if vims_test_result != '':
                 return {'status': 'PASS', 'result': vims_test_result}
             else:
@@ -352,7 +328,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
     def clean(self):
         self.vnf['object'].undeploy_vnf()
         self.orchestrator['object'].undeploy_manager()
-        super(ImsVnf, self).clean()
+        super(CloudifyIms, self).clean()
 
     def main(self, **kwargs):
         self.logger.info("Cloudify IMS VNF onboarding test starting")
