@@ -8,16 +8,16 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import json
+import os
 import socket
 import sys
 import time
 import yaml
 
-import functest.core.vnf_base as vnf_base
+import functest.opnfv_tests.vnf.ims.ims_base as ims_base
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-import os
 from functest.utils.constants import CONST
 
 from org.openbaton.cli.agents.agents import MainAgent
@@ -76,11 +76,12 @@ def servertest(host, port):
             return True
 
 
-class ImsVnf(vnf_base.VnfOnBoardingBase):
+class OrchestraIms(ims_base.ImsOnBoardingBase):
 
     def __init__(self, project='functest', case='orchestra_ims',
                  repo='', cmd=''):
-        super(ImsVnf, self).__init__(project, case, repo, cmd)
+        super(OrchestraIms, self).__init__(project, case, repo, cmd)
+        self.logger = ft_logger.Logger(__name__).getLogger()
         self.ob_password = "openbaton"
         self.ob_username = "admin"
         self.ob_https = False
@@ -88,9 +89,6 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         self.ob_ip = "localhost"
         self.ob_instance_id = ""
         self.logger = ft_logger.Logger("orchestra_ims").getLogger()
-        self.case_dir = os.path.join(CONST.dir_functest_test, 'vnf/ims/')
-        self.data_dir = CONST.dir_ims_data
-        self.test_dir = CONST.dir_repo_vims_test
         self.ob_projectid = ""
         self.keystone_client = os_utils.get_keystone_client()
         self.ob_nsr_id = ""
@@ -103,9 +101,9 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         try:
             self.config = CONST.__getattribute__(
                 'vnf_{}_config'.format(self.case_name))
-        except:
+        except Exception:
             raise Exception("Orchestra VNF config file not found")
-        config_file = self.case_dir + self.config
+        config_file = os.path.join(self.case_dir, self.config)
         self.imagename = get_config("openbaton.imagename", config_file)
         self.bootstrap_link = get_config("openbaton.bootstrap_link",
                                          config_file)
@@ -434,7 +432,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                                  instance_id=self.ob_instance_id)
         # TODO question is the clean removing also the VM?
         # I think so since is goinf to remove the tenant...
-        super(ImsVnf, self).clean()
+        super(OrchestraIms, self).clean()
 
     def main(self, **kwargs):
         self.logger.info("Orchestra IMS VNF onboarding test starting")
@@ -451,7 +449,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
 
 
 if __name__ == '__main__':
-    test = ImsVnf()
+    test = OrchestraIms()
     test.deploy_orchestrator()
     test.deploy_vnf()
     test.test_vnf()
