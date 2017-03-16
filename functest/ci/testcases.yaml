@@ -487,7 +487,7 @@ tiers:
                     scenario: '(ocl)|(nosdn)|^(os-odl)((?!bgpvpn).)*$'
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
-                    class: 'ImsVnf'
+                    class: 'CloudifyIms'
 #          -
 #               name: aaa
 #               criteria: 'ret == 0'
@@ -517,17 +517,17 @@ tiers:
 
             -
                 name: opera_ims
-                criteria: 'ret == 0'
+                criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
                 description: >-
-                    Evolution of vIMS
+                    VNF deployment with OPEN-O
                 dependencies:
-                    installer: 'unknown'
-                    scenario: 'unknown'
+                    installer: ''
+                    scenario: ''
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.opera_ims'
-                    class: 'ImsVnf'
+                    class: 'OperaIms'
 
             -
                 name: vyos_vrouter
