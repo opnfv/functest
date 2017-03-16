@@ -88,6 +88,7 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sfc ${REPOS_D
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/snaps ${REPOS_DIR}/snaps
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${REPOS_DIR}/securityscanning
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${REPOS_DIR}/releng
+RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/opera ${REPOS_DIR}/opera
 
 # OpenStack repositories
 RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${REPOS_DIR}/bgpvpn
@@ -137,6 +138,8 @@ RUN curl -L https://get.rvm.io | bash -s stable
 
 # SNAPS integration
 RUN pip install -e ${REPOS_DIR}/snaps/
+
+RUN pip install ${REPOS_DIR}/opera
 
 # SFC integration
 RUN /bin/bash -c ". ${REPOS_DIR}/sfc/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
