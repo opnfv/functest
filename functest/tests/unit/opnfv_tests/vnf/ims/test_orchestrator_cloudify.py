@@ -13,7 +13,7 @@ import mock
 from functest.opnfv_tests.vnf.ims import orchestrator_cloudify
 
 
-class ImsVnfTesting(unittest.TestCase):
+class OrchestratorImsTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
