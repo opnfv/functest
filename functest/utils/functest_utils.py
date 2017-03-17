@@ -111,12 +111,13 @@ def get_version():
     # if launched through CI the build tag has the following format
     # jenkins-<project>-<installer>-<pod>-<job>-<branch>-<id>
     # e.g. jenkins-functest-fuel-opnfv-jump-2-daily-master-190
+    # jenkins-functest-fuel-baremetal-weekly-master-8
     # use regex to match branch info
-    rule = "daily-(.+?)-[0-9]*"
+    rule = "(dai|week)ly-(.+?)-[0-9]*"
     build_tag = get_build_tag()
     m = re.search(rule, build_tag)
     if m:
-        return m.group(1)
+        return m.group(2)
     else:
         return "unknown"
 
@@ -156,8 +157,6 @@ def get_db_url():
         # if TEST_DB_URL declared in env variable, use it!
         db_url = os.environ['TEST_DB_URL']
     except KeyError:
-        logger.info("DB URL not declared as env variable,"
-                    "use local configuration")
         db_url = get_functest_config('results.test_db_url')
     return db_url
 
