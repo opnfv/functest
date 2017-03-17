@@ -27,8 +27,8 @@ Version history
 Introduction
 ============
 This document describes how to install and configure Functest in OPNFV.
-The Functest CLI is utilized during the Functest environment preparation
-step. The given example commands should work in both virtual and bare
+The Functest CLI is used during the Functest environment preparation
+phase. The given example commands should work in both virtual and bare
 metal cases alike.
 
 High level architecture
@@ -52,21 +52,12 @@ follows::
  |     |   | - Rally            |   |        |       |        |       |       |
  |     |   | - Robot            |   |        |       |        |       |       |
  |     |   | - TestON           |   |        |       |        |       |       |
+ |     |   | - RefStack         |   |        |       |        |       |       |
  |     |   |                    |   |-------------------------+       |       |
  |     |   | Testcases          |   |        |       |        |       |       |
  |     |   | - VIM              |   |        |       |        |       |       |
- |     |   |  -- healthcheck    |   |        |       |        |       |       |
- |     |   |  -- vPing_ssh      |   |        |       |        |       |       |
- |     |   |  -- vPing_userdata |   |        |       |        |       |       |
- |     |   |  -- SNAPS_cases    |   |        |       |        |       |       |
- |     |   |  -- Tempest_smoke  |   |        |       |        |       |       |
- |     |   |  -- Rally_sanity   |   |        |       |        |       |       |
- |     |   |  -- Tempest_full   |   |        |       |        |       |       |
- |     |   |  -- Rally_full     |   |        |       |        |       |       |
  |     |   |                    |   |        |       |        |       |       |
  |     |   | - SDN Controller   |   |        |       |        |       |       |
- |     |   |  -- odl            |   |        |       |        |       |       |
- |     |   |  -- onos           |   |        |       |        |       |       |
  |     |   |                    |   |        |       |        |       |       |
  |     |   | - Features         |   |        |       |        |       |       |
  |     |   |                    |   |        |       |        |       |       |
@@ -109,16 +100,16 @@ on any platform on any Operating System.
 The automated mechanisms inside the Functest Docker container will:
 
   * Retrieve OpenStack credentials
-  * Prepare the environment according to the SUT
+  * Prepare the environment according to the System Under Test (SUT)
   * Perform the appropriate functional tests
   * Push the test results into the OPNFV test result database
 
 This Docker image can be integrated into CI or deployed independently.
 
-Please note that the Functest Docker container has been designed for
-OPNFV, however, it would be possible to adapt it to any VIM + controller
-environment, since most of the test cases are integrated from upstream
-communities.
+Please note that the Functest Docker container has been designed for OPNFV,
+however, it would be possible to adapt it to any OpenStack based VIM +
+controller environment, since most of the test cases are integrated from
+upstream communities.
 
 The functional test cases are described in the Functest User Guide `[2]`_
 
@@ -127,8 +118,7 @@ Prerequisites
 =============
 The OPNFV deployment is out of the scope of this document but it can be
 found in http://docs.opnfv.org.
-The OPNFV platform is considered as the System Under Test (SUT) in this
-document.
+The OPNFV platform is considered as the SUT in this document.
 
 Several prerequisites are needed for Functest:
 
@@ -149,7 +139,7 @@ requirements. Normally it is the same server from where the OPNFV
 deployment has been triggered previously.
 
 NOTE: If your Jumphost is operating behind a company http proxy and/or
-Firewall, please consult first the section `Proxy Support`_, towards
+firewall, please consult first the section `Proxy Support`_, towards
 the end of this document. The section details some tips/tricks which
 *may* be of help in a proxified environment.
 
@@ -158,7 +148,7 @@ Docker installation
 Docker installation and configuration is only needed to be done once
 through the life cycle of Jumphost.
 
-If your Jumphost is based on Ubuntu, RHEL or CentOS linux, please
+If your Jumphost is based on Ubuntu, SUSE, RHEL or CentOS linux, please
 consult the references below for more detailed instructions. The
 commands below are offered as a short reference.
 
@@ -182,7 +172,7 @@ Add your user to docker group to be able to run commands without sudo::
 
  sudo usermod -aG docker <your_user>
 
-A reconnect is needed. There are 2 ways for this:
+A reconnection is needed. There are 2 ways for this:
     #. Re-login to your account
     #. su - <username>
 
@@ -190,10 +180,12 @@ References - Installing Docker Engine on different Linux Operating Systems:
   * Ubuntu_
   * RHEL_
   * CentOS_
+  * SUSE_
 
 .. _Ubuntu: https://docs.docker.com/engine/installation/linux/ubuntulinux/
 .. _RHEL:   https://docs.docker.com/engine/installation/linux/rhel/
 .. _CentOS: https://docs.docker.com/engine/installation/linux/centos/
+.. _SUSE: https://docs.docker.com/engine/installation/linux/suse/
 
 Public/External network on SUT
 ------------------------------
@@ -286,11 +278,11 @@ References
 .. _`[4]`: http://artifacts.opnfv.org/functest/danube/docs/configguide/index.html
 
 
-OPNFV main site: opnfvmain_.
+`OPNFV main site`_
 
-OPNFV functional test page: opnfvfunctest_.
+`Functest page`_
 
 IRC support channel: #opnfv-functest
 
-.. _opnfvmain: http://www.opnfv.org
-.. _opnfvfunctest: https://wiki.opnfv.org/functest
+.. _`OPNFV main site`: http://www.opnfv.org
+.. _`Functest page`: https://wiki.opnfv.org/functest
