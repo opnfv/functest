@@ -245,7 +245,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                          % (self.imagename, network_id, userdata))
 
         instance = os_utils.create_instance_and_wait_for_active(
-            "m1.medium",
+            "orchestra",
             os_utils.get_image_id(glance_client, self.imagename),
             network_id,
             "orchestra-openbaton",
