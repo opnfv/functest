@@ -1,5 +1,5 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
-.. http://creativecommons.org/licenses/by/4.0
+.. SPDX-License-Identifier: CC-BY-4.0
 
 
 Pulling the Docker image
@@ -16,8 +16,8 @@ created automatically by the CI mechanisms, and you must ensure you
 pull an image with the **correct tag** to match the OPNFV software
 release installed in your environment. All available tagged images can
 be seen from location [FunctestDockerTags_]. For example, when running
-on the first official release of the OPNFV Colorado system platform,
-tag "colorado.1.0" is needed. Pulling other tags might cause some
+on the first official release of the OPNFV Danube system platform,
+tag "danube.1.0" is needed. Pulling other tags might cause some
 problems while running the tests.
 Docker images pulled without a tag specifier bear the implicitly
 assigned label "latest". If you need to specifically pull the latest
@@ -201,7 +201,7 @@ when performing manual test scenarios::
                         tests are activated under Jenkins CI control.
                         It enables the correlation of test results,
                         which
-                        are independently pushed to the results datbase
+                        are independently pushed to the results database
                         from different Jenkins jobs.
                         DO NOT USE THIS OPTION IN MANUAL TEST SCENARIOS.
   <DebugTraceValue> = "true" or "false"
@@ -444,8 +444,7 @@ We may distinguish several directories, the first level has 4 directories:
 * **docker**: This directory includes the needed files and tools to
   build the Funtest Docker image.
 * **docs**: This directory includes documentation: Release Notes,
-  User Guide, Configuration Guide and Developer Guide. Test results
-  are also located in a sub--directory called 'results'.
+  User Guide, Configuration Guide and Developer Guide.
 * **functest**: This directory contains all the code needed to run
   functest internal cases and OPNFV onboarded feature or VNF test cases.
 
@@ -592,7 +591,7 @@ prompt::
               - here = "false"
 
   NOTE: In Jenkins CI runs, an additional item "BUILD TAG"
-        would also be listed. The valaue is set by Jenkins CI.
+        would also be listed. The value is set by Jenkins CI.
 
 Finally, the **functest** CLI has a **--help** options:
 

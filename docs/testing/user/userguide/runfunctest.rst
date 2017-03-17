@@ -48,33 +48,34 @@ command::
 
   root@22e436918db0:~/repos/functest/ci# functest tier list
       - 0. healthcheck:
-             ['healthcheck', 'connection_check', 'api_check',]
+             ['connection_check', 'api_check', 'snaps_health_check',]
       - 1. smoke:
-             ['vping_ssh', 'vping_userdata', 'tempest_smoke_serial', 'rally_sanity', 'snaps_smoke', 'odl']
+             ['vping_ssh', 'vping_userdata', 'tempest_smoke_serial', 'odl', 'rally_sanity', 'refstack_defcore', 'snaps_smoke']
       - 2. features:
-             ['doctor', 'security_scan']
+             ['doctor', 'domino', 'promise', security_scan']
       - 3. components:
              ['tempest_full_parallel', 'rally_full']
       - 4. vnf:
-             ['cloudify_ims']
+             ['cloudify_ims', 'orchestra_ims', 'vyos_vrouter']
 
   and
 
   root@22e436918db0:~/repos/functest/ci# functest testcase list
-  healthcheck
   api_check
   connection_check
+  snaps_health_check
   vping_ssh
   vping_userdata
   snaps_smoke
+  refstack_defcore
   tempest_smoke_serial
   rally_sanity
   odl
-  doctor
-  security_scan
   tempest_full_parallel
   rally_full
-  cloudify_ims
+  vyos_vrouter
+
+Note the list of test cases depend on the installer and the scenario.
 
 More specific details on specific Tiers or Test Cases can be seen wih the
 'show' command::
@@ -117,55 +118,260 @@ More specific details on specific Tiers or Test Cases can be seen wih the
 To execute a Test Tier or Test Case, the 'run' command is used::
 
   root@22e436918db0:~/repos/functest/ci# functest tier run healthcheck
-  Executing command: 'python /home/opnfv/repos/functest/ci/run_tests.py -t healthcheck'
-  2016-06-30 11:44:56,933 - run_tests - INFO - Sourcing the OpenStack RC file...
-  2016-06-30 11:44:56,937 - run_tests - INFO - ############################################
-  2016-06-30 11:44:56,938 - run_tests - INFO - Running tier 'healthcheck'
-  2016-06-30 11:44:56,938 - run_tests - INFO - ############################################
-  2016-06-30 11:44:56,938 - run_tests - INFO - ============================================
-  2016-06-30 11:44:56,938 - run_tests - INFO - Running test case 'healthcheck'...
-  2016-06-30 11:44:56,938 - run_tests - INFO - ============================================
-  2016-06-30 11:44:56,953 - healtcheck - INFO -  Testing Keystone API...
-  2016-06-30 11:45:05,351 - healtcheck - INFO -  ...Keystone OK!
-  2016-06-30 11:45:05,354 - healtcheck - INFO -  Testing Glance API...
-  2016-06-30 11:45:29,746 - healtcheck - INFO -  ... Glance OK!
-  2016-06-30 11:45:29,749 - healtcheck - INFO -  Testing Cinder API...
-  2016-06-30 11:45:37,502 - healtcheck - INFO -  ...Cinder OK!
-  2016-06-30 11:45:37,505 - healtcheck - INFO -  Testing Neutron API...
-  2016-06-30 11:45:39,664 - healtcheck - INFO -  External network found. ccd98ad6-d34a-4768-b03c-e28ecfcd51ca
-  2016-06-30 11:45:39,667 - healtcheck - INFO -  1. Create Networks...
-  2016-06-30 11:45:44,227 - healtcheck - INFO -  2. Create subnets...
-  2016-06-30 11:45:46,805 - healtcheck - INFO -  4. Create Routers...
-  2016-06-30 11:45:54,261 - healtcheck - INFO -  ...Neutron OK!
-  2016-06-30 11:45:54,264 - healtcheck - INFO -  Testing Nova API...
-  2016-06-30 11:47:12,272 - healtcheck - INFO -  ...Nova OK!
-  2016-06-30 11:47:12,274 - healtcheck - INFO -  Checking if instances get an IP from DHCP...
-  :
-  :
-  2016-06-30 11:48:17,832 - healtcheck - INFO -  ...DHCP OK!
-  2016-06-30 11:48:17,835 - healtcheck - INFO -  Health check passed!
-  2016-06-30 11:48:17,837 - clean_openstack - INFO - +++++++++++++++++++++++++++++++
-  2016-06-30 11:48:17,837 - clean_openstack - INFO - Cleaning OpenStack resources...
-  2016-06-30 11:48:17,837 - clean_openstack - INFO - +++++++++++++++++++++++++++++++
-  Version 1 is deprecated, use alternative version 2 instead.
-  WARNING:cinderclient.api_versions:Version 1 is deprecated, use alternative version 2 instead.
-  2016-06-30 11:48:18,272 - clean_openstack - INFO - Removing Nova instances...
-  2016-06-30 11:48:24,439 - clean_openstack - INFO - -------------------------------------------
-  2016-06-30 11:48:24,440 - clean_openstack - INFO - Removing Glance images...
-  2016-06-30 11:48:35,853 - clean_openstack - INFO - -------------------------------------------
-  2016-06-30 11:48:35,854 - clean_openstack - INFO - Removing Cinder volumes...
-  2016-06-30 11:48:37,344 - clean_openstack - INFO - -------------------------------------------
-  2016-06-30 11:48:37,344 - clean_openstack - INFO - Removing floating IPs...
-  2016-06-30 11:48:37,467 - clean_openstack - INFO - -------------------------------------------
-  2016-06-30 11:48:37,467 - clean_openstack - INFO - Removing Neutron objects
-  2016-06-30 11:48:53,633 - clean_openstack - INFO - -------------------------------------------
-  2016-06-30 11:48:53,633 - clean_openstack - INFO - Removing Security groups...
-  2016-06-30 11:48:53,689 - clean_openstack - INFO - -------------------------------------------
-  2016-06-30 11:48:53,689 - clean_openstack - INFO - Removing Users...
-  2016-06-30 11:48:54,444 - clean_openstack - INFO - -------------------------------------------
-  2016-06-30 11:48:54,444 - clean_openstack - INFO - Removing Tenants...
-  2016-06-30 11:48:54,711 - clean_openstack - INFO - -------------------------------------------
+  2017-03-21 13:34:21,400 - run_tests - INFO - ############################################
+  2017-03-21 13:34:21,400 - run_tests - INFO - Running tier 'healthcheck'
+  2017-03-21 13:34:21,400 - run_tests - INFO - ############################################
+  2017-03-21 13:34:21,401 - run_tests - INFO -
 
+  2017-03-21 13:34:21,401 - run_tests - INFO - ============================================
+  2017-03-21 13:34:21,401 - run_tests - INFO - Running test case 'connection_check'...
+  2017-03-21 13:34:21,401 - run_tests - INFO - ============================================
+  test_glance_connect_fail (snaps.openstack.utils.tests.glance_utils_tests.GlanceSmokeTests) ... ok
+  test_glance_connect_success (snaps.openstack.utils.tests.glance_utils_tests.GlanceSmokeTests) ... ok
+  test_keystone_connect_fail (snaps.openstack.utils.tests.keystone_utils_tests.KeystoneSmokeTests) ... ok
+  test_keystone_connect_success (snaps.openstack.utils.tests.keystone_utils_tests.KeystoneSmokeTests) ... ok
+  test_neutron_connect_fail (snaps.openstack.utils.tests.neutron_utils_tests.NeutronSmokeTests) ... ok
+  test_neutron_connect_success (snaps.openstack.utils.tests.neutron_utils_tests.NeutronSmokeTests) ... ok
+  test_retrieve_ext_network_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronSmokeTests) ... ok
+  test_nova_connect_fail (snaps.openstack.utils.tests.nova_utils_tests.NovaSmokeTests) ... ok
+  test_nova_connect_success (snaps.openstack.utils.tests.nova_utils_tests.NovaSmokeTests) ... ok
+
+  ----------------------------------------------------------------------
+  Ran 9 tests in 3.768s
+
+  OK
+  2017-03-21 13:34:26,570 - functest.core.testcase_base - INFO - connection_check OK
+  2017-03-21 13:34:26,918 - functest.core.testcase_base - INFO - The results were successfully pushed to DB
+  2017-03-21 13:34:26,918 - run_tests - INFO - Test execution time: 00:05
+  2017-03-21 13:34:26,918 - run_tests - INFO -
+
+  2017-03-21 13:34:26,918 - run_tests - INFO - ============================================
+  2017-03-21 13:34:26,918 - run_tests - INFO - Running test case 'api_check'...
+  2017-03-21 13:34:26,919 - run_tests - INFO - ============================================
+  test_create_project_minimal (snaps.openstack.utils.tests.keystone_utils_tests.KeystoneUtilsTests) ... ok
+  test_create_user_minimal (snaps.openstack.utils.tests.keystone_utils_tests.KeystoneUtilsTests) ... ok
+  test_create_delete_user (snaps.openstack.tests.create_user_tests.CreateUserSuccessTests) ... ok
+  test_create_user (snaps.openstack.tests.create_user_tests.CreateUserSuccessTests) ... ok
+  test_create_user_2x (snaps.openstack.tests.create_user_tests.CreateUserSuccessTests) ...
+  2017-03-21 13:34:32,684 - create_user - INFO - Found user with name - CreateUserSuccessTests-7e741e11-c9fd-489-name ok
+  test_create_delete_project (snaps.openstack.tests.create_project_tests.CreateProjectSuccessTests) ... ok
+  test_create_project (snaps.openstack.tests.create_project_tests.CreateProjectSuccessTests) ... ok
+  test_create_project_2x (snaps.openstack.tests.create_project_tests.CreateProjectSuccessTests) ...
+  2017-03-21 13:34:35,922 - create_image - INFO - Found project with name - CreateProjectSuccessTests-b38e08ce-2862-48a-name ok
+  test_create_project_sec_grp_one_user (snaps.openstack.tests.create_project_tests.CreateProjectUserTests) ...
+  2017-03-21 13:34:37,907 - OpenStackSecurityGroup - INFO - Creating security group CreateProjectUserTests-ab8801f6-dad8-4f9-name...
+  2017-03-21 13:34:37,907 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-ab8801f6-dad8-4f9-name
+  2017-03-21 13:34:38,376 - neutron_utils - INFO - Creating security group with name - CreateProjectUserTests-ab8801f6-dad8-4f9-name
+  2017-03-21 13:34:38,716 - neutron_utils - INFO - Retrieving security group rules associate with the security group - CreateProjectUserTests-ab8801f6-dad8-4f9-name
+  2017-03-21 13:34:38,762 - neutron_utils - INFO - Retrieving security group with ID - 821419cb-c54c-41b4-a61b-fb30e5dd2ec5
+  2017-03-21 13:34:38,886 - neutron_utils - INFO - Retrieving security group with ID - 821419cb-c54c-41b4-a61b-fb30e5dd2ec5
+  2017-03-21 13:34:39,000 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-ab8801f6-dad8-4f9-name
+  2017-03-21 13:34:39,307 - neutron_utils - INFO - Deleting security group rule with ID - d85fafc0-9649-45c9-a00e-452f3d5c09a6
+  2017-03-21 13:34:39,531 - neutron_utils - INFO - Deleting security group rule with ID - 69d79c09-bc3b-4975-9353-5f43aca51237
+  2017-03-21 13:34:39,762 - neutron_utils - INFO - Deleting security group with name - CreateProjectUserTests-ab8801f6-dad8-4f9-name ok
+  test_create_project_sec_grp_two_users (snaps.openstack.tests.create_project_tests.CreateProjectUserTests) ...
+  2017-03-21 13:34:43,511 - OpenStackSecurityGroup - INFO - Creating security group CreateProjectUserTests-4d9261a6-e008-44b-name...
+  2017-03-21 13:34:43,511 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
+  2017-03-21 13:34:44,090 - neutron_utils - INFO - Creating security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
+  2017-03-21 13:34:44,784 - neutron_utils - INFO - Retrieving security group rules associate with the security group - CreateProjectUserTests-4d9261a6-e008-44b-name
+  2017-03-21 13:34:44,864 - neutron_utils - INFO - Retrieving security group with ID - 780193e4-9bd2-4f2e-a14d-b01abf74c832
+  2017-03-21 13:34:45,233 - neutron_utils - INFO - Retrieving security group with ID - 780193e4-9bd2-4f2e-a14d-b01abf74c832
+  2017-03-21 13:34:45,332 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
+  2017-03-21 13:34:45,779 - OpenStackSecurityGroup - INFO - Creating security group CreateProjectUserTests-4d9261a6-e008-44b-name...
+  2017-03-21 13:34:45,779 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
+  2017-03-21 13:34:46,112 - neutron_utils - INFO - Retrieving security group rules associate with the security group - CreateProjectUserTests-4d9261a6-e008-44b-name
+  2017-03-21 13:34:46,184 - neutron_utils - INFO - Retrieving security group with ID - 780193e4-9bd2-4f2e-a14d-b01abf74c832
+  2017-03-21 13:34:46,296 - neutron_utils - INFO - Retrieving security group with ID - 780193e4-9bd2-4f2e-a14d-b01abf74c832
+  2017-03-21 13:34:46,387 - neutron_utils - INFO - Deleting security group rule with ID - 2320a573-ec56-47c5-a1ba-ec514d30114b
+  2017-03-21 13:34:46,636 - neutron_utils - INFO - Deleting security group rule with ID - 6186282b-db37-4e47-becc-a3886079c069
+  2017-03-21 13:34:46,780 - neutron_utils - INFO - Deleting security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
+  2017-03-21 13:34:47,006 - neutron_utils - INFO - Deleting security group rule with ID - 2320a573-ec56-47c5-a1ba-ec514d30114b
+  2017-03-21 13:34:47,072 - OpenStackSecurityGroup - WARNING - Rule not found, cannot delete - Security group rule 2320a573-ec56-47c5-a1ba-ec514d30114b does not exist
+  Neutron server returns request_ids: ['req-d74eb2e2-b26f-4236-87dc-7255866141d9']
+  2017-03-21 13:34:47,072 - neutron_utils - INFO - Deleting security group rule with ID - 6186282b-db37-4e47-becc-a3886079c069
+  2017-03-21 13:34:47,118 - OpenStackSecurityGroup - WARNING - Rule not found, cannot delete - Security group rule 6186282b-db37-4e47-becc-a3886079c069 does not exist
+  Neutron server returns request_ids: ['req-8c0a5a24-be90-4844-a9ed-2a85cc6f59a5']
+  2017-03-21 13:34:47,118 - neutron_utils - INFO - Deleting security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
+  2017-03-21 13:34:47,172 - OpenStackSecurityGroup - WARNING - Security Group not found, cannot delete - Security group 780193e4-9bd2-4f2e-a14d-b01abf74c832 does not exist
+  Neutron server returns request_ids: ['req-c6e1a6b5-43e0-4d46-bb68-c2e1672d4d21'] ok
+  test_create_image_minimal_file (snaps.openstack.utils.tests.glance_utils_tests.GlanceUtilsTests) ... ok
+  test_create_image_minimal_url (snaps.openstack.utils.tests.glance_utils_tests.GlanceUtilsTests) ... ok
+  test_create_network (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsNetworkTests) ...
+  2017-03-21 13:35:22,275 - neutron_utils - INFO - Creating network with name NeutronUtilsNetworkTests-c06c20e0-d78f-4fa4-8401-099a7a6cab2e-pub-net
+  2017-03-21 13:35:23,965 - neutron_utils - INFO - Deleting network with name NeutronUtilsNetworkTests-c06c20e0-d78f-4fa4-8401-099a7a6cab2e-pub-net ok
+  test_create_network_empty_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsNetworkTests) ... ok
+  test_create_network_null_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsNetworkTests) ... ok
+  test_create_subnet (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ...
+  2017-03-21 13:35:25,495 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-4f440a5f-54e3-4455-ab9b-39dfe06f6d21-pub-net
+  2017-03-21 13:35:26,841 - neutron_utils - INFO - Creating subnet with name NeutronUtilsSubnetTests-4f440a5f-54e3-4455-ab9b-39dfe06f6d21-pub-subnet
+  2017-03-21 13:35:28,311 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsSubnetTests-4f440a5f-54e3-4455-ab9b-39dfe06f6d21-pub-subnet
+  2017-03-21 13:35:29,585 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-4f440a5f-54e3-4455-ab9b-39dfe06f6d21-pub-net ok
+  test_create_subnet_empty_cidr (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ...
+  2017-03-21 13:35:31,013 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-41fc0db4-71ee-47e6-bec9-316273e5bcc0-pub-net
+  2017-03-21 13:35:31,652 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-41fc0db4-71ee-47e6-bec9-316273e5bcc0-pub-net ok
+  test_create_subnet_empty_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ...
+  2017-03-21 13:35:32,379 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-1030e0cb-1714-4d18-8619-a03bac0d0257-pub-net
+  2017-03-21 13:35:33,516 - neutron_utils - INFO - Creating subnet with name NeutronUtilsSubnetTests-1030e0cb-1714-4d18-8619-a03bac0d0257-pub-subnet
+  2017-03-21 13:35:34,160 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-1030e0cb-1714-4d18-8619-a03bac0d0257-pub-net ok
+  test_create_subnet_null_cidr (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ...
+  2017-03-21 13:35:35,784 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-1d7522fd-3fb5-4b1c-8741-97d7c47a5f7d-pub-net
+  2017-03-21 13:35:36,367 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-1d7522fd-3fb5-4b1c-8741-97d7c47a5f7d-pub-net ok
+  test_create_subnet_null_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ...
+  2017-03-21 13:35:37,055 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-0a8ac1b2-e5d4-4522-a079-7e17945e482e-pub-net
+  2017-03-21 13:35:37,691 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-0a8ac1b2-e5d4-4522-a079-7e17945e482e-pub-net ok
+  test_add_interface_router (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:35:38,994 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-net
+  2017-03-21 13:35:40,311 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-subnet
+  2017-03-21 13:35:41,713 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-router
+  2017-03-21 13:35:44,131 - neutron_utils - INFO - Adding interface to router with name NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-router
+  2017-03-21 13:35:45,725 - neutron_utils - INFO - Removing router interface from router named NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-router
+  2017-03-21 13:35:47,464 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-router
+  2017-03-21 13:35:48,670 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-subnet
+  2017-03-21 13:35:50,921 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-net ok
+  test_add_interface_router_null_router (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:35:52,230 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-1fc2de16-2d3e-497b-b947-022b1bf9d90c-pub-net
+  2017-03-21 13:35:53,662 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-1fc2de16-2d3e-497b-b947-022b1bf9d90c-pub-subnet
+  2017-03-21 13:35:55,203 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-1fc2de16-2d3e-497b-b947-022b1bf9d90c-pub-subnet
+  2017-03-21 13:35:55,694 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-1fc2de16-2d3e-497b-b947-022b1bf9d90c-pub-net ok
+  test_add_interface_router_null_subnet (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:35:57,392 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-2e4fb9f3-312b-4954-8015-435464fdc8b0-pub-net
+  2017-03-21 13:35:58,215 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-2e4fb9f3-312b-4954-8015-435464fdc8b0-pub-router
+  2017-03-21 13:36:00,369 - neutron_utils - INFO - Adding interface to router with name NeutronUtilsRouterTests-2e4fb9f3-312b-4954-8015-435464fdc8b0-pub-router
+  2017-03-21 13:36:00,369 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-2e4fb9f3-312b-4954-8015-435464fdc8b0-pub-router
+  2017-03-21 13:36:02,742 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-2e4fb9f3-312b-4954-8015-435464fdc8b0-pub-net ok
+  test_create_port (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:36:05,010 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-pub-net
+  2017-03-21 13:36:05,996 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-pub-subnet
+  2017-03-21 13:36:09,103 - neutron_utils - INFO - Creating port for network with name - NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-pub-net
+  2017-03-21 13:36:10,312 - neutron_utils - INFO - Deleting port with name NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-port
+  2017-03-21 13:36:11,045 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-pub-subnet
+  2017-03-21 13:36:14,265 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-pub-net ok
+  test_create_port_empty_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:36:16,250 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-pub-net
+  2017-03-21 13:36:16,950 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-pub-subnet
+  2017-03-21 13:36:17,798 - neutron_utils - INFO - Creating port for network with name - NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-pub-net
+  2017-03-21 13:36:18,544 - neutron_utils - INFO - Deleting port with name NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-port
+  2017-03-21 13:36:19,582 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-pub-subnet
+  2017-03-21 13:36:21,606 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-pub-net ok
+  test_create_port_invalid_ip (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:36:23,779 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-7ab3a329-9dd8-4e6f-9d52-aafb47ea5122-pub-net
+  2017-03-21 13:36:25,201 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-7ab3a329-9dd8-4e6f-9d52-aafb47ea5122-pub-subnet
+  2017-03-21 13:36:25,599 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-7ab3a329-9dd8-4e6f-9d52-aafb47ea5122-pub-subnet
+  2017-03-21 13:36:26,220 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-7ab3a329-9dd8-4e6f-9d52-aafb47ea5122-pub-net ok
+  test_create_port_invalid_ip_to_subnet (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:36:27,112 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-c016821d-cd4f-4e0f-8f8c-d5cef3392e64-pub-net
+  2017-03-21 13:36:28,720 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-c016821d-cd4f-4e0f-8f8c-d5cef3392e64-pub-subnet
+  2017-03-21 13:36:29,457 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-c016821d-cd4f-4e0f-8f8c-d5cef3392e64-pub-subnet
+  2017-03-21 13:36:29,909 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-c016821d-cd4f-4e0f-8f8c-d5cef3392e64-pub-net ok
+  test_create_port_null_ip (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:36:31,037 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-9a86227f-6041-4b04-86a7-1701fb86baa3-pub-net
+  2017-03-21 13:36:31,695 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-9a86227f-6041-4b04-86a7-1701fb86baa3-pub-subnet
+  2017-03-21 13:36:32,305 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-9a86227f-6041-4b04-86a7-1701fb86baa3-pub-subnet
+  2017-03-21 13:36:33,553 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-9a86227f-6041-4b04-86a7-1701fb86baa3-pub-net ok
+  test_create_port_null_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:36:34,593 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-42efa897-4f65-4d9b-b19d-fbc61f97c966-pub-net
+  2017-03-21 13:36:35,217 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-42efa897-4f65-4d9b-b19d-fbc61f97c966-pub-subnet
+  2017-03-21 13:36:36,648 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-42efa897-4f65-4d9b-b19d-fbc61f97c966-pub-subnet
+  2017-03-21 13:36:37,251 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-42efa897-4f65-4d9b-b19d-fbc61f97c966-pub-net ok
+  test_create_port_null_network_object (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:36:37,885 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-617f4110-45c1-4900-bad1-a6204f34dd64-pub-net
+  2017-03-21 13:36:38,468 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-617f4110-45c1-4900-bad1-a6204f34dd64-pub-subnet
+  2017-03-21 13:36:40,005 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-617f4110-45c1-4900-bad1-a6204f34dd64-pub-subnet
+  2017-03-21 13:36:41,637 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-617f4110-45c1-4900-bad1-a6204f34dd64-pub-net ok
+  test_create_router_empty_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... ok
+  test_create_router_null_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... ok
+  test_create_router_simple (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:36:43,424 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-b6a2dafc-38d4-4c46-bb41-2ba9e1c0084e-pub-router
+  2017-03-21 13:36:45,013 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-b6a2dafc-38d4-4c46-bb41-2ba9e1c0084e-pub-router ok
+  test_create_router_with_public_interface (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
+  2017-03-21 13:36:47,829 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-d268dda2-7a30-4d3d-a008-e5aa4592637d-pub-router
+  2017-03-21 13:36:49,448 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-d268dda2-7a30-4d3d-a008-e5aa4592637d-pub-router ok
+  test_create_delete_simple_sec_grp (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSecurityGroupTests) ...
+  2017-03-21 13:36:51,067 - neutron_utils - INFO - Creating security group with name - NeutronUtilsSecurityGroupTests-1543e861-ea38-4fbe-9723-c27552e3eb7aname
+  2017-03-21 13:36:51,493 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-1543e861-ea38-4fbe-9723-c27552e3eb7aname
+  2017-03-21 13:36:51,568 - neutron_utils - INFO - Deleting security group with name - NeutronUtilsSecurityGroupTests-1543e861-ea38-4fbe-9723-c27552e3eb7aname
+  2017-03-21 13:36:51,772 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-1543e861-ea38-4fbe-9723-c27552e3eb7aname ok
+  test_create_sec_grp_no_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSecurityGroupTests) ... ok
+  test_create_sec_grp_no_rules (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSecurityGroupTests) ...
+  2017-03-21 13:36:52,253 - neutron_utils - INFO - Creating security group with name - NeutronUtilsSecurityGroupTests-57c60864-f46c-4391-ba99-6acc4dd123ddname
+  2017-03-21 13:36:52,634 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-57c60864-f46c-4391-ba99-6acc4dd123ddname
+  2017-03-21 13:36:52,718 - neutron_utils - INFO - Deleting security group with name - NeutronUtilsSecurityGroupTests-57c60864-f46c-4391-ba99-6acc4dd123ddname ok
+  test_create_sec_grp_one_rule (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSecurityGroupTests) ...
+  2017-03-21 13:36:53,082 - neutron_utils - INFO - Creating security group with name - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
+  2017-03-21 13:36:53,483 - neutron_utils - INFO - Retrieving security group rules associate with the security group - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
+  2017-03-21 13:36:53,548 - neutron_utils - INFO - Creating security group to security group - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
+  2017-03-21 13:36:53,548 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
+  2017-03-21 13:36:53,871 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
+  2017-03-21 13:36:53,944 - neutron_utils - INFO - Retrieving security group rules associate with the security group - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
+  2017-03-21 13:36:53,991 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
+  2017-03-21 13:36:54,069 - neutron_utils - INFO - Deleting security group rule with ID - 7f76046c-d043-46e0-9d12-4b983525810b
+  2017-03-21 13:36:54,185 - neutron_utils - INFO - Deleting security group rule with ID - f18a9ed1-466f-4373-a6b2-82bd317bc838
+  2017-03-21 13:36:54,338 - neutron_utils - INFO - Deleting security group rule with ID - fe34a3d0-948e-47c1-abad-c3ec8d33b2fb
+  2017-03-21 13:36:54,444 - neutron_utils - INFO - Deleting security group with name - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name ok
+  test_create_delete_keypair (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ...
+  2017-03-21 13:36:54,637 - nova_utils - INFO - Creating keypair with name - NovaUtilsKeypairTests-5ce69b6f-d8d0-4b66-bd25-30a22cf3bda0 ok
+  test_create_key_from_file (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ...
+  2017-03-21 13:36:58,989 - nova_utils - INFO - Saved public key to - tmp/NovaUtilsKeypairTests-df3e848d-a467-4cc4-99d5-022eb67eee94.pub
+  2017-03-21 13:36:58,990 - nova_utils - INFO - Saved private key to - tmp/NovaUtilsKeypairTests-df3e848d-a467-4cc4-99d5-022eb67eee94
+  2017-03-21 13:36:58,990 - nova_utils - INFO - Saving keypair to - tmp/NovaUtilsKeypairTests-df3e848d-a467-4cc4-99d5-022eb67eee94.pub
+  2017-03-21 13:36:58,990 - nova_utils - INFO - Creating keypair with name - NovaUtilsKeypairTests-df3e848d-a467-4cc4-99d5-022eb67eee94 ok
+  test_create_keypair (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ...
+  2017-03-21 13:36:59,807 - nova_utils - INFO - Creating keypair with name - NovaUtilsKeypairTests-fc7f7ffd-80f6-43df-bd41-a3c014ba8c3d ok
+  test_floating_ips (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ...
+  2017-03-21 13:37:02,765 - nova_utils - INFO - Creating floating ip to external network - admin_floating_net ok
+  test_create_delete_flavor (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsFlavorTests) ... ok
+  test_create_flavor (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsFlavorTests) ... ok
+  test_create_clean_flavor (snaps.openstack.tests.create_flavor_tests.CreateFlavorTests) ... ok
+  test_create_delete_flavor (snaps.openstack.tests.create_flavor_tests.CreateFlavorTests) ... ok
+  test_create_flavor (snaps.openstack.tests.create_flavor_tests.CreateFlavorTests) ... ok
+  test_create_flavor_existing (snaps.openstack.tests.create_flavor_tests.CreateFlavorTests) ...
+  2017-03-21 13:37:18,545 - create_image - INFO - Found flavor with name - CreateFlavorTests-3befc152-4319-4f9c-82d4-75f8941d9533name ok
+
+  ----------------------------------------------------------------------
+  Ran 48 tests in 171.000s
+
+  OK
+  2017-03-21 13:37:18,620 - functest.core.testcase_base - INFO - api_check OK
+  2017-03-21 13:37:18,977 - functest.core.testcase_base - INFO - The results were successfully pushed to DB
+  2017-03-21 13:37:18,977 - run_tests - INFO - Test execution time: 02:52
+  2017-03-21 13:37:18,981 - run_tests - INFO -
+
+  2017-03-21 13:37:18,981 - run_tests - INFO - ============================================
+  2017-03-21 13:37:18,981 - run_tests - INFO - Running test case 'snaps_health_check'...
+  2017-03-21 13:37:18,981 - run_tests - INFO - ============================================
+  2017-03-21 13:37:19,098 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-21 13:37:19,099 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.7:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-21 13:37:19,434 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-21 13:37:19,435 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.7:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  test_check_vm_ip_dhcp (snaps.openstack.tests.create_instance_tests.SimpleHealthCheck) ...
+  2017-03-21 13:37:26,082 - create_image - INFO - Creating image
+  2017-03-21 13:37:28,793 - create_image - INFO - Image is active with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-image
+  2017-03-21 13:37:28,793 - create_image - INFO - Image is now active with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-image
+  2017-03-21 13:37:28,794 - OpenStackNetwork - INFO - Creating neutron network SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-priv-net...
+  2017-03-21 13:37:29,308 - neutron_utils - INFO - Creating network with name SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-priv-net
+  2017-03-21 13:37:30,771 - neutron_utils - INFO - Creating subnet with name SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-priv-subnet
+  2017-03-21 13:37:36,974 - neutron_utils - INFO - Creating port for network with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-priv-net
+  2017-03-21 13:37:38,188 - create_instance - INFO - Creating VM with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-inst
+  2017-03-21 13:37:41,538 - create_instance - INFO - Created instance with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-inst
+  2017-03-21 13:37:59,577 - create_instance - INFO - VM is - ACTIVE
+  2017-03-21 13:37:59,577 - create_instance_tests - INFO - Looking for expression Lease of.*obtained in the console log
+  2017-03-21 13:37:59,830 - create_instance_tests - INFO - DHCP lease obtained logged in console
+  2017-03-21 13:37:59,830 - create_instance_tests - INFO - With correct IP address
+  2017-03-21 13:37:59,830 - create_instance - INFO - Deleting Port - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5dport-1
+  2017-03-21 13:37:59,830 - neutron_utils - INFO - Deleting port with name SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5dport-1
+  2017-03-21 13:38:00,705 - create_instance - INFO - Deleting VM instance - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-inst
+  2017-03-21 13:38:01,412 - create_instance - INFO - Checking deletion status
+  2017-03-21 13:38:04,938 - create_instance - INFO - VM has been properly deleted VM with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-inst
+  ok
+
+  ----------------------------------------------------------------------
+  Ran 1 test in 46.982s
+
+  OK
+  2017-03-21 13:38:06,417 - functest.core.testcase_base - INFO - snaps_health_check OK
+  2017-03-21 13:38:06,778 - functest.core.testcase_base - INFO - The results were successfully pushed to DB
+  2017-03-21 13:38:06,779 - run_tests - INFO - Test execution time: 00:47
+  2017-03-21 13:38:06,779 - run_tests - INFO -
   and
 
   root@22e436918db0:~/repos/functest/ci# functest testcase run vping_ssh
@@ -206,12 +412,12 @@ command is used with 'functest tier'::
 
   root@22e436918db0:~/repos/functest/ci# functest tier get-tests healthcheck
   Test cases in tier 'healthcheck':
-   ['healthcheck']
+   ['connection_check', 'api_check', 'snaps_health_check']
 
 
 Please note that for some scenarios some test cases might not be launched.
 For example, the last example displayed only the 'odl' testcase for the given
-environment. In this particular system the deployment does not support the 'onos' SDN
+environment. In this particular system the deployment does not support the 'ocl' SDN
 Controller Test Case; for example.
 
 **Important** If you use the command 'functest tier run <tier_name>', then the
@@ -229,32 +435,35 @@ two possibilities::
 
 Functest includes a cleaning mechanism in order to remove all the OpenStack
 resources except those present before running any test. The script
-*$REPOS_DIR/functest/functest/utils/generate_defaults.py* is called once when setting up
+*$REPOS_DIR/functest/functest/utils/openstack_snapshot.py* is called once when setting up
 the Functest environment (i.e. CLI command 'functest env prepare') to snapshot
 all the OpenStack resources (images, networks, volumes, security groups, tenants,
 users) so that an eventual cleanup does not remove any of these defaults.
 
-The script **clean_openstack.py** which is located in
+It is also called before running a test except if it is disabled by configuration
+in the testcases.yaml file (clean_flag=false). This flag has been added as some
+upstream tests already include their own cleaning mechanism (e.g. Rally).
+
+The script **openstack_clean.py** which is located in
 *$REPOS_DIR/functest/functest/utils/* is normally called after a test execution. It is
 in charge of cleaning the OpenStack resources that are not specified in the
 defaults file generated previously which is stored in
-*/home/opnfv/functest/conf/os_defaults.yaml* in the Functest docker container.
+*/home/opnfv/functest/conf/openstack_snapshot.yaml* in the Functest docker container.
 
 It is important to mention that if there are new OpenStack resources created
-manually after preparing the Functest environment, they will be removed, unless
-you use the special method of invoking the test case with specific suppression
-of clean up. (See the `Troubleshooting`_ section).
+manually after the snapshot done before running the tests, they will be removed,
+unless you use the special method of invoking the test case with specific
+suppression of clean up. (See the `Troubleshooting`_ section).
 
 The reason to include this cleanup meachanism in Functest is because some
-test suites such as Tempest or Rally create a lot of resources (users,
-tenants, networks, volumes etc.) that are not always properly cleaned, so this
-function has been set to keep the system as clean as it was before a
-full Functest execution.
+test suites create a lot of resources (users, tenants, networks, volumes etc.)
+that are not always properly cleaned, so this function has been set to keep the
+system as clean as it was before a full Functest execution.
 
 Although the Functest CLI provides an easy way to run any test, it is possible to
 do a direct call to the desired test script. For example:
 
-    python $REPOS_DIR/functest/functest/opnfv_tests/OpenStack/vPing/vPing_ssh.py -d
+    python $REPOS_DIR/functest/functest/opnfv_tests/openstack/vping/vping_ssh.py
 
 
 Automated testing
@@ -282,38 +491,18 @@ The mechanism remains however as part of the CI evolution.
 CI provides some useful information passed to the container as environment
 variables:
 
- * Installer (apex|compass|daisy|fuel|joid), stored in INSTALLER_TYPE
+ * Installer (apex|compass|fuel|joid), stored in INSTALLER_TYPE
  * Installer IP of the engine or VM running the actual deployment, stored in INSTALLER_IP
  * The scenario [controller]-[feature]-[mode], stored in DEPLOY_SCENARIO with
 
-   * controller = (odl|onos|ocl|nosdn)
-   * feature = (ovs(dpdk)|kvm|sfc|bgpvpn|multisites)
+   * controller = (odl|ocl|nosdn|onos)
+   * feature = (ovs(dpdk)|kvm|sfc|bgpvpn|multisites|netready|ovs_dpdk_bar)
    * mode = (ha|noha)
 
 The constraints per test case are defined in the Functest configuration file
 */home/opnfv/repos/functest/functest/ci/testcases.yaml*::
 
  tiers:
-    -
-        name: healthcheck
-        order: 0
-        ci_loop: '(daily)|(weekly)'
-        description : >-
-            First tier to be executed to verify the basic
-            operations in the VIM.
-        testcases:
-            -
-                name: healthcheck
-                criteria: 'status == "PASS"'
-                blocking: true
-                description: >-
-                    This test case verifies the basic OpenStack services like
-                    Keystone, Glance, Cinder, Neutron and Nova.
-
-                dependencies:
-                    installer: ''
-                    scenario: ''
-
    -
         name: smoke
         order: 1
@@ -343,13 +532,14 @@ We may distinguish 2 levels in the test case description:
 
 At the tier level, we define the following parameters:
 
- * ci_loop: indicate if in automated mode, the test case must be run in daily and/or weekly jobs
+ * ci_loop: indicate if in automated mode, the test case must be run in dail and/or weekly jobs
  * description: a high level view of the test case
 
 For a given test case we defined:
   * the name of the test case
   * the criteria (experimental): a criteria used to declare the test case as PASS or FAIL
   * blocking: if set to true, if the test is failed, the execution of the following tests is canceled
+  * clean_flag: shall the functect internal mechanism be invoked after the test
   * the description of the test case
   * the dependencies: a combination of 2 regex on the scenario and the installer name
   * run: In Danube we introduced the notion of abstract class in order to harmonize the way to run internal, feature or vnf tests
