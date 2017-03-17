@@ -1,5 +1,5 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
-.. http://creativecommons.org/licenses/by/4.0
+.. SPDX-License-Identifier: CC-BY-4.0
 
 =========================
 OPNFV FUNCTEST user guide
@@ -28,7 +28,7 @@ Introduction
 
 The goal of this document is to describe the OPNFV Functest test cases and to
 provide a procedure to execute them. In the OPNFV Danube system release,
-a Functest CLI utility is introduced for easier execution of test procedures.
+a Functest CLI utility is introduced for an easier execution of test procedures.
 
 **IMPORTANT**: It is assumed here that the Functest Docker container is already
 properly deployed and that all instructions described in this guide are to be
@@ -41,21 +41,37 @@ The different test cases are described in the remaining sections of this documen
 VIM (Virtualized Infrastructure Manager)
 ----------------------------------------
 
-Healthcheck
-^^^^^^^^^^^
-In Colorado release a new Tier 'healthcheck' with one testcase 'healthcheck'
-was introduced. The healthcheck testcase verifies that some basic IP connectivity
-and  essential operations of OpenStack functionality over the command line are
-working correctly.
+Healthcheck tests
+^^^^^^^^^^^^^^^^^
+In Danube, healthcheck tests have been refactored and rely on SNAPS, a
+OPNFV middleware project.
 
-In particular, the following verifications are performed:
+SNAPS stands for "SDN/NFV Application development Platform and Stack".
+SNAPS is an object-oriented OpenStack library packaged with tests that exercise
+OpenStack.
+More information on SNAPS can be found in  `[13]`_
 
-  * DHCP agent functionality for IP address allocation
-  * Openstack Authentication management functionality via the Keystone API
-  * OpenStack Image management functionality via the Glance API
-  * OpenStack Block Storage management functionality via the Cinder API
-  * OpenStack Networking management functionality via the Neutron API
-  * Openstack Compute management functionality via the NOVA API
+Three tests are declared as healthcheck tests and can be used for gating by the
+installer, they cover functionally the tests previously done by healthcheck
+test case.
+
+The tests are:
+
+
+ * *connection_check*
+ * *api_check*
+ * *snaps_health_check*
+
+Connection_check consists in 9 test cases (test duration < 5s) checking the
+connectivity with Glance, Keystone, Neutron, Nova and the external network.
+
+Api_check verifies the retrieval of OpenStack clients: Keystone, Glance,
+Neutron and Nova and may perform some simple queries. When the config value of
+snaps.use_keystone is True, functest must have access to the cloud's private
+network. This suite consists in 49 tests (test duration < 2 minutes).
+
+snaps_health_check create instance, allocate floating IP, connect to the DB.
+This test replaced the previous Colorado healthcheck test.
 
 Self-obviously, successful completion of the 'healthcheck' testcase is a
 necessary pre-requisite for the execution of all other test Tiers.
@@ -229,30 +245,9 @@ The Rally testcases are distributed accross two Tiers:
 NOTE: Test case 'rally_sanity' executes a limited number of Rally smoke test
 cases. Test case 'rally_full' executes the full defined set of Rally tests.
 
-SNAPS
------
-
-SNAPS stands for "SNA/NFV Application development Platform and Stack".
-This project seeks to develop baseline OpenStack NFV installations. It has been
-developed by Steven Pisarski and provided an object oriented library to perform
-functional and performance tests. It has been declined in several test suites in
-Functest, 2 are part of healthcheck tier, one belongs to smoke tier.
-
-connection check
-^^^^^^^^^^^^^^^^
-Connection_check consists in 9 test cases (test duration < 5s) checking the
-connectivity with Glance, Keystone, Neutron, Nova and the external network.
-
-api_check
-^^^^^^^^^
-This test case verifies the retrieval of OpenStack clients: Keystone, Glance,
-Neutron and Nova and may perform some simple queries. When the config value of
-snaps.use_keystone is True, functest must have access to the cloud's private
-network.
-This suite consists in 49 tests (test duration< 2 minutes)
-
 snaps_smoke
-^^^^^^^^^^^
+------------
+
 This test case contains tests that setup and destroy environments with VMs with
 and without Floating IPs with a newly created user and project. Set the config
 value snaps.use_floating_ips (True|False) to toggle this functionality. When
@@ -260,16 +255,15 @@ the config value of snaps.use_keystone is True, functest must have access
 the cloud's private network.
 This suite consists in 38 tests (test duration < 10 minutes)
 
-More information on SNAPS can be found in  `[13]`_
-
 
 SDN Controllers
 ---------------
 
-There are currently 2 available controllers:
+There are currently 3 available controllers:
 
  * OpenDaylight (ODL)
  * ONOS
+ * OpenContrail (OCL)
 
 OpenDaylight
 ^^^^^^^^^^^^
@@ -366,60 +360,30 @@ The test cases are described as follows:
 Features
 --------
 
-Please refer to the dedicated feature user guides for details:
+In Danube, functest supports the integration of:
 
- * bgpvpn: http://artifacts.opnfv.org/sdnvpn/danube/docs/userguide/index.html
- * copper: http://artifacts.opnfv.org/copper/danube/docs/userguide/index.html
- * doctor: http://artifacts.opnfv.org/doctor/danube/userguide/index.html
- * domino: http://artifacts.opnfv.org/domino/docs/userguide-single/index.html
- * multisites: http://artifacts.opnfv.org/multisite/docs/userguide/index.html
- * onos-sfc: http://artifacts.opnfv.org/onosfw/danube/userguide/index.html
- * odl-sfc: http://artifacts.opnfv.org/sfc/danube/userguide/index.html
- * promise: http://artifacts.opnfv.org/danube/colorado/docs/userguide/index.html
- * security_scan: http://artifacts.opnfv.org/security_scan/colorado/docs/userguide/index.html
- * TODO
+ * barometer
+ * bgpvpn
+ * doctor
+ * domino
+ * fds
+ * multisite
+ * netready
+ * odl-sfc
+ * promise
+ * security_scan
 
-security_scan
-^^^^^^^^^^^^^
+Note: copper is not supported in Danube.
 
-Security Scanning, is a project to insure security compliance and vulnerability
-checks, as part of an automated CI / CD platform delivery process.
-
-The project makes use of the existing SCAP format `[6]`_ to perform deep
-scanning of NFVI nodes, to insure they are hardened and free of known CVE
-reported vulnerabilities.
-
-The SCAP content itself, is then consumed and run using an upstream opensource tool
-known as OpenSCAP `[7]`_.
-
-The OPNFV Security Group have developed the code that will called by the OPNFV Jenkins
-build platform, to perform a complete scan. Resulting reports are then copied to the
-OPNFV functest dashboard.
-
-The current work flow is as follows:
-
-  * Jenkins Build Initiated
-  * security_scan.py script is called, and a config file is passed to the script as
-    an argument.
-  * The IP addresses of each NFVi node (compute / control) are gathered
-  * A scan profile is matched to the node type.
-  * The OpenSCAP application is remotely installed onto each target node gathered
-    on step 3, using upstream packaging (rpm and .deb).
-  * A scan is made against each node gathered within step 3.
-  * HTML Reports are downloaded for rendering on a dashboard.
-  * If the config file value 'clean' is set to 'True' then the application installed in
-    step 5 is removed, and all reports created at step 6 are deleted.
-
-Security scan is supported by Apex, TODO....
-
+Please refer to the dedicated feature user guides for details.
 
 
 VNF
 ---
 
 
-vIMS
-^^^^
+cloudify_ims
+^^^^^^^^^^^^
 The IP Multimedia Subsystem or IP Multimedia Core Network Subsystem (IMS) is an
 architectural framework for delivering IP multimedia services.
 
@@ -437,15 +401,41 @@ The goal of this test suite consists of:
 
 The Clearwater architecture is described as follows:
 
-.. figure:: ../images/clearwater-architecture.png
+.. figure:: ../../../images/clearwater-architecture.png
    :align: center
    :alt: vIMS architecture
 
+orchestra_ims
+^^^^^^^^^^^^^
+Orchestra test case deals with the deployment of OpenIMS with OpenBaton
+orchestrator.
 
 parser
 ^^^^^^
 
 See parser user guide for details: `[12]`_
+
+
+vyos-vrouter
+^^^^^^^^^^^^
+
+This test case deals with the deployment and the test of vyos vrouter with
+Cloudify orchestrator. The test case can do testing for interchangeability of
+BGP Protocol using vyos.
+
+The Workflow is as follows:
+ * Deploy
+    Deploy VNF Testing topology by Cloudify using blueprint.
+ * Configuration
+    Setting configuration to Target VNF and reference VNF using ssh
+ * Run
+    Execution of test command for test item written YAML format  file.
+    Check VNF status and behavior.
+ * Reporting
+    Output of report based on result using JSON format.
+
+The vyos-vrouter architecture is described in `[14]`_
+
 
 
 .. include:: ./runfunctest.rst
@@ -479,20 +469,27 @@ at the end of the job and can be described as follow::
  +=========================+===============+============+===============+===========================================================================+
  | TEST CASE               | TIER          | DURATION   | RESULT        | URL                                                                       |
  +=========================+===============+============+===============+===========================================================================+
- | healthcheck             | healthcheck   | 03:07      | PASS          |                                                                           |
+ | connection_check        | healthcheck   | 00:02      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb62b34079ac000a42e3fe |
  +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | vping_ssh               | smoke         | 00:56      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac13d79377c54b278bd4c1 |
+ | api_check               | healthcheck   | 01:15      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb62fe4079ac000a42e3ff |
  +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | vping_userdata          | smoke         | 00:41      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac14019377c54b278bd4c2 |
+ | snaps_health_check      | healthcheck   | 00:50      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb63314079ac000a42e400 |
  +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | tempest_smoke_serial    | smoke         | 16:05      | FAIL          | http://testresults.opnfv.org/test/api/v1/results/57ac17ca9377c54b278bd4c3 |
+ | vping_ssh               | smoke         | 01:10      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb63654079ac000a42e401 |
  +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | rally_sanity            | smoke         | 12:19      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac1aad9377c54b278bd4cd |
+ | vping_userdata          | smoke         | 00:59      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb63a14079ac000a42e403 |
  +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | odl                     | sdn_suites    | 00:24      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac1ad09377c54b278bd4ce |
+ | tempest_smoke_serial    | smoke         | 12:57      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb66bd4079ac000a42e408 |
  +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | promise                 | features      | 00:41      | PASS          | http://testresults.opnfv.org/test/api/v1/results/57ac1ae59377c54b278bd4cf |
+ | rally_sanity            | smoke         | 10:22      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb692b4079ac000a42e40a |
  +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | refstack_defcore        | smoke         | 12:28      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb6c184079ac000a42e40c |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | snaps_smoke             | smoke         | 12:04      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb6eec4079ac000a42e40e |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ | domino                  | features      | 00:29      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb6f044079ac000a42e40f |
+ +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+
 
 Results are automatically pushed to the test results database, some additional
 result files are pushed to OPNFV artifact web sites.
@@ -504,16 +501,9 @@ portal is also automatically updated. This portal provides information on:
  * Tempest: Tempest test case including reported errors per scenario and installer
  * vIMS: vIMS details per scenario and installer
 
-.. figure:: ../images/functest-reporting-status.png
+.. figure:: ../../../images/functest-reporting-status.png
    :align: center
    :alt: Functest reporting portal Fuel status page
-
-
-Test Dashboard
-==============
-
-Based on results collected in CI, a test dashboard is dynamically generated.
-
 
 .. include:: ./troubleshooting.rst
 
@@ -528,21 +518,20 @@ References
 .. _`[5]`: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/openstack-blueprint.yaml
 .. _`[6]`: https://scap.nist.gov/
 .. _`[7]`: https://github.com/OpenSCAP/openscap
-.. _`[9]`: https://git.opnfv.org/cgit/functest/tree/testcases/VIM/OpenStack/CI/libraries/os_defaults.yaml
 .. _`[11]`: http://robotframework.org/
 .. _`[12]`: http://artifacts.opnfv.org/parser/colorado/docs/userguide/index.html
-.. _`[13]`: TODO URL doc SNAPS
+.. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
+.. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 
-OPNFV main site: opnfvmain_.
+`OPNFV main site`_
 
-OPNFV functional test page: opnfvfunctest_.
+`Functest page`_
 
 IRC support chan: #opnfv-testperf
 
-.. _opnfvmain: http://www.opnfv.org
-.. _opnfvfunctest: https://wiki.opnfv.org/opnfv_functional_testing
+.. _`OPNFV main site`: http://www.opnfv.org
+.. _`Functest page`: https://wiki.opnfv.org/functest
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
 .. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
-.. _`config_test.py` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.py
-.. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.yaml
-.. _`Functest reporting`: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-fuel.html
+.. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/functest/ci/config_functest.yaml
+.. _`Functest reporting`: http://testresults.opnfv.org/reporting/functest/release/danube/index-status-fuel.html
