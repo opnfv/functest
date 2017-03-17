@@ -33,6 +33,7 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.installer = 'test_installer'
         self.scenario = 'test_scenario'
         self.build_tag = 'jenkins-functest-fuel-opnfv-jump-2-daily-master-190'
+        self.build_tag_week = 'jenkins-functest-fuel-baremetal-weekly-master-8'
         self.version = 'master'
         self.node_name = 'test_node_name'
         self.project = 'test_project'
@@ -152,9 +153,19 @@ class FunctestUtilsTesting(unittest.TestCase):
                              self.scenario)
 
     @mock.patch('functest.utils.functest_utils.get_build_tag')
-    def test_get_version_default(self, mock_get_build_tag):
+    def test_get_version_daily_job(self, mock_get_build_tag):
         mock_get_build_tag.return_value = self.build_tag
         self.assertEqual(functest_utils.get_version(), self.version)
+
+    @mock.patch('functest.utils.functest_utils.get_build_tag')
+    def test_get_version_weekly_job(self, mock_get_build_tag):
+        mock_get_build_tag.return_value = self.build_tag_week
+        self.assertEqual(functest_utils.get_version(), self.version)
+
+    @mock.patch('functest.utils.functest_utils.get_build_tag')
+    def test_get_version_with_dummy_build_tag(self, mock_get_build_tag):
+        mock_get_build_tag.return_value = 'whatever'
+        self.assertEqual(functest_utils.get_version(), 'unknown')
 
     @mock.patch('functest.utils.functest_utils.get_build_tag')
     def test_get_version_unknown(self, mock_get_build_tag):
