@@ -1,7 +1,7 @@
 # Set of DefCore tempest test cases not flagged and required. It only contains OpenStack core (no object storage)
-# The approved guidelines (2016.08) are valid for Kilo, Liberty, Mitaka and Newton releases of OpenStack
+# The approved guidelines (2017.01) are valid for Liberty, Mitaka, Newton and ocata releases of OpenStack
 # The list can be generated using the Rest API from RefStack project:
-# https://refstack.openstack.org/api/v1/guidelines/2016.08/tests?target=compute&type=required&alias=true&flag=false
+# https://refstack.openstack.org/api/v1/guidelines/2017.01/tests?target=compute&type=required&alias=true&flag=false
 tempest.api.compute.images.test_images_oneserver.ImagesOneServerTestJSON.test_create_delete_image[id-3731d080-d4c5-4872-b41a-64d0d0021314]
 tempest.api.compute.images.test_images_oneserver.ImagesOneServerTestJSON.test_create_image_specify_multibyte_character_image_name[id-3b7c6fe4-dfe7-477c-9243-b06359db51e6]
 tempest.api.compute.servers.test_create_server.ServersTestJSON.test_host_name_is_same_as_server_name[id-ac1ad47f-984b-4441-9274-c9079b7a0666]
@@ -14,6 +14,7 @@ tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_list_s
 tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_list_servers_with_detail[id-585e934c-448e-43c4-acbf-d06a9b899997]
 tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_verify_created_server_vcpus[id-cbc0f52f-05aa-492b-bdc1-84b575ca294b]
 tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_verify_server_details[id-5de47127-9977-400a-936f-abcfbec1218f]
+tempest.api.compute.servers.test_delete_server.DeleteServersTestJSON.test_delete_active_server[id-925fdfb4-5b13-47ea-ac8a-c36ae6fddb05]
 tempest.api.compute.servers.test_instance_actions.InstanceActionsTestJSON.test_get_instance_action[id-aacc71ca-1d70-4aa5-bbf6-0ff71470e43c]
 tempest.api.compute.servers.test_instance_actions.InstanceActionsTestJSON.test_list_instance_actions[id-77ca5cc5-9990-45e0-ab98-1de8fead201a]
 tempest.api.compute.servers.test_list_server_filters.ListServerFiltersTestJSON.test_list_servers_detailed_filter_by_flavor[id-80c574cc-0925-44ba-8602-299028357dd9]
@@ -77,7 +78,7 @@ tempest.api.compute.servers.test_servers_negative.ServersNegativeTestJSON.test_u
 tempest.api.compute.test_quotas.QuotasTestJSON.test_get_default_quotas[id-9bfecac7-b966-4f47-913f-1a9e2c12134a]
 tempest.api.compute.test_quotas.QuotasTestJSON.test_get_quotas[id-f1ef0a97-dbbb-4cca-adc5-c9fbc4f76107]
 tempest.api.compute.test_versions.TestVersions.test_list_api_versions[id-6c0a0990-43b6-4529-9b61-5fd8daf7c55c]
-tempest.api.compute.volumes.test_attach_volume.AttachVolumeTestJSON.test_attach_detach_volume[id-52e9045a-e90d-4c0d-9087-79d657faffff]
+# tempest.api.compute.volumes.test_attach_volume.AttachVolumeTestJSON.test_attach_detach_volume[id-52e9045a-e90d-4c0d-9087-79d657faffff]
 tempest.api.compute.volumes.test_attach_volume.AttachVolumeTestJSON.test_list_get_volume_attachments[id-7fa563fe-f0f7-43eb-9e22-a1ece036b513]
 tempest.api.identity.v3.TestApiDiscovery.test_api_media_types[id-657c1970-4722-4189-8831-7325f3bc4265]
 tempest.api.identity.v3.TestApiDiscovery.test_api_version_resources[id-b9232f5e-d9e5-4d97-b96c-28d3db4de1bd]
