@@ -125,7 +125,7 @@ rally:
 
 refstack:
     tempest_conf_path: openstack/refstack_client/tempest.conf
-    defcore_list: openstack/refstack_client/defcore_201608.txt
+    defcore_list: openstack/refstack_client/defcore.txt
 
 vnf:
     aaa:
