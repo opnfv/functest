@@ -48,33 +48,34 @@ command::
 
   root@22e436918db0:~/repos/functest/ci# functest tier list
       - 0. healthcheck:
-             ['healthcheck', 'connection_check', 'api_check',]
+             ['connection_check', 'api_check', 'snaps_health_check',]
       - 1. smoke:
-             ['vping_ssh', 'vping_userdata', 'tempest_smoke_serial', 'rally_sanity', 'snaps_smoke', 'odl']
+             ['vping_ssh', 'vping_userdata', 'tempest_smoke_serial', 'odl', 'rally_sanity', 'refstack_defcore', 'snaps_smoke']
       - 2. features:
-             ['doctor', 'security_scan']
+             ['doctor', 'domino', 'promise', security_scan']
       - 3. components:
              ['tempest_full_parallel', 'rally_full']
       - 4. vnf:
-             ['cloudify_ims']
+             ['cloudify_ims', 'orchestra_ims', 'vyos_vrouter']
 
   and
 
   root@22e436918db0:~/repos/functest/ci# functest testcase list
-  healthcheck
   api_check
   connection_check
+  snaps_health_check
   vping_ssh
   vping_userdata
   snaps_smoke
+  refstack_defcore
   tempest_smoke_serial
   rally_sanity
   odl
-  doctor
-  security_scan
   tempest_full_parallel
   rally_full
-  cloudify_ims
+  vyos_vrouter
+
+Note the list of test cases depend on the installer and the scenario.
 
 More specific details on specific Tiers or Test Cases can be seen wih the
 'show' command::
@@ -206,12 +207,12 @@ command is used with 'functest tier'::
 
   root@22e436918db0:~/repos/functest/ci# functest tier get-tests healthcheck
   Test cases in tier 'healthcheck':
-   ['healthcheck']
+   ['connection_check', 'api_check', 'snaps_health_check']
 
 
 Please note that for some scenarios some test cases might not be launched.
 For example, the last example displayed only the 'odl' testcase for the given
-environment. In this particular system the deployment does not support the 'onos' SDN
+environment. In this particular system the deployment does not support the 'ocl' SDN
 Controller Test Case; for example.
 
 **Important** If you use the command 'functest tier run <tier_name>', then the
@@ -234,6 +235,10 @@ the Functest environment (i.e. CLI command 'functest env prepare') to snapshot
 all the OpenStack resources (images, networks, volumes, security groups, tenants,
 users) so that an eventual cleanup does not remove any of these defaults.
 
+It is also called before running a test except if it is disabled by configuration
+in the testcases.yaml file (clean_flag=false). This flag has been added as some
+upstream tests already include their own cleaning mechanism (e.g. Rally).
+
 The script **clean_openstack.py** which is located in
 *$REPOS_DIR/functest/functest/utils/* is normally called after a test execution. It is
 in charge of cleaning the OpenStack resources that are not specified in the
@@ -241,20 +246,19 @@ defaults file generated previously which is stored in
 */home/opnfv/functest/conf/os_defaults.yaml* in the Functest docker container.
 
 It is important to mention that if there are new OpenStack resources created
-manually after preparing the Functest environment, they will be removed, unless
-you use the special method of invoking the test case with specific suppression
-of clean up. (See the `Troubleshooting`_ section).
+manually after the snapshot done before running the tests, they will be removed,
+unless you use the special method of invoking the test case with specific
+suppression of clean up. (See the `Troubleshooting`_ section).
 
 The reason to include this cleanup meachanism in Functest is because some
-test suites such as Tempest or Rally create a lot of resources (users,
-tenants, networks, volumes etc.) that are not always properly cleaned, so this
-function has been set to keep the system as clean as it was before a
-full Functest execution.
+test suites create a lot of resources (users, tenants, networks, volumes etc.)
+that are not always properly cleaned, so this function has been set to keep the
+system as clean as it was before a full Functest execution.
 
 Although the Functest CLI provides an easy way to run any test, it is possible to
 do a direct call to the desired test script. For example:
 
-    python $REPOS_DIR/functest/functest/opnfv_tests/OpenStack/vPing/vPing_ssh.py -d
+    python $REPOS_DIR/functest/functest/opnfv_tests/openstack/vPing/vPing_ssh.py -d
 
 
 Automated testing
@@ -282,38 +286,18 @@ The mechanism remains however as part of the CI evolution.
 CI provides some useful information passed to the container as environment
 variables:
 
- * Installer (apex|compass|daisy|fuel|joid), stored in INSTALLER_TYPE
+ * Installer (apex|compass|fuel|joid), stored in INSTALLER_TYPE
  * Installer IP of the engine or VM running the actual deployment, stored in INSTALLER_IP
  * The scenario [controller]-[feature]-[mode], stored in DEPLOY_SCENARIO with
 
-   * controller = (odl|onos|ocl|nosdn)
-   * feature = (ovs(dpdk)|kvm|sfc|bgpvpn|multisites)
+   * controller = (odl|ocl|nosdn|onos)
+   * feature = (ovs(dpdk)|kvm|sfc|bgpvpn|multisites|netready|ovs_dpdk_bar)
    * mode = (ha|noha)
 
 The constraints per test case are defined in the Functest configuration file
 */home/opnfv/repos/functest/functest/ci/testcases.yaml*::
 
  tiers:
-    -
-        name: healthcheck
-        order: 0
-        ci_loop: '(daily)|(weekly)'
-        description : >-
-            First tier to be executed to verify the basic
-            operations in the VIM.
-        testcases:
-            -
-                name: healthcheck
-                criteria: 'status == "PASS"'
-                blocking: true
-                description: >-
-                    This test case verifies the basic OpenStack services like
-                    Keystone, Glance, Cinder, Neutron and Nova.
-
-                dependencies:
-                    installer: ''
-                    scenario: ''
-
    -
         name: smoke
         order: 1
@@ -343,13 +327,14 @@ We may distinguish 2 levels in the test case description:
 
 At the tier level, we define the following parameters:
 
- * ci_loop: indicate if in automated mode, the test case must be run in daily and/or weekly jobs
+ * ci_loop: indicate if in automated mode, the test case must be run in dail and/or weekly jobs
  * description: a high level view of the test case
 
 For a given test case we defined:
   * the name of the test case
   * the criteria (experimental): a criteria used to declare the test case as PASS or FAIL
   * blocking: if set to true, if the test is failed, the execution of the following tests is canceled
+  * clean_flag: shall the functect internal mechanism be invoked after the test
   * the description of the test case
   * the dependencies: a combination of 2 regex on the scenario and the installer name
   * run: In Danube we introduced the notion of abstract class in order to harmonize the way to run internal, feature or vnf tests

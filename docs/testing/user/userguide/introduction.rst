@@ -22,15 +22,16 @@ validate the scenario for the release.
 +-------------+---------------+----------------+----------------------------------+
 | Domain      | Tier          | Test case      | Comments                         |
 +=============+===============+================+==================================+
-| VIM         | healthcheck   | healthcheck    | Verify basic operation in VIM    |
-|             |               +----------------+----------------------------------+
-|             |               | connection     | Check OpenStack connectivity     |
+| VIM         | healthcheck   | connection     | Check OpenStack connectivity     |
 |             |               | _check         | through SNAPS framework          |
 |             |               +----------------+----------------------------------+
 |             |               | api_check      | Check OpenStack API through      |
 |             |               |                | SNAPS framework                  |
+|             |               +----------------+----------------------------------+
+|             |               | snaps_health   |  basic instance creation, check  |
+|             |               | \_check        |  DHCP                            |
 |             +---------------+----------------+----------------------------------+
-|             | smoke         | vPing_SSH      | NFV "Hello World" using an SSH   |
+|             | smoke         | vping_ssh      | NFV "Hello World" using an SSH   |
 |             |               |                | connection to a destination VM   |
 |             |               |                | over a created floating IP       |
 |             |               |                | address on the SUT Public /      |
@@ -42,7 +43,7 @@ validate the scenario for the release.
 |             |               |                | VM on a specified IP address over|
 |             |               |                | the SUT Private Tenant network.  |
 |             |               +----------------+----------------------------------+
-|             |               | vPing_userdata | Uses Ping with given userdata    |
+|             |               | vping_userdata | Uses Ping with given userdata    |
 |             |               |                | to test intra-VM connectivity    |
 |             |               |                | over the SUT Private Tenant      |
 |             |               |                | network. The correct operation   |
@@ -60,6 +61,9 @@ validate the scenario for the release.
 |             |               +----------------+----------------------------------+
 |             |               | snaps_smoke    | Run a subset of the OpenStack    |
 |             |               |                | Rally Test Suite in smoke mode   |
+|             |               +----------------+----------------------------------+
+|             |               | refstack       | Reference RefStack suite         |
+|             |               |   \_defcore    | tempest selection for NFV        |
 |             +---------------+----------------+----------------------------------+
 |             | components    | tempest_full   | Generate and run a full set of   |
 |             |               | \_parallel     | the OpenStack Tempest Test Suite.|
@@ -71,6 +75,9 @@ validate the scenario for the release.
 |             |               | rally_full     | Run the OpenStack testing tool   |
 |             |               |                | benchmarking OpenStack modules   |
 |             |               |                | See the Rally documents `[3]`_.  |
+|             |               +----------------+----------------------------------+
+|             |               | tempest_custom | Allow to run a customized list   |
+|             |               |                | of Tempest cases                 |
 +-------------+---------------+----------------+----------------------------------+
 | Controllers | smoke         | odl            | Opendaylight Test suite          |
 |             |               |                | Limited test suite to check the  |
@@ -83,17 +90,27 @@ validate the scenario for the release.
 |             |               |                | functions.                       |
 |             |               |                | See `ONOSFW User Guide`_  for    |
 |             |               |                | details.                         |
+|             |               +----------------+----------------------------------+
+|             |               | odl_netvirt    | Test Suite for the OpenDaylight  |
+|             |               |                | SDN Controller when the NetVirt  |
+|             |               |                | features are installed. It       |
+|             |               |                | integrates some test suites from |
+|             |               |                | upstream using Robot as the test |
+|             |               |                | framework                        |
+|             |               +----------------+----------------------------------+
+|             |               | fds            | Test Suite for the OpenDaylight  |
+|             |               |                | SDN Controller when the GBP      |
+|             |               |                | features are installed. It       |
+|             |               |                | integrates some test suites from |
+|             |               |                | upstream using Robot as the test |
+|             |               |                | framework                        |
 +-------------+---------------+----------------+----------------------------------+
-| Features    | features      | promise        | Resource reservation and         |
-|             |               |                | management project to identify   |
-|             |               |                | NFV related requirements and     |
-|             |               |                | realize resource reservation for |
-|             |               |                | future usage by capacity         |
-|             |               |                | management of resource pools     |
-|             |               |                | regarding compute, network and   |
-|             |               |                | storage.                         |
-|             |               |                | See `Promise User Guide`_ for    |
-|             |               |                | details.                         |
+| Features    | features      | bgpvpn         | Implementation of the OpenStack  |
+|             |               |                | bgpvpn API from the SDNVPN       |
+|             |               |                | feature project. It allows for   |
+|             |               |                | the creation of BGP VPNs.        |
+|             |               |                | See `SDNVPN User Guide`_ for     |
+|             |               |                | details                          |
 |             |               +----------------+----------------------------------+
 |             |               | doctor         | Doctor platform, as of Colorado  |
 |             |               |                | release, provides the three      |
@@ -106,25 +123,6 @@ validate the scenario for the release.
 |             |               |                | See `Doctor User Guide`_ for     |
 |             |               |                | details                          |
 |             |               +----------------+----------------------------------+
-|             |               | bgpvpn         | Implementation of the OpenStack  |
-|             |               |                | bgpvpn API from the SDNVPN       |
-|             |               |                | feature project. It allows for   |
-|             |               |                | the creation of BGP VPNs.        |
-|             |               |                | See `SDNVPN User Guide`_ for     |
-|             |               |                | details                          |
-|             |               +----------------+----------------------------------+
-|             |               | security_scan  | Implementation of a simple       |
-|             |               |                | security scan. (Currently        |
-|             |               |                | available only for the Apex      |
-|             |               |                | installer environment)           |
-|             |               +----------------+----------------------------------+
-|             |               | onos-sfc       | SFC testing for onos scenarios   |
-|             |               |                | See `ONOSFW User Guide`_ for     |
-|             |               |                | details                          |
-|             |               +----------------+----------------------------------+
-|             |               | odl-sfc        | SFC testing for odl scenarios    |
-|             |               |                | See `SFC User Guide`_ for details|
-|             |               +----------------+----------------------------------+
 |             |               | domino         | Domino provides TOSCA template   |
 |             |               |                | distribution service for network |
 |             |               |                | service and VNF descriptors      |
@@ -134,21 +132,41 @@ validate the scenario for the release.
 |             |               |                | See `Domino User Guide`_ for     |
 |             |               |                | details                          |
 |             |               +----------------+----------------------------------+
-|             |               | copper         | Copper develops OPNFV platform   |
-|             |               |                | support for policy management,   |
-|             |               |                | using open source projects such  |
-|             |               |                | as OpenStack Congress, focused   |
-|             |               |                | on helping ensure that virtual   |
-|             |               |                | infrastructure and the apps that |
-|             |               |                | execute on it comply with the    |
-|             |               |                | configuration policy intent of   |
-|             |               |                | service providers, developers,   |
-|             |               |                | and end users. See more detail   |
-|             |               |                | in the `Copper User Guide`_.     |
-|             |               +----------------+----------------------------------+
 |             |               | multisites     | Multisites                       |
 |             |               |                | See `Multisite User Guide`_ for  |
 |             |               |                | details                          |
+|             |               +----------------+----------------------------------+
+|             |               | netready       | Testing from netready project    |
+|             |               |                | ping using gluon                 |
+|             |               +----------------+----------------------------------+
+|             |               | odl-sfc        | SFC testing for odl scenarios    |
+|             |               |                | See `SFC User Guide`_ for details|
+|             |               +----------------+----------------------------------+
+|             |               | parser         | Parser is an integration project |
+|             |               |                | which aims to provide            |
+|             |               |                | placement/deployment templates   |
+|             |               |                | translation for OPNFV platform,  |
+|             |               |                | including TOSCA -> HOT, POLICY ->|
+|             |               |                | TOSCA and YANG -> TOSCA. it      |
+|             |               |                | deals with a fake vRNC.          |
+|             |               |                | See `Parser User Guide`_ for     |
+|             |               |                | details                          |
+|             |               +----------------+----------------------------------+
+|             |               | promise        | Resource reservation and         |
+|             |               |                | management project to identify   |
+|             |               |                | NFV related requirements and     |
+|             |               |                | realize resource reservation for |
+|             |               |                | future usage by capacity         |
+|             |               |                | management of resource pools     |
+|             |               |                | regarding compute, network and   |
+|             |               |                | storage.                         |
+|             |               |                | See `Promise User Guide`_ for    |
+|             |               |                | details.                         |
+|             |               +----------------+----------------------------------+
+|             |               | security_scan  | Implementation of a simple       |
+|             |               |                | security scan. (Currently        |
+|             |               |                | available only for the Apex      |
+|             |               |                | installer environment)           |
 +-------------+---------------+----------------+----------------------------------+
 | VNF         | vnf           | cloudify_ims   | Example of a real VNF deployment |
 |             |               |                | to show the NFV capabilities of  |
@@ -158,18 +176,10 @@ validate the scenario for the release.
 |             |               |                | It provides a fully functional   |
 |             |               |                | VoIP System                      |
 |             |               +----------------+----------------------------------+
-|             |               | opera_ims      | vIMS deployment using openBaton  |
+|             |               | orchestra_ims  | OpenIMS deployment using         |
+|             |               |                | Openbaton orchestrator           |
 |             |               +----------------+----------------------------------+
-|             |               | orchestra_ims  | vIMS deployment using open-O     |
-+             +---------------+----------------+----------------------------------+
-|             |               | parser         | Parser is an integration project |
-|             |               |                | which aims to provide            |
-|             |               |                | placement/deployment templates   |
-|             |               |                | translation for OPNFV platform,  |
-|             |               |                | including TOSCA -> HOT, POLICY ->|
-|             |               |                | TOSCA and YANG -> TOSCA.         |
-|             |               |                | See `Parser User Guide`_ for     |
-|             |               |                | details                          |
+|             |               | vyos_vrouter   | vRouter testing                  |
 +-------------+---------------+----------------+----------------------------------+
 
 
@@ -185,7 +195,7 @@ In Danube, we merged smoke and sdn controller tiers in smoke tier.
 
 An overview of the Functest Structural Concept is depicted graphically below:
 
-.. figure:: ../images/concepts_mapping_final.png
+.. figure:: ../../../images/concepts_mapping_final.png
    :align: center
    :alt: Functest Concepts Structure
 
@@ -203,8 +213,7 @@ NoSQL database. The goal is to populate the database with results from different
 sources and scenarios and to show them on a `Functest Dashboard`_. A screenshot
 of a live Functest Dashboard is shown below:
 
-** TODO **
-.. figure:: ../images/FunctestDashboardDanube.png
+.. figure:: ../../../images/FunctestDashboardDanube.png
    :align: center
    :alt: Functest Dashboard
 
