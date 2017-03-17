@@ -2,8 +2,8 @@ tenant_images:
     ubuntu_14.04: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
     openims: http://marketplace.openbaton.org:8082/api/v1/images/52e2ccc0-1dce-4663-894d-28aab49323aa/img
 openbaton:
-    bootstrap_link: http://get.openbaton.org/bootstrap
-    bootstrap_config_link: http://get.openbaton.org/bootstrap-config-file
+    bootstrap_link: http://get.openbaton.org/bootstraps/bootstrap_3.2.0_opnfv/bootstrap
+    bootstrap_config_link: http://get.openbaton.org/bootstraps/bootstrap_3.2.0_opnfv/bootstrap-config-file
     marketplace_link: http://marketplace.openbaton.org:8082/api/v1/nsds/fokus/OpenImsCore/3.2.0/json
     imagename: ubuntu_14.04
 vIMS:
