@@ -323,26 +323,14 @@ been correctly configured to work together. Check Neutron configuration
 files, accounts, IP addresses etc.).
 
 
-ONOS
-^^^^
-
-Please refer to the ONOS documentation. `ONOSFW User Guide`_ .
-
-
 Features
 --------
 
 Please refer to the dedicated feature user guides for details.
 
 
-security_scan
-^^^^^^^^^^^^^
 
-See OpenSCAP web site: https://www.open-scap.org/
-
-
-
-NFV
+VNF
 ---
 
 cloudify_ims
@@ -377,11 +365,6 @@ described in the following table:
 | the VM                            | the vIMS VNF installation fails    |
 +-----------------------------------+------------------------------------+
 
-
-parser
-^^^^^^
-
-For now log info is the only way to do trouble shooting
 
 
 .. _`OPNFV Functest Developer Guide`:  http://artifacts.opnfv.org/functest/docs/devguide/#
