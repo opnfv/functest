@@ -62,18 +62,18 @@ Functest internal test cases
 ============================
 The internal test cases in Danube are:
 
- * healthcheck
- * connection_check
+
  * api_check
+ * cloudify_ims
+ * connection_check
  * vping_ssh
  * vping_userdata
  * odl
- * snaps_smoke
- * tempest_smoke_serial
- * rally_sanity
- * tempest_full_parallel
  * rally_full
- * cloudify_ims
+ * rally_sanity
+ * snaps_health_check
+ * tempest_full_parallel
+ * tempest_smoke_serial
 
 By internal, we mean that this particular test cases have been
 developped and/or integrated by functest contributors and the associated
@@ -86,7 +86,7 @@ The main internal test cases are in the opnfv_tests subfolder of the
 repository, the internal test cases are:
 
  * sdn: odl, onos
- * openstack: healthcheck, vping_ssh, vping_userdata, tempest_*, rally_*, connection_check, api_check, snaps_smoke
+ * openstack: api_check, connection_check, snaps_health_check, vping_ssh, vping_userdata, tempest_*, rally_*, snaps_smoke
  * vnf: cloudify_ims
 
 If you want to create a new test case you will have to create a new
@@ -99,19 +99,22 @@ especially the feature projects.
 
 The external test cases are:
 
- * promise
- * doctor
- * onos
  * bgpvpn
- * copper
- * security_scan
- * sfc-odl
- * sfc-onos
- * parser
+ * doctor
  * domino
+ * odl-netvirt
+ * onos
+ * fds
  * multisite
- * opera_ims
+ * netready
  * orchestra_ims
+ * parser
+ * promise
+ * refstack_defcore
+ * security_scan
+ * snaps_smoke
+ * sfc-odl
+ * vyos_vrouter
 
 
 The code to run these test cases may be directly in the repository of
@@ -270,232 +273,13 @@ the API will return an error message.
 An additional method dashboard has been added to post-process
 the raw results in release Brahmaputra (deprecated in Colorado).
 
-The data model is very basic, 4 objects are created:
+The data model is very basic, 5 objects are created:
 
   * Pods
   * Projects
   * Testcases
   * Results
-
-Pods::
-
-  {
-    "id": <ID>,
-    "details": <URL description of the POD>,
-    "creation_date": "YYYY-MM-DD HH:MM:SS",
-    "name": <The POD Name>,
-    "mode": <metal or virtual>,
-    "role": <ci-pod or community-pod or single-node>
-  },
-
-Projects::
-
-  {
-    "id": <ID>,
-    "name": <Name of the Project>,
-    "creation_date": "YYYY-MM-DD HH:MM:SS",
-    "description": <Short description>
-  },
-
-Testcases::
-
-  {
-    "id": <ID>,
-    "name":<Name of the test case>,
-    "project_name":<Name of belonged project>,
-    "creation_date": "YYYY-MM-DD HH:MM:SS",
-    "description": <short description>,
-    "url":<URL for longer description>
-  },
-
-Results::
-
-  {
-    "_id": <ID>,
-    "case_name": <Reference to the test case>,
-    "project_name": <Reference to project>,
-    "pod_name": <Reference to POD where the test was executed>,
-    "installer": <Installer Apex or Compass or Fuel or Joid>,
-    "version": <master or Colorado or Brahmaputra>,
-    "start_date": "YYYY-MM-DD HH:MM:SS",
-    "stop_date": "YYYY-MM-DD HH:MM:SS",
-    "build_tag": <such as "jenkins-functest-fuel-baremetal-daily-master-108">,
-    "scenario": <Scenario on which the test was executed>,
-    "criteria": <PASS or FAILED>,
-    "trust_indicator": {
-                        "current": 0,
-                        "histories": []
-                       }
-  }
-
-The API can described as follows. For detailed information, please go to
-
- http://testresults.opnfv.org/test/swagger/spec.html
-
- Authentication: opnfv/api@opnfv
-
-Version:
-
- +--------+--------------------------+-----------------------------------------+
- | Method | Path                     | Description                             |
- +========+==========================+=========================================+
- | GET    | /versions                | Get all supported API versions          |
- +--------+--------------------------+-----------------------------------------+
-
-
-Pods:
-
- +--------+----------------------------+-----------------------------------------+
- | Method | Path                       | Description                             |
- +========+============================+=========================================+
- | GET    | /api/v1/pods               | Get the list of declared Labs (PODs)    |
- +--------+----------------------------+-----------------------------------------+
- | POST   | /api/v1/pods               | Declare a new POD                       |
- |        |                            | Content-Type: application/json          |
- |        |                            | {                                       |
- |        |                            | "name": "pod_foo",                      |
- |        |                            | "mode": "metal",                        |
- |        |                            | "role": "ci-pod",                       |
- |        |                            | "details": "it is a ci pod"             |
- |        |                            | }                                       |
- +--------+----------------------------+-----------------------------------------+
- | GET    | /api/v1/pods/{pod_name}    | Get a declared POD                      |
- +--------+----------------------------+-----------------------------------------+
-
-Projects:
-
- +--------+----------------------------+-----------------------------------------+
- | Method | Path                       | Description                             |
- +========+============================+=========================================+
- | GET    | /api/v1/projects           | Get the list of declared projects       |
- +--------+----------------------------+-----------------------------------------+
- | POST   | /api/v1/projects           | Declare a new test project              |
- |        |                            | Content-Type: application/json          |
- |        |                            | {                                       |
- |        |                            | "name": "project_foo",                  |
- |        |                            | "description": "whatever you want"      |
- |        |                            | }                                       |
- +--------+----------------------------+-----------------------------------------+
- | DELETE | /api/v1/projects/{project} | Delete a test project                   |
- +--------+----------------------------+-----------------------------------------+
- | GET    | /api/v1/projects/{project} | Get details on a {project}              |
- |        |                            |                                         |
- +--------+----------------------------+-----------------------------------------+
- | PUT    | /api/v1/projects/{project} | Update a test project                   |
- |        |                            |                                         |
- |        |                            | Content-Type: application/json          |
- |        |                            | {                                       |
- |        |                            | <the field(s) you want to modify>       |
- |        |                            | }                                       |
- +--------+----------------------------+-----------------------------------------+
-
-
-Testcases:
-
- +--------+----------------------------+-----------------------------------------+
- | Method | Path                       | Description                             |
- +========+============================+=========================================+
- | GET    | /api/v1/projects/{project}/| Get the list of testcases of {project}  |
- |        | cases                      |                                         |
- +--------+----------------------------+-----------------------------------------+
- | POST   | /api/v1/projects/{project}/| Add a new test case to {project}        |
- |        | cases                      | Content-Type: application/json          |
- |        |                            | {                                       |
- |        |                            | "name": "case_foo",                     |
- |        |                            | "description": "whatever you want"      |
- |        |                            | "url": "whatever you want"              |
- |        |                            | }                                       |
- +--------+----------------------------+-----------------------------------------+
- | DELETE | /api/v1/projects/{project}/| Delete a test case                      |
- |        | cases/{case}               |                                         |
- +--------+----------------------------+-----------------------------------------+
- | GET    | /api/v1/projects/{project}/| Get a declared test case                |
- |        | cases/{case}               |                                         |
- +--------+----------------------------+-----------------------------------------+
- | PUT    | /api/v1/projects/{project}?| Modify a test case of {project}         |
- |        | cases/{case}               |                                         |
- |        |                            | Content-Type: application/json          |
- |        |                            | {                                       |
- |        |                            | <the field(s) you want to modify>       |
- |        |                            | }                                       |
- +--------+----------------------------+-----------------------------------------+
-
-Results:
-
- +--------+----------------------------+------------------------------------------+
- | Method | Path                       | Description                              |
- +========+============================+==========================================+
- | GET    | /api/v1/results            | Get all the test results                 |
- +--------+----------------------------+------------------------------------------+
- | POST   | /api/v1/results            | Add a new test results                   |
- |        |                            | Content-Type: application/json           |
- |        |                            | {                                        |
- |        |                            | "project_name": "project_foo",           |
- |        |                            | "scenario": "odl-l2",                    |
- |        |                            | "stop_date": "2016-05-28T14:42:58.384Z", |
- |        |                            | "trust_indicator": 0.5,                  |
- |        |                            | "case_name": "vPing",                    |
- |        |                            | "build_tag": "",                         |
- |        |                            | "version": "Colorado",                   |
- |        |                            | "pod_name": "pod_foo",                   |
- |        |                            | "criteria": "PASS",                      |
- |        |                            | "installer": "fuel",                     |
- |        |                            | "start_date": "2016-05-28T14:41:58.384Z",|
- |        |                            | "details": <your results>                |
- |        |                            | }                                        |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | Get the test results of {case}           |
- |        | case={case}                |                                          |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | Get the test results of build_tag        |
- |        | build_tag={tag}            | {tag}.                                   |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | Get last {N} records of test results     |
- |        | last={N}                   |                                          |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | Get the test results of scenario         |
- |        | scenario={scenario}        | {scenario}.                              |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | Get the test results of trust_indicator  |
- |        | trust_indicator={ind}      | {ind}.                                   |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | Get the test results of last days        |
- |        | period={period}            | {period}.                                |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | Get the test results of {project}        |
- |        | project={project}          |                                          |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | Get the test results of version          |
- |        | version={version}          | {version}.                               |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | Get the test results of criteria         |
- |        | criteria={criteria}        | {criteria}.                              |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | get the results on pod {pod}             |
- |        | pod={pod}                  |                                          |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | Get the test results of installer {inst} |
- |        | installer={inst}           |                                          |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results?           | Get the results according to combined    |
- |        | <query conditions>         | query conditions supported above         |
- +--------+----------------------------+------------------------------------------+
- | GET    | /api/v1/results/{result_id}| Get the test result by result_id         |
- +--------+----------------------------+------------------------------------------+
-
-Scenarios:
-
-  +--------+----------------------------+-----------------------------------------+
-  | Method | Path                       | Description                             |
-  +========+============================+=========================================+
-  | GET    | /api/v1/scenarios          | Get the list of declared scenarios      |
-  +--------+----------------------------+-----------------------------------------+
-  | POST   | /api/v1/scenario           | Declare a new scenario                  |
-  +--------+----------------------------+-----------------------------------------+
-  | GET    | /api/v1/scenario?          | Get a declared scenario                 |
-  |        | <query conditions>         |                                         |
-  +--------+----------------------------+-----------------------------------------+
-
+  * Scenarios
 
 The code of the API is hosted in the releng repository `[6]`_.
 The static documentation of the API can be found at `[17]`_.
@@ -574,6 +358,7 @@ Please note that currently token authorization is implemented but is not yet ena
    +---------------------+---------+---------+---------+---------+
    | copper              |    X    |         |         |    X    |
    +---------------------+---------+---------+---------+---------+
+   src: colorado (see release note for the last matrix version)
 
   All the testcases listed in the table are runnable on
   os-odl_l2-nofeature scenarios.
@@ -941,6 +726,104 @@ You can also reuse a python function defined in functest_utils.py::
           return False
 
 
+Where can I find the documentation on the test API?
+===================================================
+
+http://artifacts.opnfv.org/releng/docs/testapi.html
+
+
+How to exclude Tempest case from default Tempest smoke suite?
+=============================================================
+
+Tempest default smoke suite deals with 165 test cases.
+Since Colorado the success criteria is 100%, i.e. if 1 test is failed the
+success criteria is not matched for the scenario.
+
+For some scenarios however, it may be necessary to exclude some test cases from
+the list of the test cases to be executed.
+
+A file has been created for such operation: https://git.opnfv.org/cgit/functest/tree/functest/opnfv_tests/openstack/tempest/custom_tests/blacklist.txt.
+
+It can be described as follows::
+
+    -
+        scenarios:
+            - os-odl_l2-bgpvpn-ha
+            - os-odl_l2-bgpvpn-noha
+        installers:
+            - fuel
+            - apex
+        tests:
+            - tempest.api.compute.servers.test_create_server.ServersTestJSON.test_list_servers
+            - tempest.api.compute.servers.test_create_server.ServersTestJSON.test_verify_server_details
+            - tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_list_servers
+            - tempest.api.compute.servers.test_create_server.ServersTestManualDisk.test_verify_server_details
+            - tempest.api.compute.servers.test_server_actions.ServerActionsTestJSON.test_reboot_server_hard
+            - tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_network_basic_ops
+            - tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops
+            - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern.test_volume_boot_pattern
+            - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPatternV2.test_volume_boot_pattern
+
+Please note that each exclusion must be justified. the goal is not to exclude
+test cases because they do not pass. Several scenarios reached the 100% criteria.
+So it is expected in the patch submited to exclude the cases to indicate the
+reasons of the exclusion.
+
+
+How do I know the Functest status of a scenario?
+================================================
+
+A Functest automatic reporting page is generated daily.
+This page is dynamically created through a cron job and is based on the results
+stored in the Test DB.
+You can access this reporting page: http://testresults.opnfv.org/reporting
+
+See https://wiki.opnfv.org/pages/viewpage.action?pageId=6828617 for details.
+
+
+I have tests, to which category should I declare them?
+======================================================
+
+CATEGORIES/TIERS description:
+
++----------------+-------------------------------------------------------------+
+| healthcheck    | Simple OpenStack healtcheck tests case that validates the   |
+|                | basic operations in OpenStack                               |
++----------------+-------------------------------------------------------------+
+|   Smoke	       | Set of smoke test cases/suites to validate the most common  |
+|                | OpenStack and SDN Controller operations                     |
++----------------+-------------------------------------------------------------+
+|   Features	   | Test cases that validate a specific feature on top of OPNFV.|
+|                | Those come from Feature projects and need a bit of support  |
+|                | for integration                                             |
++----------------+-------------------------------------------------------------+
+|	Components	   | Advanced Openstack tests: Full Tempest, Full Rally          |
++----------------+-------------------------------------------------------------+
+|	Performance	   | Out of Functest Scope                                       |
++----------------+-------------------------------------------------------------+
+|	VNF	           | Test cases related to deploy an open source VNF including   |
+|                | an orchestrator                                             |
++----------------+-------------------------------------------------------------+
+
+The main ambiguity could be between features and VNF.
+In fact sometimes you have to spawn VMs to demonstrate the capabilities of the
+feature you introduced.
+We recommend to declare your test in the feature category.
+
+VNF category is really dedicated to test including:
+
+ * creation of resources
+ * deployement of an orchestrator/VNFM
+ * deployment of the VNF
+ * test of the VNFM
+ * free resources
+
+The goal is not to study a particular feature on the infrastructure but to have
+a whole end to end test of a VNF automatically deployed in CI.
+Moreover VNF are run in weekly jobs (one a week), feature tests are in daily
+jobs and use to get a scenario score.
+
+
 ==========
 References
 ==========
@@ -989,4 +872,4 @@ _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_varia
 
 _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
 
-_`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/testcases/config_functest.yaml
+_`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/functest/ci/config_functest.yaml
