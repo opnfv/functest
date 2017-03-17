@@ -176,6 +176,11 @@ class RefstackClient(testcase_base.TestcaseBase):
 
     def main(self, **kwargs):
         try:
+            openstack_utils.source_credentials(CONST.openstack_creds)
+            self.defcore_env_prepare()
+        except Exception as e:
+            logger.error('Error with env prepare: %s', e)
+        try:
             tempestconf = kwargs['config']
             testlist = kwargs['testlist']
         except KeyError as e:
@@ -183,8 +188,6 @@ class RefstackClient(testcase_base.TestcaseBase):
                          "%s", e)
             return self.EX_RUN_ERROR
         try:
-            openstack_utils.source_credentials(CONST.openstack_creds)
-            self.defcore_env_prepare()
             self.run_defcore(tempestconf, testlist)
             res = testcase_base.TestcaseBase.EX_OK
         except Exception as e:
