@@ -40,4 +40,4 @@ resources:
     properties:
       volume_id: { get_resource: cinder_volume }
       instance_uuid: { get_resource: server}
-      mountpoint: /dev/vdc
+      mountpoint: /dev/vdb
