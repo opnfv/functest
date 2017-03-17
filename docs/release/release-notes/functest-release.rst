@@ -1,17 +1,20 @@
+.. This work is licensed under a Creative Commons Attribution 4.0 International License.
+.. SPDX-License-Identifier: CC-BY-4.0
+
 =======
 License
 =======
 
-OPNFV Colorado release note for Functest Docs
-(c) by Morgan Richomme (Orange)
+OPNFV Danube release note for Functest Docs
+(c) by Jose Lausuch (Ericsson)
 
-OPNFV Colorado release note for Functest Docs
+OPNFV Danube release note for Functest Docs
 are licensed under a Creative Commons Attribution 4.0 International License.
 You should have received a copy of the license along with this.
 If not, see <http://creativecommons.org/licenses/by/4.0/>.
 
 ===========================================
-OPNFV Colorado1.0 release note for Functest
+OPNFV Danube1.0 release note for Functest
 ===========================================
 
 Abstract
@@ -30,8 +33,11 @@ Version history
 | 2016-08-17 | 1.0.0    | Morgan Richomme  | Functest for Colorado  |
 |            |          | (Orange)         | release                |
 +------------+----------+------------------+------------------------+
+| 2017-03-27 | 4.0.0    | Jose Lausuch     | Functest for Danube    |
+|            |          | (Ericsson)       | release                |
++------------+----------+------------------+------------------------+
 
-OPNFV Colorado Release
+OPNFV Danube Release
 ======================
 
 Functest deals with functional testing of the OPNFV solution.
@@ -40,36 +46,44 @@ other OPNFV projects and other upstream communities.
 
 The internal test cases are:
 
- * healthcheck
- * vPing ssh
- * vPing userdata
- * Tempest Smoke Serial
- * Rally Sanity
- * ODL
- * Tempest full parallel
- * Rally full
- * vIMS
+ * connection_check
+ * api_check
+ * snaps_health_check
+ * vping_ssh
+ * vping_userdata
+ * tempest_smoke_serial
+ * refstack_defcore
+ * snaps_smoke
+ * rally_sanity
+ * odl
+ * tempest_full_parallel
+ * rally_full
+ * cloudify_ims
 
 The OPNFV projects integrated into Functest framework for automation are:
 
+ * barometer
  * bgpvpn
- * Copper
- * Doctor
- * Domino
- * Moon
- * Multisite
- * ONOSFW
- * ONOS-sfc
- * ODL-sfc
- * Parser
- * Promise
- * Security scan
+ * doctor
+ * domino
+ * fds
+ * multisite
+ * netready
+ * onos
+ * odl-sfc
+ * odl-netvirt
+ * orchestra_ims
+ * parser
+ * promise
+ * security scan
+ * vyos_vrouter
 
 The validation of a scenario requires a subset of these tests depending
 on the installer and the scenario.
 
-The 3 last internal test cases (tempest full parallel, Rally full and
-vIMS) are not considered for scenario validation.
+The test cases from vnf (cloudify_ims, orchestra_ims, vyos_vrouter) and
+component categories (tempest full parallel, Rally full) are not considered for
+scenario validation.
 
 Release Data
 ============
@@ -78,16 +92,16 @@ Release Data
 | **Project**                          | functest                             |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Repo/tag**                         | colorado.1.0                         |
+| **Repo/tag**                         | danube.1.0                           |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release designation**              | Colorado base release                |
+| **Release designation**              | Danube base release                  |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release date**                     | September 22 2016                    |
+| **Release date**                     | April 3rd 2017                       |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Purpose of the delivery**          | Colorado base release                |
+| **Purpose of the delivery**          | Danube base release                  |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
 
@@ -97,19 +111,19 @@ Deliverables
 Software
 --------
 
- - The Functest Docker image: https://hub.docker.com/r/opnfv/functest (tag: colorado.1.0)
+ - The Functest Docker image: https://hub.docker.com/r/opnfv/functest (tag: danube.1.0)
 
- - The TestAPI Docker image: https://hub.docker.com/r/opnfv/testapi (tag:colorado.1.0)
+ - The TestAPI Docker image: https://hub.docker.com/r/opnfv/testapi (tag:danube.1.0)
 
 
 Documents
 ---------
 
- - Installation/configuration guide: http://artifacts.opnfv.org/functest/colorado/docs/configguide/index.html
+ - Installation/configuration guide: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html
 
- - User Guide: http://artifacts.opnfv.org/functest/colorado/docs/userguide/index.html
+ - User Guide: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
 
- - Developer Guide: http://artifacts.opnfv.org/functest/colorado/docs/devguide/index.html
+ - Developer Guide: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/developer/devguide/index.html
 
 
 Version change
@@ -118,137 +132,140 @@ Version change
 Feature evolution
 -----------------
 
- - refactoring of ODL functional tests (with upstream modifications)
+- Adoption of SNAPS as middleware in 4 new test cases (connection_check, api_check,
+snaps_health_check and snaps_smoke)
 
- - refactoring of TestAPI (update, swagger documentation, dockerization)
+- Introduction of refstack suite
 
- - jenkins logs improvement
+- Support new odl suites (odl-netvirt, fds)
 
- - update integration of Doctor, Promise and SDNVPN  projects
+- Introduction of VNF onboarding capabilities
 
- - split Tempest and rally into 2 different tests: smoke and full
-
- - vIMS test suite integration
-
- - adoption of Kibana for dashboarding
+- Support of new feature projects (fds, netready, barometer, orchestra, vyos_vrouter)
 
 
-New features
-------------
 
- - Functest CLI to prepare and run the tests
+Framework
+---------
 
- - creation of the healthcheck test case
+ - Harmonization of the naming, better adoption of OpenStack coding conventions
 
- - support new scenarios (ocl, odl_l2-sfc, onos-sfc, lxd, moon, fdio, multisite)
+ - Pythonization, rewritting of bash scripts
 
- - integration of new OPNFV feature projects (copper, domino, multisite,
- moon, parser, onos-sfc, odl-sfc, security scan)
+ - Introduction of abstraction classes to ease and harmonize the integration of
+ test cases (internal or from feature projects)
 
- - introduction of test tiers in functest framework
+ - New management of logger, env variables and configuration files
 
- - automatic reporting
+ - Creation of unit tests on the whole framework to ensure stability
 
- - introduction of a jenkins summary table
+ - Creation or ARM Functest docker
 
- - support of ARM architecture
+
+Test API
+---------
+
+- automatic documentation (html & pdf)
+
+- full dockerization and automation of the deployment on testresults.opnfv.org
+
+- automation of test database backup on artifact
+
+
 
 
 Scenario Matrix
 ===============
 
-For Colorado 1.0, Functest was tested on the following scenarios (if not
-precised, the scenario is a HA scenario):
+For Danube 1.0, Functest was tested on the following HA scenarios (new
+dabube scenarios in bold):
 
 +---------------------+---------+---------+---------+---------+
 |    Scenario         |  Apex   | Compass |  Fuel   |   Joid  |
 +=====================+=========+=========+=========+=========+
 |   nosdn             |    X    |    X    |    X    |    X    |
 +---------------------+---------+---------+---------+---------+
-|   nosdn-noha        |         |         |    X    |    X    |
+| **fdio**            |    X    |         |         |         |
 +---------------------+---------+---------+---------+---------+
-|   kvm               |         |         |    X    |         |
+|   kvm               |    X    |         |    X    |         |
 +---------------------+---------+---------+---------+---------+
-|   kvm-noha          |         |         |    X    |         |
+| **kvm_ovs_dpdk**    |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+| **kvm_ovs_dpdk-bar**|         |         |    X    |         |
 +---------------------+---------+---------+---------+---------+
 |   lxd               |         |         |         |    X    |
 +---------------------+---------+---------+---------+---------+
-|   lxd-noha          |         |         |         |    X    |
+| **ovs**             |         |         |    X    |         |
 +---------------------+---------+---------+---------+---------+
-|   ovs-noha (dpdk)   |         |         |    X    |         |
+| **openo**           |         |    X    |         |         |
 +---------------------+---------+---------+---------+---------+
-|   odl_l2            |    X    |    X    |    X    |    X    |
+|   odl_l2            |         |    X    |   X     |    X    |
 +---------------------+---------+---------+---------+---------+
-|   odl_l2-noha       |         |         |    X    |         |
+|   odl-bgpvpn        |   X     |         |         |         |
 +---------------------+---------+---------+---------+---------+
-|   odl_l2-bgpvpn     |    X    |         |    X    |         |
+|   odl_l2-bgpvpn     |         |         |   X     |         |
 +---------------------+---------+---------+---------+---------+
-|   odl_l2-bgpvpn-noha|         |         |    X    |         |
+| **odl_l2-fdio**     |    X    |         |         |         |
 +---------------------+---------+---------+---------+---------+
-|   odl_l2-fdio-noha  |    X    |         |         |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l2-moon       |         |    X    |         |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l2-sfc-noha   |    X    |         |    X    |         |
+|   odl_l2-sfc        |         |         |    X    |         |
 +---------------------+---------+---------+---------+---------+
 |   odl_l3            |    X    |    X    |    X    |         |
 +---------------------+---------+---------+---------+---------+
-|   odl_l3-noha       |         |         |    X    |         |
+| **ocl**             |         |   X     |         |         |
 +---------------------+---------+---------+---------+---------+
-|   onos              |         |    X    |    X    |    X    |
-+---------------------+---------+---------+---------+---------+
-|   onos-noha         |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-|   onos-sfc          |         |    X    |    X    |    X    |
-+---------------------+---------+---------+---------+---------+
-|   onos-sfc-noha     |         |         |    X    |         |
+|   onos              |         |   X     |         |         |
 +---------------------+---------+---------+---------+---------+
 |   multisite         |         |         |    X    |         |
 +---------------------+---------+---------+---------+---------+
 
-For Colorado 2.0, the following scenarios have been re-released:
+Non HA scenarios:
 
 +---------------------+---------+---------+---------+---------+
 |    Scenario         |  Apex   | Compass |  Fuel   |   Joid  |
 +=====================+=========+=========+=========+=========+
-|   onos              |    X    |    X    |    X    |    X    |
+|   nosdn             |         |         |    X    |    X    |
 +---------------------+---------+---------+---------+---------+
-|   odl_l2-sfc-ha     |         |         |    X    |         |
+|   kvm               |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+| **kvm_ovs_dpdk**    |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+| **kvm_ovs_dpdk-bar**|         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   lxd               |         |         |         |    X    |
++---------------------+---------+---------+---------+---------+
+|   ovs               |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   odl_l2            |         |         |   X     |         |
++---------------------+---------+---------+---------+---------+
+|   odl_l2-bgpvpn     |         |         |   X     |         |
++---------------------+---------+---------+---------+---------+
+|   odl_l2-fdio       |    X    |         |         |         |
++---------------------+---------+---------+---------+---------+
+| **odl_l3-fdio**     |    X    |         |         |         |
++---------------------+---------+---------+---------+---------+
+|   odl_l2-sfc        |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+|   odl_l3            |         |         |    X    |         |
++---------------------+---------+---------+---------+---------+
+| **odl_gluon**       |    X    |         |         |         |
 +---------------------+---------+---------+---------+---------+
 
+Colorado deprecated scenarios:
 
-In Colorado, the functional tests have been sliced in 6 different
-categories:
+ * odl_l2-moon
+ * onos-sfc
+ * onos-noha
+ * onos-sfc-noha
 
-+----------------+-----------------------------------------------+
-| Category       |  Description                                  |
-+================+===============================================+
-| healthcheck    | Basic OpenStack commands                      |
-+----------------+-----------------------------------------------+
-| smoke          | vPings, Tempest and rally smoke tests         |
-+----------------+-----------------------------------------------+
-| sdn_suites     | Specific SDN feature tests                    |
-+----------------+-----------------------------------------------+
-| features       | OPNFV feature project functional test suites  |
-+----------------+-----------------------------------------------+
-| openstack      | Advanced, long duration OpenStack tests       |
-|                | (Tempest and Rally full suite). Each test may |
-|                | last several hours                            |
-+----------------+-----------------------------------------------+
-| vnf            | Complex scenarios dealing with orchestration, |
-|                | VNF deployment and tests (e.g. vIMS)          |
-+----------------+-----------------------------------------------+
-
-For the scenario validation, we consider only the healthcheck, smoke,
-sdn_suites and features categories. These tests are run systematically
-in the CI daily loops.
+For the scenario validation, we consider only the healthcheck, smoke and
+features categories. These tests are run systematically in the CI daily loops.
 
 Success criteria have been defined for these test cases, they can be
 PASS/FAIL or a success rate may be declared (100%, > 90%)
 All the criteria, as well as the test dependencies are declared in the
 ci/testcases.yaml file.
 
-The scoring for the Colorado release per installer can be described as
+The scoring for the Danube release per installer can be described as
 follows.
 
 The scoring is an indicator showing how many feature project test suites
@@ -266,7 +283,7 @@ By default, if not specified, the scenarios are HA.
 HA means OpenStack High Availability (main services). Note that not
 all VIM (e.g. OpenStack) services are deployed in HA mode, as that
 depends upon support of the specific service for HA deployment.
-For example, in the Colorado release, the Congress service
+For example, in the Danube release, the Congress service
 is deployed in non-HA mode even for HA OPNFV scenarios, as explicit
 support for HA operation has not yet been verified.
 See the release notes of the installers for more details.
@@ -279,6 +296,7 @@ Apex
 |  Scenario        | Scoring | Success |    Results        |
 |                  |         | rate    |                   |
 +==================+=========+=========+===================+
+************* TODO *****************************************
 | nosdn            |  17/18  |   95%   | `apex-res-174`_   |
 +------------------+---------+---------+-------------------+
 | odl_l2           |  21/21  |   100%  | `apex-res-175`_   |
@@ -302,6 +320,7 @@ Compass
 |  Scenario        | Scoring | Success |  Results          |
 |                  |         | rate    |                   |
 +==================+=========+=========+===================+
+************* TODO *****************************************
 | nosdn            |  12/12  |   100%  | `compass-res-55`_ |
 +------------------+---------+---------+-------------------+
 | odl_l2           |  15/15  |   100%  | `compass-res-59`_ |
@@ -315,7 +334,7 @@ Compass
 | onos-sfc-ha      |  17/18  |    95%  | `compass-res-76`_ |
 +------------------+---------+---------+-------------------+
 
-Note: all the Compass tests for Colorado have been executed on virtual
+Note: all the Compass tests for Danube have been executed on virtual
 environment. Bare metal resources were used for Master branch.
 
 
@@ -326,6 +345,7 @@ Fuel
 |  Scenario           | Scoring | Success |  Results          |
 |                     |         | rate    |                   |
 +=====================+=========+=========+===================+
+************* TODO *****************************************
 | nosdn               |  18/18  |  100%   | `fuel-res-129`_   |
 +---------------------+---------+---------+-------------------+
 | nosdn-noha          |  15/15  |  100%   | `fuel-res-154`_   |
@@ -367,12 +387,13 @@ Fuel
 
 *: all results passed, lacking iterations to reach the full score
 
-Results of Functest on AArch64 Colorado 3.0
+Results of Functest on AArch64 Danube 3.0
 
 +---------------------+---------+---------+----------------------+
 |  Scenario           | Scoring | Success |  Results             |
 |                     |         | rate    |                      |
 +=====================+=========+=========+======================+
+************* TODO *****************************************
 | nosdn               |  18/18  |  100%   | `fuel-arm-res-128`_  |
 +---------------------+---------+---------+----------------------+
 | odl_l2              |  21/21  |  100%   | `fuel-arm-res-122`_  |
@@ -390,6 +411,7 @@ Joid
 |  Scenario           | Scoring | Success |  Results        |
 |                     |         | rate    |                 |
 +=====================+=========+=========+=================+
+************* TODO *****************************************
 | nosdn               |  18/18  |  100%   | `joid-res-102`_ |
 +---------------------+---------+---------+-----------------+
 | nosdn-noha          |  17/18  |   95%   | `joid-res-93`_  |
@@ -416,13 +438,15 @@ for the date of the test you are interested in.
 
 The reporting pages can be found at:
 
- * apex: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-apex.html
- * compass: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-compass.html
- * fuel: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-fuel.html
- * joid: http://testresults.opnfv.org/reporting/functest/release/colorado/index-status-joid.html
+ * apex: http://testresults.opnfv.org/reporting/functest/release/danube/index-status-apex.html
+ * compass: http://testresults.opnfv.org/reporting/functest/release/danube/index-status-compass.html
+ * fuel: http://testresults.opnfv.org/reporting/functest/release/danube/index-status-fuel.html
+ * joid: http://testresults.opnfv.org/reporting/functest/release/danube/index-status-joid.html
 
-Colorado known restrictions/issues
+Danube known restrictions/issues
 ==================================
+
+************* TODO *****************************************
 
 +-----------+-----------+----------------------------------------------+
 | Installer | Scenario  |  Issue                                       |
@@ -443,42 +467,18 @@ Colorado known restrictions/issues
 |           |           | Rally sanity test case has been disabled.    |
 |           |           | Performance issues seem to be connected to   |
 |           |           | the ODL version. It is planned to reintroduce|
-|           |           | Rally sanity in Colorado 2.0 with the        |
+|           |           | Rally sanity in Danube 2.0 with the          |
 |           |           | adoption of ODL Boron release.               |
 +-----------+-----------+----------------------------------------------+
-| apex      | *-fdio    | Due to late integration, fdio decided to     |
-|           |           | focus on mandatory tests and exclude feature |
-|           |           | tests (copper, doctor, security_scan) from   |
-|           |           | its scenarios                                |
-+-----------+-----------+----------------------------------------------+
-| compass   | moon      | First ODL test FAILS because ODL/Openstack   |
-|           |           | federation done in moon is partial. Only     |
-|           |           | MD-SAL is federated (not AD-SAL)             |
-+-----------+-----------+----------------------------------------------+
-| fuel      | any       | TestServerBasicOps test case skipped         |
-|           |           | https://gerrit.opnfv.org/gerrit/#/c/19635/   |
-+-----------+-----------+----------------------------------------------+
-| fuel      | kvm       | vPing_ssh and vIMS excluded (metadata related|
-|           |           | scenarios)                                   |
-+-----------+-----------+----------------------------------------------+
-| fuel      | multisite | random errors running multisite. A known bug |
-|           |           | in keystone mitaka, due to which memcache    |
-|           |           | raises exception and keystone becomes        |
-|           |           | unresponsive                                 |
-|           |           | bugs.launchpad.net/keystone/+bug/1600394     |
-|           |           | workaround consists in restarting memcache on|
-|           |           | server                                       |
+| fuel      | odl       | TestServerBasicOps test case skipped         |
+|           |           | Tempest ssh client is hanging on opendaylight|
+|           |           | enabled envs (getting deadlock in paramiko   |
+|           |           | recv_exit_status method) while trying to     |
+|           |           | execute a command on a vm.                   |
 +-----------+-----------+----------------------------------------------+
 | joid      | any       | Tempest cases related to object storage      |
 |           |           | excluded                                     |
 |           |           | https://gerrit.opnfv.org/gerrit/#/c/17871/   |
-+-----------+-----------+----------------------------------------------+
-| joid      | domino    | Domino tests are skipped in CI. However the  |
-|           |           | test case can be run by manually setting     |
-|           |           | IS_IPandKEY_CONFIGURED=true after manually   |
-|           |           | setting properly the IP addresses of the 3   |
-|           |           | Controller nodes in the configuration file   |
-|           |           | /repos/domino/tests/run_multinode.sh         |
 +-----------+-----------+----------------------------------------------+
 
 
@@ -509,11 +509,9 @@ Open JIRA tickets
 +------------------+-----------------------------------------------+
 |   JIRA           |         Description                           |
 +==================+===============================================+
-| `FUNCTEST-446`_  |  Cleanup ODL-SFC output in Functest execution |
-|                  |  Impact on odl_l2-sfc scenarios               |
-+------------------+-----------------------------------------------+
-| `FUNCTEST-454`_  |  Cleanup failures when using HA networks in   |
-|                  |  Neutron                                      |
+************* TODO *****************************************
+|                  |                                               |
+|                  |                                               |
 +------------------+-----------------------------------------------+
 
 Useful links
@@ -521,7 +519,7 @@ Useful links
 
  - wiki project page: https://wiki.opnfv.org/opnfv_functional_testing
 
- - wiki Functest Colorado page: https://wiki.opnfv.org/display/functest/Functest+Colorado
+ - wiki Functest Danube page: https://wiki.opnfv.org/display/functest/Functest+Danube
 
  - Functest repo: https://git.opnfv.org/cgit/functest
 
@@ -531,107 +529,6 @@ Useful links
 
  - Functest IRC chan: #opnfv-functest
 
- - Functest reporting: http://testresults.opnfv.org/reporting
+ - Reporting page: http://testresults.opnfv.org/reporting/danube.html
 
- - Functest test configuration: https://git.opnfv.org/cgit/functest/tree/ci/testcases.yaml
-
- - Functest Colorado user guide: http://artifacts.opnfv.org/functest/colorado/docs/userguide/index.html
-
- - Functest installation/configuration guide: http://artifacts.opnfv.org/functest/colorado/docs/configguide/index.html
-
- - Functest developer guide: http://artifacts.opnfv.org/functest/colorado/docs/devguide/index.html
-
-.. _`FUNCTEST-446` : https://jira.opnfv.org/browse/FUNCTEST-446
-
-.. _`FUNCTEST-454` : https://jira.opnfv.org/browse/FUNCTEST-454
-
-.. _`apex-res-6` : http://testresults.opnfv.org/test/api/v1/results?build_tag=bd-push-daily-colorado-6
-
-.. _`apex-res-174` : http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-174
-
-.. _`apex-res-175`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-175
-
-.. _`apex-res-176`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-176
-
-.. _`apex-res-217`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-217
-
-.. _`apex-res-235`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-235
-
-.. _`apex-res-423`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-colorado-daily-colorado-423
-
-.. _`compass-res-55`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-colorado-55
-
-.. _`compass-res-59`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-colorado-59
-
-.. _`compass-res-73`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-colorado-73
-
-.. _`compass-res-76`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-colorado-76
-
-.. _`compass-res-77`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-colorado-77
-
-.. _`compass-res-567`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-master-567
-
-.. _`compass-res-285`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-master-285
-
-.. _`fuel-res-8`: https://build.opnfv.org/ci/view/functest/job/functest-fuel-virtual-suite-colorado/lastSuccessfulBuild/console
-
-.. _`fuel-res-115`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-115
-
-.. _`fuel-res-117`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-117
-
-.. _`fuel-res-119`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-119
-
-.. _`fuel-res-123`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-123
-
-.. _`fuel-res-124`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-124
-
-.. _`fuel-res-128`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-128
-
-.. _`fuel-res-129`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-colorado-129
-
-.. _`fuel-res-154`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-154
-
-.. _`fuel-res-155`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-155
-
-.. _`fuel-res-160`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-160
-
-.. _`fuel-res-161`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-161
-
-.. _`fuel-res-162`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-162
-
-.. _`fuel-res-164`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-164
-
-.. _`fuel-res-166`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-166
-
-.. _`fuel-res-213`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-213
-
-.. _`fuel-res-219`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-219
-
-.. _`fuel-res-376`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-376
-
-.. _`fuel-res-492`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-colorado-492
-
-.. _`fuel-arm-res-128`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/128/console
-
-.. _`fuel-arm-res-122`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/122/console
-
-.. _`fuel-arm-res-129`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/129/console
-
-.. _`fuel-arm-res-135`: https://build.opnfv.org/ci/view/armband/job/functest-fuel-armband-baremetal-daily-colorado/135/console
-
-.. _`joid-res-93`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-93
-
-.. _`joid-res-91`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-91
-
-.. _`joid-res-99`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-99
-
-.. _`joid-res-97`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-97
-
-.. _`joid-res-102`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-102
-
-.. _`joid-res-103`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-103
-
-.. _`joid-res-104`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-104
-
-.. _`joid-res-345`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-colorado-345
-
+ - Functest test configuration: https://git.opnfv.org/cgit/functest/tree/functest/ci/testcases.yaml
