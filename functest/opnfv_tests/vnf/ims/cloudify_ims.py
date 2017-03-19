@@ -261,6 +261,9 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         dns_ip = dep_outputs.json()['outputs']['dns_ip']
         ellis_ip = dep_outputs.json()['outputs']['ellis_ip']
 
+        self.logger.debug("DNS ip : %s" % dns_ip)
+        self.logger.debug("ELLIS ip : %s" % ellis_ip)
+
         ellis_url = "http://" + ellis_ip + "/"
         url = ellis_url + "accounts"
 
@@ -270,7 +273,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                   "signup_code": "secret"}
 
         rq = requests.post(url, data=params)
-        i = 20
+        i = 30
         while rq.status_code != 201 and i > 0:
             rq = requests.post(url, data=params)
             i = i - 1
@@ -281,8 +284,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             rq = requests.post(url, data=params)
             cookies = rq.cookies
         else:
-            self.step_failure("Unable to create an account for number" +
-                              " provision: %s" % rq.json()['reason'])
+            self.step_failure("Unable to create an account")
 
         url = ellis_url + "accounts/" + params['email'] + "/numbers"
         if cookies != "":
