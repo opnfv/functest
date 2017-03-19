@@ -1,3 +1,5 @@
+.. _functest-devguide:
+
 ******************************
 OPNFV FUNCTEST developer guide
 ******************************
