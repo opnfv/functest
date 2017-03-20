@@ -207,13 +207,7 @@ def push_results_to_db(project, case_name,
     except KeyError as e:
         logger.error("Please set env var: " + str(e))
         return False
-    rule = "daily-(.+?)-[0-9]*"
-    m = re.search(rule, build_tag)
-    if m:
-        version = m.group(1)
-    else:
-        logger.error("Please fix BUILD_TAG env var: " + build_tag)
-        return False
+    version = get_version()
     test_start = dt.fromtimestamp(start_date).strftime('%Y-%m-%d %H:%M:%S')
     test_stop = dt.fromtimestamp(stop_date).strftime('%Y-%m-%d %H:%M:%S')
 
