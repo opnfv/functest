@@ -52,8 +52,13 @@ class VnfOnBoardingBase(base.TestcaseBase):
     def execute(self):
         self.start_time = time.time()
         # Prepare the test (Create Tenant, User, ...)
-        self.logger.info("Create VNF Onboarding environment")
-        self.prepare()
+        try:
+            self.logger.info("Create VNF Onboarding environment")
+            self.prepare()
+        except Exception:
+            self.logger.error("Error during VNF Onboarding environment" +
+                              "creation", exc_info=True)
+            return base.TestcaseBase.EX_TESTCASE_FAILED
 
         # Deploy orchestrator
         try:
@@ -179,11 +184,11 @@ class VnfOnBoardingBase(base.TestcaseBase):
     # TODO see how to use built-in exception from releng module
     def deploy_vnf(self):
         self.logger.error("VNF must be deployed")
-        return base.TestcaseBase.EX_TESTCASE_FAILED
+        raise Exception("VNF not deployed")
 
     def test_vnf(self):
         self.logger.error("VNF must be tested")
-        return base.TestcaseBase.EX_TESTCASE_FAILED
+        raise Exception("VNF not tested")
 
     def clean(self):
         self.logger.info("test cleaning")
@@ -232,4 +237,4 @@ class VnfOnBoardingBase(base.TestcaseBase):
         self.details[part]['status'] = 'FAIL'
         self.details[part]['result'] = error_msg
         self.logger.error("Step failure:{}".format(error_msg))
-        return base.TestcaseBase.EX_TESTCASE_FAILED
+        raise Exception(error_msg)
