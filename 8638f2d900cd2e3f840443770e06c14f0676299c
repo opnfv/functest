@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_3f3c6d2f",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-03-20T12:58:59Z",
+      "side": 1,
+      "message": "You need to remove these lines for the 1-part image to be used",
+      "range": {
+        "startLine": 13,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 101
+      },
+      "revId": "8638f2d900cd2e3f840443770e06c14f0676299c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_9fc79912",
+        "filename": "functest/opnfv_tests/openstack/examples/create_instance_and_ip.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-03-20T12:58:59Z",
+      "side": 1,
+      "message": "In create_glance_image() you expect by default a dict, but here you set the default value to an empty string. This will break the execution for the case you don\u0027t have extra_properties set. Make sure you test that that you can still create an image when these properties are not present in the config file.",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "8638f2d900cd2e3f840443770e06c14f0676299c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
