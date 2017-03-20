@@ -68,6 +68,69 @@
       "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_1fa3a99f",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-03-20T11:48:50Z",
+      "side": 1,
+      "message": "multisite",
+      "range": {
+        "startLine": 365,
+        "startChar": 3,
+        "endLine": 365,
+        "endChar": 13
+      },
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_bfbb7dc3",
+        "filename": "docs/testing/user/userguide/introduction.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-03-20T11:48:50Z",
+      "side": 1,
+      "message": "duplicate",
+      "range": {
+        "startLine": 182,
+        "startChar": 1,
+        "endLine": 184,
+        "endChar": 83
+      },
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_3fcead5b",
+        "filename": "docs/testing/user/userguide/troubleshooting.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-03-20T11:48:50Z",
+      "side": 1,
+      "message": "run_rally-cert.py replaced with rally.py along with refactoring. Running only a single scenario as well as usage of optional arguments not supported.",
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
