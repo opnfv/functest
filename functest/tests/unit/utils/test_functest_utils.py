@@ -295,25 +295,6 @@ class FunctestUtilsTesting(unittest.TestCase):
     def test_push_results_to_db_missing_buildtag(self):
         self._test_push_results_to_db_missing_env('BUILD_TAG')
 
-    def test_push_results_to_db_incorrect_buildtag(self):
-        dic = self._get_env_dict(None)
-        dic['BUILD_TAG'] = 'incorrect_build_tag'
-        with mock.patch('functest.utils.functest_utils.get_db_url',
-                        return_value=self.db_url), \
-                mock.patch.dict(os.environ,
-                                dic,
-                                clear=True), \
-                mock.patch('functest.utils.functest_utils.logger.error') \
-                as mock_logger_error:
-            self.assertFalse(functest_utils.
-                             push_results_to_db(self.project, self.case_name,
-                                                self.start_date,
-                                                self.stop_date,
-                                                self.criteria, self.details))
-            mock_logger_error.assert_called_once_with("Please fix BUILD_TAG"
-                                                      " env var: incorrect_"
-                                                      "build_tag")
-
     def test_push_results_to_db_request_post_failed(self):
         dic = self._get_env_dict(None)
         with mock.patch('functest.utils.functest_utils.get_db_url',
