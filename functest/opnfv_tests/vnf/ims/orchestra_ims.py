@@ -308,12 +308,15 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         if self.ob_projectid == "":
             self.step_failure("Default project id was not found!")
 
+        creds = os_utils.get_credentials()
+        self.logger.info("PoP creds: %s" % creds)
+
         vim_json = {
             "name": "vim-instance",
-            "authUrl": os_utils.get_credentials().get("auth_url"),
-            "tenant": os_utils.get_credentials().get("tenant_name"),
-            "username": os_utils.get_credentials().get("username"),
-            "password": os_utils.get_credentials().get("password"),
+            "authUrl": creds.get("auth_url"),
+            "tenant": os.environ.get("OS_PROJECT_ID"),
+            "username": creds.get("username"),
+            "password": creds.get("password"),
             "securityGroups": [
                 "default",
                 "orchestra-sec-group"
