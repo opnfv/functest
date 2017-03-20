@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_1fc40991",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-20T10:05:47Z",
+      "side": 1,
+      "message": "You should name your own exceptions by creating a new exception class.",
+      "revId": "3575dcb2a262c623dd4ded0823bc78adf3a1012e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_dfbd1104",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-20T10:05:47Z",
+      "side": 1,
+      "message": "please use format instead.",
+      "revId": "3575dcb2a262c623dd4ded0823bc78adf3a1012e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_9f3799b0",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-20T10:05:47Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "3575dcb2a262c623dd4ded0823bc78adf3a1012e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_3f6f8d94",
+        "filename": "functest/tests/unit/core/test_vnf_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-20T10:05:47Z",
+      "side": 1,
+      "message": "It seems you don\u0027t import the mock library. I\u0027m not sure they are unit tests.",
+      "revId": "3575dcb2a262c623dd4ded0823bc78adf3a1012e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
