@@ -276,6 +276,8 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         i = 30
         while rq.status_code != 201 and i > 0:
             rq = requests.post(url, data=params)
+            self.logger.debug("Account creation http status code: %s"
+                              % rq.status_code)
             i = i - 1
             time.sleep(10)
 
@@ -292,6 +294,8 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             i = 24
             while rq.status_code != 200 and i > 0:
                 rq = requests.post(url, cookies=cookies)
+                self.logger.debug("Number creation http status code: %s"
+                                  % rq.status_code)
                 i = i - 1
                 time.sleep(25)
 
