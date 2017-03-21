@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_a29b66c8",
+        "filename": "docs/testing/user/configguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-21T10:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_ff9b3570",
+      "range": {
+        "startLine": 151,
+        "startChar": 37,
+        "endLine": 151,
+        "endChar": 41
+      },
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_9f88f923",
         "filename": "docs/testing/user/configguide/index.rst",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-20T11:04:28Z",
       "side": 1,
       "message": "\u003d\u003e SUSE ?",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 9
+      },
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_c2a0daf6",
+        "filename": "docs/testing/user/configguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-21T10:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_9f88f923",
       "range": {
         "startLine": 183,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_62a56e03",
+        "filename": "docs/testing/user/configguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-21T10:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_bf8dbd33",
+      "range": {
+        "startLine": 188,
+        "startChar": 3,
+        "endLine": 188,
+        "endChar": 8
+      },
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_a22606b9",
         "filename": "docs/testing/user/userguide/index.rst",
         "patchSetId": 2
@@ -82,6 +154,24 @@
       "writtenOn": "2017-03-20T13:57:13Z",
       "side": 1,
       "message": "\"SDN/NFV\"",
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_02b6f23d",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-21T10:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_a22606b9",
       "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_c2877a60",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-21T10:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_42370ae4",
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_e2339ef4",
         "filename": "docs/testing/user/userguide/index.rst",
         "patchSetId": 2
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_627c8e73",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-21T10:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_e2339ef4",
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_a24da674",
         "filename": "docs/testing/user/userguide/index.rst",
         "patchSetId": 2
@@ -150,6 +276,24 @@
       "writtenOn": "2017-03-20T13:57:13Z",
       "side": 1,
       "message": "This is the one that replaced healthcheck",
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_8281824c",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-21T10:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_a24da674",
       "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -179,6 +323,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_3fd8edee",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-21T10:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_1fa3a99f",
+      "range": {
+        "startLine": 365,
+        "startChar": 3,
+        "endLine": 365,
+        "endChar": 13
+      },
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_c2521a13",
         "filename": "docs/testing/user/userguide/introduction.rst",
         "patchSetId": 2
@@ -196,6 +364,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_82466222",
+        "filename": "docs/testing/user/userguide/introduction.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-21T10:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_c2521a13",
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_bfbb7dc3",
         "filename": "docs/testing/user/userguide/introduction.rst",
         "patchSetId": 2
@@ -207,6 +393,30 @@
       "writtenOn": "2017-03-20T11:48:50Z",
       "side": 1,
       "message": "duplicate",
+      "range": {
+        "startLine": 182,
+        "startChar": 1,
+        "endLine": 184,
+        "endChar": 83
+      },
+      "revId": "9e519042d8c04659a2e7ba4ab983dc28e49e3406",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_dfe431ae",
+        "filename": "docs/testing/user/userguide/introduction.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-21T10:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_bfbb7dc3",
       "range": {
         "startLine": 182,
         "startChar": 1,
