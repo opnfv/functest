@@ -28,13 +28,24 @@ import json
 
 from functest.utils.constants import CONST
 
+ignore = ["paramiko",
+          "stevedore.extension",
+          "keystoneauth.session",
+          "keystoneauth.identity.v3.base",
+          "novaclient.v2.client",
+          "neutronclient.v2_0.client",
+          "glanceclient.common.http",
+          "cinderclient.v2.client",
+          "cinderclient.client"]
+
 
 class Logger(object):
 
     def __init__(self, logger_name):
         self.setup_logging()
         self.logger = logging.getLogger(logger_name)
-        logging.getLogger("paramiko").setLevel(logging.WARNING)
+        for module_name in ignore:
+            logging.getLogger(module_name).setLevel(logging.WARNING)
 
     def getLogger(self):
         return self.logger
