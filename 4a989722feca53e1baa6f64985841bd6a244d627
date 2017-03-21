@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_281d1510",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-03-21T07:58:16Z",
+      "side": 1,
+      "message": "Should https_insecure be set as true in rally conf if no cacert available?",
+      "revId": "4a989722feca53e1baa6f64985841bd6a244d627",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
