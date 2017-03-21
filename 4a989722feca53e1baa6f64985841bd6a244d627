@@ -34,6 +34,24 @@
       "revId": "4a989722feca53e1baa6f64985841bd6a244d627",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_9304727f",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-03-21T12:23:13Z",
+      "side": 1,
+      "message": "I mean the case when https is enabled but there\u0027s no cacert file. I.e. when one have to use \u0027--insecure\u0027 option in openstack cli commands.",
+      "parentUuid": "9ab8dda7_0895b13f",
+      "revId": "4a989722feca53e1baa6f64985841bd6a244d627",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
