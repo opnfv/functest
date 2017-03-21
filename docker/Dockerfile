@@ -120,8 +120,20 @@ RUN cd ${REPOS_DIR}/barometer \
     && pip install .
 
 RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
-    -not -path "*tests/unit*" |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755 \
-    && find ${FUNCTEST_REPO_DIR} -name "*.sh" |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
+    -not -path "*tests/unit*" \
+    -not -path "*functest_venv*" \
+    |xargs grep -L __main__ |cut -d\: -f 1 |xargs chmod -c 644 &&
+    find ${FUNCTEST_REPO_DIR} -name "*.sh" \
+    -not -path "*functest_venv*" \
+    |xargs grep -L \#\! |cut -d\:  -f 1 |xargs chmod -c 644
+
+RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
+    -not -path "*tests/unit*" \
+    -not -path "*functest_venv*" \
+    |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755 &&
+    find ${FUNCTEST_REPO_DIR} -name "*.sh" \
+    -not -path "*functest_venv*" \
+    |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
 
 RUN /bin/bash ${REPOS_DIR}/parser/tests/parser_install.sh ${REPOS_DIR}
 RUN ${REPOS_DIR}/rally/install_rally.sh --yes
