@@ -203,7 +203,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         flavor_exist, flavor_id = os_utils.get_or_create_flavor(
             "m1.small",
             self.vnf['requirements']['ram_min'],
-            '20',
+            '30',
             '1',
             public=True)
         self.logger.debug("Flavor id: %s" % flavor_id)
