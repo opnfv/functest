@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_b39ad612",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-03-21T13:12:32Z",
+      "side": 1,
+      "message": "healthcheck",
+      "range": {
+        "startLine": 55,
+        "startChar": 64,
+        "endLine": 55,
+        "endChar": 76
+      },
+      "revId": "2369e3e2aeb5f02983a611af6e6b847628df27c9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
