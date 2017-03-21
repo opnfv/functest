@@ -129,10 +129,10 @@ class RefstackClient(testcase_base.TestcaseBase):
             num_executed = int(num_tests) - int(num_skipped)
             success_rate = 100 * int(num_success) / int(num_executed)
 
-            self.details = {"num_tests": int(num_tests),
-                            "num_failures": int(num_failures),
+            self.details = {"tests": int(num_tests),
+                            "failures": int(num_failures),
                             "success": success_testcases,
-                            "failed": failed_testcases,
+                            "errors": failed_testcases,
                             "skipped": skipped_testcases}
         except Exception:
             success_rate = 0
