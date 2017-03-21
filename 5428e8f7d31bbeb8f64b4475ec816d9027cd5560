@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_2d23e706",
+        "filename": "docs/testing/user/configguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 833
+      },
+      "writtenOn": "2017-03-21T01:50:12Z",
+      "side": 1,
+      "message": "Should this be \"RefStack\"? I see the expression from openstack wiki page: https://wiki.openstack.org/wiki/RefStack.",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "5428e8f7d31bbeb8f64b4475ec816d9027cd5560",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_4d0c1b95",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 833
+      },
+      "writtenOn": "2017-03-21T01:50:12Z",
+      "side": 1,
+      "message": "In Danube, ...",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "5428e8f7d31bbeb8f64b4475ec816d9027cd5560",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_0d262317",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 833
+      },
+      "writtenOn": "2017-03-21T01:50:12Z",
+      "side": 1,
+      "message": "Should this be \"relied\"?",
+      "range": {
+        "startLine": 46,
+        "startChar": 53,
+        "endLine": 46,
+        "endChar": 57
+      },
+      "revId": "5428e8f7d31bbeb8f64b4475ec816d9027cd5560",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_6d11dfab",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 833
+      },
+      "writtenOn": "2017-03-21T01:50:12Z",
+      "side": 1,
+      "message": "gave -\u003e have",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 32
+      },
+      "revId": "5428e8f7d31bbeb8f64b4475ec816d9027cd5560",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
