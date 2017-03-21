@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_732bfe30",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-03-21T11:13:40Z",
+      "side": 0,
+      "message": "snaps tests fail for aarch64 when we remove these lines completely, because it expects the property to exists, even if it might be empty. You can\n1) modify the snaps project to check if the element exists, then if it is empty\nOR\n2) set the elements here to nothing\n   kernel_url: \u0027\u0027\n   ramdisk_url: \u0027\u0027",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 101
+      },
+      "revId": "b8403226b35dbd884906276e9b8fc5c21226b387",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
