@@ -132,7 +132,7 @@ tiers:
 
             -
                 name: refstack_defcore
-                criteria: 'success_rate >= 80%'
+                criteria: 'success_rate == 100%'
                 blocking: false
                 clean_flag: false
                 description: >-
