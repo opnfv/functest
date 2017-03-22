@@ -168,7 +168,7 @@ tiers:
             -
                 name: odl_netvirt
                 criteria: 'success_rate == 100%'
-                blocking: true
+                blocking: false
                 clean_flag: false
                 description: >-
                     Test Suite for the OpenDaylight SDN Controller when
