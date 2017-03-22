@@ -16,6 +16,24 @@
       "revId": "28484fbdf5933d7c6d3563e8e1fb3877633ee721",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_f84826ce",
+        "filename": "functest/opnfv_tests/features/odl_sfc.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-03-22T09:49:52Z",
+      "side": 1,
+      "message": "report is used wrongly in sfc run_tests.py but it\u0027s supposed to push to the DB the different subtests results. I have removed it. FeatureBase will take care of reporting only the result for the whole SFC test case.",
+      "parentUuid": "9ab8dda7_18e41a3a",
+      "revId": "28484fbdf5933d7c6d3563e8e1fb3877633ee721",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
