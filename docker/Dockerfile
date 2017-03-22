@@ -122,16 +122,16 @@ RUN cd ${REPOS_DIR}/barometer \
 RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
     -not -path "*tests/unit*" \
     -not -path "*functest_venv*" \
-    |xargs grep -L __main__ |cut -d\: -f 1 |xargs chmod -c 644 &&
-    find ${FUNCTEST_REPO_DIR} -name "*.sh" \
+    |xargs grep -L __main__ |cut -d\: -f 1 |xargs chmod -c 644 \
+    && find ${FUNCTEST_REPO_DIR} -name "*.sh" \
     -not -path "*functest_venv*" \
     |xargs grep -L \#\! |cut -d\:  -f 1 |xargs chmod -c 644
 
 RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
     -not -path "*tests/unit*" \
     -not -path "*functest_venv*" \
-    |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755 &&
-    find ${FUNCTEST_REPO_DIR} -name "*.sh" \
+    |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755 \
+    && find ${FUNCTEST_REPO_DIR} -name "*.sh" \
     -not -path "*functest_venv*" \
     |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
 
