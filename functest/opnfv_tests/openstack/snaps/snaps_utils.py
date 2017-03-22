@@ -5,19 +5,15 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import neutron_utils
 
-from functest.utils.constants import CONST
 
-
-def get_ext_net_name():
+def get_ext_net_name(os_creds):
     """
     Returns the first external network name
+    :param: os_creds: an instance of snaps OSCreds object
     :return:
     """
-    os_env_file = CONST.openstack_creds
-    os_creds = openstack_tests.get_credentials(os_env_file=os_env_file)
     neutron = neutron_utils.neutron_client(os_creds)
     ext_nets = neutron_utils.get_external_networks(neutron)
     return ext_nets[0]['network']['name']

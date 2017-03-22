@@ -11,7 +11,6 @@ from snaps import test_suite_builder
 
 from functest.opnfv_tests.openstack.snaps.snaps_test_runner import \
     SnapsTestRunner
-from functest.utils.constants import CONST
 
 
 class ConnectionCheck(SnapsTestRunner):
@@ -27,7 +26,7 @@ class ConnectionCheck(SnapsTestRunner):
         self.case_name = "connection_check"
 
         test_suite_builder.add_openstack_client_tests(
-            self.suite,
-            CONST.openstack_creds,
-            self.ext_net_name,
-            use_keystone=CONST.snaps_use_keystone)
+            suite=self.suite,
+            os_creds=self.os_creds,
+            ext_net_name=self.ext_net_name,
+            use_keystone=self.use_keystone)
