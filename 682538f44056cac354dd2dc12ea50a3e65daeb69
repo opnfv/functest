@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_65ac93ee",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-03-22T02:26:13Z",
+      "side": 1,
+      "message": "The correct image path should be \"../../../images/clearwater-architecture.png\"",
+      "range": {
+        "startLine": 399,
+        "startChar": 12,
+        "endLine": 399,
+        "endChar": 21
+      },
+      "revId": "682538f44056cac354dd2dc12ea50a3e65daeb69",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_a5aa8bd2",
+        "filename": "docs/testing/user/userguide/runfunctest.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-03-22T02:26:13Z",
+      "side": 1,
+      "message": "Currently, the tier \"healthcheck\" includes testcases \"connection_check\", \"api_check\" and \"snaps_health_check\". So maybe one of the three testcases is more reasonable here.",
+      "range": {
+        "startLine": 127,
+        "startChar": 66,
+        "endLine": 127,
+        "endChar": 77
+      },
+      "revId": "682538f44056cac354dd2dc12ea50a3e65daeb69",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
