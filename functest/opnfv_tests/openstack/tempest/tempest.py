@@ -116,7 +116,7 @@ class TempestCommon(testcase_base.TestcaseBase):
         logger.info("Starting Tempest test suite: '%s'." % cmd_line)
 
         header = ("Tempest environment:\n"
-                  "  Installer: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
+                  "  SUT: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
                   (CONST.INSTALLER_TYPE,
                    CONST.DEPLOY_SCENARIO,
                    CONST.NODE_NAME,
