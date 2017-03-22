@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_c5745f9e",
+        "filename": "functest/ci/check_os.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-22T01:53:15Z",
+      "side": 1,
+      "message": "Yes, they can be wrapped as a function",
+      "parentUuid": "9ab8dda7_251a1b6f",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 27
+      },
+      "revId": "4a989722feca53e1baa6f64985841bd6a244d627",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_c5269fba",
         "filename": "functest/tests/unit/utils/test_openstack_utils.py",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-03-22T01:30:39Z",
       "side": 1,
       "message": "if add it here, if https only is tested? will http still be tested too?",
+      "revId": "4a989722feca53e1baa6f64985841bd6a244d627",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_856e67c8",
+        "filename": "functest/tests/unit/utils/test_openstack_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-22T01:53:15Z",
+      "side": 1,
+      "message": "This is just a dict to store all possible OS_** and key mapping. Functest is ought to support both http and https.",
+      "parentUuid": "9ab8dda7_c5269fba",
       "revId": "4a989722feca53e1baa6f64985841bd6a244d627",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -106,6 +148,24 @@
       "side": 1,
       "message": "I mean the case when https is enabled but there\u0027s no cacert file. I.e. when one have to use \u0027--insecure\u0027 option in openstack cli commands.",
       "parentUuid": "9ab8dda7_0895b13f",
+      "revId": "4a989722feca53e1baa6f64985841bd6a244d627",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_a5736bb0",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-22T01:53:15Z",
+      "side": 1,
+      "message": "Actually, this is one thing I am doubting about, if https is enabled, cacert file should be there to make a secure call.",
+      "parentUuid": "9ab8dda7_9304727f",
       "revId": "4a989722feca53e1baa6f64985841bd6a244d627",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
