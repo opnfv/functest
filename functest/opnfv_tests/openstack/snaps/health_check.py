@@ -32,7 +32,8 @@ class HealthCheck(SnapsTestRunner):
 
         self.suite.addTest(
             OSIntegrationTestCase.parameterize(
-                SimpleHealthCheck, CONST.openstack_creds, self.ext_net_name,
-                use_keystone=CONST.snaps_use_keystone,
+                SimpleHealthCheck, os_creds=self.os_creds,
+                ext_net_name=self.ext_net_name,
+                use_keystone=self.use_keystone,
                 flavor_metadata=self.flavor_metadata,
                 image_metadata=image_custom_config))
