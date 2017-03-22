@@ -79,26 +79,23 @@ class RefstackClient(testcase_base.TestcaseBase):
         f_stdout = open(
             os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
                          "refstack.log"), 'w+')
-        f_stderr = open(
-            os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
-                         "refstack-error.log"), 'w+')
         f_env = open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
                                   "environment.log"), 'w+')
         f_env.write(header)
 
         p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
-                             stderr=f_stderr, bufsize=1)
+                             stderr=subprocess.STDOUT, bufsize=1)
 
         with p.stdout:
             for line in iter(p.stdout.readline, b''):
                 if 'Tests' in line:
                     break
-                logger.info(line.replace('\n', ''))
+                if re.search("\} tempest\.", line):
+                    logger.info(line.replace('\n', ''))
                 f_stdout.write(line)
         p.wait()
 
         f_stdout.close()
-        f_stderr.close()
         f_env.close()
 
     def parse_refstack_result(self):
@@ -110,12 +107,16 @@ class RefstackClient(testcase_base.TestcaseBase):
             for match in re.findall("Ran: (\d+) tests in (\d+\.\d{4}) sec.",
                                     output):
                 num_tests = match[0]
-            for match in re.findall("- Passed: (\d+)", output):
-                num_success = match
-            for match in re.findall("- Skipped: (\d+)", output):
-                num_skipped = match
-            for match in re.findall("- Failed: (\d+)", output):
-                num_failures = match
+                logger.info("Ran: %s tests in %s sec." % (num_tests, match[1]))
+            for match in re.findall("(- Passed: )(\d+)", output):
+                num_success = match[1]
+                logger.info("".join(match))
+            for match in re.findall("(- Skipped: )(\d+)", output):
+                num_skipped = match[1]
+                logger.info("".join(match))
+            for match in re.findall("(- Failed: )(\d+)", output):
+                num_failures = match[1]
+                logger.info("".join(match))
             success_testcases = ""
             for match in re.findall(r"\{0\}(.*?)[. ]*ok", output):
                 success_testcases += match + ", "
