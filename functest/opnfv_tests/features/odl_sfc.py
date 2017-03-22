@@ -14,7 +14,7 @@ class OpenDaylightSFC(base.FeatureBase):
 
     def __init__(self):
         super(OpenDaylightSFC, self).__init__(project='sfc',
-                                              case='functest-odl-sfc"',
+                                              case='functest-odl-sfc',
                                               repo='dir_repo_sfc')
         dir_sfc_functest = '{}/sfc/tests/functest'.format(self.repo)
         self.cmd = 'cd %s && python ./run_tests.py' % dir_sfc_functest
