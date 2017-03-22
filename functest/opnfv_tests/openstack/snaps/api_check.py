@@ -26,7 +26,7 @@ class ApiCheck(SnapsTestRunner):
         self.suite = unittest.TestSuite()
 
         test_suite_builder.add_openstack_api_tests(
-            self.suite,
-            CONST.openstack_creds,
-            self.ext_net_name,
-            use_keystone=CONST.snaps_use_keystone)
+            suite=self.suite,
+            os_creds=self.os_creds,
+            ext_net_name=self.ext_net_name,
+            use_keystone=self.use_keystone)
