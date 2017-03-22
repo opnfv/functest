@@ -9,8 +9,10 @@ from functest.utils import functest_logger as ft_logger
 from functest.core.pytest_suite_runner import PyTestSuiteRunner
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import functest_utils
+from functest.utils.constants import CONST
 
 from snaps.openstack import create_flavor
+from snaps.openstack.tests import openstack_tests
 
 
 class SnapsTestRunner(PyTestSuiteRunner):
@@ -22,8 +24,13 @@ class SnapsTestRunner(PyTestSuiteRunner):
     def __init__(self, case_name=''):
         super(SnapsTestRunner, self).__init__(case_name)
 
-        self.ext_net_name = snaps_utils.get_ext_net_name()
-        self.logger = ft_logger.Logger(self.project_name).getLogger()
+        self.os_creds = openstack_tests.get_credentials(
+            os_env_file=CONST.openstack_creds, proxy_settings_str=None,
+            ssh_proxy_cmd=None)
+
+        self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
+        self.use_fip = CONST.snaps_use_floating_ips
+        self.use_keystone = CONST.snaps_use_keystone
         scenario = functest_utils.get_scenario()
 
         self.flavor_metadata = create_flavor.MEM_PAGE_SIZE_ANY
