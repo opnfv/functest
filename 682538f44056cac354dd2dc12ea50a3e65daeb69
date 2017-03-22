@@ -45,6 +45,98 @@
       "revId": "682538f44056cac354dd2dc12ea50a3e65daeb69",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_454b8f2b",
+        "filename": "docs/testing/user/userguide/runfunctest.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-03-22T06:32:40Z",
+      "side": 1,
+      "message": "Here it is openstack_snapshot.py that is called when \"functest testcase run *\", not \"functest env prepare\".",
+      "range": {
+        "startLine": 233,
+        "startChar": 36,
+        "endLine": 233,
+        "endChar": 56
+      },
+      "revId": "682538f44056cac354dd2dc12ea50a3e65daeb69",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_6548132e",
+        "filename": "docs/testing/user/userguide/runfunctest.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-03-22T06:32:40Z",
+      "side": 1,
+      "message": "openstack_clean.py",
+      "range": {
+        "startLine": 242,
+        "startChar": 13,
+        "endLine": 242,
+        "endChar": 31
+      },
+      "revId": "682538f44056cac354dd2dc12ea50a3e65daeb69",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_656fb393",
+        "filename": "docs/testing/user/userguide/runfunctest.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-03-22T06:32:40Z",
+      "side": 1,
+      "message": "openstack_snapshot.yaml",
+      "range": {
+        "startLine": 246,
+        "startChar": 27,
+        "endLine": 246,
+        "endChar": 43
+      },
+      "revId": "682538f44056cac354dd2dc12ea50a3e65daeb69",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_850f47e1",
+        "filename": "docs/testing/user/userguide/runfunctest.rst",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-03-22T06:32:40Z",
+      "side": 1,
+      "message": "1. The path is lowercase: vping/vping_ssh.py\n2. Now vping_ssh.py has no recognized argument \"-d\"",
+      "range": {
+        "startLine": 261,
+        "startChar": 62,
+        "endLine": 261,
+        "endChar": 83
+      },
+      "revId": "682538f44056cac354dd2dc12ea50a3e65daeb69",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
