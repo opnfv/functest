@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "9ab8dda7_251a1b6f",
+        "filename": "functest/ci/check_os.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-22T01:30:39Z",
+      "side": 1,
+      "message": "how about merging these two if [[ -n $https_enabled ]] with a function?",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 27
+      },
+      "revId": "4a989722feca53e1baa6f64985841bd6a244d627",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_c5269fba",
+        "filename": "functest/tests/unit/utils/test_openstack_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-22T01:30:39Z",
+      "side": 1,
+      "message": "if add it here, if https only is tested? will http still be tested too?",
+      "revId": "4a989722feca53e1baa6f64985841bd6a244d627",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_8520a79c",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-22T01:30:39Z",
+      "side": 1,
+      "message": "If OS_CACERT must be provided? http is no longer supported?",
+      "revId": "4a989722feca53e1baa6f64985841bd6a244d627",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_281d1510",
         "filename": "functest/utils/openstack_utils.py",
         "patchSetId": 5
