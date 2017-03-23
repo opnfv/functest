@@ -308,7 +308,7 @@ class OSUtilsTesting(unittest.TestCase):
         mock_get_rc_env.return_value = exp_resp
         with mock.patch.dict('functest.utils.openstack_utils.os.environ', {},
                              clear=True):
-            self.assertEqual(openstack_utils.check_credentials(), False)
+            self.assertEqual(openstack_utils.check_credentials(), True)
 
     @mock.patch('functest.utils.openstack_utils.get_rc_env_vars')
     def test_check_credentials_default(self, mock_get_rc_env):
