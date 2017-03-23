@@ -156,6 +156,7 @@ RUN cd ${REPOS_DIR}/bgpvpn && pip install -e .
 
 # Kingbird integration
 RUN cd ${REPOS_DIR}/kingbird && pip install -e .
+RUN cd ${FUNCTEST_REPO_DIR} && pip install -r kingbird_requirements.txt
 
 # refstack-client integration
 RUN cd ${REPOS_DIR}/refstack-client && ./setup_env -t ${REFSTACK_TAG}
