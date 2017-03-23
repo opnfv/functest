@@ -311,10 +311,16 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         creds = os_utils.get_credentials()
         self.logger.info("PoP creds: %s" % creds)
 
+        project_id = os_utils.get_tenant_id(
+            os_utils.get_keystone_client(),
+            creds.get("project_name"))
+
+        self.logger.debug("project id: %s" % project_id)
+
         vim_json = {
             "name": "vim-instance",
             "authUrl": creds.get("auth_url"),
-            "tenant": os.environ.get("OS_PROJECT_ID"),
+            "tenant": project_id,
             "username": creds.get("username"),
             "password": creds.get("password"),
             "securityGroups": [
