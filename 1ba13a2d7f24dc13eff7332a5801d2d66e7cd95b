@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_47938fa3",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-03-23T11:05:42Z",
+      "side": 1,
+      "message": "how about \"refstack environment:\\n\" Installer--\u003eSUT scenario ignored. since it\u0027s opnfv special words, when consumed by dovetail, there\u0027s some problem.",
+      "range": {
+        "startLine": 72,
+        "startChar": 17,
+        "endLine": 73,
+        "endChar": 79
+      },
+      "revId": "1ba13a2d7f24dc13eff7332a5801d2d66e7cd95b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
