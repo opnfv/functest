@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Michael Polenchuk <mpolenchuk@mirantis.com>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Thu, 23 Mar 2017 14:04:41 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/31579
+Project: functest
+Branch: refs/heads/stable/danube
