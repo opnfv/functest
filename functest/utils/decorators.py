@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
+import errno
 import mock
+import os
 import requests.sessions
 import urlparse
 
@@ -10,7 +12,12 @@ def can_dump_request_to_file(method):
     def dump_preparedrequest(request, **kwargs):
         parseresult = urlparse.urlparse(request.url)
         if parseresult.scheme == "file":
-            with open(parseresult.path.replace('/results', ''), 'a') as f:
+            try:
+                os.makedirs(parseresult.path)
+            except OSError as e:
+                if e.errno != errno.EEXIST:
+                    raise
+            with open(os.path.join(parseresult.path, 'dump.txt'), 'a') as f:
                 headers = ""
                 for key in request.headers:
                     headers += key + " " + request.headers[key] + "\n"
