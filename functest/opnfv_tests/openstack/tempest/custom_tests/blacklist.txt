@@ -55,3 +55,19 @@
         - tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops
         - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern.test_volume_boot_pattern
         - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPatternV2.test_volume_boot_pattern
+
+-
+    # https://bugs.launchpad.net/tempest/+bug/1577632
+    scenarios:
+        - os-odl_l2-nofeature-ha
+        - os-odl_l2-nofeature-noha
+        - os-odl_l2-sfc-ha
+        - os-odl_l2-sfc-noha
+        - os-odl_l2-bgpvpn-ha
+        - os-odl_l2-bgpvpn-noha
+        - os-odl_l3-nofeature-ha
+        - os-odl_l3-nofeature-noha
+    installers:
+        - fuel
+    tests:
+        - tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops
