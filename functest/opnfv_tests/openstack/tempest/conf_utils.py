@@ -392,8 +392,12 @@ def configure_tempest_multisite_params(tempest_conf_file):
         config.add_section("kingbird")
     except Exception:
         logger.info('kingbird section exist')
+
+    # set the domain id
+    config.set('auth', 'admin_domain_name', 'default')
+
     config.set('kingbird', 'endpoint_type', 'publicURL')
-    config.set('kingbird', 'TIME_TO_SYNC', '20')
+    config.set('kingbird', 'TIME_TO_SYNC', '120')
     config.set('kingbird', 'endpoint_url', kingbird_endpoint_url)
     config.set('kingbird', 'api_version', kingbird_api_version)
     with open(tempest_conf_file, 'wb') as config_file:
