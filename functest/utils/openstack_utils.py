@@ -82,7 +82,8 @@ def get_env_cred_dict():
         'OS_PROJECT_DOMAIN_NAME': 'project_domain_name',
         'OS_PROJECT_NAME': 'project_name',
         'OS_ENDPOINT_TYPE': 'endpoint_type',
-        'OS_REGION_NAME': 'region_name'
+        'OS_REGION_NAME': 'region_name',
+        'OS_CACERT': 'https_cacert'
     }
     return env_cred_dict
 
@@ -149,6 +150,11 @@ def get_credentials_for_rally():
     if region_name is not None:
         cred_key = env_cred_dict.get('OS_REGION_NAME')
         rally_conf[cred_key] = region_name
+
+    cacert = os.getenv('OS_CACERT')
+    if cacert is not None:
+        cred_key = env_cred_dict.get('OS_CACERT')
+        rally_conf[cred_key] = cacert
     return rally_conf
 
 
@@ -168,7 +174,14 @@ def get_endpoint(service_type, endpoint_type='publicURL'):
 
 def get_session(other_creds={}):
     auth = get_session_auth(other_creds)
-    return session.Session(auth=auth)
+    cacert = os.getenv('OS_CACERT')
+    if cacert is not None:
+        if not os.path.isfile(cacert):
+            raise Exception("The 'OS_CACERT' environment"
+                            "variable is set to %s but the file"
+                            "does not exist.", cacert)
+
+    return session.Session(auth=auth, verify=cacert)
 
 
 # *********************************************
