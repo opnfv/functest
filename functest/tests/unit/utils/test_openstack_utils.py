@@ -28,7 +28,8 @@ class OSUtilsTesting(unittest.TestCase):
                 'OS_PROJECT_DOMAIN_NAME': os_prefix + 'project_domain_name',
                 'OS_PROJECT_NAME': os_prefix + 'project_name',
                 'OS_ENDPOINT_TYPE': os_prefix + 'endpoint_type',
-                'OS_REGION_NAME': os_prefix + 'region_name'}
+                'OS_REGION_NAME': os_prefix + 'region_name',
+                'OS_CACERT': os_prefix + 'https_cacert'}
 
     def _get_os_env_vars(self):
         return {'username': 'test_username', 'password': 'test_password',
@@ -37,7 +38,8 @@ class OSUtilsTesting(unittest.TestCase):
                 'project_domain_name': 'test_project_domain_name',
                 'project_name': 'test_project_name',
                 'endpoint_type': 'test_endpoint_type',
-                'region_name': 'test_region_name'}
+                'region_name': 'test_region_name',
+                'https_cacert': 'test_https_cacert'}
 
     def setUp(self):
         self.env_vars = ['OS_AUTH_URL', 'OS_USERNAME', 'OS_PASSWORD']

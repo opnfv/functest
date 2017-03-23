@@ -26,6 +26,11 @@ verify_connectivity() {
     return 1
 }
 
+verify_SSL_connectivity() {
+    openssl s_client -connect $1:$2 &>/dev/null
+    return $?
+}
+
 check_service() {
     local service cmd
     service=$1
@@ -63,10 +68,16 @@ fi
 
 echo "Checking OpenStack endpoints:"
 publicURL=$(openstack catalog show  identity |awk '/public/ {print $4}')
-publicIP=$(echo $publicURL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
+publicIP=$(echo $publicURL|sed 's/^.*http.*\:\/\///'|sed 's/.[^:]*$//')
 publicPort=$(echo $publicURL|sed 's/^.*://'|sed 's/\/.*$//')
-echo ">>Verifying connectivity to the public endpoint $publicIP:$publicPort..."
-verify_connectivity $publicIP $publicPort
+https_enabled=$(echo $publicURL | grep 'https')
+if [[ -n $https_enabled ]]; then
+    echo ">>Verifying SSL connectivity to the public endpoint $publicIP:$publicPort..."
+    verify_SSL_connectivity $publicIP $publicPort
+else
+    echo ">>Verifying connectivity to the public endpoint $publicIP:$publicPort..."
+    verify_connectivity $publicIP $publicPort
+fi
 RETVAL=$?
 if [ $RETVAL -ne 0 ]; then
     echo "ERROR: Cannot talk to the public endpoint $publicIP:$publicPort ."
@@ -81,10 +92,16 @@ if [ -z ${adminURL} ]; then
     openstack catalog show identity
     exit 1
 fi
-adminIP=$(echo $adminURL|sed 's/^.*http\:\/\///'|sed 's/.[^:]*$//')
+adminIP=$(echo $adminURL|sed 's/^.*http.*\:\/\///'|sed 's/.[^:]*$//')
 adminPort=$(echo $adminURL|sed 's/^.*://'|sed 's/.[^\/]*$//')
-echo ">>Verifying connectivity to the admin endpoint $adminIP:$adminPort..."
-verify_connectivity $adminIP $adminPort
+https_enabled=$(echo $adminURL | grep 'https')
+if [[ -n $https_enabled ]]; then
+    echo ">>Verifying SSL connectivity to the admin endpoint $adminIP:$adminPort..."
+    verify_SSL_connectivity $adminIP $adminPort
+else
+    echo ">>Verifying connectivity to the admin endpoint $adminIP:$adminPort..."
+    verify_connectivity $adminIP $adminPort
+fi
 RETVAL=$?
 if [ $RETVAL -ne 0 ]; then
     echo "ERROR: Cannot talk to the admin endpoint $adminIP:$adminPort ."
