@@ -301,7 +301,7 @@ class OSUtilsTesting(unittest.TestCase):
                          'OS_PROJECT_DOMAIN_NAME'])
         self.assertEqual(openstack_utils.get_rc_env_vars(), exp_resp)
 
-    @mock.patch('functest.utils.openstack_utils')
+    @mock.patch('functest.utils.openstack_utils.get_rc_env_vars')
     def test_check_credentials_missing_env(self, mock_get_rc_env):
         exp_resp = self.env_vars
         exp_resp.extend(['OS_TENANT_NAME'])
