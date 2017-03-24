@@ -16,6 +16,24 @@
       "revId": "3fb0175dab6d60af2fe40274fab19abf3ea6162f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_898679b8",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 341
+      },
+      "writtenOn": "2017-03-24T11:22:55Z",
+      "side": 1,
+      "message": "For the considerable time yes.\nI\u0027d say longer than the coming changes in openstack CLI :)",
+      "parentUuid": "9ab8dda7_c9a47159",
+      "revId": "3fb0175dab6d60af2fe40274fab19abf3ea6162f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
