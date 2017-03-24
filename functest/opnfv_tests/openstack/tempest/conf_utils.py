@@ -341,7 +341,7 @@ def configure_tempest_multisite_params(tempest_conf_file):
     # cmd = ("openstack endpoint show kingbird | grep publicurl |"
     #       "awk '{print $4}' | awk -F '/' '{print $4}'")
     # kingbird_api_version = os.popen(cmd).read()
-    kingbird_api_version = os_utils.get_endpoint(service_type='multisite')
+    # kingbird_api_version = os_utils.get_endpoint(service_type='multisite')
 
     if CI_INSTALLER_TYPE == 'fuel':
         # For MOS based setup, the service is accessible
@@ -399,7 +399,7 @@ def configure_tempest_multisite_params(tempest_conf_file):
     config.set('kingbird', 'endpoint_type', 'publicURL')
     config.set('kingbird', 'TIME_TO_SYNC', '120')
     config.set('kingbird', 'endpoint_url', kingbird_endpoint_url)
-    config.set('kingbird', 'api_version', kingbird_api_version)
+    config.set('kingbird', 'api_version', 'v1.0')
     with open(tempest_conf_file, 'wb') as config_file:
         config.write(config_file)
 
