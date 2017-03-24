@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_c9a47159",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-03-24T11:21:10Z",
+      "side": 1,
+      "message": "planning to use always this api?",
+      "revId": "3fb0175dab6d60af2fe40274fab19abf3ea6162f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
