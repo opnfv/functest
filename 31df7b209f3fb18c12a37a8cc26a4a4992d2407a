@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_370324ba",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_29aaed19",
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_e9637518",
         "filename": "docs/release/release-notes/functest-release.rst",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-03-24T12:19:35Z",
       "side": 1,
       "message": "+barometer",
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_570018aa",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_e9637518",
       "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_b7263467",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_c97231e5",
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_096929f9",
         "filename": "docs/release/release-notes/functest-release.rst",
         "patchSetId": 17
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_d72ba82e",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_096929f9",
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_a96d7d06",
         "filename": "docs/release/release-notes/functest-release.rst",
         "patchSetId": 17
@@ -81,6 +153,24 @@
       "writtenOn": "2017-03-24T12:19:35Z",
       "side": 1,
       "message": "if this is planned for Euphrates, should it be in these release notes?",
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_7720bc49",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_a96d7d06",
       "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -115,6 +205,24 @@
       "writtenOn": "2017-03-24T12:19:35Z",
       "side": 1,
       "message": "I think TestServerBasicOps is skipped for odl scenarios only, isn\u0027t it?\nhttps://gerrit.opnfv.org/gerrit/#/c/31579/1/functest/opnfv_tests/openstack/tempest/custom_tests/blacklist.txt",
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_5717b8ed",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_09504931",
       "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -178,6 +286,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_77e75c13",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_2958ad55",
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_4955e11b",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 17
@@ -189,6 +315,24 @@
       "writtenOn": "2017-03-24T12:19:35Z",
       "side": 1,
       "message": "- execute()\n\nhttps://git.opnfv.org/functest/tree/functest/core/feature_base.py#n31",
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_97e4500e",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_4955e11b",
       "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -218,6 +362,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_37f1e4cd",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_0937e900",
+      "range": {
+        "startLine": 745,
+        "startChar": 51,
+        "endLine": 746,
+        "endChar": 42
+      },
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_a93b3dea",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 17
@@ -229,6 +397,24 @@
       "writtenOn": "2017-03-24T12:19:35Z",
       "side": 1,
       "message": "these tabs might cause miss-alignments in the render",
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_57eed8ed",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_a93b3dea",
       "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -258,6 +444,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_17c0604f",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_c940f158",
+      "range": {
+        "startLine": 835,
+        "startChar": 23,
+        "endLine": 835,
+        "endChar": 54
+      },
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_692545c1",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 17
@@ -269,6 +479,30 @@
       "writtenOn": "2017-03-24T12:19:35Z",
       "side": 1,
       "message": "they want?",
+      "range": {
+        "startLine": 835,
+        "startChar": 73,
+        "endLine": 836,
+        "endChar": 4
+      },
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_b7b4f4f2",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_692545c1",
       "range": {
         "startLine": 835,
         "startChar": 73,
@@ -327,6 +561,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_d7b968ea",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_292f4da3",
+      "range": {
+        "startLine": 847,
+        "startChar": 28,
+        "endLine": 847,
+        "endChar": 40
+      },
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_a9125d60",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 17
@@ -338,6 +596,30 @@
       "writtenOn": "2017-03-24T12:19:35Z",
       "side": 1,
       "message": "logs",
+      "range": {
+        "startLine": 848,
+        "startChar": 38,
+        "endLine": 848,
+        "endChar": 45
+      },
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_77ce7c85",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_a9125d60",
       "range": {
         "startLine": 848,
         "startChar": 38,
@@ -378,6 +660,24 @@
       "writtenOn": "2017-03-24T12:19:35Z",
       "side": 1,
       "message": "connect to the DB?",
+      "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_37c80474",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 17
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-24T21:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_0c05b710",
       "revId": "31df7b209f3fb18c12a37a8cc26a4a4992d2407a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
