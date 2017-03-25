@@ -14,10 +14,10 @@ import time
 
 from functest.core import testcase_base
 from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.utils import openstack_utils
 from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
+from tempest_conf import TempestConf
 
 """ logging configuration """
 logger = ft_logger.Logger("refstack_defcore").getLogger()
@@ -35,12 +35,6 @@ class RefstackClient(testcase_base.TestcaseBase):
                                      self.CONF_PATH)
         self.defcorelist = os.path.join(self.FUNCTEST_TEST,
                                         self.DEFCORE_LIST)
-        self.VERIFIER_ID = conf_utils.get_verifier_id()
-        self.VERIFIER_REPO_DIR = conf_utils.get_verifier_repo_dir(
-            self.VERIFIER_ID)
-        self.DEPLOYMENT_ID = conf_utils.get_verifier_deployment_id()
-        self.DEPLOYMENT_DIR = conf_utils.get_verifier_deployment_dir(
-            self.VERIFIER_ID, self.DEPLOYMENT_ID)
 
     def source_venv(self):
 
@@ -143,28 +137,18 @@ class RefstackClient(testcase_base.TestcaseBase):
         logger.info("Testcase %s success_rate is %s%%, is marked as %s"
                     % (self.case_name, success_rate, self.criteria))
 
-    def defcore_env_prepare(self):
-        try:
-            img_flavor_dict = conf_utils.create_tempest_resources(
-                use_custom_images=True, use_custom_flavors=True)
-            conf_utils.configure_tempest_defcore(
-                self.DEPLOYMENT_DIR, img_flavor_dict)
-            self.source_venv()
-            res = testcase_base.TestcaseBase.EX_OK
-        except KeyError as e:
-            logger.error("defcore prepare env error with: %s", e)
-            res = testcase_base.TestcaseBase.EX_RUN_ERROR
-
-        return res
-
     def run(self):
+        '''used for functest command line,
+           functest testcase run refstack_defcore'''
         self.start_time = time.time()
 
         if not os.path.exists(conf_utils.REFSTACK_RESULTS_DIR):
             os.makedirs(conf_utils.REFSTACK_RESULTS_DIR)
 
         try:
-            self.defcore_env_prepare()
+            tempestconf = TempestConf()
+            tempestconf.generate_tempestconf()
+            self.source_venv()
             self.run_defcore_default()
             self.parse_refstack_result()
             res = testcase_base.TestcaseBase.EX_OK
@@ -175,18 +159,31 @@ class RefstackClient(testcase_base.TestcaseBase):
         self.stop_time = time.time()
         return res
 
+    def _prep_test(self):
+        '''Check that the config file exists.'''
+        if not os.path.isfile(self.confpath):
+            logger.error("Conf file not valid: %s" % self.confpath)
+        if not os.path.isfile(self.testlist):
+            logger.error("testlist file not valid: %s" % self.testlist)
+
     def main(self, **kwargs):
+        '''used for manually running,
+           python refstack_client.py -c <tempest_conf_path>
+           --testlist <testlist_path>
+           can generate a reference tempest.conf by
+           python tempest_conf.py
+        '''
         try:
-            tempestconf = kwargs['config']
-            testlist = kwargs['testlist']
+            self.confpath = kwargs['config']
+            self.testlist = kwargs['testlist']
         except KeyError as e:
             logger.error("Cannot run refstack client. Please check "
                          "%s", e)
             return self.EX_RUN_ERROR
         try:
-            openstack_utils.source_credentials(CONST.openstack_creds)
-            self.defcore_env_prepare()
-            self.run_defcore(tempestconf, testlist)
+            self.source_venv()
+            self._prep_test()
+            self.run_defcore(self.confpath, self.testlist)
             res = testcase_base.TestcaseBase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s', e)
