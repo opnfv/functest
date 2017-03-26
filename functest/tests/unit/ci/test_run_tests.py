@@ -37,6 +37,9 @@ class RunTestsTesting(unittest.TestCase):
         attrs = {'get_tiers.return_value': [self.tier]}
         self.tiers.configure_mock(**attrs)
 
+        self.run_tests_parser = run_tests.RunTestsParser()
+        self.global_variables = run_tests.GlobalVariables()
+
     @mock.patch('functest.ci.run_tests.logger.info')
     def test_print_separator(self, mock_logger_info):
         run_tests.print_separator(self.sep)
@@ -121,8 +124,8 @@ class RunTestsTesting(unittest.TestCase):
 
     def test_run_tests_import_test_class_exception(self):
         mock_test = mock.Mock()
-        args = {'get_name': 'test_name',
-                'needs_clean': False}
+        args = {'get_name.return_value': 'test_name',
+                'needs_clean.return_value': False}
         mock_test.configure_mock(**args)
         with mock.patch('functest.ci.run_tests.print_separator'),\
             mock.patch('functest.ci.run_tests.source_rc_file'), \
@@ -131,6 +134,28 @@ class RunTestsTesting(unittest.TestCase):
                 self.assertRaises(Exception) as context:
             run_tests.run_test(mock_test, 'tier_name')
             msg = "Cannot import the class for the test case."
+            self.assertTrue(msg in context)
+
+    def test_run_tests_default(self):
+        mock_test = mock.Mock()
+        args = {'get_name.return_value': 'test_name',
+                'needs_clean.return_value': True}
+        mock_test.configure_mock(**args)
+        test_run_dict = {'module': 'test_module',
+                         'class': mock.Mock,
+                         'args': 'test_args'}
+        with mock.patch('functest.ci.run_tests.print_separator'),\
+            mock.patch('functest.ci.run_tests.source_rc_file'), \
+            mock.patch('functest.ci.run_tests.generate_os_snapshot'), \
+            mock.patch('functest.ci.run_tests.cleanup'), \
+            mock.patch('functest.ci.run_tests.update_test_info'), \
+            mock.patch('functest.ci.run_tests.get_run_dict',
+                       return_value=test_run_dict), \
+            mock.patch('functest.ci.run_tests.generate_report.main'), \
+                self.assertRaises(run_tests.BlockingTestFailed) as context:
+            run_tests.GlobalVariables.CLEAN_FLAG = True
+            run_tests.run_test(mock_test, 'tier_name')
+            msg = 'The test case test_name failed and is blocking'
             self.assertTrue(msg in context)
 
     @mock.patch('functest.ci.run_tests.logger.info')
@@ -187,6 +212,61 @@ class RunTestsTesting(unittest.TestCase):
             self.assertEqual(run_tests.main(**kwargs),
                              run_tests.Result.EX_ERROR)
 
+    def test_main_default(self):
+        kwargs = {'test': 'test_name', 'noclean': True, 'report': True}
+        mock_obj = mock.Mock()
+        args = {'get_tier.return_value': True,
+                'get_test.return_value': False}
+        mock_obj.configure_mock(**args)
+        with mock.patch('functest.ci.run_tests.tb.TierBuilder',
+                        return_value=mock_obj), \
+            mock.patch('functest.ci.run_tests.source_rc_file'), \
+            mock.patch('functest.ci.run_tests.generate_report.init'), \
+                mock.patch('functest.ci.run_tests.run_tier') as m:
+            self.assertEqual(run_tests.main(**kwargs),
+                             run_tests.Result.EX_OK)
+            self.assertTrue(m.called)
+
+        mock_obj = mock.Mock()
+        args = {'get_tier.return_value': False,
+                'get_test.return_value': True}
+        mock_obj.configure_mock(**args)
+        with mock.patch('functest.ci.run_tests.tb.TierBuilder',
+                        return_value=mock_obj), \
+            mock.patch('functest.ci.run_tests.source_rc_file'), \
+            mock.patch('functest.ci.run_tests.generate_report.init'), \
+                mock.patch('functest.ci.run_tests.run_test') as m:
+            self.assertEqual(run_tests.main(**kwargs),
+                             run_tests.Result.EX_OK)
+            self.assertTrue(m.called)
+
+        kwargs = {'test': 'all', 'noclean': True, 'report': True}
+        mock_obj = mock.Mock()
+        args = {'get_tier.return_value': False,
+                'get_test.return_value': False}
+        mock_obj.configure_mock(**args)
+        with mock.patch('functest.ci.run_tests.tb.TierBuilder',
+                        return_value=mock_obj), \
+            mock.patch('functest.ci.run_tests.source_rc_file'), \
+            mock.patch('functest.ci.run_tests.generate_report.init'), \
+                mock.patch('functest.ci.run_tests.run_all') as m:
+            self.assertEqual(run_tests.main(**kwargs),
+                             run_tests.Result.EX_OK)
+            self.assertTrue(m.called)
+
+        kwargs = {'test': 'any', 'noclean': True, 'report': True}
+        mock_obj = mock.Mock()
+        args = {'get_tier.return_value': False,
+                'get_test.return_value': False}
+        mock_obj.configure_mock(**args)
+        with mock.patch('functest.ci.run_tests.tb.TierBuilder',
+                        return_value=mock_obj), \
+            mock.patch('functest.ci.run_tests.source_rc_file'), \
+            mock.patch('functest.ci.run_tests.generate_report.init'), \
+                mock.patch('functest.ci.run_tests.logger.debug') as m:
+            self.assertEqual(run_tests.main(**kwargs),
+                             run_tests.Result.EX_ERROR)
+            self.assertTrue(m.called)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
