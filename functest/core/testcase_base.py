@@ -35,11 +35,12 @@ class TestcaseBase(object):
             assert self.criteria
             if self.criteria == 'PASS':
                 return TestcaseBase.EX_OK
-        except:
+        except AssertionError:
             self.logger.error("Please run test before checking the results")
         return TestcaseBase.EX_TESTCASE_FAILED
 
     def run(self, **kwargs):
+        # pylint: disable=unused-argument
         self.logger.error("Run must be implemented")
         return TestcaseBase.EX_RUN_ERROR
 
@@ -58,6 +59,6 @@ class TestcaseBase(object):
             else:
                 self.logger.error("The results cannot be pushed to DB")
                 return TestcaseBase.EX_PUSH_TO_DB_ERROR
-        except Exception:
+        except Exception: # pylint: disable=broad-except
             self.logger.exception("The results cannot be pushed to DB")
             return TestcaseBase.EX_PUSH_TO_DB_ERROR
