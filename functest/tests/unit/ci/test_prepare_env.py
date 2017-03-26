@@ -20,6 +20,9 @@ class PrepareEnvTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    def setUp(self):
+        self.prepare_envparser = prepare_env.PrepareEnvParser()
+
     @mock.patch('functest.ci.prepare_env.logger.info')
     def test_print_separator(self, mock_logger_info):
         str = "=============================================="
@@ -81,7 +84,7 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.logger.warning')
     def test_check_env_variables_with_scenario(self, mock_logger_warn,
                                                mock_logger_info):
-        CONST.DEPLOY_SCENARIO = mock.Mock()
+        CONST.DEPLOY_SCENARIO = 'test_scenario'
         prepare_env.check_env_variables()
         mock_logger_info.assert_any_call("Checking environment variables"
                                          "...")
@@ -133,6 +136,47 @@ class PrepareEnvTesting(unittest.TestCase):
 
         mock_logger_info.assert_any_call(test_utils.
                                          SubstrMatch("    IS_CI_RUN="))
+
+    def test_get_deployment_handler_missing_const_vars(self):
+        with mock.patch('functest.ci.prepare_env.'
+                        'factory.Factory.get_handler') as m:
+            CONST.INSTALLER_IP = None
+            prepare_env.get_deployment_handler()
+            self.assertFalse(m.called)
+
+            CONST.INSTALLER_TYPE = None
+            prepare_env.get_deployment_handler()
+            self.assertFalse(m.called)
+
+    @mock.patch('functest.ci.prepare_env.logger.debug')
+    def test_get_deployment_handler_missing_print_deploy_info(self,
+                                                              mock_debug):
+        with mock.patch('functest.ci.prepare_env.'
+                        'factory.Factory.get_handler') as m, \
+            mock.patch('functest.ci.prepare_env.'
+                       'ft_utils.get_parameter_from_yaml',
+                       side_effect=ValueError):
+            CONST.INSTALLER_IP = 'test_ip'
+            CONST.INSTALLER_TYPE = 'test_inst_type'
+            opnfv_constants.INSTALLERS = ['test_inst_type']
+            prepare_env.get_deployment_handler()
+            msg = ('Printing deployment info is not supported for '
+                   'test_inst_type')
+            mock_debug.assert_any_call(msg)
+            self.assertFalse(m.called)
+
+    @mock.patch('functest.ci.prepare_env.logger.debug')
+    def test_get_deployment_handler_exception(self, mock_debug):
+        with mock.patch('functest.ci.prepare_env.'
+                        'factory.Factory.get_handler',
+                        side_effect=Exception), \
+            mock.patch('functest.ci.prepare_env.'
+                       'ft_utils.get_parameter_from_yaml'):
+            CONST.INSTALLER_IP = 'test_ip'
+            CONST.INSTALLER_TYPE = 'test_inst_type'
+            opnfv_constants.INSTALLERS = ['test_inst_type']
+            prepare_env.get_deployment_handler()
+            self.assertTrue(mock_debug.called)
 
     @mock.patch('functest.ci.prepare_env.logger.info')
     @mock.patch('functest.ci.prepare_env.logger.debug')
@@ -228,6 +272,36 @@ class PrepareEnvTesting(unittest.TestCase):
 
             prepare_env.source_rc_file()
 
+    @mock.patch('functest.ci.prepare_env.logger.debug')
+    def test_patch_file(self, mock_logger_debug):
+        with mock.patch("__builtin__.open", mock.mock_open()), \
+            mock.patch('functest.ci.prepare_env.yaml.safe_load',
+                       return_value={'test_scenario': {'tkey': 'tvalue'}}), \
+            mock.patch('functest.ci.prepare_env.ft_utils.get_functest_yaml',
+                       return_value={'tkey1': 'tvalue1'}), \
+            mock.patch('functest.ci.prepare_env.os.remove') as m, \
+                mock.patch('functest.ci.prepare_env.yaml.dump'):
+            CONST.DEPLOY_SCENARIO = 'test_scenario'
+            prepare_env.patch_file('test_file')
+            self.assertTrue(m.called)
+
+    @mock.patch('functest.ci.prepare_env.logger.info')
+    def test_verify_deployment_error(self, mock_logger_error):
+        mock_popen = mock.Mock()
+        attrs = {'poll.return_value': None,
+                 'stdout.readline.return_value': 'ERROR'}
+        mock_popen.configure_mock(**attrs)
+
+        with mock.patch('functest.ci.prepare_env.print_separator') as m, \
+            mock.patch('functest.ci.prepare_env.subprocess.Popen',
+                       return_value=mock_popen), \
+                self.assertRaises(Exception) as context:
+            prepare_env.verify_deployment()
+            self.assertTrue(m.called)
+            msg = "Problem while running 'check_os.sh'."
+            mock_logger_error.assert_called_once_with('ERROR')
+            self.assertTrue(msg in context)
+
     def _get_rally_creds(self):
         return {"type": "ExistingCloud",
                 "admin": {"username": 'test_user_name',
@@ -271,6 +345,33 @@ class PrepareEnvTesting(unittest.TestCase):
                      "Rally plugins.")
         mock_exec.assert_any_call(cmd, error_msg=error_msg)
 
+    @mock.patch('functest.ci.prepare_env.logger.debug')
+    def test_install_tempest(self, mock_logger_debug):
+        mock_popen = mock.Mock()
+        attrs = {'poll.return_value': None,
+                 'stdout.readline.return_value': '0'}
+        mock_popen.configure_mock(**attrs)
+
+        CONST.tempest_deployment_name = 'test_dep_name'
+        with mock.patch('functest.ci.prepare_env.'
+                        'ft_utils.execute_command_raise',
+                        side_effect=Exception), \
+            mock.patch('functest.ci.prepare_env.subprocess.Popen',
+                       return_value=mock_popen), \
+                self.assertRaises(Exception):
+            prepare_env.install_tempest()
+            mock_logger_debug.assert_any_call("Tempest test_dep_name"
+                                              " does not exist")
+
+    def test_create_flavor(self):
+        with mock.patch('functest.ci.prepare_env.'
+                        'os_utils.get_or_create_flavor',
+                        return_value=('test_', None)), \
+                self.assertRaises(Exception) as context:
+            prepare_env.create_flavor()
+            msg = 'Failed to create flavor'
+            self.assertTrue(msg in context)
+
     @mock.patch('functest.ci.prepare_env.sys.exit')
     @mock.patch('functest.ci.prepare_env.logger.error')
     def test_check_environment_missing_file(self, mock_logger_error,
@@ -299,6 +400,7 @@ class PrepareEnvTesting(unittest.TestCase):
                 mock_logger_info.assert_any_call("Functest environment"
                                                  " is installed.")
 
+    @mock.patch('functest.ci.prepare_env.print_deployment_info')
     @mock.patch('functest.ci.prepare_env.check_environment')
     @mock.patch('functest.ci.prepare_env.create_flavor')
     @mock.patch('functest.ci.prepare_env.install_tempest')
@@ -307,19 +409,21 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.patch_config_file')
     @mock.patch('functest.ci.prepare_env.source_rc_file')
     @mock.patch('functest.ci.prepare_env.create_directories')
+    @mock.patch('functest.ci.prepare_env.get_deployment_handler')
     @mock.patch('functest.ci.prepare_env.check_env_variables')
     @mock.patch('functest.ci.prepare_env.logger.info')
-    def test_main_start(self, mock_logger_info, mock_env_var,
+    def test_main_start(self, mock_logger_info, mock_env_var, mock_dep_handler,
                         mock_create_dir, mock_source_rc, mock_patch_config,
                         mock_verify_depl, mock_install_rally,
                         mock_install_temp, mock_create_flavor,
-                        mock_check_env):
+                        mock_check_env, mock_print_info):
         with mock.patch("__builtin__.open", mock.mock_open()) as m:
             args = {'action': 'start'}
             self.assertEqual(prepare_env.main(**args), 0)
             mock_logger_info.assert_any_call("######### Preparing Functest "
                                              "environment #########\n")
             self.assertTrue(mock_env_var.called)
+            self.assertTrue(mock_dep_handler.called)
             self.assertTrue(mock_create_dir.called)
             self.assertTrue(mock_source_rc.called)
             self.assertTrue(mock_patch_config.called)
@@ -329,6 +433,7 @@ class PrepareEnvTesting(unittest.TestCase):
             self.assertTrue(mock_create_flavor.called)
             m.assert_called_once_with(CONST.env_active, "w")
             self.assertTrue(mock_check_env.called)
+            self.assertTrue(mock_print_info.called)
 
     @mock.patch('functest.ci.prepare_env.check_environment')
     def test_main_check(self, mock_check_env):
