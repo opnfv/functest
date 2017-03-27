@@ -333,6 +333,23 @@ tiers:
                         cmd: '. /home/opnfv/functest/conf/stackrc && cd /home/opnfv/repos/securityscanning && python security_scan.py --config config.ini && cd -'
 
             -
+                case_name: copper
+                project_name: copper
+                criteria: 'status == "PASS"'
+                blocking: false
+                clean_flag: true
+                description: >-
+                    Test suite for policy management based on OpenStack Congress
+                dependencies:
+                    installer: 'apex'
+                    scenario: '^((?!fdio).)*$'
+                run:
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'cd /home/opnfv/repos/copper/tests && bash run.sh && cd -'
+
+            -
                 case_name: multisite
                 project_name: multisite
                 criteria: 'success_rate == 100%'
