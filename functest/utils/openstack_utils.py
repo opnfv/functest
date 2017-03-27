@@ -1054,6 +1054,39 @@ def create_secgroup_rule(neutron_client, sg_id, direction, protocol,
         return False
 
 
+def get_security_group_rules(neutron_client, sg_id):
+    try:
+        security_rules = neutron_client.list_security_group_rules()[
+            'security_group_rules']
+        security_rules = [rule for rule in security_rules
+                          if rule["security_group_id"] == sg_id]
+        return security_rules
+    except Exception, e:
+        logger.error("Error [get_security_group_rules(neutron_client, sg_id)]:"
+                     " %s" % e)
+        return None
+
+
+def check_security_group_rules(neutron_client, sg_id, direction, protocol,
+                               port_min=None, port_max=None):
+    try:
+        security_rules = get_security_group_rules(neutron_client, sg_id)
+        security_rules = [rule for rule in security_rules
+                          if (rule["direction"].lower() == direction
+                              and rule["protocol"].lower() == protocol
+                              and rule["port_range_min"] == port_min
+                              and rule["port_range_max"] == port_max)]
+        if len(security_rules) == 0:
+            return True
+        else:
+            return False
+    except Exception, e:
+        logger.error("Error [check_security_group_rules("
+                     " neutron_client, sg_id, direction,"
+                     " protocol, port_min=None, port_max=None)]: "
+                     "%s" % e)
+
+
 def create_security_group_full(neutron_client,
                                sg_name, sg_description):
     sg_id = get_security_group_id(neutron_client, sg_name)
