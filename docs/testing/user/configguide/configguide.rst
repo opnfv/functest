@@ -407,7 +407,7 @@ follows::
         |   |-- __init__.py
         |   |-- feature_base.py
         |   |-- pytest_suite_runner.py
-        |   |-- testcase_base.py
+        |   |-- testcase.py
         |   |-- vnf_base.py
         |-- opnfv_tests
         |   |-- __init__.py

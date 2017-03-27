@@ -1,6 +1,6 @@
 import time
 
-import testcase_base as base
+import testcase as base
 import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_logger as ft_logger
 from functest.utils.constants import CONST

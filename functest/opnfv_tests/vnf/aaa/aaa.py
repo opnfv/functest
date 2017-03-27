@@ -11,7 +11,7 @@ import sys
 
 import argparse
 
-import functest.core.testcase_base as testcase_base
+import functest.core.testcase as testcase
 import functest.core.vnf_base as vnf_base
 import functest.utils.functest_logger as ft_logger
 
@@ -62,9 +62,9 @@ if __name__ == '__main__':
     aaa_vnf = AaaVnf()
     try:
         result = aaa_vnf.main(**args)
-        if result != testcase_base.TestCase.EX_OK:
+        if result != testcase.TestCase.EX_OK:
             sys.exit(result)
         if args['pushtodb']:
             sys.exit(aaa_vnf.push_to_db())
     except Exception:
-        sys.exit(testcase_base.TestCase.EX_RUN_ERROR)
+        sys.exit(testcase.TestCase.EX_RUN_ERROR)

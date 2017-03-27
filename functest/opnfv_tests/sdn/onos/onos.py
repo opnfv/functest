@@ -14,7 +14,7 @@ import shutil
 import time
 import urlparse
 
-from functest.core import testcase_base
+from functest.core import testcase
 from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
@@ -24,7 +24,7 @@ import functest.utils.openstack_utils as openstack_utils
 logger = ft_logger.Logger(__name__).getLogger()
 
 
-class OnosBase(testcase_base.TestCase):
+class OnosBase(testcase.TestCase):
     onos_repo_path = CONST.dir_repo_onos
     onos_sfc_image_name = CONST.onos_sfc_image_name
     onos_sfc_image_path = os.path.join(CONST.dir_functest_data,
@@ -39,10 +39,10 @@ class OnosBase(testcase_base.TestCase):
         self.start_time = time.time()
         try:
             self._run()
-            res = testcase_base.TestCase.EX_OK
+            res = testcase.TestCase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s', e)
-            res = testcase_base.TestCase.EX_RUN_ERROR
+            res = testcase.TestCase.EX_RUN_ERROR
 
         self.stop_time = time.time()
         return res

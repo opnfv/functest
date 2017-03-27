@@ -20,7 +20,7 @@ from robot.errors import RobotError
 import robot.run
 from robot.utils.robottime import timestamp_to_secs
 
-from functest.core import testcase_base
+from functest.core import testcase
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as op_utils
 
@@ -46,7 +46,7 @@ class ODLResultVisitor(robot.api.ResultVisitor):
         return self._data
 
 
-class ODLTests(testcase_base.TestCase):
+class ODLTests(testcase.TestCase):
 
     repos = "/home/opnfv/repos/"
     odl_test_repo = os.path.join(repos, "odl_test")
@@ -59,7 +59,7 @@ class ODLTests(testcase_base.TestCase):
     logger = ft_logger.Logger("opendaylight").getLogger()
 
     def __init__(self):
-        testcase_base.TestCase.__init__(self)
+        testcase.TestCase.__init__(self)
         self.case_name = "odl"
 
     @classmethod
@@ -236,9 +236,9 @@ if __name__ == '__main__':
     args = parser.parse_args(sys.argv[1:])
     try:
         result = odl.main(ODLTests.default_suites, **args)
-        if result != testcase_base.TestCase.EX_OK:
+        if result != testcase.TestCase.EX_OK:
             sys.exit(result)
         if args['pushtodb']:
             sys.exit(odl.push_to_db())
     except Exception:
-        sys.exit(testcase_base.TestCase.EX_RUN_ERROR)
+        sys.exit(testcase.TestCase.EX_RUN_ERROR)
