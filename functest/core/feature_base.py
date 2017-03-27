@@ -6,7 +6,7 @@ import functest.utils.functest_logger as ft_logger
 from functest.utils.constants import CONST
 
 
-class FeatureBase(base.TestcaseBase):
+class FeatureBase(base.TestCase):
 
     def __init__(self, project='functest', case='', repo='', cmd=''):
         super(FeatureBase, self).__init__()
@@ -26,7 +26,7 @@ class FeatureBase(base.TestcaseBase):
         self.parse_results(ret)
         self.log_results()
         self.logger.info("Test result is stored in '%s'" % self.result_file)
-        return base.TestcaseBase.EX_OK
+        return base.TestCase.EX_OK
 
     def execute(self):
         '''
@@ -42,13 +42,13 @@ class FeatureBase(base.TestcaseBase):
         pass
 
     def parse_results(self, ret):
-        exit_code = base.TestcaseBase.EX_OK
+        exit_code = base.TestCase.EX_OK
         if ret == 0:
             self.logger.info("{} OK".format(self.project_name))
             self.criteria = 'PASS'
         else:
             self.logger.info("{} FAILED".format(self.project_name))
-            exit_code = base.TestcaseBase.EX_RUN_ERROR
+            exit_code = base.TestCase.EX_RUN_ERROR
             self.criteria = "FAIL"
 
         return exit_code

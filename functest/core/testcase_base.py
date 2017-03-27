@@ -13,7 +13,7 @@ import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
 
-class TestcaseBase(object):
+class TestCase(object):
 
     EX_OK = os.EX_OK
     EX_RUN_ERROR = os.EX_SOFTWARE
@@ -34,15 +34,15 @@ class TestcaseBase(object):
         try:
             assert self.criteria
             if self.criteria == 'PASS':
-                return TestcaseBase.EX_OK
+                return TestCase.EX_OK
         except AssertionError:
             self.logger.error("Please run test before checking the results")
-        return TestcaseBase.EX_TESTCASE_FAILED
+        return TestCase.EX_TESTCASE_FAILED
 
     def run(self, **kwargs):
         # pylint: disable=unused-argument
         self.logger.error("Run must be implemented")
-        return TestcaseBase.EX_RUN_ERROR
+        return TestCase.EX_RUN_ERROR
 
     def push_to_db(self):
         try:
@@ -55,10 +55,10 @@ class TestcaseBase(object):
                     self.project_name, self.case_name, self.start_time,
                     self.stop_time, self.criteria, self.details):
                 self.logger.info("The results were successfully pushed to DB")
-                return TestcaseBase.EX_OK
+                return TestCase.EX_OK
             else:
                 self.logger.error("The results cannot be pushed to DB")
-                return TestcaseBase.EX_PUSH_TO_DB_ERROR
+                return TestCase.EX_PUSH_TO_DB_ERROR
         except Exception:  # pylint: disable=broad-except
             self.logger.exception("The results cannot be pushed to DB")
-            return TestcaseBase.EX_PUSH_TO_DB_ERROR
+            return TestCase.EX_PUSH_TO_DB_ERROR

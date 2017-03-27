@@ -70,7 +70,7 @@ class OSRefstackClientTesting(unittest.TestCase):
     def _test_main_missing_keyword(self, key):
         kwargs = self._get_main_kwargs(key)
         self.assertEqual(self.refstackclient.main(**kwargs),
-                         testcase_base.TestcaseBase.EX_RUN_ERROR)
+                         testcase_base.TestCase.EX_RUN_ERROR)
 
     def test_main_missing_conf(self):
         self._test_main_missing_keyword('config')

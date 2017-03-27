@@ -17,7 +17,7 @@ import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
 
-class VPingBase(testcase_base.TestcaseBase):
+class VPingBase(testcase_base.TestCase):
     def __init__(self):
         super(VPingBase, self).__init__()
         self.logger = None
@@ -52,23 +52,23 @@ class VPingBase(testcase_base.TestcaseBase):
 
     def run(self, **kwargs):
         if not self.check_repo_exist():
-            return testcase_base.TestcaseBase.EX_RUN_ERROR
+            return testcase_base.TestCase.EX_RUN_ERROR
 
         image_id = self.create_image()
         if not image_id:
-            return testcase_base.TestcaseBase.EX_RUN_ERROR
+            return testcase_base.TestCase.EX_RUN_ERROR
 
         flavor = self.get_flavor()
         if not flavor:
-            return testcase_base.TestcaseBase.EX_RUN_ERROR
+            return testcase_base.TestCase.EX_RUN_ERROR
 
         network_id = self.create_network_full()
         if not network_id:
-            return testcase_base.TestcaseBase.EX_RUN_ERROR
+            return testcase_base.TestCase.EX_RUN_ERROR
 
         sg_id = self.create_security_group()
         if not sg_id:
-            return testcase_base.TestcaseBase.EX_RUN_ERROR
+            return testcase_base.TestCase.EX_RUN_ERROR
 
         self.delete_exist_vms()
 
@@ -84,7 +84,7 @@ class VPingBase(testcase_base.TestcaseBase):
                            None,
                            sg_id)
         if not vm1:
-            return testcase_base.TestcaseBase.EX_RUN_ERROR
+            return testcase_base.TestCase.EX_RUN_ERROR
 
         test_ip = self.get_test_ip(vm1)
         vm2 = self.boot_vm(self.vm2_name,
@@ -94,17 +94,17 @@ class VPingBase(testcase_base.TestcaseBase):
                            test_ip,
                            sg_id)
         if not vm2:
-            return testcase_base.TestcaseBase.EX_RUN_ERROR
+            return testcase_base.TestCase.EX_RUN_ERROR
 
         EXIT_CODE = self.do_vping(vm2, test_ip)
-        if EXIT_CODE == testcase_base.TestcaseBase.EX_RUN_ERROR:
+        if EXIT_CODE == testcase_base.TestCase.EX_RUN_ERROR:
             return EXIT_CODE
 
         self.stop_time = time.time()
         self.parse_result(EXIT_CODE,
                           self.start_time,
                           self.stop_time)
-        return testcase_base.TestcaseBase.EX_OK
+        return testcase_base.TestCase.EX_OK
 
     def boot_vm_preparation(self, config, vmname, test_ip):
         pass

@@ -23,7 +23,7 @@ import functest.utils.functest_utils as ft_utils
 logger = ft_logger.Logger("refstack_defcore").getLogger()
 
 
-class RefstackClient(testcase_base.TestcaseBase):
+class RefstackClient(testcase_base.TestCase):
 
     def __init__(self):
         super(RefstackClient, self).__init__()
@@ -150,10 +150,10 @@ class RefstackClient(testcase_base.TestcaseBase):
             conf_utils.configure_tempest_defcore(
                 self.DEPLOYMENT_DIR, img_flavor_dict)
             self.source_venv()
-            res = testcase_base.TestcaseBase.EX_OK
+            res = testcase_base.TestCase.EX_OK
         except KeyError as e:
             logger.error("defcore prepare env error with: %s", e)
-            res = testcase_base.TestcaseBase.EX_RUN_ERROR
+            res = testcase_base.TestCase.EX_RUN_ERROR
 
         return res
 
@@ -167,10 +167,10 @@ class RefstackClient(testcase_base.TestcaseBase):
             self.defcore_env_prepare()
             self.run_defcore_default()
             self.parse_refstack_result()
-            res = testcase_base.TestcaseBase.EX_OK
+            res = testcase_base.TestCase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s', e)
-            res = testcase_base.TestcaseBase.EX_RUN_ERROR
+            res = testcase_base.TestCase.EX_RUN_ERROR
 
         self.stop_time = time.time()
         return res
@@ -187,15 +187,15 @@ class RefstackClient(testcase_base.TestcaseBase):
             openstack_utils.source_credentials(CONST.openstack_creds)
             self.defcore_env_prepare()
             self.run_defcore(tempestconf, testlist)
-            res = testcase_base.TestcaseBase.EX_OK
+            res = testcase_base.TestCase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s', e)
-            res = testcase_base.TestcaseBase.EX_RUN_ERROR
+            res = testcase_base.TestCase.EX_RUN_ERROR
 
         return res
 
 
-class RefstackClientParser(testcase_base.TestcaseBase):
+class RefstackClientParser(testcase_base.TestCase):
 
     def __init__(self):
         super(RefstackClientParser, self).__init__()
@@ -228,7 +228,7 @@ if __name__ == '__main__':
     args = parser.parse_args(sys.argv[1:])
     try:
         result = refstackclient.main(**args)
-        if result != testcase_base.TestcaseBase.EX_OK:
+        if result != testcase_base.TestCase.EX_OK:
             sys.exit(result)
     except Exception:
-        sys.exit(testcase_base.TestcaseBase.EX_RUN_ERROR)
+        sys.exit(testcase_base.TestCase.EX_RUN_ERROR)
