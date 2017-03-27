@@ -14,7 +14,7 @@ import inspect
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
 import functest.utils.functest_utils as ft_utils
-import testcase_base as base
+import testcase as base
 from functest.utils.constants import CONST
 
 

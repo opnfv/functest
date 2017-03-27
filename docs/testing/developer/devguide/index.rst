@@ -156,13 +156,13 @@ Functest abstraction classes
 In order to harmonize test integration, 3 abstraction classes have been
 introduced in Danube:
 
- * testcase_base: base for any test case
+ * testcase: base for any test case
  * feature_base: abstraction for feature project
  * vnf_base: abstraction for vnf onboarding
 
 The goal is to unify the way to run test from Functest.
 
-feature_base and vnf_base inherit from testcase_base::
+feature_base and vnf_base inherit from testcase::
 
               +-----------------------------------------+
               |                                         |

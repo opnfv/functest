@@ -5,7 +5,7 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import testcase_base as base
+import testcase as base
 import unittest
 import time
 

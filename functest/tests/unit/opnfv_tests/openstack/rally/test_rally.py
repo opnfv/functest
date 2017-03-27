@@ -12,7 +12,7 @@ import unittest
 
 import mock
 
-from functest.core import testcase_base
+from functest.core import testcase
 from functest.opnfv_tests.openstack.rally import rally
 from functest.utils.constants import CONST
 
@@ -378,13 +378,13 @@ class OSRallyTesting(unittest.TestCase):
             mock.patch.object(self.rally_base, '_generate_report'), \
                 mock.patch.object(self.rally_base, '_clean_up'):
             self.assertEqual(self.rally_base.run(),
-                             testcase_base.TestCase.EX_OK)
+                             testcase.TestCase.EX_OK)
 
     def test_run_exception(self):
         with mock.patch.object(self.rally_base, '_prepare_env',
                                side_effect=Exception):
             self.assertEqual(self.rally_base.run(),
-                             testcase_base.TestCase.EX_RUN_ERROR)
+                             testcase.TestCase.EX_RUN_ERROR)
 
 
 if __name__ == "__main__":

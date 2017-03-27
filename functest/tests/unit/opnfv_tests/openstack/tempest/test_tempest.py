@@ -10,7 +10,7 @@ import unittest
 
 import mock
 
-from functest.core import testcase_base
+from functest.core import testcase
 from functest.opnfv_tests.openstack.tempest import tempest
 from functest.opnfv_tests.openstack.tempest import conf_utils
 
@@ -119,7 +119,7 @@ class OSTempestTesting(unittest.TestCase):
             mock_method.assert_any_call('test_case_name', 100)
 
     def test_run_missing_create_tempest_dir(self):
-        ret = testcase_base.TestCase.EX_RUN_ERROR
+        ret = testcase.TestCase.EX_RUN_ERROR
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                         'os.path.exists', return_value=False), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
@@ -132,8 +132,8 @@ class OSTempestTesting(unittest.TestCase):
             self.assertTrue(mock_os_makedirs.called)
 
     def test_run_missing_configure_tempest(self):
-        ret = testcase_base.TestCase.EX_RUN_ERROR
-        ret_ok = testcase_base.TestCase.EX_OK
+        ret = testcase.TestCase.EX_RUN_ERROR
+        ret_ok = testcase.TestCase.EX_OK
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                         'os.path.exists', return_value=False), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
@@ -149,8 +149,8 @@ class OSTempestTesting(unittest.TestCase):
             self.assertTrue(mock_os_makedirs.called)
 
     def test_run_missing_generate_test_list(self):
-        ret = testcase_base.TestCase.EX_RUN_ERROR
-        ret_ok = testcase_base.TestCase.EX_OK
+        ret = testcase.TestCase.EX_RUN_ERROR
+        ret_ok = testcase.TestCase.EX_OK
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                         'os.path.exists', return_value=False), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
@@ -168,8 +168,8 @@ class OSTempestTesting(unittest.TestCase):
             self.assertTrue(mock_os_makedirs.called)
 
     def test_run_missing_apply_tempest_blacklist(self):
-        ret = testcase_base.TestCase.EX_RUN_ERROR
-        ret_ok = testcase_base.TestCase.EX_OK
+        ret = testcase.TestCase.EX_RUN_ERROR
+        ret_ok = testcase.TestCase.EX_OK
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                         'os.path.exists', return_value=False), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
@@ -189,8 +189,8 @@ class OSTempestTesting(unittest.TestCase):
             self.assertTrue(mock_os_makedirs.called)
 
     def test_run_missing_parse_verifier_result(self):
-        ret = testcase_base.TestCase.EX_RUN_ERROR
-        ret_ok = testcase_base.TestCase.EX_OK
+        ret = testcase.TestCase.EX_RUN_ERROR
+        ret_ok = testcase.TestCase.EX_OK
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                         'os.path.exists', return_value=False), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'

@@ -19,7 +19,7 @@ from scp import SCPClient
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
 import vping_base
-import functest.core.testcase_base as testcase_base
+import functest.core.testcase as testcase
 
 
 class VPingSSH(vping_base.VPingBase):
@@ -32,12 +32,12 @@ class VPingSSH(vping_base.VPingBase):
     def do_vping(self, vm, test_ip):
         floatip = self.add_float_ip(vm)
         if not floatip:
-            return testcase_base.TestCase.EX_RUN_ERROR
+            return testcase.TestCase.EX_RUN_ERROR
         ssh = self.establish_ssh(vm, floatip)
         if not ssh:
-            return testcase_base.TestCase.EX_RUN_ERROR
+            return testcase.TestCase.EX_RUN_ERROR
         if not self.transfer_ping_script(ssh, floatip):
-            return testcase_base.TestCase.EX_RUN_ERROR
+            return testcase.TestCase.EX_RUN_ERROR
         return self.do_vping_ssh(ssh, test_ip)
 
     def add_float_ip(self, vm):
