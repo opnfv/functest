@@ -18,7 +18,7 @@ import testcase_base as base
 from functest.utils.constants import CONST
 
 
-class VnfOnBoardingBase(base.TestcaseBase):
+class VnfOnBoardingBase(base.TestCase):
 
     logger = ft_logger.Logger(__name__).getLogger()
 
@@ -58,7 +58,7 @@ class VnfOnBoardingBase(base.TestcaseBase):
         except Exception:
             self.logger.error("Error during VNF Onboarding environment" +
                               "creation", exc_info=True)
-            return base.TestcaseBase.EX_TESTCASE_FAILED
+            return base.TestCase.EX_TESTCASE_FAILED
 
         # Deploy orchestrator
         try:
@@ -87,7 +87,7 @@ class VnfOnBoardingBase(base.TestcaseBase):
                 vnf_ready_time - orchestrator_ready_time, 1)
         except Exception:
             self.logger.error("Error during VNF deployment", exc_info=True)
-            return base.TestcaseBase.EX_TESTCASE_FAILED
+            return base.TestCase.EX_TESTCASE_FAILED
 
         # Test VNF
         try:
@@ -100,7 +100,7 @@ class VnfOnBoardingBase(base.TestcaseBase):
                 test_vnf_done_time - vnf_ready_time, 1)
         except Exception:
             self.logger.error("Error when running VNF tests", exc_info=True)
-            return base.TestcaseBase.EX_TESTCASE_FAILED
+            return base.TestCase.EX_TESTCASE_FAILED
 
         # Clean the system
         self.clean()

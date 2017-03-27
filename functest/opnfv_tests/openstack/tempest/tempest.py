@@ -26,7 +26,7 @@ import functest.utils.functest_utils as ft_utils
 logger = ft_logger.Logger("Tempest").getLogger()
 
 
-class TempestCommon(testcase_base.TestcaseBase):
+class TempestCommon(testcase_base.TestCase):
 
     def __init__(self):
         super(TempestCommon, self).__init__()
@@ -223,10 +223,10 @@ class TempestCommon(testcase_base.TestcaseBase):
             self.apply_tempest_blacklist()
             self.run_verifier_tests()
             self.parse_verifier_result()
-            res = testcase_base.TestcaseBase.EX_OK
+            res = testcase_base.TestCase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s' % e)
-            res = testcase_base.TestcaseBase.EX_RUN_ERROR
+            res = testcase_base.TestCase.EX_RUN_ERROR
 
         self.stop_time = time.time()
         return res
