@@ -78,7 +78,7 @@ tiers:
                     over a private network.
                 dependencies:
                     installer: ''
-                    scenario: '^((?!odl_l3).)*$'
+                    scenario: '^((?!odl_l3|odl-bgpvpn|gluon).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.vping.vping_ssh'
                     class: 'VPingSSH'
