@@ -16,7 +16,7 @@ import time
 
 import yaml
 
-from functest.core import testcase_base
+from functest.core import testcase
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
@@ -26,7 +26,7 @@ import functest.utils.functest_utils as ft_utils
 logger = ft_logger.Logger("Tempest").getLogger()
 
 
-class TempestCommon(testcase_base.TestCase):
+class TempestCommon(testcase.TestCase):
 
     def __init__(self):
         super(TempestCommon, self).__init__()
@@ -223,10 +223,10 @@ class TempestCommon(testcase_base.TestCase):
             self.apply_tempest_blacklist()
             self.run_verifier_tests()
             self.parse_verifier_result()
-            res = testcase_base.TestCase.EX_OK
+            res = testcase.TestCase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s' % e)
-            res = testcase_base.TestCase.EX_RUN_ERROR
+            res = testcase.TestCase.EX_RUN_ERROR
 
         self.stop_time = time.time()
         return res
