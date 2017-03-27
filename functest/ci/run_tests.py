@@ -138,7 +138,7 @@ def run_test(test, tier_name, testcases=None):
     if GlobalVariables.REPORT_FLAG:
         flags += " -r"
 
-    result = testcase_base.TestcaseBase.EX_RUN_ERROR
+    result = testcase_base.TestCase.EX_RUN_ERROR
     run_dict = get_run_dict(test_name)
     if run_dict:
         try:
@@ -151,7 +151,7 @@ def run_test(test, tier_name, testcases=None):
                 result = test_case.run(**kwargs)
             except KeyError:
                 result = test_case.run()
-            if result == testcase_base.TestcaseBase.EX_OK:
+            if result == testcase_base.TestCase.EX_OK:
                 if GlobalVariables.REPORT_FLAG:
                     test_case.push_to_db()
                 result = test_case.check_criteria()
