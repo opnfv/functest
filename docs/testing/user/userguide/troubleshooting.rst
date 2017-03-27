@@ -44,8 +44,8 @@ These test cases can be run inside the container, using new Functest CLI as foll
 
 The Functest CLI is designed to route a call to the corresponding internal
 python scripts, located in paths:
-*$REPOS_DIR/functest/functest/opnfv_tests/vPing/CI/libraries/vPing_ssh.py* and
-*$REPOS_DIR/functest/functest/opnfv_tests/vPing/CI/libraries/vPing_userdata.py*
+*$REPOS_DIR/functest/functest/opnfv_tests/openstack/vping/vping_ssh.py* and
+*$REPOS_DIR/functest/functest/opnfv_tests/openstack/vping/vping_userdata.py*
 
 Notes:
 
@@ -122,7 +122,7 @@ This test case creates a floating IP on the external network and assigns it to
 the second instance **opnfv-vping-2**. The purpose of this is to establish
 a SSH connection to that instance and SCP a script that will ping the first
 instance. This script is located in the repository under
-*$REPOS_DIR/functest/functest/opnfv_tests/OpenStack/vPing/ping.sh* and takes an IP as
+*$REPOS_DIR/functest/functest/opnfv_tests/openstack/vping/ping.sh* and takes an IP as
 a parameter. When the SCP is completed, the test will do an SSH call to that script
 inside the second instance. Some problems can happen here::
 
@@ -238,7 +238,8 @@ of the following
 | execution test cases are    | Rally in Functest, does not contain all the needed  |
 | missing                     | parameters or some parameters are not set properly. |
 |                             | The tempest.conf file is located in directory       |
-|                             | '/home/opnfv/.rally/tempest/for-deployment-<UUID>'  |
+|                             | '/home/opnfv/.rally/verification/verifier-<UUID>    |
+|                             | /for-deployment-<UUID>'                             |
 |                             | in the Functest Docker container. Use the "rally    |
 |                             | deployment list" command in order to check the UUID |
 |                             | the UUID of the current deployment.                 |
@@ -257,30 +258,6 @@ Rally
 The same error causes which were mentioned above for Tempest test cases, may also
 lead to errors in Rally as well.
 
-It is possible to run only one Rally scenario, instead of the whole suite.
-To do that, call the alternative python script as follows::
-
-  python $REPOS_DIR/functest/functest/opnfv_tests/OpenStack/rally/run_rally-cert.py -h
-  usage: run_rally-cert.py [-h] [-d] [-r] [-s] [-v] [-n] test_name
-
-  positional arguments:
-    test_name      Module name to be tested. Possible values are : [
-                   authenticate | glance | cinder | heat | keystone | neutron |
-                   nova | quotas | requests | vm | all ] The 'all' value
-                   performs all possible test scenarios
-
-  optional arguments:
-    -h, --help     show this help message and exit
-    -d, --debug    Debug mode
-    -r, --report   Create json result file
-    -s, --smoke    Smoke test mode
-    -v, --verbose  Print verbose info about the progress
-    -n, --noclean  Don't clean the created resources for this test.
-
-For example, to run the Glance scenario with debug information::
-
-  python $REPOS_DIR/functest/functest/opnfv_tests/OpenStack/rally/run_rally-cert.py -d glance
-
 Possible scenarios are:
  * authenticate
  * glance
@@ -294,13 +271,9 @@ Possible scenarios are:
  * vm
 
 To know more about what those scenarios are doing, they are defined in directory:
-*$REPOS_DIR/functest/functest/opnfv_tests/OpenStack/rally/scenario*
+*$REPOS_DIR/functest/functest/opnfv_tests/openstack/rally/scenario*
 For more info about Rally scenario definition please refer to the Rally official
 documentation. `[3]`_
-
-If the flag *all* is specified, it will run all the scenarios one by one. Please
-note that this might take some time (~1,5hr), taking around 1 hour alone to
-complete the Nova scenario.
 
 To check any possible problems with Rally, the logs are stored under
 */home/opnfv/functest/results/rally/* in the Functest Docker container.
@@ -322,10 +295,8 @@ If any of the other test cases fails, check that Neutron and ODL have
 been correctly configured to work together. Check Neutron configuration
 files, accounts, IP addresses etc.).
 
-
 ONOS
 ^^^^
-
 Please refer to the ONOS documentation. `ONOSFW User Guide`_ .
 
 
@@ -335,14 +306,8 @@ Features
 Please refer to the dedicated feature user guides for details.
 
 
-security_scan
-^^^^^^^^^^^^^
 
-See OpenSCAP web site: https://www.open-scap.org/
-
-
-
-NFV
+VNF
 ---
 
 cloudify_ims
@@ -377,11 +342,6 @@ described in the following table:
 | the VM                            | the vIMS VNF installation fails    |
 +-----------------------------------+------------------------------------+
 
-
-parser
-^^^^^^
-
-For now log info is the only way to do trouble shooting
 
 
 .. _`OPNFV Functest Developer Guide`:  http://artifacts.opnfv.org/functest/docs/devguide/#
