@@ -8,8 +8,9 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import logging
-import mock
 import unittest
+
+import mock
 
 from functest.core import testcase_base
 
@@ -33,7 +34,7 @@ class TestcaseBaseTesting(unittest.TestCase):
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=False)
-    def _test_missing_attribute(self, mock_function):
+    def _test_missing_attribute(self, mock_function=None):
         self.assertEqual(self.test.push_to_db(),
                          testcase_base.TestcaseBase.EX_PUSH_TO_DB_ERROR)
         mock_function.assert_not_called()
@@ -56,7 +57,7 @@ class TestcaseBaseTesting(unittest.TestCase):
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=True)
-    def test_missing_details(self, mock_function):
+    def test_missing_details(self, mock_function=None):
         self.test.details = None
         self.assertEqual(self.test.push_to_db(),
                          testcase_base.TestcaseBase.EX_OK)
@@ -66,7 +67,7 @@ class TestcaseBaseTesting(unittest.TestCase):
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=False)
-    def test_push_to_db_failed(self, mock_function):
+    def test_push_to_db_failed(self, mock_function=None):
         self.assertEqual(self.test.push_to_db(),
                          testcase_base.TestcaseBase.EX_PUSH_TO_DB_ERROR)
         mock_function.assert_called_once_with(
@@ -75,7 +76,7 @@ class TestcaseBaseTesting(unittest.TestCase):
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=True)
-    def test_push_to_db(self, mock_function):
+    def test_push_to_db(self, mock_function=None):
         self.assertEqual(self.test.push_to_db(),
                          testcase_base.TestcaseBase.EX_OK)
         mock_function.assert_called_once_with(
