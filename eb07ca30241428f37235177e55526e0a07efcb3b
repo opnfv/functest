@@ -46,6 +46,30 @@
       "revId": "eb07ca30241428f37235177e55526e0a07efcb3b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_ec093e96",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-03-27T11:33:52Z",
+      "side": 1,
+      "message": "I don\u0027t understand the use of embedded function either...",
+      "parentUuid": "dabed58f_cbf3ea08",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 68
+      },
+      "revId": "eb07ca30241428f37235177e55526e0a07efcb3b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
