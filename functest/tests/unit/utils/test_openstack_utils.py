@@ -229,6 +229,12 @@ class OSUtilsTesting(unittest.TestCase):
         self.sec_group = {'id': 'sec_group_id',
                           'name': 'test_sec_group'}
 
+        self.sec_group_rule = {'id': 'sec_group_rule_id',
+                               'direction': 'direction',
+                               'protocol': 'protocol',
+                               'port_range_max': 'port_max',
+                               'security_group_id': self.sec_group['id'],
+                               'port_range_min': 'port_min'}
         self.neutron_floatingip = {'id': 'fip_id',
                                    'floating_ip_address': 'test_ip'}
         self.neutron_client = mock.Mock()
@@ -260,6 +266,9 @@ class OSUtilsTesting(unittest.TestCase):
                  'show_bgpvpn.return_value': self.mock_return,
                  'list_security_groups.return_value': {'security_groups':
                                                        [self.sec_group]},
+                 'list_security_group_rules.'
+                 'return_value': {'security_group_rules':
+                                  [self.sec_group_rule]},
                  'create_security_group_rule.return_value': mock.Mock(),
                  'create_security_group.return_value': {'security_group':
                                                         self.sec_group},
@@ -1246,6 +1255,52 @@ class OSUtilsTesting(unittest.TestCase):
                              get_security_group_id(self.neutron_client,
                                                    'test_sec_group'),
                              'sec_group_id')
+
+    def test_get_security_group_rules_default(self):
+        self.assertEqual(openstack_utils.
+                         get_security_group_rules(self.neutron_client,
+                                                  self.sec_group['id']),
+                         [self.sec_group_rule])
+
+    @mock.patch('functest.utils.openstack_utils.logger.error')
+    def test_get_security_group_rules_exception(self, mock_logger_error):
+        self.assertEqual(openstack_utils.
+                         get_security_group_rules(Exception,
+                                                  'sec_group_id'),
+                         None)
+        self.assertTrue(mock_logger_error.called)
+
+    def test_check_security_group_rules_not_exists(self):
+        self.assertEqual(openstack_utils.
+                         check_security_group_rules(self.neutron_client,
+                                                    'sec_group_id_2',
+                                                    'direction',
+                                                    'protocol',
+                                                    'port_min',
+                                                    'port_max'),
+                         True)
+
+    def test_check_security_group_rules_exists(self):
+        self.assertEqual(openstack_utils.
+                         check_security_group_rules(self.neutron_client,
+                                                    self.sec_group['id'],
+                                                    'direction',
+                                                    'protocol',
+                                                    'port_min',
+                                                    'port_max'),
+                         False)
+
+    @mock.patch('functest.utils.openstack_utils.logger.error')
+    def test_check_security_group_rules_exception(self, mock_logger_error):
+        self.assertEqual(openstack_utils.
+                         check_security_group_rules(Exception,
+                                                    'sec_group_id',
+                                                    'direction',
+                                                    'protocol',
+                                                    'port_max',
+                                                    'port_min'),
+                         None)
+        self.assertTrue(mock_logger_error.called)
 
     def test_create_security_group_default(self):
         self.assertEqual(openstack_utils.
