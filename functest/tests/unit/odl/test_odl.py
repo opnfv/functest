@@ -7,14 +7,16 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+"""Define the classes required to fully cover odl."""
+
 import errno
 import logging
-import mock
 import os
 import StringIO
 import unittest
 
 from keystoneauth1.exceptions import auth_plugins
+import mock
 from robot.errors import DataError, RobotError
 from robot.result import testcase as result_testcase
 from robot.utils.robottime import timestamp_to_secs
@@ -22,8 +24,49 @@ from robot.utils.robottime import timestamp_to_secs
 from functest.core import testcase
 from functest.opnfv_tests.sdn.odl import odl
 
+__author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
+
+
+class ODLVisitorTesting(unittest.TestCase):
+
+    """The class testing ODLResultVisitor."""
+    # pylint: disable=missing-docstring
+
+    logging.disable(logging.CRITICAL)
+
+    def setUp(self):
+        self.visitor = odl.ODLResultVisitor()
+
+    def test_empty(self):
+        self.assertFalse(self.visitor.get_data())
+
+    def test_ok(self):
+        data = {'name': 'foo',
+                'parent': 'bar',
+                'status': 'PASS',
+                'starttime': "20161216 16:00:00.000",
+                'endtime': "20161216 16:00:01.000",
+                'elapsedtime': 1000,
+                'text': 'Hello, World!',
+                'critical': True}
+        test = result_testcase.TestCase(name=data['name'],
+                                        status=data['status'],
+                                        message=data['text'],
+                                        starttime=data['starttime'],
+                                        endtime=data['endtime'])
+        test.parent = mock.Mock()
+        config = {'name': data['parent'],
+                  'criticality.test_is_critical.return_value': data[
+                      'critical']}
+        test.parent.configure_mock(**config)
+        self.visitor.visit_test(test)
+        self.assertEqual(self.visitor.get_data(), [data])
+
 
 class ODLTesting(unittest.TestCase):
+
+    """The super class which testing classes could inherit."""
+    # pylint: disable=missing-docstring
 
     logging.disable(logging.CRITICAL)
 
@@ -60,39 +103,19 @@ class ODLTesting(unittest.TestCase):
                             'odlrestconfport': self._odl_restconfport,
                             'pushtodb': False}
 
-    def test_empty_visitor(self):
-        visitor = odl.ODLResultVisitor()
-        self.assertFalse(visitor.get_data())
 
-    def test_visitor(self):
-        visitor = odl.ODLResultVisitor()
-        data = {'name': 'foo',
-                'parent': 'bar',
-                'status': 'PASS',
-                'starttime': "20161216 16:00:00.000",
-                'endtime': "20161216 16:00:01.000",
-                'elapsedtime': 1000,
-                'text': 'Hello, World!',
-                'critical': True}
-        test = result_testcase.TestCase(name=data['name'],
-                                        status=data['status'],
-                                        message=data['text'],
-                                        starttime=data['starttime'],
-                                        endtime=data['endtime'])
-        test.parent = mock.Mock()
-        config = {'name': data['parent'],
-                  'criticality.test_is_critical.return_value': data[
-                      'critical']}
-        test.parent.configure_mock(**config)
-        visitor.visit_test(test)
-        self.assertEqual(visitor.get_data(), [data])
+class ODLParseResultTesting(ODLTesting):
+
+    """The class testing ODLTests.parse_results()."""
+    # pylint: disable=missing-docstring
 
     @mock.patch('robot.api.ExecutionResult', side_effect=DataError)
-    def test_parse_results_raises_exceptions(self, *args):
+    def test_raises_exc(self, mock_method):
         with self.assertRaises(DataError):
             self.test.parse_results()
+            mock_method.assert_called_once_with()
 
-    def test_parse_results(self, *args):
+    def test_ok(self):
         config = {'name': 'dummy', 'starttime': '20161216 16:00:00.000',
                   'endtime': '20161216 16:00:01.000', 'status': 'PASS'}
         suite = mock.Mock()
@@ -108,16 +131,28 @@ class ODLTesting(unittest.TestCase):
             self.assertEqual(self.test.details,
                              {'description': config['name'], 'tests': []})
 
+
+class ODLRobotTesting(ODLTesting):
+
+    """The class testing ODLTests.set_robotframework_vars()."""
+    # pylint: disable=missing-docstring
+
     @mock.patch('fileinput.input', side_effect=Exception())
-    def test_set_robotframework_vars_failed(self, *args):
+    def test_set_vars_ko(self, mock_method):
         self.assertFalse(self.test.set_robotframework_vars())
+        mock_method.assert_called_once_with(
+            os.path.join(odl.ODLTests.odl_test_repo,
+                         'csit/variables/Variables.py'), inplace=True)
 
     @mock.patch('fileinput.input', return_value=[])
-    def test_set_robotframework_vars_empty(self, args):
+    def test_set_vars_empty(self, mock_method):
         self.assertTrue(self.test.set_robotframework_vars())
+        mock_method.assert_called_once_with(
+            os.path.join(odl.ODLTests.odl_test_repo,
+                         'csit/variables/Variables.py'), inplace=True)
 
     @mock.patch('sys.stdout', new_callable=StringIO.StringIO)
-    def _test_set_robotframework_vars(self, msg1, msg2, *args):
+    def _test_set_vars(self, msg1, msg2, *args):
         line = mock.MagicMock()
         line.__iter__.return_value = [msg1]
         with mock.patch('fileinput.input', return_value=line) as mock_method:
@@ -127,15 +162,15 @@ class ODLTesting(unittest.TestCase):
                              'csit/variables/Variables.py'), inplace=True)
             self.assertEqual(args[0].getvalue(), "{}\n".format(msg2))
 
-    def test_set_robotframework_vars_auth_default(self):
-        self._test_set_robotframework_vars("AUTH = []",
-                                           "AUTH = [u'admin', u'admin']")
+    def test_set_vars_auth_default(self):
+        self._test_set_vars("AUTH = []",
+                            "AUTH = [u'admin', u'admin']")
 
-    def test_set_robotframework_vars_auth1(self):
-        self._test_set_robotframework_vars("AUTH1 = []", "AUTH1 = []")
+    def test_set_vars_auth1(self):
+        self._test_set_vars("AUTH1 = []", "AUTH1 = []")
 
     @mock.patch('sys.stdout', new_callable=StringIO.StringIO)
-    def test_set_robotframework_vars_auth_foo(self, *args):
+    def test_set_vars_auth_foo(self, *args):
         line = mock.MagicMock()
         line.__iter__.return_value = ["AUTH = []"]
         with mock.patch('fileinput.input', return_value=line) as mock_method:
@@ -146,15 +181,11 @@ class ODLTesting(unittest.TestCase):
             self.assertEqual(args[0].getvalue(),
                              "AUTH = [u'{}', u'{}']\n".format('foo', 'bar'))
 
-    @classmethod
-    def _fake_url_for(cls, service_type='identity', **kwargs):
-        if service_type == 'identity':
-            return "http://{}:5000/v2.0".format(
-                ODLTesting._keystone_ip)
-        elif service_type == 'network':
-            return "http://{}:9696".format(ODLTesting._neutron_ip)
-        else:
-            return None
+
+class ODLMainTesting(ODLTesting):
+
+    """The class testing ODLTests.main()."""
+    # pylint: disable=missing-docstring
 
     def _get_main_kwargs(self, key=None):
         kwargs = {'odlusername': self._odl_username,
@@ -199,50 +230,50 @@ class ODLTesting(unittest.TestCase):
             args[2].assert_called_with(
                 os.path.join(odl.ODLTests.res_dir, 'stdout.txt'))
 
-    def _test_main_missing_keyword(self, key):
+    def _test_no_keyword(self, key):
         kwargs = self._get_main_kwargs(key)
         self.assertEqual(self.test.main(**kwargs),
                          testcase.TestCase.EX_RUN_ERROR)
 
-    def test_main_missing_odlusername(self):
-        self._test_main_missing_keyword('odlusername')
+    def test_no_odlusername(self):
+        self._test_no_keyword('odlusername')
 
-    def test_main_missing_odlpassword(self):
-        self._test_main_missing_keyword('odlpassword')
+    def test_no_odlpassword(self):
+        self._test_no_keyword('odlpassword')
 
-    def test_main_missing_neutronip(self):
-        self._test_main_missing_keyword('neutronip')
+    def test_no_neutronip(self):
+        self._test_no_keyword('neutronip')
 
-    def test_main_missing_osauthurl(self):
-        self._test_main_missing_keyword('osauthurl')
+    def test_no_osauthurl(self):
+        self._test_no_keyword('osauthurl')
 
-    def test_main_missing_osusername(self):
-        self._test_main_missing_keyword('osusername')
+    def test_no_osusername(self):
+        self._test_no_keyword('osusername')
 
-    def test_main_missing_ostenantname(self):
-        self._test_main_missing_keyword('ostenantname')
+    def test_no_ostenantname(self):
+        self._test_no_keyword('ostenantname')
 
-    def test_main_missing_ospassword(self):
-        self._test_main_missing_keyword('ospassword')
+    def test_no_ospassword(self):
+        self._test_no_keyword('ospassword')
 
-    def test_main_missing_odlip(self):
-        self._test_main_missing_keyword('odlip')
+    def test_no_odlip(self):
+        self._test_no_keyword('odlip')
 
-    def test_main_missing_odlwebport(self):
-        self._test_main_missing_keyword('odlwebport')
+    def test_no_odlwebport(self):
+        self._test_no_keyword('odlwebport')
 
-    def test_main_missing_odlrestconfport(self):
-        self._test_main_missing_keyword('odlrestconfport')
+    def test_no_odlrestconfport(self):
+        self._test_no_keyword('odlrestconfport')
 
-    def test_main_set_robotframework_vars_failed(self):
+    def test_set_vars_ko(self):
         with mock.patch.object(self.test, 'set_robotframework_vars',
-                               return_value=False):
+                               return_value=False) as mock_object:
             self._test_main(testcase.TestCase.EX_RUN_ERROR)
-            self.test.set_robotframework_vars.assert_called_once_with(
+            mock_object.assert_called_once_with(
                 self._odl_username, self._odl_password)
 
     @mock.patch('os.makedirs', side_effect=Exception)
-    def test_main_makedirs_exception(self, mock_method):
+    def test_makedirs_exc(self, mock_method):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 self.assertRaises(Exception):
@@ -250,7 +281,7 @@ class ODLTesting(unittest.TestCase):
                             mock_method)
 
     @mock.patch('os.makedirs', side_effect=OSError)
-    def test_main_makedirs_oserror(self, mock_method):
+    def test_makedirs_oserror(self, mock_method):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True):
             self._test_main(testcase.TestCase.EX_RUN_ERROR,
@@ -258,7 +289,7 @@ class ODLTesting(unittest.TestCase):
 
     @mock.patch('robot.run', side_effect=RobotError)
     @mock.patch('os.makedirs')
-    def test_main_robot_run_failed(self, *args):
+    def test_run_ko(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(odl, 'open', mock.mock_open(),
@@ -268,7 +299,7 @@ class ODLTesting(unittest.TestCase):
 
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
-    def test_main_parse_results_failed(self, *args):
+    def test_parse_results_ko(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(odl, 'open', mock.mock_open(),
@@ -280,7 +311,7 @@ class ODLTesting(unittest.TestCase):
     @mock.patch('os.remove', side_effect=Exception)
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
-    def test_main_remove_exception(self, *args):
+    def test_remove_exc(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results'), \
@@ -290,7 +321,7 @@ class ODLTesting(unittest.TestCase):
     @mock.patch('os.remove')
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
-    def test_main(self, *args):
+    def test_ok(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(odl, 'open', mock.mock_open(),
@@ -301,7 +332,7 @@ class ODLTesting(unittest.TestCase):
     @mock.patch('os.remove')
     @mock.patch('robot.run')
     @mock.patch('os.makedirs', side_effect=OSError(errno.EEXIST, ''))
-    def test_main_makedirs_oserror17(self, *args):
+    def test_makedirs_oserror17(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(odl, 'open', mock.mock_open(),
@@ -312,7 +343,7 @@ class ODLTesting(unittest.TestCase):
     @mock.patch('os.remove')
     @mock.patch('robot.run', return_value=1)
     @mock.patch('os.makedirs')
-    def test_main_testcases_in_failure(self, *args):
+    def test_testcases_in_failure(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(odl, 'open', mock.mock_open(),
@@ -323,7 +354,7 @@ class ODLTesting(unittest.TestCase):
     @mock.patch('os.remove', side_effect=OSError)
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
-    def test_main_remove_oserror(self, *args):
+    def test_remove_oserror(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(odl, 'open', mock.mock_open(),
@@ -331,7 +362,23 @@ class ODLTesting(unittest.TestCase):
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase.TestCase.EX_OK, *args)
 
-    def _test_run_missing_env_var(self, var):
+
+class ODLRunTesting(ODLTesting):
+
+    """The class testing ODLTests.run()."""
+    # pylint: disable=missing-docstring
+
+    @classmethod
+    def _fake_url_for(cls, service_type='identity'):
+        if service_type == 'identity':
+            return "http://{}:5000/v2.0".format(
+                ODLTesting._keystone_ip)
+        elif service_type == 'network':
+            return "http://{}:9696".format(ODLTesting._neutron_ip)
+        else:
+            return None
+
+    def _test_no_env_var(self, var):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
                         side_effect=self._fake_url_for):
             del os.environ[var]
@@ -339,8 +386,12 @@ class ODLTesting(unittest.TestCase):
                              testcase.TestCase.EX_RUN_ERROR)
 
     def _test_run(self, status=testcase.TestCase.EX_OK,
-                  exception=None, odlip="127.0.0.3", odlwebport="8080",
-                  odlrestconfport="8181"):
+                  exception=None, **kwargs):
+        odlip = kwargs['odlip'] if 'odlip' in kwargs else '127.0.0.3'
+        odlwebport = kwargs['odlwebport'] if 'odlwebport' in kwargs else '8080'
+        odlrestconfport = (kwargs['odlrestconfport']
+                           if 'odlrestconfport' in kwargs else '8181')
+
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
                         side_effect=self._fake_url_for):
             if exception:
@@ -358,11 +409,13 @@ class ODLTesting(unittest.TestCase):
                 ospassword=self._os_password, ostenantname=self._os_tenantname,
                 osusername=self._os_username)
 
-    def _test_run_defining_multiple_suites(
-            self, suites,
-            status=testcase.TestCase.EX_OK,
-            exception=None, odlip="127.0.0.3", odlwebport="8080",
-            odlrestconfport="8181"):
+    def _test_multiple_suites(self, suites,
+                              status=testcase.TestCase.EX_OK,
+                              exception=None, **kwargs):
+        odlip = kwargs['odlip'] if 'odlip' in kwargs else '127.0.0.3'
+        odlwebport = kwargs['odlwebport'] if 'odlwebport' in kwargs else '8080'
+        odlrestconfport = (kwargs['odlrestconfport']
+                           if 'odlrestconfport' in kwargs else '8181')
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
                         side_effect=self._fake_url_for):
             if exception:
@@ -380,31 +433,31 @@ class ODLTesting(unittest.TestCase):
                 ospassword=self._os_password, ostenantname=self._os_tenantname,
                 osusername=self._os_username)
 
-    def test_run_exception(self):
+    def test_exc(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
                         side_effect=auth_plugins.MissingAuthPlugin()):
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
 
-    def test_run_missing_os_auth_url(self):
-        self._test_run_missing_env_var("OS_AUTH_URL")
+    def test_no_os_auth_url(self):
+        self._test_no_env_var("OS_AUTH_URL")
 
-    def test_run_missing_os_username(self):
-        self._test_run_missing_env_var("OS_USERNAME")
+    def test_no_os_username(self):
+        self._test_no_env_var("OS_USERNAME")
 
-    def test_run_missing_os_password(self):
-        self._test_run_missing_env_var("OS_PASSWORD")
+    def test_no_os_password(self):
+        self._test_no_env_var("OS_PASSWORD")
 
-    def test_run_missing_os_tenant_name(self):
-        self._test_run_missing_env_var("OS_TENANT_NAME")
+    def test_no_os_tenant_name(self):
+        self._test_no_env_var("OS_TENANT_NAME")
 
-    def test_run_main_false(self):
+    def test_main_false(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         self._test_run(testcase.TestCase.EX_RUN_ERROR,
                        odlip=self._sdn_controller_ip,
                        odlwebport=self._odl_webport)
 
-    def test_run_main_exception(self):
+    def test_main_exc(self):
         with self.assertRaises(Exception):
             os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
             self._test_run(status=testcase.TestCase.EX_RUN_ERROR,
@@ -412,147 +465,155 @@ class ODLTesting(unittest.TestCase):
                            odlip=self._sdn_controller_ip,
                            odlwebport=self._odl_webport)
 
-    def test_run_missing_sdn_controller_ip(self):
+    def test_no_sdn_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
                         side_effect=self._fake_url_for):
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
 
-    def test_run_without_installer_type(self):
+    def test_without_installer_type(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         self._test_run(testcase.TestCase.EX_OK,
                        odlip=self._sdn_controller_ip,
                        odlwebport=self._odl_webport)
 
-    def test_run_redefining_suites(self):
+    def test_suites(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
-        self._test_run_defining_multiple_suites(
+        self._test_multiple_suites(
             [odl.ODLTests.basic_suite_dir],
             testcase.TestCase.EX_OK,
             odlip=self._sdn_controller_ip,
             odlwebport=self._odl_webport)
 
-    def test_run_fuel(self):
+    def test_fuel(self):
         os.environ["INSTALLER_TYPE"] = "fuel"
         self._test_run(testcase.TestCase.EX_OK,
                        odlip=self._neutron_ip, odlwebport='8282')
 
-    def test_run_apex_missing_sdn_controller_ip(self):
+    def test_apex_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
                         side_effect=self._fake_url_for):
             os.environ["INSTALLER_TYPE"] = "apex"
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
 
-    def test_run_apex(self):
+    def test_apex(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         os.environ["INSTALLER_TYPE"] = "apex"
         self._test_run(testcase.TestCase.EX_OK,
                        odlip=self._sdn_controller_ip, odlwebport='8081',
                        odlrestconfport='8081')
 
-    def test_run_netvirt_missing_sdn_controller_ip(self):
+    def test_netvirt_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
                         side_effect=self._fake_url_for):
             os.environ["INSTALLER_TYPE"] = "netvirt"
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
 
-    def test_run_netvirt(self):
+    def test_netvirt(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         os.environ["INSTALLER_TYPE"] = "netvirt"
         self._test_run(testcase.TestCase.EX_OK,
                        odlip=self._sdn_controller_ip, odlwebport='8081',
                        odlrestconfport='8081')
 
-    def test_run_joid_missing_sdn_controller(self):
+    def test_joid_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
                         side_effect=self._fake_url_for):
             os.environ["INSTALLER_TYPE"] = "joid"
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
 
-    def test_run_joid(self):
+    def test_joid(self):
         os.environ["SDN_CONTROLLER"] = self._sdn_controller_ip
         os.environ["INSTALLER_TYPE"] = "joid"
         self._test_run(testcase.TestCase.EX_OK,
                        odlip=self._sdn_controller_ip, odlwebport='8080')
 
-    def test_run_compass(self, *args):
+    def test_compass(self):
         os.environ["INSTALLER_TYPE"] = "compass"
         self._test_run(testcase.TestCase.EX_OK,
                        odlip=self._neutron_ip, odlwebport='8181')
 
-    def test_argparser_default(self):
-        parser = odl.ODLParser()
-        self.assertEqual(parser.parse_args(), self.defaultargs)
 
-    def test_argparser_basic(self):
+class ODLArgParserTesting(ODLTesting):
+
+    """The class testing ODLParser."""
+    # pylint: disable=missing-docstring
+
+    def setUp(self):
+        self.parser = odl.ODLParser()
+        super(ODLArgParserTesting, self).setUp()
+
+    def test_default(self):
+        self.assertEqual(self.parser.parse_args(), self.defaultargs)
+
+    def test_basic(self):
         self.defaultargs['neutronip'] = self._neutron_ip
         self.defaultargs['odlip'] = self._sdn_controller_ip
-        parser = odl.ODLParser()
-        self.assertEqual(parser.parse_args(
-            ["--neutronip={}".format(self._neutron_ip),
-             "--odlip={}".format(self._sdn_controller_ip)
-             ]), self.defaultargs)
+        self.assertEqual(
+            self.parser.parse_args(
+                ["--neutronip={}".format(self._neutron_ip),
+                 "--odlip={}".format(self._sdn_controller_ip)]),
+            self.defaultargs)
 
     @mock.patch('sys.stderr', new_callable=StringIO.StringIO)
-    def test_argparser_fail(self, *args):
+    def test_fail(self, mock_method):
         self.defaultargs['foo'] = 'bar'
-        parser = odl.ODLParser()
         with self.assertRaises(SystemExit):
-            parser.parse_args(["--foo=bar"])
+            self.parser.parse_args(["--foo=bar"])
+            mock_method.assert_called_once_with()
 
-    def _test_argparser(self, arg, value):
+    def _test_arg(self, arg, value):
         self.defaultargs[arg] = value
-        parser = odl.ODLParser()
-        self.assertEqual(parser.parse_args(["--{}={}".format(arg, value)]),
-                         self.defaultargs)
+        self.assertEqual(
+            self.parser.parse_args(["--{}={}".format(arg, value)]),
+            self.defaultargs)
 
-    def test_argparser_odlusername(self):
-        self._test_argparser('odlusername', 'foo')
+    def test_odlusername(self):
+        self._test_arg('odlusername', 'foo')
 
-    def test_argparser_odlpassword(self):
-        self._test_argparser('odlpassword', 'foo')
+    def test_odlpassword(self):
+        self._test_arg('odlpassword', 'foo')
 
-    def test_argparser_osauthurl(self):
-        self._test_argparser('osauthurl', 'http://127.0.0.4:5000/v2')
+    def test_osauthurl(self):
+        self._test_arg('osauthurl', 'http://127.0.0.4:5000/v2')
 
-    def test_argparser_neutronip(self):
-        self._test_argparser('neutronip', '127.0.0.4')
+    def test_neutronip(self):
+        self._test_arg('neutronip', '127.0.0.4')
 
-    def test_argparser_osusername(self):
-        self._test_argparser('osusername', 'foo')
+    def test_osusername(self):
+        self._test_arg('osusername', 'foo')
 
-    def test_argparser_ostenantname(self):
-        self._test_argparser('ostenantname', 'foo')
+    def test_ostenantname(self):
+        self._test_arg('ostenantname', 'foo')
 
-    def test_argparser_ospassword(self):
-        self._test_argparser('ospassword', 'foo')
+    def test_ospassword(self):
+        self._test_arg('ospassword', 'foo')
 
-    def test_argparser_odlip(self):
-        self._test_argparser('odlip', '127.0.0.4')
+    def test_odlip(self):
+        self._test_arg('odlip', '127.0.0.4')
 
-    def test_argparser_odlwebport(self):
-        self._test_argparser('odlwebport', '80')
+    def test_odlwebport(self):
+        self._test_arg('odlwebport', '80')
 
-    def test_argparser_odlrestconfport(self):
-        self._test_argparser('odlrestconfport', '80')
+    def test_odlrestconfport(self):
+        self._test_arg('odlrestconfport', '80')
 
-    def test_argparser_pushtodb(self):
+    def test_pushtodb(self):
         self.defaultargs['pushtodb'] = True
-        parser = odl.ODLParser()
-        self.assertEqual(parser.parse_args(["--{}".format('pushtodb')]),
+        self.assertEqual(self.parser.parse_args(["--{}".format('pushtodb')]),
                          self.defaultargs)
 
-    def test_argparser_multiple_args(self):
+    def test_multiple_args(self):
         self.defaultargs['neutronip'] = self._neutron_ip
         self.defaultargs['odlip'] = self._sdn_controller_ip
-        parser = odl.ODLParser()
-        self.assertEqual(parser.parse_args(
-            ["--neutronip={}".format(self._neutron_ip),
-             "--odlip={}".format(self._sdn_controller_ip)
-             ]), self.defaultargs)
+        self.assertEqual(
+            self.parser.parse_args(
+                ["--neutronip={}".format(self._neutron_ip),
+                 "--odlip={}".format(self._sdn_controller_ip)]),
+            self.defaultargs)
 
 
 if __name__ == "__main__":
