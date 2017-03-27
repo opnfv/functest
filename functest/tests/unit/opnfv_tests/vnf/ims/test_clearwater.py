@@ -39,16 +39,48 @@ class ClearwaterTesting(unittest.TestCase):
         with mock.patch.object(self.clearwater.orchestrator,
                                'download_upload_and_deploy_blueprint',
                                return_value=''):
-            self.clearwater.deploy_vnf(self.bp),
+            self.clearwater.deploy_vnf(self.bp)
             self.assertEqual(self.clearwater.deploy, True)
 
     def test_undeploy_vnf_deployment_passed(self):
         with mock.patch.object(self.clearwater.orchestrator,
                                'undeploy_deployment'):
             self.clearwater.deploy = True
+            self.clearwater.undeploy_vnf()
+            self.assertEqual(self.clearwater.deploy, False)
+
+    def test_undeploy_vnf_deployment_with_undeploy(self):
+        with mock.patch.object(self.clearwater.orchestrator,
+                               'undeploy_deployment') as m:
+            self.clearwater.deploy = False
+            self.clearwater.undeploy_vnf(),
+            self.assertEqual(self.clearwater.deploy, False)
+            self.assertFalse(m.called)
+
+            self.clearwater.orchestrator = None
+            self.clearwater.deploy = True
+            self.clearwater.undeploy_vnf(),
+            self.assertEqual(self.clearwater.deploy, True)
+
+            self.clearwater.deploy = False
             self.clearwater.undeploy_vnf(),
             self.assertEqual(self.clearwater.deploy, False)
 
+    def test_set_methods(self):
+        self.clearwater.set_orchestrator(self.orchestrator)
+        self.assertTrue(self.clearwater.orchestrator, self.orchestrator)
+        self.clearwater.set_flavor_id('test_flavor_id')
+        self.assertTrue(self.clearwater.config['flavor_id'], 'test_flavor_id')
+        self.clearwater.set_image_id('test_image_id')
+        self.assertTrue(self.clearwater.config['image_id'], 'test_image_id')
+        self.clearwater.set_agent_user('test_user')
+        self.assertTrue(self.clearwater.config['agent_user'], 'test_user')
+        self.clearwater.set_external_network_name('test_network')
+        self.assertTrue(self.clearwater.config['external_network_name'],
+                        'test_network')
+        self.clearwater.set_public_domain('test_domain')
+        self.assertTrue(self.clearwater.config['public_domain'],
+                        'test_domain')
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
