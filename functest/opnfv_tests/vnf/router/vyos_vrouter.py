@@ -15,7 +15,7 @@ RESULT_DETAILS_FILE = "test_result.json"
 
 class VrouterVnf(base.FeatureBase):
     def __init__(self):
-        super(VrouterVnf, self).__init__(project='vRouter',
+        super(VrouterVnf, self).__init__(project='functest',
                                          case='vyos_vrouter',
                                          repo='dir_repo_vrouter')
         self.cmd = 'cd %s && ./run.sh' % self.repo
