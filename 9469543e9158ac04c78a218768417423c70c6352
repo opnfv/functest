@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_58bb650e",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-27T07:19:23Z",
+      "side": 1,
+      "message": "you are sure?\ndata and result are needed\ndata is used to get images or descriptors, there are not results...",
+      "revId": "9469543e9158ac04c78a218768417423c70c6352",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_380311ba",
+        "filename": "functest/opnfv_tests/vnf/ims/ims_base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-27T07:19:23Z",
+      "side": 1,
+      "message": "ImsOnBoardingbase is misleading\nit is only for clearwater and cannot be applied to OpenIMS (used by orchestra)\nso the abstraction shall be valid for opera and cloudify",
+      "revId": "9469543e9158ac04c78a218768417423c70c6352",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_386c719c",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-27T07:19:23Z",
+      "side": 1,
+      "message": "not accurate\norchestra deals with the deployment of OpenIMS not clearwater IMS\nthe IMS abstraction class you created is related to clearwater vIMS",
+      "revId": "9469543e9158ac04c78a218768417423c70c6352",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
