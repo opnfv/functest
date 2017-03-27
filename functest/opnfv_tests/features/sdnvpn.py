@@ -8,6 +8,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 import functest.core.feature_base as base
+from sdnvpn.test.functest import run_tests
 
 
 class SdnVpnTests(base.FeatureBase):
@@ -16,5 +17,6 @@ class SdnVpnTests(base.FeatureBase):
         super(SdnVpnTests, self).__init__(project='sdnvpn',
                                           case='bgpvpn',
                                           repo='dir_repo_sdnvpn')
-        dir_sfc_functest = '{}/sdnvpn/test/functest'.format(self.repo)
-        self.cmd = 'cd %s && python ./run_tests.py' % dir_sfc_functest
+
+    def execute(self):
+        return run_tests.main()
