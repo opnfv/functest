@@ -306,19 +306,19 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.features.security_scan'
                     class: 'SecurityScan'
-#            -
-#                name: copper
-#                criteria: 'status == "PASS"'
-#                blocking: false
-#                clean_flag: true
-#                description: >-
-#                    Test suite for policy management based on OpenStack Congress
-#                dependencies:
-#                    installer: '(apex)|(joid)'
-#                    scenario: '^((?!fdio|lxd).)*$'
-#                run:
-#                    module: 'functest.opnfv_tests.features.copper'
-#                    class: 'Copper'
+            -
+                name: copper
+                criteria: 'status == "PASS"'
+                blocking: false
+                clean_flag: true
+                description: >-
+                    Test suite for policy management based on OpenStack Congress
+                dependencies:
+                    installer: 'apex'
+                    scenario: '^((?!fdio).)*$'
+                run:
+                    module: 'functest.opnfv_tests.features.copper'
+                    class: 'Copper'
             -
                 name: multisite
                 criteria: 'success_rate == 100%'
