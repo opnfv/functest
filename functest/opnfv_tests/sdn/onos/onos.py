@@ -24,7 +24,7 @@ import functest.utils.openstack_utils as openstack_utils
 logger = ft_logger.Logger(__name__).getLogger()
 
 
-class OnosBase(testcase_base.TestcaseBase):
+class OnosBase(testcase_base.TestCase):
     onos_repo_path = CONST.dir_repo_onos
     onos_sfc_image_name = CONST.onos_sfc_image_name
     onos_sfc_image_path = os.path.join(CONST.dir_functest_data,
@@ -39,10 +39,10 @@ class OnosBase(testcase_base.TestcaseBase):
         self.start_time = time.time()
         try:
             self._run()
-            res = testcase_base.TestcaseBase.EX_OK
+            res = testcase_base.TestCase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s', e)
-            res = testcase_base.TestcaseBase.EX_RUN_ERROR
+            res = testcase_base.TestCase.EX_RUN_ERROR
 
         self.stop_time = time.time()
         return res

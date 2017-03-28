@@ -62,9 +62,9 @@ if __name__ == '__main__':
     aaa_vnf = AaaVnf()
     try:
         result = aaa_vnf.main(**args)
-        if result != testcase_base.TestcaseBase.EX_OK:
+        if result != testcase_base.TestCase.EX_OK:
             sys.exit(result)
         if args['pushtodb']:
             sys.exit(aaa_vnf.push_to_db())
     except Exception:
-        sys.exit(testcase_base.TestcaseBase.EX_RUN_ERROR)
+        sys.exit(testcase_base.TestCase.EX_RUN_ERROR)

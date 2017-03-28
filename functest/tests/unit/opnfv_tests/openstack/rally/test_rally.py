@@ -378,13 +378,13 @@ class OSRallyTesting(unittest.TestCase):
             mock.patch.object(self.rally_base, '_generate_report'), \
                 mock.patch.object(self.rally_base, '_clean_up'):
             self.assertEqual(self.rally_base.run(),
-                             testcase_base.TestcaseBase.EX_OK)
+                             testcase_base.TestCase.EX_OK)
 
     def test_run_exception(self):
         with mock.patch.object(self.rally_base, '_prepare_env',
                                side_effect=Exception):
             self.assertEqual(self.rally_base.run(),
-                             testcase_base.TestcaseBase.EX_RUN_ERROR)
+                             testcase_base.TestCase.EX_RUN_ERROR)
 
 
 if __name__ == "__main__":
