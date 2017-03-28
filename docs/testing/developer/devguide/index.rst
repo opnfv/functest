@@ -166,7 +166,7 @@ feature_base and vnf_base inherit from testcase::
 
               +-----------------------------------------+
               |                                         |
-              |         Testcase_base                   |
+              |         TestCase                        |
               |                                         |
               |         - init()                        |
               |         - run()                         |
