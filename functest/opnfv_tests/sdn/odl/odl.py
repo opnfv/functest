@@ -74,8 +74,8 @@ class ODLTests(testcase.TestCase):
                               odlpassword + "']"),
                              line.rstrip())
             return True
-        except Exception as e:
-            cls.logger.error("Cannot set ODL creds: %s" % str(e))
+        except Exception as ex:  # pylint: disable=broad-except
+            cls.logger.error("Cannot set ODL creds: %s", str(ex))
             return False
 
     def parse_results(self):
@@ -90,8 +90,10 @@ class ODLTests(testcase.TestCase):
         self.details['description'] = result.suite.name
         self.details['tests'] = visitor.get_data()
 
-    def main(self, suites=default_suites, **kwargs):
+    def main(self, suites=None, **kwargs):
         try:
+            if not suites:
+                suites = self.default_suites
             odlusername = kwargs['odlusername']
             odlpassword = kwargs['odlpassword']
             osauthurl = kwargs['osauthurl']
@@ -105,17 +107,17 @@ class ODLTests(testcase.TestCase):
                          'ODL_SYSTEM_IP:' + kwargs['odlip'],
                          'PORT:' + kwargs['odlwebport'],
                          'RESTCONFPORT:' + kwargs['odlrestconfport']]
-        except KeyError as e:
+        except KeyError as ex:
             self.logger.error("Cannot run ODL testcases. Please check "
-                              "%s" % str(e))
+                              "%s", str(ex))
             return self.EX_RUN_ERROR
         if self.set_robotframework_vars(odlusername, odlpassword):
             try:
                 os.makedirs(self.res_dir)
-            except OSError as e:
-                if e.errno != errno.EEXIST:
+            except OSError as ex:
+                if ex.errno != errno.EEXIST:
                     self.logger.exception(
-                        "Cannot create {}".format(self.res_dir))
+                        "Cannot create %s", self.res_dir)
                     return self.EX_RUN_ERROR
             stdout_file = os.path.join(self.res_dir, 'stdout.txt')
             output_dir = os.path.join(self.res_dir, 'output.xml')
@@ -131,14 +133,14 @@ class ODLTests(testcase.TestCase):
             try:
                 self.parse_results()
                 self.logger.info("ODL results were successfully parsed")
-            except RobotError as e:
-                self.logger.error("Run tests before publishing: %s" %
-                                  e.message)
+            except RobotError as ex:
+                self.logger.error("Run tests before publishing: %s",
+                                  ex.message)
                 return self.EX_RUN_ERROR
             try:
                 os.remove(stdout_file)
             except OSError:
-                self.logger.warning("Cannot remove {}".format(stdout_file))
+                self.logger.warning("Cannot remove %s", stdout_file)
             return self.EX_OK
         else:
             return self.EX_RUN_ERROR
@@ -176,19 +178,19 @@ class ODLTests(testcase.TestCase):
                 kwargs['odlwebport'] = '8181'
             else:
                 kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
-        except KeyError as e:
+        except KeyError as ex:
             self.logger.error("Cannot run ODL testcases. "
                               "Please check env var: "
-                              "%s" % str(e))
+                              "%s", str(ex))
             return self.EX_RUN_ERROR
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             self.logger.exception("Cannot run ODL testcases.")
             return self.EX_RUN_ERROR
 
         return self.main(suites, **kwargs)
 
 
-class ODLParser(object):
+class ODLParser(object):  # pylint: disable=too-few-public-methods
 
     def __init__(self):
         self.parser = argparse.ArgumentParser()
@@ -226,19 +228,21 @@ class ODLParser(object):
             '-p', '--pushtodb', help='Push results to DB',
             action='store_true')
 
-    def parse_args(self, argv=[]):
+    def parse_args(self, argv=None):
+        if not argv:
+            argv = []
         return vars(self.parser.parse_args(argv))
 
 
 if __name__ == '__main__':
-    odl = ODLTests()
-    parser = ODLParser()
-    args = parser.parse_args(sys.argv[1:])
+    ODL = ODLTests()
+    PARSER = ODLParser()
+    ARGS = PARSER.parse_args(sys.argv[1:])
     try:
-        result = odl.main(ODLTests.default_suites, **args)
-        if result != testcase.TestCase.EX_OK:
-            sys.exit(result)
-        if args['pushtodb']:
-            sys.exit(odl.push_to_db())
-    except Exception:
+        RESULT = ODL.main(ODLTests.default_suites, **ARGS)
+        if RESULT != testcase.TestCase.EX_OK:
+            sys.exit(RESULT)
+        if ARGS['pushtodb']:
+            sys.exit(ODL.push_to_db())
+    except Exception:  # pylint: disable=broad-except
         sys.exit(testcase.TestCase.EX_RUN_ERROR)
