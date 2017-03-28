@@ -7,6 +7,8 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+"""Define the classe required to fully cover testcase."""
+
 import logging
 import unittest
 
@@ -14,8 +16,13 @@ import mock
 
 from functest.core import testcase
 
+__author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
+
 
 class TestCaseTesting(unittest.TestCase):
+
+    """The class testing TestCase."""
+    # pylint: disable=missing-docstring
 
     logging.disable(logging.CRITICAL)
 
