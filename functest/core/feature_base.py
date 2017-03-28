@@ -20,7 +20,12 @@ class FeatureBase(base.TestCase):
     def run(self, **kwargs):
         self.prepare()
         self.start_time = time.time()
+
         ret = self.execute()
+        if self.real_time_output:
+            for line in self.tailf_results_file():
+                print line
+
         self.stop_time = time.time()
         self.post()
         self.parse_results(ret)
@@ -34,6 +39,11 @@ class FeatureBase(base.TestCase):
         By default it executes a shell command.
         '''
         return ft_utils.execute_command(self.cmd, output_file=self.result_file)
+
+    def tailf_results_file(self):
+        with open(self.result_file) as f:
+            for line in f:
+                yield line
 
     def prepare(self, **kwargs):
         pass
