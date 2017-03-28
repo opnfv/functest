@@ -300,7 +300,8 @@ def execute_command_raise(cmd, info=False, error_msg="",
 
 
 def execute_command(cmd, info=False, error_msg="",
-                    verbose=True, output_file=None):
+                    verbose=True, output_file=None,
+                    tee=False):
     if not error_msg:
         error_msg = ("The command '%s' failed." % cmd)
     msg_exec = ("Executing command: '%s'" % cmd)
@@ -311,17 +312,17 @@ def execute_command(cmd, info=False, error_msg="",
             logger.debug(msg_exec)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
-    if output_file:
-        f = open(output_file, "w")
+    files = [sys.stdout]
+    if output_file is not None:
+        out = open(output_file, 'w')
+        files = [sys.stdout, out] if tee else [out]
+
     for line in iter(p.stdout.readline, b''):
-        if output_file:
+        for f in files:
             f.write(line)
-        else:
-            line = line.replace('\n', '')
-            print line
-            sys.stdout.flush()
+            f.flush()
     if output_file:
-        f.close()
+        out.close()
     p.stdout.close()
     returncode = p.wait()
     if returncode != 0:
