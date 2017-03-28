@@ -24,9 +24,8 @@ import functest.core.testcase as testcase
 
 class VPingSSH(vping_base.VPingBase):
 
-    def __init__(self):
-        super(VPingSSH, self).__init__()
-        self.case_name = 'vping_ssh'
+    def __init__(self, case_name='vping_ssh'):
+        super(VPingSSH, self).__init__(case_name)
         self.logger = ft_logger.Logger(self.case_name).getLogger()
 
     def do_vping(self, vm, test_ip):

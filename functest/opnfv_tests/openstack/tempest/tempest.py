@@ -28,8 +28,8 @@ logger = ft_logger.Logger("Tempest").getLogger()
 
 class TempestCommon(testcase.TestCase):
 
-    def __init__(self):
-        super(TempestCommon, self).__init__()
+    def __init__(self, case_name=''):
+        super(TempestCommon, self).__init__(case_name)
         self.MODE = ""
         self.OPTION = ""
         self.VERIFIER_ID = conf_utils.get_verifier_id()
@@ -234,35 +234,31 @@ class TempestCommon(testcase.TestCase):
 
 class TempestSmokeSerial(TempestCommon):
 
-    def __init__(self):
-        TempestCommon.__init__(self)
-        self.case_name = "tempest_smoke_serial"
+    def __init__(self, case_name='tempest_smoke_serial'):
+        TempestCommon.__init__(self, case_name)
         self.MODE = "smoke"
         self.OPTION = "--concurrency 1"
 
 
 class TempestSmokeParallel(TempestCommon):
 
-    def __init__(self):
-        TempestCommon.__init__(self)
-        self.case_name = "tempest_smoke_parallel"
+    def __init__(self, case_name='tempest_smoke_parallel'):
+        TempestCommon.__init__(self, case_name)
         self.MODE = "smoke"
         self.OPTION = ""
 
 
 class TempestFullParallel(TempestCommon):
 
-    def __init__(self):
-        TempestCommon.__init__(self)
-        self.case_name = "tempest_full_parallel"
+    def __init__(self, case_name="tempest_full_parallel"):
+        TempestCommon.__init__(self, case_name)
         self.MODE = "full"
 
 
 class TempestMultisite(TempestCommon):
 
-    def __init__(self):
-        TempestCommon.__init__(self)
-        self.case_name = "multisite"
+    def __init__(self, case_name="multisite"):
+        TempestCommon.__init__(self, case_name)
         self.MODE = "feature_multisite"
         self.OPTION = "--concurrency 1"
         conf_utils.install_verifier_ext(CONST.dir_repo_kingbird)
@@ -270,17 +266,15 @@ class TempestMultisite(TempestCommon):
 
 class TempestCustom(TempestCommon):
 
-    def __init__(self):
-        TempestCommon.__init__(self)
-        self.case_name = "tempest_custom"
+    def __init__(self, case_name="tempest_custom"):
+        TempestCommon.__init__(self, case_name)
         self.MODE = "custom"
         self.OPTION = "--concurrency 1"
 
 
 class TempestDefcore(TempestCommon):
 
-    def __init__(self):
-        TempestCommon.__init__(self)
-        self.case_name = "tempest_defcore"
+    def __init__(self, case_name="tempest_defcore"):
+        TempestCommon.__init__(self, case_name)
         self.MODE = "defcore"
         self.OPTION = "--concurrency 1"

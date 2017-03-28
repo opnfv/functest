@@ -20,6 +20,6 @@ import functest.core.feature as base
 class Domino(base.Feature):
     def __init__(self):
         super(Domino, self).__init__(project='domino',
-                                     case='domino-multinode',
+                                     case_name='domino-multinode',
                                      repo='dir_repo_domino')
         self.cmd = 'cd %s && ./tests/run_multinode.sh' % self.repo

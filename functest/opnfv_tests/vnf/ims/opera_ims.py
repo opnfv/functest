@@ -21,9 +21,9 @@ import functest.utils.functest_logger as ft_logger
 
 class OperaIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
-    def __init__(self, project='functest', case='opera_ims',
+    def __init__(self, project='functest', case_name='opera_ims',
                  repo=CONST.dir_repo_opera, cmd=''):
-        super(OperaIms, self).__init__(project, case, repo, cmd)
+        super(OperaIms, self).__init__(project, case_name, repo, cmd)
         self.logger = ft_logger.Logger(__name__).getLogger()
         self.ellis_file = os.path.join(self.result_dir, 'ellis.info')
         self.live_test_file = os.path.join(self.result_dir,

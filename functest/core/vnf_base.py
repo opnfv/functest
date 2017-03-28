@@ -21,11 +21,10 @@ class VnfOnBoardingBase(base.TestCase):
 
     logger = ft_logger.Logger(__name__).getLogger()
 
-    def __init__(self, project='functest', case='', repo='', cmd=''):
-        super(VnfOnBoardingBase, self).__init__()
+    def __init__(self, project='functest', case_name='', repo='', cmd=''):
+        super(VnfOnBoardingBase, self).__init__(case_name=case_name)
         self.repo = repo
         self.project_name = project
-        self.case_name = case
         self.cmd = cmd
         self.details = {}
         self.result_dir = CONST.dir_results
