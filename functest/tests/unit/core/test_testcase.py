@@ -26,10 +26,11 @@ class TestCaseTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    _case_name = "base"
+
     def setUp(self):
         self.test = testcase.TestCase()
         self.test.project = "functest"
-        self.test.case_name = "base"
         self.test.start_time = "1"
         self.test.stop_time = "2"
         self.test.criteria = "PASS"
@@ -42,13 +43,9 @@ class TestCaseTesting(unittest.TestCase):
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=False)
     def _test_missing_attribute(self, mock_function=None):
-        self.assertEqual(self.test.push_to_db(),
+        self.assertEqual(self.test.push_to_db(self._case_name),
                          testcase.TestCase.EX_PUSH_TO_DB_ERROR)
         mock_function.assert_not_called()
-
-    def test_missing_case_name(self):
-        self.test.case_name = None
-        self._test_missing_attribute()
 
     def test_missing_criteria(self):
         self.test.criteria = None
@@ -66,28 +63,28 @@ class TestCaseTesting(unittest.TestCase):
                 return_value=True)
     def test_missing_details(self, mock_function=None):
         self.test.details = None
-        self.assertEqual(self.test.push_to_db(),
+        self.assertEqual(self.test.push_to_db(self._case_name),
                          testcase.TestCase.EX_OK)
         mock_function.assert_called_once_with(
-            self.test.project, self.test.case_name, self.test.start_time,
+            self.test.project, self._case_name, self.test.start_time,
             self.test.stop_time, self.test.criteria, self.test.details)
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=False)
     def test_push_to_db_failed(self, mock_function=None):
-        self.assertEqual(self.test.push_to_db(),
+        self.assertEqual(self.test.push_to_db(self._case_name),
                          testcase.TestCase.EX_PUSH_TO_DB_ERROR)
         mock_function.assert_called_once_with(
-            self.test.project, self.test.case_name, self.test.start_time,
+            self.test.project, self._case_name, self.test.start_time,
             self.test.stop_time, self.test.criteria, self.test.details)
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=True)
     def test_push_to_db(self, mock_function=None):
-        self.assertEqual(self.test.push_to_db(),
+        self.assertEqual(self.test.push_to_db(self._case_name),
                          testcase.TestCase.EX_OK)
         mock_function.assert_called_once_with(
-            self.test.project, self.test.case_name, self.test.start_time,
+            self.test.project, self._case_name, self.test.start_time,
             self.test.stop_time, self.test.criteria, self.test.details)
 
     def test_check_criteria_missing(self):

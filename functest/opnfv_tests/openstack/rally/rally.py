@@ -58,6 +58,7 @@ class RallyBase(testcase.TestCase):
 
     def __init__(self):
         super(RallyBase, self).__init__()
+        self.case_name =''
         self.mode = ''
         self.summary = []
         self.scenario_dir = ''
