@@ -13,6 +13,7 @@ class FeatureBase(base.TestCase):
         self.project_name = project
         self.case_name = case
         self.cmd = cmd
+        self.real_time_output = False
         self.repo = CONST.__getattribute__(repo)
         self.result_file = self.get_result_file()
         self.logger = ft_logger.Logger(project).getLogger()
@@ -33,7 +34,11 @@ class FeatureBase(base.TestCase):
         Executer method that can be overwritten
         By default it executes a shell command.
         '''
-        return ft_utils.execute_command(self.cmd, output_file=self.result_file)
+        exit_code = ft_utils.execute_command(
+            self.cmd,
+            output_file=self.result_file,
+            tee=self.real_time_output)
+        return exit_code
 
     def prepare(self, **kwargs):
         pass
