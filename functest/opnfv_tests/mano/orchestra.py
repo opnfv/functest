@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import functest.core.feature_base as base
+import functest.core.feature as base
 
 
 class Orchestra(base.FeatureBase):

@@ -7,7 +7,8 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 #
-import functest.core.feature_base as base
+import functest.core.feature as base
+from sfc.tests.functest import run_tests
 
 
 class OpenDaylightSFC(base.FeatureBase):
