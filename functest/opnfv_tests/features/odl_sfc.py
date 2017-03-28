@@ -17,4 +17,5 @@ class OpenDaylightSFC(base.FeatureBase):
                                               case='functest-odl-sfc',
                                               repo='dir_repo_sfc')
         dir_sfc_functest = '{}/sfc/tests/functest'.format(self.repo)
+        self.real_time_output = True
         self.cmd = 'cd %s && python ./run_tests.py' % dir_sfc_functest
