@@ -18,7 +18,7 @@ class BarometerCollectd(base.Feature):
 
     def __init__(self):
         super(BarometerCollectd, self).__init__(project='barometer',
-                                                case='barometercollectd',
+                                                case_name='barometercollectd',
                                                 repo='dir_repo_barometer')
 
     def execute(self):

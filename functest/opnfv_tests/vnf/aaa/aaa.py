@@ -21,7 +21,7 @@ class AaaVnf(vnf_base.VnfOnBoardingBase):
     logger = ft_logger.Logger("VNF AAA").getLogger()
 
     def __init__(self):
-        super(AaaVnf, self).__init__(case="aaa")
+        super(AaaVnf, self).__init__(case_name="aaa")
 
     def deploy_orchestrator(self):
         self.logger.info("No VNFM needed to deploy a free radius here")
@@ -55,6 +55,7 @@ class AaaVnf(vnf_base.VnfOnBoardingBase):
     def run(self):
         kwargs = {}
         return self.main(**kwargs)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

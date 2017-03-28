@@ -14,7 +14,7 @@ class SdnVpnTests(base.Feature):
 
     def __init__(self):
         super(SdnVpnTests, self).__init__(project='sdnvpn',
-                                          case='bgpvpn',
+                                          case_name='bgpvpn',
                                           repo='dir_repo_sdnvpn')
         dir_sfc_functest = '{}/sdnvpn/test/functest'.format(self.repo)
         self.cmd = 'cd %s && python ./run_tests.py' % dir_sfc_functest

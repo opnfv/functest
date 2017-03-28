@@ -15,7 +15,7 @@ class GluonVping(base.Feature):
 
     def __init__(self):
         super(GluonVping, self).__init__(project='netready',
-                                         case='gluon_vping',
+                                         case_name='gluon_vping',
                                          repo='dir_repo_netready')
         dir_netready_functest = '{}/test/functest'.format(self.repo)
         self.cmd = ('cd %s && python ./gluon-test-suite.py' %
