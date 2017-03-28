@@ -78,9 +78,9 @@ def servertest(host, port):
 
 class ImsVnf(vnf_base.VnfOnBoardingBase):
 
-    def __init__(self, project='functest', case='orchestra_ims',
+    def __init__(self, project='functest', case_name='orchestra_ims',
                  repo='', cmd=''):
-        super(ImsVnf, self).__init__(project, case, repo, cmd)
+        super(ImsVnf, self).__init__(project, case_name, repo, cmd)
         self.ob_password = "openbaton"
         self.ob_username = "admin"
         self.ob_https = False
