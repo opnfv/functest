@@ -6,8 +6,10 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import logging
-import mock
 import unittest
+
+import mock
+from tackerclient.v1_0 import client as tackerclient
 
 from functest.utils import openstack_tacker
 from functest.tests.unit import test_utils
@@ -55,6 +57,13 @@ class OSTackerTesting(unittest.TestCase):
             'OS_REGION_NAME': 'region_name'
         }
         return cred_dict
+
+    def test_get_tacker_client(self):
+        with mock.patch('functest.utils.openstack_tacker.'
+                        'os_utils.get_session'):
+            tackerclient.Client = mock.Mock
+            ret = openstack_tacker.get_tacker_client()
+            self.assertTrue(isinstance(ret, mock.Mock))
 
     def test_get_id_from_name(self):
         with mock.patch.object(self.tacker_client, 'get',
@@ -183,8 +192,16 @@ class OSTackerTesting(unittest.TestCase):
                                                 vnfd_name=self.vnfd)
             self.assertEqual(resp, self.vnfd)
 
-    # TODO: Exception('You need to provide an VNFD'
-    #                 'id or name') AssertionError
+    def test_delete_vnfd_missing_vnfd_name(self):
+        with mock.patch('functest.utils.openstack_tacker.get_vnfd_id',
+                        return_value=self.vnfd), \
+                self.assertRaises(Exception) as context:
+            resp = openstack_tacker.delete_vnfd(self.tacker_client,
+                                                vnfd_id=None,
+                                                vnfd_name=None)
+            self.assertIsNone(resp)
+            msg = 'You need to provide VNFD id or VNFD name'
+            self.assertTrue(msg in context)
 
     @mock.patch('functest.utils.openstack_tacker.logger.error')
     def test_delete_vnfd_exception(self, mock_logger_error):
@@ -253,7 +270,47 @@ class OSTackerTesting(unittest.TestCase):
                                                                   "client"))
             self.assertIsNone(resp)
 
-    # TODO: wait_for_vnf
+    def test_wait_for_vnf_vnf_retrieval_failed(self):
+        with mock.patch('functest.utils.openstack_tacker.get_vnf',
+                        return_value=None), \
+                self.assertRaises(Exception) as context:
+            openstack_tacker.wait_for_vnf(self.tacker_client,
+                                          vnf_id='vnf_id',
+                                          vnf_name='vnf_name')
+            msg = ("Could not retrieve VNF - id='vnf_id', "
+                   "name='vnf_name'")
+            self.assertTrue(msg in context)
+        with mock.patch('functest.utils.openstack_tacker.get_vnf',
+                        side_effect=Exception):
+            ret = openstack_tacker.wait_for_vnf(self.tacker_client,
+                                                vnf_id='vnf_id',
+                                                vnf_name='vnf_name')
+            self.assertEqual(ret, None)
+
+    def test_wait_for_vnf_vnf_status_error(self):
+        vnf = {'id': 'vnf_id',
+               'status': 'ERROR'}
+        with mock.patch('functest.utils.openstack_tacker.get_vnf',
+                        return_value=vnf), \
+                self.assertRaises(Exception) as context:
+            openstack_tacker.wait_for_vnf(self.tacker_client,
+                                          vnf_id='vnf_id',
+                                          vnf_name='vnf_name')
+            msg = ('Error when booting vnf vnf_id')
+            self.assertTrue(msg in context)
+
+    def test_wait_for_vnf_vnf_timeout(self):
+        vnf = {'id': 'vnf_id',
+               'status': 'PENDING_CREATE'}
+        with mock.patch('functest.utils.openstack_tacker.get_vnf',
+                        return_value=vnf), \
+                self.assertRaises(Exception) as context:
+            openstack_tacker.wait_for_vnf(self.tacker_client,
+                                          vnf_id='vnf_id',
+                                          vnf_name='vnf_name',
+                                          timeout=2)
+            msg = ('Timeout when booting vnf vnf_id')
+            self.assertTrue(msg in context)
 
     def test_delete_vnf(self):
         with mock.patch('functest.utils.openstack_tacker.get_vnf_id',
@@ -265,8 +322,13 @@ class OSTackerTesting(unittest.TestCase):
                                                vnf_name=self.vnf)
             self.assertEqual(resp, self.vnf)
 
-    # TODO: Exception('You need to provide an VNF'
-    #                 'classifier id or name') AssertionError
+    def test_delete_vnf_missing_vnf_name(self):
+        with self.assertRaises(Exception) as context:
+            openstack_tacker.delete_vnf(self.tacker_client,
+                                        vnf_id=None,
+                                        vnf_name=None)
+            msg = 'You need to provide a VNF id or name'
+            self.assertTrue(msg in context)
 
     @mock.patch('functest.utils.openstack_tacker.logger.error')
     def test_delete_vnf_exception(self, mock_logger_error):
@@ -345,8 +407,13 @@ class OSTackerTesting(unittest.TestCase):
                                                sfc_name=self.sfc)
             self.assertEqual(resp, self.sfc)
 
-    # TODO: Exception('You need to provide an SFC'
-    #                 'id or name') AssertionError
+    def test_delete_sfc_missing_sfc_name(self):
+        with self.assertRaises(Exception) as context:
+            openstack_tacker.delete_sfc(self.tacker_client,
+                                        sfc_id=None,
+                                        sfc_name=None)
+            msg = 'You need to provide an SFC id or name'
+            self.assertTrue(msg in context)
 
     @mock.patch('functest.utils.openstack_tacker.logger.error')
     def test_delete_sfc_exception(self, mock_logger_error):
@@ -431,8 +498,13 @@ class OSTackerTesting(unittest.TestCase):
                                                           sfc_clf_name=cl)
             self.assertEqual(resp, cl)
 
-    # TODO: Exception('You need to provide an SFC'
-    #                 'classifier id or name') AssertionError
+    def test_delete_sfc_classifier_missing_sfc_name(self):
+        with self.assertRaises(Exception) as context:
+            openstack_tacker.delete_vnf(self.tacker_client,
+                                        sfc_clf_id=None,
+                                        sfc_clf_name=None)
+            msg = 'You need to provide an SFCclassifier id or name'
+            self.assertTrue(msg in context)
 
     @mock.patch('functest.utils.openstack_tacker.logger.error')
     def test_delete_sfc_classifier_exception(self, mock_logger_error):
