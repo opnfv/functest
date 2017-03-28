@@ -94,6 +94,30 @@
       "revId": "553ff8c8e44673db6c2c285ac0f36dbebe110c89",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_c0ed1b8d",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-28T15:33:02Z",
+      "side": 1,
+      "message": "I disagree about inherit from Constants. Sorry I thought it was clear.",
+      "parentUuid": "9ab8dda7_e5ee3122",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "553ff8c8e44673db6c2c285ac0f36dbebe110c89",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
