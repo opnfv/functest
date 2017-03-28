@@ -11,7 +11,7 @@
 import functest.core.feature as base
 
 
-class GluonVping(base.FeatureBase):
+class GluonVping(base.Feature):
 
     def __init__(self):
         super(GluonVping, self).__init__(project='netready',
