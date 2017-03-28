@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_c0cf5baf",
+        "filename": "functest/core/feature.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-03-28T12:51:04Z",
+      "side": 1,
+      "message": "s/FeatureBase/Feature",
+      "revId": "eaacf8913a141b1e518ea990e7f12f0a195f8c21",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_60c46f92",
+        "filename": "functest/opnfv_tests/features/barometer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-03-28T12:51:04Z",
+      "side": 1,
+      "message": "s/FeatureBase/Feature\n\nsame for rest of the files using this construction.",
+      "revId": "eaacf8913a141b1e518ea990e7f12f0a195f8c21",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
