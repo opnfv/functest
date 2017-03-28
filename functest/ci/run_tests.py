@@ -144,7 +144,7 @@ def run_test(test, tier_name, testcases=None):
         try:
             module = importlib.import_module(run_dict['module'])
             cls = getattr(module, run_dict['class'])
-            test_case = cls()
+            test_case = cls(case_name=test_name)
 
             try:
                 kwargs = run_dict['args']
