@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_00f49359",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-28T15:30:55Z",
+      "side": 1,
+      "message": "If it\u0027s considered as invalid, shall we stop instead?",
+      "parentUuid": "9ab8dda7_050345b9",
+      "revId": "eb07ca30241428f37235177e55526e0a07efcb3b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_521a5318",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 1
@@ -96,6 +114,30 @@
       "side": 1,
       "message": "I don\u0027t understand the use of embedded function either...",
       "parentUuid": "dabed58f_cbf3ea08",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 68
+      },
+      "revId": "eb07ca30241428f37235177e55526e0a07efcb3b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_e0ee1f8b",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-28T15:30:55Z",
+      "side": 1,
+      "message": "Agree with Jose.",
+      "parentUuid": "9ab8dda7_ec093e96",
       "range": {
         "startLine": 212,
         "startChar": 0,
