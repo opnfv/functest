@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_e2362703",
+        "filename": "functest/opnfv_tests/features/sdnvpn.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-28T07:54:49Z",
+      "side": 1,
+      "message": "report?",
+      "revId": "64961ae6c51075fdeb70bde1630567ea32e8057a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
