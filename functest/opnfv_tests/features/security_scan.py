@@ -8,7 +8,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import functest.core.feature_base as base
+import functest.core.feature as base
 from functest.utils.constants import CONST
 
 
