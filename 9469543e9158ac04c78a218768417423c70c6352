@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_0fe5a4a7",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-28T02:05:53Z",
+      "side": 1,
+      "message": "I can put it back. In the IMS_base, it has the data_dir.",
+      "parentUuid": "9ab8dda7_58bb650e",
+      "revId": "9469543e9158ac04c78a218768417423c70c6352",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_380311ba",
         "filename": "functest/opnfv_tests/vnf/ims/ims_base.py",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_4f02bc3f",
+        "filename": "functest/opnfv_tests/vnf/ims/ims_base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-28T02:05:53Z",
+      "side": 1,
+      "message": "The original purpose of this class is to hold the common functions of IMS. \nYou are right that this class only be valid for opera and cloudify. I don\u0027t see there is much to share for openbaton except for some common attributes.\nHow about this, renaming this class into ClearwaterImsOnBoardingBase and make cloudifyIMS and operaIMS as children. Let openbaton the direct child of vnf_base.\n\nThere could be one simple solution, duplicating all the clearwater operations in opera from cloudify. However, I don\u0027t think it is maintainable. \n\nAlso, I tested the logic both on cloudify and opera. You can notice there are some minor difference between clearwaters deployed by both orchestrators.",
+      "parentUuid": "9ab8dda7_380311ba",
+      "revId": "9469543e9158ac04c78a218768417423c70c6352",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_386c719c",
         "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.py",
         "patchSetId": 17
@@ -47,6 +83,24 @@
       "writtenOn": "2017-03-27T07:19:23Z",
       "side": 1,
       "message": "not accurate\norchestra deals with the deployment of OpenIMS not clearwater IMS\nthe IMS abstraction class you created is related to clearwater vIMS",
+      "revId": "9469543e9158ac04c78a218768417423c70c6352",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_0ffcc43d",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-28T02:05:53Z",
+      "side": 1,
+      "message": "I don\u0027t think the original ImsVnf is accurate, either.\n\nAs openbaton does not share much with cloudify and opera, how about make it like this\nclass OpenBatonVnf(vnf_base.VnfOnBoardingBase):",
+      "parentUuid": "9ab8dda7_386c719c",
       "revId": "9469543e9158ac04c78a218768417423c70c6352",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
