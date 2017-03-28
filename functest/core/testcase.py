@@ -7,13 +7,18 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+"""Define the parent class of Functest TestCase."""
+
 import os
 
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
+__author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
+
 
 class TestCase(object):
+    """Parent class of Functest TestCase."""
 
     EX_OK = os.EX_OK
     EX_RUN_ERROR = os.EX_SOFTWARE
@@ -31,6 +36,17 @@ class TestCase(object):
         self.stop_time = ""
 
     def check_criteria(self):
+        """Interpret the results of TestCase.
+
+        It allows getting the results of TestCase. It completes run()
+        which only returns the execution status.
+
+        It can be overriden if checking criteria is not suitable.
+
+        Returns:
+            TestCase.EX_OK if criteria is 'PASS'.
+            TestCase.EX_TESTCASE_FAILED otherwise.
+        """
         try:
             assert self.criteria
             if self.criteria == 'PASS':
@@ -40,11 +56,46 @@ class TestCase(object):
         return TestCase.EX_TESTCASE_FAILED
 
     def run(self, **kwargs):
+        """Run TestCase.
+
+        It allows running TestCase and getting its execution
+        status.
+
+        The subclasses must override the default implementation which
+        is false on purpose. The only prerequisite is to set the
+        following attributes to push the results to DB:
+            * case_name,
+            * criteria,
+            * start_time,
+            * stop_time.
+
+        Args:
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            TestCase.EX_RUN_ERROR.
+        """
         # pylint: disable=unused-argument
         self.logger.error("Run must be implemented")
         return TestCase.EX_RUN_ERROR
 
     def push_to_db(self):
+        """Push the results of TestCase to the DB.
+
+        It allows publishing the results and to check the status.
+
+        It could be overriden if the common implementation is not
+        suitable. The following attributes must be set before pushing
+        the results to DB:
+            * case_name,
+            * criteria,
+            * start_time,
+            * stop_time.
+
+        Returns:
+            TestCase.EX_OK if results were pushed to DB.
+            TestCase.EX_PUSH_TO_DB_ERROR otherwise.
+        """
         try:
             assert self.project_name
             assert self.case_name
