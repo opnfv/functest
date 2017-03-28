@@ -30,7 +30,6 @@ class TestCase(object):
     def __init__(self):
         self.details = {}
         self.project_name = "functest"
-        self.case_name = ""
         self.criteria = ""
         self.start_time = ""
         self.stop_time = ""
@@ -79,7 +78,7 @@ class TestCase(object):
         self.logger.error("Run must be implemented")
         return TestCase.EX_RUN_ERROR
 
-    def push_to_db(self):
+    def push_to_db(self, case_name):
         """Push the results of TestCase to the DB.
 
         It allows publishing the results and to check the status.
@@ -87,10 +86,12 @@ class TestCase(object):
         It could be overriden if the common implementation is not
         suitable. The following attributes must be set before pushing
         the results to DB:
-            * case_name,
             * criteria,
             * start_time,
             * stop_time.
+
+        Args:
+            case_name: The TestCase name.
 
         Returns:
             TestCase.EX_OK if results were pushed to DB.
@@ -98,12 +99,11 @@ class TestCase(object):
         """
         try:
             assert self.project_name
-            assert self.case_name
             assert self.criteria
             assert self.start_time
             assert self.stop_time
             if ft_utils.push_results_to_db(
-                    self.project_name, self.case_name, self.start_time,
+                    self.project_name, case_name, self.start_time,
                     self.stop_time, self.criteria, self.details):
                 self.logger.info("The results were successfully pushed to DB")
                 return TestCase.EX_OK
