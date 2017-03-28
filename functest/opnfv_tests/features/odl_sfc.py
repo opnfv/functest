@@ -8,10 +8,9 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 import functest.core.feature as base
-from sfc.tests.functest import run_tests
 
 
-class OpenDaylightSFC(base.FeatureBase):
+class OpenDaylightSFC(base.Feature):
 
     def __init__(self):
         super(OpenDaylightSFC, self).__init__(project='sfc',

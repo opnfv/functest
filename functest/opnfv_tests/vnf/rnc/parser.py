@@ -18,7 +18,7 @@
 import functest.core.feature as base
 
 
-class Parser(base.FeatureBase):
+class Parser(base.Feature):
     def __init__(self):
         super(Parser, self).__init__(project='parser',
                                      case='parser-basics',

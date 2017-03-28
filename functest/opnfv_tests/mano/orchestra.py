@@ -15,7 +15,7 @@
 import functest.core.feature as base
 
 
-class Orchestra(base.FeatureBase):
+class Orchestra(base.Feature):
     def __init__(self):
         super(Orchestra, self).__init__(project='orchestra',
                                         case='orchestra',

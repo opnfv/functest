@@ -10,7 +10,7 @@
 import functest.core.feature as base
 
 
-class SdnVpnTests(base.FeatureBase):
+class SdnVpnTests(base.Feature):
 
     def __init__(self):
         super(SdnVpnTests, self).__init__(project='sdnvpn',

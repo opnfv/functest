@@ -11,7 +11,7 @@ from baro_tests import collectd
 import functest.core.feature as base
 
 
-class BarometerCollectd(base.FeatureBase):
+class BarometerCollectd(base.Feature):
     '''
     Class for executing barometercollectd testcase.
     '''
