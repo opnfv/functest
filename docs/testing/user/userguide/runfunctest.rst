@@ -140,8 +140,8 @@ To execute a Test Tier or Test Case, the 'run' command is used::
   Ran 9 tests in 3.768s
 
   OK
-  2017-03-21 13:34:26,570 - functest.core.testcase_base - INFO - connection_check OK
-  2017-03-21 13:34:26,918 - functest.core.testcase_base - INFO - The results were successfully pushed to DB
+  2017-03-21 13:34:26,570 - functest.core.testcase - INFO - connection_check OK
+  2017-03-21 13:34:26,918 - functest.core.testcase - INFO - The results were successfully pushed to DB
   2017-03-21 13:34:26,918 - run_tests - INFO - Test execution time: 00:05
   2017-03-21 13:34:26,918 - run_tests - INFO -
 
@@ -331,8 +331,8 @@ To execute a Test Tier or Test Case, the 'run' command is used::
   Ran 48 tests in 171.000s
 
   OK
-  2017-03-21 13:37:18,620 - functest.core.testcase_base - INFO - api_check OK
-  2017-03-21 13:37:18,977 - functest.core.testcase_base - INFO - The results were successfully pushed to DB
+  2017-03-21 13:37:18,620 - functest.core.testcase - INFO - api_check OK
+  2017-03-21 13:37:18,977 - functest.core.testcase - INFO - The results were successfully pushed to DB
   2017-03-21 13:37:18,977 - run_tests - INFO - Test execution time: 02:52
   2017-03-21 13:37:18,981 - run_tests - INFO -
 
@@ -368,8 +368,8 @@ To execute a Test Tier or Test Case, the 'run' command is used::
   Ran 1 test in 46.982s
 
   OK
-  2017-03-21 13:38:06,417 - functest.core.testcase_base - INFO - snaps_health_check OK
-  2017-03-21 13:38:06,778 - functest.core.testcase_base - INFO - The results were successfully pushed to DB
+  2017-03-21 13:38:06,417 - functest.core.testcase - INFO - snaps_health_check OK
+  2017-03-21 13:38:06,778 - functest.core.testcase - INFO - The results were successfully pushed to DB
   2017-03-21 13:38:06,779 - run_tests - INFO - Test execution time: 00:47
   2017-03-21 13:38:06,779 - run_tests - INFO -
   and
