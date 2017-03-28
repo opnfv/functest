@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_40ee0bee",
+        "filename": "functest/core/feature_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2479
+      },
+      "writtenOn": "2017-03-28T13:31:42Z",
+      "side": 1,
+      "message": "this variable is only set in the sfc tests, so it will break everything else. You need a declaration in the base class\u0027 __init__",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "32c3051a87110e278ce0c55efe30d52cb1d22190",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
