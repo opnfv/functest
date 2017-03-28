@@ -118,14 +118,35 @@ More specific details on specific Tiers or Test Cases can be seen wih the
 To execute a Test Tier or Test Case, the 'run' command is used::
 
   root@22e436918db0:~/repos/functest/ci# functest tier run healthcheck
-  2017-03-21 13:34:21,400 - run_tests - INFO - ############################################
-  2017-03-21 13:34:21,400 - run_tests - INFO - Running tier 'healthcheck'
-  2017-03-21 13:34:21,400 - run_tests - INFO - ############################################
-  2017-03-21 13:34:21,401 - run_tests - INFO -
+  2017-03-30 05:36:19,752 - run_tests - INFO - ############################################
+  2017-03-30 05:36:19,752 - run_tests - INFO - Running tier 'healthcheck'
+  2017-03-30 05:36:19,753 - run_tests - INFO - ############################################
+  2017-03-30 05:36:19,753 - run_tests - INFO -
 
-  2017-03-21 13:34:21,401 - run_tests - INFO - ============================================
-  2017-03-21 13:34:21,401 - run_tests - INFO - Running test case 'connection_check'...
-  2017-03-21 13:34:21,401 - run_tests - INFO - ============================================
+  2017-03-30 05:36:19,753 - run_tests - INFO - ============================================
+  2017-03-30 05:36:19,753 - run_tests - INFO - Running test case 'connection_check'...
+  2017-03-30 05:36:19,753 - run_tests - INFO - ============================================
+  2017-03-30 05:36:20,046 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:20,046 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:20,775 - functest - INFO - Using flavor metatdata '{'hw:mem_page_size': 'any'}'
+  2017-03-30 05:36:20,777 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:20,777 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:20,777 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:20,778 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:20,778 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:20,779 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:20,779 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:20,779 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:20,780 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:20,780 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:20,781 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:20,781 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:20,781 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:20,782 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:20,782 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:20,783 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:20,783 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:20,784 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
   test_glance_connect_fail (snaps.openstack.utils.tests.glance_utils_tests.GlanceSmokeTests) ... ok
   test_glance_connect_success (snaps.openstack.utils.tests.glance_utils_tests.GlanceSmokeTests) ... ok
   test_keystone_connect_fail (snaps.openstack.utils.tests.keystone_utils_tests.KeystoneSmokeTests) ... ok
@@ -137,241 +158,341 @@ To execute a Test Tier or Test Case, the 'run' command is used::
   test_nova_connect_success (snaps.openstack.utils.tests.nova_utils_tests.NovaSmokeTests) ... ok
 
   ----------------------------------------------------------------------
-  Ran 9 tests in 3.768s
+  Ran 9 tests in 1.332s
 
   OK
-  2017-03-21 13:34:26,570 - functest.core.testcase_base - INFO - connection_check OK
-  2017-03-21 13:34:26,918 - functest.core.testcase_base - INFO - The results were successfully pushed to DB
-  2017-03-21 13:34:26,918 - run_tests - INFO - Test execution time: 00:05
-  2017-03-21 13:34:26,918 - run_tests - INFO -
+  2017-03-30 05:36:22,116 - functest - INFO - connection_check OK
+  2017-03-30 05:36:22,483 - functest - INFO - The results were successfully pushed to DB
+  2017-03-30 05:36:22,483 - run_tests - INFO - Test execution time: 00:02
+  2017-03-30 05:36:22,484 - run_tests - INFO -
 
-  2017-03-21 13:34:26,918 - run_tests - INFO - ============================================
-  2017-03-21 13:34:26,918 - run_tests - INFO - Running test case 'api_check'...
-  2017-03-21 13:34:26,919 - run_tests - INFO - ============================================
+  2017-03-30 05:36:22,484 - run_tests - INFO - ============================================
+  2017-03-30 05:36:22,484 - run_tests - INFO - Running test case 'api_check'...
+  2017-03-30 05:36:22,484 - run_tests - INFO - ============================================
+  2017-03-30 05:36:22,590 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:22,591 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,361 - functest - INFO - Using flavor metatdata '{'hw:mem_page_size': 'any'}'
+  2017-03-30 05:36:23,362 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,362 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,363 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,364 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,364 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,365 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,365 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,365 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,366 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,366 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,367 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,367 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,368 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,368 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,368 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,369 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,370 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,370 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,370 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,371 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,372 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,372 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,372 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,373 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,373 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,374 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,374 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,374 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,375 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,376 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,376 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,376 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,376 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,377 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,377 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,377 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,377 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,377 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,378 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,378 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,378 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,378 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,379 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,379 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,379 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,380 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,380 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,380 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,380 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,380 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,381 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,381 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,381 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,381 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,381 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,382 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,382 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,382 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,382 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,382 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,383 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,383 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,383 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,384 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,384 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,384 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,384 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,384 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,385 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,385 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,385 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,385 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,386 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,386 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,386 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,386 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,387 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,387 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,387 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,388 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,388 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,388 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,388 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,388 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,420 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,420 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,420 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,420 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,421 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,421 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,421 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,421 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,422 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,422 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:36:23,422 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:36:23,422 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
   test_create_project_minimal (snaps.openstack.utils.tests.keystone_utils_tests.KeystoneUtilsTests) ... ok
   test_create_user_minimal (snaps.openstack.utils.tests.keystone_utils_tests.KeystoneUtilsTests) ... ok
   test_create_delete_user (snaps.openstack.tests.create_user_tests.CreateUserSuccessTests) ... ok
   test_create_user (snaps.openstack.tests.create_user_tests.CreateUserSuccessTests) ... ok
-  test_create_user_2x (snaps.openstack.tests.create_user_tests.CreateUserSuccessTests) ...
-  2017-03-21 13:34:32,684 - create_user - INFO - Found user with name - CreateUserSuccessTests-7e741e11-c9fd-489-name ok
+  test_create_user_2x (snaps.openstack.tests.create_user_tests.CreateUserSuccessTests) ... 2017-03-30 05:36:27,257 - create_user - INFO - Found user with name - CreateUserSuccessTests-5ff765c1-56bd-4c4-name
+  ok
   test_create_delete_project (snaps.openstack.tests.create_project_tests.CreateProjectSuccessTests) ... ok
   test_create_project (snaps.openstack.tests.create_project_tests.CreateProjectSuccessTests) ... ok
-  test_create_project_2x (snaps.openstack.tests.create_project_tests.CreateProjectSuccessTests) ...
-  2017-03-21 13:34:35,922 - create_image - INFO - Found project with name - CreateProjectSuccessTests-b38e08ce-2862-48a-name ok
-  test_create_project_sec_grp_one_user (snaps.openstack.tests.create_project_tests.CreateProjectUserTests) ...
-  2017-03-21 13:34:37,907 - OpenStackSecurityGroup - INFO - Creating security group CreateProjectUserTests-ab8801f6-dad8-4f9-name...
-  2017-03-21 13:34:37,907 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-ab8801f6-dad8-4f9-name
-  2017-03-21 13:34:38,376 - neutron_utils - INFO - Creating security group with name - CreateProjectUserTests-ab8801f6-dad8-4f9-name
-  2017-03-21 13:34:38,716 - neutron_utils - INFO - Retrieving security group rules associate with the security group - CreateProjectUserTests-ab8801f6-dad8-4f9-name
-  2017-03-21 13:34:38,762 - neutron_utils - INFO - Retrieving security group with ID - 821419cb-c54c-41b4-a61b-fb30e5dd2ec5
-  2017-03-21 13:34:38,886 - neutron_utils - INFO - Retrieving security group with ID - 821419cb-c54c-41b4-a61b-fb30e5dd2ec5
-  2017-03-21 13:34:39,000 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-ab8801f6-dad8-4f9-name
-  2017-03-21 13:34:39,307 - neutron_utils - INFO - Deleting security group rule with ID - d85fafc0-9649-45c9-a00e-452f3d5c09a6
-  2017-03-21 13:34:39,531 - neutron_utils - INFO - Deleting security group rule with ID - 69d79c09-bc3b-4975-9353-5f43aca51237
-  2017-03-21 13:34:39,762 - neutron_utils - INFO - Deleting security group with name - CreateProjectUserTests-ab8801f6-dad8-4f9-name ok
-  test_create_project_sec_grp_two_users (snaps.openstack.tests.create_project_tests.CreateProjectUserTests) ...
-  2017-03-21 13:34:43,511 - OpenStackSecurityGroup - INFO - Creating security group CreateProjectUserTests-4d9261a6-e008-44b-name...
-  2017-03-21 13:34:43,511 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
-  2017-03-21 13:34:44,090 - neutron_utils - INFO - Creating security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
-  2017-03-21 13:34:44,784 - neutron_utils - INFO - Retrieving security group rules associate with the security group - CreateProjectUserTests-4d9261a6-e008-44b-name
-  2017-03-21 13:34:44,864 - neutron_utils - INFO - Retrieving security group with ID - 780193e4-9bd2-4f2e-a14d-b01abf74c832
-  2017-03-21 13:34:45,233 - neutron_utils - INFO - Retrieving security group with ID - 780193e4-9bd2-4f2e-a14d-b01abf74c832
-  2017-03-21 13:34:45,332 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
-  2017-03-21 13:34:45,779 - OpenStackSecurityGroup - INFO - Creating security group CreateProjectUserTests-4d9261a6-e008-44b-name...
-  2017-03-21 13:34:45,779 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
-  2017-03-21 13:34:46,112 - neutron_utils - INFO - Retrieving security group rules associate with the security group - CreateProjectUserTests-4d9261a6-e008-44b-name
-  2017-03-21 13:34:46,184 - neutron_utils - INFO - Retrieving security group with ID - 780193e4-9bd2-4f2e-a14d-b01abf74c832
-  2017-03-21 13:34:46,296 - neutron_utils - INFO - Retrieving security group with ID - 780193e4-9bd2-4f2e-a14d-b01abf74c832
-  2017-03-21 13:34:46,387 - neutron_utils - INFO - Deleting security group rule with ID - 2320a573-ec56-47c5-a1ba-ec514d30114b
-  2017-03-21 13:34:46,636 - neutron_utils - INFO - Deleting security group rule with ID - 6186282b-db37-4e47-becc-a3886079c069
-  2017-03-21 13:34:46,780 - neutron_utils - INFO - Deleting security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
-  2017-03-21 13:34:47,006 - neutron_utils - INFO - Deleting security group rule with ID - 2320a573-ec56-47c5-a1ba-ec514d30114b
-  2017-03-21 13:34:47,072 - OpenStackSecurityGroup - WARNING - Rule not found, cannot delete - Security group rule 2320a573-ec56-47c5-a1ba-ec514d30114b does not exist
-  Neutron server returns request_ids: ['req-d74eb2e2-b26f-4236-87dc-7255866141d9']
-  2017-03-21 13:34:47,072 - neutron_utils - INFO - Deleting security group rule with ID - 6186282b-db37-4e47-becc-a3886079c069
-  2017-03-21 13:34:47,118 - OpenStackSecurityGroup - WARNING - Rule not found, cannot delete - Security group rule 6186282b-db37-4e47-becc-a3886079c069 does not exist
-  Neutron server returns request_ids: ['req-8c0a5a24-be90-4844-a9ed-2a85cc6f59a5']
-  2017-03-21 13:34:47,118 - neutron_utils - INFO - Deleting security group with name - CreateProjectUserTests-4d9261a6-e008-44b-name
-  2017-03-21 13:34:47,172 - OpenStackSecurityGroup - WARNING - Security Group not found, cannot delete - Security group 780193e4-9bd2-4f2e-a14d-b01abf74c832 does not exist
-  Neutron server returns request_ids: ['req-c6e1a6b5-43e0-4d46-bb68-c2e1672d4d21'] ok
+  test_create_project_2x (snaps.openstack.tests.create_project_tests.CreateProjectSuccessTests) ... 2017-03-30 05:36:29,798 - create_image - INFO - Found project with name - CreateProjectSuccessTests-1b2fce89-dd5e-471-name
+  ok
+  test_create_project_sec_grp_one_user (snaps.openstack.tests.create_project_tests.CreateProjectUserTests) ... 2017-03-30 05:36:31,327 - OpenStackSecurityGroup - INFO - Creating security group CreateProjectUserTests-34aa7d96-f19c-4db-name...
+  2017-03-30 05:36:31,327 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-34aa7d96-f19c-4db-name
+  2017-03-30 05:36:31,705 - neutron_utils - INFO - Creating security group with name - CreateProjectUserTests-34aa7d96-f19c-4db-name
+  2017-03-30 05:36:31,878 - neutron_utils - INFO - Retrieving security group rules associate with the security group - CreateProjectUserTests-34aa7d96-f19c-4db-name
+  2017-03-30 05:36:31,915 - neutron_utils - INFO - Retrieving security group with ID - 4dc3e8e4-3dc8-4dda-9c7e-03d08171e17a
+  2017-03-30 05:36:31,980 - neutron_utils - INFO - Retrieving security group with ID - 4dc3e8e4-3dc8-4dda-9c7e-03d08171e17a
+  2017-03-30 05:36:32,048 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-34aa7d96-f19c-4db-name
+  2017-03-30 05:36:32,108 - neutron_utils - INFO - Deleting security group rule with ID - 81cca252-45fe-4052-adb9-819191693618
+  2017-03-30 05:36:32,257 - neutron_utils - INFO - Deleting security group rule with ID - 8900647f-1587-4068-bd2e-7b77677d12ed
+  2017-03-30 05:36:32,367 - neutron_utils - INFO - Deleting security group with name - CreateProjectUserTests-34aa7d96-f19c-4db-name
+  ok
+  test_create_project_sec_grp_two_users (snaps.openstack.tests.create_project_tests.CreateProjectUserTests) ... 2017-03-30 05:36:34,950 - OpenStackSecurityGroup - INFO - Creating security group CreateProjectUserTests-6664b595-4657-4f9-name...
+  2017-03-30 05:36:34,950 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-6664b595-4657-4f9-name
+  2017-03-30 05:36:35,337 - neutron_utils - INFO - Creating security group with name - CreateProjectUserTests-6664b595-4657-4f9-name
+  2017-03-30 05:36:35,528 - neutron_utils - INFO - Retrieving security group rules associate with the security group - CreateProjectUserTests-6664b595-4657-4f9-name
+  2017-03-30 05:36:35,566 - neutron_utils - INFO - Retrieving security group with ID - ea8b1da3-0e3d-45aa-b63f-68d2e7b57e48
+  2017-03-30 05:36:35,831 - neutron_utils - INFO - Retrieving security group with ID - ea8b1da3-0e3d-45aa-b63f-68d2e7b57e48
+  2017-03-30 05:36:36,118 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-6664b595-4657-4f9-name
+  2017-03-30 05:36:36,474 - OpenStackSecurityGroup - INFO - Creating security group CreateProjectUserTests-6664b595-4657-4f9-name...
+  2017-03-30 05:36:36,475 - neutron_utils - INFO - Retrieving security group with name - CreateProjectUserTests-6664b595-4657-4f9-name
+  2017-03-30 05:36:36,717 - neutron_utils - INFO - Retrieving security group rules associate with the security group - CreateProjectUserTests-6664b595-4657-4f9-name
+  2017-03-30 05:36:36,768 - neutron_utils - INFO - Retrieving security group with ID - ea8b1da3-0e3d-45aa-b63f-68d2e7b57e48
+  2017-03-30 05:36:36,831 - neutron_utils - INFO - Retrieving security group with ID - ea8b1da3-0e3d-45aa-b63f-68d2e7b57e48
+  2017-03-30 05:36:36,902 - neutron_utils - INFO - Deleting security group rule with ID - f6e50aea-e6d2-4ba9-ab78-0674cdcd5415
+  2017-03-30 05:36:37,054 - neutron_utils - INFO - Deleting security group rule with ID - a32d9c1d-7ae0-4fe9-b4c9-8b039008f836
+  2017-03-30 05:36:37,204 - neutron_utils - INFO - Deleting security group with name - CreateProjectUserTests-6664b595-4657-4f9-name
+  2017-03-30 05:36:37,350 - neutron_utils - INFO - Deleting security group rule with ID - f6e50aea-e6d2-4ba9-ab78-0674cdcd5415
+  2017-03-30 05:36:37,387 - OpenStackSecurityGroup - WARNING - Rule not found, cannot delete - Security group rule f6e50aea-e6d2-4ba9-ab78-0674cdcd5415 does not exist
+  Neutron server returns request_ids: ['req-e740871d-34c4-4b95-a76c-6b84028954e6']
+  2017-03-30 05:36:37,387 - neutron_utils - INFO - Deleting security group rule with ID - a32d9c1d-7ae0-4fe9-b4c9-8b039008f836
+  2017-03-30 05:36:37,426 - OpenStackSecurityGroup - WARNING - Rule not found, cannot delete - Security group rule a32d9c1d-7ae0-4fe9-b4c9-8b039008f836 does not exist
+  Neutron server returns request_ids: ['req-8121308e-d7d3-4ccc-961f-5fa794fccc83']
+  2017-03-30 05:36:37,427 - neutron_utils - INFO - Deleting security group with name - CreateProjectUserTests-6664b595-4657-4f9-name
+  2017-03-30 05:36:37,470 - OpenStackSecurityGroup - WARNING - Security Group not found, cannot delete - Security group ea8b1da3-0e3d-45aa-b63f-68d2e7b57e48 does not exist
+  Neutron server returns request_ids: ['req-09424914-a32d-4bcb-9d90-0ad307ec4c56']
+  ok
   test_create_image_minimal_file (snaps.openstack.utils.tests.glance_utils_tests.GlanceUtilsTests) ... ok
   test_create_image_minimal_url (snaps.openstack.utils.tests.glance_utils_tests.GlanceUtilsTests) ... ok
-  test_create_network (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsNetworkTests) ...
-  2017-03-21 13:35:22,275 - neutron_utils - INFO - Creating network with name NeutronUtilsNetworkTests-c06c20e0-d78f-4fa4-8401-099a7a6cab2e-pub-net
-  2017-03-21 13:35:23,965 - neutron_utils - INFO - Deleting network with name NeutronUtilsNetworkTests-c06c20e0-d78f-4fa4-8401-099a7a6cab2e-pub-net ok
+  test_create_network (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsNetworkTests) ... 2017-03-30 05:37:02,330 - neutron_utils - INFO - Creating network with name NeutronUtilsNetworkTests-9dc31d5e-be87-480d-af6e-d89f0608e459-pub-net
+  2017-03-30 05:37:04,307 - neutron_utils - INFO - Deleting network with name NeutronUtilsNetworkTests-9dc31d5e-be87-480d-af6e-d89f0608e459-pub-net
+  ok
   test_create_network_empty_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsNetworkTests) ... ok
   test_create_network_null_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsNetworkTests) ... ok
-  test_create_subnet (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ...
-  2017-03-21 13:35:25,495 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-4f440a5f-54e3-4455-ab9b-39dfe06f6d21-pub-net
-  2017-03-21 13:35:26,841 - neutron_utils - INFO - Creating subnet with name NeutronUtilsSubnetTests-4f440a5f-54e3-4455-ab9b-39dfe06f6d21-pub-subnet
-  2017-03-21 13:35:28,311 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsSubnetTests-4f440a5f-54e3-4455-ab9b-39dfe06f6d21-pub-subnet
-  2017-03-21 13:35:29,585 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-4f440a5f-54e3-4455-ab9b-39dfe06f6d21-pub-net ok
-  test_create_subnet_empty_cidr (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ...
-  2017-03-21 13:35:31,013 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-41fc0db4-71ee-47e6-bec9-316273e5bcc0-pub-net
-  2017-03-21 13:35:31,652 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-41fc0db4-71ee-47e6-bec9-316273e5bcc0-pub-net ok
-  test_create_subnet_empty_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ...
-  2017-03-21 13:35:32,379 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-1030e0cb-1714-4d18-8619-a03bac0d0257-pub-net
-  2017-03-21 13:35:33,516 - neutron_utils - INFO - Creating subnet with name NeutronUtilsSubnetTests-1030e0cb-1714-4d18-8619-a03bac0d0257-pub-subnet
-  2017-03-21 13:35:34,160 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-1030e0cb-1714-4d18-8619-a03bac0d0257-pub-net ok
-  test_create_subnet_null_cidr (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ...
-  2017-03-21 13:35:35,784 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-1d7522fd-3fb5-4b1c-8741-97d7c47a5f7d-pub-net
-  2017-03-21 13:35:36,367 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-1d7522fd-3fb5-4b1c-8741-97d7c47a5f7d-pub-net ok
-  test_create_subnet_null_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ...
-  2017-03-21 13:35:37,055 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-0a8ac1b2-e5d4-4522-a079-7e17945e482e-pub-net
-  2017-03-21 13:35:37,691 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-0a8ac1b2-e5d4-4522-a079-7e17945e482e-pub-net ok
-  test_add_interface_router (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:35:38,994 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-net
-  2017-03-21 13:35:40,311 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-subnet
-  2017-03-21 13:35:41,713 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-router
-  2017-03-21 13:35:44,131 - neutron_utils - INFO - Adding interface to router with name NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-router
-  2017-03-21 13:35:45,725 - neutron_utils - INFO - Removing router interface from router named NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-router
-  2017-03-21 13:35:47,464 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-router
-  2017-03-21 13:35:48,670 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-subnet
-  2017-03-21 13:35:50,921 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-433818c9-4472-49a8-9241-791ad0a71d3f-pub-net ok
-  test_add_interface_router_null_router (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:35:52,230 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-1fc2de16-2d3e-497b-b947-022b1bf9d90c-pub-net
-  2017-03-21 13:35:53,662 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-1fc2de16-2d3e-497b-b947-022b1bf9d90c-pub-subnet
-  2017-03-21 13:35:55,203 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-1fc2de16-2d3e-497b-b947-022b1bf9d90c-pub-subnet
-  2017-03-21 13:35:55,694 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-1fc2de16-2d3e-497b-b947-022b1bf9d90c-pub-net ok
-  test_add_interface_router_null_subnet (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:35:57,392 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-2e4fb9f3-312b-4954-8015-435464fdc8b0-pub-net
-  2017-03-21 13:35:58,215 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-2e4fb9f3-312b-4954-8015-435464fdc8b0-pub-router
-  2017-03-21 13:36:00,369 - neutron_utils - INFO - Adding interface to router with name NeutronUtilsRouterTests-2e4fb9f3-312b-4954-8015-435464fdc8b0-pub-router
-  2017-03-21 13:36:00,369 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-2e4fb9f3-312b-4954-8015-435464fdc8b0-pub-router
-  2017-03-21 13:36:02,742 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-2e4fb9f3-312b-4954-8015-435464fdc8b0-pub-net ok
-  test_create_port (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:36:05,010 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-pub-net
-  2017-03-21 13:36:05,996 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-pub-subnet
-  2017-03-21 13:36:09,103 - neutron_utils - INFO - Creating port for network with name - NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-pub-net
-  2017-03-21 13:36:10,312 - neutron_utils - INFO - Deleting port with name NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-port
-  2017-03-21 13:36:11,045 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-pub-subnet
-  2017-03-21 13:36:14,265 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-dde05ce1-a2f8-4c5e-a028-e1ca0e11a05b-pub-net ok
-  test_create_port_empty_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:36:16,250 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-pub-net
-  2017-03-21 13:36:16,950 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-pub-subnet
-  2017-03-21 13:36:17,798 - neutron_utils - INFO - Creating port for network with name - NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-pub-net
-  2017-03-21 13:36:18,544 - neutron_utils - INFO - Deleting port with name NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-port
-  2017-03-21 13:36:19,582 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-pub-subnet
-  2017-03-21 13:36:21,606 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-b986a259-e873-431c-bde4-b2771ace4549-pub-net ok
-  test_create_port_invalid_ip (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:36:23,779 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-7ab3a329-9dd8-4e6f-9d52-aafb47ea5122-pub-net
-  2017-03-21 13:36:25,201 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-7ab3a329-9dd8-4e6f-9d52-aafb47ea5122-pub-subnet
-  2017-03-21 13:36:25,599 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-7ab3a329-9dd8-4e6f-9d52-aafb47ea5122-pub-subnet
-  2017-03-21 13:36:26,220 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-7ab3a329-9dd8-4e6f-9d52-aafb47ea5122-pub-net ok
-  test_create_port_invalid_ip_to_subnet (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:36:27,112 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-c016821d-cd4f-4e0f-8f8c-d5cef3392e64-pub-net
-  2017-03-21 13:36:28,720 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-c016821d-cd4f-4e0f-8f8c-d5cef3392e64-pub-subnet
-  2017-03-21 13:36:29,457 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-c016821d-cd4f-4e0f-8f8c-d5cef3392e64-pub-subnet
-  2017-03-21 13:36:29,909 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-c016821d-cd4f-4e0f-8f8c-d5cef3392e64-pub-net ok
-  test_create_port_null_ip (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:36:31,037 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-9a86227f-6041-4b04-86a7-1701fb86baa3-pub-net
-  2017-03-21 13:36:31,695 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-9a86227f-6041-4b04-86a7-1701fb86baa3-pub-subnet
-  2017-03-21 13:36:32,305 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-9a86227f-6041-4b04-86a7-1701fb86baa3-pub-subnet
-  2017-03-21 13:36:33,553 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-9a86227f-6041-4b04-86a7-1701fb86baa3-pub-net ok
-  test_create_port_null_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:36:34,593 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-42efa897-4f65-4d9b-b19d-fbc61f97c966-pub-net
-  2017-03-21 13:36:35,217 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-42efa897-4f65-4d9b-b19d-fbc61f97c966-pub-subnet
-  2017-03-21 13:36:36,648 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-42efa897-4f65-4d9b-b19d-fbc61f97c966-pub-subnet
-  2017-03-21 13:36:37,251 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-42efa897-4f65-4d9b-b19d-fbc61f97c966-pub-net ok
-  test_create_port_null_network_object (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:36:37,885 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-617f4110-45c1-4900-bad1-a6204f34dd64-pub-net
-  2017-03-21 13:36:38,468 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-617f4110-45c1-4900-bad1-a6204f34dd64-pub-subnet
-  2017-03-21 13:36:40,005 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-617f4110-45c1-4900-bad1-a6204f34dd64-pub-subnet
-  2017-03-21 13:36:41,637 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-617f4110-45c1-4900-bad1-a6204f34dd64-pub-net ok
+  test_create_subnet (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ... 2017-03-30 05:37:04,953 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-127e135b-f050-4e85-8c9f-b4f72fb1b028-pub-net
+  2017-03-30 05:37:06,108 - neutron_utils - INFO - Creating subnet with name NeutronUtilsSubnetTests-127e135b-f050-4e85-8c9f-b4f72fb1b028-pub-subnet
+  2017-03-30 05:37:07,544 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsSubnetTests-127e135b-f050-4e85-8c9f-b4f72fb1b028-pub-subnet
+  2017-03-30 05:37:07,944 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-127e135b-f050-4e85-8c9f-b4f72fb1b028-pub-net
+  ok
+  test_create_subnet_empty_cidr (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ... 2017-03-30 05:37:08,594 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-4edb48fe-2532-409b-8dc7-dcb344068a20-pub-net
+  2017-03-30 05:37:09,862 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-4edb48fe-2532-409b-8dc7-dcb344068a20-pub-net
+  ok
+  test_create_subnet_empty_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ... 2017-03-30 05:37:10,962 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-bb15908a-a475-45e9-9777-8b5d3faaaea8-pub-net
+  2017-03-30 05:37:11,973 - neutron_utils - INFO - Creating subnet with name NeutronUtilsSubnetTests-bb15908a-a475-45e9-9777-8b5d3faaaea8-pub-subnet
+  2017-03-30 05:37:13,088 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-bb15908a-a475-45e9-9777-8b5d3faaaea8-pub-net
+  ok
+  test_create_subnet_null_cidr (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ... 2017-03-30 05:37:14,032 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-701278ff-f4b6-478f-b16f-1d3fdfb43ed7-pub-net
+  2017-03-30 05:37:15,100 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-701278ff-f4b6-478f-b16f-1d3fdfb43ed7-pub-net
+  ok
+  test_create_subnet_null_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSubnetTests) ... 2017-03-30 05:37:15,658 - neutron_utils - INFO - Creating network with name NeutronUtilsSubnetTests-2dad9c37-c892-494b-a8dc-51963ce11cd8-pub-net
+  2017-03-30 05:37:16,184 - neutron_utils - INFO - Deleting network with name NeutronUtilsSubnetTests-2dad9c37-c892-494b-a8dc-51963ce11cd8-pub-net
+  ok
+  test_add_interface_router (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:37:17,438 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-5f1f0b29-1148-4628-8626-f2aa63b17914-pub-net
+  2017-03-30 05:37:18,624 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-5f1f0b29-1148-4628-8626-f2aa63b17914-pub-subnet
+  2017-03-30 05:37:20,041 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-5f1f0b29-1148-4628-8626-f2aa63b17914-pub-router
+  2017-03-30 05:37:22,518 - neutron_utils - INFO - Adding interface to router with name NeutronUtilsRouterTests-5f1f0b29-1148-4628-8626-f2aa63b17914-pub-router
+  2017-03-30 05:37:23,883 - neutron_utils - INFO - Removing router interface from router named NeutronUtilsRouterTests-5f1f0b29-1148-4628-8626-f2aa63b17914-pub-router
+  2017-03-30 05:37:25,345 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-5f1f0b29-1148-4628-8626-f2aa63b17914-pub-router
+  2017-03-30 05:37:27,019 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-5f1f0b29-1148-4628-8626-f2aa63b17914-pub-subnet
+  2017-03-30 05:37:28,570 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-5f1f0b29-1148-4628-8626-f2aa63b17914-pub-net
+  ok
+  test_add_interface_router_null_router (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:37:29,583 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-021a41c7-e2b2-45df-bb6d-630ddba2b776-pub-net
+  2017-03-30 05:37:30,234 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-021a41c7-e2b2-45df-bb6d-630ddba2b776-pub-subnet
+  2017-03-30 05:37:30,724 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-021a41c7-e2b2-45df-bb6d-630ddba2b776-pub-subnet
+  2017-03-30 05:37:31,128 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-021a41c7-e2b2-45df-bb6d-630ddba2b776-pub-net
+  ok
+  test_add_interface_router_null_subnet (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:37:32,229 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-e52f96b6-92c9-49a3-ac7f-6a4a61a82c7e-pub-net
+  2017-03-30 05:37:32,833 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-e52f96b6-92c9-49a3-ac7f-6a4a61a82c7e-pub-router
+  2017-03-30 05:37:34,002 - neutron_utils - INFO - Adding interface to router with name NeutronUtilsRouterTests-e52f96b6-92c9-49a3-ac7f-6a4a61a82c7e-pub-router
+  2017-03-30 05:37:34,003 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-e52f96b6-92c9-49a3-ac7f-6a4a61a82c7e-pub-router
+  2017-03-30 05:37:35,238 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-e52f96b6-92c9-49a3-ac7f-6a4a61a82c7e-pub-net
+  ok
+  test_create_port (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:37:35,898 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-842cf533-4886-4539-86e4-15bcd8c77b63-pub-net
+  2017-03-30 05:37:36,426 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-842cf533-4886-4539-86e4-15bcd8c77b63-pub-subnet
+  2017-03-30 05:37:37,725 - neutron_utils - INFO - Creating port for network with name - NeutronUtilsRouterTests-842cf533-4886-4539-86e4-15bcd8c77b63-pub-net
+  2017-03-30 05:37:38,511 - neutron_utils - INFO - Deleting port with name NeutronUtilsRouterTests-842cf533-4886-4539-86e4-15bcd8c77b63-port
+  2017-03-30 05:37:39,036 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-842cf533-4886-4539-86e4-15bcd8c77b63-pub-subnet
+  2017-03-30 05:37:41,326 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-842cf533-4886-4539-86e4-15bcd8c77b63-pub-net
+  ok
+  test_create_port_empty_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:37:42,725 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-303b5eae-374a-4da9-a905-aa39a7d5f026-pub-net
+  2017-03-30 05:37:43,246 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-303b5eae-374a-4da9-a905-aa39a7d5f026-pub-subnet
+  2017-03-30 05:37:43,945 - neutron_utils - INFO - Creating port for network with name - NeutronUtilsRouterTests-303b5eae-374a-4da9-a905-aa39a7d5f026-pub-net
+  2017-03-30 05:37:45,674 - neutron_utils - INFO - Deleting port with name NeutronUtilsRouterTests-303b5eae-374a-4da9-a905-aa39a7d5f026-port
+  2017-03-30 05:37:46,197 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-303b5eae-374a-4da9-a905-aa39a7d5f026-pub-subnet
+  2017-03-30 05:37:48,252 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-303b5eae-374a-4da9-a905-aa39a7d5f026-pub-net
+  ok
+  test_create_port_invalid_ip (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:37:49,864 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-bd7a4489-79e8-4328-8519-5ad1951c0b5d-pub-net
+  2017-03-30 05:37:50,322 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-bd7a4489-79e8-4328-8519-5ad1951c0b5d-pub-subnet
+  2017-03-30 05:37:50,803 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-bd7a4489-79e8-4328-8519-5ad1951c0b5d-pub-subnet
+  2017-03-30 05:37:51,240 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-bd7a4489-79e8-4328-8519-5ad1951c0b5d-pub-net
+  ok
+  test_create_port_invalid_ip_to_subnet (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:37:51,767 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-ef2c3474-7b51-483b-b269-05fc4532f294-pub-net
+  2017-03-30 05:37:52,246 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-ef2c3474-7b51-483b-b269-05fc4532f294-pub-subnet
+  2017-03-30 05:37:52,795 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-ef2c3474-7b51-483b-b269-05fc4532f294-pub-subnet
+  2017-03-30 05:37:53,199 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-ef2c3474-7b51-483b-b269-05fc4532f294-pub-net
+  ok
+  test_create_port_null_ip (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:37:53,806 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-f5829764-e1ff-4a43-b24e-52c0107f12b2-pub-net
+  2017-03-30 05:37:54,326 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-f5829764-e1ff-4a43-b24e-52c0107f12b2-pub-subnet
+  2017-03-30 05:37:55,475 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-f5829764-e1ff-4a43-b24e-52c0107f12b2-pub-subnet
+  2017-03-30 05:37:55,932 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-f5829764-e1ff-4a43-b24e-52c0107f12b2-pub-net
+  ok
+  test_create_port_null_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:37:57,121 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-194aff34-e0e6-4218-8c17-33a9d9b34816-pub-net
+  2017-03-30 05:37:57,611 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-194aff34-e0e6-4218-8c17-33a9d9b34816-pub-subnet
+  2017-03-30 05:37:58,880 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-194aff34-e0e6-4218-8c17-33a9d9b34816-pub-subnet
+  2017-03-30 05:37:59,638 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-194aff34-e0e6-4218-8c17-33a9d9b34816-pub-net
+  ok
+  test_create_port_null_network_object (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:38:01,037 - neutron_utils - INFO - Creating network with name NeutronUtilsRouterTests-3a49f710-5292-411b-83df-42bb176a5020-pub-net
+  2017-03-30 05:38:01,609 - neutron_utils - INFO - Creating subnet with name NeutronUtilsRouterTests-3a49f710-5292-411b-83df-42bb176a5020-pub-subnet
+  2017-03-30 05:38:02,095 - neutron_utils - INFO - Deleting subnet with name NeutronUtilsRouterTests-3a49f710-5292-411b-83df-42bb176a5020-pub-subnet
+  2017-03-30 05:38:03,034 - neutron_utils - INFO - Deleting network with name NeutronUtilsRouterTests-3a49f710-5292-411b-83df-42bb176a5020-pub-net
+  ok
   test_create_router_empty_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... ok
   test_create_router_null_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... ok
-  test_create_router_simple (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:36:43,424 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-b6a2dafc-38d4-4c46-bb41-2ba9e1c0084e-pub-router
-  2017-03-21 13:36:45,013 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-b6a2dafc-38d4-4c46-bb41-2ba9e1c0084e-pub-router ok
-  test_create_router_with_public_interface (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ...
-  2017-03-21 13:36:47,829 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-d268dda2-7a30-4d3d-a008-e5aa4592637d-pub-router
-  2017-03-21 13:36:49,448 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-d268dda2-7a30-4d3d-a008-e5aa4592637d-pub-router ok
-  test_create_delete_simple_sec_grp (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSecurityGroupTests) ...
-  2017-03-21 13:36:51,067 - neutron_utils - INFO - Creating security group with name - NeutronUtilsSecurityGroupTests-1543e861-ea38-4fbe-9723-c27552e3eb7aname
-  2017-03-21 13:36:51,493 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-1543e861-ea38-4fbe-9723-c27552e3eb7aname
-  2017-03-21 13:36:51,568 - neutron_utils - INFO - Deleting security group with name - NeutronUtilsSecurityGroupTests-1543e861-ea38-4fbe-9723-c27552e3eb7aname
-  2017-03-21 13:36:51,772 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-1543e861-ea38-4fbe-9723-c27552e3eb7aname ok
+  test_create_router_simple (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:38:03,973 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-54c3eaf0-00c8-4726-a248-b57f98a37999-pub-router
+  2017-03-30 05:38:05,749 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-54c3eaf0-00c8-4726-a248-b57f98a37999-pub-router
+  ok
+  test_create_router_with_public_interface (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsRouterTests) ... 2017-03-30 05:38:07,392 - neutron_utils - INFO - Creating router with name - NeutronUtilsRouterTests-a4e93ee5-781e-4e9d-9b55-b4d8fb3f0e7b-pub-router
+  2017-03-30 05:38:09,164 - neutron_utils - INFO - Deleting router with name - NeutronUtilsRouterTests-a4e93ee5-781e-4e9d-9b55-b4d8fb3f0e7b-pub-router
+  ok
+  test_create_delete_simple_sec_grp (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSecurityGroupTests) ... 2017-03-30 05:38:10,643 - neutron_utils - INFO - Creating security group with name - NeutronUtilsSecurityGroupTests-0b62acfe-fc43-4c9f-bd30-2ce350c73c57name
+  2017-03-30 05:38:11,020 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-0b62acfe-fc43-4c9f-bd30-2ce350c73c57name
+  2017-03-30 05:38:11,084 - neutron_utils - INFO - Deleting security group with name - NeutronUtilsSecurityGroupTests-0b62acfe-fc43-4c9f-bd30-2ce350c73c57name
+  2017-03-30 05:38:11,230 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-0b62acfe-fc43-4c9f-bd30-2ce350c73c57name
+  ok
   test_create_sec_grp_no_name (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSecurityGroupTests) ... ok
-  test_create_sec_grp_no_rules (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSecurityGroupTests) ...
-  2017-03-21 13:36:52,253 - neutron_utils - INFO - Creating security group with name - NeutronUtilsSecurityGroupTests-57c60864-f46c-4391-ba99-6acc4dd123ddname
-  2017-03-21 13:36:52,634 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-57c60864-f46c-4391-ba99-6acc4dd123ddname
-  2017-03-21 13:36:52,718 - neutron_utils - INFO - Deleting security group with name - NeutronUtilsSecurityGroupTests-57c60864-f46c-4391-ba99-6acc4dd123ddname ok
-  test_create_sec_grp_one_rule (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSecurityGroupTests) ...
-  2017-03-21 13:36:53,082 - neutron_utils - INFO - Creating security group with name - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
-  2017-03-21 13:36:53,483 - neutron_utils - INFO - Retrieving security group rules associate with the security group - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
-  2017-03-21 13:36:53,548 - neutron_utils - INFO - Creating security group to security group - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
-  2017-03-21 13:36:53,548 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
-  2017-03-21 13:36:53,871 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
-  2017-03-21 13:36:53,944 - neutron_utils - INFO - Retrieving security group rules associate with the security group - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
-  2017-03-21 13:36:53,991 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name
-  2017-03-21 13:36:54,069 - neutron_utils - INFO - Deleting security group rule with ID - 7f76046c-d043-46e0-9d12-4b983525810b
-  2017-03-21 13:36:54,185 - neutron_utils - INFO - Deleting security group rule with ID - f18a9ed1-466f-4373-a6b2-82bd317bc838
-  2017-03-21 13:36:54,338 - neutron_utils - INFO - Deleting security group rule with ID - fe34a3d0-948e-47c1-abad-c3ec8d33b2fb
-  2017-03-21 13:36:54,444 - neutron_utils - INFO - Deleting security group with name - NeutronUtilsSecurityGroupTests-a3ac62bb-a7e8-4fc2-ba4c-e656f1f3c9a1name ok
-  test_create_delete_keypair (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ...
-  2017-03-21 13:36:54,637 - nova_utils - INFO - Creating keypair with name - NovaUtilsKeypairTests-5ce69b6f-d8d0-4b66-bd25-30a22cf3bda0 ok
-  test_create_key_from_file (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ...
-  2017-03-21 13:36:58,989 - nova_utils - INFO - Saved public key to - tmp/NovaUtilsKeypairTests-df3e848d-a467-4cc4-99d5-022eb67eee94.pub
-  2017-03-21 13:36:58,990 - nova_utils - INFO - Saved private key to - tmp/NovaUtilsKeypairTests-df3e848d-a467-4cc4-99d5-022eb67eee94
-  2017-03-21 13:36:58,990 - nova_utils - INFO - Saving keypair to - tmp/NovaUtilsKeypairTests-df3e848d-a467-4cc4-99d5-022eb67eee94.pub
-  2017-03-21 13:36:58,990 - nova_utils - INFO - Creating keypair with name - NovaUtilsKeypairTests-df3e848d-a467-4cc4-99d5-022eb67eee94 ok
-  test_create_keypair (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ...
-  2017-03-21 13:36:59,807 - nova_utils - INFO - Creating keypair with name - NovaUtilsKeypairTests-fc7f7ffd-80f6-43df-bd41-a3c014ba8c3d ok
-  test_floating_ips (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ...
-  2017-03-21 13:37:02,765 - nova_utils - INFO - Creating floating ip to external network - admin_floating_net ok
+  test_create_sec_grp_no_rules (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSecurityGroupTests) ... 2017-03-30 05:38:11,653 - neutron_utils - INFO - Creating security group with name - NeutronUtilsSecurityGroupTests-19dc66ba-630d-4ef5-87e1-b0461971ef8ename
+  2017-03-30 05:38:11,960 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-19dc66ba-630d-4ef5-87e1-b0461971ef8ename
+  2017-03-30 05:38:12,047 - neutron_utils - INFO - Deleting security group with name - NeutronUtilsSecurityGroupTests-19dc66ba-630d-4ef5-87e1-b0461971ef8ename
+  ok
+  test_create_sec_grp_one_rule (snaps.openstack.utils.tests.neutron_utils_tests.NeutronUtilsSecurityGroupTests) ... 2017-03-30 05:38:12,321 - neutron_utils - INFO - Creating security group with name - NeutronUtilsSecurityGroupTests-cf3022e5-dc6e-4cc1-8fe0-41c8c1c56defname
+  2017-03-30 05:38:12,676 - neutron_utils - INFO - Retrieving security group rules associate with the security group - NeutronUtilsSecurityGroupTests-cf3022e5-dc6e-4cc1-8fe0-41c8c1c56defname
+  2017-03-30 05:38:12,735 - neutron_utils - INFO - Creating security group to security group - NeutronUtilsSecurityGroupTests-cf3022e5-dc6e-4cc1-8fe0-41c8c1c56defname
+  2017-03-30 05:38:12,736 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-cf3022e5-dc6e-4cc1-8fe0-41c8c1c56defname
+  2017-03-30 05:38:12,948 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-cf3022e5-dc6e-4cc1-8fe0-41c8c1c56defname
+  2017-03-30 05:38:13,024 - neutron_utils - INFO - Retrieving security group rules associate with the security group - NeutronUtilsSecurityGroupTests-cf3022e5-dc6e-4cc1-8fe0-41c8c1c56defname
+  2017-03-30 05:38:13,054 - neutron_utils - INFO - Retrieving security group with name - NeutronUtilsSecurityGroupTests-cf3022e5-dc6e-4cc1-8fe0-41c8c1c56defname
+  2017-03-30 05:38:13,121 - neutron_utils - INFO - Deleting security group rule with ID - 07b4bfbe-c632-496b-95f7-b42de9293519
+  2017-03-30 05:38:13,238 - neutron_utils - INFO - Deleting security group rule with ID - c5e58c9f-6cc8-4543-ae39-aa1960b9a3e1
+  2017-03-30 05:38:13,387 - neutron_utils - INFO - Deleting security group rule with ID - 184d29e8-b460-4f80-858f-7915b9bafe9b
+  2017-03-30 05:38:13,492 - neutron_utils - INFO - Deleting security group with name - NeutronUtilsSecurityGroupTests-cf3022e5-dc6e-4cc1-8fe0-41c8c1c56defname
+  ok
+  test_create_delete_keypair (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ... 2017-03-30 05:38:13,664 - nova_utils - INFO - Creating keypair with name - NovaUtilsKeypairTests-cb36f8f9-ceca-4802-8735-a1dc846ad2a8
+  ok
+  test_create_key_from_file (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ... 2017-03-30 05:38:18,337 - nova_utils - INFO - Saved public key to - tmp/NovaUtilsKeypairTests-a7eba01b-9615-4271-b5f9-8fe915972f16.pub
+  2017-03-30 05:38:18,338 - nova_utils - INFO - Saved private key to - tmp/NovaUtilsKeypairTests-a7eba01b-9615-4271-b5f9-8fe915972f16
+  2017-03-30 05:38:18,338 - nova_utils - INFO - Saving keypair to - tmp/NovaUtilsKeypairTests-a7eba01b-9615-4271-b5f9-8fe915972f16.pub
+  2017-03-30 05:38:18,338 - nova_utils - INFO - Creating keypair with name - NovaUtilsKeypairTests-a7eba01b-9615-4271-b5f9-8fe915972f16
+  ok
+  test_create_keypair (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ... 2017-03-30 05:38:21,492 - nova_utils - INFO - Creating keypair with name - NovaUtilsKeypairTests-74535dab-d450-47b1-8814-c0b3f48b7643
+  ok
+  test_floating_ips (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsKeypairTests) ... 2017-03-30 05:38:23,509 - nova_utils - INFO - Creating floating ip to external network - admin_floating_net
+  ok
   test_create_delete_flavor (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsFlavorTests) ... ok
   test_create_flavor (snaps.openstack.utils.tests.nova_utils_tests.NovaUtilsFlavorTests) ... ok
   test_create_clean_flavor (snaps.openstack.tests.create_flavor_tests.CreateFlavorTests) ... ok
   test_create_delete_flavor (snaps.openstack.tests.create_flavor_tests.CreateFlavorTests) ... ok
   test_create_flavor (snaps.openstack.tests.create_flavor_tests.CreateFlavorTests) ... ok
-  test_create_flavor_existing (snaps.openstack.tests.create_flavor_tests.CreateFlavorTests) ...
-  2017-03-21 13:37:18,545 - create_image - INFO - Found flavor with name - CreateFlavorTests-3befc152-4319-4f9c-82d4-75f8941d9533name ok
-
-  ----------------------------------------------------------------------
-  Ran 48 tests in 171.000s
-
-  OK
-  2017-03-21 13:37:18,620 - functest.core.testcase_base - INFO - api_check OK
-  2017-03-21 13:37:18,977 - functest.core.testcase_base - INFO - The results were successfully pushed to DB
-  2017-03-21 13:37:18,977 - run_tests - INFO - Test execution time: 02:52
-  2017-03-21 13:37:18,981 - run_tests - INFO -
-
-  2017-03-21 13:37:18,981 - run_tests - INFO - ============================================
-  2017-03-21 13:37:18,981 - run_tests - INFO - Running test case 'snaps_health_check'...
-  2017-03-21 13:37:18,981 - run_tests - INFO - ============================================
-  2017-03-21 13:37:19,098 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
-  2017-03-21 13:37:19,099 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.7:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
-  2017-03-21 13:37:19,434 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
-  2017-03-21 13:37:19,435 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.7:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
-  test_check_vm_ip_dhcp (snaps.openstack.tests.create_instance_tests.SimpleHealthCheck) ...
-  2017-03-21 13:37:26,082 - create_image - INFO - Creating image
-  2017-03-21 13:37:28,793 - create_image - INFO - Image is active with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-image
-  2017-03-21 13:37:28,793 - create_image - INFO - Image is now active with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-image
-  2017-03-21 13:37:28,794 - OpenStackNetwork - INFO - Creating neutron network SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-priv-net...
-  2017-03-21 13:37:29,308 - neutron_utils - INFO - Creating network with name SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-priv-net
-  2017-03-21 13:37:30,771 - neutron_utils - INFO - Creating subnet with name SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-priv-subnet
-  2017-03-21 13:37:36,974 - neutron_utils - INFO - Creating port for network with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-priv-net
-  2017-03-21 13:37:38,188 - create_instance - INFO - Creating VM with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-inst
-  2017-03-21 13:37:41,538 - create_instance - INFO - Created instance with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-inst
-  2017-03-21 13:37:59,577 - create_instance - INFO - VM is - ACTIVE
-  2017-03-21 13:37:59,577 - create_instance_tests - INFO - Looking for expression Lease of.*obtained in the console log
-  2017-03-21 13:37:59,830 - create_instance_tests - INFO - DHCP lease obtained logged in console
-  2017-03-21 13:37:59,830 - create_instance_tests - INFO - With correct IP address
-  2017-03-21 13:37:59,830 - create_instance - INFO - Deleting Port - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5dport-1
-  2017-03-21 13:37:59,830 - neutron_utils - INFO - Deleting port with name SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5dport-1
-  2017-03-21 13:38:00,705 - create_instance - INFO - Deleting VM instance - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-inst
-  2017-03-21 13:38:01,412 - create_instance - INFO - Checking deletion status
-  2017-03-21 13:38:04,938 - create_instance - INFO - VM has been properly deleted VM with name - SimpleHealthCheck-23244728-5a5a-4545-9b16-50257a595e5d-inst
+  test_create_flavor_existing (snaps.openstack.tests.create_flavor_tests.CreateFlavorTests) ... 2017-03-30 05:38:34,855 - create_image - INFO - Found flavor with name - CreateFlavorTests-3e389b6c-ee95-4f2d-bf74-78d324722ef2name
   ok
 
   ----------------------------------------------------------------------
-  Ran 1 test in 46.982s
+  Ran 48 tests in 131.483s
 
   OK
-  2017-03-21 13:38:06,417 - functest.core.testcase_base - INFO - snaps_health_check OK
-  2017-03-21 13:38:06,778 - functest.core.testcase_base - INFO - The results were successfully pushed to DB
-  2017-03-21 13:38:06,779 - run_tests - INFO - Test execution time: 00:47
-  2017-03-21 13:38:06,779 - run_tests - INFO -
+  2017-03-30 05:38:34,905 - functest - INFO - api_check OK
+  2017-03-30 05:38:35,259 - functest - INFO - The results were successfully pushed to DB
+  2017-03-30 05:38:35,259 - run_tests - INFO - Test execution time: 02:12
+  2017-03-30 05:38:35,267 - run_tests - INFO -
+
+  2017-03-30 05:38:35,268 - run_tests - INFO - ============================================
+  2017-03-30 05:38:35,268 - run_tests - INFO - Running test case 'snaps_health_check'...
+  2017-03-30 05:38:35,268 - run_tests - INFO - ============================================
+  2017-03-30 05:38:35,383 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:38:35,384 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  2017-03-30 05:38:35,855 - functest - INFO - Using flavor metatdata '{'hw:mem_page_size': 'any'}'
+  2017-03-30 05:38:35,856 - file_utils - INFO - Attempting to read OS environment file - /home/opnfv/functest/conf/openstack.creds
+  2017-03-30 05:38:35,856 - openstack_tests - INFO - OS Credentials = OSCreds - username=admin, password=admin, auth_url=http://192.168.10.2:5000/v3, project_name=admin, identity_api_version=3, image_api_version=1, network_api_version=2, compute_api_version=2, user_domain_id=default, proxy_settings=None
+  test_check_vm_ip_dhcp (snaps.openstack.tests.create_instance_tests.SimpleHealthCheck) ... 2017-03-30 05:38:39,896 - create_image - INFO - Creating image
+  2017-03-30 05:38:41,843 - create_image - INFO - Image is active with name - SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181-image
+  2017-03-30 05:38:41,843 - create_image - INFO - Image is now active with name - SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181-image
+  2017-03-30 05:38:41,845 - OpenStackNetwork - INFO - Creating neutron network SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181-priv-net...
+  2017-03-30 05:38:42,140 - neutron_utils - INFO - Creating network with name SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181-priv-net
+  2017-03-30 05:38:42,480 - neutron_utils - INFO - Creating subnet with name SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181-priv-subnet
+  2017-03-30 05:38:44,166 - neutron_utils - INFO - Creating port for network with name - SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181-priv-net
+  2017-03-30 05:38:45,173 - create_instance - INFO - Creating VM with name - SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181-inst
+  2017-03-30 05:38:48,419 - create_instance - INFO - Created instance with name - SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181-inst
+  2017-03-30 05:39:05,164 - create_instance - INFO - VM is - ACTIVE
+  2017-03-30 05:39:05,164 - create_instance_tests - INFO - Looking for expression Lease of.*obtained in the console log
+  2017-03-30 05:39:06,547 - create_instance_tests - INFO - DHCP lease obtained logged in console
+  2017-03-30 05:39:06,548 - create_instance_tests - INFO - With correct IP address
+  2017-03-30 05:39:06,548 - create_instance - INFO - Deleting Port - SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181port-1
+  2017-03-30 05:39:06,548 - neutron_utils - INFO - Deleting port with name SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181port-1
+  2017-03-30 05:39:07,178 - create_instance - INFO - Deleting VM instance - SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181-inst
+  2017-03-30 05:39:07,693 - create_instance - INFO - Checking deletion status
+  2017-03-30 05:39:11,088 - create_instance - INFO - VM has been properly deleted VM with name - SimpleHealthCheck-85a41a34-a9b3-463d-a12c-4bd057d70181-inst
+  ok
+
+  ----------------------------------------------------------------------
+  Ran 1 test in 36.376s
+
+  OK
+  2017-03-30 05:39:12,233 - functest - INFO - snaps_health_check OK
+  2017-03-30 05:39:12,598 - functest - INFO - The results were successfully pushed to DB
+  2017-03-30 05:39:12,598 - run_tests - INFO - Test execution time: 00:37
+  2017-03-30 05:39:12,599 - run_tests - INFO -
+
   and
 
   root@22e436918db0:~/repos/functest/ci# functest testcase run vping_ssh
