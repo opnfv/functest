@@ -12,7 +12,7 @@ import functest.core.feature as base
 from functest.utils.constants import CONST
 
 
-class SecurityScan(base.FeatureBase):
+class SecurityScan(base.Feature):
     def __init__(self):
         super(SecurityScan, self).__init__(project='securityscanning',
                                            case='security_scan',

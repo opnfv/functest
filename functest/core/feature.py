@@ -6,10 +6,10 @@ import functest.utils.functest_logger as ft_logger
 from functest.utils.constants import CONST
 
 
-class FeatureBase(base.TestCase):
+class Feature(base.TestCase):
 
     def __init__(self, project='functest', case='', repo='', cmd=''):
-        super(FeatureBase, self).__init__()
+        super(Feature, self).__init__()
         self.project_name = project
         self.case_name = case
         self.cmd = cmd

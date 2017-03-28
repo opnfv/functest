@@ -10,7 +10,7 @@
 import functest.core.feature as base
 
 
-class OpenDaylightSFC(base.FeatureBase):
+class OpenDaylightSFC(base.Feature):
 
     def __init__(self):
         super(OpenDaylightSFC, self).__init__(project='sfc',

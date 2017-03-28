@@ -13,7 +13,7 @@ import os
 RESULT_DETAILS_FILE = "test_result.json"
 
 
-class VrouterVnf(base.FeatureBase):
+class VrouterVnf(base.Feature):
     def __init__(self):
         super(VrouterVnf, self).__init__(project='functest',
                                          case='vyos_vrouter',

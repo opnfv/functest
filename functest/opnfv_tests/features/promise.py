@@ -15,7 +15,7 @@
 import functest.core.feature as base
 
 
-class Promise(base.FeatureBase):
+class Promise(base.Feature):
     def __init__(self):
         super(Promise, self).__init__(project='promise',
                                       case='promise',
