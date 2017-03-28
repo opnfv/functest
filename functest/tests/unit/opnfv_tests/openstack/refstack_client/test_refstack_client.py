@@ -10,7 +10,7 @@ import mock
 import os
 import unittest
 
-from functest.core import testcase_base
+from functest.core import testcase
 from functest.opnfv_tests.openstack.refstack_client import refstack_client
 from functest.utils.constants import CONST
 
@@ -70,7 +70,7 @@ class OSRefstackClientTesting(unittest.TestCase):
     def _test_main_missing_keyword(self, key):
         kwargs = self._get_main_kwargs(key)
         self.assertEqual(self.refstackclient.main(**kwargs),
-                         testcase_base.TestCase.EX_RUN_ERROR)
+                         testcase.TestCase.EX_RUN_ERROR)
 
     def test_main_missing_conf(self):
         self._test_main_missing_keyword('config')

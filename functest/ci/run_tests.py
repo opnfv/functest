@@ -18,7 +18,7 @@ import sys
 
 import functest.ci.generate_report as generate_report
 import functest.ci.tier_builder as tb
-import functest.core.testcase_base as testcase_base
+import functest.core.testcase as testcase
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
@@ -138,7 +138,7 @@ def run_test(test, tier_name, testcases=None):
     if GlobalVariables.REPORT_FLAG:
         flags += " -r"
 
-    result = testcase_base.TestCase.EX_RUN_ERROR
+    result = testcase.TestCase.EX_RUN_ERROR
     run_dict = get_run_dict(test_name)
     if run_dict:
         try:
@@ -151,7 +151,7 @@ def run_test(test, tier_name, testcases=None):
                 result = test_case.run(**kwargs)
             except KeyError:
                 result = test_case.run()
-            if result == testcase_base.TestCase.EX_OK:
+            if result == testcase.TestCase.EX_OK:
                 if GlobalVariables.REPORT_FLAG:
                     test_case.push_to_db()
                 result = test_case.check_criteria()

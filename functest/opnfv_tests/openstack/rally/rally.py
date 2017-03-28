@@ -17,7 +17,7 @@ import time
 import iniparse
 import yaml
 
-from functest.core import testcase_base
+from functest.core import testcase
 from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
@@ -26,7 +26,7 @@ import functest.utils.openstack_utils as os_utils
 logger = ft_logger.Logger('Rally').getLogger()
 
 
-class RallyBase(testcase_base.TestCase):
+class RallyBase(testcase.TestCase):
     TESTS = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
              'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
     GLANCE_IMAGE_NAME = CONST.openstack_image_name
@@ -526,10 +526,10 @@ class RallyBase(testcase_base.TestCase):
             self._run_tests()
             self._generate_report()
             self._clean_up()
-            res = testcase_base.TestCase.EX_OK
+            res = testcase.TestCase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s' % e)
-            res = testcase_base.TestCase.EX_RUN_ERROR
+            res = testcase.TestCase.EX_RUN_ERROR
 
         self.stop_time = time.time()
         return res
