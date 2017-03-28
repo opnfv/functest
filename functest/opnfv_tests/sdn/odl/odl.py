@@ -7,6 +7,15 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+"""Define classes required to run ODL suites.
+
+It has been designed for any context. But helpers are given for
+running test suites in OPNFV environment.
+
+Example:
+        $ python odl.py
+"""
+
 import argparse
 import errno
 import fileinput
@@ -24,8 +33,11 @@ from functest.core import testcase
 import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as op_utils
 
+__author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
+
 
 class ODLResultVisitor(robot.api.ResultVisitor):
+    """Visitor to get result details."""
 
     def __init__(self):
         self._data = []
@@ -43,10 +55,12 @@ class ODLResultVisitor(robot.api.ResultVisitor):
         self._data.append(output)
 
     def get_data(self):
+        """Get the details of the result."""
         return self._data
 
 
 class ODLTests(testcase.TestCase):
+    """ODL test runner."""
 
     repos = "/home/opnfv/repos/"
     odl_test_repo = os.path.join(repos, "odl_test")
@@ -64,6 +78,12 @@ class ODLTests(testcase.TestCase):
 
     @classmethod
     def set_robotframework_vars(cls, odlusername="admin", odlpassword="admin"):
+        """Set credentials in csit/variables/Variables.py.
+
+        Returns:
+            True if credentials are set.
+            False otherwise.
+        """
         odl_variables_files = os.path.join(cls.odl_test_repo,
                                            'csit/variables/Variables.py')
         try:
@@ -79,6 +99,7 @@ class ODLTests(testcase.TestCase):
             return False
 
     def parse_results(self):
+        """Parse output.xml and get the details in it."""
         xml_file = os.path.join(self.res_dir, 'output.xml')
         result = robot.api.ExecutionResult(xml_file)
         visitor = ODLResultVisitor()
@@ -91,6 +112,34 @@ class ODLTests(testcase.TestCase):
         self.details['tests'] = visitor.get_data()
 
     def main(self, suites=None, **kwargs):
+        """Run the test suites
+
+        It has been designed to be called in any context.
+        It requires the following keyword arguments:
+           * odlusername,
+           * odlpassword,
+           * osauthurl,
+           * neutronip,
+           * osusername,
+           * ostenantname,
+           * ospassword,
+           * odlip,
+           * odlwebport,
+           * odlrestconfport.
+
+        Here are the steps:
+           * set all RobotFramework_variables,
+           * create the output directories if required,
+           * get the results in output.xml,
+           * delete temporary files.
+
+        Args:
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            EX_OK if all suites ran well.
+            EX_RUN_ERROR otherwise.
+        """
         try:
             if not suites:
                 suites = self.default_suites
@@ -146,6 +195,18 @@ class ODLTests(testcase.TestCase):
             return self.EX_RUN_ERROR
 
     def run(self, **kwargs):
+        """Run suites in OPNFV environment
+
+        It basically check env vars to call main() with the keywords
+        required.
+
+        Args:
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            EX_OK if all suites ran well.
+            EX_RUN_ERROR otherwise.
+        """
         try:
             suites = self.default_suites
             try:
@@ -191,6 +252,7 @@ class ODLTests(testcase.TestCase):
 
 
 class ODLParser(object):  # pylint: disable=too-few-public-methods
+    """Parser to run ODL test suites."""
 
     def __init__(self):
         self.parser = argparse.ArgumentParser()
@@ -229,6 +291,13 @@ class ODLParser(object):  # pylint: disable=too-few-public-methods
             action='store_true')
 
     def parse_args(self, argv=None):
+        """Parse arguments.
+
+        It can call sys.exit if arguments are incorrect.
+
+        Returns:
+            the arguments from cmdline
+        """
         if not argv:
             argv = []
         return vars(self.parser.parse_args(argv))
