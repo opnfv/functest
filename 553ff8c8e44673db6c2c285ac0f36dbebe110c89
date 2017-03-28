@@ -46,6 +46,30 @@
       "revId": "553ff8c8e44673db6c2c285ac0f36dbebe110c89",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_054b455a",
+        "filename": "functest/core/testcase_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-03-28T08:34:16Z",
+      "side": 1,
+      "message": "Sorry to disagree about this change.",
+      "parentUuid": "5ac10518_88faa6bb",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "553ff8c8e44673db6c2c285ac0f36dbebe110c89",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
