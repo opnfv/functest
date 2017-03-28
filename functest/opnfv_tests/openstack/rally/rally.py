@@ -56,8 +56,8 @@ class RallyBase(testcase.TestCase):
     RALLY_PRIVATE_SUBNET_CIDR = CONST.rally_subnet_cidr
     RALLY_ROUTER_NAME = CONST.rally_router_name
 
-    def __init__(self):
-        super(RallyBase, self).__init__()
+    def __init__(self, case_name=''):
+        super(RallyBase, self).__init__(case_name)
         self.mode = ''
         self.summary = []
         self.scenario_dir = ''

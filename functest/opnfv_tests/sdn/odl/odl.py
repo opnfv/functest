@@ -72,10 +72,6 @@ class ODLTests(testcase.TestCase):
     res_dir = '/home/opnfv/functest/results/odl/'
     logger = ft_logger.Logger("opendaylight").getLogger()
 
-    def __init__(self):
-        testcase.TestCase.__init__(self)
-        self.case_name = "odl"
-
     @classmethod
     def set_robotframework_vars(cls, odlusername="admin", odlpassword="admin"):
         """Set credentials in csit/variables/Variables.py.

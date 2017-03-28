@@ -19,7 +19,7 @@ class VnfBaseTesting(unittest.TestCase):
 
     def setUp(self):
         self.test = vnf_base.VnfOnBoardingBase(project='functest',
-                                               case='aaa')
+                                               case_name='aaa')
         self.test.project = "functest"
         self.test.case_name = "aaa"
         self.test.start_time = "1"
