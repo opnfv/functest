@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_9b447275",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-29T02:29:08Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9ab8dda7_a217cf50",
+      "revId": "9469543e9158ac04c78a218768417423c70c6352",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_380311ba",
         "filename": "functest/opnfv_tests/vnf/ims/ims_base.py",
         "patchSetId": 17
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_7b5bbe54",
+        "filename": "functest/opnfv_tests/vnf/ims/ims_base.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-29T02:29:08Z",
+      "side": 1,
+      "message": "The name is changed into ClearwaterOnBoardingBase.",
+      "parentUuid": "9ab8dda7_c5c76d11",
+      "revId": "9469543e9158ac04c78a218768417423c70c6352",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_386c719c",
         "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.py",
         "patchSetId": 17
@@ -155,6 +191,24 @@
       "side": 1,
       "message": "not really\nthe goal is to deploy some elements of OpenIMS through Openbaton ...so it is still an IMS\n\nI will suggest you do not change anything for orchestra\nand consider only opera and cloudify which are both using clearwater",
       "parentUuid": "9ab8dda7_0ffcc43d",
+      "revId": "9469543e9158ac04c78a218768417423c70c6352",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_fb4fae90",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-29T02:29:08Z",
+      "side": 1,
+      "message": "All openbaton related code has been reverted.",
+      "parentUuid": "9ab8dda7_8212cb60",
       "revId": "9469543e9158ac04c78a218768417423c70c6352",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
