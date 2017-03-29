@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_bb405657",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-29T02:29:18Z",
+      "side": 1,
+      "message": "When fetching RC file failed, an empty openstack.creds will be placed in /home/opnfv/functest/conf/openstack.creds, next time when prepare env is executed again, it will return empty openstack.creds error rather than trying to fetch the RC file again.\n\nin this case fetch the file again automatically will be more user-friendly than delete the file manually first then fetch.",
+      "parentUuid": "9ab8dda7_00f49359",
+      "revId": "eb07ca30241428f37235177e55526e0a07efcb3b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabed58f_521a5318",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 1
@@ -138,6 +156,54 @@
       "side": 1,
       "message": "Agree with Jose.",
       "parentUuid": "9ab8dda7_ec093e96",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 68
+      },
+      "revId": "eb07ca30241428f37235177e55526e0a07efcb3b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_c52c4d4d",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-29T02:29:18Z",
+      "side": 1,
+      "message": "because it is used only in is_valid_openrc() method, so I made it a nested function",
+      "parentUuid": "9ab8dda7_ec093e96",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 68
+      },
+      "revId": "eb07ca30241428f37235177e55526e0a07efcb3b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_db4aea82",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-29T02:29:18Z",
+      "side": 1,
+      "message": "I already changed it, saw the last patchset",
+      "parentUuid": "9ab8dda7_e0ee1f8b",
       "range": {
         "startLine": 212,
         "startChar": 0,
