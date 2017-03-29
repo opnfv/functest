@@ -184,7 +184,7 @@ class RefstackClient(testcase.TestCase):
             self.source_venv()
             self._prep_test()
             self.run_defcore(self.confpath, self.testlist)
-            res = testcase.TestcaseBase.EX_OK
+            res = testcase.TestCase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s', e)
             res = testcase.TestCase.EX_RUN_ERROR
