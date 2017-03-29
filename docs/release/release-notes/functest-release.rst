@@ -33,9 +33,10 @@ Version history
 | 2016-08-17 | 1.0.0    | Morgan Richomme  | Functest for Colorado  |
 |            |          | (Orange)         | release                |
 +------------+----------+------------------+------------------------+
-| 2017-03-27 | 4.0.0    | Jose Lausuch     | Functest for Danube    |
+| 2017-03-29 | 4.0.0    | Jose Lausuch     | Functest for Danube    |
 |            |          | (Ericsson)       | release                |
 +------------+----------+------------------+------------------------+
+
 
 OPNFV Danube Release
 ======================
@@ -72,10 +73,10 @@ The OPNFV projects integrated into Functest framework for automation are:
  * onos
  * odl-sfc
  * odl-netvirt
- * orchestra_ims
  * parser
  * promise
  * security scan
+ * orchestra_ims
  * vyos_vrouter
 
 The validation of a scenario requires a subset of these tests depending
@@ -98,7 +99,7 @@ Release Data
 | **Release designation**              | Danube base release                  |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release date**                     | April 3rd 2017                       |
+| **Release date**                     | Marcn 31st 2017                      |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
 | **Purpose of the delivery**          | Danube base release                  |
@@ -133,7 +134,7 @@ Feature evolution
 -----------------
 
 - Adoption of SNAPS as middleware in 4 new test cases (connection_check, api_check,
-snaps_health_check and snaps_smoke)
+   snaps_health_check and snaps_smoke)
 
 - Introduction of refstack suite
 
@@ -150,10 +151,10 @@ Framework
 
  - Harmonization of the naming, better adoption of OpenStack coding conventions
 
- - Pythonization, rewritting of bash scripts
+ - Enhanced code to be more Object Oriented, removed bash scripts
 
  - Introduction of abstraction classes to ease and harmonize the integration of
- test cases (internal or from feature projects)
+    test cases (internal or from feature projects)
 
  - New management of logger, env variables and configuration files
 
@@ -165,13 +166,27 @@ Framework
 Test API
 ---------
 
-- automatic documentation (html & pdf)
+- Automatic documentation (html & pdf)
 
-- full dockerization and automation of the deployment on testresults.opnfv.org
+- Full dockerization and automation of the deployment on testresults.opnfv.org
 
-- automation of test database backup on artifact
+- Automation of test database backup on artifact
 
 
+New internal tests cases
+------------------------
+
+- connection_check
+
+- api_check
+
+- snaps_health_check (replacing shell script healtcheck)
+
+- refstack_defcore
+
+- snaps_smoke
+
+- vyos_vrouter
 
 
 Scenario Matrix
@@ -260,18 +275,18 @@ Colorado deprecated scenarios:
 For the scenario validation, we consider only the healthcheck, smoke and
 features categories. These tests are run systematically in the CI daily loops.
 
-Success criteria have been defined for these test cases, they can be
-PASS/FAIL or a success rate may be declared (100%, > 90%)
+Success criterias have been defined for these test cases, they can be
+PASS/FAIL or a success rate may be declared (100%, > 90%).
 All the criteria, as well as the test dependencies are declared in the
-ci/testcases.yaml file.
+testcases.yaml file located in the ci directory of the repository.
 
 The scoring for the Danube release per installer can be described as
 follows.
 
 The scoring is an indicator showing how many feature project test suites
-have been integrated on the scenario.
+have been integrated in the scenario.
 
-The scoring equals the number of tests * succesful iteration of each
+The scoring equals the number of tests * successful iteration of each
 test [0-3]. The scoring method is described in https://wiki.opnfv.org/pages/viewpage.action?pageId=6828617
 
  e.g.
@@ -296,22 +311,24 @@ Apex
 |  Scenario        | Scoring | Success |    Results        |
 |                  |         | rate    |                   |
 +==================+=========+=========+===================+
-************* TODO *****************************************
-| nosdn            |  17/18  |   95%   | `apex-res-174`_   |
+| nosdn            |  33/33  |   100%  | `apex-res-174`_   |
 +------------------+---------+---------+-------------------+
-| odl_l2           |  21/21  |   100%  | `apex-res-175`_   |
+| odl_l3           |  27/33  |    82%  | `apex-res-176`_   |
 +------------------+---------+---------+-------------------+
-| odl_l3           |  15/18  |    83%  | `apex-res-176`_   |
+| odl-bgpvpn       |  26/30  |    87%  | `apex-res-235`_   |
 +------------------+---------+---------+-------------------+
-| odl_l2-bgpvpn    |  14/18  |    78%  | `apex-res-235`_   |
+| odl-gluon        |  30/36  |    83%  | `apex-res-235`_   |
 +------------------+---------+---------+-------------------+
-| odl_l2-fdio-noha |  12/15  |    80%  | `apex-res-6`_     |
+| kvm              |  32/33  |    97%  | `apex-res-6`_     |
 +------------------+---------+---------+-------------------+
-| odl_l2-sfc-noha  |  18/24  |    75%  | `apex-res-217`_   |
+| odl_l2-fdio      |  28/36  |    78%  | `apex-res-6`_     |
 +------------------+---------+---------+-------------------+
-| onos-nofeature-ha|  20/21  |    95%  | `apex-res-423`_   |
+| odl_l2-fdio-noha |  30/36  |    83%  | `apex-res-6`_     |
 +------------------+---------+---------+-------------------+
-
+| odl_l3-fdio-noha |  26/30  |    87%  | `apex-res-6`_     |
++------------------+---------+---------+-------------------+
+| fdio             |   6/30  |    20%  | `apex-res-6`_     |
++------------------+---------+---------+-------------------+
 
 Compass
 -------
@@ -320,7 +337,6 @@ Compass
 |  Scenario        | Scoring | Success |  Results          |
 |                  |         | rate    |                   |
 +==================+=========+=========+===================+
-************* TODO *****************************************
 | nosdn            |  12/12  |   100%  | `compass-res-55`_ |
 +------------------+---------+---------+-------------------+
 | odl_l2           |  15/15  |   100%  | `compass-res-59`_ |
@@ -532,3 +548,4 @@ Useful links
  - Reporting page: http://testresults.opnfv.org/reporting/danube.html
 
  - Functest test configuration: https://git.opnfv.org/cgit/functest/tree/functest/ci/testcases.yaml
+
