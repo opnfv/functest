@@ -17,7 +17,7 @@
 import functest.core.feature as base
 
 
-class Domino(base.FeatureBase):
+class Domino(base.Feature):
     def __init__(self):
         super(Domino, self).__init__(project='domino',
                                      case='domino-multinode',

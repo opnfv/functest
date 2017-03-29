@@ -16,7 +16,7 @@
 import functest.core.feature as base
 
 
-class Doctor(base.FeatureBase):
+class Doctor(base.Feature):
     def __init__(self):
         super(Doctor, self).__init__(project='doctor',
                                      case='doctor-notification',
