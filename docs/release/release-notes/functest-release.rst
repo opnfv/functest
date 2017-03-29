@@ -33,9 +33,10 @@ Version history
 | 2016-08-17 | 1.0.0    | Morgan Richomme  | Functest for Colorado  |
 |            |          | (Orange)         | release                |
 +------------+----------+------------------+------------------------+
-| 2017-03-27 | 4.0.0    | Jose Lausuch     | Functest for Danube    |
+| 2017-03-29 | 4.0.0    | Jose Lausuch     | Functest for Danube    |
 |            |          | (Ericsson)       | release                |
 +------------+----------+------------------+------------------------+
+
 
 OPNFV Danube Release
 ======================
@@ -72,10 +73,10 @@ The OPNFV projects integrated into Functest framework for automation are:
  * onos
  * odl-sfc
  * odl-netvirt
- * orchestra_ims
  * parser
  * promise
  * security scan
+ * orchestra_ims
  * vyos_vrouter
 
 The validation of a scenario requires a subset of these tests depending
@@ -98,7 +99,7 @@ Release Data
 | **Release designation**              | Danube base release                  |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release date**                     | April 3rd 2017                       |
+| **Release date**                     | Marcn 31st 2017                      |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
 | **Purpose of the delivery**          | Danube base release                  |
@@ -133,7 +134,7 @@ Feature evolution
 -----------------
 
 - Adoption of SNAPS as middleware in 4 new test cases (connection_check, api_check,
-snaps_health_check and snaps_smoke)
+   snaps_health_check and snaps_smoke)
 
 - Introduction of refstack suite
 
@@ -150,10 +151,10 @@ Framework
 
  - Harmonization of the naming, better adoption of OpenStack coding conventions
 
- - Pythonization, rewritting of bash scripts
+ - Enhanced code to be more Object Oriented, removed bash scripts
 
  - Introduction of abstraction classes to ease and harmonize the integration of
- test cases (internal or from feature projects)
+    test cases (internal or from feature projects)
 
  - New management of logger, env variables and configuration files
 
@@ -165,13 +166,27 @@ Framework
 Test API
 ---------
 
-- automatic documentation (html & pdf)
+- Automatic documentation (html & pdf)
 
-- full dockerization and automation of the deployment on testresults.opnfv.org
+- Full dockerization and automation of the deployment on testresults.opnfv.org
 
-- automation of test database backup on artifact
+- Automation of test database backup on artifact
 
 
+New internal tests cases
+------------------------
+
+- connection_check
+
+- api_check
+
+- snaps_health_check (replacing shell script healtcheck)
+
+- refstack_defcore
+
+- snaps_smoke
+
+- vyos_vrouter
 
 
 Scenario Matrix
@@ -260,18 +275,18 @@ Colorado deprecated scenarios:
 For the scenario validation, we consider only the healthcheck, smoke and
 features categories. These tests are run systematically in the CI daily loops.
 
-Success criteria have been defined for these test cases, they can be
-PASS/FAIL or a success rate may be declared (100%, > 90%)
+Success criterias have been defined for these test cases, they can be
+PASS/FAIL or a success rate may be declared (100%, > 90%).
 All the criteria, as well as the test dependencies are declared in the
-ci/testcases.yaml file.
+testcases.yaml file located in the ci directory of the repository.
 
 The scoring for the Danube release per installer can be described as
 follows.
 
 The scoring is an indicator showing how many feature project test suites
-have been integrated on the scenario.
+have been integrated in the scenario.
 
-The scoring equals the number of tests * succesful iteration of each
+The scoring equals the number of tests * successful iteration of each
 test [0-3]. The scoring method is described in https://wiki.opnfv.org/pages/viewpage.action?pageId=6828617
 
  e.g.
@@ -292,47 +307,48 @@ See the release notes of the installers for more details.
 Apex
 ----
 
-+------------------+---------+---------+-------------------+
-|  Scenario        | Scoring | Success |    Results        |
-|                  |         | rate    |                   |
-+==================+=========+=========+===================+
-************* TODO *****************************************
-| nosdn            |  17/18  |   95%   | `apex-res-174`_   |
-+------------------+---------+---------+-------------------+
-| odl_l2           |  21/21  |   100%  | `apex-res-175`_   |
-+------------------+---------+---------+-------------------+
-| odl_l3           |  15/18  |    83%  | `apex-res-176`_   |
-+------------------+---------+---------+-------------------+
-| odl_l2-bgpvpn    |  14/18  |    78%  | `apex-res-235`_   |
-+------------------+---------+---------+-------------------+
-| odl_l2-fdio-noha |  12/15  |    80%  | `apex-res-6`_     |
-+------------------+---------+---------+-------------------+
-| odl_l2-sfc-noha  |  18/24  |    75%  | `apex-res-217`_   |
-+------------------+---------+---------+-------------------+
-| onos-nofeature-ha|  20/21  |    95%  | `apex-res-423`_   |
-+------------------+---------+---------+-------------------+
-
++------------------+---------+---------+-----------------+
+|  Scenario        | Scoring | Success |    Results      |
+|                  |         | rate    |                 |
++==================+=========+=========+=================+
+| nosdn            |  33/33  |   100%  | `apex-res-1`_   |
++------------------+---------+---------+-----------------+
+| odl_l3           |  27/33  |    82%  | `apex-res-2`_   |
++------------------+---------+---------+-----------------+
+| odl-bgpvpn       |  26/30  |    87%  | `apex-res-3`_   |
++------------------+---------+---------+-----------------+
+| odl-gluon        |  30/36  |    83%  | `apex-res-4`_   |
++------------------+---------+---------+-----------------+
+| kvm              |  32/33  |    97%  | `apex-res-5`_   |
++------------------+---------+---------+-----------------+
+| odl_l2-fdio      |  28/36  |    78%  | `apex-res-6`_   |
++------------------+---------+---------+-----------------+
+| odl_l2-fdio-noha |  30/36  |    83%  | `apex-res-7`_   |
++------------------+---------+---------+-----------------+
+| odl_l3-fdio-noha |  26/30  |    87%  | `apex-res-8`_   |
++------------------+---------+---------+-----------------+
+| fdio             |   6/30  |    20%  | `apex-res-9`_   |
++------------------+---------+---------+-----------------+
 
 Compass
 -------
 
-+------------------+---------+---------+-------------------+
-|  Scenario        | Scoring | Success |  Results          |
-|                  |         | rate    |                   |
-+==================+=========+=========+===================+
-************* TODO *****************************************
-| nosdn            |  12/12  |   100%  | `compass-res-55`_ |
-+------------------+---------+---------+-------------------+
-| odl_l2           |  15/15  |   100%  | `compass-res-59`_ |
-+------------------+---------+---------+-------------------+
-| odl_l3           |  9/12   |    75%  | `compass-res-73`_ |
-+------------------+---------+---------+-------------------+
-| odl_l2-moon      |  15/18  |    83%  | `compass-res-567`_|
-+------------------+---------+---------+-------------------+
-| onos-ha          |  15/15  |   100%  | `compass-res-285`_|
-+------------------+---------+---------+-------------------+
-| onos-sfc-ha      |  17/18  |    95%  | `compass-res-76`_ |
-+------------------+---------+---------+-------------------+
++------------------+---------+---------+------------------+
+|  Scenario        | Scoring | Success |  Results         |
+|                  |         | rate    |                  |
++==================+=========+=========+==================+
+| nosdn            |  29/30  |    97%  | `compass-res-1`_ |
++------------------+---------+---------+------------------+
+| odl_l2           |  28/33  |    84%  | `compass-res-2`_ |
++------------------+---------+---------+------------------+
+| odl_l3           |  21/30  |    70%  | `compass-res-3`_ |
++------------------+---------+---------+------------------+
+| onos             |  27/33  |    82%  | `compass-res-4`_ |
++------------------+---------+---------+------------------+
+| openo            |  15/15  |    97%  | `compass-res-5`_ |
++------------------+---------+---------+------------------+
+| ocl              |  15/15  |    13%  | `compass-res-6`_ |
++------------------+---------+---------+------------------+
 
 Note: all the Compass tests for Danube have been executed on virtual
 environment. Bare metal resources were used for Master branch.
@@ -341,91 +357,63 @@ environment. Bare metal resources were used for Master branch.
 Fuel
 ----
 
-+---------------------+---------+---------+-------------------+
-|  Scenario           | Scoring | Success |  Results          |
-|                     |         | rate    |                   |
-+=====================+=========+=========+===================+
-************* TODO *****************************************
-| nosdn               |  18/18  |  100%   | `fuel-res-129`_   |
-+---------------------+---------+---------+-------------------+
-| nosdn-noha          |  15/15  |  100%   | `fuel-res-154`_   |
-+---------------------+---------+---------+-------------------+
-| nosdn-kvm           |  18/18  |  100%   | `fuel-res-128`_   |
-+---------------------+---------+---------+-------------------+
-| nosdn-kvm-noha      |  15/15  |  100%   | `fuel-res-161`_   |
-+---------------------+---------+---------+-------------------+
-| nosdn-ovs           |  12/18  |   67%*  |  `fuel-res-213`_  |
-+---------------------+---------+---------+-------------------+
-| nosdn-ovs-noha      |  15/15  |  100%   | `fuel-res-162`_   |
-+---------------------+---------+---------+-------------------+
-| odl_l2              |  21/21  |  100%   |  `fuel-res-123`_  |
-+---------------------+---------+---------+-------------------+
-| odl_l2-noha         |  17/18  |   94%   | `fuel-res-155`_   |
-+---------------------+---------+---------+-------------------+
-| odl_l2-bgpvpn       |  14/18  |   78%   | `fuel-res-119`_   |
-+---------------------+---------+---------+-------------------+
-| odl_l2-bgpvpn-noha  |  14/15  |   93%   | `fuel-res-160`_   |
-+---------------------+---------+---------+-------------------+
-| odl_l2-sfc-noha     |   6/21  |   29%   | `fuel-res-219`_   |
-+---------------------+---------+---------+-------------------+
-| odl_l2-sfc-ha       |  16/21  |   76%   | `fuel-res-376`_   |
-+---------------------+---------+---------+-------------------+
-| odl_l3              |  15/18  |   83%   | `fuel-res-115`_   |
-+---------------------+---------+---------+-------------------+
-| odl_l3-noha         |  12/15  |   80%   | `fuel-res-164`_   |
-+---------------------+---------+---------+-------------------+
-| onos                |  20/21  |   95%   | `fuel-res-492`_   |
-+---------------------+---------+---------+-------------------+
-| onos-noha           |  18/18  |  100%   | `fuel-res-166`_   |
-+---------------------+---------+---------+-------------------+
-| onos-sfc            |  24/24  |  100%   | `fuel-res-124`_   |
-+---------------------+---------+---------+-------------------+
-| onos-sfc-noha       |  21/21  |  100%   | `fuel-res-129`_   |
-+---------------------+---------+---------+-------------------+
-| multisite           |  N.R    |  100%   | `fuel-res-8`_     |
-+---------------------+---------+---------+-------------------+
++----------------------+---------+---------+----------------+
+|  Scenario            | Scoring | Success |  Results       |
+|                      |         | rate    |                |
++======================+=========+=========+================+
+| nosdn                |  37/39  |   95%   | `fuel-res-1`_  |
++----------------------+---------+---------+----------------+
+| nosdn-noha           |  36/36  |  100%   | `fuel-res-2`_  |
++----------------------+---------+---------+----------------+
+| nosdn-kvm            |  37/39  |   95%   | `fuel-res-3`_  |
++----------------------+---------+---------+----------------+
+| nosdn-kvm-noha       |  36/36  |  100%   | `fuel-res-4`_  |
++----------------------+---------+---------+----------------+
+| nosdn-ovs            |  38/39  |   97%   | `fuel-res-5`_  |
++----------------------+---------+---------+----------------+
+| nosdn-ovs-noha       |  36/36  |  100%   | `fuel-res-6`_  |
++----------------------+---------+---------+----------------+
+| odl_l2               |  42/42  |  100%   | `fuel-res-7`_  |
++----------------------+---------+---------+----------------+
+| odl_l2-noha          |  36/39  |   92%   | `fuel-res-8`_  |
++----------------------+---------+---------+----------------+
+| odl_l2-sfc           |  40/45  |   89%   | `fuel-res-11`_ |
++----------------------+---------+---------+----------------+
+| odl_l2-sfc-noha      |  36/42  |   86%   | `fuel-res-12`_ |
++----------------------+---------+---------+----------------+
+| odl_l3               |  34/39  |   87%   | `fuel-res-13`_ |
++----------------------+---------+---------+----------------+
+| odl_l3-noha          |  34/36  |   94%   | `fuel-res-14`_ |
++----------------------+---------+---------+----------------+
+| kvm_ovs_dpdk         |   6/39  |   15%   | `fuel-res-15`_ |
++----------------------+---------+---------+----------------+
+| kvm_ovs_dpdk_noha    |  36/36  |  100%   | `fuel-res-16`_ |
++----------------------+---------+---------+----------------+
+| kvm_ovs_dpdk_bar     |   6/42  |   14%   | `fuel-res-17`_ |
++----------------------+---------+---------+----------------+
+| kvm_ovs_dpdk_bar_noha|  38/39  |   97%   | `fuel-res-18`_ |
++----------------------+---------+---------+----------------+
 
-*: all results passed, lacking iterations to reach the full score
 
-Results of Functest on AArch64 Danube 3.0
-
-+---------------------+---------+---------+----------------------+
-|  Scenario           | Scoring | Success |  Results             |
-|                     |         | rate    |                      |
-+=====================+=========+=========+======================+
-************* TODO *****************************************
-| nosdn               |  18/18  |  100%   | `fuel-arm-res-128`_  |
-+---------------------+---------+---------+----------------------+
-| odl_l2              |  21/21  |  100%   | `fuel-arm-res-122`_  |
-+---------------------+---------+---------+----------------------+
-| odl_l2-noha         |  18/18  |  100%   | `fuel-arm-res-129`_  |
-+---------------------+---------+---------+----------------------+
-| odl_l3              |  17/18  |   95%   | `fuel-arm-res-135`_  |
-+---------------------+---------+---------+----------------------+
 
 
 Joid
 ----
 
-+---------------------+---------+---------+-----------------+
-|  Scenario           | Scoring | Success |  Results        |
-|                     |         | rate    |                 |
-+=====================+=========+=========+=================+
-************* TODO *****************************************
-| nosdn               |  18/18  |  100%   | `joid-res-102`_ |
-+---------------------+---------+---------+-----------------+
-| nosdn-noha          |  17/18  |   95%   | `joid-res-93`_  |
-+---------------------+---------+---------+-----------------+
-| nosdn-lxd           |  12/12  |  100%   | `joid-res-104`_ |
-+---------------------+---------+---------+-----------------+
-| nosdn-lxd-noha      |  12/12  |  100%   | `joid-res-91`_  |
-+---------------------+---------+---------+-----------------+
-| odl_l2              |  21/21  |  100%   | `joid-res-103`_ |
-+---------------------+---------+---------+-----------------+
-| onos                |  21/21  |  100%   | `joid-res-345`_ |
-+---------------------+---------+---------+-----------------+
-| onos-sfc            |  24/24  |  100%   | `joid-res-97`_  |
-+---------------------+---------+---------+-----------------+
++---------------------+---------+---------+---------------+
+|  Scenario           | Scoring | Success |  Results      |
+|                     |         | rate    |               |
++=====================+=========+=========+===============+
+| nosdn               |  32/33  |   97%   | `joid-res-1`_ |
++---------------------+---------+---------+---------------+
+| nosdn-noha          |  31/33  |   94%   | `joid-res-2`_ |
++---------------------+---------+---------+---------------+
+| nosdn-lxd           |  18/24  |   75%   | `joid-res-3`_ |
++---------------------+---------+---------+---------------+
+| nosdn-lxd-noha      |  12/12  |   71%   | `joid-res-4`_ |
++---------------------+---------+---------+---------------+
+| odl_l2              |  21/21  |   25%   | `joid-res-5`_ |
++---------------------+---------+---------+---------------+
 
 It is highly recommended to install a json viewer in your browser
 (e.g. https://addons.mozilla.org/fr/firefox/addon/jsonview/)
@@ -451,34 +439,20 @@ Danube known restrictions/issues
 +-----------+-----------+----------------------------------------------+
 | Installer | Scenario  |  Issue                                       |
 +===========+===========+==============================================+
-| any       | odl_l3-*  | Tempest cases related to using floating IP   |
-|           |           | addresses fail because of a known ODL bug.   |
-|           |           | vPing_ssh test case is excluded for the same |
-|           |           | reason.                                      |
-|           |           | https://jira.opnfv.org/browse/APEX-112       |
-|           |           | https://jira.opnfv.org/browse/FUNCTEST-445   |
+| fuel      | odl_-*    | Tempest test case "TestServerBasicOps"       |
+|           |           | disabled due to bug `tempest-bug`_           |
 +-----------+-----------+----------------------------------------------+
-| apex/fuel | *-bgpvpn  | vPing_ssh (floating ips not supported) and   |
-|           |           | vIMS excluded. Some Tempest cases related to |
-|           |           | floating ips also excluded. Some performance |
-|           |           | issues have been detected in this scenario   |
-|           |           | (i.e. BGPVPN extension enabled) when running |
-|           |           | commands against the OpenStack APIs, thus    |
-|           |           | Rally sanity test case has been disabled.    |
-|           |           | Performance issues seem to be connected to   |
-|           |           | the ODL version. It is planned to reintroduce|
-|           |           | Rally sanity in Danube 2.0 with the          |
-|           |           | adoption of ODL Boron release.               |
+| apex/fuel | *-bgpvpn  | Due to some instabilities in the bgpvpn      |
+|           |           | test case, the scenario has been postponed   |
+|           |           | to Danube 2.0                                |
 +-----------+-----------+----------------------------------------------+
-| fuel      | odl       | TestServerBasicOps test case skipped         |
-|           |           | Tempest ssh client is hanging on opendaylight|
-|           |           | enabled envs (getting deadlock in paramiko   |
-|           |           | recv_exit_status method) while trying to     |
-|           |           | execute a command on a vm.                   |
+| apex      | *-gluon   | vPing_ssh disabled due to floating ips       |
+|           |           | not working 100% of the times.               |
+|           |           | Tempest test "test_reboot_server_hard"       |
+|           |           | disabled due to bug `gluon-bug`_             |
 +-----------+-----------+----------------------------------------------+
 | joid      | any       | Tempest cases related to object storage      |
 |           |           | excluded                                     |
-|           |           | https://gerrit.opnfv.org/gerrit/#/c/17871/   |
 +-----------+-----------+----------------------------------------------+
 
 
@@ -509,10 +483,16 @@ Open JIRA tickets
 +------------------+-----------------------------------------------+
 |   JIRA           |         Description                           |
 +==================+===============================================+
-************* TODO *****************************************
 |                  |                                               |
 |                  |                                               |
 +------------------+-----------------------------------------------+
+
+All the tickets that are not blocking have been fixed or postponed
+the next release.
+
+Functest Danube 1.0 is released without known bugs.
+
+
 
 Useful links
 ============
@@ -532,3 +512,83 @@ Useful links
  - Reporting page: http://testresults.opnfv.org/reporting/danube.html
 
  - Functest test configuration: https://git.opnfv.org/cgit/functest/tree/functest/ci/testcases.yaml
+
+.. _`tempest-bug`: https://bugs.launchpad.net/tempest/+bug/1577632
+
+.. _`gluon-bug`: https://bugs.opendaylight.org/show_bug.cgi?id=5586
+
+.. _`apex-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-68
+
+.. _`apex-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-69
+
+.. _`apex-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-70
+
+.. _`apex-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-66
+
+.. _`apex-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-60
+
+.. _`apex-res-6`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-73
+
+.. _`apex-res-7`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-72
+
+.. _`apex-res-8`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-69
+
+.. _`apex-res-9`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-62
+
+.. _`compass-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-60
+
+.. _`compass-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-59
+
+.. _`compass-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-baremetal-daily-danube-69
+
+.. _`compass-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-57
+
+.. _`compass-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-baremetal-daily-danube-67
+
+.. _`compass-res-6`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-baremetal-daily-danube-65
+
+.. _`fuel-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-54
+
+.. _`fuel-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-46
+
+.. _`fuel-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-53
+
+.. _`fuel-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-44
+
+.. _`fuel-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-55
+
+.. _`fuel-res-6`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-45
+
+.. _`fuel-res-7`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-zte-pod1-daily-danube-4
+
+.. _`fuel-res-8`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-48
+
+.. _`fuel-res-9`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-52
+
+.. _`fuel-res-10`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-43
+
+.. _`fuel-res-11`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-50
+
+.. _`fuel-res-12`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-42
+
+.. _`fuel-res-13`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-48
+
+.. _`fuel-res-14`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-50
+
+.. _`fuel-res-15`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-51
+
+.. _`fuel-res-16`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-49
+
+.. _`fuel-res-17`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-49
+
+.. _`fuel-res-18`: http://testresults.opnfv.org/test/api/v1/results?build_tag=  jenkins-functest-fuel-virtual-daily-danube-51
+
+.. _`joid-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-54
+
+.. _`joid-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-55
+
+.. _`joid-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-56
+
+.. _`joid-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-57
+
+.. _`joid-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-46
