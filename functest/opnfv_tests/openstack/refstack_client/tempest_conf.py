@@ -39,15 +39,15 @@ class TempestConf(object):
     def main(self):
         try:
             self.generate_tempestconf()
-            res = testcase.TestcaseBase.EX_OK
+            res = testcase.TestCase.EX_OK
         except Exception as e:
             logger.error('Error with run: %s', e)
-            res = testcase.TestcaseBase.EX_RUN_ERROR
+            res = testcase.TestCase.EX_RUN_ERROR
 
         return res
 
 if __name__ == '__main__':
     tempestconf = TempestConf()
     result = tempestconf.main()
-    if result != testcase.TestcaseBase.EX_OK:
+    if result != testcase.TestCase.EX_OK:
         sys.exit(result)
