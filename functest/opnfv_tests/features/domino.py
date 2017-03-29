@@ -14,7 +14,7 @@
 # 0.3: add report flag to push results when needed
 # 0.4: refactoring to match Test abstraction class
 
-import functest.core.feature_base as base
+import functest.core.feature as base
 
 
 class Domino(base.FeatureBase):

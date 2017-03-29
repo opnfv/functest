@@ -405,7 +405,7 @@ follows::
         |   `-- setup.py
         |-- core
         |   |-- __init__.py
-        |   |-- feature_base.py
+        |   |-- feature.py
         |   |-- pytest_suite_runner.py
         |   |-- testcase.py
         |   |-- vnf_base.py

@@ -157,12 +157,12 @@ In order to harmonize test integration, 3 abstraction classes have been
 introduced in Danube:
 
  * testcase: base for any test case
- * feature_base: abstraction for feature project
+ * feature: abstraction for feature project
  * vnf_base: abstraction for vnf onboarding
 
 The goal is to unify the way to run test from Functest.
 
-feature_base and vnf_base inherit from testcase::
+feature and vnf_base inherit from testcase::
 
               +-----------------------------------------+
               |                                         |
@@ -178,7 +178,7 @@ feature_base and vnf_base inherit from testcase::
                      V                       V
          +--------------------+   +--------------------------+
          |                    |   |                          |
-         |    feature_base    |   |      vnf_base            |
+         |    feature         |   |      vnf_base            |
          |                    |   |                          |
          |  - prepare()       |   |  - prepare()             |
          |  - execute()       |   |  - deploy_orchestrator() |

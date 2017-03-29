@@ -13,7 +13,7 @@
 # 0.2: measure test duration and publish results under json format
 #
 #
-import functest.core.feature_base as base
+import functest.core.feature as base
 
 
 class Doctor(base.FeatureBase):
