@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Hideyasu Hayashi <hideyasu.hayashi@okinawaopenlabs.org>
+Code-Review+2: Helen Yao <yaohelan@huawei.com>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-by: Cedric Ollivier <ollivier.cedric@gmail.com>
+Submitted-at: Wed, 29 Mar 2017 12:53:16 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/32035
+Project: functest
+Branch: refs/heads/master
