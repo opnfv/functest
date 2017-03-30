@@ -71,3 +71,15 @@
         - fuel
     tests:
         - tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops
+
+
+    # https://bugs.opendaylight.org/show_bug.cgi?id=5586
+    scenarios:
+        - os-odl-bgpvpn-ha
+        - os-odl-gluon-noha
+        - os-odl_l2-bgpvpn-ha
+    installers:
+        - apex
+        - fuel
+    tests:
+        - tempest.api.compute.servers.test_server_actions.ServerActionsTestJSON.test_reboot_server_hard
