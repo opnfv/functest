@@ -27,29 +27,9 @@
     scenarios:
         - os-onos-nofeature-ha
         - os-onos-nofeature-noha
-        - os-onos-sfc-ha
-        - os-onos-sfc-noha
     installers:
-        - fuel
-        - apex
         - compass
     tests:
-        - tempest.api.compute.servers.test_server_actions.ServerActionsTestJSON.test_reboot_server_hard
-        - tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_network_basic_ops
-        - tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops
-        - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPattern.test_volume_boot_pattern
-        - tempest.scenario.test_volume_boot_pattern.TestVolumeBootPatternV2.test_volume_boot_pattern
-
--
-    scenarios:
-        - os-onos-nofeature-ha
-        - os-onos-nofeature-noha
-        - os-onos-sfc-ha
-        - os-onos-sfc-noha
-    installers:
-        - joid
-    tests:
-        - tempest.api.object_storage
         - tempest.api.compute.servers.test_server_actions.ServerActionsTestJSON.test_reboot_server_hard
         - tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_network_basic_ops
         - tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops
