@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_69b9b32d",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-30T08:28:19Z",
+      "side": 1,
+      "message": "nit March",
+      "revId": "0c3c3da14516e930d41df0abe0763fcfe07c43ae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_091597f0",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-30T08:28:19Z",
+      "side": 1,
+      "message": "15/15 97% ?",
+      "revId": "0c3c3da14516e930d41df0abe0763fcfe07c43ae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_c9f69fd7",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-30T08:28:19Z",
+      "side": 1,
+      "message": "15/15 !\u003d 13%",
+      "range": {
+        "startLine": 350,
+        "startChar": 25,
+        "endLine": 350,
+        "endChar": 26
+      },
+      "revId": "0c3c3da14516e930d41df0abe0763fcfe07c43ae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_89ee67eb",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-30T08:28:19Z",
+      "side": 1,
+      "message": "not 12/12",
+      "revId": "0c3c3da14516e930d41df0abe0763fcfe07c43ae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_69f1b3cc",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-30T08:28:19Z",
+      "side": 1,
+      "message": "not 21/21",
+      "revId": "0c3c3da14516e930d41df0abe0763fcfe07c43ae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_c9c77f44",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-03-30T08:28:19Z",
+      "side": 1,
+      "message": "we shall indicate that weekly jobs have been declared lately\nso VNFs have not been fully tested for Danube 1.0",
+      "revId": "0c3c3da14516e930d41df0abe0763fcfe07c43ae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
