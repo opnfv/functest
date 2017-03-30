@@ -5,9 +5,8 @@
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
-import sys
+import os
 
-from functest.core import testcase
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils import openstack_utils
 from functest.utils.constants import CONST
@@ -25,6 +24,8 @@ class TempestConf(object):
         self.DEPLOYMENT_ID = conf_utils.get_verifier_deployment_id()
         self.DEPLOYMENT_DIR = conf_utils.get_verifier_deployment_dir(
             self.VERIFIER_ID, self.DEPLOYMENT_ID)
+        self.confpath = os.path.join(CONST.dir_functest_test,
+                                     CONST.refstack_tempest_conf_path)
 
     def generate_tempestconf(self):
         try:
@@ -33,21 +34,19 @@ class TempestConf(object):
                 use_custom_images=True, use_custom_flavors=True)
             conf_utils.configure_tempest_defcore(
                 self.DEPLOYMENT_DIR, img_flavor_dict)
-        except KeyError as e:
-            logger.error("defcore prepare env error with: %s", e)
+        except Exception as e:
+            logger.error("error with generating refstack client "
+                         "reference tempest conf file: %s", e)
 
     def main(self):
         try:
             self.generate_tempestconf()
-            res = testcase.TestCase.EX_OK
+            logger.info("a reference tempest conf file generated "
+                        "at %s", self.confpath)
         except Exception as e:
             logger.error('Error with run: %s', e)
-            res = testcase.TestCase.EX_RUN_ERROR
 
-        return res
 
 if __name__ == '__main__':
     tempestconf = TempestConf()
-    result = tempestconf.main()
-    if result != testcase.TestCase.EX_OK:
-        sys.exit(result)
+    tempestconf.main()

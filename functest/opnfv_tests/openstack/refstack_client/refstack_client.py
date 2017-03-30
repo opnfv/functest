@@ -192,7 +192,7 @@ class RefstackClient(testcase.TestCase):
         return res
 
 
-class RefstackClientParser(testcase.TestCase):
+class RefstackClientParser(object):
 
     def __init__(self):
         super(RefstackClientParser, self).__init__()
