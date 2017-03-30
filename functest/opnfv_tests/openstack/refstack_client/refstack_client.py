@@ -192,10 +192,9 @@ class RefstackClient(testcase.TestCase):
         return res
 
 
-class RefstackClientParser(testcase.TestCase):
+class RefstackClientParser(object):
 
     def __init__(self):
-        super(RefstackClientParser, self).__init__()
         self.FUNCTEST_TEST = CONST.dir_functest_test
         self.CONF_PATH = CONST.refstack_tempest_conf_path
         self.DEFCORE_LIST = CONST.refstack_defcore_list
