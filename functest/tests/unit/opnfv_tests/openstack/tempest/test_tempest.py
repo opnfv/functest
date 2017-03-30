@@ -13,6 +13,7 @@ import mock
 from functest.core import testcase
 from functest.opnfv_tests.openstack.tempest import tempest
 from functest.opnfv_tests.openstack.tempest import conf_utils
+from functest.utils.constants import CONST
 
 
 class OSTempestTesting(unittest.TestCase):
@@ -33,6 +34,14 @@ class OSTempestTesting(unittest.TestCase):
                        'conf_utils.get_verifier_deployment_dir',
                        return_value='test_verifier_deploy_dir'):
             self.tempestcommon = tempest.TempestCommon()
+            self.tempestsmoke_serial = tempest.TempestSmokeSerial()
+            self.tempestsmoke_parallel = tempest.TempestSmokeParallel()
+            self.tempestfull_parallel = tempest.TempestFullParallel()
+            with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                            'conf_utils.install_verifier_ext'):
+                self.tempestmultisite = tempest.TempestMultisite()
+            self.tempestcustom = tempest.TempestCustom()
+            self.tempestdefcore = tempest.TempestDefcore()
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.logger.debug')
     def test_generate_test_list_defcore_mode(self, mock_logger_debug):
@@ -99,6 +108,48 @@ class OSTempestTesting(unittest.TestCase):
         self.tempestcommon.VERIFICATION_ID = ''
         with self.assertRaises(Exception):
             self.tempestcommon.parse_verifier_result()
+
+    def test_apply_tempest_blacklist_no_blacklist(self):
+        with mock.patch('__builtin__.open', mock.mock_open()) as m, \
+            mock.patch.object(self.tempestcommon, 'read_file',
+                              return_value=['test1', 'test2']):
+            conf_utils.TEMPEST_BLACKLIST = Exception
+            CONST.INSTALLER_TYPE = 'installer_type'
+            CONST.DEPLOY_SCENARIO = 'deploy_scenario'
+            self.tempestcommon.apply_tempest_blacklist()
+            obj = m()
+            obj.write.assert_any_call('test1\n')
+            obj.write.assert_any_call('test2\n')
+
+    def test_apply_tempest_blacklist_default(self):
+        item_dict = {'scenarios': ['deploy_scenario'],
+                     'installers': ['installer_type'],
+                     'tests': ['test2']}
+        with mock.patch('__builtin__.open', mock.mock_open()) as m, \
+            mock.patch.object(self.tempestcommon, 'read_file',
+                              return_value=['test1', 'test2']), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                       'yaml.safe_load', return_value=item_dict):
+            CONST.INSTALLER_TYPE = 'installer_type'
+            CONST.DEPLOY_SCENARIO = 'deploy_scenario'
+            self.tempestcommon.apply_tempest_blacklist()
+            obj = m()
+            obj.write.assert_any_call('test1\n')
+            self.assertFalse(obj.write.assert_any_call('test2\n'))
+
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.logger.info')
+    def test_run_verifier_tests_default(self, mock_logger_info):
+        with mock.patch('__builtin__.open', mock.mock_open()), \
+            mock.patch('__builtin__.iter', return_value=['\} tempest\.']), \
+            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                       'subprocess.Popen'):
+            conf_utils.TEMPEST_LIST = 'test_tempest_list'
+            cmd_line = ("rally verify start  --load-list "
+                        "test_tempest_list --detailed")
+            self.tempestcommon.run_verifier_tests()
+            mock_logger_info. \
+                assert_any_call("Starting Tempest test suite: '%s'."
+                                % cmd_line)
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.logger.info')
     def test_parse_verifier_result_default(self, mock_logger_info):
