@@ -22,6 +22,7 @@ class PrepareEnvTesting(unittest.TestCase):
 
     def setUp(self):
         self.prepare_envparser = prepare_env.PrepareEnvParser()
+        self.db_url_env = 'http://foo/testdb'
 
     @mock.patch('functest.ci.prepare_env.logger.info')
     def test_print_separator(self, mock_logger_info):
@@ -285,6 +286,20 @@ class PrepareEnvTesting(unittest.TestCase):
             prepare_env.patch_file('test_file')
             self.assertTrue(m.called)
 
+    @mock.patch('functest.ci.prepare_env.update_db_url')
+    def test_update_db_url(self, mock_db_url):
+        with mock.patch("__builtin__.open", mock.mock_open()), \
+            mock.patch('functest.ci.prepare_env.yaml.safe_load',
+                       return_value={'test_scenario': {'tkey': 'tvalue'}}), \
+            mock.patch('functest.ci.prepare_env.ft_utils.get_functest_yaml',
+                       return_value={'tkey1': 'tvalue1'}), \
+            mock.patch('functest.ci.prepare_env.yaml.dump'), \
+                mock.patch.dict('functest.ci.prepare_env.os.environ',
+                                {'TEST_DB_URL': self.db_url_env},
+                                clear=True):
+            prepare_env.update_config_file()
+            self.assertTrue(mock_db_url.called)
+
     @mock.patch('functest.ci.prepare_env.logger.info')
     def test_verify_deployment_error(self, mock_logger_error):
         mock_popen = mock.Mock()
@@ -406,14 +421,14 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.install_tempest')
     @mock.patch('functest.ci.prepare_env.install_rally')
     @mock.patch('functest.ci.prepare_env.verify_deployment')
-    @mock.patch('functest.ci.prepare_env.patch_config_file')
+    @mock.patch('functest.ci.prepare_env.update_config_file')
     @mock.patch('functest.ci.prepare_env.source_rc_file')
     @mock.patch('functest.ci.prepare_env.create_directories')
     @mock.patch('functest.ci.prepare_env.get_deployment_handler')
     @mock.patch('functest.ci.prepare_env.check_env_variables')
     @mock.patch('functest.ci.prepare_env.logger.info')
     def test_main_start(self, mock_logger_info, mock_env_var, mock_dep_handler,
-                        mock_create_dir, mock_source_rc, mock_patch_config,
+                        mock_create_dir, mock_source_rc, mock_update_config,
                         mock_verify_depl, mock_install_rally,
                         mock_install_temp, mock_create_flavor,
                         mock_check_env, mock_print_info):
@@ -426,7 +441,7 @@ class PrepareEnvTesting(unittest.TestCase):
             self.assertTrue(mock_dep_handler.called)
             self.assertTrue(mock_create_dir.called)
             self.assertTrue(mock_source_rc.called)
-            self.assertTrue(mock_patch_config.called)
+            self.assertTrue(mock_update_config.called)
             self.assertTrue(mock_verify_depl.called)
             self.assertTrue(mock_install_rally.called)
             self.assertTrue(mock_install_temp.called)
