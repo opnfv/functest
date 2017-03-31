@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_37cd4d32",
+        "filename": "functest/opnfv_tests/vnf/ims/clearwater_ims_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-03-31T09:30:17Z",
+      "side": 1,
+      "message": "Your fix is easy and clean. However, I would insist to document the failure detail to help with the debug.\nI would log rq.json() if it is not none.",
+      "range": {
+        "startLine": 49,
+        "startChar": 38,
+        "endLine": 49,
+        "endChar": 79
+      },
+      "revId": "f2eaa39ca28093baa7f004e7febcc648106e5cd7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
