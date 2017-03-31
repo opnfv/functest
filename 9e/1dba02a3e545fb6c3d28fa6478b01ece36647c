@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Sofia Wallin <sofia.wallin@ericsson.com>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Fri, 31 Mar 2017 07:39:43 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/32703
+Project: functest
+Branch: refs/heads/master
