@@ -26,6 +26,7 @@ from git import Repo
 
 from functest.utils import constants
 from functest.utils import decorators
+from functest.utils.constants import CONST
 
 logger = logging.getLogger(__name__)
 
@@ -149,19 +150,6 @@ def get_build_tag():
     return build_tag
 
 
-def get_db_url():
-    """
-    Returns DB URL
-    """
-    # TODO use CONST mechanism
-    try:
-        # if TEST_DB_URL declared in env variable, use it!
-        db_url = os.environ['TEST_DB_URL']
-    except KeyError:
-        db_url = get_functest_config('results.test_db_url')
-    return db_url
-
-
 def logger_test_results(project, case_name, status, details):
     """
     Format test case results for the logger
@@ -170,6 +158,7 @@ def logger_test_results(project, case_name, status, details):
     scenario = get_scenario()
     version = get_version()
     build_tag = get_build_tag()
+    db_url = CONST.__getattribute__("results_test_db_url")
 
     logger.info(
         "\n"
@@ -185,7 +174,7 @@ def logger_test_results(project, case_name, status, details):
         "details:\t%(d)s\n"
         % {'p': project,
             'n': case_name,
-            'db': get_db_url(),
+            'db': db_url,
             'pod': pod_name,
             'v': version,
             's': scenario,
@@ -201,7 +190,7 @@ def push_results_to_db(project, case_name,
     POST results to the Result target DB
     """
     # Retrieve params from CI and conf
-    url = get_db_url()
+    url = CONST.__getattribute__("results_test_db_url")
 
     try:
         installer = os.environ['INSTALLER_TYPE']
