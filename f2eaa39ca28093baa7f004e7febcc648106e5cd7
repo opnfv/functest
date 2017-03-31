@@ -22,6 +22,30 @@
       "revId": "f2eaa39ca28093baa7f004e7febcc648106e5cd7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_72a75350",
+        "filename": "functest/opnfv_tests/vnf/ims/clearwater_ims_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2017-03-31T14:19:55Z",
+      "side": 1,
+      "message": "You are right, but it generates the bad exception when there is really an error because the response is not in json visibly ... \n\n2017-03-29 21:16:53,309 - functest.opnfv_tests.vnf.ims.cloudify_ims - ERROR - Error when running VNF tests\nTraceback (most recent call last):\n  File \"/home/opnfv/repos/functest/functest/core/vnf_base.py\", line 94, in execute\n    res_test_vnf \u003d self.test_vnf()\n  File \"/home/opnfv/repos/functest/functest/opnfv_tests/vnf/ims/cloudify_ims.py\", line 259, in test_vnf\n    self.config_ellis(ellis_ip)\n  File \"/home/opnfv/repos/functest/functest/opnfv_tests/vnf/ims/clearwater_ims_base.py\", line 50, in config_ellis\n    \" provision: %s\" % rq.json()[\u0027reason\u0027])\n  File \"/usr/local/lib/python2.7/dist-packages/requests/models.py\", line 850, in json\n    return complexjson.loads(self.text, **kwargs)\n  File \"/usr/local/lib/python2.7/dist-packages/simplejson/__init__.py\", line 516, in loads\n    return _default_decoder.decode(s)\n  File \"/usr/local/lib/python2.7/dist-packages/simplejson/decoder.py\", line 374, in decode\n    obj, end \u003d self.raw_decode(s)\n  File \"/usr/local/lib/python2.7/dist-packages/simplejson/decoder.py\", line 404, in raw_decode\n    return self.scan_once(s, idx\u003d_w(s, idx).end())\nJSONDecodeError: Expecting value: line 1 column 1 (char 0)\n2017-03-29 21:16:53,316 - functest.opnfv_tests.vnf.ims.cloudify_i",
+      "parentUuid": "9ab8dda7_37cd4d32",
+      "range": {
+        "startLine": 49,
+        "startChar": 38,
+        "endLine": 49,
+        "endChar": 79
+      },
+      "revId": "f2eaa39ca28093baa7f004e7febcc648106e5cd7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
