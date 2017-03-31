@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_d741510c",
+        "filename": "functest/ci/generate_report.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-03-31T08:08:58Z",
+      "side": 1,
+      "message": "I would suggest modifying test_db_url in config_functest.yaml file during env preparation rather than writing os.environ.get(\u0027TEST_DB_URL\u0027, CONST.results_test_db_url) everywhere.",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 70
+      },
+      "revId": "bf5811e7dcf6e409726bed90036cc90de2d724c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
