@@ -20,6 +20,7 @@ import mock
 
 from functest.utils import decorators
 from functest.utils import functest_utils
+from functest.utils.constants import CONST
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
@@ -65,34 +66,29 @@ class DecoratorsTesting(unittest.TestCase):
                 'details': {}, 'criteria': self._result}
         return json.dumps(data, sort_keys=True)
 
-    @mock.patch('{}.get_db_url'.format(functest_utils.__name__),
-                return_value='http://127.0.0.1')
     @mock.patch('{}.get_version'.format(functest_utils.__name__),
                 return_value=VERSION)
     @mock.patch('requests.post')
     def test_http_shema(self, *args):
+        CONST.__setattr__('results_test_db_url', 'http://127.0.0.1')
         self.assertTrue(functest_utils.push_results_to_db(
             self._project_name, self._case_name, self._start_time,
             self._stop_time, self._result, {}))
         args[1].assert_called_once_with()
-        args[2].assert_called_once_with()
         args[0].assert_called_once_with(
             'http://127.0.0.1', data=self._get_json(),
             headers={'Content-Type': 'application/json'})
 
-    @mock.patch('{}.get_db_url'.format(functest_utils.__name__),
-                return_value="/dev/null")
     def test_wrong_shema(self, mock_method=None):
+        CONST.__setattr__('results_test_db_url', '/dev/null')
         self.assertFalse(functest_utils.push_results_to_db(
             self._project_name, self._case_name, self._start_time,
             self._stop_time, self._result, {}))
-        mock_method.assert_called_once_with()
 
     @mock.patch('{}.get_version'.format(functest_utils.__name__),
                 return_value=VERSION)
-    @mock.patch('{}.get_db_url'.format(functest_utils.__name__),
-                return_value=URL)
     def _test_dump(self, *args):
+        CONST.__setattr__('results_test_db_url', URL)
         with mock.patch.object(decorators, 'open', mock.mock_open(),
                                create=True) as mock_open:
             self.assertTrue(functest_utils.push_results_to_db(
@@ -104,7 +100,6 @@ class DecoratorsTesting(unittest.TestCase):
         self.assertIn('POST', call_args[0])
         self.assertIn(self._get_json(), call_args[0])
         args[0].assert_called_once_with()
-        args[1].assert_called_once_with()
 
     @mock.patch('os.makedirs')
     def test_default_dump(self, mock_method=None):
@@ -116,16 +111,14 @@ class DecoratorsTesting(unittest.TestCase):
         self._test_dump()
         mock_method.assert_called_once_with(DIR)
 
-    @mock.patch('{}.get_db_url'.format(functest_utils.__name__),
-                return_value=URL)
     @mock.patch('os.makedirs', side_effect=OSError)
     def test_makedirs_exc(self, *args):
+        CONST.__setattr__('results_test_db_url', URL)
         self.assertFalse(
             functest_utils.push_results_to_db(
                 self._project_name, self._case_name, self._start_time,
                 self._stop_time, self._result, {}))
         args[0].assert_called_once_with(DIR)
-        args[1].assert_called_once_with()
 
 
 if __name__ == "__main__":
