@@ -54,7 +54,8 @@ class Foundation(object):
         """
         Get Default Parameters value
         """
-        self.Result_DB = ft_utils.get_db_url()
+        self.Result_DB = os.environ.get('TEST_DB_URL',
+                                        CONST.results_test_db_url)
         self.masterusername = CONST.ONOS_onosbench_username
         self.masterpassword = CONST.ONOS_onosbench_password
         self.agentusername = CONST.ONOS_onoscli_username

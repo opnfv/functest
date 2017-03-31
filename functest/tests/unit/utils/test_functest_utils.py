@@ -19,6 +19,7 @@ import requests
 
 from functest.tests.unit import test_utils
 from functest.utils import functest_utils
+from functest.utils.constants import CONST
 
 
 class FunctestUtilsTesting(unittest.TestCase):
@@ -208,21 +209,6 @@ class FunctestUtilsTesting(unittest.TestCase):
             self.assertEqual(functest_utils.get_build_tag(),
                              self.build_tag)
 
-    def test_get_db_url_env_var(self):
-        with mock.patch.dict(os.environ,
-                             {'TEST_DB_URL': self.db_url_env,
-                              'CONFIG_FUNCTEST_YAML':
-                              "./functest/ci/config_functest.yaml"},
-                             clear=True):
-            self.assertEqual(functest_utils.get_db_url(),
-                             self.db_url_env)
-
-    @mock.patch('functest.utils.functest_utils.get_functest_config')
-    def test_get_db_url_default(self, mock_get_functest_config):
-        mock_get_functest_config.return_value = self.db_url
-        self.assertEqual(functest_utils.get_db_url(), self.db_url)
-        mock_get_functest_config.assert_called_once_with('results.test_db_url')
-
     @mock.patch('functest.utils.functest_utils.logger.info')
     def test_logger_test_results(self, mock_logger_info):
         with mock.patch('functest.utils.functest_utils.get_pod_name',
@@ -233,8 +219,8 @@ class FunctestUtilsTesting(unittest.TestCase):
                            return_value=self.version), \
                 mock.patch('functest.utils.functest_utils.get_build_tag',
                            return_value=self.build_tag), \
-                mock.patch('functest.utils.functest_utils.get_db_url',
-                           return_value=self.db_url):
+                mock.patch('os.environ.get',
+                           return_value=self.db_url_env):
             functest_utils.logger_test_results(self.project, self.case_name,
                                                self.status, self.details)
             mock_logger_info.assert_called_once_with(
@@ -251,7 +237,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                 "details:\t%(d)s\n"
                 % {'p': self.project,
                     'n': self.case_name,
-                    'db': self.db_url,
+                    'db': self.db_url_env,
                     'pod': self.node_name,
                     'v': self.version,
                     's': self.scenario,
@@ -269,8 +255,8 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def _test_push_results_to_db_missing_env(self, env_var):
         dic = self._get_env_dict(env_var)
-        with mock.patch('functest.utils.functest_utils.get_db_url',
-                        return_value=self.db_url), \
+        with mock.patch('os.environ.get',
+                        return_value=self._get_environ), \
                 mock.patch.dict(os.environ,
                                 dic,
                                 clear=True), \
@@ -297,7 +283,7 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def test_push_results_to_db_request_post_failed(self):
         dic = self._get_env_dict(None)
-        with mock.patch('functest.utils.functest_utils.get_db_url',
+        with mock.patch('os.environ.get',
                         return_value=self.db_url), \
                 mock.patch.dict(os.environ,
                                 dic,
@@ -320,8 +306,8 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def test_push_results_to_db_request_post_exception(self):
         dic = self._get_env_dict(None)
-        with mock.patch('functest.utils.functest_utils.get_db_url',
-                        return_value=self.db_url), \
+        with mock.patch('os.environ.get',
+                        return_value=self._get_environ), \
                 mock.patch.dict(os.environ,
                                 dic,
                                 clear=True), \
@@ -338,8 +324,8 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def test_push_results_to_db_default(self):
         dic = self._get_env_dict(None)
-        with mock.patch('functest.utils.functest_utils.get_db_url',
-                        return_value=self.db_url), \
+        with mock.patch('os.environ.get',
+                        return_value=self._get_environ), \
                 mock.patch.dict(os.environ,
                                 dic,
                                 clear=True), \
@@ -378,8 +364,12 @@ class FunctestUtilsTesting(unittest.TestCase):
     def _get_environ(self, var):
         if var == 'INSTALLER_TYPE':
             return self.installer
-        elif var == 'DEPLOY_SCENARIO':
+        if var == 'DEPLOY_SCENARIO':
             return self.scenario
+        if var == 'TEST_DB_URL':
+            return self.db_url_env
+        elif var == CONST.results_test_db_url:
+            return self.db_url
         return var
 
     def test_get_ci_envvars_default(self):

@@ -6,14 +6,13 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import logging
+import mock
+import os
 import unittest
 import urllib2
 
-import mock
-
 from functest.ci import generate_report as gen_report
 from functest.tests.unit import test_utils
-from functest.utils import functest_utils as ft_utils
 from functest.utils.constants import CONST
 
 
@@ -28,16 +27,18 @@ class GenerateReportTesting(unittest.TestCase):
     @mock.patch('functest.ci.generate_report.urllib2.urlopen',
                 side_effect=urllib2.URLError('no host given'))
     def test_get_results_from_db_fail(self, mock_method):
-        url = "%s/results?build_tag=%s" % (ft_utils.get_db_url(),
-                                           CONST.BUILD_TAG)
+        url = ("%s/results?build_tag=%s"
+               % (os.environ.get('TEST_DB_URL', CONST.results_test_db_url),
+                  CONST.BUILD_TAG))
         self.assertIsNone(gen_report.get_results_from_db())
         mock_method.assert_called_once_with(url)
 
     @mock.patch('functest.ci.generate_report.urllib2.urlopen',
                 return_value={'results': []})
     def test_get_results_from_db_success(self, mock_method):
-        url = "%s/results?build_tag=%s" % (ft_utils.get_db_url(),
-                                           CONST.BUILD_TAG)
+        url = ("%s/results?build_tag=%s"
+               % (os.environ.get('TEST_DB_URL', CONST.results_test_db_url),
+                  CONST.BUILD_TAG))
         self.assertEqual(gen_report.get_results_from_db(), None)
         mock_method.assert_called_once_with(url)
 
