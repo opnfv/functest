@@ -18,7 +18,6 @@ import re
 import time
 
 from functest.utils.constants import CONST
-import functest.utils.functest_utils as ft_utils
 
 
 class Foundation(object):
@@ -54,7 +53,7 @@ class Foundation(object):
         """
         Get Default Parameters value
         """
-        self.Result_DB = ft_utils.get_db_url()
+        self.Result_DB = CONST.results_test_db_url
         self.masterusername = CONST.ONOS_onosbench_username
         self.masterpassword = CONST.ONOS_onosbench_password
         self.agentusername = CONST.ONOS_onoscli_username
