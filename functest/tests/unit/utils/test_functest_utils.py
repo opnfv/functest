@@ -19,6 +19,7 @@ import requests
 
 from functest.tests.unit import test_utils
 from functest.utils import functest_utils
+from functest.utils.constants import CONST
 
 
 class FunctestUtilsTesting(unittest.TestCase):
@@ -57,8 +58,8 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.testcase_dict = {'case_name': 'testname',
                               'criteria': self.criteria}
         self.parameter = 'general.openstack.image_name'
-        self.config_yaml = 'test_config_yaml-'
-        self.db_url_env = 'http://foo/testdb'
+        self.config_yaml = 'test_config_yaml'
+        self.testcases_yaml = "test_testcases_yaml"
         self.file_yaml = {'general': {'openstack': {'image_name':
                                                     'test_image_name'}}}
 
@@ -209,23 +210,9 @@ class FunctestUtilsTesting(unittest.TestCase):
             self.assertEqual(functest_utils.get_build_tag(),
                              self.build_tag)
 
-    def test_get_db_url_env_var(self):
-        with mock.patch.dict(os.environ,
-                             {'TEST_DB_URL': self.db_url_env,
-                              'CONFIG_FUNCTEST_YAML':
-                              "./functest/ci/config_functest.yaml"},
-                             clear=True):
-            self.assertEqual(functest_utils.get_db_url(),
-                             self.db_url_env)
-
-    @mock.patch('functest.utils.functest_utils.get_functest_config')
-    def test_get_db_url_default(self, mock_get_functest_config):
-        mock_get_functest_config.return_value = self.db_url
-        self.assertEqual(functest_utils.get_db_url(), self.db_url)
-        mock_get_functest_config.assert_called_once_with('results.test_db_url')
-
     @mock.patch('functest.utils.functest_utils.logger.info')
     def test_logger_test_results(self, mock_logger_info):
+        CONST.results_test_db_url = self.db_url
         with mock.patch('functest.utils.functest_utils.get_pod_name',
                         return_value=self.node_name), \
                 mock.patch('functest.utils.functest_utils.get_scenario',
@@ -233,9 +220,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                 mock.patch('functest.utils.functest_utils.get_version',
                            return_value=self.version), \
                 mock.patch('functest.utils.functest_utils.get_build_tag',
-                           return_value=self.build_tag), \
-                mock.patch('functest.utils.functest_utils.get_db_url',
-                           return_value=self.db_url):
+                           return_value=self.build_tag):
             functest_utils.logger_test_results(self.project, self.case_name,
                                                self.status, self.details)
             mock_logger_info.assert_called_once_with(
@@ -252,7 +237,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                 "details:\t%(d)s\n"
                 % {'p': self.project,
                     'n': self.case_name,
-                    'db': self.db_url,
+                    'db': CONST.results_test_db_url,
                     'pod': self.node_name,
                     'v': self.version,
                     's': self.scenario,
@@ -270,11 +255,10 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def _test_push_results_to_db_missing_env(self, env_var):
         dic = self._get_env_dict(env_var)
-        with mock.patch('functest.utils.functest_utils.get_db_url',
-                        return_value=self.db_url), \
-                mock.patch.dict(os.environ,
-                                dic,
-                                clear=True), \
+        CONST.results_test_db_url = self.db_url
+        with mock.patch.dict(os.environ,
+                             dic,
+                             clear=True), \
                 mock.patch('functest.utils.functest_utils.logger.error') \
                 as mock_logger_error:
             functest_utils.push_results_to_db(self.project, self.case_name,
@@ -298,11 +282,10 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def test_push_results_to_db_request_post_failed(self):
         dic = self._get_env_dict(None)
-        with mock.patch('functest.utils.functest_utils.get_db_url',
-                        return_value=self.db_url), \
-                mock.patch.dict(os.environ,
-                                dic,
-                                clear=True), \
+        CONST.results_test_db_url = self.db_url
+        with mock.patch.dict(os.environ,
+                             dic,
+                             clear=True), \
                 mock.patch('functest.utils.functest_utils.logger.error') \
                 as mock_logger_error, \
                 mock.patch('functest.utils.functest_utils.requests.post',
@@ -321,11 +304,10 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def test_push_results_to_db_request_post_exception(self):
         dic = self._get_env_dict(None)
-        with mock.patch('functest.utils.functest_utils.get_db_url',
-                        return_value=self.db_url), \
-                mock.patch.dict(os.environ,
-                                dic,
-                                clear=True), \
+        CONST.results_test_db_url = self.db_url
+        with mock.patch.dict(os.environ,
+                             dic,
+                             clear=True), \
                 mock.patch('functest.utils.functest_utils.logger.error') \
                 as mock_logger_error, \
                 mock.patch('functest.utils.functest_utils.requests.post',
@@ -339,11 +321,10 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def test_push_results_to_db_default(self):
         dic = self._get_env_dict(None)
-        with mock.patch('functest.utils.functest_utils.get_db_url',
-                        return_value=self.db_url), \
-                mock.patch.dict(os.environ,
-                                dic,
-                                clear=True), \
+        CONST.results_test_db_url = self.db_url
+        with mock.patch.dict(os.environ,
+                             dic,
+                             clear=True), \
                 mock.patch('functest.utils.functest_utils.requests.post'):
             self.assertTrue(functest_utils.
                             push_results_to_db(self.project, self.case_name,
@@ -579,11 +560,13 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     # TODO: merge_dicts
 
-    def test_get_testcases_file_dir(self):
+    @mock.patch('functest.utils.functest_utils.get_functest_config')
+    def test_get_testcases_file_dir(self, mock_get_functest_config):
+        mock_get_functest_config.return_value = self.testcases_yaml
         resp = functest_utils.get_testcases_file_dir()
-        self.assertEqual(resp,
-                         "/home/opnfv/repos/functest/"
-                         "functest/ci/testcases.yaml")
+        self.assertEqual(resp, self.testcases_yaml)
+        mock_get_functest_config.assert_called_once_with(
+            'general.functest.testcases_yaml')
 
     def test_get_functest_yaml(self):
         with mock.patch('__builtin__.open', mock.mock_open()), \
