@@ -214,11 +214,14 @@ def source_rc_file():
                 CONST.OS_PASSWORD = value
 
 
-def patch_config_file():
+def update_config_file():
     patch_file(CONFIG_PATCH_PATH)
 
     if pod_arch and pod_arch in arch_filter:
         patch_file(CONFIG_AARCH64_PATCH_PATH)
+
+    if "TEST_DB_URL" in os.environ:
+        update_db_url()
 
 
 def patch_file(patch_file_path):
@@ -237,7 +240,15 @@ def patch_file(patch_file_path):
         os.remove(CONFIG_FUNCTEST_PATH)
         with open(CONFIG_FUNCTEST_PATH, "w") as f:
             f.write(yaml.dump(new_functest_yaml, default_style='"'))
-        f.close()
+
+
+def update_db_url():
+    with open(CONFIG_FUNCTEST_PATH) as f:
+        functest_yaml = yaml.safe_load(f)
+
+    with open(CONFIG_FUNCTEST_PATH, "w") as f:
+        functest_yaml["results"]["test_db_url"] = os.environ.get('TEST_DB_URL')
+        f.write(yaml.dump(functest_yaml, default_style='"'))
 
 
 def verify_deployment():
@@ -359,7 +370,7 @@ def main(**kwargs):
             get_deployment_handler()
             create_directories()
             source_rc_file()
-            patch_config_file()
+            update_config_file()
             verify_deployment()
             install_rally()
             install_tempest()
