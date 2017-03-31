@@ -46,8 +46,7 @@ class ClearwaterOnBoardingBase(vnf_base.VnfOnBoardingBase):
         rq = requests.post(account_url, data=params)
         output_dict['login'] = params
         if rq.status_code != 201 and rq.status_code != 409:
-            raise Exception("Unable to create an account for number"
-                            " provision: %s" % rq.json()['reason'])
+            raise Exception("Unable to create an account for number provision")
         self.logger.info('Account is created on Ellis: %s', params)
 
         session_url = 'http://{0}/session'.format(ellis_ip)
