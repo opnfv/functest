@@ -6,11 +6,11 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 import json
+import os
 import re
 import urllib2
 
 import functest.utils.functest_logger as ft_logger
-import functest.utils.functest_utils as ft_utils
 from functest.utils.constants import CONST
 
 COL_1_LEN = 25
@@ -39,13 +39,13 @@ def init(tiers_to_run=[]):
 
 
 def get_results_from_db():
-    url = "%s/results?build_tag=%s" % (ft_utils.get_db_url(),
-                                       CONST.BUILD_TAG)
+    url = ("%s/results?build_tag=%s" % (CONST.results_test_db_url,
+                                        CONST.BUILD_TAG))
     logger.debug("Query to rest api: %s" % url)
     try:
         data = json.load(urllib2.urlopen(url))
         return data['results']
-    except:
+    except (urllib2.HTTPError, urllib2.URLError):
         logger.error("Cannot read content from the url: %s" % url)
         return None
 
@@ -56,7 +56,8 @@ def get_data(test, results):
     for test_db in results:
         if test['test_name'] in test_db['case_name']:
             id = test_db['_id']
-            url = ft_utils.get_db_url() + '/results/' + id
+            url = ("{0}/results/{1}"
+                   .format(CONST.results_test_db_url, id))
             test_result = test_db['criteria']
 
     return {"url": url, "result": test_result}

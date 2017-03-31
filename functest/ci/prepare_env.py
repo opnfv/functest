@@ -237,7 +237,15 @@ def patch_file(patch_file_path):
         os.remove(CONFIG_FUNCTEST_PATH)
         with open(CONFIG_FUNCTEST_PATH, "w") as f:
             f.write(yaml.dump(new_functest_yaml, default_style='"'))
-        f.close()
+
+    if "TEST_DB_URL" in os.environ:
+        with open(CONFIG_FUNCTEST_PATH) as f:
+            functest_yaml = yaml.safe_load(f)
+
+        with open(CONFIG_FUNCTEST_PATH, "w") as f:
+            functest_yaml["results"]["test_db_url"] = \
+                os.environ.get('TEST_DB_URL')
+            f.write(yaml.dump(functest_yaml, default_style='"'))
 
 
 def verify_deployment():
