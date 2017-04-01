@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_a886bcb7",
+        "filename": "functest/core/feature_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-01T16:06:04Z",
+      "side": 1,
+      "message": "I could have agreed to define an helper (additional method) to run bash programs but forking as default behavior induces bad programming.",
+      "revId": "c5c6dce10bfa43dacd3043ebe9942689eed8b9a4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_e8a4b458",
+        "filename": "functest/core/feature_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-01T16:06:04Z",
+      "side": 1,
+      "message": "You have to check ret before returning EX_OK.",
+      "revId": "c5c6dce10bfa43dacd3043ebe9942689eed8b9a4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
