@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_08bd8868",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-01T16:18:53Z",
+      "side": 1,
+      "message": "then you can remove this",
+      "revId": "08c84c9692afc628044ca5264d7140ba61d367d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
