@@ -94,6 +94,30 @@
       "revId": "bf5811e7dcf6e409726bed90036cc90de2d724c6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_4d2f12a2",
+        "filename": "functest/ci/generate_report.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-01T04:12:37Z",
+      "side": 1,
+      "message": "The original implementation is because refactoring are not all done, ft_utils.get_db_url() will be deleted finally. so in this patch, you can delete it once and for all, just use CONST.results_test_db_url directly.\nPersonally I prefer to update the test_db_url in config_functest.yaml during the env preparation, after that all codes use CONST.results_test_db_url directly. By doing so, where test_db_url is configured and which one (env or config) is first priority will not be perceived except for preparing env.\nJust personally opinion, if you have other ideas, we can discuss it during next weekly meeting.",
+      "parentUuid": "9ab8dda7_8df8aa7d",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 70
+      },
+      "revId": "bf5811e7dcf6e409726bed90036cc90de2d724c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
