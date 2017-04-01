@@ -46,6 +46,54 @@
       "revId": "bf5811e7dcf6e409726bed90036cc90de2d724c6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_8d3f4a25",
+        "filename": "functest/ci/generate_report.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-04-01T01:28:01Z",
+      "side": 1,
+      "message": "Maybe it is necessary to update the logic of CONST to realize only one \"CONST.DB_URL\" which wrap up TEST_DB_URL in env and test_db_url in yaml. \n@Serena Do you have any suggestions?",
+      "parentUuid": "9ab8dda7_f7b575cd",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 70
+      },
+      "revId": "bf5811e7dcf6e409726bed90036cc90de2d724c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_8df8aa7d",
+        "filename": "functest/ci/generate_report.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-04-01T01:28:01Z",
+      "side": 1,
+      "message": "The original intention of \"ft_utils.get_db_url()\" is to allow TEST_DB_URL in env and test_db_url in yaml exist simultaneously. The idea is that if TEST_DB_URL in env exists, use it prior, without changing test_db_url in yaml.",
+      "parentUuid": "9ab8dda7_d741510c",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 70
+      },
+      "revId": "bf5811e7dcf6e409726bed90036cc90de2d724c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
