@@ -27,10 +27,10 @@ class TestCase(object):
 
     logger = ft_logger.Logger(__name__).getLogger()
 
-    def __init__(self):
+    def __init__(self, case_name=""):
         self.details = {}
         self.project_name = "functest"
-        self.case_name = ""
+        self.case_name = case_name
         self.criteria = ""
         self.start_time = ""
         self.stop_time = ""
@@ -87,6 +87,7 @@ class TestCase(object):
         It could be overriden if the common implementation is not
         suitable. The following attributes must be set before pushing
         the results to DB:
+            * project_name,
             * case_name,
             * criteria,
             * start_time,
