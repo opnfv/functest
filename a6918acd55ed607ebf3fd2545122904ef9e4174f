@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_8f065dcd",
+        "filename": "functest/tests/unit/core/test_vnf_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-04-04T07:51:07Z",
+      "side": 1,
+      "message": "\u003d case_name",
+      "revId": "a6918acd55ed607ebf3fd2545122904ef9e4174f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
