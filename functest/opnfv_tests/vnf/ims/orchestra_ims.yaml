@@ -4,6 +4,8 @@ tenant_images:
 openbaton:
     bootstrap_link: http://get.openbaton.org/bootstraps/bootstrap_3.2.0_opnfv/bootstrap
     bootstrap_config_link: http://get.openbaton.org/bootstraps/bootstrap_3.2.0_opnfv/bootstrap-config-file
+    userdata:
+        file: https://raw.githubusercontent.com/openbaton/generic-vnfm/3.2.0/src/main/resources/user-data.sh
     marketplace_link: http://marketplace.openbaton.org:8082/api/v1/nsds/fokus/OpenImsCore/3.2.0/json
     imagename: ubuntu_14.04
 vIMS:
