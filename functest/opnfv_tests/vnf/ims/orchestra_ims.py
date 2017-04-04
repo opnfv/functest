@@ -103,7 +103,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         try:
             self.config = CONST.__getattribute__(
                 'vnf_{}_config'.format(self.case_name))
-        except:
+        except BaseException:
             raise Exception("Orchestra VNF config file not found")
         config_file = self.case_dir + self.config
         self.imagename = get_config("openbaton.imagename", config_file)
@@ -115,6 +115,8 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                                       config_file)
         self.images = get_config("tenant_images", config_file)
         self.ims_conf = get_config("vIMS", config_file)
+        self.userdata_file = get_config("openbaton.userdata.file",
+                                        config_file)
 
     def deploy_orchestrator(self, **kwargs):
         self.logger.info("Additional pre-configuration steps")
@@ -132,7 +134,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                 image_id = os_utils.get_image_id(glance_client,
                                                  image_name)
                 self.logger.info("image_id: %s" % image_id)
-            except:
+            except BaseException:
                 self.logger.error("Unexpected error: %s" % sys.exc_info()[0])
 
             if image_id == '':
@@ -153,7 +155,8 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                                                    "192.168.100.0/24")
 
         # orchestrator VM flavor
-        self.logger.info("Check if Flavor is available, if not create one")
+        self.logger.info(
+            "Check if orchestra Flavor is available, if not create one")
         flavor_exist, flavor_id = os_utils.get_or_create_flavor(
             "orchestra",
             "4096",
@@ -210,8 +213,13 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         bootstrap = "sh ./bootstrap release -configFile=./config_file"
         userdata += bootstrap + "\n"
         userdata += "echo \"Setting 'nfvo.plugin.timeout' to '300000'\"\n"
-        userdata += ("echo \"nfvo.plugin.timeout=300000\" >> "
+        userdata += ("echo \"nfvo.plugin.timeout=600000\" >> "
                      "/etc/openbaton/openbaton-nfvo.properties\n")
+        userdata += (
+            "wget %s -O /etc/openbaton/openbaton-vnfm-generic-user-data.sh\n" %
+            self.userdata_file)
+        userdata += "sed -i '113i\ \ \ \ sleep 60' " \
+                    "/etc/openbaton/openbaton-vnfm-generic-user-data.sh\n"
         userdata += "echo \"Starting NFVO\"\n"
         userdata += "service openbaton-nfvo restart\n"
         userdata += "echo \"Starting Generic VNFM\"\n"
@@ -283,7 +291,10 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         self.ob_username = "admin"
         self.ob_https = False
         self.ob_port = "8080"
-
+        self.logger.info("Waiting for all components up and running...")
+        time.sleep(60)
+        self.details["orchestrator"] = {
+            'status': "PASS", 'result': "Deploy Open Baton NFVO: OK"}
         self.logger.info("Deploy Open Baton NFVO: OK")
 
     def deploy_vnf(self):
@@ -295,6 +306,16 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                                     version=1,
                                     username=self.ob_username,
                                     password=self.ob_password)
+
+        self.logger.info(
+            "Check if openims Flavor is available, if not create one")
+        flavor_exist, flavor_id = os_utils.get_or_create_flavor(
+            "m1.small",
+            "2048",
+            '20',
+            '1',
+            public=True)
+        self.logger.debug("Flavor id: %s" % flavor_id)
 
         self.logger.info("Getting project 'default'...")
         project_agent = self.main_agent.get_agent("project", self.ob_projectid)
@@ -311,9 +332,16 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         creds = os_utils.get_credentials()
         self.logger.info("PoP creds: %s" % creds)
 
-        project_id = os_utils.get_tenant_id(
-            os_utils.get_keystone_client(),
-            creds.get("project_name"))
+        if os_utils.is_keystone_v3():
+            self.logger.info(
+                "Using v3 API of OpenStack... -> Using OS_PROJECT_ID")
+            project_id = os_utils.get_tenant_id(
+                os_utils.get_keystone_client(),
+                creds.get("project_name"))
+        else:
+            self.logger.info(
+                "Using v2 API of OpenStack... -> Using OS_TENANT_NAME")
+            project_id = creds.get("tenant_name")
 
         self.logger.debug("project id: %s" % project_id)
 
@@ -381,16 +409,17 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
             self.nsr = json.loads(nsr_agent.find(self.nsr.get('id')))
 
         if self.nsr.get("status") == 'ACTIVE':
-            deploy_vnf = {'status': "PASS", 'result': self.nsr}
+            self.details["vnf"] = {'status': "PASS", 'result': self.nsr}
             self.logger.info("Deploy VNF: OK")
         else:
-            deploy_vnf = {'status': "FAIL", 'result': self.nsr}
+            self.details["vnf"] = {'status': "FAIL", 'result': self.nsr}
+            self.logger.error(self.nsr)
             self.step_failure("Deploy VNF: ERROR")
         self.ob_nsr_id = self.nsr.get("id")
         self.logger.info(
             "Sleep for 60s to ensure that all services are up and running...")
         time.sleep(60)
-        return deploy_vnf
+        return self.details.get("vnf")
 
     def test_vnf(self):
         # Adaptations probably needed
@@ -427,9 +456,18 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
                                     "VNFC instance %s is not reachable "
                                     "at %s:%s" % (vnfci.get('hostname'),
                                                   floatingIp.get('ip'), port))
+                                self.details["test_vnf"] = {
+                                    'status': "FAIL", 'result': (
+                                        "Port %s of server %s -> %s is "
+                                        "not reachable" %
+                                        (port, vnfci.get('hostname'),
+                                         floatingIp.get('ip')))}
                                 self.step_failure("Test VNF: ERROR")
+        self.details["test_vnf"] = {
+            'status': "PASS",
+            'result': "All tests have been executed successfully"}
         self.logger.info("Test VNF: OK")
-        return
+        return self.details.get('test_vnf')
 
     def clean(self):
         self.main_agent.get_agent(
