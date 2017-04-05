@@ -19,8 +19,8 @@ class SnapsTestRunner(PyTestSuiteRunner):
     creates a VM with a single port with an IPv4 address that is assigned by
     DHCP. This test then validates the expected IP with the actual
     """
-    def __init__(self):
-        super(SnapsTestRunner, self).__init__()
+    def __init__(self, case_name=''):
+        super(SnapsTestRunner, self).__init__(case_name)
 
         self.ext_net_name = snaps_utils.get_ext_net_name()
         self.logger = ft_logger.Logger(self.project_name).getLogger()
