@@ -536,9 +536,8 @@ class RallyBase(testcase.TestCase):
 
 
 class RallySanity(RallyBase):
-    def __init__(self):
-        super(RallySanity, self).__init__()
-        self.case_name = 'rally_sanity'
+    def __init__(self, case_name="rally_sanity"):
+        super(RallySanity, self).__init__(case_name)
         self.mode = 'sanity'
         self.test_name = 'all'
         self.smoke = True
@@ -546,9 +545,8 @@ class RallySanity(RallyBase):
 
 
 class RallyFull(RallyBase):
-    def __init__(self):
-        super(RallyFull, self).__init__()
-        self.case_name = 'rally_full'
+    def __init__(self, case_name="rally_full"):
+        super(RallyFull, self).__init__(case_name)
         self.mode = 'full'
         self.test_name = 'all'
         self.smoke = False
