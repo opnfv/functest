@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Michael Pauls <michael.pauls@fokus.fraunhofer.de>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Wed, 05 Apr 2017 07:23:38 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/32965
+Project: functest
+Branch: refs/heads/master
