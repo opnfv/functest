@@ -17,8 +17,8 @@ import functest.core.feature as base
 
 
 class Doctor(base.Feature):
-    def __init__(self):
+    def __init__(self, case_name='doctor-notification'):
         super(Doctor, self).__init__(project='doctor',
-                                     case_name='doctor-notification',
+                                     case_name=case_name,
                                      repo='dir_repo_doctor')
         self.cmd = 'cd %s/tests && ./run.sh' % self.repo

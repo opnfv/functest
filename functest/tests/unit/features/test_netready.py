@@ -21,7 +21,7 @@ class NetreadyTesting(unittest.TestCase):
     logging.disable(logging.CRITICAL)
 
     def setUp(self):
-        self.netready = netready.GluonVping()
+        self.netready = netready.GluonVping(case_name="gluon_vping")
 
     def test_init(self):
         self.assertEqual(self.netready.project_name, "netready")

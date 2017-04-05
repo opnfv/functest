@@ -21,7 +21,7 @@ class SecurityScanTesting(unittest.TestCase):
     logging.disable(logging.CRITICAL)
 
     def setUp(self):
-        self.sscan = security_scan.SecurityScan()
+        self.sscan = security_scan.SecurityScan(case_name="security_scan")
 
     def test_init(self):
         self.assertEqual(self.sscan.project_name, "securityscanning")

@@ -21,7 +21,7 @@ class CopperTesting(unittest.TestCase):
     logging.disable(logging.CRITICAL)
 
     def setUp(self):
-        self.copper = copper.Copper()
+        self.copper = copper.Copper(case_name="copper-notification")
 
     def test_init(self):
         self.assertEqual(self.copper.project_name, "copper")

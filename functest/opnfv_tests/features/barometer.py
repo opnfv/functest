@@ -16,9 +16,9 @@ class BarometerCollectd(base.Feature):
     Class for executing barometercollectd testcase.
     '''
 
-    def __init__(self):
+    def __init__(self, case_name='barometercollectd'):
         super(BarometerCollectd, self).__init__(project='barometer',
-                                                case_name='barometercollectd',
+                                                case_name=case_name,
                                                 repo='dir_repo_barometer')
 
     def execute(self):

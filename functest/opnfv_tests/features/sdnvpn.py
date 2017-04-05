@@ -12,9 +12,9 @@ import functest.core.feature as base
 
 class SdnVpnTests(base.Feature):
 
-    def __init__(self):
+    def __init__(self, case_name='bgpvpn'):
         super(SdnVpnTests, self).__init__(project='sdnvpn',
-                                          case_name='bgpvpn',
+                                          case_name=case_name,
                                           repo='dir_repo_sdnvpn')
         dir_sfc_functest = '{}/sdnvpn/test/functest'.format(self.repo)
         self.cmd = 'cd %s && python ./run_tests.py' % dir_sfc_functest

@@ -18,8 +18,8 @@ import functest.core.feature as base
 
 
 class Copper(base.Feature):
-    def __init__(self):
+    def __init__(self, case_name='copper-notification'):
         super(Copper, self).__init__(project='copper',
-                                     case_name='copper-notification',
+                                     case_name=case_name,
                                      repo='dir_repo_copper')
         self.cmd = 'cd %s/tests && bash run.sh && cd -' % self.repo

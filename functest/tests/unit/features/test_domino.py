@@ -21,7 +21,7 @@ class DominoTesting(unittest.TestCase):
     logging.disable(logging.CRITICAL)
 
     def setUp(self):
-        self.domino = domino.Domino()
+        self.domino = domino.Domino(case_name="domino-multinode")
 
     def test_init(self):
         self.assertEqual(self.domino.project_name, "domino")

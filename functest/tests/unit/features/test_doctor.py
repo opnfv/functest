@@ -21,7 +21,7 @@ class DoctorTesting(unittest.TestCase):
     logging.disable(logging.CRITICAL)
 
     def setUp(self):
-        self.doctor = doctor.Doctor()
+        self.doctor = doctor.Doctor(case_name="doctor-notification")
 
     def test_init(self):
         self.assertEqual(self.doctor.project_name, "doctor")

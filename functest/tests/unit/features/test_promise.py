@@ -21,7 +21,7 @@ class PromiseTesting(unittest.TestCase):
     logging.disable(logging.CRITICAL)
 
     def setUp(self):
-        self.promise = promise.Promise()
+        self.promise = promise.Promise(case_name="promise")
 
     def test_init(self):
         self.assertEqual(self.promise.project_name, "promise")
