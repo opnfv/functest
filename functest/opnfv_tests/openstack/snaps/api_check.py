@@ -20,11 +20,10 @@ class ApiCheck(SnapsTestRunner):
     that exercise many of the OpenStack APIs within Keystone, Glance, Neutron,
     and Nova
     """
-    def __init__(self):
-        super(ApiCheck, self).__init__()
+    def __init__(self, case_name="api_check"):
+        super(ApiCheck, self).__init__(case_name)
 
         self.suite = unittest.TestSuite()
-        self.case_name = "api_check"
 
         test_suite_builder.add_openstack_api_tests(
             self.suite,
