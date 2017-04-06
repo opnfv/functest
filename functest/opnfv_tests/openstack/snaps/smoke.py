@@ -21,11 +21,10 @@ class SnapsSmoke(SnapsTestRunner):
     that exercise many of the OpenStack APIs within Keystone, Glance, Neutron,
     and Nova
     """
-    def __init__(self):
-        super(SnapsSmoke, self).__init__()
+    def __init__(self, case_name="snaps_smoke"):
+        super(SnapsSmoke, self).__init__(case_name)
 
         self.suite = unittest.TestSuite()
-        self.case_name = "snaps_smoke"
         use_fip = CONST.snaps_use_floating_ips
 
         # The snaps smoke test uses the same config as the
