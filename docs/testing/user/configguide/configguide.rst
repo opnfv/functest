@@ -336,6 +336,7 @@ should now be in place::
             |-- parser
             |-- promise
             |-- rally
+            |-- refstack-client
             |-- releng
             |-- sdnvpn
             |-- securityscanning
