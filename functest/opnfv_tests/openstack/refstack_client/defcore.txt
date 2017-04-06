@@ -1,4 +1,11 @@
-# Set of DefCore tempest test cases not flagged and required. It only contains OpenStack core (no object storage)
+# Set of DefCore tempest test cases not flagged and required.
+# According to https://github.com/openstack/interop/blob/master/2016.08/procedure.rst,
+# some tests are still flagged due to outstanding bugs in the Tempest library,
+# particularly tests that require SSH. Refstack developers
+# are working on correcting these bugs upstream. Please note that although some tests
+# are flagged because of bugs, there is still an expectation that the capabilities
+# covered by the tests are available.
+# It only contains Openstack core compute (no object storage)
 # The approved guidelines (2016.08) are valid for Kilo, Liberty, Mitaka and Newton releases of OpenStack
 # The list can be generated using the Rest API from RefStack project:
 # https://refstack.openstack.org/api/v1/guidelines/2016.08/tests?target=compute&type=required&alias=true&flag=false
