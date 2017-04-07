@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_1e96194d",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-07T01:10:47Z",
+      "side": 1,
+      "message": "I would suggest to make it a independent method.CONIFG_PATCH_PATH has a particular purpose, not a general one",
+      "revId": "d619aab5bcb0e48a9dd604537720e5f1bf596aa3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
