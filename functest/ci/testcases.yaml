@@ -266,7 +266,7 @@ tiers:
                      class: 'Promise'
 
             -
-                name: doctor
+                name: doctor-notification
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -321,7 +321,7 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestMultisite'
             -
-                name: odl-sfc
+                name: functest-odl-sfc
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -360,7 +360,7 @@ tiers:
                     module: 'functest.opnfv_tests.vnf.rnc.parser'
                     class: 'Parser'
             -
-                name: domino
+                name: domino-multinode
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -373,7 +373,7 @@ tiers:
                     module: 'functest.opnfv_tests.features.domino'
                     class: 'Domino'
             -
-                name: netready
+                name: gluon_vping
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -386,7 +386,7 @@ tiers:
                      module: 'functest.opnfv_tests.features.netready'
                      class: 'GluonVping'
             -
-                name: barometer
+                name: barometercollectd
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
