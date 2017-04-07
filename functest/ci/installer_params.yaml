@@ -2,10 +2,10 @@ apex:
     ip: ''
     user: 'stack'
     pkey: '/root/.ssh/id_rsa'
-# compass:
-#     ip: '192.168.200.2'
-#     user: 'root'
-#     password: 'root'
+compass:
+    ip: '192.168.200.2'
+    user: 'root'
+    password: 'root'
 fuel:
     ip: '10.20.0.2'
     user: 'root'
