@@ -43,6 +43,7 @@ nosetests --with-xunit \
          --cover-package=functest.core \
          --cover-package=functest.opnfv_tests.sdn.odl.odl \
          --cover-package=functest.opnfv_tests.vnf.ims \
+         --cover-package=functest.opnfv_tests.vnf.rnc \
          --cover-package=functest.utils \
          --cover-package=functest.opnfv_tests.features \
          --cover-package=functest.opnfv_tests.openstack \
