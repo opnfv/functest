@@ -19,8 +19,8 @@ import functest.core.feature as base
 
 
 class Parser(base.Feature):
-    def __init__(self):
+    def __init__(self, case_name='parser-basics'):
         super(Parser, self).__init__(project='parser',
-                                     case='parser-basics',
+                                     case_name=case_name,
                                      repo='dir_repo_parser')
         self.cmd = 'cd %s/tests && ./functest_run.sh' % self.repo

@@ -347,7 +347,7 @@ tiers:
                     module: 'functest.opnfv_tests.sdn.onos.onos'
                     class: 'OnosSfc'
             -
-                name: parser
+                name: parser-basics
                 criteria: 'ret == 0'
                 blocking: false
                 clean_flag: true
