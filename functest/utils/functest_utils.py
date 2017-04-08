@@ -337,7 +337,7 @@ def get_dict_by_test(testname):
 
     for dic_tier in testcases_yaml.get("tiers"):
         for dic_testcase in dic_tier['testcases']:
-            if dic_testcase['name'] == testname:
+            if dic_testcase['case_name'] == testname:
                 return dic_testcase
 
     logger.error('Project %s is not defined in testcases.yaml' % testname)

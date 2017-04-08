@@ -56,8 +56,8 @@ class RallyBase(testcase.TestCase):
     RALLY_PRIVATE_SUBNET_CIDR = CONST.rally_subnet_cidr
     RALLY_ROUTER_NAME = CONST.rally_router_name
 
-    def __init__(self, case_name=''):
-        super(RallyBase, self).__init__(case_name)
+    def __init__(self, **kwargs):
+        super(RallyBase, self).__init__(**kwargs)
         self.mode = ''
         self.summary = []
         self.scenario_dir = ''
@@ -536,8 +536,10 @@ class RallyBase(testcase.TestCase):
 
 
 class RallySanity(RallyBase):
-    def __init__(self, case_name="rally_sanity"):
-        super(RallySanity, self).__init__(case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "rally_sanity"
+        super(RallySanity, self).__init__(**kwargs)
         self.mode = 'sanity'
         self.test_name = 'all'
         self.smoke = True
@@ -545,8 +547,10 @@ class RallySanity(RallyBase):
 
 
 class RallyFull(RallyBase):
-    def __init__(self, case_name="rally_full"):
-        super(RallyFull, self).__init__(case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "rally_full"
+        super(RallyFull, self).__init__(**kwargs)
         self.mode = 'full'
         self.test_name = 'all'
         self.smoke = False

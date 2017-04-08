@@ -14,10 +14,11 @@ RESULT_DETAILS_FILE = "test_result.json"
 
 
 class VrouterVnf(base.Feature):
-    def __init__(self):
-        super(VrouterVnf, self).__init__(project='functest',
-                                         case='vyos_vrouter',
-                                         repo='dir_repo_vrouter')
+    def __init__(self, **kwargs):
+        kwargs["repo"] = 'dir_repo_vrouter'
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "vyos_vrouter"
+        super(VrouterVnf, self).__init__(**kwargs)
         self.cmd = 'cd %s && ./run.sh' % self.repo
 
     def set_result_details(self):

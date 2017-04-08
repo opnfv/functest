@@ -26,13 +26,16 @@ class BarometerTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    _case_name = "barometercollectd"
+    _project_name = "barometer"
+
     def setUp(self):
         self.barometer = barometer.BarometerCollectd(
-            case_name="barometercollectd")
+            case_name=self._case_name, project_name=self._project_name)
 
     def test_init(self):
-        self.assertEqual(self.barometer.project_name, "barometer")
-        self.assertEqual(self.barometer.case_name, "barometercollectd")
+        self.assertEqual(self.barometer.project_name, self._project_name)
+        self.assertEqual(self.barometer.case_name, self._case_name)
         self.assertEqual(
             self.barometer.repo,
             constants.CONST.__getattribute__('dir_repo_barometer'))

@@ -15,8 +15,8 @@ class PyTestSuiteRunner(base.TestCase):
     This superclass is designed to execute pre-configured unittest.TestSuite()
     objects
     """
-    def __init__(self, case_name=''):
-        super(PyTestSuiteRunner, self).__init__(case_name)
+    def __init__(self, **kwargs):
+        super(PyTestSuiteRunner, self).__init__(**kwargs)
         self.suite = None
 
     def run(self, **kwargs):

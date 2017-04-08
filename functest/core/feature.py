@@ -8,13 +8,13 @@ from functest.utils.constants import CONST
 
 class Feature(base.TestCase):
 
-    def __init__(self, project='functest', case_name='', repo='', cmd=''):
-        super(Feature, self).__init__(case_name=case_name)
-        self.project_name = project
-        self.cmd = cmd
+    def __init__(self, **kwargs):
+        super(Feature, self).__init__(**kwargs)
+        self.cmd = kwargs.get('cmd', '')
+        repo = kwargs.get('repo', '')
         self.repo = CONST.__getattribute__(repo)
         self.result_file = self.get_result_file()
-        self.logger = ft_logger.Logger(project).getLogger()
+        self.logger = ft_logger.Logger(self.project_name).getLogger()
 
     def run(self, **kwargs):
         self.prepare()

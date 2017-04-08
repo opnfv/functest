@@ -27,10 +27,10 @@ class TestCase(object):
 
     logger = ft_logger.Logger(__name__).getLogger()
 
-    def __init__(self, case_name=""):
+    def __init__(self, **kwargs):
         self.details = {}
-        self.project_name = "functest"
-        self.case_name = case_name
+        self.project_name = kwargs.get('project_name', 'functest')
+        self.case_name = kwargs.get('case_name', '')
         self.criteria = ""
         self.start_time = ""
         self.stop_time = ""

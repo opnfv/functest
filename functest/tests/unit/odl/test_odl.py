@@ -90,7 +90,7 @@ class ODLTesting(unittest.TestCase):
         os.environ["OS_USERNAME"] = self._os_username
         os.environ["OS_PASSWORD"] = self._os_password
         os.environ["OS_TENANT_NAME"] = self._os_tenantname
-        self.test = odl.ODLTests()
+        self.test = odl.ODLTests(case_name='odl', project_name='functest')
         self.defaultargs = {'odlusername': self._odl_username,
                             'odlpassword': self._odl_password,
                             'neutronip': self._keystone_ip,

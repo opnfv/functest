@@ -21,8 +21,10 @@ class HealthCheck(SnapsTestRunner):
     creates a VM with a single port with an IPv4 address that is assigned by
     DHCP. This test then validates the expected IP with the actual
     """
-    def __init__(self, case_name="snaps_health_check"):
-        super(HealthCheck, self).__init__(case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "snaps_health_check"
+        super(HealthCheck, self).__init__(**kwargs)
 
         self.suite = unittest.TestSuite()
 

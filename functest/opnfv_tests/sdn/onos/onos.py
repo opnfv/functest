@@ -49,8 +49,10 @@ class OnosBase(testcase.TestCase):
 
 
 class Onos(OnosBase):
-    def __init__(self, case_name='onos'):
-        super(Onos, self).__init__(case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "onos"
+        super(Onos, self).__init__(**kwargs)
         self.log_path = os.path.join(self.onos_repo_path, 'TestON/logs')
 
     def set_onos_ip(self):

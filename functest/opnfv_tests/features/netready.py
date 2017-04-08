@@ -13,10 +13,9 @@ import functest.core.feature as base
 
 class GluonVping(base.Feature):
 
-    def __init__(self, case_name='gluon_vping'):
-        super(GluonVping, self).__init__(project='netready',
-                                         case_name=case_name,
-                                         repo='dir_repo_netready')
+    def __init__(self, **kwargs):
+        kwargs["repo"] = 'dir_repo_netready'
+        super(GluonVping, self).__init__(**kwargs)
         dir_netready_functest = '{}/test/functest'.format(self.repo)
         self.cmd = ('cd %s && python ./gluon-test-suite.py' %
                     dir_netready_functest)

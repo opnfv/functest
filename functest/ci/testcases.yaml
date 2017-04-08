@@ -8,7 +8,8 @@ tiers:
             operations in the VIM.
         testcases:
             -
-                name: connection_check
+                case_name: connection_check
+                project_name: functest
                 criteria: 'status == "PASS"'
                 blocking: true
                 clean_flag: false
@@ -27,7 +28,8 @@ tiers:
                     class: 'ConnectionCheck'
 
             -
-                name: api_check
+                case_name: api_check
+                project_name: functest
                 criteria: 'status == "PASS"'
                 blocking: true
                 clean_flag: false
@@ -45,7 +47,8 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.snaps.api_check'
                     class: 'ApiCheck'
             -
-                name: snaps_health_check
+                case_name: snaps_health_check
+                project_name: functest
                 criteria: 'status == "PASS"'
                 blocking: true
                 clean_flag: false
@@ -68,7 +71,8 @@ tiers:
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
             -
-                name: vping_ssh
+                case_name: vping_ssh
+                project_name: functest
                 criteria: 'status == "PASS"'
                 blocking: true
                 clean_flag: true
@@ -84,7 +88,8 @@ tiers:
                     class: 'VPingSSH'
 
             -
-                name: vping_userdata
+                case_name: vping_userdata
+                project_name: functest
                 criteria: 'status == "PASS"'
                 blocking: true
                 clean_flag: true
@@ -99,7 +104,8 @@ tiers:
                     class: 'VPingUserdata'
 
             -
-                name: tempest_smoke_serial
+                case_name: tempest_smoke_serial
+                project_name: functest
                 criteria: 'success_rate == 100%'
                 blocking: false
                 clean_flag: true
@@ -116,7 +122,8 @@ tiers:
                     class: 'TempestSmokeSerial'
 
             -
-                name: rally_sanity
+                case_name: rally_sanity
+                project_name: functest
                 criteria: 'success_rate == 100%'
                 blocking: false
                 clean_flag: false
@@ -131,7 +138,8 @@ tiers:
                     class: 'RallySanity'
 
             -
-                name: refstack_defcore
+                case_name: refstack_defcore
+                project_name: functest
                 criteria: 'success_rate == 100%'
                 blocking: false
                 clean_flag: true
@@ -146,7 +154,8 @@ tiers:
                     class: 'RefstackClient'
 
             -
-                name: odl
+                case_name: odl
+                project_name: functest
                 criteria: 'success_rate == 100%'
                 blocking: true
                 clean_flag: false
@@ -166,7 +175,8 @@ tiers:
                             -  /home/opnfv/repos/odl_test/csit/suites/openstack/neutron
 
             -
-                name: odl_netvirt
+                case_name: odl_netvirt
+                project_name: functest
                 criteria: 'success_rate == 100%'
                 blocking: false
                 clean_flag: false
@@ -188,7 +198,8 @@ tiers:
                             -  /home/opnfv/repos/odl_test/csit/suites/openstack/connectivity
 
             -
-                name: fds
+                case_name: fds
+                project_name: functest
                 criteria: 'success_rate == 100%'
                 blocking: false
                 clean_flag: false
@@ -207,7 +218,8 @@ tiers:
                             -  /home/opnfv/repos/fds/testing/robot
 
             -
-                name: onos
+                case_name: onos
+                project_name: functest
                 criteria: 'status == "PASS"'
                 blocking: true
                 clean_flag: true
@@ -223,7 +235,8 @@ tiers:
                     class: 'Onos'
 
             -
-                name: snaps_smoke
+                case_name: snaps_smoke
+                project_name: functest
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: false
@@ -252,7 +265,8 @@ tiers:
             integrated in functest
         testcases:
             -
-                name: promise
+                case_name: promise
+                project_name: promise
                 criteria: 'success_rate == 100%'
                 blocking: false
                 clean_flag: true
@@ -266,7 +280,8 @@ tiers:
                      class: 'Promise'
 
             -
-                name: doctor-notification
+                case_name: doctor-notification
+                project_name: doctor
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -280,7 +295,8 @@ tiers:
                     class: 'Doctor'
 
             -
-                name: bgpvpn
+                case_name: bgpvpn
+                project_name: sdnvpn
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -294,7 +310,8 @@ tiers:
                     class: 'SdnVpnTests'
 
             -
-                name: security_scan
+                case_name: security_scan
+                project_name: securityscanning
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -308,7 +325,8 @@ tiers:
                     class: 'SecurityScan'
 
             -
-                name: multisite
+                case_name: multisite
+                project_name: multisite
                 criteria: 'success_rate == 100%'
                 blocking: false
                 clean_flag: false
@@ -321,7 +339,8 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestMultisite'
             -
-                name: functest-odl-sfc
+                case_name: functest-odl-sfc
+                project_name: sfc
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -334,7 +353,8 @@ tiers:
                     module: 'functest.opnfv_tests.features.odl_sfc'
                     class: 'OpenDaylightSFC'
             -
-                name: onos_sfc
+                case_name: onos_sfc
+                project_name: functest
                 criteria: 'status == "PASS"'
                 blocking: true
                 clean_flag: true
@@ -347,7 +367,8 @@ tiers:
                     module: 'functest.opnfv_tests.sdn.onos.onos'
                     class: 'OnosSfc'
             -
-                name: parser-basics
+                case_name: parser-basics
+                project_name: parser
                 criteria: 'ret == 0'
                 blocking: false
                 clean_flag: true
@@ -360,7 +381,8 @@ tiers:
                     module: 'functest.opnfv_tests.vnf.rnc.parser'
                     class: 'Parser'
             -
-                name: domino-multinode
+                case_name: domino-multinode
+                project_name: domino
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -373,7 +395,8 @@ tiers:
                     module: 'functest.opnfv_tests.features.domino'
                     class: 'Domino'
             -
-                name: gluon_vping
+                case_name: gluon_vping
+                project_name: netready
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -386,7 +409,8 @@ tiers:
                      module: 'functest.opnfv_tests.features.netready'
                      class: 'GluonVping'
             -
-                name: barometercollectd
+                case_name: barometercollectd
+                project_name: barometer
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -409,7 +433,8 @@ tiers:
             Extensive testing of OpenStack API.
         testcases:
             -
-                name: tempest_full_parallel
+                case_name: tempest_full_parallel
+                project_name: functest
                 criteria: 'success_rate >= 80%'
                 blocking: false
                 clean_flag: true
@@ -424,7 +449,8 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestFullParallel'
             -
-                name: tempest_custom
+                case_name: tempest_custom
+                project_name: functest
                 criteria: 'success_rate == 100%'
                 blocking: false
                 clean_flag: true
@@ -441,7 +467,8 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestCustom'
             -
-                name: rally_full
+                case_name: rally_full
+                project_name: functest
                 criteria: 'success_rate >= 90%'
                 blocking: false
                 clean_flag: false
@@ -463,7 +490,8 @@ tiers:
             Collection of VNF test cases.
         testcases:
             -
-                name: cloudify_ims
+                case_name: cloudify_ims
+                project_name: functest
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -477,7 +505,8 @@ tiers:
                     module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
                     class: 'CloudifyIms'
 #          -
-#               name: aaa
+#               case_name: aaa
+#               project_name: functest
 #               criteria: 'ret == 0'
 #               blocking: false
 #               clean_flag: true
@@ -490,7 +519,8 @@ tiers:
 #                   module: 'functest.opnfv_tests.vnf.aaa.aaa'
 #                   class: 'AaaVnf'
             -
-                name: orchestra_ims
+                case_name: orchestra_ims
+                project_name: functest
                 criteria: 'ret == 0'
                 blocking: false
                 clean_flag: true
@@ -504,7 +534,8 @@ tiers:
                     class: 'ImsVnf'
 
             -
-                name: opera_ims
+                case_name: opera_vims
+                project_name: opera
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true
@@ -518,7 +549,8 @@ tiers:
                     class: 'OperaIms'
 
             -
-                name: vyos_vrouter
+                case_name: vyos_vrouter
+                project_name: functest
                 criteria: 'status == "PASS"'
                 blocking: false
                 clean_flag: true

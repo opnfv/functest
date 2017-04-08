@@ -20,13 +20,12 @@ import functest.utils.functest_utils as ft_utils
 
 class ClearwaterOnBoardingBase(vnf_base.VnfOnBoardingBase):
 
-    def __init__(self, project='functest', case='', repo='', cmd=''):
+    def __init__(self, **kwargs):
         self.logger = ft_logger.Logger(__name__).getLogger()
-        super(ClearwaterOnBoardingBase, self).__init__(
-            project, case, repo, cmd)
+        super(ClearwaterOnBoardingBase, self).__init__(**kwargs)
         self.case_dir = os.path.join(CONST.dir_functest_test, 'vnf', 'ims')
         self.data_dir = CONST.dir_ims_data
-        self.result_dir = os.path.join(CONST.dir_results, case)
+        self.result_dir = os.path.join(CONST.dir_results, self.case_name)
         self.test_dir = CONST.dir_repo_vims_test
 
         if not os.path.exists(self.data_dir):
