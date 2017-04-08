@@ -20,12 +20,16 @@ class DominoTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    _case_name = "domino-multinode"
+    _project_name = "domino"
+
     def setUp(self):
-        self.domino = domino.Domino(case_name="domino-multinode")
+        self.domino = domino.Domino(case_name=self._case_name,
+                                    project_name=self._project_name)
 
     def test_init(self):
-        self.assertEqual(self.domino.project_name, "domino")
-        self.assertEqual(self.domino.case_name, "domino-multinode")
+        self.assertEqual(self.domino.project_name, self._project_name)
+        self.assertEqual(self.domino.case_name, self._case_name)
         self.assertEqual(
             self.domino.repo,
             constants.CONST.__getattribute__("dir_repo_domino"))

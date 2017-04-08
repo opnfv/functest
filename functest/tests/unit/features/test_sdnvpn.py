@@ -20,12 +20,16 @@ class SdnVpnTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    _case_name = "bgpvpn"
+    _project_name = "sdnvpn"
+
     def setUp(self):
-        self.sdnvpn = sdnvpn.SdnVpnTests(case_name="bgpvpn")
+        self.sdnvpn = sdnvpn.SdnVpnTests(case_name=self._case_name,
+                                         project_name=self._project_name)
 
     def test_init(self):
-        self.assertEqual(self.sdnvpn.project_name, "sdnvpn")
-        self.assertEqual(self.sdnvpn.case_name, "bgpvpn")
+        self.assertEqual(self.sdnvpn.project_name, self._project_name)
+        self.assertEqual(self.sdnvpn.case_name, self._case_name)
         self.assertEqual(
             self.sdnvpn.repo,
             constants.CONST.__getattribute__("dir_repo_sdnvpn"))

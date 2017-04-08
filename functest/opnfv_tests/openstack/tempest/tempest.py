@@ -28,8 +28,8 @@ logger = ft_logger.Logger("Tempest").getLogger()
 
 class TempestCommon(testcase.TestCase):
 
-    def __init__(self, case_name=''):
-        super(TempestCommon, self).__init__(case_name)
+    def __init__(self, **kwargs):
+        super(TempestCommon, self).__init__(**kwargs)
         self.MODE = ""
         self.OPTION = ""
         self.VERIFIER_ID = conf_utils.get_verifier_id()
@@ -234,31 +234,39 @@ class TempestCommon(testcase.TestCase):
 
 class TempestSmokeSerial(TempestCommon):
 
-    def __init__(self, case_name='tempest_smoke_serial'):
-        TempestCommon.__init__(self, case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = 'tempest_smoke_serial'
+        TempestCommon.__init__(self, **kwargs)
         self.MODE = "smoke"
         self.OPTION = "--concurrency 1"
 
 
 class TempestSmokeParallel(TempestCommon):
 
-    def __init__(self, case_name='tempest_smoke_parallel'):
-        TempestCommon.__init__(self, case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = 'tempest_smoke_parallel'
+        TempestCommon.__init__(self, **kwargs)
         self.MODE = "smoke"
         self.OPTION = ""
 
 
 class TempestFullParallel(TempestCommon):
 
-    def __init__(self, case_name="tempest_full_parallel"):
-        TempestCommon.__init__(self, case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = 'tempest_full_parallel'
+        TempestCommon.__init__(self, **kwargs)
         self.MODE = "full"
 
 
 class TempestMultisite(TempestCommon):
 
-    def __init__(self, case_name="multisite"):
-        TempestCommon.__init__(self, case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = 'multisite'
+        TempestCommon.__init__(self, **kwargs)
         self.MODE = "feature_multisite"
         self.OPTION = "--concurrency 1"
         conf_utils.install_verifier_ext(CONST.dir_repo_kingbird)
@@ -266,15 +274,19 @@ class TempestMultisite(TempestCommon):
 
 class TempestCustom(TempestCommon):
 
-    def __init__(self, case_name="tempest_custom"):
-        TempestCommon.__init__(self, case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = 'tempest_custom'
+        TempestCommon.__init__(self, **kwargs)
         self.MODE = "custom"
         self.OPTION = "--concurrency 1"
 
 
 class TempestDefcore(TempestCommon):
 
-    def __init__(self, case_name="tempest_defcore"):
-        TempestCommon.__init__(self, case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = 'tempest_defcore'
+        TempestCommon.__init__(self, **kwargs)
         self.MODE = "defcore"
         self.OPTION = "--concurrency 1"

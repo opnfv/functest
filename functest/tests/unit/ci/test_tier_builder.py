@@ -22,7 +22,7 @@ class TierBuilderTesting(unittest.TestCase):
                            'scenario': 'test_scenario'}
 
         self.testcase = {'dependencies': self.dependency,
-                         'name': 'test_name',
+                         'case_name': 'test_name',
                          'criteria': 'test_criteria',
                          'blocking': 'test_blocking',
                          'clean_flag': 'test_clean_flag',

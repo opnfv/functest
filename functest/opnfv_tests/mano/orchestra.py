@@ -16,9 +16,12 @@ import functest.core.feature as base
 
 
 class Orchestra(base.Feature):
-    def __init__(self):
-        super(Orchestra, self).__init__(project='orchestra',
-                                        case='orchestra',
-                                        repo='dir_repo_orchestra')
+    def __init__(self, **kwargs):
+        if "project_name" not in kwargs:
+            kwargs["project_name"] = "orchestra"
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "orchestra"
+        kwargs['repo'] = 'dir_repo_orchestra'
+        super(Orchestra, self).__init__(**kwargs)
         # TODO
         # self.cmd = "%s/tests/run.sh %s/tests" % (self.repo, self.repo)

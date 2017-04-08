@@ -25,9 +25,10 @@ import functest.utils.openstack_utils as os_utils
 
 class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
-    def __init__(self, project='functest', case_name='cloudify_ims',
-                 repo='', cmd=''):
-        super(CloudifyIms, self).__init__(project, case_name, repo, cmd)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "cloudify_ims"
+        super(CloudifyIms, self).__init__(**kwargs)
         self.logger = ft_logger.Logger(__name__).getLogger()
 
         # Retrieve the configuration

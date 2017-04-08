@@ -18,8 +18,10 @@ import vping_base
 
 class VPingUserdata(vping_base.VPingBase):
 
-    def __init__(self, case_name='vping_userdata'):
-        super(VPingUserdata, self).__init__(case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "vping_userdata"
+        super(VPingUserdata, self).__init__(**kwargs)
         self.logger = ft_logger.Logger(self.case_name).getLogger()
 
     def boot_vm_preparation(self, config, vmname, test_ip):

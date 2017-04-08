@@ -16,9 +16,8 @@ import functest.core.feature as base
 
 
 class Promise(base.Feature):
-    def __init__(self, case_name='promise'):
-        super(Promise, self).__init__(project='promise',
-                                      case_name=case_name,
-                                      repo='dir_repo_promise')
+    def __init__(self, **kwargs):
+        kwargs["repo"] = 'dir_repo_promise'
+        super(Promise, self).__init__(**kwargs)
         dir_promise_functest = '{}/promise/test/functest'.format(self.repo)
         self.cmd = 'cd %s && python ./run_tests.py' % dir_promise_functest

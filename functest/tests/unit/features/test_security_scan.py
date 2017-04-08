@@ -20,12 +20,16 @@ class SecurityScanTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    _case_name = "security_scan"
+    _project_name = "security_scan"
+
     def setUp(self):
-        self.sscan = security_scan.SecurityScan(case_name="security_scan")
+        self.sscan = security_scan.SecurityScan(
+            case_name=self._case_name, project_name=self._project_name)
 
     def test_init(self):
-        self.assertEqual(self.sscan.project_name, "securityscanning")
-        self.assertEqual(self.sscan.case_name, "security_scan")
+        self.assertEqual(self.sscan.project_name, self._project_name)
+        self.assertEqual(self.sscan.case_name, self._case_name)
         self.assertEqual(
             self.sscan.repo,
             constants.CONST.__getattribute__("dir_repo_securityscan"))

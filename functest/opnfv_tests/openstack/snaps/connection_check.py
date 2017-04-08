@@ -20,8 +20,10 @@ class ConnectionCheck(SnapsTestRunner):
     that simply obtain the different OpenStack clients and may perform
     simple queries
     """
-    def __init__(self, case_name="connection_check"):
-        super(ConnectionCheck, self).__init__(case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "connection_check"
+        super(ConnectionCheck, self).__init__(**kwargs)
 
         self.suite = unittest.TestSuite()
 
