@@ -20,8 +20,10 @@ class AaaVnf(vnf_base.VnfOnBoardingBase):
 
     logger = ft_logger.Logger("VNF AAA").getLogger()
 
-    def __init__(self):
-        super(AaaVnf, self).__init__(case_name="aaa")
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "aaa"
+        super(AaaVnf, self).__init__(**kwargs)
 
     def deploy_orchestrator(self):
         self.logger.info("No VNFM needed to deploy a free radius here")

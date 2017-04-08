@@ -20,12 +20,16 @@ class NetreadyTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    _case_name = "gluon_vping"
+    _project_name = "netready"
+
     def setUp(self):
-        self.netready = netready.GluonVping(case_name="gluon_vping")
+        self.netready = netready.GluonVping(case_name=self._case_name,
+                                            project_name=self._project_name)
 
     def test_init(self):
-        self.assertEqual(self.netready.project_name, "netready")
-        self.assertEqual(self.netready.case_name, "gluon_vping")
+        self.assertEqual(self.netready.project_name, self._project_name)
+        self.assertEqual(self.netready.case_name, self._case_name)
         self.assertEqual(
             self.netready.repo,
             constants.CONST.__getattribute__("dir_repo_netready"))

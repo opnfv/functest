@@ -20,12 +20,16 @@ class DoctorTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    _case_name = "doctor-notification"
+    _project_name = "doctor"
+
     def setUp(self):
-        self.doctor = doctor.Doctor(case_name="doctor-notification")
+        self.doctor = doctor.Doctor(case_name=self._case_name,
+                                    project_name=self._project_name)
 
     def test_init(self):
-        self.assertEqual(self.doctor.project_name, "doctor")
-        self.assertEqual(self.doctor.case_name, "doctor-notification")
+        self.assertEqual(self.doctor.project_name, self._project_name)
+        self.assertEqual(self.doctor.case_name, self._case_name)
         self.assertEqual(
             self.doctor.repo,
             constants.CONST.__getattribute__("dir_repo_doctor"))

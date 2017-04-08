@@ -18,8 +18,8 @@ from functest.utils.constants import CONST
 
 
 class VPingBase(testcase.TestCase):
-    def __init__(self, case_name=''):
-        super(VPingBase, self).__init__(case_name)
+    def __init__(self, **kwargs):
+        super(VPingBase, self).__init__(**kwargs)
         self.logger = None
         self.functest_repo = CONST.dir_repo_functest
         self.repo = CONST.dir_vping

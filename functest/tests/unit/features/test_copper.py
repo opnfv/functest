@@ -20,12 +20,16 @@ class CopperTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    _case_name = "copper-notification"
+    _project_name = "copper"
+
     def setUp(self):
-        self.copper = copper.Copper(case_name="copper-notification")
+        self.copper = copper.Copper(case_name=self._case_name,
+                                    project_name=self._project_name)
 
     def test_init(self):
-        self.assertEqual(self.copper.project_name, "copper")
-        self.assertEqual(self.copper.case_name, "copper-notification")
+        self.assertEqual(self.copper.project_name, self._project_name)
+        self.assertEqual(self.copper.case_name, self._case_name)
         self.assertEqual(
             self.copper.repo,
             constants.CONST.__getattribute__("dir_repo_copper"))

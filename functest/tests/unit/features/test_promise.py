@@ -20,12 +20,16 @@ class PromiseTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    _case_name = "promise"
+    _project_name = "promise"
+
     def setUp(self):
-        self.promise = promise.Promise(case_name="promise")
+        self.promise = promise.Promise(case_name=self._case_name,
+                                       project_name=self._project_name)
 
     def test_init(self):
-        self.assertEqual(self.promise.project_name, "promise")
-        self.assertEqual(self.promise.case_name, "promise")
+        self.assertEqual(self.promise.project_name, self._project_name)
+        self.assertEqual(self.promise.case_name, self._case_name)
         self.assertEqual(
             self.promise.repo,
             constants.CONST.__getattribute__("dir_repo_promise"))

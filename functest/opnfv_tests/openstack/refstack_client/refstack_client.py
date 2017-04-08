@@ -25,8 +25,10 @@ logger = ft_logger.Logger("refstack_defcore").getLogger()
 
 class RefstackClient(testcase.TestCase):
 
-    def __init__(self, case_name="refstack_defcore"):
-        super(RefstackClient, self).__init__(case_name)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "refstack_defcore"
+        super(RefstackClient, self).__init__(**kwargs)
         self.FUNCTEST_TEST = CONST.dir_functest_test
         self.CONF_PATH = CONST.refstack_tempest_conf_path
         self.DEFCORE_LIST = CONST.refstack_defcore_list

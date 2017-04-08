@@ -54,7 +54,8 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.cmd = 'test_cmd'
         self.output_file = 'test_output_file'
         self.testname = 'testname'
-        self.testcase_dict = {'name': 'testname', 'criteria': self.criteria}
+        self.testcase_dict = {'case_name': 'testname',
+                              'criteria': self.criteria}
         self.parameter = 'general.openstack.image_name'
         self.config_yaml = 'test_config_yaml-'
         self.db_url_env = 'http://foo/testdb'

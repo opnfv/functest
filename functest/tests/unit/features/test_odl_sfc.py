@@ -20,8 +20,13 @@ class OpenDaylightSFCTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    _case_name = "functest-odl-sfc"
+    _project_name = "sfc"
+
     def setUp(self):
-        self.odl_sfc = odl_sfc.OpenDaylightSFC(case_name="functest-odl-sfc")
+        self.odl_sfc = odl_sfc.OpenDaylightSFC(
+            case_name="functest-odl-sfc",
+            project_name=self._project_name)
 
     def test_init(self):
         self.assertEqual(self.odl_sfc.project_name, "sfc")

@@ -13,10 +13,9 @@ from functest.utils.constants import CONST
 
 
 class SecurityScan(base.Feature):
-    def __init__(self, case_name='security_scan'):
-        super(SecurityScan, self).__init__(project='securityscanning',
-                                           case_name=case_name,
-                                           repo='dir_repo_securityscan')
+    def __init__(self, **kwargs):
+        kwargs["repo"] = 'dir_repo_securityscan'
+        super(SecurityScan, self).__init__(**kwargs)
         self.cmd = ('. {0}/stackrc && '
                     'cd {1} && '
                     'python security_scan.py --config config.ini && '

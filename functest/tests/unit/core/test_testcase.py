@@ -27,10 +27,11 @@ class TestCaseTesting(unittest.TestCase):
     logging.disable(logging.CRITICAL)
 
     _case_name = "base"
+    _project_name = "functest"
 
     def setUp(self):
-        self.test = testcase.TestCase(case_name=self._case_name)
-        self.test.project = "functest"
+        self.test = testcase.TestCase(case_name=self._case_name,
+                                      project_name=self._project_name)
         self.test.start_time = "1"
         self.test.stop_time = "2"
         self.test.criteria = "PASS"
@@ -74,7 +75,7 @@ class TestCaseTesting(unittest.TestCase):
         self.assertEqual(self.test.push_to_db(),
                          testcase.TestCase.EX_OK)
         mock_function.assert_called_once_with(
-            self.test.project, self._case_name, self.test.start_time,
+            self._project_name, self._case_name, self.test.start_time,
             self.test.stop_time, self.test.criteria, self.test.details)
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
@@ -83,7 +84,7 @@ class TestCaseTesting(unittest.TestCase):
         self.assertEqual(self.test.push_to_db(),
                          testcase.TestCase.EX_PUSH_TO_DB_ERROR)
         mock_function.assert_called_once_with(
-            self.test.project, self._case_name, self.test.start_time,
+            self._project_name, self._case_name, self.test.start_time,
             self.test.stop_time, self.test.criteria, self.test.details)
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
@@ -92,7 +93,7 @@ class TestCaseTesting(unittest.TestCase):
         self.assertEqual(self.test.push_to_db(),
                          testcase.TestCase.EX_OK)
         mock_function.assert_called_once_with(
-            self.test.project, self._case_name, self.test.start_time,
+            self._project_name, self._case_name, self.test.start_time,
             self.test.stop_time, self.test.criteria, self.test.details)
 
     def test_check_criteria_missing(self):

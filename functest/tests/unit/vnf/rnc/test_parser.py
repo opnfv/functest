@@ -20,12 +20,16 @@ class ParserTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
+    _case_name = "parser-basics"
+    _project_name = "parser"
+
     def setUp(self):
-        self.parser = parser.Parser(case_name="parser-basics")
+        self.parser = parser.Parser(
+            case_name=self._case_name, project_name=self._project_name)
 
     def test_init(self):
-        self.assertEqual(self.parser.project_name, "parser")
-        self.assertEqual(self.parser.case_name, "parser-basics")
+        self.assertEqual(self.parser.project_name, self._project_name)
+        self.assertEqual(self.parser.case_name, self._case_name)
         self.assertEqual(
             self.parser.repo,
             constants.CONST.__getattribute__("dir_repo_parser"))
