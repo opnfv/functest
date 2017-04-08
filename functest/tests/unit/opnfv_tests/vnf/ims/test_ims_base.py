@@ -10,7 +10,7 @@ import unittest
 
 import mock
 
-from functest.opnfv_tests.vnf.ims import ims_base
+from functest.opnfv_tests.vnf.ims import clearwater_ims_base as ims_base
 
 
 class ClearwaterOnBoardingBaseTesting(unittest.TestCase):
@@ -38,8 +38,8 @@ class ClearwaterOnBoardingBaseTesting(unittest.TestCase):
         self.mock_post_200.configure_mock(**attrs)
 
     def test_create_ellis_number_failure(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.ims_base.'
-                        'requests.post',
+        with mock.patch('functest.opnfv_tests.vnf.ims.'
+                        'clearwater_ims_base.requests.post',
                         return_value=self.mock_post_500), \
                 self.assertRaises(Exception) as context:
             self.ims_vnf.create_ellis_number()
