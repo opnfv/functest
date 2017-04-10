@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_042b2c95",
+        "filename": "docs/testing/developer/internship/unit_tests/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-04-10T03:42:07Z",
+      "side": 1,
+      "message": "The line is a bit long. Could you help to wrap the line, maybe 79 words per line.",
+      "revId": "e9bc874e67816b3a286086a049a31b2327a3ab27",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_a419008a",
+        "filename": "docs/testing/developer/internship/unit_tests/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-04-10T03:42:07Z",
+      "side": 1,
+      "message": "Could you help to remove the strange line?",
+      "range": {
+        "startLine": 75,
+        "startChar": 57,
+        "endLine": 76,
+        "endChar": 39
+      },
+      "revId": "e9bc874e67816b3a286086a049a31b2327a3ab27",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
