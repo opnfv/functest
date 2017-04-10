@@ -15,10 +15,11 @@
 # 0.4: refactoring to match Test abstraction class
 
 import functest.core.feature as base
+from functest.utils.constants import CONST
 
 
-class Domino(base.Feature):
+class Domino(base.BashFeature):
     def __init__(self, **kwargs):
-        kwargs["repo"] = 'dir_repo_domino'
+        repo = CONST.__getattribute__('dir_repo_domino')
+        kwargs["cmd"] = 'cd %s && ./tests/run_multinode.sh' % repo
         super(Domino, self).__init__(**kwargs)
-        self.cmd = 'cd %s && ./tests/run_multinode.sh' % self.repo

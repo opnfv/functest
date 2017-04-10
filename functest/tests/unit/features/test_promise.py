@@ -13,7 +13,7 @@ import logging
 import unittest
 
 from functest.opnfv_tests.features import promise
-from functest.utils import constants
+from functest.utils.constants import CONST
 
 
 class PromiseTesting(unittest.TestCase):
@@ -30,13 +30,11 @@ class PromiseTesting(unittest.TestCase):
     def test_init(self):
         self.assertEqual(self.promise.project_name, self._project_name)
         self.assertEqual(self.promise.case_name, self._case_name)
-        self.assertEqual(
-            self.promise.repo,
-            constants.CONST.__getattribute__("dir_repo_promise"))
+        repo = CONST.__getattribute__('dir_repo_promise')
         self.assertEqual(
             self.promise.cmd,
             'cd {}/promise/test/functest && python ./run_tests.py'.format(
-                self.promise.repo))
+                repo))
 
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ import logging
 import unittest
 
 from functest.opnfv_tests.features import odl_sfc
-from functest.utils import constants
+from functest.utils.constants import CONST
 
 
 class OpenDaylightSFCTesting(unittest.TestCase):
@@ -31,10 +31,8 @@ class OpenDaylightSFCTesting(unittest.TestCase):
     def test_init(self):
         self.assertEqual(self.odl_sfc.project_name, "sfc")
         self.assertEqual(self.odl_sfc.case_name, "functest-odl-sfc")
-        self.assertEqual(
-            self.odl_sfc.repo,
-            constants.CONST.__getattribute__("dir_repo_sfc"))
-        dir_sfc_functest = '{}/sfc/tests/functest'.format(self.odl_sfc.repo)
+        repo = CONST.__getattribute__('dir_repo_sfc')
+        dir_sfc_functest = '{}/sfc/tests/functest'.format(repo)
         self.assertEqual(
             self.odl_sfc.cmd,
             'cd {} && python ./run_tests.py'.format(dir_sfc_functest))

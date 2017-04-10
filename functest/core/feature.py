@@ -1,6 +1,6 @@
 import time
 
-import testcase as base
+import functest.core.testcase as base
 import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_logger as ft_logger
 from functest.utils.constants import CONST
@@ -11,52 +11,34 @@ class Feature(base.TestCase):
     def __init__(self, **kwargs):
         super(Feature, self).__init__(**kwargs)
         self.cmd = kwargs.get('cmd', '')
-        repo = kwargs.get('repo', '')
-        self.repo = CONST.__getattribute__(repo)
-        self.result_file = self.get_result_file()
+        self.result_file = "{}/{}.log".format(
+            CONST.__getattribute__('dir_results'), self.project_name)
         self.logger = ft_logger.Logger(self.project_name).getLogger()
 
+    def execute(self, **kwargs):
+        return -1
+
     def run(self, **kwargs):
-        self.prepare()
         self.start_time = time.time()
-        ret = self.execute()
+        exit_code = base.TestCase.EX_RUN_ERROR
+        self.criteria = "FAIL"
+        try:
+            if self.execute() == 0:
+                exit_code = base.TestCase.EX_OK
+                self.criteria = 'PASS'
+            ft_utils.logger_test_results(
+                self.project_name, self.case_name,
+                self.criteria, self.details)
+            self.logger.info("%s %s", self.project_name, self.criteria)
+        except Exception:  # pylint: disable=broad-except
+            self.logger.exception("%s FAILED", self.project_name)
+        self.logger.info("Test result is stored in '%s'", self.result_file)
         self.stop_time = time.time()
-        self.post()
-        self.parse_results(ret)
-        self.log_results()
-        self.logger.info("Test result is stored in '%s'" % self.result_file)
-        return base.TestCase.EX_OK
-
-    def execute(self):
-        '''
-        Executer method that can be overwritten
-        By default it executes a shell command.
-        '''
-        return ft_utils.execute_command(self.cmd, output_file=self.result_file)
-
-    def prepare(self, **kwargs):
-        pass
-
-    def post(self, **kwargs):
-        pass
-
-    def parse_results(self, ret):
-        exit_code = base.TestCase.EX_OK
-        if ret == 0:
-            self.logger.info("{} OK".format(self.project_name))
-            self.criteria = 'PASS'
-        else:
-            self.logger.info("{} FAILED".format(self.project_name))
-            exit_code = base.TestCase.EX_RUN_ERROR
-            self.criteria = "FAIL"
-
         return exit_code
 
-    def get_result_file(self):
-        return "{}/{}.log".format(CONST.dir_results, self.project_name)
 
-    def log_results(self):
-        ft_utils.logger_test_results(self.project_name,
-                                     self.case_name,
-                                     self.criteria,
-                                     self.details)
+class BashFeature(Feature):
+
+    def execute(self, **kwargs):
+        return ft_utils.execute_command(
+            self.cmd, output_file=self.result_file)

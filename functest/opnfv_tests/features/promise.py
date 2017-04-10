@@ -13,11 +13,12 @@
 # limitations under the License.
 #
 import functest.core.feature as base
+from functest.utils.constants import CONST
 
 
-class Promise(base.Feature):
+class Promise(base.BashFeature):
     def __init__(self, **kwargs):
-        kwargs["repo"] = 'dir_repo_promise'
+        repo = CONST.__getattribute__('dir_repo_promise')
+        dir_promise_functest = '{}/promise/test/functest'.format(repo)
+        kwargs["cmd"] = 'cd %s && python ./run_tests.py' % dir_promise_functest
         super(Promise, self).__init__(**kwargs)
-        dir_promise_functest = '{}/promise/test/functest'.format(self.repo)
-        self.cmd = 'cd %s && python ./run_tests.py' % dir_promise_functest

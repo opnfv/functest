@@ -8,12 +8,13 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 import functest.core.feature as base
+from functest.utils.constants import CONST
 
 
-class OpenDaylightSFC(base.Feature):
+class OpenDaylightSFC(base.BashFeature):
 
     def __init__(self, **kwargs):
-        kwargs["repo"] = 'dir_repo_sfc'
+        repo = CONST.__getattribute__('dir_repo_sfc')
+        dir_sfc_functest = '{}/sfc/tests/functest'.format(repo)
+        kwargs["cmd"] = 'cd %s && python ./run_tests.py' % dir_sfc_functest
         super(OpenDaylightSFC, self).__init__(**kwargs)
-        dir_sfc_functest = '{}/sfc/tests/functest'.format(self.repo)
-        self.cmd = 'cd %s && python ./run_tests.py' % dir_sfc_functest

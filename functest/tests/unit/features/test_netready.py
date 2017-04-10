@@ -13,7 +13,7 @@ import logging
 import unittest
 
 from functest.opnfv_tests.features import netready
-from functest.utils import constants
+from functest.utils.constants import CONST
 
 
 class NetreadyTesting(unittest.TestCase):
@@ -30,13 +30,10 @@ class NetreadyTesting(unittest.TestCase):
     def test_init(self):
         self.assertEqual(self.netready.project_name, self._project_name)
         self.assertEqual(self.netready.case_name, self._case_name)
-        self.assertEqual(
-            self.netready.repo,
-            constants.CONST.__getattribute__("dir_repo_netready"))
+        repo = CONST.__getattribute__('dir_repo_netready')
         self.assertEqual(
             self.netready.cmd,
-            'cd {}/test/functest && python ./gluon-test-suite.py'.format(
-                self.netready.repo))
+            'cd {}/test/functest && python ./gluon-test-suite.py'.format(repo))
 
 
 if __name__ == "__main__":

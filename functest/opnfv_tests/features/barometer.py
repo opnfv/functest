@@ -17,7 +17,6 @@ class BarometerCollectd(base.Feature):
     '''
 
     def __init__(self, **kwargs):
-        kwargs["repo"] = 'dir_repo_barometer'
         super(BarometerCollectd, self).__init__(**kwargs)
 
     def execute(self):

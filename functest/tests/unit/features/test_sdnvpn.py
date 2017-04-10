@@ -13,7 +13,7 @@ import logging
 import unittest
 
 from functest.opnfv_tests.features import sdnvpn
-from functest.utils import constants
+from functest.utils.constants import CONST
 
 
 class SdnVpnTesting(unittest.TestCase):
@@ -30,13 +30,10 @@ class SdnVpnTesting(unittest.TestCase):
     def test_init(self):
         self.assertEqual(self.sdnvpn.project_name, self._project_name)
         self.assertEqual(self.sdnvpn.case_name, self._case_name)
-        self.assertEqual(
-            self.sdnvpn.repo,
-            constants.CONST.__getattribute__("dir_repo_sdnvpn"))
+        repo = CONST.__getattribute__('dir_repo_sdnvpn')
         self.assertEqual(
             self.sdnvpn.cmd,
-            'cd {}/sdnvpn/test/functest && python ./run_tests.py'.format(
-                self.sdnvpn.repo))
+            'cd {}/sdnvpn/test/functest && python ./run_tests.py'.format(repo))
 
 
 if __name__ == "__main__":

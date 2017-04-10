@@ -13,7 +13,7 @@ import logging
 import unittest
 
 from functest.opnfv_tests.features import domino
-from functest.utils import constants
+from functest.utils.constants import CONST
 
 
 class DominoTesting(unittest.TestCase):
@@ -30,12 +30,10 @@ class DominoTesting(unittest.TestCase):
     def test_init(self):
         self.assertEqual(self.domino.project_name, self._project_name)
         self.assertEqual(self.domino.case_name, self._case_name)
-        self.assertEqual(
-            self.domino.repo,
-            constants.CONST.__getattribute__("dir_repo_domino"))
+        repo = CONST.__getattribute__('dir_repo_domino')
         self.assertEqual(
             self.domino.cmd,
-            'cd {} && ./tests/run_multinode.sh'.format(self.domino.repo))
+            'cd {} && ./tests/run_multinode.sh'.format(repo))
 
 
 if __name__ == "__main__":

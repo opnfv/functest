@@ -12,12 +12,12 @@ import functest.core.feature as base
 from functest.utils.constants import CONST
 
 
-class SecurityScan(base.Feature):
+class SecurityScan(base.BashFeature):
     def __init__(self, **kwargs):
-        kwargs["repo"] = 'dir_repo_securityscan'
+        repo = CONST.__getattribute__('dir_repo_securityscan')
+        conf = CONST.__getattribute__('dir_functest_conf')
+        kwargs["cmd"] = ('. {0}/stackrc && '
+                         'cd {1} && '
+                         'python security_scan.py --config config.ini && '
+                         'cd -'.format(conf, repo))
         super(SecurityScan, self).__init__(**kwargs)
-        self.cmd = ('. {0}/stackrc && '
-                    'cd {1} && '
-                    'python security_scan.py --config config.ini && '
-                    'cd -'.format(CONST.dir_functest_conf,
-                                  self.repo))

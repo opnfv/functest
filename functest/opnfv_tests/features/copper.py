@@ -15,10 +15,11 @@
 # limitations under the License.
 #
 import functest.core.feature as base
+from functest.utils.constants import CONST
 
 
-class Copper(base.Feature):
+class Copper(base.BashFeature):
     def __init__(self, **kwargs):
-        kwargs["repo"] = 'dir_repo_copper'
+        repo = CONST.__getattribute__('dir_repo_copper')
+        kwargs["cmd"] = 'cd %s/tests && bash run.sh && cd -' % repo
         super(Copper, self).__init__(**kwargs)
-        self.cmd = 'cd %s/tests && bash run.sh && cd -' % self.repo

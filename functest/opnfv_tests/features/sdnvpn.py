@@ -8,12 +8,13 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 import functest.core.feature as base
+from functest.utils.constants import CONST
 
 
-class SdnVpnTests(base.Feature):
+class SdnVpnTests(base.BashFeature):
 
     def __init__(self, **kwargs):
-        kwargs["repo"] = 'dir_repo_sdnvpn'
+        repo = CONST.__getattribute__('dir_repo_sdnvpn')
+        dir_sfc_functest = '{}/sdnvpn/test/functest'.format(repo)
+        kwargs["cmd"] = 'cd %s && python ./run_tests.py' % dir_sfc_functest
         super(SdnVpnTests, self).__init__(**kwargs)
-        dir_sfc_functest = '{}/sdnvpn/test/functest'.format(self.repo)
-        self.cmd = 'cd %s && python ./run_tests.py' % dir_sfc_functest
