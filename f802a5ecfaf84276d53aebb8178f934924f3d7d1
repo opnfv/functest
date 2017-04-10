@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_d8d41449",
+        "filename": "unit_test_cover.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-10T08:19:25Z",
+      "side": 1,
+      "message": "I think it is useless as git-review check it",
+      "revId": "f802a5ecfaf84276d53aebb8178f934924f3d7d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
