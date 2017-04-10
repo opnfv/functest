@@ -14,10 +14,11 @@
 #
 #
 import functest.core.feature as base
+from functest.utils.constants import CONST
 
 
-class Doctor(base.Feature):
+class Doctor(base.BashFeature):
     def __init__(self, **kwargs):
-        kwargs["repo"] = 'dir_repo_doctor'
+        repo = CONST.__getattribute__('dir_repo_doctor')
+        kwargs["cmd"] = 'cd %s/tests && ./run.sh' % repo
         super(Doctor, self).__init__(**kwargs)
-        self.cmd = 'cd %s/tests && ./run.sh' % self.repo

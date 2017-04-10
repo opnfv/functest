@@ -19,7 +19,6 @@ from functest.core import testcase
 sys.modules['baro_tests'] = mock.Mock()  # noqa
 # pylint: disable=wrong-import-position
 from functest.opnfv_tests.features import barometer
-from functest.utils import constants
 
 
 class BarometerTesting(unittest.TestCase):
@@ -36,22 +35,15 @@ class BarometerTesting(unittest.TestCase):
     def test_init(self):
         self.assertEqual(self.barometer.project_name, self._project_name)
         self.assertEqual(self.barometer.case_name, self._case_name)
-        self.assertEqual(
-            self.barometer.repo,
-            constants.CONST.__getattribute__('dir_repo_barometer'))
 
-    @unittest.skip("JIRA: FUNCTEST-777")
-    def test_execute_ko(self):
-        # It must be skipped to allow merging
+    def test_run_ko(self):
         sys.modules['baro_tests'].collectd.main = mock.Mock(return_value=1)
-        self.assertEqual(self.barometer.execute(),
+        self.assertEqual(self.barometer.run(),
                          testcase.TestCase.EX_RUN_ERROR)
 
-    @unittest.skip("JIRA: FUNCTEST-777")
-    def test_execute(self):
-        # It must be skipped to allow merging
+    def test_run(self):
         sys.modules['baro_tests'].collectd.main = mock.Mock(return_value=0)
-        self.assertEqual(self.barometer.execute(), testcase.TestCase.EX_OK)
+        self.assertEqual(self.barometer.run(), testcase.TestCase.EX_OK)
 
 
 if __name__ == "__main__":

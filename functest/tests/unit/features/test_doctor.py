@@ -13,7 +13,7 @@ import logging
 import unittest
 
 from functest.opnfv_tests.features import doctor
-from functest.utils import constants
+from functest.utils.constants import CONST
 
 
 class DoctorTesting(unittest.TestCase):
@@ -30,12 +30,10 @@ class DoctorTesting(unittest.TestCase):
     def test_init(self):
         self.assertEqual(self.doctor.project_name, self._project_name)
         self.assertEqual(self.doctor.case_name, self._case_name)
-        self.assertEqual(
-            self.doctor.repo,
-            constants.CONST.__getattribute__("dir_repo_doctor"))
+        repo = CONST.__getattribute__('dir_repo_doctor')
         self.assertEqual(
             self.doctor.cmd,
-            'cd {}/tests && ./run.sh'.format(self.doctor.repo))
+            'cd {}/tests && ./run.sh'.format(repo))
 
 
 if __name__ == "__main__":

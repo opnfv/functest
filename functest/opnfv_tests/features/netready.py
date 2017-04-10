@@ -9,13 +9,14 @@
 
 #
 import functest.core.feature as base
+from functest.utils.constants import CONST
 
 
-class GluonVping(base.Feature):
+class GluonVping(base.BashFeature):
 
     def __init__(self, **kwargs):
-        kwargs["repo"] = 'dir_repo_netready'
+        repo = CONST.__getattribute__('dir_repo_netready')
+        dir_netready_functest = '{}/test/functest'.format(repo)
+        kwargs["cmd"] = ('cd %s && python ./gluon-test-suite.py' %
+                         dir_netready_functest)
         super(GluonVping, self).__init__(**kwargs)
-        dir_netready_functest = '{}/test/functest'.format(self.repo)
-        self.cmd = ('cd %s && python ./gluon-test-suite.py' %
-                    dir_netready_functest)

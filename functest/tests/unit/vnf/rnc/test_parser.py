@@ -13,7 +13,7 @@ import logging
 import unittest
 
 from functest.opnfv_tests.vnf.rnc import parser
-from functest.utils import constants
+from functest.utils.constants import CONST
 
 
 class ParserTesting(unittest.TestCase):
@@ -30,12 +30,10 @@ class ParserTesting(unittest.TestCase):
     def test_init(self):
         self.assertEqual(self.parser.project_name, self._project_name)
         self.assertEqual(self.parser.case_name, self._case_name)
-        self.assertEqual(
-            self.parser.repo,
-            constants.CONST.__getattribute__("dir_repo_parser"))
+        repo = CONST.__getattribute__('dir_repo_parser')
         self.assertEqual(
             self.parser.cmd,
-            'cd {}/tests && ./functest_run.sh'.format(self.parser.repo))
+            'cd {}/tests && ./functest_run.sh'.format(repo))
 
 
 if __name__ == "__main__":

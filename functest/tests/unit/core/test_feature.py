@@ -16,92 +16,68 @@ import mock
 
 from functest.core import feature
 from functest.core import testcase
-from functest.utils import constants
+
+logging.disable(logging.CRITICAL)
 
 
-class FeatureInitTesting(unittest.TestCase):
+class FeatureTestingBase(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
+    _case_name = "foo"
+    _project_name = "bar"
+    _repo = "dir_repo_copper"
+    _cmd = "cd /home/opnfv/repos/foo/tests && bash run.sh && cd -"
+    _output_file = '/home/opnfv/functest/results/bar.log'
 
-    @unittest.skip("JIRA: FUNCTEST-780")
-    def test_init_with_wrong_repo(self):
-        with self.assertRaises(ValueError):
-            feature.Feature(repo='foo')
-
-    def test_init(self):
-        barometer = feature.Feature(repo='dir_repo_barometer')
-        self.assertEqual(barometer.project_name, "functest")
-        self.assertEqual(barometer.case_name, "")
-        self.assertEqual(
-            barometer.repo,
-            constants.CONST.__getattribute__('dir_repo_barometer'))
+    @mock.patch('time.time', side_effect=[1, 2])
+    def _test_run(self, status, mock_method=None):
+        self.assertEqual(self.feature.run(), status)
+        if status == testcase.TestCase.EX_OK:
+            self.assertEqual(self.feature.criteria, 'PASS')
+        else:
+            self.assertEqual(self.feature.criteria, 'FAIL')
+        mock_method.assert_has_calls([mock.call(), mock.call()])
+        self.assertEqual(self.feature.start_time, 1)
+        self.assertEqual(self.feature.stop_time, 2)
 
 
-class FeatureTesting(unittest.TestCase):
-
-    logging.disable(logging.CRITICAL)
+class FeatureTesting(FeatureTestingBase):
 
     def setUp(self):
-        self.feature = feature.Feature(repo='dir_repo_barometer')
-
-    @unittest.skip("JIRA: FUNCTEST-781")
-    def test_prepare_ko(self):
-        # pylint: disable=bad-continuation
-        with mock.patch.object(
-                self.feature, 'prepare',
-                return_value=testcase.TestCase.EX_RUN_ERROR) as mock_object:
-            self.assertEqual(self.feature.run(),
-                             testcase.TestCase.EX_RUN_ERROR)
-            mock_object.assert_called_once_with()
-
-    @unittest.skip("JIRA: FUNCTEST-781")
-    def test_prepare_exc(self):
-        with mock.patch.object(self.feature, 'prepare',
-                               side_effect=Exception) as mock_object:
-            self.assertEqual(self.feature.run(),
-                             testcase.TestCase.EX_RUN_ERROR)
-            mock_object.assert_called_once_with()
-
-    @unittest.skip("JIRA: FUNCTEST-781")
-    def test_post_ko(self):
-        # pylint: disable=bad-continuation
-        with mock.patch.object(
-                self.feature, 'post',
-                return_value=testcase.TestCase.EX_RUN_ERROR) as mock_object:
-            self.assertEqual(self.feature.run(),
-                             testcase.TestCase.EX_RUN_ERROR)
-            mock_object.assert_called_once_with()
-
-    @unittest.skip("JIRA: FUNCTEST-781")
-    def test_post_exc(self):
-        with mock.patch.object(self.feature, 'post',
-                               side_effect=Exception) as mock_object:
-            self.assertEqual(self.feature.run(),
-                             testcase.TestCase.EX_RUN_ERROR)
-            mock_object.assert_called_once_with()
-
-    @unittest.skip("JIRA: FUNCTEST-778")
-    def test_execute_ko(self):
-        with mock.patch.object(self.feature, 'execute',
-                               return_value=1) as mock_object:
-            self.assertEqual(self.feature.run(),
-                             testcase.TestCase.EX_RUN_ERROR)
-            mock_object.assert_called_once_with()
-
-    @unittest.skip("JIRA: FUNCTEST-778")
-    def test_execute_exc(self):
-        with mock.patch.object(self.feature, 'execute',
-                               side_effect=Exception) as mock_object:
-            self.assertEqual(self.feature.run(),
-                             testcase.TestCase.EX_RUN_ERROR)
-            mock_object.assert_called_once_with()
+        self.feature = feature.Feature(
+            project_name=self._project_name, case_name=self._case_name,
+            cmd=self._cmd)
 
     def test_run(self):
-        with mock.patch.object(self.feature, 'execute',
-                               return_value=0) as mock_object:
-            self.assertEqual(self.feature.run(),
-                             testcase.TestCase.EX_OK)
-            mock_object.assert_called_once_with()
+        self._test_run(testcase.TestCase.EX_RUN_ERROR)
+
+
+class BashFeatureTesting(FeatureTestingBase):
+
+    def setUp(self):
+        self.feature = feature.BashFeature(
+            project_name=self._project_name, case_name=self._case_name,
+            cmd=self._cmd)
+
+    @mock.patch("functest.utils.functest_utils.execute_command",
+                return_value=1)
+    def test_run_ko(self, mock_method=None):
+        self._test_run(testcase.TestCase.EX_RUN_ERROR)
+        mock_method.assert_called_once_with(
+            self._cmd, output_file=self._output_file)
+
+    @mock.patch("functest.utils.functest_utils.execute_command",
+                side_effect=Exception)
+    def test_run_exc(self, mock_method=None):
+        self._test_run(testcase.TestCase.EX_RUN_ERROR)
+        mock_method.assert_called_once_with(
+            self._cmd, output_file=self._output_file)
+
+    @mock.patch("functest.utils.functest_utils.execute_command",
+                return_value=0)
+    def test_run(self, mock_method):
+        self._test_run(testcase.TestCase.EX_OK)
+        mock_method.assert_called_once_with(
+            self._cmd, output_file=self._output_file)
 
 
 if __name__ == "__main__":

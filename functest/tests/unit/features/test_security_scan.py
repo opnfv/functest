@@ -13,7 +13,7 @@ import logging
 import unittest
 
 from functest.opnfv_tests.features import security_scan
-from functest.utils import constants
+from functest.utils.constants import CONST
 
 
 class SecurityScanTesting(unittest.TestCase):
@@ -30,16 +30,14 @@ class SecurityScanTesting(unittest.TestCase):
     def test_init(self):
         self.assertEqual(self.sscan.project_name, self._project_name)
         self.assertEqual(self.sscan.case_name, self._case_name)
-        self.assertEqual(
-            self.sscan.repo,
-            constants.CONST.__getattribute__("dir_repo_securityscan"))
+        repo = CONST.__getattribute__('dir_repo_securityscan')
         self.assertEqual(
             self.sscan.cmd, (
                 '. {0}/stackrc && cd {1} && '
                 'python security_scan.py --config config.ini && '
                 'cd -'.format(
-                    constants.CONST.__getattribute__("dir_functest_conf"),
-                    self.sscan.repo)))
+                    CONST.__getattribute__("dir_functest_conf"),
+                    repo)))
 
 
 if __name__ == "__main__":

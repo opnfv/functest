@@ -13,7 +13,7 @@ import logging
 import unittest
 
 from functest.opnfv_tests.features import copper
-from functest.utils import constants
+from functest.utils.constants import CONST
 
 
 class CopperTesting(unittest.TestCase):
@@ -29,13 +29,10 @@ class CopperTesting(unittest.TestCase):
 
     def test_init(self):
         self.assertEqual(self.copper.project_name, self._project_name)
-        self.assertEqual(self.copper.case_name, self._case_name)
-        self.assertEqual(
-            self.copper.repo,
-            constants.CONST.__getattribute__("dir_repo_copper"))
+        repo = CONST.__getattribute__('dir_repo_copper')
         self.assertEqual(
             self.copper.cmd,
-            "cd {}/tests && bash run.sh && cd -".format(self.copper.repo))
+            "cd {}/tests && bash run.sh && cd -".format(repo))
 
 
 if __name__ == "__main__":
