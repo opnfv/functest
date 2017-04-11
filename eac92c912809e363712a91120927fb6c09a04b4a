@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9ab8dda7_db672e24",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-04-11T10:43:37Z",
+      "side": 1,
+      "message": "this test case belongs to \"multisite\" project\n\nhttp://testresults.opnfv.org/test/api/v1/projects/multisite/cases",
+      "revId": "eac92c912809e363712a91120927fb6c09a04b4a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_84163c54",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 1
@@ -19,6 +36,23 @@
         "endLine": 370,
         "endChar": 40
       },
+      "revId": "eac92c912809e363712a91120927fb6c09a04b4a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_7b6e4203",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-04-11T10:43:37Z",
+      "side": 1,
+      "message": "this should be named: opera-vims and belongs to opera project\n\nhttp://testresults.opnfv.org/test/api/v1/projects/opera/cases",
       "revId": "eac92c912809e363712a91120927fb6c09a04b4a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
