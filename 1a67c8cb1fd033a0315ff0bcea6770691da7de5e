@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_db864e65",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-04-11T01:42:30Z",
+      "side": 1,
+      "message": "Could you please rebase this patch?  The module testcase_base has been changed.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "1a67c8cb1fd033a0315ff0bcea6770691da7de5e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
