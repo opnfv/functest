@@ -22,6 +22,30 @@
       "revId": "682a062895ce527338a66769c2e5c91662579b71",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_db2f2ef5",
+        "filename": "functest/opnfv_tests/features/sdnvpn.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-11T08:01:08Z",
+      "side": 1,
+      "message": "That\u0027s True. But as this file will be deleted soon, I don\u0027t think we should waste time renaming this local variable.",
+      "parentUuid": "9ab8dda7_bb383aa1",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "682a062895ce527338a66769c2e5c91662579b71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
