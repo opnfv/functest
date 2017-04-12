@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_f1e573a8",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-12T09:14:40Z",
+      "side": 1,
+      "message": "I would suggest to raise exception if project_name and case_name is not provided. And another benefit by doing this is that by initiating project_name and case_name in only one place, testcases won\u0027t need to do the following process again and again\n        if \"case_name\" not in kwargs:\n            kwargs[\"case_name\"] \u003d \"vyos_vrouter\"",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_915e7775",
+        "filename": "functest/opnfv_tests/mano/orchestra.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-12T09:14:40Z",
+      "side": 1,
+      "message": "same to onos and \u0027project_name\u0027",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_715bc387",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-12T09:14:40Z",
+      "side": 1,
+      "message": "same to onos?",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_71d2e3d3",
+        "filename": "functest/opnfv_tests/openstack/snaps/api_check.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-12T09:14:40Z",
+      "side": 1,
+      "message": "same to onos?",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_d1cb8f1c",
+        "filename": "functest/opnfv_tests/openstack/snaps/connection_check.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-12T09:14:40Z",
+      "side": 1,
+      "message": "same to onos?",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_b1613b3b",
+        "filename": "functest/opnfv_tests/openstack/snaps/health_check.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-12T09:14:40Z",
+      "side": 1,
+      "message": "same to onos?",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_b1c85b23",
+        "filename": "functest/opnfv_tests/openstack/snaps/smoke.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-12T09:14:40Z",
+      "side": 1,
+      "message": "same to onos?",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_f12013f9",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-12T09:14:40Z",
+      "side": 1,
+      "message": "I guess case_name will be initiated in TestCase, here need not to do it again",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_b17a9bef",
+        "filename": "functest/opnfv_tests/vnf/aaa/aaa.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-12T09:14:40Z",
+      "side": 1,
+      "message": "same to onos?",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_d17dcfe8",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-12T09:14:40Z",
+      "side": 1,
+      "message": "same to onos?",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_5169df23",
+        "filename": "functest/opnfv_tests/vnf/router/vyos_vrouter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-04-12T09:14:40Z",
+      "side": 1,
+      "message": "same to onos?",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
