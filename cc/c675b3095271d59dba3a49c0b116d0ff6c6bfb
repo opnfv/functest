@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Helen Yao <yaohelan@huawei.com>
+Code-Review+2: valentin boucher <valentin.boucher@orange.com>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Wed, 12 Apr 2017 13:33:11 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/33153
+Project: functest
+Branch: refs/heads/master
