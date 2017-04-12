@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_118fe7cd",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-12T09:59:57Z",
+      "side": 1,
+      "message": "I think functest is fine as default value of project name. Maybe we could raise exception if case_name is None instead of default \u0027\u0027.",
+      "parentUuid": "9ab8dda7_f1e573a8",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_915e7775",
         "filename": "functest/opnfv_tests/mano/orchestra.py",
         "patchSetId": 3
@@ -132,6 +150,24 @@
       "writtenOn": "2017-04-12T09:14:40Z",
       "side": 1,
       "message": "I guess case_name will be initiated in TestCase, here need not to do it again",
+      "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_3178ebc3",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-12T09:59:57Z",
+      "side": 1,
+      "message": "It keeps the previous behavior and allow creating object without case_name as arg.\n\nI agree it\u0027s useless when run_tests.py passes case_name as arg.",
+      "parentUuid": "9ab8dda7_f12013f9",
       "revId": "96bacd7d8ffb9c05672c0a1fc6e68d19e4a6793a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
