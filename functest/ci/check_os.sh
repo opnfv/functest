@@ -93,7 +93,7 @@ if [ -z ${adminURL} ]; then
     exit 1
 fi
 adminIP=$(echo $adminURL|sed 's/^.*http.*\:\/\///'|sed 's/.[^:]*$//')
-adminPort=$(echo $adminURL|sed 's/^.*://'|sed 's/.[^\/]*$//')
+adminPort=$(echo $adminURL|sed 's/^.*://'|sed 's/\/.*$//')
 https_enabled=$(echo $adminURL | grep 'https')
 if [[ -n $https_enabled ]]; then
     echo ">>Verifying SSL connectivity to the admin endpoint $adminIP:$adminPort..."
