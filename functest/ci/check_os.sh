@@ -69,7 +69,7 @@ fi
 echo "Checking OpenStack endpoints:"
 publicURL=$(openstack catalog show  identity |awk '/public/ {print $4}')
 publicIP=$(echo $publicURL|sed 's/^.*http.*\:\/\///'|sed 's/.[^:]*$//')
-publicPort=$(echo $publicURL|sed 's/^.*://'|sed 's/\/.*$//')
+publicPort=$(echo $publicURL|grep -Po '(?<=:)\d+')
 https_enabled=$(echo $publicURL | grep 'https')
 if [[ -n $https_enabled ]]; then
     echo ">>Verifying SSL connectivity to the public endpoint $publicIP:$publicPort..."
@@ -93,7 +93,7 @@ if [ -z ${adminURL} ]; then
     exit 1
 fi
 adminIP=$(echo $adminURL|sed 's/^.*http.*\:\/\///'|sed 's/.[^:]*$//')
-adminPort=$(echo $adminURL|sed 's/^.*://'|sed 's/.[^\/]*$//')
+adminPort=$(echo $adminURL|grep -Po '(?<=:)\d+')
 https_enabled=$(echo $adminURL | grep 'https')
 if [[ -n $https_enabled ]]; then
     echo ">>Verifying SSL connectivity to the admin endpoint $adminIP:$adminPort..."
