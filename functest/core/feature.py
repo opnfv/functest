@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import time
 
 import functest.core.testcase as base
@@ -16,6 +18,7 @@ class Feature(base.TestCase):
         self.logger = ft_logger.Logger(self.project_name).getLogger()
 
     def execute(self, **kwargs):
+        # pylint: disable=unused-argument,no-self-use
         return -1
 
     def run(self, **kwargs):
@@ -23,7 +26,7 @@ class Feature(base.TestCase):
         exit_code = base.TestCase.EX_RUN_ERROR
         self.criteria = "FAIL"
         try:
-            if self.execute() == 0:
+            if self.execute(**kwargs) == 0:
                 exit_code = base.TestCase.EX_OK
                 self.criteria = 'PASS'
             ft_utils.logger_test_results(
@@ -40,5 +43,12 @@ class Feature(base.TestCase):
 class BashFeature(Feature):
 
     def execute(self, **kwargs):
-        return ft_utils.execute_command(
-            self.cmd, output_file=self.result_file)
+        ret = -1
+        try:
+            cmd = kwargs["cmd"]
+            ret = ft_utils.execute_command(cmd, output_file=self.result_file)
+        except KeyError:
+            self.logger.error("Please give cmd as arg. kwargs: %s", kwargs)
+        except Exception:  # pylint: disable=broad-except
+            self.logger.exception("Execute cmd: %s failed", cmd)
+        return ret

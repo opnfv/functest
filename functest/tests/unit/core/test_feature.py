@@ -17,6 +17,8 @@ import mock
 from functest.core import feature
 from functest.core import testcase
 
+# logging must be disabled else it calls time.time()
+# what will break these unit tests.
 logging.disable(logging.CRITICAL)
 
 
@@ -27,10 +29,11 @@ class FeatureTestingBase(unittest.TestCase):
     _repo = "dir_repo_copper"
     _cmd = "cd /home/opnfv/repos/foo/tests && bash run.sh && cd -"
     _output_file = '/home/opnfv/functest/results/bar.log'
+    feature = None
 
     @mock.patch('time.time', side_effect=[1, 2])
     def _test_run(self, status, mock_method=None):
-        self.assertEqual(self.feature.run(), status)
+        self.assertEqual(self.feature.run(cmd=self._cmd), status)
         if status == testcase.TestCase.EX_OK:
             self.assertEqual(self.feature.criteria, 'PASS')
         else:
@@ -44,8 +47,15 @@ class FeatureTesting(FeatureTestingBase):
 
     def setUp(self):
         self.feature = feature.Feature(
-            project_name=self._project_name, case_name=self._case_name,
-            cmd=self._cmd)
+            project_name=self._project_name, case_name=self._case_name)
+
+    def test_run_exc(self):
+        # pylint: disable=bad-continuation
+        with mock.patch.object(
+                self.feature, 'execute',
+                side_effect=Exception) as mock_method:
+            self._test_run(testcase.TestCase.EX_RUN_ERROR)
+            mock_method.assert_called_once_with(cmd=self._cmd)
 
     def test_run(self):
         self._test_run(testcase.TestCase.EX_RUN_ERROR)
@@ -55,8 +65,12 @@ class BashFeatureTesting(FeatureTestingBase):
 
     def setUp(self):
         self.feature = feature.BashFeature(
-            project_name=self._project_name, case_name=self._case_name,
-            cmd=self._cmd)
+            project_name=self._project_name, case_name=self._case_name)
+
+    @mock.patch("functest.utils.functest_utils.execute_command")
+    def test_run_no_cmd(self, mock_method=None):
+        self.assertEqual(self.feature.run(), testcase.TestCase.EX_RUN_ERROR)
+        mock_method.assert_not_called()
 
     @mock.patch("functest.utils.functest_utils.execute_command",
                 return_value=1)
