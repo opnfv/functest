@@ -276,8 +276,10 @@ tiers:
                     installer: '(fuel)|(joid)'
                     scenario: ''
                 run:
-                     module: 'functest.opnfv_tests.features.promise'
-                     class: 'Promise'
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'cd /home/opnfv/repos/promise/promise/test/functest && python ./run_tests.py'
 
             -
                 case_name: doctor-notification
@@ -291,8 +293,10 @@ tiers:
                     installer: '(apex)|(fuel)'
                     scenario: '^((?!fdio).)*$'
                 run:
-                    module: 'functest.opnfv_tests.features.doctor'
-                    class: 'Doctor'
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'cd /home/opnfv/repos/doctor/tests && ./run.sh'
 
             -
                 case_name: bgpvpn
@@ -306,8 +310,10 @@ tiers:
                     installer: '(fuel)|(apex)|(netvirt)'
                     scenario: 'bgpvpn'
                 run:
-                    module: 'functest.opnfv_tests.features.sdnvpn'
-                    class: 'SdnVpnTests'
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'cd /home/opnfv/repos/sdnvpn/sdnvpn/test/functest && python ./run_tests.py'
 
             -
                 case_name: security_scan
@@ -321,8 +327,10 @@ tiers:
                     installer: 'apex'
                     scenario: '^((?!fdio).)*$'
                 run:
-                    module: 'functest.opnfv_tests.features.security_scan'
-                    class: 'SecurityScan'
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: '. /home/opnfv/functest/conf/stackrc && cd /home/opnfv/repos/securityscanning && python security_scan.py --config config.ini && cd -'
 
             -
                 case_name: multisite
@@ -350,8 +358,10 @@ tiers:
                     installer: '(apex)|(fuel)'
                     scenario: 'odl_l2-sfc'
                 run:
-                    module: 'functest.opnfv_tests.features.odl_sfc'
-                    class: 'OpenDaylightSFC'
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'cd /home/opnfv/repos/sfc/sfc/tests/functest && python ./run_tests.py'
             -
                 case_name: onos_sfc
                 project_name: functest
@@ -378,8 +388,10 @@ tiers:
                     installer: 'fuel'
                     scenario: '^((?!bgpvpn|noha).)*$'
                 run:
-                    module: 'functest.opnfv_tests.vnf.rnc.parser'
-                    class: 'Parser'
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'cd /home/opnfv/repos/parser/tests && ./functest_run.sh'
             -
                 case_name: domino-multinode
                 project_name: domino
@@ -392,8 +404,10 @@ tiers:
                     installer: ''
                     scenario: ''
                 run:
-                    module: 'functest.opnfv_tests.features.domino'
-                    class: 'Domino'
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'cd /home/opnfv/repos/domino && ./tests/run_multinode.sh'
             -
                 case_name: gluon_vping
                 project_name: netready
@@ -406,8 +420,10 @@ tiers:
                     installer: 'apex'
                     scenario: 'gluon'
                 run:
-                     module: 'functest.opnfv_tests.features.netready'
-                     class: 'GluonVping'
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'cd /home/opnfv/repos/netready/test/functest && python ./gluon-test-suite.py'
             -
                 case_name: barometercollectd
                 project_name: barometer
