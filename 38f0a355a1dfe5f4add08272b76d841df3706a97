@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_e7d4d548",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4291
+      },
+      "writtenOn": "2017-04-13T07:16:07Z",
+      "side": 1,
+      "message": "should be with Change-Id: below description",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "38f0a355a1dfe5f4add08272b76d841df3706a97",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_c7d19158",
+        "filename": "functest/ci/check_os.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 4291
+      },
+      "writtenOn": "2017-04-13T07:16:07Z",
+      "side": 1,
+      "message": "Please use one grep call instead of double sed:\ngrep -Po \u0027(?\u003c\u003d:)\\d+\u0027",
+      "range": {
+        "startLine": 96,
+        "startChar": 27,
+        "endLine": 96,
+        "endChar": 57
+      },
+      "revId": "38f0a355a1dfe5f4add08272b76d841df3706a97",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
