@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_42034f42",
+        "filename": "functest/tests/unit/core/test_vnf_base.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-14T08:19:03Z",
+      "side": 1,
+      "message": "I prefer using decorators for these patches.\nThey ease reading the code",
+      "revId": "d3cac55819f39d6aac96b5b0062da90fe194965e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
