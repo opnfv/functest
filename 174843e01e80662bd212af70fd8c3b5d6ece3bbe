@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_a2ba4b6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-14T08:43:33Z",
+      "side": 1,
+      "message": "Please fix this typos.",
+      "revId": "174843e01e80662bd212af70fd8c3b5d6ece3bbe",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
