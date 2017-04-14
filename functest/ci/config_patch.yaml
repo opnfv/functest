@@ -22,3 +22,7 @@ ovs:
     tempest:
         use_custom_images: True
         use_custom_flavors: True
+multisite:
+    tempest:
+        use_custom_images: True
+        use_custom_flavors: True
