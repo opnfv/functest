@@ -21,9 +21,16 @@ class TestCase(object):
     """Parent class of Functest TestCase."""
 
     EX_OK = os.EX_OK
+    """Status code returned when everything is OK"""
+
     EX_RUN_ERROR = os.EX_SOFTWARE
+    """Status code returned when run() fails"""
+
     EX_PUSH_TO_DB_ERROR = os.EX_SOFTWARE - 1
+    """Status code returned when push_to_db() fails"""
+
     EX_TESTCASE_FAILED = os.EX_SOFTWARE - 2
+    """Status code returned when results are false"""
 
     logger = ft_logger.Logger(__name__).getLogger()
 
