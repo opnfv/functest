@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: valentin boucher <valentin.boucher@orange.com>
+Code-Review+2: Helen Yao <yaohelan@huawei.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Fri, 14 Apr 2017 08:02:01 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/33349
+Project: functest
+Branch: refs/heads/master
