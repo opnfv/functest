@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_bdb7cad7",
+        "filename": "functest/core/feature.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-04-16T20:12:50Z",
+      "side": 1,
+      "message": "We probably should talk about these licenses under different companies.",
+      "revId": "e2bef24394cbfa22c67328d13024e08a4ac6a266",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
