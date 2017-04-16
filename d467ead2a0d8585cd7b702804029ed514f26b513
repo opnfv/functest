@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_fdad4289",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-04-16T20:10:24Z",
+      "side": 1,
+      "message": "shouldn\u0027t it be better?:\n\npython /home/opnfv/repos/promise/promise/test/functest/run_tests.py",
+      "revId": "d467ead2a0d8585cd7b702804029ed514f26b513",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
