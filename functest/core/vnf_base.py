@@ -109,7 +109,7 @@ class VnfOnBoardingBase(base.TestCase):
 
     # prepare state could consist in the creation of the resources
     # a dedicated user
-    # a dedictaed tenant
+    # a dedicated tenant
     # dedicated images
     def prepare(self):
         self.creds = os_utils.get_credentials()
@@ -174,7 +174,7 @@ class VnfOnBoardingBase(base.TestCase):
             "password": self.tenant_name,
         })
 
-    # orchestrator is not mandatory to dpeloy and test VNF
+    # orchestrator is not mandatory to deploy and test VNF
     def deploy_orchestrator(self, **kwargs):
         pass
 
