@@ -529,7 +529,7 @@ References
 
 `Functest page`_
 
-IRC support chan: #opnfv-testperf
+IRC support chan: #opnfv-functest
 
 .. _`OPNFV main site`: http://www.opnfv.org
 .. _`Functest page`: https://wiki.opnfv.org/functest
