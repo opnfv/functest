@@ -71,13 +71,14 @@ class TestCase(object):
         The subclasses must override the default implementation which
         is false on purpose. The only prerequisite is to set the
         following attributes to push the results to DB:
+
             * case_name,
             * criteria,
             * start_time,
             * stop_time.
 
         Args:
-            **kwargs: Arbitrary keyword arguments.
+            kwargs: Arbitrary keyword arguments.
 
         Returns:
             TestCase.EX_RUN_ERROR.
@@ -94,6 +95,7 @@ class TestCase(object):
         It could be overriden if the common implementation is not
         suitable. The following attributes must be set before pushing
         the results to DB:
+
             * project_name,
             * case_name,
             * criteria,

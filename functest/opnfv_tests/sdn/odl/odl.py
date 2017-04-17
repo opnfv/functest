@@ -112,6 +112,7 @@ class ODLTests(testcase.TestCase):
 
         It has been designed to be called in any context.
         It requires the following keyword arguments:
+
            * odlusername,
            * odlpassword,
            * osauthurl,
@@ -130,7 +131,7 @@ class ODLTests(testcase.TestCase):
            * delete temporary files.
 
         Args:
-            **kwargs: Arbitrary keyword arguments.
+            kwargs: Arbitrary keyword arguments.
 
         Returns:
             EX_OK if all suites ran well.
@@ -197,7 +198,7 @@ class ODLTests(testcase.TestCase):
         required.
 
         Args:
-            **kwargs: Arbitrary keyword arguments.
+            kwargs: Arbitrary keyword arguments.
 
         Returns:
             EX_OK if all suites ran well.
