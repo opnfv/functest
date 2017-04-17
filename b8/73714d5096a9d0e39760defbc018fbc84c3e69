@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Code-Review+2: Helen Yao <yaohelan@huawei.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Mon, 17 Apr 2017 08:49:26 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/33375
+Project: functest
+Branch: refs/heads/master
