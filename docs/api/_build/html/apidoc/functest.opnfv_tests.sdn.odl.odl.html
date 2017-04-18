@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>functest.opnfv_tests.sdn.odl.odl module &mdash; OPNFV Functest master documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'master',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="OPNFV Functest master documentation" href="../index.html" />
+    <link rel="up" title="functest.opnfv_tests.sdn.odl package" href="functest.opnfv_tests.sdn.odl.html" />
+    <link rel="prev" title="functest.opnfv_tests.sdn.odl package" href="functest.opnfv_tests.sdn.odl.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-functest.opnfv_tests.sdn.odl.odl">
+<span id="functest-opnfv-tests-sdn-odl-odl-module"></span><h1>functest.opnfv_tests.sdn.odl.odl module<a class="headerlink" href="#module-functest.opnfv_tests.sdn.odl.odl" title="Permalink to this headline">¶</a></h1>
+<p>Define classes required to run ODL suites.</p>
+<p>It has been designed for any context. But helpers are given for
+running test suites in OPNFV environment.</p>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd>$ python odl.py</dd>
+</dl>
+<dl class="class">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLParser">
+<em class="property">class </em><code class="descclassname">functest.opnfv_tests.sdn.odl.odl.</code><code class="descname">ODLParser</code><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Parser to run ODL test suites.</p>
+<dl class="method">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLParser.parse_args">
+<code class="descname">parse_args</code><span class="sig-paren">(</span><em>argv=None</em><span class="sig-paren">)</span><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLParser.parse_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse arguments.</p>
+<p>It can call sys.exit if arguments are incorrect.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>the arguments from cmdline</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLResultVisitor">
+<em class="property">class </em><code class="descclassname">functest.opnfv_tests.sdn.odl.odl.</code><code class="descname">ODLResultVisitor</code><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLResultVisitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">robot.result.visitor.ResultVisitor</span></code></p>
+<p>Visitor to get result details.</p>
+<dl class="method">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLResultVisitor.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLResultVisitor.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the details of the result.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLResultVisitor.visit_test">
+<code class="descname">visit_test</code><span class="sig-paren">(</span><em>test</em><span class="sig-paren">)</span><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLResultVisitor.visit_test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests">
+<em class="property">class </em><code class="descclassname">functest.opnfv_tests.sdn.odl.odl.</code><code class="descname">ODLTests</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="functest.core.testcase.html#functest.core.testcase.TestCase" title="functest.core.testcase.TestCase"><code class="xref py py-class docutils literal"><span class="pre">functest.core.testcase.TestCase</span></code></a></p>
+<p>ODL test runner.</p>
+<dl class="attribute">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests.basic_suite_dir">
+<code class="descname">basic_suite_dir</code><em class="property"> = '/home/opnfv/repos/odl_test/csit/suites/integration/basic'</em><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests.basic_suite_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests.default_suites">
+<code class="descname">default_suites</code><em class="property"> = ['/home/opnfv/repos/odl_test/csit/suites/integration/basic', '/home/opnfv/repos/odl_test/csit/suites/openstack/neutron']</em><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests.default_suites" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests.logger">
+<code class="descname">logger</code><em class="property"> = &lt;logging.Logger object&gt;</em><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests.logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests.main">
+<code class="descname">main</code><span class="sig-paren">(</span><em>suites=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the test suites</p>
+<p>It has been designed to be called in any context.
+It requires the following keyword arguments:</p>
+<blockquote>
+<div><ul class="simple">
+<li>odlusername,</li>
+<li>odlpassword,</li>
+<li>osauthurl,</li>
+<li>neutronip,</li>
+<li>osusername,</li>
+<li>ostenantname,</li>
+<li>ospassword,</li>
+<li>odlip,</li>
+<li>odlwebport,</li>
+<li>odlrestconfport.</li>
+</ul>
+</div></blockquote>
+<dl class="docutils">
+<dt>Here are the steps:</dt>
+<dd><ul class="first last simple">
+<li>set all RobotFramework_variables,</li>
+<li>create the output directories if required,</li>
+<li>get the results in output.xml,</li>
+<li>delete temporary files.</li>
+</ul>
+</dd>
+<dt>Args:</dt>
+<dd><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: Arbitrary keyword arguments.</dd>
+<dt>Returns:</dt>
+<dd>EX_OK if all suites ran well.
+EX_RUN_ERROR otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests.neutron_suite_dir">
+<code class="descname">neutron_suite_dir</code><em class="property"> = '/home/opnfv/repos/odl_test/csit/suites/openstack/neutron'</em><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests.neutron_suite_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests.odl_test_repo">
+<code class="descname">odl_test_repo</code><em class="property"> = '/home/opnfv/repos/odl_test'</em><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests.odl_test_repo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests.parse_results">
+<code class="descname">parse_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests.parse_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse output.xml and get the details in it.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests.repos">
+<code class="descname">repos</code><em class="property"> = '/home/opnfv/repos/'</em><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests.repos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests.res_dir">
+<code class="descname">res_dir</code><em class="property"> = '/home/opnfv/functest/results/odl/'</em><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests.res_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run suites in OPNFV environment</p>
+<p>It basically check env vars to call main() with the keywords
+required.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs: Arbitrary keyword arguments.</dd>
+<dt>Returns:</dt>
+<dd>EX_OK if all suites ran well.
+EX_RUN_ERROR otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="functest.opnfv_tests.sdn.odl.odl.ODLTests.set_robotframework_vars">
+<em class="property">classmethod </em><code class="descname">set_robotframework_vars</code><span class="sig-paren">(</span><em>odlusername='admin'</em>, <em>odlpassword='admin'</em><span class="sig-paren">)</span><a class="headerlink" href="#functest.opnfv_tests.sdn.odl.odl.ODLTests.set_robotframework_vars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set credentials in csit/variables/Variables.py.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>True if credentials are set.
+False otherwise.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">functest</a><ul>
+  <li><a href="functest.html">functest package</a><ul>
+  <li><a href="functest.opnfv_tests.html">functest.opnfv_tests package</a><ul>
+  <li><a href="functest.opnfv_tests.sdn.html">functest.opnfv_tests.sdn package</a><ul>
+  <li><a href="functest.opnfv_tests.sdn.odl.html">functest.opnfv_tests.sdn.odl package</a><ul>
+      <li>Previous: <a href="functest.opnfv_tests.sdn.odl.html" title="previous chapter">functest.opnfv_tests.sdn.odl package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/apidoc/functest.opnfv_tests.sdn.odl.odl.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, #opnfv-functest (chat.freenode.net).
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/apidoc/functest.opnfv_tests.sdn.odl.odl.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

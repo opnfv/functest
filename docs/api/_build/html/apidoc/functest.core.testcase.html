@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>functest.core.testcase module &mdash; OPNFV Functest master documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'master',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="OPNFV Functest master documentation" href="../index.html" />
+    <link rel="up" title="functest.core package" href="functest.core.html" />
+    <link rel="next" title="functest.core.vnf_base module" href="functest.core.vnf_base.html" />
+    <link rel="prev" title="functest.core.feature module" href="functest.core.feature.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-functest.core.testcase">
+<span id="functest-core-testcase-module"></span><h1>functest.core.testcase module<a class="headerlink" href="#module-functest.core.testcase" title="Permalink to this headline">¶</a></h1>
+<p>Define the parent class of Functest TestCase.</p>
+<dl class="class">
+<dt id="functest.core.testcase.TestCase">
+<em class="property">class </em><code class="descclassname">functest.core.testcase.</code><code class="descname">TestCase</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#functest.core.testcase.TestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Parent class of Functest TestCase.</p>
+<dl class="attribute">
+<dt id="functest.core.testcase.TestCase.EX_OK">
+<code class="descname">EX_OK</code><em class="property"> = 0</em><a class="headerlink" href="#functest.core.testcase.TestCase.EX_OK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status code returned when everything is OK</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="functest.core.testcase.TestCase.EX_PUSH_TO_DB_ERROR">
+<code class="descname">EX_PUSH_TO_DB_ERROR</code><em class="property"> = 69</em><a class="headerlink" href="#functest.core.testcase.TestCase.EX_PUSH_TO_DB_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status code returned when push_to_db() fails</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="functest.core.testcase.TestCase.EX_RUN_ERROR">
+<code class="descname">EX_RUN_ERROR</code><em class="property"> = 70</em><a class="headerlink" href="#functest.core.testcase.TestCase.EX_RUN_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status code returned when run() fails</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="functest.core.testcase.TestCase.EX_TESTCASE_FAILED">
+<code class="descname">EX_TESTCASE_FAILED</code><em class="property"> = 68</em><a class="headerlink" href="#functest.core.testcase.TestCase.EX_TESTCASE_FAILED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status code returned when results are false</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="functest.core.testcase.TestCase.check_criteria">
+<code class="descname">check_criteria</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functest.core.testcase.TestCase.check_criteria" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpret the results of TestCase.</p>
+<p>It allows getting the results of TestCase. It completes run()
+which only returns the execution status.</p>
+<p>It can be overriden if checking criteria is not suitable.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>TestCase.EX_OK if criteria is &#8216;PASS&#8217;.
+TestCase.EX_TESTCASE_FAILED otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="functest.core.testcase.TestCase.logger">
+<code class="descname">logger</code><em class="property"> = &lt;logging.Logger object&gt;</em><a class="headerlink" href="#functest.core.testcase.TestCase.logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="functest.core.testcase.TestCase.push_to_db">
+<code class="descname">push_to_db</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functest.core.testcase.TestCase.push_to_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push the results of TestCase to the DB.</p>
+<p>It allows publishing the results and to check the status.</p>
+<p>It could be overriden if the common implementation is not
+suitable. The following attributes must be set before pushing
+the results to DB:</p>
+<blockquote>
+<div><ul class="simple">
+<li>project_name,</li>
+<li>case_name,</li>
+<li>criteria,</li>
+<li>start_time,</li>
+<li>stop_time.</li>
+</ul>
+</div></blockquote>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>TestCase.EX_OK if results were pushed to DB.
+TestCase.EX_PUSH_TO_DB_ERROR otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="functest.core.testcase.TestCase.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#functest.core.testcase.TestCase.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run TestCase.</p>
+<p>It allows running TestCase and getting its execution
+status.</p>
+<p>The subclasses must override the default implementation which
+is false on purpose. The only prerequisite is to set the
+following attributes to push the results to DB:</p>
+<blockquote>
+<div><ul class="simple">
+<li>case_name,</li>
+<li>criteria,</li>
+<li>start_time,</li>
+<li>stop_time.</li>
+</ul>
+</div></blockquote>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: Arbitrary keyword arguments.</dd>
+<dt>Returns:</dt>
+<dd>TestCase.EX_RUN_ERROR.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">functest</a><ul>
+  <li><a href="functest.html">functest package</a><ul>
+  <li><a href="functest.core.html">functest.core package</a><ul>
+      <li>Previous: <a href="functest.core.feature.html" title="previous chapter">functest.core.feature module</a></li>
+      <li>Next: <a href="functest.core.vnf_base.html" title="next chapter">functest.core.vnf_base module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/apidoc/functest.core.testcase.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, #opnfv-functest (chat.freenode.net).
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/apidoc/functest.core.testcase.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
