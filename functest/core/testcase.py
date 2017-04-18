@@ -7,7 +7,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-"""Define the parent class of Functest TestCase."""
+"""Define the parent class of all Functest TestCases."""
 
 import os
 
