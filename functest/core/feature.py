@@ -7,6 +7,12 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+"""Define the parent class of all Functest Features.
+
+Feature is considered as TestCase offered by Third-party. It offers
+helpers to run any python method or any bash command.
+"""
+
 import time
 
 import functest.core.testcase as base
@@ -14,8 +20,12 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_logger as ft_logger
 from functest.utils.constants import CONST
 
+__author__ = ("Serena Feng <feng.xiaowei@zte.com.cn>, "
+              "Cedric Ollivier <cedric.ollivier@orange.com>")
+
 
 class Feature(base.TestCase):
+    """Parent class of Functest Feature."""
 
     def __init__(self, **kwargs):
         super(Feature, self).__init__(**kwargs)
@@ -24,10 +34,42 @@ class Feature(base.TestCase):
         self.logger = ft_logger.Logger(self.project_name).getLogger()
 
     def execute(self, **kwargs):
+        """Execute Feature.
+
+        The subclasses must override the default implementation which
+        is false on purpose. The only prerequisite is to return 0 if
+        success or anything else if failure.
+
+        Args:
+            kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            -1.
+        """
         # pylint: disable=unused-argument,no-self-use
         return -1
 
     def run(self, **kwargs):
+        """Run Feature.
+
+        It allows executing any Python method by calling execute().
+
+        It sets the following attributes required to push the results
+        to DB:
+
+            * criteria,
+            * start_time,
+            * stop_time.
+
+        It doesn't fulfill details when pushing the results to the DB.
+
+        Args:
+            kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            TestCase.EX_OK if execute() returns 0,
+            TestCase.EX_RUN_ERROR otherwise.
+        """
         self.start_time = time.time()
         exit_code = base.TestCase.EX_RUN_ERROR
         self.criteria = "FAIL"
@@ -47,8 +89,18 @@ class Feature(base.TestCase):
 
 
 class BashFeature(Feature):
+    """Class designed to run any bash command."""
 
     def execute(self, **kwargs):
+        """Execute the cmd passed as arg
+
+        Args:
+            kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            0 if cmd returns 0,
+            -1 otherwise.
+        """
         ret = -1
         try:
             cmd = kwargs["cmd"]

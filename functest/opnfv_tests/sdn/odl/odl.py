@@ -131,7 +131,7 @@ class ODLTests(testcase.TestCase):
            * delete temporary files.
 
         Args:
-            \**kwargs: Arbitrary keyword arguments.
+            kwargs: Arbitrary keyword arguments.
 
         Returns:
             EX_OK if all suites ran well.
@@ -198,7 +198,7 @@ class ODLTests(testcase.TestCase):
         required.
 
         Args:
-            \**kwargs: Arbitrary keyword arguments.
+            kwargs: Arbitrary keyword arguments.
 
         Returns:
             EX_OK if all suites ran well.
