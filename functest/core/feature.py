@@ -19,7 +19,6 @@ class Feature(base.TestCase):
 
     def __init__(self, **kwargs):
         super(Feature, self).__init__(**kwargs)
-        self.cmd = kwargs.get('cmd', '')
         self.result_file = "{}/{}.log".format(
             CONST.__getattribute__('dir_results'), self.project_name)
         self.logger = ft_logger.Logger(self.project_name).getLogger()
