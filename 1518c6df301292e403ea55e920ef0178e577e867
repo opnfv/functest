@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_24450670",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-18T12:25:59Z",
+      "side": 1,
+      "message": "I would have switched the title to \"Define a new env var for DB url\".\n\nOfc using CONST to retrieve db_url must be written in details.",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_047322e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-18T12:25:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure we should modify the config file",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_64645e22",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-18T12:25:59Z",
+      "side": 1,
+      "message": "you should avoid \\ in this case.",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_246e6602",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-18T12:25:59Z",
+      "side": 1,
+      "message": "I think we shouldn\u0027t complete the config file if test_db_url is missing.",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_e477eed2",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-18T12:25:59Z",
+      "side": 1,
+      "message": "I think pylint and IDE don\u0027t like that. You must call __getattribute__ in this case",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
