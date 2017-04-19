@@ -210,6 +210,24 @@
       "revId": "1518c6df301292e403ea55e920ef0178e577e867",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_6a4e6571",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-19T09:58:23Z",
+      "side": 1,
+      "message": "Yes. I agree.\nplease run $ pylint functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py\nE: 56,25: Instance of \u0027Constants\u0027 has no \u0027results_test_db_url\u0027 member (no-member)\n\nYou must write CONST.__getattribute__(\"results_test_db_url\") to help pylint and IDE as well",
+      "parentUuid": "9ab8dda7_8a2ab97c",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
