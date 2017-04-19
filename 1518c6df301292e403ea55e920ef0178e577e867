@@ -192,6 +192,24 @@
       "revId": "1518c6df301292e403ea55e920ef0178e577e867",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_8a2ab97c",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-04-19T09:09:15Z",
+      "side": 1,
+      "message": "In functest env preparing, config_functest.yaml has been updated if TEST_DB_URL is declared. Here CONST.results_test_db_url comes from config_functest.yaml.",
+      "parentUuid": "9ab8dda7_27b74888",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
