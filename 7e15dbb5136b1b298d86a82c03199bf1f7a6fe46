@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_aa1d3d68",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-04-19T09:11:46Z",
+      "side": 1,
+      "message": "functest_results.txt seems better\neven though it\u0027s a annotation",
+      "range": {
+        "startLine": 204,
+        "startChar": 65,
+        "endLine": 204,
+        "endChar": 73
+      },
+      "revId": "7e15dbb5136b1b298d86a82c03199bf1f7a6fe46",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_ca18b177",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-04-19T09:11:46Z",
+      "side": 1,
+      "message": "same above",
+      "range": {
+        "startLine": 205,
+        "startChar": 55,
+        "endLine": 205,
+        "endChar": 63
+      },
+      "revId": "7e15dbb5136b1b298d86a82c03199bf1f7a6fe46",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_0a36c9e7",
+        "filename": "functest/utils/decorators.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-04-19T09:11:46Z",
+      "side": 1,
+      "message": "if file:///home/opnfv/functest/results/dump.txt , it\u0027s a file name not directory path, is this OK?",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "7e15dbb5136b1b298d86a82c03199bf1f7a6fe46",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
