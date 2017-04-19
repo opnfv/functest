@@ -13,11 +13,12 @@ def can_dump_request_to_file(method):
         parseresult = urlparse.urlparse(request.url)
         if parseresult.scheme == "file":
             try:
-                os.makedirs(parseresult.path)
+                dirname = os.path.dirname(parseresult.path)
+                os.makedirs(dirname)
             except OSError as e:
                 if e.errno != errno.EEXIST:
                     raise
-            with open(os.path.join(parseresult.path, 'dump.txt'), 'a') as f:
+            with open(parseresult.path, 'a') as f:
                 headers = ""
                 for key in request.headers:
                     headers += key + " " + request.headers[key] + "\n"
