@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_87c074e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-19T07:37:52Z",
+      "side": 1,
+      "message": "Agree.But I should have not written it in the config file if missing.",
+      "parentUuid": "9ab8dda7_270d0891",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_64645e22",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 9
@@ -153,6 +171,24 @@
       "side": 1,
       "message": "CONST is able to acquire it from config_functest.yaml, why should it be called by __getattribute__.",
       "parentUuid": "9ab8dda7_e477eed2",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_27b74888",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-19T07:37:52Z",
+      "side": 1,
+      "message": "Pylint obliges it as it\u0027s declared in runtime.",
+      "parentUuid": "9ab8dda7_a72018f8",
       "revId": "1518c6df301292e403ea55e920ef0178e577e867",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
