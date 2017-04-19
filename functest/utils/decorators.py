@@ -17,7 +17,8 @@ def can_dump_request_to_file(method):
             except OSError as e:
                 if e.errno != errno.EEXIST:
                     raise
-            with open(os.path.join(parseresult.path, 'dump.txt'), 'a') as f:
+            with open(os.path.join(parseresult.path,
+                      'functest_results.txt'), 'a') as f:
                 headers = ""
                 for key in request.headers:
                     headers += key + " " + request.headers[key] + "\n"
