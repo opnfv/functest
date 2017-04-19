@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_270d0891",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-04-19T06:26:04Z",
+      "side": 1,
+      "message": "Cedric, do you have any other better suggestion? \nThe intention is that if TEST_DB_URL declared in env, it will be used as a priority.",
+      "parentUuid": "9ab8dda7_047322e8",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_64645e22",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 9
@@ -47,6 +65,24 @@
       "writtenOn": "2017-04-18T12:25:59Z",
       "side": 1,
       "message": "you should avoid \\ in this case.",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_e7261016",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-04-19T06:26:04Z",
+      "side": 1,
+      "message": "Sure. Thank you.",
+      "parentUuid": "9ab8dda7_64645e22",
       "revId": "1518c6df301292e403ea55e920ef0178e577e867",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_47103ca8",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-04-19T06:26:04Z",
+      "side": 1,
+      "message": "The idea is that if TEST_DB_URL is declared in env, update test_db_url in config_functest.yaml.",
+      "parentUuid": "9ab8dda7_246e6602",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_e477eed2",
         "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
         "patchSetId": 9
@@ -81,6 +135,24 @@
       "writtenOn": "2017-04-18T12:25:59Z",
       "side": 1,
       "message": "I think pylint and IDE don\u0027t like that. You must call __getattribute__ in this case",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_a72018f8",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-04-19T06:26:04Z",
+      "side": 1,
+      "message": "CONST is able to acquire it from config_functest.yaml, why should it be called by __getattribute__.",
+      "parentUuid": "9ab8dda7_e477eed2",
       "revId": "1518c6df301292e403ea55e920ef0178e577e867",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
