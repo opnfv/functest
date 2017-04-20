@@ -228,6 +228,24 @@
       "revId": "1518c6df301292e403ea55e920ef0178e577e867",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_7578868f",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-04-20T00:56:36Z",
+      "side": 1,
+      "message": "I see. But there are other similar errors for pylint.\nE: 58,30: Instance of \u0027Constants\u0027 has no \u0027ONOS_onosbench_username\u0027 member (no-member)\nE: 59,30: Instance of \u0027Constants\u0027 has no \u0027ONOS_onosbench_password\u0027 member (no-member)\nE: 60,29: Instance of \u0027Constants\u0027 has no \u0027ONOS_onoscli_username\u0027 member (no-member)\nE: 61,29: Instance of \u0027Constants\u0027 has no \u0027ONOS_onoscli_password\u0027 member (no-member)\nE: 62,26: Instance of \u0027Constants\u0027 has no \u0027ONOS_runtimeout\u0027 member (no-member)\n....\nHow about these other ERRORs? should they also be modified?",
+      "parentUuid": "9ab8dda7_6a4e6571",
+      "revId": "1518c6df301292e403ea55e920ef0178e577e867",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
