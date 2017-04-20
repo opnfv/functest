@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_b02fec87",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T14:42:31Z",
+      "side": 1,
+      "message": "is \u003d\u003d \u0027\u0027 really required?",
+      "revId": "f0d3a6790effb0e0db9e1becfa192f0f30173b0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_7051740d",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T14:42:31Z",
+      "side": 1,
+      "message": "format is better",
+      "revId": "f0d3a6790effb0e0db9e1becfa192f0f30173b0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_10583831",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T14:42:31Z",
+      "side": 1,
+      "message": "format",
+      "revId": "f0d3a6790effb0e0db9e1becfa192f0f30173b0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_504eb070",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T14:42:31Z",
+      "side": 1,
+      "message": "maybe split into two lines",
+      "revId": "f0d3a6790effb0e0db9e1becfa192f0f30173b0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_305bfc2f",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T14:42:31Z",
+      "side": 1,
+      "message": "if not user_id: ?",
+      "revId": "f0d3a6790effb0e0db9e1becfa192f0f30173b0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
