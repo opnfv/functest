@@ -27,6 +27,12 @@ class VnfOnBoardingBase(base.TestCase):
         self.cmd = kwargs.get('cmd', '')
         self.details = {}
         self.result_dir = CONST.dir_results
+        self.details_section_mapping = {}
+        self.details_section_mapping['deploy_orchestrator'] = 'orchestrator'
+        self.details_section_mapping['deploy_vnf'] = 'vnf'
+        self.details_section_mapping['test_vnf'] = 'test_vnf'
+        self.details_section_mapping['prepare'] = 'prepare_env'
+        self.details['prepare_env'] = {}
         self.details['orchestrator'] = {}
         self.details['vnf'] = {}
         self.details['test_vnf'] = {}
@@ -122,44 +128,41 @@ class VnfOnBoardingBase(base.TestCase):
             self.step_failure("Failed to get id of " +
                               self.creds['username'])
 
-        tenant_id = os_utils.create_tenant(
-            self.keystone_client, self.tenant_name, self.tenant_description)
-        if not tenant_id:
-            self.step_failure("Failed to create " +
-                              self.tenant_name + " tenant")
+        tenant_id = os_utils.get_tenant_id(self.keystone_client,
+                                           self.tenant_name)
+        if tenant_id == '':
+            tenant_id = os_utils.create_tenant(self.keystone_client,
+                                               self.tenant_name,
+                                               self.tenant_description)
+            if not tenant_id:
+                self.step_failure("Failed to get or create " +
+                                  self.tenant_name + " tenant")
+            roles_name = ["admin", "Admin"]
+            role_id = ''
+            for role_name in roles_name:
+                if role_id == '':
+                    role_id = os_utils.get_role_id(self.keystone_client,
+                                                   role_name)
 
-        roles_name = ["admin", "Admin"]
-        role_id = ''
-        for role_name in roles_name:
             if role_id == '':
-                role_id = os_utils.get_role_id(self.keystone_client, role_name)
+                self.step_failure("Failed to get id for %s role" % role_name)
 
-        if role_id == '':
-            self.logger.error("Failed to get id for %s role" % role_name)
-            self.step_failure("Failed to get role id of " + role_name)
+            if not os_utils.add_role_user(self.keystone_client, admin_user_id,
+                                          role_id, tenant_id):
+                self.step_failure("Failed to add %s on tenant" %
+                                  self.creds['username'])
 
-        if not os_utils.add_role_user(self.keystone_client, admin_user_id,
-                                      role_id, tenant_id):
-            self.logger.error("Failed to add %s on tenant" %
-                              self.creds['username'])
-            self.step_failure("Failed to add %s on tenant" %
-                              self.creds['username'])
-
-        user_id = os_utils.create_user(self.keystone_client,
-                                       self.tenant_name,
-                                       self.tenant_name,
-                                       None,
-                                       tenant_id)
+        user_id = os_utils.get_or_create_user(self.keystone_client,
+                                              self.tenant_name,
+                                              self.tenant_name,
+                                              None,
+                                              tenant_id)
         if not user_id:
-            self.logger.error("Failed to create %s user" % self.tenant_name)
-            self.step_failure("Failed to create user ")
+            self.step_failure("Failed to get or create %s user" %
+                              self.tenant_name)
 
-        if not os_utils.add_role_user(self.keystone_client, user_id,
-                                      role_id, tenant_id):
-            self.logger.error("Failed to add %s on tenant" %
-                              self.tenant_name)
-            self.step_failure("Failed to add %s on tenant" %
-                              self.tenant_name)
+        os_utils.add_role_user(self.keystone_client, user_id,
+                               role_id, tenant_id)
 
         self.logger.info("Update OpenStack creds informations")
         self.admin_creds = self.creds.copy()
@@ -187,30 +190,9 @@ class VnfOnBoardingBase(base.TestCase):
         self.logger.error("VNF must be tested")
         raise Exception("VNF not tested")
 
+    # clean before openstack clean run
     def clean(self):
         self.logger.info("test cleaning")
-
-        self.logger.info("Removing %s tenant .." % self.tenant_name)
-        tenant_id = os_utils.get_tenant_id(self.keystone_client,
-                                           self.tenant_name)
-        if tenant_id == '':
-            self.logger.error("Error : Failed to get id of %s tenant" %
-                              self.tenant_name)
-        else:
-            if not os_utils.delete_tenant(self.keystone_client, tenant_id):
-                self.logger.error("Error : Failed to remove %s tenant" %
-                                  self.tenant_name)
-
-        self.logger.info("Removing %s user .." % self.tenant_name)
-        user_id = os_utils.get_user_id(
-            self.keystone_client, self.tenant_name)
-        if user_id == '':
-            self.logger.error("Error : Failed to get id of %s user" %
-                              self.tenant_name)
-        else:
-            if not os_utils.delete_user(self.keystone_client, user_id):
-                self.logger.error("Error : Failed to remove %s user" %
-                                  self.tenant_name)
 
     def parse_results(self):
         exit_code = self.EX_OK
@@ -233,7 +215,7 @@ class VnfOnBoardingBase(base.TestCase):
         part = inspect.stack()[1][3]
         self.logger.error("Step '%s' failed: %s", part, error_msg)
         try:
-            part_info = self.details[part]
+            part_info = self.details[self.details_section_mapping[part]]
         except KeyError:
             self.details[part] = {}
             part_info = self.details[part]
