@@ -25,7 +25,7 @@ __author__ = ("Serena Feng <feng.xiaowei@zte.com.cn>, "
 
 
 class Feature(base.TestCase):
-    """Parent class of Functest Feature."""
+    """Base model for single Functest feature."""
 
     def __init__(self, **kwargs):
         super(Feature, self).__init__(**kwargs)
@@ -34,11 +34,13 @@ class Feature(base.TestCase):
         self.logger = ft_logger.Logger(self.project_name).getLogger()
 
     def execute(self, **kwargs):
-        """Execute Feature.
+        """Execute the Python method.
 
         The subclasses must override the default implementation which
-        is false on purpose. The only prerequisite is to return 0 if
-        success or anything else if failure.
+        is false on purpose.
+
+        The new implementation must return 0 if success or anything
+        else if failure.
 
         Args:
             kwargs: Arbitrary keyword arguments.
@@ -50,7 +52,7 @@ class Feature(base.TestCase):
         return -1
 
     def run(self, **kwargs):
-        """Run Feature.
+        """Run the feature.
 
         It allows executing any Python method by calling execute().
 
