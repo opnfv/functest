@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_10cb58a6",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T16:33:24Z",
+      "side": 1,
+      "message": "I think we should only call get_tenant_id() here.\nget_tenant could create the tenant if required and raise an exception in caise of failure",
+      "revId": "0e12e2e5ac8f1ae46a1c19436675da5075ea8f44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_d0c4e093",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T16:33:24Z",
+      "side": 1,
+      "message": "same as get_tenant_id().",
+      "revId": "0e12e2e5ac8f1ae46a1c19436675da5075ea8f44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_30ce9cb5",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T16:33:24Z",
+      "side": 1,
+      "message": "We could raise an exception here too to avoid checking the id returned.",
+      "revId": "0e12e2e5ac8f1ae46a1c19436675da5075ea8f44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
