@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_f091e49a",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T15:23:25Z",
+      "side": 1,
+      "message": "please init details... in one instruction",
+      "revId": "b9dd6250ab057387dec2cad89014e22e091843e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_70865467",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T15:23:25Z",
+      "side": 1,
+      "message": "If is useless in this case, no?",
+      "revId": "b9dd6250ab057387dec2cad89014e22e091843e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_d0962094",
+        "filename": "functest/core/vnf_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T15:23:25Z",
+      "side": 1,
+      "message": "None can be removed easily here. see the other comment.",
+      "revId": "b9dd6250ab057387dec2cad89014e22e091843e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_107d986e",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-20T15:23:25Z",
+      "side": 1,
+      "message": "user_email should be the last arg and its default value should be None",
+      "revId": "b9dd6250ab057387dec2cad89014e22e091843e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
