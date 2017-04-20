@@ -1394,6 +1394,15 @@ def create_tenant(keystone_client, tenant_name, tenant_description):
         return None
 
 
+def get_or_create_tenant(keystone_client, tenant_name, tenant_description):
+    tenant_id = get_tenant_id(keystone_client, tenant_name)
+    if not tenant_id:
+        tenant_id = create_tenant(keystone_client, tenant_name,
+                                  tenant_description)
+
+    return tenant_id
+
+
 def create_user(keystone_client, user_name, user_password,
                 user_email, tenant_id):
     try:
@@ -1415,6 +1424,15 @@ def create_user(keystone_client, user_name, user_password,
                      "'%s')]: %s" % (user_name, user_password,
                                      user_email, tenant_id, e))
         return None
+
+
+def get_or_create_user(keystone_client, user_name, user_password,
+                       tenant_id, user_email=None):
+    user_id = get_user_id(keystone_client, user_name)
+    if not user_id:
+        user_id = create_user(keystone_client, user_name, user_password,
+                              user_email, tenant_id)
+    return user_id
 
 
 def add_role_user(keystone_client, user_id, role_id, tenant_id):
