@@ -5,6 +5,7 @@
 .pydevproject
 rally_conf.json
 /docs_build/
+_build
 /docs_output/
 /releng/
 .idea
