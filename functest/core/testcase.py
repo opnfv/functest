@@ -18,7 +18,7 @@ __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
 
 class TestCase(object):
-    """Base model for single Functest testcase."""
+    """Base model for single test case."""
 
     EX_OK = os.EX_OK
     """everything is OK"""
@@ -43,7 +43,7 @@ class TestCase(object):
         self.stop_time = ""
 
     def check_criteria(self):
-        """Interpret the results of the testcase.
+        """Interpret the results of the test case.
 
         It allows getting the results of TestCase. It completes run()
         which only returns the execution status.
@@ -63,7 +63,7 @@ class TestCase(object):
         return TestCase.EX_TESTCASE_FAILED
 
     def run(self, **kwargs):
-        """Run the testcase.
+        """Run the test case.
 
         It allows running TestCase and getting its execution
         status.
@@ -89,7 +89,7 @@ class TestCase(object):
         return TestCase.EX_RUN_ERROR
 
     def push_to_db(self):
-        """Push the results of the testcase to the DB.
+        """Push the results of the test case to the DB.
 
         It allows publishing the results and to check the status.
 

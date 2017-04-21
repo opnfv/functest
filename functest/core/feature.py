@@ -25,7 +25,7 @@ __author__ = ("Serena Feng <feng.xiaowei@zte.com.cn>, "
 
 
 class Feature(base.TestCase):
-    """Base model for single Functest feature."""
+    """Base model for single feature."""
 
     def __init__(self, **kwargs):
         super(Feature, self).__init__(**kwargs)
