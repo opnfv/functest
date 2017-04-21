@@ -197,7 +197,7 @@ def push_results_to_db(project, case_name,
     POST results to the Result target DB
     """
     # Retrieve params from CI and conf
-    url = get_db_url() + "/results"
+    url = get_db_url()
 
     try:
         installer = os.environ['INSTALLER_TYPE']
