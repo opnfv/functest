@@ -18,19 +18,19 @@ __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
 
 class TestCase(object):
-    """Parent class of Functest TestCase."""
+    """Base model for single Functest testcase."""
 
     EX_OK = os.EX_OK
-    """Status code returned when everything is OK"""
+    """everything is OK"""
 
     EX_RUN_ERROR = os.EX_SOFTWARE
-    """Status code returned when run() fails"""
+    """run() failed"""
 
     EX_PUSH_TO_DB_ERROR = os.EX_SOFTWARE - 1
-    """Status code returned when push_to_db() fails"""
+    """push_to_db() failed"""
 
     EX_TESTCASE_FAILED = os.EX_SOFTWARE - 2
-    """Status code returned when results are false"""
+    """results are false"""
 
     logger = ft_logger.Logger(__name__).getLogger()
 
@@ -43,7 +43,7 @@ class TestCase(object):
         self.stop_time = ""
 
     def check_criteria(self):
-        """Interpret the results of TestCase.
+        """Interpret the results of the testcase.
 
         It allows getting the results of TestCase. It completes run()
         which only returns the execution status.
@@ -63,16 +63,17 @@ class TestCase(object):
         return TestCase.EX_TESTCASE_FAILED
 
     def run(self, **kwargs):
-        """Run TestCase.
+        """Run the testcase.
 
         It allows running TestCase and getting its execution
         status.
 
         The subclasses must override the default implementation which
-        is false on purpose. The only prerequisite is to set the
-        following attributes to push the results to DB:
+        is false on purpose.
 
-            * case_name,
+        The new implementation must set the following attributes to
+        push the results to DB:
+
             * criteria,
             * start_time,
             * stop_time.
@@ -88,7 +89,7 @@ class TestCase(object):
         return TestCase.EX_RUN_ERROR
 
     def push_to_db(self):
-        """Push the results of TestCase to the DB.
+        """Push the results of the testcase to the DB.
 
         It allows publishing the results and to check the status.
 
