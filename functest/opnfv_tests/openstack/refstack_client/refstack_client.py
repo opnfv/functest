@@ -170,7 +170,7 @@ class RefstackClient(testcase.TestCase):
         '''used for manually running,
            python refstack_client.py -c <tempest_conf_path>
            --testlist <testlist_path>
-           can generate a reference tempest.conf by
+           can generate a reference refstack_tempest.conf by
            python tempest_conf.py
         '''
         try:
@@ -205,7 +205,7 @@ class RefstackClientParser(object):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument(
             '-c', '--config',
-            help='the file path of tempest.conf',
+            help='the file path of refstack_tempest.conf',
             default=self.confpath)
         self.parser.add_argument(
             '-t', '--testlist',

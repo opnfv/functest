@@ -124,7 +124,7 @@ rally:
     router_name: rally-router
 
 refstack:
-    tempest_conf_path: openstack/refstack_client/tempest.conf
+    tempest_conf_path: openstack/refstack_client/refstack_tempest.conf
     defcore_list: openstack/refstack_client/defcore.txt
 
 vnf:
