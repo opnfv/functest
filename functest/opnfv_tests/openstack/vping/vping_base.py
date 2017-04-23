@@ -273,7 +273,7 @@ class VPingBase(testcase.TestCase):
         self.details = {'timestart': start_time,
                         'duration': duration,
                         'status': test_status}
-        self.criteria = test_status
+        self.result = test_status
 
     @staticmethod
     def pMsg(msg):

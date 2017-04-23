@@ -123,7 +123,7 @@ class ODLParseResultTesting(ODLTesting):
         with mock.patch('robot.api.ExecutionResult',
                         return_value=mock.Mock(suite=suite)):
             self.test.parse_results()
-            self.assertEqual(self.test.criteria, config['status'])
+            self.assertEqual(self.test.result, config['status'])
             self.assertEqual(self.test.start_time,
                              timestamp_to_secs(config['starttime']))
             self.assertEqual(self.test.stop_time,

@@ -196,19 +196,19 @@ class VnfOnBoardingBase(base.TestCase):
 
     def parse_results(self):
         exit_code = self.EX_OK
-        self.criteria = "PASS"
+        self.result = "PASS"
         self.logger.info(self.details)
         # The 2 VNF steps must be OK to get a PASS result
         if (self.details['vnf']['status'] is not "PASS" or
                 self.details['test_vnf']['status'] is not "PASS"):
             exit_code = self.EX_RUN_ERROR
-            self.criteria = "FAIL"
+            self.result = "FAIL"
         return exit_code
 
     def log_results(self):
         ft_utils.logger_test_results(self.project_name,
                                      self.case_name,
-                                     self.criteria,
+                                     self.result,
                                      self.details)
 
     def step_failure(self, error_msg):

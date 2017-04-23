@@ -23,7 +23,7 @@ class VnfBaseTesting(unittest.TestCase):
         self.test.project = "functest"
         self.test.start_time = "1"
         self.test.stop_time = "5"
-        self.test.criteria = ""
+        self.test.result = ""
         self.test.details = {"orchestrator": {"status": "PASS",
                                               "result": "",
                                               "duration": 20},

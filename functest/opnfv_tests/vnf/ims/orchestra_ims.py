@@ -484,7 +484,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         self.logger.info("Orchestra IMS VNF onboarding test starting")
         self.execute()
         self.logger.info("Orchestra IMS VNF onboarding test executed")
-        if self.criteria is "PASS":
+        if self.result is "PASS":
             return self.EX_OK
         else:
             return self.EX_RUN_ERROR

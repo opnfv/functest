@@ -48,10 +48,10 @@ class PyTestSuiteRunner(base.TestCase):
         if ((result.errors and len(result.errors) > 0)
                 or (result.failures and len(result.failures) > 0)):
             self.logger.info("%s FAILED" % self.case_name)
-            self.criteria = 'FAIL'
+            self.result = 'FAIL'
         else:
             self.logger.info("%s OK" % self.case_name)
-            self.criteria = 'PASS'
+            self.result = 'PASS'
 
         self.details = {}
         return exit_code

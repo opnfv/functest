@@ -119,7 +119,7 @@ class OperaIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.logger.info("Start to run Opera vIMS VNF onboarding test")
         self.execute()
         self.logger.info("Opera vIMS VNF onboarding test finished")
-        if self.criteria is "PASS":
+        if self.result is "PASS":
             return self.EX_OK
         else:
             return self.EX_RUN_ERROR
