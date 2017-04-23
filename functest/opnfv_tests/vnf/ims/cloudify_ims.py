@@ -277,7 +277,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.logger.info("Cloudify IMS VNF onboarding test starting")
         self.execute()
         self.logger.info("Cloudify IMS VNF onboarding test executed")
-        if self.criteria is "PASS":
+        if self.result is "PASS":
             return self.EX_OK
         else:
             return self.EX_RUN_ERROR

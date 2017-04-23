@@ -49,7 +49,7 @@ class AaaVnf(vnf_base.VnfOnBoardingBase):
     def main(self, **kwargs):
         self.logger.info("AAA VNF onboarding")
         self.execute()
-        if self.criteria is "PASS":
+        if self.result is "PASS":
             return self.EX_OK
         else:
             return self.EX_RUN_ERROR

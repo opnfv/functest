@@ -192,7 +192,7 @@ def logger_test_results(project, case_name, status, details):
 
 @decorators.can_dump_request_to_file
 def push_results_to_db(project, case_name,
-                       start_date, stop_date, criteria, details):
+                       start_date, stop_date, result, details):
     """
     POST results to the Result target DB
     """
@@ -213,7 +213,7 @@ def push_results_to_db(project, case_name,
 
     params = {"project_name": project, "case_name": case_name,
               "pod_name": pod_name, "installer": installer,
-              "version": version, "scenario": scenario, "criteria": criteria,
+              "version": version, "scenario": scenario, "criteria": result,
               "build_tag": build_tag, "start_date": test_start,
               "stop_date": test_stop, "details": details}
 
@@ -248,7 +248,7 @@ def push_results_to_db(project, case_name,
                      'pod': pod_name,
                      'v': version,
                      's': scenario,
-                     'c': criteria,
+                     'c': result,
                      't': build_tag,
                      'd': details,
                      'error': e

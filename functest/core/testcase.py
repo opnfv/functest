@@ -38,25 +38,25 @@ class TestCase(object):
         self.details = {}
         self.project_name = kwargs.get('project_name', 'functest')
         self.case_name = kwargs.get('case_name', '')
-        self.criteria = ""
+        self.result = ""
         self.start_time = ""
         self.stop_time = ""
 
-    def check_criteria(self):
-        """Interpret the results of the test case.
+    def check_result(self):
+        """Interpret the result of the test case.
 
-        It allows getting the results of TestCase. It completes run()
+        It allows getting the result of TestCase. It completes run()
         which only returns the execution status.
 
-        It can be overriden if checking criteria is not suitable.
+        It can be overriden if checking result is not suitable.
 
         Returns:
-            TestCase.EX_OK if criteria is 'PASS'.
+            TestCase.EX_OK if result is 'PASS'.
             TestCase.EX_TESTCASE_FAILED otherwise.
         """
         try:
-            assert self.criteria
-            if self.criteria == 'PASS':
+            assert self.result
+            if self.result == 'PASS':
                 return TestCase.EX_OK
         except AssertionError:
             self.logger.error("Please run test before checking the results")
@@ -74,7 +74,7 @@ class TestCase(object):
         The new implementation must set the following attributes to
         push the results to DB:
 
-            * criteria,
+            * result,
             * start_time,
             * stop_time.
 
@@ -99,7 +99,7 @@ class TestCase(object):
 
             * project_name,
             * case_name,
-            * criteria,
+            * result,
             * start_time,
             * stop_time.
 
@@ -110,12 +110,12 @@ class TestCase(object):
         try:
             assert self.project_name
             assert self.case_name
-            assert self.criteria
+            assert self.result
             assert self.start_time
             assert self.stop_time
             if ft_utils.push_results_to_db(
                     self.project_name, self.case_name, self.start_time,
-                    self.stop_time, self.criteria, self.details):
+                    self.stop_time, self.result, self.details):
                 self.logger.info("The results were successfully pushed to DB")
                 return TestCase.EX_OK
             else:

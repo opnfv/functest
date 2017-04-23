@@ -43,6 +43,7 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.db_url = 'test_db_url'
         self.success_rate = 2.0
         self.criteria = 'test_criteria==2.0'
+        self.result = 'PASS'
         self.start_date = 1482624000
         self.stop_date = 1482624000
         self.start_time = time.time()
@@ -279,7 +280,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                 as mock_logger_error:
             functest_utils.push_results_to_db(self.project, self.case_name,
                                               self.start_date, self.stop_date,
-                                              self.criteria, self.details)
+                                              self.result, self.details)
             mock_logger_error.assert_called_once_with("Please set env var: " +
                                                       str("\'" + env_var +
                                                           "\'"))
@@ -311,7 +312,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                              push_results_to_db(self.project, self.case_name,
                                                 self.start_date,
                                                 self.stop_date,
-                                                self.criteria, self.details))
+                                                self.result, self.details))
             mock_logger_error.assert_called_once_with(test_utils.
                                                       RegexMatch("Pushing "
                                                                  "Result to"
@@ -334,7 +335,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                              push_results_to_db(self.project, self.case_name,
                                                 self.start_date,
                                                 self.stop_date,
-                                                self.criteria, self.details))
+                                                self.result, self.details))
             self.assertTrue(mock_logger_error.called)
 
     def test_push_results_to_db_default(self):
@@ -349,7 +350,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                             push_results_to_db(self.project, self.case_name,
                                                self.start_date,
                                                self.stop_date,
-                                               self.criteria, self.details))
+                                               self.result, self.details))
     readline = 0
     test_ip = ['10.1.23.4', '10.1.14.15', '10.1.16.15']
 

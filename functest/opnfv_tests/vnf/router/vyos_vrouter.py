@@ -29,6 +29,6 @@ class VrouterVnf(base.Feature):
             f.close()
 
     def log_results(self):
-        if self.criteria == 'PASS':
+        if self.result == 'PASS':
             self.set_result_details()
         super(VrouterVnf, self).log_results()

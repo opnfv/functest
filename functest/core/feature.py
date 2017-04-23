@@ -59,7 +59,7 @@ class Feature(base.TestCase):
         It sets the following attributes required to push the results
         to DB:
 
-            * criteria,
+            * result,
             * start_time,
             * stop_time.
 
@@ -74,15 +74,15 @@ class Feature(base.TestCase):
         """
         self.start_time = time.time()
         exit_code = base.TestCase.EX_RUN_ERROR
-        self.criteria = "FAIL"
+        self.result = "FAIL"
         try:
             if self.execute(**kwargs) == 0:
                 exit_code = base.TestCase.EX_OK
-                self.criteria = 'PASS'
+                self.result = 'PASS'
             ft_utils.logger_test_results(
                 self.project_name, self.case_name,
-                self.criteria, self.details)
-            self.logger.info("%s %s", self.project_name, self.criteria)
+                self.result, self.details)
+            self.logger.info("%s %s", self.project_name, self.result)
         except Exception:  # pylint: disable=broad-except
             self.logger.exception("%s FAILED", self.project_name)
         self.logger.info("Test result is stored in '%s'", self.result_file)

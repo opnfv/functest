@@ -34,7 +34,7 @@ class TestCaseTesting(unittest.TestCase):
                                       project_name=self._project_name)
         self.test.start_time = "1"
         self.test.stop_time = "2"
-        self.test.criteria = "PASS"
+        self.test.result = "PASS"
         self.test.details = {"Hello": "World"}
 
     def test_run_unimplemented(self):
@@ -57,7 +57,7 @@ class TestCaseTesting(unittest.TestCase):
         self._test_missing_attribute()
 
     def test_missing_criteria(self):
-        self.test.criteria = None
+        self.test.result = None
         self._test_missing_attribute()
 
     def test_missing_start_time(self):
@@ -76,7 +76,7 @@ class TestCaseTesting(unittest.TestCase):
                          testcase.TestCase.EX_OK)
         mock_function.assert_called_once_with(
             self._project_name, self._case_name, self.test.start_time,
-            self.test.stop_time, self.test.criteria, self.test.details)
+            self.test.stop_time, self.test.result, self.test.details)
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=False)
@@ -85,7 +85,7 @@ class TestCaseTesting(unittest.TestCase):
                          testcase.TestCase.EX_PUSH_TO_DB_ERROR)
         mock_function.assert_called_once_with(
             self._project_name, self._case_name, self.test.start_time,
-            self.test.stop_time, self.test.criteria, self.test.details)
+            self.test.stop_time, self.test.result, self.test.details)
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=True)
@@ -94,21 +94,21 @@ class TestCaseTesting(unittest.TestCase):
                          testcase.TestCase.EX_OK)
         mock_function.assert_called_once_with(
             self._project_name, self._case_name, self.test.start_time,
-            self.test.stop_time, self.test.criteria, self.test.details)
+            self.test.stop_time, self.test.result, self.test.details)
 
-    def test_check_criteria_missing(self):
-        self.test.criteria = None
-        self.assertEqual(self.test.check_criteria(),
+    def test_check_result_missing(self):
+        self.test.result = None
+        self.assertEqual(self.test.check_result(),
                          testcase.TestCase.EX_TESTCASE_FAILED)
 
-    def test_check_criteria_failed(self):
-        self.test.criteria = 'FAILED'
-        self.assertEqual(self.test.check_criteria(),
+    def test_check_result_failed(self):
+        self.test.result = 'FAILED'
+        self.assertEqual(self.test.check_result(),
                          testcase.TestCase.EX_TESTCASE_FAILED)
 
-    def test_check_criteria_pass(self):
-        self.test.criteria = 'PASS'
-        self.assertEqual(self.test.check_criteria(),
+    def test_check_result_pass(self):
+        self.test.result = 'PASS'
+        self.assertEqual(self.test.check_result(),
                          testcase.TestCase.EX_OK)
 
 

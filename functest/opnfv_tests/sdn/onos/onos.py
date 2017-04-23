@@ -156,9 +156,9 @@ class Onos(OnosBase):
                     result['FUNCvirNetL3']['result'] == "Success"):
                 status = "PASS"
         except:
-            logger.error("Unable to set ONOS criteria")
+            logger.error("Unable to set ONOS result")
 
-        self.criteria = status
+        self.result = status
         self.details = result
 
     def _run(self):

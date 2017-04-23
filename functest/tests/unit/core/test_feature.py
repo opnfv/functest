@@ -35,9 +35,9 @@ class FeatureTestingBase(unittest.TestCase):
     def _test_run(self, status, mock_method=None):
         self.assertEqual(self.feature.run(cmd=self._cmd), status)
         if status == testcase.TestCase.EX_OK:
-            self.assertEqual(self.feature.criteria, 'PASS')
+            self.assertEqual(self.feature.result, 'PASS')
         else:
-            self.assertEqual(self.feature.criteria, 'FAIL')
+            self.assertEqual(self.feature.result, 'FAIL')
         mock_method.assert_has_calls([mock.call(), mock.call()])
         self.assertEqual(self.feature.start_time, 1)
         self.assertEqual(self.feature.stop_time, 2)

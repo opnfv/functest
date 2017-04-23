@@ -133,10 +133,10 @@ class RefstackClient(testcase.TestCase):
         except Exception:
             success_rate = 0
 
-        self.criteria = ft_utils.check_success_rate(
+        self.result = ft_utils.check_success_rate(
             self.case_name, success_rate)
         logger.info("Testcase %s success_rate is %s%%, is marked as %s"
-                    % (self.case_name, success_rate, self.criteria))
+                    % (self.case_name, success_rate, self.result))
 
     def run(self):
         '''used for functest command line,
