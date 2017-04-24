@@ -16,8 +16,5 @@ class BarometerCollectd(base.Feature):
     Class for executing barometercollectd testcase.
     '''
 
-    def __init__(self, **kwargs):
-        super(BarometerCollectd, self).__init__(**kwargs)
-
     def execute(self):
         return collectd.main(self.logger)
