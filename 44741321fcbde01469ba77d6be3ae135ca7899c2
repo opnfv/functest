@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_f6fd5c3c",
+        "filename": "functest/tests/unit/opnfv_tests/openstack/tempest/test_tempest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-24T10:10:08Z",
+      "side": 1,
+      "message": "You should have initialized it to None instead of \u0027\u0027",
+      "revId": "44741321fcbde01469ba77d6be3ae135ca7899c2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
