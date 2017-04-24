@@ -105,7 +105,7 @@ class OSTempestTesting(unittest.TestCase):
         self._test_generate_test_list_mode_default('full')
 
     def test_parse_verifier_result_missing_verification_uuid(self):
-        self.tempestcommon.VERIFICATION_ID = ''
+        self.tempestcommon.VERIFICATION_ID = None
         with self.assertRaises(Exception):
             self.tempestcommon.parse_verifier_result()
 

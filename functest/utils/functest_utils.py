@@ -379,23 +379,14 @@ def get_functest_config(parameter):
     return get_parameter_from_yaml(parameter, yaml_)
 
 
-def check_success_rate(case_name, success_rate):
-    success_rate = float(success_rate)
+def check_success_rate(case_name, result):
+    # It should be removed as TestCase tests criteria
+    # and result.
+    logger.warning('check_success_rate will be removed soon')
     criteria = get_criteria_by_test(case_name)
-
-    def get_criteria_value(op):
-        return float(criteria.split(op)[1].rstrip('%'))
-
-    status = 'FAIL'
-    ops = ['==', '>=']
-    for op in ops:
-        if op in criteria:
-            c_value = get_criteria_value(op)
-            if eval("%s %s %s" % (success_rate, op, c_value)):
-                status = 'PASS'
-            break
-
-    return status
+    if type(criteria) == int and result >= criteria:
+        return 'PASS'
+    return 'FAIL'
 
 
 def merge_dicts(dict1, dict2):

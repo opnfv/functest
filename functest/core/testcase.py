@@ -38,6 +38,7 @@ class TestCase(object):
         self.details = {}
         self.project_name = kwargs.get('project_name', 'functest')
         self.case_name = kwargs.get('case_name', '')
+        self.criteria = kwargs.get('criteria', 100)
         self.result = ""
         self.start_time = ""
         self.stop_time = ""
@@ -55,9 +56,19 @@ class TestCase(object):
             TestCase.EX_TESTCASE_FAILED otherwise.
         """
         try:
-            assert self.result
-            if self.result == 'PASS':
-                return TestCase.EX_OK
+            assert self.criteria
+            if isinstance(self.result, int) and isinstance(self.criteria, int):
+                if self.result >= self.criteria:
+                    return TestCase.EX_OK
+            else:
+                # Backward compatibility
+                # It must be removed as soon as TestCase subclasses
+                # stop setting result = 'PASS' or 'FAIL'.
+                # In this case criteria is unread.
+                self.logger.warning(
+                    "Please update result which must be an int!")
+                if self.result == 'PASS':
+                    return TestCase.EX_OK
         except AssertionError:
             self.logger.error("Please run test before checking the results")
         return TestCase.EX_TESTCASE_FAILED
@@ -110,12 +121,13 @@ class TestCase(object):
         try:
             assert self.project_name
             assert self.case_name
-            assert self.result
             assert self.start_time
             assert self.stop_time
+            pub_result = 'PASS' if self.check_result(
+                ) == TestCase.EX_OK else 'FAIL'
             if ft_utils.push_results_to_db(
                     self.project_name, self.case_name, self.start_time,
-                    self.stop_time, self.result, self.details):
+                    self.stop_time, pub_result, self.details):
                 self.logger.info("The results were successfully pushed to DB")
                 return TestCase.EX_OK
             else:

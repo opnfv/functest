@@ -28,13 +28,14 @@ class TestCaseTesting(unittest.TestCase):
 
     _case_name = "base"
     _project_name = "functest"
+    _published_result = "PASS"
 
     def setUp(self):
         self.test = testcase.TestCase(case_name=self._case_name,
                                       project_name=self._project_name)
         self.test.start_time = "1"
         self.test.stop_time = "2"
-        self.test.result = "PASS"
+        self.test.result = 100
         self.test.details = {"Hello": "World"}
 
     def test_run_unimplemented(self):
@@ -56,10 +57,6 @@ class TestCaseTesting(unittest.TestCase):
         self.test.case_name = None
         self._test_missing_attribute()
 
-    def test_missing_criteria(self):
-        self.test.result = None
-        self._test_missing_attribute()
-
     def test_missing_start_time(self):
         self.test.start_time = None
         self._test_missing_attribute()
@@ -76,7 +73,7 @@ class TestCaseTesting(unittest.TestCase):
                          testcase.TestCase.EX_OK)
         mock_function.assert_called_once_with(
             self._project_name, self._case_name, self.test.start_time,
-            self.test.stop_time, self.test.result, self.test.details)
+            self.test.stop_time, self._published_result, self.test.details)
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=False)
@@ -85,7 +82,7 @@ class TestCaseTesting(unittest.TestCase):
                          testcase.TestCase.EX_PUSH_TO_DB_ERROR)
         mock_function.assert_called_once_with(
             self._project_name, self._case_name, self.test.start_time,
-            self.test.stop_time, self.test.result, self.test.details)
+            self.test.stop_time, self._published_result, self.test.details)
 
     @mock.patch('functest.utils.functest_utils.push_results_to_db',
                 return_value=True)
@@ -94,7 +91,33 @@ class TestCaseTesting(unittest.TestCase):
                          testcase.TestCase.EX_OK)
         mock_function.assert_called_once_with(
             self._project_name, self._case_name, self.test.start_time,
-            self.test.stop_time, self.test.result, self.test.details)
+            self.test.stop_time, self._published_result, self.test.details)
+
+    @mock.patch('functest.utils.functest_utils.push_results_to_db',
+                return_value=True)
+    def test_push_to_db_res_ko(self, mock_function=None):
+        self.test.result = 0
+        self.assertEqual(self.test.push_to_db(),
+                         testcase.TestCase.EX_OK)
+        mock_function.assert_called_once_with(
+            self._project_name, self._case_name, self.test.start_time,
+            self.test.stop_time, 'FAIL', self.test.details)
+
+    @mock.patch('functest.utils.functest_utils.push_results_to_db',
+                return_value=True)
+    def test_push_to_db_both_ko(self, mock_function=None):
+        self.test.result = 0
+        self.test.criteria = 0
+        self.assertEqual(self.test.push_to_db(),
+                         testcase.TestCase.EX_OK)
+        mock_function.assert_called_once_with(
+            self._project_name, self._case_name, self.test.start_time,
+            self.test.stop_time, 'FAIL', self.test.details)
+
+    def test_check_criteria_missing(self):
+        self.test.criteria = None
+        self.assertEqual(self.test.check_result(),
+                         testcase.TestCase.EX_TESTCASE_FAILED)
 
     def test_check_result_missing(self):
         self.test.result = None
@@ -102,12 +125,34 @@ class TestCaseTesting(unittest.TestCase):
                          testcase.TestCase.EX_TESTCASE_FAILED)
 
     def test_check_result_failed(self):
-        self.test.result = 'FAILED'
+        # Backward compatibility
+        # It must be removed as soon as TestCase subclasses
+        # stop setting result = 'PASS' or 'FAIL'.
+        self.test.result = 'FAIL'
         self.assertEqual(self.test.check_result(),
                          testcase.TestCase.EX_TESTCASE_FAILED)
 
     def test_check_result_pass(self):
+        # Backward compatibility
+        # It must be removed as soon as TestCase subclasses
+        # stop setting result = 'PASS' or 'FAIL'.
         self.test.result = 'PASS'
+        self.assertEqual(self.test.check_result(),
+                         testcase.TestCase.EX_OK)
+
+    def test_check_result_lt(self):
+        self.test.result = 50
+        self.assertEqual(self.test.check_result(),
+                         testcase.TestCase.EX_TESTCASE_FAILED)
+
+    def test_check_result_eq(self):
+        self.test.result = 100
+        self.assertEqual(self.test.check_result(),
+                         testcase.TestCase.EX_OK)
+
+    def test_check_result_gt(self):
+        self.test.criteria = 50
+        self.test.result = 100
         self.assertEqual(self.test.check_result(),
                          testcase.TestCase.EX_OK)
 

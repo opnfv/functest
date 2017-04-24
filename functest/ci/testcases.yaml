@@ -10,7 +10,7 @@ tiers:
             -
                 case_name: connection_check
                 project_name: functest
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: true
                 clean_flag: false
                 description: >-
@@ -30,7 +30,7 @@ tiers:
             -
                 case_name: api_check
                 project_name: functest
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: true
                 clean_flag: false
                 description: >-
@@ -49,7 +49,7 @@ tiers:
             -
                 case_name: snaps_health_check
                 project_name: functest
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: true
                 clean_flag: false
                 description: >-
@@ -73,7 +73,7 @@ tiers:
             -
                 case_name: vping_ssh
                 project_name: functest
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: true
                 clean_flag: true
                 description: >-
@@ -90,7 +90,7 @@ tiers:
             -
                 case_name: vping_userdata
                 project_name: functest
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: true
                 clean_flag: true
                 description: >-
@@ -106,7 +106,7 @@ tiers:
             -
                 case_name: tempest_smoke_serial
                 project_name: functest
-                criteria: 'success_rate == 100%'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -124,7 +124,7 @@ tiers:
             -
                 case_name: rally_sanity
                 project_name: functest
-                criteria: 'success_rate == 100%'
+                criteria: 100
                 blocking: false
                 clean_flag: false
                 description: >-
@@ -140,7 +140,7 @@ tiers:
             -
                 case_name: refstack_defcore
                 project_name: functest
-                criteria: 'success_rate == 100%'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -156,7 +156,7 @@ tiers:
             -
                 case_name: odl
                 project_name: functest
-                criteria: 'success_rate == 100%'
+                criteria: 100
                 blocking: true
                 clean_flag: false
                 description: >-
@@ -177,7 +177,7 @@ tiers:
             -
                 case_name: odl_netvirt
                 project_name: functest
-                criteria: 'success_rate == 100%'
+                criteria: 100
                 blocking: false
                 clean_flag: false
                 description: >-
@@ -200,7 +200,7 @@ tiers:
             -
                 case_name: fds
                 project_name: functest
-                criteria: 'success_rate == 100%'
+                criteria: 100
                 blocking: false
                 clean_flag: false
                 description: >-
@@ -220,7 +220,7 @@ tiers:
             -
                 case_name: onos
                 project_name: functest
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: true
                 clean_flag: true
                 description: >-
@@ -237,7 +237,7 @@ tiers:
             -
                 case_name: snaps_smoke
                 project_name: functest
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: false
                 description: >-
@@ -267,7 +267,7 @@ tiers:
             -
                 case_name: promise
                 project_name: promise
-                criteria: 'success_rate == 100%'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -284,7 +284,7 @@ tiers:
             -
                 case_name: doctor-notification
                 project_name: doctor
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -301,7 +301,7 @@ tiers:
             -
                 case_name: bgpvpn
                 project_name: sdnvpn
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -318,7 +318,7 @@ tiers:
             -
                 case_name: security_scan
                 project_name: securityscanning
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -335,7 +335,7 @@ tiers:
             -
                 case_name: copper
                 project_name: copper
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -352,7 +352,7 @@ tiers:
             -
                 case_name: multisite
                 project_name: multisite
-                criteria: 'success_rate == 100%'
+                criteria: 100
                 blocking: false
                 clean_flag: false
                 description: >-
@@ -366,7 +366,7 @@ tiers:
             -
                 case_name: functest-odl-sfc
                 project_name: sfc
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -382,7 +382,7 @@ tiers:
             -
                 case_name: onos_sfc
                 project_name: functest
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: true
                 clean_flag: true
                 description: >-
@@ -396,7 +396,7 @@ tiers:
             -
                 case_name: parser-basics
                 project_name: parser
-                criteria: 'ret == 0'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -412,7 +412,7 @@ tiers:
             -
                 case_name: domino-multinode
                 project_name: domino
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -428,7 +428,7 @@ tiers:
             -
                 case_name: gluon_vping
                 project_name: netready
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -444,7 +444,7 @@ tiers:
             -
                 case_name: barometercollectd
                 project_name: barometer
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -468,7 +468,7 @@ tiers:
             -
                 case_name: tempest_full_parallel
                 project_name: functest
-                criteria: 'success_rate >= 80%'
+                criteria: 80
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -484,7 +484,7 @@ tiers:
             -
                 case_name: tempest_custom
                 project_name: functest
-                criteria: 'success_rate == 100%'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -502,7 +502,7 @@ tiers:
             -
                 case_name: rally_full
                 project_name: functest
-                criteria: 'success_rate >= 90%'
+                criteria: 90
                 blocking: false
                 clean_flag: false
                 description: >-
@@ -525,7 +525,7 @@ tiers:
             -
                 case_name: cloudify_ims
                 project_name: functest
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -540,7 +540,7 @@ tiers:
 #          -
 #               case_name: aaa
 #               project_name: functest
-#               criteria: 'ret == 0'
+#               criteria: 100
 #               blocking: false
 #               clean_flag: true
 #               description: >-
@@ -554,7 +554,7 @@ tiers:
             -
                 case_name: orchestra_ims
                 project_name: functest
-                criteria: 'ret == 0'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -569,7 +569,7 @@ tiers:
             -
                 case_name: opera-vims
                 project_name: opera
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-
@@ -584,7 +584,7 @@ tiers:
             -
                 case_name: vyos_vrouter
                 project_name: functest
-                criteria: 'status == "PASS"'
+                criteria: 100
                 blocking: false
                 clean_flag: true
                 description: >-

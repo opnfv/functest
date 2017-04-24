@@ -74,11 +74,11 @@ class Feature(base.TestCase):
         """
         self.start_time = time.time()
         exit_code = base.TestCase.EX_RUN_ERROR
-        self.result = "FAIL"
+        self.result = 0
         try:
             if self.execute(**kwargs) == 0:
                 exit_code = base.TestCase.EX_OK
-                self.result = 'PASS'
+                self.result = 100
             ft_utils.logger_test_results(
                 self.project_name, self.case_name,
                 self.result, self.details)
