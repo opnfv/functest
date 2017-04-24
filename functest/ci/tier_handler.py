@@ -158,7 +158,7 @@ class TestCase(object):
         for line in lines:
             out += ("|    " + line.ljust(LINE_LENGTH - 7) + " |\n")
         out += ("| Criteria:  " +
-                self.criteria.ljust(LINE_LENGTH - 14) + "|\n")
+                str(self.criteria).ljust(LINE_LENGTH - 14) + "|\n")
         out += ("| Dependencies:".ljust(LINE_LENGTH - 1) + "|\n")
         installer = self.dependency.get_installer()
         scenario = self.dependency.get_scenario()

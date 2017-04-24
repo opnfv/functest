@@ -41,9 +41,8 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.status = 'test_status'
         self.details = 'test_details'
         self.db_url = 'test_db_url'
-        self.success_rate = 2.0
-        self.criteria = 'test_criteria==2.0'
-        self.result = 'PASS'
+        self.criteria = 50
+        self.result = 75
         self.start_date = 1482624000
         self.stop_date = 1482624000
         self.start_time = time.time()
@@ -567,7 +566,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                 as mock_criteria:
             mock_criteria.return_value = self.criteria
             resp = functest_utils.check_success_rate(self.case_name,
-                                                     self.success_rate)
+                                                     self.result)
             self.assertEqual(resp, 'PASS')
 
     def test_check_success_rate_failed(self):
@@ -575,7 +574,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                 as mock_criteria:
             mock_criteria.return_value = self.criteria
             resp = functest_utils.check_success_rate(self.case_name,
-                                                     3.0)
+                                                     0)
             self.assertEqual(resp, 'FAIL')
 
     # TODO: merge_dicts
