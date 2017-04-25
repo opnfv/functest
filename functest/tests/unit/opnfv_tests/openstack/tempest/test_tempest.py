@@ -169,100 +169,82 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestcommon.parse_verifier_result()
             mock_method.assert_any_call('test_case_name', 100)
 
-    def test_run_missing_create_tempest_dir(self):
-        ret = testcase.TestCase.EX_RUN_ERROR
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'os.path.exists', return_value=False), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os.makedirs') as mock_os_makedirs, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.create_tempest_resources',
-                       return_value="image_and_flavor"):
-            self.assertEqual(self.tempestcommon.run(),
-                             ret)
-            self.assertTrue(mock_os_makedirs.called)
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'os.path.exists', return_value=False)
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs',
+                side_effect=Exception)
+    def test_run_makedirs_ko(self, *args):
+        self.assertEqual(self.tempestcommon.run(),
+                         testcase.TestCase.EX_RUN_ERROR)
 
-    def test_run_missing_configure_tempest(self):
-        ret = testcase.TestCase.EX_RUN_ERROR
-        ret_ok = testcase.TestCase.EX_OK
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'os.path.exists', return_value=False), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os.makedirs') as mock_os_makedirs, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.create_tempest_resources',
-                       return_value=ret_ok), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.configure_tempest',
-                       return_value=ret):
-            self.assertEqual(self.tempestcommon.run(),
-                             ret)
-            self.assertTrue(mock_os_makedirs.called)
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'os.path.exists', return_value=False)
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'conf_utils.create_tempest_resources', side_effect=Exception)
+    def test_run_create_tempest_resources_ko(self, *args):
+        self.assertEqual(self.tempestcommon.run(),
+                         testcase.TestCase.EX_RUN_ERROR)
+
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'os.path.exists', return_value=False)
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'conf_utils.create_tempest_resources', return_value={})
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'conf_utils.configure_tempest', side_effect=Exception)
+    def test_run_configure_tempest_ko(self, *args):
+        self.assertEqual(self.tempestcommon.run(),
+                         testcase.TestCase.EX_RUN_ERROR)
+
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'os.path.exists', return_value=False)
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'conf_utils.create_tempest_resources', return_value={})
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'conf_utils.configure_tempest')
+    def _test_run(self, status, *args):
+        self.assertEqual(self.tempestcommon.run(), status)
 
     def test_run_missing_generate_test_list(self):
-        ret = testcase.TestCase.EX_RUN_ERROR
-        ret_ok = testcase.TestCase.EX_OK
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'os.path.exists', return_value=False), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os.makedirs') as mock_os_makedirs, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.create_tempest_resources',
-                       return_value=ret_ok), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.configure_tempest',
-                       return_value=ret_ok), \
-            mock.patch.object(self.tempestcommon, 'generate_test_list',
-                              return_value=ret):
-            self.assertEqual(self.tempestcommon.run(),
-                             ret)
-            self.assertTrue(mock_os_makedirs.called)
+        with mock.patch.object(self.tempestcommon, 'generate_test_list',
+                               side_effect=Exception):
+            self._test_run(testcase.TestCase.EX_RUN_ERROR)
 
-    def test_run_missing_apply_tempest_blacklist(self):
-        ret = testcase.TestCase.EX_RUN_ERROR
-        ret_ok = testcase.TestCase.EX_OK
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'os.path.exists', return_value=False), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os.makedirs') as mock_os_makedirs, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.create_tempest_resources',
-                       return_value=ret_ok), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.configure_tempest',
-                       return_value=ret_ok), \
-            mock.patch.object(self.tempestcommon, 'generate_test_list',
-                              return_value=ret_ok), \
-            mock.patch.object(self.tempestcommon, 'apply_tempest_blacklist',
-                              return_value=ret):
-            self.assertEqual(self.tempestcommon.run(),
-                             ret)
-            self.assertTrue(mock_os_makedirs.called)
+    def test_run_apply_tempest_blacklist_ko(self):
+        with mock.patch.object(self.tempestcommon, 'generate_test_list'), \
+                    mock.patch.object(self.tempestcommon,
+                                      'apply_tempest_blacklist',
+                                      side_effect=Exception()):
+            self._test_run(testcase.TestCase.EX_RUN_ERROR)
 
-    def test_run_missing_parse_verifier_result(self):
-        ret = testcase.TestCase.EX_RUN_ERROR
-        ret_ok = testcase.TestCase.EX_OK
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'os.path.exists', return_value=False), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'os.makedirs') as mock_os_makedirs, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.create_tempest_resources',
-                       return_value=ret_ok), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.configure_tempest',
-                       return_value=ret_ok), \
-            mock.patch.object(self.tempestcommon, 'generate_test_list',
-                              return_value=ret_ok), \
-            mock.patch.object(self.tempestcommon, 'apply_tempest_blacklist',
-                              return_value=ret_ok), \
-            mock.patch.object(self.tempestcommon, 'run_verifier_tests',
-                              return_value=ret_ok), \
-            mock.patch.object(self.tempestcommon, 'parse_verifier_result',
-                              return_value=ret):
-            self.assertEqual(self.tempestcommon.run(),
-                             ret)
-            self.assertTrue(mock_os_makedirs.called)
+    def test_run_verifier_tests_ko(self, *args):
+        with mock.patch.object(self.tempestcommon, 'generate_test_list'), \
+                mock.patch.object(self.tempestcommon,
+                                  'apply_tempest_blacklist'), \
+                mock.patch.object(self.tempestcommon, 'run_verifier_tests',
+                                  side_effect=Exception()), \
+                mock.patch.object(self.tempestcommon, 'parse_verifier_result',
+                                  side_effect=Exception):
+            self._test_run(testcase.TestCase.EX_RUN_ERROR)
+
+    def test_run_parse_verifier_result_ko(self, *args):
+        with mock.patch.object(self.tempestcommon, 'generate_test_list'), \
+                mock.patch.object(self.tempestcommon,
+                                  'apply_tempest_blacklist'), \
+                mock.patch.object(self.tempestcommon, 'run_verifier_tests'), \
+                mock.patch.object(self.tempestcommon, 'parse_verifier_result',
+                                  side_effect=Exception):
+            self._test_run(testcase.TestCase.EX_RUN_ERROR)
+
+    def test_run(self, *args):
+        with mock.patch.object(self.tempestcommon, 'generate_test_list'), \
+                mock.patch.object(self.tempestcommon,
+                                  'apply_tempest_blacklist'), \
+                mock.patch.object(self.tempestcommon, 'run_verifier_tests'), \
+                mock.patch.object(self.tempestcommon, 'parse_verifier_result'):
+            self._test_run(testcase.TestCase.EX_OK)
 
 
 if __name__ == "__main__":
