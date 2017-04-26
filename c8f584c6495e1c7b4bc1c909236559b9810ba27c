@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_4059fdfc",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-04-26T02:49:03Z",
+      "side": 1,
+      "message": "make some illustration in patchset 2 line 270-275.",
+      "parentUuid": "9ab8dda7_5696a8f1",
+      "revId": "c8f584c6495e1c7b4bc1c909236559b9810ba27c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_fbab051c",
         "filename": "docs/testing/user/userguide/index.rst",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-04-22T04:07:52Z",
       "side": 1,
       "message": "It is not necessary to installed again for functest without volume mapping.",
+      "range": {
+        "startLine": 277,
+        "startChar": 2,
+        "endLine": 277,
+        "endChar": 18
+      },
+      "revId": "c8f584c6495e1c7b4bc1c909236559b9810ba27c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_e067d1b5",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-04-26T02:49:03Z",
+      "side": 1,
+      "message": "yep. there are some circumstances when developer to mount the /functest repo for develop(debugging) or /results to local host. so need pip install here. further, pip install here is harmless. so keep it here.",
+      "parentUuid": "9ab8dda7_fbab051c",
       "range": {
         "startLine": 277,
         "startChar": 2,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_800615cd",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-04-26T02:49:03Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9ab8dda7_3ba3dd50",
+      "range": {
+        "startLine": 311,
+        "startChar": 10,
+        "endLine": 311,
+        "endChar": 18
+      },
+      "revId": "c8f584c6495e1c7b4bc1c909236559b9810ba27c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_fb8465b2",
         "filename": "docs/testing/user/userguide/index.rst",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2017-04-22T04:07:52Z",
       "side": 1,
       "message": "recommended",
+      "range": {
+        "startLine": 321,
+        "startChar": 31,
+        "endLine": 321,
+        "endChar": 42
+      },
+      "revId": "c8f584c6495e1c7b4bc1c909236559b9810ba27c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_a009d9de",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-04-26T02:49:03Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9ab8dda7_fb8465b2",
       "range": {
         "startLine": 321,
         "startChar": 31,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_6013e10d",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-04-26T02:49:03Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9ab8dda7_9b93e9f9",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 329,
+        "endChar": 4
+      },
+      "revId": "c8f584c6495e1c7b4bc1c909236559b9810ba27c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_bb8eedce",
         "filename": "docs/testing/user/userguide/index.rst",
         "patchSetId": 1
@@ -122,6 +236,30 @@
       "writtenOn": "2017-04-22T04:07:52Z",
       "side": 1,
       "message": "Since the last step has declared where the file is stored, so how about removing this cd line?  just for your information.",
+      "range": {
+        "startLine": 333,
+        "startChar": 2,
+        "endLine": 333,
+        "endChar": 78
+      },
+      "revId": "c8f584c6495e1c7b4bc1c909236559b9810ba27c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_40101d01",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-04-26T02:49:03Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9ab8dda7_bb8eedce",
       "range": {
         "startLine": 333,
         "startChar": 2,
