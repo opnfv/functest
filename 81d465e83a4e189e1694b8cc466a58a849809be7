@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_03422f3e",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-26T09:44:51Z",
+      "side": 1,
+      "message": "I think you could keep them as class attributes.",
+      "revId": "81d465e83a4e189e1694b8cc466a58a849809be7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_233df3bb",
+        "filename": "functest/opnfv_tests/sdn/onos/onos.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-26T09:44:51Z",
+      "side": 1,
+      "message": "please call __get_attribute__() to avoid pylint warnings.",
+      "revId": "81d465e83a4e189e1694b8cc466a58a849809be7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
