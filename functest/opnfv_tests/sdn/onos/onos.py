@@ -21,16 +21,21 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as openstack_utils
 
 
-logger = ft_logger.Logger(__name__).getLogger()
-
-
 class OnosBase(testcase.TestCase):
-    onos_repo_path = CONST.dir_repo_onos
-    onos_sfc_image_name = CONST.onos_sfc_image_name
-    onos_sfc_image_path = os.path.join(CONST.dir_functest_data,
-                                       CONST.onos_sfc_image_file_name)
-    onos_sfc_path = os.path.join(CONST.dir_repo_functest,
-                                 CONST.dir_onos_sfc)
+    onos_repo_path = CONST.__getattribute__('dir_repo_onos')
+    onos_sfc_image_name = CONST.__getattribute__('onos_sfc_image_name')
+    onos_sfc_image_path = os.path.join(
+        CONST.__getattribute__('dir_functest_data'),
+        CONST.__getattribute__('onos_sfc_image_file_name'))
+    onos_sfc_path = os.path.join(CONST.__getattribute__('dir_repo_functest'),
+                                 CONST.__getattribute__('dir_onos_sfc'))
+    installer_type = CONST.__getattribute__('INSTALLER_TYPE')
+    logger = ft_logger.Logger(__name__).getLogger()
+
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "onos_base"
+        super(OnosBase, self).__init__(**kwargs)
 
     def run(self):
         self.start_time = time.time()
@@ -38,7 +43,7 @@ class OnosBase(testcase.TestCase):
             self._run()
             res = testcase.TestCase.EX_OK
         except Exception as e:
-            logger.error('Error with run: %s', e)
+            self.logger.error('Error with run: %s', e)
             res = testcase.TestCase.EX_RUN_ERROR
 
         self.stop_time = time.time()
@@ -56,20 +61,20 @@ class Onos(OnosBase):
         self.log_path = os.path.join(self.onos_repo_path, 'TestON/logs')
 
     def set_onos_ip(self):
-        if (CONST.INSTALLER_TYPE and
-                CONST.INSTALLER_TYPE.lower() == 'joid'):
+        if (self.installer_type and
+                self.installer_type.lower() == 'joid'):
             sdn_controller_env = os.getenv('SDN_CONTROLLER')
             OC1 = re.search(r"\d+\.\d+\.\d+\.\d+", sdn_controller_env).group()
         else:
             neutron_url = openstack_utils.get_endpoint(service_type='network')
             OC1 = urlparse.urlparse(neutron_url).hostname
         os.environ['OC1'] = OC1
-        logger.debug("ONOS IP is %s" % OC1)
+        self.logger.debug("ONOS IP is %s", OC1)
 
     def run_onos_script(self, testname):
         cli_dir = os.path.join(self.onos_repo_path, 'TestON/bin/cli.py')
         cmd = '{0} run {1}'.format(cli_dir, testname)
-        logger.debug("Run script: %s" % testname)
+        self.logger.debug("Run script: %s", testname)
         ft_utils.execute_command_raise(
             cmd,
             error_msg=('Error when running ONOS script: %s'
@@ -84,8 +89,8 @@ class Onos(OnosBase):
                 elif os.path.isfile(log):
                     os.remove(log)
             except OSError as e:
-                logger.error('Error with deleting file %s: %s',
-                             log, e.strerror)
+                self.logger.error('Error with deleting file %s: %s',
+                                  log, e.strerror)
 
     def get_result(self):
         cmd = 'grep -rnh Fail {0}'.format(self.log_path)
@@ -95,9 +100,9 @@ class Onos(OnosBase):
                              stderr=subprocess.STDOUT)
 
         for line in p.stdout:
-            logger.debug(line)
+            self.logger.debug(line)
             if re.search("\s+[1-9]+\s+", line):
-                logger.debug("Testcase Fails\n" + line)
+                self.logger.debug("Testcase Fails\n" + line)
 
         cmd = "grep -rnh 'Execution Time' {0}".format(self.log_path)
         result_buffer = os.popen(cmd).read()
@@ -155,8 +160,8 @@ class Onos(OnosBase):
             if (result['FUNCvirNet']['result'] == "Success" and
                     result['FUNCvirNetL3']['result'] == "Success"):
                 status = "PASS"
-        except:
-            logger.error("Unable to set ONOS result")
+        except Exception:
+            self.logger.error("Unable to set ONOS result")
 
         self.result = status
         self.details = result
@@ -170,13 +175,14 @@ class Onos(OnosBase):
 
 
 class OnosSfc(OnosBase):
-    def __init__(self):
-        super(OnosSfc, self).__init__()
-        self.case_name = 'onos_sfc'
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "onos_sfc"
+        super(OnosSfc, self).__init__(**kwargs)
 
-    def get_ip(type):
+    def get_ip(self, type):
         url = openstack_utils.get_endpoint(service_type=type)
-        logger.debug('get_ip for %s: %s' % (type, url))
+        self.logger.debug('get_ip for %s: %s', type, url)
         return urlparse.urlparse(url).hostname
 
     def update_sfc_onos_file(self, before, after):
@@ -190,6 +196,7 @@ class OnosSfc(OnosBase):
                        % (before, after)))
 
     def create_image(self):
+        self.logger.warn('inside create_image')
         glance_client = openstack_utils.get_glance_client()
         image_id = openstack_utils.create_glance_image(
             glance_client,
@@ -198,19 +205,20 @@ class OnosSfc(OnosBase):
         if image_id is None:
             raise Exception('Failed to create image')
 
-        logger.debug("Image '%s' with ID=%s is created successfully."
-                     % (self.onos_sfc_image_name, image_id))
+        self.logger.debug("Image '%s' with ID=%s is created successfully.",
+                          self.onos_sfc_image_name, image_id)
 
     def set_sfc_conf(self):
         self.update_sfc_onos_file("keystone_ip", self.get_ip("keystone"))
         self.update_sfc_onos_file("neutron_ip", self.get_ip("neutron"))
         self.update_sfc_onos_file("nova_ip", self.get_ip("nova"))
         self.update_sfc_onos_file("glance_ip", self.get_ip("glance"))
-        self.update_sfc_onos_file("console", CONST.OS_PASSWORD)
+        self.update_sfc_onos_file("console",
+                                  CONST.__getattribute__('OS_PASSWORD'))
         neutron_client = openstack_utils.get_neutron_client()
         ext_net = openstack_utils.get_external_net(neutron_client)
         self.update_sfc_onos_file("admin_floating_net", ext_net)
-        logger.debug("SFC configuration is modified")
+        self.logger.debug("SFC configuration is modified")
 
     def sfc_test(self):
         cmd = 'python {0}'.format(os.path.join(self.onos_sfc_path, 'sfc.py'))
