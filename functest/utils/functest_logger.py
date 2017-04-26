@@ -41,6 +41,13 @@ ignore = ["paramiko",
 
 class Logger(object):
 
+    instance = None
+
+    def __new__(cls, logger_name):
+        if cls.instance is None:
+            cls.instance = object.__new__(cls)
+        return cls.instance
+
     def __init__(self, logger_name):
         self.setup_logging()
         self.logger = logging.getLogger(logger_name)
