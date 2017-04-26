@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_632a0b2e",
+        "filename": "functest/ci/tier_handler.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-26T11:57:14Z",
+      "side": 1,
+      "message": "Sure. Here I simply fixed the new issue.",
+      "parentUuid": "9ab8dda7_03fa2fbd",
+      "revId": "37c98a6fa101be2b32129dd5d71ad750f5245b88",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_23f5f3ca",
         "filename": "functest/core/feature.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-04-26T11:42:35Z",
       "side": 1,
       "message": "Although the code is right, it\u0027s a bit misleading because normally for result\u003d0 means PASS and any other number for FAIL. I know this is not a return value, but it looks a bit confusing.\n\nMaybe, instead of result, we should call it success_rate or something similar.",
+      "revId": "37c98a6fa101be2b32129dd5d71ad750f5245b88",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_63e1abfd",
+        "filename": "functest/core/feature.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-26T11:57:14Z",
+      "side": 1,
+      "message": "The purpose is to compare result and criteria. Then we can\u0027t evaluate result\u003d0 as PASS.\n\nI can rename it success_rate. Here it may be any int number (percent is not mandatory).",
+      "parentUuid": "9ab8dda7_23f5f3ca",
       "revId": "37c98a6fa101be2b32129dd5d71ad750f5245b88",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
