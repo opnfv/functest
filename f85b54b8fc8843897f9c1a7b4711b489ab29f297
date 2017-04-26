@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_03cb0f54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4291
+      },
+      "writtenOn": "2017-04-26T12:46:55Z",
+      "side": 1,
+      "message": "This is wrong, metadata service is available.\nPlease read the original bug more carefully.",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 9
+      },
+      "revId": "f85b54b8fc8843897f9c1a7b4711b489ab29f297",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
