@@ -208,11 +208,9 @@ class TempestCommon(testcase.TestCase):
     def run(self):
 
         self.start_time = time.time()
-
-        if not os.path.exists(conf_utils.TEMPEST_RESULTS_DIR):
-            os.makedirs(conf_utils.TEMPEST_RESULTS_DIR)
-
         try:
+            if not os.path.exists(conf_utils.TEMPEST_RESULTS_DIR):
+                os.makedirs(conf_utils.TEMPEST_RESULTS_DIR)
             image_and_flavor = conf_utils.create_tempest_resources()
             conf_utils.configure_tempest(
                 self.DEPLOYMENT_DIR,
