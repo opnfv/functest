@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_4027bd64",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-04-26T02:57:57Z",
+      "side": 1,
+      "message": "refstack_tempest.conf",
+      "range": {
+        "startLine": 272,
+        "startChar": 25,
+        "endLine": 272,
+        "endChar": 38
+      },
+      "revId": "9fbaccf4101f90dd279bce2037697f8174163a2a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_602a012e",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-04-26T02:57:57Z",
+      "side": 1,
+      "message": "refstack_tempest.conf",
+      "range": {
+        "startLine": 341,
+        "startChar": 6,
+        "endLine": 341,
+        "endChar": 18
+      },
+      "revId": "9fbaccf4101f90dd279bce2037697f8174163a2a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
