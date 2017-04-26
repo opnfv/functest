@@ -25,12 +25,17 @@ logger = ft_logger.Logger(__name__).getLogger()
 
 
 class OnosBase(testcase.TestCase):
-    onos_repo_path = CONST.dir_repo_onos
-    onos_sfc_image_name = CONST.onos_sfc_image_name
-    onos_sfc_image_path = os.path.join(CONST.dir_functest_data,
-                                       CONST.onos_sfc_image_file_name)
-    onos_sfc_path = os.path.join(CONST.dir_repo_functest,
-                                 CONST.dir_onos_sfc)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "onos_base"
+        super(OnosBase, self).__init__(**kwargs)
+        self.case_name = 'onos_sfc'
+        self.onos_repo_path = CONST.dir_repo_onos
+        self.onos_sfc_image_name = CONST.onos_sfc_image_name
+        self.onos_sfc_image_path = os.path.join(CONST.dir_functest_data,
+                                                CONST.onos_sfc_image_file_name)
+        self.onos_sfc_path = os.path.join(CONST.dir_repo_functest,
+                                          CONST.dir_onos_sfc)
 
     def run(self):
         self.start_time = time.time()
@@ -155,7 +160,7 @@ class Onos(OnosBase):
             if (result['FUNCvirNet']['result'] == "Success" and
                     result['FUNCvirNetL3']['result'] == "Success"):
                 status = "PASS"
-        except:
+        except Exception:
             logger.error("Unable to set ONOS criteria")
 
         self.criteria = status
@@ -170,9 +175,10 @@ class Onos(OnosBase):
 
 
 class OnosSfc(OnosBase):
-    def __init__(self):
-        super(OnosSfc, self).__init__()
-        self.case_name = 'onos_sfc'
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "onos_sfc"
+        super(OnosSfc, self).__init__(**kwargs)
 
     def get_ip(type):
         url = openstack_utils.get_endpoint(service_type=type)
