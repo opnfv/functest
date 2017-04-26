@@ -69,6 +69,24 @@
       "revId": "37c98a6fa101be2b32129dd5d71ad750f5245b88",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_e3d6fbf0",
+        "filename": "functest/core/feature.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-04-26T13:16:31Z",
+      "side": 1,
+      "message": "This is not a big trouble, as it works, but I vote for renaming it to success_rate to avoid confusion. \n0-100 is fine to me, it\u0027s easier to define a percentage for success rate (e.g. tempest full 80%)",
+      "parentUuid": "9ab8dda7_63e1abfd",
+      "revId": "37c98a6fa101be2b32129dd5d71ad750f5245b88",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
