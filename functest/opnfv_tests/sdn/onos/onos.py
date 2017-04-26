@@ -25,12 +25,19 @@ logger = ft_logger.Logger(__name__).getLogger()
 
 
 class OnosBase(testcase.TestCase):
-    onos_repo_path = CONST.dir_repo_onos
-    onos_sfc_image_name = CONST.onos_sfc_image_name
-    onos_sfc_image_path = os.path.join(CONST.dir_functest_data,
-                                       CONST.onos_sfc_image_file_name)
-    onos_sfc_path = os.path.join(CONST.dir_repo_functest,
-                                 CONST.dir_onos_sfc)
+    onos_repo_path = CONST.__getattribute__('dir_repo_onos')
+    onos_sfc_image_name = CONST.__getattribute__('onos_sfc_image_name')
+    onos_sfc_image_path = os.path.join(
+        CONST.__getattribute__('dir_functest_data'),
+        CONST.__getattribute__('onos_sfc_image_file_name'))
+    onos_sfc_path = os.path.join(CONST.__getattribute__('dir_repo_functest'),
+                                 CONST.__getattribute__('dir_onos_sfc'))
+    installer_type = CONST.__getattribute__('INSTALLER_TYPE')
+
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "onos_base"
+        super(OnosBase, self).__init__(**kwargs)
 
     def run(self):
         self.start_time = time.time()
@@ -56,8 +63,8 @@ class Onos(OnosBase):
         self.log_path = os.path.join(self.onos_repo_path, 'TestON/logs')
 
     def set_onos_ip(self):
-        if (CONST.INSTALLER_TYPE and
-                CONST.INSTALLER_TYPE.lower() == 'joid'):
+        if (self.installer_type and
+                self.installer_type.lower() == 'joid'):
             sdn_controller_env = os.getenv('SDN_CONTROLLER')
             OC1 = re.search(r"\d+\.\d+\.\d+\.\d+", sdn_controller_env).group()
         else:
@@ -155,7 +162,7 @@ class Onos(OnosBase):
             if (result['FUNCvirNet']['result'] == "Success" and
                     result['FUNCvirNetL3']['result'] == "Success"):
                 status = "PASS"
-        except:
+        except Exception:
             logger.error("Unable to set ONOS result")
 
         self.result = status
@@ -170,11 +177,12 @@ class Onos(OnosBase):
 
 
 class OnosSfc(OnosBase):
-    def __init__(self):
-        super(OnosSfc, self).__init__()
-        self.case_name = 'onos_sfc'
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "onos_sfc"
+        super(OnosSfc, self).__init__(**kwargs)
 
-    def get_ip(type):
+    def get_ip(self, type):
         url = openstack_utils.get_endpoint(service_type=type)
         logger.debug('get_ip for %s: %s' % (type, url))
         return urlparse.urlparse(url).hostname
@@ -206,7 +214,8 @@ class OnosSfc(OnosBase):
         self.update_sfc_onos_file("neutron_ip", self.get_ip("neutron"))
         self.update_sfc_onos_file("nova_ip", self.get_ip("nova"))
         self.update_sfc_onos_file("glance_ip", self.get_ip("glance"))
-        self.update_sfc_onos_file("console", CONST.OS_PASSWORD)
+        self.update_sfc_onos_file("console",
+                                  CONST.__getattribute__('OS_PASSWORD'))
         neutron_client = openstack_utils.get_neutron_client()
         ext_net = openstack_utils.get_external_net(neutron_client)
         self.update_sfc_onos_file("admin_floating_net", ext_net)
