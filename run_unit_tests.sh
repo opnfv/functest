@@ -41,6 +41,7 @@ nosetests --with-xunit \
          --cover-package=functest.ci \
          --cover-package=functest.cli \
          --cover-package=functest.core \
+         --cover-package=functest.energy \
          --cover-package=functest.opnfv_tests.sdn.odl.odl \
          --cover-package=functest.opnfv_tests.vnf.ims \
          --cover-package=functest.utils \
