@@ -204,3 +204,8 @@ results:
     # you can also set a file (e.g. /home/opnfv/functest/results/dump.txt) to dump results
     # test_db_url: file:///home/opnfv/functest/results/dump.txt
     test_db_url: http://testresults.opnfv.org/test/api/v1/results
+
+energy_recorder:
+    api_url: http://161.105.253.100:8888/resources
+    api_user: ""
+    api_password: ""
