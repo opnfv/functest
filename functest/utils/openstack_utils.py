@@ -198,7 +198,9 @@ def get_keystone_client_version():
 
 def get_keystone_client(other_creds={}):
     sess = get_session(other_creds)
-    return keystoneclient.Client(get_keystone_client_version(), session=sess)
+    return keystoneclient.Client(get_keystone_client_version(),
+                                 session=sess,
+                                 interface=os.getenv('OS_INTERFACE'))
 
 
 def get_nova_client_version():
