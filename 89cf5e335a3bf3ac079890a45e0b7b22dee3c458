@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_cfe2f62e",
+        "filename": "functest/tests/unit/utils/test_openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-28T07:48:29Z",
+      "side": 1,
+      "message": "Could use please set mock.patch as decorator? It eases reading unit tests.\n\nI know it was written before but It would be great if you modify it on the fly.\n\nThank you",
+      "revId": "89cf5e335a3bf3ac079890a45e0b7b22dee3c458",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_8fd4fe47",
+        "filename": "functest/tests/unit/utils/test_openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-28T07:48:29Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "89cf5e335a3bf3ac079890a45e0b7b22dee3c458",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_2fcb92a6",
+        "filename": "functest/tests/unit/utils/test_openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-28T07:48:29Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "89cf5e335a3bf3ac079890a45e0b7b22dee3c458",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_4fce06b6",
+        "filename": "functest/tests/unit/utils/test_openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-28T07:48:29Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "89cf5e335a3bf3ac079890a45e0b7b22dee3c458",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_6fd18a56",
+        "filename": "functest/tests/unit/utils/test_openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-28T07:48:29Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "89cf5e335a3bf3ac079890a45e0b7b22dee3c458",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_efc49a93",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-04-28T07:48:29Z",
+      "side": 1,
+      "message": "This could be dangerous if env is unset isn\u0027t it? Maybe set the default value to public, or and internal.\n\nDoes keystone read env var if interface is unspecified?",
+      "revId": "89cf5e335a3bf3ac079890a45e0b7b22dee3c458",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
