@@ -16,5 +16,12 @@ os:
     vping:
         image_name: TestVM
 
+    odl_sfc:
+        image_base_url: "http://artifacts.opnfv.org/sfc/demo"
+        image_name: sfc_nsh_danube
+        image_file_name: sf_nsh_danube_arm64.img
+        image_initrd: sf_nsh_danube_arm64-initrd
+        image_kernel: sf_nsh_danube_arm64-kernel
+        image_format: ami
     doctor:
         image_name: TestVM
