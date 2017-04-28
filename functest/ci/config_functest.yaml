@@ -98,6 +98,12 @@ onos_sfc:
     image_name: TestSfcVm
     image_file_name: firewall_block_image.img
 
+odl_sfc:
+    image_base_url: "http://artifacts.opnfv.org/sfc/images"
+    image_name: sfc_nsh_danube
+    image_file_name: sfc_nsh_danube.qcow2
+    image_format: qcow2
+
 tempest:
     deployment_name: opnfv-tempest
     identity:
