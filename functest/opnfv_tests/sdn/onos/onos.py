@@ -7,6 +7,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import logging
 import os
 import re
 import subprocess
@@ -16,7 +17,6 @@ import urlparse
 
 from functest.core import testcase
 from functest.utils.constants import CONST
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as openstack_utils
 
@@ -30,7 +30,7 @@ class OnosBase(testcase.TestCase):
     onos_sfc_path = os.path.join(CONST.__getattribute__('dir_repo_functest'),
                                  CONST.__getattribute__('dir_onos_sfc'))
     installer_type = CONST.__getattribute__('INSTALLER_TYPE')
-    logger = ft_logger.Logger(__name__).getLogger()
+    logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
