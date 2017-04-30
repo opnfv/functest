@@ -9,6 +9,7 @@
 #
 import functools
 import json
+import logging
 import os
 import re
 import shutil
@@ -24,9 +25,8 @@ import yaml
 from git import Repo
 
 from functest.utils import decorators
-import functest.utils.functest_logger as ft_logger
 
-logger = ft_logger.Logger("functest_utils").getLogger()
+logger = logging.getLogger(__name__)
 
 
 # ----------------------------------------------------------
