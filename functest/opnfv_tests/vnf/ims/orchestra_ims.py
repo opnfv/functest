@@ -8,13 +8,13 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import json
+import logging
 import socket
 import sys
 import time
 import yaml
 
 import functest.core.vnf_base as vnf_base
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 import os
@@ -87,7 +87,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
         self.ob_port = "8080"
         self.ob_ip = "localhost"
         self.ob_instance_id = ""
-        self.logger = ft_logger.Logger("orchestra_ims").getLogger()
+        self.logger = logging.getLogger(__name__)
         self.case_dir = os.path.join(CONST.dir_functest_test, 'vnf/ims/')
         self.data_dir = CONST.dir_ims_data
         self.test_dir = CONST.dir_repo_vims_test
@@ -495,6 +495,7 @@ class ImsVnf(vnf_base.VnfOnBoardingBase):
 
 
 if __name__ == '__main__':
+    logging.basicConfig()
     test = ImsVnf()
     test.deploy_orchestrator()
     test.deploy_vnf()

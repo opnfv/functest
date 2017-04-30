@@ -34,7 +34,7 @@ general:
         functest:           /home/opnfv/functest
         functest_test:      /home/opnfv/repos/functest/functest/opnfv_tests
         results:            /home/opnfv/functest/results
-        functest_logging_cfg:   /home/opnfv/repos/functest/functest/ci/logging.json
+        functest_logging_cfg:   /home/opnfv/repos/functest/functest/ci/logging.ini
         functest_conf:      /home/opnfv/functest/conf
         functest_data:      /home/opnfv/functest/data
         ims_data:           /home/opnfv/functest/data/ims/
