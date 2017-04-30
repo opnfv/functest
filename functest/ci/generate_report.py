@@ -6,10 +6,10 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 import json
+import logging
 import re
 import urllib2
 
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 from functest.utils.constants import CONST
 
@@ -23,7 +23,7 @@ COL_5_LEN = 75
 # and then we can print the url to the specific test result
 
 
-logger = ft_logger.Logger("generate_report").getLogger()
+logger = logging.getLogger(__name__)
 
 
 def init(tiers_to_run=[]):
