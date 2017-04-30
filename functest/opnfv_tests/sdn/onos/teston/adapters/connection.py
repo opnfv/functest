@@ -13,17 +13,17 @@ Description:
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 """
+import logging
 import os
 import pexpect
 import re
 
 from foundation import Foundation
-import functest.utils.functest_logger as ft_logger
 
 
 class Connection(Foundation):
 
-    logger = ft_logger.Logger("connection").getLogger()
+    logger = logging.getLogger(__name__)
 
     def __init__(self):
         Foundation.__init__(self)

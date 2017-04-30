@@ -1,3 +1,4 @@
+import logging
 import os
 import re
 import time
@@ -7,8 +8,6 @@ import requests
 from multiprocessing import Process
 from multiprocessing import Queue
 from pexpect import pxssh
-
-import functest.utils.functest_logger as ft_logger
 
 from functest.utils.constants import CONST
 
@@ -23,7 +22,7 @@ class SfcOnos(object):
 
     def __init__(self):
         """Initialization of variables."""
-        self.logger = ft_logger.Logger("sfc_fun").getLogger()
+        self.logger = logging.getLogger(__name__)
         self.osver = "v2.0"
         self.token_id = 0
         self.net_id = 0

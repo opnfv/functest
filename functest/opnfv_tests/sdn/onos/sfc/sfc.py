@@ -1,4 +1,3 @@
-"""Script to Test the SFC scenarios in ONOS."""
 # !/usr/bin/python
 #
 # Copyright (c) CREATED5 All rights reserved
@@ -22,13 +21,14 @@
 # Testcase 7 : Cleanup
 # ###########################################################################
 #
+"""Script to Test the SFC scenarios in ONOS."""
 
+import logging
 import time
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 from sfc_onos import SfcOnos
 
-logger = ft_logger.Logger("sfc").getLogger()
+logger = logging.getLogger(__name__)
 Sfc_obj = SfcOnos()
 
 OK = 200
@@ -174,4 +174,5 @@ def main():
 
 
 if __name__ == '__main__':
+    logging.basicConfig()
     main()

@@ -7,12 +7,12 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import logging
 import sys
 import time
 
 import argparse
 
-import functest.utils.functest_logger as ft_logger
 import vping_base
 
 
@@ -22,7 +22,7 @@ class VPingUserdata(vping_base.VPingBase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "vping_userdata"
         super(VPingUserdata, self).__init__(**kwargs)
-        self.logger = ft_logger.Logger(self.case_name).getLogger()
+        self.logger = logging.getLogger(__name__)
 
     def boot_vm_preparation(self, config, vmname, test_ip):
         config['config_drive'] = True
@@ -74,6 +74,7 @@ class VPingUserdata(vping_base.VPingBase):
 
 
 if __name__ == '__main__':
+    logging.basicConfig()
     args_parser = argparse.ArgumentParser()
     args_parser.add_argument("-r", "--report",
                              help="Create json result file",
