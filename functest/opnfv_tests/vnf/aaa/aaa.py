@@ -7,18 +7,18 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import logging
 import sys
 
 import argparse
 
 import functest.core.testcase as testcase
 import functest.core.vnf_base as vnf_base
-import functest.utils.functest_logger as ft_logger
 
 
 class AaaVnf(vnf_base.VnfOnBoardingBase):
 
-    logger = ft_logger.Logger("VNF AAA").getLogger()
+    logger = logger.getLogger(__name__)
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:

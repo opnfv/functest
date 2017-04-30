@@ -7,6 +7,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import logging
 import os
 import sys
 import time
@@ -18,7 +19,6 @@ from functest.opnfv_tests.vnf.ims.clearwater import Clearwater
 import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
 from functest.opnfv_tests.vnf.ims.orchestrator_cloudify import Orchestrator
 from functest.utils.constants import CONST
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 
@@ -29,7 +29,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "cloudify_ims"
         super(CloudifyIms, self).__init__(**kwargs)
-        self.logger = ft_logger.Logger(__name__).getLogger()
+        self.logger = logging.getLogger(__name__)
 
         # Retrieve the configuration
         try:
