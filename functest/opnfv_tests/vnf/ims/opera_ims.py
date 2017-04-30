@@ -8,6 +8,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import json
+import logging
 import os
 import time
 
@@ -16,7 +17,6 @@ import requests
 
 import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
 from functest.utils.constants import CONST
-import functest.utils.functest_logger as ft_logger
 
 
 class OperaIms(clearwater_ims_base.ClearwaterOnBoardingBase):
@@ -24,7 +24,7 @@ class OperaIms(clearwater_ims_base.ClearwaterOnBoardingBase):
     def __init__(self, project='functest', case_name='opera_ims',
                  repo=CONST.dir_repo_opera, cmd=''):
         super(OperaIms, self).__init__(project, case_name, repo, cmd)
-        self.logger = ft_logger.Logger(__name__).getLogger()
+        self.logger = logging.getLogger(__name__)
         self.ellis_file = os.path.join(self.result_dir, 'ellis.info')
         self.live_test_file = os.path.join(self.result_dir,
                                            'live_test_report.json')

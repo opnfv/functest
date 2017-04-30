@@ -11,11 +11,11 @@
 #
 
 import argparse
+import logging
 import os
 import sys
 
 from functest.utils.constants import CONST
-import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
 
 parser = argparse.ArgumentParser()
@@ -27,7 +27,7 @@ parser.add_argument("-r", "--report",
 args = parser.parse_args()
 
 """ logging configuration """
-logger = ft_logger.Logger("create_instance_and_ip").getLogger()
+logger = logging.getLogger(__name__)
 
 HOME = CONST.dir_home + "/"
 

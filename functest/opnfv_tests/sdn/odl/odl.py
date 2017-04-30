@@ -19,6 +19,7 @@ Example:
 import argparse
 import errno
 import fileinput
+import logging
 import os
 import re
 import sys
@@ -30,7 +31,6 @@ import robot.run
 from robot.utils.robottime import timestamp_to_secs
 
 from functest.core import testcase
-import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as op_utils
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
@@ -70,7 +70,7 @@ class ODLTests(testcase.TestCase):
                                    "csit/suites/integration/basic")
     default_suites = [basic_suite_dir, neutron_suite_dir]
     res_dir = '/home/opnfv/functest/results/odl/'
-    logger = ft_logger.Logger("opendaylight").getLogger()
+    logger = logging.getLogger(__name__)
 
     @classmethod
     def set_robotframework_vars(cls, odlusername="admin", odlpassword="admin"):

@@ -20,13 +20,13 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
+import logging
 import yaml
 
-import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
-logger = ft_logger.Logger("openstack_snapshot").getLogger()
+logger = logging.getLogger(__name__)
 
 
 OS_SNAPSHOT_FILE = CONST.openstack_snapshot_file
