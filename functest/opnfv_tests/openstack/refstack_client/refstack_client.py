@@ -6,6 +6,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 import argparse
+import logging
 import os
 import re
 import sys
@@ -15,12 +16,11 @@ import time
 from functest.core import testcase
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 from tempest_conf import TempestConf
 
 """ logging configuration """
-logger = ft_logger.Logger("refstack_defcore").getLogger()
+logger = logging.getLogger(__name__)
 
 
 class RefstackClient(testcase.TestCase):
@@ -220,6 +220,7 @@ class RefstackClientParser(object):
 
 
 if __name__ == '__main__':
+    logging.basicConfig()
     refstackclient = RefstackClient()
     parser = RefstackClientParser()
     args = parser.parse_args(sys.argv[1:])

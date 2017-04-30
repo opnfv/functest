@@ -11,13 +11,13 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 ##########################################################################
 
+import logging
 
 from tackerclient.v1_0 import client as tackerclient
-import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
 import time
 
-logger = ft_logger.Logger("tacker_utils").getLogger()
+logger = logging.getLogger(__name__)
 
 
 def get_tacker_client(other_creds={}):
