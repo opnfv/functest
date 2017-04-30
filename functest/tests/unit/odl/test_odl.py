@@ -113,7 +113,8 @@ class ODLParseResultTesting(ODLTesting):
     def test_raises_exc(self, mock_method):
         with self.assertRaises(DataError):
             self.test.parse_results()
-            mock_method.assert_called_once_with()
+        mock_method.assert_called_once_with(
+            os.path.join(odl.ODLTests.res_dir, 'output.xml'))
 
     def test_ok(self):
         config = {'name': 'dummy', 'starttime': '20161216 16:00:00.000',
@@ -368,19 +369,10 @@ class ODLRunTesting(ODLTesting):
     """The class testing ODLTests.run()."""
     # pylint: disable=missing-docstring
 
-    @classmethod
-    def _fake_url_for(cls, service_type='identity'):
-        if service_type == 'identity':
-            return "http://{}:5000/v2.0".format(
-                ODLTesting._keystone_ip)
-        elif service_type == 'network':
-            return "http://{}:9696".format(ODLTesting._neutron_ip)
-        else:
-            return None
-
     def _test_no_env_var(self, var):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        side_effect=self._fake_url_for):
+                        return_value="http://{}:9696".format(
+                            ODLTesting._neutron_ip)):
             del os.environ[var]
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
@@ -393,7 +385,8 @@ class ODLRunTesting(ODLTesting):
                            if 'odlrestconfport' in kwargs else '8181')
 
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        side_effect=self._fake_url_for):
+                        return_value="http://{}:9696".format(
+                            ODLTesting._neutron_ip)):
             if exception:
                 self.test.main = mock.Mock(side_effect=exception)
             else:
@@ -410,18 +403,15 @@ class ODLRunTesting(ODLTesting):
                 osusername=self._os_username)
 
     def _test_multiple_suites(self, suites,
-                              status=testcase.TestCase.EX_OK,
-                              exception=None, **kwargs):
+                              status=testcase.TestCase.EX_OK, **kwargs):
         odlip = kwargs['odlip'] if 'odlip' in kwargs else '127.0.0.3'
         odlwebport = kwargs['odlwebport'] if 'odlwebport' in kwargs else '8080'
         odlrestconfport = (kwargs['odlrestconfport']
                            if 'odlrestconfport' in kwargs else '8181')
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        side_effect=self._fake_url_for):
-            if exception:
-                self.test.main = mock.Mock(side_effect=exception)
-            else:
-                self.test.main = mock.Mock(return_value=status)
+                        return_value="http://{}:9696".format(
+                            ODLTesting._neutron_ip)):
+            self.test.main = mock.Mock(return_value=status)
             self.assertEqual(self.test.run(suites=suites), status)
             self.test.main.assert_called_once_with(
                 suites,
@@ -467,7 +457,8 @@ class ODLRunTesting(ODLTesting):
 
     def test_no_sdn_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        side_effect=self._fake_url_for):
+                        return_value="http://{}:9696".format(
+                            ODLTesting._neutron_ip)):
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
 
@@ -492,7 +483,8 @@ class ODLRunTesting(ODLTesting):
 
     def test_apex_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        side_effect=self._fake_url_for):
+                        return_value="http://{}:9696".format(
+                            ODLTesting._neutron_ip)):
             os.environ["INSTALLER_TYPE"] = "apex"
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
@@ -506,7 +498,8 @@ class ODLRunTesting(ODLTesting):
 
     def test_netvirt_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        side_effect=self._fake_url_for):
+                        return_value="http://{}:9696".format(
+                            ODLTesting._neutron_ip)):
             os.environ["INSTALLER_TYPE"] = "netvirt"
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
@@ -520,7 +513,8 @@ class ODLRunTesting(ODLTesting):
 
     def test_joid_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        side_effect=self._fake_url_for):
+                        return_value="http://{}:9696".format(
+                            ODLTesting._neutron_ip)):
             os.environ["INSTALLER_TYPE"] = "joid"
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
@@ -563,7 +557,7 @@ class ODLArgParserTesting(ODLTesting):
         self.defaultargs['foo'] = 'bar'
         with self.assertRaises(SystemExit):
             self.parser.parse_args(["--foo=bar"])
-            mock_method.assert_called_once_with()
+        self.assertTrue(mock_method.getvalue().startswith("usage:"))
 
     def _test_arg(self, arg, value):
         self.defaultargs[arg] = value
