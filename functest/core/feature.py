@@ -13,11 +13,11 @@ Feature is considered as TestCase offered by Third-party. It offers
 helpers to run any python method or any bash command.
 """
 
+import logging
 import time
 
 import functest.core.testcase as base
 import functest.utils.functest_utils as ft_utils
-import functest.utils.functest_logger as ft_logger
 from functest.utils.constants import CONST
 
 __author__ = ("Serena Feng <feng.xiaowei@zte.com.cn>, "
@@ -27,11 +27,12 @@ __author__ = ("Serena Feng <feng.xiaowei@zte.com.cn>, "
 class Feature(base.TestCase):
     """Base model for single feature."""
 
+    logger = logging.getLogger(__name__)
+
     def __init__(self, **kwargs):
         super(Feature, self).__init__(**kwargs)
         self.result_file = "{}/{}.log".format(
             CONST.__getattribute__('dir_results'), self.project_name)
-        self.logger = ft_logger.Logger(self.project_name).getLogger()
 
     def execute(self, **kwargs):
         """Execute the Python method.
