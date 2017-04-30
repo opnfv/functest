@@ -23,12 +23,11 @@ import sys
 import time
 
 from connection import Connection
-import functest.utils.functest_logger as ft_logger
 
 
 class Environment(Connection):
 
-    logger = ft_logger.Logger("environment").getLogger()
+    logger = logging.getLogger(__name__)
 
     def __init__(self):
         Connection.__init__(self)

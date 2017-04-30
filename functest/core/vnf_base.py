@@ -8,18 +8,18 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import inspect
+import logging
 import time
 
 import functest.core.testcase as base
 from functest.utils.constants import CONST
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 
 
 class VnfOnBoardingBase(base.TestCase):
 
-    logger = ft_logger.Logger(__name__).getLogger()
+    logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         super(VnfOnBoardingBase, self).__init__(**kwargs)

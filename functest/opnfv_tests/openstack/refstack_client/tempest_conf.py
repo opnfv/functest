@@ -5,15 +5,15 @@
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
+import logging
 import os
 
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils import openstack_utils
 from functest.utils.constants import CONST
-import functest.utils.functest_logger as ft_logger
 
 """ logging configuration """
-logger = ft_logger.Logger("refstack_defcore").getLogger()
+logger = logging.getLogger(__name__)
 
 
 class TempestConf(object):

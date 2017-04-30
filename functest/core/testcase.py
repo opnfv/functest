@@ -9,9 +9,9 @@
 
 """Define the parent class of all Functest TestCases."""
 
+import logging
 import os
 
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
@@ -32,7 +32,7 @@ class TestCase(object):
     EX_TESTCASE_FAILED = os.EX_SOFTWARE - 2
     """results are false"""
 
-    logger = ft_logger.Logger(__name__).getLogger()
+    logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         self.details = {}
