@@ -30,8 +30,7 @@ class HealthCheck(SnapsTestRunner):
 
         image_custom_config = None
         if hasattr(CONST, 'snaps_health_check'):
-            image_custom_config = CONST.snaps_health_check
-
+            image_custom_config = CONST.__getattribute__('snaps_health_check')
         self.suite.addTest(
             OSIntegrationTestCase.parameterize(
                 SimpleHealthCheck, os_creds=self.os_creds,
