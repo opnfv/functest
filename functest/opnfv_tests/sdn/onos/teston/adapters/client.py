@@ -11,17 +11,17 @@ Description:
 #
 """
 import json
+import logging
 import pexpect
 import requests
 import time
 
 from environment import Environment
-import functest.utils.functest_logger as ft_logger
 
 
 class Client(Environment):
 
-    logger = ft_logger.Logger("client").getLogger()
+    logger = logging.getLogger(__name__)
 
     def __init__(self):
         Environment.__init__(self)

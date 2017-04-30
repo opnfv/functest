@@ -7,6 +7,7 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 import json
+import logging
 import os
 import shutil
 
@@ -14,14 +15,13 @@ import requests
 
 import functest.core.vnf_base as vnf_base
 from functest.utils.constants import CONST
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
 
 class ClearwaterOnBoardingBase(vnf_base.VnfOnBoardingBase):
 
     def __init__(self, **kwargs):
-        self.logger = ft_logger.Logger(__name__).getLogger()
+        self.logger = logging.getLogger(__name__)
         super(ClearwaterOnBoardingBase, self).__init__(**kwargs)
         self.case_dir = os.path.join(CONST.dir_functest_test, 'vnf', 'ims')
         self.data_dir = CONST.dir_ims_data

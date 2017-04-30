@@ -8,11 +8,16 @@
 #
 
 import click
+import logging.config
 
 from functest.cli.commands.cli_env import CliEnv
 from functest.cli.commands.cli_os import CliOpenStack
 from functest.cli.commands.cli_testcase import CliTestcase
 from functest.cli.commands.cli_tier import CliTier
+from functest.utils.constants import CONST
+
+logging.config.fileConfig(
+    CONST.__getattribute__('dir_functest_logging_cfg'))
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
