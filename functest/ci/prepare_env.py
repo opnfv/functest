@@ -8,6 +8,7 @@
 
 import argparse
 import json
+import logging
 import os
 import re
 import subprocess
@@ -16,7 +17,6 @@ import fileinput
 
 import yaml
 
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
@@ -27,7 +27,7 @@ from opnfv.deployment import factory
 actions = ['start', 'check']
 
 """ logging configuration """
-logger = ft_logger.Logger("prepare_env").getLogger()
+logger = logging.getLogger('functest.ci.prepare_env')
 handler = None
 # set the architecture to default
 pod_arch = None
@@ -377,6 +377,8 @@ def main(**kwargs):
 
 
 if __name__ == '__main__':
+    logging.config.fileConfig(
+        CONST.__getattribute__('dir_functest_logging_cfg'))
     parser = PrepareEnvParser()
     args = parser.parse_args(sys.argv[1:])
     sys.exit(main(**args))

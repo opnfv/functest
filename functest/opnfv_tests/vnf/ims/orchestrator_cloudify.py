@@ -11,14 +11,13 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 ########################################################################
 
+import logging
 import os
 import shutil
 import subprocess32 as subprocess
 import yaml
 
 from git import Repo
-
-import functest.utils.functest_logger as ft_logger
 
 
 class Orchestrator(object):
@@ -29,7 +28,7 @@ class Orchestrator(object):
         self.input_file = 'inputs.yaml'
         self.manager_blueprint = False
         self.config = inputs
-        self.logger = ft_logger.Logger("Orchestrator").getLogger()
+        self.logger = logging.getLogger(__name__)
         self.manager_up = False
 
     def set_credentials(self, username, password, tenant_name, auth_url):
