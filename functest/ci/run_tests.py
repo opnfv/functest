@@ -12,6 +12,8 @@ import argparse
 import datetime
 import enum
 import importlib
+import logging
+import logging.config
 import os
 import re
 import sys
@@ -19,16 +21,14 @@ import sys
 import functest.ci.generate_report as generate_report
 import functest.ci.tier_builder as tb
 import functest.core.testcase as testcase
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
-
-""" logging configuration """
-logger = ft_logger.Logger("run_tests").getLogger()
+# __name__ cannot be used here
+logger = logging.getLogger('functest.ci.run_tests')
 
 
 class Result(enum.Enum):
@@ -270,6 +270,9 @@ def main(**kwargs):
 
 
 if __name__ == '__main__':
+    logging.basicConfig()
     parser = RunTestsParser()
     args = parser.parse_args(sys.argv[1:])
+    logging.config.fileConfig(
+        CONST.__getattribute__('dir_functest_logging_cfg'))
     sys.exit(main(**args).value)
