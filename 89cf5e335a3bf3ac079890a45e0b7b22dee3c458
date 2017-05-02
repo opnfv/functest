@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_ab277511",
+        "filename": "functest/tests/unit/utils/test_openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-05-02T06:14:23Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9ab8dda7_cfe2f62e",
+      "revId": "89cf5e335a3bf3ac079890a45e0b7b22dee3c458",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_8fd4fe47",
         "filename": "functest/tests/unit/utils/test_openstack_utils.py",
         "patchSetId": 3
@@ -98,6 +116,24 @@
       "writtenOn": "2017-04-28T07:48:29Z",
       "side": 1,
       "message": "This could be dangerous if env is unset isn\u0027t it? Maybe set the default value to public, or and internal.\n\nDoes keystone read env var if interface is unspecified?",
+      "revId": "89cf5e335a3bf3ac079890a45e0b7b22dee3c458",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_8bee31b3",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-05-02T06:14:23Z",
+      "side": 1,
+      "message": "Thank you, Cedric.\n1) If env OS_INTERFACE is unset, when creating keystoneclient, the param interface will be set as \"admin\" by default [1]. So it is better to set the default value to \"admin\".\n2) The param interface is optional for keystoneclient.\n\n[1]: https://github.com/openstack/python-keystoneclient/blob/master/keystoneclient/httpclient.py",
+      "parentUuid": "9ab8dda7_efc49a93",
       "revId": "89cf5e335a3bf3ac079890a45e0b7b22dee3c458",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
