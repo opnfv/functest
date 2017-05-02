@@ -70,7 +70,7 @@ class ODLTests(testcase.TestCase):
                                    "csit/suites/integration/basic")
     default_suites = [basic_suite_dir, neutron_suite_dir]
     res_dir = '/home/opnfv/functest/results/odl/'
-    logger = logging.getLogger(__name__)
+    __logger = logging.getLogger(__name__)
 
     @classmethod
     def set_robotframework_vars(cls, odlusername="admin", odlpassword="admin"):
@@ -91,7 +91,7 @@ class ODLTests(testcase.TestCase):
                              line.rstrip())
             return True
         except Exception as ex:  # pylint: disable=broad-except
-            cls.logger.error("Cannot set ODL creds: %s", str(ex))
+            cls.__logger.error("Cannot set ODL creds: %s", str(ex))
             return False
 
     def parse_results(self):
@@ -154,15 +154,15 @@ class ODLTests(testcase.TestCase):
                          'PORT:' + kwargs['odlwebport'],
                          'RESTCONFPORT:' + kwargs['odlrestconfport']]
         except KeyError as ex:
-            self.logger.error("Cannot run ODL testcases. Please check "
-                              "%s", str(ex))
+            self.__logger.error("Cannot run ODL testcases. Please check "
+                                "%s", str(ex))
             return self.EX_RUN_ERROR
         if self.set_robotframework_vars(odlusername, odlpassword):
             try:
                 os.makedirs(self.res_dir)
             except OSError as ex:
                 if ex.errno != errno.EEXIST:
-                    self.logger.exception(
+                    self.__logger.exception(
                         "Cannot create %s", self.res_dir)
                     return self.EX_RUN_ERROR
             stdout_file = os.path.join(self.res_dir, 'stdout.txt')
@@ -174,19 +174,19 @@ class ODLTests(testcase.TestCase):
                           report='NONE',
                           stdout=stdout)
                 stdout.seek(0, 0)
-                self.logger.info("\n" + stdout.read())
-            self.logger.info("ODL results were successfully generated")
+                self.__logger.info("\n" + stdout.read())
+            self.__logger.info("ODL results were successfully generated")
             try:
                 self.parse_results()
-                self.logger.info("ODL results were successfully parsed")
+                self.__logger.info("ODL results were successfully parsed")
             except RobotError as ex:
-                self.logger.error("Run tests before publishing: %s",
-                                  ex.message)
+                self.__logger.error("Run tests before publishing: %s",
+                                    ex.message)
                 return self.EX_RUN_ERROR
             try:
                 os.remove(stdout_file)
             except OSError:
-                self.logger.warning("Cannot remove %s", stdout_file)
+                self.__logger.warning("Cannot remove %s", stdout_file)
             return self.EX_OK
         else:
             return self.EX_RUN_ERROR
@@ -237,12 +237,12 @@ class ODLTests(testcase.TestCase):
             else:
                 kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
         except KeyError as ex:
-            self.logger.error("Cannot run ODL testcases. "
-                              "Please check env var: "
-                              "%s", str(ex))
+            self.__logger.error("Cannot run ODL testcases. "
+                                "Please check env var: "
+                                "%s", str(ex))
             return self.EX_RUN_ERROR
         except Exception:  # pylint: disable=broad-except
-            self.logger.exception("Cannot run ODL testcases.")
+            self.__logger.exception("Cannot run ODL testcases.")
             return self.EX_RUN_ERROR
 
         return self.main(suites, **kwargs)
