@@ -73,13 +73,13 @@ def check_env_variables():
         if CONST.INSTALLER_TYPE not in opnfv_constants.INSTALLERS:
             logger.warning("INSTALLER_TYPE=%s is not a valid OPNFV installer. "
                            "Available OPNFV Installers are : %s. "
-                           "Setting INSTALLER_TYPE=undefined."
-                           % (CONST.INSTALLER_TYPE,
-                              opnfv_constants.INSTALLERS))
+                           "Setting INSTALLER_TYPE=undefined.",
+                           CONST.INSTALLER_TYPE,
+                           opnfv_constants.INSTALLERS)
             CONST.INSTALLER_TYPE = "undefined"
         else:
-            logger.info("    INSTALLER_TYPE=%s"
-                        % CONST.INSTALLER_TYPE)
+            logger.info("    INSTALLER_TYPE=%s",
+                        CONST.INSTALLER_TYPE)
 
     if CONST.INSTALLER_IP is None:
         logger.warning("The env variable 'INSTALLER_IP' is not defined. "
@@ -88,25 +88,25 @@ def check_env_variables():
                        "container as a volume, please add this env variable "
                        "to the 'docker run' command.")
     else:
-        logger.info("    INSTALLER_IP=%s" % CONST.INSTALLER_IP)
+        logger.info("    INSTALLER_IP=%s", CONST.INSTALLER_IP)
 
     if CONST.DEPLOY_SCENARIO is None:
         logger.warning("The env variable 'DEPLOY_SCENARIO' is not defined. "
                        "Setting CI_SCENARIO=undefined.")
         CONST.DEPLOY_SCENARIO = "undefined"
     else:
-        logger.info("    DEPLOY_SCENARIO=%s" % CONST.DEPLOY_SCENARIO)
+        logger.info("    DEPLOY_SCENARIO=%s", CONST.DEPLOY_SCENARIO)
     if CONST.CI_DEBUG:
-        logger.info("    CI_DEBUG=%s" % CONST.CI_DEBUG)
+        logger.info("    CI_DEBUG=%s", CONST.CI_DEBUG)
 
     if CONST.NODE_NAME:
-        logger.info("    NODE_NAME=%s" % CONST.NODE_NAME)
+        logger.info("    NODE_NAME=%s", CONST.NODE_NAME)
 
     if CONST.BUILD_TAG:
-        logger.info("    BUILD_TAG=%s" % CONST.BUILD_TAG)
+        logger.info("    BUILD_TAG=%s", CONST.BUILD_TAG)
 
     if CONST.IS_CI_RUN:
-        logger.info("    IS_CI_RUN=%s" % CONST.IS_CI_RUN)
+        logger.info("    IS_CI_RUN=%s", CONST.IS_CI_RUN)
 
 
 def get_deployment_handler():
@@ -121,7 +121,7 @@ def get_deployment_handler():
             installer_params = ft_utils.get_parameter_from_yaml(
                 CONST.INSTALLER_TYPE, installer_params_yaml)
         except ValueError as e:
-            logger.debug('Printing deployment info is not supported for %s' %
+            logger.debug('Printing deployment info is not supported for %s',
                          CONST.INSTALLER_TYPE)
             logger.debug(e)
         else:
@@ -138,7 +138,7 @@ def get_deployment_handler():
                 if handler:
                     pod_arch = handler.get_arch()
             except Exception as e:
-                logger.debug("Cannot get deployment information. %s" % e)
+                logger.debug("Cannot get deployment information. %s", e)
 
 
 def create_directories():
@@ -146,17 +146,22 @@ def create_directories():
     logger.info("Creating needed directories...")
     if not os.path.exists(CONST.dir_functest_conf):
         os.makedirs(CONST.dir_functest_conf)
-        logger.info("    %s created." % CONST.dir_functest_conf)
+        logger.info("    %s created.", CONST.dir_functest_conf)
     else:
-        logger.debug("   %s already exists."
-                     % CONST.dir_functest_conf)
+        logger.debug("   %s already exists.",
+                     CONST.dir_functest_conf)
 
     if not os.path.exists(CONST.dir_functest_data):
         os.makedirs(CONST.dir_functest_data)
-        logger.info("    %s created." % CONST.dir_functest_data)
+        logger.info("    %s created.", CONST.dir_functest_data)
     else:
-        logger.debug("   %s already exists."
-                     % CONST.dir_functest_data)
+        logger.debug("   %s already exists.", CONST.dir_functest_data)
+
+    if not os.path.exists(CONST.dir_images_data):
+        os.makedirs(CONST.dir_images_data)
+        logger.info("    %s created.", CONST.dir_images_data)
+    else:
+        logger.debug("   %s already exists.", CONST.dir_images_data)
 
 
 def source_rc_file():
@@ -179,27 +184,26 @@ def source_rc_file():
         if CONST.INSTALLER_TYPE not in opnfv_constants.INSTALLERS:
             logger.error("Cannot fetch credentials. INSTALLER_TYPE=%s is "
                          "not a valid OPNFV installer. Available "
-                         "installers are : %s." %
-                         (CONST.INSTALLER_TYPE,
-                          opnfv_constants.INSTALLERS))
+                         "installers are : %s.",
+                         CONST.INSTALLER_TYPE,
+                         opnfv_constants.INSTALLERS)
             raise Exception("Wrong INSTALLER_TYPE.")
 
         cmd = ("/home/opnfv/repos/releng/utils/fetch_os_creds.sh "
-               "-d %s -i %s -a %s"
-               % (CONST.openstack_creds,
-                  CONST.INSTALLER_TYPE,
-                  CONST.INSTALLER_IP))
-        logger.debug("Executing command: %s" % cmd)
+               "-d %s -i %s -a %s",
+               CONST.openstack_creds,
+               CONST.INSTALLER_TYPE,
+               CONST.INSTALLER_IP)
+        logger.debug("Executing command: %s", cmd)
         p = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
         output = p.communicate()[0]
-        logger.debug("\n%s" % output)
+        logger.debug("\n%s", output)
         if p.returncode != 0:
             raise Exception("Failed to fetch credentials from installer.")
     else:
-        logger.info("RC file provided in %s."
-                    % CONST.openstack_creds)
+        logger.info("RC file provided in %s.", CONST.openstack_creds)
         if os.path.getsize(CONST.openstack_creds) == 0:
-            raise Exception("The file %s is empty." % CONST.openstack_creds)
+            raise Exception("The file %s is empty.", CONST.openstack_creds)
 
     logger.info("Sourcing the OpenStack RC file...")
     os_utils.source_credentials(CONST.openstack_creds)
@@ -244,9 +248,9 @@ def patch_file(patch_file_path):
 def verify_deployment():
     print_separator()
     logger.info("Verifying OpenStack services...")
-    cmd = ("%s/functest/ci/check_os.sh" % CONST.dir_repo_functest)
+    cmd = ("%s/functest/ci/check_os.sh", CONST.dir_repo_functest)
 
-    logger.debug("Executing command: %s" % cmd)
+    logger.debug("Executing command: %s", cmd)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
 
     while p.poll() is None:
@@ -274,8 +278,8 @@ def install_rally():
 
     cmd = "rally deployment destroy opnfv-rally"
     ft_utils.execute_command(cmd, error_msg=(
-        "Deployment %s does not exist."
-        % CONST.rally_deployment_name),
+        "Deployment %s does not exist.",
+        CONST.rally_deployment_name),
         verbose=False)
 
     rally_conf = os_utils.get_credentials_for_rally()
@@ -310,7 +314,7 @@ def install_tempest():
     while p.poll() is None:
         line = p.stdout.readline().rstrip()
         if str(line) == '0':
-            logger.debug("Tempest %s does not exist" %
+            logger.debug("Tempest %s does not exist",
                          CONST.tempest_deployment_name)
             cmd = ("rally verify create-verifier --source {0} "
                    "--name {1} --type tempest --system-wide"
@@ -345,7 +349,7 @@ def check_environment():
 
 def print_deployment_info():
     if handler:
-        logger.info('\n\nDeployment information:\n%s' %
+        logger.info('\n\nDeployment information:\n%s',
                     handler.get_deployment_info())
 
 

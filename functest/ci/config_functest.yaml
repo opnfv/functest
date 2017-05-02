@@ -37,6 +37,7 @@ general:
         functest_logging_cfg:   /home/opnfv/repos/functest/functest/ci/logging.ini
         functest_conf:      /home/opnfv/functest/conf
         functest_data:      /home/opnfv/functest/data
+        images_data:        /home/opnfv/functest/data/images
         ims_data:           /home/opnfv/functest/data/ims/
         rally_inst:         /home/opnfv/.rally
         repo_kingbird:      /home/opnfv/repos/kingbird
@@ -72,7 +73,7 @@ general:
         testcases_yaml: /home/opnfv/repos/functest/functest/ci/testcases.yaml
 
 healthcheck:
-    disk_image: /home/opnfv/functest/data/cirros-0.3.5-x86_64-disk.img
+    disk_image: /home/opnfv/functest/data/images/cirros-0.3.5-x86_64-disk.img
     disk_format: qcow2
     wait_time: 60
 
