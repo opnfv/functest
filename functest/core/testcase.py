@@ -32,7 +32,7 @@ class TestCase(object):
     EX_TESTCASE_FAILED = os.EX_SOFTWARE - 2
     """results are false"""
 
-    logger = logging.getLogger(__name__)
+    __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         self.details = {}
@@ -65,12 +65,12 @@ class TestCase(object):
                 # It must be removed as soon as TestCase subclasses
                 # stop setting result = 'PASS' or 'FAIL'.
                 # In this case criteria is unread.
-                self.logger.warning(
+                self.__logger.warning(
                     "Please update result which must be an int!")
                 if self.result == 'PASS':
                     return TestCase.EX_OK
         except AssertionError:
-            self.logger.error("Please run test before checking the results")
+            self.__logger.error("Please run test before checking the results")
         return TestCase.EX_TESTCASE_FAILED
 
     def run(self, **kwargs):
@@ -96,7 +96,7 @@ class TestCase(object):
             TestCase.EX_RUN_ERROR.
         """
         # pylint: disable=unused-argument
-        self.logger.error("Run must be implemented")
+        self.__logger.error("Run must be implemented")
         return TestCase.EX_RUN_ERROR
 
     def push_to_db(self):
@@ -128,11 +128,12 @@ class TestCase(object):
             if ft_utils.push_results_to_db(
                     self.project_name, self.case_name, self.start_time,
                     self.stop_time, pub_result, self.details):
-                self.logger.info("The results were successfully pushed to DB")
+                self.__logger.info(
+                    "The results were successfully pushed to DB")
                 return TestCase.EX_OK
             else:
-                self.logger.error("The results cannot be pushed to DB")
+                self.__logger.error("The results cannot be pushed to DB")
                 return TestCase.EX_PUSH_TO_DB_ERROR
         except Exception:  # pylint: disable=broad-except
-            self.logger.exception("The results cannot be pushed to DB")
+            self.__logger.exception("The results cannot be pushed to DB")
             return TestCase.EX_PUSH_TO_DB_ERROR
