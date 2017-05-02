@@ -567,7 +567,7 @@ tiers:
                     class: 'ImsVnf'
 
             -
-                case_name: opera-vims
+                case_name: opera_vims
                 project_name: opera
                 criteria: 100
                 blocking: false
@@ -575,8 +575,8 @@ tiers:
                 description: >-
                     VNF deployment with OPEN-O
                 dependencies:
-                    installer: 'unknown'
-                    scenario: 'unknown'
+                    installer: 'compass'
+                    scenario: 'os-nosdn-openo-ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.opera_ims'
                     class: 'OperaIms'
