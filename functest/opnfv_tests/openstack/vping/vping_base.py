@@ -34,7 +34,6 @@ class VPingBase(TestCase):
 
     def __init__(self, **kwargs):
         super(VPingBase, self).__init__(**kwargs)
-
         self.logger = logging.getLogger(self.__class__.__name__)
 
         self.functest_repo = CONST.__getattribute__('dir_repo_functest')
