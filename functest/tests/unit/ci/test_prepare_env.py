@@ -192,12 +192,17 @@ class PrepareEnvTesting(unittest.TestCase):
                 CONST.__getattribute__('dir_functest_conf'))
             mock_method.assert_any_call(
                 CONST.__getattribute__('dir_functest_data'))
+            mock_method.assert_any_call(
+                CONST.__getattribute__('dir_functest_images'))
             mock_logger_info.assert_any_call("    %s created." %
                                              CONST.__getattribute__(
                                                  'dir_functest_conf'))
             mock_logger_info.assert_any_call("    %s created." %
                                              CONST.__getattribute__(
                                                  'dir_functest_data'))
+            mock_logger_info.assert_any_call("    %s created." %
+                                             CONST.__getattribute__(
+                                                 'dir_functest_images'))
 
     @mock.patch('functest.ci.prepare_env.logger.info')
     @mock.patch('functest.ci.prepare_env.logger.debug')
@@ -213,6 +218,9 @@ class PrepareEnvTesting(unittest.TestCase):
             mock_logger_debug.assert_any_call("   %s already exists." %
                                               CONST.__getattribute__(
                                                   'dir_functest_data'))
+            mock_logger_debug.assert_any_call("   %s already exists." %
+                                              CONST.__getattribute__(
+                                                  'dir_functest_images'))
 
     def _get_env_cred_dict(self, os_prefix=''):
         return {'OS_USERNAME': os_prefix + 'username',
