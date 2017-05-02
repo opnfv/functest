@@ -16,14 +16,14 @@ from opera import openo_connect
 import requests
 
 import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
-from functest.utils.constants import CONST
 
 
 class OperaIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
-    def __init__(self, project='functest', case_name='opera_ims',
-                 repo=CONST.dir_repo_opera, cmd=''):
-        super(OperaIms, self).__init__(project, case_name, repo, cmd)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "opera_ims"
+        super(OperaIms, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
         self.ellis_file = os.path.join(self.result_dir, 'ellis.info')
         self.live_test_file = os.path.join(self.result_dir,
