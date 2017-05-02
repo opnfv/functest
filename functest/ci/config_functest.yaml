@@ -37,6 +37,7 @@ general:
         functest_logging_cfg:   /home/opnfv/repos/functest/functest/ci/logging.json
         functest_conf:      /home/opnfv/functest/conf
         functest_data:      /home/opnfv/functest/data
+        custom_images_data: /home/opnfv/functest/data/custom_images
         ims_data:           /home/opnfv/functest/data/ims/
         rally_inst:         /home/opnfv/.rally
         repo_kingbird:      /home/opnfv/repos/kingbird
