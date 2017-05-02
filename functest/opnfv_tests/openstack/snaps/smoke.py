@@ -32,12 +32,13 @@ class SnapsSmoke(SnapsTestRunner):
         # snaps_health_check suite, so reuse it here
         image_custom_config = None
         if hasattr(CONST, 'snaps_health_check'):
-            image_custom_config = CONST.snaps_health_check
+            image_custom_config = CONST.__getattribute__('snaps_health_check')
 
         # Tests requiring floating IPs leverage files contained within the
         # SNAPS repository and are found relative to that path
         if self.use_fip:
-            snaps_dir = CONST.dir_repo_snaps + '/snaps'
+            snaps_dir = os.path.join(CONST.__getattribute__('dir_repo_snaps'),
+                                     'snaps')
             os.chdir(snaps_dir)
 
         test_suite_builder.add_openstack_integration_tests(
