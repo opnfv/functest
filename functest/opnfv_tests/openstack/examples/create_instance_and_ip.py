@@ -38,7 +38,7 @@ EXAMPLE_FLAVOR = CONST.example_flavor
 EXAMPLE_IMAGE_NAME = CONST.example_image_name
 IMAGE_FILENAME = CONST.openstack_image_file_name
 IMAGE_FORMAT = CONST.openstack_image_disk_format
-IMAGE_PATH = os.path.join(CONST.dir_functest_data, IMAGE_FILENAME)
+IMAGE_PATH = os.path.join(CONST.images_data, IMAGE_FILENAME)
 
 # NEUTRON Private Network parameters
 

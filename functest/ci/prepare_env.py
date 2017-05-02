@@ -157,6 +157,13 @@ def create_directories():
         logger.debug("   %s already exists."
                      % CONST.dir_functest_data)
 
+    if not os.path.exists(CONST.dir_images_data):
+        os.makedirs(CONST.dir_images_data)
+        logger.info("    %s created." % CONST.dir_images_data)
+    else:
+        logger.debug("   %s already exists."
+                     % CONST.dir_images_data)
+
 
 def source_rc_file():
     print_separator()

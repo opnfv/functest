@@ -22,7 +22,7 @@ import functest.utils.openstack_utils as os_utils
 IMAGE_ID_ALT = None
 FLAVOR_ID_ALT = None
 REPO_PATH = CONST.dir_repo_functest
-GLANCE_IMAGE_PATH = os.path.join(CONST.dir_functest_data,
+GLANCE_IMAGE_PATH = os.path.join(CONST.images_data,
                                  CONST.openstack_image_file_name)
 TEMPEST_TEST_LIST_DIR = CONST.dir_tempest_cases
 TEMPEST_RESULTS_DIR = os.path.join(CONST.dir_results,
