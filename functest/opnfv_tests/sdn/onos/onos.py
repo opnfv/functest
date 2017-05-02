@@ -25,7 +25,7 @@ class OnosBase(testcase.TestCase):
     onos_repo_path = CONST.__getattribute__('dir_repo_onos')
     onos_sfc_image_name = CONST.__getattribute__('onos_sfc_image_name')
     onos_sfc_image_path = os.path.join(
-        CONST.__getattribute__('dir_functest_data'),
+        CONST.__getattribute__('dir_functest_images'),
         CONST.__getattribute__('onos_sfc_image_file_name'))
     onos_sfc_path = os.path.join(CONST.__getattribute__('dir_repo_functest'),
                                  CONST.__getattribute__('dir_onos_sfc'))
