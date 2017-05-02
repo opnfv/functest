@@ -25,6 +25,7 @@ ARG REPOS_DIR=/home/opnfv/repos
 ARG FUNCTEST_BASE_DIR=/home/opnfv/functest
 ARG FUNCTEST_CONF_DIR=${FUNCTEST_BASE_DIR}/conf
 ARG FUNCTEST_DATA_DIR=${FUNCTEST_BASE_DIR}/data
+ARG FUNCTEST_IMAGES_DIR=${FUNCTEST_BASE_DIR}/images
 ARG FUNCTEST_RESULTS_DIR=${FUNCTEST_BASE_DIR}/results
 ARG FUNCTEST_REPO_DIR=${REPOS_DIR}/functest
 ARG FUNCTEST_TEST_DIR=${FUNCTEST_REPO_DIR}/functest/opnfv_tests
@@ -71,7 +72,8 @@ RUN pip install --upgrade pip
 RUN mkdir -p ${REPOS_DIR} \
     && mkdir -p ${REPOS_VNFS_DIR} \
     && mkdir -p ${FUNCTEST_BASE_DIR}/results \
-    && mkdir -p ${FUNCTEST_BASE_DIR}/conf \
+    && mkdir -p ${FUNCTEST_CONF_DIR} \
+    && mkdir -p ${FUNCTEST_IMAGES_DIR} \
     && mkdir -p /root/.ssh \
     && chmod 700 /root/.ssh
 

@@ -74,13 +74,13 @@ def check_env_variables():
                 opnfv_constants.INSTALLERS):
             logger.warning("INSTALLER_TYPE=%s is not a valid OPNFV installer. "
                            "Available OPNFV Installers are : %s. "
-                           "Setting INSTALLER_TYPE=undefined."
-                           % (CONST.__getattribute__('INSTALLER_TYPE'),
-                              opnfv_constants.INSTALLERS))
+                           "Setting INSTALLER_TYPE=undefined.",
+                           CONST.__getattribute__('INSTALLER_TYPE'),
+                           opnfv_constants.INSTALLERS)
             CONST.__setattr__('INSTALLER_TYPE', 'undefined')
         else:
-            logger.info("    INSTALLER_TYPE=%s"
-                        % CONST.__getattribute__('INSTALLER_TYPE'))
+            logger.info("    INSTALLER_TYPE=%s",
+                        CONST.__getattribute__('INSTALLER_TYPE'))
 
     if CONST.__getattribute__('INSTALLER_IP') is None:
         logger.warning("The env variable 'INSTALLER_IP' is not defined. "
@@ -89,7 +89,7 @@ def check_env_variables():
                        "container as a volume, please add this env variable "
                        "to the 'docker run' command.")
     else:
-        logger.info("    INSTALLER_IP=%s" %
+        logger.info("    INSTALLER_IP=%s",
                     CONST.__getattribute__('INSTALLER_IP'))
 
     if CONST.__getattribute__('DEPLOY_SCENARIO') is None:
@@ -145,7 +145,7 @@ def get_deployment_handler():
                 if handler:
                     pod_arch = handler.get_arch()
             except Exception as e:
-                logger.debug("Cannot get deployment information. %s" % e)
+                logger.debug("Cannot get deployment information. %s", e)
 
 
 def create_directories():
@@ -156,8 +156,8 @@ def create_directories():
         logger.info("    %s created." %
                     CONST.__getattribute__('dir_functest_conf'))
     else:
-        logger.debug("   %s already exists."
-                     % CONST.__getattribute__('dir_functest_conf'))
+        logger.debug("   %s already exists." %
+                     CONST.__getattribute__('dir_functest_conf'))
 
     if not os.path.exists(CONST.__getattribute__('dir_functest_data')):
         os.makedirs(CONST.__getattribute__('dir_functest_data'))
@@ -166,6 +166,13 @@ def create_directories():
     else:
         logger.debug("   %s already exists." %
                      CONST.__getattribute__('dir_functest_data'))
+    if not os.path.exists(CONST.__getattribute__('dir_functest_images')):
+        os.makedirs(CONST.__getattribute__('dir_functest_images'))
+        logger.info("    %s created." %
+                    CONST.__getattribute__('dir_functest_images'))
+    else:
+        logger.debug("   %s already exists." %
+                     CONST.__getattribute__('dir_functest_images'))
 
 
 def source_rc_file():
@@ -203,7 +210,7 @@ def source_rc_file():
         logger.debug("Executing command: %s" % cmd)
         p = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
         output = p.communicate()[0]
-        logger.debug("\n%s" % output)
+        logger.debug("\n%s", output)
         if p.returncode != 0:
             raise Exception("Failed to fetch credentials from installer.")
     else:
@@ -259,7 +266,7 @@ def verify_deployment():
     cmd = ("%s/functest/ci/check_os.sh" %
            CONST.__getattribute__('dir_repo_functest'))
 
-    logger.debug("Executing command: %s" % cmd)
+    logger.debug("Executing command: %s", cmd)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
 
     while p.poll() is None:
@@ -359,7 +366,7 @@ def check_environment():
 
 def print_deployment_info():
     if handler:
-        logger.info('\n\nDeployment information:\n%s' %
+        logger.info('\n\nDeployment information:\n%s',
                     handler.get_deployment_info())
 
 
