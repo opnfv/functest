@@ -19,7 +19,7 @@ import functest.utils.openstack_utils as os_utils
 
 class VnfOnBoardingBase(base.TestCase):
 
-    logger = logging.getLogger(__name__)
+    __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         super(VnfOnBoardingBase, self).__init__(**kwargs)
@@ -44,28 +44,28 @@ class VnfOnBoardingBase(base.TestCase):
                 'vnf_{}_tenant_description'.format(self.case_name))
         except Exception:
             # raise Exception("Unknown VNF case=" + self.case_name)
-            self.logger.error("Unknown VNF case={}".format(self.case_name))
+            self.__logger.error("Unknown VNF case={}".format(self.case_name))
 
         try:
             self.images = CONST.__getattribute__(
                 'vnf_{}_tenant_images'.format(self.case_name))
         except Exception:
-            self.logger.warn("No tenant image defined for this VNF")
+            self.__logger.warn("No tenant image defined for this VNF")
 
     def execute(self):
         self.start_time = time.time()
         # Prepare the test (Create Tenant, User, ...)
         try:
-            self.logger.info("Create VNF Onboarding environment")
+            self.__logger.info("Create VNF Onboarding environment")
             self.prepare()
         except Exception:
-            self.logger.error("Error during VNF Onboarding environment" +
-                              "creation", exc_info=True)
+            self.__logger.error("Error during VNF Onboarding environment"
+                                "creation", exc_info=True)
             return base.TestCase.EX_TESTCASE_FAILED
 
         # Deploy orchestrator
         try:
-            self.logger.info("Deploy orchestrator (if necessary)")
+            self.__logger.info("Deploy orchestrator (if necessary)")
             orchestrator_ready_time = time.time()
             res_orchestrator = self.deploy_orchestrator()
             # orchestrator is not mandatory
@@ -77,11 +77,11 @@ class VnfOnBoardingBase(base.TestCase):
                 self.details['orchestrator']['duration'] = round(
                     orchestrator_ready_time - self.start_time, 1)
         except Exception:
-            self.logger.warn("Problem with the Orchestrator", exc_info=True)
+            self.__logger.warn("Problem with the Orchestrator", exc_info=True)
 
         # Deploy VNF
         try:
-            self.logger.info("Deploy VNF " + self.case_name)
+            self.__logger.info("Deploy VNF " + self.case_name)
             res_deploy_vnf = self.deploy_vnf()
             vnf_ready_time = time.time()
             self.details['vnf']['status'] = res_deploy_vnf['status']
@@ -89,12 +89,12 @@ class VnfOnBoardingBase(base.TestCase):
             self.details['vnf']['duration'] = round(
                 vnf_ready_time - orchestrator_ready_time, 1)
         except Exception:
-            self.logger.error("Error during VNF deployment", exc_info=True)
+            self.__logger.error("Error during VNF deployment", exc_info=True)
             return base.TestCase.EX_TESTCASE_FAILED
 
         # Test VNF
         try:
-            self.logger.info("Test VNF")
+            self.__logger.info("Test VNF")
             res_test_vnf = self.test_vnf()
             test_vnf_done_time = time.time()
             self.details['test_vnf']['status'] = res_test_vnf['status']
@@ -102,7 +102,7 @@ class VnfOnBoardingBase(base.TestCase):
             self.details['test_vnf']['duration'] = round(
                 test_vnf_done_time - vnf_ready_time, 1)
         except Exception:
-            self.logger.error("Error when running VNF tests", exc_info=True)
+            self.__logger.error("Error when running VNF tests", exc_info=True)
             return base.TestCase.EX_TESTCASE_FAILED
 
         # Clean the system
@@ -121,7 +121,8 @@ class VnfOnBoardingBase(base.TestCase):
         self.creds = os_utils.get_credentials()
         self.keystone_client = os_utils.get_keystone_client()
 
-        self.logger.info("Prepare OpenStack plateform(create tenant and user)")
+        self.__logger.info(
+            "Prepare OpenStack plateform(create tenant and user)")
         admin_user_id = os_utils.get_user_id(self.keystone_client,
                                              self.creds['username'])
         if not admin_user_id:
@@ -164,7 +165,7 @@ class VnfOnBoardingBase(base.TestCase):
         os_utils.add_role_user(self.keystone_client, user_id,
                                role_id, tenant_id)
 
-        self.logger.info("Update OpenStack creds informations")
+        self.__logger.info("Update OpenStack creds informations")
         self.admin_creds = self.creds.copy()
         self.admin_creds.update({
             "tenant": self.tenant_name
@@ -183,21 +184,21 @@ class VnfOnBoardingBase(base.TestCase):
 
     # TODO see how to use built-in exception from releng module
     def deploy_vnf(self):
-        self.logger.error("VNF must be deployed")
+        self.__logger.error("VNF must be deployed")
         raise Exception("VNF not deployed")
 
     def test_vnf(self):
-        self.logger.error("VNF must be tested")
+        self.__logger.error("VNF must be tested")
         raise Exception("VNF not tested")
 
     # clean before openstack clean run
     def clean(self):
-        self.logger.info("test cleaning")
+        self.__logger.info("test cleaning")
 
     def parse_results(self):
         exit_code = self.EX_OK
         self.result = "PASS"
-        self.logger.info(self.details)
+        self.__logger.info(self.details)
         # The 2 VNF steps must be OK to get a PASS result
         if (self.details['vnf']['status'] is not "PASS" or
                 self.details['test_vnf']['status'] is not "PASS"):
@@ -213,7 +214,7 @@ class VnfOnBoardingBase(base.TestCase):
 
     def step_failure(self, error_msg):
         part = inspect.stack()[1][3]
-        self.logger.error("Step {0} failed: {1}".format(part, error_msg))
+        self.__logger.error("Step {0} failed: {1}".format(part, error_msg))
         try:
             step_name = self.details_step_mapping[part]
             part_info = self.details[step_name]
