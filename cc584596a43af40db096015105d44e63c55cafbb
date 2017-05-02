@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_2b1aa57d",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-02T08:17:56Z",
+      "side": 1,
+      "message": "Is this supposed to be check_result()?",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 64,
+        "endChar": 18
+      },
+      "revId": "cc584596a43af40db096015105d44e63c55cafbb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_eb132d64",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-02T08:17:56Z",
+      "side": 1,
+      "message": "Is this supposed to be result?",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "cc584596a43af40db096015105d44e63c55cafbb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_4b1d9972",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-02T08:17:56Z",
+      "side": 1,
+      "message": "Is this supposed to be check_result()?",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "cc584596a43af40db096015105d44e63c55cafbb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_8b2b9193",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-02T08:17:56Z",
+      "side": 1,
+      "message": "Is this line correct?\nIn the current testcase.yaml, criteria is put as below\ncriteria: 100",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 28
+      },
+      "revId": "cc584596a43af40db096015105d44e63c55cafbb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_6b309d01",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-02T08:17:56Z",
+      "side": 1,
+      "message": "Is this line correct?\nIn the current testcase.yaml, criteria is put as below\ncriteria: 100",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 28
+      },
+      "revId": "cc584596a43af40db096015105d44e63c55cafbb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
