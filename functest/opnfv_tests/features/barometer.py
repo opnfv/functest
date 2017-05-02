@@ -6,6 +6,8 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import logging
+
 from baro_tests import collectd
 
 import functest.core.feature as base
@@ -16,5 +18,7 @@ class BarometerCollectd(base.Feature):
     Class for executing barometercollectd testcase.
     '''
 
+    __logger = logging.getLogger(__name__)
+
     def execute(self):
-        return collectd.main(self.logger)
+        return collectd.main(self.__logger)

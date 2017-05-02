@@ -27,7 +27,7 @@ __author__ = ("Serena Feng <feng.xiaowei@zte.com.cn>, "
 class Feature(base.TestCase):
     """Base model for single feature."""
 
-    logger = logging.getLogger(__name__)
+    __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         super(Feature, self).__init__(**kwargs)
@@ -83,16 +83,18 @@ class Feature(base.TestCase):
             ft_utils.logger_test_results(
                 self.project_name, self.case_name,
                 self.result, self.details)
-            self.logger.info("%s %s", self.project_name, self.result)
+            self.__logger.info("%s %s", self.project_name, self.result)
         except Exception:  # pylint: disable=broad-except
-            self.logger.exception("%s FAILED", self.project_name)
-        self.logger.info("Test result is stored in '%s'", self.result_file)
+            self.__logger.exception("%s FAILED", self.project_name)
+        self.__logger.info("Test result is stored in '%s'", self.result_file)
         self.stop_time = time.time()
         return exit_code
 
 
 class BashFeature(Feature):
     """Class designed to run any bash command."""
+
+    __logger = logging.getLogger(__name__)
 
     def execute(self, **kwargs):
         """Execute the cmd passed as arg
@@ -109,7 +111,7 @@ class BashFeature(Feature):
             cmd = kwargs["cmd"]
             ret = ft_utils.execute_command(cmd, output_file=self.result_file)
         except KeyError:
-            self.logger.error("Please give cmd as arg. kwargs: %s", kwargs)
+            self.__logger.error("Please give cmd as arg. kwargs: %s", kwargs)
         except Exception:  # pylint: disable=broad-except
-            self.logger.exception("Execute cmd: %s failed", cmd)
+            self.__logger.exception("Execute cmd: %s failed", cmd)
         return ret
