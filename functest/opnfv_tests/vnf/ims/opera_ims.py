@@ -15,15 +15,15 @@ from opera import openo_connect
 import requests
 
 import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
-from functest.utils.constants import CONST
 import functest.utils.functest_logger as ft_logger
 
 
 class OperaIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
-    def __init__(self, project='functest', case_name='opera_ims',
-                 repo=CONST.dir_repo_opera, cmd=''):
-        super(OperaIms, self).__init__(project, case_name, repo, cmd)
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "opera_ims"
+        super(OperaIms, self).__init__(**kwargs)
         self.logger = ft_logger.Logger(__name__).getLogger()
         self.ellis_file = os.path.join(self.result_dir, 'ellis.info')
         self.live_test_file = os.path.join(self.result_dir,
@@ -64,20 +64,20 @@ class OperaIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.logger.info('VNFM IP: %s', vnfm_ip)
         vnf_status_url = 'http://{0}:5000/api/v1/model/status'.format(vnfm_ip)
         vnf_alive = False
-        retry = 15
+        retry = 40
 
         self.logger.info('Check the VNF status')
         while retry > 0:
-            rq = requests.get(vnf_status_url)
+            rq = requests.get(vnf_status_url, timeout=90)
             response = rq.json()
             vnf_alive = response['vnf_alive']
             msg = response['msg']
             self.logger.info(msg)
             if vnf_alive:
                 break
-            self.logger.info('check again in one minute...')
+            self.logger.info('check again in one and half a minute...')
             retry = retry - 1
-            time.sleep(60)
+            time.sleep(90)
 
         if not vnf_alive:
             raise Exception('VNF failed to start: {0}'.format(msg))
