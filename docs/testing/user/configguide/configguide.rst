@@ -11,14 +11,15 @@ following docker command::
   docker pull opnfv/functest:<TagIdentifier>
 
 where <TagIdentifier> identifies a release of the Functest docker
-container image in the public dockerhub registry. There are many tags
+container image in the public Dockerhub registry. There are many tags
 created automatically by the CI mechanisms, and you must ensure you
 pull an image with the **correct tag** to match the OPNFV software
 release installed in your environment. All available tagged images can
 be seen from location [FunctestDockerTags_]. For example, when running
 on the first official release of the OPNFV Danube system platform,
-tag "danube.1.0" is needed. Pulling other tags might cause some
-problems while running the tests.
+tag "danube.1.0" is needed. For the second and third releases, the tag
+"danube.2.0" and "danube.3.0" can be used respectively.
+Pulling other tags might cause some problems while running the tests. 
 Docker images pulled without a tag specifier bear the implicitly
 assigned label "latest". If you need to specifically pull the latest
 Functest docker image, then omit the tag argument::
@@ -29,10 +30,10 @@ After pulling the Docker image, check that it is available with the
 following docker command::
 
   [functester@jumphost ~]$ docker images
-  REPOSITORY     TAG             IMAGE ID      CREATED      SIZE
-  opnfv/functest latest          8cd6683c32ae  2 weeks ago  1.321 GB
-  opnfv/functest danube.1.0    13fa54a1b238  4 weeks ago  1.29 GB
-  opnfv/functest colorado.1.0    94b78faa94f7  9 weeks ago  968 MB
+  REPOSITORY     TAG             IMAGE ID      CREATED       SIZE
+  opnfv/functest latest          8cd6683c32ae  2 weeks ago   1.321 GB
+  opnfv/functest danube.2.0      d2c174a91911  7 minutes ago 1.471 GB
+  opnfv/functest danube.1.0      13fa54a1b238  4 weeks ago   1.29 GB
 
 The Functest docker container environment can -in principle- be also
 used with non-OPNFV official installers (e.g. 'devstack'), with the
