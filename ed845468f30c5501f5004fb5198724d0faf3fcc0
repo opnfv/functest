@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_3191b447",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-05-03T02:04:58Z",
+      "side": 1,
+      "message": "sure. in https://github.com/openstack/interop/blob/master/2016.08/procedure.rst there is explanation",
+      "parentUuid": "9ab8dda7_ee36db51",
+      "revId": "ed845468f30c5501f5004fb5198724d0faf3fcc0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_0e3a4f36",
         "filename": "docs/testing/user/userguide/index.rst",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_71772c3b",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-05-03T02:04:58Z",
+      "side": 1,
+      "message": "will amend",
+      "parentUuid": "9ab8dda7_0e3a4f36",
+      "range": {
+        "startLine": 351,
+        "startChar": 17,
+        "endLine": 351,
+        "endChar": 32
+      },
+      "revId": "ed845468f30c5501f5004fb5198724d0faf3fcc0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_ce3bd736",
         "filename": "docs/testing/user/userguide/index.rst",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-05-02T14:17:58Z",
       "side": 1,
       "message": "dot at the end",
+      "revId": "ed845468f30c5501f5004fb5198724d0faf3fcc0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_9172e047",
+        "filename": "docs/testing/user/userguide/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 371
+      },
+      "writtenOn": "2017-05-03T02:04:58Z",
+      "side": 1,
+      "message": "will put before \"running method\" section.",
+      "parentUuid": "9ab8dda7_ce3bd736",
       "revId": "ed845468f30c5501f5004fb5198724d0faf3fcc0",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
