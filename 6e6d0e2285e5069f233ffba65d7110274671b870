@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_912bc093",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-05-03T06:42:07Z",
+      "side": 1,
+      "message": "good catch :), in the test DB (http://testresults.opnfv.org/test/api/v1/projects/functest/cases) it is currently opera_ims\nwe just need to align",
+      "revId": "6e6d0e2285e5069f233ffba65d7110274671b870",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_b12604cd",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-05-03T06:42:07Z",
+      "side": 1,
+      "message": "we could even precise clearwater vIMS here",
+      "revId": "6e6d0e2285e5069f233ffba65d7110274671b870",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
