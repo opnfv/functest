@@ -33,7 +33,7 @@ handler = None
 pod_arch = None
 arch_filter = ['aarch64']
 
-CONFIG_FUNCTEST_PATH = CONST.CONFIG_FUNCTEST_YAML
+CONFIG_FUNCTEST_PATH = CONST.__getattribute__('CONFIG_FUNCTEST_YAML')
 CONFIG_PATCH_PATH = os.path.join(os.path.dirname(
     CONFIG_FUNCTEST_PATH), "config_patch.yaml")
 CONFIG_AARCH64_PATCH_PATH = os.path.join(os.path.dirname(
@@ -41,6 +41,12 @@ CONFIG_AARCH64_PATCH_PATH = os.path.join(os.path.dirname(
 RALLY_CONF_PATH = os.path.join("/etc/rally/rally.conf")
 RALLY_AARCH64_PATCH_PATH = os.path.join(os.path.dirname(
     CONFIG_FUNCTEST_PATH), "rally_aarch64_patch.conf")
+INSTALLER_TYPE = CONST.__getattribute__('INSTALLER_TYPE')
+INSTALLER_IP = CONST.__getattribute__('INSTALLER_IP')
+DEPLOY_SCENARIO = CONST.__getattribute__('DEPLOY_SCENARIO')
+DIR_FUNCTEST_CONF = CONST.__getattribute__('dir_functest_conf')
+DIR_FUNCTEST_DATA = CONST.__getattribute__('dir_functest_data')
+DIR_OPENSTACK_CREDS = CONST.__getattribute__('openstack_creds')
 
 
 class PrepareEnvParser(object):
@@ -65,63 +71,64 @@ def check_env_variables():
     print_separator()
     logger.info("Checking environment variables...")
 
-    if CONST.INSTALLER_TYPE is None:
+    if INSTALLER_TYPE is None:
         logger.warning("The env variable 'INSTALLER_TYPE' is not defined.")
-        CONST.INSTALLER_TYPE = "undefined"
+        CONST.__setattr__('INSTALLER_TYPE', 'undefined')
     else:
-        if CONST.INSTALLER_TYPE not in opnfv_constants.INSTALLERS:
+        if INSTALLER_TYPE not in opnfv_constants.INSTALLERS:
             logger.warning("INSTALLER_TYPE=%s is not a valid OPNFV installer. "
                            "Available OPNFV Installers are : %s. "
                            "Setting INSTALLER_TYPE=undefined."
-                           % (CONST.INSTALLER_TYPE,
+                           % (INSTALLER_TYPE,
                               opnfv_constants.INSTALLERS))
-            CONST.INSTALLER_TYPE = "undefined"
+            CONST.__setattr__('INSTALLER_TYPE', 'undefined')
         else:
             logger.info("    INSTALLER_TYPE=%s"
-                        % CONST.INSTALLER_TYPE)
+                        % INSTALLER_TYPE)
 
-    if CONST.INSTALLER_IP is None:
+    if INSTALLER_IP is None:
         logger.warning("The env variable 'INSTALLER_IP' is not defined. "
                        "It is needed to fetch the OpenStack credentials. "
                        "If the credentials are not provided to the "
                        "container as a volume, please add this env variable "
                        "to the 'docker run' command.")
     else:
-        logger.info("    INSTALLER_IP=%s" % CONST.INSTALLER_IP)
+        logger.info("    INSTALLER_IP=%s" % INSTALLER_IP)
 
-    if CONST.DEPLOY_SCENARIO is None:
+    if DEPLOY_SCENARIO is None:
         logger.warning("The env variable 'DEPLOY_SCENARIO' is not defined. "
                        "Setting CI_SCENARIO=undefined.")
-        CONST.DEPLOY_SCENARIO = "undefined"
+        CONST.__setattr__('DEPLOY_SCENARIO', 'undefined')
     else:
-        logger.info("    DEPLOY_SCENARIO=%s" % CONST.DEPLOY_SCENARIO)
-    if CONST.CI_DEBUG:
-        logger.info("    CI_DEBUG=%s" % CONST.CI_DEBUG)
+        logger.info("    DEPLOY_SCENARIO=%s" % DEPLOY_SCENARIO)
+    if CONST.__getattribute__('CI_DEBUG'):
+        logger.info("    CI_DEBUG=%s" % CONST.__getattribute__('CI_DEBUG'))
 
-    if CONST.NODE_NAME:
-        logger.info("    NODE_NAME=%s" % CONST.NODE_NAME)
+    if CONST.__getattribute__('NODE_NAME'):
+        logger.info("    NODE_NAME=%s" % CONST.__getattribute__('NODE_NAME'))
 
-    if CONST.BUILD_TAG:
-        logger.info("    BUILD_TAG=%s" % CONST.BUILD_TAG)
+    if CONST.__getattribute__('BUILD_TAG'):
+        logger.info("    BUILD_TAG=%s" % CONST.__getattribute__('BUILD_TAG'))
 
-    if CONST.IS_CI_RUN:
-        logger.info("    IS_CI_RUN=%s" % CONST.IS_CI_RUN)
+    if CONST.__getattribute__('IS_CI_RUN'):
+        logger.info("    IS_CI_RUN=%s" % CONST.__getattribute__('IS_CI_RUN'))
 
 
 def get_deployment_handler():
     global handler
     global pod_arch
 
-    installer_params_yaml = os.path.join(CONST.dir_repo_functest,
-                                         'functest/ci/installer_params.yaml')
-    if (CONST.INSTALLER_IP and CONST.INSTALLER_TYPE and
-            CONST.INSTALLER_TYPE in opnfv_constants.INSTALLERS):
+    installer_params_yaml = os.path.join(
+        CONST.__getattribute__('dir_repo_functest'),
+        'functest/ci/installer_params.yaml')
+    if (INSTALLER_IP and INSTALLER_TYPE and
+            INSTALLER_TYPE in opnfv_constants.INSTALLERS):
         try:
             installer_params = ft_utils.get_parameter_from_yaml(
-                CONST.INSTALLER_TYPE, installer_params_yaml)
+                INSTALLER_TYPE, installer_params_yaml)
         except ValueError as e:
             logger.debug('Printing deployment info is not supported for %s' %
-                         CONST.INSTALLER_TYPE)
+                         INSTALLER_TYPE)
             logger.debug(e)
         else:
             user = installer_params.get('user', None)
@@ -129,8 +136,8 @@ def get_deployment_handler():
             pkey = installer_params.get('pkey', None)
             try:
                 handler = factory.Factory.get_handler(
-                    installer=CONST.INSTALLER_TYPE,
-                    installer_ip=CONST.INSTALLER_IP,
+                    installer=INSTALLER_TYPE,
+                    installer_ip=INSTALLER_IP,
                     installer_user=user,
                     installer_pwd=password,
                     pkey_file=pkey)
@@ -143,51 +150,52 @@ def get_deployment_handler():
 def create_directories():
     print_separator()
     logger.info("Creating needed directories...")
-    if not os.path.exists(CONST.dir_functest_conf):
-        os.makedirs(CONST.dir_functest_conf)
-        logger.info("    %s created." % CONST.dir_functest_conf)
+    if not os.path.exists(DIR_FUNCTEST_CONF):
+        os.makedirs(DIR_FUNCTEST_CONF)
+        logger.info("    %s created." % DIR_FUNCTEST_CONF)
     else:
         logger.debug("   %s already exists."
-                     % CONST.dir_functest_conf)
+                     % DIR_FUNCTEST_CONF)
 
-    if not os.path.exists(CONST.dir_functest_data):
-        os.makedirs(CONST.dir_functest_data)
-        logger.info("    %s created." % CONST.dir_functest_data)
+    if not os.path.exists(DIR_FUNCTEST_DATA):
+        os.makedirs(DIR_FUNCTEST_DATA)
+        logger.info("    %s created." %
+                    CONST.CONST.__getattribute__('dir_functest_data'))
     else:
         logger.debug("   %s already exists."
-                     % CONST.dir_functest_data)
+                     % CONST.CONST.__getattribute__('dir_functest_data'))
 
 
 def source_rc_file():
     print_separator()
     logger.info("Fetching RC file...")
 
-    if CONST.openstack_creds is None:
+    if DIR_OPENSTACK_CREDS is None:
         logger.warning("The environment variable 'creds' must be set and"
                        "pointing to the local RC file. Using default: "
                        "/home/opnfv/functest/conf/openstack.creds ...")
-        os.path.join(CONST.dir_functest_conf, 'openstack.creds')
+        os.path.join(DIR_FUNCTEST_CONF, 'openstack.creds')
 
-    if not os.path.isfile(CONST.openstack_creds):
+    if not os.path.isfile(DIR_OPENSTACK_CREDS):
         logger.info("RC file not provided. "
                     "Fetching it from the installer...")
-        if CONST.INSTALLER_IP is None:
+        if INSTALLER_IP is None:
             logger.error("The env variable CI_INSTALLER_IP must be provided in"
                          " order to fetch the credentials from the installer.")
             raise Exception("Missing CI_INSTALLER_IP.")
-        if CONST.INSTALLER_TYPE not in opnfv_constants.INSTALLERS:
+        if INSTALLER_TYPE not in opnfv_constants.INSTALLERS:
             logger.error("Cannot fetch credentials. INSTALLER_TYPE=%s is "
                          "not a valid OPNFV installer. Available "
                          "installers are : %s." %
-                         (CONST.INSTALLER_TYPE,
+                         (INSTALLER_TYPE,
                           opnfv_constants.INSTALLERS))
             raise Exception("Wrong INSTALLER_TYPE.")
 
         cmd = ("/home/opnfv/repos/releng/utils/fetch_os_creds.sh "
                "-d %s -i %s -a %s"
-               % (CONST.openstack_creds,
-                  CONST.INSTALLER_TYPE,
-                  CONST.INSTALLER_IP))
+               % (DIR_OPENSTACK_CREDS,
+                  INSTALLER_TYPE,
+                  INSTALLER_IP))
         logger.debug("Executing command: %s" % cmd)
         p = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
         output = p.communicate()[0]
@@ -196,22 +204,22 @@ def source_rc_file():
             raise Exception("Failed to fetch credentials from installer.")
     else:
         logger.info("RC file provided in %s."
-                    % CONST.openstack_creds)
-        if os.path.getsize(CONST.openstack_creds) == 0:
-            raise Exception("The file %s is empty." % CONST.openstack_creds)
+                    % DIR_OPENSTACK_CREDS)
+        if os.path.getsize(DIR_OPENSTACK_CREDS) == 0:
+            raise Exception("The file %s is empty." % DIR_OPENSTACK_CREDS)
 
     logger.info("Sourcing the OpenStack RC file...")
-    os_utils.source_credentials(CONST.openstack_creds)
+    os_utils.source_credentials(DIR_OPENSTACK_CREDS)
     for key, value in os.environ.iteritems():
         if re.search("OS_", key):
             if key == 'OS_AUTH_URL':
-                CONST.OS_AUTH_URL = value
+                CONST.__setattr__('OS_AUTH_URL', value)
             elif key == 'OS_USERNAME':
-                CONST.OS_USERNAME = value
+                CONST.__setattr__('OS_USERNAME', value)
             elif key == 'OS_TENANT_NAME':
-                CONST.OS_TENANT_NAME = value
+                CONST.__setattr__('OS_TENANT_NAME', value)
             elif key == 'OS_PASSWORD':
-                CONST.OS_PASSWORD = value
+                CONST.__setattr__('OS_PASSWORD', value)
 
 
 def patch_config_file():
@@ -228,7 +236,7 @@ def patch_file(patch_file_path):
 
     updated = False
     for key in patch_file:
-        if key in CONST.DEPLOY_SCENARIO:
+        if key in DEPLOY_SCENARIO:
             new_functest_yaml = dict(ft_utils.merge_dicts(
                 ft_utils.get_functest_yaml(), patch_file[key]))
             updated = True
@@ -243,7 +251,8 @@ def patch_file(patch_file_path):
 def verify_deployment():
     print_separator()
     logger.info("Verifying OpenStack services...")
-    cmd = ("%s/functest/ci/check_os.sh" % CONST.dir_repo_functest)
+    cmd = ("%s/functest/ci/check_os.sh" %
+           CONST.__getattribute__('dir_repo_functest'))
 
     logger.debug("Executing command: %s" % cmd)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
@@ -274,7 +283,7 @@ def install_rally():
     cmd = "rally deployment destroy opnfv-rally"
     ft_utils.execute_command(cmd, error_msg=(
         "Deployment %s does not exist."
-        % CONST.rally_deployment_name),
+        % CONST.__getattribute__('rally_deployment_name')),
         verbose=False)
 
     rally_conf = os_utils.get_credentials_for_rally()
@@ -282,7 +291,7 @@ def install_rally():
         json.dump(rally_conf, fp)
     cmd = ("rally deployment create "
            "--file=rally_conf.json --name={0}"
-           .format(CONST.rally_deployment_name))
+           .format(CONST.__getattribute__('rally_deployment_name')))
     error_msg = "Problem while creating Rally deployment"
     ft_utils.execute_command_raise(cmd, error_msg=error_msg)
 
@@ -304,17 +313,18 @@ def install_rally():
 def install_tempest():
     logger.info("Installing tempest from existing repo...")
     cmd = ("rally verify list-verifiers | "
-           "grep '{0}' | wc -l".format(CONST.tempest_deployment_name))
+           "grep '{0}' | wc -l".format(
+               CONST.__getattribute__('tempest_deployment_name')))
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
     while p.poll() is None:
         line = p.stdout.readline().rstrip()
         if str(line) == '0':
             logger.debug("Tempest %s does not exist" %
-                         CONST.tempest_deployment_name)
+                         CONST.__getattribute__('tempest_deployment_name'))
             cmd = ("rally verify create-verifier --source {0} "
                    "--name {1} --type tempest --system-wide"
-                   .format(CONST.dir_repo_tempest,
-                           CONST.tempest_deployment_name))
+                   .format(CONST.__getattribute__('dir_repo_tempest'),
+                           CONST.__getattribute__('tempest_deployment_name')))
             error_msg = "Problem while installing Tempest."
             ft_utils.execute_command_raise(cmd, error_msg=error_msg)
 
@@ -331,10 +341,10 @@ def create_flavor():
 
 def check_environment():
     msg_not_active = "The Functest environment is not installed."
-    if not os.path.isfile(CONST.env_active):
+    if not os.path.isfile(CONST.__getattribute__('env_active')):
         raise Exception(msg_not_active)
 
-    with open(CONST.env_active, "r") as env_file:
+    with open(CONST.__getattribute__('env_active'), "r") as env_file:
         s = env_file.read()
         if not re.search("1", s):
             raise Exception(msg_not_active)
@@ -364,7 +374,7 @@ def main(**kwargs):
             install_rally()
             install_tempest()
             create_flavor()
-            with open(CONST.env_active, "w") as env_file:
+            with open(CONST.__getattribute__('env_active'), "w") as env_file:
                 env_file.write("1")
             check_environment()
             print_deployment_info()

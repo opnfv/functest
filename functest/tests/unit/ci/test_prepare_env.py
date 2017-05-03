@@ -15,6 +15,9 @@ from functest.tests.unit import test_utils
 from functest.utils.constants import CONST
 from opnfv.utils import constants as opnfv_constants
 
+DIR_FUNCTEST_CONF = CONST.__getattribute__('dir_functest_conf')
+DIR_FUNCTEST_DATA = CONST.__getattribute__('dir_functest_data')
+
 
 class PrepareEnvTesting(unittest.TestCase):
 
@@ -33,7 +36,7 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.logger.warning')
     def test_check_env_variables_missing_inst_type(self, mock_logger_warn,
                                                    mock_logger_info):
-        CONST.INSTALLER_TYPE = None
+        CONST.__setattr__('INSTALLER_TYPE', None)
         prepare_env.check_env_variables()
         mock_logger_info.assert_any_call("Checking environment variables"
                                          "...")
@@ -44,7 +47,7 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.logger.warning')
     def test_check_env_variables_missing_inst_ip(self, mock_logger_warn,
                                                  mock_logger_info):
-        CONST.INSTALLER_IP = None
+        CONST.__setattr__('INSTALLER_IP', None)
         prepare_env.check_env_variables()
         mock_logger_info.assert_any_call("Checking environment variables"
                                          "...")
@@ -61,7 +64,7 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.logger.warning')
     def test_check_env_variables_with_inst_ip(self, mock_logger_warn,
                                               mock_logger_info):
-        CONST.INSTALLER_IP = mock.Mock()
+        CONST.__setattr__('INSTALLER_IP', mock.Mock())
         prepare_env.check_env_variables()
         mock_logger_info.assert_any_call("Checking environment variables"
                                          "...")
@@ -72,7 +75,7 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.logger.warning')
     def test_check_env_variables_missing_scenario(self, mock_logger_warn,
                                                   mock_logger_info):
-        CONST.DEPLOY_SCENARIO = None
+        CONST.__setattr__('DEPLOY_SCENARIO', None)
         prepare_env.check_env_variables()
         mock_logger_info.assert_any_call("Checking environment variables"
                                          "...")
@@ -84,7 +87,7 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.logger.warning')
     def test_check_env_variables_with_scenario(self, mock_logger_warn,
                                                mock_logger_info):
-        CONST.DEPLOY_SCENARIO = 'test_scenario'
+        CONST.__setattr__('DEPLOY_SCENARIO', 'test_scenario')
         prepare_env.check_env_variables()
         mock_logger_info.assert_any_call("Checking environment variables"
                                          "...")
@@ -95,7 +98,7 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.logger.warning')
     def test_check_env_variables_with_ci_debug(self, mock_logger_warn,
                                                mock_logger_info):
-        CONST.CI_DEBUG = mock.Mock()
+        CONST.__setattr__('CI_DEBUG', mock.Mock())
         prepare_env.check_env_variables()
         mock_logger_info.assert_any_call("Checking environment variables"
                                          "...")
@@ -106,7 +109,7 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.logger.warning')
     def test_check_env_variables_with_node(self, mock_logger_warn,
                                            mock_logger_info):
-        CONST.NODE_NAME = mock.Mock()
+        CONST.__setattr__('NODE_NAME', mock.Mock())
         prepare_env.check_env_variables()
         mock_logger_info.assert_any_call("Checking environment variables"
                                          "...")
@@ -117,7 +120,7 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.logger.warning')
     def test_check_env_variables_with_build_tag(self, mock_logger_warn,
                                                 mock_logger_info):
-        CONST.BUILD_TAG = mock.Mock()
+        CONST.__setattr__('BUILD_TAG', mock.Mock())
         prepare_env.check_env_variables()
         mock_logger_info.assert_any_call("Checking environment variables"
                                          "...")
@@ -129,7 +132,7 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.logger.warning')
     def test_check_env_variables_with_is_ci_run(self, mock_logger_warn,
                                                 mock_logger_info):
-        CONST.IS_CI_RUN = mock.Mock()
+        CONST.__setattr__('IS_CI_RUN', mock.Mock())
         prepare_env.check_env_variables()
         mock_logger_info.assert_any_call("Checking environment variables"
                                          "...")
@@ -140,11 +143,11 @@ class PrepareEnvTesting(unittest.TestCase):
     def test_get_deployment_handler_missing_const_vars(self):
         with mock.patch('functest.ci.prepare_env.'
                         'factory.Factory.get_handler') as m:
-            CONST.INSTALLER_IP = None
+            CONST.__setattr__('INSTALLER_IP', None)
             prepare_env.get_deployment_handler()
             self.assertFalse(m.called)
 
-            CONST.INSTALLER_TYPE = None
+            CONST.__setattr__('INSTALLER_TYPE', None)
             prepare_env.get_deployment_handler()
             self.assertFalse(m.called)
 
@@ -156,8 +159,8 @@ class PrepareEnvTesting(unittest.TestCase):
             mock.patch('functest.ci.prepare_env.'
                        'ft_utils.get_parameter_from_yaml',
                        side_effect=ValueError):
-            CONST.INSTALLER_IP = 'test_ip'
-            CONST.INSTALLER_TYPE = 'test_inst_type'
+            CONST.__setattr__('INSTALLER_IP', 'test_ip')
+            CONST.__setattr__('INSTALLER_TYPE', 'test_inst_type')
             opnfv_constants.INSTALLERS = ['test_inst_type']
             prepare_env.get_deployment_handler()
             msg = ('Printing deployment info is not supported for '
@@ -172,8 +175,8 @@ class PrepareEnvTesting(unittest.TestCase):
                         side_effect=Exception), \
             mock.patch('functest.ci.prepare_env.'
                        'ft_utils.get_parameter_from_yaml'):
-            CONST.INSTALLER_IP = 'test_ip'
-            CONST.INSTALLER_TYPE = 'test_inst_type'
+            CONST.__setattr__('INSTALLER_IP', 'test_ip')
+            CONST.__setattr__('INSTALLER_TYPE', 'test_inst_type')
             opnfv_constants.INSTALLERS = ['test_inst_type']
             prepare_env.get_deployment_handler()
             self.assertTrue(mock_debug.called)
@@ -188,12 +191,12 @@ class PrepareEnvTesting(unittest.TestCase):
                 as mock_method:
             prepare_env.create_directories()
             mock_logger_info.assert_any_call("Creating needed directories...")
-            mock_method.assert_any_call(CONST.dir_functest_conf)
-            mock_method.assert_any_call(CONST.dir_functest_data)
+            mock_method.assert_any_call(DIR_FUNCTEST_CONF)
+            mock_method.assert_any_call(DIR_FUNCTEST_DATA)
             mock_logger_info.assert_any_call("    %s created." %
-                                             CONST.dir_functest_conf)
+                                             DIR_FUNCTEST_CONF)
             mock_logger_info.assert_any_call("    %s created." %
-                                             CONST.dir_functest_data)
+                                             DIR_FUNCTEST_DATA)
 
     @mock.patch('functest.ci.prepare_env.logger.info')
     @mock.patch('functest.ci.prepare_env.logger.debug')
@@ -204,9 +207,9 @@ class PrepareEnvTesting(unittest.TestCase):
             prepare_env.create_directories()
             mock_logger_info.assert_any_call("Creating needed directories...")
             mock_logger_debug.assert_any_call("   %s already exists." %
-                                              CONST.dir_functest_conf)
+                                              DIR_FUNCTEST_CONF)
             mock_logger_debug.assert_any_call("   %s already exists." %
-                                              CONST.dir_functest_data)
+                                              DIR_FUNCTEST_DATA)
 
     def _get_env_cred_dict(self, os_prefix=''):
         return {'OS_USERNAME': os_prefix + 'username',
@@ -230,24 +233,24 @@ class PrepareEnvTesting(unittest.TestCase):
                 mock.patch('functest.ci.prepare_env.os.path.getsize',
                            return_value=0), \
                 self.assertRaises(Exception):
-            CONST.openstack_creds = 'test_creds'
+            CONST.__setattr__('openstack_creds', 'test_creds')
             prepare_env.source_rc_file()
 
     def test_source_rc_missing_installer_ip(self):
         with mock.patch('functest.ci.prepare_env.os.path.isfile',
                         return_value=False), \
                 self.assertRaises(Exception):
-            CONST.INSTALLER_IP = None
-            CONST.openstack_creds = 'test_creds'
+            CONST.__setattr__('INSTALLER_IP', None)
+            CONST.__setattr__('openstack_creds', 'test_creds')
             prepare_env.source_rc_file()
 
     def test_source_rc_missing_installer_type(self):
         with mock.patch('functest.ci.prepare_env.os.path.isfile',
                         return_value=False), \
                 self.assertRaises(Exception):
-            CONST.INSTALLER_IP = 'test_ip'
-            CONST.openstack_creds = 'test_creds'
-            CONST.INSTALLER_TYPE = 'test_type'
+            CONST.__setattr__('INSTALLER_IP', 'test_ip')
+            CONST.__setattr__('openstack_creds', 'test_creds')
+            CONST.__setattr__('INSTALLER_TYPE', 'test_type')
             opnfv_constants.INSTALLERS = []
             prepare_env.source_rc_file()
 
@@ -259,9 +262,9 @@ class PrepareEnvTesting(unittest.TestCase):
                 mock.patch('functest.ci.prepare_env.subprocess.Popen') \
                 as mock_subproc_popen, \
                 self.assertRaises(Exception):
-            CONST.openstack_creds = 'test_creds'
-            CONST.INSTALLER_IP = None
-            CONST.INSTALLER_TYPE = 'test_type'
+            CONST.__setattr__('openstack_creds', 'test_creds')
+            CONST.__setattr__('INSTALLER_IP', None)
+            CONST.__setattr__('INSTALLER_TYPE', 'test_type')
             opnfv_constants.INSTALLERS = ['test_type']
 
             process_mock = mock.Mock()
@@ -281,7 +284,7 @@ class PrepareEnvTesting(unittest.TestCase):
                        return_value={'tkey1': 'tvalue1'}), \
             mock.patch('functest.ci.prepare_env.os.remove') as m, \
                 mock.patch('functest.ci.prepare_env.yaml.dump'):
-            CONST.DEPLOY_SCENARIO = 'test_scenario'
+            CONST.__setattr__('DEPLOY_SCENARIO', 'test_scenario')
             prepare_env.patch_file('test_file')
             self.assertTrue(m.called)
 
@@ -321,12 +324,12 @@ class PrepareEnvTesting(unittest.TestCase):
 
         cmd = "rally deployment destroy opnfv-rally"
         error_msg = "Deployment %s does not exist." % \
-                    CONST.rally_deployment_name
+                    CONST.__getattribute__('rally_deployment_name')
         mock_logger_info.assert_any_call("Creating Rally environment...")
         mock_exec.assert_any_call(cmd, error_msg=error_msg, verbose=False)
 
         cmd = "rally deployment create --file=rally_conf.json --name="
-        cmd += CONST.rally_deployment_name
+        cmd += CONST.__getattribute__('rally_deployment_name')
         error_msg = "Problem while creating Rally deployment"
         mock_exec_raise.assert_any_call(cmd, error_msg=error_msg)
 
@@ -352,7 +355,7 @@ class PrepareEnvTesting(unittest.TestCase):
                  'stdout.readline.return_value': '0'}
         mock_popen.configure_mock(**attrs)
 
-        CONST.tempest_deployment_name = 'test_dep_name'
+        CONST.__setattr__('tempest_deployment_name', 'test_dep_name')
         with mock.patch('functest.ci.prepare_env.'
                         'ft_utils.execute_command_raise',
                         side_effect=Exception), \
@@ -379,7 +382,7 @@ class PrepareEnvTesting(unittest.TestCase):
         with mock.patch('functest.ci.prepare_env.os.path.isfile',
                         return_value=False), \
                 self.assertRaises(Exception):
-                prepare_env.check_environment()
+            prepare_env.check_environment()
 
     @mock.patch('functest.ci.prepare_env.sys.exit')
     @mock.patch('functest.ci.prepare_env.logger.error')
@@ -431,7 +434,8 @@ class PrepareEnvTesting(unittest.TestCase):
             self.assertTrue(mock_install_rally.called)
             self.assertTrue(mock_install_temp.called)
             self.assertTrue(mock_create_flavor.called)
-            m.assert_called_once_with(CONST.env_active, "w")
+            m.assert_called_once_with(
+                CONST.__getattribute__('env_active'), "w")
             self.assertTrue(mock_check_env.called)
             self.assertTrue(mock_print_info.called)
 
