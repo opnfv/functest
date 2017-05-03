@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_d4912653",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-03T08:50:42Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "6727aac32833e57890d34e03c22ee9a7cd87770c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
