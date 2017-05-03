@@ -26,12 +26,12 @@ class VnfOnBoardingBase(base.TestCase):
         self.repo = kwargs.get('repo', '')
         self.cmd = kwargs.get('cmd', '')
         self.details = {}
-        self.result_dir = CONST.dir_results
+        self.result_dir = CONST.__getattribute__('dir_results')
         self.details_step_mapping = dict(
-                    deploy_orchestrator='orchestrator',
-                    deploy_vnf='vnf',
-                    test_vnf='test_vnf',
-                    prepare='prepare_env')
+            deploy_orchestrator='orchestrator',
+            deploy_vnf='vnf',
+            test_vnf='test_vnf',
+            prepare='prepare_env')
         self.details['prepare_env'] = {}
         self.details['orchestrator'] = {}
         self.details['vnf'] = {}
@@ -126,7 +126,7 @@ class VnfOnBoardingBase(base.TestCase):
                                              self.creds['username'])
         if not admin_user_id:
             self.step_failure("Failed to get id of {0}".format(
-                                                self.creds['username']))
+                self.creds['username']))
 
         tenant_id = os_utils.get_tenant_id(self.keystone_client,
                                            self.tenant_name)
@@ -136,7 +136,7 @@ class VnfOnBoardingBase(base.TestCase):
                                                self.tenant_description)
             if not tenant_id:
                 self.step_failure("Failed to get or create {0} tenant".format(
-                                                        self.tenant_name))
+                    self.tenant_name))
             roles_name = ["admin", "Admin"]
             role_id = ''
             for role_name in roles_name:
@@ -146,12 +146,12 @@ class VnfOnBoardingBase(base.TestCase):
 
             if not role_id:
                 self.step_failure("Failed to get id for {0} role".format(
-                                                            role_name))
+                    role_name))
 
             if not os_utils.add_role_user(self.keystone_client, admin_user_id,
                                           role_id, tenant_id):
                 self.step_failure("Failed to add {0} on tenant".format(
-                                                self.creds['username']))
+                    self.creds['username']))
 
         user_id = os_utils.get_or_create_user(self.keystone_client,
                                               self.tenant_name,

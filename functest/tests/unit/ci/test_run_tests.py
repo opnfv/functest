@@ -62,13 +62,13 @@ class RunTestsTesting(unittest.TestCase):
 
     @mock.patch('functest.ci.run_tests.os_snapshot.main')
     def test_generate_os_snapshot(self, mock_os_snap):
-            run_tests.generate_os_snapshot()
-            self.assertTrue(mock_os_snap.called)
+        run_tests.generate_os_snapshot()
+        self.assertTrue(mock_os_snap.called)
 
     @mock.patch('functest.ci.run_tests.os_clean.main')
     def test_cleanup(self, mock_os_clean):
-            run_tests.cleanup()
-            self.assertTrue(mock_os_clean.called)
+        run_tests.cleanup()
+        self.assertTrue(mock_os_clean.called)
 
     def test_update_test_info(self):
         run_tests.GlobalVariables.EXECUTED_TEST_CASES = [self.test]
@@ -179,7 +179,7 @@ class RunTestsTesting(unittest.TestCase):
         with mock.patch('functest.ci.run_tests.run_tier') as mock_method, \
             mock.patch('functest.ci.run_tests.generate_report.init'), \
                 mock.patch('functest.ci.run_tests.generate_report.main'):
-            CONST.CI_LOOP = 'test_ci_loop'
+            CONST.__setattr__('CI_LOOP', 'test_ci_loop')
             run_tests.run_all(self.tiers)
             mock_method.assert_any_call(self.tier)
             self.assertTrue(mock_logger_info.called)
@@ -188,7 +188,7 @@ class RunTestsTesting(unittest.TestCase):
     def test_run_all__missing_tier(self, mock_logger_info):
         with mock.patch('functest.ci.run_tests.generate_report.init'), \
                 mock.patch('functest.ci.run_tests.generate_report.main'):
-            CONST.CI_LOOP = 'loop_re_not_available'
+            CONST.__setattr__('CI_LOOP', 'loop_re_not_available')
             run_tests.run_all(self.tiers)
             self.assertTrue(mock_logger_info.called)
 
@@ -267,6 +267,7 @@ class RunTestsTesting(unittest.TestCase):
             self.assertEqual(run_tests.main(**kwargs),
                              run_tests.Result.EX_ERROR)
             self.assertTrue(m.called)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
