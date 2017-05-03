@@ -147,8 +147,3 @@ def main(args=[]):
         str += print_separator('-')
 
     logger.info("\n\n\n%s" % str)
-
-
-if __name__ == '__main__':
-    logging.basicConfig()
-    main(sys.argv[1:])
