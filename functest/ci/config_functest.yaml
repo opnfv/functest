@@ -124,7 +124,7 @@ rally:
     router_name: rally-router
 
 refstack:
-    tempest_conf_path: openstack/refstack_client/tempest.conf
+    tempest_conf_path: openstack/refstack_client/refstack_tempest.conf
     defcore_list: openstack/refstack_client/defcore.txt
 
 vnf:
@@ -200,6 +200,6 @@ example:
     sg_desc: Example Security group
 
 results:
-    # you can also set a dir (e.g. /home/opnfv/db) to dump results
-    # test_db_url: file:///home/opnfv/db
-    test_db_url: http://testresults.opnfv.org/test/api/v1
+    # you can also set a file (e.g. /home/opnfv/functest/results/dump.txt) to dump results
+    # test_db_url: file:///home/opnfv/functest/results/dump.txt
+    test_db_url: http://testresults.opnfv.org/test/api/v1/results
