@@ -67,7 +67,7 @@ def print_line(w1, w2='', w3='', w4='', w5=''):
            '| ' + w2.ljust(COL_2_LEN - 1) +
            '| ' + w3.ljust(COL_3_LEN - 1) +
            '| ' + w4.ljust(COL_4_LEN - 1))
-    if CONST.IS_CI_RUN:
+    if CONST.__getattribute__('IS_CI_RUN'):
         str += ('| ' + w5.ljust(COL_5_LEN - 1))
     str += '|\n'
     return str
@@ -75,7 +75,7 @@ def print_line(w1, w2='', w3='', w4='', w5=''):
 
 def print_line_no_columns(str):
     TOTAL_LEN = COL_1_LEN + COL_2_LEN + COL_3_LEN + COL_4_LEN + 2
-    if CONST.IS_CI_RUN:
+    if CONST.__getattribute__('IS_CI_RUN'):
         TOTAL_LEN += COL_5_LEN + 1
     return ('| ' + str.ljust(TOTAL_LEN) + "|\n")
 
@@ -85,7 +85,7 @@ def print_separator(char="=", delimiter="+"):
            delimiter + char * COL_2_LEN +
            delimiter + char * COL_3_LEN +
            delimiter + char * COL_4_LEN)
-    if CONST.IS_CI_RUN:
+    if CONST.__getattribute__('IS_CI_RUN'):
         str += (delimiter + char * COL_5_LEN)
     str += '+\n'
     return str
@@ -94,7 +94,7 @@ def print_separator(char="=", delimiter="+"):
 def main(args=[]):
     executed_test_cases = args
 
-    if CONST.IS_CI_RUN:
+    if CONST.__getattribute__('IS_CI_RUN'):
         results = get_results_from_db()
         if results is not None:
             for test in executed_test_cases:
@@ -103,15 +103,15 @@ def main(args=[]):
                              "result": data['result']})
 
     TOTAL_LEN = COL_1_LEN + COL_2_LEN + COL_3_LEN + COL_4_LEN
-    if CONST.IS_CI_RUN:
+    if CONST.__getattribute__('IS_CI_RUN'):
         TOTAL_LEN += COL_5_LEN
     MID = TOTAL_LEN / 2
 
-    if CONST.BUILD_TAG is not None:
-        if re.search("daily", CONST.BUILD_TAG) is not None:
-            CONST.CI_LOOP = "daily"
+    if CONST.__getattribute__('BUILD_TAG') is not None:
+        if re.search("daily", CONST.__getattribute__('BUILD_TAG')) is not None:
+            CONST.__setattr__('CI_LOOP', 'daily')
         else:
-            CONST.CI_LOOP = "weekly"
+            CONST.__setattr__('CI_LOOP', 'weekly')
 
     str = ''
     str += print_separator('=', delimiter="=")
@@ -120,19 +120,20 @@ def main(args=[]):
     str += print_line_no_columns(' ')
     str += print_line_no_columns(" Deployment description:")
     str += print_line_no_columns("   INSTALLER: %s"
-                                 % CONST.INSTALLER_TYPE)
-    if CONST.DEPLOY_SCENARIO is not None:
+                                 % CONST.__getattribute__('INSTALLER_TYPE'))
+    if CONST.__getattribute__('DEPLOY_SCENARIO') is not None:
         str += print_line_no_columns("   SCENARIO:  %s"
-                                     % CONST.DEPLOY_SCENARIO)
-    if CONST.BUILD_TAG is not None:
+                                     % CONST.__getattribute__(
+                                         'DEPLOY_SCENARIO'))
+    if CONST.__getattribute__('BUILD_TAG') is not None:
         str += print_line_no_columns("   BUILD TAG: %s"
-                                     % CONST.BUILD_TAG)
-    if CONST.CI_LOOP is not None:
+                                     % CONST.__getattribute__('BUILD_TAG'))
+    if CONST.__getattribute__('CI_LOOP') is not None:
         str += print_line_no_columns("   CI LOOP:   %s"
-                                     % CONST.CI_LOOP)
+                                     % CONST.__getattribute__('CI_LOOP'))
     str += print_line_no_columns(' ')
     str += print_separator('=')
-    if CONST.IS_CI_RUN:
+    if CONST.__getattribute__('IS_CI_RUN'):
         str += print_line('TEST CASE', 'TIER', 'DURATION', 'RESULT', 'URL')
     else:
         str += print_line('TEST CASE', 'TIER', 'DURATION', 'RESULT')
