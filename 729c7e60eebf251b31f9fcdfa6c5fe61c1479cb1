@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_b473527f",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-03T07:57:51Z",
+      "side": 1,
+      "message": "typo , remove last bracket\nCONST.__getattribute__(\u0027OS_ENDPOINT_TYPE\u0027)",
+      "revId": "729c7e60eebf251b31f9fcdfa6c5fe61c1479cb1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
