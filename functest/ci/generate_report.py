@@ -8,7 +8,6 @@
 import json
 import logging
 import re
-import sys
 import urllib2
 
 import functest.utils.functest_utils as ft_utils
@@ -147,8 +146,3 @@ def main(args=[]):
         str += print_separator('-')
 
     logger.info("\n\n\n%s" % str)
-
-
-if __name__ == '__main__':
-    logging.basicConfig()
-    main(sys.argv[1:])
