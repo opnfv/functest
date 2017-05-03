@@ -11,19 +11,24 @@ IRC: Server:freenode.net Channel:#opnfv-functest
 Repository: functest
 
 Committers:
-yaohelan@huawei.com
-feng.xiaowei@zte.com.cn
-ollivier.cedric@gmail.com
-jose.lausuch@ericsson.com
-morgan.richomme@orange.com
-meimei@huawei.com
-valentin.boucher@orange.com
-lanqinglong@huawei.com
-viktor.tikkanen@nokia.com
-juha.kosonen@nokia.com
-zhanghaoyu7@huawei.com
-raghavendrachari.kamsali@hpe.com
-lixiaoguang5@huawei.com
+Morgan Richomme <morgan.richomme@orange.com>
+Jose Lausuch <jose.lausuch@ericsson.com>
+Cedric Ollivier <ollivier.cedric@gmail.com>
+Helen Yao <yaohelan@huawei.com>
+Serena Feng <feng.xiaowei@zte.com.cn>
+Juha Kosonen <juha.kosonen@nokia.com>
+Valentin Boucher <valentin.boucher@orange.com>
+Viktor Tikkanen <viktor.tikkanen@nokia.com>
+Mei Mei <meimei@huawei.com>
+
+Additional contributors:
+Linda Wang <wangwulin@huawei.com>
+Georgios Paraskevopoulos <georgepar.91@gmail.com>
+Romanos Skiadas <rom.skiad@gmail.com>
+Michael Polenchuk <mpolenchuk@mirantis.com>
+Cristina Pauna <cristina.pauna@enea.com>
+Matthew Li <matthew.lijun@huawei.com>
+Steven Pisarski <s.pisarski@cablelabs.com>
 
 Link to TSC approval of the project: http://meetbot.opnfv.org/meetings/opnfv-meeting/2015/opnfv-meeting.2015-01-20-14.57.html
 
