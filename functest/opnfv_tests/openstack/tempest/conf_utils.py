@@ -279,12 +279,20 @@ def configure_tempest_update_params(tempest_conf_file,
     config.set('identity', 'tenant_name', CONST.tempest_identity_tenant_name)
     config.set('identity', 'username', CONST.tempest_identity_user_name)
     config.set('identity', 'password', CONST.tempest_identity_user_password)
+    config.set('identity', 'region', 'RegionOne')
     config.set(
         'validation', 'ssh_timeout', CONST.tempest_validation_ssh_timeout)
     config.set('object-storage', 'operator_role',
                CONST.tempest_object_storage_operator_role)
 
     if CONST.OS_ENDPOINT_TYPE is not None:
+        sections = config.sections()
+        if os_utils.is_keystone_v3():
+            config.set('identity', 'v3_endpoint_type', CONST.OS_ENDPOINT_TYPE)
+            if 'identity-feature-enabled' not in sections:
+                config.add_section('identity-feature-enabled')
+                config.set('identity-feature-enabled', 'api_v2', False)
+                config.set('identity-feature-enabled', 'api_v2_admin', False)
         services_list = ['compute',
                          'volume',
                          'image',
@@ -292,7 +300,6 @@ def configure_tempest_update_params(tempest_conf_file,
                          'data-processing',
                          'object-storage',
                          'orchestration']
-        sections = config.sections()
         for service in services_list:
             if service not in sections:
                 config.add_section(service)
