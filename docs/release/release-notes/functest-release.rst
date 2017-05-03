@@ -14,7 +14,7 @@ You should have received a copy of the license along with this.
 If not, see <http://creativecommons.org/licenses/by/4.0/>.
 
 ===========================================
-OPNFV Danube1.0 release note for Functest
+OPNFV Danube2.0 release note for Functest
 ===========================================
 
 Abstract
@@ -34,6 +34,9 @@ Version history
 |            |          | (Orange)         | release                |
 +------------+----------+------------------+------------------------+
 | 2017-03-29 | 4.0.0    | Jose Lausuch     | Functest for Danube    |
+|            |          | (Ericsson)       | release                |
++------------+----------+------------------+------------------------+
+| 2017-05-04 | 5.0.0    | Jose Lausuch     | Functest for Danube.2.0|
 |            |          | (Ericsson)       | release                |
 +------------+----------+------------------+------------------------+
 
@@ -93,16 +96,16 @@ Release Data
 | **Project**                          | functest                             |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Repo/tag**                         | danube.1.0                           |
+| **Repo/tag**                         | danube.2.0                           |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release designation**              | Danube base release                  |
+| **Release designation**              | Danube service release               |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release date**                     | March 31st 2017                      |
+| **Release date**                     | May 4st 2017                         |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Purpose of the delivery**          | Danube base release                  |
+| **Purpose of the delivery**          | Danube second release                |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
 
@@ -112,9 +115,9 @@ Deliverables
 Software
 --------
 
- - The Functest Docker image: https://hub.docker.com/r/opnfv/functest (tag: danube.1.0)
+ - The Functest Docker image: https://hub.docker.com/r/opnfv/functest (tag: danube.2.0)
 
- - The TestAPI Docker image: https://hub.docker.com/r/opnfv/testapi (tag:danube.1.0)
+ - The TestAPI Docker image: https://hub.docker.com/r/opnfv/testapi (tag:danube.2.0)
 
 
 Documents
@@ -192,7 +195,7 @@ New internal tests cases
 Scenario Matrix
 ===============
 
-For Danube 1.0, Functest was tested on the following HA scenarios (new
+For Danube 2.0, Functest was tested on the following HA scenarios (new
 dabube scenarios in bold):
 
 +---------------------+---------+---------+---------+---------+
@@ -495,7 +498,7 @@ Open JIRA tickets
 All the tickets that are not blocking have been fixed or postponed
 the next release.
 
-Functest Danube 1.0 is released without known bugs.
+Functest Danube 2.0 is released without known bugs.
 
 
 
