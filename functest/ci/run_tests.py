@@ -75,7 +75,7 @@ def print_separator(str, count=45):
 
 
 def source_rc_file():
-    rc_file = CONST.openstack_creds
+    rc_file = CONST.__getattribute__('openstack_creds')
     if not os.path.isfile(rc_file):
         raise Exception("RC file %s does not exist..." % rc_file)
     logger.debug("Sourcing the OpenStack RC file...")
@@ -83,13 +83,13 @@ def source_rc_file():
     for key, value in os.environ.iteritems():
         if re.search("OS_", key):
             if key == 'OS_AUTH_URL':
-                CONST.OS_AUTH_URL = value
+                CONST.__setattr__('OS_AUTH_URL', value)
             elif key == 'OS_USERNAME':
-                CONST.OS_USERNAME = value
+                CONST.__setattr__('OS_USERNAME', value)
             elif key == 'OS_TENANT_NAME':
-                CONST.OS_TENANT_NAME = value
+                CONST.__setattr__('OS_TENANT_NAME', value)
             elif key == 'OS_PASSWORD':
-                CONST.OS_PASSWORD = value
+                CONST.__setattr__('OS_PASSWORD', value)
 
 
 def generate_os_snapshot():
@@ -211,7 +211,8 @@ def run_all(tiers):
 
     for tier in tiers.get_tiers():
         if (len(tier.get_tests()) != 0 and
-                re.search(CONST.CI_LOOP, tier.get_ci_loop()) is not None):
+                re.search(CONST.__getattribute__('CI_LOOP'),
+                          tier.get_ci_loop()) is not None):
             tiers_to_run.append(tier)
             summary += ("\n    - %s:\n\t   %s"
                         % (tier.get_name(),
@@ -227,11 +228,10 @@ def run_all(tiers):
 
 def main(**kwargs):
 
-    CI_INSTALLER_TYPE = CONST.INSTALLER_TYPE
-    CI_SCENARIO = CONST.DEPLOY_SCENARIO
-
     file = CONST.functest_testcases_yaml
-    _tiers = tb.TierBuilder(CI_INSTALLER_TYPE, CI_SCENARIO, file)
+    _tiers = tb.TierBuilder(CONST.__getattribute__('INSTALLER_TYPE'),
+                            CONST.__getattribute__('DEPLOY_SCENARIO'),
+                            file)
 
     if kwargs['noclean']:
         GlobalVariables.CLEAN_FLAG = False
@@ -256,7 +256,8 @@ def main(**kwargs):
                 logger.error("Unknown test case or tier '%s', "
                              "or not supported by "
                              "the given scenario '%s'."
-                             % (kwargs['test'], CI_SCENARIO))
+                             % (kwargs['test'],
+                                CONST.__getattribute__('DEPLOY_SCENARIO')))
                 logger.debug("Available tiers are:\n\n%s"
                              % _tiers)
                 return Result.EX_ERROR
