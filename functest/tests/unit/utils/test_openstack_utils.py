@@ -418,21 +418,45 @@ class OSUtilsTesting(unittest.TestCase):
         mock_logger_info.assert_called_once_with("OS_IDENTITY_API_VERSION is "
                                                  "set in env as '%s'", '3')
 
-    def test_get_keystone_client(self):
+    @mock.patch('functest.utils.openstack_utils.get_session')
+    @mock.patch('functest.utils.openstack_utils.keystoneclient.Client')
+    @mock.patch('functest.utils.openstack_utils.get_keystone_client_version',
+                return_value='3')
+    @mock.patch('functest.utils.openstack_utils.os.getenv',
+                return_value='public')
+    def test_get_keystone_client_with_interface(self, mock_os_getenv,
+                                                mock_keystoneclient_version,
+                                                mock_key_client,
+                                                mock_get_session):
         mock_keystone_obj = mock.Mock()
         mock_session_obj = mock.Mock()
-        with mock.patch('functest.utils.openstack_utils'
-                        '.get_keystone_client_version', return_value='3'), \
-            mock.patch('functest.utils.openstack_utils'
-                       '.keystoneclient.Client',
-                       return_value=mock_keystone_obj) \
-            as mock_key_client, \
-            mock.patch('functest.utils.openstack_utils.get_session',
-                       return_value=mock_session_obj):
-            self.assertEqual(openstack_utils.get_keystone_client(),
-                             mock_keystone_obj)
-            mock_key_client.assert_called_once_with('3',
-                                                    session=mock_session_obj)
+        mock_key_client.return_value = mock_keystone_obj
+        mock_get_session.return_value = mock_session_obj
+        self.assertEqual(openstack_utils.get_keystone_client(),
+                         mock_keystone_obj)
+        mock_key_client.assert_called_once_with('3',
+                                                session=mock_session_obj,
+                                                interface='public')
+
+    @mock.patch('functest.utils.openstack_utils.get_session')
+    @mock.patch('functest.utils.openstack_utils.keystoneclient.Client')
+    @mock.patch('functest.utils.openstack_utils.get_keystone_client_version',
+                return_value='3')
+    @mock.patch('functest.utils.openstack_utils.os.getenv',
+                return_value='admin')
+    def test_get_keystone_client_no_interface(self, mock_os_getenv,
+                                              mock_keystoneclient_version,
+                                              mock_key_client,
+                                              mock_get_session):
+        mock_keystone_obj = mock.Mock()
+        mock_session_obj = mock.Mock()
+        mock_key_client.return_value = mock_keystone_obj
+        mock_get_session.return_value = mock_session_obj
+        self.assertEqual(openstack_utils.get_keystone_client(),
+                         mock_keystone_obj)
+        mock_key_client.assert_called_once_with('3',
+                                                session=mock_session_obj,
+                                                interface='admin')
 
     @mock.patch('functest.utils.openstack_utils.os.getenv',
                 return_value=None)

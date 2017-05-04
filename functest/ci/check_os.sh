@@ -86,30 +86,6 @@ if [ $RETVAL -ne 0 ]; then
 fi
 echo "  ...OK"
 
-adminURL=$(openstack catalog show  identity |awk '/admin/ {print $4}')
-if [ -z ${adminURL} ]; then
-    echo "ERROR: Cannot determine the admin URL."
-    openstack catalog show identity
-    exit 1
-fi
-adminIP=$(echo $adminURL|sed 's/^.*http.*\:\/\///'|sed 's/.[^:]*$//')
-adminPort=$(echo $adminURL|grep -Po '(?<=:)\d+')
-https_enabled=$(echo $adminURL | grep 'https')
-if [[ -n $https_enabled ]]; then
-    echo ">>Verifying SSL connectivity to the admin endpoint $adminIP:$adminPort..."
-    verify_SSL_connectivity $adminIP $adminPort
-else
-    echo ">>Verifying connectivity to the admin endpoint $adminIP:$adminPort..."
-    verify_connectivity $adminIP $adminPort
-fi
-RETVAL=$?
-if [ $RETVAL -ne 0 ]; then
-    echo "ERROR: Cannot talk to the admin endpoint $adminIP:$adminPort ."
-    echo "$adminURL"
-    exit 1
-fi
-echo "  ...OK"
-
 
 echo "Checking Required OpenStack services:"
 for service in $MANDATORY_SERVICES; do
