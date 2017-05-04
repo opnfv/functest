@@ -139,11 +139,11 @@ def get_credentials_for_rally():
     endpoint_types = [('internalURL', 'internal'),
                       ('publicURL', 'public'), ('adminURL', 'admin')]
 
-    endpoint_type = os.getenv('OS_ENDPOINT_TYPE')
+    endpoint_type = get_endpoint_type_from_env()
     if endpoint_type is not None:
         cred_key = env_cred_dict.get('OS_ENDPOINT_TYPE')
         for k, v in endpoint_types:
-            if endpoint_type == k:
+            if endpoint_type == v:
                 rally_conf[cred_key] = v
 
     region_name = os.getenv('OS_REGION_NAME')
@@ -156,6 +156,14 @@ def get_credentials_for_rally():
         cred_key = env_cred_dict.get('OS_CACERT')
         rally_conf[cred_key] = cacert
     return rally_conf
+
+
+def get_endpoint_type_from_env():
+    endpoint_type = os.environ.get("OS_ENDPOINT_TYPE",
+                                   os.environ.get("OS_INTERFACE"))
+    if endpoint_type and "URL" in endpoint_type:
+        endpoint_type = endpoint_type.replace("URL", "")
+    return endpoint_type
 
 
 def get_session_auth(other_creds={}):
