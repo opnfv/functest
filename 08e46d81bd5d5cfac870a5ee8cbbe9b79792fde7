@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_d442810f",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-04T15:30:42Z",
+      "side": 1,
+      "message": "I would prefer just \"/images\"",
+      "revId": "08e46d81bd5d5cfac870a5ee8cbbe9b79792fde7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_745155d7",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-04T15:30:42Z",
+      "side": 1,
+      "message": "just \"images\"?",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "08e46d81bd5d5cfac870a5ee8cbbe9b79792fde7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
