@@ -32,7 +32,7 @@ class Feature(base.TestCase):
     def __init__(self, **kwargs):
         super(Feature, self).__init__(**kwargs)
         self.result_file = "{}/{}.log".format(
-            CONST.__getattribute__('dir_results'), self.project_name)
+            CONST.__getattribute__('dir_results'), self.case_name)
 
     def execute(self, **kwargs):
         """Execute the Python method.

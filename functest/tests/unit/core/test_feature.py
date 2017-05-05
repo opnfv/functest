@@ -28,7 +28,7 @@ class FeatureTestingBase(unittest.TestCase):
     _project_name = "bar"
     _repo = "dir_repo_copper"
     _cmd = "cd /home/opnfv/repos/foo/tests && bash run.sh && cd -"
-    _output_file = '/home/opnfv/functest/results/bar.log'
+    _output_file = '/home/opnfv/functest/results/foo.log'
     feature = None
 
     @mock.patch('time.time', side_effect=[1, 2])
