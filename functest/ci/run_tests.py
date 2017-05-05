@@ -121,8 +121,8 @@ def get_run_dict(testname):
 
 
 def run_test(test, tier_name, testcases=None):
+    duration = "XX:XX"
     result_str = "PASS"
-    start = datetime.datetime.now()
     test_name = test.get_name()
     logger.info("\n")  # blank line
     print_separator("=")
@@ -146,7 +146,6 @@ def run_test(test, tier_name, testcases=None):
             cls = getattr(module, run_dict['class'])
             test_dict = ft_utils.get_dict_by_test(test_name)
             test_case = cls(**test_dict)
-
             try:
                 kwargs = run_dict['args']
                 result = test_case.run(**kwargs)
@@ -156,6 +155,7 @@ def run_test(test, tier_name, testcases=None):
                 if GlobalVariables.REPORT_FLAG:
                     test_case.push_to_db()
                 result = test_case.check_result()
+            duration = test_case.get_duration()
         except ImportError:
             logger.exception("Cannot import module {}".format(
                 run_dict['module']))
@@ -168,12 +168,7 @@ def run_test(test, tier_name, testcases=None):
     if test.needs_clean() and GlobalVariables.CLEAN_FLAG:
         cleanup()
 
-    end = datetime.datetime.now()
-    duration = (end - start).seconds
-    duration_str = ("%02d:%02d" % divmod(duration, 60))
-    logger.info("Test execution time: %s" % duration_str)
-
-    if result != 0:
+    if result != testcase.TestCase.EX_OK:
         logger.error("The test case '%s' failed. " % test_name)
         GlobalVariables.OVERALL_RESULT = Result.EX_ERROR
         result_str = "FAIL"
@@ -181,12 +176,12 @@ def run_test(test, tier_name, testcases=None):
         if test.is_blocking():
             if not testcases or testcases == "all":
                 # if it is a single test we don't print the whole results table
-                update_test_info(test_name, result_str, duration_str)
+                update_test_info(test_name, result_str, duration)
                 generate_report.main(GlobalVariables.EXECUTED_TEST_CASES)
             raise BlockingTestFailed("The test case {} failed and is blocking"
                                      .format(test.get_name()))
 
-    update_test_info(test_name, result_str, duration_str)
+    update_test_info(test_name, result_str, duration)
 
 
 def run_tier(tier):

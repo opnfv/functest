@@ -43,6 +43,24 @@ class TestCase(object):
         self.start_time = ""
         self.stop_time = ""
 
+    def get_duration(self):
+        """Return the duration of TestCase as str.
+
+        Returns:
+            duration if start_time and stop_time are set
+            "XX:XX" otherwise.
+        """
+        try:
+            assert self.start_time
+            assert self.stop_time
+            if self.stop_time < self.start_time:
+                return "XX:XX"
+            return "{0[0]:02.0f}:{0[1]:02.0f}".format(divmod(
+                self.stop_time - self.start_time, 60))
+        except Exception:
+            self.__logger.error("Please run test before getting the duration")
+            return "XX:XX"
+
     def check_result(self):
         """Interpret the result of the test case.
 
