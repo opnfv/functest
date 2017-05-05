@@ -337,9 +337,11 @@ class ODLMainTesting(ODLTesting):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(odl, 'open', mock.mock_open(),
-                                  create=True), \
+                                  create=True) as mock_open, \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase.TestCase.EX_OK, *args)
+        mock_open.assert_called_once_with(
+            os.path.join(odl.ODLTests.res_dir, 'stdout.txt'), 'w+')
 
     @mock.patch('os.remove')
     @mock.patch('robot.run', return_value=1)
@@ -348,9 +350,11 @@ class ODLMainTesting(ODLTesting):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(odl, 'open', mock.mock_open(),
-                                  create=True), \
+                                  create=True) as mock_open, \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase.TestCase.EX_OK, *args)
+        mock_open.assert_called_once_with(
+            os.path.join(odl.ODLTests.res_dir, 'stdout.txt'), 'w+')
 
     @mock.patch('os.remove', side_effect=OSError)
     @mock.patch('robot.run')
@@ -359,9 +363,11 @@ class ODLMainTesting(ODLTesting):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(odl, 'open', mock.mock_open(),
-                                  create=True), \
+                                  create=True) as mock_open, \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase.TestCase.EX_OK, *args)
+        mock_open.assert_called_once_with(
+            os.path.join(odl.ODLTests.res_dir, 'stdout.txt'), 'w+')
 
 
 class ODLRunTesting(ODLTesting):
