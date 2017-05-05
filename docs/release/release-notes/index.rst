@@ -15,6 +15,6 @@ Functest Release Notes
 
 Revision: _sha1_
 
-:Author: Morgan Richomme (morgan.richomme@orange.com)
+:Author: Jose Lausuch (jose.lausuch@ericsson.com)
 
 Build date: |today|
