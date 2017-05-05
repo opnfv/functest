@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_b7ca6f6c",
+        "filename": "functest/ci/generate_report.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-05T05:56:30Z",
+      "side": 1,
+      "message": "I fully agree with you. It was decided to forbid calling generate_report from cmdline. Please see https://gerrit.opnfv.org/gerrit/#/c/34143/\n\nI didn\u0027t apply it here as it will add another features here.",
+      "parentUuid": "9ab8dda7_77687787",
+      "range": {
+        "startLine": 27,
+        "startChar": 27,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "a87a5f00e1d32af5b193d0376778c966f1aaab3f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_1707bbcb",
         "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-05T01:47:40Z",
       "side": 1,
       "message": "As it also support being called through main, I would suggest to put a string here\n\u0027functest.opnfv_tests.openstack.refstack_client.refstack_client\u0027",
+      "range": {
+        "startLine": 23,
+        "startChar": 35,
+        "endLine": 23,
+        "endChar": 36
+      },
+      "revId": "a87a5f00e1d32af5b193d0376778c966f1aaab3f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_77c4f75e",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-05T05:56:30Z",
+      "side": 1,
+      "message": "But it\u0027s quite useless here as we call logging.basicConfig() instead of loadling logging.ini. \n\nI would prefer the TestCase owners to decide how he wants to manage logs when calling outside CI (log file can be considered as useless, DEBUG can be much interesting etc.)",
+      "parentUuid": "9ab8dda7_1707bbcb",
       "range": {
         "startLine": 23,
         "startChar": 35,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_17a33bb3",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/tempest_conf.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-05T05:56:30Z",
+      "side": 1,
+      "message": "I don\u0027t think so. Please see the previous comment",
+      "parentUuid": "9ab8dda7_370affd2",
+      "range": {
+        "startLine": 16,
+        "startChar": 27,
+        "endLine": 16,
+        "endChar": 35
+      },
+      "revId": "a87a5f00e1d32af5b193d0376778c966f1aaab3f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_d7104303",
         "filename": "functest/opnfv_tests/openstack/vping/vping_userdata.py",
         "patchSetId": 13
@@ -82,6 +154,30 @@
       "writtenOn": "2017-05-05T01:47:40Z",
       "side": 1,
       "message": "The logger is not consistent. Some logger is put on module level, some is put as instance attribute.\nCan we choose one type and stick to it?",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 49
+      },
+      "revId": "a87a5f00e1d32af5b193d0376778c966f1aaab3f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_97964b4b",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_userdata.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-05T05:56:30Z",
+      "side": 1,
+      "message": "Sure. I think it should be a class attribute. But I don\u0027t want to fix all them in this patch. Here I delete the previous dependency and I think each owner can apply that. But if you look at pylint score,  this is ok and they are bigger issues.",
+      "parentUuid": "9ab8dda7_d7104303",
       "range": {
         "startLine": 25,
         "startChar": 8,
