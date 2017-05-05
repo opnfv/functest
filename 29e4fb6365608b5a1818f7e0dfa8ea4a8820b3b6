@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_2a3136a2",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-05T14:39:04Z",
+      "side": 1,
+      "message": "can we just call it FUNCTEST_IMAGES_DIR?",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "29e4fb6365608b5a1818f7e0dfa8ea4a8820b3b6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_8a21424f",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-05T14:39:04Z",
+      "side": 1,
+      "message": "I would call it images or os_images. images_data is a bit misleading.",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 19
+      },
+      "revId": "29e4fb6365608b5a1818f7e0dfa8ea4a8820b3b6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
