@@ -7,6 +7,7 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import logging
 import os
 import re
 import sys
@@ -16,7 +17,6 @@ import argparse
 import paramiko
 from scp import SCPClient
 
-import functest.utils.functest_logger as ft_logger
 import functest.utils.openstack_utils as os_utils
 import vping_base
 import functest.core.testcase as testcase
@@ -28,7 +28,7 @@ class VPingSSH(vping_base.VPingBase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "vping_ssh"
         super(VPingSSH, self).__init__(**kwargs)
-        self.logger = ft_logger.Logger(self.case_name).getLogger()
+        self.logger = logging.getLogger(__name__)
 
     def do_vping(self, vm, test_ip):
         floatip = self.add_float_ip(vm)
@@ -166,6 +166,7 @@ class VPingSSH(vping_base.VPingBase):
 
 
 if __name__ == '__main__':
+    logging.basicConfig()
     args_parser = argparse.ArgumentParser()
     args_parser.add_argument("-r", "--report",
                              help="Create json result file",

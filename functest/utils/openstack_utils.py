@@ -8,7 +8,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import os
+import logging
 import os.path
 import re
 import sys
@@ -23,10 +23,9 @@ from novaclient import client as novaclient
 from keystoneclient import client as keystoneclient
 from neutronclient.neutron import client as neutronclient
 
-import functest.utils.functest_logger as ft_logger
 import functest.utils.functest_utils as ft_utils
 
-logger = ft_logger.Logger("openstack_utils").getLogger()
+logger = logging.getLogger(__name__)
 
 DEFAULT_API_VERSION = '2'
 DEFAULT_HEAT_API_VERSION = '1'
