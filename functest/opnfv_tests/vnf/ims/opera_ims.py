@@ -64,27 +64,27 @@ class OperaIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.logger.info('VNFM IP: %s', vnfm_ip)
         vnf_status_url = 'http://{0}:5000/api/v1/model/status'.format(vnfm_ip)
         vnf_alive = False
-        retry = 15
+        retry = 40
 
         self.logger.info('Check the VNF status')
         while retry > 0:
-            rq = requests.get(vnf_status_url)
+            rq = requests.get(vnf_status_url, timeout=90)
             response = rq.json()
             vnf_alive = response['vnf_alive']
             msg = response['msg']
             self.logger.info(msg)
             if vnf_alive:
                 break
-            self.logger.info('check again in one minute...')
+            self.logger.info('check again in one and half a minute...')
             retry = retry - 1
-            time.sleep(60)
+            time.sleep(90)
 
         if not vnf_alive:
             raise Exception('VNF failed to start: {0}'.format(msg))
 
         ellis_config_url = ('http://{0}:5000/api/v1/model/ellis/configure'
                             .format(vnfm_ip))
-        rq = requests.get(ellis_config_url, timeout=60)
+        rq = requests.get(ellis_config_url, timeout=90)
         if rq.json() and not rq.json()['ellis_ok']:
             self.logger.error(rq.json()['data'])
             raise Exception('Failed to configure Ellis')
@@ -92,7 +92,7 @@ class OperaIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.logger.info('Get Clearwater deployment detail')
         vnf_info_url = ('http://{0}:5000/api/v1/model/output'
                         .format(vnfm_ip))
-        rq = requests.get(vnf_info_url, timeout=60)
+        rq = requests.get(vnf_info_url, timeout=90)
         data = rq.json()['data']
         self.logger.info(data)
         bono_ip = data['bono_ip']
