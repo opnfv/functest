@@ -22,7 +22,7 @@ __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 class TestCaseTesting(unittest.TestCase):
 
     """The class testing TestCase."""
-    # pylint: disable=missing-docstring
+    # pylint: disable=missing-docstring,too-many-public-methods
 
     logging.disable(logging.CRITICAL)
 
@@ -161,6 +161,33 @@ class TestCaseTesting(unittest.TestCase):
         self.test.result = 0
         self.assertEqual(self.test.check_result(),
                          testcase.TestCase.EX_TESTCASE_FAILED)
+
+    def test_get_duration_start_ko(self):
+        self.test.start_time = None
+        self.assertEqual(self.test.get_duration(), "XX:XX")
+        self.test.start_time = 0
+        self.assertEqual(self.test.get_duration(), "XX:XX")
+
+    def test_get_duration_end_ko(self):
+        self.test.stop_time = None
+        self.assertEqual(self.test.get_duration(), "XX:XX")
+        self.test.stop_time = 0
+        self.assertEqual(self.test.get_duration(), "XX:XX")
+
+    def test_get_invalid_duration(self):
+        self.test.start_time = 2
+        self.test.stop_time = 1
+        self.assertEqual(self.test.get_duration(), "XX:XX")
+
+    def test_get_zero_duration(self):
+        self.test.start_time = 2
+        self.test.stop_time = 2
+        self.assertEqual(self.test.get_duration(), "00:00")
+
+    def test_get_duration(self):
+        self.test.start_time = 1
+        self.test.stop_time = 180
+        self.assertEqual(self.test.get_duration(), "02:59")
 
 
 if __name__ == "__main__":
