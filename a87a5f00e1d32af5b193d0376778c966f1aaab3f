@@ -143,6 +143,23 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_d7360352",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/tempest_conf.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-05T07:50:30Z",
+      "side": 1,
+      "message": "I think we never call this script manually. So, this can be removed in another patch.",
+      "revId": "a87a5f00e1d32af5b193d0376778c966f1aaab3f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_d7104303",
         "filename": "functest/opnfv_tests/openstack/vping/vping_userdata.py",
         "patchSetId": 13
