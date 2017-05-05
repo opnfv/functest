@@ -116,12 +116,12 @@ class TestCaseTesting(unittest.TestCase):
 
     def test_check_criteria_missing(self):
         self.test.criteria = None
-        self.assertEqual(self.test.check_result(),
+        self.assertEqual(self.test.is_successful(),
                          testcase.TestCase.EX_TESTCASE_FAILED)
 
     def test_check_result_missing(self):
         self.test.result = None
-        self.assertEqual(self.test.check_result(),
+        self.assertEqual(self.test.is_successful(),
                          testcase.TestCase.EX_TESTCASE_FAILED)
 
     def test_check_result_failed(self):
@@ -129,7 +129,7 @@ class TestCaseTesting(unittest.TestCase):
         # It must be removed as soon as TestCase subclasses
         # stop setting result = 'PASS' or 'FAIL'.
         self.test.result = 'FAIL'
-        self.assertEqual(self.test.check_result(),
+        self.assertEqual(self.test.is_successful(),
                          testcase.TestCase.EX_TESTCASE_FAILED)
 
     def test_check_result_pass(self):
@@ -137,29 +137,29 @@ class TestCaseTesting(unittest.TestCase):
         # It must be removed as soon as TestCase subclasses
         # stop setting result = 'PASS' or 'FAIL'.
         self.test.result = 'PASS'
-        self.assertEqual(self.test.check_result(),
+        self.assertEqual(self.test.is_successful(),
                          testcase.TestCase.EX_OK)
 
     def test_check_result_lt(self):
         self.test.result = 50
-        self.assertEqual(self.test.check_result(),
+        self.assertEqual(self.test.is_successful(),
                          testcase.TestCase.EX_TESTCASE_FAILED)
 
     def test_check_result_eq(self):
         self.test.result = 100
-        self.assertEqual(self.test.check_result(),
+        self.assertEqual(self.test.is_successful(),
                          testcase.TestCase.EX_OK)
 
     def test_check_result_gt(self):
         self.test.criteria = 50
         self.test.result = 100
-        self.assertEqual(self.test.check_result(),
+        self.assertEqual(self.test.is_successful(),
                          testcase.TestCase.EX_OK)
 
     def test_check_result_zero(self):
         self.test.criteria = 0
         self.test.result = 0
-        self.assertEqual(self.test.check_result(),
+        self.assertEqual(self.test.is_successful(),
                          testcase.TestCase.EX_TESTCASE_FAILED)
 
     def test_get_duration_start_ko(self):
