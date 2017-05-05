@@ -1,0 +1,1057 @@
+ <html>
+  <head>
+    <meta charset="utf-8">
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../js/default.css" rel="stylesheet">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://d3js.org/d3.v2.min.js"></script>
+    <script type="text/javascript" src="../../js/gauge.js"></script>
+    <script type="text/javascript" src="../../js/trend.js"></script>
+    <script>
+    function onDocumentReady() {
+    	// Gauge management
+        var gaugeScenario1 = gauge('#gaugeScenario1');var gaugeScenario2 = gauge('#gaugeScenario2');var gaugeScenario3 = gauge('#gaugeScenario3');var gaugeScenario4 = gauge('#gaugeScenario4');var gaugeScenario5 = gauge('#gaugeScenario5');var gaugeScenario6 = gauge('#gaugeScenario6');var gaugeScenario7 = gauge('#gaugeScenario7');var gaugeScenario8 = gauge('#gaugeScenario8');var gaugeScenario9 = gauge('#gaugeScenario9');var gaugeScenario10 = gauge('#gaugeScenario10');var gaugeScenario11 = gauge('#gaugeScenario11');var gaugeScenario12 = gauge('#gaugeScenario12');var gaugeScenario13 = gauge('#gaugeScenario13');var gaugeScenario14 = gauge('#gaugeScenario14');
+
+    	// assign success rate to the gauge
+    	function updateReadings() {
+    	    gaugeScenario1.update(93.3333333333);gaugeScenario2.update(50.0);gaugeScenario3.update(27.2727272727);gaugeScenario4.update(77.7777777778);gaugeScenario5.update(18.1818181818);gaugeScenario6.update(44.4444444444);gaugeScenario7.update(90.9090909091);gaugeScenario8.update(76.6666666667);gaugeScenario9.update(20.0);gaugeScenario10.update(69.696969697);gaugeScenario11.update(18.1818181818);gaugeScenario12.update(80.5555555556);gaugeScenario13.update(90.9090909091);gaugeScenario14.update(76.6666666667);
+    	}
+    	updateReadings();
+        }
+
+        // trend line management
+        d3.csv("./scenario_history.txt", function(data) {
+       // ***************************************
+       // Create the trend line
+      // for scenario os-nosdn-fdio-noha
+       // Filter results
+        var trend1 = data.filter(function(row) {
+    	     return row["scenario"]=="os-nosdn-fdio-noha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend1.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg1",trend1)
+        // ****************************************// for scenario os-odl-gluon-noha
+       // Filter results
+        var trend2 = data.filter(function(row) {
+    	     return row["scenario"]=="os-odl-gluon-noha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend2.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg2",trend2)
+        // ****************************************// for scenario os-ovn-nofeature-noha
+       // Filter results
+        var trend3 = data.filter(function(row) {
+    	     return row["scenario"]=="os-ovn-nofeature-noha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend3.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg3",trend3)
+        // ****************************************// for scenario os-odl_l2-fdio-noha
+       // Filter results
+        var trend4 = data.filter(function(row) {
+    	     return row["scenario"]=="os-odl_l2-fdio-noha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend4.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg4",trend4)
+        // ****************************************// for scenario os-odl_l3-ovs-ha
+       // Filter results
+        var trend5 = data.filter(function(row) {
+    	     return row["scenario"]=="os-odl_l3-ovs-ha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend5.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg5",trend5)
+        // ****************************************// for scenario os-odl-bgpvpn-ha
+       // Filter results
+        var trend6 = data.filter(function(row) {
+    	     return row["scenario"]=="os-odl-bgpvpn-ha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend6.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg6",trend6)
+        // ****************************************// for scenario os-nosdn-kvm-ha
+       // Filter results
+        var trend7 = data.filter(function(row) {
+    	     return row["scenario"]=="os-nosdn-kvm-ha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend7.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg7",trend7)
+        // ****************************************// for scenario os-odl_l3-fdio-noha
+       // Filter results
+        var trend8 = data.filter(function(row) {
+    	     return row["scenario"]=="os-odl_l3-fdio-noha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend8.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg8",trend8)
+        // ****************************************// for scenario os-nosdn-fdio-ha
+       // Filter results
+        var trend9 = data.filter(function(row) {
+    	     return row["scenario"]=="os-nosdn-fdio-ha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend9.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg9",trend9)
+        // ****************************************// for scenario os-odl_l3-nofeature-ha
+       // Filter results
+        var trend10 = data.filter(function(row) {
+    	     return row["scenario"]=="os-odl_l3-nofeature-ha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend10.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg10",trend10)
+        // ****************************************// for scenario os-nosdn-ovs-ha
+       // Filter results
+        var trend11 = data.filter(function(row) {
+    	     return row["scenario"]=="os-nosdn-ovs-ha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend11.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg11",trend11)
+        // ****************************************// for scenario os-odl_l2-fdio-ha
+       // Filter results
+        var trend12 = data.filter(function(row) {
+    	     return row["scenario"]=="os-odl_l2-fdio-ha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend12.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg12",trend12)
+        // ****************************************// for scenario os-nosdn-nofeature-ha
+       // Filter results
+        var trend13 = data.filter(function(row) {
+    	     return row["scenario"]=="os-nosdn-nofeature-ha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend13.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg13",trend13)
+        // ****************************************// for scenario os-odl_l3-fdio-ha
+       // Filter results
+        var trend14 = data.filter(function(row) {
+    	     return row["scenario"]=="os-odl_l3-fdio-ha" && row["installer"]=="apex";
+    	})
+       // Parse the date
+        trend14.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg14",trend14)
+        // ****************************************
+    });
+    if ( !window.isLoaded ) {
+        window.addEventListener("load", function() {
+    			onDocumentReady();
+        }, false);
+    } else {
+    	onDocumentReady();
+    }
+</script>
+<script type="text/javascript">
+$(document).ready(function (){
+    $(".btn-more").click(function() {
+    	$(this).hide();
+    	$(this).parent().find(".panel-default").show();
+    });
+})
+</script>
+
+  </head>
+    <body>
+    <div class="container">
+      <div class="masthead">
+        <h3 class="text-muted">Functest status page (danube, 2017-05-05 01:45)</h3>
+        <nav>
+          <ul class="nav nav-justified">
+            <li class="active"><a href="http://testresults.opnfv.org/reporting/index.html">Home</a></li>
+            <li><a href="apex.html">Apex</a></li>
+            <li><a href="compass.html">Compass</a></li>
+            <li><a href="fuel.html">Fuel</a></li>
+            <li><a href="joid.html">Joid</a></li>
+          </ul>
+        </nav>
+      </div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="page-header">
+            <h2>apex</h2>
+        </div>
+
+        <div class="scenario-overview">
+            <div class="panel-heading"><h4><b>List of last scenarios (danube) run over the last 10 days </b></h4></div>
+                <table class="table">
+                    <tr>
+                        <th width="40%">Scenario</th>
+                        <th width="20%">Status</th>
+                        <th width="20%">Trend</th>
+                        <th width="10%">Score</th>
+                        <th width="10%">Iteration</th>
+                    </tr>
+                        <tr class="tr-ok">
+                                <td><a href=http://testresultS.opnfv.org/reporting>os-nosdn-fdio-noha</a></td>
+                                <td><div id="gaugeScenario1"></div></td>
+                                <td><div id="trend_svg1"></div></td>
+                                <td>28/30</td>
+                                <td>10</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/225/console>os-odl-gluon-noha</a></td>
+                                <td><div id="gaugeScenario2"></div></td>
+                                <td><div id="trend_svg2"></div></td>
+                                <td>18/36</td>
+                                <td>3</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/221/console>os-ovn-nofeature-noha</a></td>
+                                <td><div id="gaugeScenario3"></div></td>
+                                <td><div id="trend_svg3"></div></td>
+                                <td>9/33</td>
+                                <td>5</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/226/console>os-odl_l2-fdio-noha</a></td>
+                                <td><div id="gaugeScenario4"></div></td>
+                                <td><div id="trend_svg4"></div></td>
+                                <td>28/36</td>
+                                <td>6</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/220/console>os-odl_l3-ovs-ha</a></td>
+                                <td><div id="gaugeScenario5"></div></td>
+                                <td><div id="trend_svg5"></div></td>
+                                <td>6/33</td>
+                                <td>4</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/224/console>os-odl-bgpvpn-ha</a></td>
+                                <td><div id="gaugeScenario6"></div></td>
+                                <td><div id="trend_svg6"></div></td>
+                                <td>16/36</td>
+                                <td>3</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/228/console>os-nosdn-kvm-ha</a></td>
+                                <td><div id="gaugeScenario7"></div></td>
+                                <td><div id="trend_svg7"></div></td>
+                                <td>30/33</td>
+                                <td>6</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/217/console>os-odl_l3-fdio-noha</a></td>
+                                <td><div id="gaugeScenario8"></div></td>
+                                <td><div id="trend_svg8"></div></td>
+                                <td>23/30</td>
+                                <td>13</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/230/console>os-nosdn-fdio-ha</a></td>
+                                <td><div id="gaugeScenario9"></div></td>
+                                <td><div id="trend_svg9"></div></td>
+                                <td>6/30</td>
+                                <td>6</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/211/console>os-odl_l3-nofeature-ha</a></td>
+                                <td><div id="gaugeScenario10"></div></td>
+                                <td><div id="trend_svg10"></div></td>
+                                <td>23/33</td>
+                                <td>5</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/231/console>os-nosdn-ovs-ha</a></td>
+                                <td><div id="gaugeScenario11"></div></td>
+                                <td><div id="trend_svg11"></div></td>
+                                <td>6/33</td>
+                                <td>6</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/227/console>os-odl_l2-fdio-ha</a></td>
+                                <td><div id="gaugeScenario12"></div></td>
+                                <td><div id="trend_svg12"></div></td>
+                                <td>29/36</td>
+                                <td>20</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/222/console>os-nosdn-nofeature-ha</a></td>
+                                <td><div id="gaugeScenario13"></div></td>
+                                <td><div id="trend_svg13"></div></td>
+                                <td>30/33</td>
+                                <td>5</td>
+                            </tr><tr class="tr-ok">
+                                <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-apex-apex-daily-danube-daily-danube/229/console>os-odl_l3-fdio-ha</a></td>
+                                <td><div id="gaugeScenario14"></div></td>
+                                <td><div id="trend_svg14"></div></td>
+                                <td>23/30</td>
+                                <td>6</td>
+                            </tr>
+                        </table>
+        </div>
+
+
+        <div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-nosdn-fdio-noha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (ssh)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-clear.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-odl-gluon-noha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            ODL
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Doctor
+
+                             </th><th>
+                            Domino
+
+                             </th><th>
+                            Netready
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-few-clouds.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-ovn-nofeature-noha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (ssh)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Doctor
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-odl_l2-fdio-noha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (ssh)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            ODL
+
+                             </th><th>
+                            FDS
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-odl_l3-ovs-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            ODL
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Doctor
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-odl-bgpvpn-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            ODL
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Doctor
+
+                             </th><th>
+                            bgpvpn
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-nosdn-kvm-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (ssh)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Doctor
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-odl_l3-fdio-noha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            ODL
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-nosdn-fdio-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (ssh)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-odl_l3-nofeature-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            ODL
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Doctor
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-nosdn-ovs-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (ssh)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Doctor
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-odl_l2-fdio-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (ssh)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            ODL
+
+                             </th><th>
+                            FDS
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-overcast.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-few-clouds.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-nosdn-nofeature-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (ssh)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Doctor
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-odl_l3-fdio-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+
+                             </th><th>
+                            Health (api)
+
+                             </th><th>
+                            Health (dhcp)
+
+                             </th><th>
+                            vPing (userdata)
+
+                             </th><th>
+                            Tempest (smoke)
+
+                             </th><th>
+                            Rally (smoke)
+
+                             </th><th>
+                            Refstack
+
+                             </th><th>
+                            ODL
+
+                             </th><th>
+                            SNAPS
+
+                             </th><th>
+                            Domino
+
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+    see <a href="https://wiki.opnfv.org/pages/viewpage.action?pageId=6828617">Functest scoring wiki page</a> for details on scenario scoring
+     <div> <br>
+    <a href="./status-apex.pdf" class="myButtonPdf">Export to PDF</a>   <a href="./scenario_history_apex.txt" class="myButtonCSV">Export to CSV</a>
+    </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
