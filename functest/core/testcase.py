@@ -61,7 +61,7 @@ class TestCase(object):
             self.__logger.error("Please run test before getting the duration")
             return "XX:XX"
 
-    def check_result(self):
+    def is_successful(self):
         """Interpret the result of the test case.
 
         It allows getting the result of TestCase. It completes run()
@@ -141,7 +141,7 @@ class TestCase(object):
             assert self.case_name
             assert self.start_time
             assert self.stop_time
-            pub_result = 'PASS' if self.check_result(
+            pub_result = 'PASS' if self.is_successful(
                 ) == TestCase.EX_OK else 'FAIL'
             if ft_utils.push_results_to_db(
                     self.project_name, self.case_name, self.start_time,
