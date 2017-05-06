@@ -2,11 +2,11 @@
 
 created by [Cédric Ollivier](mailto:cedric.ollivier@orange.com)
 
-2017/04/24
+2017/05/06
 
 Note:
 
-- Functest integrates lots of heteregeounous testcases:
+- Functest integrates lots of heterogeneous testcases:
     - python vs bash
     - internal vs external
 - it aims to benefit from object programming
@@ -33,11 +33,11 @@ Note:
 ### Our target
 
 - limit run_tests.py instructions by defining:
-    - the basic testcase attritutes
+    - the basic testcase attributes
     - all common operations
     - the status codes expected
 - avoid duplicating codes between testcases
-- ease the developpement of third-party testcases (aka features)
+- ease the development of third-party testcases (aka features)
 
 
 
@@ -51,6 +51,7 @@ base model for single test case
 - project_name (default: 'functest')
 - case_name
 - criteria
+- result
 - start_time
 - stop_time
 - details
@@ -61,7 +62,8 @@ base model for single test case
 | Method            | Purpose                                    |
 |-------------------|--------------------------------------------|
 | run(**kwargs)     | run the test case                          |
-| check_criteria()  | interpret the results of the test case     |
+| is_successful()   | interpret the results of the test case     |
+| get_duration()    | return the duration of the test case       |
 | push_to_db()      | push the results of the test case to the DB|
 
 
@@ -69,7 +71,7 @@ base model for single test case
 
 - the subclasses must override the default implementation which is false on purpose
 - the new implementation must set the following attributes to push the results to DB:
-    - criteria
+    - result
     - start_time
     - stop_time
 
@@ -99,7 +101,8 @@ except KeyError:
 if result == testcase.TestCase.EX_OK:
     if GlobalVariables.REPORT_FLAG:
         test_case.push_to_db()
-    result = test_case.check_criteria()
+    result = test_case.is_successful()
+duration = test_case.get_duration()
 ```
 
 
@@ -121,7 +124,7 @@ class Test(testcase.TestCase):
     def run(self, **kwargs):
         self.start_time = time.time()
         print "Hello World"
-        self.criteria = 'PASS'
+        self.result = 100
         self.stop_time = time.time()
         return testcase.TestCase.EX_OK
 ```
@@ -132,7 +135,7 @@ class Test(testcase.TestCase):
 ```yaml
 case_name: first
 project_name: functest
-criteria: 'status == "PASS"'
+criteria: 100
 blocking: true
 clean_flag: false
 description: ''
@@ -164,7 +167,7 @@ base model for single feature
 
 - allows executing any Python method by calling execute()
 - sets the following attributes required to push the results to DB:
-    - criteria
+    - result
     - start_time
     - stop_time
 - doesn't fulfill details when pushing the results to the DB.
@@ -200,7 +203,7 @@ class Test(feature.Feature):
 ```yaml
 case_name: second
 project_name: functest
-criteria: 'status == "PASS"'
+criteria: 100
 blocking: true
 clean_flag: false
 description: ''
@@ -234,7 +237,7 @@ execute the cmd passed as arg.
 ```
 case_name: third
 project_name: functest
-criteria: 'status == "PASS"'
+criteria: 100
 blocking: true
 clean_flag: false
 description: ''
