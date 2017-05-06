@@ -155,6 +155,7 @@ def run_test(test, tier_name, testcases=None):
                     test_case.push_to_db()
                 result = test_case.is_successful()
             duration = test_case.get_duration()
+            logger.info("\n%s\n", test_case)
         except ImportError:
             logger.exception("Cannot import module {}".format(
                 run_dict['module']))
@@ -166,8 +167,6 @@ def run_test(test, tier_name, testcases=None):
 
     if test.needs_clean() and GlobalVariables.CLEAN_FLAG:
         cleanup()
-
-    logger.info("Test execution time: %s", duration)
 
     if result != testcase.TestCase.EX_OK:
         logger.error("The test case '%s' failed. " % test_name)
