@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_28393ea4",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-08T07:21:38Z",
+      "side": 1,
+      "message": "The ARG will only be used by docker image during building phase. ENV will be valid in container.",
+      "parentUuid": "9ab8dda7_4887d261",
+      "revId": "087bbbb3e3b185fa0ebe3a3b274bc67377267e86",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_e87d666f",
         "filename": "docker/Dockerfile.aarch64",
         "patchSetId": 14
@@ -47,6 +65,24 @@
       "writtenOn": "2017-05-08T06:48:13Z",
       "side": 1,
       "message": "I think just \u0027images\u0027 is ok, when accessing, it will be \u0027dir_images\u0027, which is simple and clear.",
+      "revId": "087bbbb3e3b185fa0ebe3a3b274bc67377267e86",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_e842460f",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-08T07:21:38Z",
+      "side": 1,
+      "message": "If this is the case, the functest_conf and functest_data also need to be updated.\nI would suggest to address this in another patch.",
+      "parentUuid": "9ab8dda7_a8976e8f",
       "revId": "087bbbb3e3b185fa0ebe3a3b274bc67377267e86",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false

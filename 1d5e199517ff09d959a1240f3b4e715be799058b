@@ -16,6 +16,24 @@
       "revId": "1d5e199517ff09d959a1240f3b4e715be799058b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_483cb293",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-08T07:21:38Z",
+      "side": 0,
+      "message": "Yes, this file will be removed finally. There is a patch needed in releng. Once the releng patch is merged, this file will be deleted.",
+      "parentUuid": "9ab8dda7_0881da49",
+      "revId": "1d5e199517ff09d959a1240f3b4e715be799058b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
