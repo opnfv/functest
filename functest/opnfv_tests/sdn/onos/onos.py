@@ -209,10 +209,10 @@ class OnosSfc(OnosBase):
                           self.onos_sfc_image_name, image_id)
 
     def set_sfc_conf(self):
-        self.update_sfc_onos_file("keystone_ip", self.get_ip("keystone"))
-        self.update_sfc_onos_file("neutron_ip", self.get_ip("neutron"))
-        self.update_sfc_onos_file("nova_ip", self.get_ip("nova"))
-        self.update_sfc_onos_file("glance_ip", self.get_ip("glance"))
+        self.update_sfc_onos_file("keystone_ip", self.get_ip("identity"))
+        self.update_sfc_onos_file("neutron_ip", self.get_ip("network"))
+        self.update_sfc_onos_file("nova_ip", self.get_ip("compute"))
+        self.update_sfc_onos_file("glance_ip", self.get_ip("image"))
         self.update_sfc_onos_file("console",
                                   CONST.__getattribute__('OS_PASSWORD'))
         neutron_client = openstack_utils.get_neutron_client()
