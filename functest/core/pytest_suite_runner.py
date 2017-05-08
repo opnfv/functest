@@ -18,6 +18,7 @@ class PyTestSuiteRunner(base.TestCase):
     def __init__(self, **kwargs):
         super(PyTestSuiteRunner, self).__init__(**kwargs)
         self.suite = None
+        self.logger = None
 
     def run(self, **kwargs):
         """
