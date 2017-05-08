@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_0881da49",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-05-08T06:48:13Z",
+      "side": 0,
+      "message": "how about putting all the images together?",
+      "revId": "1d5e199517ff09d959a1240f3b4e715be799058b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
