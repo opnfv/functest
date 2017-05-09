@@ -109,6 +109,9 @@ class ODLParseResultTesting(ODLTesting):
     """The class testing ODLTests.parse_results()."""
     # pylint: disable=missing-docstring
 
+    _config = {'name': 'dummy', 'starttime': '20161216 16:00:00.000',
+               'endtime': '20161216 16:00:01.000'}
+
     @mock.patch('robot.api.ExecutionResult', side_effect=DataError)
     def test_raises_exc(self, mock_method):
         with self.assertRaises(DataError):
@@ -116,21 +119,39 @@ class ODLParseResultTesting(ODLTesting):
         mock_method.assert_called_once_with(
             os.path.join(odl.ODLTests.res_dir, 'output.xml'))
 
-    def test_ok(self):
-        config = {'name': 'dummy', 'starttime': '20161216 16:00:00.000',
-                  'endtime': '20161216 16:00:01.000', 'status': 'PASS'}
+    def _test_result(self, config, result):
         suite = mock.Mock()
         suite.configure_mock(**config)
         with mock.patch('robot.api.ExecutionResult',
                         return_value=mock.Mock(suite=suite)):
             self.test.parse_results()
-            self.assertEqual(self.test.result, config['status'])
+            self.assertEqual(self.test.result, result)
             self.assertEqual(self.test.start_time,
                              timestamp_to_secs(config['starttime']))
             self.assertEqual(self.test.stop_time,
                              timestamp_to_secs(config['endtime']))
             self.assertEqual(self.test.details,
                              {'description': config['name'], 'tests': []})
+
+    def test_null_passed(self):
+        self._config.update({'statistics.all.passed': 0,
+                             'statistics.all.total': 20})
+        self._test_result(self._config, 0)
+
+    def test_no_test(self):
+        self._config.update({'statistics.all.passed': 20,
+                             'statistics.all.total': 0})
+        self._test_result(self._config, 0)
+
+    def test_half_success(self):
+        self._config.update({'statistics.all.passed': 10,
+                             'statistics.all.total': 20})
+        self._test_result(self._config, 50)
+
+    def test_success(self):
+        self._config.update({'statistics.all.passed': 20,
+                             'statistics.all.total': 20})
+        self._test_result(self._config, 100)
 
 
 class ODLRobotTesting(ODLTesting):

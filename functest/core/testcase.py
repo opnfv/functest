@@ -39,9 +39,9 @@ class TestCase(object):
         self.project_name = kwargs.get('project_name', 'functest')
         self.case_name = kwargs.get('case_name', '')
         self.criteria = kwargs.get('criteria', 100)
-        self.result = ""
-        self.start_time = ""
-        self.stop_time = ""
+        self.result = 0
+        self.start_time = 0
+        self.stop_time = 0
 
     def get_duration(self):
         """Return the duration of the test case.

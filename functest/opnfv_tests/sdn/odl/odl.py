@@ -16,6 +16,8 @@ Example:
         $ python odl.py
 """
 
+from __future__ import division
+
 import argparse
 import errno
 import fileinput
@@ -100,7 +102,12 @@ class ODLTests(testcase.TestCase):
         result = robot.api.ExecutionResult(xml_file)
         visitor = ODLResultVisitor()
         result.visit(visitor)
-        self.result = result.suite.status
+        try:
+            self.result = 100 * (
+                result.suite.statistics.all.passed /
+                result.suite.statistics.all.total)
+        except ZeroDivisionError:
+            self.__logger.error("No test has been ran")
         self.start_time = timestamp_to_secs(result.suite.starttime)
         self.stop_time = timestamp_to_secs(result.suite.endtime)
         self.details = {}
