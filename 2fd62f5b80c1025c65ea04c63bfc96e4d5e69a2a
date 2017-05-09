@@ -45,6 +45,23 @@
       "revId": "2fd62f5b80c1025c65ea04c63bfc96e4d5e69a2a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_c373a5e5",
+        "filename": "docs/testing/developer/internship/unit_tests/index.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-09T07:24:36Z",
+      "side": 1,
+      "message": "partially. You must write for core/vnf\nI have done most of the unit tests for core.",
+      "revId": "2fd62f5b80c1025c65ea04c63bfc96e4d5e69a2a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
