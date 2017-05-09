@@ -9,15 +9,15 @@
 
 import json
 import logging
+import os
 import socket
 import sys
 import time
 import yaml
 
-import functest.core.vnf_base as vnf_base
+import functest.core.vnf as vnf
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
-import os
 from functest.utils.constants import CONST
 
 from org.openbaton.cli.agents.agents import MainAgent
@@ -76,7 +76,7 @@ def servertest(host, port):
             return True
 
 
-class ImsVnf(vnf_base.VnfOnBoardingBase):
+class ImsVnf(vnf.VnfOnBoardingBase):
 
     def __init__(self, project='functest', case_name='orchestra_ims',
                  repo='', cmd=''):

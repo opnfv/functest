@@ -13,10 +13,10 @@ import sys
 import argparse
 
 import functest.core.testcase as testcase
-import functest.core.vnf_base as vnf_base
+import functest.core.vnf as vnf
 
 
-class AaaVnf(vnf_base.VnfOnBoardingBase):
+class AaaVnf(vnf.VnfOnBoardingBase):
 
     logger = logging.getLogger(__name__)
 

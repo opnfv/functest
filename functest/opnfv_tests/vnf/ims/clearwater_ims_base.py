@@ -13,12 +13,12 @@ import shutil
 
 import requests
 
-import functest.core.vnf_base as vnf_base
+import functest.core.vnf as vnf
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 
 
-class ClearwaterOnBoardingBase(vnf_base.VnfOnBoardingBase):
+class ClearwaterOnBoardingBase(vnf.VnfOnBoardingBase):
 
     def __init__(self, **kwargs):
         self.logger = logging.getLogger(__name__)

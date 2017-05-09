@@ -10,7 +10,7 @@
 import logging
 import unittest
 
-from functest.core import vnf_base
+from functest.core import vnf
 
 
 class VnfBaseTesting(unittest.TestCase):
@@ -18,8 +18,8 @@ class VnfBaseTesting(unittest.TestCase):
     logging.disable(logging.CRITICAL)
 
     def setUp(self):
-        self.test = vnf_base.VnfOnBoardingBase(project='functest',
-                                               case_name='aaa')
+        self.test = vnf.VnfOnBoardingBase(project='functest',
+                                          case_name='aaa')
         self.test.project = "functest"
         self.test.start_time = "1"
         self.test.stop_time = "5"
