@@ -18,7 +18,7 @@ from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 
 
-class ClearwaterOnBoardingBase(vnf.VnfOnBoardingBase):
+class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
 
     def __init__(self, **kwargs):
         self.logger = logging.getLogger(__name__)

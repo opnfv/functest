@@ -17,12 +17,12 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 
 
-class VnfOnBoardingBase(base.TestCase):
+class VnfOnBoarding(base.TestCase):
 
     __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
-        super(VnfOnBoardingBase, self).__init__(**kwargs)
+        super(VnfOnBoarding, self).__init__(**kwargs)
         self.repo = kwargs.get('repo', '')
         self.cmd = kwargs.get('cmd', '')
         self.details = {}

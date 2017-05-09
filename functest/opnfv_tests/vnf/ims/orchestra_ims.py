@@ -76,7 +76,7 @@ def servertest(host, port):
             return True
 
 
-class ImsVnf(vnf.VnfOnBoardingBase):
+class ImsVnf(vnf.VnfOnBoarding):
 
     def __init__(self, project='functest', case_name='orchestra_ims',
                  repo='', cmd=''):

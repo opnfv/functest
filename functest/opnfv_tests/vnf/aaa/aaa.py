@@ -16,7 +16,7 @@ import functest.core.testcase as testcase
 import functest.core.vnf as vnf
 
 
-class AaaVnf(vnf.VnfOnBoardingBase):
+class AaaVnf(vnf.VnfOnBoarding):
 
     logger = logging.getLogger(__name__)
 
