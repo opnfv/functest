@@ -5,6 +5,8 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+import logging
+
 from functest.core.pytest_suite_runner import PyTestSuiteRunner
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import functest_utils
@@ -22,6 +24,7 @@ class SnapsTestRunner(PyTestSuiteRunner):
     """
     def __init__(self, **kwargs):
         super(SnapsTestRunner, self).__init__(**kwargs)
+        self.logger = logging.getLogger(__name__)
 
         self.os_creds = openstack_tests.get_credentials(
             os_env_file=CONST.__getattribute__('openstack_creds'),
