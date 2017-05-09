@@ -100,7 +100,7 @@ class ODLTests(testcase.TestCase):
         result = robot.api.ExecutionResult(xml_file)
         visitor = ODLResultVisitor()
         result.visit(visitor)
-        self.result = result.suite.status
+        self.result = result.return_code
         self.start_time = timestamp_to_secs(result.suite.starttime)
         self.stop_time = timestamp_to_secs(result.suite.endtime)
         self.details = {}
