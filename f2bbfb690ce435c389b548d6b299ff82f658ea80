@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_becd645f",
+        "filename": "functest/tests/unit/odl/test_odl.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-05-09T12:18:24Z",
+      "side": 1,
+      "message": "should it not be 0?\nit is a case of no test or bad config (20 passed/0 run)",
+      "revId": "f2bbfb690ce435c389b548d6b299ff82f658ea80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
