@@ -144,7 +144,7 @@ def run_test(test, tier_name, testcases=None):
             module = importlib.import_module(run_dict['module'])
             cls = getattr(module, run_dict['class'])
             test_dict = ft_utils.get_dict_by_test(test_name)
-            test_case = cls(**test_dict)
+            test_case = cls(tier_name=tier_name, **test_dict)
             try:
                 kwargs = run_dict['args']
                 result = test_case.run(**kwargs)
@@ -243,7 +243,7 @@ def main(**kwargs):
                 run_tier(_tiers.get_tier(kwargs['test']))
             elif _tiers.get_test(kwargs['test']):
                 run_test(_tiers.get_test(kwargs['test']),
-                         _tiers.get_tier(kwargs['test']),
+                         _tiers.get_tier_name(kwargs['test']),
                          kwargs['test'])
             elif kwargs['test'] == "all":
                 run_all(_tiers)
