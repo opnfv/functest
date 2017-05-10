@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+2: Serena Feng <feng.xiaowei@zte.com.cn>
+Code-Review+1: Linda Wang <wangwulin@huawei.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Wed, 10 May 2017 07:53:46 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/34501
+Project: functest
+Branch: refs/heads/master
