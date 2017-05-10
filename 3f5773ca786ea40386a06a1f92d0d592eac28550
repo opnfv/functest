@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_9dfe6537",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-05-10T12:21:36Z",
+      "side": 1,
+      "message": "not sure to catch the difference between ad and download sh files. Do we need both?",
+      "revId": "3f5773ca786ea40386a06a1f92d0d592eac28550",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_7d037142",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-05-10T12:21:36Z",
+      "side": 1,
+      "message": "3-par \u003d\u003e 3rd party\nimage \u003d\u003e images\n\"from an x86\" or \"on an x86\"\nan \u003d\u003e and a",
+      "revId": "3f5773ca786ea40386a06a1f92d0d592eac28550",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
