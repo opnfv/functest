@@ -26,17 +26,24 @@ class TestCaseTesting(unittest.TestCase):
 
     logging.disable(logging.CRITICAL)
 
-    _case_name = "base"
+    _case_name = "foo"
     _project_name = "functest"
+    _tier_name = "bar"
     _published_result = "PASS"
 
     def setUp(self):
         self.test = testcase.TestCase(case_name=self._case_name,
-                                      project_name=self._project_name)
+                                      project_name=self._project_name,
+                                      tier_name=self._tier_name)
         self.test.start_time = "1"
         self.test.stop_time = "2"
         self.test.result = 100
         self.test.details = {"Hello": "World"}
+
+    def test_init(self):
+        self.assertEqual(self.test.case_name, self._case_name)
+        self.assertEqual(self.test.project_name, self._project_name)
+        self.assertEqual(self.test.tier_name, self._tier_name)
 
     def test_run_unimplemented(self):
         self.assertEqual(self.test.run(),

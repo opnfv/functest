@@ -36,12 +36,15 @@ class TestCase(object):
 
     def __init__(self, **kwargs):
         self.details = {}
+        self.__logger.info("kwargs {}".format(kwargs))
+        self.tier_name = kwargs.get('tier_name', '')
         self.project_name = kwargs.get('project_name', 'functest')
         self.case_name = kwargs.get('case_name', '')
         self.criteria = kwargs.get('criteria', 100)
         self.result = 0
         self.start_time = 0
         self.stop_time = 0
+        self.__logger.info("tier name {}".format(self.tier_name))
 
     def __str__(self):
         try:
@@ -49,9 +52,9 @@ class TestCase(object):
             assert self.case_name
             result = 'PASS' if(self.is_successful(
                 ) == TestCase.EX_OK) else 'FAIL'
-            return ('| {0:<23} | {1:<13} | {2:<10} | {3:<13} |'
-                    '\n{4:-<26}{4:-<16}{4:-<13}{4:-<16}{4}'.format(
-                        self.case_name, self.project_name,
+            return ('| {0:<23} | {1:<13} | {2:<13} | {3:<10} | {4:<13} |'
+                    '\n{5:-<26}{5:-<16}{5:-<16}{5:-<13}{5:-<16}{5}'.format(
+                        self.case_name, self.project_name, self.tier_name,
                         self.get_duration(), result, '+'))
         except AssertionError:
             self.__logger.error("We cannot print invalid objects")
