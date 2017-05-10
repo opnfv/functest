@@ -39,9 +39,9 @@ class TestCase(object):
         self.project_name = kwargs.get('project_name', 'functest')
         self.case_name = kwargs.get('case_name', '')
         self.criteria = kwargs.get('criteria', 100)
-        self.result = ""
-        self.start_time = ""
-        self.stop_time = ""
+        self.result = 0
+        self.start_time = 0
+        self.stop_time = 0
 
     def __str__(self):
         try:
@@ -90,7 +90,8 @@ class TestCase(object):
         """
         try:
             assert self.criteria
-            if isinstance(self.result, int) and isinstance(self.criteria, int):
+            if (not isinstance(self.result, str) and
+                    not isinstance(self.criteria, str)):
                 if self.result >= self.criteria:
                     return TestCase.EX_OK
             else:
