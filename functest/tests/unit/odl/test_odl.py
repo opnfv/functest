@@ -18,7 +18,7 @@ import unittest
 from keystoneauth1.exceptions import auth_plugins
 import mock
 from robot.errors import DataError, RobotError
-from robot.result import testcase as result_testcase
+from robot.result import model
 from robot.utils.robottime import timestamp_to_secs
 
 from functest.core import testcase
@@ -49,11 +49,9 @@ class ODLVisitorTesting(unittest.TestCase):
                 'elapsedtime': 1000,
                 'text': 'Hello, World!',
                 'critical': True}
-        test = result_testcase.TestCase(name=data['name'],
-                                        status=data['status'],
-                                        message=data['text'],
-                                        starttime=data['starttime'],
-                                        endtime=data['endtime'])
+        test = model.TestCase(
+            name=data['name'], status=data['status'], message=data['text'],
+            starttime=data['starttime'], endtime=data['endtime'])
         test.parent = mock.Mock()
         config = {'name': data['parent'],
                   'criticality.test_is_critical.return_value': data[

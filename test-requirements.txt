@@ -21,8 +21,9 @@ python-openstackclient==2.3.0
 python-tackerclient==0.7.0
 pyyaml==3.10
 requests==2.8.0
-robotframework==2.9.1
-robotframework-requests==0.3.8
+robotframework==3.0.2
+robotframework-httplibrary==0.4.2
+robotframework-requests==0.4.7
 robotframework-sshlibrary==2.1.3
 subprocess32==3.2.7
 virtualenv==15.1.0
