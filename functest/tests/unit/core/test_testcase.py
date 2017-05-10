@@ -189,6 +189,39 @@ class TestCaseTesting(unittest.TestCase):
         self.test.stop_time = 180
         self.assertEqual(self.test.get_duration(), "02:59")
 
+    def test_str_project_name_ko(self):
+        self.test.project_name = None
+        self.assertIn("INVALID OBJECT", str(self.test))
+
+    def test_str_case_name_ko(self):
+        self.test.case_name = None
+        self.assertIn("INVALID OBJECT", str(self.test))
+
+    def test_str_pass(self):
+        duration = '01:01'
+        with mock.patch.object(self.test, 'get_duration',
+                               return_value=duration), \
+                mock.patch.object(self.test, 'is_successful',
+                                  return_value=testcase.TestCase.EX_OK):
+            message = str(self.test)
+        self.assertIn(self._project_name, message)
+        self.assertIn(self._case_name, message)
+        self.assertIn(duration, message)
+        self.assertIn('PASS', message)
+
+    def test_str_fail(self):
+        duration = '00:59'
+        with mock.patch.object(self.test, 'get_duration',
+                               return_value=duration), \
+                mock.patch.object(
+                    self.test, 'is_successful',
+                    return_value=testcase.TestCase.EX_TESTCASE_FAILED):
+            message = str(self.test)
+        self.assertIn(self._project_name, message)
+        self.assertIn(self._case_name, message)
+        self.assertIn(duration, message)
+        self.assertIn('FAIL', message)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

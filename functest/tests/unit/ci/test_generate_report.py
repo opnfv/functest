@@ -28,16 +28,16 @@ class GenerateReportTesting(unittest.TestCase):
     @mock.patch('functest.ci.generate_report.urllib2.urlopen',
                 side_effect=urllib2.URLError('no host given'))
     def test_get_results_from_db_fail(self, mock_method):
-        url = "%s/results?build_tag=%s" % (ft_utils.get_db_url(),
-                                           CONST.__getattribute__('BUILD_TAG'))
+        url = "%s?build_tag=%s" % (ft_utils.get_db_url(),
+                                   CONST.__getattribute__('BUILD_TAG'))
         self.assertIsNone(gen_report.get_results_from_db())
         mock_method.assert_called_once_with(url)
 
     @mock.patch('functest.ci.generate_report.urllib2.urlopen',
                 return_value={'results': []})
     def test_get_results_from_db_success(self, mock_method):
-        url = "%s/results?build_tag=%s" % (ft_utils.get_db_url(),
-                                           CONST.__getattribute__('BUILD_TAG'))
+        url = "%s?build_tag=%s" % (ft_utils.get_db_url(),
+                                   CONST.__getattribute__('BUILD_TAG'))
         self.assertEqual(gen_report.get_results_from_db(), None)
         mock_method.assert_called_once_with(url)
 

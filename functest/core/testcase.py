@@ -43,6 +43,21 @@ class TestCase(object):
         self.start_time = ""
         self.stop_time = ""
 
+    def __str__(self):
+        try:
+            assert self.project_name
+            assert self.case_name
+            result = 'PASS' if(self.is_successful(
+                ) == TestCase.EX_OK) else 'FAIL'
+            return ('| {0:<23} | {1:<13} | {2:<10} | {3:<13} |'
+                    '\n{4:-<26}{4:-<16}{4:-<13}{4:-<16}{4}'.format(
+                        self.case_name, self.project_name,
+                        self.get_duration(), result, '+'))
+        except AssertionError:
+            self.__logger.error("We cannot print invalid objects")
+            return '| {0:^68} |\n{1:-<26}{1:-<16}{1:-<13}{1:-<16}{1}'.format(
+                'INVALID OBJECT', '+')
+
     def get_duration(self):
         """Return the duration of the test case.
 
@@ -57,7 +72,7 @@ class TestCase(object):
                 return "XX:XX"
             return "{0[0]:02.0f}:{0[1]:02.0f}".format(divmod(
                 self.stop_time - self.start_time, 60))
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             self.__logger.error("Please run test before getting the duration")
             return "XX:XX"
 
