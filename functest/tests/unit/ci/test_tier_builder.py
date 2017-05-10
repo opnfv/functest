@@ -78,6 +78,13 @@ class TierBuilderTesting(unittest.TestCase):
         self.assertEqual(self.tierbuilder.get_tests('test_tier2'),
                          None)
 
+    def test_get_tier_name_ok(self):
+        self.assertEqual(self.tierbuilder.get_tier_name('test_name'),
+                         'test_tier')
+
+    def test_get_tier_name_ko(self):
+        self.assertEqual(self.tierbuilder.get_tier_name('test_name2'), None)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

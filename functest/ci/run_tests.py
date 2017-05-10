@@ -243,7 +243,7 @@ def main(**kwargs):
                 run_tier(_tiers.get_tier(kwargs['test']))
             elif _tiers.get_test(kwargs['test']):
                 run_test(_tiers.get_test(kwargs['test']),
-                         _tiers.get_tier(kwargs['test']),
+                         _tiers.get_tier_name(kwargs['test']),
                          kwargs['test'])
             elif kwargs['test'] == "all":
                 run_all(_tiers)
