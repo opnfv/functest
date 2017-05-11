@@ -191,11 +191,13 @@ class TestCaseTesting(unittest.TestCase):
 
     def test_str_project_name_ko(self):
         self.test.project_name = None
-        self.assertIn("INVALID OBJECT", str(self.test))
+        self.assertIn("<functest.core.testcase.TestCase object at",
+                      str(self.test))
 
     def test_str_case_name_ko(self):
         self.test.case_name = None
-        self.assertIn("INVALID OBJECT", str(self.test))
+        self.assertIn("<functest.core.testcase.TestCase object at",
+                      str(self.test))
 
     def test_str_pass(self):
         duration = '01:01'
