@@ -52,7 +52,7 @@ class TestCase(object):
             result = 'PASS' if(self.is_successful(
                 ) == TestCase.EX_OK) else 'FAIL'
             msg = prettytable.PrettyTable(
-                header_style='upper',
+                header_style='upper', padding_width=5,
                 field_names=['test case', 'project', 'duration',
                              'result'])
             msg.add_row([self.case_name, self.project_name,
