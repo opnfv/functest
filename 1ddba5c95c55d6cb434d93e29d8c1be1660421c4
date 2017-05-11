@@ -16,6 +16,24 @@
       "revId": "1ddba5c95c55d6cb434d93e29d8c1be1660421c4",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_a3f46c87",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-05-11T10:23:32Z",
+      "side": 1,
+      "message": "both of them are 3rd lib regards to functest. Theoretically, it is right to process it in this way.",
+      "parentUuid": "9ab8dda7_436d7097",
+      "revId": "1ddba5c95c55d6cb434d93e29d8c1be1660421c4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
