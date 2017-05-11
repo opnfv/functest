@@ -70,17 +70,6 @@ class RunTestsTesting(unittest.TestCase):
         run_tests.cleanup()
         self.assertTrue(mock_os_clean.called)
 
-    def test_update_test_info(self):
-        run_tests.GlobalVariables.EXECUTED_TEST_CASES = [self.test]
-        run_tests.update_test_info('test_name',
-                                   'test_result',
-                                   'test_duration')
-        exp = self.test
-        exp.update({"result": 'test_result',
-                    "duration": 'test_duration'})
-        self.assertEqual(run_tests.GlobalVariables.EXECUTED_TEST_CASES,
-                         [exp])
-
     def test_get_run_dict_if_defined_default(self):
         mock_obj = mock.Mock()
         with mock.patch('functest.ci.run_tests.'
@@ -148,10 +137,8 @@ class RunTestsTesting(unittest.TestCase):
             mock.patch('functest.ci.run_tests.source_rc_file'), \
             mock.patch('functest.ci.run_tests.generate_os_snapshot'), \
             mock.patch('functest.ci.run_tests.cleanup'), \
-            mock.patch('functest.ci.run_tests.update_test_info'), \
             mock.patch('functest.ci.run_tests.get_run_dict',
                        return_value=test_run_dict), \
-            mock.patch('functest.ci.run_tests.generate_report.main'), \
                 self.assertRaises(run_tests.BlockingTestFailed) as context:
             run_tests.GlobalVariables.CLEAN_FLAG = True
             run_tests.run_test(mock_test, 'tier_name')
@@ -176,21 +163,17 @@ class RunTestsTesting(unittest.TestCase):
 
     @mock.patch('functest.ci.run_tests.logger.info')
     def test_run_all_default(self, mock_logger_info):
-        with mock.patch('functest.ci.run_tests.run_tier') as mock_method, \
-            mock.patch('functest.ci.run_tests.generate_report.init'), \
-                mock.patch('functest.ci.run_tests.generate_report.main'):
+        with mock.patch('functest.ci.run_tests.run_tier') as mock_method:
             CONST.__setattr__('CI_LOOP', 'test_ci_loop')
             run_tests.run_all(self.tiers)
             mock_method.assert_any_call(self.tier)
             self.assertTrue(mock_logger_info.called)
 
     @mock.patch('functest.ci.run_tests.logger.info')
-    def test_run_all__missing_tier(self, mock_logger_info):
-        with mock.patch('functest.ci.run_tests.generate_report.init'), \
-                mock.patch('functest.ci.run_tests.generate_report.main'):
-            CONST.__setattr__('CI_LOOP', 'loop_re_not_available')
-            run_tests.run_all(self.tiers)
-            self.assertTrue(mock_logger_info.called)
+    def test_run_all_missing_tier(self, mock_logger_info):
+        CONST.__setattr__('CI_LOOP', 'loop_re_not_available')
+        run_tests.run_all(self.tiers)
+        self.assertTrue(mock_logger_info.called)
 
     def test_main_failed(self):
         kwargs = {'test': 'test_name', 'noclean': True, 'report': True}
@@ -221,7 +204,6 @@ class RunTestsTesting(unittest.TestCase):
         with mock.patch('functest.ci.run_tests.tb.TierBuilder',
                         return_value=mock_obj), \
             mock.patch('functest.ci.run_tests.source_rc_file'), \
-            mock.patch('functest.ci.run_tests.generate_report.init'), \
                 mock.patch('functest.ci.run_tests.run_tier') as m:
             self.assertEqual(run_tests.main(**kwargs),
                              run_tests.Result.EX_OK)
@@ -234,7 +216,6 @@ class RunTestsTesting(unittest.TestCase):
         with mock.patch('functest.ci.run_tests.tb.TierBuilder',
                         return_value=mock_obj), \
             mock.patch('functest.ci.run_tests.source_rc_file'), \
-            mock.patch('functest.ci.run_tests.generate_report.init'), \
                 mock.patch('functest.ci.run_tests.run_test') as m:
             self.assertEqual(run_tests.main(**kwargs),
                              run_tests.Result.EX_OK)
@@ -248,7 +229,6 @@ class RunTestsTesting(unittest.TestCase):
         with mock.patch('functest.ci.run_tests.tb.TierBuilder',
                         return_value=mock_obj), \
             mock.patch('functest.ci.run_tests.source_rc_file'), \
-            mock.patch('functest.ci.run_tests.generate_report.init'), \
                 mock.patch('functest.ci.run_tests.run_all') as m:
             self.assertEqual(run_tests.main(**kwargs),
                              run_tests.Result.EX_OK)
@@ -262,7 +242,6 @@ class RunTestsTesting(unittest.TestCase):
         with mock.patch('functest.ci.run_tests.tb.TierBuilder',
                         return_value=mock_obj), \
             mock.patch('functest.ci.run_tests.source_rc_file'), \
-            mock.patch('functest.ci.run_tests.generate_report.init'), \
                 mock.patch('functest.ci.run_tests.logger.debug') as m:
             self.assertEqual(run_tests.main(**kwargs),
                              run_tests.Result.EX_ERROR)
