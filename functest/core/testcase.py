@@ -14,6 +14,8 @@ import os
 
 import functest.utils.functest_utils as ft_utils
 
+import prettytable
+
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
 
@@ -49,14 +51,16 @@ class TestCase(object):
             assert self.case_name
             result = 'PASS' if(self.is_successful(
                 ) == TestCase.EX_OK) else 'FAIL'
-            return ('| {0:<23} | {1:<13} | {2:<10} | {3:<13} |'
-                    '\n{4:-<26}{4:-<16}{4:-<13}{4:-<16}{4}'.format(
-                        self.case_name, self.project_name,
-                        self.get_duration(), result, '+'))
+            msg = prettytable.PrettyTable(
+                header_style='upper',
+                field_names=['test case', 'project', 'duration',
+                             'result'])
+            msg.add_row([self.case_name, self.project_name,
+                         self.get_duration(), result])
+            return msg.get_string()
         except AssertionError:
             self.__logger.error("We cannot print invalid objects")
-            return '| {0:^68} |\n{1:-<26}{1:-<16}{1:-<13}{1:-<16}{1}'.format(
-                'INVALID OBJECT', '+')
+            return super(TestCase, self).__str__()
 
     def get_duration(self):
         """Return the duration of the test case.
