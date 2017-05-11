@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_409486e1",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-11T01:49:50Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 65,
+        "startChar": 65,
+        "endLine": 65,
+        "endChar": 66
+      },
+      "revId": "4d8b41c1b4a55e5f1be64f116ab07ed5b60a22a0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_a08542ae",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-11T01:49:50Z",
+      "side": 1,
+      "message": "The slash is better to be a line.",
+      "range": {
+        "startLine": 65,
+        "startChar": 20,
+        "endLine": 65,
+        "endChar": 21
+      },
+      "revId": "4d8b41c1b4a55e5f1be64f116ab07ed5b60a22a0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_608f4acd",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-11T01:49:50Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 1
+      },
+      "revId": "4d8b41c1b4a55e5f1be64f116ab07ed5b60a22a0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_00be8e65",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-11T01:49:50Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 44
+      },
+      "revId": "4d8b41c1b4a55e5f1be64f116ab07ed5b60a22a0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
