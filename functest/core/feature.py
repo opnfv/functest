@@ -83,7 +83,6 @@ class Feature(base.TestCase):
             ft_utils.logger_test_results(
                 self.project_name, self.case_name,
                 self.result, self.details)
-            self.__logger.info("%s %s", self.project_name, self.result)
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("%s FAILED", self.project_name)
         self.__logger.info("Test result is stored in '%s'", self.result_file)

@@ -102,7 +102,6 @@ if result == testcase.TestCase.EX_OK:
     if GlobalVariables.REPORT_FLAG:
         test_case.push_to_db()
     result = test_case.is_successful()
-duration = test_case.get_duration()
 ```
 
 

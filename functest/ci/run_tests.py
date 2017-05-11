@@ -17,7 +17,8 @@ import os
 import re
 import sys
 
-import functest.ci.generate_report as generate_report
+import prettytable
+
 import functest.ci.tier_builder as tb
 import functest.core.testcase as testcase
 import functest.utils.functest_utils as ft_utils
@@ -99,13 +100,6 @@ def cleanup():
     os_clean.main()
 
 
-def update_test_info(test_name, result, duration):
-    for test in GlobalVariables.EXECUTED_TEST_CASES:
-        if test['test_name'] == test_name:
-            test.update({"result": result,
-                         "duration": duration})
-
-
 def get_run_dict(testname):
     try:
         dict = ft_utils.get_dict_by_test(testname)
@@ -120,8 +114,6 @@ def get_run_dict(testname):
 
 
 def run_test(test, tier_name, testcases=None):
-    duration = "XX:XX"
-    result_str = "PASS"
     test_name = test.get_name()
     logger.info("\n")  # blank line
     print_separator("=")
@@ -145,6 +137,7 @@ def run_test(test, tier_name, testcases=None):
             cls = getattr(module, run_dict['class'])
             test_dict = ft_utils.get_dict_by_test(test_name)
             test_case = cls(**test_dict)
+            GlobalVariables.EXECUTED_TEST_CASES.append(test_case)
             try:
                 kwargs = run_dict['args']
                 result = test_case.run(**kwargs)
@@ -154,8 +147,7 @@ def run_test(test, tier_name, testcases=None):
                 if GlobalVariables.REPORT_FLAG:
                     test_case.push_to_db()
                 result = test_case.is_successful()
-            duration = test_case.get_duration()
-            logger.info("\n%s\n", test_case)
+            logger.info("Test result:\n\n%s\n", test_case)
         except ImportError:
             logger.exception("Cannot import module {}".format(
                 run_dict['module']))
@@ -167,21 +159,12 @@ def run_test(test, tier_name, testcases=None):
 
     if test.needs_clean() and GlobalVariables.CLEAN_FLAG:
         cleanup()
-
     if result != testcase.TestCase.EX_OK:
         logger.error("The test case '%s' failed. " % test_name)
         GlobalVariables.OVERALL_RESULT = Result.EX_ERROR
-        result_str = "FAIL"
-
         if test.is_blocking():
-            if not testcases or testcases == "all":
-                # if it is a single test we don't print the whole results table
-                update_test_info(test_name, result_str, duration)
-                generate_report.main(GlobalVariables.EXECUTED_TEST_CASES)
             raise BlockingTestFailed("The test case {} failed and is blocking"
                                      .format(test.get_name()))
-
-    update_test_info(test_name, result_str, duration)
 
 
 def run_tier(tier):
@@ -214,11 +197,8 @@ def run_all(tiers):
                            tier.get_test_names()))
 
     logger.info("Tests to be executed:%s" % summary)
-    GlobalVariables.EXECUTED_TEST_CASES = generate_report.init(tiers_to_run)
     for tier in tiers_to_run:
         run_tier(tier)
-
-    generate_report.main(GlobalVariables.EXECUTED_TEST_CASES)
 
 
 def main(**kwargs):
@@ -238,8 +218,6 @@ def main(**kwargs):
         if kwargs['test']:
             source_rc_file()
             if _tiers.get_tier(kwargs['test']):
-                GlobalVariables.EXECUTED_TEST_CASES = generate_report.init(
-                    [_tiers.get_tier(kwargs['test'])])
                 run_tier(_tiers.get_tier(kwargs['test']))
             elif _tiers.get_test(kwargs['test']):
                 run_test(_tiers.get_test(kwargs['test']),
@@ -261,6 +239,26 @@ def main(**kwargs):
     except Exception as e:
         logger.error(e)
         GlobalVariables.OVERALL_RESULT = Result.EX_ERROR
+
+    msg = prettytable.PrettyTable(
+        header_style='upper', padding_width=5,
+        field_names=['env var', 'value'])
+    for env_var in ['INSTALLER_TYPE', 'DEPLOY_SCENARIO', 'BUILD_TAG',
+                    'CI_LOOP']:
+        msg.add_row([env_var, CONST.__getattribute__(env_var)])
+    logger.info("Deployment description: \n\n%s\n", msg)
+
+    msg = prettytable.PrettyTable(
+        header_style='upper', padding_width=5,
+        field_names=['test case', 'project', 'tier', 'duration', 'result'])
+    for test_case in GlobalVariables.EXECUTED_TEST_CASES:
+        result = 'PASS' if(test_case.is_successful(
+                ) == test_case.EX_OK) else 'FAIL'
+        msg.add_row([test_case.case_name, test_case.project_name,
+                     _tiers.get_tier_name(test_case.case_name),
+                     test_case.get_duration(), result])
+    logger.info("FUNCTEST REPORT: \n\n%s\n", msg)
+
     logger.info("Execution exit value: %s" % GlobalVariables.OVERALL_RESULT)
     return GlobalVariables.OVERALL_RESULT
 
