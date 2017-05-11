@@ -20,7 +20,6 @@ __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
 
 class TestCaseTesting(unittest.TestCase):
-
     """The class testing TestCase."""
     # pylint: disable=missing-docstring,too-many-public-methods
 
