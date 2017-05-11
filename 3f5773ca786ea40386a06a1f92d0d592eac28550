@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_a0d782be",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-11T01:43:39Z",
+      "side": 1,
+      "message": "The add_images.sh will be removed finally after releng patch[1] is merged.\nIf I removed this file in this patch, the CI will fail.\n\nhttps://gerrit.opnfv.org/gerrit/#/c/34421/",
+      "parentUuid": "9ab8dda7_9dfe6537",
+      "revId": "3f5773ca786ea40386a06a1f92d0d592eac28550",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_7d037142",
         "filename": "docker/add_images.sh",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-10T12:21:36Z",
       "side": 1,
       "message": "3-par \u003d\u003e 3rd party\nimage \u003d\u003e images\n\"from an x86\" or \"on an x86\"\nan \u003d\u003e and a",
+      "revId": "3f5773ca786ea40386a06a1f92d0d592eac28550",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_60e18a99",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-11T01:43:39Z",
+      "side": 1,
+      "message": "Good catch. I will update it in download_images.sh",
+      "parentUuid": "9ab8dda7_7d037142",
       "revId": "3f5773ca786ea40386a06a1f92d0d592eac28550",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
