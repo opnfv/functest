@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_436d7097",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-05-11T08:52:43Z",
+      "side": 1,
+      "message": "is it correct to have the yaml import here after the opnfv.* ?",
+      "revId": "1ddba5c95c55d6cb434d93e29d8c1be1660421c4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
