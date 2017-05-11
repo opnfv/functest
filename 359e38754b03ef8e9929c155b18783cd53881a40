@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_c35960ff",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-11T08:50:02Z",
+      "side": 1,
+      "message": "I would have put the prettytable in the 2nd group of import as it is an external package. The 3rd group is functest internal package.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "359e38754b03ef8e9929c155b18783cd53881a40",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
