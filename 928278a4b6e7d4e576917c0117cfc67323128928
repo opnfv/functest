@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_4607be1c",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-12T07:16:50Z",
+      "side": 1,
+      "message": "Sure but I must set docstrings first. could we merge it as it is. If it\u0027s not explicit, we must rename it. Threshold?",
+      "parentUuid": "9ab8dda7_862616cd",
+      "revId": "928278a4b6e7d4e576917c0117cfc67323128928",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_e63fd2d4",
         "filename": "docs/com/pres/framework/framework.md",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-12T06:33:02Z",
       "side": 1,
       "message": "/ or |\nnot consistant",
+      "revId": "928278a4b6e7d4e576917c0117cfc67323128928",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_a608fa2d",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-12T07:16:50Z",
+      "side": 1,
+      "message": "Please see the file instead. I think it\u0027s ok.\n_ located in class attributes or methods is intepreted here as italic.\nhttps://gerrit.opnfv.org/gerrit/gitweb?p\u003dfunctest.git;a\u003dblob;f\u003ddocs/com/pres/framework/framework.md;h\u003d61249e0eafcaf9718758dc778fe1194242c90edb;hb\u003d928278a4b6e7d4e576917c0117cfc67323128928",
+      "parentUuid": "9ab8dda7_e63fd2d4",
       "revId": "928278a4b6e7d4e576917c0117cfc67323128928",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
