@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_862616cd",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-05-12T06:33:02Z",
+      "side": 1,
+      "message": "shall we add a comment\ncriteria is not self explicit\nshall we indicate that criteria is a percentage that shall be set by the test owner. It indicates a treshold. Above this value the test is PASS, under it is FAIL. For binary state tests, this criteria is sett to 100.",
+      "revId": "928278a4b6e7d4e576917c0117cfc67323128928",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_e63fd2d4",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-05-12T06:33:02Z",
+      "side": 1,
+      "message": "/ or |\nnot consistant",
+      "revId": "928278a4b6e7d4e576917c0117cfc67323128928",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
