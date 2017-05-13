@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_ec61f139",
+        "filename": "functest/core/pytest_suite_runner.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-13T08:05:54Z",
+      "side": 1,
+      "message": "Why don\u0027t you rely on self.result as our framework asks for?",
+      "revId": "534f34abb3488870377355552f24ab63d549f502",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_2c7869f1",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-13T08:05:54Z",
+      "side": 1,
+      "message": "I will be very suprised that pylint doesn\u0027t warn about the amount of instance attributes.",
+      "revId": "534f34abb3488870377355552f24ab63d549f502",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_4c735d15",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-13T08:05:54Z",
+      "side": 1,
+      "message": "Could you please save the resources in a list and then apply clean() in a simple loop",
+      "revId": "534f34abb3488870377355552f24ab63d549f502",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
