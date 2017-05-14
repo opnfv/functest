@@ -3,6 +3,7 @@
 # pylint: disable=missing-docstring
 
 import errno
+import functools
 import os
 import urlparse
 
@@ -41,6 +42,7 @@ def can_dump_request_to_file(method):
             else:
                 return session.request(method=method, url=url, **kwargs)
 
+    @functools.wraps(method)
     def hook(*args, **kwargs):
         with mock.patch('requests.api.request', side_effect=patch_request):
             return method(*args, **kwargs)
