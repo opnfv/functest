@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_12eedc22",
+        "filename": "functest/core/pytest_suite_runner.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-15T13:58:31Z",
+      "side": 1,
+      "message": "No pb :)\nI also fix the logger issue in [1] as it was mandatory to merge [2]. Let me know if you need help to rebase it on top of [1].\n[1] https://gerrit.opnfv.org/gerrit/#/c/34771/\n[2] https://gerrit.opnfv.org/gerrit/#/c/28545/",
+      "parentUuid": "9ab8dda7_726958bd",
+      "revId": "534f34abb3488870377355552f24ab63d549f502",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_2c7869f1",
         "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
         "patchSetId": 30
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "It never had but I will pare these down.",
       "parentUuid": "9ab8dda7_2c7869f1",
+      "revId": "534f34abb3488870377355552f24ab63d549f502",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_b2f4b0f2",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-15T13:58:31Z",
+      "side": 1,
+      "message": "You could at least remove attributes for constants as it\u0027s quite useless.",
+      "parentUuid": "9ab8dda7_d2a924e0",
       "revId": "534f34abb3488870377355552f24ab63d549f502",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
