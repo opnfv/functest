@@ -7,7 +7,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-"""Define the classe required to fully cover testcase."""
+"""Define the class required to fully cover testcase."""
 
 import logging
 import unittest
