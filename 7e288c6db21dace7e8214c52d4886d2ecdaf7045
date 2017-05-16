@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_49ffcaaa",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-16T14:19:24Z",
+      "side": 1,
+      "message": "Could you please remove this \\n too?",
+      "revId": "7e288c6db21dace7e8214c52d4886d2ecdaf7045",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_e92d5e47",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-16T14:19:24Z",
+      "side": 1,
+      "message": "Could you please remove this \\n too?",
+      "revId": "7e288c6db21dace7e8214c52d4886d2ecdaf7045",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
