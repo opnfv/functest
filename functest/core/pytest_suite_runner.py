@@ -5,12 +5,18 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import testcase as base
+# pylint: disable=missing-docstring
+
+import logging
 import unittest
 import time
 
+from functest.core import testcase
 
-class PyTestSuiteRunner(base.TestCase):
+logging.basicConfig()
+
+
+class PyTestSuiteRunner(testcase.TestCase):
     """
     This superclass is designed to execute pre-configured unittest.TestSuite()
     objects
@@ -18,7 +24,7 @@ class PyTestSuiteRunner(base.TestCase):
     def __init__(self, **kwargs):
         super(PyTestSuiteRunner, self).__init__(**kwargs)
         self.suite = None
-        self.logger = None
+        self.logger = logging.getLogger(__name__)
 
     def run(self, **kwargs):
         """
@@ -45,13 +51,13 @@ class PyTestSuiteRunner(base.TestCase):
         # we shall distinguish Execution Error from FAIL results
         # TestCase.EX_RUN_ERROR means that the test case was not run
         # not that it was run but the result was FAIL
-        exit_code = base.TestCase.EX_OK
+        exit_code = testcase.TestCase.EX_OK
         if ((result.errors and len(result.errors) > 0)
                 or (result.failures and len(result.failures) > 0)):
-            self.logger.info("%s FAILED" % self.case_name)
+            self.logger.info("%s FAILED", self.case_name)
             self.result = 'FAIL'
         else:
-            self.logger.info("%s OK" % self.case_name)
+            self.logger.info("%s OK", self.case_name)
             self.result = 'PASS'
 
         self.details = {}
