@@ -47,12 +47,14 @@ class TierBuilder(object):
                 dep = th.Dependency(installer, scenario)
 
                 testcase = th.TestCase(name=dic_testcase['case_name'],
+                                       enabled=dic_testcase['enabled'],
                                        dependency=dep,
                                        criteria=dic_testcase['criteria'],
                                        blocking=dic_testcase['blocking'],
                                        clean_flag=dic_testcase['clean_flag'],
                                        description=dic_testcase['description'])
-                if testcase.is_compatible(self.ci_installer, self.ci_scenario):
+                if (testcase.is_compatible(self.ci_installer, self.ci_scenario)
+                        and tetcase.is_enabled()):
                     tier.add_test(testcase)
 
             self.tier_objects.append(tier)

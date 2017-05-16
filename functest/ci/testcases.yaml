@@ -9,6 +9,7 @@ tiers:
         testcases:
             -
                 case_name: connection_check
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: true
@@ -29,6 +30,7 @@ tiers:
 
             -
                 case_name: api_check
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: true
@@ -48,6 +50,7 @@ tiers:
                     class: 'ApiCheck'
             -
                 case_name: snaps_health_check
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: true
@@ -72,6 +75,7 @@ tiers:
         testcases:
             -
                 case_name: vping_ssh
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: true
@@ -89,6 +93,7 @@ tiers:
 
             -
                 case_name: vping_userdata
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: true
@@ -105,6 +110,7 @@ tiers:
 
             -
                 case_name: tempest_smoke_serial
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -123,6 +129,7 @@ tiers:
 
             -
                 case_name: rally_sanity
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -139,6 +146,7 @@ tiers:
 
             -
                 case_name: refstack_defcore
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -155,6 +163,7 @@ tiers:
 
             -
                 case_name: odl
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: true
@@ -176,6 +185,7 @@ tiers:
 
             -
                 case_name: odl_netvirt
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -199,6 +209,7 @@ tiers:
 
             -
                 case_name: fds
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -219,6 +230,7 @@ tiers:
 
             -
                 case_name: onos
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: true
@@ -236,6 +248,7 @@ tiers:
 
             -
                 case_name: snaps_smoke
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -266,6 +279,7 @@ tiers:
         testcases:
             -
                 case_name: promise
+                enabled: false
                 project_name: promise
                 criteria: 100
                 blocking: false
@@ -283,6 +297,7 @@ tiers:
 
             -
                 case_name: doctor-notification
+                enabled: false
                 project_name: doctor
                 criteria: 100
                 blocking: false
@@ -300,6 +315,7 @@ tiers:
 
             -
                 case_name: bgpvpn
+                enabled: false
                 project_name: sdnvpn
                 criteria: 100
                 blocking: false
@@ -317,6 +333,7 @@ tiers:
 
             -
                 case_name: security_scan
+                enabled: false
                 project_name: securityscanning
                 criteria: 100
                 blocking: false
@@ -334,6 +351,7 @@ tiers:
 
             -
                 case_name: copper
+                enabled: false
                 project_name: copper
                 criteria: 100
                 blocking: false
@@ -351,6 +369,7 @@ tiers:
 
             -
                 case_name: multisite
+                enabled: false
                 project_name: multisite
                 criteria: 100
                 blocking: false
@@ -365,6 +384,7 @@ tiers:
                     class: 'TempestMultisite'
             -
                 case_name: functest-odl-sfc
+                enabled: false
                 project_name: sfc
                 criteria: 100
                 blocking: false
@@ -381,6 +401,7 @@ tiers:
                         cmd: 'cd /home/opnfv/repos/sfc/sfc/tests/functest && python ./run_tests.py'
             -
                 case_name: onos_sfc
+                enabled: false
                 project_name: functest
                 criteria: 100
                 blocking: true
@@ -395,6 +416,7 @@ tiers:
                     class: 'OnosSfc'
             -
                 case_name: parser-basics
+                enabled: false
                 project_name: parser
                 criteria: 100
                 blocking: false
@@ -411,6 +433,7 @@ tiers:
                         cmd: 'cd /home/opnfv/repos/parser/tests && ./functest_run.sh'
             -
                 case_name: domino-multinode
+                enabled: false
                 project_name: domino
                 criteria: 100
                 blocking: false
@@ -427,6 +450,7 @@ tiers:
                         cmd: 'cd /home/opnfv/repos/domino && ./tests/run_multinode.sh'
             -
                 case_name: gluon_vping
+                enabled: false
                 project_name: netready
                 criteria: 100
                 blocking: false
@@ -443,6 +467,7 @@ tiers:
                         cmd: 'cd /home/opnfv/repos/netready/test/functest && python ./gluon-test-suite.py'
             -
                 case_name: barometercollectd
+                enabled: false
                 project_name: barometer
                 criteria: 100
                 blocking: false
@@ -467,6 +492,7 @@ tiers:
         testcases:
             -
                 case_name: tempest_full_parallel
+                enabled: true
                 project_name: functest
                 criteria: 80
                 blocking: false
@@ -483,6 +509,7 @@ tiers:
                     class: 'TempestFullParallel'
             -
                 case_name: tempest_custom
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -501,6 +528,7 @@ tiers:
                     class: 'TempestCustom'
             -
                 case_name: rally_full
+                enabled: true
                 project_name: functest
                 criteria: 90
                 blocking: false
@@ -524,6 +552,7 @@ tiers:
         testcases:
             -
                 case_name: cloudify_ims
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -537,22 +566,24 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
                     class: 'CloudifyIms'
-#          -
-#               case_name: aaa
-#               project_name: functest
-#               criteria: 100
-#               blocking: false
-#               clean_flag: true
-#               description: >-
-#                   Test suite from Parser project.
-#               dependencies:
-#                   installer: ''
-#                   scenario: ''
-#               run:
-#                   module: 'functest.opnfv_tests.vnf.aaa.aaa'
-#                   class: 'AaaVnf'
+           -
+                case_name: aaa
+                enabled: false
+                project_name: functest
+                criteria: 100
+                blocking: false
+                clean_flag: true
+                description: >-
+                   Test suite from Parser project.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.vnf.aaa.aaa'
+                    class: 'AaaVnf'
             -
                 case_name: orchestra_ims
+                enabled: false
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -568,6 +599,7 @@ tiers:
 
             -
                 case_name: opera_vims
+                enabled: false
                 project_name: opera
                 criteria: 100
                 blocking: false
@@ -583,6 +615,7 @@ tiers:
 
             -
                 case_name: vyos_vrouter
+                enabled: false
                 project_name: functest
                 criteria: 100
                 blocking: false
