@@ -39,8 +39,8 @@ def init(tiers_to_run=[]):
 
 
 def get_results_from_db():
-    url = "%s/results?build_tag=%s" % (ft_utils.get_db_url(),
-                                       CONST.BUILD_TAG)
+    url = "%s?build_tag=%s" % (ft_utils.get_db_url(),
+                               CONST.BUILD_TAG)
     logger.debug("Query to rest api: %s" % url)
     try:
         data = json.load(urllib2.urlopen(url))
@@ -56,7 +56,7 @@ def get_data(test, results):
     for test_db in results:
         if test['test_name'] in test_db['case_name']:
             id = test_db['_id']
-            url = ft_utils.get_db_url() + '/results/' + id
+            url = ft_utils.get_db_url() + '/' + id
             test_result = test_db['criteria']
 
     return {"url": url, "result": test_result}
