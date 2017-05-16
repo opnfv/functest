@@ -40,6 +40,10 @@ class BlockingTestFailed(Exception):
     pass
 
 
+class TestNotEnabled(Exception):
+    pass
+
+
 class RunTestsParser(object):
 
     def __init__(self):
@@ -114,6 +118,9 @@ def get_run_dict(testname):
 
 
 def run_test(test, tier_name, testcases=None):
+    if not test.is_enabled():
+        raise TestNotEnabled("The test case {} is not enabled"
+                             .format(test.get_name()))
     test_name = test.get_name()
     logger.info("\n")  # blank line
     print_separator("=")
@@ -253,7 +260,7 @@ def main(**kwargs):
         field_names=['test case', 'project', 'tier', 'duration', 'result'])
     for test_case in GlobalVariables.EXECUTED_TEST_CASES:
         result = 'PASS' if(test_case.is_successful(
-                ) == test_case.EX_OK) else 'FAIL'
+        ) == test_case.EX_OK) else 'FAIL'
         msg.add_row([test_case.case_name, test_case.project_name,
                      _tiers.get_tier_name(test_case.case_name),
                      test_case.get_duration(), result])
