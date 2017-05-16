@@ -32,6 +32,7 @@ class TierHandlerTesting(unittest.TestCase):
                                       'test_ci_loop',
                                       description='test_desc')
         self.testcase = tier_handler.TestCase('test_name',
+                                              'true',
                                               self.mock_depend,
                                               'test_criteria',
                                               'test_blocking',
@@ -115,6 +116,10 @@ class TierHandlerTesting(unittest.TestCase):
     def test_testcase_get_name(self):
         self.assertEqual(self.tier.get_name(),
                          'test_tier')
+
+    def test_testcase_is_enabled(self):
+        self.assertEqual(self.testcase.is_enabled(),
+                         'true')
 
     def test_testcase_get_criteria(self):
         self.assertEqual(self.tier.get_order(),

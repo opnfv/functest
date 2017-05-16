@@ -39,6 +39,10 @@ class BlockingTestFailed(Exception):
     pass
 
 
+class TestNotEnabled(Exception):
+    pass
+
+
 class RunTestsParser(object):
 
     def __init__(self):
@@ -120,6 +124,11 @@ def get_run_dict(testname):
 
 
 def run_test(test, tier_name, testcases=None):
+
+    if not test.is_enabled():
+        raise TestNotEnabled("The test case {} is not enabled"
+                             .format(test.get_name()))
+
     duration = "XX:XX"
     result_str = "PASS"
     test_name = test.get_name()

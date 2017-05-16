@@ -105,12 +105,14 @@ class Tier(object):
 class TestCase(object):
 
     def __init__(self, name,
+                 enabled,
                  dependency,
                  criteria,
                  blocking,
                  clean_flag,
                  description=""):
         self.name = name
+        self.enabled = enabled
         self.dependency = dependency
         self.criteria = criteria
         self.blocking = blocking
@@ -137,6 +139,9 @@ class TestCase(object):
 
     def get_name(self):
         return self.name
+
+    def is_enabled(self):
+        return self.enabled
 
     def get_criteria(self):
         return self.criteria
