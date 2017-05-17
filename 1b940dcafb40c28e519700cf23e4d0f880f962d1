@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_da27f6b4",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-05-17T13:27:26Z",
+      "side": 1,
+      "message": "Offline testing is to come and will be done more elegantly.",
+      "parentUuid": "9ab8dda7_9fb5f0ef",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 69
+      },
+      "revId": "1b940dcafb40c28e519700cf23e4d0f880f962d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_bfceb4b2",
         "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
         "patchSetId": 33
