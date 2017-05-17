@@ -52,13 +52,13 @@ class PyTestSuiteRunner(testcase.TestCase):
         # TestCase.EX_RUN_ERROR means that the test case was not run
         # not that it was run but the result was FAIL
         exit_code = testcase.TestCase.EX_OK
-        if ((result.errors and len(result.errors) > 0)
-                or (result.failures and len(result.failures) > 0)):
+        if ((result.errors and len(result.errors) > 0) or
+                (result.failures and len(result.failures) > 0)):
             self.logger.info("%s FAILED", self.case_name)
-            self.result = 'FAIL'
+            self.result = 0
         else:
             self.logger.info("%s OK", self.case_name)
-            self.result = 'PASS'
+            self.result = 100
 
         self.details = {}
         return exit_code
