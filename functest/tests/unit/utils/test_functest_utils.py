@@ -569,7 +569,7 @@ class FunctestUtilsTesting(unittest.TestCase):
             mock_criteria.return_value = self.criteria
             resp = functest_utils.check_success_rate(self.case_name,
                                                      self.result)
-            self.assertEqual(resp, 'PASS')
+            self.assertEqual(resp, 100)
 
     def test_check_success_rate_failed(self):
         with mock.patch('functest.utils.functest_utils.get_criteria_by_test') \
@@ -577,7 +577,7 @@ class FunctestUtilsTesting(unittest.TestCase):
             mock_criteria.return_value = self.criteria
             resp = functest_utils.check_success_rate(self.case_name,
                                                      0)
-            self.assertEqual(resp, 'FAIL')
+            self.assertEqual(resp, 0)
 
     # TODO: merge_dicts
 
