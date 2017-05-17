@@ -379,16 +379,6 @@ def get_functest_config(parameter):
     return get_parameter_from_yaml(parameter, yaml_)
 
 
-def check_success_rate(case_name, result):
-    # It should be removed as TestCase tests criteria
-    # and result.
-    logger.warning('check_success_rate will be removed soon')
-    criteria = get_criteria_by_test(case_name)
-    if type(criteria) == int and result >= criteria:
-        return 'PASS'
-    return 'FAIL'
-
-
 def merge_dicts(dict1, dict2):
     for k in set(dict1.keys()).union(dict2.keys()):
         if k in dict1 and k in dict2:

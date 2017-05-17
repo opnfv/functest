@@ -123,7 +123,7 @@ class RefstackClient(testcase.TestCase):
                 skipped_testcases += match + ", "
 
             num_executed = int(num_tests) - int(num_skipped)
-            success_rate = 100 * int(num_success) / int(num_executed)
+            self.result = 100 * int(num_success) / int(num_executed)
 
             self.details = {"tests": int(num_tests),
                             "failures": int(num_failures),
@@ -131,12 +131,10 @@ class RefstackClient(testcase.TestCase):
                             "errors": failed_testcases,
                             "skipped": skipped_testcases}
         except Exception:
-            success_rate = 0
+            self.result = 0
 
-        self.result = ft_utils.check_success_rate(
-            self.case_name, success_rate)
-        logger.info("Testcase %s success_rate is %s%%, is marked as %s"
-                    % (self.case_name, success_rate, self.result))
+        logger.info("Testcase %s success_rate is %s%%"
+                    % (self.case_name, self.result))
 
     def run(self):
         '''used for functest command line,

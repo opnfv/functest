@@ -145,13 +145,13 @@ class OSRallyTesting(unittest.TestCase):
             mock.patch('functest.opnfv_tests.openstack.rally.rally.'
                        'yaml.safe_load',
                        return_value=dic):
-                self.assertEqual(self.rally_base.excl_scenario(),
-                                 ['test'])
+            self.assertEqual(self.rally_base.excl_scenario(),
+                             ['test'])
 
     def test_excl_scenario_exception(self):
         with mock.patch('__builtin__.open', side_effect=Exception):
-                self.assertEqual(self.rally_base.excl_scenario(),
-                                 [])
+            self.assertEqual(self.rally_base.excl_scenario(),
+                             [])
 
     def test_excl_func_default(self):
         CONST.INSTALLER_TYPE = 'test_installer'
@@ -164,13 +164,13 @@ class OSRallyTesting(unittest.TestCase):
                        return_value=dic), \
             mock.patch.object(self.rally_base, 'live_migration_supported',
                               return_value=False):
-                self.assertEqual(self.rally_base.excl_func(),
-                                 ['test'])
+            self.assertEqual(self.rally_base.excl_func(),
+                             ['test'])
 
     def test_excl_func_exception(self):
         with mock.patch('__builtin__.open', side_effect=Exception):
-                self.assertEqual(self.rally_base.excl_func(),
-                                 [])
+            self.assertEqual(self.rally_base.excl_func(),
+                             [])
 
     def test_file_is_empty_default(self):
         mock_obj = mock.Mock()
@@ -342,19 +342,6 @@ class OSRallyTesting(unittest.TestCase):
                                return_value=mock.Mock()):
             self.rally_base._run_tests()
             self.rally_base._run_task.assert_any_call('test1')
-
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.logger.info')
-    def test_generate_report(self, mock_logger_info):
-        summary = [{'test_name': 'test_name',
-                    'overall_duration': 5,
-                    'nb_tests': 3,
-                    'success': 5}]
-        self.rally_base.summary = summary
-        with mock.patch('functest.opnfv_tests.openstack.rally.rally.'
-                        'ft_utils.check_success_rate',
-                        return_value='criteria'):
-            self.rally_base._generate_report()
-            self.assertTrue(mock_logger_info.called)
 
     def test_clean_up_default(self):
         self.rally_base.volume_type = mock.Mock()

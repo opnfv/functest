@@ -151,24 +151,6 @@ class OSTempestTesting(unittest.TestCase):
                 assert_any_call("Starting Tempest test suite: '%s'."
                                 % cmd_line)
 
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.logger.info')
-    def test_parse_verifier_result_default(self, mock_logger_info):
-        self.tempestcommon.VERIFICATION_ID = 'test_uuid'
-        self.tempestcommon.case_name = 'test_case_name'
-        stdout = ['Testscount||2', 'Success||2', 'Skipped||0', 'Failures||0']
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'subprocess.Popen') as mock_popen, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'ft_utils.check_success_rate') as mock_method, \
-                mock.patch('__builtin__.open', mock.mock_open()):
-            mock_stdout = mock.Mock()
-            attrs = {'stdout': stdout}
-            mock_stdout.configure_mock(**attrs)
-            mock_popen.return_value = mock_stdout
-
-            self.tempestcommon.parse_verifier_result()
-            mock_method.assert_any_call('test_case_name', 100)
-
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'os.path.exists', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs',
@@ -214,9 +196,9 @@ class OSTempestTesting(unittest.TestCase):
 
     def test_run_apply_tempest_blacklist_ko(self):
         with mock.patch.object(self.tempestcommon, 'generate_test_list'), \
-                    mock.patch.object(self.tempestcommon,
-                                      'apply_tempest_blacklist',
-                                      side_effect=Exception()):
+            mock.patch.object(self.tempestcommon,
+                              'apply_tempest_blacklist',
+                              side_effect=Exception()):
             self._test_run(testcase.TestCase.EX_RUN_ERROR)
 
     def test_run_verifier_tests_ko(self, *args):

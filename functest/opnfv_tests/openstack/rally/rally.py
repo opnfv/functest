@@ -229,7 +229,7 @@ class RallyBase(testcase.TestCase):
         result_file = open(result_file_name, 'w')
 
         black_tests = list(set(RallyBase.excl_func() +
-                           RallyBase.excl_scenario()))
+                               RallyBase.excl_scenario()))
 
         include = True
         for cases_line in cases_file:
@@ -500,8 +500,7 @@ class RallyBase(testcase.TestCase):
                                     'nb tests': total_nb_tests,
                                     'nb success': success_rate}})
 
-        self.result = ft_utils.check_success_rate(
-            self.case_name, success_rate)
+        self.result = int(success_rate)
         self.details = payload
 
         logger.info("Rally '%s' success_rate is %s%%, is marked as %s"
@@ -536,6 +535,7 @@ class RallyBase(testcase.TestCase):
 
 
 class RallySanity(RallyBase):
+
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_sanity"
@@ -547,6 +547,7 @@ class RallySanity(RallyBase):
 
 
 class RallyFull(RallyBase):
+
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_full"
