@@ -20,7 +20,6 @@ import yaml
 
 from functest.core import testcase
 from functest.utils.constants import CONST
-import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 
 logger = logging.getLogger(__name__)
@@ -500,12 +499,11 @@ class RallyBase(testcase.TestCase):
                                     'nb tests': total_nb_tests,
                                     'nb success': success_rate}})
 
-        self.result = ft_utils.check_success_rate(
-            self.case_name, success_rate)
+        self.result = success_rate
         self.details = payload
 
-        logger.info("Rally '%s' success_rate is %s%%, is marked as %s"
-                    % (self.case_name, success_rate, self.result))
+        logger.info("Rally '%s' success_rate is %s%%"
+                    % (self.case_name, self.result))
 
     def _clean_up(self):
         if self.volume_type:
