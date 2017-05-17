@@ -94,6 +94,7 @@ class TestCase(object):
         """
         try:
             assert self.criteria
+            assert self.result is not None
             if (not isinstance(self.result, str) and
                     not isinstance(self.criteria, str)):
                 if self.result >= self.criteria:
