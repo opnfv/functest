@@ -286,7 +286,7 @@ def get_instances(nova_client):
     try:
         instances = nova_client.servers.list(search_opts={'all_tenants': 1})
         return instances
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_instances(nova_client)]: %s" % e)
         return None
 
@@ -295,7 +295,7 @@ def get_instance_status(nova_client, instance):
     try:
         instance = nova_client.servers.get(instance.id)
         return instance.status
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_instance_status(nova_client)]: %s" % e)
         return None
 
@@ -304,7 +304,7 @@ def get_instance_by_name(nova_client, instance_name):
     try:
         instance = nova_client.servers.find(name=instance_name)
         return instance
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_instance_by_name(nova_client, '%s')]: %s"
                      % (instance_name, e))
         return None
@@ -334,7 +334,7 @@ def get_aggregates(nova_client):
     try:
         aggregates = nova_client.aggregates.list()
         return aggregates
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_aggregates(nova_client)]: %s" % e)
         return None
 
@@ -344,7 +344,7 @@ def get_aggregate_id(nova_client, aggregate_name):
         aggregates = get_aggregates(nova_client)
         _id = [ag.id for ag in aggregates if ag.name == aggregate_name][0]
         return _id
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_aggregate_id(nova_client, %s)]:"
                      " %s" % (aggregate_name, e))
         return None
@@ -354,7 +354,7 @@ def get_availability_zones(nova_client):
     try:
         availability_zones = nova_client.availability_zones.list()
         return availability_zones
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_availability_zones(nova_client)]: %s" % e)
         return None
 
@@ -363,7 +363,7 @@ def get_availability_zone_names(nova_client):
     try:
         az_names = [az.zoneName for az in get_availability_zones(nova_client)]
         return az_names
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_availability_zone_names(nova_client)]:"
                      " %s" % e)
         return None
@@ -381,7 +381,7 @@ def create_flavor(nova_client, flavor_name, ram, disk, vcpus, public=True):
             # flavor extra specs are not configured, therefore skip the update
             pass
 
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_flavor(nova_client, '%s', '%s', '%s', "
                      "'%s')]: %s" % (flavor_name, ram, disk, vcpus, e))
         return None
@@ -414,7 +414,7 @@ def get_floating_ips(nova_client):
     try:
         floating_ips = nova_client.floating_ips.list()
         return floating_ips
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_floating_ips(nova_client)]: %s" % e)
         return None
 
@@ -427,7 +427,7 @@ def get_hypervisors(nova_client):
             if hypervisor.state == "up":
                 nodes.append(hypervisor.hypervisor_hostname)
         return nodes
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_hypervisors(nova_client)]: %s" % e)
         return None
 
@@ -436,7 +436,7 @@ def create_aggregate(nova_client, aggregate_name, av_zone):
     try:
         nova_client.aggregates.create(aggregate_name, av_zone)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_aggregate(nova_client, %s, %s)]: %s"
                      % (aggregate_name, av_zone, e))
         return None
@@ -447,7 +447,7 @@ def add_host_to_aggregate(nova_client, aggregate_name, compute_host):
         aggregate_id = get_aggregate_id(nova_client, aggregate_name)
         nova_client.aggregates.add_host(aggregate_id, compute_host)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [add_host_to_aggregate(nova_client, %s, %s)]: %s"
                      % (aggregate_name, compute_host, e))
         return None
@@ -459,7 +459,7 @@ def create_aggregate_with_host(
         create_aggregate(nova_client, aggregate_name, av_zone)
         add_host_to_aggregate(nova_client, aggregate_name, compute_host)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_aggregate_with_host("
                      "nova_client, %s, %s, %s)]: %s"
                      % (aggregate_name, av_zone, compute_host, e))
@@ -552,7 +552,7 @@ def create_floating_ip(neutron_client):
         ip_json = neutron_client.create_floatingip({'floatingip': props})
         fip_addr = ip_json['floatingip']['floating_ip_address']
         fip_id = ip_json['floatingip']['id']
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_floating_ip(neutron_client)]: %s" % e)
         return None
     return {'fip_addr': fip_addr, 'fip_id': fip_id}
@@ -562,7 +562,7 @@ def add_floating_ip(nova_client, server_id, floatingip_addr):
     try:
         nova_client.servers.add_floating_ip(server_id, floatingip_addr)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [add_floating_ip(nova_client, '%s', '%s')]: %s"
                      % (server_id, floatingip_addr, e))
         return False
@@ -572,7 +572,7 @@ def delete_instance(nova_client, instance_id):
     try:
         nova_client.servers.force_delete(instance_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_instance(nova_client, '%s')]: %s"
                      % (instance_id, e))
         return False
@@ -582,7 +582,7 @@ def delete_floating_ip(nova_client, floatingip_id):
     try:
         nova_client.floating_ips.delete(floatingip_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_floating_ip(nova_client, '%s')]: %s"
                      % (floatingip_id, e))
         return False
@@ -593,7 +593,7 @@ def remove_host_from_aggregate(nova_client, aggregate_name, compute_host):
         aggregate_id = get_aggregate_id(nova_client, aggregate_name)
         nova_client.aggregates.remove_host(aggregate_id, compute_host)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [remove_host_from_aggregate(nova_client, %s, %s)]:"
                      " %s" % (aggregate_name, compute_host, e))
         return False
@@ -612,7 +612,7 @@ def delete_aggregate(nova_client, aggregate_name):
         remove_hosts_from_aggregate(nova_client, aggregate_name)
         nova_client.aggregates.delete(aggregate_name)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_aggregate(nova_client, %s)]: %s"
                      % (aggregate_name, e))
         return False
@@ -715,7 +715,7 @@ def create_neutron_net(neutron_client, name):
         network = neutron_client.create_network(body=json_body)
         network_dict = network['network']
         return network_dict['id']
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_neutron_net(neutron_client, '%s')]: %s"
                      % (name, e))
         return None
@@ -727,7 +727,7 @@ def create_neutron_subnet(neutron_client, name, cidr, net_id):
     try:
         subnet = neutron_client.create_subnet(body=json_body)
         return subnet['subnets'][0]['id']
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_neutron_subnet(neutron_client, '%s', "
                      "'%s', '%s')]: %s" % (name, cidr, net_id, e))
         return None
@@ -738,7 +738,7 @@ def create_neutron_router(neutron_client, name):
     try:
         router = neutron_client.create_router(json_body)
         return router['router']['id']
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_neutron_router(neutron_client, '%s')]: %s"
                      % (name, e))
         return None
@@ -754,7 +754,7 @@ def create_neutron_port(neutron_client, name, network_id, ip):
     try:
         port = neutron_client.create_port(body=json_body)
         return port['port']['id']
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_neutron_port(neutron_client, '%s', '%s', "
                      "'%s')]: %s" % (name, network_id, ip, e))
         return None
@@ -765,7 +765,7 @@ def update_neutron_net(neutron_client, network_id, shared=False):
     try:
         neutron_client.update_network(network_id, body=json_body)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [update_neutron_net(neutron_client, '%s', '%s')]: "
                      "%s" % (network_id, str(shared), e))
         return False
@@ -779,7 +779,7 @@ def update_neutron_port(neutron_client, port_id, device_owner):
         port = neutron_client.update_port(port=port_id,
                                           body=json_body)
         return port['port']['id']
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [update_neutron_port(neutron_client, '%s', '%s')]:"
                      " %s" % (port_id, device_owner, e))
         return None
@@ -790,7 +790,7 @@ def add_interface_router(neutron_client, router_id, subnet_id):
     try:
         neutron_client.add_interface_router(router=router_id, body=json_body)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [add_interface_router(neutron_client, '%s', "
                      "'%s')]: %s" % (router_id, subnet_id, e))
         return False
@@ -802,7 +802,7 @@ def add_gateway_router(neutron_client, router_id):
     try:
         neutron_client.add_gateway_router(router_id, router_dict)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [add_gateway_router(neutron_client, '%s')]: %s"
                      % (router_id, e))
         return False
@@ -812,7 +812,7 @@ def delete_neutron_net(neutron_client, network_id):
     try:
         neutron_client.delete_network(network_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_neutron_net(neutron_client, '%s')]: %s"
                      % (network_id, e))
         return False
@@ -822,7 +822,7 @@ def delete_neutron_subnet(neutron_client, subnet_id):
     try:
         neutron_client.delete_subnet(subnet_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_neutron_subnet(neutron_client, '%s')]: %s"
                      % (subnet_id, e))
         return False
@@ -832,7 +832,7 @@ def delete_neutron_router(neutron_client, router_id):
     try:
         neutron_client.delete_router(router=router_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_neutron_router(neutron_client, '%s')]: %s"
                      % (router_id, e))
         return False
@@ -842,7 +842,7 @@ def delete_neutron_port(neutron_client, port_id):
     try:
         neutron_client.delete_port(port_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_neutron_port(neutron_client, '%s')]: %s"
                      % (port_id, e))
         return False
@@ -854,7 +854,7 @@ def remove_interface_router(neutron_client, router_id, subnet_id):
         neutron_client.remove_interface_router(router=router_id,
                                                body=json_body)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [remove_interface_router(neutron_client, '%s', "
                      "'%s')]: %s" % (router_id, subnet_id, e))
         return False
@@ -864,7 +864,7 @@ def remove_gateway_router(neutron_client, router_id):
     try:
         neutron_client.remove_gateway_router(router_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [remove_gateway_router(neutron_client, '%s')]: %s"
                      % (router_id, e))
         return False
@@ -994,7 +994,7 @@ def get_security_groups(neutron_client):
         security_groups = neutron_client.list_security_groups()[
             'security_groups']
         return security_groups
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_security_groups(neutron_client)]: %s" % e)
         return None
 
@@ -1015,7 +1015,7 @@ def create_security_group(neutron_client, sg_name, sg_description):
     try:
         secgroup = neutron_client.create_security_group(json_body)
         return secgroup['security_group']
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_security_group(neutron_client, '%s', "
                      "'%s')]: %s" % (sg_name, sg_description, e))
         return None
@@ -1070,7 +1070,7 @@ def get_security_group_rules(neutron_client, sg_id):
         security_rules = [rule for rule in security_rules
                           if rule["security_group_id"] == sg_id]
         return security_rules
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_security_group_rules(neutron_client, sg_id)]:"
                      " %s" % e)
         return None
@@ -1089,7 +1089,7 @@ def check_security_group_rules(neutron_client, sg_id, direction, protocol,
             return True
         else:
             return False
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [check_security_group_rules("
                      " neutron_client, sg_id, direction,"
                      " protocol, port_min=None, port_max=None)]: "
@@ -1141,7 +1141,7 @@ def add_secgroup_to_instance(nova_client, instance_id, secgroup_id):
     try:
         nova_client.servers.add_security_group(instance_id, secgroup_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [add_secgroup_to_instance(nova_client, '%s', "
                      "'%s')]: %s" % (instance_id, secgroup_id, e))
         return False
@@ -1157,7 +1157,7 @@ def update_sg_quota(neutron_client, tenant_id, sg_quota, sg_rule_quota):
         neutron_client.update_quota(tenant_id=tenant_id,
                                     body=json_body)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [update_sg_quota(neutron_client, '%s', '%s', "
                      "'%s')]: %s" % (tenant_id, sg_quota, sg_rule_quota, e))
         return False
@@ -1167,7 +1167,7 @@ def delete_security_group(neutron_client, secgroup_id):
     try:
         neutron_client.delete_security_group(secgroup_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_security_group(neutron_client, '%s')]: %s"
                      % (secgroup_id, e))
         return False
@@ -1180,7 +1180,7 @@ def get_images(nova_client):
     try:
         images = nova_client.images.list()
         return images
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_images]: %s" % e)
         return None
 
@@ -1216,7 +1216,7 @@ def create_glance_image(glance_client, image_name, file_path, disk="qcow2",
             with open(file_path) as image_data:
                 glance_client.images.upload(image_id, image_data)
         return image_id
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_glance_image(glance_client, '%s', '%s', "
                      "'%s')]: %s" % (image_name, file_path, public, e))
         return None
@@ -1246,7 +1246,7 @@ def delete_glance_image(nova_client, image_id):
     try:
         nova_client.images.delete(image_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_glance_image(nova_client, '%s')]: %s"
                      % (image_id, e))
         return False
@@ -1259,7 +1259,7 @@ def get_volumes(cinder_client):
     try:
         volumes = cinder_client.volumes.list(search_opts={'all_tenants': 1})
         return volumes
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_volumes(cinder_client)]: %s" % e)
         return None
 
@@ -1272,7 +1272,7 @@ def list_volume_types(cinder_client, public=True, private=True):
         if not private:
             volume_types = [vt for vt in volume_types if vt.is_public]
         return volume_types
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [list_volume_types(cinder_client)]: %s" % e)
         return None
 
@@ -1281,7 +1281,7 @@ def create_volume_type(cinder_client, name):
     try:
         volume_type = cinder_client.volume_types.create(name)
         return volume_type
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_volume_type(cinder_client, '%s')]: %s"
                      % (name, e))
         return None
@@ -1296,7 +1296,7 @@ def update_cinder_quota(cinder_client, tenant_id, vols_quota,
     try:
         cinder_client.quotas.update(tenant_id, **quotas_values)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [update_cinder_quota(cinder_client, '%s', '%s', "
                      "'%s' '%s')]: %s" % (tenant_id, vols_quota,
                                           snapshots_quota, gigabytes_quota, e))
@@ -1314,7 +1314,7 @@ def delete_volume(cinder_client, volume_id, forced=False):
         else:
             cinder_client.volumes.delete(volume_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_volume(cinder_client, '%s', '%s')]: %s"
                      % (volume_id, str(forced), e))
         return False
@@ -1324,7 +1324,7 @@ def delete_volume_type(cinder_client, volume_type):
     try:
         cinder_client.volume_types.delete(volume_type)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_volume_type(cinder_client, '%s')]: %s"
                      % (volume_type, e))
         return False
@@ -1340,7 +1340,7 @@ def get_tenants(keystone_client):
         else:
             tenants = keystone_client.tenants.list()
         return tenants
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_tenants(keystone_client)]: %s" % e)
         return None
 
@@ -1349,7 +1349,7 @@ def get_users(keystone_client):
     try:
         users = keystone_client.users.list()
         return users
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_users(keystone_client)]: %s" % e)
         return None
 
@@ -1397,7 +1397,7 @@ def create_tenant(keystone_client, tenant_name, tenant_description):
                                                     tenant_description,
                                                     enabled=True)
         return tenant.id
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_tenant(keystone_client, '%s', '%s')]: %s"
                      % (tenant_name, tenant_description, e))
         return None
@@ -1428,7 +1428,7 @@ def create_user(keystone_client, user_name, user_password,
                                                 tenant_id,
                                                 enabled=True)
         return user.id
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [create_user(keystone_client, '%s', '%s', '%s'"
                      "'%s')]: %s" % (user_name, user_password,
                                      user_email, tenant_id, e))
@@ -1453,7 +1453,7 @@ def add_role_user(keystone_client, user_id, role_id, tenant_id):
         else:
             keystone_client.roles.add_user_role(user_id, role_id, tenant_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [add_role_user(keystone_client, '%s', '%s'"
                      "'%s')]: %s " % (user_id, role_id, tenant_id, e))
         return False
@@ -1466,7 +1466,7 @@ def delete_tenant(keystone_client, tenant_id):
         else:
             keystone_client.tenants.delete(tenant_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_tenant(keystone_client, '%s')]: %s"
                      % (tenant_id, e))
         return False
@@ -1476,7 +1476,7 @@ def delete_user(keystone_client, user_id):
     try:
         keystone_client.users.delete(user_id)
         return True
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [delete_user(keystone_client, '%s')]: %s"
                      % (user_id, e))
         return False
@@ -1489,6 +1489,6 @@ def get_resource(heat_client, stack_id, resource):
     try:
         resources = heat_client.resources.get(stack_id, resource)
         return resources
-    except Exception, e:
+    except Exception as e:
         logger.error("Error [get_resource]: %s" % e)
         return None
