@@ -31,6 +31,7 @@ class VPingBase(TestCase):
     internal network.
     This class is responsible for creating the image, internal network.
     """
+
     def __init__(self, **kwargs):
         super(VPingBase, self).__init__(**kwargs)
 
@@ -155,7 +156,7 @@ class VPingBase(TestCase):
             return TestCase.EX_RUN_ERROR
 
         self.stop_time = time.time()
-        self.result = 'PASS'
+        self.result = 100
         return TestCase.EX_OK
 
     def _cleanup(self):
@@ -193,6 +194,7 @@ class VPingBase(TestCase):
 
 
 class VPingMain(object):
+
     def __init__(self, vping_cls):
         self.vping = vping_cls()
 
