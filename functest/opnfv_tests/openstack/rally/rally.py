@@ -8,6 +8,8 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
+from __future__ import division
+
 import json
 import logging
 import os
@@ -20,7 +22,6 @@ import yaml
 
 from functest.core import testcase
 from functest.utils.constants import CONST
-import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 
 logger = logging.getLogger(__name__)
@@ -480,11 +481,12 @@ class RallyBase(testcase.TestCase):
         total_duration_str2 = "{0:<10}".format(total_duration_str)
         total_nb_tests_str = "{0:<13}".format(total_nb_tests)
 
-        if len(self.summary):
-            success_rate = total_success / len(self.summary)
-        else:
-            success_rate = 100
-        success_rate = "{:0.2f}".format(success_rate)
+        try:
+            self.result = total_success / len(self.summary)
+        except ZeroDivisionError:
+            self.result = 100
+
+        success_rate = "{:0.2f}".format(self.result)
         success_rate_str = "{0:<10}".format(str(success_rate) + '%')
         report += ("+===================+============"
                    "+===============+===========+")
@@ -500,12 +502,10 @@ class RallyBase(testcase.TestCase):
                                     'nb tests': total_nb_tests,
                                     'nb success': success_rate}})
 
-        self.result = ft_utils.check_success_rate(
-            self.case_name, success_rate)
         self.details = payload
 
-        logger.info("Rally '%s' success_rate is %s%%, is marked as %s"
-                    % (self.case_name, success_rate, self.result))
+        logger.info("Rally '%s' success_rate is %s%%"
+                    % (self.case_name, success_rate))
 
     def _clean_up(self):
         if self.volume_type:
