@@ -28,6 +28,12 @@ class HealthCheck(SnapsTestRunner):
 
         self.suite = unittest.TestSuite()
 
+    def run(self, **kwargs):
+        """
+        Builds the test suite then calls super.run()
+        :param kwargs: the arguments to pass on
+        :return:
+        """
         image_custom_config = None
 
         if hasattr(CONST, 'snaps_images_cirros'):
@@ -39,3 +45,4 @@ class HealthCheck(SnapsTestRunner):
                 use_keystone=self.use_keystone,
                 flavor_metadata=self.flavor_metadata,
                 image_metadata=image_custom_config))
+        return super(self.__class__, self).run()
