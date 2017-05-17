@@ -21,6 +21,7 @@ class PyTestSuiteRunner(testcase.TestCase):
     This superclass is designed to execute pre-configured unittest.TestSuite()
     objects
     """
+
     def __init__(self, **kwargs):
         super(PyTestSuiteRunner, self).__init__(**kwargs)
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -55,10 +56,10 @@ class PyTestSuiteRunner(testcase.TestCase):
         if ((result.errors and len(result.errors) > 0)
                 or (result.failures and len(result.failures) > 0)):
             self.logger.info("%s FAILED", self.case_name)
-            self.result = 'FAIL'
+            self.result = 0
         else:
             self.logger.info("%s OK", self.case_name)
-            self.result = 'PASS'
+            self.result = 100
 
         self.details = {}
         return exit_code
