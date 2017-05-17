@@ -25,12 +25,12 @@ import logging
 import os
 import re
 import sys
-import urlparse
 
 import robot.api
 from robot.errors import RobotError
 import robot.run
 from robot.utils.robottime import timestamp_to_secs
+from six.moves import urllib
 
 from functest.core import testcase
 import functest.utils.openstack_utils as op_utils
@@ -87,10 +87,10 @@ class ODLTests(testcase.TestCase):
         try:
             for line in fileinput.input(odl_variables_files,
                                         inplace=True):
-                print re.sub("AUTH = .*",
+                print(re.sub("AUTH = .*",
                              ("AUTH = [u'" + odlusername + "', u'" +
                               odlpassword + "']"),
-                             line.rstrip())
+                             line.rstrip()))
             return True
         except Exception as ex:  # pylint: disable=broad-except
             cls.__logger.error("Cannot set ODL creds: %s", str(ex))
@@ -150,7 +150,7 @@ class ODLTests(testcase.TestCase):
             odlusername = kwargs['odlusername']
             odlpassword = kwargs['odlpassword']
             osauthurl = kwargs['osauthurl']
-            keystoneip = urlparse.urlparse(osauthurl).hostname
+            keystoneip = urllib.parse.urlparse(osauthurl).hostname
             variables = ['KEYSTONE:' + keystoneip,
                          'NEUTRON:' + kwargs['neutronip'],
                          'OS_AUTH_URL:"' + osauthurl + '"',
@@ -218,7 +218,7 @@ class ODLTests(testcase.TestCase):
             except KeyError:
                 pass
             neutron_url = op_utils.get_endpoint(service_type='network')
-            kwargs = {'neutronip': urlparse.urlparse(neutron_url).hostname}
+            kwargs = {'neutronip': urllib.parse.urlparse(neutron_url).hostname}
             kwargs['odlip'] = kwargs['neutronip']
             kwargs['odlwebport'] = '8080'
             kwargs['odlrestconfport'] = '8181'

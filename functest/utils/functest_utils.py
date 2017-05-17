@@ -16,11 +16,11 @@ import shutil
 import subprocess
 import sys
 import time
-import urllib2
 from datetime import datetime as dt
 
 import dns.resolver
 import requests
+from six.moves import urllib
 import yaml
 from git import Repo
 
@@ -39,9 +39,9 @@ def check_internet_connectivity(url='http://www.opnfv.org/'):
     Check if there is access to the internet
     """
     try:
-        urllib2.urlopen(url, timeout=5)
+        urllib.request.urlopen(url, timeout=5)
         return True
-    except urllib2.URLError:
+    except urllib.error.URLError:
         return False
 
 
@@ -52,8 +52,8 @@ def download_url(url, dest_path):
     name = url.rsplit('/')[-1]
     dest = dest_path + "/" + name
     try:
-        response = urllib2.urlopen(url)
-    except (urllib2.HTTPError, urllib2.URLError):
+        response = urllib.request.urlopen(url)
+    except (urllib.error.HTTPError, urllib.error.URLError):
         return False
 
     with open(dest, 'wb') as f:
@@ -318,7 +318,7 @@ def execute_command(cmd, info=False, error_msg="",
             f.write(line)
         else:
             line = line.replace('\n', '')
-            print line
+            print(line)
             sys.stdout.flush()
     if output_file:
         f.close()
