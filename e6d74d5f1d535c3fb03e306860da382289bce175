@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_5fe8d8e1",
+        "filename": "functest/utils/config.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-17T09:10:03Z",
+      "side": 1,
+      "message": "I don\u0027t think so. But I thought it was out of the patch.",
+      "parentUuid": "9ab8dda7_3c541220",
+      "revId": "e6d74d5f1d535c3fb03e306860da382289bce175",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_5f21b84b",
         "filename": "functest/utils/constants.py",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-17T08:53:20Z",
       "side": 1,
       "message": "same, do we need this 2 printouts?",
+      "revId": "e6d74d5f1d535c3fb03e306860da382289bce175",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_7fe35c05",
+        "filename": "functest/utils/constants.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-17T09:10:03Z",
+      "side": 1,
+      "message": "I don\u0027t think so. But I thought it was out of the patch.",
+      "parentUuid": "9ab8dda7_5f21b84b",
       "revId": "e6d74d5f1d535c3fb03e306860da382289bce175",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
