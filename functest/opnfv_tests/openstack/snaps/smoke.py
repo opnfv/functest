@@ -28,6 +28,12 @@ class SnapsSmoke(SnapsTestRunner):
 
         self.suite = unittest.TestSuite()
 
+    def run(self, **kwargs):
+        """
+        Builds the test suite then calls super.run()
+        :param kwargs: the arguments to pass on
+        :return:
+        """
         image_config = None
         if hasattr(CONST, 'snaps_images_cirros'):
             image_config = CONST.__getattribute__('snaps_images_cirros')
@@ -47,3 +53,4 @@ class SnapsSmoke(SnapsTestRunner):
             flavor_metadata=self.flavor_metadata,
             image_metadata=image_config,
             use_floating_ips=self.use_fip)
+        return super(self.__class__, self).run()
