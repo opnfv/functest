@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_fa30ba9f",
+        "filename": "functest/tests/unit/openstack/rally/test_rally.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-17T16:01:03Z",
+      "side": 1,
+      "message": "this is false too.I don\u0027t see any blank chars between mock... and self...",
+      "revId": "f67e87d3c155761b3fc2f33c258ef72623ad975f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_3aff32ac",
+        "filename": "functest/tests/unit/openstack/tempest/test_tempest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-17T16:01:03Z",
+      "side": 1,
+      "message": "this is not good. Please fix your IDE.",
+      "revId": "f67e87d3c155761b3fc2f33c258ef72623ad975f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
