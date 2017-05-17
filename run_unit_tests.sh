@@ -14,13 +14,16 @@ fi
 # ***************
 echo "Running unit tests..."
 
+sudo apt-get install -y build-essential python-dev python-pip
+sudo pip install virtualenv==15.1.0
+
 # start vitual env
 virtualenv $WORKSPACE/functest_venv
 source $WORKSPACE/functest_venv/bin/activate
 
 # install python packages
-sudo apt-get install -y build-essential python-dev python-pip
 pip install --upgrade pip
+pip install -r $WORKSPACE/requirements.txt
 pip install -r $WORKSPACE/test-requirements.txt
 pip install $WORKSPACE
 
