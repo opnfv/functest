@@ -47,8 +47,6 @@ class VPingSSH(vping_base.VPingBase):
         self.sg_name = CONST.__getattribute__('vping_sg_name') + self.guid
         self.sg_desc = CONST.__getattribute__('vping_sg_desc')
 
-        self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
-
     def run(self):
         """
         Sets up the OpenStack keypair, router, security group, and VM instance
@@ -71,11 +69,12 @@ class VPingSSH(vping_base.VPingBase):
                              % self.router_name)
             net_set = self.network_creator.network_settings
             sub_set = [net_set.subnet_settings[0].name]
+            ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
             router_creator = deploy_utils.create_router(
                 self.os_creds,
                 RouterSettings(
                     name=self.router_name,
-                    external_gateway=self.ext_net_name,
+                    external_gateway=ext_net_name,
                     internal_subnets=sub_set))
             self.creators.append(router_creator)
 
@@ -142,13 +141,13 @@ class VPingSSH(vping_base.VPingBase):
         """
         if vm_creator.vm_ssh_active(block=True):
             ssh = vm_creator.ssh_client()
-            if not self.__transfer_ping_script(ssh):
+            if not self._transfer_ping_script(ssh):
                 return TestCase.EX_RUN_ERROR
-            return self.__do_vping_ssh(ssh, test_ip)
+            return self._do_vping_ssh(ssh, test_ip)
         else:
             return -1
 
-    def __transfer_ping_script(self, ssh):
+    def _transfer_ping_script(self, ssh):
         """
         Uses SCP to copy the ping script via the SSH client
         :param ssh: the SSH client
@@ -156,7 +155,8 @@ class VPingSSH(vping_base.VPingBase):
         """
         self.logger.info("Trying to transfer ping.sh")
         scp = SCPClient(ssh.get_transport())
-        local_path = self.functest_repo + "/" + self.repo
+        local_path = self.functest_repo + "/" \
+                     + CONST.__getattribute__('dir_vping')
         ping_script = os.path.join(local_path, "ping.sh")
         try:
             scp.put(ping_script, "~/")
@@ -171,7 +171,7 @@ class VPingSSH(vping_base.VPingBase):
 
         return True
 
-    def __do_vping_ssh(self, ssh, test_ip):
+    def _do_vping_ssh(self, ssh, test_ip):
         """
         Pings the test_ip via the SSH client
         :param ssh: the SSH client used to issue the ping command
