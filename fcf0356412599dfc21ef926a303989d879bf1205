@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_7f503c5e",
+        "filename": "functest/core/pytest_suite_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-17T12:20:51Z",
+      "side": 1,
+      "message": "I would have deleted this modification.",
+      "revId": "fcf0356412599dfc21ef926a303989d879bf1205",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
