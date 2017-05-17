@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_bfceb4b2",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-05-17T08:13:48Z",
+      "side": 1,
+      "message": "I am confused with this module snaps_utils, which seems a simple function to get one of external networks. So why not call this def get_external_networks in snaps repo, rather than adding another file in functest?",
+      "range": {
+        "startLine": 50,
+        "startChar": 28,
+        "endLine": 50,
+        "endChar": 56
+      },
+      "revId": "1b940dcafb40c28e519700cf23e4d0f880f962d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
