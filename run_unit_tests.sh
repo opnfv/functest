@@ -30,6 +30,10 @@ git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng releng-unittests
 pip install releng-unittests/modules/
 rm -fr releng-unittests
 
+rm -rf snaps
+git clone --depth 1 https://gerrit.opnfv.org/gerrit/snaps
+pip install -e ./snaps/
+
 export CONFIG_FUNCTEST_YAML=$(pwd)/functest/ci/config_functest.yaml
 nosetests --with-xunit \
          --with-coverage \
