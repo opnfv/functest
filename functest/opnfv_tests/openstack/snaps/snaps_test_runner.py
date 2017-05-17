@@ -24,11 +24,18 @@ class SnapsTestRunner(PyTestSuiteRunner):
         super(SnapsTestRunner, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
 
-        self.os_creds = openstack_tests.get_credentials(
-            os_env_file=CONST.__getattribute__('openstack_creds'),
-            proxy_settings_str=None, ssh_proxy_cmd=None)
+        if 'os_creds' in kwargs:
+            self.os_creds = kwargs['os_creds']
+        else:
+            self.os_creds = openstack_tests.get_credentials(
+                os_env_file=CONST.__getattribute__('openstack_creds'),
+                proxy_settings_str=None, ssh_proxy_cmd=None)
 
-        self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
+        if 'ext_net_name' in kwargs:
+            self.ext_net_name = kwargs['ext_net_name']
+        else:
+            self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
+
         self.use_fip = CONST.__getattribute__('snaps_use_floating_ips')
         self.use_keystone = CONST.__getattribute__('snaps_use_keystone')
         scenario = functest_utils.get_scenario()
