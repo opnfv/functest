@@ -1,8 +1,12 @@
-import os
+#!/usr/bin/env python
 
+import os
 import yaml
 
-import env
+from functest.utils import env
+
+
+import six
 
 
 class Config(object):
@@ -16,7 +20,7 @@ class Config(object):
         self._set_others()
 
     def _parse(self, attr_now, left_parametes):
-        for param_n, param_v in left_parametes.iteritems():
+        for param_n, param_v in six.iteritems(left_parametes):
             attr_further = self._get_attr_further(attr_now, param_n)
             if attr_further:
                 self.__setattr__(attr_further, param_v)
@@ -34,6 +38,4 @@ class Config(object):
 CONF = Config()
 
 if __name__ == "__main__":
-    print CONF.vnf_cloudify_ims
-    print CONF.vnf_cloudify_ims_tenant_images
-    print CONF.vnf_cloudify_ims_tenant_images_centos_7
+    print(CONF.vnf_cloudify_ims)
