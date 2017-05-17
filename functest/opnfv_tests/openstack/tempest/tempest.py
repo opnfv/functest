@@ -8,6 +8,8 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
+from __future__ import division
+
 import logging
 import os
 import re
@@ -181,7 +183,11 @@ class TempestCommon(testcase.TestCase):
 
         try:
             num_executed = int(num_tests) - int(num_skipped)
-            success_rate = 100 * int(num_success) / int(num_executed)
+            try:
+                self.result = 100 * int(num_success) / int(num_executed)
+            except ZeroDivisionError:
+                logger.error("No test has been executed")
+
             with open(os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
                                    "tempest.log"), 'r') as logfile:
                 output = logfile.read()
@@ -198,12 +204,10 @@ class TempestCommon(testcase.TestCase):
                             "errors": error_logs,
                             "skipped": skipped_testcase}
         except Exception:
-            success_rate = 0
+            self.result = 0
 
-        self.result = ft_utils.check_success_rate(
-            self.case_name, success_rate)
-        logger.info("Tempest %s success_rate is %s%%, is marked as %s"
-                    % (self.case_name, success_rate, self.result))
+        logger.info("Tempest %s success_rate is %s%%"
+                    % (self.case_name, self.result))
 
     def run(self):
 
