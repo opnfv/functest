@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# Copyright (c) 2017 Cable Television Laboratories, Inc. and others.
+#
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
@@ -35,11 +37,11 @@ class PyTestSuiteRunnerTesting(unittest.TestCase):
     def test_run_no_ut(self):
         mock_result = mock.Mock(testsRun=0, errors=[], failures=[])
         self._test_run(result=mock_result,
-                       status=testcase.TestCase.EX_RUN_ERROR)
-        self.assertEqual(self.psrunner.result, 0)
+                       status=testcase.TestCase.EX_OK)
+        self.assertEqual(self.psrunner.result, 100.0)
         self.assertEqual(self.psrunner.details, {'errors': [], 'failures': []})
         self.assertEqual(self.psrunner.is_successful(),
-                         testcase.TestCase.EX_TESTCASE_FAILED)
+                         testcase.TestCase.EX_OK)
 
     def test_run_result_ko(self):
         self.psrunner.criteria = 100

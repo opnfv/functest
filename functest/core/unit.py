@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2016 Cable Television Laboratories, Inc. and others.
+# Copyright (c) 2017 Cable Television Laboratories, Inc. and others.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
+#
 # http://www.apache.org/licenses/LICENSE-2.0
 
 """Define the parent class to run unittest.TestSuite as TestCase."""
@@ -73,12 +74,13 @@ class Suite(testcase.TestCase):
         self.stop_time = time.time()
         self.details = {"failures": result.failures,
                         "errors": result.errors}
-        try:
-            self.result = 100 * (
-                (result.testsRun - (len(result.failures) +
-                                    len(result.errors))) /
-                result.testsRun)
-            return testcase.TestCase.EX_OK
-        except ZeroDivisionError:
-            self.logger.error("No test has been run")
-            return testcase.TestCase.EX_RUN_ERROR
+        failure_ratio = 1.00
+        if result.testsRun != 0:
+            num_fail_error = len(result.failures) + len(result.errors)
+            num_success = result.testsRun - num_fail_error
+            failure_ratio = num_success / result.testsRun
+        else:
+            self.logger.warn("No tests were run")
+
+        self.result = 100 * failure_ratio
+        return testcase.TestCase.EX_OK
