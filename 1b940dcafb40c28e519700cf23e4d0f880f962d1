@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9ab8dda7_9fb5f0ef",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-05-17T09:16:40Z",
+      "side": 1,
+      "message": "Is it possible to update os_image_settings to be:\nos_image_settings \u003d openstack_tests.file_image_test_settings(image_base_name,\nos.path.join(CONST.__getattribute__(\u0027dir_functest_data),\u0027cirros-0.3.5-x86_64-disk.img\u0027) \n\nJust to enable running vping_ssh offline.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 69
+      },
+      "revId": "1b940dcafb40c28e519700cf23e4d0f880f962d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_bfceb4b2",
         "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
         "patchSetId": 33
