@@ -563,22 +563,6 @@ class FunctestUtilsTesting(unittest.TestCase):
                 assert_called_once_with(self.parameter,
                                         self.config_yaml)
 
-    def test_check_success_rate_default(self):
-        with mock.patch('functest.utils.functest_utils.get_criteria_by_test') \
-                as mock_criteria:
-            mock_criteria.return_value = self.criteria
-            resp = functest_utils.check_success_rate(self.case_name,
-                                                     self.result)
-            self.assertEqual(resp, 100)
-
-    def test_check_success_rate_failed(self):
-        with mock.patch('functest.utils.functest_utils.get_criteria_by_test') \
-                as mock_criteria:
-            mock_criteria.return_value = self.criteria
-            resp = functest_utils.check_success_rate(self.case_name,
-                                                     0)
-            self.assertEqual(resp, 0)
-
     # TODO: merge_dicts
 
     def test_get_testcases_file_dir(self):
