@@ -5,17 +5,17 @@
 import errno
 import functools
 import os
-import urlparse
 
 import mock
 import requests.sessions
+from six.moves import urllib
 
 
 def can_dump_request_to_file(method):
 
     def dump_preparedrequest(request, **kwargs):
         # pylint: disable=unused-argument
-        parseresult = urlparse.urlparse(request.url)
+        parseresult = urllib.parse.urlparse(request.url)
         if parseresult.scheme == "file":
             try:
                 dirname = os.path.dirname(parseresult.path)
@@ -34,7 +34,7 @@ def can_dump_request_to_file(method):
 
     def patch_request(method, url, **kwargs):
         with requests.sessions.Session() as session:
-            parseresult = urlparse.urlparse(url)
+            parseresult = urllib.parse.urlparse(url)
             if parseresult.scheme == "file":
                 with mock.patch.object(session, 'send',
                                        side_effect=dump_preparedrequest):

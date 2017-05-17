@@ -12,7 +12,6 @@
 import errno
 import logging
 import os
-import StringIO
 import unittest
 
 from keystoneauth1.exceptions import auth_plugins
@@ -20,6 +19,7 @@ import mock
 from robot.errors import DataError, RobotError
 from robot.result import model
 from robot.utils.robottime import timestamp_to_secs
+import six
 
 from functest.core import testcase
 from functest.opnfv_tests.sdn.odl import odl
@@ -171,7 +171,7 @@ class ODLRobotTesting(ODLTesting):
             os.path.join(odl.ODLTests.odl_test_repo,
                          'csit/variables/Variables.py'), inplace=True)
 
-    @mock.patch('sys.stdout', new_callable=StringIO.StringIO)
+    @mock.patch('sys.stdout', new_callable=six.StringIO)
     def _test_set_vars(self, msg1, msg2, *args):
         line = mock.MagicMock()
         line.__iter__.return_value = [msg1]
@@ -189,7 +189,7 @@ class ODLRobotTesting(ODLTesting):
     def test_set_vars_auth1(self):
         self._test_set_vars("AUTH1 = []", "AUTH1 = []")
 
-    @mock.patch('sys.stdout', new_callable=StringIO.StringIO)
+    @mock.patch('sys.stdout', new_callable=six.StringIO)
     def test_set_vars_auth_foo(self, *args):
         line = mock.MagicMock()
         line.__iter__.return_value = ["AUTH = []"]
@@ -577,7 +577,7 @@ class ODLArgParserTesting(ODLTesting):
                  "--odlip={}".format(self._sdn_controller_ip)]),
             self.defaultargs)
 
-    @mock.patch('sys.stderr', new_callable=StringIO.StringIO)
+    @mock.patch('sys.stderr', new_callable=six.StringIO)
     def test_fail(self, mock_method):
         self.defaultargs['foo'] = 'bar'
         with self.assertRaises(SystemExit):

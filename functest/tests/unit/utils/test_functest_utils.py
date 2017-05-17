@@ -11,11 +11,11 @@ import logging
 import os
 import time
 import unittest
-import urllib2
 
 from git.exc import NoSuchPathError
 import mock
 import requests
+from six.moves import urllib
 
 from functest.tests.unit import test_utils
 from functest.utils import functest_utils
@@ -62,31 +62,31 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.file_yaml = {'general': {'openstack': {'image_name':
                                                     'test_image_name'}}}
 
-    @mock.patch('urllib2.urlopen',
-                side_effect=urllib2.URLError('no host given'))
+    @mock.patch('six.moves.urllib.request.urlopen',
+                side_effect=urllib.error.URLError('no host given'))
     def test_check_internet_connectivity_failed(self, mock_method):
         self.assertFalse(functest_utils.check_internet_connectivity())
         mock_method.assert_called_once_with(self.url, timeout=self.timeout)
 
-    @mock.patch('urllib2.urlopen')
+    @mock.patch('six.moves.urllib.request.urlopen')
     def test_check_internet_connectivity_default(self, mock_method):
         self.assertTrue(functest_utils.check_internet_connectivity())
         mock_method.assert_called_once_with(self.url, timeout=self.timeout)
 
-    @mock.patch('urllib2.urlopen')
+    @mock.patch('six.moves.urllib.request.urlopen')
     def test_check_internet_connectivity_debian(self, mock_method):
         self.url = "https://www.debian.org/"
         self.assertTrue(functest_utils.check_internet_connectivity(self.url))
         mock_method.assert_called_once_with(self.url, timeout=self.timeout)
 
-    @mock.patch('urllib2.urlopen',
-                side_effect=urllib2.URLError('no host given'))
+    @mock.patch('six.moves.urllib.request.urlopen',
+                side_effect=urllib.error.URLError('no host given'))
     def test_download_url_failed(self, mock_url):
         self.assertFalse(functest_utils.download_url(self.url, self.dest_path))
 
-    @mock.patch('urllib2.urlopen')
+    @mock.patch('six.moves.urllib.request.urlopen')
     def test_download_url_default(self, mock_url):
-        with mock.patch("__builtin__.open", mock.mock_open()) as m, \
+        with mock.patch("six.moves.builtins.open", mock.mock_open()) as m, \
                 mock.patch('functest.utils.functest_utils.shutil.copyfileobj')\
                 as mock_sh:
             name = self.url.rsplit('/')[-1]
@@ -371,7 +371,7 @@ class FunctestUtilsTesting(unittest.TestCase):
         attrs = {'readline.side_effect': self.readline_side}
         m.configure_mock(**attrs)
 
-        with mock.patch("__builtin__.open") as mo:
+        with mock.patch("six.moves.builtins.open") as mo:
             mo.return_value = m
             self.assertEqual(functest_utils.get_resolvconf_ns(),
                              self.test_ip[1:])
@@ -399,7 +399,8 @@ class FunctestUtilsTesting(unittest.TestCase):
                                                      mock_logger_error):
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open, \
-                mock.patch('__builtin__.open', mock.mock_open()) as mopen:
+                mock.patch('six.moves.builtins.open',
+                           mock.mock_open()) as mopen:
 
             FunctestUtilsTesting.readline = 0
 
@@ -428,7 +429,8 @@ class FunctestUtilsTesting(unittest.TestCase):
                                                        ):
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open, \
-                mock.patch('__builtin__.open', mock.mock_open()) as mopen:
+                mock.patch('six.moves.builtins.open',
+                           mock.mock_open()) as mopen:
 
             FunctestUtilsTesting.readline = 0
 
@@ -503,7 +505,7 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     @mock.patch('functest.utils.functest_utils.logger.error')
     def test_get_dict_by_test(self, mock_logger_error):
-        with mock.patch('__builtin__.open', mock.mock_open()), \
+        with mock.patch('six.moves.builtins.open', mock.mock_open()), \
                 mock.patch('functest.utils.functest_utils.yaml.safe_load') \
                 as mock_yaml, \
                 mock.patch('functest.utils.functest_utils.get_testcases_'
@@ -531,7 +533,7 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def test_get_parameter_from_yaml_failed(self):
         self.file_yaml['general'] = None
-        with mock.patch('__builtin__.open', mock.mock_open()), \
+        with mock.patch('six.moves.builtins.open', mock.mock_open()), \
                 mock.patch('functest.utils.functest_utils.yaml.safe_load') \
                 as mock_yaml, \
                 self.assertRaises(ValueError) as excep:
@@ -543,7 +545,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                              self.parameter) in excep.exception)
 
     def test_get_parameter_from_yaml_default(self):
-        with mock.patch('__builtin__.open', mock.mock_open()), \
+        with mock.patch('six.moves.builtins.open', mock.mock_open()), \
                 mock.patch('functest.utils.functest_utils.yaml.safe_load') \
                 as mock_yaml:
             mock_yaml.return_value = self.file_yaml
@@ -586,7 +588,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                          "functest/ci/testcases.yaml")
 
     def test_get_functest_yaml(self):
-        with mock.patch('__builtin__.open', mock.mock_open()), \
+        with mock.patch('six.moves.builtins.open', mock.mock_open()), \
                 mock.patch('functest.utils.functest_utils.yaml.safe_load') \
                 as mock_yaml:
             mock_yaml.return_value = self.file_yaml
