@@ -1,5 +1,10 @@
+#!/usr/bin/env python
+
 import os
 import re
+
+import six
+
 
 default_envs = {
     'NODE_NAME': 'unknown_pod',
@@ -17,9 +22,9 @@ default_envs = {
 class Environment(object):
 
     def __init__(self):
-        for k, v in os.environ.iteritems():
+        for k, v in six.iteritems(os.environ):
             self.__setattr__(k, v)
-        for k, v in default_envs.iteritems():
+        for k, v in six.iteritems(default_envs):
             if k not in os.environ:
                 self.__setattr__(k, v)
         self._set_ci_run()
