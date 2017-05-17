@@ -385,8 +385,8 @@ def check_success_rate(case_name, result):
     logger.warning('check_success_rate will be removed soon')
     criteria = get_criteria_by_test(case_name)
     if type(criteria) == int and result >= criteria:
-        return 'PASS'
-    return 'FAIL'
+        return 100
+    return 0
 
 
 def merge_dicts(dict1, dict2):
