@@ -122,10 +122,9 @@ class Runner(object):
         if not test.is_enabled():
             raise TestNotEnabled(
                 "The test case {} is not enabled".format(test.get_name()))
-        test_name = test.get_name()
         logger.info("\n")  # blank line
         self.print_separator("=")
-        logger.info("Running test case '%s'..." % test_name)
+        logger.info("Running test case '%s'..." % test.get_name())
         self.print_separator("=")
         logger.debug("\n%s" % test)
         self.source_rc_file()
@@ -133,17 +132,17 @@ class Runner(object):
         if test.needs_clean() and self.clean_flag:
             self.generate_os_snapshot()
 
-        flags = (" -t %s" % (test_name))
+        flags = " -t %s" % test.get_name()
         if self.report_flag:
             flags += " -r"
 
         result = testcase.TestCase.EX_RUN_ERROR
-        run_dict = self.get_run_dict(test_name)
+        run_dict = self.get_run_dict(test.get_name())
         if run_dict:
             try:
                 module = importlib.import_module(run_dict['module'])
                 cls = getattr(module, run_dict['class'])
-                test_dict = ft_utils.get_dict_by_test(test_name)
+                test_dict = ft_utils.get_dict_by_test(test.get_name())
                 test_case = cls(**test_dict)
                 self.executed_test_cases.append(test_case)
                 try:
@@ -168,7 +167,7 @@ class Runner(object):
         if test.needs_clean() and self.clean_flag:
             self.cleanup()
         if result != testcase.TestCase.EX_OK:
-            logger.error("The test case '%s' failed. " % test_name)
+            logger.error("The test case '%s' failed. " % test.get_name())
             self.overall_result = Result.EX_ERROR
             if test.is_blocking():
                 raise BlockingTestFailed(
@@ -242,8 +241,10 @@ class Runner(object):
                     return Result.EX_ERROR
             else:
                 self.run_all(_tiers)
+        except BlockingTestFailed:
+            pass
         except Exception:
-            logger.exception("Runner failed")
+            logger.exception("Failures when running testcase(s)")
             self.overall_result = Result.EX_ERROR
 
         msg = prettytable.PrettyTable(
@@ -267,7 +268,6 @@ class Runner(object):
 
         logger.info("Execution exit value: %s" % self.overall_result)
         return self.overall_result
-
 
 if __name__ == '__main__':
     logging.config.fileConfig(
