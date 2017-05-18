@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_d55fc9e3",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-05-18T03:08:00Z",
+      "side": 1,
+      "message": "Could you please convert the string to an integer, otherwise, it will be judged to fail even though self.result is 100.00",
+      "range": {
+        "startLine": 502,
+        "startChar": 8,
+        "endLine": 502,
+        "endChar": 34
+      },
+      "revId": "1b90850bf109baf38b0d84c79f9b9b5f39d5d0e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
