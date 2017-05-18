@@ -8,8 +8,10 @@
 # pylint: disable=missing-docstring
 
 import logging
-import unittest
 import time
+import unittest
+
+import six
 
 from functest.core import testcase
 
@@ -19,6 +21,7 @@ class PyTestSuiteRunner(testcase.TestCase):
     This superclass is designed to execute pre-configured unittest.TestSuite()
     objects
     """
+
     def __init__(self, **kwargs):
         super(PyTestSuiteRunner, self).__init__(**kwargs)
         self.suite = None
@@ -30,11 +33,18 @@ class PyTestSuiteRunner(testcase.TestCase):
         """
         try:
             name = kwargs["name"]
-            self.suite = unittest.TestLoader().loadTestsFromName(name)
+            try:
+                self.suite = unittest.TestLoader().loadTestsFromName(name)
+            except ImportError:
+                self.logger.error("Can not import %s", name)
+                return testcase.TestCase.EX_RUN_ERROR
         except KeyError:
             pass
         self.start_time = time.time()
-        result = unittest.TextTestRunner(verbosity=2).run(self.suite)
+        stream = six.StringIO()
+        result = unittest.TextTestRunner(
+            stream=stream, verbosity=2).run(self.suite)
+        self.logger.debug("\n\n%s", stream.getvalue())
         self.stop_time = time.time()
 
         if result.errors:
