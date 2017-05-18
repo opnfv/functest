@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_70caab6f",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-05-18T12:16:53Z",
+      "side": 1,
+      "message": "not connected to the patch but could it use the same lib than the one for the report?",
+      "revId": "87dcf37d2d658e83252aadfad468639842a30085",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
