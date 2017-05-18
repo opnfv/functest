@@ -13,8 +13,6 @@ import time
 
 from functest.core import testcase
 
-logging.basicConfig()
-
 
 class PyTestSuiteRunner(testcase.TestCase):
     """
@@ -23,8 +21,8 @@ class PyTestSuiteRunner(testcase.TestCase):
     """
     def __init__(self, **kwargs):
         super(PyTestSuiteRunner, self).__init__(**kwargs)
-        self.logger = logging.getLogger(self.__class__.__name__)
         self.suite = None
+        self.logger = logging.getLogger(__name__)
 
     def run(self, **kwargs):
         """
