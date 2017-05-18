@@ -121,10 +121,9 @@ def run_test(test, tier_name, testcases=None):
     if not test.is_enabled():
         raise TestNotEnabled("The test case {} is not enabled"
                              .format(test.get_name()))
-    test_name = test.get_name()
     logger.info("\n")  # blank line
     print_separator("=")
-    logger.info("Running test case '%s'..." % test_name)
+    logger.info("Running test case '%s'..." % test.get_name())
     print_separator("=")
     logger.debug("\n%s" % test)
     source_rc_file()
@@ -132,17 +131,17 @@ def run_test(test, tier_name, testcases=None):
     if test.needs_clean() and GlobalVariables.CLEAN_FLAG:
         generate_os_snapshot()
 
-    flags = (" -t %s" % (test_name))
+    flags = " -t %s" % test.get_name()
     if GlobalVariables.REPORT_FLAG:
         flags += " -r"
 
     result = testcase.TestCase.EX_RUN_ERROR
-    run_dict = get_run_dict(test_name)
+    run_dict = get_run_dict(test.get_name())
     if run_dict:
         try:
             module = importlib.import_module(run_dict['module'])
             cls = getattr(module, run_dict['class'])
-            test_dict = ft_utils.get_dict_by_test(test_name)
+            test_dict = ft_utils.get_dict_by_test(test.get_name())
             test_case = cls(**test_dict)
             GlobalVariables.EXECUTED_TEST_CASES.append(test_case)
             try:
@@ -167,7 +166,7 @@ def run_test(test, tier_name, testcases=None):
     if test.needs_clean() and GlobalVariables.CLEAN_FLAG:
         cleanup()
     if result != testcase.TestCase.EX_OK:
-        logger.error("The test case '%s' failed. " % test_name)
+        logger.error("The test case '%s' failed. " % test.get_name())
         GlobalVariables.OVERALL_RESULT = Result.EX_ERROR
         if test.is_blocking():
             raise BlockingTestFailed("The test case {} failed and is blocking"
@@ -243,8 +242,10 @@ def main(**kwargs):
                 return Result.EX_ERROR
         else:
             run_all(_tiers)
-    except Exception as e:
-        logger.error(e)
+    except BlockingTestFailed:
+        pass
+    except Exception:
+        logger.exception("Failures when running testcase(s)")
         GlobalVariables.OVERALL_RESULT = Result.EX_ERROR
 
     msg = prettytable.PrettyTable(
