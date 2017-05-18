@@ -17,8 +17,6 @@ from functest.utils import openstack_utils
 
 class OSUtilsTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def _get_env_cred_dict(self, os_prefix=''):
         return {'OS_USERNAME': os_prefix + 'username',
                 'OS_PASSWORD': os_prefix + 'password',
@@ -1839,4 +1837,5 @@ class OSUtilsTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

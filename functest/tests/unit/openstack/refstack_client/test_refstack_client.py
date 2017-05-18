@@ -17,11 +17,10 @@ from functest.utils.constants import CONST
 
 class OSRefstackClientTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-    _config = \
-        os.path.join(CONST.dir_functest_test, CONST.refstack_tempest_conf_path)
-    _testlist = \
-        os.path.join(CONST.dir_functest_test, CONST.refstack_defcore_list)
+    _config = os.path.join(CONST.dir_functest_test,
+                           CONST.refstack_tempest_conf_path)
+    _testlist = os.path.join(CONST.dir_functest_test,
+                             CONST.refstack_defcore_list)
 
     def setUp(self):
         self.defaultargs = {'config': self._config,
@@ -101,4 +100,5 @@ class OSRefstackClientTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

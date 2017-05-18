@@ -17,8 +17,6 @@ from functest.utils.constants import CONST
 
 class CliTierTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.tiername = 'tiername'
         self.testnames = 'testnames'
@@ -127,4 +125,5 @@ class CliTierTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

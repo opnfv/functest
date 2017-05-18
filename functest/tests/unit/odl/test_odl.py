@@ -32,8 +32,6 @@ class ODLVisitorTesting(unittest.TestCase):
     """The class testing ODLResultVisitor."""
     # pylint: disable=missing-docstring
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.visitor = odl.ODLResultVisitor()
 
@@ -636,4 +634,5 @@ class ODLArgParserTesting(ODLTesting):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

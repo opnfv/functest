@@ -18,8 +18,6 @@ from functest.core import testcase
 
 class PyTestSuiteRunnerTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.psrunner = pytest_suite_runner.PyTestSuiteRunner()
         self.result = mock.Mock()
@@ -48,4 +46,5 @@ class PyTestSuiteRunnerTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

@@ -18,8 +18,6 @@ from functest.utils.constants import CONST
 
 class OSTempestTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                         'conf_utils.get_verifier_id',
@@ -248,4 +246,5 @@ class OSTempestTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

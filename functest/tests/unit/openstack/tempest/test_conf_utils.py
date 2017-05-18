@@ -16,8 +16,6 @@ from functest.utils.constants import CONST
 
 class OSTempestConfUtilsTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def test_create_tempest_resources_missing_network_dic(self):
         with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                         'os_utils.get_keystone_client',
@@ -371,4 +369,5 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             mexe.assert_called_once_with(cmd, error_msg=error_msg)
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

@@ -14,8 +14,6 @@ from functest.utils import openstack_snapshot
 
 class OSTackerTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def _get_instance(self, key):
         mock_obj = mock.Mock()
         attrs = {'id': 'id' + str(key), 'name': 'name' + str(key),
@@ -232,4 +230,5 @@ class OSTackerTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

@@ -17,8 +17,6 @@ from functest.utils.constants import CONST
 
 class RunTestsTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.sep = 'test_sep'
         self.creds = {'OS_AUTH_URL': 'http://test_ip:test_port/v2.0',
@@ -249,4 +247,5 @@ class RunTestsTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

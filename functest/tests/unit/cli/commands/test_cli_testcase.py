@@ -17,8 +17,6 @@ from functest.utils.constants import CONST
 
 class CliTestCasesTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.testname = 'testname'
         with mock.patch('functest.cli.commands.cli_testcase.tb'):
@@ -100,4 +98,5 @@ class CliTestCasesTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

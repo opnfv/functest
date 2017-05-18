@@ -15,8 +15,6 @@ from functest.opnfv_tests.vnf.ims import clearwater_ims_base as ims_base
 
 class ClearwaterOnBoardingBaseTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
                         'os.makedirs'):
@@ -55,4 +53,5 @@ class ClearwaterOnBoardingBaseTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

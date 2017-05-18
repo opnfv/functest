@@ -17,10 +17,6 @@ import mock
 from functest.core import feature
 from functest.core import testcase
 
-# logging must be disabled else it calls time.time()
-# what will break these unit tests.
-logging.disable(logging.CRITICAL)
-
 
 class FeatureTestingBase(unittest.TestCase):
 
@@ -95,4 +91,7 @@ class BashFeatureTesting(FeatureTestingBase):
 
 
 if __name__ == "__main__":
+    # logging must be disabled else it calls time.time()
+    # what will break these unit tests.
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

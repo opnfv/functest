@@ -18,8 +18,6 @@ from opnfv.utils import constants as opnfv_constants
 
 class PrepareEnvTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.prepare_envparser = prepare_env.PrepareEnvParser()
 
@@ -456,4 +454,5 @@ class PrepareEnvTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

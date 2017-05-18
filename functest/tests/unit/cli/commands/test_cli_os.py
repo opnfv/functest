@@ -18,7 +18,6 @@ from functest.utils.constants import CONST
 
 
 class CliOpenStackTesting(unittest.TestCase):
-    logging.disable(logging.CRITICAL)
 
     def setUp(self):
         self.endpoint_ip = 'test_ip'
@@ -235,4 +234,5 @@ class CliOpenStackTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)
