@@ -30,6 +30,11 @@ class PyTestSuiteRunner(testcase.TestCase):
         """
         Starts test execution from the functest framework
         """
+        try:
+            name = kwargs["name"]
+            self.suite = unittest.TestLoader().loadTestsFromName(name)
+        except KeyError:
+            pass
         self.start_time = time.time()
         result = unittest.TextTestRunner(verbosity=2).run(self.suite)
         self.stop_time = time.time()
