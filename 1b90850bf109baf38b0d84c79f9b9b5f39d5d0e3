@@ -46,6 +46,30 @@
       "revId": "1b90850bf109baf38b0d84c79f9b9b5f39d5d0e3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_95839103",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-18T06:58:20Z",
+      "side": 1,
+      "message": "Yes I think it\u0027s fine. But please add future divide else it will convert to int.",
+      "parentUuid": "9ab8dda7_15a0019e",
+      "range": {
+        "startLine": 502,
+        "startChar": 8,
+        "endLine": 502,
+        "endChar": 34
+      },
+      "revId": "1b90850bf109baf38b0d84c79f9b9b5f39d5d0e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
