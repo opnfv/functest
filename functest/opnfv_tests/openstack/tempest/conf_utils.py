@@ -21,11 +21,12 @@ import functest.utils.openstack_utils as os_utils
 
 IMAGE_ID_ALT = None
 FLAVOR_ID_ALT = None
-REPO_PATH = CONST.dir_repo_functest
-GLANCE_IMAGE_PATH = os.path.join(CONST.dir_functest_images,
-                                 CONST.openstack_image_file_name)
-TEMPEST_TEST_LIST_DIR = CONST.dir_tempest_cases
-TEMPEST_RESULTS_DIR = os.path.join(CONST.dir_results,
+REPO_PATH = CONST.__getattribute__('dir_repo_functest')
+GLANCE_IMAGE_PATH = os.path.join(
+    CONST.__getattribute__('dir_functest_images'),
+    CONST.__getattribute__('openstack_image_file_name'))
+TEMPEST_TEST_LIST_DIR = CONST.__getattribute__('dir_tempest_cases')
+TEMPEST_RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'),
                                    'tempest')
 TEMPEST_CUSTOM = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
                               'test_list.txt')
@@ -35,11 +36,11 @@ TEMPEST_DEFCORE = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
                                'defcore_req.txt')
 TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
-REFSTACK_RESULTS_DIR = os.path.join(CONST.dir_results,
+REFSTACK_RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'),
                                     'refstack')
 
-CI_INSTALLER_TYPE = CONST.INSTALLER_TYPE
-CI_INSTALLER_IP = CONST.INSTALLER_IP
+CI_INSTALLER_TYPE = CONST.__getattribute__('INSTALLER_TYPE')
+CI_INSTALLER_IP = CONST.__getattribute__('INSTALLER_IP')
 
 """ logging configuration """
 logger = logging.getLogger(__name__)
@@ -52,26 +53,27 @@ def create_tempest_resources(use_custom_images=False,
     logger.debug("Creating tenant and user for Tempest suite")
     tenant_id = os_utils.create_tenant(
         keystone_client,
-        CONST.tempest_identity_tenant_name,
-        CONST.tempest_identity_tenant_description)
+        CONST.__getattribute__('tempest_identity_tenant_name'),
+        CONST.__getattribute__('tempest_identity_tenant_description'))
     if not tenant_id:
         logger.error("Failed to create %s tenant"
-                     % CONST.tempest_identity_tenant_name)
+                     % CONST.__getattribute__('tempest_identity_tenant_name'))
 
-    user_id = os_utils.create_user(keystone_client,
-                                   CONST.tempest_identity_user_name,
-                                   CONST.tempest_identity_user_password,
-                                   None, tenant_id)
+    user_id = os_utils.create_user(
+        keystone_client,
+        CONST.__getattribute__('tempest_identity_user_name'),
+        CONST.__getattribute__('tempest_identity_user_password'),
+        None, tenant_id)
     if not user_id:
         logger.error("Failed to create %s user" %
-                     CONST.tempest_identity_user_name)
+                     CONST.__getattribute__('tempest_identity_user_name'))
 
     logger.debug("Creating private network for Tempest suite")
     network_dic = os_utils.create_shared_network_full(
-        CONST.tempest_private_net_name,
-        CONST.tempest_private_subnet_name,
-        CONST.tempest_router_name,
-        CONST.tempest_private_subnet_cidr)
+        CONST.__getattribute__('tempest_private_net_name'),
+        CONST.__getattribute__('tempest_private_subnet_name'),
+        CONST.__getattribute__('tempest_router_name'),
+        CONST.__getattribute__('tempest_private_subnet_cidr'))
     if network_dic is None:
         raise Exception('Failed to create private network')
 
@@ -80,41 +82,45 @@ def create_tempest_resources(use_custom_images=False,
     flavor_id = ""
     flavor_id_alt = ""
 
-    if CONST.tempest_use_custom_images or use_custom_images:
+    if (CONST.__getattribute__('tempest_use_custom_images') or
+       use_custom_images):
         # adding alternative image should be trivial should we need it
         logger.debug("Creating image for Tempest suite")
         _, image_id = os_utils.get_or_create_image(
-            CONST.openstack_image_name, GLANCE_IMAGE_PATH,
-            CONST.openstack_image_disk_format)
+            CONST.__getattribute__('openstack_image_name'),
+            GLANCE_IMAGE_PATH,
+            CONST.__getattribute__('openstack_image_disk_format'))
         if image_id is None:
             raise Exception('Failed to create image')
 
     if use_custom_images:
         logger.debug("Creating 2nd image for Tempest suite")
         _, image_id_alt = os_utils.get_or_create_image(
-            CONST.openstack_image_name_alt, GLANCE_IMAGE_PATH,
-            CONST.openstack_image_disk_format)
+            CONST.__getattribute__('openstack_image_name_alt'),
+            GLANCE_IMAGE_PATH,
+            CONST.__getattribute__('openstack_image_disk_format'))
         if image_id_alt is None:
             raise Exception('Failed to create image')
 
-    if CONST.tempest_use_custom_flavors or use_custom_flavors:
+    if (CONST.__getattribute__('tempest_use_custom_flavors') or
+       use_custom_flavors):
         # adding alternative flavor should be trivial should we need it
         logger.debug("Creating flavor for Tempest suite")
         _, flavor_id = os_utils.get_or_create_flavor(
-            CONST.openstack_flavor_name,
-            CONST.openstack_flavor_ram,
-            CONST.openstack_flavor_disk,
-            CONST.openstack_flavor_vcpus)
+            CONST.__getattribute__('openstack_flavor_name'),
+            CONST.__getattribute__('openstack_flavor_ram'),
+            CONST.__getattribute__('openstack_flavor_disk'),
+            CONST.__getattribute__('openstack_flavor_vcpus'))
         if flavor_id is None:
             raise Exception('Failed to create flavor')
 
     if use_custom_flavors:
         logger.debug("Creating 2nd flavor for tempest_defcore")
         _, flavor_id_alt = os_utils.get_or_create_flavor(
-            CONST.openstack_flavor_name_alt,
-            CONST.openstack_flavor_ram,
-            CONST.openstack_flavor_disk,
-            CONST.openstack_flavor_vcpus)
+            CONST.__getattribute__('openstack_flavor_name_alt'),
+            CONST.__getattribute__('openstack_flavor_ram'),
+            CONST.__getattribute__('openstack_flavor_disk'),
+            CONST.__getattribute__('openstack_flavor_vcpus'))
         if flavor_id_alt is None:
             raise Exception('Failed to create flavor')
 
@@ -132,7 +138,7 @@ def get_verifier_id():
     Returns verifer id for current Tempest
     """
     cmd = ("rally verify list-verifiers | awk '/" +
-           CONST.tempest_deployment_name +
+           CONST.__getattribute__('tempest_deployment_name') +
            "/ {print $2}'")
     p = subprocess.Popen(cmd, shell=True,
                          stdout=subprocess.PIPE,
@@ -149,7 +155,7 @@ def get_verifier_deployment_id():
     Returns deployment id for active Rally deployment
     """
     cmd = ("rally deployment list | awk '/" +
-           CONST.rally_deployment_name +
+           CONST.__getattribute__('rally_deployment_name') +
            "/ {print $2}'")
     p = subprocess.Popen(cmd, shell=True,
                          stdout=subprocess.PIPE,
@@ -168,7 +174,7 @@ def get_verifier_repo_dir(verifier_id):
     if not verifier_id:
         verifier_id = get_verifier_id()
 
-    return os.path.join(CONST.dir_rally_inst,
+    return os.path.join(CONST.__getattribute__('dir_rally_inst'),
                         'verification',
                         'verifier-{}'.format(verifier_id),
                         'repo')
@@ -184,7 +190,7 @@ def get_verifier_deployment_dir(verifier_id, deployment_id):
     if not deployment_id:
         deployment_id = get_verifier_deployment_id()
 
-    return os.path.join(CONST.dir_rally_inst,
+    return os.path.join(CONST.__getattribute__('dir_rally_inst'),
                         'verification',
                         'verifier-{}'.format(verifier_id),
                         'for-deployment-{}'.format(deployment_id))
@@ -247,8 +253,9 @@ def configure_tempest_defcore(deployment_dir, img_flavor_dict):
     with open(conf_file, 'wb') as config_file:
         config.write(config_file)
 
-    confpath = os.path.join(CONST.dir_functest_test,
-                            CONST.refstack_tempest_conf_path)
+    confpath = os.path.join(
+        CONST.__getattribute__('dir_functest_test'),
+        CONST.__getattribute__('refstack_tempest_conf_path'))
     shutil.copyfile(conf_file, confpath)
 
 
@@ -263,32 +270,37 @@ def configure_tempest_update_params(tempest_conf_file,
     config.set(
         'compute',
         'fixed_network_name',
-        CONST.tempest_private_net_name)
+        CONST.__getattribute__('tempest_private_net_name'))
     config.set('compute', 'volume_device_name',
-               CONST.tempest_volume_device_name)
-    if CONST.tempest_use_custom_images:
+               CONST.__getattribute__('tempest_volume_device_name'))
+    if CONST.__getattribute__('tempest_use_custom_images'):
         if IMAGE_ID is not None:
             config.set('compute', 'image_ref', IMAGE_ID)
         if IMAGE_ID_ALT is not None:
             config.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
-    if CONST.tempest_use_custom_flavors:
+    if CONST.__getattribute__('tempest_use_custom_flavors'):
         if FLAVOR_ID is not None:
             config.set('compute', 'flavor_ref', FLAVOR_ID)
         if FLAVOR_ID_ALT is not None:
             config.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
-    config.set('identity', 'tenant_name', CONST.tempest_identity_tenant_name)
-    config.set('identity', 'username', CONST.tempest_identity_user_name)
-    config.set('identity', 'password', CONST.tempest_identity_user_password)
+    config.set('identity', 'tenant_name',
+               CONST.__getattribute__('tempest_identity_tenant_name'))
+    config.set('identity', 'username',
+               CONST.__getattribute__('tempest_identity_user_name'))
+    config.set('identity', 'password',
+               CONST.__getattribute__('tempest_identity_user_password'))
     config.set('identity', 'region', 'RegionOne')
     config.set(
-        'validation', 'ssh_timeout', CONST.tempest_validation_ssh_timeout)
+        'validation', 'ssh_timeout',
+        CONST.__getattribute__('tempest_validation_ssh_timeout'))
     config.set('object-storage', 'operator_role',
-               CONST.tempest_object_storage_operator_role)
+               CONST.__getattribute__('tempest_object_storage_operator_role'))
 
-    if CONST.OS_ENDPOINT_TYPE is not None:
+    if CONST.__getattribute__('OS_ENDPOINT_TYPE') is not None:
         sections = config.sections()
         if os_utils.is_keystone_v3():
-            config.set('identity', 'v3_endpoint_type', CONST.OS_ENDPOINT_TYPE)
+            config.set('identity', 'v3_endpoint_type',
+                       CONST.__getattribute__('OS_ENDPOINT_TYPE'))
             if 'identity-feature-enabled' not in sections:
                 config.add_section('identity-feature-enabled')
                 config.set('identity-feature-enabled', 'api_v2', False)
@@ -304,7 +316,7 @@ def configure_tempest_update_params(tempest_conf_file,
             if service not in sections:
                 config.add_section(service)
             config.set(service, 'endpoint_type',
-                       CONST.OS_ENDPOINT_TYPE)
+                       CONST.__getattribute__('OS_ENDPOINT_TYPE'))
 
     with open(tempest_conf_file, 'wb') as config_file:
         config.write(config_file)
@@ -365,22 +377,22 @@ def configure_tempest_multisite_params(tempest_conf_file):
                        "StrictHostKeyChecking=no")
 
         # Get the controller IP from the fuel node
-        cmd = 'sshpass -p %s ssh 2>/dev/null %s %s@%s \
-                \'fuel node --env 1| grep controller | grep "True\|  1" \
-                | awk -F\| "{print \$5}"\'' % (installer_password,
+        cmd = ('sshpass -p %s ssh 2>/dev/null %s %s@%s '
+               '\'fuel node --env 1| grep controller | grep "True\|  1" '
+               '| awk -F\| "{print \$5}"\'' % (installer_password,
                                                ssh_options,
                                                installer_username,
-                                               installer_ip)
+                                               installer_ip))
         multisite_controller_ip = "".join(os.popen(cmd).read().split())
 
         # Login to controller and get bind host details
-        cmd = 'sshpass -p %s ssh 2>/dev/null  %s %s@%s "ssh %s \\" \
-            grep -e "^bind_" %s  \\""' % (installer_password,
-                                          ssh_options,
-                                          installer_username,
-                                          installer_ip,
-                                          multisite_controller_ip,
-                                          kingbird_conf_path)
+        cmd = ('sshpass -p %s ssh 2>/dev/null  %s %s@%s "ssh %s \\" '
+               'grep -e "^bind_" %s  \\""' % (installer_password,
+                                              ssh_options,
+                                              installer_username,
+                                              installer_ip,
+                                              multisite_controller_ip,
+                                              kingbird_conf_path))
         bind_details = os.popen(cmd).read()
         bind_details = "".join(bind_details.split())
         # Extract port number from the bind details
