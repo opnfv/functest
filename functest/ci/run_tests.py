@@ -243,8 +243,8 @@ def main(**kwargs):
                 return Result.EX_ERROR
         else:
             run_all(_tiers)
-    except Exception as e:
-        logger.error(e)
+    except Exception:
+        logger.exception("Failures when running testcase(s)")
         GlobalVariables.OVERALL_RESULT = Result.EX_ERROR
 
     msg = prettytable.PrettyTable(
