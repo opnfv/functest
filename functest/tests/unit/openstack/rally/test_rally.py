@@ -343,19 +343,6 @@ class OSRallyTesting(unittest.TestCase):
             self.rally_base._run_tests()
             self.rally_base._run_task.assert_any_call('test1')
 
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.logger.info')
-    def test_generate_report(self, mock_logger_info):
-        summary = [{'test_name': 'test_name',
-                    'overall_duration': 5,
-                    'nb_tests': 3,
-                    'success': 5}]
-        self.rally_base.summary = summary
-        with mock.patch('functest.opnfv_tests.openstack.rally.rally.'
-                        'ft_utils.check_success_rate',
-                        return_value='criteria'):
-            self.rally_base._generate_report()
-            self.assertTrue(mock_logger_info.called)
-
     def test_clean_up_default(self):
         self.rally_base.volume_type = mock.Mock()
         self.rally_base.cinder_client = mock.Mock()
