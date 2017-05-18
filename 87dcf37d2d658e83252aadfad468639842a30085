@@ -16,6 +16,24 @@
       "revId": "87dcf37d2d658e83252aadfad468639842a30085",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_b0afc393",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-18T12:17:58Z",
+      "side": 1,
+      "message": "prettytable? Yes, sure, but not for this patch.",
+      "parentUuid": "9ab8dda7_70caab6f",
+      "revId": "87dcf37d2d658e83252aadfad468639842a30085",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
