@@ -7,6 +7,7 @@
 #
 pyyaml==3.10
 gitpython==1.0.1
+keystoneauth1>=2.18.0
 python-openstackclient==2.3.0
 python-ceilometerclient==2.6.2
 python-heatclient==1.7.0
