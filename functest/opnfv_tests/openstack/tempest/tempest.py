@@ -79,8 +79,8 @@ class TempestCommon(testcase.TestCase):
         result_file = open(conf_utils.TEMPEST_LIST, 'w')
         black_tests = []
         try:
-            installer_type = CONST.INSTALLER_TYPE
-            deploy_scenario = CONST.DEPLOY_SCENARIO
+            installer_type = CONST.__getattribute__('INSTALLER_TYPE')
+            deploy_scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
             if (bool(installer_type) * bool(deploy_scenario)):
                 # if INSTALLER_TYPE and DEPLOY_SCENARIO are set we read the
                 # file
@@ -117,9 +117,9 @@ class TempestCommon(testcase.TestCase):
 
         header = ("Tempest environment:\n"
                   "  SUT: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
-                  (CONST.INSTALLER_TYPE,
-                   CONST.DEPLOY_SCENARIO,
-                   CONST.NODE_NAME,
+                  (CONST.__getattribute__('INSTALLER_TYPE'),
+                   CONST.__getattribute__('DEPLOY_SCENARIO'),
+                   CONST.__getattribute__('NODE_NAME'),
                    time.strftime("%a %b %d %H:%M:%S %Z %Y")))
 
         f_stdout = open(
@@ -267,7 +267,8 @@ class TempestMultisite(TempestCommon):
         TempestCommon.__init__(self, **kwargs)
         self.MODE = "feature_multisite"
         self.OPTION = "--concurrency 1"
-        conf_utils.install_verifier_ext(CONST.dir_repo_kingbird)
+        conf_utils.install_verifier_ext(
+            CONST.__getattribute__('dir_repo_kingbird'))
 
 
 class TempestCustom(TempestCommon):
