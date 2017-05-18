@@ -24,12 +24,14 @@ class TempestConf(object):
         self.DEPLOYMENT_ID = conf_utils.get_verifier_deployment_id()
         self.DEPLOYMENT_DIR = conf_utils.get_verifier_deployment_dir(
             self.VERIFIER_ID, self.DEPLOYMENT_ID)
-        self.confpath = os.path.join(CONST.dir_functest_test,
-                                     CONST.refstack_tempest_conf_path)
+        self.confpath = os.path.join(
+            CONST.__getattribute__('dir_functest_test'),
+            CONST.__getattribute__('refstack_tempest_conf_path'))
 
     def generate_tempestconf(self):
         try:
-            openstack_utils.source_credentials(CONST.openstack_creds)
+            openstack_utils.source_credentials(
+                CONST.__getattribute__('openstack_creds'))
             img_flavor_dict = conf_utils.create_tempest_resources(
                 use_custom_images=True, use_custom_flavors=True)
             conf_utils.configure_tempest_defcore(
