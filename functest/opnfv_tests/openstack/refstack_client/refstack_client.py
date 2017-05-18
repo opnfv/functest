@@ -33,9 +33,9 @@ class RefstackClient(testcase.TestCase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "refstack_defcore"
         super(RefstackClient, self).__init__(**kwargs)
-        self.FUNCTEST_TEST = CONST.dir_functest_test
-        self.CONF_PATH = CONST.refstack_tempest_conf_path
-        self.DEFCORE_LIST = CONST.refstack_defcore_list
+        self.FUNCTEST_TEST = CONST.__getattribute__('dir_functest_test')
+        self.CONF_PATH = CONST.__getattribute__('refstack_tempest_conf_path')
+        self.DEFCORE_LIST = CONST.__getattribute__('refstack_defcore_list')
         self.confpath = os.path.join(self.FUNCTEST_TEST,
                                      self.CONF_PATH)
         self.defcorelist = os.path.join(self.FUNCTEST_TEST,
@@ -45,7 +45,7 @@ class RefstackClient(testcase.TestCase):
 
         cmd = ("cd {0};"
                ". .venv/bin/activate;"
-               "cd -;".format(CONST.dir_refstack_client))
+               "cd -;".format(CONST.__getattribute__('dir_refstack_client')))
         ft_utils.execute_command(cmd)
 
     def run_defcore(self, conf, testlist):
@@ -53,7 +53,7 @@ class RefstackClient(testcase.TestCase):
 
         cmd = ("cd {0};"
                "./refstack-client test -c {1} -v --test-list {2};"
-               "cd -;".format(CONST.dir_refstack_client,
+               "cd -;".format(CONST.__getattribute__('dir_refstack_client'),
                               conf,
                               testlist))
         ft_utils.execute_command(cmd)
@@ -63,16 +63,16 @@ class RefstackClient(testcase.TestCase):
 
         cmd = ("cd {0};"
                "./refstack-client test -c {1} -v --test-list {2};"
-               "cd -;".format(CONST.dir_refstack_client,
+               "cd -;".format(CONST.__getattribute__('dir_refstack_client'),
                               self.confpath,
                               self.defcorelist))
         logger.info("Starting Refstack_defcore test case: '%s'." % cmd)
 
         header = ("Refstack environment:\n"
                   "  SUT: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
-                  (CONST.INSTALLER_TYPE,
-                   CONST.DEPLOY_SCENARIO,
-                   CONST.NODE_NAME,
+                  (CONST.__getattribute__('INSTALLER_TYPE'),
+                   CONST.__getattribute__('DEPLOY_SCENARIO'),
+                   CONST.__getattribute__('NODE_NAME'),
                    time.strftime("%a %b %d %H:%M:%S %Z %Y")))
 
         f_stdout = open(
@@ -202,9 +202,9 @@ class RefstackClient(testcase.TestCase):
 class RefstackClientParser(object):
 
     def __init__(self):
-        self.FUNCTEST_TEST = CONST.dir_functest_test
-        self.CONF_PATH = CONST.refstack_tempest_conf_path
-        self.DEFCORE_LIST = CONST.refstack_defcore_list
+        self.FUNCTEST_TEST = CONST.__getattribute__('dir_functest_test')
+        self.CONF_PATH = CONST.__getattribute__('refstack_tempest_conf_path')
+        self.DEFCORE_LIST = CONST.__getattribute__('refstack_defcore_list')
         self.confpath = os.path.join(self.FUNCTEST_TEST,
                                      self.CONF_PATH)
         self.defcorelist = os.path.join(self.FUNCTEST_TEST,
