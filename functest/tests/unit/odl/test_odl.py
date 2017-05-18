@@ -312,8 +312,6 @@ class ODLMainTesting(ODLTesting):
     def test_run_ko(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(odl, 'open', mock.mock_open(),
-                                  create=True), \
                 self.assertRaises(RobotError):
             self._test_main(testcase.TestCase.EX_RUN_ERROR, *args)
 
@@ -322,71 +320,33 @@ class ODLMainTesting(ODLTesting):
     def test_parse_results_ko(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(odl, 'open', mock.mock_open(),
-                                  create=True), \
                 mock.patch.object(self.test, 'parse_results',
                                   side_effect=RobotError):
             self._test_main(testcase.TestCase.EX_RUN_ERROR, *args)
 
-    @mock.patch('os.remove', side_effect=Exception)
-    @mock.patch('robot.run')
-    @mock.patch('os.makedirs')
-    def test_remove_exc(self, *args):
-        with mock.patch.object(self.test, 'set_robotframework_vars',
-                               return_value=True), \
-                mock.patch.object(self.test, 'parse_results'), \
-                self.assertRaises(Exception):
-            self._test_main(testcase.TestCase.EX_OK, *args)
-
-    @mock.patch('os.remove')
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
     def test_ok(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(odl, 'open', mock.mock_open(),
-                                  create=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase.TestCase.EX_OK, *args)
 
-    @mock.patch('os.remove')
     @mock.patch('robot.run')
     @mock.patch('os.makedirs', side_effect=OSError(errno.EEXIST, ''))
     def test_makedirs_oserror17(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(odl, 'open', mock.mock_open(),
-                                  create=True) as mock_open, \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase.TestCase.EX_OK, *args)
-        mock_open.assert_called_once_with(
-            os.path.join(odl.ODLTests.res_dir, 'stdout.txt'), 'w+')
 
-    @mock.patch('os.remove')
     @mock.patch('robot.run', return_value=1)
     @mock.patch('os.makedirs')
     def test_testcases_in_failure(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(odl, 'open', mock.mock_open(),
-                                  create=True) as mock_open, \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_main(testcase.TestCase.EX_OK, *args)
-        mock_open.assert_called_once_with(
-            os.path.join(odl.ODLTests.res_dir, 'stdout.txt'), 'w+')
-
-    @mock.patch('os.remove', side_effect=OSError)
-    @mock.patch('robot.run')
-    @mock.patch('os.makedirs')
-    def test_remove_oserror(self, *args):
-        with mock.patch.object(self.test, 'set_robotframework_vars',
-                               return_value=True), \
-                mock.patch.object(odl, 'open', mock.mock_open(),
-                                  create=True) as mock_open, \
-                mock.patch.object(self.test, 'parse_results'):
-            self._test_main(testcase.TestCase.EX_OK, *args)
-        mock_open.assert_called_once_with(
-            os.path.join(odl.ODLTests.res_dir, 'stdout.txt'), 'w+')
 
 
 class ODLRunTesting(ODLTesting):
