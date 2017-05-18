@@ -16,6 +16,24 @@
       "revId": "9c871392fe9fd4e975f0245753a77093e7634aa9",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_b0802347",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-18T11:26:56Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9ab8dda7_305e7313",
+      "revId": "9c871392fe9fd4e975f0245753a77093e7634aa9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
