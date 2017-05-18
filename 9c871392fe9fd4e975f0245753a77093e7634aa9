@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_305e7313",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-18T11:17:51Z",
+      "side": 1,
+      "message": "Maybe you could add self.result \u003d 0 and return",
+      "revId": "9c871392fe9fd4e975f0245753a77093e7634aa9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
