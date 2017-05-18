@@ -28,7 +28,7 @@ class CliEnv(object):
                                "it again? [y|n]\n")
             while True:
                 if answer.lower() in ["y", "yes"]:
-                    os.remove(CONST.env_active)
+                    os.remove(CONST.__getattribute__('env_active'))
                     break
                 elif answer.lower() in ["n", "no"]:
                     return
@@ -36,19 +36,19 @@ class CliEnv(object):
                     answer = raw_input("Invalid answer. Please type [y|n]\n")
 
         cmd = ("python %s/functest/ci/prepare_env.py start" %
-               CONST.dir_repo_functest)
+               CONST.__getattribute__('dir_repo_functest'))
         ft_utils.execute_command(cmd)
 
     def show(self):
         def _get_value(attr, default='Unknown'):
             return attr if attr else default
 
-        install_type = _get_value(CONST.INSTALLER_TYPE)
-        installer_ip = _get_value(CONST.INSTALLER_IP)
+        install_type = _get_value(CONST.__getattribute__('INSTALLER_TYPE'))
+        installer_ip = _get_value(CONST.__getattribute__('INSTALLER_IP'))
         installer_info = ("%s, %s" % (install_type, installer_ip))
-        scenario = _get_value(CONST.DEPLOY_SCENARIO)
-        node = _get_value(CONST.NODE_NAME)
-        repo_h = git.Repo(CONST.dir_repo_functest).head
+        scenario = _get_value(CONST.__getattribute__('DEPLOY_SCENARIO'))
+        node = _get_value(CONST.__getattribute__('NODE_NAME'))
+        repo_h = git.Repo(CONST.__getattribute__('dir_repo_functest')).head
         if repo_h.is_detached:
             git_branch = 'detached from FETCH_HEAD'
             git_hash = repo_h.commit.hexsha
@@ -56,8 +56,8 @@ class CliEnv(object):
             branch = repo_h.reference
             git_branch = branch.name
             git_hash = branch.commit.hexsha
-        is_debug = _get_value(CONST.CI_DEBUG, 'false')
-        build_tag = CONST.BUILD_TAG
+        is_debug = _get_value(CONST.__getattribute__('CI_DEBUG'), 'false')
+        build_tag = CONST.__getattribute__('BUILD_TAG')
         if build_tag is not None:
             build_tag = build_tag.lstrip(
                 "jenkins-").lstrip("functest").lstrip("-")
@@ -84,7 +84,7 @@ class CliEnv(object):
 
     def status(self, verbose=True):
         ret_val = 0
-        if not os.path.isfile(CONST.env_active):
+        if not os.path.isfile(CONST.__getattribute__('env_active')):
             if verbose:
                 click.echo("Functest environment is not installed.\n")
             ret_val = 1

@@ -69,10 +69,10 @@ class CliOpenStackTesting(unittest.TestCase):
     def test_fetch_credentials_default(self, mock_click_echo,
                                        mock_os_path,
                                        mock_ftutils_execute):
-        CONST.INSTALLER_TYPE = self.installer_type
-        CONST.INSTALLER_IP = self.installer_ip
+        CONST.__setattr__('INSTALLER_TYPE', self.installer_type)
+        CONST.__setattr__('INSTALLER_IP', self.installer_ip)
         cmd = ("%s/releng/utils/fetch_os_creds.sh -d %s -i %s -a %s"
-               % (CONST.dir_repos,
+               % (CONST.__getattribute__('dir_repos'),
                   self.openstack_creds,
                   self.installer_type,
                   self.installer_ip))
@@ -92,15 +92,13 @@ class CliOpenStackTesting(unittest.TestCase):
     def test_fetch_credentials_missing_installer_type(self, mock_click_echo,
                                                       mock_os_path,
                                                       mock_ftutils_execute):
-        installer_type = None
-        installer_ip = self.installer_ip
-        CONST.INSTALLER_TYPE = installer_type
-        CONST.INSTALLER_IP = installer_ip
+        CONST.__setattr__('INSTALLER_TYPE', None)
+        CONST.__setattr__('INSTALLER_IP', self.installer_ip)
         cmd = ("%s/releng/utils/fetch_os_creds.sh -d %s -i %s -a %s"
-               % (CONST.dir_repos,
+               % (CONST.__getattribute__('dir_repos'),
                   self.openstack_creds,
-                  installer_type,
-                  installer_ip))
+                  None,
+                  self.installer_ip))
         self.cli_os.openstack_creds = self.openstack_creds
         self.cli_os.fetch_credentials()
         mock_click_echo.assert_any_call("The environment variable "
@@ -109,8 +107,8 @@ class CliOpenStackTesting(unittest.TestCase):
         mock_click_echo.assert_any_call("Fetching credentials from "
                                         "installer node '%s' with "
                                         "IP=%s.." %
-                                        (installer_type,
-                                         installer_ip))
+                                        (None,
+                                         self.installer_ip))
         mock_ftutils_execute.assert_called_once_with(cmd, verbose=False)
 
     @mock.patch('functest.cli.commands.cli_os.ft_utils.execute_command')
@@ -122,10 +120,10 @@ class CliOpenStackTesting(unittest.TestCase):
                                                     mock_ftutils_execute):
         installer_type = self.installer_type
         installer_ip = None
-        CONST.INSTALLER_TYPE = installer_type
-        CONST.INSTALLER_IP = installer_ip
+        CONST.__setattr__('INSTALLER_TYPE', installer_type)
+        CONST.__setattr__('INSTALLER_IP', installer_ip)
         cmd = ("%s/releng/utils/fetch_os_creds.sh -d %s -i %s -a %s"
-               % (CONST.dir_repos,
+               % (CONST.__getattribute__('dir_repos'),
                   self.openstack_creds,
                   installer_type,
                   installer_ip))
@@ -144,8 +142,9 @@ class CliOpenStackTesting(unittest.TestCase):
     @mock.patch('functest.cli.commands.cli_os.ft_utils.execute_command')
     def test_check(self, mock_ftutils_execute):
         with mock.patch.object(self.cli_os, 'ping_endpoint'):
-            CONST.dir_repo_functest = self.dir_repo_functest
-            cmd = CONST.dir_repo_functest + "/functest/ci/check_os.sh"
+            CONST.__setattr__('dir_repo_functest', self.dir_repo_functest)
+            cmd = os.path.join(CONST.__getattribute__('dir_repo_functest'),
+                               "functest/ci/check_os.sh")
             self.cli_os.check()
             mock_ftutils_execute.assert_called_once_with(cmd, verbose=False)
 

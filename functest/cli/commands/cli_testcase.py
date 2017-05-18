@@ -22,9 +22,10 @@ import functest.utils.functest_vacation as vacation
 class CliTestcase(object):
 
     def __init__(self):
-        self.tiers = tb.TierBuilder(CONST.INSTALLER_TYPE,
-                                    CONST.DEPLOY_SCENARIO,
-                                    CONST.functest_testcases_yaml)
+        self.tiers = tb.TierBuilder(
+            CONST.__getattribute__('INSTALLER_TYPE'),
+            CONST.__getattribute__('DEPLOY_SCENARIO'),
+            CONST.__getattribute__('functest_testcases_yaml'))
 
     def list(self):
         summary = ""
@@ -52,12 +53,14 @@ class CliTestcase(object):
 
         if testname == 'vacation':
             vacation.main()
-        elif not os.path.isfile(CONST.env_active):
+        elif not os.path.isfile(CONST.__getattribute__('env_active')):
             click.echo("Functest environment is not ready. "
                        "Run first 'functest env prepare'")
         else:
             tests = testname.split(",")
             for test in tests:
                 cmd = ("python %s/functest/ci/run_tests.py "
-                       "%s -t %s" % (CONST.dir_repo_functest, flags, test))
+                       "%s -t %s" %
+                       (CONST.__getattribute__('dir_repo_functest'),
+                        flags, test))
                 ft_utils.execute_command(cmd)
