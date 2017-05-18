@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_abce76b2",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-18T18:47:26Z",
+      "side": 1,
+      "message": "Coud you please remove it? PEP8 forbid it outside the context manager",
+      "revId": "69bb5663b113a0440ef502fb66aeb59f765c5e1d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_4bc57a8c",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-18T18:47:26Z",
+      "side": 1,
+      "message": "please use format",
+      "revId": "69bb5663b113a0440ef502fb66aeb59f765c5e1d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_8bcb72a4",
+        "filename": "run_unit_tests.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-18T18:47:26Z",
+      "side": 1,
+      "message": "We could also have defined a git submodule as we did for reveal.js. But that\u0027s good and close to the target",
+      "revId": "69bb5663b113a0440ef502fb66aeb59f765c5e1d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
