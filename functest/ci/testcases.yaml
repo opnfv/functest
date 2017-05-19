@@ -266,7 +266,7 @@ tiers:
         testcases:
             -
                 case_name: promise
-                enabled: false
+                enabled: true
                 project_name: promise
                 criteria: 100
                 blocking: false
