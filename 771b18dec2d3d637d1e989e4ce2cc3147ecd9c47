@@ -34,6 +34,24 @@
       "revId": "771b18dec2d3d637d1e989e4ce2cc3147ecd9c47",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_176004ce",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-19T07:27:18Z",
+      "side": 1,
+      "message": "Not here. It should be a property which simply returns the attribute value. Then it costs in memory (as answer of performance as drawback) and readability to define local var for something well named and simple.\n\nHere we must focus instead on using properties in Tier*.py and quite rewriting this module wich must be much simpler and readable.",
+      "parentUuid": "9ab8dda7_173244f2",
+      "revId": "771b18dec2d3d637d1e989e4ce2cc3147ecd9c47",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
