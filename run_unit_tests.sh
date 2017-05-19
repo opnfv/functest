@@ -31,7 +31,13 @@ pip install $WORKSPACE
 rm -rf releng-unittests
 git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng releng-unittests
 pip install releng-unittests/modules/
-rm -fr releng-unittests
+rm -rf releng-unittests
+
+#install barometer
+rm -rf barometer-unittests
+git clone --depth 1 https://gerrit.opnfv.org/gerrit/barometer barometer-unittests
+python barometer-unittests/setup.py install
+rm -rf barometer-unittests
 
 nosetests --with-xunit \
          --with-coverage \
