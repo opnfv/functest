@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_774aa027",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-19T08:30:47Z",
+      "side": 1,
+      "message": "you can even remove the line and by default it will be true.",
+      "range": {
+        "startLine": 269,
+        "startChar": 16,
+        "endLine": 269,
+        "endChar": 29
+      },
+      "revId": "51cbd2276e7929e1743bb1a080512442954b7a99",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
