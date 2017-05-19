@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_97ae3480",
+        "filename": "functest/opnfv_tests/openstack/snaps/api_check.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-19T09:40:04Z",
+      "side": 1,
+      "message": "the other functest\u0027s classes use \"\"\"",
+      "revId": "685f12b36c1aab1fe633702aa29a7511e68eb4c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_57cc3c6a",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-19T09:40:04Z",
+      "side": 1,
+      "message": "please remove all \u0027\\\u0027",
+      "revId": "685f12b36c1aab1fe633702aa29a7511e68eb4c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_17c24434",
+        "filename": "functest/tests/unit/openstack/vping/test_vping.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-19T09:40:04Z",
+      "side": 1,
+      "message": "I prefer them as decorators when you can. I think it eases reading ut.",
+      "revId": "685f12b36c1aab1fe633702aa29a7511e68eb4c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
