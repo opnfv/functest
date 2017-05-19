@@ -36,6 +36,41 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_57d3dc03",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-19T09:43:37Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "9ab8dda7_57cc3c6a",
+      "revId": "685f12b36c1aab1fe633702aa29a7511e68eb4c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_77d060f6",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-19T09:43:37Z",
+      "side": 1,
+      "message": "as well here, remove \"\\\"",
+      "revId": "685f12b36c1aab1fe633702aa29a7511e68eb4c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_17c24434",
         "filename": "functest/tests/unit/openstack/vping/test_vping.py",
         "patchSetId": 7
