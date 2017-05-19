@@ -16,6 +16,24 @@
       "revId": "d55207785fc615c5236bf204a583285882b0672f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_97a95492",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-19T09:16:15Z",
+      "side": 1,
+      "message": "yes. As discussed, we will do it.",
+      "parentUuid": "9ab8dda7_9724f460",
+      "revId": "d55207785fc615c5236bf204a583285882b0672f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
