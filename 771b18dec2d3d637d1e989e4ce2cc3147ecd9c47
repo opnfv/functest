@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_d7010c06",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-05-19T06:59:16Z",
+      "side": 1,
+      "message": "just for my culture..is is better call the functions N times rather than putting the result in a variable and working on the variable?",
+      "revId": "771b18dec2d3d637d1e989e4ce2cc3147ecd9c47",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
