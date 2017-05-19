@@ -29,7 +29,6 @@ ARG FUNCTEST_IMAGES_DIR=${FUNCTEST_BASE_DIR}/images
 ARG FUNCTEST_RESULTS_DIR=${FUNCTEST_BASE_DIR}/results
 ARG FUNCTEST_REPO_DIR=${REPOS_DIR}/functest
 ARG FUNCTEST_TEST_DIR=${FUNCTEST_REPO_DIR}/functest/opnfv_tests
-ARG RELENG_MODULE_DIR=${REPOS_DIR}/releng/modules
 ARG REPOS_VNFS_DIR=${REPOS_DIR}/vnfs
 
 # Environment variables
@@ -94,7 +93,6 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/barometer ${R
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sfc ${REPOS_DIR}/sfc
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/snaps ${REPOS_DIR}/snaps
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${REPOS_DIR}/securityscanning
-RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng ${REPOS_DIR}/releng
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/opera ${REPOS_DIR}/opera
 
 # OpenStack repositories
@@ -115,9 +113,6 @@ RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
 
 RUN cd ${FUNCTEST_REPO_DIR} \
     && pip install -r requirements.txt \
-    && pip install -e .
-
-RUN cd ${RELENG_MODULE_DIR} \
     && pip install -e .
 
 RUN cd ${REPOS_DIR}/barometer \
