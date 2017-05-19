@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_17c6c468",
+        "filename": "functest/core/pytest_suite_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-19T09:06:56Z",
+      "side": 1,
+      "message": "is there a nicer way to restructure these lines to make it more human readable?",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "bb5b34507a3c732200a0e34800f730cc40faefb9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_77cdc084",
+        "filename": "functest/core/pytest_suite_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-19T09:06:56Z",
+      "side": 1,
+      "message": "\u0027run\u0027 or \u0027executed\u0027. \u0027ran\u0027 is not correct",
+      "range": {
+        "startLine": 60,
+        "startChar": 48,
+        "endLine": 60,
+        "endChar": 51
+      },
+      "revId": "bb5b34507a3c732200a0e34800f730cc40faefb9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
