@@ -16,6 +16,24 @@
       "revId": "771b18dec2d3d637d1e989e4ce2cc3147ecd9c47",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_173244f2",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-05-19T07:15:21Z",
+      "side": 1,
+      "message": "I would use a local parameter to hold the value instead of calling the getter many times. It is costly to calling a function for so many times.",
+      "parentUuid": "9ab8dda7_d7010c06",
+      "revId": "771b18dec2d3d637d1e989e4ce2cc3147ecd9c47",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
