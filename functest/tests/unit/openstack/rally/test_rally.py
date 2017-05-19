@@ -37,7 +37,7 @@ class OSRallyTesting(unittest.TestCase):
             self.polling_iter = 2
 
     def test_build_task_args_missing_floating_network(self):
-        CONST.OS_AUTH_URL = None
+        CONST.__setattr__('OS_AUTH_URL', None)
         with mock.patch('functest.opnfv_tests.openstack.rally.rally.'
                         'os_utils.get_external_net',
                         return_value=None):
@@ -45,7 +45,7 @@ class OSRallyTesting(unittest.TestCase):
             self.assertEqual(task_args['floating_network'], '')
 
     def test_build_task_args_missing_net_id(self):
-        CONST.OS_AUTH_URL = None
+        CONST.__setattr__('OS_AUTH_URL', None)
         self.rally_base.network_dict['net_id'] = ''
         with mock.patch('functest.opnfv_tests.openstack.rally.rally.'
                         'os_utils.get_external_net',
@@ -54,7 +54,7 @@ class OSRallyTesting(unittest.TestCase):
             self.assertEqual(task_args['netid'], '')
 
     def test_build_task_args_missing_auth_url(self):
-        CONST.OS_AUTH_URL = None
+        CONST.__setattr__('OS_AUTH_URL', None)
         with mock.patch('functest.opnfv_tests.openstack.rally.rally.'
                         'os_utils.get_external_net',
                         return_value='test_floating_network'):
@@ -134,8 +134,8 @@ class OSRallyTesting(unittest.TestCase):
                          'lineline')
 
     def test_excl_scenario_default(self):
-        CONST.INSTALLER_TYPE = 'test_installer'
-        CONST.DEPLOY_SCENARIO = 'test_scenario'
+        CONST.__setattr__('INSTALLER_TYPE', 'test_installer')
+        CONST.__setattr__('DEPLOY_SCENARIO', 'test_scenario')
         dic = {'scenario': [{'scenarios': ['test_scenario'],
                              'installers': ['test_installer'],
                              'tests': ['test']}]}
@@ -152,8 +152,8 @@ class OSRallyTesting(unittest.TestCase):
                                  [])
 
     def test_excl_func_default(self):
-        CONST.INSTALLER_TYPE = 'test_installer'
-        CONST.DEPLOY_SCENARIO = 'test_scenario'
+        CONST.__setattr__('INSTALLER_TYPE', 'test_installer')
+        CONST.__setattr__('DEPLOY_SCENARIO', 'test_scenario')
         dic = {'functionality': [{'functions': ['no_live_migration'],
                                   'tests': ['test']}]}
         with mock.patch('__builtin__.open', mock.mock_open()), \

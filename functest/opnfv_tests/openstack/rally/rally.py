@@ -30,14 +30,17 @@ logger = logging.getLogger(__name__)
 class RallyBase(testcase.TestCase):
     TESTS = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
              'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
-    GLANCE_IMAGE_NAME = CONST.openstack_image_name
-    GLANCE_IMAGE_FILENAME = CONST.openstack_image_file_name
-    GLANCE_IMAGE_PATH = os.path.join(CONST.dir_functest_images,
-                                     GLANCE_IMAGE_FILENAME)
-    GLANCE_IMAGE_FORMAT = CONST.openstack_image_disk_format
+    GLANCE_IMAGE_NAME = CONST.__getattribute__('openstack_image_name')
+    GLANCE_IMAGE_FILENAME = CONST.__getattribute__('openstack_image_file_name')
+    GLANCE_IMAGE_PATH = os.path.join(
+        CONST.__getattribute__('dir_functest_images'),
+        GLANCE_IMAGE_FILENAME)
+    GLANCE_IMAGE_FORMAT = CONST.__getattribute__('openstack_image_disk_format')
     FLAVOR_NAME = "m1.tiny"
 
-    RALLY_DIR = os.path.join(CONST.dir_repo_functest, CONST.dir_rally)
+    RALLY_DIR = os.path.join(
+        CONST.__getattribute__('dir_repo_functest'),
+        CONST.__getattribute__('dir_rally'))
     RALLY_SCENARIO_DIR = os.path.join(RALLY_DIR, "scenario")
     TEMPLATE_DIR = os.path.join(RALLY_SCENARIO_DIR, "templates")
     SUPPORT_DIR = os.path.join(RALLY_SCENARIO_DIR, "support")
@@ -45,17 +48,17 @@ class RallyBase(testcase.TestCase):
     TENANTS_AMOUNT = 3
     ITERATIONS_AMOUNT = 10
     CONCURRENCY = 4
-    RESULTS_DIR = os.path.join(CONST.dir_results, 'rally')
-    TEMPEST_CONF_FILE = os.path.join(CONST.dir_results,
+    RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'), 'rally')
+    TEMPEST_CONF_FILE = os.path.join(CONST.__getattribute__('dir_results'),
                                      'tempest/tempest.conf')
     BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.txt")
     TEMP_DIR = os.path.join(RALLY_DIR, "var")
 
     CINDER_VOLUME_TYPE_NAME = "volume_test"
-    RALLY_PRIVATE_NET_NAME = CONST.rally_network_name
-    RALLY_PRIVATE_SUBNET_NAME = CONST.rally_subnet_name
-    RALLY_PRIVATE_SUBNET_CIDR = CONST.rally_subnet_cidr
-    RALLY_ROUTER_NAME = CONST.rally_router_name
+    RALLY_PRIVATE_NET_NAME = CONST.__getattribute__('rally_network_name')
+    RALLY_PRIVATE_SUBNET_NAME = CONST.__getattribute__('rally_subnet_name')
+    RALLY_PRIVATE_SUBNET_CIDR = CONST.__getattribute__('rally_subnet_cidr')
+    RALLY_ROUTER_NAME = CONST.__getattribute__('rally_router_name')
 
     def __init__(self, **kwargs):
         super(RallyBase, self).__init__(**kwargs)
@@ -97,7 +100,7 @@ class RallyBase(testcase.TestCase):
             task_args['netid'] = ''
 
         # get keystone auth endpoint
-        task_args['request_url'] = CONST.OS_AUTH_URL or ''
+        task_args['request_url'] = CONST.__getattribute__('OS_AUTH_URL') or ''
 
         return task_args
 
@@ -183,8 +186,8 @@ class RallyBase(testcase.TestCase):
             with open(RallyBase.BLACKLIST_FILE, 'r') as black_list_file:
                 black_list_yaml = yaml.safe_load(black_list_file)
 
-            installer_type = CONST.INSTALLER_TYPE
-            deploy_scenario = CONST.DEPLOY_SCENARIO
+            installer_type = CONST.__getattribute__('INSTALLER_TYPE')
+            deploy_scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
             if (bool(installer_type) * bool(deploy_scenario)):
                 if 'scenario' in black_list_yaml.keys():
                     for item in black_list_yaml['scenario']:
