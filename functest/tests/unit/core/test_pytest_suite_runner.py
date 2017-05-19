@@ -20,29 +20,41 @@ class PyTestSuiteRunnerTesting(unittest.TestCase):
 
     def setUp(self):
         self.psrunner = pytest_suite_runner.PyTestSuiteRunner()
-        self.result = mock.Mock()
-        attrs = {'errors': [('test1', 'error_msg1')],
-                 'failures': [('test2', 'failure_msg1')]}
-        self.result.configure_mock(**attrs)
 
-        self.pass_results = mock.Mock()
-        attrs = {'errors': None,
-                 'failures': None}
-        self.pass_results.configure_mock(**attrs)
-
-    def test_run(self):
-        self.psrunner.case_name = 'test_case_name'
+    def _test_run(self, result, status=testcase.TestCase.EX_OK):
         with mock.patch('functest.core.pytest_suite_runner.'
                         'unittest.TextTestRunner.run',
-                        return_value=self.result):
-            self.assertEqual(self.psrunner.run(),
-                             testcase.TestCase.EX_OK)
+                        return_value=result):
+            self.assertEqual(self.psrunner.run(), status)
 
-        with mock.patch('functest.core.pytest_suite_runner.'
-                        'unittest.TextTestRunner.run',
-                        return_value=self.pass_results):
-            self.assertEqual(self.psrunner.run(),
-                             testcase.TestCase.EX_OK)
+    def test_run_no_ut(self):
+        mock_result = mock.Mock(testsRun=0, errors=[], failures=[])
+        self._test_run(mock_result, testcase.TestCase.EX_RUN_ERROR)
+        self.assertEqual(self.psrunner.result, 0)
+        self.assertEqual(self.psrunner.details, {'errors': [], 'failures': []})
+        self.assertEqual(self.psrunner.is_successful(),
+                         testcase.TestCase.EX_TESTCASE_FAILED)
+
+    def test_run_ko(self):
+        self.psrunner.criteria = 100
+        mock_result = mock.Mock(testsRun=50, errors=[('test1', 'error_msg1')],
+                                failures=[('test2', 'failure_msg1')])
+        self._test_run(mock_result, testcase.TestCase.EX_OK)
+        self.assertEqual(self.psrunner.result, 96)
+        self.assertEqual(self.psrunner.details,
+                         {'errors': [('test1', 'error_msg1')],
+                          'failures': [('test2', 'failure_msg1')]})
+        self.assertEqual(self.psrunner.is_successful(),
+                         testcase.TestCase.EX_TESTCASE_FAILED)
+
+    def test_run_ok(self):
+        mock_result = mock.Mock(testsRun=50, errors=[],
+                                failures=[])
+        self._test_run(mock_result)
+        self.assertEqual(self.psrunner.result, 100)
+        self.assertEqual(self.psrunner.details, {'errors': [], 'failures': []})
+        self.assertEqual(self.psrunner.is_successful(),
+                         testcase.TestCase.EX_OK)
 
 
 if __name__ == "__main__":
