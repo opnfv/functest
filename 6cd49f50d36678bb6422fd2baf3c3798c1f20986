@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_9a55f9fb",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-19T12:01:22Z",
+      "side": 1,
+      "message": "another option is to remove this line:\nsee: https://gerrit.opnfv.org/gerrit/#/c/35041",
+      "range": {
+        "startLine": 305,
+        "startChar": 16,
+        "endLine": 305,
+        "endChar": 29
+      },
+      "revId": "6cd49f50d36678bb6422fd2baf3c3798c1f20986",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
