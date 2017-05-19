@@ -1,0 +1,11 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Juan Vidal <juan.vidal.allende@ericsson.com>
+Code-Review+1: Manuel Buil <mbuil@suse.com>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+2: Helen Yao <yaohelan@huawei.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Fri, 19 May 2017 08:36:00 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/33991
+Project: functest
+Branch: refs/heads/master
