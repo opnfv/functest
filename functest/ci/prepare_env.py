@@ -156,8 +156,8 @@ def create_directories():
         logger.info("    %s created." %
                     CONST.__getattribute__('dir_functest_conf'))
     else:
-        logger.debug("   %s already exists."
-                     % CONST.__getattribute__('dir_functest_conf'))
+        logger.debug("   %s already exists." %
+                     CONST.__getattribute__('dir_functest_conf'))
 
     if not os.path.exists(CONST.__getattribute__('dir_functest_data')):
         os.makedirs(CONST.__getattribute__('dir_functest_data'))
@@ -166,6 +166,13 @@ def create_directories():
     else:
         logger.debug("   %s already exists." %
                      CONST.__getattribute__('dir_functest_data'))
+    if not os.path.exists(CONST.__getattribute__('dir_functest_images')):
+        os.makedirs(CONST.__getattribute__('dir_functest_images'))
+        logger.info("    %s created." %
+                    CONST.__getattribute__('dir_functest_images'))
+    else:
+        logger.debug("   %s already exists." %
+                     CONST.__getattribute__('dir_functest_images'))
 
 
 def source_rc_file():
