@@ -6,6 +6,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import logging
+import sys
 import unittest
 
 import mock
@@ -13,7 +14,10 @@ import mock
 from functest.ci import prepare_env
 from functest.tests.unit import test_utils
 from functest.utils.constants import CONST
+sys.modules['opnfv.utils.constants'] = mock.Mock()  # noqa
+sys.modules['opnfv.deployment.factory'] = mock.Mock()  # noqa
 from opnfv.utils import constants as opnfv_constants
+# pylint: disable=wrong-import-position
 
 
 class PrepareEnvTesting(unittest.TestCase):
