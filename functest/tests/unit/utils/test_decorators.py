@@ -32,8 +32,6 @@ URL = 'file://{}'.format(FILE)
 class DecoratorsTesting(unittest.TestCase):
     # pylint: disable=missing-docstring
 
-    logging.disable(logging.CRITICAL)
-
     _case_name = 'base'
     _project_name = 'functest'
     _start_time = 1.0
@@ -131,5 +129,5 @@ class DecoratorsTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    logging.basicConfig()
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

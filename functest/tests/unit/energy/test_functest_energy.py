@@ -19,8 +19,6 @@ import functest.energy.energy as energy
 CASE_NAME = "UNIT_test_CASE"
 STEP_NAME = "UNIT_test_STEP"
 
-logging.disable(logging.CRITICAL)
-
 
 class MockHttpResponse(object):  # pylint: disable=too-few-public-methods
     """Mock response for Energy recorder API."""
@@ -274,4 +272,5 @@ class EnergyRecorderTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

@@ -19,8 +19,6 @@ from functest.utils.constants import CONST
 
 class OSRallyTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.nova_client = mock.Mock()
         self.neutron_client = mock.Mock()
@@ -375,4 +373,5 @@ class OSRallyTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

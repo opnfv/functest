@@ -21,8 +21,6 @@ from functest.core import testcase
 
 class VnfBaseTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.test = vnf.VnfOnBoarding(
             project='functest', case_name='aaa')
@@ -165,4 +163,5 @@ class VnfBaseTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

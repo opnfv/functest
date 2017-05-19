@@ -23,8 +23,6 @@ class TestCaseTesting(unittest.TestCase):
     """The class testing TestCase."""
     # pylint: disable=missing-docstring,too-many-public-methods
 
-    logging.disable(logging.CRITICAL)
-
     _case_name = "base"
     _project_name = "functest"
     _published_result = "PASS"
@@ -225,4 +223,5 @@ class TestCaseTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

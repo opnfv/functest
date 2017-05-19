@@ -22,8 +22,6 @@ with mock.patch('functest.cli.commands.cli_testcase.CliTestcase.__init__',
 
 class CliBaseTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.runner = CliRunner()
         self._openstack = cli_base._openstack
@@ -135,4 +133,5 @@ class CliBaseTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

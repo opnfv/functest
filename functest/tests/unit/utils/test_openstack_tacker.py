@@ -17,8 +17,6 @@ from functest.tests.unit import test_utils
 
 class OSTackerTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.tacker_client = mock.Mock()
         self.getresponse = {'vnfds': [{'id': 'test_id'}],
@@ -522,4 +520,5 @@ class OSTackerTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

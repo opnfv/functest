@@ -15,8 +15,6 @@ from functest.ci import tier_builder
 
 class TierBuilderTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.dependency = {'installer': 'test_installer',
                            'scenario': 'test_scenario'}
@@ -88,4 +86,5 @@ class TierBuilderTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

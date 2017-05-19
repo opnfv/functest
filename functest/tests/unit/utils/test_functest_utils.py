@@ -23,8 +23,6 @@ from functest.utils import functest_utils
 
 class FunctestUtilsTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.url = 'http://www.opnfv.org/'
         self.timeout = 5
@@ -587,4 +585,5 @@ class FunctestUtilsTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

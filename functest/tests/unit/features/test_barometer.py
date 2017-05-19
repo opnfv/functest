@@ -23,8 +23,6 @@ from functest.opnfv_tests.features import barometer
 
 class BarometerTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     _case_name = "barometercollectd"
     _project_name = "barometer"
 
@@ -47,4 +45,5 @@ class BarometerTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

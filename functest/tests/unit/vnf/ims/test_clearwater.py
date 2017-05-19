@@ -16,8 +16,6 @@ from functest.opnfv_tests.vnf.ims import orchestrator_cloudify
 
 class ClearwaterTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.clearwater = clearwater.Clearwater()
         self.orchestrator = orchestrator_cloudify.Orchestrator('test_dir')
@@ -83,4 +81,5 @@ class ClearwaterTesting(unittest.TestCase):
                         'test_domain')
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

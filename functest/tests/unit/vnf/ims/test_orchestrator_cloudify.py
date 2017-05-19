@@ -16,8 +16,6 @@ from functest.opnfv_tests.vnf.ims import orchestrator_cloudify
 
 class ImsVnfTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.orchestrator = orchestrator_cloudify.Orchestrator('test_dir')
         self.bp = {'file_name': 'test_file',
@@ -174,4 +172,5 @@ class ImsVnfTesting(unittest.TestCase):
                         'test_subnet')
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

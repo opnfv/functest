@@ -15,8 +15,6 @@ from functest.ci import tier_handler
 
 class TierHandlerTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.test = mock.Mock()
         attrs = {'get_name.return_value': 'test_name'}
@@ -139,4 +137,5 @@ class TierHandlerTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)

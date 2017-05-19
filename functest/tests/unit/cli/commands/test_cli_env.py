@@ -18,8 +18,6 @@ from functest.tests.unit import test_utils
 
 class CliEnvTesting(unittest.TestCase):
 
-    logging.disable(logging.CRITICAL)
-
     def setUp(self):
         self.cli_environ = cli_env.CliEnv()
 
@@ -128,4 +126,5 @@ class CliEnvTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)
