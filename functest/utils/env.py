@@ -15,7 +15,9 @@ default_envs = {
     'INSTALLER_IP': None,
     'BUILD_TAG': None,
     'OS_ENDPOINT_TYPE': None,
-    'OS_AUTH_URL': None
+    'OS_AUTH_URL': None,
+    'CONFIG_FUNCTEST_YAML': os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), '../ci/config_functest.yaml')
 }
 
 
