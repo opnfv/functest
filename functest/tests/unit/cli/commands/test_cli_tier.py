@@ -90,8 +90,9 @@ class CliTierTesting(unittest.TestCase):
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_default(self, mock_ft_utils, mock_os):
         cmd = ("python %s/functest/ci/run_tests.py "
-               "%s -t %s" % (CONST.dir_repo_functest, "-n -r ",
-                             self.tiername))
+               "%s -t %s" %
+               (CONST.__getattribute__('dir_repo_functest'),
+                "-n -r ", self.tiername))
         self.cli_tier.run(self.tiername, noclean=True, report=True)
         mock_ft_utils.assert_called_with(cmd)
 
@@ -100,8 +101,9 @@ class CliTierTesting(unittest.TestCase):
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_report_missing_noclean(self, mock_ft_utils, mock_os):
         cmd = ("python %s/functest/ci/run_tests.py "
-               "%s -t %s" % (CONST.dir_repo_functest, "-r ",
-                             self.tiername))
+               "%s -t %s" %
+               (CONST.__getattribute__('dir_repo_functest'),
+                "-r ", self.tiername))
         self.cli_tier.run(self.tiername, noclean=False, report=True)
         mock_ft_utils.assert_called_with(cmd)
 
@@ -110,8 +112,9 @@ class CliTierTesting(unittest.TestCase):
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_noclean_missing_report(self, mock_ft_utils, mock_os):
         cmd = ("python %s/functest/ci/run_tests.py "
-               "%s -t %s" % (CONST.dir_repo_functest, "-n ",
-                             self.tiername))
+               "%s -t %s" %
+               (CONST.__getattribute__('dir_repo_functest'),
+                "-n ", self.tiername))
         self.cli_tier.run(self.tiername, noclean=True, report=False)
         mock_ft_utils.assert_called_with(cmd)
 
@@ -120,8 +123,9 @@ class CliTierTesting(unittest.TestCase):
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_missing_noclean_report(self, mock_ft_utils, mock_os):
         cmd = ("python %s/functest/ci/run_tests.py "
-               "%s -t %s" % (CONST.dir_repo_functest, "",
-                             self.tiername))
+               "%s -t %s" %
+               (CONST.__getattribute__('dir_repo_functest'),
+                "", self.tiername))
         self.cli_tier.run(self.tiername, noclean=False, report=False)
         mock_ft_utils.assert_called_with(cmd)
 

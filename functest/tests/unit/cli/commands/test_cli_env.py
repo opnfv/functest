@@ -28,7 +28,7 @@ class CliEnvTesting(unittest.TestCase):
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
     def test_prepare_default(self, mock_ft_utils, mock_os):
         cmd = ("python %s/functest/ci/prepare_env.py start" %
-               CONST.dir_repo_functest)
+               CONST.__getattribute__('dir_repo_functest'))
         self.cli_environ.prepare()
         mock_ft_utils.assert_called_with(cmd)
 
@@ -40,29 +40,30 @@ class CliEnvTesting(unittest.TestCase):
                 mock.patch('functest.cli.commands.cli_testcase.os.remove') \
                 as mock_os_remove:
             cmd = ("python %s/functest/ci/prepare_env.py start" %
-                   CONST.dir_repo_functest)
+                   CONST.__getattribute__('dir_repo_functest'))
             self.cli_environ.prepare()
-            mock_os_remove.assert_called_once_with(CONST.env_active)
+            mock_os_remove.assert_called_once_with(
+                CONST.__getattribute__('env_active'))
             mock_ft_utils.assert_called_with(cmd)
 
     def _test_show_missing_env_var(self, var, *args):
         if var == 'INSTALLER_TYPE':
-            CONST.INSTALLER_TYPE = None
+            CONST.__setattr__('INSTALLER_TYPE', None)
             reg_string = "|  INSTALLER: Unknown, \S+\s*|"
         elif var == 'INSTALLER_IP':
-            CONST.INSTALLER_IP = None
+            CONST.__setattr__('INSTALLER_IP', None)
             reg_string = "|  INSTALLER: \S+, Unknown\s*|"
         elif var == 'SCENARIO':
-            CONST.DEPLOY_SCENARIO = None
+            CONST.__setattr__('DEPLOY_SCENARIO', None)
             reg_string = "|   SCENARIO: Unknown\s*|"
         elif var == 'NODE':
-            CONST.NODE_NAME = None
+            CONST.__setattr__('NODE_NAME', None)
             reg_string = "|        POD: Unknown\s*|"
         elif var == 'BUILD_TAG':
-            CONST.BUILD_TAG = None
+            CONST.__setattr__('BUILD_TAG', None)
             reg_string = "|  BUILD TAG: None|"
         elif var == 'DEBUG':
-            CONST.CI_DEBUG = None
+            CONST.__setattr__('CI_DEBUG', None)
             reg_string = "| DEBUG FLAG: false\s*|"
         elif var == 'STATUS':
             reg_string = "|     STATUS: not ready\s*|"
@@ -106,7 +107,7 @@ class CliEnvTesting(unittest.TestCase):
     @mock.patch('functest.cli.commands.cli_env.os.path.exists',
                 return_value=False)
     def test_show_missing_git_repo_dir(self, *args):
-        CONST.dir_repo_functest = None
+        CONST.__setattr__('dir_repo_functest', None)
         self.assertRaises(NoSuchPathError, lambda: self.cli_environ.show())
 
     @mock.patch('functest.cli.commands.cli_env.click.echo')

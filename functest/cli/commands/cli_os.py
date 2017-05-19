@@ -21,11 +21,11 @@ import functest.utils.openstack_snapshot as os_snapshot
 class CliOpenStack(object):
 
     def __init__(self):
-        self.os_auth_url = CONST.OS_AUTH_URL
+        self.os_auth_url = CONST.__getattribute__('OS_AUTH_URL')
         self.endpoint_ip = None
         self.endpoint_port = None
-        self.openstack_creds = CONST.openstack_creds
-        self.snapshot_file = CONST.openstack_snapshot_file
+        self.openstack_creds = CONST.__getattribute__('openstack_creds')
+        self.snapshot_file = CONST.__getattribute__('openstack_snapshot_file')
         if self.os_auth_url:
             self.endpoint_ip = self.os_auth_url.rsplit("/")[2].rsplit(":")[0]
             self.endpoint_port = self.os_auth_url.rsplit("/")[2].rsplit(":")[1]
@@ -59,16 +59,16 @@ class CliOpenStack(object):
                 else:
                     answer = raw_input("Invalid answer. Please type [y|n]\n")
 
-        installer_type = CONST.INSTALLER_TYPE
+        installer_type = CONST.__getattribute__('INSTALLER_TYPE')
         if installer_type is None:
             click.echo("The environment variable 'INSTALLER_TYPE' is not"
                        "defined. Please export it")
-        installer_ip = CONST.INSTALLER_IP
+        installer_ip = CONST.__getattribute__('INSTALLER_IP')
         if installer_ip is None:
             click.echo("The environment variable 'INSTALLER_IP' is not"
                        "defined. Please export it")
         cmd = ("%s/releng/utils/fetch_os_creds.sh -d %s -i %s -a %s"
-               % (CONST.dir_repos,
+               % (CONST.__getattribute__('dir_repos'),
                   self.openstack_creds,
                   installer_type,
                   installer_ip))
@@ -78,7 +78,8 @@ class CliOpenStack(object):
 
     def check(self):
         self.ping_endpoint()
-        cmd = CONST.dir_repo_functest + "/functest/ci/check_os.sh"
+        cmd = os.path.join(CONST.__getattribute__('dir_repo_functest'),
+                           "functest/ci/check_os.sh")
         ft_utils.execute_command(cmd, verbose=False)
 
     def snapshot_create(self):
