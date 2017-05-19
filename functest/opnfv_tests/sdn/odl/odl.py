@@ -30,6 +30,7 @@ import robot.api
 from robot.errors import RobotError
 import robot.run
 from robot.utils.robottime import timestamp_to_secs
+from six import StringIO
 from six.moves import urllib
 
 from functest.core import testcase
@@ -172,16 +173,11 @@ class ODLTests(testcase.TestCase):
                     self.__logger.exception(
                         "Cannot create %s", self.res_dir)
                     return self.EX_RUN_ERROR
-            stdout_file = os.path.join(self.res_dir, 'stdout.txt')
             output_dir = os.path.join(self.res_dir, 'output.xml')
-            with open(stdout_file, 'w+') as stdout:
-                robot.run(*suites, variable=variables,
-                          output=output_dir,
-                          log='NONE',
-                          report='NONE',
-                          stdout=stdout)
-                stdout.seek(0, 0)
-                self.__logger.info("\n" + stdout.read())
+            stream = StringIO()
+            robot.run(*suites, variable=variables, output=output_dir,
+                      log='NONE', report='NONE', stdout=stream)
+            self.__logger.info("\n" + stream.getvalue())
             self.__logger.info("ODL results were successfully generated")
             try:
                 self.parse_results()
@@ -190,10 +186,6 @@ class ODLTests(testcase.TestCase):
                 self.__logger.error("Run tests before publishing: %s",
                                     ex.message)
                 return self.EX_RUN_ERROR
-            try:
-                os.remove(stdout_file)
-            except OSError:
-                self.__logger.warning("Cannot remove %s", stdout_file)
             return self.EX_OK
         else:
             return self.EX_RUN_ERROR
