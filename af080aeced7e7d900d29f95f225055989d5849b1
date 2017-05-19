@@ -34,6 +34,24 @@
       "revId": "af080aeced7e7d900d29f95f225055989d5849b1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_7794e042",
+        "filename": "functest/tests/unit/openstack/refstack_client/test_refstack_client.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-19T09:18:55Z",
+      "side": 1,
+      "message": "yes, and actually we should update all the lines of code where we use prints or loggers to match the same way. We are today mixing % and format too much. It will also help move code towards python 3",
+      "parentUuid": "9ab8dda7_171b2474",
+      "revId": "af080aeced7e7d900d29f95f225055989d5849b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
