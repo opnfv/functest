@@ -34,7 +34,9 @@ from six import StringIO
 from six.moves import urllib
 
 from functest.core import testcase
-import functest.utils.openstack_utils as op_utils
+from functest.utils.constants import CONST
+from snaps.openstack.tests import openstack_tests
+from snaps.openstack.utils import keystone_utils
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
@@ -65,14 +67,17 @@ class ODLResultVisitor(robot.api.ResultVisitor):
 class ODLTests(testcase.TestCase):
     """ODL test runner."""
 
-    repos = "/home/opnfv/repos/"
-    odl_test_repo = os.path.join(repos, "odl_test")
+    odl_test_repo = os.path.join(
+        CONST.__getattribute__('dir_repos'), 'odl_test')
     neutron_suite_dir = os.path.join(odl_test_repo,
                                      "csit/suites/openstack/neutron")
     basic_suite_dir = os.path.join(odl_test_repo,
                                    "csit/suites/integration/basic")
     default_suites = [basic_suite_dir, neutron_suite_dir]
-    res_dir = '/home/opnfv/functest/results/odl/'
+    res_dir = os.path.join(CONST.__getattribute__('dir_results'), 'odl')
+    os_creds = openstack_tests.get_credentials(
+        os_env_file=CONST.__getattribute__('openstack_creds'),
+        proxy_settings_str=None, ssh_proxy_cmd=None)
     __logger = logging.getLogger(__name__)
 
     @classmethod
@@ -209,7 +214,8 @@ class ODLTests(testcase.TestCase):
                 suites = kwargs["suites"]
             except KeyError:
                 pass
-            neutron_url = op_utils.get_endpoint(service_type='network')
+            neutron_url = keystone_utils.get_endpoint(self.os_creds,
+                                                      service_type='network')
             kwargs = {'neutronip': urllib.parse.urlparse(neutron_url).hostname}
             kwargs['odlip'] = kwargs['neutronip']
             kwargs['odlwebport'] = '8080'
