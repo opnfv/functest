@@ -34,6 +34,7 @@ from six import StringIO
 from six.moves import urllib
 
 from functest.core import testcase
+from functest.utils import constants
 import functest.utils.openstack_utils as op_utils
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
@@ -65,14 +66,15 @@ class ODLResultVisitor(robot.api.ResultVisitor):
 class ODLTests(testcase.TestCase):
     """ODL test runner."""
 
-    repos = "/home/opnfv/repos/"
-    odl_test_repo = os.path.join(repos, "odl_test")
+    odl_test_repo = os.path.join(
+        constants.CONST.__getattribute__('dir_repos'), 'odl_test')
     neutron_suite_dir = os.path.join(odl_test_repo,
                                      "csit/suites/openstack/neutron")
     basic_suite_dir = os.path.join(odl_test_repo,
                                    "csit/suites/integration/basic")
     default_suites = [basic_suite_dir, neutron_suite_dir]
-    res_dir = '/home/opnfv/functest/results/odl/'
+    res_dir = os.path.join(
+        constants.CONST.__getattribute__('dir_results'), 'odl')
     __logger = logging.getLogger(__name__)
 
     @classmethod
