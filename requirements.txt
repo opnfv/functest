@@ -38,3 +38,4 @@ iniparse==0.4
 PrettyTable>=0.7.1,<0.8 # BSD
 six>=1.9.0 # MIT
 git+https://gerrit.opnfv.org/gerrit/releng#egg=opnfv&subdirectory=modules
+git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
