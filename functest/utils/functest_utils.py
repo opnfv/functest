@@ -221,7 +221,8 @@ def push_results_to_db(project, case_name,
     error = None
     headers = {'Content-Type': 'application/json'}
     try:
-        r = requests.post(url, data=json.dumps(params), headers=headers)
+        r = requests.post(url, data=json.dumps(params, sort_keys=True),
+                          headers=headers)
         logger.debug(r)
         r.raise_for_status()
     except requests.RequestException as exc:
