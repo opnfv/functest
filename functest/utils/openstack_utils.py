@@ -1081,10 +1081,10 @@ def check_security_group_rules(neutron_client, sg_id, direction, protocol,
     try:
         security_rules = get_security_group_rules(neutron_client, sg_id)
         security_rules = [rule for rule in security_rules
-                          if (rule["direction"].lower() == direction
-                              and rule["protocol"].lower() == protocol
-                              and rule["port_range_min"] == port_min
-                              and rule["port_range_max"] == port_max)]
+                          if (rule["direction"].lower() == direction and
+                              rule["protocol"].lower() == protocol and
+                              rule["port_range_min"] == port_min and
+                              rule["port_range_max"] == port_max)]
         if len(security_rules) == 0:
             return True
         else:

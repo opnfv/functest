@@ -54,8 +54,9 @@ class TierBuilder(object):
                                        blocking=dic_testcase['blocking'],
                                        clean_flag=dic_testcase['clean_flag'],
                                        description=dic_testcase['description'])
-                if (testcase.is_compatible(self.ci_installer, self.ci_scenario)
-                        and testcase.is_enabled()):
+                if (testcase.is_compatible(self.ci_installer,
+                                           self.ci_scenario) and
+                        testcase.is_enabled()):
                     tier.add_test(testcase)
 
             self.tier_objects.append(tier)
