@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_3d1ba7cb",
+        "filename": "functest/opnfv_tests/sdn/onos/teston/adapters/foundation.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-21T14:39:48Z",
+      "side": 1,
+      "message": "please add one sentence in git commit msg for these modif\u0027.",
+      "revId": "667d7c8aa7d47e5b3616cda3eaf9afa5e24243f2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_7d259f07",
+        "filename": "functest/tests/unit/ci/test_prepare_env.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-21T14:39:48Z",
+      "side": 1,
+      "message": "Could you please use decorators when it\u0027s possible.\nI think it helps reading",
+      "revId": "667d7c8aa7d47e5b3616cda3eaf9afa5e24243f2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
