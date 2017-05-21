@@ -13,5 +13,5 @@ Submodules
 
    functest.core.feature
    functest.core.testcase
-   functest.core.vnf_base
+   functest.core.vnf
 
