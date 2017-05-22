@@ -17,10 +17,12 @@ from functest.utils.constants import CONST
 
 class OSRefstackClientTesting(unittest.TestCase):
 
-    _config = os.path.join(CONST.dir_functest_test,
-                           CONST.refstack_tempest_conf_path)
-    _testlist = os.path.join(CONST.dir_functest_test,
-                             CONST.refstack_defcore_list)
+    _config = os.path.join(
+        CONST.__getattribute__('dir_functest_test'),
+        CONST.__getattribute__('refstack_tempest_conf_path'))
+    _testlist = os.path.join(
+        CONST.__getattribute__('dir_functest_test'),
+        CONST.__getattribute__('refstack_defcore_list'))
 
     def setUp(self):
         self.defaultargs = {'config': self._config,
@@ -28,12 +30,13 @@ class OSRefstackClientTesting(unittest.TestCase):
         self.refstackclient = refstack_client.RefstackClient()
 
     def test_source_venv(self):
-        CONST.dir_refstack_client = 'test_repo_dir'
+        CONST.__setattr__('dir_refstack_client', 'test_repo_dir')
         with mock.patch('functest.opnfv_tests.openstack.refstack_client.'
                         'refstack_client.ft_utils.execute_command') as m:
             cmd = ("cd {0};"
                    ". .venv/bin/activate;"
-                   "cd -;".format(CONST.dir_refstack_client))
+                   "cd -;"
+                   .format(CONST.__getattribute__('dir_refstack_client')))
             self.refstackclient.source_venv()
             m.assert_any_call(cmd)
 
@@ -44,9 +47,10 @@ class OSRefstackClientTesting(unittest.TestCase):
                         'refstack_client.ft_utils.execute_command') as m:
             cmd = ("cd {0};"
                    "./refstack-client test -c {1} -v --test-list {2};"
-                   "cd -;".format(CONST.dir_refstack_client,
-                                  config,
-                                  testlist))
+                   "cd -;"
+                   .format(CONST.__getattribute__('dir_refstack_client'),
+                           config,
+                           testlist))
             self.refstackclient.run_defcore(config, testlist)
             m.assert_any_call(cmd)
 
@@ -62,7 +66,7 @@ class OSRefstackClientTesting(unittest.TestCase):
         self.assertEqual(self.refstackclient.main(**kwargs), status)
         if len(args) > 0:
             args[0].assert_called_once_with(
-                 refstack_client.RefstackClient.result_dir)
+                refstack_client.RefstackClient.result_dir)
         if len(args) > 1:
             args
 
