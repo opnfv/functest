@@ -146,12 +146,12 @@ class VnfBaseTesting(unittest.TestCase):
     def test_deploy_vnf_unimplemented(self):
         with self.assertRaises(Exception) as context:
             self.test.deploy_vnf()
-        self.assertTrue('VNF not deployed' in context.exception)
+        self.assertIn('VNF not deployed', str(context.exception))
 
     def test_test_vnf_unimplemented(self):
         with self.assertRaises(Exception) as context:
             self.test.test_vnf()()
-        self.assertTrue('VNF not tested' in context.exception)
+        self.assertIn('VNF not tested', str(context.exception))
 
     def test_parse_results_ex_ok(self):
         self.test.details['test_vnf']['status'] = 'PASS'
