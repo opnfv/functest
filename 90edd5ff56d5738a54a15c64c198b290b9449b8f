@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_08caa7a1",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-05-22T15:55:38Z",
+      "side": 1,
+      "message": "Why has SNAPS been removed from the docker build? It appears that this may be the culprit to the functest-verify-master job failing.",
+      "revId": "90edd5ff56d5738a54a15c64c198b290b9449b8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
