@@ -89,7 +89,6 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${REPO
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${REPOS_DIR}/promise
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/netready ${REPOS_DIR}/netready
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/fds ${REPOS_DIR}/fds
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/barometer ${REPOS_DIR}/barometer
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sfc ${REPOS_DIR}/sfc
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/snaps ${REPOS_DIR}/snaps
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${REPOS_DIR}/securityscanning
@@ -114,9 +113,6 @@ RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
 RUN cd ${FUNCTEST_REPO_DIR} \
     && pip install -r requirements.txt \
     && pip install -e .
-
-RUN cd ${REPOS_DIR}/barometer \
-    && pip install .
 
 RUN pip install ${REPOS_DIR}/opera
 

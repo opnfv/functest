@@ -16,9 +16,8 @@ import unittest
 import mock
 
 from functest.core import testcase
-sys.modules['baro_tests'] = mock.Mock()  # noqa
-# pylint: disable=wrong-import-position
-from functest.opnfv_tests.features import barometer
+with mock.patch('functest.utils.functest_utils.get_parameter_from_yaml'):
+    from functest.opnfv_tests.features import barometer
 
 
 class BarometerTesting(unittest.TestCase):
