@@ -10,3 +10,4 @@ mock==1.3.0
 nose==1.3.7
 flake8>=2.5.4,<2.6.0 # MIT
 pylint==1.4.5 # GPLv2
+sphinx!=1.6.1,>=1.5.1 # BSD
