@@ -27,12 +27,6 @@ pip install -r $WORKSPACE/requirements.txt
 pip install -r $WORKSPACE/test-requirements.txt
 pip install $WORKSPACE
 
-#install releng
-rm -rf releng-unittests
-git clone --depth 1 https://gerrit.opnfv.org/gerrit/releng releng-unittests
-pip install releng-unittests/modules/
-rm -fr releng-unittests
-
 nosetests --with-xunit \
          --with-coverage \
          --cover-tests \
