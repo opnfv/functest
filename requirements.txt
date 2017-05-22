@@ -16,7 +16,7 @@ python-novaclient==6.0.0
 python-congressclient==1.5.0
 python-tackerclient==0.7.0
 pexpect==4.0
-requests>=2.8.0
+requests==2.9.1
 robotframework==3.0.2
 robotframework-httplibrary==0.4.2
 robotframework-requests==0.4.7
