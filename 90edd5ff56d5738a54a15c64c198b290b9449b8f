@@ -16,6 +16,24 @@
       "revId": "90edd5ff56d5738a54a15c64c198b290b9449b8f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c84a4f27",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-22T16:11:30Z",
+      "side": 1,
+      "message": "I added git+https://gerrit.opnfv.org/gerrit/snaps#egg\u003dsnaps in requirements.txt to replace that (I think it\u0027s better).\n\nPlease see https://gerrit.opnfv.org/gerrit/#/c/34909/10/requirements.txt\n\nI think there are conflicts in dependencies in snaps\u0027 requirements.txt. Could you please first fix that? Then you can write recheck as comment here.",
+      "parentUuid": "5aaae553_08caa7a1",
+      "revId": "90edd5ff56d5738a54a15c64c198b290b9449b8f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
