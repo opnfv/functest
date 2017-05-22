@@ -7,6 +7,8 @@
 
 # pylint: disable=missing-docstring
 
+from __future__ import division
+
 import logging
 import time
 import unittest
@@ -46,32 +48,14 @@ class PyTestSuiteRunner(testcase.TestCase):
             stream=stream, verbosity=2).run(self.suite)
         self.logger.debug("\n\n%s", stream.getvalue())
         self.stop_time = time.time()
-
-        if result.errors:
-            self.logger.error('Number of errors in test suite - ' +
-                              str(len(result.errors)))
-            for test, message in result.errors:
-                self.logger.error(str(test) + " ERROR with " + message)
-
-        if result.failures:
-            self.logger.error('Number of failures in test suite - ' +
-                              str(len(result.failures)))
-            for test, message in result.failures:
-                self.logger.error(str(test) + " FAILED with " + message)
-
-        # a result can be PASS or FAIL
-        # But in this case it means that the Execution was OK
-        # we shall distinguish Execution Error from FAIL results
-        # TestCase.EX_RUN_ERROR means that the test case was not run
-        # not that it was run but the result was FAIL
-        exit_code = testcase.TestCase.EX_OK
-        if ((result.errors and len(result.errors) > 0) or
-                (result.failures and len(result.failures) > 0)):
-            self.logger.info("%s FAILED", self.case_name)
-            self.result = 0
-        else:
-            self.logger.info("%s OK", self.case_name)
-            self.result = 100
-
-        self.details = {}
-        return exit_code
+        self.details = {"failures": result.failures,
+                        "errors": result.errors}
+        try:
+            self.result = 100 * (
+                (result.testsRun - (len(result.failures) +
+                                    len(result.errors))) /
+                result.testsRun)
+            return testcase.TestCase.EX_OK
+        except ZeroDivisionError:
+            self.logger.error("No test has been run")
+            return testcase.TestCase.EX_RUN_ERROR

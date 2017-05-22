@@ -108,7 +108,7 @@ class ODLTests(testcase.TestCase):
                 result.suite.statistics.critical.passed /
                 result.suite.statistics.critical.total)
         except ZeroDivisionError:
-            self.__logger.error("No test has been ran")
+            self.__logger.error("No test has been run")
         self.start_time = timestamp_to_secs(result.suite.starttime)
         self.stop_time = timestamp_to_secs(result.suite.endtime)
         self.details = {}
