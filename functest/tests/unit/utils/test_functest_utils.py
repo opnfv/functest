@@ -55,7 +55,8 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.testcase_dict = {'case_name': 'testname',
                               'criteria': self.criteria}
         self.parameter = 'general.openstack.image_name'
-        self.config_yaml = 'test_config_yaml-'
+        self.config_yaml = os.path.normpath(os.path.join(os.path.dirname(
+            os.path.abspath(__file__)), '../../../ci/config_functest.yaml'))
         self.db_url_env = 'http://foo/testdb'
         self.file_yaml = {'general': {'openstack': {'image_name':
                                                     'test_image_name'}}}

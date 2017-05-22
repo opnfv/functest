@@ -24,6 +24,7 @@ from six.moves import urllib
 import yaml
 from git import Repo
 
+from functest.utils import constants
 from functest.utils import decorators
 
 logger = logging.getLogger(__name__)
@@ -375,7 +376,7 @@ def get_parameter_from_yaml(parameter, file):
 
 
 def get_functest_config(parameter):
-    yaml_ = os.environ["CONFIG_FUNCTEST_YAML"]
+    yaml_ = constants.CONST.__getattribute__('CONFIG_FUNCTEST_YAML')
     return get_parameter_from_yaml(parameter, yaml_)
 
 
@@ -397,7 +398,7 @@ def get_testcases_file_dir():
 
 
 def get_functest_yaml():
-    with open(os.environ["CONFIG_FUNCTEST_YAML"]) as f:
+    with open(constants.CONST.__getattribute__('CONFIG_FUNCTEST_YAML')) as f:
         functest_yaml = yaml.safe_load(f)
     f.close()
     return functest_yaml
