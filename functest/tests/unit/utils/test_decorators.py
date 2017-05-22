@@ -63,7 +63,7 @@ class DecoratorsTesting(unittest.TestCase):
                 'pod_name': self._node_name, 'installer': self._installer_type,
                 'scenario': self._deploy_scenario, 'version': VERSION,
                 'details': {}, 'criteria': self._result}
-        return json.dumps(data)
+        return json.dumps(data, sort_keys=True)
 
     @mock.patch('{}.get_db_url'.format(functest_utils.__name__),
                 return_value='http://127.0.0.1')
