@@ -74,7 +74,7 @@ executing the following sequence
   #. Log in to container and execute the following command. Replace
      the IP with installer address after the "-a" parameter::
 
-       $REPOS_DIR/releng/utils/fetch_os_creds.sh \
+       fetch_os_creds.sh \
        -d /home/opnfv/functest/conf/openstack.creds \
        -i fuel \
        -a 10.20.0.2 \

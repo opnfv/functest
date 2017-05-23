@@ -70,9 +70,8 @@ class CliOpenStackTesting(unittest.TestCase):
                                        mock_ftutils_execute):
         CONST.__setattr__('INSTALLER_TYPE', self.installer_type)
         CONST.__setattr__('INSTALLER_IP', self.installer_ip)
-        cmd = ("%s/releng/utils/fetch_os_creds.sh -d %s -i %s -a %s"
-               % (CONST.__getattribute__('dir_repos'),
-                  self.openstack_creds,
+        cmd = ("fetch_os_creds.sh -d %s -i %s -a %s"
+               % (self.openstack_creds,
                   self.installer_type,
                   self.installer_ip))
         self.cli_os.openstack_creds = self.openstack_creds
@@ -93,9 +92,8 @@ class CliOpenStackTesting(unittest.TestCase):
                                                       mock_ftutils_execute):
         CONST.__setattr__('INSTALLER_TYPE', None)
         CONST.__setattr__('INSTALLER_IP', self.installer_ip)
-        cmd = ("%s/releng/utils/fetch_os_creds.sh -d %s -i %s -a %s"
-               % (CONST.__getattribute__('dir_repos'),
-                  self.openstack_creds,
+        cmd = ("fetch_os_creds.sh -d %s -i %s -a %s"
+               % (self.openstack_creds,
                   None,
                   self.installer_ip))
         self.cli_os.openstack_creds = self.openstack_creds
@@ -121,9 +119,8 @@ class CliOpenStackTesting(unittest.TestCase):
         installer_ip = None
         CONST.__setattr__('INSTALLER_TYPE', installer_type)
         CONST.__setattr__('INSTALLER_IP', installer_ip)
-        cmd = ("%s/releng/utils/fetch_os_creds.sh -d %s -i %s -a %s"
-               % (CONST.__getattribute__('dir_repos'),
-                  self.openstack_creds,
+        cmd = ("fetch_os_creds.sh -d %s -i %s -a %s"
+               % (self.openstack_creds,
                   installer_type,
                   installer_ip))
         self.cli_os.openstack_creds = self.openstack_creds
