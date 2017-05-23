@@ -148,7 +148,7 @@ class TempestCommon(testcase.TestCase):
                     first_pos = line.index("UUID=") + len("UUID=")
                     last_pos = line.index(") for deployment")
                     self.VERIFICATION_ID = line[first_pos:last_pos]
-                    logger.debug('Verication UUID: %s' % self.VERIFICATION_ID)
+                    logger.debug('Verification UUID: %s' % self.VERIFICATION_ID)
                 f_stdout.write(line)
         p.wait()
 
