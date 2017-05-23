@@ -70,16 +70,6 @@ class RunTestsTesting(unittest.TestCase):
                         return_value=self.creds):
             self.runner.source_rc_file()
 
-    @mock.patch('functest.ci.run_tests.os_snapshot.main')
-    def test_generate_os_snapshot(self, mock_os_snap):
-        self.runner.generate_os_snapshot()
-        self.assertTrue(mock_os_snap.called)
-
-    @mock.patch('functest.ci.run_tests.os_clean.main')
-    def test_cleanup(self, mock_os_clean):
-        self.runner.cleanup()
-        self.assertTrue(mock_os_clean.called)
-
     def test_get_run_dict_if_defined_default(self):
         mock_obj = mock.Mock()
         with mock.patch('functest.ci.run_tests.'
@@ -137,8 +127,6 @@ class RunTestsTesting(unittest.TestCase):
 
     @mock.patch('functest.ci.run_tests.Runner.print_separator')
     @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
-    @mock.patch('functest.ci.run_tests.Runner.generate_os_snapshot')
-    @mock.patch('functest.ci.run_tests.Runner.cleanup')
     @mock.patch('importlib.import_module', name="module",
                 return_value=mock.Mock(test_class=mock.Mock(
                     side_effect=FakeModule)))
