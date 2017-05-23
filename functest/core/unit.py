@@ -65,20 +65,24 @@ class Suite(testcase.TestCase):
                 return testcase.TestCase.EX_RUN_ERROR
         except KeyError:
             pass
-        self.start_time = time.time()
-        stream = six.StringIO()
-        result = unittest.TextTestRunner(
-            stream=stream, verbosity=2).run(self.suite)
-        self.logger.debug("\n\n%s", stream.getvalue())
-        self.stop_time = time.time()
-        self.details = {"failures": result.failures,
-                        "errors": result.errors}
         try:
+            assert self.suite
+            self.start_time = time.time()
+            stream = six.StringIO()
+            result = unittest.TextTestRunner(
+                stream=stream, verbosity=2).run(self.suite)
+            self.logger.debug("\n\n%s", stream.getvalue())
+            self.stop_time = time.time()
+            self.details = {"failures": result.failures,
+                            "errors": result.errors}
             self.result = 100 * (
                 (result.testsRun - (len(result.failures) +
                                     len(result.errors))) /
                 result.testsRun)
             return testcase.TestCase.EX_OK
+        except AssertionError:
+            self.logger.error("No suite is defined")
+            return testcase.TestCase.EX_RUN_ERROR
         except ZeroDivisionError:
             self.logger.error("No test has been run")
             return testcase.TestCase.EX_RUN_ERROR
