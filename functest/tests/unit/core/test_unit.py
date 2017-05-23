@@ -90,5 +90,6 @@ class PyTestSuiteRunnerTesting(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    logging.disable(logging.CRITICAL)
+    logging.basicConfig()
+    #logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)
