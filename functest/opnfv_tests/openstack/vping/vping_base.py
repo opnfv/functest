@@ -79,7 +79,7 @@ class VPingBase(TestCase):
 
         scenario = functest_utils.get_scenario()
 
-        self.flavor_metadata = create_flavor.MEM_PAGE_SIZE_ANY
+        self.flavor_metadata = None
         if 'ovs' in scenario or 'fdio' in scenario:
             self.flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
 
