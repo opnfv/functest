@@ -27,7 +27,7 @@ from tempest_conf import TempestConf
 logger = logging.getLogger(__name__)
 
 
-class RefstackClient(testcase.TestCase):
+class RefstackClient(testcase.OSGCTestCase):
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:

@@ -38,8 +38,12 @@ class RunTestsTesting(unittest.TestCase):
                       'OS_PASSWORD': 'test_password'}
         self.test = {'test_name': 'test_name'}
         self.tier = mock.Mock()
+        test1 = mock.Mock()
+        test1.get_name.return_value = 'test1'
+        test2 = mock.Mock()
+        test2.get_name.return_value = 'test2'
         attrs = {'get_name.return_value': 'test_tier',
-                 'get_tests.return_value': ['test1', 'test2'],
+                 'get_tests.return_value': [test1, test2],
                  'get_ci_loop.return_value': 'test_ci_loop',
                  'get_test_names.return_value': ['test1', 'test2']}
         self.tier.configure_mock(**attrs)
@@ -69,16 +73,6 @@ class RunTestsTesting(unittest.TestCase):
         with mock.patch('functest.ci.run_tests.os_utils.source_credentials',
                         return_value=self.creds):
             self.runner.source_rc_file()
-
-    @mock.patch('functest.ci.run_tests.os_snapshot.main')
-    def test_generate_os_snapshot(self, mock_os_snap):
-        self.runner.generate_os_snapshot()
-        self.assertTrue(mock_os_snap.called)
-
-    @mock.patch('functest.ci.run_tests.os_clean.main')
-    def test_cleanup(self, mock_os_clean):
-        self.runner.cleanup()
-        self.assertTrue(mock_os_clean.called)
 
     def test_get_run_dict_if_defined_default(self):
         mock_obj = mock.Mock()
@@ -137,8 +131,6 @@ class RunTestsTesting(unittest.TestCase):
 
     @mock.patch('functest.ci.run_tests.Runner.print_separator')
     @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
-    @mock.patch('functest.ci.run_tests.Runner.generate_os_snapshot')
-    @mock.patch('functest.ci.run_tests.Runner.cleanup')
     @mock.patch('importlib.import_module', name="module",
                 return_value=mock.Mock(test_class=mock.Mock(
                     side_effect=FakeModule)))
@@ -161,10 +153,10 @@ class RunTestsTesting(unittest.TestCase):
     def test_run_tier_default(self, mock_logger_info):
         with mock.patch('functest.ci.run_tests.Runner.print_separator'), \
                 mock.patch(
-                    'functest.ci.run_tests.Runner.run_test') as mock_method:
+                    'functest.ci.run_tests.Runner.run_test',
+                    return_value=TestCase.EX_OK) as mock_method:
             self.runner.run_tier(self.tier)
-            mock_method.assert_any_call('test1', 'test_tier')
-            mock_method.assert_any_call('test2', 'test_tier')
+            mock_method.assert_any_call(mock.ANY, 'test_tier')
             self.assertTrue(mock_logger_info.called)
 
     @mock.patch('functest.ci.run_tests.logger.info')
@@ -237,7 +229,8 @@ class RunTestsTesting(unittest.TestCase):
         with mock.patch('functest.ci.run_tests.tb.TierBuilder',
                         return_value=mock_obj), \
             mock.patch('functest.ci.run_tests.Runner.source_rc_file'), \
-                mock.patch('functest.ci.run_tests.Runner.run_test') as m:
+                mock.patch('functest.ci.run_tests.Runner.run_test',
+                           return_value=TestCase.EX_OK) as m:
             self.assertEqual(self.runner.main(**kwargs),
                              run_tests.Result.EX_OK)
             self.assertTrue(m.called)

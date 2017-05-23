@@ -22,9 +22,9 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import time
-
 import logging
+import sys
+import time
 import yaml
 
 import functest.utils.openstack_utils as os_utils
@@ -392,7 +392,7 @@ def main():
     except Exception:
         logger.info("The file %s does not exist. The OpenStack snapshot must"
                     " be created first. Aborting cleanup." % OS_SNAPSHOT_FILE)
-        exit(0)
+        return 0
 
     default_images = snapshot_yaml.get('images')
     default_instances = snapshot_yaml.get('instances')
@@ -407,7 +407,7 @@ def main():
     if not os_utils.check_credentials():
         logger.error("Please source the openrc credentials and run "
                      "the script again.")
-        exit(-1)
+        return -1
 
     remove_instances(nova_client, default_instances)
     separator()
@@ -429,4 +429,4 @@ def main():
 
 if __name__ == '__main__':
     logging.basicConfig()
-    main()
+    sys.exit(main())
