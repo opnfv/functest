@@ -452,9 +452,8 @@ class FunctestUtilsTesting(unittest.TestCase):
             mock_logger_info.assert_called_once_with(msg_exec)
             mopen.assert_called_once_with(self.output_file, "w")
 
-    @mock.patch('functest.utils.functest_utils.logger.info')
-    def test_execute_command_args_missing_with_success(self, mock_logger_info,
-                                                       ):
+    @mock.patch('sys.stdout')
+    def test_execute_command_args_missing_with_success(self, stdout=None):
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open:
 
@@ -476,9 +475,8 @@ class FunctestUtilsTesting(unittest.TestCase):
                                                   output_file=None)
             self.assertEqual(resp, 0)
 
-    @mock.patch('functest.utils.functest_utils.logger.error')
-    def test_execute_command_args_missing_with_error(self, mock_logger_error,
-                                                     ):
+    @mock.patch('sys.stdout')
+    def test_execute_command_args_missing_with_error(self, stdout=None):
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open:
 
