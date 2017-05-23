@@ -136,7 +136,6 @@ case_name: first
 project_name: functest
 criteria: 100
 blocking: true
-clean_flag: false
 description: ''
 dependencies:
     installer: ''
@@ -204,7 +203,6 @@ case_name: second
 project_name: functest
 criteria: 100
 blocking: true
-clean_flag: false
 description: ''
 dependencies:
     installer: ''
@@ -238,7 +236,6 @@ case_name: third
 project_name: functest
 criteria: 100
 blocking: true
-clean_flag: false
 description: ''
 dependencies:
     installer: ''
@@ -294,7 +291,6 @@ case_name: fourth
 project_name: functest
 criteria: 100
 blocking: true
-clean_flag: false
 description: ''
 dependencies:
     installer: ''

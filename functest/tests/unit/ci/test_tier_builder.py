@@ -24,7 +24,6 @@ class TierBuilderTesting(unittest.TestCase):
                          'case_name': 'test_name',
                          'criteria': 'test_criteria',
                          'blocking': 'test_blocking',
-                         'clean_flag': 'test_clean_flag',
                          'description': 'test_desc'}
 
         self.dic_tier = {'name': 'test_tier',
