@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_ab458db4",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-23T07:08:23Z",
+      "side": 1,
+      "message": "logger.debug(\"Test args: %s\" % kwargs[\u0027test\u0027])\n\nor with format",
+      "range": {
+        "startLine": 224,
+        "startChar": 16,
+        "endLine": 224,
+        "endChar": 43
+      },
+      "revId": "15dd4fd48ff5db02bedf732d2ec8762338ccf86f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
