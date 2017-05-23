@@ -176,3 +176,13 @@ class TestCase(object):
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("The results cannot be pushed to DB")
             return TestCase.EX_PUSH_TO_DB_ERROR
+
+    def clean(self):
+        """Clean the resources.
+
+        It can be overriden if resources must be deleted after
+        running the test case.
+
+        Returns:
+            TestCase.EX_OK
+        """

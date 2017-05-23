@@ -34,7 +34,6 @@ class TierHandlerTesting(unittest.TestCase):
                                               self.mock_depend,
                                               'test_criteria',
                                               'test_blocking',
-                                              'test_clean_flag',
                                               description='test_desc')
 
         self.dependency = tier_handler.Dependency('test_installer',
