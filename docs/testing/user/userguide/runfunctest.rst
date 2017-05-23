@@ -561,14 +561,9 @@ the Functest environment (i.e. CLI command 'functest env prepare') to snapshot
 all the OpenStack resources (images, networks, volumes, security groups, tenants,
 users) so that an eventual cleanup does not remove any of these defaults.
 
-It is also called before running a test except if it is disabled by configuration
-in the testcases.yaml file (clean_flag=false). This flag has been added as some
-upstream tests already include their own cleaning mechanism (e.g. Rally).
-
 The script **openstack_clean.py** which is located in
-*$REPOS_DIR/functest/functest/utils/* is normally called after a test execution. It is
-in charge of cleaning the OpenStack resources that are not specified in the
-defaults file generated previously which is stored in
+*$REPOS_DIR/functest/functest/utils/* is in charge of cleaning the OpenStack resources
+that are not specified in the defaults file generated previously which is stored in
 */home/opnfv/functest/conf/openstack_snapshot.yaml* in the Functest docker container.
 
 It is important to mention that if there are new OpenStack resources created
@@ -660,7 +655,6 @@ For a given test case we defined:
   * the name of the test case
   * the criteria (experimental): a criteria used to declare the test case as PASS or FAIL
   * blocking: if set to true, if the test is failed, the execution of the following tests is canceled
-  * clean_flag: shall the functect internal mechanism be invoked after the test
   * the description of the test case
   * the dependencies: a combination of 2 regex on the scenario and the installer name
   * run: In Danube we introduced the notion of abstract class in order to harmonize the way to run internal, feature or vnf tests
