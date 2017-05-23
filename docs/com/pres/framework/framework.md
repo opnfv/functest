@@ -59,12 +59,13 @@ base model for single test case
 
 ### methods
 
-| Method            | Purpose                                    |
-|-------------------|--------------------------------------------|
-| run(**kwargs)     | run the test case                          |
-| is_successful()   | interpret the results of the test case     |
-| get_duration()    | return the duration of the test case       |
-| push_to_db()      | push the results of the test case to the DB|
+| Method            | Purpose                                     |
+|-------------------|---------------------------------------------|
+| run(**kwargs)     | run the test case                           |
+| is_successful()   | interpret the results of the test case      |
+| get_duration()    | return the duration of the test case        |
+| push_to_db()      | push the results of the test case to the DB |
+| clean()           | clean the resources                         |
 
 
 ### run(**kwargs)
@@ -136,7 +137,6 @@ case_name: first
 project_name: functest
 criteria: 100
 blocking: true
-clean_flag: false
 description: ''
 dependencies:
     installer: ''
@@ -204,7 +204,6 @@ case_name: second
 project_name: functest
 criteria: 100
 blocking: true
-clean_flag: false
 description: ''
 dependencies:
     installer: ''
@@ -238,7 +237,6 @@ case_name: third
 project_name: functest
 criteria: 100
 blocking: true
-clean_flag: false
 description: ''
 dependencies:
     installer: ''
@@ -294,7 +292,6 @@ case_name: fourth
 project_name: functest
 criteria: 100
 blocking: true
-clean_flag: false
 description: ''
 dependencies:
     installer: ''
