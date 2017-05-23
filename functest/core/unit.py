@@ -26,10 +26,11 @@ __author__ = ("Steven Pisarski <s.pisarski@cablelabs.com>, "
 class Suite(testcase.TestCase):
     """Base model for running unittest.TestSuite."""
 
+    __logger = logging.getLogger(__name__)
+
     def __init__(self, **kwargs):
         super(Suite, self).__init__(**kwargs)
         self.suite = None
-        self.logger = logging.getLogger(__name__)
 
     def run(self, **kwargs):
         """Run the test suite.
@@ -61,7 +62,7 @@ class Suite(testcase.TestCase):
             try:
                 self.suite = unittest.TestLoader().loadTestsFromName(name)
             except ImportError:
-                self.logger.error("Can not import %s", name)
+                self.__logger.error("Can not import %s", name)
                 return testcase.TestCase.EX_RUN_ERROR
         except KeyError:
             pass
@@ -71,7 +72,7 @@ class Suite(testcase.TestCase):
             stream = six.StringIO()
             result = unittest.TextTestRunner(
                 stream=stream, verbosity=2).run(self.suite)
-            self.logger.debug("\n\n%s", stream.getvalue())
+            self.__logger.debug("\n\n%s", stream.getvalue())
             self.stop_time = time.time()
             self.details = {"failures": result.failures,
                             "errors": result.errors}
@@ -81,8 +82,8 @@ class Suite(testcase.TestCase):
                 result.testsRun)
             return testcase.TestCase.EX_OK
         except AssertionError:
-            self.logger.error("No suite is defined")
+            self.__logger.error("No suite is defined")
             return testcase.TestCase.EX_RUN_ERROR
         except ZeroDivisionError:
-            self.logger.error("No test has been run")
+            self.__logger.error("No test has been run")
             return testcase.TestCase.EX_RUN_ERROR
