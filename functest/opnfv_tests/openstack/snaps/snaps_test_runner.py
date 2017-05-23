@@ -7,7 +7,7 @@
 
 import logging
 
-from functest.core.pytest_suite_runner import PyTestSuiteRunner
+from functest.core import unit
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import functest_utils
 from functest.utils.constants import CONST
@@ -16,7 +16,7 @@ from snaps.openstack import create_flavor
 from snaps.openstack.tests import openstack_tests
 
 
-class SnapsTestRunner(PyTestSuiteRunner):
+class SnapsTestRunner(unit.PyTestSuiteRunner):
     """
     This test executes the SNAPS Python Tests
     """
