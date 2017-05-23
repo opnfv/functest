@@ -98,14 +98,6 @@ class Runner(object):
                     CONST.__setattr__('OS_PASSWORD', value)
 
     @staticmethod
-    def generate_os_snapshot():
-        os_snapshot.main()
-
-    @staticmethod
-    def cleanup():
-        os_clean.main()
-
-    @staticmethod
     def get_run_dict(testname):
         try:
             dict = ft_utils.get_dict_by_test(testname)
@@ -128,9 +120,6 @@ class Runner(object):
         self.print_separator("=")
         logger.debug("\n%s" % test)
         self.source_rc_file()
-
-        if test.needs_clean() and self.clean_flag:
-            self.generate_os_snapshot()
 
         flags = " -t %s" % test.get_name()
         if self.report_flag:
@@ -155,6 +144,8 @@ class Runner(object):
                         test_case.push_to_db()
                     result = test_case.is_successful()
                 logger.info("Test result:\n\n%s\n", test_case)
+                if self.clean_flag:
+                    test_case.clean()
             except ImportError:
                 logger.exception("Cannot import module {}".format(
                     run_dict['module']))
@@ -164,8 +155,6 @@ class Runner(object):
         else:
             raise Exception("Cannot import the class for the test case.")
 
-        if test.needs_clean() and self.clean_flag:
-            self.cleanup()
         if result != testcase.TestCase.EX_OK:
             logger.error("The test case '%s' failed. " % test.get_name())
             self.overall_result = Result.EX_ERROR
