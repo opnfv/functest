@@ -22,6 +22,7 @@
 
 import logging
 import yaml
+import sys
 
 import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
@@ -139,7 +140,7 @@ def main():
     if not os_utils.check_credentials():
         logger.error("Please source the openrc credentials and run the" +
                      "script again.")
-        exit(-1)
+        return -1
 
     snapshot = {}
     snapshot.update(get_instances(nova_client))
@@ -163,4 +164,4 @@ def main():
 
 if __name__ == '__main__':
     logging.basicConfig()
-    main()
+    sys.exit(main())
