@@ -221,7 +221,7 @@ class Runner(object):
         try:
             if kwargs['test']:
                 self.source_rc_file()
-                logger.error(kwargs['test'])
+                logger.debug("Test args: %s", kwargs['test'])
                 if _tiers.get_tier(kwargs['test']):
                     self.run_tier(_tiers.get_tier(kwargs['test']))
                 elif _tiers.get_test(kwargs['test']):
