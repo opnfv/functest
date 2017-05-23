@@ -20,6 +20,7 @@ class PyTestSuiteRunnerTesting(unittest.TestCase):
 
     def setUp(self):
         self.psrunner = unit.Suite()
+        self.psrunner.suite = "foo"
 
     @mock.patch('unittest.TestLoader')
     def _test_run(self, mock_class=None, result=mock.Mock(),
@@ -30,7 +31,10 @@ class PyTestSuiteRunnerTesting(unittest.TestCase):
             mock_class.assert_not_called()
 
     def test_check_suite_null(self):
-        self.assertEqual(self.psrunner.suite, None)
+        self.assertEqual(unit.Suite().suite, None)
+        self.psrunner.suite = None
+        self._test_run(result=mock.Mock(),
+                       status=testcase.TestCase.EX_RUN_ERROR)
 
     def test_run_no_ut(self):
         mock_result = mock.Mock(testsRun=0, errors=[], failures=[])
