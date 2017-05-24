@@ -1,11 +1,13 @@
-# Copyright (c) 2015 All rights reserved
-# This program and the accompanying materials
+#!/usr/bin/env python
+
+# Copyright (c) 2016 Cable Television Laboratories, Inc. and others.
+#
+# All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
-#
 # http://www.apache.org/licenses/LICENSE-2.0
 
-# pylint: disable=missing-docstring
+"""Define the parent class to run unittest.TestSuite as TestCase."""
 
 from __future__ import division
 
@@ -17,12 +19,12 @@ import six
 
 from functest.core import testcase
 
+__author__ = ("Steven Pisarski <s.pisarski@cablelabs.com>, "
+              "Cedric Ollivier <cedric.ollivier@orange.com>")
+
 
 class Suite(testcase.TestCase):
-    """
-    This superclass is designed to execute pre-configured unittest.TestSuite()
-    objects
-    """
+    """Base model for running unittest.TestSuite."""
 
     def __init__(self, **kwargs):
         super(Suite, self).__init__(**kwargs)
@@ -30,8 +32,29 @@ class Suite(testcase.TestCase):
         self.logger = logging.getLogger(__name__)
 
     def run(self, **kwargs):
-        """
-        Starts test execution from the functest framework
+        """Run the test suite.
+
+        It allows running any unittest.TestSuite and getting its
+        execution status.
+
+        By default, it runs the suite defined as instance attribute.
+        It can be overriden by passing name as arg. It must
+        conform with TestLoader.loadTestsFromName().
+
+        It sets the following attributes required to push the results
+        to DB:
+
+            * result,
+            * start_time,
+            * stop_time,
+            * details.
+
+        Args:
+            kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            TestCase.EX_OK if any TestSuite has been run,
+            TestCase.EX_RUN_ERROR otherwise.
         """
         try:
             name = kwargs["name"]

@@ -7,7 +7,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-"""Define the parent class of all Functest Features.
+"""Define the parent classes of all Functest Features.
 
 Feature is considered as TestCase offered by Third-party. It offers
 helpers to run any python method or any bash command.

@@ -252,6 +252,62 @@ run:
 
 
 
+## class Suite
+bases: TestCase
+
+base model for running unittest.TestSuite
+
+
+### run(**kwargs)
+
+- allows running any unittest.TestSuite
+- sets the following attributes required to push the results to DB:
+    - result
+    - start_time
+    - stop_time
+    - details
+
+
+
+## Your fourth test case
+
+
+### fourth.py
+
+```python
+#!/usr/bin/env python
+
+import unittest
+
+class TestStringMethods(unittest.TestCase):
+
+    def test_upper(self):
+        self.assertEqual('Hello World'.upper(),
+                         'HELLO WORLD')
+```
+
+
+### functest/ci/testcases.yaml
+
+```
+case_name: fourth
+project_name: functest
+criteria: 100
+blocking: true
+clean_flag: false
+description: ''
+dependencies:
+    installer: ''
+    scenario: ''
+run:
+    module: 'functest.core.unit'
+    class: 'Suite'
+    args:
+        name: 'fourth'
+```
+
+
+
 ## Euphrates
 
 
