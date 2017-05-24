@@ -151,6 +151,9 @@ def get_build_tag():
 
 
 def logger_test_results(project, case_name, status, details):
+    """
+    Format test case results for the logger
+    """
     pod_name = get_pod_name()
     scenario = get_scenario()
     version = get_version()

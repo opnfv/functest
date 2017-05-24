@@ -69,7 +69,7 @@ class CloudifyImsTesting(unittest.TestCase):
             mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
                        'os_utils.get_image_id',
                        return_value=''), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
+            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.os_utils.'
                        'download_and_add_image_on_glance') as m, \
                 self.assertRaises(Exception) as context:
             self.ims_vnf.deploy_orchestrator()
@@ -457,35 +457,6 @@ class CloudifyImsTesting(unittest.TestCase):
                 self.assertEqual(self.ims_vnf.test_vnf(),
                                  {'status': 'PASS',
                                   'result': 'vims_test_result'})
-
-    def test_download_and_add_image_on_glance_incorrect_url(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os.makedirs'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'ft_utils.download_url',
-                       return_value=False):
-            resp = cloudify_ims.download_and_add_image_on_glance(self.
-                                                                 glance_client,
-                                                                 'image_name',
-                                                                 'http://url',
-                                                                 'data_dir')
-            self.assertEqual(resp, False)
-
-    def test_download_and_add_image_on_glance_image_creation_failure(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os.makedirs'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'ft_utils.download_url',
-                       return_value=True), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.create_glance_image',
-                       return_value=''):
-            resp = cloudify_ims.download_and_add_image_on_glance(self.
-                                                                 glance_client,
-                                                                 'image_name',
-                                                                 'http://url',
-                                                                 'data_dir')
-            self.assertEqual(resp, False)
 
 
 if __name__ == "__main__":
