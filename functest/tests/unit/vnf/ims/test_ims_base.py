@@ -35,21 +35,21 @@ class ClearwaterOnBoardingBaseTesting(unittest.TestCase):
                  'cookies': ""}
         self.mock_post_200.configure_mock(**attrs)
 
-    def test_create_ellis_number_failure(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.'
-                        'clearwater_ims_base.requests.post',
-                        return_value=self.mock_post_500), \
-                self.assertRaises(Exception) as context:
-            self.ims_vnf.create_ellis_number()
-
-            msg = "Unable to create a number:"
-            self.assertTrue(msg in context.exception)
-
-    def _get_post_status(self, url, cookies='', data=''):
-        ellis_url = "http://test_ellis_ip/session"
-        if url == ellis_url:
-            return self.mock_post_200
-        return self.mock_post
+    # def test_create_ellis_number_failure(self):
+    #     with mock.patch('functest.opnfv_tests.vnf.ims.'
+    #                     'clearwater_ims_base.requests.post',
+    #                     return_value=self.mock_post_500), \
+    #             self.assertRaises(Exception) as context:
+    #         self.ims_vnf.create_ellis_number()
+    #
+    #         msg = "Unable to create a number:"
+    #         self.assertTrue(msg in context.exception)
+    #
+    # def _get_post_status(self, url, cookies='', data=''):
+    #     ellis_url = "http://test_ellis_ip/session"
+    #     if url == ellis_url:
+    #         return self.mock_post_200
+    #     return self.mock_post
 
 
 if __name__ == "__main__":
