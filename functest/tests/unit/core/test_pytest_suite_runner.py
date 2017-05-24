@@ -12,20 +12,19 @@ import unittest
 
 import mock
 
-from functest.core import pytest_suite_runner
+from functest.core import unit
 from functest.core import testcase
 
 
 class PyTestSuiteRunnerTesting(unittest.TestCase):
 
     def setUp(self):
-        self.psrunner = pytest_suite_runner.PyTestSuiteRunner()
+        self.psrunner = unit.PyTestSuiteRunner()
 
     @mock.patch('unittest.TestLoader')
     def _test_run(self, mock_class=None, result=mock.Mock(),
                   status=testcase.TestCase.EX_OK):
-        with mock.patch('functest.core.pytest_suite_runner.'
-                        'unittest.TextTestRunner.run',
+        with mock.patch('functest.core.unit.unittest.TextTestRunner.run',
                         return_value=result):
             self.assertEqual(self.psrunner.run(), status)
             mock_class.assert_not_called()
@@ -78,8 +77,7 @@ class PyTestSuiteRunnerTesting(unittest.TestCase):
                                 failures=[])
         mock_obj = mock.Mock()
         mock_class.side_effect = mock_obj
-        with mock.patch('functest.core.pytest_suite_runner.'
-                        'unittest.TextTestRunner.run',
+        with mock.patch('functest.core.unit.unittest.TextTestRunner.run',
                         return_value=mock_result):
             self.assertEqual(self.psrunner.run(name='foo'),
                              testcase.TestCase.EX_OK)
