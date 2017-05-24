@@ -279,6 +279,21 @@ def get_heat_client(other_creds={}):
     return heatclient.Client(get_heat_client_version(), session=sess)
 
 
+def download_and_add_image_on_glance(glance, image_name, image_url, data_dir):
+    dest_path = data_dir
+    if not os.path.exists(dest_path):
+        os.makedirs(dest_path)
+    file_name = image_url.rsplit('/')[-1]
+    if not ft_utils.download_url(image_url, dest_path):
+        return False
+
+    image = create_glance_image(
+        glance, image_name, dest_path + file_name)
+    if not image:
+        return False
+
+    return image
+
 # *********************************************
 #   NOVA
 # *********************************************
@@ -1412,6 +1427,32 @@ def get_or_create_tenant(keystone_client, tenant_name, tenant_description):
     return tenant_id
 
 
+def get_or_create_tenant_for_vnf(keystone_client, tenant_name,
+                                 tenant_description):
+    """Get or Create a Tenant
+
+        Args:
+            keystone_client: keystone client reference
+            tenant_name: the name of the tenant
+            tenant_description: the description of the tenant
+
+        return 0 if tenant get
+        return 1 if tenant created
+        raise Exception if error during processing
+    """
+    try:
+        tenant_id = get_tenant_id(keystone_client, tenant_name)
+        if not tenant_id:
+            tenant_id = create_tenant(keystone_client, tenant_name,
+                                      tenant_description)
+            return 0
+        else:
+            return 1
+    except:
+        raise Exception("Impossible to create a Tenant for the VNF {}".format(
+                            tenant_name))
+
+
 def create_user(keystone_client, user_name, user_password,
                 user_email, tenant_id):
     try:
@@ -1442,6 +1483,32 @@ def get_or_create_user(keystone_client, user_name, user_password,
         user_id = create_user(keystone_client, user_name, user_password,
                               user_email, tenant_id)
     return user_id
+
+
+def get_or_create_user_for_vnf(keystone_client, vnf_ref):
+    """Get or Create user for VNF
+
+        Args:
+            keystone_client: keystone client reference
+            vnf_ref: VNF reference used as user name & password, tenant name
+
+        return 0 if user get
+        return 1 if user created
+        raise Exception if error during processing
+    """
+    try:
+        user_id = get_user_id(keystone_client, vnf_ref)
+        tenant_id = get_tenant_id(keystone_client, vnf_ref)
+        if not user_id:
+            user_id = create_user(keystone_client, vnf_ref, vnf_ref,
+                                  "", tenant_id)
+            return 0
+        else:
+            return 1
+        add_role_user(keystone_client, user_id, 'admin', vnf_ref)
+    except:
+        raise Exception("Impossible to create a user for the VNF {}".format(
+            vnf_ref))
 
 
 def add_role_user(keystone_client, user_id, role_id, tenant_id):
