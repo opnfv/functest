@@ -10,156 +10,199 @@
 # pylint: disable=missing-docstring
 
 import logging
-import os
 import unittest
 
 import mock
 
 from functest.core import vnf
 from functest.core import testcase
+from functest.utils import constants
 
 
 class VnfBaseTesting(unittest.TestCase):
+    """The class testing VNF."""
+    # pylint: disable=missing-docstring,too-many-public-methods
+
+    tenant_name = 'test_tenant_name'
+    tenant_description = 'description'
 
     def setUp(self):
-        self.test = vnf.VnfOnBoarding(
-            project='functest', case_name='aaa')
-        self.test.project = "functest"
-        self.test.start_time = "1"
-        self.test.stop_time = "5"
-        self.test.result = ""
-        self.test.details = {
-            "orchestrator": {"status": "PASS", "result": "", "duration": 20},
-            "vnf": {"status": "PASS", "result": "", "duration": 15},
-            "test_vnf": {"status": "FAIL", "result": "", "duration": 5}}
-        self.test.keystone_client = 'test_client'
-        self.test.tenant_name = 'test_tenant_name'
+        constants.CONST.__setattr__("vnf_foo_tenant_name", self.tenant_name)
+        constants.CONST.__setattr__(
+            "vnf_foo_tenant_description", self.tenant_description)
+        self.test = vnf.VnfOnBoarding(project='functest', case_name='foo')
 
-    def test_execute_deploy_vnf_fail(self):
+    def test_run_deploy_vnf_exc(self):
         with mock.patch.object(self.test, 'prepare'),\
             mock.patch.object(self.test, 'deploy_orchestrator',
                               return_value=None), \
             mock.patch.object(self.test, 'deploy_vnf',
                               side_effect=Exception):
-            self.assertEqual(self.test.execute(),
+            self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_TESTCASE_FAILED)
 
-    def test_execute_test_vnf_fail(self):
+    def test_run_test_vnf_exc(self):
         with mock.patch.object(self.test, 'prepare'),\
             mock.patch.object(self.test, 'deploy_orchestrator',
                               return_value=None), \
             mock.patch.object(self.test, 'deploy_vnf'), \
             mock.patch.object(self.test, 'test_vnf',
                               side_effect=Exception):
-            self.assertEqual(self.test.execute(),
+            self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_TESTCASE_FAILED)
 
-    @mock.patch('functest.core.vnf.os_utils.get_tenant_id',
-                return_value='test_tenant_id')
-    @mock.patch('functest.core.vnf.os_utils.delete_tenant',
-                return_value=True)
-    @mock.patch('functest.core.vnf.os_utils.get_user_id',
-                return_value='test_user_id')
-    @mock.patch('functest.core.vnf.os_utils.delete_user',
-                return_value=True)
-    def test_execute_default(self, *args):
+    def test_run_deploy_orch_ko(self):
         with mock.patch.object(self.test, 'prepare'),\
                 mock.patch.object(self.test, 'deploy_orchestrator',
-                                  return_value=None), \
-                mock.patch.object(self.test, 'deploy_vnf'), \
-                mock.patch.object(self.test, 'test_vnf'), \
-                mock.patch.object(self.test, 'parse_results',
-                                  return_value='ret_exit_code'), \
-                mock.patch.object(self.test, 'log_results'):
-            self.assertEqual(self.test.execute(),
-                             'ret_exit_code')
+                                  return_value=False), \
+                mock.patch.object(self.test, 'deploy_vnf',
+                                  return_value=True), \
+                mock.patch.object(self.test, 'test_vnf',
+                                  return_value=True):
+            self.assertEqual(self.test.run(),
+                             testcase.TestCase.EX_TESTCASE_FAILED)
 
-    @mock.patch('functest.core.vnf.os_utils.get_credentials')
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.get_user_id', return_value='')
-    def test_prepare_missing_userid(self, *args):
-        with self.assertRaises(Exception):
-            self.test.prepare()
+    def test_run_vnf_deploy_ko(self):
+        with mock.patch.object(self.test, 'prepare'),\
+                mock.patch.object(self.test, 'deploy_orchestrator',
+                                  return_value=True), \
+                mock.patch.object(self.test, 'deploy_vnf',
+                                  return_value=False), \
+                mock.patch.object(self.test, 'test_vnf',
+                                  return_value=True):
+            self.assertEqual(self.test.run(),
+                             testcase.TestCase.EX_TESTCASE_FAILED)
 
-    @mock.patch('functest.core.vnf.os_utils.get_credentials')
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.get_user_id',
-                return_value='test_roleid')
-    @mock.patch('functest.core.vnf.os_utils.create_tenant',
-                return_value='')
-    def test_prepare_missing_tenantid(self, *args):
-        with self.assertRaises(Exception):
-            self.test.prepare()
+    def test_run_vnf_test_ko(self):
+        with mock.patch.object(self.test, 'prepare'),\
+                mock.patch.object(self.test, 'deploy_orchestrator',
+                                  return_value=True), \
+                mock.patch.object(self.test, 'deploy_vnf',
+                                  return_value=True), \
+                mock.patch.object(self.test, 'test_vnf',
+                                  return_value=False):
+            self.assertEqual(self.test.run(),
+                             testcase.TestCase.EX_TESTCASE_FAILED)
 
-    @mock.patch('functest.core.vnf.os_utils.get_credentials')
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.get_user_id',
-                return_value='test_roleid')
-    @mock.patch('functest.core.vnf.os_utils.create_tenant',
-                return_value='test_tenantid')
-    @mock.patch('functest.core.vnf.os_utils.get_role_id',
-                return_value='')
-    def test_prepare_missing_roleid(self, *args):
-        with self.assertRaises(Exception):
-            self.test.prepare()
-
-    @mock.patch('functest.core.vnf.os_utils.get_credentials')
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.get_user_id',
-                return_value='test_roleid')
-    @mock.patch('functest.core.vnf.os_utils.create_tenant',
-                return_value='test_tenantid')
-    @mock.patch('functest.core.vnf.os_utils.get_role_id',
-                return_value='test_roleid')
-    @mock.patch('functest.core.vnf.os_utils.add_role_user',
-                return_value='')
-    def test_prepare_role_add_failure(self, *args):
-        with self.assertRaises(Exception):
-            self.test.prepare()
-
-    @mock.patch('functest.core.vnf.os_utils.get_credentials')
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.get_user_id',
-                return_value='test_roleid')
-    @mock.patch('functest.core.vnf.os_utils.create_tenant',
-                return_value='test_tenantid')
-    @mock.patch('functest.core.vnf.os_utils.get_role_id',
-                return_value='test_roleid')
-    @mock.patch('functest.core.vnf.os_utils.add_role_user')
-    @mock.patch('functest.core.vnf.os_utils.create_user',
-                return_value='')
-    def test_create_user_failure(self, *args):
-        with self.assertRaises(Exception):
-            self.test.prepare()
-
-    def test_log_results_default(self):
-        with mock.patch('functest.core.vnf.'
-                        'ft_utils.logger_test_results') \
-                as mock_method:
-            self.test.log_results()
-            self.assertTrue(mock_method.called)
-
-    def test_step_failures_default(self):
-        with self.assertRaises(Exception):
-            self.test.step_failure("error_msg")
+    def test_run_default(self):
+        with mock.patch.object(self.test, 'prepare'),\
+                mock.patch.object(self.test, 'deploy_orchestrator',
+                                  return_value=True), \
+                mock.patch.object(self.test, 'deploy_vnf',
+                                  return_value=True), \
+                mock.patch.object(self.test, 'test_vnf',
+                                  return_value=True):
+            self.assertEqual(self.test.run(), testcase.TestCase.EX_OK)
 
     def test_deploy_vnf_unimplemented(self):
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(vnf.VnfDeploymentException):
             self.test.deploy_vnf()
-        self.assertIn('VNF not deployed', str(context.exception))
 
     def test_test_vnf_unimplemented(self):
-        with self.assertRaises(Exception) as context:
-            self.test.test_vnf()()
-        self.assertIn('VNF not tested', str(context.exception))
+        with self.assertRaises(vnf.VnfTestException):
+            self.test.test_vnf()
 
-    def test_parse_results_ex_ok(self):
-        self.test.details['test_vnf']['status'] = 'PASS'
-        self.assertEqual(self.test.parse_results(), os.EX_OK)
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
+    @mock.patch('functest.core.vnf.os_utils.delete_user',
+                return_value=True)
+    def test_clean_user_set(self, *args):
+        self.test.user_created = True
+        self.test.clean()
+        args[0].assert_called_once_with(mock.ANY, self.tenant_name)
+        args[1].assert_called_once_with()
 
-    def test_parse_results_ex_run_error(self):
-        self.test.details['vnf']['status'] = 'FAIL'
-        self.assertEqual(self.test.parse_results(), os.EX_SOFTWARE)
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
+    @mock.patch('functest.core.vnf.os_utils.delete_user',
+                return_value=True)
+    def test_clean_user_unset(self, *args):
+        self.test.user_created = False
+        self.test.clean()
+        args[0].assert_not_called()
+        args[1].assert_called_once_with()
+
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
+    @mock.patch('functest.core.vnf.os_utils.delete_tenant',
+                return_value=True)
+    def test_clean_tenant_set(self, *args):
+        self.test.tenant_created = True
+        self.test.clean()
+        args[0].assert_called_once_with(mock.ANY, self.tenant_name)
+        args[1].assert_called_once_with()
+
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
+    @mock.patch('functest.core.vnf.os_utils.delete_tenant',
+                return_value=True)
+    def test_clean_tenant_unset(self, *args):
+        self.test.tenant_created = False
+        self.test.clean()
+        args[0].assert_not_called()
+        args[1].assert_called_once_with()
+
+    def test_deploy_orch_unimplemented(self):
+        self.assertTrue(self.test.deploy_orchestrator())
+
+    @mock.patch('functest.core.vnf.os_utils.get_credentials',
+                return_value={'creds': 'test'})
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
+                return_value='test')
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
+                return_value=0)
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
+                return_value=0)
+    def test_prepare(self, *args):
+        self.assertEqual(self.test.prepare(),
+                         testcase.TestCase.EX_OK)
+        args[0].assert_called_once_with('test', self.tenant_name)
+        args[1].assert_called_once_with(
+            'test', self.tenant_name, self.tenant_description)
+        args[2].assert_called_once_with()
+        args[3].assert_called_once_with()
+
+    @mock.patch('functest.core.vnf.os_utils.get_credentials',
+                side_effect=Exception)
+    def test_prepare_admin_creds_ko(self, *args):
+        with self.assertRaises(vnf.VnfPreparationException):
+            self.test.prepare()
+        args[0].assert_called_once_with()
+
+    @mock.patch('functest.core.vnf.os_utils.get_credentials',
+                return_value='creds')
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
+                side_effect=Exception)
+    def test_prepare_keystone_client_ko(self, *args):
+        with self.assertRaises(vnf.VnfPreparationException):
+            self.test.prepare()
+        args[0].assert_called_once_with()
+        args[1].assert_called_once_with()
+
+    @mock.patch('functest.core.vnf.os_utils.get_credentials',
+                return_value='creds')
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
+                side_effect=Exception)
+    def test_prepare_tenant_creation_ko(self, *args):
+        with self.assertRaises(vnf.VnfPreparationException):
+            self.test.prepare()
+        args[0].assert_called_once_with(
+            mock.ANY, self.tenant_name, self.tenant_description)
+        args[1].assert_called_once_with()
+        args[2].assert_called_once_with()
+
+    @mock.patch('functest.core.vnf.os_utils.get_credentials',
+                return_value='creds')
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
+                return_value=0)
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
+                side_effect=Exception)
+    def test_prepare_user_creation_ko(self, *args):
+        with self.assertRaises(vnf.VnfPreparationException):
+            self.test.prepare()
+        args[0].assert_called_once_with(mock.ANY, self.tenant_name)
+        args[1].assert_called_once_with(
+            mock.ANY, self.tenant_name, self.tenant_description)
+        args[2].assert_called_once_with()
+        args[3].assert_called_once_with()
 
 
 if __name__ == "__main__":
