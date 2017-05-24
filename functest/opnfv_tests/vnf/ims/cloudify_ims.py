@@ -22,14 +22,21 @@ from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 
+__author__ = "Valentin Boucher <valentin.boucher@orange.com>"
+
 
 class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
+    """Clearwater vIMS deployed with Cloudify Orchestrator Case"""
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "cloudify_ims"
         super(CloudifyIms, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
+        self.neutron_client = ''
+        self.glance_client = ''
+        self.keystone_client = ''
+        self.nova_client = ''
 
         # Retrieve the configuration
         try:
@@ -44,7 +51,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             blueprint=get_config("cloudify.blueprint", config_file),
             inputs=get_config("cloudify.inputs", config_file)
         )
-        self.logger.debug("Orchestrator configuration: %s" % self.orchestrator)
+        self.logger.debug("Orchestrator configuration: %s", self.orchestrator)
         self.vnf = dict(
             blueprint=get_config("clearwater.blueprint", config_file),
             deployment_name=get_config("clearwater.deployment_name",
@@ -52,12 +59,12 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             inputs=get_config("clearwater.inputs", config_file),
             requirements=get_config("clearwater.requirements", config_file)
         )
-        self.logger.debug("VNF configuration: %s" % self.vnf)
+        self.logger.debug("VNF configuration: %s", self.vnf)
 
         self.images = get_config("tenant_images", config_file)
-        self.logger.info("Images needed for vIMS: %s" % self.images)
+        self.logger.info("Images needed for vIMS: %s", self.images)
 
-    def deploy_orchestrator(self, **kwargs):
+    def deploy_orchestrator(self):
 
         self.logger.info("Additional pre-configuration steps")
         self.neutron_client = os_utils.get_neutron_client(self.admin_creds)
@@ -69,45 +76,50 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.logger.info("Upload some OS images if it doesn't exist")
         temp_dir = os.path.join(self.data_dir, "tmp/")
         for image_name, image_url in self.images.iteritems():
-            self.logger.info("image: %s, url: %s" % (image_name, image_url))
+            self.logger.info("image: %s, url: %s", image_name, image_url)
             try:
                 image_id = os_utils.get_image_id(self.glance_client,
                                                  image_name)
-                self.logger.debug("image_id: %s" % image_id)
+                self.logger.debug("image_id: %s", image_id)
             except Exception:
-                self.logger.error("Unexpected error: %s" % sys.exc_info()[0])
+                self.logger.error("Unexpected error: %s", sys.exc_info()[0])
 
             if image_id == '':
-                self.logger.info("""%s image doesn't exist on glance repository. Try
-                downloading this image and upload on glance !""" % image_name)
-                image_id = download_and_add_image_on_glance(self.glance_client,
-                                                            image_name,
-                                                            image_url,
-                                                            temp_dir)
-            if image_id == '':
-                self.step_failure(
-                    "Failed to find or upload required OS "
-                    "image for this deployment")
+                self.logger.info("""%s image does not exist on glance repo.
+                                 Try downloading this image
+                                 and upload on glance !""",
+                                 image_name)
+                image_id = os_utils.download_and_add_image_on_glance(
+                    self.glance_client,
+                    image_name,
+                    image_url,
+                    temp_dir)
+            # if image_id == '':
+                # self.step_failure(
+                #     "Failed to find or upload required OS "
+                #     "image for this deployment")
         # Need to extend quota
         self.logger.info("Update security group quota for this tenant")
         tenant_id = os_utils.get_tenant_id(self.keystone_client,
                                            self.tenant_name)
-        self.logger.debug("Tenant id found %s" % tenant_id)
+        self.logger.debug("Tenant id found %s", tenant_id)
         if not os_utils.update_sg_quota(self.neutron_client,
                                         tenant_id, 50, 100):
-            self.step_failure("Failed to update security group quota" +
+            self.logger.error("Failed to update security group quota"
                               " for tenant " + self.tenant_name)
+            # self.step_failure("Failed to update security group quota" +
+            #                   " for tenant " + self.tenant_name)
         self.logger.debug("group quota extended")
 
         # start the deployment of cloudify
         public_auth_url = os_utils.get_endpoint('identity')
 
-        self.logger.debug("CFY inputs: %s" % self.orchestrator['inputs'])
+        self.logger.debug("CFY inputs: %s", self.orchestrator['inputs'])
         cfy = Orchestrator(self.data_dir, self.orchestrator['inputs'])
         self.orchestrator['object'] = cfy
         self.logger.debug("Orchestrator object created")
 
-        self.logger.debug("Tenant name: %s" % self.tenant_name)
+        self.logger.debug("Tenant name: %s", self.tenant_name)
 
         cfy.set_credentials(username=self.tenant_name,
                             password=self.tenant_name,
@@ -117,7 +129,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
         # orchestrator VM flavor
         self.logger.info("Check Flavor is available, if not create one")
-        self.logger.debug("Flavor details %s " %
+        self.logger.debug("Flavor details %s ",
                           self.orchestrator['requirements']['ram_min'])
         flavor_exist, flavor_id = os_utils.get_or_create_flavor(
             "m1.large",
@@ -125,13 +137,13 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             '50',
             '2',
             public=True)
-        self.logger.debug("Flavor id: %s" % flavor_id)
+        self.logger.debug("Flavor id: %s", flavor_id)
 
         if not flavor_id:
             self.logger.info("Available flavors are: ")
             self.logger.info(self.nova_client.flavor.list())
-            self.step_failure("Failed to find required flavor"
-                              "for this deployment")
+            # self.step_failure("Failed to find required flavor"
+            #                   "for this deployment")
         cfy.set_flavor_id(flavor_id)
         self.logger.debug("Flavor OK")
 
@@ -141,23 +153,23 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             image_id = os_utils.get_image_id(
                 self.glance_client,
                 self.orchestrator['requirements']['os_image'])
-            self.logger.debug("Orchestrator image id: %s" % image_id)
+            self.logger.debug("Orchestrator image id: %s", image_id)
             if image_id == '':
                 self.logger.error("CFY image not found")
-                self.step_failure("Failed to find required OS image"
-                                  " for cloudify manager")
-        else:
-            self.step_failure("Failed to find required OS image"
-                              " for cloudify manager")
+                # self.step_failure("Failed to find required OS image"
+                #                   " for cloudify manager")
+        # else:
+        #     self.step_failure("Failed to find required OS image"
+        #                       " for cloudify manager")
 
         cfy.set_image_id(image_id)
         self.logger.debug("Orchestrator image set")
 
         self.logger.debug("Get External network")
         ext_net = os_utils.get_external_net(self.neutron_client)
-        self.logger.debug("External network: %s" % ext_net)
-        if not ext_net:
-            self.step_failure("Failed to get external network")
+        self.logger.debug("External network: %s", ext_net)
+        # if not ext_net:
+        #     self.step_failure("Failed to get external network")
 
         cfy.set_external_network_name(ext_net)
         self.logger.debug("CFY External network set")
@@ -199,12 +211,12 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             '30',
             '1',
             public=True)
-        self.logger.debug("Flavor id: %s" % flavor_id)
+        self.logger.debug("Flavor id: %s", flavor_id)
         if not flavor_id:
             self.logger.info("Available flavors are: ")
             self.logger.info(self.nova_client.flavor.list())
-            self.step_failure("Failed to find required flavor"
-                              " for this deployment")
+            # self.step_failure("Failed to find required flavor"
+            #                   " for this deployment")
 
         cw.set_flavor_id(flavor_id)
 
@@ -212,18 +224,18 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         if 'os_image' in self.vnf['requirements'].keys():
             image_id = os_utils.get_image_id(
                 self.glance_client, self.vnf['requirements']['os_image'])
-            if image_id == '':
-                self.step_failure("Failed to find required OS image"
-                                  " for clearwater VMs")
-        else:
-            self.step_failure("Failed to find required OS image"
-                              " for clearwater VMs")
+            # if image_id == '':
+            #     self.step_failure("Failed to find required OS image"
+            #                       " for clearwater VMs")
+        # else:
+        #     self.step_failure("Failed to find required OS image"
+        #                       " for clearwater VMs")
 
         cw.set_image_id(image_id)
 
         ext_net = os_utils.get_external_net(self.neutron_client)
-        if not ext_net:
-            self.step_failure("Failed to get external network")
+        # if not ext_net:
+        #     self.step_failure("Failed to get external network")
 
         cw.set_external_network_name(ext_net)
 
@@ -245,8 +257,8 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             mgr_ip = os.popen(cmd).read()
             mgr_ip = mgr_ip.splitlines()[0]
         except Exception:
-            self.step_failure("Unable to retrieve the IP of the "
-                              "cloudify manager server !")
+            self.logger.exception("Unable to retrieve the IP of the "
+                                  "cloudify manager server !")
 
         self.logger.info('Cloudify Manager: %s', mgr_ip)
         api_url = 'http://{0}/api/v2/deployments/{1}/outputs'.format(
@@ -273,19 +285,6 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.orchestrator['object'].undeploy_manager()
         super(CloudifyIms, self).clean()
 
-    def main(self, **kwargs):
-        self.logger.info("Cloudify IMS VNF onboarding test starting")
-        self.execute()
-        self.logger.info("Cloudify IMS VNF onboarding test executed")
-        if self.result is "PASS":
-            return self.EX_OK
-        else:
-            return self.EX_RUN_ERROR
-
-    def run(self):
-        kwargs = {}
-        return self.main(**kwargs)
-
 
 # ----------------------------------------------------------
 #
@@ -308,19 +307,3 @@ def get_config(parameter, file):
             raise ValueError("The parameter %s is not defined in"
                              " reporting.yaml" % parameter)
     return value
-
-
-def download_and_add_image_on_glance(glance, image_name, image_url, data_dir):
-    dest_path = data_dir
-    if not os.path.exists(dest_path):
-        os.makedirs(dest_path)
-    file_name = image_url.rsplit('/')[-1]
-    if not ft_utils.download_url(image_url, dest_path):
-        return False
-
-    image = os_utils.create_glance_image(
-        glance, image_name, dest_path + file_name)
-    if not image:
-        return False
-
-    return image
