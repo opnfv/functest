@@ -16,13 +16,14 @@ import time
 import yaml
 
 import functest.core.vnf as vnf
-import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
 from org.openbaton.cli.agents.agents import MainAgent
 from org.openbaton.cli.errors.errors import NfvoException
 
+
+__author__ = "Pauls, Michael <michael.pauls@fokus.fraunhofer.de>"
 # ----------------------------------------------------------
 #
 #               UTILS
@@ -30,7 +31,7 @@ from org.openbaton.cli.errors.errors import NfvoException
 # -----------------------------------------------------------
 
 
-def get_config(parameter, file):
+def get_config(parameter, my_file):
     """
     Returns the value of a given parameter in file.yaml
     parameter must be given in string format with dots
@@ -44,23 +45,8 @@ def get_config(parameter, file):
         value = value.get(element)
         if value is None:
             raise ValueError("The parameter %s is not defined in"
-                             " %s" % (parameter, file))
+                             " %s" % (parameter, my_file))
     return value
-
-
-def download_and_add_image_on_glance(glance, image_name,
-                                     image_url, data_dir):
-    dest_path = data_dir
-    if not os.path.exists(dest_path):
-        os.makedirs(dest_path)
-    file_name = image_url.rsplit('/')[-1]
-    if not ft_utils.download_url(image_url, dest_path):
-        return False
-    image = os_utils.create_glance_image(
-        glance, image_name, dest_path + file_name)
-    if not image:
-        return False
-    return image
 
 
 def servertest(host, port):
@@ -77,20 +63,24 @@ def servertest(host, port):
 
 
 class ImsVnf(vnf.VnfOnBoarding):
+    """OpenIMS VNF deployed with openBaton orchestrator"""
 
     def __init__(self, project='functest', case_name='orchestra_ims',
                  repo='', cmd=''):
         super(ImsVnf, self).__init__(project, case_name, repo, cmd)
+        self.logger = logging.getLogger(__name__)
+        self.logger.info("Orchestra IMS VNF onboarding test starting")
         self.ob_password = "openbaton"
         self.ob_username = "admin"
         self.ob_https = False
         self.ob_port = "8080"
         self.ob_ip = "localhost"
         self.ob_instance_id = ""
-        self.logger = logging.getLogger(__name__)
-        self.case_dir = os.path.join(CONST.dir_functest_test, 'vnf/ims/')
-        self.data_dir = CONST.dir_ims_data
-        self.test_dir = CONST.dir_repo_vims_test
+        self.case_dir = os.path.join(
+            CONST.__getattribute__('dir_functest_test'),
+            'vnf/ims/')
+        self.data_dir = CONST.__getattribute__('dir_ims_data')
+        self.test_dir = CONST.__getattribute__('dir_repo_vims_test')
         self.ob_projectid = ""
         self.keystone_client = os_utils.get_keystone_client()
         self.ob_nsr_id = ""
@@ -118,7 +108,7 @@ class ImsVnf(vnf.VnfOnBoarding):
         self.userdata_file = get_config("openbaton.userdata.file",
                                         config_file)
 
-    def deploy_orchestrator(self, **kwargs):
+    def deploy_orchestrator(self):
         self.logger.info("Additional pre-configuration steps")
         nova_client = os_utils.get_nova_client()
         neutron_client = os_utils.get_neutron_client()
@@ -129,25 +119,28 @@ class ImsVnf(vnf.VnfOnBoarding):
         self.logger.info("Upload some OS images if it doesn't exist")
         temp_dir = os.path.join(self.data_dir, "tmp/")
         for image_name, image_url in self.images.iteritems():
-            self.logger.info("image: %s, url: %s" % (image_name, image_url))
+            self.logger.info("image: %s, url: %s", image_name, image_url)
             try:
                 image_id = os_utils.get_image_id(glance_client,
                                                  image_name)
-                self.logger.info("image_id: %s" % image_id)
+                self.logger.info("image_id: %s", image_id)
             except BaseException:
-                self.logger.error("Unexpected error: %s" % sys.exc_info()[0])
+                self.logger.error("Unexpected error: %s", sys.exc_info()[0])
 
             if image_id == '':
-                self.logger.info("""%s image doesn't exist on glance repository. Try
-                downloading this image and upload on glance !""" % image_name)
-                image_id = download_and_add_image_on_glance(glance_client,
-                                                            image_name,
-                                                            image_url,
-                                                            temp_dir)
+                self.logger.info("""%s image doesn't exist on glance
+                                 repository. Try downloading this image
+                                 and upload on glance !""" % image_name)
+                image_id = os_utils.download_and_add_image_on_glance(
+                    glance_client,
+                    image_name,
+                    image_url,
+                    temp_dir)
             if image_id == '':
-                self.step_failure(
-                    "Failed to find or upload required OS "
-                    "image for this deployment")
+                self.logger.error("Failed to find or upload required OS "
+                                  "image for this deployment")
+                return False
+
         network_dic = os_utils.create_network_full(neutron_client,
                                                    "openbaton_mgmt",
                                                    "openbaton_mgmt_subnet",
@@ -177,6 +170,7 @@ class ImsVnf(vnf.VnfOnBoarding):
 
         if floatip is None:
             self.logger.error("Cannot create floating IP.")
+            return False
 
         userdata = "#!/bin/bash\n"
         userdata += "echo \"Executing userdata...\"\n"
@@ -249,8 +243,10 @@ class ImsVnf(vnf.VnfOnBoarding):
         self.logger.info("flavor: m1.medium\n"
                          "image: %s\n"
                          "network_id: %s\n"
-                         "userdata: %s\n"
-                         % (self.imagename, network_id, userdata))
+                         "userdata: %s\n",
+                         self.imagename,
+                         network_id,
+                         userdata)
 
         instance = os_utils.create_instance_and_wait_for_active(
             "orchestra",
@@ -266,10 +262,12 @@ class ImsVnf(vnf.VnfOnBoarding):
         os_utils.add_secgroup_to_instance(nova_client,
                                           self.ob_instance_id, sg_id)
 
-        self.logger.info("Associating floating ip: '%s' to VM '%s' "
-                         % (floatip, "orchestra-openbaton"))
+        self.logger.info("Associating floating ip: '%s' to VM '%s' ",
+                         floatip,
+                         "orchestra-openbaton")
         if not os_utils.add_floating_ip(nova_client, instance.id, floatip):
-            self.step_failure("Cannot associate floating IP to VM.")
+            self.logger.error("Cannot associate floating IP to VM.")
+            return False
 
         self.logger.info("Waiting for Open Baton NFVO to be up and running...")
         x = 0
@@ -284,7 +282,7 @@ class ImsVnf(vnf.VnfOnBoarding):
                 x += 1
 
         if x == 100:
-            self.step_failure("Open Baton is not started correctly")
+            self.logger.error("Open Baton is not started correctly")
 
         self.ob_ip = floatip
         self.ob_password = "openbaton"
@@ -296,6 +294,7 @@ class ImsVnf(vnf.VnfOnBoarding):
         self.details["orchestrator"] = {
             'status': "PASS", 'result': "Deploy Open Baton NFVO: OK"}
         self.logger.info("Deploy Open Baton NFVO: OK")
+        return True
 
     def deploy_vnf(self):
         self.logger.info("Starting vIMS Deployment...")
@@ -315,22 +314,22 @@ class ImsVnf(vnf.VnfOnBoarding):
             '20',
             '1',
             public=True)
-        self.logger.debug("Flavor id: %s" % flavor_id)
+        self.logger.debug("Flavor id: %s", flavor_id)
 
         self.logger.info("Getting project 'default'...")
         project_agent = self.main_agent.get_agent("project", self.ob_projectid)
         for p in json.loads(project_agent.find()):
             if p.get("name") == "default":
                 self.ob_projectid = p.get("id")
-                self.logger.info("Found project 'default': %s" % p)
+                self.logger.info("Found project 'default': %s", p)
                 break
 
-        self.logger.debug("project id: %s" % self.ob_projectid)
+        self.logger.debug("project id: %s", self.ob_projectid)
         if self.ob_projectid == "":
-            self.step_failure("Default project id was not found!")
+            self.logger.error("Default project id was not found!")
 
         creds = os_utils.get_credentials()
-        self.logger.info("PoP creds: %s" % creds)
+        self.logger.info("PoP creds: %s", creds)
 
         if os_utils.is_keystone_v3():
             self.logger.info(
@@ -343,7 +342,7 @@ class ImsVnf(vnf.VnfOnBoarding):
                 "Using v2 API of OpenStack... -> Using OS_TENANT_NAME")
             project_id = creds.get("tenant_name")
 
-        self.logger.debug("project id: %s" % project_id)
+        self.logger.debug("project id: %s", project_id)
 
         vim_json = {
             "name": "vim-instance",
@@ -363,7 +362,7 @@ class ImsVnf(vnf.VnfOnBoarding):
             }
         }
 
-        self.logger.debug("Registering VIM: %s" % vim_json)
+        self.logger.debug("Registering VIM: %s", vim_json)
 
         self.main_agent.get_agent(
             "vim",
@@ -374,28 +373,29 @@ class ImsVnf(vnf.VnfOnBoarding):
 
         nsd = {}
         try:
-            self.logger.info("sending: %s" % self.market_link)
+            self.logger.info("sending: %s", self.market_link)
             nsd = market_agent.create(entity=self.market_link)
             self.logger.info("Onboarded NSD: " + nsd.get("name"))
         except NfvoException as e:
-            self.step_failure(e.message)
+            self.logger.error(e.message)
 
         nsr_agent = self.main_agent.get_agent("nsr",
                                               project_id=self.ob_projectid)
         nsd_id = nsd.get('id')
         if nsd_id is None:
-            self.step_failure("NSD not onboarded correctly")
+            self.logger.error("NSD not onboarded correctly")
 
         try:
             self.nsr = nsr_agent.create(nsd_id)
         except NfvoException as e:
-            self.step_failure(e.message)
+            self.logger.error(e.message)
 
         if self.nsr.get('code') is not None:
             self.logger.error(
-                "vIMS cannot be deployed: %s -> %s" %
-                (self.nsr.get('code'), self.nsr.get('message')))
-            self.step_failure("vIMS cannot be deployed")
+                "vIMS cannot be deployed: %s -> %s",
+                self.nsr.get('code'),
+                self.nsr.get('message'))
+            self.logger.error("vIMS cannot be deployed")
 
         i = 0
         self.logger.info("Waiting for NSR to go to ACTIVE...")
@@ -403,8 +403,8 @@ class ImsVnf(vnf.VnfOnBoarding):
                 "status") != 'ERROR':
             i += 1
             if i == 150:
-                self.step_failure("After %s sec the NSR did not go to ACTIVE.."
-                                  % 5 * i)
+                self.logger.error("INACTIVE NSR after %s sec..", 5 * i)
+
             time.sleep(5)
             self.nsr = json.loads(nsr_agent.find(self.nsr.get('id')))
 
@@ -414,60 +414,66 @@ class ImsVnf(vnf.VnfOnBoarding):
         else:
             self.details["vnf"] = {'status': "FAIL", 'result': self.nsr}
             self.logger.error(self.nsr)
-            self.step_failure("Deploy VNF: ERROR")
+            self.logger.error("Deploy VNF: ERROR")
+            return False
+
         self.ob_nsr_id = self.nsr.get("id")
         self.logger.info(
             "Sleep for 60s to ensure that all services are up and running...")
         time.sleep(60)
-        return self.details.get("vnf")
+        return True
 
     def test_vnf(self):
         # Adaptations probably needed
         # code used for cloudify_ims
         # ruby client on jumphost calling the vIMS on the SUT
         self.logger.info(
-            "Testing if %s works properly..." %
-            self.nsr.get('name'))
+            "Testing if %s works properly...", self.nsr.get('name'))
         for vnfr in self.nsr.get('vnfr'):
             self.logger.info(
-                "Checking ports %s of VNF %s" %
-                (self.ims_conf.get(
-                    vnfr.get('name')).get('ports'),
-                    vnfr.get('name')))
+                "Checking ports %s of VNF %s",
+                self.ims_conf.get(vnfr.get('name')).get('ports'),
+                vnfr.get('name'))
             for vdu in vnfr.get('vdu'):
                 for vnfci in vdu.get('vnfc_instance'):
                     self.logger.debug(
-                        "Checking ports of VNFC instance %s" %
+                        "Checking ports of VNFC instance %s",
                         vnfci.get('hostname'))
                     for floatingIp in vnfci.get('floatingIps'):
                         self.logger.debug(
-                            "Testing %s:%s" %
-                            (vnfci.get('hostname'), floatingIp.get('ip')))
+                            "Testing %s:%s",
+                            vnfci.get('hostname'),
+                            floatingIp.get('ip'))
                         for port in self.ims_conf.get(
                                 vnfr.get('name')).get('ports'):
                             if servertest(floatingIp.get('ip'), port):
                                 self.logger.info(
-                                    "VNFC instance %s is reachable at %s:%s" %
-                                    (vnfci.get('hostname'),
-                                     floatingIp.get('ip'),
-                                     port))
+                                    "VNFC instance %s is reachable at %s:%s",
+                                    vnfci.get('hostname'),
+                                    floatingIp.get('ip'),
+                                    port)
                             else:
                                 self.logger.error(
                                     "VNFC instance %s is not reachable "
-                                    "at %s:%s" % (vnfci.get('hostname'),
-                                                  floatingIp.get('ip'), port))
+                                    "at %s:%s",
+                                    vnfci.get('hostname'),
+                                    floatingIp.get('ip'),
+                                    port)
                                 self.details["test_vnf"] = {
                                     'status': "FAIL", 'result': (
                                         "Port %s of server %s -> %s is "
-                                        "not reachable" %
-                                        (port, vnfci.get('hostname'),
-                                         floatingIp.get('ip')))}
-                                self.step_failure("Test VNF: ERROR")
+                                        "not reachable",
+                                        port,
+                                        vnfci.get('hostname'),
+                                        floatingIp.get('ip'))}
+                                self.logger.error("Test VNF: ERROR")
+                                return False
+
         self.details["test_vnf"] = {
             'status': "PASS",
             'result': "All tests have been executed successfully"}
         self.logger.info("Test VNF: OK")
-        return self.details.get('test_vnf')
+        return True
 
     def clean(self):
         self.main_agent.get_agent(
@@ -476,28 +482,6 @@ class ImsVnf(vnf.VnfOnBoarding):
         time.sleep(5)
         os_utils.delete_instance(nova_client=os_utils.get_nova_client(),
                                  instance_id=self.ob_instance_id)
-        # TODO question is the clean removing also the VM?
+        # question is the clean removing also the VM?
         # I think so since is goinf to remove the tenant...
         super(ImsVnf, self).clean()
-
-    def main(self, **kwargs):
-        self.logger.info("Orchestra IMS VNF onboarding test starting")
-        self.execute()
-        self.logger.info("Orchestra IMS VNF onboarding test executed")
-        if self.result is "PASS":
-            return self.EX_OK
-        else:
-            return self.EX_RUN_ERROR
-
-    def run(self):
-        kwargs = {}
-        return self.main(**kwargs)
-
-
-if __name__ == '__main__':
-    logging.basicConfig()
-    test = ImsVnf()
-    test.deploy_orchestrator()
-    test.deploy_vnf()
-    test.test_vnf()
-    test.clean()
