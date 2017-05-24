@@ -18,14 +18,14 @@ import six
 from functest.core import testcase
 
 
-class PyTestSuiteRunner(testcase.TestCase):
+class Suite(testcase.TestCase):
     """
     This superclass is designed to execute pre-configured unittest.TestSuite()
     objects
     """
 
     def __init__(self, **kwargs):
-        super(PyTestSuiteRunner, self).__init__(**kwargs)
+        super(Suite, self).__init__(**kwargs)
         self.suite = None
         self.logger = logging.getLogger(__name__)
 

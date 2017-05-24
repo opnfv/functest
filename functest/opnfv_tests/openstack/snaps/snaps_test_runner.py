@@ -16,7 +16,7 @@ from snaps.openstack import create_flavor
 from snaps.openstack.tests import openstack_tests
 
 
-class SnapsTestRunner(unit.PyTestSuiteRunner):
+class SnapsTestRunner(unit.Suite):
     """
     This test executes the SNAPS Python Tests
     """

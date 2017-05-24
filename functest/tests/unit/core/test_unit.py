@@ -19,7 +19,7 @@ from functest.core import testcase
 class PyTestSuiteRunnerTesting(unittest.TestCase):
 
     def setUp(self):
-        self.psrunner = unit.PyTestSuiteRunner()
+        self.psrunner = unit.Suite()
 
     @mock.patch('unittest.TestLoader')
     def _test_run(self, mock_class=None, result=mock.Mock(),
