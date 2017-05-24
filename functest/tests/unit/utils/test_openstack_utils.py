@@ -1835,6 +1835,79 @@ class OSUtilsTesting(unittest.TestCase):
                          None)
         self.assertTrue(mock_logger_error.called)
 
+    def test_get_or_create_user_for_vnf_get(self):
+        with mock.patch('functest.utils.openstack_utils.'
+                        'get_user_id',
+                        return_value='user_id'), \
+            mock.patch('functest.utils.openstack_utils.get_tenant_id',
+                       return_value='tenant_id'):
+            self.assertEqual(openstack_utils.
+                             get_or_create_user_for_vnf(self.keystone_client,
+                                                        'my_vnf'), 1)
+
+    def test_get_or_create_user_for_vnf_create(self):
+        with mock.patch('functest.utils.openstack_utils.'
+                        'get_user_id',
+                        return_value=None), \
+            mock.patch('functest.utils.openstack_utils.get_tenant_id',
+                       return_value='tenant_id'):
+            self.assertEqual(openstack_utils.
+                             get_or_create_user_for_vnf(self.keystone_client,
+                                                        'my_vnf'), 0)
+
+    def test_get_or_create_user_for_vnf_error_get_user_id(self):
+        with mock.patch('functest.utils.openstack_utils.'
+                        'get_user_id',
+                        side_effect=Exception):
+            self.assertRaises(Exception)
+
+    def test_get_or_create_user_for_vnf_error_get_tenant_id(self):
+        with mock.patch('functest.utils.openstack_utils.'
+                        'get_user_id',
+                        return_value='user_id'), \
+            mock.patch('functest.utils.openstack_utils.get_tenant_id',
+                       side_effect='Exception'):
+            self.assertRaises(Exception)
+
+    def test_get_or_create_tenant_for_vnf_get(self):
+        with mock.patch('functest.utils.openstack_utils.'
+                        'get_tenant_id',
+                        return_value='tenant_id'):
+            self.assertEqual(
+                openstack_utils.get_or_create_tenant_for_vnf(
+                    self.keystone_client, 'tenant_name', 'tenant_description'),
+                1)
+
+    def test_get_or_create_tenant_for_vnf_create(self):
+        with mock.patch('functest.utils.openstack_utils.get_tenant_id',
+                        return_value=None):
+            self.assertEqual(
+                openstack_utils.get_or_create_tenant_for_vnf(
+                    self.keystone_client, 'tenant_name', 'tenant_description'),
+                0)
+
+    def test_get_or_create_tenant_for_vnf_error_get_tenant_id(self):
+        with mock.patch('functest.utils.openstack_utils.'
+                        'get_tenant_id',
+                        side_effect=Exception):
+            self.assertRaises(Exception)
+
+    def test_download_and_add_image_on_glance_image_creation_failure(self):
+        with mock.patch('functest.utils.openstack_utils.'
+                        'os.makedirs'), \
+            mock.patch('functest.utils.openstack_utils.'
+                       'ft_utils.download_url',
+                       return_value=True), \
+            mock.patch('functest.utils.openstack_utils.'
+                       'create_glance_image',
+                       return_value=''):
+            resp = openstack_utils.download_and_add_image_on_glance(
+                self.glance_client,
+                'image_name',
+                'http://url',
+                'data_dir')
+            self.assertEqual(resp, False)
+
 
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
