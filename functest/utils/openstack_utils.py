@@ -181,14 +181,10 @@ def get_endpoint(service_type, endpoint_type='publicURL'):
 
 def get_session(other_creds={}):
     auth = get_session_auth(other_creds)
-    cacert = os.getenv('OS_CACERT')
-    if cacert is not None:
-        if not os.path.isfile(cacert):
-            raise Exception("The 'OS_CACERT' environment"
-                            "variable is set to %s but the file"
-                            "does not exist.", cacert)
-
-    return session.Session(auth=auth, verify=cacert)
+    https_cacert = os.getenv('OS_CACERT', '')
+    https_insecure = os.getenv("OS_INSECURE") in ['True', 'true'] or False
+    return session.Session(auth=auth,
+                           verify=(https_cacert or not https_insecure))
 
 
 # *********************************************
