@@ -6,12 +6,18 @@
 #    jose.lausuch@ericsson.com
 #
 
+if [[ ${OS_INSECURE,,} == "true" ]]; then
+    option_insecure='--insecure'
+else
+    option_insecure=''
+fi
+
 declare -A service_cmd_array
-service_cmd_array['nova']='openstack server list'
-service_cmd_array['neutron']='openstack network list'
-service_cmd_array['keystone']='openstack endpoint list'
-service_cmd_array['cinder']='openstack volume list'
-service_cmd_array['glance']='openstack image list'
+service_cmd_array['nova']='openstack $option_insecure server list'
+service_cmd_array['neutron']='openstack $option_insecure network list'
+service_cmd_array['keystone']='openstack $option_insecure endpoint list'
+service_cmd_array['cinder']='openstack $option_insecure volume list'
+service_cmd_array['glance']='openstack $option_insecure image list'
 
 MANDATORY_SERVICES='nova neutron keystone glance'
 OPTIONAL_SERVICES='cinder'
@@ -41,7 +47,7 @@ check_service() {
         required=$2
     fi
     echo ">>Checking ${service} service..."
-    if ! openstack service list | grep -i ${service} > /dev/null; then
+    if ! openstack $option_insecure service list | grep -i ${service} > /dev/null; then
         if [ "$required" == 'false' ]; then
             echo "WARN: Optional Service ${service} is not enabled!"
             return
@@ -67,7 +73,7 @@ fi
 
 
 echo "Checking OpenStack endpoints:"
-publicURL=$(openstack catalog show  identity |awk '/public/ {print $4}')
+publicURL=$(openstack $option_insecure catalog show  identity |awk '/public/ {print $4}')
 publicIP=$(echo $publicURL|sed 's/^.*http.*\:\/\///'|sed 's/.[^:]*$//')
 publicPort=$(echo $publicURL|grep -Po '(?<=:)\d+')
 https_enabled=$(echo $publicURL | grep 'https')
@@ -99,11 +105,11 @@ for service in $OPTIONAL_SERVICES; do
 done
 
 echo "Checking External network..."
-networks=($(neutron net-list -F id | tail -n +4 | head -n -1 | awk '{print $2}'))
+networks=($(neutron $option_insecure net-list -F id | tail -n +4 | head -n -1 | awk '{print $2}'))
 is_external=False
 for net in "${networks[@]}"
 do
-    is_external=$(neutron net-show $net|grep "router:external"|awk '{print $4}')
+    is_external=$(neutron $option_insecure net-show $net|grep "router:external"|awk '{print $4}')
     if [ $is_external == "True" ]; then
         echo "External network found: $net"
         break
