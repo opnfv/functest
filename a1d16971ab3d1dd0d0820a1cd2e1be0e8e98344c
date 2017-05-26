@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_a71cd96b",
+        "filename": "functest/core/unit.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-05-26T13:48:12Z",
+      "side": 1,
+      "message": "This patch will be abandoned but I don\u0027t like div by zero errors or reliance on exceptions for flow of control; however, I do agree that the logic as shown here is flawed. The new logic in subsequent patches will remain the same but should never raise the ZeroDivisionError.",
+      "parentUuid": "5aaae553_e4f88fc6",
+      "revId": "a1d16971ab3d1dd0d0820a1cd2e1be0e8e98344c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_04f60bd8",
         "filename": "functest/tests/unit/core/test_unit.py",
         "patchSetId": 13
