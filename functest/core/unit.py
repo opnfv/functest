@@ -69,16 +69,23 @@ class Suite(testcase.TestCase):
         stream = six.StringIO()
         result = unittest.TextTestRunner(
             stream=stream, verbosity=2).run(self.suite)
+
         self.logger.debug("\n\n%s", stream.getvalue())
         self.stop_time = time.time()
         self.details = {"failures": result.failures,
                         "errors": result.errors}
-        try:
-            self.result = 100 * (
-                (result.testsRun - (len(result.failures) +
-                                    len(result.errors))) /
-                result.testsRun)
-            return testcase.TestCase.EX_OK
-        except ZeroDivisionError:
-            self.logger.error("No test has been run")
+        tests_run = result.testsRun
+        if tests_run != 0:
+            num_fail_error = len(result.failures) + len(result.errors)
+            num_success = tests_run - num_fail_error
+            failure_ratio = num_success / tests_run
+        else:
+            failure_ratio = 0
+
+        self.result = 100 * float(failure_ratio)
+
+        if result.testsRun == 0:
+            self.logger.warn("No test has been run")
             return testcase.TestCase.EX_RUN_ERROR
+        else:
+            return testcase.TestCase.EX_OK
