@@ -1,4 +1,4 @@
-#!/usr/bin/python -u
+#!/usr/bin/env python -u
 #
 # Author: Jose Lausuch (jose.lausuch@ericsson.com)
 #
