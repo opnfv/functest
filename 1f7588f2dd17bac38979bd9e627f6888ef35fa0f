@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_fdc34288",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-05-29T09:19:55Z",
+      "side": 1,
+      "message": "what does OSGC stand for?\nOpenStack Garbage Collector?\n\ncould we find something more explicit..not sure\nAutoCleanTestCase even if it is a bit misleading",
+      "revId": "1f7588f2dd17bac38979bd9e627f6888ef35fa0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
