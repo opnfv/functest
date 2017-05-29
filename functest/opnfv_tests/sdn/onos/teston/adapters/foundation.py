@@ -26,7 +26,8 @@ class Foundation(object):
     def __init__(self):
 
         # currentpath = os.getcwd()
-        currentpath = '%s/sdn/onos/teston/ci' % CONST.dir_functest_data
+        currentpath = ('{0}/sdn/onos/teston/ci'
+                       .format(CONST.__getattribute__('dir_functest_data')))
         self.cipath = currentpath
         self.logdir = os.path.join(currentpath, 'log')
         self.workhome = currentpath[0: currentpath.rfind('opnfv_tests') - 1]
@@ -55,22 +56,25 @@ class Foundation(object):
         Get Default Parameters value
         """
         self.Result_DB = ft_utils.get_db_url()
-        self.masterusername = CONST.ONOS_onosbench_username
-        self.masterpassword = CONST.ONOS_onosbench_password
-        self.agentusername = CONST.ONOS_onoscli_username
-        self.agentpassword = CONST.ONOS_onoscli_password
-        self.runtimeout = CONST.ONOS_runtimeout
-        self.OCT = CONST.ONOS_environment_OCT
-        self.OC1 = CONST.ONOS_environment_OC1
-        self.OC2 = CONST.ONOS_environment_OC2
-        self.OC3 = CONST.ONOS_environment_OC3
-        self.OCN = CONST.ONOS_environment_OCN
-        self.OCN2 = CONST.ONOS_environment_OCN2
-        self.installer_master = CONST.ONOS_environment_installer_master
+        self.masterusername = CONST.__getattribute__('ONOS_onosbench_username')
+        self.masterpassword = CONST.__getattribute__('ONOS_onosbench_password')
+        self.agentusername = CONST.__getattribute__('ONOS_onoscli_username')
+        self.agentpassword = CONST.__getattribute__('ONOS_onoscli_password')
+        self.runtimeout = CONST.__getattribute__('ONOS_runtimeout')
+        self.OCT = CONST.__getattribute__('ONOS_environment_OCT')
+        self.OC1 = CONST.__getattribute__('ONOS_environment_OC1')
+        self.OC2 = CONST.__getattribute__('ONOS_environment_OC2')
+        self.OC3 = CONST.__getattribute__('ONOS_environment_OC3')
+        self.OCN = CONST.__getattribute__('ONOS_environment_OCN')
+        self.OCN2 = CONST.__getattribute__('ONOS_environment_OCN2')
+        self.installer_master = CONST.__getattribute__(
+            'ONOS_environment_installer_master')
         self.installer_master_username = (
-            CONST.ONOS_environment_installer_master_username)
+            CONST.__getattribute__(
+                'ONOS_environment_installer_master_username'))
         self.installer_master_password = (
-            CONST.ONOS_environment_installer_master_password)
+            CONST.__getattribute__(
+                'ONOS_environment_installer_master_password'))
         self.hosts = [self.OC1, self.OCN, self.OCN2]
         self.localhost = self.OCT
 
