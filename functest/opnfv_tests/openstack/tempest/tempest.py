@@ -28,7 +28,7 @@ import functest.utils.functest_utils as ft_utils
 logger = logging.getLogger(__name__)
 
 
-class TempestCommon(testcase.TestCase):
+class TempestCommon(testcase.OSGCTestCase):
 
     def __init__(self, **kwargs):
         super(TempestCommon, self).__init__(**kwargs)

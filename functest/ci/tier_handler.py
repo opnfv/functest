@@ -109,14 +109,12 @@ class TestCase(object):
                  dependency,
                  criteria,
                  blocking,
-                 clean_flag,
                  description=""):
         self.name = name
         self.enabled = enabled
         self.dependency = dependency
         self.criteria = criteria
         self.blocking = blocking
-        self.clean_flag = clean_flag
         self.description = description
 
     @staticmethod
@@ -148,9 +146,6 @@ class TestCase(object):
 
     def is_blocking(self):
         return self.blocking
-
-    def needs_clean(self):
-        return self.clean_flag
 
     def __str__(self):
         lines = split_text(self.description, LINE_LENGTH - 6)

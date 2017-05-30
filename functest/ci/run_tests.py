@@ -22,8 +22,6 @@ import prettytable
 import functest.ci.tier_builder as tb
 import functest.core.testcase as testcase
 import functest.utils.functest_utils as ft_utils
-import functest.utils.openstack_clean as os_clean
-import functest.utils.openstack_snapshot as os_snapshot
 import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
@@ -98,14 +96,6 @@ class Runner(object):
                     CONST.__setattr__('OS_PASSWORD', value)
 
     @staticmethod
-    def generate_os_snapshot():
-        os_snapshot.main()
-
-    @staticmethod
-    def cleanup():
-        os_clean.main()
-
-    @staticmethod
     def get_run_dict(testname):
         try:
             dict = ft_utils.get_dict_by_test(testname)
@@ -124,13 +114,10 @@ class Runner(object):
                 "The test case {} is not enabled".format(test.get_name()))
         logger.info("\n")  # blank line
         self.print_separator("=")
-        logger.info("Running test case '%s'..." % test.get_name())
+        logger.info("Running test case '%s'...", test.get_name())
         self.print_separator("=")
         logger.debug("\n%s" % test)
         self.source_rc_file()
-
-        if test.needs_clean() and self.clean_flag:
-            self.generate_os_snapshot()
 
         flags = " -t %s" % test.get_name()
         if self.report_flag:
@@ -145,6 +132,9 @@ class Runner(object):
                 test_dict = ft_utils.get_dict_by_test(test.get_name())
                 test_case = cls(**test_dict)
                 self.executed_test_cases.append(test_case)
+                if self.clean_flag:
+                    if test_case.create_snapshot() != test_case.EX_OK:
+                        return result
                 try:
                     kwargs = run_dict['args']
                     result = test_case.run(**kwargs)
@@ -155,6 +145,8 @@ class Runner(object):
                         test_case.push_to_db()
                     result = test_case.is_successful()
                 logger.info("Test result:\n\n%s\n", test_case)
+                if self.clean_flag:
+                    test_case.clean()
             except ImportError:
                 logger.exception("Cannot import module {}".format(
                     run_dict['module']))
@@ -164,15 +156,7 @@ class Runner(object):
         else:
             raise Exception("Cannot import the class for the test case.")
 
-        if test.needs_clean() and self.clean_flag:
-            self.cleanup()
-        if result != testcase.TestCase.EX_OK:
-            logger.error("The test case '%s' failed. " % test.get_name())
-            self.overall_result = Result.EX_ERROR
-            if test.is_blocking():
-                raise BlockingTestFailed(
-                    "The test case {} failed and is blocking".format(
-                        test.get_name()))
+        return result
 
     def run_tier(self, tier):
         tier_name = tier.get_name()
@@ -187,7 +171,14 @@ class Runner(object):
         self.print_separator("#")
         logger.debug("\n%s" % tier)
         for test in tests:
-            self.run_test(test, tier_name)
+            result = self.run_test(test, tier_name)
+            if result != testcase.TestCase.EX_OK:
+                logger.error("The test case '%s' failed.", test.get_name())
+                self.overall_result = Result.EX_ERROR
+                if test.is_blocking():
+                    raise BlockingTestFailed(
+                        "The test case {} failed and is blocking".format(
+                            test.get_name()))
 
     def run_all(self, tiers):
         summary = ""
@@ -225,9 +216,14 @@ class Runner(object):
                 if _tiers.get_tier(kwargs['test']):
                     self.run_tier(_tiers.get_tier(kwargs['test']))
                 elif _tiers.get_test(kwargs['test']):
-                    self.run_test(_tiers.get_test(kwargs['test']),
-                                  _tiers.get_tier_name(kwargs['test']),
-                                  kwargs['test'])
+                    result = self.run_test(
+                        _tiers.get_test(kwargs['test']),
+                        _tiers.get_tier_name(kwargs['test']),
+                        kwargs['test'])
+                    if result != testcase.TestCase.EX_OK:
+                        logger.error("The test case '%s' failed.",
+                                     kwargs['test'])
+                        self.overall_result = Result.EX_ERROR
                 elif kwargs['test'] == "all":
                     self.run_all(_tiers)
                 else:

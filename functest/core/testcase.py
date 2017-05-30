@@ -15,6 +15,8 @@ import os
 import prettytable
 
 import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_clean as os_clean
+import functest.utils.openstack_snapshot as os_snapshot
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
@@ -176,3 +178,51 @@ class TestCase(object):
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("The results cannot be pushed to DB")
             return TestCase.EX_PUSH_TO_DB_ERROR
+
+    def create_snapshot(self):  # pylint: disable=no-self-use
+        """Save the testing environement before running test.
+
+        It can be overriden if resources must be listed running the
+        test case.
+
+        Returns:
+            TestCase.EX_OK
+        """
+        return TestCase.EX_OK
+
+    def clean(self):
+        """Clean the resources.
+
+        It can be overriden if resources must be deleted after
+        running the test case.
+        """
+
+
+class OSGCTestCase(TestCase):
+    """Model for single test case which requires an OpenStack Garbage
+    Collector."""
+
+    __logger = logging.getLogger(__name__)
+
+    def create_snapshot(self):
+        """Create a snapshot listing the OpenStack resources.
+
+        Returns:
+            TestCase.EX_OK if os_snapshot.main() returns 0.
+            TestCase.EX_RUN_ERROR otherwise.
+        """
+        try:
+            assert os_snapshot.main() == 0
+            self.__logger.info("OpenStack resources snapshot created")
+            return TestCase.EX_OK
+        except Exception:  # pylint: disable=broad-except
+            self.__logger.exception("Cannot create the snapshot")
+            return TestCase.EX_RUN_ERROR
+
+    def clean(self):
+        """Clean the OpenStack resources."""
+        try:
+            assert os_clean.main() == 0
+            self.__logger.info("OpenStack resources cleaned")
+        except Exception:  # pylint: disable=broad-except
+            self.__logger.exception("Cannot clean the OpenStack resources")

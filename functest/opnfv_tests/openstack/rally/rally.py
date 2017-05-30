@@ -27,7 +27,7 @@ import functest.utils.openstack_utils as os_utils
 logger = logging.getLogger(__name__)
 
 
-class RallyBase(testcase.TestCase):
+class RallyBase(testcase.OSGCTestCase):
     TESTS = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
              'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
     GLANCE_IMAGE_NAME = CONST.__getattribute__('openstack_image_name')

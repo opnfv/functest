@@ -13,7 +13,7 @@ import os
 import time
 import uuid
 
-from functest.core.testcase import TestCase
+from functest.core import testcase
 from functest.utils import functest_utils
 from functest.utils.constants import CONST
 
@@ -24,7 +24,7 @@ from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import deploy_utils, nova_utils
 
 
-class VPingBase(TestCase):
+class VPingBase(testcase.OSGCTestCase):
 
     """
     Base class for vPing tests that check connectivity between two VMs shared
@@ -152,12 +152,12 @@ class VPingBase(TestCase):
         else:
             raise Exception('VMs never became active')
 
-        if result == TestCase.EX_RUN_ERROR:
-            return TestCase.EX_RUN_ERROR
+        if result == testcase.TestCase.EX_RUN_ERROR:
+            return testcase.TestCase.EX_RUN_ERROR
 
         self.stop_time = time.time()
         self.result = 100
-        return TestCase.EX_OK
+        return testcase.TestCase.EX_OK
 
     def _cleanup(self):
         """

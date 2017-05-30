@@ -52,7 +52,6 @@ class TierBuilder(object):
                                        dependency=dep,
                                        criteria=dic_testcase['criteria'],
                                        blocking=dic_testcase['blocking'],
-                                       clean_flag=dic_testcase['clean_flag'],
                                        description=dic_testcase['description'])
                 if (testcase.is_compatible(self.ci_installer,
                                            self.ci_scenario) and
