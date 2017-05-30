@@ -180,7 +180,7 @@ class TestCase(object):
             return TestCase.EX_PUSH_TO_DB_ERROR
 
     def create_snapshot(self):  # pylint: disable=no-self-use
-        """Save the testing environement before running test.
+        """Save the testing environment before running test.
 
         It can be overriden if resources must be listed running the
         test case.
