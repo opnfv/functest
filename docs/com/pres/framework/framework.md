@@ -59,14 +59,14 @@ base model for single test case
 
 ### methods
 
-| Method            | Purpose                       |
-|-------------------|-------------------------------|
-| run(**kwargs)     | run the test case             |
-| is_successful()   | interpret the results         |
-| get_duration()    | return the duration           |
-| push_to_db()      | push the results to the DB    |
-| create_snapshot() | save the testing environement |
-| clean()           | clean the resources           |
+| Method            | Purpose                      |
+|-------------------|------------------------------|
+| run(**kwargs)     | run the test case            |
+| is_successful()   | interpret the results        |
+| get_duration()    | return the duration          |
+| push_to_db()      | push the results to the DB   |
+| create_snapshot() | save the testing environment |
+| clean()           | clean the resources          |
 
 
 ### run(**kwargs)
