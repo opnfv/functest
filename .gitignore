@@ -16,3 +16,4 @@ nosetests.xml
 functest.egg-info
 *venv
 .tox
+*.out
