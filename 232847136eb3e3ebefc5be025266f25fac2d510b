@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_33102a4e",
+        "filename": "functest/core/vnf.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-30T21:03:31Z",
+      "side": 1,
+      "message": "Or you could directly get the CONST value in the next methods instead of saving it again as instance attribute. That\u0027s quite ok.",
+      "revId": "232847136eb3e3ebefc5be025266f25fac2d510b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_f319327a",
+        "filename": "functest/core/vnf.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-30T21:03:31Z",
+      "side": 1,
+      "message": "you could avoid saving the results in local variables.",
+      "revId": "232847136eb3e3ebefc5be025266f25fac2d510b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_1313ae5d",
+        "filename": "functest/core/vnf.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-30T21:03:31Z",
+      "side": 1,
+      "message": "Exception info is always added to the logging message when  Logger.exception(msg, *args, **kwargs)\n\nhttps://docs.python.org/2/library/logging.html",
+      "revId": "232847136eb3e3ebefc5be025266f25fac2d510b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_d31c366d",
+        "filename": "functest/core/vnf.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-30T21:03:31Z",
+      "side": 1,
+      "message": "you could merge them in one logger.info() call.",
+      "revId": "232847136eb3e3ebefc5be025266f25fac2d510b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_b32bba81",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-30T21:03:31Z",
+      "side": 1,
+      "message": "Could you please remove them?",
+      "revId": "232847136eb3e3ebefc5be025266f25fac2d510b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
