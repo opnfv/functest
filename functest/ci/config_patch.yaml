@@ -13,16 +13,13 @@ fdio:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         image_properties: {'hw_mem_page_size':'large'}
     tempest:
-        use_custom_images: True
         use_custom_flavors: True
 ovs:
     general:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         image_properties: {'hw_mem_page_size':'large'}
     tempest:
-        use_custom_images: True
         use_custom_flavors: True
 multisite:
     tempest:
-        use_custom_images: True
         use_custom_flavors: True
