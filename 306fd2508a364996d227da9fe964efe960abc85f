@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_732542aa",
+        "filename": "functest/opnfv_tests/sdn/odl/odl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-30T21:10:46Z",
+      "side": 1,
+      "message": "OpenStack asks to import modules",
+      "range": {
+        "startLine": 37,
+        "startChar": 39,
+        "endLine": 37,
+        "endChar": 40
+      },
+      "revId": "306fd2508a364996d227da9fe964efe960abc85f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_3337cae5",
+        "filename": "functest/opnfv_tests/sdn/odl/odl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-30T21:10:46Z",
+      "side": 1,
+      "message": "we should use the keystone client to get neutron endpoint. No reason to link to 3rd party lib for that.",
+      "revId": "306fd2508a364996d227da9fe964efe960abc85f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
