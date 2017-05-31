@@ -13,7 +13,6 @@ general:
         repo_copper:        /home/opnfv/repos/copper
         repo_parser:        /home/opnfv/repos/parser
         repo_domino:        /home/opnfv/repos/domino
-        repo_snaps:         /home/opnfv/repos/snaps
         repo_fds:           /home/opnfv/repos/fds
         repo_securityscan:  /home/opnfv/repos/securityscanning
         repo_vrouter:       /home/opnfv/repos/vnfs/vrouter
@@ -58,19 +57,14 @@ snaps:
     use_keystone: True
     use_floating_ips: True
     images:
+      glance_tests:
+        disk_file: /home/opnfv/functest/images/cirros-0.3.5-x86_64-disk.img
       cirros:
         disk_file: /home/opnfv/functest/images/cirros-0.3.5-x86_64-disk.img
-        # ARM
-#        disk_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-disk.img
-#        kernel_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-kernel
-#        ramdisk_url: http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-initramfs
-#        extra_properties:
-#            os_command_line: root=/dev/vdb1 rw rootwait console=tty0 console=ttyS0 console=ttyAMA0
-#            hw_video_model: vga
-#      ubuntu:
-#        disk_url: http://uec-images.ubuntu.com/releases/trusty/14.04/ubuntu-14.04-server-cloudimg-amd64-disk1.img
-#      centos:
-#        disk_url: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+      ubuntu:
+        disk_file: /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+      centos:
+        disk_file: /home/opnfv/functest/images/CentOS-7-x86_64-GenericCloud.qcow2
 
 vping:
     ping_timeout:   200
