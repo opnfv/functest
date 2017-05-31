@@ -41,51 +41,24 @@ scope and responsibility of the OPNFV project.
 
 Accessing the Openstack credentials
 -----------------------------------
-OpenStack credentials are mandatory and can be retrieved in different
-ways. From inside the running Functest docker container the
-"functest env prepare" command will automatically look for the
-Openstack credentials file "/home/opnfv/functest/conf/openstack.creds"
-and retrieve it unless the file already exists. This Functest
-environment preparation step is described later in this document.
+OpenStack credentials are mandatory and must be provided to Functest.
+When running the command "functest env prepare", the framework  will 
+automatically look for the Openstack credentials file 
+"/home/opnfv/functest/conf/openstack.creds" and will exit with 
+error if it is not present or it is empty.
 
-WARNING: When the installer type is "joid" you have to have the
-credentials file inside the running container **before** initiating the
-functest environment preparation. For that reason you have to choose
-either one of the options below, since the automated copying does not
-work for "joid".
+There are 2 ways to provide that file:
 
-You can also specifically pass in the needed file prior to running the
-environment preparation either:
-
-  * by using the -v option when creating the Docker container. This is
-    referred to in docker documentation as "Bind Mounting". See the
-    usage of this parameter in the following chapter.
-  * or creating a local file '/home/opnfv/functest/conf/openstack.creds'
-    inside the running container with the credentials in it. Consult
+  * by using a Docker volume with -v option when creating the Docker container. 
+    This is referred to in docker documentation as "Bind Mounting". 
+    See the usage of this parameter in the following chapter.
+  * or creating manually the file '/home/opnfv/functest/conf/openstack.creds'
+    inside the running container and pasting the credentials in it. Consult
     your installer guide for further details. This is however not
     instructed in this document.
 
-NOTE: When the installer type is "fuel" and virtualized deployment
-is used, there you have to explicitly fetch the credentials file
-executing the following sequence
-
-  #. Create a container as described in next chapter but do not
-     "Bind Mount" the credentials
-  #. Log in to container and execute the following command. Replace
-     the IP with installer address after the "-a" parameter::
-
-       fetch_os_creds.sh \
-       -d /home/opnfv/functest/conf/openstack.creds \
-       -i fuel \
-       -a 10.20.0.2 \
-       -v
-       ( -d specifies the full path to the Openstack credential file
-       -i specifies the INSTALLER_TYPE
-       -a specifies the INSTALLER_IP
-       -v indicates a virtualized environment and takes no arguments )
-
-  #. Continue with your testing, initiate functest environment
-     preparation, run tests etc.
+There is a default environment variable in the Functest container **$creds**
+that points to the credentials absolute path to help the user with this task.
 
 In proxified environment you may need to change the credentials file.
 There are some tips in chapter: `Proxy support`_
@@ -108,9 +81,10 @@ recommended parameters for invoking docker container
 
        -e "INSTALLER_IP=<Specific IP Address>"
 
-       This IP is needed to fetch RC file from deployment, fetch logs, ...
-       If not provided, there is no way to fetch the RC file. It must be
-       provided manually as a volume
+       These two env variables are useful extract some information
+       from the deployment. However, for some test cases like
+       SFC or Barometer they are mandatory since the tests
+       need to access the installer node and the deployment.
 
   #. Credentials for accessing the Openstack.
      Most convenient way of passing them to container is by having a

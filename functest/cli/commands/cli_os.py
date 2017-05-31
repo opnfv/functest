@@ -47,34 +47,6 @@ class CliOpenStack(object):
             if key.startswith('OS_'):
                 click.echo("{}={}".format(key, value))
 
-    def fetch_credentials(self):
-        if os.path.isfile(self.openstack_creds):
-            answer = raw_input("It seems the RC file is already present. "
-                               "Do you want to overwrite it? [y|n]\n")
-            while True:
-                if answer.lower() in ["y", "yes"]:
-                    break
-                elif answer.lower() in ["n", "no"]:
-                    return
-                else:
-                    answer = raw_input("Invalid answer. Please type [y|n]\n")
-
-        installer_type = CONST.__getattribute__('INSTALLER_TYPE')
-        if installer_type is None:
-            click.echo("The environment variable 'INSTALLER_TYPE' is not"
-                       "defined. Please export it")
-        installer_ip = CONST.__getattribute__('INSTALLER_IP')
-        if installer_ip is None:
-            click.echo("The environment variable 'INSTALLER_IP' is not"
-                       "defined. Please export it")
-        cmd = ("fetch_os_creds.sh -d %s -i %s -a %s"
-               % (self.openstack_creds,
-                  installer_type,
-                  installer_ip))
-        click.echo("Fetching credentials from installer node '%s' with IP=%s.."
-                   % (installer_type, installer_ip))
-        ft_utils.execute_command(cmd, verbose=False)
-
     def check(self):
         self.ping_endpoint()
         cmd = os.path.join(CONST.__getattribute__('dir_repo_functest'),
