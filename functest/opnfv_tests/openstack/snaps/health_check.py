@@ -9,7 +9,6 @@ import unittest
 
 from functest.opnfv_tests.openstack.snaps.snaps_test_runner import \
     SnapsTestRunner
-from functest.utils.constants import CONST
 
 from snaps.openstack.tests.os_source_file_test import OSIntegrationTestCase
 from snaps.openstack.tests.create_instance_tests import SimpleHealthCheck
@@ -27,15 +26,10 @@ class HealthCheck(SnapsTestRunner):
         super(HealthCheck, self).__init__(**kwargs)
 
         self.suite = unittest.TestSuite()
-
-        image_custom_config = None
-
-        if hasattr(CONST, 'snaps_images_cirros'):
-            image_custom_config = CONST.__getattribute__('snaps_images_cirros')
         self.suite.addTest(
             OSIntegrationTestCase.parameterize(
                 SimpleHealthCheck, os_creds=self.os_creds,
                 ext_net_name=self.ext_net_name,
                 use_keystone=self.use_keystone,
                 flavor_metadata=self.flavor_metadata,
-                image_metadata=image_custom_config))
+                image_metadata=self.image_metadata))
