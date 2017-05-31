@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_d61c246d",
+        "filename": "functest/tests/unit/openstack/snaps/test_snaps.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-31T14:39:38Z",
+      "side": 1,
+      "message": "it could be defined as decorator to ease reading",
+      "revId": "5f7359543fdb2464fa32f3076670d6f6c20850bc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_f619207a",
+        "filename": "functest/tests/unit/openstack/snaps/test_snaps.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-31T14:39:38Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "5f7359543fdb2464fa32f3076670d6f6c20850bc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
