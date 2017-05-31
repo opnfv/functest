@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_b6d5e844",
+        "filename": "functest/tests/unit/openstack/snaps/test_snaps.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-31T15:26:23Z",
+      "side": 1,
+      "message": "Did I miss the return value?. I would prefer your first proposal when pathing run()\n\nRegarding the other monkey patches, it\u0027s better. Thank you.",
+      "revId": "5e73111f79a14468a4d647453cb5ac96511bc51f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
