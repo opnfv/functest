@@ -62,13 +62,6 @@ class CliBaseTesting(unittest.TestCase):
             self.assertEqual(result.exit_code, 0)
             self.assertTrue(mock_method.called)
 
-    def test_os_fetch_rc(self):
-        with mock.patch.object(self._openstack, 'fetch_credentials') \
-                as mock_method:
-            result = self.runner.invoke(cli_base.os_fetch_rc)
-            self.assertEqual(result.exit_code, 0)
-            self.assertTrue(mock_method.called)
-
     def test_env_prepare(self):
         with mock.patch.object(self._env, 'prepare') as mock_method:
             result = self.runner.invoke(cli_base.env_prepare)
