@@ -37,5 +37,6 @@ class ApiCheck(SnapsTestRunner):
             suite=self.suite,
             os_creds=self.os_creds,
             ext_net_name=self.ext_net_name,
-            use_keystone=self.use_keystone)
+            use_keystone=self.use_keystone,
+            image_metadata=self.image_metadata)
         return super(self.__class__, self).run()

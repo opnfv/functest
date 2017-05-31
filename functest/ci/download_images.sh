@@ -28,4 +28,11 @@ wget -nc http://artifacts.opnfv.org/sdnvpn/ubuntu-16.04-server-cloudimg-amd64-di
 wget -nc ${CIRROS_REPO_URL}/daily/20${CIRROS_AARCH64_TAG}/cirros-d${CIRROS_AARCH64_TAG}-aarch64-disk.img -P ${IMAGES_FOLDER_DIR}
 wget -nc ${CIRROS_REPO_URL}/daily/20${CIRROS_AARCH64_TAG}/cirros-d${CIRROS_AARCH64_TAG}-aarch64-initramfs -P ${IMAGES_FOLDER_DIR}
 wget -nc ${CIRROS_REPO_URL}/daily/20${CIRROS_AARCH64_TAG}/cirros-d${CIRROS_AARCH64_TAG}-aarch64-kernel -P ${IMAGES_FOLDER_DIR}
+
+# Add Ubuntu 14 qcow2 image
+wget -nc http://uec-images.ubuntu.com/releases/trusty/14.04/ubuntu-14.04-server-cloudimg-amd64-disk1.img -P ${IMAGES_FOLDER_DIR}
+
+# Add Centos 7 qcow2 image
+wget -nc http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2 -P ${IMAGES_FOLDER_DIR}
+
 set +ex
