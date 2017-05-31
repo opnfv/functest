@@ -187,38 +187,18 @@ def source_rc_file():
             CONST.__getattribute__('dir_functest_conf'), 'openstack.creds')
 
     if not os.path.isfile(CONST.__getattribute__('openstack_creds')):
-        logger.info("RC file not provided. "
-                    "Fetching it from the installer...")
-        if CONST.__getattribute__('INSTALLER_IP')is None:
-            logger.error("The env variable 'INSTALLER_IP' must be provided in"
-                         " order to fetch the credentials from the installer.")
-            raise Exception("Missing CI_INSTALLER_IP.")
-        if (CONST.__getattribute__('INSTALLER_TYPE') not in
-                opnfv_constants.INSTALLERS):
-            logger.error("Cannot fetch credentials. INSTALLER_TYPE=%s is "
-                         "not a valid OPNFV installer. Available "
-                         "installers are : %s." %
-                         (CONST.__getattribute__('INSTALLER_TYPE'),
-                          opnfv_constants.INSTALLERS))
-            raise Exception("Wrong INSTALLER_TYPE.")
-
-        cmd = ("/home/opnfv/repos/releng/utils/fetch_os_creds.sh "
-               "-d %s -i %s -a %s"
-               % (CONST.__getattribute__('openstack_creds'),
-                  CONST.__getattribute__('INSTALLER_TYPE'),
-                  CONST.__getattribute__('INSTALLER_IP')))
-        logger.debug("Executing command: %s" % cmd)
-        p = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
-        output = p.communicate()[0]
-        logger.debug("\n%s" % output)
-        if p.returncode != 0:
-            raise Exception("Failed to fetch credentials from installer.")
+        raise Exception("OpenStack credentials file not provided. "
+                        "The OpenStack credentials must be in {rc_file}"
+                        .format(
+                            rc_file=CONST.__getattribute__('openstack_creds')))
     else:
         logger.info("RC file provided in %s."
                     % CONST.__getattribute__('openstack_creds'))
         if os.path.getsize(CONST.__getattribute__('openstack_creds')) == 0:
-            raise Exception("The file %s is empty." %
-                            CONST.__getattribute__('openstack_creds'))
+            raise Exception("The OpenStack RC file {rc_file} is empty."
+                            .format(
+                                rc_file=CONST.__getattribute__(
+                                    'openstack_creds')))
 
     logger.info("Sourcing the OpenStack RC file...")
     os_utils.source_credentials(CONST.__getattribute__('openstack_creds'))
