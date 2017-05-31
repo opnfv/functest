@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_93c79e12",
+        "filename": "functest/core/unit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-31T11:36:04Z",
+      "side": 1,
+      "message": "I disagree about these modifications. They can be simply removed as it\u0027s also out of the scope of this patch",
+      "revId": "827594ce27dcfebb80e361d22dc1b5966970dd56",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
