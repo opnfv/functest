@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_b6a088f5",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-31T15:21:39Z",
+      "side": 1,
+      "message": "format seems good here?",
+      "revId": "bc14451c54d1237bf4f461b7695ed8e4fe21379a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_56a59402",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-05-31T15:21:39Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "bc14451c54d1237bf4f461b7695ed8e4fe21379a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
