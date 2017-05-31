@@ -24,7 +24,7 @@ from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import deploy_utils, nova_utils
 
 
-class VPingBase(testcase.OSGCTestCase):
+class VPingBase(testcase.TestCase):
 
     """
     Base class for vPing tests that check connectivity between two VMs shared

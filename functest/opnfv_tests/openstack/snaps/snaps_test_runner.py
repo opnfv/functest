@@ -38,3 +38,8 @@ class SnapsTestRunner(unit.Suite):
             self.flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
 
         self.logger.info("Using flavor metadata '%s'", self.flavor_metadata)
+
+        self.image_metadata = None
+        if hasattr(CONST, 'snaps_images'):
+            self.image_metadata = CONST.__getattribute__('snaps_images')
+

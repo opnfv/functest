@@ -35,6 +35,8 @@ class SnapsSmoke(SnapsTestRunner):
         # Tests requiring floating IPs leverage files contained within the
         # SNAPS repository and are found relative to that path
         if self.use_fip:
+            # 3 tests use a relative path for obtaining Ansible Playbooks that
+            # are applied via a floating IP
             snaps_dir = os.path.join(CONST.__getattribute__('dir_repo_snaps'),
                                      'snaps')
             os.chdir(snaps_dir)
@@ -45,5 +47,5 @@ class SnapsSmoke(SnapsTestRunner):
             ext_net_name=self.ext_net_name,
             use_keystone=self.use_keystone,
             flavor_metadata=self.flavor_metadata,
-            image_metadata=image_config,
+            image_metadata=self.image_metadata,
             use_floating_ips=self.use_fip)
