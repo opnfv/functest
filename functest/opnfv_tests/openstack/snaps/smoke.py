@@ -5,14 +5,12 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import os
 import unittest
 
 from snaps import test_suite_builder
 
 from functest.opnfv_tests.openstack.snaps.snaps_test_runner import \
     SnapsTestRunner
-from functest.utils.constants import CONST
 
 
 class SnapsSmoke(SnapsTestRunner):
@@ -28,22 +26,11 @@ class SnapsSmoke(SnapsTestRunner):
 
         self.suite = unittest.TestSuite()
 
-        image_config = None
-        if hasattr(CONST, 'snaps_images_cirros'):
-            image_config = CONST.__getattribute__('snaps_images_cirros')
-
-        # Tests requiring floating IPs leverage files contained within the
-        # SNAPS repository and are found relative to that path
-        if self.use_fip:
-            snaps_dir = os.path.join(CONST.__getattribute__('dir_repo_snaps'),
-                                     'snaps')
-            os.chdir(snaps_dir)
-
         test_suite_builder.add_openstack_integration_tests(
             suite=self.suite,
             os_creds=self.os_creds,
             ext_net_name=self.ext_net_name,
             use_keystone=self.use_keystone,
             flavor_metadata=self.flavor_metadata,
-            image_metadata=image_config,
+            image_metadata=self.image_metadata,
             use_floating_ips=self.use_fip)
