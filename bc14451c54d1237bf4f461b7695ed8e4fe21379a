@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_f6b5a031",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-05-31T15:22:22Z",
+      "side": 1,
+      "message": "ok, I can use format",
+      "parentUuid": "5aaae553_b6a088f5",
+      "revId": "bc14451c54d1237bf4f461b7695ed8e4fe21379a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_56a59402",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 1
