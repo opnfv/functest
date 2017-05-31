@@ -47,13 +47,9 @@ class PrepareEnvTesting(unittest.TestCase):
         mock_logger_info.assert_any_call("Checking environment variables"
                                          "...")
         mock_logger_warn.assert_any_call("The env variable 'INSTALLER_IP'"
-                                         " is not defined. It is needed to"
-                                         " fetch the OpenStack credentials."
-                                         " If the credentials are not"
-                                         " provided to the container as a"
-                                         " volume, please add this env"
-                                         " variable to the 'docker run'"
-                                         " command.")
+                                         " is not defined. It is recommended"
+                                         " to extract some information from"
+                                         " the deployment")
 
     @mock.patch('functest.ci.prepare_env.logger.info')
     @mock.patch('functest.ci.prepare_env.logger.warning')
@@ -271,8 +267,8 @@ class PrepareEnvTesting(unittest.TestCase):
                 mock.patch('functest.ci.prepare_env.subprocess.Popen') \
                 as mock_subproc_popen, \
                 self.assertRaises(Exception):
-            CONST.__setattr__('openstack_creds', 'test_creds')
-            CONST.__setattr__('INSTALLER_IP', None)
+            CONST.__setattr__('openstack_creds', None)
+            CONST.__setattr__('INSTALLER_IP', 'test_ip')
             CONST.__setattr__('INSTALLER_TYPE', 'test_type')
             opnfv_constants.INSTALLERS = ['test_type']
 
