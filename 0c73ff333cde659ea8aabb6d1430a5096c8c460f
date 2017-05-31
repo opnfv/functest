@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_13f88e7b",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-05-31T08:02:00Z",
+      "side": 1,
+      "message": "This attribute should still be set to False in the functest_aarch64_patch.yaml On arm we are running tempest based on the fact that we are using TestVM.",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 27
+      },
+      "revId": "0c73ff333cde659ea8aabb6d1430a5096c8c460f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
