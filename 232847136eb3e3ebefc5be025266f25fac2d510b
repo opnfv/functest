@@ -84,6 +84,24 @@
       "revId": "232847136eb3e3ebefc5be025266f25fac2d510b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_99d01d55",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-06-01T06:50:03Z",
+      "side": 1,
+      "message": "+1, if the code won\u0027t be used any more, please remove the lines.",
+      "parentUuid": "5aaae553_b32bba81",
+      "revId": "232847136eb3e3ebefc5be025266f25fac2d510b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
