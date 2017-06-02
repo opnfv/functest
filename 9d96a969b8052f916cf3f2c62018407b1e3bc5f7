@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_c79eac63",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-02T08:18:31Z",
+      "side": 1,
+      "message": "or just return the tenant_id",
+      "parentUuid": "5aaae553_a70a90d0",
+      "range": {
+        "startLine": 1440,
+        "startChar": 0,
+        "endLine": 1441,
+        "endChar": 34
+      },
+      "revId": "9d96a969b8052f916cf3f2c62018407b1e3bc5f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_470f1ce2",
         "filename": "functest/utils/openstack_utils.py",
         "patchSetId": 8
