@@ -18,8 +18,8 @@ import requests
 from six.moves import urllib
 
 from functest.tests.unit import test_utils
+from functest.utils import constants
 from functest.utils import functest_utils
-from functest.utils.constants import CONST
 
 
 class FunctestUtilsTesting(unittest.TestCase):
@@ -191,7 +191,7 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     @mock.patch('functest.utils.functest_utils.logger.info')
     def test_logger_test_results(self, mock_logger_info):
-        CONST.__setattr__('results_test_db_url', self.db_url)
+        constants.CONST.__setattr__('results_test_db_url', self.db_url)
         with mock.patch('functest.utils.functest_utils.get_pod_name',
                         return_value=self.node_name), \
                 mock.patch('functest.utils.functest_utils.get_scenario',
@@ -202,6 +202,18 @@ class FunctestUtilsTesting(unittest.TestCase):
                            return_value=self.build_tag):
             functest_utils.logger_test_results(self.project, self.case_name,
                                                self.status, self.details)
+
+            d = {
+                'p': self.project,
+                'n': self.case_name,
+                'db': constants.CONST.__getattribute__('results_test_db_url'),
+                'pod': self.node_name,
+                'v': self.version,
+                's': self.scenario,
+                'c': self.status,
+                'b': self.build_tag,
+                'd': self.details
+            }
             mock_logger_info.assert_called_once_with(
                 "\n"
                 "****************************************\n"
@@ -214,15 +226,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                 "status:\t%(c)s\n"
                 "build tag:\t%(b)s\n"
                 "details:\t%(d)s\n"
-                % {'p': self.project,
-                    'n': self.case_name,
-                    'db': CONST.__getattribute__('results_test_db_url'),
-                    'pod': self.node_name,
-                    'v': self.version,
-                    's': self.scenario,
-                    'c': self.status,
-                    'b': self.build_tag,
-                    'd': self.details})
+                % d)
 
     def _get_env_dict(self, var):
         dic = {'INSTALLER_TYPE': self.installer,
@@ -234,7 +238,7 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def _test_push_results_to_db_missing_env(self, env_var):
         dic = self._get_env_dict(env_var)
-        CONST.__setattr__('results_test_db_url', self.db_url)
+        constants.CONST.__setattr__('results_test_db_url', self.db_url)
         with mock.patch.dict(os.environ,
                              dic,
                              clear=True), \
@@ -261,7 +265,7 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def test_push_results_to_db_request_post_failed(self):
         dic = self._get_env_dict(None)
-        CONST.__setattr__('results_test_db_url', self.db_url)
+        constants.CONST.__setattr__('results_test_db_url', self.db_url)
         with mock.patch.dict(os.environ,
                              dic,
                              clear=True), \
@@ -283,7 +287,7 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def test_push_results_to_db_request_post_exception(self):
         dic = self._get_env_dict(None)
-        CONST.__setattr__('results_test_db_url', self.db_url)
+        constants.CONST.__setattr__('results_test_db_url', self.db_url)
         with mock.patch.dict(os.environ,
                              dic,
                              clear=True), \
@@ -300,7 +304,7 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def test_push_results_to_db_default(self):
         dic = self._get_env_dict(None)
-        CONST.__setattr__('results_test_db_url', self.db_url)
+        constants.CONST.__setattr__('results_test_db_url', self.db_url)
         with mock.patch.dict(os.environ,
                              dic,
                              clear=True), \
