@@ -130,7 +130,7 @@ tempest:
         tenant_name: tempest
         tenant_description: Tenant for Tempest test suite
         user_name: tempest
-        user_password: tempest
+        user_password: tempest_12
     validation:
         ssh_timeout: 130
     object_storage:
