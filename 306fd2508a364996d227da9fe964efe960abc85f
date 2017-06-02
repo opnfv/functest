@@ -57,6 +57,24 @@
       "revId": "306fd2508a364996d227da9fe964efe960abc85f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c7e6ac44",
+        "filename": "functest/opnfv_tests/sdn/odl/odl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-02T06:20:46Z",
+      "side": 1,
+      "message": "You can keep it as it was written before your first proposal (via op_utils). Here I would propose to simply keep the modifications related to CONST and to adapt git commit message as well (change should target only one task).\n\nI will modify it in another change if really needed.\n\nThank you.",
+      "parentUuid": "5aaae553_273780e5",
+      "revId": "306fd2508a364996d227da9fe964efe960abc85f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
