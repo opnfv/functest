@@ -26,7 +26,6 @@ import yaml
 
 from functest.utils import constants
 from functest.utils import decorators
-from functest.utils.constants import CONST
 
 logger = logging.getLogger(__name__)
 
@@ -149,7 +148,7 @@ def logger_test_results(project, case_name, status, details):
     scenario = get_scenario()
     version = get_version()
     build_tag = get_build_tag()
-    db_url = CONST.__getattribute__("results_test_db_url")
+    db_url = constants.CONST.__getattribute__("results_test_db_url")
 
     logger.info(
         "\n"
@@ -181,7 +180,7 @@ def push_results_to_db(project, case_name,
     POST results to the Result target DB
     """
     # Retrieve params from CI and conf
-    url = CONST.__getattribute__("results_test_db_url")
+    url = constants.CONST.__getattribute__("results_test_db_url")
 
     try:
         installer = os.environ['INSTALLER_TYPE']
