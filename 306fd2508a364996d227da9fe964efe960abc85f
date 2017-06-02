@@ -39,6 +39,24 @@
       "revId": "306fd2508a364996d227da9fe964efe960abc85f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_273780e5",
+        "filename": "functest/opnfv_tests/sdn/odl/odl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-06-02T01:55:13Z",
+      "side": 1,
+      "message": "Cedric, I am just wondering what the difference between openstack_utils.get_endpoint and get_endpoint via keystone client which you recommended is. The session from keystoneauth1 is adopted by def get_endpoint in openstack_utils. Is it necessary to update it to use ketstone client? Or just keep it as it is?",
+      "parentUuid": "5aaae553_3337cae5",
+      "revId": "306fd2508a364996d227da9fe964efe960abc85f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
