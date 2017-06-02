@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_675d78e9",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_ims.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-06-02T07:28:01Z",
+      "side": 1,
+      "message": "test_vnf() is too long and too complex and difficult for the unit test, how about abstract several methods may be in next patch?",
+      "revId": "9d96a969b8052f916cf3f2c62018407b1e3bc5f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a70a90d0",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-06-02T07:28:01Z",
+      "side": 1,
+      "message": "according to upstream usage, maybe return True/False is more reasonable",
+      "range": {
+        "startLine": 1440,
+        "startChar": 0,
+        "endLine": 1441,
+        "endChar": 34
+      },
+      "revId": "9d96a969b8052f916cf3f2c62018407b1e3bc5f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_470f1ce2",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 1497,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-06-02T07:28:01Z",
+      "side": 1,
+      "message": "same to above",
+      "range": {
+        "startLine": 1496,
+        "startChar": 0,
+        "endLine": 1497,
+        "endChar": 32
+      },
+      "revId": "9d96a969b8052f916cf3f2c62018407b1e3bc5f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
