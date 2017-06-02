@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_67e25805",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-02T08:10:24Z",
+      "side": 1,
+      "message": "Sorry I strongly disagree with adding vim",
+      "revId": "6d9f1defff9c76c6c23fee8a372e0947ce4c9d4d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_27e4600c",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-02T08:10:24Z",
+      "side": 1,
+      "message": "I strongly disagree with adding wim",
+      "revId": "6d9f1defff9c76c6c23fee8a372e0947ce4c9d4d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
