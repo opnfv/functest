@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_07ca844f",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-02T08:41:08Z",
+      "side": 1,
+      "message": "to avoid a new layer in the image we could merge this with the previous line\n\n    RUN pip install --upgrade pip \u0026\u0026 easy_install -U setuptools\u003d\u003d35.0.2",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "8b5287b6bc0069cf3b0a6b13b1ff563314f4ec8c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
