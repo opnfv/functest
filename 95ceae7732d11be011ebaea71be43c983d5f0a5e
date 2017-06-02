@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_0795a43f",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-02T08:16:07Z",
+      "side": 1,
+      "message": "I normally prefer exclamation mark rather than underscore, or you can even combine them.\n\ntempest123!\ntempest!123\ntempest_123!\n....",
+      "range": {
+        "startLine": 133,
+        "startChar": 23,
+        "endLine": 133,
+        "endChar": 33
+      },
+      "revId": "95ceae7732d11be011ebaea71be43c983d5f0a5e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
