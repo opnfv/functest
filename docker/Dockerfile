@@ -63,10 +63,12 @@ postgresql \
 ruby1.9.1-dev \
 ssh \
 sshpass \
+vim \
 wget \
 --no-install-recommends
 
 RUN pip install --upgrade pip
+RUN easy_install -U setuptools==35.0.2
 
 RUN mkdir -p ${REPOS_DIR} \
     && mkdir -p ${REPOS_VNFS_DIR} \
