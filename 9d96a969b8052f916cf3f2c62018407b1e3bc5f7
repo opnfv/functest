@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_0202723e",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-03T09:27:40Z",
+      "side": 1,
+      "message": "We need to know if the tenant_id has been created. Agree with true or false.",
+      "parentUuid": "5aaae553_c79eac63",
+      "range": {
+        "startLine": 1440,
+        "startChar": 0,
+        "endLine": 1441,
+        "endChar": 34
+      },
+      "revId": "9d96a969b8052f916cf3f2c62018407b1e3bc5f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_470f1ce2",
         "filename": "functest/utils/openstack_utils.py",
         "patchSetId": 8
