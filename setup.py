@@ -1,25 +1,17 @@
-##############################################################################
+#!/usr/bin/env python
+
+# Copyright (c) 2017 Orange and others.
+#
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
-##############################################################################
 
-from setuptools import setup, find_packages
+# pylint: disable=missing-docstring
 
+from setuptools import setup
 
 setup(
-    name="functest",
-    version="master",
-    py_modules=['cli_base'],
-    packages=find_packages(),
-    include_package_data=True,
-    package_data={
-    },
-    url="https://www.opnfv.org",
-    entry_points={
-        'console_scripts': [
-            'functest=functest.cli.cli_base:cli'
-        ],
-    },
+    setup_requires=['pbr>=1.9', 'setuptools>=17.1'],
+    pbr=True,
 )
