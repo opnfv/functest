@@ -68,7 +68,7 @@ wget \
 
 RUN pip install --upgrade pip && easy_install -U setuptools==30.0.0
 
-RUN mkdir -p ${REPOS_DIR} \
+RUN mkdir -p ${FUNCTEST_REPO_DIR} \
     && mkdir -p ${REPOS_VNFS_DIR} \
     && mkdir -p ${FUNCTEST_BASE_DIR}/results \
     && mkdir -p ${FUNCTEST_CONF_DIR} \
@@ -79,8 +79,16 @@ RUN mkdir -p ${REPOS_DIR} \
 
 RUN git config --global http.sslVerify false
 
+RUN pip install \
+  git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
+  git+https://gerrit.opnfv.org/gerrit/releng@$BRANCH#egg=opnfv\&subdirectory=modules \
+  git+https://gerrit.opnfv.org/gerrit/barometer@$BRANCH#egg=baro_tests \
+  git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps
+
+# Hook required by hardcoded paths in Functest
+RUN ln -s /usr/local/lib/python2.7/dist-packages/functest ${FUNCTEST_REPO_DIR}/functest
+
 # OPNFV repositories
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${REPOS_DIR}/functest
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${REPOS_DIR}/copper
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${REPOS_DIR}/sdnvpn
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${REPOS_DIR}/domino
@@ -108,33 +116,28 @@ RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_
 
 RUN pip install -r ${REPOS_DIR}/rally/requirements.txt
 RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
-
-RUN cd ${FUNCTEST_REPO_DIR} \
-    && pip install -r requirements.txt \
-    && pip install -e .
-
 RUN pip install ${REPOS_DIR}/opera
 
-RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
+RUN find -L ${FUNCTEST_REPO_DIR} -name "*.py" \
     -not -path "*tests/unit*" \
     -not -path "*functest_venv*" \
     |xargs grep -L __main__ |cut -d\: -f 1 |xargs chmod -c 644 \
-    && find ${FUNCTEST_REPO_DIR} -name "*.sh" \
+    && find -L ${FUNCTEST_REPO_DIR} -name "*.sh" \
     -not -path "*functest_venv*" \
     |xargs grep -L \#\! |cut -d\:  -f 1 |xargs chmod -c 644
 
-RUN find ${FUNCTEST_REPO_DIR} -name "*.py" \
+RUN find -L ${FUNCTEST_REPO_DIR} -name "*.py" \
     -not -path "*tests/unit*" \
     -not -path "*functest_venv*" \
     |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755 \
-    && find ${FUNCTEST_REPO_DIR} -name "*.sh" \
+    && find -L ${FUNCTEST_REPO_DIR} -name "*.sh" \
     -not -path "*functest_venv*" \
     |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
 
 RUN /bin/bash ${REPOS_DIR}/parser/tests/parser_install.sh ${REPOS_DIR}
 RUN ${REPOS_DIR}/rally/install_rally.sh --yes
 
-RUN /bin/bash ${REPOS_DIR}/functest/docker/add_images.sh
+RUN add_images.sh
 
 RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 RUN curl -L https://get.rvm.io | bash -s stable
@@ -148,8 +151,7 @@ RUN cd ${REPOS_DIR}/sdnvpn && pip install -e .
 RUN cd ${REPOS_DIR}/bgpvpn && pip install -e .
 
 # Kingbird integration
-RUN cd ${REPOS_DIR}/kingbird && pip install -e .
-RUN cd ${FUNCTEST_REPO_DIR} && pip install -r kingbird_requirements.txt
+RUN cd ${REPOS_DIR}/kingbird && pip install -e . -r test-requirements.txt
 
 # refstack-client integration
 RUN cd ${REPOS_DIR}/refstack-client && ./setup_env -t ${REFSTACK_TAG}
