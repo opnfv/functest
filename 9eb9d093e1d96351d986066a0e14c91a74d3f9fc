@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_cd4a4b55",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-06-04T08:55:52Z",
+      "side": 1,
+      "message": "I strongly recommend that as regards to common tools, using the latest version rather than specifying the version.",
+      "revId": "9eb9d093e1d96351d986066a0e14c91a74d3f9fc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
