@@ -11,6 +11,7 @@ import os
 
 import click
 import git
+import prettytable
 
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
@@ -66,21 +67,19 @@ class CliEnv(object):
         if self.status(verbose=False) == 0:
             STATUS = "ready"
 
-        click.echo("+======================================================+")
-        click.echo("| Functest Environment info                            |")
-        click.echo("+======================================================+")
-        click.echo("|  INSTALLER: %s|" % installer_info.ljust(41))
-        click.echo("|   SCENARIO: %s|" % scenario.ljust(41))
-        click.echo("|        POD: %s|" % node.ljust(41))
-        click.echo("| GIT BRACNH: %s|" % git_branch.ljust(41))
-        click.echo("|   GIT HASH: %s|" % git_hash.ljust(41))
+        msg = prettytable.PrettyTable(
+            header_style='upper', padding_width=5,
+            field_names=['Functest Environment', 'value'])
+        msg.add_row(['INSTALLER', installer_info])
+        msg.add_row(['SCENARIO', scenario])
+        msg.add_row(['POD', node])
+        msg.add_row(['GIT BRANCH', git_branch])
+        msg.add_row(['GIT HASH', git_hash])
         if build_tag:
-            click.echo("|  BUILD TAG: %s|" % build_tag.ljust(41))
-        click.echo("| DEBUG FLAG: %s|" % is_debug.ljust(41))
-        click.echo("+------------------------------------------------------+")
-        click.echo("|     STATUS: %s|" % STATUS.ljust(41))
-        click.echo("+------------------------------------------------------+")
-        click.echo("")
+            msg.add_row(['BUILD TAG', build_tag])
+        msg.add_row(['DEBUG FLAG', is_debug])
+        msg.add_row(['STATUS', STATUS])
+        click.echo(msg.get_string())
 
     def status(self, verbose=True):
         ret_val = 0
