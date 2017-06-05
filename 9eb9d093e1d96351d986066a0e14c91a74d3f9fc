@@ -34,6 +34,24 @@
       "revId": "9eb9d093e1d96351d986066a0e14c91a74d3f9fc",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_ad17cfa2",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-06-05T08:19:44Z",
+      "side": 1,
+      "message": "In case someone uses 3rd pypi lib, and 35.0.2 is not included there. so it is reasonable that we specify the lower version, let 3rd pypi to choose the latest version to install.\nPersonal opinion, since we are open source, it would be recommended to use the new technology including new tools to keep progress with other open sources.",
+      "parentUuid": "5aaae553_4d589bfa",
+      "revId": "9eb9d093e1d96351d986066a0e14c91a74d3f9fc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
