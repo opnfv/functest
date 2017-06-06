@@ -86,12 +86,6 @@ def os_show_credentials():
     _openstack.show_credentials()
 
 
-@openstack.command('fetch-rc', help="Fetch the OpenStack RC file from "
-                   "the installer.")
-def os_fetch_rc():
-    _openstack.fetch_credentials()
-
-
 @env.command('prepare', help="Prepares the Functest environment. This step is "
              "needed run the tests.")
 def env_prepare():
