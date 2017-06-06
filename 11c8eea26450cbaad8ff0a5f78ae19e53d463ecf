@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5aaae553_fc025ab3",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-06-06T12:32:50Z",
+      "side": 1,
+      "message": "A similar block should be added to the aarch64 config file, with the cirros aarch64 images. Also, in the latest docker image I didn\u0027t see any ubuntu or centos images for x86. Is there a plan to add those to the docker image? I assume it will increase the size of it quite a lot....",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 75
+      },
+      "revId": "11c8eea26450cbaad8ff0a5f78ae19e53d463ecf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_1c0096a9",
         "filename": "functest/opnfv_tests/openstack/snaps/health_check.py",
         "patchSetId": 2

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_3cf9d2c8",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-06-06T12:32:50Z",
+      "side": 0,
+      "message": "I know that these properties are not used anymore with the previous changes in functest, but they need to be updated accordingly. I added Catalina as reviewer, since she worked with the 1 part image.",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "86aee2dcf004361b1516f28b0137b7c3fedfe8a5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
