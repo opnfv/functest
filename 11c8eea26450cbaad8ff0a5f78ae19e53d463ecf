@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_1c0096a9",
+        "filename": "functest/opnfv_tests/openstack/snaps/health_check.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-06T12:19:58Z",
+      "side": 1,
+      "message": "This line could also be\n\nfrom functest.opnfv_tests.openstack.snaps.snaps_test_runner import (\n    SnapsTestRunner)\n\nto avoid backslash",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "11c8eea26450cbaad8ff0a5f78ae19e53d463ecf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
