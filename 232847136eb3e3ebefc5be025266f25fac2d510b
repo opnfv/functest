@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_b63c0895",
+        "filename": "functest/core/vnf.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-06-06T11:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_f319327a",
+      "revId": "232847136eb3e3ebefc5be025266f25fac2d510b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_1313ae5d",
         "filename": "functest/core/vnf.py",
         "patchSetId": 7
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_1672bc7c",
+        "filename": "functest/core/vnf.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-06-06T11:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_1313ae5d",
+      "revId": "232847136eb3e3ebefc5be025266f25fac2d510b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_d31c366d",
         "filename": "functest/core/vnf.py",
         "patchSetId": 7
@@ -64,6 +100,24 @@
       "writtenOn": "2017-05-30T21:03:31Z",
       "side": 1,
       "message": "you could merge them in one logger.info() call.",
+      "revId": "232847136eb3e3ebefc5be025266f25fac2d510b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_f6684089",
+        "filename": "functest/core/vnf.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-06-06T11:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_d31c366d",
       "revId": "232847136eb3e3ebefc5be025266f25fac2d510b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
