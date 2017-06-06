@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_dc7e7ee4",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-06T13:49:47Z",
+      "side": 0,
+      "message": "RUN pip install https://gerrit.opnfv.org/gerrit/sdnvpn#egg\u003dsdnvpn",
+      "revId": "d1fe9ae1d51537c73f3264cb1e01342888f5fd3f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_bc7942fe",
+        "filename": "docker/Dockerfile.aarch64",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-06T13:49:47Z",
+      "side": 0,
+      "message": "RUN pip install https://gerrit.opnfv.org/gerrit/sdnvpn#egg\u003dsdnvpn",
+      "revId": "d1fe9ae1d51537c73f3264cb1e01342888f5fd3f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}

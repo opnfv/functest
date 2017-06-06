@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_1c1df6bd",
+        "filename": "requirements.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-06T13:49:47Z",
+      "side": 1,
+      "message": "This line should not be declared here. It must be declared directly in the docker container.\n\nHere only sdnvpn and networking-bgpvpn\u003d\u003d7.0.0.0b1 should have been added.",
+      "revId": "d90055cd66ac9e78776d9f646b09ebc383217390",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
