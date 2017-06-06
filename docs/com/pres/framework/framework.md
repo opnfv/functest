@@ -2,7 +2,7 @@
 
 created by [Cédric Ollivier](mailto:cedric.ollivier@orange.com)
 
-2017/05/06
+2017/06/05
 
 Note:
 
@@ -313,7 +313,6 @@ run:
 
 - __to finish VNF abstraction (coverage + pylint)__
 - to publish doc API
-- to manage criteria as written in testcases.yaml
 
 Please see [Functest Euphrates page](https://wiki.opnfv.org/display/functest/Functest+Euphrates+page) for more details
 
