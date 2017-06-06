@@ -66,7 +66,7 @@ sshpass \
 wget \
 --no-install-recommends
 
-RUN pip install --upgrade pip && easy_install -U setuptools==35.0.2
+RUN pip install --upgrade pip && easy_install -U setuptools==30.0.0
 
 RUN mkdir -p ${REPOS_DIR} \
     && mkdir -p ${REPOS_VNFS_DIR} \
