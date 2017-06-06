@@ -17,7 +17,6 @@ ARG RALLY_TAG=0.8.1
 ARG TEMPEST_TAG=15.0.0
 ARG REFSTACK_TAG=15.0.0
 ARG ODL_TAG=release/beryllium-sr4
-ARG OPENSTACK_TAG=stable/mitaka
 ARG KINGBIRD_TAG=1.1.0
 ARG VIMS_TAG=stable
 ARG VROUTER_TAG=stable
@@ -82,7 +81,6 @@ RUN git config --global http.sslVerify false
 # OPNFV repositories
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/functest ${REPOS_DIR}/functest
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${REPOS_DIR}/copper
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${REPOS_DIR}/sdnvpn
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${REPOS_DIR}/domino
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${REPOS_DIR}/parser
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${REPOS_DIR}/doctor
@@ -94,7 +92,6 @@ RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${REPOS
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/opera ${REPOS_DIR}/opera
 
 # OpenStack repositories
-RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${REPOS_DIR}/bgpvpn
 RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${REPOS_DIR}/kingbird
 RUN git clone --depth 1 -b $RALLY_TAG https://github.com/openstack/rally.git ${REPOS_DIR}/rally
 RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${REPOS_DIR}/tempest
@@ -142,10 +139,6 @@ RUN curl -L https://get.rvm.io | bash -s stable
 # SFC integration
 RUN /bin/bash -c ". ${REPOS_DIR}/sfc/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
 RUN cd ${REPOS_DIR}/sfc && pip install -e .
-
-# SDNVPN integration
-RUN cd ${REPOS_DIR}/sdnvpn && pip install -e .
-RUN cd ${REPOS_DIR}/bgpvpn && pip install -e .
 
 # Kingbird integration
 RUN cd ${REPOS_DIR}/kingbird && pip install -e .
