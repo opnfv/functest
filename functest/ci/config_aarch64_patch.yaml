@@ -16,6 +16,9 @@ os:
     vping:
         image_name: TestVM
 
+    tempest:
+        use_custom_images: False
+
     odl_sfc:
         image_base_url: "http://artifacts.opnfv.org/sfc/demo"
         image_name: sfc_nsh_danube
