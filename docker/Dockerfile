@@ -17,7 +17,6 @@ ARG RALLY_TAG=0.8.1
 ARG TEMPEST_TAG=15.0.0
 ARG REFSTACK_TAG=15.0.0
 ARG ODL_TAG=release/beryllium-sr4
-ARG OPENSTACK_TAG=stable/mitaka
 ARG KINGBIRD_TAG=1.1.0
 ARG VIMS_TAG=stable
 ARG VROUTER_TAG=stable
@@ -90,7 +89,6 @@ RUN ln -s /usr/local/lib/python2.7/dist-packages/functest ${FUNCTEST_REPO_DIR}/f
 
 # OPNFV repositories
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${REPOS_DIR}/copper
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sdnvpn ${REPOS_DIR}/sdnvpn
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${REPOS_DIR}/domino
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${REPOS_DIR}/parser
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${REPOS_DIR}/doctor
@@ -137,9 +135,6 @@ RUN curl -L https://get.rvm.io | bash -s stable
 # SFC integration
 RUN /bin/bash -c ". ${REPOS_DIR}/sfc/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
 RUN cd ${REPOS_DIR}/sfc && pip install -e .
-
-# SDNVPN integration
-RUN cd ${REPOS_DIR}/sdnvpn && pip install -e .
 
 # refstack-client integration
 RUN wget -q https://raw.githubusercontent.com/openstack/refstack-client/master/setup_env \
