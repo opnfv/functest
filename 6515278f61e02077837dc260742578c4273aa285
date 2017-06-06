@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_5c928e58",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-06T13:05:49Z",
+      "side": 1,
+      "message": "Is it possible to use only two or three lines for the message (we are limited to 80 char per line)?",
+      "revId": "6515278f61e02077837dc260742578c4273aa285",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_9cb006f6",
+        "filename": "functest/tests/unit/ci/test_prepare_env.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-06T13:05:49Z",
+      "side": 1,
+      "message": "please add a break after ( wich saves several lines",
+      "revId": "6515278f61e02077837dc260742578c4273aa285",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
