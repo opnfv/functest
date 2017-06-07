@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_3f546453",
+        "filename": "functest/opnfv_tests/openstack/snaps/smoke.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-07T07:54:46Z",
+      "side": 1,
+      "message": "That\u0027s right. Snaps is installed as a requirement and we don\u0027t clone the repo.",
+      "parentUuid": "5aaae553_1f7408fc",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "11c8eea26450cbaad8ff0a5f78ae19e53d463ecf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_bf605436",
         "filename": "functest/opnfv_tests/openstack/snaps/smoke.py",
         "patchSetId": 2
