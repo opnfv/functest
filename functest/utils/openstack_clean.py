@@ -425,6 +425,7 @@ def main():
     separator()
     remove_tenants(keystone_client, default_tenants)
     separator()
+    return 0
 
 
 if __name__ == '__main__':
