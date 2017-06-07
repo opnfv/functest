@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_f2b8432c",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-06-07T15:59:23Z",
+      "side": 1,
+      "message": "that works",
+      "parentUuid": "5aaae553_6711f8ab",
+      "range": {
+        "startLine": 90,
+        "startChar": 27,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "a61a4b0bdcce47cae03094e17af5bfc61b90191b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_07260417",
         "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-06-02T09:25:07Z",
       "side": 1,
       "message": "Not sure if makes it cleaner, but you can also do:\n\n    if \u0027ovs\u0027 or \u0027fdio\u0027 in scenario:",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 51
+      },
+      "revId": "a61a4b0bdcce47cae03094e17af5bfc61b90191b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_52acb7ed",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-06-07T15:59:23Z",
+      "side": 1,
+      "message": "This logic you suggested does not work as expected. Will keep as is.",
+      "parentUuid": "5aaae553_07260417",
       "range": {
         "startLine": 121,
         "startChar": 8,
