@@ -160,6 +160,7 @@ def main():
                      % yaml_file.read())
         logger.debug("NOTE: These objects will NOT be deleted after " +
                      "running the test.")
+    return 0
 
 
 if __name__ == '__main__':
