@@ -33,6 +33,29 @@
       "revId": "3bbda03d34124b7a6a76ce8bdb404d760d6743e0",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_3f2544c2",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-07T13:34:39Z",
+      "side": 1,
+      "message": "can you convert this string without using oslo_utils?",
+      "range": {
+        "startLine": 186,
+        "startChar": 21,
+        "endLine": 187,
+        "endChar": 38
+      },
+      "revId": "3bbda03d34124b7a6a76ce8bdb404d760d6743e0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
