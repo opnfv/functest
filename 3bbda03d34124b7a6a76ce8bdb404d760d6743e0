@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_df367003",
+        "filename": "functest/ci/check_os.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-07T13:29:16Z",
+      "side": 1,
+      "message": "could we simply define args or options? Maybe we would add another one day.",
+      "revId": "3bbda03d34124b7a6a76ce8bdb404d760d6743e0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_7f3bbceb",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-07T13:29:16Z",
+      "side": 1,
+      "message": "Are we adding a new dependancy to oslo?",
+      "revId": "3bbda03d34124b7a6a76ce8bdb404d760d6743e0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
