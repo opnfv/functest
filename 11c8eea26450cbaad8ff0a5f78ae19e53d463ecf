@@ -45,6 +45,52 @@
       "revId": "11c8eea26450cbaad8ff0a5f78ae19e53d463ecf",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_1f7408fc",
+        "filename": "functest/opnfv_tests/openstack/snaps/smoke.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-06-07T07:36:36Z",
+      "side": 1,
+      "message": "The big issue is that there is no snaps repo in functest container now, so this will fail.",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "11c8eea26450cbaad8ff0a5f78ae19e53d463ecf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_bf605436",
+        "filename": "functest/opnfv_tests/openstack/snaps/smoke.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-06-07T07:36:36Z",
+      "side": 1,
+      "message": "This will fail for sure.",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 58
+      },
+      "revId": "11c8eea26450cbaad8ff0a5f78ae19e53d463ecf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
