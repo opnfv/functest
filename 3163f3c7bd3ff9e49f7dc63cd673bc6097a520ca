@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_759f5d04",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-06-09T03:25:18Z",
+      "side": 1,
+      "message": "1. Could you please help update cirros version to 0.3.5? Cause cirros-0.3.5-x86_64-disk.img is used in functest.\n2. Some of files have not prepared in dir_functest_images, so shall we add these files\u0027 name required to add_images.sh, in order to download them beforehand?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 75
+      },
+      "revId": "3163f3c7bd3ff9e49f7dc63cd673bc6097a520ca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
