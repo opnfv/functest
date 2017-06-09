@@ -22,6 +22,30 @@
       "revId": "3163f3c7bd3ff9e49f7dc63cd673bc6097a520ca",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_901467f6",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-06-09T12:57:05Z",
+      "side": 1,
+      "message": "Adding the the ubuntu or centos images in add_images.sh will add these images to the docker functest image. This will increase its size by ~1.5G for x86 alone (and we should also have the aarch64 ones). \n The cirros images are small compared to the other 2 that\u0027s why it is reasonable to have them downloaded there. I think we need a different approach for these 2.",
+      "parentUuid": "5aaae553_759f5d04",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 75
+      },
+      "revId": "3163f3c7bd3ff9e49f7dc63cd673bc6097a520ca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
