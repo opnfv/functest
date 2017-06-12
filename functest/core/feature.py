@@ -33,6 +33,24 @@ class Feature(base.TestCase):
         super(Feature, self).__init__(**kwargs)
         self.result_file = "{}/{}.log".format(
             CONST.__getattribute__('dir_results'), self.case_name)
+        try:
+            module = kwargs['run']['module']
+            self.logger = logging.getLogger(module)
+        except KeyError:
+            self.__logger.warning(
+                "Cannot get module name %s. Using %s as fallback",
+                kwargs, self.case_name)
+            self.logger = logging.getLogger(self.case_name)
+        handler = logging.StreamHandler()
+        handler.setLevel(logging.WARN)
+        self.logger.addHandler(handler)
+        handler = logging.FileHandler(self.result_file)
+        handler.setLevel(logging.DEBUG)
+        self.logger.addHandler(handler)
+        formatter = logging.Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
 
     def execute(self, **kwargs):
         """Execute the Python method.
