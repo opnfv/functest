@@ -1,0 +1,1 @@
+git+https://gerrit.opnfv.org/gerrit/barometer@$BRANCH#egg=baro_tests
