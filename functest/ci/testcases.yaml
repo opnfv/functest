@@ -447,7 +447,7 @@ tiers:
                     installer: 'fuel'
                     scenario: 'kvm_ovs_dpdk_bar'
                 run:
-                     module: 'functest.opnfv_tests.features.barometer'
+                     module: 'baro_tests.barometer'
                      class: 'BarometerCollectd'
 
     -
