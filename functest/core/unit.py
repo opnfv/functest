@@ -74,8 +74,11 @@ class Suite(testcase.TestCase):
                 stream=stream, verbosity=2).run(self.suite)
             self.__logger.debug("\n\n%s", stream.getvalue())
             self.stop_time = time.time()
-            self.details = {"failures": result.failures,
-                            "errors": result.errors}
+            self.details = {
+                "testsRun": len(result.testsRun),
+                "failures": len(result.failures),
+                "errors": len(result.errors),
+                "stream": stream.getvalue()}
             self.result = 100 * (
                 (result.testsRun - (len(result.failures) +
                                     len(result.errors))) /
