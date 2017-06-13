@@ -17,16 +17,24 @@ import functest.core.vnf as vnf
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 
+__author__ = ("Valentin Boucher <valentin.boucher@orange.com>, "
+              "Helen Yao <helanyao@gmail.com>")
+
 
 class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
+    """ vIMS clearwater base usable by several orchestrators"""
 
     def __init__(self, **kwargs):
         self.logger = logging.getLogger(__name__)
         super(ClearwaterOnBoardingBase, self).__init__(**kwargs)
-        self.case_dir = os.path.join(CONST.dir_functest_test, 'vnf', 'ims')
-        self.data_dir = CONST.dir_ims_data
-        self.result_dir = os.path.join(CONST.dir_results, self.case_name)
-        self.test_dir = CONST.dir_repo_vims_test
+        self.case_dir = os.path.join(
+            CONST.__getattribute__('dir_functest_test'),
+            'vnf',
+            'ims')
+        self.data_dir = CONST.__getattribute__('dir_ims_data')
+        self.result_dir = os.path.join(CONST.__getattribute__('dir_results'),
+                                       self.case_name)
+        self.test_dir = CONST.__getattribute__('dir_repo_vims_test')
 
         if not os.path.exists(self.data_dir):
             os.makedirs(self.data_dir)
@@ -58,7 +66,7 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         if rq.status_code != 201:
             raise Exception('Failed to get cookie for Ellis')
         cookies = rq.cookies
-        self.logger.info('Cookies: %s' % cookies)
+        self.logger.info('Cookies: %s', cookies)
 
         number_url = 'http://{0}/accounts/{1}/numbers'.format(
                      ellis_ip,
