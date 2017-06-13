@@ -85,6 +85,7 @@ RUN pip install \
   git+https://gerrit.opnfv.org/gerrit/barometer@$BRANCH#egg=baro_tests \
   git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps
 
+
 # Hook required by hardcoded paths in Functest
 RUN ln -s /usr/local/lib/python2.7/dist-packages/functest ${FUNCTEST_REPO_DIR}/functest
 
