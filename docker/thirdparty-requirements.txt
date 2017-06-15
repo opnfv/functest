@@ -1,1 +1,6 @@
 git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
+networking-bgpvpn
+kingbird
+rally
+tempest>=12.1.0 # Apache-2.0
+git+https://github.com/openstack/refstack-client#egg=refstack-client
