@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_8f92fd55",
+        "filename": "functest/tests/unit/openstack/vping/test_vping.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-15T20:26:19Z",
+      "side": 1,
+      "message": "Could you please remove \\",
+      "revId": "5fca13debd08b6b86a90ab4a65ed284276906d5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
