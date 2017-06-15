@@ -23,7 +23,7 @@ paramiko>=2.0 # LGPLv2.1+
 subprocess32;python_version=='2.7'
 shyaml
 dnspython>=1.14.0;python_version=='2.7' # http://www.dnspython.org/LICENSE
-dnspython3>=1.12.0,!=1.13.0,!=1.14.0;python_version>='3.0' # http://www.dnspython.org/LICENSE
+dnspython3!=1.13.0,!=1.14.0,>=1.12.0;python_version>='3.0' # http://www.dnspython.org/LICENSE
 Pillow>=2.4.0 # PIL License
 click==6.6
 openbaton-cli==2.2.1-beta7
