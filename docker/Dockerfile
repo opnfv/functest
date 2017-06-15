@@ -36,8 +36,6 @@ ENV HOME /home/opnfv
 ENV CONFIG_FUNCTEST_YAML ${FUNCTEST_REPO_DIR}/functest/ci/config_functest.yaml
 ENV REPOS_DIR ${HOME}/repos
 ENV creds ${FUNCTEST_CONF_DIR}/openstack.creds
-ENV TERM xterm
-ENV COLORTERM gnome-terminal
 
 WORKDIR ${HOME}
 
@@ -165,10 +163,5 @@ RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -' \
     && cd ${REPOS_DIR}/promise && sudo npm -g install npm@latest \
     && cd ${REPOS_DIR}/promise/source && npm install
 
-RUN echo "set nocompatible \n\
-set backspace=2" \
->> ${HOME}/.vimrc
-RUN echo set nocompatible >> ${HOME}/.exrc
-RUN echo "alias ll='ls -lh' \n\
-. ${FUNCTEST_REPO_DIR}/functest/cli/functest-complete.sh" \
->> ${HOME}/.bashrc
+RUN echo ". ${FUNCTEST_REPO_DIR}/functest/cli/functest-complete.sh" >> ${HOME}/.bashrc
+RUN echo "set nocompatible \nset backspace=2" >> ${HOME}/.vimrc
