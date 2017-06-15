@@ -97,15 +97,12 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/netready ${RE
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/fds ${REPOS_DIR}/fds
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sfc ${REPOS_DIR}/sfc
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${REPOS_DIR}/securityscanning
-RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/opera ${REPOS_DIR}/opera
 
 # other repositories
 RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${REPOS_DIR}/odl_test
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_VNFS_DIR}/vims-test
 RUN git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-functest-vrouter.git ${REPOS_VNFS_DIR}/vrouter
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
-
-RUN pip install ${REPOS_DIR}/opera
 
 RUN find -L ${FUNCTEST_REPO_DIR} -name "*.py" \
     -not -path "*tests/unit*" \
