@@ -1,5 +1,6 @@
 git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn#egg=sdnvpn
+git+https://gerrit.opnfv.org/gerrit/opera#egg=opera
 networking-bgpvpn
 kingbird
 rally
