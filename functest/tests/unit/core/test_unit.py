@@ -41,7 +41,9 @@ class PyTestSuiteRunnerTesting(unittest.TestCase):
         self._test_run(result=mock_result,
                        status=testcase.TestCase.EX_RUN_ERROR)
         self.assertEqual(self.psrunner.result, 0)
-        self.assertEqual(self.psrunner.details, {'errors': [], 'failures': []})
+        self.assertEqual(self.psrunner.details,
+                         {'errors': 0, 'failures': 0, 'stream': '',
+                          'testsRun': 0})
         self.assertEqual(self.psrunner.is_successful(),
                          testcase.TestCase.EX_TESTCASE_FAILED)
 
@@ -52,8 +54,8 @@ class PyTestSuiteRunnerTesting(unittest.TestCase):
         self._test_run(result=mock_result)
         self.assertEqual(self.psrunner.result, 96)
         self.assertEqual(self.psrunner.details,
-                         {'errors': [('test1', 'error_msg1')],
-                          'failures': [('test2', 'failure_msg1')]})
+                         {'errors': 1, 'failures': 1, 'stream': '',
+                          'testsRun': 50})
         self.assertEqual(self.psrunner.is_successful(),
                          testcase.TestCase.EX_TESTCASE_FAILED)
 
@@ -62,7 +64,9 @@ class PyTestSuiteRunnerTesting(unittest.TestCase):
                                 failures=[])
         self._test_run(result=mock_result)
         self.assertEqual(self.psrunner.result, 100)
-        self.assertEqual(self.psrunner.details, {'errors': [], 'failures': []})
+        self.assertEqual(self.psrunner.details,
+                         {'errors': 0, 'failures': 0, 'stream': '',
+                          'testsRun': 50})
         self.assertEqual(self.psrunner.is_successful(),
                          testcase.TestCase.EX_OK)
 
