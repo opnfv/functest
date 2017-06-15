@@ -81,10 +81,11 @@ RUN git config --global http.sslVerify false
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN pip install \
-  git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
-  git+https://gerrit.opnfv.org/gerrit/releng@$BRANCH#egg=opnfv\&subdirectory=modules \
-  git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps \
-  -r thirdparty-requirements.txt
+    git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
+    git+https://gerrit.opnfv.org/gerrit/releng@$BRANCH#egg=opnfv\&subdirectory=modules \
+    git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps \
+    -r thirdparty-requirements.txt \
+    && rm thirdparty-requirements.txt
 
 # Hook required by hardcoded paths in Functest
 RUN ln -s /usr/local/lib/python2.7/dist-packages/functest ${FUNCTEST_REPO_DIR}/functest
@@ -102,21 +103,12 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sfc ${REPOS_D
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${REPOS_DIR}/securityscanning
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/opera ${REPOS_DIR}/opera
 
-# OpenStack repositories
-RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${REPOS_DIR}/bgpvpn
-RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${REPOS_DIR}/kingbird
-RUN git clone --depth 1 -b $RALLY_TAG https://github.com/openstack/rally.git ${REPOS_DIR}/rally
-RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${REPOS_DIR}/tempest
-RUN git clone https://github.com/openstack/refstack-client ${REPOS_DIR}/refstack-client
-
 # other repositories
 RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${REPOS_DIR}/odl_test
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_VNFS_DIR}/vims-test
 RUN git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-functest-vrouter.git ${REPOS_VNFS_DIR}/vrouter
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
 
-RUN pip install -r ${REPOS_DIR}/rally/requirements.txt
-RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
 RUN pip install ${REPOS_DIR}/opera
 
 RUN find -L ${FUNCTEST_REPO_DIR} -name "*.py" \
@@ -136,7 +128,8 @@ RUN find -L ${FUNCTEST_REPO_DIR} -name "*.py" \
     |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
 
 RUN /bin/bash ${REPOS_DIR}/parser/tests/parser_install.sh ${REPOS_DIR}
-RUN ${REPOS_DIR}/rally/install_rally.sh --yes
+RUN wget -q https://raw.githubusercontent.com/openstack/rally/${RALLY_TAG}/install_rally.sh \
+    && bash install_rally.sh --yes && rm install_rally.sh
 
 RUN add_images.sh
 
@@ -149,13 +142,10 @@ RUN cd ${REPOS_DIR}/sfc && pip install -e .
 
 # SDNVPN integration
 RUN cd ${REPOS_DIR}/sdnvpn && pip install -e .
-RUN cd ${REPOS_DIR}/bgpvpn && pip install -e .
-
-# Kingbird integration
-RUN cd ${REPOS_DIR}/kingbird && pip install -e . -r test-requirements.txt
 
 # refstack-client integration
-RUN cd ${REPOS_DIR}/refstack-client && ./setup_env -t ${REFSTACK_TAG}
+RUN wget -q https://raw.githubusercontent.com/openstack/refstack-client/master/setup_env \
+    && bash setup_env -t ${REFSTACK_TAG} && rm setup_env
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd ${REPOS_VNFS_DIR}/vims-test \

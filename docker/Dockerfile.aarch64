@@ -98,20 +98,11 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sfc ${REPOS_D
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/securityscanning ${REPOS_DIR}/securityscanning
 RUN git clone --depth 1 https://gerrit.opnfv.org/gerrit/opera ${REPOS_DIR}/opera
 
-# OpenStack repositories
-RUN git clone --depth 1 -b $OPENSTACK_TAG https://github.com/openstack/networking-bgpvpn ${REPOS_DIR}/bgpvpn
-RUN git clone --depth 1 -b $KINGBIRD_TAG https://github.com/openstack/kingbird.git ${REPOS_DIR}/kingbird
-RUN git clone --depth 1 -b $RALLY_TAG https://github.com/openstack/rally.git ${REPOS_DIR}/rally
-RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${REPOS_DIR}/tempest
-RUN git clone https://github.com/openstack/refstack-client ${REPOS_DIR}/refstack-client
-
 # other repositories
+RUN git clone https://github.com/openstack/refstack-client ${REPOS_DIR}/refstack-client
 RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${REPOS_DIR}/odl_test
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_VNFS_DIR}/vims-test
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
-
-RUN pip install -r ${REPOS_DIR}/rally/requirements.txt
-RUN pip install -r ${REPOS_DIR}/tempest/requirements.txt
 
 RUN find -L ${FUNCTEST_REPO_DIR} -name "*.py" \
     -not -path "*tests/unit*" \
@@ -145,10 +136,6 @@ RUN cd ${REPOS_DIR}/sfc && pip install -e .
 
 # SDNVPN integration
 RUN cd ${REPOS_DIR}/sdnvpn && pip install -e .
-RUN cd ${REPOS_DIR}/bgpvpn && pip install -e .
-
-# Kingbird integration
-RUN cd ${REPOS_DIR}/kingbird && pip install -e . -r test-requirements.txt
 
 # refstack-client integration
 RUN cd ${REPOS_DIR}/refstack-client && ./setup_env -t ${REFSTACK_TAG}
