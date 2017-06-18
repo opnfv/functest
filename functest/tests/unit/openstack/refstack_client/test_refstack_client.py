@@ -7,7 +7,7 @@
 
 import logging
 import mock
-import os
+import pkg_resources
 import unittest
 
 from functest.core import testcase
@@ -17,12 +17,11 @@ from functest.utils.constants import CONST
 
 class OSRefstackClientTesting(unittest.TestCase):
 
-    _config = os.path.join(
-        CONST.__getattribute__('dir_functest_test'),
-        CONST.__getattribute__('refstack_tempest_conf_path'))
-    _testlist = os.path.join(
-        CONST.__getattribute__('dir_functest_test'),
-        CONST.__getattribute__('refstack_defcore_list'))
+    _config = pkg_resources.resource_filename(
+        'functest',
+        'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
+    _testlist = pkg_resources.resource_filename(
+            'functest', 'opnfv_tests/openstack/refstack_client/defcore.txt')
 
     def setUp(self):
         self.defaultargs = {'config': self._config,
@@ -30,7 +29,6 @@ class OSRefstackClientTesting(unittest.TestCase):
         self.refstackclient = refstack_client.RefstackClient()
 
     def test_source_venv(self):
-        CONST.__setattr__('dir_refstack_client', 'test_repo_dir')
         with mock.patch('functest.opnfv_tests.openstack.refstack_client.'
                         'refstack_client.ft_utils.execute_command') as m:
             cmd = ("cd {0};"

@@ -11,6 +11,7 @@ import json
 import logging
 import logging.config
 import os
+import pkg_resources
 import re
 import subprocess
 import sys
@@ -34,14 +35,15 @@ handler = None
 pod_arch = None
 arch_filter = ['aarch64']
 
-CONFIG_FUNCTEST_PATH = CONST.__getattribute__('CONFIG_FUNCTEST_YAML')
-CONFIG_PATCH_PATH = os.path.join(os.path.dirname(
-    CONFIG_FUNCTEST_PATH), "config_patch.yaml")
-CONFIG_AARCH64_PATCH_PATH = os.path.join(os.path.dirname(
-    CONFIG_FUNCTEST_PATH), "config_aarch64_patch.yaml")
-RALLY_CONF_PATH = os.path.join("/etc/rally/rally.conf")
-RALLY_AARCH64_PATCH_PATH = os.path.join(os.path.dirname(
-    CONFIG_FUNCTEST_PATH), "rally_aarch64_patch.conf")
+CONFIG_FUNCTEST_PATH = pkg_resources.resource_filename(
+            'functest', 'ci/config_functest.yaml')
+CONFIG_PATCH_PATH = pkg_resources.resource_filename(
+            'functest', 'ci/config_patch.yaml')
+CONFIG_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
+            'functest', 'ci/config_aarch64_patch.yaml')
+RALLY_CONF_PATH = "/etc/rally/rally.conf"
+RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
+            'functest', 'ci/rally_aarch64_patch.conf')
 
 
 class PrepareEnvParser(object):
@@ -114,9 +116,8 @@ def get_deployment_handler():
     global handler
     global pod_arch
 
-    installer_params_yaml = os.path.join(
-        CONST.__getattribute__('dir_repo_functest'),
-        'functest/ci/installer_params.yaml')
+    installer_params_yaml = pkg_resources.resource_filename(
+            'functest', 'ci/installer_params.yaml')
     if (CONST.__getattribute__('INSTALLER_IP') and
         CONST.__getattribute__('INSTALLER_TYPE') and
             CONST.__getattribute__('INSTALLER_TYPE') in
@@ -250,8 +251,8 @@ def update_db_url():
 def verify_deployment():
     print_separator()
     logger.info("Verifying OpenStack services...")
-    cmd = ("%s/functest/ci/check_os.sh" %
-           CONST.__getattribute__('dir_repo_functest'))
+    cmd = ("sh %s" % pkg_resources.resource_filename(
+        'functest', 'ci/check_os.sh'))
 
     logger.debug("Executing command: %s" % cmd)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
@@ -386,8 +387,8 @@ def main(**kwargs):
 
 
 if __name__ == '__main__':
-    logging.config.fileConfig(
-        CONST.__getattribute__('dir_functest_logging_cfg'))
+    logging.config.fileConfig(pkg_resources.resource_filename(
+        'functest', 'ci/logging.ini'))
     parser = PrepareEnvParser()
     args = parser.parse_args(sys.argv[1:])
     sys.exit(main(**args))

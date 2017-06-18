@@ -9,6 +9,7 @@
 import json
 import logging
 import os
+import pkg_resources
 import shutil
 
 import requests
@@ -27,10 +28,8 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
     def __init__(self, **kwargs):
         self.logger = logging.getLogger(__name__)
         super(ClearwaterOnBoardingBase, self).__init__(**kwargs)
-        self.case_dir = os.path.join(
-            CONST.__getattribute__('dir_functest_test'),
-            'vnf',
-            'ims')
+        self.case_dir = pkg_resources.resource_filename(
+            'functest', 'opnfv_tests/vnf/ims')
         self.data_dir = CONST.__getattribute__('dir_ims_data')
         self.result_dir = os.path.join(CONST.__getattribute__('dir_results'),
                                        self.case_name)

@@ -9,12 +9,12 @@
 
 import click
 import logging.config
+import pkg_resources
 
 from functest.cli.commands.cli_env import CliEnv
 from functest.cli.commands.cli_os import CliOpenStack
 from functest.cli.commands.cli_testcase import CliTestcase
 from functest.cli.commands.cli_tier import CliTier
-from functest.utils.constants import CONST
 
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
@@ -23,8 +23,8 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.version_option(version='opnfv colorado.0.1 ')
 def cli():
-    logging.config.fileConfig(
-        CONST.__getattribute__('dir_functest_logging_cfg'))
+    logging.config.fileConfig(pkg_resources.resource_filename(
+        'functest', 'ci/logging.ini'))
 
 
 _env = CliEnv()

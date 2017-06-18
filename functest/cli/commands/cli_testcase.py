@@ -10,6 +10,7 @@
 """ global variables """
 
 import os
+import pkg_resources
 
 import click
 
@@ -25,7 +26,7 @@ class CliTestcase(object):
         self.tiers = tb.TierBuilder(
             CONST.__getattribute__('INSTALLER_TYPE'),
             CONST.__getattribute__('DEPLOY_SCENARIO'),
-            CONST.__getattribute__('functest_testcases_yaml'))
+            pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
 
     def list(self):
         summary = ""
@@ -59,8 +60,8 @@ class CliTestcase(object):
         else:
             tests = testname.split(",")
             for test in tests:
-                cmd = ("python %s/functest/ci/run_tests.py "
-                       "%s -t %s" %
-                       (CONST.__getattribute__('dir_repo_functest'),
+                cmd = ("python %s %s -t %s" %
+                       (pkg_resources.resource_filename(
+                           'functest', 'ci/run_tests.py'),
                         flags, test))
                 ft_utils.execute_command(cmd)

@@ -12,6 +12,7 @@ from __future__ import division
 import argparse
 import logging
 import os
+import pkg_resources
 import re
 import sys
 import subprocess
@@ -33,13 +34,16 @@ class RefstackClient(testcase.OSGCTestCase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "refstack_defcore"
         super(RefstackClient, self).__init__(**kwargs)
-        self.FUNCTEST_TEST = CONST.__getattribute__('dir_functest_test')
-        self.CONF_PATH = CONST.__getattribute__('refstack_tempest_conf_path')
-        self.DEFCORE_LIST = CONST.__getattribute__('refstack_defcore_list')
+        self.CONF_PATH = pkg_resources.resource_filename(
+            'functest',
+            'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
+        self.FUNCTEST_TEST = pkg_resources.resource_filename(
+            'functest', 'opnfv_tests')
+        self.DEFCORE_LIST = 'openstack/refstack_client/defcore.txt'
         self.confpath = os.path.join(self.FUNCTEST_TEST,
                                      self.CONF_PATH)
-        self.defcorelist = os.path.join(self.FUNCTEST_TEST,
-                                        self.DEFCORE_LIST)
+        self.defcorelist = pkg_resources.resource_filename(
+            'functest', 'opnfv_tests/openstack/refstack_client/defcore.txt')
 
     def source_venv(self):
 
@@ -202,9 +206,13 @@ class RefstackClient(testcase.OSGCTestCase):
 class RefstackClientParser(object):
 
     def __init__(self):
-        self.FUNCTEST_TEST = CONST.__getattribute__('dir_functest_test')
-        self.CONF_PATH = CONST.__getattribute__('refstack_tempest_conf_path')
-        self.DEFCORE_LIST = CONST.__getattribute__('refstack_defcore_list')
+        self.FUNCTEST_TEST = pkg_resources.resource_filename(
+            'functest', 'opnfv_tests')
+        self.CONF_PATH = pkg_resources.resource_filename(
+            'functest',
+            'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
+        self.DEFCORE_LIST = pkg_resources.resource_filename(
+            'functest', 'opnfv_tests/openstack/refstack_client/defcore.txt')
         self.confpath = os.path.join(self.FUNCTEST_TEST,
                                      self.CONF_PATH)
         self.defcorelist = os.path.join(self.FUNCTEST_TEST,

@@ -13,6 +13,7 @@ from __future__ import division
 import json
 import logging
 import os
+import pkg_resources
 import re
 import subprocess
 import time
@@ -38,12 +39,14 @@ class RallyBase(testcase.OSGCTestCase):
     GLANCE_IMAGE_FORMAT = CONST.__getattribute__('openstack_image_disk_format')
     FLAVOR_NAME = "m1.tiny"
 
-    RALLY_DIR = os.path.join(
-        CONST.__getattribute__('dir_repo_functest'),
-        CONST.__getattribute__('dir_rally'))
-    RALLY_SCENARIO_DIR = os.path.join(RALLY_DIR, "scenario")
-    TEMPLATE_DIR = os.path.join(RALLY_SCENARIO_DIR, "templates")
-    SUPPORT_DIR = os.path.join(RALLY_SCENARIO_DIR, "support")
+    RALLY_DIR = pkg_resources.resource_filename(
+        'functest', 'opnfv_tests/openstack/rally')
+    RALLY_SCENARIO_DIR = pkg_resources.resource_filename(
+        'functest', 'opnfv_tests/openstack/rally/scenario')
+    TEMPLATE_DIR = pkg_resources.resource_filename(
+        'functest', 'opnfv_tests/openstack/rally/scenario/templates')
+    SUPPORT_DIR = pkg_resources.resource_filename(
+        'functest', 'opnfv_tests/openstack/rally/scenario/support')
     USERS_AMOUNT = 2
     TENANTS_AMOUNT = 3
     ITERATIONS_AMOUNT = 10

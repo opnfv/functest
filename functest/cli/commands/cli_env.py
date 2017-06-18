@@ -8,6 +8,7 @@
 #
 
 import os
+import pkg_resources
 
 import click
 import prettytable
@@ -35,8 +36,8 @@ class CliEnv(object):
                 else:
                     answer = raw_input("Invalid answer. Please type [y|n]\n")
 
-        cmd = ("python %s/functest/ci/prepare_env.py start" %
-               CONST.__getattribute__('dir_repo_functest'))
+        cmd = ("python %s start" % pkg_resources.resource_filename(
+            'functest', 'ci/prepare_env.py'))
         ft_utils.execute_command(cmd)
 
     def show(self):

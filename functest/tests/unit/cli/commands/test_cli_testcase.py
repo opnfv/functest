@@ -7,12 +7,12 @@
 
 
 import logging
+import pkg_resources
 import unittest
 
 import mock
 
 from functest.cli.commands import cli_testcase
-from functest.utils.constants import CONST
 
 
 class CliTestCasesTesting(unittest.TestCase):
@@ -39,9 +39,9 @@ class CliTestCasesTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
     def test_run_default(self, mock_ft_utils, mock_os):
-        cmd = ("python %s/functest/ci/run_tests.py "
-               "%s -t %s" %
-               (CONST.__getattribute__('dir_repo_functest'),
+        cmd = ("python %s %s -t %s" %
+               (pkg_resources.resource_filename(
+                   'functest', 'ci/run_tests.py'),
                 "-n -r ", self.testname))
         self.cli_tests.run(self.testname, noclean=True, report=True)
         mock_ft_utils.assert_called_with(cmd)
@@ -50,9 +50,9 @@ class CliTestCasesTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
     def test_run_noclean_missing_report(self, mock_ft_utils, mock_os):
-        cmd = ("python %s/functest/ci/run_tests.py "
-               "%s -t %s" %
-               (CONST.__getattribute__('dir_repo_functest'),
+        cmd = ("python %s %s -t %s" %
+               (pkg_resources.resource_filename(
+                   'functest', 'ci/run_tests.py'),
                 "-n ", self.testname))
         self.cli_tests.run(self.testname, noclean=True, report=False)
         mock_ft_utils.assert_called_with(cmd)
@@ -61,9 +61,9 @@ class CliTestCasesTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
     def test_run_report_missing_noclean(self, mock_ft_utils, mock_os):
-        cmd = ("python %s/functest/ci/run_tests.py "
-               "%s -t %s" %
-               (CONST.__getattribute__('dir_repo_functest'),
+        cmd = ("python %s %s -t %s" %
+               (pkg_resources.resource_filename(
+                   'functest', 'ci/run_tests.py'),
                 "-r ", self.testname))
         self.cli_tests.run(self.testname, noclean=False, report=True)
         mock_ft_utils.assert_called_with(cmd)
@@ -72,9 +72,9 @@ class CliTestCasesTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
     def test_run_missing_noclean_report(self, mock_ft_utils, mock_os):
-        cmd = ("python %s/functest/ci/run_tests.py "
-               "%s -t %s" %
-               (CONST.__getattribute__('dir_repo_functest'),
+        cmd = ("python %s %s -t %s" %
+               (pkg_resources.resource_filename(
+                   'functest', 'ci/run_tests.py'),
                 "", self.testname))
         self.cli_tests.run(self.testname, noclean=False, report=False)
         mock_ft_utils.assert_called_with(cmd)
