@@ -10,6 +10,7 @@
 import ConfigParser
 import logging
 import os
+import pkg_resources
 import re
 import shutil
 import subprocess
@@ -21,19 +22,18 @@ import functest.utils.openstack_utils as os_utils
 
 IMAGE_ID_ALT = None
 FLAVOR_ID_ALT = None
-REPO_PATH = CONST.__getattribute__('dir_repo_functest')
 GLANCE_IMAGE_PATH = os.path.join(
     CONST.__getattribute__('dir_functest_images'),
     CONST.__getattribute__('openstack_image_file_name'))
-TEMPEST_TEST_LIST_DIR = CONST.__getattribute__('dir_tempest_cases')
 TEMPEST_RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'),
                                    'tempest')
-TEMPEST_CUSTOM = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
-                              'test_list.txt')
-TEMPEST_BLACKLIST = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
-                                 'blacklist.txt')
-TEMPEST_DEFCORE = os.path.join(REPO_PATH, TEMPEST_TEST_LIST_DIR,
-                               'defcore_req.txt')
+TEMPEST_CUSTOM = pkg_resources.resource_filename(
+        'functest', 'opnfv_tests/openstack/tempest/custom_tests/test_list.txt')
+TEMPEST_BLACKLIST = pkg_resources.resource_filename(
+        'functest', 'opnfv_tests/openstack/tempest/custom_tests/blacklist.txt')
+TEMPEST_DEFCORE = pkg_resources.resource_filename(
+        'functest',
+        'opnfv_tests/openstack/tempest/custom_tests/defcore_req.txt')
 TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
 REFSTACK_RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'),
@@ -253,9 +253,9 @@ def configure_tempest_defcore(deployment_dir, img_flavor_dict):
     with open(conf_file, 'wb') as config_file:
         config.write(config_file)
 
-    confpath = os.path.join(
-        CONST.__getattribute__('dir_functest_test'),
-        CONST.__getattribute__('refstack_tempest_conf_path'))
+    confpath = pkg_resources.resource_filename(
+        'functest',
+        'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
     shutil.copyfile(conf_file, confpath)
 
 

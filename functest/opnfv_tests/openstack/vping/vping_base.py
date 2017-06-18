@@ -10,6 +10,7 @@
 from datetime import datetime
 import logging
 import os
+import pkg_resources
 import time
 import uuid
 
@@ -37,15 +38,14 @@ class VPingBase(testcase.OSGCTestCase):
 
         self.logger = logging.getLogger(self.__class__.__name__)
 
-        self.functest_repo = CONST.__getattribute__('dir_repo_functest')
+        self.functest_repo = pkg_resources.resource_filename(
+            'functest', '..')
         self.guid = ''
         if CONST.__getattribute__('vping_unique_names'):
             self.guid = '-' + str(uuid.uuid4())
 
         self.os_creds = openstack_tests.get_credentials(
             os_env_file=CONST.__getattribute__('openstack_creds'))
-
-        self.repo = CONST.__getattribute__('dir_vping')
 
         self.creators = list()
         self.image_creator = None

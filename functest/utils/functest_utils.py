@@ -11,6 +11,7 @@ import functools
 import json
 import logging
 import os
+import pkg_resources
 import re
 import shutil
 import subprocess
@@ -316,7 +317,8 @@ def execute_command(cmd, info=False, error_msg="",
 
 
 def get_dict_by_test(testname):
-    with open(get_testcases_file_dir()) as f:
+    with open(pkg_resources.resource_filename(
+            'functest', 'ci/testcases.yaml')) as f:
         testcases_yaml = yaml.safe_load(f)
 
     for dic_tier in testcases_yaml.get("tiers"):
@@ -374,10 +376,6 @@ def merge_dicts(dict1, dict2):
             yield (k, dict1[k])
         else:
             yield (k, dict2[k])
-
-
-def get_testcases_file_dir():
-    return get_functest_config('general.functest.testcases_yaml')
 
 
 def get_functest_yaml():

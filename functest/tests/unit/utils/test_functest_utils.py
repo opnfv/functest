@@ -465,9 +465,7 @@ class FunctestUtilsTesting(unittest.TestCase):
     def test_get_dict_by_test(self, mock_logger_error):
         with mock.patch('six.moves.builtins.open', mock.mock_open()), \
                 mock.patch('functest.utils.functest_utils.yaml.safe_load') \
-                as mock_yaml, \
-                mock.patch('functest.utils.functest_utils.get_testcases_'
-                           'file_dir'):
+                as mock_yaml:
             mock_obj = mock.Mock()
             attrs = {'get.return_value': [{'testcases': [self.testcase_dict]}]}
             mock_obj.configure_mock(**attrs)
@@ -520,16 +518,6 @@ class FunctestUtilsTesting(unittest.TestCase):
             mock_get_parameter_from_yaml. \
                 assert_called_once_with(self.parameter,
                                         self.config_yaml)
-
-    # TODO: merge_dicts
-
-    @mock.patch('functest.utils.functest_utils.get_functest_config')
-    def test_get_testcases_file_dir(self, mock_get_functest_config):
-        mock_get_functest_config.return_value = self.testcases_yaml
-        resp = functest_utils.get_testcases_file_dir()
-        self.assertEqual(resp, self.testcases_yaml)
-        mock_get_functest_config.assert_called_once_with(
-            'general.functest.testcases_yaml')
 
     def test_get_functest_yaml(self):
         with mock.patch('six.moves.builtins.open', mock.mock_open()), \

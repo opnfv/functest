@@ -238,8 +238,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             mock.patch('__builtin__.open', mock.mock_open()), \
             mock.patch('functest.opnfv_tests.openstack.tempest.'
                        'conf_utils.shutil.copyfile'):
-            CONST.__setattr__('dir_functest_test', 'test_dir')
-            CONST.__setattr__('refstack_tempest_conf_path', 'test_path')
             conf_utils.configure_tempest_defcore('test_dep_dir',
                                                  img_flavor_dict)
             mset.assert_any_call('compute', 'image_ref', 'test_image_id')
@@ -264,7 +262,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             mock.patch('__builtin__.open', mock.mock_open()), \
             mock.patch('functest.opnfv_tests.openstack.tempest.'
                        'conf_utils.backup_tempest_config'):
-            CONST.__setattr__('dir_functest_test', 'test_dir')
             CONST.__setattr__('OS_ENDPOINT_TYPE', None)
             conf_utils.\
                 configure_tempest_update_params('test_conf_file',

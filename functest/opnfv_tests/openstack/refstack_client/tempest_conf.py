@@ -6,7 +6,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 import logging
-import os
+import pkg_resources
 
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils import openstack_utils
@@ -24,9 +24,9 @@ class TempestConf(object):
         self.DEPLOYMENT_ID = conf_utils.get_verifier_deployment_id()
         self.DEPLOYMENT_DIR = conf_utils.get_verifier_deployment_dir(
             self.VERIFIER_ID, self.DEPLOYMENT_ID)
-        self.confpath = os.path.join(
-            CONST.__getattribute__('dir_functest_test'),
-            CONST.__getattribute__('refstack_tempest_conf_path'))
+        self.confpath = pkg_resources.resource_filename(
+            'functest',
+            'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
 
     def generate_tempestconf(self):
         try:

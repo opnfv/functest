@@ -8,7 +8,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import argparse
-import os
+import pkg_resources
 from scp import SCPClient
 import sys
 import time
@@ -156,8 +156,8 @@ class VPingSSH(vping_base.VPingBase):
         """
         self.logger.info("Trying to transfer ping.sh")
         scp = SCPClient(ssh.get_transport())
-        local_path = self.functest_repo + "/" + self.repo
-        ping_script = os.path.join(local_path, "ping.sh")
+        ping_script = pkg_resources.resource_filename(
+            'functest', 'opnfv_tests/openstack/vping/ping.sh')
         try:
             scp.put(ping_script, "~/")
         except:
