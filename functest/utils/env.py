@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import pkg_resources
 import os
 import re
 
@@ -16,8 +17,8 @@ default_envs = {
     'BUILD_TAG': None,
     'OS_ENDPOINT_TYPE': None,
     'OS_AUTH_URL': None,
-    'CONFIG_FUNCTEST_YAML': os.path.normpath(os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), '../ci/config_functest.yaml'))
+    'CONFIG_FUNCTEST_YAML': pkg_resources.resource_filename(
+        'functest', 'ci/config_functest.yaml')
 }
 
 
