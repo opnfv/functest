@@ -22,7 +22,6 @@ import dns.resolver
 import requests
 from six.moves import urllib
 import yaml
-from git import Repo
 
 from functest.utils import constants
 from functest.utils import decorators
@@ -68,15 +67,6 @@ def download_url(url, dest_path):
 #               CI UTILS
 #
 # -----------------------------------------------------------
-def get_git_branch(repo_path):
-    """
-    Get git branch name
-    """
-    repo = Repo(repo_path)
-    branch = repo.active_branch
-    return branch.name
-
-
 def get_installer_type():
     """
     Get installer type (fuel, apex, joid, compass)

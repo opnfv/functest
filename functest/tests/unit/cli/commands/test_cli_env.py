@@ -8,7 +8,6 @@
 import logging
 import unittest
 
-from git.exc import NoSuchPathError
 import mock
 
 from functest.cli.commands import cli_env
@@ -72,41 +71,28 @@ class CliEnvTesting(unittest.TestCase):
             mock_click_echo.assert_called_with(test_utils.
                                                RegexMatch(reg_string))
 
-    @mock.patch('functest.cli.commands.cli_env.git.Repo')
     def test_show_missing_ci_installer_type(self, *args):
         self._test_show_missing_env_var('INSTALLER_TYPE', *args)
 
-    @mock.patch('functest.cli.commands.cli_env.git.Repo')
     def test_show_missing_ci_installer_ip(self, *args):
         self._test_show_missing_env_var('INSTALLER_IP', *args)
 
-    @mock.patch('functest.cli.commands.cli_env.git.Repo')
     def test_show_missing_ci_scenario(self, *args):
         self._test_show_missing_env_var('SCENARIO', *args)
 
-    @mock.patch('functest.cli.commands.cli_env.git.Repo')
     def test_show_missing_ci_node(self, *args):
         self._test_show_missing_env_var('NODE', *args)
 
-    @mock.patch('functest.cli.commands.cli_env.git.Repo')
     def test_show_missing_ci_build_tag(self, *args):
         self._test_show_missing_env_var('BUILD_TAG', *args)
 
-    @mock.patch('functest.cli.commands.cli_env.git.Repo')
     def test_show_missing_ci_debug(self, *args):
         self._test_show_missing_env_var('DEBUG', *args)
 
-    @mock.patch('functest.cli.commands.cli_env.git.Repo')
     @mock.patch('functest.cli.commands.cli_env.os.path.isfile',
                 return_value=False)
     def test_show_missing_environment(self, *args):
         self._test_show_missing_env_var('STATUS', *args)
-
-    @mock.patch('functest.cli.commands.cli_env.os.path.exists',
-                return_value=False)
-    def test_show_missing_git_repo_dir(self, *args):
-        CONST.__setattr__('dir_repo_functest', None)
-        self.assertRaises(NoSuchPathError, lambda: self.cli_environ.show())
 
     @mock.patch('functest.cli.commands.cli_env.click.echo')
     @mock.patch('functest.cli.commands.cli_env.os.path.isfile',

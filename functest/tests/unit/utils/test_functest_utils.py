@@ -13,7 +13,6 @@ import os
 import time
 import unittest
 
-from git.exc import NoSuchPathError
 import mock
 import requests
 from six.moves import urllib
@@ -97,27 +96,6 @@ class FunctestUtilsTesting(unittest.TestCase):
                                                         self.dest_path))
             m.assert_called_once_with(dest, 'wb')
             self.assertTrue(mock_sh.called)
-
-    def test_get_git_branch(self):
-        with mock.patch('functest.utils.functest_utils.Repo') as mock_repo:
-            mock_obj2 = mock.Mock()
-            attrs = {'name': 'test_branch'}
-            mock_obj2.configure_mock(**attrs)
-
-            mock_obj = mock.Mock()
-            attrs = {'active_branch': mock_obj2}
-            mock_obj.configure_mock(**attrs)
-
-            mock_repo.return_value = mock_obj
-            self.assertEqual(functest_utils.get_git_branch(self.repo_path),
-                             'test_branch')
-
-    @mock.patch('functest.utils.functest_utils.Repo',
-                side_effect=NoSuchPathError)
-    def test_get_git_branch_failed(self, mock_repo):
-        self.assertRaises(NoSuchPathError,
-                          lambda: functest_utils.get_git_branch(self.repo_path
-                                                                ))
 
     @mock.patch('functest.utils.functest_utils.logger.error')
     def test_get_installer_type_failed(self, mock_logger_error):

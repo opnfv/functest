@@ -10,7 +10,6 @@
 import os
 
 import click
-import git
 import prettytable
 
 from functest.utils.constants import CONST
@@ -49,14 +48,6 @@ class CliEnv(object):
         installer_info = ("%s, %s" % (install_type, installer_ip))
         scenario = _get_value(CONST.__getattribute__('DEPLOY_SCENARIO'))
         node = _get_value(CONST.__getattribute__('NODE_NAME'))
-        repo_h = git.Repo(CONST.__getattribute__('dir_repo_functest')).head
-        if repo_h.is_detached:
-            git_branch = 'detached from FETCH_HEAD'
-            git_hash = repo_h.commit.hexsha
-        else:
-            branch = repo_h.reference
-            git_branch = branch.name
-            git_hash = branch.commit.hexsha
         is_debug = _get_value(CONST.__getattribute__('CI_DEBUG'), 'false')
         build_tag = CONST.__getattribute__('BUILD_TAG')
         if build_tag is not None:
@@ -73,8 +64,6 @@ class CliEnv(object):
         msg.add_row(['INSTALLER', installer_info])
         msg.add_row(['SCENARIO', scenario])
         msg.add_row(['POD', node])
-        msg.add_row(['GIT BRANCH', git_branch])
-        msg.add_row(['GIT HASH', git_hash])
         if build_tag:
             msg.add_row(['BUILD TAG', build_tag])
         msg.add_row(['DEBUG FLAG', is_debug])
