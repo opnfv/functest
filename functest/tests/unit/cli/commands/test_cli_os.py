@@ -8,13 +8,13 @@
 #
 
 import logging
+import pkg_resources
 import unittest
 import os
 
 import mock
 
 from functest.cli.commands import cli_os
-from functest.utils.constants import CONST
 
 
 class CliOpenStackTesting(unittest.TestCase):
@@ -25,7 +25,6 @@ class CliOpenStackTesting(unittest.TestCase):
         self.installer_type = 'test_installer_type'
         self.installer_ip = 'test_installer_ip'
         self.openstack_creds = 'test_openstack_creds'
-        self.dir_repo_functest = 'test_dir_repo_functest'
         self.snapshot_file = 'test_snapshot_file'
         self.cli_os = cli_os.CliOpenStack()
 
@@ -64,11 +63,10 @@ class CliOpenStackTesting(unittest.TestCase):
     @mock.patch('functest.cli.commands.cli_os.ft_utils.execute_command')
     def test_check(self, mock_ftutils_execute):
         with mock.patch.object(self.cli_os, 'ping_endpoint'):
-            CONST.__setattr__('dir_repo_functest', self.dir_repo_functest)
-            cmd = os.path.join(CONST.__getattribute__('dir_repo_functest'),
-                               "functest/ci/check_os.sh")
             self.cli_os.check()
-            mock_ftutils_execute.assert_called_once_with(cmd, verbose=False)
+            mock_ftutils_execute.assert_called_once_with(
+                "sh %s" % pkg_resources.resource_filename(
+                    'functest', 'ci/check_os.sh'), verbose=False)
 
     @mock.patch('functest.cli.commands.cli_os.os.path.isfile',
                 return_value=False)

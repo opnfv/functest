@@ -14,6 +14,7 @@ import importlib
 import logging
 import logging.config
 import os
+import pkg_resources
 import re
 import sys
 
@@ -201,7 +202,7 @@ class Runner(object):
         _tiers = tb.TierBuilder(
             CONST.__getattribute__('INSTALLER_TYPE'),
             CONST.__getattribute__('DEPLOY_SCENARIO'),
-            CONST.__getattribute__("functest_testcases_yaml"))
+            pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
 
         if kwargs['noclean']:
             self.clean_flag = False
@@ -267,8 +268,8 @@ class Runner(object):
 
 
 if __name__ == '__main__':
-    logging.config.fileConfig(
-        CONST.__getattribute__('dir_functest_logging_cfg'))
+    logging.config.fileConfig(pkg_resources.resource_filename(
+        'functest', 'ci/logging.ini'))
     parser = RunTestsParser()
     args = parser.parse_args(sys.argv[1:])
     runner = Runner()
