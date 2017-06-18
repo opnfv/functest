@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_12a716bf",
+        "filename": "thirdparty-requirements.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-18T19:55:31Z",
+      "side": 1,
+      "message": "shall we specify versions for these libs? I guess networking-bgpvpn folks don\u0027t want to use latest package, only the one that points to OCata",
+      "revId": "7bc2b42fc57e331f5f879f0a2d30292df7bf1bb8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
