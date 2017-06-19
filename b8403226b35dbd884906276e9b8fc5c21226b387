@@ -22,6 +22,30 @@
       "revId": "b8403226b35dbd884906276e9b8fc5c21226b387",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_5b74ccce",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2017-06-19T15:14:33Z",
+      "side": 0,
+      "message": "The SimpleHealthCheck VM seems to have some troubles in the check for IP phase, so until further check I removed these modifications",
+      "parentUuid": "9ab8dda7_732bfe30",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 101
+      },
+      "revId": "b8403226b35dbd884906276e9b8fc5c21226b387",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
