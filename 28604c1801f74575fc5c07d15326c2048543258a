@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_5d46ffc0",
+        "filename": "docker/thirdparty-requirements.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-19T14:05:42Z",
+      "side": 1,
+      "message": "networking-bgpvpn should be listed in sdnvpn instead of functest. I will check for the other librairies",
+      "revId": "28604c1801f74575fc5c07d15326c2048543258a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
