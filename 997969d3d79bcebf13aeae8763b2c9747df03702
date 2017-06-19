@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_b29f2203",
+        "filename": "requirements.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-19T06:28:18Z",
+      "side": 0,
+      "message": "don\u0027t we use paramiko in vping ssh?",
+      "revId": "997969d3d79bcebf13aeae8763b2c9747df03702",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
