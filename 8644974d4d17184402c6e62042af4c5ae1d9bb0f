@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_d2117ead",
+        "filename": "functest/ci/logging.ini",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-06-19T02:02:47Z",
+      "side": 1,
+      "message": "it seems like handlers will become very long, can we find a way to shorten it?\nand should \u0027null\u0027 be put in the end?",
+      "revId": "8644974d4d17184402c6e62042af4c5ae1d9bb0f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
