@@ -16,6 +16,24 @@
       "revId": "7bc2b42fc57e331f5f879f0a2d30292df7bf1bb8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_5d691f8a",
+        "filename": "thirdparty-requirements.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-19T11:11:28Z",
+      "side": 1,
+      "message": "That\u0027s has been checked according to global requirements.\nI will ask the networking-bgpvpn community about your concerns. Last time I discussed with Thomas, we agreed on relying on backward compatibility.",
+      "parentUuid": "5aaae553_12a716bf",
+      "revId": "7bc2b42fc57e331f5f879f0a2d30292df7bf1bb8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
