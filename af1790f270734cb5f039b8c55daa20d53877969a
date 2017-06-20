@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_f8a1f9a9",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-06-20T01:41:51Z",
+      "side": 1,
+      "message": "Hi, here self.repo is supposed to be a relative path, which is functest/opnfv_tests/openstack/vping, rather than an absolute one. Otherwise local_path \u003d self.functest_repo + \"/\" + self.repo will fail.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "af1790f270734cb5f039b8c55daa20d53877969a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
