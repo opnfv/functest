@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_58a7ed4f",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-20T07:33:11Z",
+      "side": 1,
+      "message": "no need to use strutils\n\n    https_insecure \u003d  os.environ.get(\"OS_INSECURE\") in [\u0027True\u0027, \u0027true\u0027] or False",
+      "revId": "8f1d528c57bc0b563abf42d6834aa8764487bcf2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
