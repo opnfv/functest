@@ -16,6 +16,24 @@
       "revId": "adb19cdd2da2def5eaa069216e6234d9c4bf1027",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_9ec78d45",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-06-21T02:56:38Z",
+      "side": 1,
+      "message": "I would put it as below to avoid NoneType\nhttps_insecure \u003d os.getenv(\u0027OS_INSECURE\u0027, \u0027\u0027).lower() \u003d\u003d \u0027true\u0027",
+      "parentUuid": "5aaae553_feb6c1db",
+      "revId": "adb19cdd2da2def5eaa069216e6234d9c4bf1027",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
