@@ -46,6 +46,30 @@
       "revId": "3c5697ca01dcf66e9c955d5d625fc1dfe6945a45",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_deb505ce",
+        "filename": "functest/tests/unit/utils/test_functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-06-21T02:45:35Z",
+      "side": 1,
+      "message": "Yes, an explanation is needed here. The change for the module import will put other modules into change as well. The project need to be consistent.",
+      "parentUuid": "5aaae553_9ea0ed91",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "3c5697ca01dcf66e9c955d5d625fc1dfe6945a45",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
