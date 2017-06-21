@@ -78,11 +78,12 @@ RUN mkdir -p ${FUNCTEST_REPO_DIR} \
 
 RUN git config --global http.sslVerify false
 
+COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN pip install \
   git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
   git+https://gerrit.opnfv.org/gerrit/releng@$BRANCH#egg=opnfv\&subdirectory=modules \
-  git+https://gerrit.opnfv.org/gerrit/barometer@$BRANCH#egg=baro_tests \
-  git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps
+  git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps \
+  -r thirdparty-requirements.txt
 
 # Hook required by hardcoded paths in Functest
 RUN ln -s /usr/local/lib/python2.7/dist-packages/functest ${FUNCTEST_REPO_DIR}/functest
