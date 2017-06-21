@@ -9,6 +9,7 @@
 
 import logging
 import os
+import pkg_resources
 import re
 import subprocess
 import shutil
@@ -27,8 +28,8 @@ class OnosBase(testcase.TestCase):
     onos_sfc_image_path = os.path.join(
         CONST.__getattribute__('dir_functest_images'),
         CONST.__getattribute__('onos_sfc_image_file_name'))
-    onos_sfc_path = os.path.join(CONST.__getattribute__('dir_repo_functest'),
-                                 CONST.__getattribute__('dir_onos_sfc'))
+    onos_sfc_path = pkg_resources.resource_filename(
+        'functest', 'opnfv_tests/sdn/onos/sfc')
     installer_type = CONST.__getattribute__('INSTALLER_TYPE')
     logger = logging.getLogger(__name__)
 

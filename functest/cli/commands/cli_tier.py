@@ -10,6 +10,7 @@
 """ global variables """
 
 import os
+import pkg_resources
 
 import click
 
@@ -24,7 +25,7 @@ class CliTier(object):
         self.tiers = tb.TierBuilder(
             CONST.__getattribute__('INSTALLER_TYPE'),
             CONST.__getattribute__('DEPLOY_SCENARIO'),
-            CONST.__getattribute__('functest_testcases_yaml'))
+            pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
 
     def list(self):
         summary = ""
@@ -67,8 +68,6 @@ class CliTier(object):
             click.echo("Functest environment is not ready. "
                        "Run first 'functest env prepare'")
         else:
-            cmd = ("python %s/functest/ci/run_tests.py "
-                   "%s -t %s" %
-                   (CONST.__getattribute__('dir_repo_functest'),
-                    flags, tiername))
+            cmd = ("python %s %s -t %s" % (pkg_resources.resource_filename(
+                'functest', 'ci/run_tests.py'), flags, tiername))
             ft_utils.execute_command(cmd)

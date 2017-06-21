@@ -10,6 +10,7 @@
 import json
 import logging
 import os
+import pkg_resources
 import socket
 import sys
 import time
@@ -76,9 +77,8 @@ class ImsVnf(vnf.VnfOnBoarding):
         self.ob_port = "8080"
         self.ob_ip = "localhost"
         self.ob_instance_id = ""
-        self.case_dir = os.path.join(
-            CONST.__getattribute__('dir_functest_test'),
-            'vnf/ims/')
+        self.case_dir = pkg_resources.resource_filename(
+            'functest', 'opnfv_tests/vnf/ims/')
         self.data_dir = CONST.__getattribute__('dir_ims_data')
         self.test_dir = CONST.__getattribute__('dir_repo_vims_test')
         self.ob_projectid = ""
