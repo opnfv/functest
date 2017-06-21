@@ -11,15 +11,13 @@ import logging
 import os
 import sys
 import time
-
-import requests
 import yaml
 
-from functest.opnfv_tests.vnf.ims.clearwater import Clearwater
+from cloudify_rest_client import CloudifyClient
+
+import functest.core.vnf as vnf
 import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
-from functest.opnfv_tests.vnf.ims.orchestrator_cloudify import Orchestrator
 from functest.utils.constants import CONST
-import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
@@ -35,7 +33,6 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.logger = logging.getLogger(__name__)
         self.neutron_client = ''
         self.glance_client = ''
-        self.keystone_client = ''
         self.nova_client = ''
 
         # Retrieve the configuration
@@ -47,30 +44,42 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
         config_file = os.path.join(self.case_dir, self.config)
         self.orchestrator = dict(
-            requirements=get_config("cloudify.requirements", config_file),
-            blueprint=get_config("cloudify.blueprint", config_file),
-            inputs=get_config("cloudify.inputs", config_file)
+            requirements=get_config("orchestrator.requirements", config_file),
+        )
+        self.details['orchestrator'] = dict(
+            name=get_config("orchestrator.name", config_file),
+            version=get_config("orchestrator.version", config_file),
+            status='ERROR',
+            result=''
         )
         self.logger.debug("Orchestrator configuration: %s", self.orchestrator)
         self.vnf = dict(
-            blueprint=get_config("clearwater.blueprint", config_file),
-            deployment_name=get_config("clearwater.deployment_name",
-                                       config_file),
-            inputs=get_config("clearwater.inputs", config_file),
-            requirements=get_config("clearwater.requirements", config_file)
+            descriptor=get_config("vnf.descriptor", config_file),
+            inputs=get_config("vnf.inputs", config_file),
+            requirements=get_config("vnf.requirements", config_file)
+        )
+        self.details['vnf'] = dict(
+            descriptor_version=self.vnf['descriptor']['version'],
+            name=get_config("vnf.name", config_file),
+            version=get_config("vnf.version", config_file),
         )
         self.logger.debug("VNF configuration: %s", self.vnf)
 
+        self.details['test_vnf'] = dict(
+            name=get_config("vnf_test_suite.name", config_file),
+            version=get_config("vnf_test_suite.version", config_file)
+        )
         self.images = get_config("tenant_images", config_file)
         self.logger.info("Images needed for vIMS: %s", self.images)
 
-    def deploy_orchestrator(self):
+    def prepare(self):
+        super(CloudifyIms, self).prepare()
 
         self.logger.info("Additional pre-configuration steps")
-        self.neutron_client = os_utils.get_neutron_client(self.admin_creds)
-        self.glance_client = os_utils.get_glance_client(self.admin_creds)
-        self.keystone_client = os_utils.get_keystone_client(self.admin_creds)
-        self.nova_client = os_utils.get_nova_client(self.admin_creds)
+        self.neutron_client = os_utils.get_neutron_client(self.creds)
+        self.glance_client = os_utils.get_glance_client(self.creds)
+        keystone_client = os_utils.get_keystone_client(self.creds)
+        self.nova_client = os_utils.get_nova_client(self.creds)
 
         # needs some images
         self.logger.info("Upload some OS images if it doesn't exist")
@@ -81,8 +90,9 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                 image_id = os_utils.get_image_id(self.glance_client,
                                                  image_name)
                 self.logger.debug("image_id: %s", image_id)
-            except Exception:
+            except Exception:  # pylint: disable=broad-except
                 self.logger.error("Unexpected error: %s", sys.exc_info()[0])
+                raise vnf.VnfPreparationException
 
             if image_id == '':
                 self.logger.info("""%s image does not exist on glance repo.
@@ -96,7 +106,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                     temp_dir)
         # Need to extend quota
         self.logger.info("Update security group quota for this tenant")
-        tenant_id = os_utils.get_tenant_id(self.keystone_client,
+        tenant_id = os_utils.get_tenant_id(keystone_client,
                                            self.tenant_name)
         self.logger.debug("Tenant id found %s", tenant_id)
         if not os_utils.update_sg_quota(self.neutron_client,
@@ -106,142 +116,163 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
         self.logger.debug("group quota extended")
 
-        # start the deployment of cloudify
-        public_auth_url = os_utils.get_endpoint('identity')
+    def deploy_orchestrator(self):
+        """
+        Deploy Cloudify Manager
 
-        self.logger.debug("CFY inputs: %s", self.orchestrator['inputs'])
-        cfy = Orchestrator(self.data_dir, self.orchestrator['inputs'])
-        self.orchestrator['object'] = cfy
-        self.logger.debug("Orchestrator object created")
+        network, security group, fip, VM creation
+        """
+        # network creation
 
-        self.logger.debug("Tenant name: %s", self.tenant_name)
+        start_time = time.time()
+        self.logger.info("Creating full network ...")
+        network_id = os_utils.create_network_full(
+            self.neutron_client,
+            "cloudify_ims_network",
+            "cloudify_ims_subnet",
+            "cloudify_ims_router",
+            "10.67.79.0/24")["net_id"]
 
-        cfy.set_credentials(username=self.tenant_name,
-                            password=self.tenant_name,
-                            tenant_name=self.tenant_name,
-                            auth_url=public_auth_url)
-        self.logger.info("Credentials set in CFY")
+        # floating ip creation
+        self.logger.info("Creating floating IP for cloudify manager vm ...")
+        floating_ip = os_utils.create_floating_ip(
+            self.neutron_client)['fip_addr']
+
+        # security group creation
+        self.logger.info("Creating security group for cloudify manager vm ...")
+        sg_id = os_utils.create_security_group_full(self.neutron_client,
+                                                    "sg-cloudify-manager",
+                                                    "Cloudify manager")
+        os_utils.create_secgroup_rule(self.neutron_client, sg_id, "ingress",
+                                      "tcp", 1, 65535)
+        os_utils.create_secgroup_rule(self.neutron_client, sg_id, "ingress",
+                                      "udp", 1, 65535)
+        os_utils.create_secgroup_rule(self.neutron_client, sg_id, "egress",
+                                      "tcp", 1, 65535)
+        os_utils.create_secgroup_rule(self.neutron_client, sg_id, "egress",
+                                      "udp", 1, 65535)
 
         # orchestrator VM flavor
-        self.logger.info("Check Flavor is available, if not create one")
-        self.logger.debug("Flavor details %s ",
-                          self.orchestrator['requirements']['ram_min'])
-        flavor_exist, flavor_id = os_utils.get_or_create_flavor(
-            "m1.large",
-            self.orchestrator['requirements']['ram_min'],
+        self.logger.info("Get or create flavor for cloudify manager vm ...")
+
+        self.exist_obj['flavor1'], flavor_id = os_utils.get_or_create_flavor(
+            self.orchestrator['requirements']['flavor']['name'],
+            self.orchestrator['requirements']['flavor']['ram_min'],
             '50',
             '2',
             public=True)
         self.logger.debug("Flavor id: %s", flavor_id)
 
-        if not flavor_id:
-            self.logger.info("Available flavors are: ")
-            self.logger.info(self.nova_client.flavor.list())
+        image_id = os_utils.get_image_id(self.glance_client,
+                                         self.orchestrator
+                                         ['requirements']['image'])
 
-        cfy.set_flavor_id(flavor_id)
-        self.logger.debug("Flavor OK")
+        instance = os_utils.create_instance_and_wait_for_active(
+            self.orchestrator['requirements']['flavor']['name'],
+            image_id,
+            network_id,
+            "cloudify_manager")
 
-        # orchestrator VM image
-        self.logger.debug("Orchestrator image")
-        if 'os_image' in self.orchestrator['requirements'].keys():
-            image_id = os_utils.get_image_id(
-                self.glance_client,
-                self.orchestrator['requirements']['os_image'])
-            self.logger.debug("Orchestrator image id: %s", image_id)
-            if image_id == '':
-                self.logger.error("CFY image not found")
+        os_utils.add_secgroup_to_instance(self.nova_client,
+                                          instance.id,
+                                          sg_id)
+        self.logger.info("Associating floating ip: '%s' to VM '%s' ",
+                         floating_ip,
+                         "cloudify_manager")
+        os_utils.add_floating_ip(self.nova_client, instance.id, floating_ip)
 
-        cfy.set_image_id(image_id)
-        self.logger.debug("Orchestrator image set")
+        public_auth_url = os_utils.get_endpoint('identity')
 
-        self.logger.debug("Get External network")
-        ext_net = os_utils.get_external_net(self.neutron_client)
-        self.logger.debug("External network: %s", ext_net)
+        self.logger.info("Set creds for cloudify manager")
+        cfy_creds = dict(keystone_username=self.tenant_name,
+                         keystone_password=self.tenant_name,
+                         keystone_tenant_name=self.tenant_name,
+                         keystone_url=public_auth_url)
 
-        cfy.set_external_network_name(ext_net)
-        self.logger.debug("CFY External network set")
+        cfy_client = CloudifyClient(host=floating_ip,
+                                    username='admin',
+                                    password='admin',
+                                    tenant='default_tenant')
 
-        self.logger.debug("get resolvconf")
-        ns = ft_utils.get_resolvconf_ns()
-        if ns:
-            cfy.set_nameservers(ns)
-            self.logger.debug("Resolvconf set")
+        self.orchestrator['object'] = cfy_client
 
-        self.logger.info("Prepare virtualenv for cloudify-cli")
-        venv_scrit_dir = os.path.join(self.case_dir, "create_venv.sh")
-        cmd = "chmod +x " + venv_scrit_dir
-        ft_utils.execute_command(cmd)
-        time.sleep(3)
-        cmd = venv_scrit_dir + " " + self.data_dir
-        ft_utils.execute_command(cmd)
+        # TRY GET STATUS UNTIL 6 min
+        cfy_status = None
+        retry = 30
+        while cfy_status != 'running' and retry:
+            try:
+                cfy_status = cfy_client.manager.get_status()['status']
+            except Exception:  # pylint: disable=broad-except
+                self.logger.warning("Cloudify Manager isn't" +
+                                    "up and running. Retrying ...")
+            retry = retry - 1
+            time.sleep(10)
 
-        cfy.download_manager_blueprint(
-            self.orchestrator['blueprint']['url'],
-            self.orchestrator['blueprint']['branch'])
-
-        error = cfy.deploy_manager()
-        if error:
-            self.logger.error(error)
-            return {'status': 'FAIL', 'result': error}
+        if cfy_status == 'running':
+            self.logger.info("Cloudify Manager is up and running")
         else:
-            return {'status': 'PASS', 'result': ''}
+            raise Exception("Cloudify Manager isn't up and running")
+
+        secrets_list = cfy_client.secrets.list()
+        for k, val in cfy_creds.iteritems():
+            if not any(d.get('key', None) == k for d in secrets_list):
+                cfy_client.secrets.create(k, val)
+            else:
+                cfy_client.secrets.update(k, val)
+
+        duration = time.time() - start_time
+
+        self.details['orchestrator'].update(status='PASS', duration=duration)
+
+        return True
 
     def deploy_vnf(self):
-        cw = Clearwater(self.vnf['inputs'], self.orchestrator['object'],
-                        self.logger)
-        self.vnf['object'] = cw
+        """
+        Deploy Clearwater IMS
+        """
+        start_time = time.time()
 
-        self.logger.info("Collect flavor id for all clearwater vm")
-        flavor_exist, flavor_id = os_utils.get_or_create_flavor(
-            "m1.small",
-            self.vnf['requirements']['ram_min'],
+        cfy_client = self.orchestrator['object']
+        descriptor = self.vnf['descriptor']
+        cfy_client.blueprints.publish_archive(descriptor.get('url'),
+                                              descriptor.get('name'),
+                                              descriptor.get('file_name'))
+
+        self.logger.info("Get or create flavor for all clearwater vm")
+        self.exist_obj['flavor2'], flavor_id = os_utils.get_or_create_flavor(
+            self.vnf['requirements']['flavor']['name'],
+            self.vnf['requirements']['flavor']['ram_min'],
             '30',
             '1',
             public=True)
-        self.logger.debug("Flavor id: %s", flavor_id)
-        if not flavor_id:
-            self.logger.info("Available flavors are: ")
-            self.logger.info(self.nova_client.flavor.list())
 
-        cw.set_flavor_id(flavor_id)
+        self.vnf['inputs'].update(dict(
+            flavor_id=flavor_id,
+            external_network_name=os_utils.get_external_net(
+                                                self.neutron_client),
+            network_name="cloudify_ims_network",
+            private_key_path=""
+        ))
 
-        # VMs image
-        if 'os_image' in self.vnf['requirements'].keys():
-            image_id = os_utils.get_image_id(
-                self.glance_client, self.vnf['requirements']['os_image'])
+        cfy_client.deployments.create(descriptor.get('name'),
+                                      descriptor.get('name'),
+                                      self.vnf.get('inputs'))
 
-        cw.set_image_id(image_id)
-        ext_net = os_utils.get_external_net(self.neutron_client)
-        cw.set_external_network_name(ext_net)
+        cfy_client.executions.start(descriptor.get('name'), 'install')
 
-        error = cw.deploy_vnf(self.vnf['blueprint'])
-        if error:
-            self.logger.error(error)
-            return {'status': 'FAIL', 'result': error}
-        else:
-            return {'status': 'PASS', 'result': ''}
+        duration = time.time() - start_time
+
+        self.details['vnf'].update(status='PASS', duration=duration)
 
     def test_vnf(self):
-        script = "source {0}venv_cloudify/bin/activate; "
-        script += "cd {0}; "
-        script += "cfy status | grep -Eo \"([0-9]{{1,3}}\.){{3}}[0-9]{{1,3}}\""
-        cmd = "/bin/bash -c '" + script.format(self.data_dir) + "'"
+        """
+        Run test on clearwater ims instance
+        """
+        start_time = time.time()
 
-        try:
-            self.logger.debug("Trying to get clearwater manager IP ... ")
-            mgr_ip = os.popen(cmd).read()
-            mgr_ip = mgr_ip.splitlines()[0]
-        except Exception:
-            self.logger.exception("Unable to retrieve the IP of the "
-                                  "cloudify manager server !")
+        cfy_client = self.orchestrator['object']
 
-        self.logger.info('Cloudify Manager: %s', mgr_ip)
-        api_url = 'http://{0}/api/v2/deployments/{1}/outputs'.format(
-                  mgr_ip, self.vnf['deployment_name'])
-        dep_outputs = requests.get(api_url)
-        self.logger.info(api_url)
-        outputs = dep_outputs.json()['outputs']
-        self.logger.info("Deployment outputs: %s", outputs)
+        outputs = cfy_client.deployments.get('cw-site1').outputs
         dns_ip = outputs['dns_ip']
         ellis_ip = outputs['ellis_ip']
         self.config_ellis(ellis_ip)
@@ -249,15 +280,24 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         if dns_ip != "":
             vims_test_result = self.run_clearwater_live_test(
                 dns_ip=dns_ip,
-                public_domain="")  # self.inputs["public_domain"]
-            if vims_test_result != '':
-                return {'status': 'PASS', 'result': vims_test_result}
-            else:
-                return {'status': 'FAIL', 'result': ''}
+                public_domain=self.vnf['inputs']["public_domain"])
+            duration = time.time() - start_time
+            self.details['test_vnf'].update(status='PASS',
+                                            result=vims_test_result,
+                                            duration=duration)
+            return True
 
     def clean(self):
-        self.vnf['object'].undeploy_vnf()
-        self.orchestrator['object'].undeploy_manager()
+        cfy_client = self.orchestrator['object']
+
+        cfy_client.executions.start(self.vnf['descriptor'].get('name'),
+                                    'uninstall',
+                                    parameters=dict(ignore_failure=True),
+                                    force=True)
+
+        cfy_client.deployments.delete(self.vnf['descriptor'].get('name'))
+
+        cfy_client.blueprints.delete(self.vnf['descriptor'].get('name'))
         super(CloudifyIms, self).clean()
 
 
@@ -266,15 +306,15 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 #               YAML UTILS
 #
 # -----------------------------------------------------------
-def get_config(parameter, file):
+def get_config(parameter, file_path):
     """
     Returns the value of a given parameter in file.yaml
     parameter must be given in string format with dots
     Example: general.openstack.image_name
     """
-    with open(file) as f:
-        file_yaml = yaml.safe_load(f)
-    f.close()
+    with open(file_path) as config_file:
+        file_yaml = yaml.safe_load(config_file)
+    config_file.close()
     value = file_yaml
     for element in parameter.split("."):
         value = value.get(element)
