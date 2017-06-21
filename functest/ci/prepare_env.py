@@ -36,14 +36,14 @@ pod_arch = None
 arch_filter = ['aarch64']
 
 CONFIG_FUNCTEST_PATH = pkg_resources.resource_filename(
-            'functest', 'ci/config_functest.yaml')
+    'functest', 'ci/config_functest.yaml')
 CONFIG_PATCH_PATH = pkg_resources.resource_filename(
-            'functest', 'ci/config_patch.yaml')
+    'functest', 'ci/config_patch.yaml')
 CONFIG_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
-            'functest', 'ci/config_aarch64_patch.yaml')
+    'functest', 'ci/config_aarch64_patch.yaml')
 RALLY_CONF_PATH = "/etc/rally/rally.conf"
 RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
-            'functest', 'ci/rally_aarch64_patch.conf')
+    'functest', 'ci/rally_aarch64_patch.conf')
 
 
 class PrepareEnvParser(object):
@@ -117,7 +117,7 @@ def get_deployment_handler():
     global pod_arch
 
     installer_params_yaml = pkg_resources.resource_filename(
-            'functest', 'ci/installer_params.yaml')
+        'functest', 'ci/installer_params.yaml')
     if (CONST.__getattribute__('INSTALLER_IP') and
         CONST.__getattribute__('INSTALLER_TYPE') and
             CONST.__getattribute__('INSTALLER_TYPE') in
@@ -251,8 +251,8 @@ def update_db_url():
 def verify_deployment():
     print_separator()
     logger.info("Verifying OpenStack services...")
-    cmd = ("sh %s" % pkg_resources.resource_filename(
-        'functest', 'ci/check_os.sh'))
+    cmd = ("%s" % pkg_resources.resource_filename(
+           'functest', 'ci/check_os.sh'))
 
     logger.debug("Executing command: %s" % cmd)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
