@@ -11,6 +11,7 @@ import logging
 import os
 import pkg_resources
 import shutil
+import time
 
 import requests
 
@@ -71,7 +72,17 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
                      ellis_ip,
                      params['email'])
         self.logger.info('Create 1st calling number on Ellis')
-        number_res = self.create_ellis_number(number_url, cookies)
+        i = 24
+        while rq.status_code != 200 and i > 0:
+            try:
+                number_res = self.create_ellis_number(number_url, cookies)
+                break
+            except:
+                if i == 1:
+                    raise Exception("Unable to create a number")
+                self.logger.warn("Unable to create a number. Retry ..")
+                time.sleep(25)
+            i = i - 1
         output_dict['number'] = number_res
 
         if two_numbers:

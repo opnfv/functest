@@ -105,26 +105,17 @@ class VnfBaseTesting(unittest.TestCase):
     @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
     @mock.patch('functest.core.vnf.os_utils.delete_user',
                 return_value=True)
-    def test_clean_user_set(self, *args):
-        self.test.user_created = True
+    def test_clean_user_already_exist(self, *args):
+        self.test.exist_obj['user'] = True
         self.test.clean()
-        args[0].assert_called_once_with(mock.ANY, self.tenant_name)
+        args[0].assert_not_called()
         args[1].assert_called_once_with()
 
     @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
     @mock.patch('functest.core.vnf.os_utils.delete_user',
                 return_value=True)
-    def test_clean_user_unset(self, *args):
-        self.test.user_created = False
-        self.test.clean()
-        args[0].assert_not_called()
-        args[1].assert_called_once_with()
-
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.delete_tenant',
-                return_value=True)
-    def test_clean_tenant_set(self, *args):
-        self.test.tenant_created = True
+    def test_clean_user_created(self, *args):
+        self.test.exist_obj['user'] = False
         self.test.clean()
         args[0].assert_called_once_with(mock.ANY, self.tenant_name)
         args[1].assert_called_once_with()
@@ -132,51 +123,48 @@ class VnfBaseTesting(unittest.TestCase):
     @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
     @mock.patch('functest.core.vnf.os_utils.delete_tenant',
                 return_value=True)
-    def test_clean_tenant_unset(self, *args):
-        self.test.tenant_created = False
+    def test_clean_tenant_already_exist(self, *args):
+        self.test.exist_obj['tenant'] = True
         self.test.clean()
         args[0].assert_not_called()
+        args[1].assert_called_once_with()
+
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
+    @mock.patch('functest.core.vnf.os_utils.delete_tenant',
+                return_value=True)
+    def test_clean_tenant_created(self, *args):
+        self.test.exist_obj['tenant'] = False
+        self.test.clean()
+        args[0].assert_called_once_with(mock.ANY, self.tenant_name)
         args[1].assert_called_once_with()
 
     def test_deploy_orch_unimplemented(self):
         self.assertTrue(self.test.deploy_orchestrator())
 
-    @mock.patch('functest.core.vnf.os_utils.get_credentials',
-                return_value={'creds': 'test'})
     @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
                 return_value='test')
     @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
-                return_value=0)
+                return_value=True)
     @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
-                return_value=0)
+                return_value=True)
+    @mock.patch('functest.core.vnf.os_utils.get_credentials',
+                return_value={'auth_url': 'test'})
     def test_prepare(self, *args):
         self.assertEqual(self.test.prepare(),
                          testcase.TestCase.EX_OK)
-        args[0].assert_called_once_with('test', self.tenant_name)
-        args[1].assert_called_once_with(
+        args[0].assert_called_once_with()
+        args[1].assert_called_once_with('test', self.tenant_name)
+        args[2].assert_called_once_with(
             'test', self.tenant_name, self.tenant_description)
-        args[2].assert_called_once_with()
         args[3].assert_called_once_with()
 
-    @mock.patch('functest.core.vnf.os_utils.get_credentials',
-                side_effect=Exception)
-    def test_prepare_admin_creds_ko(self, *args):
-        with self.assertRaises(vnf.VnfPreparationException):
-            self.test.prepare()
-        args[0].assert_called_once_with()
-
-    @mock.patch('functest.core.vnf.os_utils.get_credentials',
-                return_value='creds')
     @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
                 side_effect=Exception)
     def test_prepare_keystone_client_ko(self, *args):
         with self.assertRaises(vnf.VnfPreparationException):
             self.test.prepare()
         args[0].assert_called_once_with()
-        args[1].assert_called_once_with()
 
-    @mock.patch('functest.core.vnf.os_utils.get_credentials',
-                return_value='creds')
     @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
     @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
                 side_effect=Exception)
@@ -186,10 +174,7 @@ class VnfBaseTesting(unittest.TestCase):
         args[0].assert_called_once_with(
             mock.ANY, self.tenant_name, self.tenant_description)
         args[1].assert_called_once_with()
-        args[2].assert_called_once_with()
 
-    @mock.patch('functest.core.vnf.os_utils.get_credentials',
-                return_value='creds')
     @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
     @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
                 return_value=0)
@@ -202,7 +187,6 @@ class VnfBaseTesting(unittest.TestCase):
         args[1].assert_called_once_with(
             mock.ANY, self.tenant_name, self.tenant_description)
         args[2].assert_called_once_with()
-        args[3].assert_called_once_with()
 
 
 if __name__ == "__main__":
