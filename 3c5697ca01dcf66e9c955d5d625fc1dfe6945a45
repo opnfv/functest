@@ -22,6 +22,30 @@
       "revId": "3c5697ca01dcf66e9c955d5d625fc1dfe6945a45",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_9ea0ed91",
+        "filename": "functest/tests/unit/utils/test_functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-06-21T02:35:19Z",
+      "side": 1,
+      "message": "Good catch! I remember we have already discussed it before, and agree to import CONST directly",
+      "parentUuid": "5aaae553_42570a03",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "3c5697ca01dcf66e9c955d5d625fc1dfe6945a45",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
