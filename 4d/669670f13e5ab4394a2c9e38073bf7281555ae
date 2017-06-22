@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Linda Wang <wangwulin@huawei.com>
+Code-Review+2: Helen Yao <yaohelan@huawei.com>
+Submitted-by: Serena Feng <feng.xiaowei@zte.com.cn>
+Submitted-at: Thu, 22 Jun 2017 02:17:00 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/36301
+Project: functest
+Branch: refs/heads/master
