@@ -1472,7 +1472,7 @@ class OSUtilsTesting(unittest.TestCase):
 
     def test_get_images_default(self):
         self.assertEqual(openstack_utils.
-                         get_images(self.nova_client),
+                         get_images(self.glance_client),
                          [self.image])
 
     @mock.patch('functest.utils.openstack_utils.logger.error')
