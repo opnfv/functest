@@ -204,6 +204,8 @@ class Runner(object):
             CONST.__getattribute__('DEPLOY_SCENARIO'),
             pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
 
+        _single_test = False
+
         if kwargs['noclean']:
             self.clean_flag = False
 
@@ -217,6 +219,7 @@ class Runner(object):
                 if _tiers.get_tier(kwargs['test']):
                     self.run_tier(_tiers.get_tier(kwargs['test']))
                 elif _tiers.get_test(kwargs['test']):
+                    _single_test = True
                     result = self.run_test(
                         _tiers.get_test(kwargs['test']),
                         _tiers.get_tier_name(kwargs['test']),
@@ -244,24 +247,26 @@ class Runner(object):
             logger.exception("Failures when running testcase(s)")
             self.overall_result = Result.EX_ERROR
 
-        msg = prettytable.PrettyTable(
-            header_style='upper', padding_width=5,
-            field_names=['env var', 'value'])
-        for env_var in ['INSTALLER_TYPE', 'DEPLOY_SCENARIO', 'BUILD_TAG',
-                        'CI_LOOP']:
-            msg.add_row([env_var, CONST.__getattribute__(env_var)])
-        logger.info("Deployment description: \n\n%s\n", msg)
+        if not _single_test:
+            msg = prettytable.PrettyTable(
+                header_style='upper', padding_width=5,
+                field_names=['env var', 'value'])
+            for env_var in ['INSTALLER_TYPE', 'DEPLOY_SCENARIO', 'BUILD_TAG',
+                            'CI_LOOP']:
+                msg.add_row([env_var, CONST.__getattribute__(env_var)])
+            logger.info("Deployment description: \n\n%s\n", msg)
 
-        msg = prettytable.PrettyTable(
-            header_style='upper', padding_width=5,
-            field_names=['test case', 'project', 'tier', 'duration', 'result'])
-        for test_case in self.executed_test_cases:
-            result = 'PASS' if(test_case.is_successful(
-                    ) == test_case.EX_OK) else 'FAIL'
-            msg.add_row([test_case.case_name, test_case.project_name,
-                         _tiers.get_tier_name(test_case.case_name),
-                         test_case.get_duration(), result])
-        logger.info("FUNCTEST REPORT: \n\n%s\n", msg)
+            msg = prettytable.PrettyTable(
+                header_style='upper', padding_width=5,
+                field_names=['test case', 'project', 'tier',
+                             'duration', 'result'])
+            for test_case in self.executed_test_cases:
+                result = 'PASS' if(test_case.is_successful(
+                        ) == test_case.EX_OK) else 'FAIL'
+                msg.add_row([test_case.case_name, test_case.project_name,
+                             _tiers.get_tier_name(test_case.case_name),
+                             test_case.get_duration(), result])
+            logger.info("FUNCTEST REPORT: \n\n%s\n", msg)
 
         logger.info("Execution exit value: %s" % self.overall_result)
         return self.overall_result
