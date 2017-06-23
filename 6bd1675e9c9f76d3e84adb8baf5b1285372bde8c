@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_e66420e7",
+        "filename": "functest/utils/openstack_snapshot.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-23T09:15:43Z",
+      "side": 1,
+      "message": "why -1? if there are no images in the deployment, we should return {\u0027images\u0027: {}}",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 17
+      },
+      "revId": "6bd1675e9c9f76d3e84adb8baf5b1285372bde8c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8661acd5",
+        "filename": "functest/utils/openstack_snapshot.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-23T09:15:43Z",
+      "side": 1,
+      "message": "I would include this in \n   if images is not None:\n       dic_images.update(......",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 65
+      },
+      "revId": "6bd1675e9c9f76d3e84adb8baf5b1285372bde8c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_066e1cca",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-23T09:15:43Z",
+      "side": 1,
+      "message": "update this function too.",
+      "range": {
+        "startLine": 1195,
+        "startChar": 4,
+        "endLine": 1195,
+        "endChar": 28
+      },
+      "revId": "6bd1675e9c9f76d3e84adb8baf5b1285372bde8c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_267318b3",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-23T09:15:43Z",
+      "side": 1,
+      "message": "glance_client.images.list()\n\nbut be careful because this doesn\u0027t return a list, it returns objects. you need to convert that to a list.\n\nhttps://docs.openstack.org/developer/python-glanceclient/apiv2.html\n\nI did some tests, and this is how I achieved:\n    \n    images \u003d []\n    for image in glance.images.list():\n        images.append(dict(image))\n    return images",
+      "range": {
+        "startLine": 1197,
+        "startChar": 17,
+        "endLine": 1197,
+        "endChar": 42
+      },
+      "revId": "6bd1675e9c9f76d3e84adb8baf5b1285372bde8c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
