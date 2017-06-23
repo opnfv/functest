@@ -422,10 +422,10 @@ def get_or_create_flavor(flavor_name, ram, disk, vcpus, public=True):
     return flavor_exists, flavor_id
 
 
-def get_floating_ips(nova_client):
+def get_floating_ips(neutron_client):
     try:
-        floating_ips = nova_client.floating_ips.list()
-        return floating_ips
+        floating_ips = neutron_client.list_floatingips()
+        return floating_ips['floatingips']
     except Exception as e:
         logger.error("Error [get_floating_ips(nova_client)]: %s" % e)
         return None
@@ -590,9 +590,9 @@ def delete_instance(nova_client, instance_id):
         return False
 
 
-def delete_floating_ip(nova_client, floatingip_id):
+def delete_floating_ip(neutron_client, floatingip_id):
     try:
-        nova_client.floating_ips.delete(floatingip_id)
+        neutron_client.delete_floatingip(floatingip_id)
         return True
     except Exception as e:
         logger.error("Error [delete_floating_ip(nova_client, '%s')]: %s"

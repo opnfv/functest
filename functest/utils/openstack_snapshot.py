@@ -98,13 +98,14 @@ def get_security_groups(neutron_client):
     return {'secgroups': dic_secgroups}
 
 
-def get_floatinips(nova_client):
+def get_floatingips(neutron_client):
     logger.debug("Getting Floating IPs...")
     dic_floatingips = {}
-    floatingips = os_utils.get_floating_ips(nova_client)
+    floatingips = os_utils.get_floating_ips(neutron_client)
     if not (floatingips is None or len(floatingips) == 0):
         for floatingip in floatingips:
-            dic_floatingips.update({floatingip.id: floatingip.ip})
+            dic_floatingips.update({floatingip['id']:
+                                    floatingip['floating_ip_address']})
     return {'floatingips': dic_floatingips}
 
 
@@ -149,7 +150,7 @@ def main():
     snapshot.update(get_networks(neutron_client))
     snapshot.update(get_routers(neutron_client))
     snapshot.update(get_security_groups(neutron_client))
-    snapshot.update(get_floatinips(nova_client))
+    snapshot.update(get_floatingips(nova_client))
     snapshot.update(get_users(keystone_client))
     snapshot.update(get_tenants(keystone_client))
 
