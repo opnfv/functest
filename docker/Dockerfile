@@ -130,7 +130,7 @@ RUN find -L ${FUNCTEST_REPO_DIR} -name "*.py" \
 
 RUN /bin/bash ${REPOS_DIR}/parser/tests/parser_install.sh ${REPOS_DIR}
 RUN wget -q https://raw.githubusercontent.com/openstack/rally/${RALLY_TAG}/install_rally.sh \
-    && bash install_rally.sh --yes && rm install_rally.sh
+    && bash install_rally.sh --branch ${RALLY_TAG} --yes && rm install_rally.sh
 
 RUN add_images.sh
 
