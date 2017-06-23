@@ -22,6 +22,30 @@
       "revId": "b3bc49bdeec45ca55847696bb771e9b674e8ba87",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_663110a2",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-23T14:07:47Z",
+      "side": 1,
+      "message": "no, openstack has kept this method in nova client instead of neutron. It is the only 2 things you can do with nova (associate/dissasociate ips)",
+      "parentUuid": "1aa4ed85_a6ff08aa",
+      "range": {
+        "startLine": 573,
+        "startChar": 20,
+        "endLine": 573,
+        "endChar": 31
+      },
+      "revId": "b3bc49bdeec45ca55847696bb771e9b674e8ba87",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
