@@ -48,13 +48,13 @@ def get_instances(nova_client):
     return {'instances': dic_instances}
 
 
-def get_images(nova_client):
+def get_images(glance_client):
     logger.debug("Getting images...")
     dic_images = {}
-    images = os_utils.get_images(nova_client)
-    if not (images is None or len(images) == 0):
-        for image in images:
-            dic_images.update({getattr(image, 'id'): getattr(image, 'name')})
+    images = os_utils.get_images(glance_client)
+    if images is None:
+        return -1
+    dic_images.update({image.id: image.name for image in images})
     return {'images': dic_images}
 
 
@@ -136,6 +136,7 @@ def main():
     neutron_client = os_utils.get_neutron_client()
     keystone_client = os_utils.get_keystone_client()
     cinder_client = os_utils.get_cinder_client()
+    glance_client = os_utils.get_glance_client()
 
     if not os_utils.check_credentials():
         logger.error("Please source the openrc credentials and run the" +
@@ -144,7 +145,7 @@ def main():
 
     snapshot = {}
     snapshot.update(get_instances(nova_client))
-    snapshot.update(get_images(nova_client))
+    snapshot.update(get_images(glance_client))
     snapshot.update(get_volumes(cinder_client))
     snapshot.update(get_networks(neutron_client))
     snapshot.update(get_routers(neutron_client))
