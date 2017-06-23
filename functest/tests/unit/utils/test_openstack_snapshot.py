@@ -12,7 +12,7 @@ import unittest
 from functest.utils import openstack_snapshot
 
 
-class OSTackerTesting(unittest.TestCase):
+class OSSnapshotTesting(unittest.TestCase):
 
     def _get_instance(self, key):
         mock_obj = mock.Mock()
@@ -139,7 +139,7 @@ class OSTackerTesting(unittest.TestCase):
     def test_get_floatingips(self, mock_logger_debug):
         with mock.patch('functest.utils.openstack_snapshot.os_utils'
                         '.get_floating_ips', return_value=self.test_list):
-            resp = openstack_snapshot.get_floatinips(self.client)
+            resp = openstack_snapshot.get_floatingips(self.client)
             mock_logger_debug.assert_called_once_with("Getting Floating "
                                                       "IPs...")
             self.assertDictEqual(resp, {'floatingips':
@@ -149,7 +149,7 @@ class OSTackerTesting(unittest.TestCase):
     def test_get_floatingips_missing_floatingips(self, mock_logger_debug):
         with mock.patch('functest.utils.openstack_snapshot.os_utils'
                         '.get_floating_ips', return_value=[]):
-            resp = openstack_snapshot.get_floatinips(self.client)
+            resp = openstack_snapshot.get_floatingips(self.client)
             mock_logger_debug.assert_called_once_with("Getting Floating "
                                                       "IPs...")
             self.assertDictEqual(resp, {'floatingips': {}})
@@ -212,7 +212,7 @@ class OSTackerTesting(unittest.TestCase):
                        return_value=self.update_list), \
             mock.patch('functest.utils.openstack_snapshot.get_security_groups',
                        return_value=self.update_list), \
-            mock.patch('functest.utils.openstack_snapshot.get_floatinips',
+            mock.patch('functest.utils.openstack_snapshot.get_floatingips',
                        return_value=self.update_floatingips), \
             mock.patch('functest.utils.openstack_snapshot.get_users',
                        return_value=self.update_list), \
