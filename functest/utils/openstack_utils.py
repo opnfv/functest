@@ -1258,12 +1258,12 @@ def get_or_create_image(name, path, format):
     return image_exists, image_id
 
 
-def delete_glance_image(nova_client, image_id):
+def delete_glance_image(glance_client, image_id):
     try:
-        nova_client.images.delete(image_id)
+        glance_client.images.delete(image_id)
         return True
     except Exception as e:
-        logger.error("Error [delete_glance_image(nova_client, '%s')]: %s"
+        logger.error("Error [delete_glance_image(glance_client, '%s')]: %s"
                      % (image_id, e))
         return False
 
