@@ -75,9 +75,8 @@ class OSUtilsTesting(unittest.TestCase):
         self.availability_zone = mock_obj
 
         mock_obj = mock.Mock()
-        attrs = {'id': 'floating_id',
-                 'zoneName': 'test_floating_ip',
-                 'status': 'ok'}
+        attrs = {'floating_network_id': 'floating_id',
+                 'floating_ip_address': 'test_floating_ip'}
         mock_obj.configure_mock(**attrs)
         self.floating_ip = mock_obj
 
@@ -113,8 +112,6 @@ class OSUtilsTesting(unittest.TestCase):
                  'aggregates.delete.return_value': mock.Mock(),
                  'availability_zones.list.return_value':
                  [self.availability_zone],
-                 'floating_ips.list.return_value': [self.floating_ip],
-                 'floating_ips.delete.return_value': mock.Mock(),
                  'hypervisors.list.return_value': [self.hypervisor],
                  'create.return_value': mock.Mock(),
                  'add_security_group.return_value': mock.Mock(),
@@ -271,7 +268,10 @@ class OSUtilsTesting(unittest.TestCase):
                  'create_security_group.return_value': {'security_group':
                                                         self.sec_group},
                  'update_quota.return_value': mock.Mock(),
-                 'delete_security_group.return_value': mock.Mock()
+                 'delete_security_group.return_value': mock.Mock(),
+                 'list_floatingips.return_value': {'floatingips':
+                                                   [self.floating_ip]},
+                 'delete_floatingip.return_value': mock.Mock(),
                  }
         self.neutron_client.configure_mock(**attrs)
 
@@ -721,7 +721,7 @@ class OSUtilsTesting(unittest.TestCase):
 
     def test_get_floating_ips_default(self):
             self.assertEqual(openstack_utils.
-                             get_floating_ips(self.nova_client),
+                             get_floating_ips(self.neutron_client),
                              [self.floating_ip])
 
     @mock.patch('functest.utils.openstack_utils.logger.error')
@@ -867,7 +867,7 @@ class OSUtilsTesting(unittest.TestCase):
 
     def test_delete_floating_ip_default(self):
             self.assertTrue(openstack_utils.
-                            delete_floating_ip(self.nova_client,
+                            delete_floating_ip(self.neutron_client,
                                                'floating_ip_id'))
 
     @mock.patch('functest.utils.openstack_utils.logger.error')
