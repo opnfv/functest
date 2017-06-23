@@ -135,9 +135,9 @@ def remove_volumes(cinder_client, default_volumes):
                          "NOT be deleted.")
 
 
-def remove_floatingips(nova_client, default_floatingips):
+def remove_floatingips(neutron_client, default_floatingips):
     logger.debug("Removing floating IPs...")
-    floatingips = os_utils.get_floating_ips(nova_client)
+    floatingips = os_utils.get_floating_ips(neutron_client)
     if floatingips is None or len(floatingips) == 0:
         logger.debug("No floating IPs found.")
         return
@@ -151,7 +151,7 @@ def remove_floatingips(nova_client, default_floatingips):
         if (fip_id not in default_floatingips and
                 fip_ip not in default_floatingips.values()):
             logger.debug("Removing floating IP %s ..." % fip_id)
-            if os_utils.delete_floating_ip(nova_client, fip_id):
+            if os_utils.delete_floating_ip(neutron_client, fip_id):
                 logger.debug("  > Done!")
                 deleted += 1
             else:
@@ -163,7 +163,7 @@ def remove_floatingips(nova_client, default_floatingips):
 
     timeout = 50
     while timeout > 0:
-        floatingips = os_utils.get_floating_ips(nova_client)
+        floatingips = os_utils.get_floating_ips(neutron_client)
         if floatingips is None or len(floatingips) == (init_len - deleted):
             break
         else:
@@ -415,7 +415,7 @@ def main():
     separator()
     remove_volumes(cinder_client, default_volumes)
     separator()
-    remove_floatingips(nova_client, default_floatingips)
+    remove_floatingips(neutron_client, default_floatingips)
     separator()
     remove_networks(neutron_client, default_networks, default_routers)
     separator()
