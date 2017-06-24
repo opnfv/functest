@@ -70,6 +70,30 @@
       "revId": "3163f3c7bd3ff9e49f7dc63cd673bc6097a520ca",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c60b242a",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-06-24T03:17:58Z",
+      "side": 1,
+      "message": "Hi, Steven. \n1. Do you plan to uncomment this lines in order to leverage the local image files directly? Offline should be supported by functest automatically without any configuration manually.\n\n2. Why must centos and ubuntu images with large size be used for snaps_smoke? As I know, these two large images are only for snaps_smoke and cirros related images are required for api_check and snaps_health_check, where the small cirros images can be added in add_images.sh\n\n3. If centos and ubuntu images are essential for snaps_smoke, could we add them to download_images.sh, which can download images online before and then use them offline by volume mapping?",
+      "parentUuid": "5aaae553_30b0138b",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 75
+      },
+      "revId": "3163f3c7bd3ff9e49f7dc63cd673bc6097a520ca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
