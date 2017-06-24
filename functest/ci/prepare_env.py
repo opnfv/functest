@@ -366,7 +366,6 @@ def main(**kwargs):
         elif kwargs['action'] == "start":
             logger.info("######### Preparing Functest environment #########\n")
             check_env_variables()
-            get_deployment_handler()
             create_directories()
             source_rc_file()
             update_config_file()
@@ -377,7 +376,6 @@ def main(**kwargs):
             with open(CONST.__getattribute__('env_active'), "w") as env_file:
                 env_file.write("1")
             check_environment()
-            print_deployment_info()
         elif kwargs['action'] == "check":
             check_environment()
     except Exception as e:

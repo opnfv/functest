@@ -424,7 +424,6 @@ class PrepareEnvTesting(unittest.TestCase):
                 mock_logger_info.assert_any_call("Functest environment"
                                                  " is installed.")
 
-    @mock.patch('functest.ci.prepare_env.print_deployment_info')
     @mock.patch('functest.ci.prepare_env.check_environment')
     @mock.patch('functest.ci.prepare_env.create_flavor')
     @mock.patch('functest.ci.prepare_env.install_tempest')
@@ -433,21 +432,19 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.update_config_file')
     @mock.patch('functest.ci.prepare_env.source_rc_file')
     @mock.patch('functest.ci.prepare_env.create_directories')
-    @mock.patch('functest.ci.prepare_env.get_deployment_handler')
     @mock.patch('functest.ci.prepare_env.check_env_variables')
     @mock.patch('functest.ci.prepare_env.logger.info')
-    def test_main_start(self, mock_logger_info, mock_env_var, mock_dep_handler,
+    def test_main_start(self, mock_logger_info, mock_env_var,
                         mock_create_dir, mock_source_rc, mock_update_config,
                         mock_verify_depl, mock_install_rally,
                         mock_install_temp, mock_create_flavor,
-                        mock_check_env, mock_print_info):
+                        mock_check_env):
         with mock.patch("__builtin__.open", mock.mock_open()) as m:
             args = {'action': 'start'}
             self.assertEqual(prepare_env.main(**args), 0)
             mock_logger_info.assert_any_call("######### Preparing Functest "
                                              "environment #########\n")
             self.assertTrue(mock_env_var.called)
-            self.assertTrue(mock_dep_handler.called)
             self.assertTrue(mock_create_dir.called)
             self.assertTrue(mock_source_rc.called)
             self.assertTrue(mock_update_config.called)
@@ -458,7 +455,6 @@ class PrepareEnvTesting(unittest.TestCase):
             m.assert_called_once_with(
                 CONST.__getattribute__('env_active'), "w")
             self.assertTrue(mock_check_env.called)
-            self.assertTrue(mock_print_info.called)
 
     @mock.patch('functest.ci.prepare_env.check_environment')
     def test_main_check(self, mock_check_env):
