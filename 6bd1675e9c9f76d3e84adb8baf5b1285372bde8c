@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_49bae5e2",
+        "filename": "functest/utils/openstack_snapshot.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-24T11:35:22Z",
+      "side": 1,
+      "message": "ok, so get_images returns an empty dic {} if there are no images.",
+      "parentUuid": "1aa4ed85_66f35074",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 17
+      },
+      "revId": "6bd1675e9c9f76d3e84adb8baf5b1285372bde8c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_8661acd5",
         "filename": "functest/utils/openstack_snapshot.py",
         "patchSetId": 3
