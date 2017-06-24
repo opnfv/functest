@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_66f35074",
+        "filename": "functest/utils/openstack_snapshot.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-06-24T02:13:54Z",
+      "side": 1,
+      "message": "1. If no images are found, images is generator object, rather than None.\n2. The return code -1 is for an exception from def get_images in openstack_utils. eg. if we use the novaclient to obtain images, just like the base patch, snapshot creation is supposed to fail and will block the next step via the return code -1, rather than the case that the testcase will be executed anyway and return PASS (You mentioned that in your email)",
+      "parentUuid": "1aa4ed85_e66420e7",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 17
+      },
+      "revId": "6bd1675e9c9f76d3e84adb8baf5b1285372bde8c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_8661acd5",
         "filename": "functest/utils/openstack_snapshot.py",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-23T09:15:43Z",
       "side": 1,
       "message": "I would include this in \n   if images is not None:\n       dic_images.update(......",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 65
+      },
+      "revId": "6bd1675e9c9f76d3e84adb8baf5b1285372bde8c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_06e85c7b",
+        "filename": "functest/utils/openstack_snapshot.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-06-24T02:13:54Z",
+      "side": 1,
+      "message": "If no images are found, dic_images will be {} for sure.",
+      "parentUuid": "1aa4ed85_8661acd5",
       "range": {
         "startLine": 57,
         "startChar": 4,
