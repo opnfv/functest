@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-
+##############################################################################
+# Copyright (c) 2017 Huawei Technologies Co.,Ltd and others.
 # matthew.lijun@huawei.com wangwulin@huawei.com
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
+##############################################################################
 
 from __future__ import division
 
@@ -47,29 +49,21 @@ class RefstackClient(testcase.OSGCTestCase):
 
     def source_venv(self):
 
-        cmd = ("cd {0};"
-               ". .venv/bin/activate;"
-               "cd -;".format(CONST.__getattribute__('dir_refstack_client')))
+        cmd = ("cd {0}; . .venv/bin/activate; cd -;".format("/home/opnfv"))
         ft_utils.execute_command(cmd)
 
     def run_defcore(self, conf, testlist):
         logger.debug("Generating test case list...")
 
-        cmd = ("cd {0};"
-               "./refstack-client test -c {1} -v --test-list {2};"
-               "cd -;".format(CONST.__getattribute__('dir_refstack_client'),
-                              conf,
-                              testlist))
+        cmd = ("refstack-client test -c {0} -v --test-list {1}"
+               .format(conf, testlist))
         ft_utils.execute_command(cmd)
 
     def run_defcore_default(self):
         logger.debug("Generating test case list...")
 
-        cmd = ("cd {0};"
-               "./refstack-client test -c {1} -v --test-list {2};"
-               "cd -;".format(CONST.__getattribute__('dir_refstack_client'),
-                              self.confpath,
-                              self.defcorelist))
+        cmd = ("refstack-client test -c {0} -v --test-list {1}"
+               .format(self.confpath, self.defcorelist))
         logger.info("Starting Refstack_defcore test case: '%s'." % cmd)
 
         header = ("Refstack environment:\n"
