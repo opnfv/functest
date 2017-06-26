@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1aa4ed85_17f3a40b",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6865
+      },
+      "writtenOn": "2017-06-26T10:51:27Z",
+      "side": 0,
+      "message": "It is a bad idea to introduce terminal specific configurations when not needed, especially when they are link to the graphical environment, and moreover a particular one such as gnome.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 28
+      },
+      "revId": "572ef8dd7a109dead80c6f7a97aef34dc594c7c8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_4c04337e",
         "filename": "docker/Dockerfile",
         "patchSetId": 8
@@ -36,6 +59,30 @@
       "writtenOn": "2017-06-26T08:16:21Z",
       "side": 0,
       "message": "I\u0027m very sorry to write again that\u0027s not the target of a container. For your propose, you could create another docker image based on this one or simply copy a file from host before editing.",
+      "parentUuid": "1aa4ed85_4c04337e",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 17
+      },
+      "revId": "572ef8dd7a109dead80c6f7a97aef34dc594c7c8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f7d92884",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6865
+      },
+      "writtenOn": "2017-06-26T10:51:27Z",
+      "side": 0,
+      "message": "This is not only a matter of space but also of peaceful cohabitation.\nIf another contributor prefer to have \"set backspace\u003d3\" in his configuration, why should we impose him 2 instead of 3 ?\nAnd are we assuming that everybody is using vim ? Why shouldn\u0027t we  use emacs, nano or even gedit since it looks like we have gnome ? If true, we should also allow people to modify those editors default configuration. And you will have soon a maintainability problem because of the number of editors to maintain.\n\nThere is also a portability problem to do this.\nStrictly spoken, this is not a \"vi\" configuration but a \"vim\" configuration. Vim is not fully compatible with the original vi especially when you \"set nocompatible\" in its configuration. If vim is often the default vi clone installed by default on Debian or Debian-based distributions, it is not the only one (eg. nvi) and nothing says that it will remain  the default vi clone in Debian.\n\nThis also let think contributors modify files inside the Docker container rather than from their system where they are free to customize their configuration. This is a bad idea.",
       "parentUuid": "1aa4ed85_4c04337e",
       "range": {
         "startLine": 168,
