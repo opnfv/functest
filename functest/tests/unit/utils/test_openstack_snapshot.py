@@ -12,7 +12,7 @@ import unittest
 from functest.utils import openstack_snapshot
 
 
-class OSTackerTesting(unittest.TestCase):
+class OSSnapshotTesting(unittest.TestCase):
 
     def _get_instance(self, key):
         mock_obj = mock.Mock()
@@ -26,6 +26,8 @@ class OSTackerTesting(unittest.TestCase):
         self.test_list = [self._get_instance(1), self._get_instance(2)]
         self.update_list = {'id1': 'name1', 'id2': 'name2'}
         self.update_floatingips = {'id1': 'ip1', 'id2': 'ip2'}
+        self.floatingips_list = [{'id': 'id1', 'floating_ip_address': 'ip1'},
+                                 {'id': 'id2', 'floating_ip_address': 'ip2'}]
         self.test_dict_list = [{'id': 'id1', 'name': 'name1', 'ip': 'ip1'},
                                {'id': 'id2', 'name': 'name2', 'ip': 'ip2'}]
 
@@ -138,8 +140,9 @@ class OSTackerTesting(unittest.TestCase):
     @mock.patch('functest.utils.openstack_snapshot.logger.debug')
     def test_get_floatingips(self, mock_logger_debug):
         with mock.patch('functest.utils.openstack_snapshot.os_utils'
-                        '.get_floating_ips', return_value=self.test_list):
-            resp = openstack_snapshot.get_floatinips(self.client)
+                        '.get_floating_ips',
+                        return_value=self.floatingips_list):
+            resp = openstack_snapshot.get_floatingips(self.client)
             mock_logger_debug.assert_called_once_with("Getting Floating "
                                                       "IPs...")
             self.assertDictEqual(resp, {'floatingips':
@@ -149,7 +152,7 @@ class OSTackerTesting(unittest.TestCase):
     def test_get_floatingips_missing_floatingips(self, mock_logger_debug):
         with mock.patch('functest.utils.openstack_snapshot.os_utils'
                         '.get_floating_ips', return_value=[]):
-            resp = openstack_snapshot.get_floatinips(self.client)
+            resp = openstack_snapshot.get_floatingips(self.client)
             mock_logger_debug.assert_called_once_with("Getting Floating "
                                                       "IPs...")
             self.assertDictEqual(resp, {'floatingips': {}})
@@ -212,7 +215,7 @@ class OSTackerTesting(unittest.TestCase):
                        return_value=self.update_list), \
             mock.patch('functest.utils.openstack_snapshot.get_security_groups',
                        return_value=self.update_list), \
-            mock.patch('functest.utils.openstack_snapshot.get_floatinips',
+            mock.patch('functest.utils.openstack_snapshot.get_floatingips',
                        return_value=self.update_floatingips), \
             mock.patch('functest.utils.openstack_snapshot.get_users',
                        return_value=self.update_list), \
