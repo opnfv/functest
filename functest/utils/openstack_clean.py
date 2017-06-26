@@ -148,8 +148,8 @@ def remove_floatingips(neutron_client, default_floatingips):
     init_len = len(floatingips)
     deleted = 0
     for fip in floatingips:
-        fip_id = getattr(fip, 'id')
-        fip_ip = getattr(fip, 'ip')
+        fip_id = fip['id']
+        fip_ip = fip['floating_ip_address']
         logger.debug("'%s', ID=%s " % (fip_ip, fip_id))
         if (fip_id not in default_floatingips and
                 fip_ip not in default_floatingips.values()):
