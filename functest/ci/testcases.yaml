@@ -367,7 +367,7 @@ tiers:
                 description: >-
                     Test suite from Domino project.
                 dependencies:
-                    installer: ''
+                    installer: '(compass)|(fuel)'
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.features.domino'
