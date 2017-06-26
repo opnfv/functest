@@ -61,6 +61,8 @@ class OSCleanTesting(unittest.TestCase):
                                {'id': 'id2', 'name': 'name2', 'ip': 'ip2',
                                 'router:external': False,
                                 'external_gateway_info': None}]
+        self.floatingips_list = [{'id': 'id1', 'floating_ip_address': 'ip1'},
+                                 {'id': 'id2', 'floating_ip_address': 'ip2'}]
         self.routers = [mock.Mock()]
         self.ports = [mock.Mock()]
 
@@ -254,7 +256,8 @@ class OSCleanTesting(unittest.TestCase):
     @mock.patch('functest.utils.openstack_clean.logger.debug')
     def test_remove_floatingips(self, mock_logger_debug):
         with mock.patch('functest.utils.openstack_clean.os_utils'
-                        '.get_floating_ips', return_value=self.test_list):
+                        '.get_floating_ips',
+                        return_value=self.floatingips_list):
             openstack_clean.remove_floatingips(self.client, self.update_list)
             mock_logger_debug.assert_any_call("Removing floating IPs...")
             mock_logger_debug.assert_any_call("   > this is a default "
@@ -272,9 +275,10 @@ class OSCleanTesting(unittest.TestCase):
     @mock.patch('functest.utils.openstack_clean.logger.debug')
     def test_remove_floatingips_delete_success(self, mock_logger_debug):
         with mock.patch('functest.utils.openstack_clean.os_utils'
-                        '.get_floating_ips', return_value=self.test_list), \
+                         '.get_floating_ips',
+                         return_value=self.floatingips_list), \
                 mock.patch('functest.utils.openstack_clean.os_utils'
-                           '.delete_volume', return_value=True):
+                           '.delete_floating_ip', return_value=True):
             openstack_clean.remove_floatingips(self.client, self.remove_list)
             mock_logger_debug.assert_any_call("Removing floating IPs...")
             mock_logger_debug.assert_any_call("  > Done!")
@@ -287,7 +291,8 @@ class OSCleanTesting(unittest.TestCase):
     def test_remove_floatingips_delete_failed(self, mock_logger_debug,
                                               mock_logger_error):
         with mock.patch('functest.utils.openstack_clean.os_utils'
-                        '.get_floating_ips', return_value=self.test_list), \
+                         '.get_floating_ips',
+                         return_value=self.floatingips_list), \
                 mock.patch('functest.utils.openstack_clean.os_utils'
                            '.delete_floating_ip', return_value=False):
             openstack_clean.remove_floatingips(self.client, self.remove_list)
