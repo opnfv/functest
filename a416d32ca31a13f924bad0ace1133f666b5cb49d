@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_29bbe973",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-26T03:31:56Z",
+      "side": 1,
+      "message": "typo: testcase",
+      "revId": "a416d32ca31a13f924bad0ace1133f666b5cb49d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c976d5d8",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-26T03:31:56Z",
+      "side": 1,
+      "message": "You could test the lenght of self.executed_test_cases instead.",
+      "revId": "a416d32ca31a13f924bad0ace1133f666b5cb49d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
