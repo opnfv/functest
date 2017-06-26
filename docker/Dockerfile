@@ -29,6 +29,7 @@ ARG FUNCTEST_RESULTS_DIR=${FUNCTEST_BASE_DIR}/results
 ARG FUNCTEST_REPO_DIR=${REPOS_DIR}/functest
 ARG FUNCTEST_TEST_DIR=${FUNCTEST_REPO_DIR}/functest/opnfv_tests
 ARG REPOS_VNFS_DIR=${REPOS_DIR}/vnfs
+ARG PIP_OPTS=-chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?stable/ocata
 
 # Environment variables
 ENV HOME /home/opnfv
@@ -77,7 +78,7 @@ RUN mkdir -p ${FUNCTEST_REPO_DIR} \
 RUN git config --global http.sslVerify false
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
-RUN pip install \
+RUN pip install ${PIP_OPTS} \
     git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
     git+https://gerrit.opnfv.org/gerrit/releng@$BRANCH#egg=opnfv\&subdirectory=modules \
     git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps \
@@ -131,7 +132,7 @@ RUN curl -L https://get.rvm.io | bash -s stable
 
 # SFC integration
 RUN /bin/bash -c ". ${REPOS_DIR}/sfc/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
-RUN cd ${REPOS_DIR}/sfc && pip install -e .
+RUN cd ${REPOS_DIR}/sfc && pip install ${PIP_OPTS} -e .
 
 # refstack-client integration
 RUN wget -q https://raw.githubusercontent.com/openstack/refstack-client/master/setup_env \
