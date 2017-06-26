@@ -80,22 +80,25 @@ def remove_instances(nova_client, default_instances):
         break
 
 
-def remove_images(nova_client, default_images):
+def remove_images(glance_client, default_images):
     logger.debug("Removing Glance images...")
-    images = os_utils.get_images(nova_client)
-    if images is None or len(images) == 0:
+    images = os_utils.get_images(glance_client)
+    if images is None:
+        return -1
+    images = {image.id: image.name for image in images}
+    if len(images) == 0:
         logger.debug("No images found.")
         return
 
     for image in images:
-        image_name = getattr(image, 'name')
-        image_id = getattr(image, 'id')
+        image_id = image
+        image_name = images.get(image_id)
         logger.debug("'%s', ID=%s " % (image_name, image_id))
         if (image_id not in default_images and
                 image_name not in default_images.values()):
             logger.debug("Removing image '%s', ID=%s ..."
                          % (image_name, image_id))
-            if os_utils.delete_glance_image(nova_client, image_id):
+            if os_utils.delete_glance_image(glance_client, image_id):
                 logger.debug("  > Done!")
             else:
                 logger.error("There has been a problem removing the"
@@ -385,6 +388,7 @@ def main():
     neutron_client = os_utils.get_neutron_client()
     keystone_client = os_utils.get_keystone_client()
     cinder_client = os_utils.get_cinder_client()
+    glance_client = os_utils.get_glance_client()
 
     try:
         with open(OS_SNAPSHOT_FILE) as f:
@@ -411,7 +415,7 @@ def main():
 
     remove_instances(nova_client, default_instances)
     separator()
-    remove_images(nova_client, default_images)
+    remove_images(glance_client, default_images)
     separator()
     remove_volumes(cinder_client, default_volumes)
     separator()

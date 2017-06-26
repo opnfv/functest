@@ -672,6 +672,7 @@ class OSCleanTesting(unittest.TestCase):
                                               RegexMatch(" Removing "
                                                          "\s*\S+..."))
 
+    @mock.patch('functest.utils.openstack_clean.os_utils.get_glance_client')
     @mock.patch('functest.utils.openstack_clean.os_utils.get_cinder_client')
     @mock.patch('functest.utils.openstack_clean.os_utils'
                 '.get_keystone_client')
@@ -684,7 +685,7 @@ class OSCleanTesting(unittest.TestCase):
     @mock.patch('functest.utils.openstack_clean.logger.debug')
     def test_main_default(self, mock_logger_debug, mock_logger_info,
                           mock_creds, mock_nova, mock_neutron,
-                          mock_keystone, mock_cinder):
+                          mock_keystone, mock_cinder, mock_glance):
 
         with mock.patch('functest.utils.openstack_clean.remove_instances') \
             as mock_remove_instances, \

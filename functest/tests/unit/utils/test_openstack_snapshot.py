@@ -189,6 +189,7 @@ class OSSnapshotTesting(unittest.TestCase):
             mock_logger_debug.assert_called_once_with("Getting tenants...")
             self.assertDictEqual(resp, {'tenants': {}})
 
+    @mock.patch('functest.utils.openstack_clean.os_utils.get_glance_client')
     @mock.patch('functest.utils.openstack_snapshot.os_utils.get_cinder_client')
     @mock.patch('functest.utils.openstack_snapshot.os_utils'
                 '.get_keystone_client')
@@ -200,7 +201,7 @@ class OSSnapshotTesting(unittest.TestCase):
     @mock.patch('functest.utils.openstack_snapshot.logger.debug')
     def test_main_default(self, mock_logger_debug, mock_logger_info,
                           mock_creds, mock_nova, mock_neutron,
-                          mock_keystone, mock_cinder):
+                          mock_keystone, mock_cinder, mock_glance):
         with mock.patch('functest.utils.openstack_snapshot.get_instances',
                         return_value=self.update_list), \
             mock.patch('functest.utils.openstack_snapshot.get_images',
