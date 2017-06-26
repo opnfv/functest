@@ -82,7 +82,8 @@ def get_env_cred_dict():
         'OS_PROJECT_NAME': 'project_name',
         'OS_ENDPOINT_TYPE': 'endpoint_type',
         'OS_REGION_NAME': 'region_name',
-        'OS_CACERT': 'https_cacert'
+        'OS_CACERT': 'https_cacert',
+        'OS_INSECURE': 'https_insecure'
     }
     return env_cred_dict
 
@@ -150,10 +151,12 @@ def get_credentials_for_rally():
         cred_key = env_cred_dict.get('OS_REGION_NAME')
         rally_conf[cred_key] = region_name
 
-    cacert = os.getenv('OS_CACERT')
-    if cacert is not None:
-        cred_key = env_cred_dict.get('OS_CACERT')
-        rally_conf[cred_key] = cacert
+    cred_key = env_cred_dict.get('OS_CACERT')
+    rally_conf[cred_key] = os.getenv('OS_CACERT', '')
+
+    insecure_key = env_cred_dict.get('OS_INSECURE')
+    rally_conf[insecure_key] = os.getenv('OS_INSECURE', '').lower() == 'true'
+
     return rally_conf
 
 
