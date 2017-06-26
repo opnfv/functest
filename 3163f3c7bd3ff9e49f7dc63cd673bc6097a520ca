@@ -118,6 +118,30 @@
       "revId": "3163f3c7bd3ff9e49f7dc63cd673bc6097a520ca",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b7a65052",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-06-26T14:56:21Z",
+      "side": 1,
+      "message": "My suggestion is to have offline testing just for the cirros images. Is it possible to use the download approach for the centos and ubuntu images when the values in this config are missing?",
+      "parentUuid": "1aa4ed85_17b6448b",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 75
+      },
+      "revId": "3163f3c7bd3ff9e49f7dc63cd673bc6097a520ca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
