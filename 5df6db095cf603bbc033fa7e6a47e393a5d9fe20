@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_d712ec57",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-26T09:20:28Z",
+      "side": 1,
+      "message": "is sdnvpn repo needed? We now install sdnvpn as a python package\nhttps://gerrit.opnfv.org/gerrit/#/c/35835/7",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "5df6db095cf603bbc033fa7e6a47e393a5d9fe20",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_370ee035",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-26T09:20:28Z",
+      "side": 1,
+      "message": "is opera repo needed? We now install opera as a python package\nhttps://gerrit.opnfv.org/gerrit/#/c/36129/",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "5df6db095cf603bbc033fa7e6a47e393a5d9fe20",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
