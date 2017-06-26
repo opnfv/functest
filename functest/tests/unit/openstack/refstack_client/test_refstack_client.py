@@ -1,9 +1,12 @@
 #!/usr/bin/env python
-
+##############################################################################
+# Copyright (c) 2017 Huawei Technologies Co.,Ltd and others.
+# matthew.lijun@huawei.com wangwulin@huawei.com
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
+##############################################################################
 
 import logging
 import mock
@@ -12,7 +15,6 @@ import unittest
 
 from functest.core import testcase
 from functest.opnfv_tests.openstack.refstack_client import refstack_client
-from functest.utils.constants import CONST
 
 
 class OSRefstackClientTesting(unittest.TestCase):
@@ -31,10 +33,7 @@ class OSRefstackClientTesting(unittest.TestCase):
     def test_source_venv(self):
         with mock.patch('functest.opnfv_tests.openstack.refstack_client.'
                         'refstack_client.ft_utils.execute_command') as m:
-            cmd = ("cd {0};"
-                   ". .venv/bin/activate;"
-                   "cd -;"
-                   .format(CONST.__getattribute__('dir_refstack_client')))
+            cmd = ("cd {0}; . .venv/bin/activate; cd -;".format("/home/opnfv"))
             self.refstackclient.source_venv()
             m.assert_any_call(cmd)
 
@@ -43,12 +42,8 @@ class OSRefstackClientTesting(unittest.TestCase):
         testlist = 'testlist'
         with mock.patch('functest.opnfv_tests.openstack.refstack_client.'
                         'refstack_client.ft_utils.execute_command') as m:
-            cmd = ("cd {0};"
-                   "./refstack-client test -c {1} -v --test-list {2};"
-                   "cd -;"
-                   .format(CONST.__getattribute__('dir_refstack_client'),
-                           config,
-                           testlist))
+            cmd = ("refstack-client test -c {0} -v --test-list {1}"
+                   .format(config, testlist))
             self.refstackclient.run_defcore(config, testlist)
             m.assert_any_call(cmd)
 

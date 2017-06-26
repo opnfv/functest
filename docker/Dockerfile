@@ -147,6 +147,7 @@ RUN cd ${REPOS_DIR}/sdnvpn && pip install -e .
 # refstack-client integration
 RUN wget -q https://raw.githubusercontent.com/openstack/refstack-client/master/setup_env \
     && bash setup_env -t ${REFSTACK_TAG} && rm setup_env
+RUN ln -s /usr/local/lib/python2.7/dist-packages/.tempest ${HOME}/.tempest
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd ${REPOS_VNFS_DIR}/vims-test \
