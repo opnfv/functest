@@ -12,6 +12,7 @@ from __future__ import division
 
 import logging
 import os
+import pkg_resources
 import re
 import shutil
 import subprocess
@@ -274,7 +275,7 @@ class TempestMultisite(TempestCommon):
         self.MODE = "feature_multisite"
         self.OPTION = "--concurrency 1"
         conf_utils.install_verifier_ext(
-            CONST.__getattribute__('dir_repo_kingbird'))
+            pkg_resources.resource_filename('kingbird', '..'))
 
 
 class TempestCustom(TempestCommon):

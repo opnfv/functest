@@ -9,7 +9,6 @@ general:
         repo_sdnvpn:        /home/opnfv/repos/sdnvpn
         repo_sfc:           /home/opnfv/repos/sfc
         repo_onos:          /home/opnfv/repos/onos
-        repo_promise:       /home/opnfv/repos/promise
         repo_netready:      /home/opnfv/repos/netready
         repo_barometer:     /home/opnfv/repos/barometer
         repo_doctor:        /home/opnfv/repos/doctor
@@ -28,7 +27,6 @@ general:
         ims_data:           /home/opnfv/functest/data/ims/
         functest_images:    /home/opnfv/functest/images
         rally_inst:         /home/opnfv/.rally
-        repo_kingbird:      /home/opnfv/repos/kingbird
         refstack_client:    /home/opnfv/repos/refstack-client
 
     openstack:
