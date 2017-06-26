@@ -94,6 +94,30 @@
       "revId": "3163f3c7bd3ff9e49f7dc63cd673bc6097a520ca",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_17b6448b",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-06-26T14:44:51Z",
+      "side": 1,
+      "message": "1. This example could be removed, but I guess I do not understand how offline testing is being implemented. For SNAPS to support offline testing, it will need a data structure such as the one shown under snaps.images.\n2. There are 3 tests in the smoke suite that leverage centos and ubuntu. If this is problematic, those tests will need to be removed from functest.\n3. Yes, I agree those should be added to download_images.sh just as long as the Functest team agrees they want to keep those 3 tests that are affected. I believe they have value as I have seen pods act and perform differently with all three image types; however, those types of tests may be out-of-scope for Functest in general.",
+      "parentUuid": "1aa4ed85_c60b242a",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 75
+      },
+      "revId": "3163f3c7bd3ff9e49f7dc63cd673bc6097a520ca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
