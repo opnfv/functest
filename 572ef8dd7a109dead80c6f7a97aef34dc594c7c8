@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_4c04337e",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-26T07:57:11Z",
+      "side": 0,
+      "message": "would it be a lot of trouble to keep this command? It doesn\u0027t harm and it doesn\u0027t take extra space. \n\nor just \n\n    RUN echo \"set nocompatible \\nset backspace\u003d2\" \u003e\u003e ${HOME}/.vimrc\n\nSome developers and external users use \"vi\" and it is extra work to start every time the container and copy this options manually. Most of the people won\u0027t know it, this allows facilitate the work on the \"vi\" editor.\n\nSome other openstack docker images install vim (which takes extra space) and vim doesn\u0027t need these options, but I prefer to keep them as they don\u0027t harm anyone.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 17
+      },
+      "revId": "572ef8dd7a109dead80c6f7a97aef34dc594c7c8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
