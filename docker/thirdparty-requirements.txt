@@ -1,6 +1,7 @@
 git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn#egg=sdnvpn
 git+https://gerrit.opnfv.org/gerrit/opera#egg=opera
+git+https://gerrit.opnfv.org/gerrit/securityscanning#egg=securityscanning
 networking-bgpvpn
 rally
 tempest>=12.1.0 # Apache-2.0
