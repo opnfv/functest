@@ -6,10 +6,8 @@ general:
         repo_tempest:       /home/opnfv/repos/tempest
         dir_repo_releng:    /home/opnfv/repos/releng
         repo_vims_test:     /home/opnfv/repos/vnfs/vims-test
-        repo_sdnvpn:        /home/opnfv/repos/sdnvpn
         repo_sfc:           /home/opnfv/repos/sfc
         repo_onos:          /home/opnfv/repos/onos
-        repo_promise:       /home/opnfv/repos/promise
         repo_netready:      /home/opnfv/repos/netready
         repo_barometer:     /home/opnfv/repos/barometer
         repo_doctor:        /home/opnfv/repos/doctor
@@ -17,7 +15,6 @@ general:
         repo_parser:        /home/opnfv/repos/parser
         repo_domino:        /home/opnfv/repos/domino
         repo_snaps:         /home/opnfv/repos/snaps
-        repo_opera:         /home/opnfv/repos/opera
         repo_fds:           /home/opnfv/repos/fds
         repo_securityscan:  /home/opnfv/repos/securityscanning
         repo_vrouter:       /home/opnfv/repos/vnfs/vrouter
@@ -28,7 +25,6 @@ general:
         ims_data:           /home/opnfv/functest/data/ims/
         functest_images:    /home/opnfv/functest/images
         rally_inst:         /home/opnfv/.rally
-        repo_kingbird:      /home/opnfv/repos/kingbird
         refstack_client:    /home/opnfv/repos/refstack-client
 
     openstack:
