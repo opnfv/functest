@@ -22,6 +22,30 @@
       "revId": "ae95e8627bd83cbd92f22c80fd287b6f529f9a17",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_58a149a8",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-27T13:49:17Z",
+      "side": 1,
+      "message": "Why not. At least it could be declared as script to be located in $PATH. \n\nThis patch aims at not cloning sfc and lists it as third party requirements. I agree it remains some work on sfc python package.\n\nI must notice that this script is strongly linked to Ubuntu.",
+      "parentUuid": "1aa4ed85_78d8c553",
+      "range": {
+        "startLine": 132,
+        "startChar": 20,
+        "endLine": 132,
+        "endChar": 117
+      },
+      "revId": "ae95e8627bd83cbd92f22c80fd287b6f529f9a17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
