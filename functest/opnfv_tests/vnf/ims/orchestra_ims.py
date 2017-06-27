@@ -271,7 +271,7 @@ class ImsVnf(vnf.VnfOnBoarding):
 
         self.logger.info("Waiting for Open Baton NFVO to be up and running...")
         x = 0
-        while x < 100:
+        while x < 200:
             if servertest(floatip, "8080"):
                 break
             else:
@@ -281,7 +281,7 @@ class ImsVnf(vnf.VnfOnBoarding):
                 time.sleep(5)
                 x += 1
 
-        if x == 100:
+        if x == 200:
             self.logger.error("Open Baton is not started correctly")
 
         self.ob_ip = floatip
