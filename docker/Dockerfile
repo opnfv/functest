@@ -95,7 +95,6 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${REPO
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${REPOS_DIR}/promise
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/netready ${REPOS_DIR}/netready
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/fds ${REPOS_DIR}/fds
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/sfc ${REPOS_DIR}/sfc
 
 # other repositories
 RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${REPOS_DIR}/odl_test
@@ -129,8 +128,7 @@ RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C
 RUN curl -L https://get.rvm.io | bash -s stable
 
 # SFC integration
-RUN /bin/bash -c ". ${REPOS_DIR}/sfc/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
-RUN cd ${REPOS_DIR}/sfc && pip install ${PIP_OPTS} -e .
+RUN /bin/bash -c ". /usr/local/lib/python2.7/dist-packages/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
 
 # refstack-client integration
 RUN wget -q https://raw.githubusercontent.com/openstack/refstack-client/master/setup_env \
