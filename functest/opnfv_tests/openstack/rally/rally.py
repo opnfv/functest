@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 class RallyBase(testcase.OSGCTestCase):
     TESTS = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
-             'neutron', 'nova', 'quotas', 'requests', 'vm', 'all']
+             'neutron', 'nova', 'quotas', 'vm', 'all']
     GLANCE_IMAGE_NAME = CONST.__getattribute__('openstack_image_name')
     GLANCE_IMAGE_FILENAME = CONST.__getattribute__('openstack_image_file_name')
     GLANCE_IMAGE_PATH = os.path.join(
@@ -101,9 +101,6 @@ class RallyBase(testcase.OSGCTestCase):
             task_args['netid'] = str(net_id)
         else:
             task_args['netid'] = ''
-
-        # get keystone auth endpoint
-        task_args['request_url'] = CONST.__getattribute__('OS_AUTH_URL') or ''
 
         return task_args
 
