@@ -252,16 +252,18 @@ class Runner(object):
             msg.add_row([env_var, CONST.__getattribute__(env_var)])
         logger.info("Deployment description: \n\n%s\n", msg)
 
-        msg = prettytable.PrettyTable(
-            header_style='upper', padding_width=5,
-            field_names=['test case', 'project', 'tier', 'duration', 'result'])
-        for test_case in self.executed_test_cases:
-            result = 'PASS' if(test_case.is_successful(
-                    ) == test_case.EX_OK) else 'FAIL'
-            msg.add_row([test_case.case_name, test_case.project_name,
-                         _tiers.get_tier_name(test_case.case_name),
-                         test_case.get_duration(), result])
-        logger.info("FUNCTEST REPORT: \n\n%s\n", msg)
+        if len(self.executed_test_cases) > 1:
+            msg = prettytable.PrettyTable(
+                header_style='upper', padding_width=5,
+                field_names=['test case', 'project', 'tier',
+                             'duration', 'result'])
+            for test_case in self.executed_test_cases:
+                result = 'PASS' if(test_case.is_successful(
+                        ) == test_case.EX_OK) else 'FAIL'
+                msg.add_row([test_case.case_name, test_case.project_name,
+                             _tiers.get_tier_name(test_case.case_name),
+                             test_case.get_duration(), result])
+            logger.info("FUNCTEST REPORT: \n\n%s\n", msg)
 
         logger.info("Execution exit value: %s" % self.overall_result)
         return self.overall_result
