@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_9dac938e",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-27T08:41:39Z",
+      "side": 1,
+      "message": "I Asked and these 2 lines are not needed. You can remove them",
+      "parentUuid": "1aa4ed85_97c31438",
+      "revId": "6918505ab9acc6eac478fce9e77bbd390cb5bd5c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_572cbc4a",
         "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
         "patchSetId": 8
