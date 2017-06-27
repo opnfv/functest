@@ -323,7 +323,7 @@ def install_tempest():
                          CONST.__getattribute__('tempest_deployment_name'))
             cmd = ("rally verify create-verifier --source {0} "
                    "--name {1} --type tempest --system-wide"
-                   .format(CONST.__getattribute__('dir_repo_tempest'),
+                   .format('/home/opnfv/.tempest',
                            CONST.__getattribute__('tempest_deployment_name')))
             error_msg = "Problem while installing Tempest."
             ft_utils.execute_command_raise(cmd, error_msg=error_msg)
