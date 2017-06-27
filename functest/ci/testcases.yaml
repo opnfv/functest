@@ -198,7 +198,7 @@ tiers:
                     Robot as the test framework.
                 dependencies:
                     installer: 'apex'
-                    scenario: 'odl_l2-fdio'
+                    scenario: 'odl.*-fdio'
                 run:
                     module: 'functest.opnfv_tests.sdn.odl.odl'
                     class: 'ODLTests'
