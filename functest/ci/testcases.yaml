@@ -269,7 +269,6 @@ tiers:
 
             -
                 case_name: doctor-notification
-                enabled: false
                 project_name: doctor
                 criteria: 100
                 blocking: false
