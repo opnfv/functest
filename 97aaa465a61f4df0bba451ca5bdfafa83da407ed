@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_b89b9d71",
+        "filename": "functest/core/vnf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-27T14:03:50Z",
+      "side": 1,
+      "message": "Could you wrap afer \u0027(\u0027 to save some extra spaces?",
+      "revId": "97aaa465a61f4df0bba451ca5bdfafa83da407ed",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_18b0b1dc",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-27T14:03:50Z",
+      "side": 1,
+      "message": "The warning is quite relevant when calling get_image_id which should raise named exceptions. I agree to disable it as it\u0027s a global task. \n\nBut shouldn\u0027t we reraise the exception?",
+      "revId": "97aaa465a61f4df0bba451ca5bdfafa83da407ed",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d8c9b95b",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-27T14:03:50Z",
+      "side": 1,
+      "message": "I would have wrapped after (",
+      "revId": "97aaa465a61f4df0bba451ca5bdfafa83da407ed",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_98c34138",
+        "filename": "functest/tests/unit/vnf/ims/test_cloudify_ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-06-27T14:03:50Z",
+      "side": 1,
+      "message": "I would have set them as decorators to ease reading",
+      "revId": "97aaa465a61f4df0bba451ca5bdfafa83da407ed",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
