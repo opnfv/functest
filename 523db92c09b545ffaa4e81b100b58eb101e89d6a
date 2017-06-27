@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_d87699d8",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-27T16:42:55Z",
+      "side": 1,
+      "message": "Maybe not now, but do you think we could reuse the image we have in opnfv artifacts for SNAPS? if SNAPS test case have the filename as the input, we could use ubuntu-16.04-server-cloudimg-amd64-disk1.img",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 128
+      },
+      "revId": "523db92c09b545ffaa4e81b100b58eb101e89d6a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f87355e5",
+        "filename": "functest/opnfv_tests/openstack/snaps/health_check.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-27T16:42:55Z",
+      "side": 1,
+      "message": "you can remove this line",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 42
+      },
+      "revId": "523db92c09b545ffaa4e81b100b58eb101e89d6a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b87dddb3",
+        "filename": "functest/opnfv_tests/openstack/snaps/smoke.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-27T16:42:55Z",
+      "side": 1,
+      "message": "you can remove this line",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "523db92c09b545ffaa4e81b100b58eb101e89d6a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_9880218d",
+        "filename": "functest/opnfv_tests/openstack/snaps/smoke.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-06-27T16:42:55Z",
+      "side": 1,
+      "message": "you can remove this line",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "523db92c09b545ffaa4e81b100b58eb101e89d6a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
