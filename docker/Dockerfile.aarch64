@@ -109,7 +109,7 @@ RUN find -L ${FUNCTEST_REPO_DIR} -name "*.py" \
     -not -path "*functest_venv*" \
     |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
 
-RUN wget -q https://raw.githubusercontent.com/openstack/rally/${RALLY_TAG}/install_rally.sh \
+RUN wget -q https://git.openstack.org/cgit/openstack/rally/plain/install_rally.sh?h=${RALLY_TAG} -O install_rally.sh \
     && bash install_rally.sh --branch ${RALLY_TAG} --yes && rm install_rally.sh
 
 RUN add_images.sh
