@@ -35,10 +35,6 @@
 {%- include "var/opnfv-quotas.yaml"-%}
 {% endif %}
 
-{% if "requests" in service_list %}
-{%- include "var/opnfv-requests.yaml"-%}
-{% endif %}
-
 {% if "heat" in service_list %}
 {%- include "var/opnfv-heat.yaml"-%}
 {% endif %}

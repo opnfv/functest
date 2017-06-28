@@ -53,14 +53,6 @@ class OSRallyTesting(unittest.TestCase):
             task_args = self.rally_base._build_task_args('test_file_name')
             self.assertEqual(task_args['netid'], '')
 
-    def test_build_task_args_missing_auth_url(self):
-        CONST.__setattr__('OS_AUTH_URL', None)
-        with mock.patch('functest.opnfv_tests.openstack.rally.rally.'
-                        'os_utils.get_external_net',
-                        return_value='test_floating_network'):
-            task_args = self.rally_base._build_task_args('test_file_name')
-            self.assertEqual(task_args['request_url'], '')
-
     def check_scenario_file(self, value):
         yaml_file = 'opnfv-{}.yaml'.format('test_file_name')
         if yaml_file in value:
