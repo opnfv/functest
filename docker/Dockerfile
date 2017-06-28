@@ -90,7 +90,6 @@ RUN ln -s /usr/local/lib/python2.7/dist-packages/functest ${FUNCTEST_REPO_DIR}/f
 # OPNFV repositories
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${REPOS_DIR}/copper
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${REPOS_DIR}/domino
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/parser ${REPOS_DIR}/parser
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${REPOS_DIR}/doctor
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${REPOS_DIR}/promise
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/netready ${REPOS_DIR}/netready
@@ -118,7 +117,6 @@ RUN find -L ${FUNCTEST_REPO_DIR} -name "*.py" \
     -not -path "*functest_venv*" \
     |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
 
-RUN /bin/bash ${REPOS_DIR}/parser/tests/parser_install.sh ${REPOS_DIR}
 RUN wget -q https://raw.githubusercontent.com/openstack/rally/${RALLY_TAG}/install_rally.sh \
     && bash install_rally.sh --branch ${RALLY_TAG} --yes && rm install_rally.sh
 
