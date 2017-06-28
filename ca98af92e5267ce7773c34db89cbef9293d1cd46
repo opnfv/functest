@@ -70,6 +70,29 @@
       "revId": "ca98af92e5267ce7773c34db89cbef9293d1cd46",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8c68e6f6",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-06-28T08:27:37Z",
+      "side": 1,
+      "message": "From my perspective, here, activate venv is useless to the following work. because ft_utils.execute_command() will create a subprocess to source the cmd, and it will not impact the envs in the parent process.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "ca98af92e5267ce7773c34db89cbef9293d1cd46",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
