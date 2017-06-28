@@ -34,6 +34,24 @@
       "revId": "ca98af92e5267ce7773c34db89cbef9293d1cd46",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_cc4a5eac",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-06-28T07:46:54Z",
+      "side": 1,
+      "message": "According to the link you provided:\n        self.current_dir \u003d os.path.dirname(os.path.realpath(__file__))\n        self.refstack_dir \u003d os.path.dirname(self.current_dir)\n        self.tempest_dir \u003d os.path.join(self.refstack_dir, \u0027.tempest\u0027)\nI don\u0027t think $refstack_dir \u003d\u003d /usr/local/lib/python2.7/dist-packages is correct.\nShouldn\u0027t it be something like $refstack_dir \u003d\u003d /usr/local/lib/python2.7/dist-packages/refstack_client   ?\nthen tempest_dir \u003d /usr/local/lib/python2.7/dist-packages/refstack_client/.tempest",
+      "parentUuid": "1aa4ed85_0cc71647",
+      "revId": "ca98af92e5267ce7773c34db89cbef9293d1cd46",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
