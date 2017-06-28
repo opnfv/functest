@@ -52,6 +52,24 @@
       "revId": "ca98af92e5267ce7773c34db89cbef9293d1cd46",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8c9a2613",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-06-28T08:12:19Z",
+      "side": 1,
+      "message": "Please ignore this comment, my mistake, here we are leveraging the installed refstack_client, the refstack_dir\u003d\u003d/usr/local/lib/python2.7/dist-packages.\nVery strange to use it like this!",
+      "parentUuid": "1aa4ed85_cc4a5eac",
+      "revId": "ca98af92e5267ce7773c34db89cbef9293d1cd46",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
