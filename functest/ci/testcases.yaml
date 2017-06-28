@@ -297,7 +297,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /home/opnfv/repos/sdnvpn/sdnvpn/test/functest && python ./run_tests.py'
+                        cmd: 'cd /usr/local/lib/python2.7/dist-packages/sdnvpn/test/functest && python ./run_tests.py'
 
             -
                 case_name: security_scan
@@ -314,7 +314,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: '. /home/opnfv/functest/conf/stackrc && cd /home/opnfv/repos/securityscanning && python security_scan.py --config config.ini && cd -'
+                        cmd: '. /home/opnfv/functest/conf/stackrc && cd /usr/local/lib/python2.7/dist-packages && python security_scan.py --config config.ini && cd -'
 
             -
                 case_name: copper
@@ -363,7 +363,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /home/opnfv/repos/sfc/sfc/tests/functest && python ./run_tests.py'
+                        cmd: 'cd /usr/local/lib/python2.7/dist-packages/sfc/tests/functest && python ./run_tests.py'
 
             -
                 case_name: onos_sfc
