@@ -16,7 +16,7 @@ from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 
 
-class CliEnv(object):
+class Env(object):
 
     def __init__(self):
         pass
@@ -66,7 +66,13 @@ class CliEnv(object):
             msg.add_row(['BUILD TAG', build_tag])
         msg.add_row(['DEBUG FLAG', is_debug])
         msg.add_row(['STATUS', STATUS])
-        click.echo(msg.get_string())
+        env_show = {'INSTALLER': installer_info,
+                    'SCENARIO': scenario,
+                    'POD': node,
+                    'DEBUG FLAG': is_debug,
+                    'STATUS': STATUS}
+
+        return msg.get_string(), env_show
 
     def status(self, verbose=True):
         ret_val = 0
@@ -78,3 +84,23 @@ class CliEnv(object):
             click.echo("Functest environment ready to run tests.\n")
 
         return ret_val
+
+
+class CliEnv(Env):
+
+    def __init__(self):
+        super(CliEnv, self).__init__()
+
+    def show(self):
+        msg_env, _ = super(CliEnv, self).show()
+        click.echo(msg_env)
+
+
+class ApiEnv(Env):
+
+    def __init__(self):
+        super(ApiEnv, self).__init__()
+
+    def show(self):
+        _, env_show = super(ApiEnv, self).show()
+        return env_show
