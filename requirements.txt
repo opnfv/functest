@@ -21,6 +21,8 @@ dnspython3!=1.13.0,!=1.14.0,>=1.12.0;python_version>='3.0' # http://www.dnspytho
 click
 openbaton-cli
 cloudify_rest_client
+flask==0.11.1
+flask-restful==0.3.5
 mock>=2.0 # BSD
 iniparse==0.4
 PrettyTable<0.8,>=0.7.1 # BSD
