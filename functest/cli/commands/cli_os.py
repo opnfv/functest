@@ -43,9 +43,12 @@ class CliOpenStack(object):
 
     @staticmethod
     def show_credentials():
+        dic_credentials = {}
         for key, value in os.environ.items():
             if key.startswith('OS_'):
                 click.echo("{}={}".format(key, value))
+                dic_credentials.update({key: value})
+        return dic_credentials
 
     def check(self):
         self.ping_endpoint()
