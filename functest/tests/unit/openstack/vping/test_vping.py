@@ -50,8 +50,6 @@ class VPingUserdataTesting(unittest.TestCase):
                 'vm_active', return_value=True)
     def test_vping_userdata(self, deploy_vm, path_exists, create_flavor,
                             get_port_ip, vm_active):
-        os_vm_inst = mock.MagicMock(name='get_console_output')
-        os_vm_inst.get_console_output.return_value = 'vPing OK'
         with mock.patch('snaps.openstack.utils.deploy_utils.create_image',
                         return_value=OpenStackImage(self.os_creds, None)), \
                 mock.patch('snaps.openstack.utils.deploy_utils.create_network',
@@ -67,8 +65,8 @@ class VPingUserdataTesting(unittest.TestCase):
                                        name='foo', network_name='bar')]),
                                None)), \
                 mock.patch('snaps.openstack.create_instance.'
-                           'OpenStackVmInstance.get_os_vm_server_obj',
-                           return_value=os_vm_inst):
+                           'OpenStackVmInstance.get_console_output',
+                           return_value='vPing OK'):
             self.assertEquals(TestCase.EX_OK, self.vping_userdata.run())
 
 
