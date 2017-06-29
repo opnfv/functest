@@ -203,3 +203,7 @@ energy_recorder:
     api_url: http://energy.opnfv.fr/resources
     api_user: ""
     api_password: ""
+
+api:
+    # Functest Rest API related configuration
+    port: 5000
