@@ -35,6 +35,7 @@ class CliTier(object):
                            tier.get_name(),
                            tier.get_test_names()))
         click.echo(summary)
+        return summary
 
     def show(self, tiername):
         tier = self.tiers.get_tier(tiername)
