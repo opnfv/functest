@@ -13,6 +13,7 @@ import unittest
 
 from functest.core import testcase
 from functest.opnfv_tests.openstack.refstack_client import refstack_client
+from functest.utils.constants import CONST
 
 
 class OSRefstackClientTesting(unittest.TestCase):
@@ -21,20 +22,36 @@ class OSRefstackClientTesting(unittest.TestCase):
         'functest',
         'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
     _testlist = pkg_resources.resource_filename(
-            'functest', 'opnfv_tests/openstack/refstack_client/defcore.txt')
+        'functest', 'opnfv_tests/openstack/refstack_client/defcore.txt')
 
     def setUp(self):
         self.defaultargs = {'config': self._config,
                             'testlist': self._testlist}
+        CONST.__setattr__('OS_AUTH_URL', 'https://ip:5000/v3')
+        CONST.__setattr__('OS_INSECURE', 'true')
         self.refstackclient = refstack_client.RefstackClient()
 
-    def test_run_defcore(self):
+    def test_run_defcore_insecure(self):
+        insecure = '-k'
         config = 'tempest.conf'
         testlist = 'testlist'
         with mock.patch('functest.opnfv_tests.openstack.refstack_client.'
                         'refstack_client.ft_utils.execute_command') as m:
-            cmd = ("refstack-client test -c {0} -v --test-list {1}"
-                   .format(config, testlist))
+            cmd = ("refstack-client test {0} -c {1} -v --test-list {2}"
+                   .format(insecure, config, testlist))
+            self.refstackclient.run_defcore(config, testlist)
+            m.assert_any_call(cmd)
+
+    def test_run_defcore(self):
+        CONST.__setattr__('OS_AUTH_URL', 'http://ip:5000/v3')
+        self.refstackclient = refstack_client.RefstackClient()
+        insecure = ''
+        config = 'tempest.conf'
+        testlist = 'testlist'
+        with mock.patch('functest.opnfv_tests.openstack.refstack_client.'
+                        'refstack_client.ft_utils.execute_command') as m:
+            cmd = ("refstack-client test {0} -c {1} -v --test-list {2}"
+                   .format(insecure, config, testlist))
             self.refstackclient.run_defcore(config, testlist)
             m.assert_any_call(cmd)
 
