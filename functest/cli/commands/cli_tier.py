@@ -19,7 +19,7 @@ from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 
 
-class CliTier(object):
+class Tier(object):
 
     def __init__(self):
         self.tiers = tb.TierBuilder(
@@ -34,26 +34,23 @@ class CliTier(object):
                         % (tier.get_order(),
                            tier.get_name(),
                            tier.get_test_names()))
-        click.echo(summary)
+        return summary
 
     def show(self, tiername):
         tier = self.tiers.get_tier(tiername)
         if tier is None:
-            tier_names = self.tiers.get_tier_names()
-            click.echo("The tier with name '%s' does not exist. "
-                       "Available tiers are:\n  %s\n" % (tiername, tier_names))
+            return None
         else:
-            click.echo(self.tiers.get_tier(tiername))
+            tier_info = self.tiers.get_tier(tiername)
+            return tier_info
 
     def gettests(self, tiername):
         tier = self.tiers.get_tier(tiername)
         if tier is None:
-            tier_names = self.tiers.get_tier_names()
-            click.echo("The tier with name '%s' does not exist. "
-                       "Available tiers are:\n  %s\n" % (tiername, tier_names))
+            return None
         else:
             tests = tier.get_test_names()
-            click.echo("Test cases in tier '%s':\n %s\n" % (tiername, tests))
+            return tests
 
     @staticmethod
     def run(tiername, noclean=False, report=False):
@@ -70,3 +67,30 @@ class CliTier(object):
         else:
             cmd = "run_tests {}-t {}".format(flags, tiername)
             ft_utils.execute_command(cmd)
+
+
+class CliTier(Tier):
+
+    def __init__(self):
+        super(CliTier, self).__init__()
+
+    def list(self):
+        click.echo(super(CliTier, self).list())
+
+    def show(self, tiername):
+        tier_info = super(CliTier, self).show(tiername)
+        if tier_info:
+            click.echo(tier_info)
+        else:
+            tier_names = self.tiers.get_tier_names()
+            click.echo("The tier with name '%s' does not exist. "
+                       "Available tiers are:\n  %s\n" % (tiername, tier_names))
+
+    def gettests(self, tiername):
+        tests = super(CliTier, self).gettests(tiername)
+        if tests:
+            click.echo("Test cases in tier '%s':\n %s\n" % (tiername, tests))
+        else:
+            tier_names = self.tiers.get_tier_names()
+            click.echo("The tier with name '%s' does not exist. "
+                       "Available tiers are:\n  %s\n" % (tiername, tier_names))
