@@ -34,6 +34,7 @@ class CliTestcase(object):
             for test in tier.get_tests():
                 summary += (" %s\n" % test.get_name())
         click.echo(summary)
+        return summary
 
     def show(self, testname):
         description = self.tiers.get_test(testname)
