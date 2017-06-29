@@ -35,6 +35,7 @@ class CliTier(object):
                            tier.get_name(),
                            tier.get_test_names()))
         click.echo(summary)
+        return summary
 
     def show(self, tiername):
         tier = self.tiers.get_tier(tiername)
@@ -42,8 +43,11 @@ class CliTier(object):
             tier_names = self.tiers.get_tier_names()
             click.echo("The tier with name '%s' does not exist. "
                        "Available tiers are:\n  %s\n" % (tiername, tier_names))
+            return None
         else:
-            click.echo(self.tiers.get_tier(tiername))
+            tier_info = self.tiers.get_tier(tiername)
+            click.echo(tier_info)
+            return tier_info
 
     def gettests(self, tiername):
         tier = self.tiers.get_tier(tiername)
@@ -51,9 +55,11 @@ class CliTier(object):
             tier_names = self.tiers.get_tier_names()
             click.echo("The tier with name '%s' does not exist. "
                        "Available tiers are:\n  %s\n" % (tiername, tier_names))
+            return None
         else:
             tests = tier.get_test_names()
             click.echo("Test cases in tier '%s':\n %s\n" % (tiername, tests))
+            return tests
 
     @staticmethod
     def run(tiername, noclean=False, report=False):
