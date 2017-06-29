@@ -255,12 +255,6 @@ class OSUtilsTesting(unittest.TestCase):
                  'delete_port.return_value': mock.Mock(),
                  'remove_interface_router.return_value': mock.Mock(),
                  'remove_gateway_router.return_value': mock.Mock(),
-                 'create_bgpvpn.return_value': self.mock_return,
-                 'create_network_association.return_value': self.mock_return,
-                 'create_router_association.return_value': self.mock_return,
-                 'update_bgpvpn.return_value': self.mock_return,
-                 'delete_bgpvpn.return_value': self.mock_return,
-                 'show_bgpvpn.return_value': self.mock_return,
                  'list_security_groups.return_value': {'security_groups':
                                                        [self.sec_group]},
                  'list_security_group_rules.'
@@ -1211,53 +1205,6 @@ class OSUtilsTesting(unittest.TestCase):
                              remove_gateway_router(Exception,
                                                    'router_id'))
             self.assertTrue(mock_logger_error.called)
-
-    def test_create_bgpvpn(self):
-        self.assertEqual(openstack_utils.
-                         create_bgpvpn(self.neutron_client),
-                         self.mock_return)
-
-    def test_create_network_association(self):
-        self.assertEqual(openstack_utils.
-                         create_network_association(self.neutron_client,
-                                                    'bgpvpn_id',
-                                                    'network_id'),
-                         self.mock_return)
-
-    def test_create_router_association(self):
-        self.assertEqual(openstack_utils.
-                         create_router_association(self.neutron_client,
-                                                   'bgpvpn_id',
-                                                   'router_id'),
-                         self.mock_return)
-
-    def test_update_bgpvpn(self):
-        self.assertEqual(openstack_utils.
-                         update_bgpvpn(self.neutron_client,
-                                       'bgpvpn_id'),
-                         self.mock_return)
-
-    def test_delete_bgpvpn(self):
-        self.assertEqual(openstack_utils.
-                         delete_bgpvpn(self.neutron_client,
-                                       'bgpvpn_id'),
-                         self.mock_return)
-
-    def test_get_bgpvpn(self):
-        self.assertEqual(openstack_utils.
-                         get_bgpvpn(self.neutron_client,
-                                    'bgpvpn_id'),
-                         self.mock_return)
-
-    def test_get_bgpvpn_routers(self):
-        with mock.patch('functest.utils.openstack_utils.'
-                        'get_bgpvpn',
-                        return_value={'bgpvpn':
-                                      {'routers': [self.router]}}):
-            self.assertEqual(openstack_utils.
-                             get_bgpvpn_routers(self.neutron_client,
-                                                'bgpvpn_id'),
-                             [self.router])
 
     def test_get_security_groups_default(self):
         self.assertEqual(openstack_utils.

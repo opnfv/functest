@@ -962,43 +962,6 @@ def create_shared_network_full(net_name, subnt_name, router_name, subnet_cidr):
     return network_dic
 
 
-def create_bgpvpn(neutron_client, **kwargs):
-    # route_distinguishers
-    # route_targets
-    json_body = {"bgpvpn": kwargs}
-    return neutron_client.create_bgpvpn(json_body)
-
-
-def create_network_association(neutron_client, bgpvpn_id, neutron_network_id):
-    json_body = {"network_association": {"network_id": neutron_network_id}}
-    return neutron_client.create_network_association(bgpvpn_id, json_body)
-
-
-def create_router_association(neutron_client, bgpvpn_id, router_id):
-    json_body = {"router_association": {"router_id": router_id}}
-    return neutron_client.create_router_association(bgpvpn_id, json_body)
-
-
-def update_bgpvpn(neutron_client, bgpvpn_id, **kwargs):
-    json_body = {"bgpvpn": kwargs}
-    return neutron_client.update_bgpvpn(bgpvpn_id, json_body)
-
-
-def delete_bgpvpn(neutron_client, bgpvpn_id):
-    return neutron_client.delete_bgpvpn(bgpvpn_id)
-
-
-def get_bgpvpn(neutron_client, bgpvpn_id):
-    return neutron_client.show_bgpvpn(bgpvpn_id)
-
-
-def get_bgpvpn_routers(neutron_client, bgpvpn_id):
-    return get_bgpvpn(neutron_client, bgpvpn_id)['bgpvpn']['routers']
-
-
-def get_bgpvpn_networks(neutron_client, bgpvpn_id):
-    return get_bgpvpn(neutron_client, bgpvpn_id)['bgpvpn']['networks']
-
 # *********************************************
 #   SEC GROUPS
 # *********************************************
