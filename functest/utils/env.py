@@ -16,9 +16,10 @@ default_envs = {
     'INSTALLER_IP': None,
     'BUILD_TAG': None,
     'OS_ENDPOINT_TYPE': None,
-    'OS_AUTH_URL': None,
+    'OS_AUTH_URL': '',
     'CONFIG_FUNCTEST_YAML': pkg_resources.resource_filename(
-        'functest', 'ci/config_functest.yaml')
+        'functest', 'ci/config_functest.yaml'),
+    'OS_INSECURE': ''
 }
 
 
