@@ -23,7 +23,6 @@ general:
         ims_data:           /home/opnfv/functest/data/ims/
         functest_images:    /home/opnfv/functest/images
         rally_inst:         /home/opnfv/.rally
-        refstack_client:    /home/opnfv/repos/refstack-client
 
     openstack:
         creds: /home/opnfv/functest/conf/openstack.creds
