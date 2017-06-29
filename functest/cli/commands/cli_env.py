@@ -67,6 +67,12 @@ class CliEnv(object):
         msg.add_row(['DEBUG FLAG', is_debug])
         msg.add_row(['STATUS', STATUS])
         click.echo(msg.get_string())
+        env_show = {'INSTALLER': installer_info,
+                    'SCENARIO': scenario,
+                    'POD': node,
+                    'DEBUG FLAG': is_debug,
+                    'STATUS': STATUS}
+        return env_show
 
     def status(self, verbose=True):
         ret_val = 0
