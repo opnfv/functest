@@ -20,7 +20,7 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.functest_vacation as vacation
 
 
-class CliTestcase(object):
+class Testcase(object):
 
     def __init__(self):
         self.tiers = tb.TierBuilder(
@@ -33,15 +33,11 @@ class CliTestcase(object):
         for tier in self.tiers.get_tiers():
             for test in tier.get_tests():
                 summary += (" %s\n" % test.get_name())
-        click.echo(summary)
+        return summary
 
     def show(self, testname):
         description = self.tiers.get_test(testname)
-        if description is None:
-            click.echo("The test case '%s' does not exist or is not supported."
-                       % testname)
-
-        click.echo(description)
+        return description
 
     @staticmethod
     def run(testname, noclean=False, report=False):
@@ -62,3 +58,20 @@ class CliTestcase(object):
             for test in tests:
                 cmd = "run_tests {}-t {}".format(flags, test)
                 ft_utils.execute_command(cmd)
+
+
+class CliTestcase(Testcase):
+
+    def __init__(self):
+        super(CliTestcase, self).__init__()
+
+    def list(self):
+        click.echo(super(CliTestcase, self).list())
+
+    def show(self, testname):
+        testcase_show = super(CliTestcase, self).show(testname)
+        if testcase_show:
+            click.echo(testcase_show)
+        else:
+            click.echo("The test case '%s' does not exist or is not supported."
+                       % testname)
