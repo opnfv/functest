@@ -45,7 +45,8 @@ class VPingBase(testcase.TestCase):
             self.guid = '-' + str(uuid.uuid4())
 
         self.os_creds = openstack_tests.get_credentials(
-            os_env_file=CONST.__getattribute__('openstack_creds'))
+            os_env_file=CONST.__getattribute__('openstack_creds'),
+            overrides=CONST.__getattribute__('snaps_os_creds_override'))
 
         self.creators = list()
         self.image_creator = None

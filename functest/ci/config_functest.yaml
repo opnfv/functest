@@ -63,6 +63,25 @@ snaps:
         disk_file: /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
       centos:
         disk_file: /home/opnfv/functest/images/CentOS-7-x86_64-GenericCloud.qcow2
+      # All of these values are optional and will override the values retrieved
+      # by the RC file
+#    os_creds_override:
+#      username: {user}
+#      password: {password}
+#      auth_url: {auth_url}
+#      project_name: {project_name}
+#      identity_api_version: {2|3}
+#      network_api_version: {2}
+#      compute_api_version: {2}
+#      image_api_version: {1|2}
+#      user_domain_id: {user_domain_id}
+#      project_domain_id: {projects_domain_id}
+#      interface: {interface}
+#      cacert: {True|False}
+#      proxy_settings:
+#        host: {proxy_host}
+#        port: {proxy_port}
+#        ssh_proxy_cmd: {OpenSSH -o ProxyCommand value}
 
 vping:
     ping_timeout:   200
