@@ -43,8 +43,14 @@ class VPingBase(testcase.TestCase):
         if 'os_creds' in kwargs:
             self.os_creds = kwargs['os_creds']
         else:
+            creds_override = None
+            if hasattr(CONST, 'snaps_os_creds_override'):
+                creds_override = CONST.__getattribute__(
+                    'snaps_os_creds_override')
+
             self.os_creds = openstack_tests.get_credentials(
-                os_env_file=CONST.__getattribute__('openstack_creds'))
+                os_env_file=CONST.__getattribute__('openstack_creds'),
+                overrides=creds_override)
 
         self.creators = list()
         self.image_creator = None
