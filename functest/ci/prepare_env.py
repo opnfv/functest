@@ -358,7 +358,7 @@ def print_deployment_info():
                     handler.get_deployment_info())
 
 
-def main(**kwargs):
+def prepare_env(**kwargs):
     try:
         if not (kwargs['action'] in actions):
             logger.error('Argument not valid.')
@@ -384,9 +384,13 @@ def main(**kwargs):
     return 0
 
 
-if __name__ == '__main__':
+def main():
     logging.config.fileConfig(pkg_resources.resource_filename(
         'functest', 'ci/logging.ini'))
     parser = PrepareEnvParser()
     args = parser.parse_args(sys.argv[1:])
-    sys.exit(main(**args))
+    return prepare_env(**args)
+
+
+if __name__ == '__main__':
+    sys.exit(main())

@@ -49,7 +49,7 @@ class TempestConf(object):
             logger.error('Error with run: %s', e)
 
 
-if __name__ == '__main__':
+def main():
     logging.basicConfig()
     tempestconf = TempestConf()
     tempestconf.main()

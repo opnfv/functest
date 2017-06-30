@@ -269,10 +269,13 @@ class Runner(object):
         return self.overall_result
 
 
-if __name__ == '__main__':
+def main():
     logging.config.fileConfig(pkg_resources.resource_filename(
         'functest', 'ci/logging.ini'))
     parser = RunTestsParser()
     args = parser.parse_args(sys.argv[1:])
     runner = Runner()
-    sys.exit(runner.main(**args).value)
+    return runner.main(**args).value
+
+if __name__ == '__main__':
+    sys.exit(main())
