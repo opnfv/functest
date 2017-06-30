@@ -165,14 +165,10 @@ def PushDB(status, info):
 
 def main():
     """Script to Test the SFC scenarios in ONOS."""
+    logging.basicConfig()
     PreConfig()
     CreateNodes()
     ConfigSfc()
     VerifySfcTraffic()
     CleanUp()
     PushDB("PASS", "")
-
-
-if __name__ == '__main__':
-    logging.basicConfig()
-    main()

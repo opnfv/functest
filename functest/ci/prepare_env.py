@@ -358,12 +358,16 @@ def print_deployment_info():
                     handler.get_deployment_info())
 
 
-def main(**kwargs):
+def main():
+    logging.config.fileConfig(pkg_resources.resource_filename(
+        'functest', 'ci/logging.ini'))
+    parser = PrepareEnvParser()
+    args = parser.parse_args(sys.argv[1:])
     try:
-        if not (kwargs['action'] in actions):
+        if not (args['action'] in actions):
             logger.error('Argument not valid.')
             return -1
-        elif kwargs['action'] == "start":
+        elif args['action'] == "start":
             logger.info("######### Preparing Functest environment #########\n")
             check_env_variables()
             create_directories()
@@ -376,17 +380,12 @@ def main(**kwargs):
             with open(CONST.__getattribute__('env_active'), "w") as env_file:
                 env_file.write("1")
             check_environment()
-        elif kwargs['action'] == "check":
+        elif args['action'] == "check":
             check_environment()
     except Exception as e:
         logger.error(e)
         return -1
     return 0
 
-
 if __name__ == '__main__':
-    logging.config.fileConfig(pkg_resources.resource_filename(
-        'functest', 'ci/logging.ini'))
-    parser = PrepareEnvParser()
-    args = parser.parse_args(sys.argv[1:])
-    sys.exit(main(**args))
+    sys.exit(main())

@@ -236,10 +236,10 @@ class VPingSSH(vping_base.VPingBase):
                                                       rule_settings=sg_rules))
 
 
-if __name__ == '__main__':
+def main():
     args_parser = argparse.ArgumentParser()
     args_parser.add_argument("-r", "--report",
                              help="Create json result file",
                              action="store_true")
     args = vars(args_parser.parse_args())
-    sys.exit(vping_base.VPingMain(VPingSSH).main(**args))
+    return vping_base.VPingMain(VPingSSH).main(**args)

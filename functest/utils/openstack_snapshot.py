@@ -131,6 +131,7 @@ def get_tenants(keystone_client):
 
 
 def main():
+    logging.basicConfig()
     logger.info("Generating OpenStack snapshot...")
 
     nova_client = os_utils.get_nova_client()
@@ -163,8 +164,3 @@ def main():
         logger.debug("NOTE: These objects will NOT be deleted after " +
                      "running the test.")
     return 0
-
-
-if __name__ == '__main__':
-    logging.basicConfig()
-    sys.exit(main())
