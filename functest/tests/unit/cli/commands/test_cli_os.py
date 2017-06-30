@@ -8,7 +8,6 @@
 #
 
 import logging
-import pkg_resources
 import unittest
 import os
 
@@ -65,8 +64,7 @@ class CliOpenStackTesting(unittest.TestCase):
         with mock.patch.object(self.cli_os, 'ping_endpoint'):
             self.cli_os.check()
             mock_ftutils_execute.assert_called_once_with(
-                "sh %s" % pkg_resources.resource_filename(
-                    'functest', 'ci/check_os.sh'), verbose=False)
+                "check_os.sh", verbose=False)
 
     @mock.patch('functest.cli.commands.cli_os.os.path.isfile',
                 return_value=False)
