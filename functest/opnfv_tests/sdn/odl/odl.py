@@ -117,7 +117,7 @@ class ODLTests(testcase.TestCase):
         self.details['description'] = result.suite.name
         self.details['tests'] = visitor.get_data()
 
-    def main(self, suites=None, **kwargs):
+    def run_suites(self, suites=None, **kwargs):
         """Run the test suites
 
         It has been designed to be called in any context.
@@ -246,7 +246,7 @@ class ODLTests(testcase.TestCase):
             self.__logger.exception("Cannot run ODL testcases.")
             return self.EX_RUN_ERROR
 
-        return self.main(suites, **kwargs)
+        return self.run_suites(suites, **kwargs)
 
 
 class ODLParser(object):  # pylint: disable=too-few-public-methods
@@ -301,16 +301,19 @@ class ODLParser(object):  # pylint: disable=too-few-public-methods
         return vars(self.parser.parse_args(argv))
 
 
-if __name__ == '__main__':
+def main():
+    """Entry point"""
     logging.basicConfig()
-    ODL = ODLTests()
-    PARSER = ODLParser()
-    ARGS = PARSER.parse_args(sys.argv[1:])
+    odl = ODLTests()
+    parser = ODLParser()
+    args = parser.parse_args(sys.argv[1:])
     try:
-        RESULT = ODL.main(ODLTests.default_suites, **ARGS)
-        if RESULT != testcase.TestCase.EX_OK:
-            sys.exit(RESULT)
-        if ARGS['pushtodb']:
-            sys.exit(ODL.push_to_db())
+        result = odl.run_suites(ODLTests.default_suites, **args)
+        if result != testcase.TestCase.EX_OK:
+            return result
+        if args['pushtodb']:
+            return odl.push_to_db()
+        else:
+            return result
     except Exception:  # pylint: disable=broad-except
-        sys.exit(testcase.TestCase.EX_RUN_ERROR)
+        return testcase.TestCase.EX_RUN_ERROR

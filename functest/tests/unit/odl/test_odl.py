@@ -202,10 +202,10 @@ class ODLRobotTesting(ODLTesting):
 
 class ODLMainTesting(ODLTesting):
 
-    """The class testing ODLTests.main()."""
+    """The class testing ODLTests.run_suites()."""
     # pylint: disable=missing-docstring
 
-    def _get_main_kwargs(self, key=None):
+    def _get_run_suites_kwargs(self, key=None):
         kwargs = {'odlusername': self._odl_username,
                   'odlpassword': self._odl_password,
                   'neutronip': self._neutron_ip,
@@ -220,9 +220,9 @@ class ODLMainTesting(ODLTesting):
             del kwargs[key]
         return kwargs
 
-    def _test_main(self, status, *args):
-        kwargs = self._get_main_kwargs()
-        self.assertEqual(self.test.main(**kwargs), status)
+    def _test_run_suites(self, status, *args):
+        kwargs = self._get_run_suites_kwargs()
+        self.assertEqual(self.test.run_suites(**kwargs), status)
         if len(args) > 0:
             args[0].assert_called_once_with(
                 odl.ODLTests.res_dir)
@@ -249,8 +249,8 @@ class ODLMainTesting(ODLTesting):
                 os.path.join(odl.ODLTests.res_dir, 'stdout.txt'))
 
     def _test_no_keyword(self, key):
-        kwargs = self._get_main_kwargs(key)
-        self.assertEqual(self.test.main(**kwargs),
+        kwargs = self._get_run_suites_kwargs(key)
+        self.assertEqual(self.test.run_suites(**kwargs),
                          testcase.TestCase.EX_RUN_ERROR)
 
     def test_no_odlusername(self):
@@ -286,7 +286,7 @@ class ODLMainTesting(ODLTesting):
     def test_set_vars_ko(self):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=False) as mock_object:
-            self._test_main(testcase.TestCase.EX_RUN_ERROR)
+            self._test_run_suites(testcase.TestCase.EX_RUN_ERROR)
             mock_object.assert_called_once_with(
                 self._odl_username, self._odl_password)
 
@@ -295,15 +295,15 @@ class ODLMainTesting(ODLTesting):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 self.assertRaises(Exception):
-            self._test_main(testcase.TestCase.EX_RUN_ERROR,
-                            mock_method)
+            self._test_run_suites(testcase.TestCase.EX_RUN_ERROR,
+                                  mock_method)
 
     @mock.patch('os.makedirs', side_effect=OSError)
     def test_makedirs_oserror(self, mock_method):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True):
-            self._test_main(testcase.TestCase.EX_RUN_ERROR,
-                            mock_method)
+            self._test_run_suites(testcase.TestCase.EX_RUN_ERROR,
+                                  mock_method)
 
     @mock.patch('robot.run', side_effect=RobotError)
     @mock.patch('os.makedirs')
@@ -311,7 +311,7 @@ class ODLMainTesting(ODLTesting):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 self.assertRaises(RobotError):
-            self._test_main(testcase.TestCase.EX_RUN_ERROR, *args)
+            self._test_run_suites(testcase.TestCase.EX_RUN_ERROR, *args)
 
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
@@ -320,7 +320,7 @@ class ODLMainTesting(ODLTesting):
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results',
                                   side_effect=RobotError):
-            self._test_main(testcase.TestCase.EX_RUN_ERROR, *args)
+            self._test_run_suites(testcase.TestCase.EX_RUN_ERROR, *args)
 
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
@@ -328,7 +328,7 @@ class ODLMainTesting(ODLTesting):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results'):
-            self._test_main(testcase.TestCase.EX_OK, *args)
+            self._test_run_suites(testcase.TestCase.EX_OK, *args)
 
     @mock.patch('robot.run')
     @mock.patch('os.makedirs', side_effect=OSError(errno.EEXIST, ''))
@@ -336,7 +336,7 @@ class ODLMainTesting(ODLTesting):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results'):
-            self._test_main(testcase.TestCase.EX_OK, *args)
+            self._test_run_suites(testcase.TestCase.EX_OK, *args)
 
     @mock.patch('robot.run', return_value=1)
     @mock.patch('os.makedirs')
@@ -344,7 +344,7 @@ class ODLMainTesting(ODLTesting):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results'):
-            self._test_main(testcase.TestCase.EX_OK, *args)
+            self._test_run_suites(testcase.TestCase.EX_OK, *args)
 
 
 class ODLRunTesting(ODLTesting):
@@ -371,11 +371,11 @@ class ODLRunTesting(ODLTesting):
                         return_value="http://{}:9696".format(
                             ODLTesting._neutron_ip)):
             if exception:
-                self.test.main = mock.Mock(side_effect=exception)
+                self.test.run_suites = mock.Mock(side_effect=exception)
             else:
-                self.test.main = mock.Mock(return_value=status)
+                self.test.run_suites = mock.Mock(return_value=status)
             self.assertEqual(self.test.run(), status)
-            self.test.main.assert_called_once_with(
+            self.test.run_suites.assert_called_once_with(
                 odl.ODLTests.default_suites,
                 neutronip=self._neutron_ip,
                 odlip=odlip, odlpassword=self._odl_password,
@@ -394,9 +394,9 @@ class ODLRunTesting(ODLTesting):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
                         return_value="http://{}:9696".format(
                             ODLTesting._neutron_ip)):
-            self.test.main = mock.Mock(return_value=status)
+            self.test.run_suites = mock.Mock(return_value=status)
             self.assertEqual(self.test.run(suites=suites), status)
-            self.test.main.assert_called_once_with(
+            self.test.run_suites.assert_called_once_with(
                 suites,
                 neutronip=self._neutron_ip,
                 odlip=odlip, odlpassword=self._odl_password,
@@ -424,13 +424,13 @@ class ODLRunTesting(ODLTesting):
     def test_no_os_tenant_name(self):
         self._test_no_env_var("OS_TENANT_NAME")
 
-    def test_main_false(self):
+    def test_run_suites_false(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         self._test_run(testcase.TestCase.EX_RUN_ERROR,
                        odlip=self._sdn_controller_ip,
                        odlwebport=self._odl_webport)
 
-    def test_main_exc(self):
+    def test_run_suites_exc(self):
         with self.assertRaises(Exception):
             os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
             self._test_run(status=testcase.TestCase.EX_RUN_ERROR,
