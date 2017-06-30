@@ -251,8 +251,7 @@ def update_db_url():
 def verify_deployment():
     print_separator()
     logger.info("Verifying OpenStack services...")
-    cmd = ("%s" % pkg_resources.resource_filename(
-           'functest', 'ci/check_os.sh'))
+    cmd = "check_os.sh"
 
     logger.debug("Executing command: %s" % cmd)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
@@ -261,7 +260,7 @@ def verify_deployment():
         line = p.stdout.readline().rstrip()
         if "ERROR" in line:
             logger.error(line)
-            raise Exception("Problem while running 'check_os.sh'.")
+            raise Exception("Problem while running '{}'.".format(cmd))
         logger.info(line)
 
 
