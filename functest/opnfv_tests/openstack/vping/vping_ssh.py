@@ -7,10 +7,9 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import argparse
+import os
 import pkg_resources
 from scp import SCPClient
-import sys
 import time
 
 from snaps.openstack.create_instance import FloatingIpSettings, \
@@ -35,6 +34,11 @@ class VPingSSH(vping_base.VPingBase):
     """
 
     def __init__(self, **kwargs):
+
+        # This line is here simply for pep8 as the 'os' package import appears
+        # to be required for mock and the unit tests will fail without it
+        os.environ
+
         if "case_name" not in kwargs:
             kwargs["case_name"] = "vping_ssh"
         super(VPingSSH, self).__init__(**kwargs)
@@ -42,12 +46,10 @@ class VPingSSH(vping_base.VPingBase):
         self.kp_name = CONST.__getattribute__('vping_keypair_name') + self.guid
         self.kp_priv_file = CONST.__getattribute__('vping_keypair_priv_file')
         self.kp_pub_file = CONST.__getattribute__('vping_keypair_pub_file')
-        self.router_name =\
-            CONST.__getattribute__('vping_router_name') + self.guid
+        self.router_name = CONST.__getattribute__(
+            'vping_router_name') + self.guid
         self.sg_name = CONST.__getattribute__('vping_sg_name') + self.guid
         self.sg_desc = CONST.__getattribute__('vping_sg_desc')
-
-        self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
 
     def run(self):
         """
@@ -71,11 +73,12 @@ class VPingSSH(vping_base.VPingBase):
                              % self.router_name)
             net_set = self.network_creator.network_settings
             sub_set = [net_set.subnet_settings[0].name]
+            ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
             router_creator = deploy_utils.create_router(
                 self.os_creds,
                 RouterSettings(
                     name=self.router_name,
-                    external_gateway=self.ext_net_name,
+                    external_gateway=ext_net_name,
                     internal_subnets=sub_set))
             self.creators.append(router_creator)
 
@@ -142,13 +145,13 @@ class VPingSSH(vping_base.VPingBase):
         """
         if vm_creator.vm_ssh_active(block=True):
             ssh = vm_creator.ssh_client()
-            if not self.__transfer_ping_script(ssh):
+            if not self._transfer_ping_script(ssh):
                 return TestCase.EX_RUN_ERROR
-            return self.__do_vping_ssh(ssh, test_ip)
+            return self._do_vping_ssh(ssh, test_ip)
         else:
             return -1
 
-    def __transfer_ping_script(self, ssh):
+    def _transfer_ping_script(self, ssh):
         """
         Uses SCP to copy the ping script via the SSH client
         :param ssh: the SSH client
@@ -157,7 +160,7 @@ class VPingSSH(vping_base.VPingBase):
         self.logger.info("Trying to transfer ping.sh")
         scp = SCPClient(ssh.get_transport())
         ping_script = pkg_resources.resource_filename(
-            'functest', 'opnfv_tests/openstack/vping/ping.sh')
+            'functest.opnfv_tests.openstack.vping', 'ping.sh')
         try:
             scp.put(ping_script, "~/")
         except:
@@ -171,7 +174,7 @@ class VPingSSH(vping_base.VPingBase):
 
         return True
 
-    def __do_vping_ssh(self, ssh, test_ip):
+    def _do_vping_ssh(self, ssh, test_ip):
         """
         Pings the test_ip via the SSH client
         :param ssh: the SSH client used to issue the ping command
@@ -234,12 +237,3 @@ class VPingSSH(vping_base.VPingBase):
                                                       name=self.sg_name,
                                                       description=self.sg_desc,
                                                       rule_settings=sg_rules))
-
-
-if __name__ == '__main__':
-    args_parser = argparse.ArgumentParser()
-    args_parser.add_argument("-r", "--report",
-                             help="Create json result file",
-                             action="store_true")
-    args = vars(args_parser.parse_args())
-    sys.exit(vping_base.VPingMain(VPingSSH).main(**args))
