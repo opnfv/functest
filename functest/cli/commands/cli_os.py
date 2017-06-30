@@ -9,7 +9,6 @@
 
 
 import os
-import pkg_resources
 
 import click
 
@@ -50,8 +49,7 @@ class CliOpenStack(object):
 
     def check(self):
         self.ping_endpoint()
-        ft_utils.execute_command("sh %s" % pkg_resources.resource_filename(
-            'functest', 'ci/check_os.sh'), verbose=False)
+        ft_utils.execute_command("check_os.sh", verbose=False)
 
     def snapshot_create(self):
         self.ping_endpoint()
