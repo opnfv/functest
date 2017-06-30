@@ -7,17 +7,14 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import argparse
-import sys
 import time
-
-from functest.core.testcase import TestCase
 
 from snaps.openstack.utils import deploy_utils
 from snaps.openstack.create_instance import VmInstanceSettings
 from snaps.openstack.create_network import PortSettings
 
-import vping_base
+from functest.core.testcase import TestCase
+from functest.opnfv_tests.openstack.vping import vping_base
 
 
 class VPingUserdata(vping_base.VPingBase):
@@ -142,13 +139,3 @@ def _get_userdata(test_ip):
                 " sleep 1\n"
                 "done\n" % test_ip)
     return None
-
-
-if __name__ == '__main__':
-    args_parser = argparse.ArgumentParser()
-    args_parser.add_argument("-r", "--report",
-                             help="Create json result file",
-                             action="store_true")
-    args = vars(args_parser.parse_args())
-
-    sys.exit(vping_base.VPingMain(VPingUserdata).main(**args))
