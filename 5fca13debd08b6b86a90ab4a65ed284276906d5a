@@ -16,6 +16,24 @@
       "revId": "5fca13debd08b6b86a90ab4a65ed284276906d5a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_16c15d80",
+        "filename": "functest/tests/unit/openstack/vping/test_vping.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-06-30T08:06:16Z",
+      "side": 1,
+      "message": "I remember the import rule in OpenStack is one line one module.",
+      "parentUuid": "5aaae553_8f92fd55",
+      "revId": "5fca13debd08b6b86a90ab4a65ed284276906d5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
