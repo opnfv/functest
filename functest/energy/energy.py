@@ -20,6 +20,8 @@ import functest.utils.functest_utils as ft_utils
 
 def enable_recording(method):
     """
+    Record energy during method execution.
+
     Decorator to record energy during "method" exection.
 
         param method: Method to suround with start and stop
@@ -29,10 +31,21 @@ def enable_recording(method):
                   attribute
     """
     def wrapper(*args):
-        """Wrapper for decorator to handle method arguments."""
+        """
+        Record energy during method execution (implementation).
+
+        Wrapper for decorator to handle method arguments.
+        """
+        current_scenario = EnergyRecorder.get_current_scenario()
         EnergyRecorder.start(args[0].case_name)
         return_value = method(*args)
-        EnergyRecorder.stop()
+        if current_scenario is None:
+            EnergyRecorder.stop()
+        else:
+            EnergyRecorder.submit_scenario(
+                current_scenario["scenario"],
+                current_scenario["step"]
+            )
         return return_value
     return wrapper
 
@@ -47,7 +60,7 @@ class EnergyRecorder(object):
     energy_recorder_api = None
 
     # Default initial step
-    INITIAL_STEP = "starting"
+    INITIAL_STEP = "running"
 
     @staticmethod
     def load_config():
@@ -92,22 +105,24 @@ class EnergyRecorder(object):
             }
 
     @staticmethod
-    def start(scenario):
+    def submit_scenario(scenario, step):
         """
-        Start a recording session for scenario.
+        Submit a complet scenario definition to Energy recorder API.
 
-            param scenario: Starting scenario
+            param scenario: Scenario name
             :type scenario: string
+            param step: Step name
+            :type step: string
         """
         return_status = True
         try:
-            EnergyRecorder.logger.debug("Starting recording")
+            EnergyRecorder.logger.debug("Submitting scenario")
             # Ensure that connectyvity settings are loaded
             EnergyRecorder.load_config()
 
             # Create API payload
             payload = {
-                "step": EnergyRecorder.INITIAL_STEP,
+                "step": step,
                 "scenario": scenario
             }
             # Call API to start energy recording
@@ -120,10 +135,34 @@ class EnergyRecorder(object):
                 }
             )
             if response.status_code != 200:
-                log_msg = "Error while starting energy recording session\n{}"
+                log_msg = "Error while submitting scenario\n{}"
                 log_msg = log_msg.format(response.text)
                 EnergyRecorder.logger.info(log_msg)
                 return_status = False
+        except Exception:  # pylint: disable=broad-except
+            # Default exception handler to ensure that method
+            # is safe for caller
+            EnergyRecorder.logger.exception(
+                "Error while submitting scenarion to energy recorder API"
+            )
+            return_status = False
+        return return_status
+
+    @staticmethod
+    def start(scenario):
+        """
+        Start a recording session for scenario.
+
+            param scenario: Starting scenario
+            :type scenario: string
+        """
+        return_status = True
+        try:
+            EnergyRecorder.logger.debug("Starting recording")
+            return_status = EnergyRecorder.submit_scenario(
+                scenario,
+                EnergyRecorder.INITIAL_STEP
+            )
 
         except Exception:  # pylint: disable=broad-except
             # Default exception handler to ensure that method
@@ -201,3 +240,39 @@ class EnergyRecorder(object):
             )
             return_status = False
         return return_status
+
+    @staticmethod
+    def get_current_scenario():
+        """Get current running scenario (if any, None else)."""
+        EnergyRecorder.logger.debug("Getting current scenario")
+        return_value = None
+        try:
+            # Ensure that connectyvity settings are loaded
+            EnergyRecorder.load_config()
+
+            # Call API get running scenario
+            response = requests.get(
+                EnergyRecorder.energy_recorder_api["uri"],
+                auth=EnergyRecorder.energy_recorder_api["auth"]
+            )
+            if response.status_code == 200:
+                return_value = json.loads(response.text)
+            elif response.status_code == 404:
+                log_msg = "No current running scenario at {}"
+                log_msg = log_msg.format(
+                    EnergyRecorder.energy_recorder_api["uri"])
+                EnergyRecorder.logger.error(log_msg)
+                return_value = None
+            else:
+                log_msg = "Error while getting current scenario\n{}"
+                log_msg = log_msg.format(response.text)
+                EnergyRecorder.logger.error(log_msg)
+                return_value = None
+        except Exception:  # pylint: disable=broad-except
+            # Default exception handler to ensure that method
+            # is safe for caller
+            EnergyRecorder.logger.exception(
+                "Error while getting current scenario from energy recorder API"
+            )
+            return_value = None
+        return return_value
