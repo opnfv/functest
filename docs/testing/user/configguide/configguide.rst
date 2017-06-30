@@ -283,7 +283,7 @@ to attach the 'Up' status Functest container and start bash mode::
 
    docker exec -it <Functest_Container_Name> bash
 
-4, Functest environemnt preparation and check
+4, Functest environment preparation and check
 
 To see the Section below `Preparing the Functest environment`_.
 
@@ -417,7 +417,7 @@ We may distinguish several directories, the first level has 4 directories:
   profile or any other test inputs that could be reused by any test
   project.
 * **docker**: This directory includes the needed files and tools to
-  build the Funtest Docker image.
+  build the Functest Docker image.
 * **docs**: This directory includes documentation: Release Notes,
   User Guide, Configuration Guide and Developer Guide.
 * **functest**: This directory contains all the code needed to run
@@ -513,7 +513,7 @@ This script will make sure that the requirements to run the tests are
 met and will install the needed libraries and tools by all Functest
 test cases. It should be run only once every time the Functest docker
 container is started from scratch. If you try to run this command, on
-an already prepared enviroment, you will be prompted whether you really
+an already prepared environment, you will be prompted whether you really
 want to continue or not::
 
   functest env prepare

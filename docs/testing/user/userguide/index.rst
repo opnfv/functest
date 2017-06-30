@@ -198,7 +198,7 @@ updates the appropriate parameters into the configuration file.
 When the Tempest suite is executed, each test duration is measured and the full
 console output is stored to a *log* file for further analysis.
 
-The Tempest testcases are distributed accross two
+The Tempest testcases are distributed across two
 Tiers:
 
   * Smoke Tier - Test Case 'tempest_smoke_serial'
@@ -239,7 +239,7 @@ The OPNFV Rally scenarios are based on the collection of the actual Rally scenar
 
 A basic SLA (stop test on errors) has been implemented.
 
-The Rally testcases are distributed accross two Tiers:
+The Rally testcases are distributed across two Tiers:
 
   * Smoke Tier - Test Case 'rally_sanity'
   * Components Tier - Test case 'rally_full'
@@ -416,11 +416,11 @@ The list of tests can be described as follows:
 
  * Delete operations
    * Delete the port previously created via OpenStack
-   * Check that the port has been also succesfully deleted in OpenDaylight
+   * Check that the port has been also successfully deleted in OpenDaylight
    * Delete previously subnet created via OpenStack
    * Check that the subnet has also been successfully deleted in OpenDaylight
    * Delete the network created via OpenStack
-   * Check that the network has also been succesfully deleted in OpenDaylight
+   * Check that the network has also been successfully deleted in OpenDaylight
 
 Note: the checks in OpenDaylight are based on the returned HTTP status
 code returned by OpenDaylight.

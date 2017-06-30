@@ -81,7 +81,7 @@ The internal test cases in Danube are:
 By internal, we mean that this particular test cases have been
 developped and/or integrated by functest contributors and the associated
 code is hosted in the Functest repository.
-An internal case can be fully developped or a simple integration of
+An internal case can be fully developed or a simple integration of
 upstream suites (e.g. Tempest/Rally developped in OpenStack are just
 integrated in Functest).
 The structure of this repository is detailed in `[1]`_.
@@ -123,7 +123,7 @@ The external test cases are:
 
 The code to run these test cases may be directly in the repository of
 the project. We have also a **features** sub directory under opnfv_tests
-directory that may be used (it can be usefull if you want to reuse
+directory that may be used (it can be useful if you want to reuse
 Functest library).
 
 Functest framework
@@ -131,12 +131,12 @@ Functest framework
 
 Functest can be considered as a framework.
 Functest is release as a docker file, including tools, scripts and a CLI
-to prepare the environement and run tests.
+to prepare the environment and run tests.
 It simplifies the integration of external test suites in CI pipeline
 and provide commodity tools to collect and display results.
 
 Since Colorado, test categories also known as tiers have been created to
-group similar tests, provide consistant sub-lists and at the end optimize
+group similar tests, provide consistent sub-lists and at the end optimize
 test duration for CI (see How To section).
 
 The definition of the tiers has been agreed by the testing working group.
@@ -212,7 +212,7 @@ functest/utils/
 `-- openstack_utils.py
 
 Note that for Openstack, keystone v3 is now deployed by default by compass,
-fuel and joid in Danube. All installers still support keysone v2 (deprecated in
+fuel and joid in Danube. All installers still support keystone v2 (deprecated in
 next version).
 
 Test collection framework
@@ -323,7 +323,7 @@ Please note that currently token authorization is implemented but is not yet ena
   ===================
 
   An automatic reporting page has been created in order to provide a
-  consistant view of the scenarios.
+  consistent view of the scenarios.
   In this page, each scenario is evaluated according to test criteria.
   The code for the automatic reporting is available at `[8]`_.
 
@@ -368,7 +368,7 @@ Please note that currently token authorization is implemented but is not yet ena
   os-odl_l2-nofeature scenarios.
   If no result is available or if all the results are failed, the test
   case get 0 point.
-  If it was succesfull at least once but not anymore during the 4 runs,
+  If it was successful at least once but not anymore during the 4 runs,
   the case get 1 point (it worked once).
   If at least 3 of the last 4 runs were successful, the case get 2 points.
   If the last 4 runs of the test are successful, the test get 3 points.
@@ -400,7 +400,7 @@ Please note that currently token authorization is implemented but is not yet ena
 Dashboard
 =========
 
-Dashboard is used to provide a consistant view of the results collected
+Dashboard is used to provide a consistent view of the results collected
 in CI.
 The results showed on the dashboard are post processed from the Database,
 which only contains raw results.
@@ -473,10 +473,10 @@ are identified but not covered yet by an existing testing project (e.g
 security_scan before the creation of the security repository)
 
 
-How test constraints are defined?
+How are test constraints defined?
 =================================
 
-Test constraints are defined according to 2 paramaters:
+Test constraints are defined according to 2 parameters:
 
  * The scenario (DEPLOY_SCENARIO env variable)
  * The installer (INSTALLER_TYPE env variable)
@@ -518,7 +518,7 @@ bgpvpn scenarios::
         scenario: '(ocl)|(nosdn)|^(os-odl)((?!bgpvpn).)*$'
 
 
-How to write and check constaint regex?
+How to write and check constraint regex?
 =======================================
 
 Regex are standard regex. You can have a look at  `[11]`_
@@ -534,7 +534,7 @@ How to know which test I can run?
 You can use the API `[13]`_. The static declaration is in git `[5]`_
 
 If you are in a Functest docker container (assuming that the
-environement has been prepared): just use the CLI.
+environment has been prepared): just use the CLI.
 
 You can get the list per Test cases or by Tier::
 
@@ -692,7 +692,7 @@ e.g.::
 
 This command will run all the test cases of the first 2 tiers, i.e.
 healthcheck, connection_check, api_check, vping_ssh, vping_userdata,
-snaps_somke, tempest_smoke_serial and rally_sanity.
+snaps_smoke, tempest_smoke_serial and rally_sanity.
 
 
 How to push your results into the Test Database
@@ -769,7 +769,7 @@ It can be described as follows::
 
 Please note that each exclusion must be justified. the goal is not to exclude
 test cases because they do not pass. Several scenarios reached the 100% criteria.
-So it is expected in the patch submited to exclude the cases to indicate the
+So it is expected in the patch submitted to exclude the cases to indicate the
 reasons of the exclusion.
 
 
@@ -790,7 +790,7 @@ I have tests, to which category should I declare them?
 CATEGORIES/TIERS description:
 
 +----------------+-------------------------------------------------------------+
-| healthcheck    | Simple OpenStack healtcheck tests case that validates the   |
+| healthcheck    | Simple OpenStack healthcheck tests case that validates the  |
 |                | basic operations in OpenStack                               |
 +----------------+-------------------------------------------------------------+
 |   Smoke        | Set of smoke test cases/suites to validate the most common  |
@@ -800,7 +800,7 @@ CATEGORIES/TIERS description:
 |                | Those come from Feature projects and need a bit of support  |
 |                | for integration                                             |
 +----------------+-------------------------------------------------------------+
-| Components     | Advanced Openstack tests: Full Tempest, Full Rally          |
+| Components     | Advanced OpenStack tests: Full Tempest, Full Rally          |
 +----------------+-------------------------------------------------------------+
 | Performance    | Out of Functest Scope                                       |
 +----------------+-------------------------------------------------------------+
@@ -816,7 +816,7 @@ We recommend to declare your test in the feature category.
 VNF category is really dedicated to test including:
 
  * creation of resources
- * deployement of an orchestrator/VNFM
+ * deployment of an orchestrator/VNFM
  * deployment of the VNF
  * test of the VNFM
  * free resources
@@ -939,7 +939,7 @@ You can precise some configuration parameters in config_functest.yaml
 
 Create your own VnfOnboarding file
 
-you must create your entry point through a python clase as referenced in the
+you must create your entry point through a python class as referenced in the
 configuration file
 
 e.g. aaa => creation of the file <Functest repo>/functest/opnfv_tests/vnf/aaa/aaa.py
