@@ -23,8 +23,8 @@ from snaps.openstack.utils import deploy_utils
 
 from functest.core.testcase import TestCase
 from functest.opnfv_tests.openstack.snaps import snaps_utils
+from functest.opnfv_tests.openstack.vping import vping_base
 from functest.utils.constants import CONST
-import vping_base
 
 
 class VPingSSH(vping_base.VPingBase):

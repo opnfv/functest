@@ -441,7 +441,7 @@ class PrepareEnvTesting(unittest.TestCase):
                         mock_check_env):
         with mock.patch("__builtin__.open", mock.mock_open()) as m:
             args = {'action': 'start'}
-            self.assertEqual(prepare_env.main(**args), 0)
+            self.assertEqual(prepare_env.prepare_env(**args), 0)
             mock_logger_info.assert_any_call("######### Preparing Functest "
                                              "environment #########\n")
             self.assertTrue(mock_env_var.called)
@@ -459,13 +459,13 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.check_environment')
     def test_main_check(self, mock_check_env):
         args = {'action': 'check'}
-        self.assertEqual(prepare_env.main(**args), 0)
+        self.assertEqual(prepare_env.prepare_env(**args), 0)
         self.assertTrue(mock_check_env.called)
 
     @mock.patch('functest.ci.prepare_env.logger.error')
     def test_main_no_arg(self, mock_logger_error):
         args = {'action': 'not_valid'}
-        self.assertEqual(prepare_env.main(**args), -1)
+        self.assertEqual(prepare_env.prepare_env(**args), -1)
         mock_logger_error.assert_called_once_with('Argument not valid.')
 
 
