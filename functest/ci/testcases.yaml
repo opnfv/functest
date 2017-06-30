@@ -314,7 +314,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: '. /home/opnfv/functest/conf/stackrc && cd /usr/local/lib/python2.7/dist-packages && python security_scan.py --config config.ini && cd -'
+                        cmd: '. /home/opnfv/functest/conf/stackrc && security_scan --config /usr/local/etc/securityscanning/config.ini'
 
             -
                 case_name: copper
