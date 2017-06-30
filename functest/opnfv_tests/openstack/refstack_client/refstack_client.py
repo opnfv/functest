@@ -218,7 +218,7 @@ class RefstackClientParser(object):
         return vars(self.parser.parse_args(argv))
 
 
-if __name__ == '__main__':
+def main():
     logging.basicConfig()
     refstackclient = RefstackClient()
     parser = RefstackClientParser()
@@ -226,6 +226,6 @@ if __name__ == '__main__':
     try:
         result = refstackclient.main(**args)
         if result != testcase.TestCase.EX_OK:
-            sys.exit(result)
+            return result
     except Exception:
-        sys.exit(testcase.TestCase.EX_RUN_ERROR)
+        return testcase.TestCase.EX_RUN_ERROR

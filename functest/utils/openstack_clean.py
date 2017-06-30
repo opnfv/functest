@@ -23,7 +23,6 @@
 #
 
 import logging
-import sys
 import time
 import yaml
 
@@ -382,6 +381,7 @@ def remove_tenants(keystone_client, default_tenants):
 
 
 def main():
+    logging.basicConfig()
     logger.info("Cleaning OpenStack resources...")
 
     nova_client = os_utils.get_nova_client()
@@ -430,8 +430,3 @@ def main():
     remove_tenants(keystone_client, default_tenants)
     separator()
     return 0
-
-
-if __name__ == '__main__':
-    logging.basicConfig()
-    sys.exit(main())
