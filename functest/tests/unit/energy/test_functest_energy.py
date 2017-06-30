@@ -1,5 +1,8 @@
 #!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 
+# Copyright (c) 2017 Orange and others.
+#
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
@@ -16,8 +19,11 @@ from functest.energy.energy import EnergyRecorder
 import functest.energy.energy as energy
 
 
-CASE_NAME = "UNIT_test_CASE"
-STEP_NAME = "UNIT_test_STEP"
+CASE_NAME = "UNIT_TEST_CASE"
+STEP_NAME = "UNIT_TEST_STEP"
+
+PREVIOUS_SCENARIO = "previous_scenario"
+PREVIOUS_STEP = "previous_step"
 
 
 class MockHttpResponse(object):  # pylint: disable=too-few-public-methods
@@ -197,6 +203,8 @@ class EnergyRecorderTest(unittest.TestCase):
         """Call with to energy recorder decorators."""
         raise Exception(self.exception_message_to_preserve)
 
+    @mock.patch("functest.energy.energy.EnergyRecorder.get_current_scenario",
+                return_value=None)
     @mock.patch("functest.energy.energy.EnergyRecorder")
     @mock.patch("functest.utils.functest_utils.get_pod_name",
                 return_value="MOCK_POD")
@@ -205,11 +213,32 @@ class EnergyRecorderTest(unittest.TestCase):
     def test_decorators(self,
                         loader_mock=None,
                         pod_mock=None,
-                        recorder_mock=None):
+                        recorder_mock=None,
+                        cur_scenario_mock=None):
         """Test energy module decorators."""
         self.__decorated_method()
         calls = [mock.call.start(self.case_name),
                  mock.call.stop()]
+        recorder_mock.assert_has_calls(calls)
+
+    @mock.patch("functest.energy.energy.EnergyRecorder.get_current_scenario",
+                return_value={"scenario": PREVIOUS_SCENARIO,
+                              "step": PREVIOUS_STEP})
+    @mock.patch("functest.energy.energy.EnergyRecorder")
+    @mock.patch("functest.utils.functest_utils.get_pod_name",
+                return_value="MOCK_POD")
+    @mock.patch("functest.utils.functest_utils.get_functest_config",
+                side_effect=config_loader_mock)
+    def test_decorators_with_previous(self,
+                                      loader_mock=None,
+                                      pod_mock=None,
+                                      recorder_mock=None,
+                                      cur_scenario_mock=None):
+        """Test energy module decorators."""
+        self.__decorated_method()
+        calls = [mock.call.start(self.case_name),
+                 mock.call.submit_scenario(PREVIOUS_SCENARIO,
+                                           PREVIOUS_STEP)]
         recorder_mock.assert_has_calls(calls)
 
     def test_decorator_preserve_return(self):
@@ -269,6 +298,19 @@ class EnergyRecorderTest(unittest.TestCase):
             EnergyRecorder.energy_recorder_api = None
             EnergyRecorder.load_config()
         self.assertEquals(EnergyRecorder.energy_recorder_api, None)
+
+    @mock.patch("functest.utils.functest_utils.get_functest_config",
+                return_value=None)
+    @mock.patch("functest.utils.functest_utils.get_pod_name",
+                return_value="MOCK_POD")
+    @mock.patch('functest.energy.energy.requests.get',
+                return_value=RECORDER_OK)
+    def test_get_current_scenario(self, loader_mock=None,
+                                  pod_mock=None, get_mock=None):
+        """Test get_current_scenario."""
+        self.test_load_config()
+        scenario = EnergyRecorder.get_current_scenario()
+        self.assertTrue(scenario is not None)
 
 
 if __name__ == "__main__":
