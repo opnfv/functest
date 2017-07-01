@@ -3,7 +3,7 @@ general:
         home:               /home/opnfv
         repos:              /home/opnfv/repos
         dir_repo_rally:     /home/opnfv/repos/rally
-        repo_tempest:       /home/opnfv/.tempest
+        repo_tempest:       /home/opnfv/src/tempest
         dir_repo_releng:    /home/opnfv/repos/releng
         repo_vims_test:     /home/opnfv/repos/vnfs/vims-test
         repo_onos:          /home/opnfv/repos/onos
