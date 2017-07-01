@@ -14,7 +14,6 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 # Environment variables
 ARG BRANCH=master
 ARG RALLY_TAG=0.8.1
-ARG REFSTACK_TAG=15.0.0
 ARG ODL_TAG=release/beryllium-sr4
 ARG KINGBIRD_TAG=1.1.0
 ARG VIMS_TAG=stable
@@ -109,10 +108,12 @@ RUN curl -L https://get.rvm.io | bash -s stable
 # SFC integration
 RUN /bin/bash -c ". /usr/local/lib/python2.7/dist-packages/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
 
-# refstack-client integration
-RUN wget -q https://raw.githubusercontent.com/openstack/refstack-client/master/setup_env \
-    && bash setup_env -t ${REFSTACK_TAG} && rm setup_env
-RUN ln -s ${HOME}/.tempest /usr/local/lib/python2.7/dist-packages/.tempest
+# Install tempest venv and create symlink for running refstack-client
+RUN ln -s /src/tempest /src/refstack-client/.tempest \
+    && virtualenv /src/tempest/.venv \
+    && pip install \
+        -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=stable/ocata \
+        -r/src/tempest/requirements.txt
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd ${REPOS_VNFS_DIR}/vims-test \
