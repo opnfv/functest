@@ -14,7 +14,7 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 # Environment variables
 ARG BRANCH=master
 ARG RALLY_TAG=0.8.1
-ARG REFSTACK_TAG=15.0.0
+ARG TEMPEST_TAG=15.0.0
 ARG ODL_TAG=release/beryllium-sr4
 ARG KINGBIRD_TAG=1.1.0
 ARG VIMS_TAG=stable
@@ -93,6 +93,7 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/netready ${RE
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/fds ${REPOS_DIR}/fds
 
 # other repositories
+RUN git clone --depth 1 -b $TEMPEST_TAG https://github.com/openstack/tempest.git ${REPOS_DIR}/tempest
 RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git ${REPOS_DIR}/odl_test
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_VNFS_DIR}/vims-test
 RUN git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-functest-vrouter.git ${REPOS_VNFS_DIR}/vrouter
@@ -109,10 +110,9 @@ RUN curl -L https://get.rvm.io | bash -s stable
 # SFC integration
 RUN /bin/bash -c ". /usr/local/lib/python2.7/dist-packages/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
 
-# refstack-client integration
-RUN wget -q https://raw.githubusercontent.com/openstack/refstack-client/master/setup_env \
-    && bash setup_env -t ${REFSTACK_TAG} && rm setup_env
-RUN ln -s ${HOME}/.tempest /usr/local/lib/python2.7/dist-packages/.tempest
+# Install tempest venv and create symlink for running refstack-client
+RUN cd ${REPOS_DIR}/tempest && virtualenv .venv && . .venv/bin/activate && pip install -r requirements.txt && deactivate
+RUN ln -s ${REPOS_DIR}/tempest /usr/local/lib/python2.7/dist-packages/.tempest
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd ${REPOS_VNFS_DIR}/vims-test \
