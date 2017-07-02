@@ -33,6 +33,23 @@
       "revId": "84e7baa0dbd73636bdcdc65e6049aa475eb18902",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_158952ca",
+        "filename": "docker/thirdparty-requirements.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-02T13:16:10Z",
+      "side": 1,
+      "message": "It comes from Official OpenStack requirements. You are not allowed to modify it",
+      "revId": "84e7baa0dbd73636bdcdc65e6049aa475eb18902",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
