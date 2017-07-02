@@ -60,8 +60,5 @@ class CliTestcase(object):
         else:
             tests = testname.split(",")
             for test in tests:
-                cmd = ("python %s %s -t %s" %
-                       (pkg_resources.resource_filename(
-                           'functest', 'ci/run_tests.py'),
-                        flags, test))
+                cmd = "run_tests {}-t {}".format(flags, test)
                 ft_utils.execute_command(cmd)

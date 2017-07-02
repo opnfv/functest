@@ -68,6 +68,5 @@ class CliTier(object):
             click.echo("Functest environment is not ready. "
                        "Run first 'functest env prepare'")
         else:
-            cmd = ("python %s %s -t %s" % (pkg_resources.resource_filename(
-                'functest', 'ci/run_tests.py'), flags, tiername))
+            cmd = "run_tests {}-t {}".format(flags, tiername)
             ft_utils.execute_command(cmd)

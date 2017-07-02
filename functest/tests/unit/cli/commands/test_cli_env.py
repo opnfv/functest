@@ -6,7 +6,6 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 import logging
-import pkg_resources
 import unittest
 
 import mock
@@ -25,8 +24,7 @@ class CliEnvTesting(unittest.TestCase):
                 return_value=False)
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
     def test_prepare_default(self, mock_ft_utils, mock_os):
-        cmd = ("python %s start" % pkg_resources.resource_filename(
-            'functest', 'ci/prepare_env.py'))
+        cmd = "prepare_env start"
         self.cli_environ.prepare()
         mock_ft_utils.assert_called_with(cmd)
 
@@ -37,8 +35,7 @@ class CliEnvTesting(unittest.TestCase):
         with mock.patch('__builtin__.raw_input', return_value="y"), \
                 mock.patch('functest.cli.commands.cli_testcase.os.remove') \
                 as mock_os_remove:
-            cmd = ("python %s start" % pkg_resources.resource_filename(
-                'functest', 'ci/prepare_env.py'))
+            cmd = "prepare_env start"
             self.cli_environ.prepare()
             mock_os_remove.assert_called_once_with(
                 CONST.__getattribute__('env_active'))
