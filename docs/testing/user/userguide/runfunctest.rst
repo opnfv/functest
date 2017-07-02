@@ -616,7 +616,7 @@ variables:
    * mode = (ha|noha)
 
 The constraints per test case are defined in the Functest configuration file
-*/home/opnfv/repos/functest/functest/ci/testcases.yaml*::
+*/usr/local/lib/python2.7/dist-packages/functest/ci/testcases.yaml*::
 
  tiers:
    -
