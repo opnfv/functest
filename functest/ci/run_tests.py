@@ -276,6 +276,3 @@ def main():
     args = parser.parse_args(sys.argv[1:])
     runner = Runner()
     return runner.main(**args).value
-
-if __name__ == '__main__':
-    sys.exit(main())

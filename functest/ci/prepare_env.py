@@ -389,7 +389,3 @@ def main():
     parser = PrepareEnvParser()
     args = parser.parse_args(sys.argv[1:])
     return prepare_env(**args)
-
-
-if __name__ == '__main__':
-    sys.exit(main())
