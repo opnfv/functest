@@ -496,8 +496,6 @@ To execute a Test Tier or Test Case, the 'run' command is used::
   and
 
   root@22e436918db0:~/repos/functest/ci# functest testcase run vping_ssh
-  Executing command: 'python /home/opnfv/repos/functest/ci/run_tests.py -t vping_ssh'
-  2016-06-30 11:50:31,861 - run_tests - INFO - Sourcing the OpenStack RC file...
   2016-06-30 11:50:31,865 - run_tests - INFO - ============================================
   2016-06-30 11:50:31,865 - run_tests - INFO - Running test case 'vping_ssh'...
   2016-06-30 11:50:31,865 - run_tests - INFO - ============================================
@@ -616,7 +614,7 @@ variables:
    * mode = (ha|noha)
 
 The constraints per test case are defined in the Functest configuration file
-*/home/opnfv/repos/functest/functest/ci/testcases.yaml*::
+*/usr/local/lib/python2.7/dist-packages/functest/ci/testcases.yaml*::
 
  tiers:
    -
