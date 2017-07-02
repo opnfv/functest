@@ -101,22 +101,6 @@ RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwat
 RUN git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-functest-vrouter.git ${REPOS_VNFS_DIR}/vrouter
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
 
-RUN find -L ${FUNCTEST_REPO_DIR} -name "*.py" \
-    -not -path "*tests/unit*" \
-    -not -path "*functest_venv*" \
-    |xargs grep -L __main__ |cut -d\: -f 1 |xargs chmod -c 644 \
-    && find -L ${FUNCTEST_REPO_DIR} -name "*.sh" \
-    -not -path "*functest_venv*" \
-    |xargs grep -L \#\! |cut -d\:  -f 1 |xargs chmod -c 644
-
-RUN find -L ${FUNCTEST_REPO_DIR} -name "*.py" \
-    -not -path "*tests/unit*" \
-    -not -path "*functest_venv*" \
-    |xargs grep __main__ |cut -d\: -f 1 |xargs chmod -c 755 \
-    && find -L ${FUNCTEST_REPO_DIR} -name "*.sh" \
-    -not -path "*functest_venv*" \
-    |xargs grep \#\! |cut -d\:  -f 1 |xargs chmod -c 755
-
 RUN wget -q https://git.openstack.org/cgit/openstack/rally/plain/install_rally.sh?h=${RALLY_TAG} -O install_rally.sh \
     && bash install_rally.sh --branch ${RALLY_TAG} --yes && rm install_rally.sh
 
