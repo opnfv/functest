@@ -65,7 +65,7 @@ Notes:
 
      It is actually still possible to invoke test execution, with suppression
      of OpenStack resource cleanup, however this requires invocation of a
-     **specific Python script:** '/home/opnfv/repos/functest/ci/run_test.py'.
+     **specific Python script:** 'run_tests'.
      The `OPNFV Functest Developer Guide`_ provides guidance on the use of that
      Python script in such troubleshooting cases.
 
