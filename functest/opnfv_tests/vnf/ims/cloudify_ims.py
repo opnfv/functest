@@ -10,7 +10,6 @@
 import logging
 import os
 import sys
-import time
 
 import requests
 import yaml
@@ -169,10 +168,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
         self.logger.info("Prepare virtualenv for cloudify-cli")
         venv_scrit_dir = os.path.join(self.case_dir, "create_venv.sh")
-        cmd = "chmod +x " + venv_scrit_dir
-        ft_utils.execute_command(cmd)
-        time.sleep(3)
-        cmd = venv_scrit_dir + " " + self.data_dir
+        cmd = "bash {} {}".format(venv_scrit_dir, self.data_dir)
         ft_utils.execute_command(cmd)
 
         cfy.download_manager_blueprint(
