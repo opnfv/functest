@@ -24,14 +24,13 @@ ARG FUNCTEST_CONF_DIR=${FUNCTEST_BASE_DIR}/conf
 ARG FUNCTEST_DATA_DIR=${FUNCTEST_BASE_DIR}/data
 ARG FUNCTEST_IMAGES_DIR=${FUNCTEST_BASE_DIR}/images
 ARG FUNCTEST_RESULTS_DIR=${FUNCTEST_BASE_DIR}/results
-ARG FUNCTEST_REPO_DIR=${REPOS_DIR}/functest
-ARG FUNCTEST_TEST_DIR=${FUNCTEST_REPO_DIR}/functest/opnfv_tests
+ARG FUNCTEST_DIR=/usr/local/lib/python2.7/dist-packages/functest/
 ARG REPOS_VNFS_DIR=${REPOS_DIR}/vnfs
 ARG PIP_OPTS=-chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=stable/ocata
 
 # Environment variables
 ENV HOME /home/opnfv
-ENV CONFIG_FUNCTEST_YAML ${FUNCTEST_REPO_DIR}/functest/ci/config_functest.yaml
+ENV CONFIG_FUNCTEST_YAML ${FUNCTEST_DIR}/functest/ci/config_functest.yaml
 ENV REPOS_DIR ${HOME}/repos
 ENV creds ${FUNCTEST_CONF_DIR}/openstack.creds
 
@@ -64,8 +63,7 @@ wget \
 
 RUN pip install --upgrade pip && easy_install -U setuptools==30.0.0
 
-RUN mkdir -p ${FUNCTEST_REPO_DIR} \
-    && mkdir -p ${REPOS_VNFS_DIR} \
+RUN mkdir -p ${REPOS_VNFS_DIR} \
     && mkdir -p ${FUNCTEST_BASE_DIR}/results \
     && mkdir -p ${FUNCTEST_BASE_DIR}/conf \
     && mkdir -p ${FUNCTEST_DATA_DIR} \
@@ -129,4 +127,4 @@ RUN sh -c 'wget -qO- https://nodejs.org/dist/v4.7.2/node-v4.7.2-linux-arm64.tar.
     && cd ${REPOS_DIR}/promise && sudo npm -g install npm@latest \
     && cd ${REPOS_DIR}/promise/source && npm install
 
-RUN echo ". ${FUNCTEST_REPO_DIR}/functest/cli/functest-complete.sh" >> ${HOME}/.bashrc
+RUN echo ". ${FUNCTEST_DIR}/functest/cli/functest-complete.sh" >> ${HOME}/.bashrc
