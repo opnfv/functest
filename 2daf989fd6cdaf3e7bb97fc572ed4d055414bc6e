@@ -16,6 +16,24 @@
       "revId": "2daf989fd6cdaf3e7bb97fc572ed4d055414bc6e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_7ea42357",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-04T06:07:51Z",
+      "side": 1,
+      "message": "Thank you. Done.",
+      "parentUuid": "1aa4ed85_7ed663c7",
+      "revId": "2daf989fd6cdaf3e7bb97fc572ed4d055414bc6e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
