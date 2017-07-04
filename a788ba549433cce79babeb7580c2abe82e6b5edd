@@ -16,6 +16,24 @@
       "revId": "a788ba549433cce79babeb7580c2abe82e6b5edd",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3e5b0b56",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-04T07:03:54Z",
+      "side": 1,
+      "message": "No, we uploaded this image to artifacts yesterday, and it is exactly the one used before.",
+      "parentUuid": "1aa4ed85_9e4a3f82",
+      "revId": "a788ba549433cce79babeb7580c2abe82e6b5edd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
