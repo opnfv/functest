@@ -7,7 +7,6 @@
 
 
 import logging
-import pkg_resources
 import unittest
 
 import mock
@@ -87,10 +86,7 @@ class CliTierTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_default(self, mock_ft_utils, mock_os):
-        cmd = ("python %s %s -t %s" %
-               (pkg_resources.resource_filename(
-                   'functest', 'ci/run_tests.py'),
-                "-n -r ", self.tiername))
+        cmd = "run_tests -n -r -t {}".format(self.tiername)
         self.cli_tier.run(self.tiername, noclean=True, report=True)
         mock_ft_utils.assert_called_with(cmd)
 
@@ -98,10 +94,7 @@ class CliTierTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_report_missing_noclean(self, mock_ft_utils, mock_os):
-        cmd = ("python %s %s -t %s" %
-               (pkg_resources.resource_filename(
-                   'functest', 'ci/run_tests.py'),
-                "-r ", self.tiername))
+        cmd = "run_tests -r -t {}".format(self.tiername)
         self.cli_tier.run(self.tiername, noclean=False, report=True)
         mock_ft_utils.assert_called_with(cmd)
 
@@ -109,10 +102,7 @@ class CliTierTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_noclean_missing_report(self, mock_ft_utils, mock_os):
-        cmd = ("python %s %s -t %s" %
-               (pkg_resources.resource_filename(
-                   'functest', 'ci/run_tests.py'),
-                "-n ", self.tiername))
+        cmd = "run_tests -n -t {}".format(self.tiername)
         self.cli_tier.run(self.tiername, noclean=True, report=False)
         mock_ft_utils.assert_called_with(cmd)
 
@@ -120,10 +110,7 @@ class CliTierTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_missing_noclean_report(self, mock_ft_utils, mock_os):
-        cmd = ("python %s %s -t %s" %
-               (pkg_resources.resource_filename(
-                   'functest', 'ci/run_tests.py'),
-                "", self.tiername))
+        cmd = "run_tests -t {}".format(self.tiername)
         self.cli_tier.run(self.tiername, noclean=False, report=False)
         mock_ft_utils.assert_called_with(cmd)
 
