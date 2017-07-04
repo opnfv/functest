@@ -27,7 +27,7 @@ ARG FUNCTEST_RESULTS_DIR=${FUNCTEST_BASE_DIR}/results
 ARG FUNCTEST_REPO_DIR=${REPOS_DIR}/functest
 ARG FUNCTEST_TEST_DIR=${FUNCTEST_REPO_DIR}/functest/opnfv_tests
 ARG REPOS_VNFS_DIR=${REPOS_DIR}/vnfs
-ARG PIP_OPTS=-chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?stable/ocata
+ARG PIP_OPTS=-chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=stable/ocata
 
 # Environment variables
 ENV HOME /home/opnfv
