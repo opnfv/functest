@@ -28,7 +28,6 @@ ARG FUNCTEST_RESULTS_DIR=${FUNCTEST_BASE_DIR}/results
 ARG FUNCTEST_REPO_DIR=${REPOS_DIR}/functest
 ARG FUNCTEST_TEST_DIR=${FUNCTEST_REPO_DIR}/functest/opnfv_tests
 ARG REPOS_VNFS_DIR=${REPOS_DIR}/vnfs
-ARG PIP_OPTS=-chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=stable/ocata
 
 # Environment variables
 ENV HOME /home/opnfv
@@ -77,12 +76,14 @@ RUN mkdir -p ${FUNCTEST_REPO_DIR} \
 RUN git config --global http.sslVerify false
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
-RUN pip install ${PIP_OPTS} \
-    git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
-    git+https://gerrit.opnfv.org/gerrit/releng@$BRANCH#egg=opnfv\&subdirectory=modules \
-    git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps \
-    -r thirdparty-requirements.txt \
-    && rm thirdparty-requirements.txt
+RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=stable/ocata | \
+        sed /^tempest===.*$/d > upper-constraints.txt && \
+    pip install -cupper-constraints.txt \
+        git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
+        git+https://gerrit.opnfv.org/gerrit/releng@$BRANCH#egg=opnfv\&subdirectory=modules \
+        git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps \
+        -r thirdparty-requirements.txt && \
+    rm thirdparty-requirements.txt upper-constraints.txt
 
 # OPNFV repositories
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${REPOS_DIR}/copper
