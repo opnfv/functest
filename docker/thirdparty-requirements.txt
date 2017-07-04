@@ -6,5 +6,5 @@ git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
 tosca-parser>=0.7.0 # Apache-2.0
 heat-translator>=0.4.0 # Apache-2.0
 rally
-tempest>=15.0.0 # Apache-2.0
+tempest>=12.1.0 # Apache-2.0
 git+https://github.com/openstack/refstack-client#egg=refstack-client
