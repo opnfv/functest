@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_89376bb0",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 610
+      },
+      "writtenOn": "2017-07-04T08:30:03Z",
+      "side": 1,
+      "message": "not from this patch, but please change this to https://download.cirros-cloud.net, rather then plain http. They also have checksums to insure the image is not MiTM. Would be good to use them to validate.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "5b12df81627940fcc174e2cfd9c7bd75d7942935",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
