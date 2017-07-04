@@ -84,9 +84,6 @@ RUN pip install ${PIP_OPTS} \
     -r thirdparty-requirements.txt \
     && rm thirdparty-requirements.txt
 
-# Hook required by hardcoded paths in Functest
-RUN ln -s /usr/local/lib/python2.7/dist-packages/functest ${FUNCTEST_REPO_DIR}/functest
-
 # OPNFV repositories
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${REPOS_DIR}/copper
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${REPOS_DIR}/domino

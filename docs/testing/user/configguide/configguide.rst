@@ -327,9 +327,7 @@ includes two main directories:
     the **data** directory stores a 'cirros' test image used in some
     functional tests and the **results** directory stores some temporary
     result log files
-  * The **repos** directory holds various repositories. The directory
-    '/home/opnfv/repos/functest' is used to prepare the needed Functest
-    environment and to run the tests. The other repository directories
+  * The **repos** directory holds various repositories. The directories
     are used for the installation of the needed tooling (e.g. rally) or
     for the retrieval of feature projects scenarios (e.g. promise)
 

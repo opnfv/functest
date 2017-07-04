@@ -296,8 +296,6 @@ Inside the Functest container, first to prepare Functest environment:
 
 ::
 
-  cd /home/opnfv/repos/functest
-  pip install -e .
   functest env prepare
 
 then to run default defcore testcases by using refstack-client:
@@ -346,7 +344,7 @@ file is:
 
 ::
 
-  cd /home/opnfv/repos/functest/functest/opnfv_tests/openstack/refstack_client
+  cd /usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/refstack_client
   python tempest_conf.py
 
 a file called tempest.conf is stored in the current path by default, users can do
