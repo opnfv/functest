@@ -34,6 +34,24 @@
       "revId": "12faa0a4cac0d034921ffb64d0783093ca8d2f19",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_09db7bee",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-04T10:11:47Z",
+      "side": 1,
+      "message": "1 layer \u003d 1 RUN command\n\nRUN cd ${REPOS_DIR}/tempest \\\n    \u0026\u0026 virtualenv .venv \\\n    \u0026\u0026 . .venv/bin/activate \\\n    \u0026\u0026 pip install -r requirements.txt \\\n    \u0026\u0026 deactivate \\\n    \u0026\u0026 ln -s ${REPOS_DIR}/tempest /usr/local/lib/python2.7/dist-packages/.tempest",
+      "parentUuid": "1aa4ed85_c94d63c6",
+      "revId": "12faa0a4cac0d034921ffb64d0783093ca8d2f19",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
