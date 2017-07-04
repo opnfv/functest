@@ -46,6 +46,30 @@
       "revId": "5b12df81627940fcc174e2cfd9c7bd75d7942935",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_89120bb3",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 610
+      },
+      "writtenOn": "2017-07-04T09:50:29Z",
+      "side": 1,
+      "message": "Thanks. I created FUNCTEST-850 so at some point in the future the .asc files can be used to insure no tampering / or download failures have occurred.",
+      "parentUuid": "1aa4ed85_89376bb0",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "5b12df81627940fcc174e2cfd9c7bd75d7942935",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
