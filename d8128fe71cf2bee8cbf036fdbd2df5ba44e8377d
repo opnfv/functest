@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_09029b3e",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-04T10:26:20Z",
+      "side": 1,
+      "message": "I wonder if we need this line if we are intalling tempest in thirdparty-requirements.txt",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 38
+      },
+      "revId": "d8128fe71cf2bee8cbf036fdbd2df5ba44e8377d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
