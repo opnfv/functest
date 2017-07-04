@@ -22,6 +22,30 @@
       "revId": "5b12df81627940fcc174e2cfd9c7bd75d7942935",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_69b9cfe8",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-04T09:14:10Z",
+      "side": 1,
+      "message": "Done. Thank you.",
+      "parentUuid": "1aa4ed85_89376bb0",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "5b12df81627940fcc174e2cfd9c7bd75d7942935",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
