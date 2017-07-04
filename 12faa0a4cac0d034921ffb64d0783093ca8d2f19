@@ -16,6 +16,24 @@
       "revId": "12faa0a4cac0d034921ffb64d0783093ca8d2f19",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c94d63c6",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-04T10:01:14Z",
+      "side": 1,
+      "message": "Where is the previous layer using \"ln -s\"?",
+      "parentUuid": "1aa4ed85_695f8f73",
+      "revId": "12faa0a4cac0d034921ffb64d0783093ca8d2f19",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
