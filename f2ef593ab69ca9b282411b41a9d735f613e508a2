@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_e4f8864b",
+        "filename": "functest/tests/unit/openstack/refstack_client/test_refstack_client.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-05T01:20:20Z",
+      "side": 1,
+      "message": "If the envs are changed directly here, will \u0027http\u0027 still be supported in Refstack and Functest? if so, will \u0027http\u0027 still be tested?\nIf both \u0027http\u0027 and \u0027https\u0027 are supported, I would suggest to create new test cases to test \u0027https\u0027 condition.",
+      "revId": "f2ef593ab69ca9b282411b41a9d735f613e508a2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
