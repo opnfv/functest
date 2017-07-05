@@ -1,0 +1,10 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Code-Review+1: Alex Yang <yangyang1@zte.com.cn>
+Code-Review+1: Steven Pisarski <s.pisarski@cablelabs.com>
+Code-Review+2: valentin boucher <valentin.boucher@orange.com>
+Submitted-by: valentin boucher <valentin.boucher@orange.com>
+Submitted-at: Wed, 05 Jul 2017 15:45:49 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/36939
+Project: functest
+Branch: refs/heads/master
