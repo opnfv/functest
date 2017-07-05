@@ -5,6 +5,4 @@ git+https://gerrit.opnfv.org/gerrit/securityscanning#egg=securityscanning
 git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
 tosca-parser>=0.7.0 # Apache-2.0
 heat-translator>=0.4.0 # Apache-2.0
-rally
--e git+https://github.com/openstack/tempest@14.0.0#egg=tempest # Apache-2.0
 git+https://github.com/openstack/refstack-client#egg=refstack-client
