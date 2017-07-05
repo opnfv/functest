@@ -1,0 +1,61 @@
+tiers:
+    -
+        name: healthcheck
+        order: 0
+        ci_loop: '(daily)|(weekly)'
+        description : >-
+            First tier to be executed to verify the basic
+            operations in the VIM.
+        testcases:
+            -
+                case_name: connection_check
+                project_name: functest
+                criteria: 100
+                blocking: true
+                description: >-
+                    This test case verifies the retrieval of OpenStack clients:
+                    Keystone, Glance, Neutron and Nova and may perform some
+                    simple queries. When the config value of
+                    snaps.use_keystone is True, functest must have access to
+                    the cloud's private network.
+                dependencies:
+                    installer: '^((?!netvirt).)*$'
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.snaps.connection_check'
+                    class: 'ConnectionCheck'
+
+            -
+                case_name: api_check
+                project_name: functest
+                criteria: 100
+                blocking: true
+                description: >-
+                    This test case verifies the retrieval of OpenStack clients:
+                    Keystone, Glance, Neutron and Nova and may perform some
+                    simple queries. When the config value of
+                    snaps.use_keystone is True, functest must have access to
+                    the cloud's private network.
+                dependencies:
+                    installer: '^((?!netvirt).)*$'
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.snaps.api_check'
+                    class: 'ApiCheck'
+
+            -
+                case_name: snaps_health_check
+                project_name: functest
+                criteria: 100
+                blocking: true
+                description: >-
+                    This test case creates executes the SimpleHealthCheck
+                    Python test class which creates an, image, flavor, network,
+                    and Cirros VM instance and observes the console output to
+                    validate the single port obtains the correct IP address.
+                dependencies:
+                    installer: ''
+                    scenario: '^((?!lxd).)*$'
+                run:
+                    module: 'functest.opnfv_tests.openstack.snaps.health_check'
+                    class: 'HealthCheck'
