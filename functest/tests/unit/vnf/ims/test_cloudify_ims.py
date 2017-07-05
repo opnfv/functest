@@ -10,453 +10,155 @@ import unittest
 
 import mock
 
+from functest.core import vnf
 from functest.opnfv_tests.vnf.ims import cloudify_ims
 
 
 class CloudifyImsTesting(unittest.TestCase):
 
     def setUp(self):
+
+        self.tenant = 'cloudify_ims'
+        self.creds = {'username': 'user',
+                      'password': 'pwd'}
+        self.orchestrator = {'name': 'cloudify',
+                             'version': '4.0',
+                             'object': 'foo',
+                             'requirements': {'flavor': {'name': 'm1.medium',
+                                                         'ram_min': 4096},
+                                              'os_image': 'manager_4.0'}}
+
+        self.vnf = {'name': 'clearwater',
+                    'descriptor': {'version': '108',
+                                   'file_name': 'openstack-blueprint.yaml',
+                                   'name': 'clearwater-opnfv',
+                                   'url': 'https://foo',
+                                   'requirements': {'flavor':
+                                                    {'name': 'm1.medium',
+                                                     'ram_min': 2048}}}}
+
         with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
                         'os.makedirs'), \
             mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'get_config', return_value='config_value'):
+                       'get_config', return_value={
+                           'tenant_images': 'foo',
+                           'orchestrator': self.orchestrator,
+                           'vnf': self.vnf,
+                           'vnf_test_suite': '',
+                           'version': 'whatever'}):
+
             self.ims_vnf = cloudify_ims.CloudifyIms()
-        self.neutron_client = mock.Mock()
-        self.glance_client = mock.Mock()
-        self.keystone_client = mock.Mock()
-        self.nova_client = mock.Mock()
-        self.orchestrator = {'requirements': {'ram_min': 2,
-                                              'os_image': 'test_os_image'},
-                             'blueprint': {'url': 'test_url',
-                                           'branch': 'test_branch'},
-                             'inputs': {'public_domain': 'test_domain'},
-                             'object': 'test_object',
-                             'deployment_name': 'test_deployment_name'}
-        self.ims_vnf.orchestrator = self.orchestrator
-        self.ims_vnf.images = {'test_image': 'test_url'}
-        self.ims_vnf.vnf = self.orchestrator
-        self.ims_vnf.tenant_name = 'test_tenant'
-        self.ims_vnf.inputs = {'public_domain': 'test_domain'}
-        self.ims_vnf.glance_client = self.glance_client
-        self.ims_vnf.neutron_client = self.neutron_client
-        self.ims_vnf.keystone_client = self.keystone_client
-        self.ims_vnf.nova_client = self.nova_client
-        self.ims_vnf.admin_creds = 'test_creds'
 
-        self.mock_post = mock.Mock()
-        attrs = {'status_code': 201,
-                 'cookies': ""}
-        self.mock_post.configure_mock(**attrs)
+        self.images = {'image1': 'url1',
+                       'image2': 'url2'}
+        self.details = {'orchestrator': {'status': 'PASS', 'duration': 120},
+                        'vnf': {},
+                        'test_vnf':  {}}
 
-        self.mock_post_200 = mock.Mock()
-        attrs = {'status_code': 200,
-                 'cookies': ""}
-        self.mock_post_200.configure_mock(**attrs)
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
+                return_value='test')
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
+                return_value=True)
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
+                return_value=True)
+    @mock.patch('functest.core.vnf.os_utils.get_credentials',
+                return_value={'auth_url': 'test/v1'})
+    @mock.patch('snaps.openstack.create_image.OpenStackImage.create')
+    def test_prepare_default(self, *args):
+        self.assertIsNone(self.ims_vnf.prepare())
+        args[4].assert_called_once_with()
 
-    def test_deploy_orchestrator_missing_image(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os_utils.get_neutron_client',
-                        return_value=self.neutron_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_glance_client',
-                       return_value=self.glance_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_keystone_client',
-                       return_value=self.keystone_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_nova_client',
-                       return_value=self.nova_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_image_id',
-                       return_value=''), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.os_utils.'
-                       'download_and_add_image_on_glance') as m, \
-                self.assertRaises(Exception) as context:
-            self.ims_vnf.deploy_orchestrator()
-            self.assertTrue(m.called)
-            msg = "Failed to find or upload required OS "
-            msg += "image for this deployment"
-            self.assertTrue(msg in context.exception)
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
+                return_value='test')
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
+                return_value=True)
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
+                return_value=True)
+    @mock.patch('functest.core.vnf.os_utils.get_credentials',
+                return_value={'auth_url': 'test/no_v'})
+    @mock.patch('snaps.openstack.create_image.OpenStackImage.create')
+    def test_prepare_bad_auth_url(self, *args):
+        with self.assertRaises(Exception):
+            self.ims_vnf.prepare()
+        args[0].assert_not_called()
 
-    def test_deploy_orchestrator_extend_quota_fail(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os_utils.get_neutron_client',
-                        return_value=self.neutron_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_glance_client',
-                       return_value=self.glance_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_keystone_client',
-                       return_value=self.keystone_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_nova_client',
-                       return_value=self.nova_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_image_id',
-                       return_value='image_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_tenant_id',
-                       return_value='tenant_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.update_sg_quota',
-                       return_value=False), \
-                self.assertRaises(Exception) as context:
-            self.ims_vnf.deploy_orchestrator()
-            msg = "Failed to update security group quota"
-            msg += " for tenant test_tenant"
-            self.assertTrue(msg in context.exception)
+    def test_prepare_missing_param(self):
+        with self.assertRaises(vnf.VnfPreparationException):
+            self.ims_vnf.prepare()
 
-    def _get_image_id(self, client, name):
-        if name == 'test_image':
-            return 'image_id'
-        else:
-            return ''
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
+                side_effect=Exception)
+    def test_prepare_keystone_exception(self, *args):
+        with self.assertRaises(vnf.VnfPreparationException):
+            self.ims_vnf.prepare()
+        args[0].assert_called_once_with()
 
-    def test_deploy_orchestrator_missing_flavor(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os_utils.get_neutron_client',
-                        return_value=self.neutron_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_glance_client',
-                       return_value=self.glance_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_keystone_client',
-                       return_value=self.keystone_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_nova_client',
-                       return_value=self.nova_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_image_id',
-                       side_effect=self._get_image_id), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_tenant_id',
-                       return_value='tenant_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.update_sg_quota',
-                       return_value=True), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_endpoint',
-                       return_value='public_auth_url'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'Orchestrator', return_value=mock.Mock()) as m, \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(False, '')), \
-                self.assertRaises(Exception) as context:
-            self.ims_vnf.deploy_orchestrator()
-            self.assertTrue(m.set_credentials.called)
-            msg = "Failed to find required flavorfor this deployment"
-            self.assertTrue(msg in context.exception)
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
+                return_value='test')
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
+                side_effect=Exception)
+    def test_prepare_tenant_exception(self, *args):
+        with self.assertRaises(vnf.VnfPreparationException):
+            self.ims_vnf.prepare()
+        args[1].assert_called_once_with()
 
-    def test_deploy_orchestrator_missing_os_image(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os_utils.get_neutron_client',
-                        return_value=self.neutron_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_glance_client',
-                       return_value=self.glance_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_keystone_client',
-                       return_value=self.keystone_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_nova_client',
-                       return_value=self.nova_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_image_id',
-                       side_effect=self._get_image_id), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_tenant_id',
-                       return_value='tenant_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.update_sg_quota',
-                       return_value=True), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_endpoint',
-                       return_value='public_auth_url'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'Orchestrator', return_value=mock.Mock()) as m, \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(True, 'flavor_id')), \
-                self.assertRaises(Exception) as context:
-            self.ims_vnf.deploy_orchestrator()
-            self.assertTrue(m.set_credentials.called)
-            self.assertTrue(m.set_flavor_id.called)
-            msg = "Failed to find required OS image for cloudify manager"
-            self.assertTrue(msg in context.exception)
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
+                return_value='test')
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
+                return_value=True)
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
+                side_effect=Exception)
+    def test_prepare_user_exception(self, *args):
+        with self.assertRaises(vnf.VnfPreparationException):
+            self.ims_vnf.prepare()
+        args[2].assert_called_once_with()
 
-    def test_deploy_orchestrator_get_ext_network_fail(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os_utils.get_neutron_client',
-                        return_value=self.neutron_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_glance_client',
-                       return_value=self.glance_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_keystone_client',
-                       return_value=self.keystone_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_nova_client',
-                       return_value=self.nova_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_image_id',
-                       return_value='image_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_tenant_id',
-                       return_value='tenant_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.update_sg_quota',
-                       return_value=True), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_endpoint',
-                       return_value='public_auth_url'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'Orchestrator', return_value=mock.Mock()) as m, \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(True, 'flavor_id')), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_external_net',
-                       return_value=''), \
-                self.assertRaises(Exception) as context:
-            self.ims_vnf.deploy_orchestrator()
-            self.assertTrue(m.set_credentials.called)
-            self.assertTrue(m.set_flavor_id.called)
-            self.assertTrue(m.set_image_id.called)
-            msg = "Failed to get external network"
-            self.assertTrue(msg in context.exception)
+    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
+                return_value='test')
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
+                return_value=True)
+    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
+                return_value=True)
+    @mock.patch('functest.core.vnf.os_utils.get_credentials',
+                side_effect=Exception)
+    def test_prepare_credentials_exception(self, *args):
+        with self.assertRaises(vnf.VnfPreparationException):
+            self.ims_vnf.prepare()
+        args[0].assert_called_once_with()
 
-    def test_deploy_orchestrator_with_error(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os_utils.get_neutron_client',
-                        return_value=self.neutron_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_glance_client',
-                       return_value=self.glance_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_keystone_client',
-                       return_value=self.keystone_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_nova_client',
-                       return_value=self.nova_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_image_id',
-                       return_value='image_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_tenant_id',
-                       return_value='tenant_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.update_sg_quota',
-                       return_value=True), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_endpoint',
-                       return_value='public_auth_url'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'Orchestrator') as m, \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(True, 'flavor_id')), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_external_net',
-                       return_value='ext_net'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'ft_utils.get_resolvconf_ns',
-                       return_value=True), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'ft_utils.execute_command'):
-            mock_obj = mock.Mock()
-            attrs = {'deploy_manager.return_value': 'error'}
-            mock_obj.configure_mock(**attrs)
+    # @mock.patch('snaps.openstack.create_keypairs.OpenStackKeypair',
+    #             side_effect=Exception)
+    # def test_deploy_orchestrator_keypair_exception(self, *args):
+    #    with self.assertRaises(vnf.OrchestratorDeploymentException):
+    #        self.ims_vnf.deploy_orchestrator()
 
-            m.return_value = mock_obj
+    #   def test_deploy_orchestrator_network_creation_fail(self):
+    #   def test_deploy_orchestrator_floatting_ip_creation_fail(self):
+    #   def test_deploy_orchestrator_flavor_fail(self):
+    #   def test_deploy_orchestrator_get_image_id_fail(self):
+    #   def test_deploy_orchestrator_create_instance_fail(self):
+    #   def test_deploy_orchestrator_secgroup_fail(self):
+    #   def test_deploy_orchestrator_add_floating_ip_fail(self):
+    #   def test_deploy_orchestrator_get_endpoint_fail(self):
+    #   def test_deploy_orchestrator_initiate CloudifyClient_fail(self):
+    #   def test_deploy_orchestrator_get_status_fail(self):
+    #
 
-            self.assertEqual(self.ims_vnf.deploy_orchestrator(),
-                             {'status': 'FAIL', 'result': 'error'})
-
-    def test_deploy_orchestrator_default(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os_utils.get_neutron_client',
-                        return_value=self.neutron_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_glance_client',
-                       return_value=self.glance_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_keystone_client',
-                       return_value=self.keystone_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_nova_client',
-                       return_value=self.nova_client), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_image_id',
-                       return_value='image_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_tenant_id',
-                       return_value='tenant_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.update_sg_quota',
-                       return_value=True), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_endpoint',
-                       return_value='public_auth_url'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'Orchestrator') as m, \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(True, 'flavor_id')), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_external_net',
-                       return_value='ext_net'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'ft_utils.get_resolvconf_ns',
-                       return_value=True), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'ft_utils.execute_command'):
-            mock_obj = mock.Mock()
-            attrs = {'deploy_manager.return_value': ''}
-            mock_obj.configure_mock(**attrs)
-
-            m.return_value = mock_obj
-
-            self.assertEqual(self.ims_vnf.deploy_orchestrator(),
-                             {'status': 'PASS', 'result': ''})
-
-    def test_deploy_vnf_missing_flavor(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'Clearwater', return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(False, '')), \
-                self.assertRaises(Exception) as context:
-            self.ims_vnf.deploy_vnf()
-            msg = "Failed to find required flavor for this deployment"
-            self.assertTrue(msg in context.exception)
-
-    def test_deploy_vnf_missing_os_image(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'Clearwater', return_value=mock.Mock()) as m, \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(True, 'test_flavor')), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_image_id',
-                       return_value=''), \
-                self.assertRaises(Exception) as context:
-            self.ims_vnf.deploy_vnf()
-            msg = "Failed to find required OS image"
-            msg += " for clearwater VMs"
-            self.assertTrue(msg in context.exception)
-            self.assertTrue(m.set_flavor_id.called)
-
-    def test_deploy_vnf_missing_get_ext_net(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'Clearwater', return_value=mock.Mock()) as m, \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(True, 'test_flavor')), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_image_id',
-                       return_value='image_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_external_net',
-                       return_value=''), \
-                self.assertRaises(Exception) as context:
-            self.ims_vnf.deploy_vnf()
-            msg = "Failed to get external network"
-            self.assertTrue(msg in context.exception)
-            self.assertTrue(m.set_flavor_id.called)
-            self.assertTrue(m.set_image_id.called)
-
-    def test_deploy_vnf_with_error(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'Clearwater') as m, \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(True, 'test_flavor')), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_image_id',
-                       return_value='image_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_external_net',
-                       return_value='ext_net'):
-            mock_obj = mock.Mock()
-            attrs = {'deploy_vnf.return_value': 'error'}
-            mock_obj.configure_mock(**attrs)
-
-            m.return_value = mock_obj
-
-            self.assertEqual(self.ims_vnf.deploy_vnf(),
-                             {'status': 'FAIL', 'result': 'error'})
-
-    def test_deploy_vnf_default(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'Clearwater') as m, \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(True, 'test_flavor')), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_image_id',
-                       return_value='image_id'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'os_utils.get_external_net',
-                       return_value='ext_net'):
-            mock_obj = mock.Mock()
-            attrs = {'deploy_vnf.return_value': ''}
-            mock_obj.configure_mock(**attrs)
-
-            m.return_value = mock_obj
-
-            self.assertEqual(self.ims_vnf.deploy_vnf(),
-                             {'status': 'PASS', 'result': ''})
-
-    def test_test_vnf_ip_retrieval_failure(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os.popen', side_effect=Exception), \
-                self.assertRaises(Exception) as context:
-            msg = "Unable to retrieve the IP of the "
-            msg += "cloudify manager server !"
-            self.ims_vnf.test_vnf()
-            self.assertTrue(msg in context.exception)
-
-    def test_test_vnf_fail(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os.popen'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'requests.get') as mock_get, \
-            mock.patch.object(self.ims_vnf, 'config_ellis'), \
-            mock.patch.object(self.ims_vnf,
-                              'run_clearwater_live_test') as clearwater_obj:
-                clearwater_obj.return_value = ''
-
-                mock_obj2 = mock.Mock()
-                attrs = {'json.return_value': {'outputs':
-                                               {'dns_ip': 'test_dns_ip',
-                                                'ellis_ip': 'test_ellis_ip'}}}
-                mock_obj2.configure_mock(**attrs)
-                mock_get.return_value = mock_obj2
-
-                self.assertEqual(self.ims_vnf.test_vnf(),
-                                 {'status': 'FAIL', 'result': ''})
-
-    def test_test_vnf_pass(self):
-        with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                        'os.popen'), \
-            mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
-                       'requests.get') as mock_get, \
-            mock.patch.object(self.ims_vnf, 'config_ellis'), \
-            mock.patch.object(self.ims_vnf,
-                              'run_clearwater_live_test') as clearwater_obj:
-                clearwater_obj.return_value = 'vims_test_result'
-
-                mock_obj2 = mock.Mock()
-                attrs = {'json.return_value': {'outputs':
-                                               {'dns_ip': 'test_dns_ip',
-                                                'ellis_ip': 'test_ellis_ip'}}}
-                mock_obj2.configure_mock(**attrs)
-                mock_get.return_value = mock_obj2
-
-                self.assertEqual(self.ims_vnf.test_vnf(),
-                                 {'status': 'PASS',
-                                  'result': 'vims_test_result'})
+    #   def test_deploy_vnf(self):
+    #   def test_deploy_vnf_publish_fail(self):
+    #   def test_deploy_vnf_get_flavor_fail(self):
+    #   def test_deploy_vnf_get_external_net_fail(self):
+    #   def test_deploy_vnf_deployment_create_fail(self):
+    #   def test_deploy_vnf_start_fail(self):
+    #
+    #   def test_test_vnf(self):
+    #   def test_test_vnf_deployment_get_fail(self):
+    #   def test_test_vnf_run_live_test_fail(self):
+    #
+    #   def test_clean(self):
+    #   def test_clean_execution_start_fail(self):
+    #   def test_clean_deployment_delete_fail(self):
+    #   def test_clean_blueprint_delete_fail(self):
 
 
 if __name__ == "__main__":

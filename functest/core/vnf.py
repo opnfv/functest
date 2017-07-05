@@ -43,12 +43,10 @@ class VnfOnBoarding(base.TestCase):
 
     def __init__(self, **kwargs):
         super(VnfOnBoarding, self).__init__(**kwargs)
-        self.tenant_created = False
-        self.user_created = False
+        self.exist_obj = {'tenant': False, 'user': False}
         self.tenant_name = CONST.__getattribute__(
             'vnf_{}_tenant_name'.format(self.case_name))
-        self.tenant_description = CONST.__getattribute__(
-            'vnf_{}_tenant_description'.format(self.case_name))
+        self.creds = {}
 
     def run(self, **kwargs):
         """
@@ -78,8 +76,10 @@ class VnfOnBoarding(base.TestCase):
                 return base.TestCase.EX_OK
             else:
                 self.result = 0
+                self.stop_time = time.time()
                 return base.TestCase.EX_TESTCASE_FAILED
         except Exception:  # pylint: disable=broad-except
+            self.stop_time = time.time()
             self.__logger.exception("Exception on VNF testing")
             return base.TestCase.EX_TESTCASE_FAILED
 
@@ -96,20 +96,24 @@ class VnfOnBoarding(base.TestCase):
         Raise VnfPreparationException in case of problem
         """
         try:
+            tenant_description = CONST.__getattribute__(
+                'vnf_{}_tenant_description'.format(self.case_name))
             self.__logger.info("Prepare VNF: %s, description: %s",
-                               self.tenant_name, self.tenant_description)
-            admin_creds = os_utils.get_credentials()
+                               self.tenant_name, tenant_description)
             keystone_client = os_utils.get_keystone_client()
-            self.tenant_created = os_utils.get_or_create_tenant_for_vnf(
-                keystone_client, self.tenant_name, self.tenant_description)
-            self.user_created = os_utils.get_or_create_user_for_vnf(
+            self.exist_obj['tenant'] = (
+                not os_utils.get_or_create_tenant_for_vnf(
+                    keystone_client,
+                    self.tenant_name,
+                    tenant_description))
+            self.exist_obj['user'] = not os_utils.get_or_create_user_for_vnf(
                 keystone_client, self.tenant_name)
-            creds = admin_creds.copy()
-            creds.update({
+            self.creds = {
                 "tenant": self.tenant_name,
                 "username": self.tenant_name,
-                "password": self.tenant_name
-                })
+                "password": self.tenant_name,
+                "auth_url": os_utils.get_credentials()['auth_url']
+                }
             return base.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Exception raised during VNF preparation")
@@ -182,7 +186,7 @@ class VnfOnBoarding(base.TestCase):
         """
         self.__logger.info("test cleaning")
         keystone_client = os_utils.get_keystone_client()
-        if self.tenant_created:
+        if not self.exist_obj['tenant']:
             os_utils.delete_tenant(keystone_client, self.tenant_name)
-        if self.user_created:
+        if not self.exist_obj['user']:
             os_utils.delete_user(keystone_client, self.tenant_name)

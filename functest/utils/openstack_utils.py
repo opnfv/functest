@@ -279,19 +279,27 @@ def get_heat_client(other_creds={}):
 
 
 def download_and_add_image_on_glance(glance, image_name, image_url, data_dir):
-    dest_path = data_dir
-    if not os.path.exists(dest_path):
-        os.makedirs(dest_path)
-    file_name = image_url.rsplit('/')[-1]
-    if not ft_utils.download_url(image_url, dest_path):
-        return False
+    try:
+        dest_path = data_dir
+        if not os.path.exists(dest_path):
+            os.makedirs(dest_path)
+        file_name = image_url.rsplit('/')[-1]
+        if not ft_utils.download_url(image_url, dest_path):
+            return False
+    except Exception:
+        raise Exception("Impossible to download image from {}".format(
+                        image_url))
 
-    image = create_glance_image(
-        glance, image_name, dest_path + file_name)
-    if not image:
-        return False
-
-    return image
+    try:
+        image = create_glance_image(
+            glance, image_name, dest_path + file_name)
+        if not image:
+            return False
+        else:
+            return image
+    except Exception:
+        raise Exception("Impossible to put image {} in glance".format(
+                        image_name))
 
 
 # *********************************************
@@ -417,7 +425,7 @@ def get_or_create_flavor(flavor_name, ram, disk, vcpus, public=True):
         flavor_id = create_flavor(
             nova_client, flavor_name, ram, disk, vcpus, public=public)
         if not flavor_id:
-            logger.error("Failed to create flavor '%s'..." % (flavor_name))
+            raise Exception("Failed to create flavor '%s'..." % (flavor_name))
         else:
             logger.debug("Flavor '%s' with ID=%s created successfully."
                          % (flavor_name, flavor_id))
@@ -736,9 +744,12 @@ def create_neutron_net(neutron_client, name):
         return None
 
 
-def create_neutron_subnet(neutron_client, name, cidr, net_id):
+def create_neutron_subnet(neutron_client, name, cidr, net_id,
+                          dns=['8.8.8.8', '8.8.4.4']):
     json_body = {'subnets': [{'name': name, 'cidr': cidr,
-                              'ip_version': 4, 'network_id': net_id}]}
+                              'ip_version': 4, 'network_id': net_id,
+                              'dns_nameservers': dns}]}
+
     try:
         subnet = neutron_client.create_subnet(body=json_body)
         return subnet['subnets'][0]['id']
@@ -889,7 +900,8 @@ def create_network_full(neutron_client,
                         net_name,
                         subnet_name,
                         router_name,
-                        cidr):
+                        cidr,
+                        dns=['8.8.8.8', '8.8.4.4']):
 
     # Check if the network already exists
     network_id = get_network_id(neutron_client, net_name)
@@ -909,7 +921,7 @@ def create_network_full(neutron_client,
         logger.debug("Network '%s' created successfully" % network_id)
         logger.debug('Creating Subnet....')
         subnet_id = create_neutron_subnet(neutron_client, subnet_name,
-                                          cidr, network_id)
+                                          cidr, network_id, dns)
         if not subnet_id:
             return None
 
@@ -1462,13 +1474,18 @@ def get_or_create_user_for_vnf(keystone_client, vnf_ref):
     try:
         user_id = get_user_id(keystone_client, vnf_ref)
         tenant_id = get_tenant_id(keystone_client, vnf_ref)
+        created = False
         if not user_id:
             user_id = create_user(keystone_client, vnf_ref, vnf_ref,
                                   "", tenant_id)
-            return True
-        else:
-            return False
-        add_role_user(keystone_client, user_id, 'admin', vnf_ref)
+            created = True
+        try:
+            role_id = get_role_id(keystone_client, 'admin')
+            tenant_id = get_tenant_id(keystone_client, vnf_ref)
+            add_role_user(keystone_client, user_id, role_id, tenant_id)
+        except:
+            logger.warn("Cannot associate user to role admin on tenant")
+        return created
     except:
         raise Exception("Impossible to create a user for the VNF {}".format(
             vnf_ref))
