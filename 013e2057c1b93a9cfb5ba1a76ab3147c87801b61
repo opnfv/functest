@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "1aa4ed85_ea1ccdc3",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-05T13:22:48Z",
+      "side": 1,
+      "message": "It can be safely removed now. FYI Opstack stable/ocata\u0027s upper contraints define tempest\u003d\u003d0.14",
+      "revId": "013e2057c1b93a9cfb5ba1a76ab3147c87801b61",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ca1f91b6",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-05T13:22:48Z",
+      "side": 1,
+      "message": "It must be removed after rebasing on top of https://gerrit.opnfv.org/gerrit/#/c/36915/",
+      "revId": "013e2057c1b93a9cfb5ba1a76ab3147c87801b61",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_2a23c506",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-05T13:22:48Z",
+      "side": 1,
+      "message": "Could you please add upper constaints here even if we install packages in a virtualenv? You could have a look to [1].\n[1] https://gerrit.opnfv.org/gerrit/#/c/36963/2/docker/smoke/Dockerfile",
+      "revId": "013e2057c1b93a9cfb5ba1a76ab3147c87801b61",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_24ff7e36",
         "filename": "docker/Dockerfile",
         "patchSetId": 4
@@ -13,6 +64,24 @@
       "writtenOn": "2017-07-05T01:15:02Z",
       "side": 1,
       "message": "A venv is created here, but nothing changed in the source code, I doubt this venv works as we expect. I am kind of pretty sure that even if the venv is not created and only a symlink is produced, the tempest/rally/refstack will still work because the tempest leveraged 3rd libs are still the system ones.",
+      "revId": "013e2057c1b93a9cfb5ba1a76ab3147c87801b61",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8a7999fe",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-05T13:22:48Z",
+      "side": 1,
+      "message": "I agree that tempest is not installed in venv here.",
+      "parentUuid": "1aa4ed85_24ff7e36",
       "revId": "013e2057c1b93a9cfb5ba1a76ab3147c87801b61",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
