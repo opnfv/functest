@@ -38,7 +38,7 @@ class VPingBase(testcase.TestCase):
         # to be required for mock and the unit tests will fail without it
         os.environ
 
-        self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger = logging.getLogger(__name__)
 
         if 'os_creds' in kwargs:
             self.os_creds = kwargs['os_creds']
