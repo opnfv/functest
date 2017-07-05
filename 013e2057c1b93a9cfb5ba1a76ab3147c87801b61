@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_24ff7e36",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-05T01:15:02Z",
+      "side": 1,
+      "message": "A venv is created here, but nothing changed in the source code, I doubt this venv works as we expect. I am kind of pretty sure that even if the venv is not created and only a symlink is produced, the tempest/rally/refstack will still work because the tempest leveraged 3rd libs are still the system ones.",
+      "revId": "013e2057c1b93a9cfb5ba1a76ab3147c87801b61",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
