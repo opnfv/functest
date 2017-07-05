@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_8f31ab0d",
+        "filename": "docker/add_images.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-05T08:46:15Z",
+      "side": 1,
+      "message": "typo, this should be FUNCTEST_BASE_DIR",
+      "range": {
+        "startLine": 13,
+        "startChar": 85,
+        "endLine": 13,
+        "endChar": 91
+      },
+      "revId": "176f0001cd63efe34b37d588616dde6ac5d8741d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
