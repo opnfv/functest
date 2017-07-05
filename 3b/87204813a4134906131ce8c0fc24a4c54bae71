@@ -1,0 +1,8 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Verified+1: Jose Lausuch <jose.lausuch@ericsson.com>
+Code-Review+2: Linda Wang <wangwulin@huawei.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Wed, 05 Jul 2017 10:27:52 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/36965
+Project: functest
+Branch: refs/heads/stable/danube
