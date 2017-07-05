@@ -4,6 +4,8 @@
 # and places them in the functest docker image
 set -e
 
+FUNCTEST_IMAGES_DIR=${FUNCTEST_IMAGES_DIR:-/home/opnfv/functest/images}
+
 CIRROS_REPO_URL=https://download.cirros-cloud.net
 CIRROS_AARCH64_TAG=161201
 CIRROS_X86_64_TAG=0.3.5
