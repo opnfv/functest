@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_eaee0db4",
+        "filename": "functest/tests/unit/openstack/refstack_client/test_refstack_client.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-05T12:47:57Z",
+      "side": 1,
+      "message": "I would remove this, as you are creating this object only for this test function.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 13
+      },
+      "revId": "64bc1283c17baedfc961f50a6244071bbcc19d46",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8a2bd9ea",
+        "filename": "functest/tests/unit/openstack/refstack_client/test_refstack_client.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-05T12:47:57Z",
+      "side": 1,
+      "message": "if you remove self. from above, also remove it here. So you are just testing a local object for this function and don\u0027t modify the global object of the class.",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "64bc1283c17baedfc961f50a6244071bbcc19d46",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
