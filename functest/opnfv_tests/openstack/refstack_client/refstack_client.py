@@ -44,19 +44,20 @@ class RefstackClient(testcase.OSGCTestCase):
                                      self.CONF_PATH)
         self.defcorelist = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/openstack/refstack_client/defcore.txt')
+        self.insecure = ''
+        if ('https' in CONST.__getattribute__('OS_AUTH_URL') and
+                CONST.__getattribute__('OS_INSECURE').lower() == 'true'):
+            self.insecure = '-k'
 
     def run_defcore(self, conf, testlist):
-        logger.debug("Generating test case list...")
-
-        cmd = ("refstack-client test -c {0} -v --test-list {1}"
-               .format(conf, testlist))
+        cmd = ("refstack-client test {0} -c {1} -v --test-list {2}"
+               .format(self.insecure, conf, testlist))
+        logger.info("Starting Refstack_defcore test case: '%s'." % cmd)
         ft_utils.execute_command(cmd)
 
     def run_defcore_default(self):
-        logger.debug("Generating test case list...")
-
-        cmd = ("refstack-client test -c {0} -v --test-list {1}"
-               .format(self.confpath, self.defcorelist))
+        cmd = ("refstack-client test {0} -c {1} -v --test-list {2}"
+               .format(self.insecure, self.confpath, self.defcorelist))
         logger.info("Starting Refstack_defcore test case: '%s'." % cmd)
 
         header = ("Refstack environment:\n"
