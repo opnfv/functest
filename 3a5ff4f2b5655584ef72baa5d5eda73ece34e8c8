@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_9eb55acf",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-06T01:43:33Z",
+      "side": 1,
+      "message": "\u0027pip install -cupper-constraints.txt\u0027 or \u0027pip install -c upper-constraints.txt?\u0027",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 42
+      },
+      "revId": "3a5ff4f2b5655584ef72baa5d5eda73ece34e8c8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_7eb09edd",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-06T01:43:33Z",
+      "side": 1,
+      "message": "Again I highly doubt .venv is used. Please make sure, will the Restack still works when this .venv is not created?",
+      "revId": "3a5ff4f2b5655584ef72baa5d5eda73ece34e8c8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
