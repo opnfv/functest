@@ -175,11 +175,11 @@ def get_session_auth(other_creds={}):
     return auth
 
 
-def get_endpoint(service_type, endpoint_type='publicURL'):
+def get_endpoint(service_type, interface='public'):
     auth = get_session_auth()
     return get_session().get_endpoint(auth=auth,
                                       service_type=service_type,
-                                      endpoint_type=endpoint_type)
+                                      interface=interface)
 
 
 def get_session(other_creds={}):
