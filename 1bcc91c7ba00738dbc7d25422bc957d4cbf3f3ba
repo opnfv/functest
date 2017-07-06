@@ -22,6 +22,30 @@
       "revId": "1bcc91c7ba00738dbc7d25422bc957d4cbf3f3ba",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_01490fd0",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-06T08:00:01Z",
+      "side": 1,
+      "message": "You\u0027re right from a general purpose but here I\u0027m not sure it\u0027s usefull because we must build the docker in the current branch. Then I won\u0027t bet this Dockerfile will build a newer version of OpenStack.",
+      "parentUuid": "1aa4ed85_61f56382",
+      "range": {
+        "startLine": 78,
+        "startChar": 82,
+        "endLine": 78,
+        "endChar": 88
+      },
+      "revId": "1bcc91c7ba00738dbc7d25422bc957d4cbf3f3ba",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
