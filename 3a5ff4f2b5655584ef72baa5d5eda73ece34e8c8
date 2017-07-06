@@ -140,6 +140,24 @@
       "revId": "3a5ff4f2b5655584ef72baa5d5eda73ece34e8c8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_e16873f7",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-06T09:13:48Z",
+      "side": 1,
+      "message": "Sorry, my misunderstood, it is used in Refstack client rather than Functest.",
+      "parentUuid": "1aa4ed85_3e546653",
+      "revId": "3a5ff4f2b5655584ef72baa5d5eda73ece34e8c8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
