@@ -46,6 +46,30 @@
       "revId": "1bcc91c7ba00738dbc7d25422bc957d4cbf3f3ba",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_e17e33e4",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-06T08:14:53Z",
+      "side": 1,
+      "message": "maybe, but it would be nice to follow the same principles as in the other packages in this file, e.g. $RALLY_TAG, REFSTACK_TAG, etc..",
+      "parentUuid": "1aa4ed85_01490fd0",
+      "range": {
+        "startLine": 78,
+        "startChar": 82,
+        "endLine": 78,
+        "endChar": 88
+      },
+      "revId": "1bcc91c7ba00738dbc7d25422bc957d4cbf3f3ba",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
