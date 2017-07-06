@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_a1ecbbc8",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-06T07:44:19Z",
+      "side": 1,
+      "message": "can\u0027t we put it in /home/opnfv/\u003csomething\u003e\n\nAlso, and out of curiosity, why isn\u0027t a space between \"-c\" and upper-constraints.txt ?",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "26c6f1aefce88a11e241eea7f7bb9fa0d6795b4e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
