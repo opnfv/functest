@@ -70,6 +70,30 @@
       "revId": "26c6f1aefce88a11e241eea7f7bb9fa0d6795b4e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f4334ff4",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-06T10:13:47Z",
+      "side": 1,
+      "message": "I create all the required dir in the new alpine and I know there is no opnfv user.\n\nI don\u0027t think we should modify everything right now. Maybe all repos as we are working on that point.\n\nHere the problem is that Ubuntu installs in /root/src and Alpine in /src. I must find a common way via --src. As we don\u0027t know which package must be editable or not (see last refstack patchset), we could wait a little bit to move it in /home/opnfv/repos again.\n\nNothing is disruptive here. From the beginning we are fixing how requirements are handled.",
+      "parentUuid": "1aa4ed85_f41caf6c",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "26c6f1aefce88a11e241eea7f7bb9fa0d6795b4e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
