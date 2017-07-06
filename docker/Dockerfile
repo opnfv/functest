@@ -75,7 +75,7 @@ RUN git config --global http.sslVerify false
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=stable/ocata | \
-        sed s/^tempest===.*$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@14.0.0#egg=tempest/ \
+        sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ \
         > upper-constraints.txt && \
     pip install --src /src -cupper-constraints.txt \
         git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
