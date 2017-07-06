@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1aa4ed85_e1d5d343",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-06T08:16:55Z",
+      "side": 1,
+      "message": "Here we are not obliged to filter upper-constraints.txt (we can rely on the official packages in this venv).",
+      "revId": "3a5ff4f2b5655584ef72baa5d5eda73ece34e8c8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_9eb55acf",
         "filename": "docker/Dockerfile",
         "patchSetId": 6
@@ -49,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_2131abec",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-06T08:16:55Z",
+      "side": 1,
+      "message": "Both are fine. I prefer -c upper-constraints.txt which is more clear but I found more -cupper-constraints.txt when reading articles (as for -r...). We write -cupper-constraints.txt -rrequirements.txt everywhere (see tox.ini)",
+      "parentUuid": "1aa4ed85_3e6d4633",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 42
+      },
+      "revId": "3a5ff4f2b5655584ef72baa5d5eda73ece34e8c8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_7eb09edd",
         "filename": "docker/Dockerfile",
         "patchSetId": 6
@@ -78,6 +119,24 @@
       "side": 1,
       "message": "According to [1] in refstack_client, tempest requirements are required to be installed in a virtualenv named .venv in the specified dir .tempest/.venv. Here I call the step as setup_venv_tempest for the time being.\n\nActually from the side of refstack_client, we do not have to take the step setup_venv_tempest, as refstack-client will try to check and install the virtualenv of tempest automatically if it is not set up, as long as the tempest repo is provided in the specific dir (self.tempest_dir) [2]. However, refstack_client has a bug here and will fail to realize that. What\u0027s worse, more importantly, it will go against functest offline for sure, as it will try to download the the required packages for tempest.\n\nIf we do not install tempest requirements, it will fail.[3]\n\n\n[1]: https://github.com/openstack/refstack-client/blob/master/refstack_client/list_parser.py#L175\n[2]: https://github.com/openstack/refstack-client/blob/master/refstack_client/list_parser.py#L179\n\n[3]:https://hastebin.com/vojeqekeqa.swift",
       "parentUuid": "1aa4ed85_7eb09edd",
+      "revId": "3a5ff4f2b5655584ef72baa5d5eda73ece34e8c8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_a1883be8",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-06T08:16:55Z",
+      "side": 1,
+      "message": "Agree that refstack\u0027s setup_venv:\n  - clones tempest into .tempest\n  - creates the venv .tempest/.venv\n  - install tempest\u0027s requirements.txt in .tempest/.venv\n\nThe symlink could be created somewhere else.",
+      "parentUuid": "1aa4ed85_3e546653",
       "revId": "3a5ff4f2b5655584ef72baa5d5eda73ece34e8c8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
