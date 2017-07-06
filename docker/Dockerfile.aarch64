@@ -106,10 +106,7 @@ RUN /bin/bash -c ". /usr/local/lib/python2.7/dist-packages/sfc/tests/functest/se
 
 # Install tempest venv and create symlink for running refstack-client
 RUN ln -s /src/tempest /src/refstack-client/.tempest \
-    && virtualenv /src/tempest/.venv \
-    && /src/tempest/.venv/bin/python -m pip install \
-        -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=stable/ocata \
-        -r/src/tempest/requirements.txt
+    && virtualenv --system-site-packages /src/tempest/.venv
 
 RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && cd ${REPOS_VNFS_DIR}/vims-test \
