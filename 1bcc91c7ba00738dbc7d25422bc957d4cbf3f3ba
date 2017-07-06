@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_61f56382",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-06T07:47:35Z",
+      "side": 1,
+      "message": "we could put this as an ARG in the Dockerfile.",
+      "range": {
+        "startLine": 78,
+        "startChar": 82,
+        "endLine": 78,
+        "endChar": 88
+      },
+      "revId": "1bcc91c7ba00738dbc7d25422bc957d4cbf3f3ba",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
