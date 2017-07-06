@@ -46,6 +46,30 @@
       "revId": "26c6f1aefce88a11e241eea7f7bb9fa0d6795b4e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f41caf6c",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-06T10:04:08Z",
+      "side": 1,
+      "message": "is there /home/opnfv in the new alpine? Actually we are not using the \"opnfv\" user anytime, we are always running on root... so I\u0027m ok with not using /home/opnfv, but then we need to change everything... shall we do that in another patch including this installation?",
+      "parentUuid": "1aa4ed85_3413275e",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "26c6f1aefce88a11e241eea7f7bb9fa0d6795b4e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
