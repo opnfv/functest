@@ -22,6 +22,30 @@
       "revId": "26c6f1aefce88a11e241eea7f7bb9fa0d6795b4e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3413275e",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-06T09:59:06Z",
+      "side": 1,
+      "message": "space is not mandatory here and we start writing without (see tox.ini)\nIt\u0027s just a bugfix and I would propose to update all /src in a global patch when everybody agrees because it blocks also the current refstack proposal.\n\nI prefer using /src as normally it\u0027s for all users not for a dedicated one (/home/opnfv) but I agree to change if everybody perfers the former dir.",
+      "parentUuid": "1aa4ed85_a1ecbbc8",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "26c6f1aefce88a11e241eea7f7bb9fa0d6795b4e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
