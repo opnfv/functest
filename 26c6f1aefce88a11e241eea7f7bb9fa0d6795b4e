@@ -94,6 +94,30 @@
       "revId": "26c6f1aefce88a11e241eea7f7bb9fa0d6795b4e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_74575f03",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-06T10:16:08Z",
+      "side": 1,
+      "message": "ok, if we can make alpine and this ubuntu container similar it would be great. Thanks.",
+      "parentUuid": "1aa4ed85_f4334ff4",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "26c6f1aefce88a11e241eea7f7bb9fa0d6795b4e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
