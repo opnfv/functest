@@ -188,19 +188,42 @@ class RallyBase(testcase.OSGCTestCase):
 
             installer_type = CONST.__getattribute__('INSTALLER_TYPE')
             deploy_scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
-            if (bool(installer_type) * bool(deploy_scenario)):
-                if 'scenario' in black_list_yaml.keys():
-                    for item in black_list_yaml['scenario']:
-                        scenarios = item['scenarios']
-                        installers = item['installers']
-                        if (deploy_scenario in scenarios and
-                                installer_type in installers):
-                            tests = item['tests']
-                            black_tests.extend(tests)
+            if bool(installer_type) and bool(deploy_scenario) \
+                    and 'scenario' in black_list_yaml.keys():
+                for item in black_list_yaml['scenario']:
+                    scenarios = item['scenarios']
+                    installers = item['installers']
+                    if RallyBase.in_iterable_re(deploy_scenario, scenarios) \
+                        and RallyBase.in_iterable_re(installer_type,
+                                                     installers):
+                        tests = item['tests']
+                        black_tests.extend(tests)
         except Exception:
             logger.debug("Scenario exclusion not applied.")
 
         return black_tests
+
+    @staticmethod
+    def in_iterable_re(needle, haystack):
+        """
+        Check if given needle is in the iterable haystack, using regex.
+
+        :param needle: string to be matched
+        :param haystack: iterable of strings (optionally regex patterns)
+        :return: True if needle is eqial to any of the elements in haystack,
+                 or if a nonempty regex pattern in haystack is found in needle.
+        """
+
+        # match without regex
+        if needle in haystack:
+            return True
+
+        for pattern in haystack:
+            # match if regex pattern is set and found in the needle
+            if pattern and re.search(pattern, needle) is not None:
+                return True
+        else:
+            return False
 
     @staticmethod
     def excl_func():
@@ -234,6 +257,9 @@ class RallyBase(testcase.OSGCTestCase):
 
         black_tests = list(set(RallyBase.excl_func() +
                            RallyBase.excl_scenario()))
+
+        if black_tests:
+            logger.debug("Blacklisted tests: " + str(black_tests))
 
         include = True
         for cases_line in cases_file:
