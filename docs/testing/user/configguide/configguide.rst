@@ -361,7 +361,7 @@ follows::
         |-- __init__.py
         |-- ci
         |   |-- __init__.py
-        |   |-- check_os.sh
+        |   |-- check_deployment.py
         |   |-- config_functest.yaml
         |   |-- config_patch.yaml
         |   |-- generate_report.py
