@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_4df656d9",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-07T12:12:12Z",
+      "side": 1,
+      "message": "I prefer from in this case",
+      "revId": "388883cdef777da0e3f3a1c1d6321a4ae95aa5ee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ed02a2b3",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-07T12:12:12Z",
+      "side": 1,
+      "message": "We could use PrettyTable here. I can take the action point.",
+      "revId": "388883cdef777da0e3f3a1c1d6321a4ae95aa5ee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_0d005ea9",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-07T12:12:12Z",
+      "side": 1,
+      "message": "I prefer adding docstrings after the copyright",
+      "revId": "388883cdef777da0e3f3a1c1d6321a4ae95aa5ee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ad2caa4b",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-07T12:12:12Z",
+      "side": 1,
+      "message": "_ instead?",
+      "revId": "388883cdef777da0e3f3a1c1d6321a4ae95aa5ee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
