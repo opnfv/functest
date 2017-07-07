@@ -1,5 +1,6 @@
 FROM alpine:3.6
 
+COPY upper-constraints.txt upper-constraints.txt
 RUN apk --no-cache add --update \
         python libffi libssl1.0 libjpeg-turbo py-pip bash \
         grep sed wget ca-certificates git && \
@@ -8,12 +9,10 @@ RUN apk --no-cache add --update \
         openssl-dev libjpeg-turbo-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=stable/ocata | \
         sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ \
-        > upper-constraints.txt && \
-    pip install --src /src -cupper-constraints.txt \
-        git+https://gerrit.opnfv.org/gerrit/releng#egg=opnfv\&subdirectory=modules \
-        git+https://gerrit.opnfv.org/gerrit/snaps#egg=snaps \
+        > o-upper-constraints.txt && \
+    pip install --src /src -cupper-constraints.txt -co-upper-constraints.txt \
         git+https://gerrit.opnfv.org/gerrit/functest#egg=functest && \
-    rm upper-constraints.txt && \
+    rm upper-constraints.txt o-upper-constraints.txt && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally-manage db create && \

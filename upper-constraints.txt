@@ -1,0 +1,17 @@
+git+https://gerrit.opnfv.org/gerrit/releng#egg=opnfv&subdirectory=modules
+git+https://gerrit.opnfv.org/gerrit/snaps#egg=snaps
+git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
+git+https://gerrit.opnfv.org/gerrit/sdnvpn#egg=sdnvpn
+git+https://gerrit.opnfv.org/gerrit/opera#egg=opera
+git+https://gerrit.opnfv.org/gerrit/securityscanning#egg=securityscanning
+git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
+-e git+https://github.com/openstack/refstack-client#egg=refstack-client
+cloudify_rest_client===4.0
+iniparse===0.4
+openbaton-cli===2.2.1b7
+robotframework===3.0.2
+robotframework-httplibrary===0.4.2
+robotframework-requests===0.4.7
+robotframework-sshlibrary===2.1.3;python_version=='2.7'
+kingbird===1.1.0
+rally===0.9.1

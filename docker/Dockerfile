@@ -70,18 +70,17 @@ RUN mkdir -p ${REPOS_VNFS_DIR} \
 RUN git config --global http.sslVerify false
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
+COPY upper-constraints.txt upper-constraints.txt
 RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=stable/ocata | \
         sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ \
-        > upper-constraints.txt && \
-    pip install --src /src -cupper-constraints.txt \
+        > o-upper-constraints.txt && \
+    pip install --src /src -cupper-constraints.txt -co-upper-constraints.txt \
         git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
-        git+https://gerrit.opnfv.org/gerrit/releng@$BRANCH#egg=opnfv\&subdirectory=modules \
-        git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps \
-        -r thirdparty-requirements.txt && \
+        -rthirdparty-requirements.txt && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally-manage db create && \
-    rm thirdparty-requirements.txt upper-constraints.txt
+    rm thirdparty-requirements.txt upper-constraints.txt o-upper-constraints.txt
 
 # OPNFV repositories
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${REPOS_DIR}/copper
