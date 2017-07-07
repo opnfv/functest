@@ -18,6 +18,17 @@ import requests
 import functest.utils.functest_utils as ft_utils
 
 
+def finish_session(current_scenario):
+    """Finish a recording session."""
+    if current_scenario is None:
+        EnergyRecorder.stop()
+    else:
+        EnergyRecorder.submit_scenario(
+            current_scenario["scenario"],
+            current_scenario["step"]
+        )
+
+
 def enable_recording(method):
     """
     Record energy during method execution.
@@ -38,14 +49,12 @@ def enable_recording(method):
         """
         current_scenario = EnergyRecorder.get_current_scenario()
         EnergyRecorder.start(args[0].case_name)
-        return_value = method(*args)
-        if current_scenario is None:
-            EnergyRecorder.stop()
-        else:
-            EnergyRecorder.submit_scenario(
-                current_scenario["scenario"],
-                current_scenario["step"]
-            )
+        try:
+            return_value = method(*args)
+            finish_session(current_scenario)
+        except Exception:  # pylint: disable=broad-except
+            finish_session(current_scenario)
+            raise
         return return_value
     return wrapper
 
@@ -246,7 +255,6 @@ class EnergyRecorder(object):
         """Get current running scenario (if any, None else)."""
         EnergyRecorder.logger.debug("Getting current scenario")
         return_value = None
-        print "In get current"
         try:
             # Ensure that connectyvity settings are loaded
             EnergyRecorder.load_config()
