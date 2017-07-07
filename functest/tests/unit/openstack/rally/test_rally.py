@@ -217,7 +217,7 @@ class OSRallyTesting(unittest.TestCase):
                 self.assertRaises(Exception):
             self.rally_base._run_task('test_name')
 
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.logger.info')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.info')
     def test_run_task_no_tests_for_scenario(self, mock_logger_info):
         with mock.patch('functest.opnfv_tests.openstack.rally.rally.'
                         'os.path.exists',
@@ -227,10 +227,10 @@ class OSRallyTesting(unittest.TestCase):
             mock.patch.object(self.rally_base, 'file_is_empty',
                               return_value=True):
             self.rally_base._run_task('test_name')
-            str = 'No tests for scenario "test_name"'
-            mock_logger_info.assert_any_call(str)
+            mock_logger_info.assert_any_call('No tests for scenario \"%s\"',
+                                             'test_name')
 
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.logger.error')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.error')
     def test_run_task_taskid_missing(self, mock_logger_error):
         with mock.patch('functest.opnfv_tests.openstack.rally.rally.'
                         'os.path.exists',
@@ -253,8 +253,8 @@ class OSRallyTesting(unittest.TestCase):
             str = 'Failed to retrieve task_id, validating task...'
             mock_logger_error.assert_any_call(str)
 
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.logger.info')
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.logger.error')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.info')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.error')
     def test_run_task_default(self, mock_logger_error,
                               mock_logger_info):
         popen = mock.Mock()

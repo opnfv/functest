@@ -248,7 +248,9 @@ class EnergyRecorderTest(unittest.TestCase):
             self.__decorated_method() == self.returned_value_to_preserve
         )
 
-    def test_decorator_preserve_ex(self):
+    @mock.patch(
+        "functest.energy.energy.finish_session")
+    def test_decorator_preserve_ex(self, finish_mock=None):
         """Test that decorator preserve method exceptions."""
         self.test_load_config()
         with self.assertRaises(Exception) as context:
@@ -256,6 +258,7 @@ class EnergyRecorderTest(unittest.TestCase):
         self.assertTrue(
             self.exception_message_to_preserve in context.exception
         )
+        self.assertTrue(finish_mock.called)
 
     @mock.patch("functest.utils.functest_utils.get_functest_config",
                 side_effect=config_loader_mock)
