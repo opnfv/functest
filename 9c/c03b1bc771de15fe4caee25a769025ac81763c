@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: valentin boucher <valentin.boucher@orange.com>
+Code-Review+2: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-by: Jose Lausuch <jose.lausuch@ericsson.com>
+Submitted-at: Fri, 07 Jul 2017 07:38:13 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/37025
+Project: functest
+Branch: refs/heads/master
