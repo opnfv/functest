@@ -188,19 +188,45 @@ class RallyBase(testcase.OSGCTestCase):
 
             installer_type = CONST.__getattribute__('INSTALLER_TYPE')
             deploy_scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
-            if (bool(installer_type) * bool(deploy_scenario)):
+            if bool(installer_type) and bool(deploy_scenario):
                 if 'scenario' in black_list_yaml.keys():
                     for item in black_list_yaml['scenario']:
                         scenarios = item['scenarios']
                         installers = item['installers']
-                        if (deploy_scenario in scenarios and
-                                installer_type in installers):
+                        if installer_type in installers and \
+                                RallyBase.in_scenarios_wildcard(deploy_scenario,
+                                                                scenarios):
                             tests = item['tests']
                             black_tests.extend(tests)
         except Exception:
             logger.debug("Scenario exclusion not applied.")
 
         return black_tests
+
+    @staticmethod
+    def in_scenarios_wildcard(deploy_scenario, scenarios):
+        """
+        Check if given deployment scenario is in the list of scenarios, using
+        wildcard matching. Each of the fields in the scenarios can be replaced
+        by a '*' to allow any value for that field.
+        For details about the scenario naming scheme, see
+            https://wiki.opnfv.org/display/INF/CI+Scenario+Naming
+        """
+
+        # match without a wildcard
+        if deploy_scenario in scenarios:
+            return True
+
+        # split into individual fields
+        deploy_scenario_parts = deploy_scenario.split('-')
+
+        for scenario in scenarios:
+            # match if fields match or if other field is a wildcard or undefined
+            if all(map(lambda f1, f2: f1 == f2 or f2 == '*' or f2 is None,
+                       deploy_scenario_parts, scenario.split('-'))):
+                return True
+
+        return False
 
     @staticmethod
     def excl_func():
@@ -234,6 +260,9 @@ class RallyBase(testcase.OSGCTestCase):
 
         black_tests = list(set(RallyBase.excl_func() +
                            RallyBase.excl_scenario()))
+
+        if black_tests:
+            logger.debug("Blacklisted tests: " + str(black_tests))
 
         include = True
         for cases_line in cases_file:
