@@ -13,9 +13,22 @@
 import json
 import logging
 import urllib
+
+from functools import wraps
 import requests
 
 import functest.utils.functest_utils as ft_utils
+
+
+def finish_session(current_scenario):
+    """Finish a recording session."""
+    if current_scenario is None:
+        EnergyRecorder.stop()
+    else:
+        EnergyRecorder.submit_scenario(
+            current_scenario["scenario"],
+            current_scenario["step"]
+        )
 
 
 def enable_recording(method):
@@ -30,6 +43,7 @@ def enable_recording(method):
         .. note:: "method" should belong to a class having a "case_name"
                   attribute
     """
+    @wraps(method)
     def wrapper(*args):
         """
         Record energy during method execution (implementation).
@@ -38,14 +52,12 @@ def enable_recording(method):
         """
         current_scenario = EnergyRecorder.get_current_scenario()
         EnergyRecorder.start(args[0].case_name)
-        return_value = method(*args)
-        if current_scenario is None:
-            EnergyRecorder.stop()
-        else:
-            EnergyRecorder.submit_scenario(
-                current_scenario["scenario"],
-                current_scenario["step"]
-            )
+        try:
+            return_value = method(*args)
+            finish_session(current_scenario)
+        except Exception:  # pylint: disable=broad-except
+            finish_session(current_scenario)
+            raise
         return return_value
     return wrapper
 
@@ -246,7 +258,6 @@ class EnergyRecorder(object):
         """Get current running scenario (if any, None else)."""
         EnergyRecorder.logger.debug("Getting current scenario")
         return_value = None
-        print "In get current"
         try:
             # Ensure that connectyvity settings are loaded
             EnergyRecorder.load_config()
@@ -263,13 +274,11 @@ class EnergyRecorder(object):
                 log_msg = log_msg.format(
                     EnergyRecorder.energy_recorder_api["uri"])
                 EnergyRecorder.logger.error(log_msg)
-                print log_msg
                 return_value = None
             else:
                 log_msg = "Error while getting current scenario\n{}"
                 log_msg = log_msg.format(response.text)
                 EnergyRecorder.logger.error(log_msg)
-                print log_msg
                 return_value = None
         except Exception:  # pylint: disable=broad-except
             # Default exception handler to ensure that method
