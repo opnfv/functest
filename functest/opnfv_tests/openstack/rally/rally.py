@@ -8,27 +8,32 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
+"""Rally testcases implementation."""
+
 from __future__ import division
 
 import json
 import logging
 import os
-import pkg_resources
 import re
 import subprocess
 import time
 
 import iniparse
+import pkg_resources
 import yaml
 
 from functest.core import testcase
+from functest.energy import energy
 from functest.utils.constants import CONST
 import functest.utils.openstack_utils as os_utils
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 class RallyBase(testcase.OSGCTestCase):
+    """Base class form Rally testcases implementation."""
+
     TESTS = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
              'neutron', 'nova', 'quotas', 'vm', 'all']
     GLANCE_IMAGE_NAME = CONST.__getattribute__('openstack_image_name')
@@ -64,6 +69,7 @@ class RallyBase(testcase.OSGCTestCase):
     RALLY_ROUTER_NAME = CONST.__getattribute__('rally_router_name')
 
     def __init__(self, **kwargs):
+        """Initialize RallyBase object."""
         super(RallyBase, self).__init__(**kwargs)
         self.mode = ''
         self.summary = []
@@ -74,6 +80,12 @@ class RallyBase(testcase.OSGCTestCase):
         self.network_dict = {}
         self.volume_type = None
         self.smoke = None
+        self.test_name = None
+        self.image_exists = None
+        self.image_id = None
+        self.start_time = None
+        self.result = None
+        self.details = None
 
     def _build_task_args(self, test_file_name):
         task_args = {'service_list': [test_file_name]}
@@ -117,7 +129,7 @@ class RallyBase(testcase.OSGCTestCase):
                 raise Exception("The scenario '%s' does not exist."
                                 % scenario_file_name)
 
-        logger.debug('Scenario fetched from : {}'.format(scenario_file_name))
+        LOGGER.debug('Scenario fetched from : %s', scenario_file_name)
         test_file_name = os.path.join(self.TEMP_DIR, test_yaml_file_name)
 
         if not os.path.exists(self.TEMP_DIR):
@@ -129,7 +141,8 @@ class RallyBase(testcase.OSGCTestCase):
     @staticmethod
     def get_task_id(cmd_raw):
         """
-        get task id from command rally result
+        Get task id from command rally result.
+
         :param cmd_raw:
         :return: task_id as string
         """
@@ -144,7 +157,8 @@ class RallyBase(testcase.OSGCTestCase):
     @staticmethod
     def task_succeed(json_raw):
         """
-        Parse JSON from rally JSON results
+        Parse JSON from rally JSON results.
+
         :param json_raw:
         :return: Bool
         """
@@ -161,6 +175,7 @@ class RallyBase(testcase.OSGCTestCase):
 
     @staticmethod
     def live_migration_supported():
+        """Determine is live migration is supported."""
         config = iniparse.ConfigParser()
         if (config.read(RallyBase.TEMPEST_CONF_FILE) and
                 config.has_section('compute-feature-enabled') and
@@ -173,6 +188,7 @@ class RallyBase(testcase.OSGCTestCase):
 
     @staticmethod
     def get_cmd_output(proc):
+        """Get command stdout."""
         result = ""
         while proc.poll() is None:
             line = proc.stdout.readline()
@@ -181,6 +197,7 @@ class RallyBase(testcase.OSGCTestCase):
 
     @staticmethod
     def excl_scenario():
+        """Exclude scenario."""
         black_tests = []
         try:
             with open(RallyBase.BLACKLIST_FILE, 'r') as black_list_file:
@@ -199,7 +216,16 @@ class RallyBase(testcase.OSGCTestCase):
                         tests = item['tests']
                         black_tests.extend(tests)
         except Exception:
-            logger.debug("Scenario exclusion not applied.")
+            LOGGER.debug("Scenario exclusion not applied.")
+            if bool(installer_type) * bool(deploy_scenario):
+                if 'scenario' in black_list_yaml.keys():
+                    for item in black_list_yaml['scenario']:
+                        scenarios = item['scenarios']
+                        installers = item['installers']
+                        if (deploy_scenario in scenarios and
+                                installer_type in installers):
+                            tests = item['tests']
+                            black_tests.extend(tests)
 
         return black_tests
 
@@ -213,7 +239,6 @@ class RallyBase(testcase.OSGCTestCase):
         :return: True if needle is eqial to any of the elements in haystack,
                  or if a nonempty regex pattern in haystack is found in needle.
         """
-
         # match without regex
         if needle in haystack:
             return True
@@ -227,6 +252,7 @@ class RallyBase(testcase.OSGCTestCase):
 
     @staticmethod
     def excl_func():
+        """Exclude functionalities."""
         black_tests = []
         func_list = []
 
@@ -244,22 +270,23 @@ class RallyBase(testcase.OSGCTestCase):
                         if func in functions:
                             tests = item['tests']
                             black_tests.extend(tests)
-        except Exception:
-            logger.debug("Functionality exclusion not applied.")
+        except Exception:  # pylint: disable=broad-except
+            LOGGER.debug("Functionality exclusion not applied.")
 
         return black_tests
 
     @staticmethod
     def apply_blacklist(case_file_name, result_file_name):
-        logger.debug("Applying blacklist...")
+        """Apply blacklist."""
+        LOGGER.debug("Applying blacklist...")
         cases_file = open(case_file_name, 'r')
         result_file = open(result_file_name, 'w')
 
         black_tests = list(set(RallyBase.excl_func() +
-                           RallyBase.excl_scenario()))
+                               RallyBase.excl_scenario()))
 
         if black_tests:
-            logger.debug("Blacklisted tests: " + str(black_tests))
+            LOGGER.debug("Blacklisted tests: " + str(black_tests))
 
         include = True
         for cases_line in cases_file:
@@ -280,56 +307,58 @@ class RallyBase(testcase.OSGCTestCase):
 
     @staticmethod
     def file_is_empty(file_name):
+        """Determine is a file is empty."""
         try:
             if os.stat(file_name).st_size > 0:
                 return False
-        except:
+        except Exception:  # pylint: disable=broad-except
             pass
 
         return True
 
     def _run_task(self, test_name):
-        logger.info('Starting test scenario "{}" ...'.format(test_name))
+        """Run a task."""
+        LOGGER.info('Starting test scenario "%s" ...', test_name)
 
         task_file = os.path.join(self.RALLY_DIR, 'task.yaml')
         if not os.path.exists(task_file):
-            logger.error("Task file '%s' does not exist." % task_file)
-            raise Exception("Task file '%s' does not exist." % task_file)
+            LOGGER.error("Task file '%s' does not exist.", task_file)
+            raise Exception("Task file '%s' does not exist.", task_file)
 
         file_name = self._prepare_test_list(test_name)
         if self.file_is_empty(file_name):
-            logger.info('No tests for scenario "{}"'.format(test_name))
+            LOGGER.info('No tests for scenario "%s"', test_name)
             return
 
         cmd_line = ("rally task start --abort-on-sla-failure "
                     "--task {0} "
                     "--task-args \"{1}\""
                     .format(task_file, self._build_task_args(test_name)))
-        logger.debug('running command line: {}'.format(cmd_line))
+        LOGGER.debug('running command line: %s', cmd_line)
 
-        p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
-                             stderr=subprocess.STDOUT, shell=True)
-        output = self._get_output(p, test_name)
+        proc = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT, shell=True)
+        output = self._get_output(proc, test_name)
         task_id = self.get_task_id(output)
-        logger.debug('task_id : {}'.format(task_id))
+        LOGGER.debug('task_id : %s', task_id)
 
         if task_id is None:
-            logger.error('Failed to retrieve task_id, validating task...')
+            LOGGER.error('Failed to retrieve task_id, validating task...')
             cmd_line = ("rally task validate "
                         "--task {0} "
                         "--task-args \"{1}\""
                         .format(task_file, self._build_task_args(test_name)))
-            logger.debug('running command line: {}'.format(cmd_line))
-            p = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT, shell=True)
-            output = self.get_cmd_output(p)
-            logger.error("Task validation result:" + "\n" + output)
+            LOGGER.debug('running command line: %s', cmd_line)
+            proc = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
+                                    stderr=subprocess.STDOUT, shell=True)
+            output = self.get_cmd_output(proc)
+            LOGGER.error("Task validation result:" + "\n" + output)
             return
 
         # check for result directory and create it otherwise
         if not os.path.exists(self.RESULTS_DIR):
-            logger.debug('{} does not exist, we create it.'
-                         .format(self.RESULTS_DIR))
+            LOGGER.debug('%s does not exist, we create it.',
+                         self.RESULTS_DIR)
             os.makedirs(self.RESULTS_DIR)
 
         # write html report file
@@ -338,25 +367,25 @@ class RallyBase(testcase.OSGCTestCase):
         cmd_line = "rally task report {} --out {}".format(task_id,
                                                           report_html_dir)
 
-        logger.debug('running command line: {}'.format(cmd_line))
+        LOGGER.debug('running command line: %s', cmd_line)
         os.popen(cmd_line)
 
         # get and save rally operation JSON result
         cmd_line = "rally task results %s" % task_id
-        logger.debug('running command line: {}'.format(cmd_line))
+        LOGGER.debug('running command line: %s', cmd_line)
         cmd = os.popen(cmd_line)
         json_results = cmd.read()
         report_json_name = 'opnfv-{}.json'.format(test_name)
         report_json_dir = os.path.join(self.RESULTS_DIR, report_json_name)
-        with open(report_json_dir, 'w') as f:
-            logger.debug('saving json file')
-            f.write(json_results)
+        with open(report_json_dir, 'w') as r_file:
+            LOGGER.debug('saving json file')
+            r_file.write(json_results)
 
-        """ parse JSON operation result """
+        # parse JSON operation result
         if self.task_succeed(json_results):
-            logger.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
+            LOGGER.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
         else:
-            logger.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
+            LOGGER.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
 
     def _get_output(self, proc, test_name):
         result = ""
@@ -393,15 +422,15 @@ class RallyBase(testcase.OSGCTestCase):
                 try:
                     success += float(percentage)
                 except ValueError:
-                    logger.info('Percentage error: %s, %s' %
-                                (percentage, line))
+                    LOGGER.info('Percentage error: %s, %s',
+                                percentage, line)
                 nb_totals += 1
             elif "Full duration" in line:
                 duration = line.split(': ')[1]
                 try:
                     overall_duration += float(duration)
                 except ValueError:
-                    logger.info('Duration error: %s, %s' % (duration, line))
+                    LOGGER.info('Duration error: %s, %s', duration, line)
 
         overall_duration = "{:10.2f}".format(overall_duration)
         if nb_totals == 0:
@@ -415,30 +444,30 @@ class RallyBase(testcase.OSGCTestCase):
                             'success': success_avg}
         self.summary.append(scenario_summary)
 
-        logger.debug("\n" + result)
+        LOGGER.debug("\n" + result)
 
         return result
 
     def _prepare_env(self):
-        logger.debug('Validating the test name...')
-        if not (self.test_name in self.TESTS):
+        LOGGER.debug('Validating the test name...')
+        if self.test_name not in self.TESTS:
             raise Exception("Test name '%s' is invalid" % self.test_name)
 
         volume_types = os_utils.list_volume_types(self.cinder_client,
                                                   private=False)
         if volume_types:
-            logger.debug("Using existing volume type(s)...")
+            LOGGER.debug("Using existing volume type(s)...")
         else:
-            logger.debug('Creating volume type...')
+            LOGGER.debug('Creating volume type...')
             self.volume_type = os_utils.create_volume_type(
                 self.cinder_client, self.CINDER_VOLUME_TYPE_NAME)
             if self.volume_type is None:
                 raise Exception("Failed to create volume type '%s'" %
                                 self.CINDER_VOLUME_TYPE_NAME)
-            logger.debug("Volume type '%s' is created succesfully." %
+            LOGGER.debug("Volume type '%s' is created succesfully.",
                          self.CINDER_VOLUME_TYPE_NAME)
 
-        logger.debug('Getting or creating image...')
+        LOGGER.debug('Getting or creating image...')
         self.image_exists, self.image_id = os_utils.get_or_create_image(
             self.GLANCE_IMAGE_NAME,
             self.GLANCE_IMAGE_PATH,
@@ -447,7 +476,7 @@ class RallyBase(testcase.OSGCTestCase):
             raise Exception("Failed to get or create image '%s'" %
                             self.GLANCE_IMAGE_NAME)
 
-        logger.debug("Creating network '%s'..." % self.RALLY_PRIVATE_NET_NAME)
+        LOGGER.debug("Creating network '%s'...", self.RALLY_PRIVATE_NET_NAME)
         self.network_dict = os_utils.create_shared_network_full(
             self.RALLY_PRIVATE_NET_NAME,
             self.RALLY_PRIVATE_SUBNET_NAME,
@@ -460,7 +489,7 @@ class RallyBase(testcase.OSGCTestCase):
     def _run_tests(self):
         if self.test_name == 'all':
             for test in self.TESTS:
-                if (test == 'all' or test == 'vm'):
+                if test == 'all' or test == 'vm':
                     continue
                 self._run_task(test)
         else:
@@ -485,25 +514,25 @@ class RallyBase(testcase.OSGCTestCase):
         total_duration = 0.0
         total_nb_tests = 0
         total_success = 0.0
-        for s in self.summary:
-            name = "{0:<17}".format(s['test_name'])
-            duration = float(s['overall_duration'])
+        for item in self.summary:
+            name = "{0:<17}".format(item['test_name'])
+            duration = float(item['overall_duration'])
             total_duration += duration
             duration = time.strftime("%M:%S", time.gmtime(duration))
             duration = "{0:<10}".format(duration)
-            nb_tests = "{0:<13}".format(s['nb_tests'])
-            total_nb_tests += int(s['nb_tests'])
-            success = "{0:<10}".format(str(s['success']) + '%')
-            total_success += float(s['success'])
+            nb_tests = "{0:<13}".format(item['nb_tests'])
+            total_nb_tests += int(item['nb_tests'])
+            success = "{0:<10}".format(str(item['success']) + '%')
+            total_success += float(item['success'])
             report += ("" +
                        "| " + name + " | " + duration + " | " +
                        nb_tests + " | " + success + "|\n" +
                        "+-------------------+------------"
                        "+---------------+-----------+\n")
             payload.append({'module': name,
-                            'details': {'duration': s['overall_duration'],
-                                        'nb tests': s['nb_tests'],
-                                        'success': s['success']}})
+                            'details': {'duration': item['overall_duration'],
+                                        'nb tests': item['nb_tests'],
+                                        'success': item['success']}})
 
         total_duration_str = time.strftime("%H:%M:%S",
                                            time.gmtime(total_duration))
@@ -526,29 +555,31 @@ class RallyBase(testcase.OSGCTestCase):
                    "+===============+===========+")
         report += "\n"
 
-        logger.info("\n" + report)
+        LOGGER.info("\n" + report)
         payload.append({'summary': {'duration': total_duration,
                                     'nb tests': total_nb_tests,
                                     'nb success': success_rate}})
 
         self.details = payload
 
-        logger.info("Rally '%s' success_rate is %s%%"
-                    % (self.case_name, success_rate))
+        LOGGER.info("Rally '%s' success_rate is %s%%",
+                    self.case_name, success_rate)
 
     def _clean_up(self):
         if self.volume_type:
-            logger.debug("Deleting volume type '%s'..." % self.volume_type)
+            LOGGER.debug("Deleting volume type '%s'...", self.volume_type)
             os_utils.delete_volume_type(self.cinder_client, self.volume_type)
 
         if not self.image_exists:
-            logger.debug("Deleting image '%s' with ID '%s'..."
-                         % (self.GLANCE_IMAGE_NAME, self.image_id))
+            LOGGER.debug("Deleting image '%s' with ID '%s'...",
+                         self.GLANCE_IMAGE_NAME, self.image_id)
             if not os_utils.delete_glance_image(self.nova_client,
                                                 self.image_id):
-                logger.error("Error deleting the glance image")
+                LOGGER.error("Error deleting the glance image")
 
-    def run(self):
+    @energy.enable_recording
+    def run(self, **kwargs):
+        """Run testcase."""
         self.start_time = time.time()
         try:
             self._prepare_env()
@@ -556,8 +587,8 @@ class RallyBase(testcase.OSGCTestCase):
             self._generate_report()
             self._clean_up()
             res = testcase.TestCase.EX_OK
-        except Exception as e:
-            logger.error('Error with run: %s' % e)
+        except Exception as exc:   # pylint: disable=broad-except
+            LOGGER.error('Error with run: %s', exc)
             res = testcase.TestCase.EX_RUN_ERROR
 
         self.stop_time = time.time()
@@ -565,7 +596,10 @@ class RallyBase(testcase.OSGCTestCase):
 
 
 class RallySanity(RallyBase):
+    """Rally sanity testcase implementation."""
+
     def __init__(self, **kwargs):
+        """Initialize RallySanity object."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_sanity"
         super(RallySanity, self).__init__(**kwargs)
@@ -576,7 +610,10 @@ class RallySanity(RallyBase):
 
 
 class RallyFull(RallyBase):
+    """Rally full testcase implementation."""
+
     def __init__(self, **kwargs):
+        """Initialize RallyFull object."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_full"
         super(RallyFull, self).__init__(**kwargs)
