@@ -19,6 +19,7 @@ import fileinput
 
 import yaml
 
+from functest.ci import check_deployment
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
@@ -250,18 +251,9 @@ def update_db_url():
 
 def verify_deployment():
     print_separator()
-    logger.info("Verifying OpenStack services...")
-    cmd = "check_os.sh"
-
-    logger.debug("Executing command: %s" % cmd)
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-
-    while p.poll() is None:
-        line = p.stdout.readline().rstrip()
-        if "ERROR" in line:
-            logger.error(line)
-            raise Exception("Problem while running '{}'.".format(cmd))
-        logger.info(line)
+    logger.info("Verifying OpenStack deployment...")
+    deployment = check_deployment.CheckDeployment()
+    deployment.check_all()
 
 
 def install_rally():
