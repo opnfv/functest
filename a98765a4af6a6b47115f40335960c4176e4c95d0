@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_b2a167ab",
+        "filename": "docker/core/Dockerfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-07T08:10:08Z",
+      "side": 1,
+      "message": "Yes I will add it as TODO.\nI must first define upper-constraints in functest and ease the next updates.",
+      "parentUuid": "1aa4ed85_5210334e",
+      "revId": "a98765a4af6a6b47115f40335960c4176e4c95d0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_f21cbf6c",
         "filename": "docker/smoke/Dockerfile",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-07T07:36:54Z",
       "side": 1,
       "message": "Add a comment line to describe the Docker file",
+      "revId": "a98765a4af6a6b47115f40335960c4176e4c95d0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d2a663c1",
+        "filename": "docker/smoke/Dockerfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-07T08:10:08Z",
+      "side": 1,
+      "message": "idem",
+      "parentUuid": "1aa4ed85_f21cbf6c",
       "revId": "a98765a4af6a6b47115f40335960c4176e4c95d0",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
