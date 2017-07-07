@@ -12,8 +12,8 @@ import os
 
 import click
 
+from functest.ci import check_deployment
 from functest.utils.constants import CONST
-import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 
@@ -49,7 +49,8 @@ class CliOpenStack(object):
 
     def check(self):
         self.ping_endpoint()
-        ft_utils.execute_command("check_os.sh", verbose=False)
+        deployment = check_deployment.CheckDeployment()
+        deployment.check_all()
 
     def snapshot_create(self):
         self.ping_endpoint()

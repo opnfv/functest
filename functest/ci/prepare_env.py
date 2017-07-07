@@ -19,6 +19,7 @@ import fileinput
 
 import yaml
 
+from functest.ci import check_deployment
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
@@ -177,26 +178,6 @@ def create_directories():
 def source_rc_file():
     print_separator()
 
-    if CONST.__getattribute__('openstack_creds') is None:
-        logger.warning("The environment variable 'creds' must be set and"
-                       "pointing to the local RC file. Using default: "
-                       "/home/opnfv/functest/conf/openstack.creds ...")
-        os.path.join(
-            CONST.__getattribute__('dir_functest_conf'), 'openstack.creds')
-
-    if not os.path.isfile(CONST.__getattribute__('openstack_creds')):
-        raise Exception(
-            "OpenStack credentials file not provided. "
-            "The OpenStack credentials must be in {}"
-            .format(CONST.__getattribute__('openstack_creds')))
-    else:
-        logger.info("RC file provided in %s."
-                    % CONST.__getattribute__('openstack_creds'))
-        if os.path.getsize(CONST.__getattribute__('openstack_creds')) == 0:
-            raise Exception(
-                "The OpenStack RC file {} is empty."
-                .format(CONST.__getattribute__('openstack_creds')))
-
     logger.info("Sourcing the OpenStack RC file...")
     os_utils.source_credentials(CONST.__getattribute__('openstack_creds'))
     for key, value in os.environ.iteritems():
@@ -250,18 +231,9 @@ def update_db_url():
 
 def verify_deployment():
     print_separator()
-    logger.info("Verifying OpenStack services...")
-    cmd = "check_os.sh"
-
-    logger.debug("Executing command: %s" % cmd)
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-
-    while p.poll() is None:
-        line = p.stdout.readline().rstrip()
-        if "ERROR" in line:
-            logger.error(line)
-            raise Exception("Problem while running '{}'.".format(cmd))
-        logger.info(line)
+    logger.info("Verifying OpenStack deployment...")
+    deployment = check_deployment.CheckDeployment()
+    deployment.check_all()
 
 
 def install_rally():
@@ -364,11 +336,11 @@ def prepare_env(**kwargs):
             return -1
         elif kwargs['action'] == "start":
             logger.info("######### Preparing Functest environment #########\n")
+            verify_deployment()
             check_env_variables()
             create_directories()
             source_rc_file()
             update_config_file()
-            verify_deployment()
             install_rally()
             install_tempest()
             create_flavor()
