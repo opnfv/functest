@@ -11,16 +11,16 @@ python-novaclient!=7.0.0,>=6.0.0 # Apache-2.0
 python-tackerclient>=0.8.0 # Apache-2.0
 pexpect!=3.3,>=3.1 # ISC License
 requests!=2.12.2,>=2.10.0 # Apache-2.0
-robotframework==3.0.2
-robotframework-httplibrary==0.4.2
-robotframework-requests==0.4.7
-robotframework-sshlibrary==2.1.3;python_version=='2.7'
-scp==0.10.2
+robotframework>=3.0
+robotframework-httplibrary
+robotframework-requests
+robotframework-sshlibrary;python_version=='2.7'
+scp
 dnspython>=1.14.0;python_version=='2.7' # http://www.dnspython.org/LICENSE
 dnspython3!=1.13.0,!=1.14.0,>=1.12.0;python_version>='3.0' # http://www.dnspython.org/LICENSE
-click==6.6
-openbaton-cli==2.2.1-beta7
-cloudify_rest_client==4.0
+click
+openbaton-cli
+cloudify_rest_client
 mock>=2.0 # BSD
 iniparse==0.4
 PrettyTable<0.8,>=0.7.1 # BSD
