@@ -7,10 +7,16 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import os
+# This line is here simply for pep8 as the 'os' package import appears
+# to be required for mock and the unit tests will fail without it
+
+"""vPingSSH testcase."""
+
+import os  # noqa # pylint: disable=unused-import
+
+import time
 import pkg_resources
 from scp import SCPClient
-import time
 
 from snaps.openstack.create_instance import FloatingIpSettings, \
     VmInstanceSettings
@@ -25,20 +31,19 @@ from functest.core.testcase import TestCase
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.vping import vping_base
 from functest.utils.constants import CONST
+from functest.energy import energy
 
 
 class VPingSSH(vping_base.VPingBase):
     """
+    VPingSSH testcase implementation.
+
     Class to execute the vPing test using a Floating IP to connect to one VM
     to issue the ping command to the second
     """
 
     def __init__(self, **kwargs):
-
-        # This line is here simply for pep8 as the 'os' package import appears
-        # to be required for mock and the unit tests will fail without it
-        os.environ
-
+        """Initialize testcase."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "vping_ssh"
         super(VPingSSH, self).__init__(**kwargs)
@@ -51,8 +56,11 @@ class VPingSSH(vping_base.VPingBase):
         self.sg_name = CONST.__getattribute__('vping_sg_name') + self.guid
         self.sg_desc = CONST.__getattribute__('vping_sg_desc')
 
+    @energy.enable_recording
     def run(self):
         """
+        Excecute VPingSSH testcase.
+
         Sets up the OpenStack keypair, router, security group, and VM instance
         objects then validates the ping.
         :return: the exit code from the super.execute() method
@@ -60,7 +68,8 @@ class VPingSSH(vping_base.VPingBase):
         try:
             super(VPingSSH, self).run()
 
-            self.logger.info("Creating keypair with name: '%s'" % self.kp_name)
+            log = "Creating keypair with name: '%s'" % self.kp_name
+            self.logger.info(log)
             kp_creator = deploy_utils.create_keypair(
                 self.os_creds,
                 KeypairSettings(name=self.kp_name,
@@ -69,8 +78,8 @@ class VPingSSH(vping_base.VPingBase):
             self.creators.append(kp_creator)
 
             # Creating router to external network
-            self.logger.info("Creating router with name: '%s'"
-                             % self.router_name)
+            log = "Creating router with name: '%s'" % self.router_name
+            self.logger.info(log)
             net_set = self.network_creator.network_settings
             sub_set = [net_set.subnet_settings[0].name]
             ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
@@ -93,9 +102,9 @@ class VPingSSH(vping_base.VPingBase):
                 ssh_connect_timeout=self.vm_ssh_connect_timeout,
                 port_settings=[port1_settings])
 
-            self.logger.info(
-                "Creating VM 1 instance with name: '%s'"
-                % instance1_settings.name)
+            log = ("Creating VM 1 instance with name: '%s'"
+                   % instance1_settings.name)
+            self.logger.info(log)
             self.vm1_creator = deploy_utils.create_vm_instance(
                 self.os_creds,
                 instance1_settings,
@@ -122,9 +131,9 @@ class VPingSSH(vping_base.VPingBase):
                     port_name=port2_settings.name,
                     router_name=router_creator.router_settings.name)])
 
-            self.logger.info(
-                "Creating VM 2 instance with name: '%s'"
-                % instance2_settings.name)
+            log = ("Creating VM 2 instance with name: '%s'"
+                   % instance2_settings.name)
+            self.logger.info(log)
             self.vm2_creator = deploy_utils.create_vm_instance(
                 self.os_creds,
                 instance2_settings,
@@ -133,14 +142,16 @@ class VPingSSH(vping_base.VPingBase):
             self.creators.append(self.vm2_creator)
 
             return self._execute()
-        except Exception as e:
-            self.logger.error('Unexpected error running test - ' + e.message)
+        except Exception as exc:  # pylint: disable=broad-except
+            self.logger.error('Unexpected error running test - ' + exc.message)
             return TestCase.EX_RUN_ERROR
         finally:
             self._cleanup()
 
     def _do_vping(self, vm_creator, test_ip):
         """
+        Execute ping command.
+
         Override from super
         """
         if vm_creator.vm_ssh_active(block=True):
@@ -153,6 +164,8 @@ class VPingSSH(vping_base.VPingBase):
 
     def _transfer_ping_script(self, ssh):
         """
+        Transfert vping script to VM.
+
         Uses SCP to copy the ping script via the SSH client
         :param ssh: the SSH client
         :return:
@@ -163,11 +176,13 @@ class VPingSSH(vping_base.VPingBase):
             'functest.opnfv_tests.openstack.vping', 'ping.sh')
         try:
             scp.put(ping_script, "~/")
-        except:
-            self.logger.error("Cannot SCP the file '%s'" % ping_script)
+        except Exception:  # pylint: disable=broad-except
+            log = "Cannot SCP the file '%s'" % ping_script
+            self.logger.error(log)
             return False
 
         cmd = 'chmod 755 ~/ping.sh'
+        # pylint: disable=unused-variable
         (stdin, stdout, stderr) = ssh.exec_command(cmd)
         for line in stdout.readlines():
             print line
@@ -176,6 +191,8 @@ class VPingSSH(vping_base.VPingBase):
 
     def _do_vping_ssh(self, ssh, test_ip):
         """
+        Execute ping command via SSH.
+
         Pings the test_ip via the SSH client
         :param ssh: the SSH client used to issue the ping command
         :param test_ip: the IP for the ping command to use
@@ -190,7 +207,7 @@ class VPingSSH(vping_base.VPingBase):
 
         while True:
             time.sleep(1)
-            (stdin, stdout, stderr) = ssh.exec_command(cmd)
+            (_stdin, stdout, _stderr) = ssh.exec_command(cmd)
             output = stdout.readlines()
 
             for line in output:
@@ -206,12 +223,15 @@ class VPingSSH(vping_base.VPingBase):
                     break
             if flag:
                 break
-            self.logger.debug("Pinging %s. Waiting for response..." % test_ip)
+            log = "Pinging %s. Waiting for response..." % test_ip
+            self.logger.debug(log)
             sec += 1
         return exit_code
 
     def __create_security_group(self):
         """
+        Configure OpenStack security groups.
+
         Configures and deploys an OpenStack security group object
         :return: the creator object
         """
@@ -231,7 +251,8 @@ class VPingSSH(vping_base.VPingBase):
                                       protocol=Protocol.tcp, port_range_min=22,
                                       port_range_max=22))
 
-        self.logger.info("Security group with name: '%s'" % self.sg_name)
+        log = "Security group with name: '%s'" % self.sg_name
+        self.logger.info(log)
         return deploy_utils.create_security_group(self.os_creds,
                                                   SecurityGroupSettings(
                                                       name=self.sg_name,
