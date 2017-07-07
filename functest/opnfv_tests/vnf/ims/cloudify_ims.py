@@ -7,6 +7,8 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+"""CloudifyIms testcase implementation."""
+
 import logging
 import os
 import time
@@ -16,6 +18,8 @@ from scp import SCPClient
 from cloudify_rest_client import CloudifyClient
 from cloudify_rest_client.executions import Execution
 
+from functest.energy import energy
+from functest.opnfv_tests.openstack.snaps import snaps_utils
 import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
 from functest.utils.constants import CONST
 import functest.utils.openstack_utils as os_utils
@@ -36,18 +40,17 @@ from snaps.openstack.create_image import ImageSettings, OpenStackImage
 from snaps.openstack.create_keypairs import KeypairSettings, OpenStackKeypair
 from snaps.openstack.create_network import PortSettings
 
-from functest.opnfv_tests.openstack.snaps import snaps_utils
-
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
 
 
 class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
-    """Clearwater vIMS deployed with Cloudify Orchestrator Case"""
+    """Clearwater vIMS deployed with Cloudify Orchestrator Case."""
 
     __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
+        """Initialize CloudifyIms testcase object."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "cloudify_ims"
         super(CloudifyIms, self).__init__(**kwargs)
@@ -93,6 +96,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.__logger.info("Images needed for vIMS: %s", self.images)
 
     def prepare(self):
+        """Prepare testscase (Additional pre-configuration steps)."""
         super(CloudifyIms, self).prepare()
 
         self.__logger.info("Additional pre-configuration steps")
@@ -120,7 +124,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
     def deploy_orchestrator(self):
         """
-        Deploy Cloudify Manager
+        Deploy Cloudify Manager.
 
         network, security group, fip, VM creation
         """
@@ -277,9 +281,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         return True
 
     def deploy_vnf(self):
-        """
-        Deploy Clearwater IMS
-        """
+        """Deploy Clearwater IMS."""
         start_time = time.time()
 
         self.__logger.info("Upload VNFD")
@@ -323,15 +325,14 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.__logger.info(execution)
         if execution.status == 'terminated':
             self.details['vnf'].update(status='PASS', duration=duration)
-            return True
+            result = True
         else:
             self.details['vnf'].update(status='FAIL', duration=duration)
-            return False
+            result = False
+        return result
 
     def test_vnf(self):
-        """
-        Run test on clearwater ims instance
-        """
+        """Run test on clearwater ims instance."""
         start_time = time.time()
 
         cfy_client = self.orchestrator['object']
@@ -342,22 +343,23 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         ellis_ip = outputs['ellis_ip']
         self.config_ellis(ellis_ip)
 
-        if dns_ip != "":
-            vims_test_result = self.run_clearwater_live_test(
-                dns_ip=dns_ip,
-                public_domain=self.vnf['inputs']["public_domain"])
-            duration = time.time() - start_time
-            short_result = sig_test_format(vims_test_result)
-            self.__logger.info(short_result)
-            self.details['test_vnf'].update(status='PASS',
-                                            result=short_result,
-                                            full_result=vims_test_result,
-                                            duration=duration)
-            return True
-        else:
+        if not dns_ip:
             return False
 
+        vims_test_result = self.run_clearwater_live_test(
+            dns_ip=dns_ip,
+            public_domain=self.vnf['inputs']["public_domain"])
+        duration = time.time() - start_time
+        short_result = sig_test_format(vims_test_result)
+        self.__logger.info(short_result)
+        self.details['test_vnf'].update(status='PASS',
+                                        result=short_result,
+                                        full_result=vims_test_result,
+                                        duration=duration)
+        return True
+
     def clean(self):
+        """Clean created objects/functions."""
         try:
             cfy_client = self.orchestrator['object']
             dep_name = self.vnf['descriptor'].get('name')
@@ -389,9 +391,14 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         for creator in reversed(self.created_object):
             try:
                 creator.clean()
-            except Exception as e:
-                self.logger.error('Unexpected error cleaning - %s', e)
+            except Exception as exc:
+                self.logger.error('Unexpected error cleaning - %s', exc)
         super(CloudifyIms, self).clean()
+
+    @energy.enable_recording
+    def run(self, **kwargs):
+        """Execute CloudifyIms test case."""
+        super(CloudifyIms, self).run(**kwargs)
 
 
 # ----------------------------------------------------------
@@ -401,6 +408,8 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 # -----------------------------------------------------------
 def get_config(parameter, file_path):
     """
+    Get config parameter.
+
     Returns the value of a given parameter in file.yaml
     parameter must be given in string format with dots
     Example: general.openstack.image_name
@@ -418,9 +427,7 @@ def get_config(parameter, file_path):
 
 
 def wait_for_execution(client, execution, logger, timeout=2400, ):
-    """
-    Wait for a workflow execution on Cloudify Manager
-    """
+    """Wait for a workflow execution on Cloudify Manager."""
     # if execution already ended - return without waiting
     if execution.status in Execution.END_STATES:
         return execution
@@ -470,7 +477,7 @@ def wait_for_execution(client, execution, logger, timeout=2400, ):
 
 def _get_deployment_environment_creation_execution(client, deployment_id):
     """
-    Get the execution id of a env preparation
+    Get the execution id of a env preparation.
 
     network, security group, fip, VM creation
     """
@@ -484,9 +491,7 @@ def _get_deployment_environment_creation_execution(client, deployment_id):
 
 
 def sig_test_format(sig_test):
-    """
-    Process the signaling result to have a short result
-    """
+    """Process the signaling result to have a short result."""
     nb_passed = 0
     nb_failures = 0
     nb_skipped = 0
