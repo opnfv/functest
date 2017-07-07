@@ -59,12 +59,12 @@ class CliOpenStackTesting(unittest.TestCase):
                                                     self.endpoint_ip)
             mock_exit.assert_called_once_with(0)
 
-    @mock.patch('functest.cli.commands.cli_os.ft_utils.execute_command')
-    def test_check(self, mock_ftutils_execute):
-        with mock.patch.object(self.cli_os, 'ping_endpoint'):
+    def test_check(self):
+        with mock.patch.object(self.cli_os, 'ping_endpoint'), \
+            mock.patch('functest.cli.commands.cli_os.check_deployment.'
+                       'CheckDeployment') as mock_check_deployment:
             self.cli_os.check()
-            mock_ftutils_execute.assert_called_once_with(
-                "check_os.sh", verbose=False)
+            self.assertTrue(mock_check_deployment.called)
 
     @mock.patch('functest.cli.commands.cli_os.os.path.isfile',
                 return_value=False)
