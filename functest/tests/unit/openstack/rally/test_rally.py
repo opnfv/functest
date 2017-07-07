@@ -130,13 +130,44 @@ class OSRallyTesting(unittest.TestCase):
         CONST.__setattr__('DEPLOY_SCENARIO', 'test_scenario')
         dic = {'scenario': [{'scenarios': ['test_scenario'],
                              'installers': ['test_installer'],
-                             'tests': ['test']}]}
+                             'tests': ['test']},
+                            {'scenarios': ['other_scenario'],
+                             'installers': ['test_installer'],
+                             'tests': ['other_test']}]}
         with mock.patch('__builtin__.open', mock.mock_open()), \
             mock.patch('functest.opnfv_tests.openstack.rally.rally.'
                        'yaml.safe_load',
                        return_value=dic):
                 self.assertEqual(self.rally_base.excl_scenario(),
                                  ['test'])
+
+    def test_excl_scenario_regex(self):
+        CONST.__setattr__('INSTALLER_TYPE', 'test_installer')
+        CONST.__setattr__('DEPLOY_SCENARIO', 'os-ctrlT-featT-modeT')
+        dic = {'scenario': [{'scenarios': ['^os-[^-]+-featT-modeT$'],
+                             'installers': ['test_installer'],
+                             'tests': ['test1']},
+                            {'scenarios': ['^os-ctrlT-[^-]+-modeT$'],
+                             'installers': ['test_installer'],
+                             'tests': ['test2']},
+                            {'scenarios': ['^os-ctrlT-featT-[^-]+$'],
+                             'installers': ['test_installer'],
+                             'tests': ['test3']},
+                            {'scenarios': ['^os-'],
+                             'installers': ['test_installer'],
+                             'tests': ['test4']},
+                            {'scenarios': ['other_scenario'],
+                             'installers': ['test_installer'],
+                             'tests': ['test0a']},
+                            {'scenarios': [''],  # empty scenario
+                             'installers': ['test_installer'],
+                             'tests': ['test0b']}]}
+        with mock.patch('__builtin__.open', mock.mock_open()), \
+            mock.patch('functest.opnfv_tests.openstack.rally.rally.'
+                       'yaml.safe_load',
+                       return_value=dic):
+            self.assertEqual(self.rally_base.excl_scenario(),
+                             ['test1', 'test2', 'test3', 'test4'])
 
     def test_excl_scenario_exception(self):
         with mock.patch('__builtin__.open', side_effect=Exception):
