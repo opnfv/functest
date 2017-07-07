@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_ed80628d",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-07T18:42:37Z",
+      "side": 1,
+      "message": "wrong order too, no?",
+      "revId": "4166c52713ff220548e84607c9bd86f917de6caa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_0d7e1eaf",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-07T18:42:37Z",
+      "side": 1,
+      "message": "(_, stdout, _)for ignoring the specific values.",
+      "revId": "4166c52713ff220548e84607c9bd86f917de6caa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ad4a6a81",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-07T18:42:37Z",
+      "side": 1,
+      "message": "wrong order too",
+      "revId": "4166c52713ff220548e84607c9bd86f917de6caa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
