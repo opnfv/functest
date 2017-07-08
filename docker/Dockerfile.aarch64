@@ -27,7 +27,6 @@ ARG FUNCTEST_DIR=/usr/local/lib/python2.7/dist-packages/functest/
 ARG REPOS_VNFS_DIR=${REPOS_DIR}/vnfs
 
 # Environment variables
-ENV HOME /home/opnfv
 ENV CONFIG_FUNCTEST_YAML ${FUNCTEST_DIR}/functest/ci/config_functest.yaml
 ENV REPOS_DIR ${HOME}/repos
 ENV creds ${FUNCTEST_CONF_DIR}/openstack.creds
