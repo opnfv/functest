@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_08b60c3e",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-08T09:19:58Z",
+      "side": 1,
+      "message": "It doesn\u0027t conform with our copyright headers",
+      "revId": "375a0695b9e6fa9b15a4f770d6cf81e0b03bca0d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_e8b8502c",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-08T09:19:58Z",
+      "side": 1,
+      "message": "One blank line is enough",
+      "revId": "375a0695b9e6fa9b15a4f770d6cf81e0b03bca0d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_08484c5a",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-08T09:19:58Z",
+      "side": 1,
+      "message": "__name__ instead",
+      "revId": "375a0695b9e6fa9b15a4f770d6cf81e0b03bca0d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8873dcb0",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-08T09:19:58Z",
+      "side": 1,
+      "message": "I don\u0027t like that if it\u0027s used via logger (we can\u0027t add the status at end of the line). I would simply write the right message when the instruction is done.",
+      "revId": "375a0695b9e6fa9b15a4f770d6cf81e0b03bca0d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c879d494",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-08T09:19:58Z",
+      "side": 1,
+      "message": "named exception instead?",
+      "revId": "375a0695b9e6fa9b15a4f770d6cf81e0b03bca0d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_686ea0cb",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-08T09:19:58Z",
+      "side": 1,
+      "message": "os_creds is called everywhere. It makes sense to save it as instance attribute.",
+      "revId": "375a0695b9e6fa9b15a4f770d6cf81e0b03bca0d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_a89b38c8",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-08T09:19:58Z",
+      "side": 1,
+      "message": "It must be removed and we should declare a new console script instead",
+      "revId": "375a0695b9e6fa9b15a4f770d6cf81e0b03bca0d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
