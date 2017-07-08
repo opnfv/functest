@@ -28,12 +28,9 @@ ARG FUNCTEST_DIR=/usr/local/lib/python2.7/dist-packages/functest/
 ARG REPOS_VNFS_DIR=${REPOS_DIR}/vnfs
 
 # Environment variables
-ENV HOME /home/opnfv
 ENV CONFIG_FUNCTEST_YAML ${FUNCTEST_DIR}/ci/config_functest.yaml
-ENV REPOS_DIR ${HOME}/repos
+ENV REPOS_DIR ${REPOS_DIR}
 ENV creds ${FUNCTEST_CONF_DIR}/openstack.creds
-
-WORKDIR ${HOME}
 
 # Packaged dependencies
 RUN apt-get update && apt-get install -y \
@@ -130,4 +127,4 @@ RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -' \
     && cd ${REPOS_DIR}/promise && sudo npm -g install npm@latest \
     && cd ${REPOS_DIR}/promise/source && npm install
 
-RUN echo ". ${FUNCTEST_DIR}/cli/functest-complete.sh" >> ${HOME}/.bashrc
+RUN echo ". ${FUNCTEST_DIR}/cli/functest-complete.sh" >> /root/.bashrc
