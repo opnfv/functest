@@ -31,6 +31,7 @@ ENV HOME /home/opnfv
 ENV CONFIG_FUNCTEST_YAML ${FUNCTEST_DIR}/functest/ci/config_functest.yaml
 ENV REPOS_DIR ${HOME}/repos
 ENV creds ${FUNCTEST_CONF_DIR}/openstack.creds
+ENV NODE_VERSION 4.7.2
 
 WORKDIR ${HOME}
 
@@ -123,8 +124,12 @@ RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
     && bundle config build.nokogiri --use-system-libraries \
     && bundle install"
 
-RUN sh -c 'wget -qO- https://nodejs.org/dist/v4.7.2/node-v4.7.2-linux-arm64.tar.gz | \
-    tar -xz -C /usr/local --exclude=CHANGELOG.md --exclude=LICENSE --exclude=README.md --strip-components 1 '\
+RUN curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-arm64.tar.gz" \
+    && curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
+    && gpg --verify SHASUMS256.txt.asc \
+    && grep " node-v$NODE_VERSION-linux-arm64.tar.gz\$" SHASUMS256.txt.asc | sha256sum -c - \
+    && tar -xz "node-v$NODE_VERSION-linux-arm64.tar.gz" -C /usr/local --exclude=CHANGELOG.md \
+    --exclude=LICENSE --exlude=README.md --strip-components 1 \
     && cd ${REPOS_DIR}/promise && sudo npm -g install npm@latest \
     && cd ${REPOS_DIR}/promise/source && npm install
 
