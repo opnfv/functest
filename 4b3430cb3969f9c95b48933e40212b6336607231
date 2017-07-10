@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_6741ee38",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-10T12:25:47Z",
+      "side": 1,
+      "message": "error instead",
+      "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_e774fe9d",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-10T12:25:47Z",
+      "side": 1,
+      "message": "pylint warns about e",
+      "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_873e6ab7",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-10T12:25:47Z",
+      "side": 1,
+      "message": "error",
+      "range": {
+        "startLine": 105,
+        "startChar": 21,
+        "endLine": 105,
+        "endChar": 22
+      },
+      "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_4748725b",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-10T12:25:47Z",
+      "side": 1,
+      "message": "error",
+      "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c75c6228",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-10T12:25:47Z",
+      "side": 1,
+      "message": "I would prefer this affection in __init__() but as it raises exc I think I understand your point.\nCould you please protect every method against os_creds equals to None?",
+      "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
