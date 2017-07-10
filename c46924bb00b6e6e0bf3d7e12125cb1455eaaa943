@@ -117,6 +117,30 @@
       "revId": "c46924bb00b6e6e0bf3d7e12125cb1455eaaa943",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_e7e95e1b",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-10T13:00:39Z",
+      "side": 1,
+      "message": "I simply check carefully install_rally.sh and adapt the Dockerfile as well:\nhttps://raw.githubusercontent.com/openstack/rally/master/install_rally.sh",
+      "parentUuid": "1aa4ed85_e782be51",
+      "range": {
+        "startLine": 86,
+        "startChar": 40,
+        "endLine": 86,
+        "endChar": 62
+      },
+      "revId": "c46924bb00b6e6e0bf3d7e12125cb1455eaaa943",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
