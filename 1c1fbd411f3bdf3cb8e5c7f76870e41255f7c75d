@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_a374bb9c",
+        "filename": "functest/energy/energy.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1402
+      },
+      "writtenOn": "2017-07-10T06:03:18Z",
+      "side": 1,
+      "message": "it is common to use functools.wraps() to update __name__ and __doc__ metadata when decorating\n\nhttps://docs.python.org/3/library/functools.html#functools.wraps\n\n @wraps(method)\n def wrapper(*args):",
+      "revId": "1c1fbd411f3bdf3cb8e5c7f76870e41255f7c75d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c379b794",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1402
+      },
+      "writtenOn": "2017-07-10T06:03:18Z",
+      "side": 1,
+      "message": "thanks for fixing the logging format strings.  the incorrect usage seems to be widespread.",
+      "revId": "1c1fbd411f3bdf3cb8e5c7f76870e41255f7c75d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8373bfb0",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1402
+      },
+      "writtenOn": "2017-07-10T06:03:18Z",
+      "side": 1,
+      "message": "sometimes this is done with LOGGER.excecption() or exc_info\u003dTrue)\n\n LOGGER.exception(\"Error with run\")\n\n LOGGER.error(\"Error with run\", exc_info\u003dTrue)",
+      "revId": "1c1fbd411f3bdf3cb8e5c7f76870e41255f7c75d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_2368cbb9",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_ssh.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1402
+      },
+      "writtenOn": "2017-07-10T06:03:18Z",
+      "side": 1,
+      "message": "logging is designed to do the interpolation itself, so as to defer interpolation if the log level is not enabled.\n\n  self.logger.error(\"Cannot SCP the file \u0027%s\u0027\", log)",
+      "revId": "1c1fbd411f3bdf3cb8e5c7f76870e41255f7c75d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
