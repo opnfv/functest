@@ -81,6 +81,9 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
         git+https://gerrit.opnfv.org/gerrit/releng@$BRANCH#egg=opnfv\&subdirectory=modules \
         git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps \
         -r thirdparty-requirements.txt && \
+    mkdir -p /etc/rally && \
+    printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
+    mkdir -p /var/lib/rally/database && rally-manage db create && \
     rm thirdparty-requirements.txt upper-constraints.txt
 
 # OPNFV repositories
@@ -96,9 +99,6 @@ RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integr
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_VNFS_DIR}/vims-test
 RUN git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-functest-vrouter.git ${REPOS_VNFS_DIR}/vrouter
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
-
-RUN wget -q https://git.openstack.org/cgit/openstack/rally/plain/install_rally.sh?h=${RALLY_TAG} -O install_rally.sh \
-    && bash install_rally.sh --branch ${RALLY_TAG} --yes && rm install_rally.sh
 
 RUN add_images.sh
 
