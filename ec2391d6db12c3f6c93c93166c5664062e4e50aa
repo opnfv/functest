@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_e31f13b6",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-10T08:04:39Z",
+      "side": 1,
+      "message": "remove \\ and use parenthesis instead for multiple lines.",
+      "range": {
+        "startLine": 191,
+        "startChar": 61,
+        "endLine": 191,
+        "endChar": 63
+      },
+      "revId": "ec2391d6db12c3f6c93c93166c5664062e4e50aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_031d8fbd",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-10T08:04:39Z",
+      "side": 1,
+      "message": "idem",
+      "range": {
+        "startLine": 196,
+        "startChar": 76,
+        "endLine": 196,
+        "endChar": 77
+      },
+      "revId": "ec2391d6db12c3f6c93c93166c5664062e4e50aa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
