@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_676d6e32",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-10T19:02:45Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "1aa4ed85_6741ee38",
+      "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_e774fe9d",
         "filename": "functest/ci/check_deployment.py",
         "patchSetId": 9
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_a78366cb",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-10T19:02:45Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "1aa4ed85_873e6ab7",
+      "range": {
+        "startLine": 105,
+        "startChar": 21,
+        "endLine": 105,
+        "endChar": 22
+      },
+      "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_4748725b",
         "filename": "functest/ci/check_deployment.py",
         "patchSetId": 9
@@ -70,6 +112,24 @@
       "writtenOn": "2017-07-10T12:25:47Z",
       "side": 1,
       "message": "error",
+      "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_077fdae1",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-10T19:02:45Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "1aa4ed85_4748725b",
       "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -99,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_e7795efd",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-10T19:02:45Z",
+      "side": 1,
+      "message": "I would like to propose to remove it from prepare_env and do it here instead and call this class before doing anything.",
+      "parentUuid": "1aa4ed85_67dd6e70",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 23
+      },
+      "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_c75c6228",
         "filename": "functest/ci/check_deployment.py",
         "patchSetId": 9
@@ -110,6 +194,24 @@
       "writtenOn": "2017-07-10T12:25:47Z",
       "side": 1,
       "message": "I would prefer this affection in __init__() but as it raises exc I think I understand your point.\nCould you please protect every method against os_creds equals to None?",
+      "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_471dd2bc",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-10T19:02:45Z",
+      "side": 1,
+      "message": "in every method? Why not here and raise an exception if it\u0027s none?",
+      "parentUuid": "1aa4ed85_c75c6228",
       "revId": "4b3430cb3969f9c95b48933e40212b6336607231",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
