@@ -50,6 +50,23 @@
       "revId": "4166c52713ff220548e84607c9bd86f917de6caa",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_4365c7df",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1402
+      },
+      "writtenOn": "2017-07-10T06:03:18Z",
+      "side": 1,
+      "message": "alternatively there is the guard clause style which saves some indented if/else blocks and highlights failing fast\n\n\n  if not dns_ip:\n     return False\n\n  # normal path\n  vims_test_result \u003d self.run_clearwater_live_test(\n  .....      \n  self.details[\u0027test_vnf\u0027]....\n  return True",
+      "revId": "4166c52713ff220548e84607c9bd86f917de6caa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
