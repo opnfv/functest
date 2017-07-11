@@ -1,4 +1,4 @@
-FROM ollivier/functest-core
+FROM opnfv/functest-core
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/ocata
