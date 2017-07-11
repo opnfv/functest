@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_ea7923fd",
+        "filename": "functest/tests/unit/openstack/rally/test_rally.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-11T07:55:48Z",
+      "side": 1,
+      "message": "Good principles but we can\u0027t here (with).\nCould you please use decorators for monkey patches instead (as much as possible)? It helps reading.",
+      "parentUuid": "1aa4ed85_aaa56b05",
+      "range": {
+        "startLine": 137,
+        "startChar": 63,
+        "endLine": 137,
+        "endChar": 64
+      },
+      "revId": "053bc5f800de4c5543452f0cf27e26d6e5d9d96b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_0aa11ff8",
         "filename": "functest/tests/unit/openstack/rally/test_rally.py",
         "patchSetId": 6
