@@ -34,6 +34,24 @@
       "revId": "9138cc184b23cef2067605d6464e0acbd6bd105d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_edc7fd10",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-11T13:22:55Z",
+      "side": 1,
+      "message": "pylint also complains if you use lowercase. if you put this \"variable\" out of the class/method, it is a constant, and best practice for constants is capital letters.",
+      "parentUuid": "1aa4ed85_0d661952",
+      "revId": "9138cc184b23cef2067605d6464e0acbd6bd105d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
