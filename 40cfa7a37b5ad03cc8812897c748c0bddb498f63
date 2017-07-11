@@ -34,6 +34,24 @@
       "revId": "40cfa7a37b5ad03cc8812897c748c0bddb498f63",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3006ca21",
+        "filename": "build.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1402
+      },
+      "writtenOn": "2017-07-11T22:27:36Z",
+      "side": 1,
+      "message": "${dir##**/} avoids the shell out and word splitting/quoting issues. \n\notherwise pedantically it should be  $(basename \"${dir}\")",
+      "parentUuid": "1aa4ed85_700c4243",
+      "revId": "40cfa7a37b5ad03cc8812897c748c0bddb498f63",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
