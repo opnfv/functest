@@ -235,6 +235,9 @@ class ODLTests(testcase.TestCase):
                 kwargs['odlip'] = os.environ['SDN_CONTROLLER']
             elif installer_type == 'compass':
                 kwargs['odlwebport'] = '8181'
+            elif installer_type == 'daisy':
+                kwargs['odlwebport'] = '8181'
+                kwargs['odlrestconfport'] = '8087'
             else:
                 kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
         except KeyError as ex:
