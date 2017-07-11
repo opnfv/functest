@@ -290,6 +290,7 @@ def configure_tempest_update_params(tempest_conf_file,
     config.set('identity', 'password',
                CONST.__getattribute__('tempest_identity_user_password'))
     config.set('identity', 'region', 'RegionOne')
+    config.set('auth', 'tempest_roles', 'admin')
     if os_utils.is_keystone_v3():
         auth_version = 'v3'
     else:
