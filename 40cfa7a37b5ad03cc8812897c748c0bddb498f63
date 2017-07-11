@@ -16,6 +16,24 @@
       "revId": "40cfa7a37b5ad03cc8812897c748c0bddb498f63",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_700c4243",
+        "filename": "build.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-11T22:14:35Z",
+      "side": 1,
+      "message": "Yes. I consider basename much explicit. But I will take it into account.",
+      "parentUuid": "1aa4ed85_b012ba60",
+      "revId": "40cfa7a37b5ad03cc8812897c748c0bddb498f63",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
