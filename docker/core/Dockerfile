@@ -5,7 +5,7 @@ ARG OPENSTACK_TAG=stable/ocata
 
 RUN apk --no-cache add --update \
         python libffi libssl1.0 libjpeg-turbo py-pip bash \
-        grep sed wget ca-certificates git && \
+        grep sed wget ca-certificates git openssh-client && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
