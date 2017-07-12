@@ -18,6 +18,7 @@ import pkg_resources
 import re
 import sys
 
+import ConfigParser
 import prettytable
 
 import functest.ci.tier_builder as tb
@@ -28,6 +29,27 @@ from functest.utils.constants import CONST
 
 # __name__ cannot be used here
 logger = logging.getLogger('functest.ci.run_tests')
+
+
+def update_logging_ini(console=False):
+    value = "wconsole"
+    level = "INFO"
+    if console:
+        value = "console"
+        level = "DEBUG"
+    config = ConfigParser.RawConfigParser()
+    config.read(
+        pkg_resources.resource_filename('functest', 'ci/logging.ini'))
+    config.set('handler_console', 'level', level)
+    config.set('logger_cli', 'handlers', value)
+    config.set('logger_energy', 'handlers', value)
+    config.set('logger_opnfv_tests', 'handlers', value)
+    config.set('logger_utils', 'handlers', value)
+
+    with open(
+        pkg_resources.resource_filename('functest',
+                                        'ci/logging.ini'), 'wb') as configfile:
+        config.write(configfile)
 
 
 class Result(enum.Enum):
@@ -57,6 +79,9 @@ class RunTestsParser(object):
                                  action="store_true")
         self.parser.add_argument("-r", "--report", help="Push results to "
                                  "database (default=false).",
+                                 action="store_true")
+        self.parser.add_argument("-d", "--debug", help="Print logs to console "
+                                 "(default=false).",
                                  action="store_true")
 
     def parse_args(self, argv=[]):
@@ -210,6 +235,14 @@ class Runner(object):
         if kwargs['report']:
             self.report_flag = True
 
+        if kwargs['debug']:
+            update_logging_ini(console=True)
+        else:
+            update_logging_ini(console=False)
+
+        logging.config.fileConfig(pkg_resources.resource_filename(
+                                  'functest', 'ci/logging.ini'))
+
         try:
             if kwargs['test']:
                 self.source_rc_file()
@@ -266,12 +299,13 @@ class Runner(object):
             logger.info("FUNCTEST REPORT: \n\n%s\n", msg)
 
         logger.info("Execution exit value: %s" % self.overall_result)
+
+        if kwargs['debug']:
+            update_logging_ini(console=False)
         return self.overall_result
 
 
 def main():
-    logging.config.fileConfig(pkg_resources.resource_filename(
-        'functest', 'ci/logging.ini'))
     parser = RunTestsParser()
     args = parser.parse_args(sys.argv[1:])
     runner = Runner()
