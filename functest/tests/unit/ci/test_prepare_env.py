@@ -309,22 +309,18 @@ class PrepareEnvTesting(unittest.TestCase):
             prepare_env.update_config_file()
             self.assertTrue(mock_db_url.called)
 
-    @mock.patch('functest.ci.prepare_env.logger.info')
-    def test_verify_deployment_error(self, mock_logger_error):
-        mock_popen = mock.Mock()
-        attrs = {'poll.return_value': None,
-                 'stdout.readline.return_value': 'ERROR'}
-        mock_popen.configure_mock(**attrs)
-
-        with mock.patch('functest.ci.prepare_env.print_separator') as m, \
-            mock.patch('functest.ci.prepare_env.subprocess.Popen',
-                       return_value=mock_popen), \
-                self.assertRaises(Exception) as context:
+    def test_verify_deployment(self):
+        with mock.patch('functest.ci.check_deployment.CheckDeployment') \
+                as mock_check_deployment:
             prepare_env.verify_deployment()
-            self.assertTrue(m.called)
-            msg = "Problem while running 'check_os.sh'."
-            mock_logger_error.assert_called_once_with('ERROR')
-            self.assertTrue(msg in context)
+            self.assertTrue(mock_check_deployment.called)
+
+    def test_verify_deployment_error(self):
+        with mock.patch('functest.ci.prepare_env.'
+                        'check_deployment.CheckDeployment',
+                        return_value=('test_', None)), \
+                self.assertRaises(Exception):
+            prepare_env.verify_deployment()
 
     def _get_rally_creds(self):
         return {"type": "ExistingCloud",
