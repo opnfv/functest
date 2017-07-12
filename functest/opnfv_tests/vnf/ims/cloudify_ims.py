@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2016 Orange and others.
+# Copyright (c) 2017 Orange and others.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
@@ -25,16 +25,16 @@ from functest.utils.constants import CONST
 import functest.utils.openstack_utils as os_utils
 
 from snaps.openstack.os_credentials import OSCreds
-from snaps.openstack.create_network import NetworkSettings, SubnetSettings, \
-                                            OpenStackNetwork
-from snaps.openstack.create_security_group import SecurityGroupSettings, \
-                                                    SecurityGroupRuleSettings,\
-                                                    Direction, Protocol, \
-                                                    OpenStackSecurityGroup
+from snaps.openstack.create_network import (NetworkSettings, SubnetSettings,
+                                            OpenStackNetwork)
+from snaps.openstack.create_security_group import (SecurityGroupSettings,
+                                                   SecurityGroupRuleSettings,
+                                                   Direction, Protocol,
+                                                   OpenStackSecurityGroup)
 from snaps.openstack.create_router import RouterSettings, OpenStackRouter
-from snaps.openstack.create_instance import VmInstanceSettings, \
-                                                FloatingIpSettings, \
-                                                OpenStackVmInstance
+from snaps.openstack.create_instance import (VmInstanceSettings,
+                                             FloatingIpSettings,
+                                             OpenStackVmInstance)
 from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
 from snaps.openstack.create_image import ImageSettings, OpenStackImage
 from snaps.openstack.create_keypairs import KeypairSettings, OpenStackKeypair
@@ -239,6 +239,8 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         while str(cfy_status) != 'running' and retry:
             try:
                 cfy_status = cfy_client.manager.get_status()['status']
+                self.__logger.debug("The current manager status is %s",
+                                    cfy_status)
             except Exception:  # pylint: disable=broad-except
                 self.__logger.warning("Cloudify Manager isn't " +
                                       "up and running. Retrying ...")
@@ -263,14 +265,15 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.__logger.info("Put private keypair in manager")
         if manager_creator.vm_ssh_active(block=True):
             ssh = manager_creator.ssh_client()
-            scp = SCPClient(ssh.get_transport())
+            scp = SCPClient(ssh.get_transport(), socket_timeout=15.0)
             scp.put(kp_file, '~/')
             cmd = "sudo cp ~/cloudify_ims.pem /etc/cloudify/"
-            ssh.exec_command(cmd)
+            run_blocking_ssh_command(ssh, cmd)
             cmd = "sudo chmod 444 /etc/cloudify/cloudify_ims.pem"
-            ssh.exec_command(cmd)
+            run_blocking_ssh_command(ssh, cmd)
             cmd = "sudo yum install -y gcc python-devel"
-            ssh.exec_command(cmd)
+            run_blocking_ssh_command(ssh, cmd, "Unable to install packages \
+                                                on manager")
 
         self.details['orchestrator'].update(status='PASS', duration=duration)
 
@@ -292,15 +295,17 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                                               descriptor.get('file_name'))
 
         self.__logger.info("Get or create flavor for all clearwater vm")
-        self.exist_obj['flavor2'], flavor_id = os_utils.get_or_create_flavor(
-            self.vnf['requirements']['flavor']['name'],
-            self.vnf['requirements']['flavor']['ram_min'],
-            '30',
-            '1',
-            public=True)
+        flavor_settings = FlavorSettings(
+            name=self.vnf['requirements']['flavor']['name'],
+            ram=self.vnf['requirements']['flavor']['ram_min'],
+            disk=25,
+            vcpus=1)
+        flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
+        flavor_creator.create()
+        self.created_object.append(flavor_creator)
 
         self.vnf['inputs'].update(dict(
-            flavor_id=flavor_id,
+            flavor_id=self.vnf['requirements']['flavor']['name'],
         ))
 
         self.__logger.info("Create VNF Instance")
@@ -371,7 +376,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                     try:
                         cfy_client.executions.cancel(execution['id'],
                                                      force=True)
-                    except:
+                    except:  # pylint: disable=broad-except
                         self.__logger.warn("Can't cancel the current exec")
 
             execution = cfy_client.executions.start(
@@ -383,7 +388,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             wait_for_execution(cfy_client, execution, self.__logger)
             cfy_client.deployments.delete(self.vnf['descriptor'].get('name'))
             cfy_client.blueprints.delete(self.vnf['descriptor'].get('name'))
-        except:
+        except:  # pylint: disable=broad-except
             self.__logger.warn("Some issue during the undeployment ..")
             self.__logger.warn("Tenant clean continue ..")
 
@@ -507,3 +512,10 @@ def sig_test_format(sig_test):
     total_sig_test_result['failures'] = nb_failures
     total_sig_test_result['skipped'] = nb_skipped
     return total_sig_test_result
+
+
+def run_blocking_ssh_command(ssh, cmd, error_msg="Unable to run this command"):
+    """Command to run ssh command with the exit status."""
+    stdin, stdout, stderr = ssh.exec_command(cmd)
+    if stdout.channel.recv_exit_status() != 0:
+        raise Exception(error_msg)
