@@ -30,16 +30,24 @@ Version history
 | **Date**   | **Ver.** | **Author**       | **Comment**            |
 |            |          |                  |                        |
 +------------+----------+------------------+------------------------+
-| 2016-08-17 | 1.0.0    | Morgan Richomme  | Functest for Colorado  |
-|            |          | (Orange)         | release                |
+| 2016-08-17 | 1.0.0    | Morgan Richomme  | Functest for           |
+|            |          | (Orange)         | Colorado.1.0 release   |
 +------------+----------+------------------+------------------------+
-| 2017-03-29 | 4.0.0    | Jose Lausuch     | Functest for Danube    |
-|            |          | (Ericsson)       | release                |
+| 2016-10-24 | 2.0.0    | Morgan Richomme  | Functest for           |
+|            |          | (Orange)         | Colorado.2.0 release   |
 +------------+----------+------------------+------------------------+
-| 2017-05-04 | 5.0.0    | Jose Lausuch     | Functest for Danube.2.0|
-|            |          | (Ericsson)       | release                |
+| 2016-08-17 | 3.0.0    | Morgan Richomme  | Functest for           |
+|            |          | (Orange)         | Colorado.3.0 release   |
 +------------+----------+------------------+------------------------+
-
+| 2018-03-29 | 4.0.0    | Jose Lausuch     | Functest for           |
+|            |          | (Ericsson)       | Danube.1.0 release     |
++------------+----------+------------------+------------------------+
+| 2018-05-04 | 5.0.0    | Jose Lausuch     | Functest for           |
+|            |          | (Ericsson)       | Danube.2.0 release     |
++------------+----------+------------------+------------------------+
+| 2018-07-12 | 6.0.0    | Jose Lausuch     | Functest for           |
+|            |          | (Ericsson)       | Danube.3.0 release     |
++------------+----------+------------------+------------------------+
 
 OPNFV Danube Release
 ======================
@@ -96,7 +104,7 @@ Release Data
 | **Project**                          | functest                             |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Repo/tag**                         | danube.2.0                           |
+| **Repo/tag**                         | danube.3.0                           |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
 | **Release designation**              | Danube service release               |
@@ -105,7 +113,7 @@ Release Data
 | **Release date**                     | May 4st 2017                         |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Purpose of the delivery**          | Danube second release                |
+| **Purpose of the delivery**          | Danube third release                 |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
 
@@ -115,9 +123,9 @@ Deliverables
 Software
 --------
 
- - The Functest Docker image: https://hub.docker.com/r/opnfv/functest (tag: danube.2.0)
+ - The Functest Docker image: https://hub.docker.com/r/opnfv/functest (tag: danube.3.0)
 
- - The TestAPI Docker image: https://hub.docker.com/r/opnfv/testapi (tag:danube.2.0)
+ - The TestAPI Docker image: https://hub.docker.com/r/opnfv/testapi (tag:danube.3.0)
 
 
 Documents
@@ -133,69 +141,23 @@ Documents
 Version change
 ==============
 
-Feature evolution
------------------
 
-- Adoption of SNAPS as middleware in 4 new test cases (connection_check, api_check,
-   snaps_health_check and snaps_smoke)
+- Bugfixes in refstack client
 
-- Introduction of refstack suite
+- Fixed vIMS onboarding and ims deployment
 
-- Support new odl suites (odl-netvirt, fds)
+- Increased timeout of OpenBaton installation
 
-- Introduction of VNF onboarding capabilities
+- Switched to mitaka-eol in openstack repositories, as stable/mitake is not longer existing
 
-- Support of new feature projects (fds, netready, barometer, orchestra, vyos_vrouter)
+- Minor fixes in logging and test cases
 
-
-
-Framework
----------
-
- - Harmonization of the naming, better adoption of OpenStack coding conventions
-
- - Enhanced code to be more Object Oriented, removed bash scripts
-
- - Introduction of abstraction classes to ease and harmonize the integration of
-    test cases (internal or from feature projects)
-
- - New management of logger, env variables and configuration files
-
- - Creation of unit tests on the whole framework to ensure stability
-
- - Creation or ARM Functest docker
-
-
-Test API
----------
-
-- Automatic documentation (html & pdf)
-
-- Full dockerization and automation of the deployment on testresults.opnfv.org
-
-- Automation of test database backup on artifact
-
-
-New internal tests cases
-------------------------
-
-- connection_check
-
-- api_check
-
-- snaps_health_check (replacing shell script healtcheck)
-
-- refstack_defcore
-
-- snaps_smoke
-
-- vyos_vrouter
 
 
 Scenario Matrix
 ===============
 
-For Danube 2.0, Functest was tested on the following HA scenarios (new
+For Danube 3.0, Functest was tested on the following HA scenarios (new
 dabube scenarios in bold):
 
 +---------------------+---------+---------+---------+---------+
