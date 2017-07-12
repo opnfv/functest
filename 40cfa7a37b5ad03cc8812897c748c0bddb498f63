@@ -70,6 +70,24 @@
       "revId": "40cfa7a37b5ad03cc8812897c748c0bddb498f63",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_16a706bf",
+        "filename": "build.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1402
+      },
+      "writtenOn": "2017-07-12T07:30:22Z",
+      "side": 1,
+      "message": "I guess it gets trickier since technically the result of Command Subsitution undergoes word splitting.\n\nhttp://mywiki.wooledge.org/BashPitfalls#cd_.24.28dirname_.22.24f.22.29\n\nFor bash scripts we usually run shellcheck on them. \nhttps://www.shellcheck.net/\n\nshellcheck always nags about quotes and ${}\n\nSomeday I\u0027ll try to add Jenkins shellcheck check for bash scripts.\n\n  (cd $dir \u0026\u0026 docker build -t opnfv/functest-$(basename $dir) .)\n                                             ^-- SC2046: Quote this to prevent word splitting.\n\n\n\n  docker push opnfv/functest-$(basename $dir)\n                             ^-- SC2046: Quote this to prevent word splitting.",
+      "parentUuid": "1aa4ed85_96f696d6",
+      "revId": "40cfa7a37b5ad03cc8812897c748c0bddb498f63",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
