@@ -19,7 +19,7 @@ vnf:
         version: '122'
     requirements:
         flavor:
-          name: m1.medium
+          name: m1.small
           ram_min: 2048
     inputs:
         image_id: 'ubuntu_14.04'

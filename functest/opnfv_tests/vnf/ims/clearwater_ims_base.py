@@ -43,7 +43,7 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
 
     def config_ellis(self, ellis_ip, signup_code='secret', two_numbers=False):
         output_dict = {}
-        self.logger.info('Configure Ellis: %s', ellis_ip)
+        self.logger.debug('Configure Ellis: %s', ellis_ip)
         output_dict['ellis_ip'] = ellis_ip
         account_url = 'http://{0}/accounts'.format(ellis_ip)
         params = {"password": "functest",
@@ -54,7 +54,7 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         output_dict['login'] = params
         if rq.status_code != 201 and rq.status_code != 409:
             raise Exception("Unable to create an account for number provision")
-        self.logger.info('Account is created on Ellis: %s', params)
+        self.logger.debug('Account is created on Ellis: %s', params)
 
         session_url = 'http://{0}/session'.format(ellis_ip)
         session_data = {
@@ -66,12 +66,12 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         if rq.status_code != 201:
             raise Exception('Failed to get cookie for Ellis')
         cookies = rq.cookies
-        self.logger.info('Cookies: %s', cookies)
+        self.logger.debug('Cookies: %s', cookies)
 
         number_url = 'http://{0}/accounts/{1}/numbers'.format(
                      ellis_ip,
                      params['email'])
-        self.logger.info('Create 1st calling number on Ellis')
+        self.logger.debug('Create 1st calling number on Ellis')
         i = 24
         while rq.status_code != 200 and i > 0:
             try:
@@ -86,7 +86,7 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         output_dict['number'] = number_res
 
         if two_numbers:
-            self.logger.info('Create 2nd calling number on Ellis')
+            self.logger.debug('Create 2nd calling number on Ellis')
             number_res = self.create_ellis_number(number_url, cookies)
             output_dict['number2'] = number_res
 
@@ -131,7 +131,7 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
             script = '{0}{1}'.format(script, subscript)
         script = ('{0}{1}'.format(script, ' --trace'))
         cmd = "/bin/bash -c '{0}'".format(script)
-        self.logger.info('Live test cmd: %s', cmd)
+        self.logger.debug('Live test cmd: %s', cmd)
         output_file = os.path.join(self.result_dir, "ims_test_output.txt")
         ft_utils.execute_command(cmd,
                                  error_msg='Clearwater live test failed',
