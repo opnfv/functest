@@ -18,6 +18,7 @@ import pkg_resources
 import re
 import sys
 
+import ConfigParser
 import prettytable
 
 import functest.ci.tier_builder as tb
@@ -28,6 +29,27 @@ from functest.utils.constants import CONST
 
 # __name__ cannot be used here
 logger = logging.getLogger('functest.ci.run_tests')
+
+
+def update_logging_ini(verbosity_level=0):
+    config = ConfigParser.RawConfigParser()
+    config.read(
+        pkg_resources.resource_filename('functest', 'ci/logging.ini'))
+    level = 'INFO'
+    value = "wconsole"
+    if verbosity_level >= 1:
+        value = "console"
+    if verbosity_level >= 2:
+        level = 'DEBUG'
+    config.set('handler_console', 'level', level)
+    config.set('logger_cli', 'handlers', value)
+    config.set('logger_energy', 'handlers', value)
+    config.set('logger_opnfv_tests', 'handlers', value)
+    config.set('logger_utils', 'handlers', value)
+    with open(
+        pkg_resources.resource_filename('functest',
+                                        'ci/logging.ini'), 'wb') as configfile:
+        config.write(configfile)
 
 
 class Result(enum.Enum):
@@ -58,6 +80,8 @@ class RunTestsParser(object):
         self.parser.add_argument("-r", "--report", help="Push results to "
                                  "database (default=false).",
                                  action="store_true")
+        self.parser.add_argument("-v", "--verbosity", help="Verbosity level.",
+                                 action="count")
 
     def parse_args(self, argv=[]):
         return vars(self.parser.parse_args(argv))
@@ -210,6 +234,10 @@ class Runner(object):
         if kwargs['report']:
             self.report_flag = True
 
+        update_logging_ini(verbosity_level=kwargs['verbosity'])
+
+        logging.config.fileConfig(pkg_resources.resource_filename(
+                                  'functest', 'ci/logging.ini'))
         try:
             if kwargs['test']:
                 self.source_rc_file()
@@ -266,6 +294,9 @@ class Runner(object):
             logger.info("FUNCTEST REPORT: \n\n%s\n", msg)
 
         logger.info("Execution exit value: %s" % self.overall_result)
+        if kwargs['verbosity'] > 0:
+            update_logging_ini(verbosity_level=0)
+
         return self.overall_result
 
 
