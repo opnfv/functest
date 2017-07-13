@@ -511,7 +511,7 @@ class ODLRunTesting(ODLTesting):
     def test_compass(self):
         os.environ["INSTALLER_TYPE"] = "compass"
         self._test_run(testcase.TestCase.EX_OK,
-                       odlip=self._neutron_ip, odlwebport='8181')
+                       odlip=self._neutron_ip, odlwebport='8080')
 
     def test_daisy_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
