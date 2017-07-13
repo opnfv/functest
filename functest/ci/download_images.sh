@@ -59,4 +59,7 @@ if [[ ${ARCH} == "arm" ]] || [[ ${ARCH} == "aarch64" ]]; then
     wget -nc ${CIRROS_REPO_URL}/daily/20${CIRROS_AARCH64_TAG}/cirros-d${CIRROS_AARCH64_TAG}-aarch64-kernel -P ${IMAGES_FOLDER_DIR}
 fi
 
+# PARSER
+wget -nc http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img -P ${IMAGES_FOLDER_DIR}
+
 set +ex
