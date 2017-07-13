@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_b3b5dfce",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 2409
+      },
+      "writtenOn": "2017-07-13T10:32:19Z",
+      "side": 1,
+      "message": "July 14 2017",
+      "range": {
+        "startLine": 113,
+        "startChar": 41,
+        "endLine": 113,
+        "endChar": 54
+      },
+      "revId": "cfe2466a65cc97ee48f3d0e57396bf9dd5e79d16",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
