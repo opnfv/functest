@@ -22,6 +22,30 @@
       "revId": "8bbda84dc9af1ca476c079436bf46598eeef1b7e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_dced0d8d",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-13T02:06:12Z",
+      "side": 1,
+      "message": "I am afraid it is necessary, because once logging.ini is modified, it will never be recovered except modify it again. From that point, if leveraging your logic, it will be \u0027debug once debug forever\u0027",
+      "parentUuid": "1aa4ed85_9cc79545",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 64
+      },
+      "revId": "8bbda84dc9af1ca476c079436bf46598eeef1b7e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
