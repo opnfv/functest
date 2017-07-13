@@ -395,7 +395,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /home/opnfv/repos/parser/tests && ./functest_run.sh'
+                        cmd: 'cd /home/opnfv/repos/parser/tests && ./functest_run.sh /home/opnfv/functest/images/cirros-0.3.2-x86_64-disk.img'
 
             -
                 case_name: domino-multinode
