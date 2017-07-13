@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_f0a6edc0",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-07-13T07:13:29Z",
+      "side": 1,
+      "message": "trailing space",
+      "revId": "50d4e0eee61984a2158e565b40465f68c09a1df5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
