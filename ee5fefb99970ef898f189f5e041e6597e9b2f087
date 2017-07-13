@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_b0ecf5c8",
+        "filename": "functest/opnfv_tests/sdn/odl/odl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-13T07:25:53Z",
+      "side": 1,
+      "message": "that\u0027s the default. Please remove it to ease reading.",
+      "revId": "ee5fefb99970ef898f189f5e041e6597e9b2f087",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
