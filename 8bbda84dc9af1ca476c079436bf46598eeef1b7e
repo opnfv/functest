@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_9cc79545",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-13T01:13:11Z",
+      "side": 1,
+      "message": "If the flag --debug is not set, is it necessary to update logging.ini?\nHow about this:\n\nif kwargs[\u0027debug\u0027]:\n    update_logging_ini(console\u003dTrue)     \n    logging.config.fileConfig(pkg_resources.resource_filename(                                  \n                              \u0027functest\u0027,\u0027ci/logging.ini\u0027))",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 64
+      },
+      "revId": "8bbda84dc9af1ca476c079436bf46598eeef1b7e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
