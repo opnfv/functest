@@ -46,6 +46,30 @@
       "revId": "8bbda84dc9af1ca476c079436bf46598eeef1b7e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d05e51e9",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-13T06:22:07Z",
+      "side": 1,
+      "message": "maybe Linda is right, since I am updating it to original state with console\u003dFalse at the end of the test.",
+      "parentUuid": "1aa4ed85_dced0d8d",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 64
+      },
+      "revId": "8bbda84dc9af1ca476c079436bf46598eeef1b7e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
