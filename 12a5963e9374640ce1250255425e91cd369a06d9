@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_6637a7e4",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-07-13T12:19:26Z",
+      "side": 1,
+      "message": "shall we use latest or\nhttp://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/configguide/index.html?",
+      "revId": "12a5963e9374640ce1250255425e91cd369a06d9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_0634b3dc",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-07-13T12:19:26Z",
+      "side": 1,
+      "message": "for dfio nosdn I think it is a mix of local push (100%) and lf (introducing some errors)",
+      "revId": "12a5963e9374640ce1250255425e91cd369a06d9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
