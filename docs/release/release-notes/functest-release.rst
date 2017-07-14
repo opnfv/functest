@@ -14,7 +14,7 @@ You should have received a copy of the license along with this.
 If not, see <http://creativecommons.org/licenses/by/4.0/>.
 
 ===========================================
-OPNFV Danube1.0 release note for Functest
+OPNFV Danube2.0 release note for Functest
 ===========================================
 
 Abstract
@@ -34,6 +34,9 @@ Version history
 |            |          | (Orange)         | release                |
 +------------+----------+------------------+------------------------+
 | 2017-03-29 | 4.0.0    | Jose Lausuch     | Functest for Danube    |
+|            |          | (Ericsson)       | release                |
++------------+----------+------------------+------------------------+
+| 2017-05-04 | 5.0.0    | Jose Lausuch     | Functest for Danube.2.0|
 |            |          | (Ericsson)       | release                |
 +------------+----------+------------------+------------------------+
 
@@ -93,16 +96,16 @@ Release Data
 | **Project**                          | functest                             |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Repo/tag**                         | danube.1.0                           |
+| **Repo/tag**                         | danube.2.0                           |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release designation**              | Danube base release                  |
+| **Release designation**              | Danube service release               |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release date**                     | March 31st 2017                      |
+| **Release date**                     | May 4st 2017                         |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Purpose of the delivery**          | Danube base release                  |
+| **Purpose of the delivery**          | Danube second release                |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
 
@@ -112,9 +115,9 @@ Deliverables
 Software
 --------
 
- - The Functest Docker image: https://hub.docker.com/r/opnfv/functest (tag: danube.1.0)
+ - The Functest Docker image: https://hub.docker.com/r/opnfv/functest (tag: danube.2.0)
 
- - The TestAPI Docker image: https://hub.docker.com/r/opnfv/testapi (tag:danube.1.0)
+ - The TestAPI Docker image: https://hub.docker.com/r/opnfv/testapi (tag:danube.2.0)
 
 
 Documents
@@ -192,7 +195,7 @@ New internal tests cases
 Scenario Matrix
 ===============
 
-For Danube 1.0, Functest was tested on the following HA scenarios (new
+For Danube 2.0, Functest was tested on the following HA scenarios (new
 dabube scenarios in bold):
 
 +---------------------+---------+---------+---------+---------+
@@ -311,21 +314,21 @@ Apex
 |  Scenario        | Scoring | Success |    Results      |
 |                  |         | rate    |                 |
 +==================+=========+=========+=================+
-| nosdn            |  33/33  |   100%  | `apex-res-1`_   |
+| nosdn            |  30/33  |    91%  | `apex-res-1`_   |
 +------------------+---------+---------+-----------------+
-| odl_l3           |  27/33  |    82%  | `apex-res-2`_   |
+| odl_l3           |  23/33  |    70%  | `apex-res-2`_   |
 +------------------+---------+---------+-----------------+
-| odl-bgpvpn       |  26/30  |    87%  | `apex-res-3`_   |
+| odl-bgpvpn       |  16/36  |    44%  | `apex-res-3`_   |
 +------------------+---------+---------+-----------------+
-| odl-gluon        |  30/36  |    83%  | `apex-res-4`_   |
+| odl-gluon        |  18/36  |    50%  | `apex-res-4`_   |
 +------------------+---------+---------+-----------------+
-| kvm              |  32/33  |    97%  | `apex-res-5`_   |
+| kvm              |  30/33  |    91%  | `apex-res-5`_   |
 +------------------+---------+---------+-----------------+
-| odl_l2-fdio      |  28/36  |    78%  | `apex-res-6`_   |
+| odl_l2-fdio      |  30/36  |    83%  | `apex-res-6`_   |
 +------------------+---------+---------+-----------------+
-| odl_l2-fdio-noha |  30/36  |    83%  | `apex-res-7`_   |
+| odl_l2-fdio-noha |  29/36  |    81%  | `apex-res-7`_   |
 +------------------+---------+---------+-----------------+
-| odl_l3-fdio-noha |  26/30  |    87%  | `apex-res-8`_   |
+| odl_l3-fdio-noha |  23/30  |    77%  | `apex-res-8`_   |
 +------------------+---------+---------+-----------------+
 | fdio             |   6/30  |    20%  | `apex-res-9`_   |
 +------------------+---------+---------+-----------------+
@@ -339,15 +342,15 @@ Compass
 +==================+=========+=========+==================+
 | nosdn            |  29/30  |    97%  | `compass-res-1`_ |
 +------------------+---------+---------+------------------+
-| odl_l2           |  28/33  |    84%  | `compass-res-2`_ |
+| odl_l2           |  29/33  |    88%  | `compass-res-2`_ |
 +------------------+---------+---------+------------------+
-| odl_l3           |  21/30  |    70%  | `compass-res-3`_ |
+| odl_l3           |  25/30  |    83%  | `compass-res-3`_ |
 +------------------+---------+---------+------------------+
 | onos             |  28/33  |    84%  | `compass-res-4`_ |
 +------------------+---------+---------+------------------+
-| openo            |  28/30  |    93%  | `compass-res-5`_ |
+| openo            |  29/30  |    97%  | `compass-res-5`_ |
 +------------------+---------+---------+------------------+
-| ocl              |   4/30  |    13%  | `compass-res-6`_ |
+| ocl              |   3/30  |    10%  | `compass-res-6`_ |
 +------------------+---------+---------+------------------+
 
 Note: all the Compass tests for Danube have been executed on virtual
@@ -361,37 +364,37 @@ Fuel
 |  Scenario            | Scoring | Success |  Results       |
 |                      |         | rate    |                |
 +======================+=========+=========+================+
-| nosdn                |  37/39  |   95%   | `fuel-res-1`_  |
+| nosdn                |  38/39  |   97%   | `fuel-res-1`_  |
 +----------------------+---------+---------+----------------+
 | nosdn-noha           |  36/36  |  100%   | `fuel-res-2`_  |
 +----------------------+---------+---------+----------------+
-| nosdn-kvm            |  37/39  |   95%   | `fuel-res-3`_  |
+| nosdn-kvm            |  39/39  |  100%   | `fuel-res-3`_  |
 +----------------------+---------+---------+----------------+
 | nosdn-kvm-noha       |  36/36  |  100%   | `fuel-res-4`_  |
 +----------------------+---------+---------+----------------+
-| nosdn-ovs            |  38/39  |   97%   | `fuel-res-5`_  |
+| nosdn-ovs            |  39/39  |  100%   | `fuel-res-5`_  |
 +----------------------+---------+---------+----------------+
 | nosdn-ovs-noha       |  36/36  |  100%   | `fuel-res-6`_  |
 +----------------------+---------+---------+----------------+
-| odl_l2               |  42/42  |  100%   | `fuel-res-7`_  |
+| odl_l2               |  40/42  |   95%   | `fuel-res-7`_  |
 +----------------------+---------+---------+----------------+
-| odl_l2-noha          |  36/39  |   92%   | `fuel-res-8`_  |
+| odl_l2-noha          |  37/39  |   95%   | `fuel-res-8`_  |
 +----------------------+---------+---------+----------------+
-| odl_l2-sfc           |  40/45  |   89%   | `fuel-res-11`_ |
+| odl_l2-sfc           |  45/45  |  100%   | `fuel-res-9`_  |
 +----------------------+---------+---------+----------------+
-| odl_l2-sfc-noha      |  36/42  |   86%   | `fuel-res-12`_ |
+| odl_l2-sfc-noha      |  36/42  |   86%   | `fuel-res-10`_ |
 +----------------------+---------+---------+----------------+
-| odl_l3               |  34/39  |   87%   | `fuel-res-13`_ |
+| odl_l3               |  38/39  |   97%   | `fuel-res-11`_ |
 +----------------------+---------+---------+----------------+
-| odl_l3-noha          |  34/36  |   94%   | `fuel-res-14`_ |
+| odl_l3-noha          |  36/36  |  100%   | `fuel-res-12`_ |
 +----------------------+---------+---------+----------------+
-| kvm_ovs_dpdk         |   6/39  |   15%   | `fuel-res-15`_ |
+| kvm_ovs_dpdk         |   6/39  |   15%   | `fuel-res-13`_ |
 +----------------------+---------+---------+----------------+
-| kvm_ovs_dpdk_noha    |  36/36  |  100%   | `fuel-res-16`_ |
+| kvm_ovs_dpdk_noha    |  36/36  |  100%   | `fuel-res-14`_ |
 +----------------------+---------+---------+----------------+
-| kvm_ovs_dpdk_bar     |   6/42  |   14%   | `fuel-res-17`_ |
+| kvm_ovs_dpdk_bar     |   6/42  |   14%   | `fuel-res-15`_ |
 +----------------------+---------+---------+----------------+
-| kvm_ovs_dpdk_bar_noha|  38/39  |   97%   | `fuel-res-18`_ |
+| kvm_ovs_dpdk_bar_noha|  38/39  |   97%   | `fuel-res-16`_ |
 +----------------------+---------+---------+----------------+
 
 
@@ -404,13 +407,13 @@ Joid
 |  Scenario           | Scoring | Success |  Results      |
 |                     |         | rate    |               |
 +=====================+=========+=========+===============+
-| nosdn               |  32/33  |   97%   | `joid-res-1`_ |
+| nosdn               |  29/33  |   97%   | `joid-res-1`_ |
 +---------------------+---------+---------+---------------+
-| nosdn-noha          |  31/33  |   94%   | `joid-res-2`_ |
+| nosdn-noha          |  33/33  |  100%   | `joid-res-2`_ |
 +---------------------+---------+---------+---------------+
 | nosdn-lxd           |  18/24  |   75%   | `joid-res-3`_ |
 +---------------------+---------+---------+---------------+
-| nosdn-lxd-noha      |  17/24  |   71%   | `joid-res-4`_ |
+| nosdn-lxd-noha      |  18/24  |   71%   | `joid-res-4`_ |
 +---------------------+---------+---------+---------------+
 | odl_l2              |   9/36  |   25%   | `joid-res-5`_ |
 +---------------------+---------+---------+---------------+
@@ -495,7 +498,7 @@ Open JIRA tickets
 All the tickets that are not blocking have been fixed or postponed
 the next release.
 
-Functest Danube 1.0 is released without known bugs.
+Functest Danube 2.0 is released without known bugs.
 
 
 
@@ -522,78 +525,75 @@ Useful links
 
 .. _`gluon-bug`: https://bugs.opendaylight.org/show_bug.cgi?id=5586
 
-.. _`apex-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-68
+.. _`apex-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-222
 
-.. _`apex-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-69
+.. _`apex-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-211
 
-.. _`apex-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-70
+.. _`apex-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-224
 
-.. _`apex-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-66
+.. _`apex-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-225
 
-.. _`apex-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-60
+.. _`apex-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-216
 
-.. _`apex-res-6`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-73
+.. _`apex-res-6`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-215
 
-.. _`apex-res-7`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-72
+.. _`apex-res-7`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-214
 
-.. _`apex-res-8`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-69
+.. _`apex-res-8`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-217
 
-.. _`apex-res-9`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-62
+.. _`apex-res-9`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-apex-daily-danube-daily-danube-218
 
-.. _`compass-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-60
+.. _`compass-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-216
 
-.. _`compass-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-59
+.. _`compass-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-221
 
-.. _`compass-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-baremetal-daily-danube-69
+.. _`compass-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-baremetal-daily-danube-214
 
-.. _`compass-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-57
+.. _`compass-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-213
 
-.. _`compass-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-baremetal-daily-danube-67
+.. _`compass-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-baremetal-daily-danube-212
 
-.. _`compass-res-6`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-baremetal-daily-danube-65
+.. _`compass-res-6`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-baremetal-daily-danube-222
 
 .. _`fuel-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-54
 
-.. _`fuel-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-46
+.. _`fuel-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-357
 
 .. _`fuel-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-53
 
-.. _`fuel-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-44
+.. _`fuel-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-355
 
-.. _`fuel-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-55
+.. _`fuel-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-335
 
-.. _`fuel-res-6`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-45
+.. _`fuel-res-6`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-356
 
-.. _`fuel-res-7`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-zte-pod1-daily-danube-4
+.. _`fuel-res-7`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-zte-pod1-daily-danube-337
 
-.. _`fuel-res-8`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-48
+.. _`fuel-res-8`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-358
 
-.. _`fuel-res-9`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-52
+.. _`fuel-res-9`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-340
 
-.. _`fuel-res-10`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-43
+.. _`fuel-res-10`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-353
 
-.. _`fuel-res-11`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-50
+.. _`fuel-res-11`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-338
 
-.. _`fuel-res-12`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-42
+.. _`fuel-res-12`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-360
 
-.. _`fuel-res-13`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-48
+.. _`fuel-res-13`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-341
 
-.. _`fuel-res-14`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-50
+.. _`fuel-res-14`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-359
 
-.. _`fuel-res-15`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-51
+.. _`fuel-res-15`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-339
 
-.. _`fuel-res-16`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-49
+.. _`fuel-res-16`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-361
 
-.. _`fuel-res-17`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-49
 
-.. _`fuel-res-18`: http://testresults.opnfv.org/test/api/v1/results?build_tag=  jenkins-functest-fuel-virtual-daily-danube-51
+.. _`joid-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-164
 
-.. _`joid-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-54
+.. _`joid-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-150
 
-.. _`joid-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-55
+.. _`joid-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-162
 
-.. _`joid-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-56
+.. _`joid-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-167
 
-.. _`joid-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-57
-
-.. _`joid-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-46
+.. _`joid-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-165
