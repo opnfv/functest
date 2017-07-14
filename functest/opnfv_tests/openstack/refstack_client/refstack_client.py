@@ -65,39 +65,26 @@ class RefstackClient(testcase.OSGCTestCase):
         ft_utils.execute_command(cmd)
 
     def run_defcore_default(self):
-        """Run default defcare sys command."""
-        cmd = ("refstack-client test {0} -c {1} -v --test-list {2}"
-               .format(self.insecure, self.confpath, self.defcorelist))
+        """Run default defcore sys command."""
+        options = "-v" if not self.insecure else "-v {}".format(self.insecure)
+        cmd = ["/usr/bin/refstack-client", "test", "-c", self.confpath,
+               options, "--test-list",  self.defcorelist]
         LOGGER.info("Starting Refstack_defcore test case: '%s'.", cmd)
 
-        header = ("Refstack environment:\n"
-                  "  SUT: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
-                  (CONST.__getattribute__('INSTALLER_TYPE'),
-                   CONST.__getattribute__('DEPLOY_SCENARIO'),
-                   CONST.__getattribute__('NODE_NAME'),
-                   time.strftime("%a %b %d %H:%M:%S %Z %Y")))
+        with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+                               "environment.log"), 'w+') as f_env:
+            f_env.write(
+                ("Refstack environment:\n"
+                 "  SUT: {}\n  Scenario: {}\n  Node: {}\n  Date: {}\n").format(
+                    CONST.__getattribute__('INSTALLER_TYPE'),
+                    CONST.__getattribute__('DEPLOY_SCENARIO'),
+                    CONST.__getattribute__('NODE_NAME'),
+                    time.strftime("%a %b %d %H:%M:%S %Z %Y")))
 
-        f_stdout = open(
-            os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
-                         "refstack.log"), 'w+')
-        f_env = open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
-                                  "environment.log"), 'w+')
-        f_env.write(header)
-
-        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
-                                   stderr=subprocess.STDOUT, bufsize=1)
-
-        with process.stdout:
-            for line in iter(process.stdout.readline, b''):
-                if 'Tests' in line:
-                    break
-                if re.search(r"\} tempest\.", line):
-                    LOGGER.info(line.replace('\n', ''))
-                f_stdout.write(line)
-        process.wait()
-
-        f_stdout.close()
-        f_env.close()
+        with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+                               "refstack.log"), 'w+') as f_stdout:
+            subprocess.call(cmd, shell=False, stdout=f_stdout,
+                            stderr=subprocess.STDOUT)
 
     def parse_refstack_result(self):
         """Parse Refstact results."""
