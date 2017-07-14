@@ -34,8 +34,8 @@ LOGGER = logging.getLogger(__name__)
 class RallyBase(testcase.OSGCTestCase):
     """Base class form Rally testcases implementation."""
 
-    TESTS = ['authenticate', 'glance', 'cinder', 'heat', 'keystone',
-             'neutron', 'nova', 'quotas', 'vm', 'all']
+    TESTS = ['authenticate', 'glance', 'ceilometer', 'cinder', 'heat',
+             'keystone', 'neutron', 'nova', 'quotas', 'vm', 'all']
     GLANCE_IMAGE_NAME = CONST.__getattribute__('openstack_image_name')
     GLANCE_IMAGE_FILENAME = CONST.__getattribute__('openstack_image_file_name')
     GLANCE_IMAGE_PATH = os.path.join(
