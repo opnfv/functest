@@ -234,7 +234,7 @@ class ODLTests(testcase.TestCase):
             elif installer_type == 'joid':
                 kwargs['odlip'] = os.environ['SDN_CONTROLLER']
             elif installer_type == 'compass':
-                kwargs['odlwebport'] = '8181'
+                kwargs['odlrestconfport'] = '8080'
             elif installer_type == 'daisy':
                 kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
                 kwargs['odlwebport'] = '8181'
