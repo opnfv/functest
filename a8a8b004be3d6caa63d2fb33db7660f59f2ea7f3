@@ -45,6 +45,29 @@
       "revId": "a8a8b004be3d6caa63d2fb33db7660f59f2ea7f3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_39dea912",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-16T10:09:54Z",
+      "side": 1,
+      "message": "Is there any difference between shell\u003dTrue and False?",
+      "range": {
+        "startLine": 86,
+        "startChar": 33,
+        "endLine": 86,
+        "endChar": 44
+      },
+      "revId": "a8a8b004be3d6caa63d2fb33db7660f59f2ea7f3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
