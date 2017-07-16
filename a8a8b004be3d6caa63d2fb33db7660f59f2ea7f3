@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_991d5dc0",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-16T23:34:17Z",
+      "side": 1,
+      "message": "if self.insecure is not empty (eg -k), options \u003d \"-v  -k\".\nI think it\u0027s was the target.",
+      "parentUuid": "1aa4ed85_d9c75544",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "a8a8b004be3d6caa63d2fb33db7660f59f2ea7f3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_79c42140",
         "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_397a29f2",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-16T23:34:17Z",
+      "side": 1,
+      "message": "see options",
+      "parentUuid": "1aa4ed85_79c42140",
+      "range": {
+        "startLine": 71,
+        "startChar": 23,
+        "endLine": 71,
+        "endChar": 25
+      },
+      "revId": "a8a8b004be3d6caa63d2fb33db7660f59f2ea7f3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_39dea912",
         "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-16T10:09:54Z",
       "side": 1,
       "message": "Is there any difference between shell\u003dTrue and False?",
+      "range": {
+        "startLine": 86,
+        "startChar": 33,
+        "endLine": 86,
+        "endChar": 44
+      },
+      "revId": "a8a8b004be3d6caa63d2fb33db7660f59f2ea7f3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_597fe5e0",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-16T23:34:17Z",
+      "side": 1,
+      "message": "Yes. If shell \u003d True it calls \"/bin/sh -c cmd\" instead of directly cmd. Using shell\u003dTrue can be a security hazard.\nhttps://docs.python.org/2/library/subprocess.html#frequently-used-arguments\n\nShell is useless and raised the previous issue.",
+      "parentUuid": "1aa4ed85_39dea912",
       "range": {
         "startLine": 86,
         "startChar": 33,
