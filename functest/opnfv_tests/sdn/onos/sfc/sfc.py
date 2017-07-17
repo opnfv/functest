@@ -42,7 +42,7 @@ start_time = time.time()
 def PreConfig():
     logger.info("Testcase 1 : Prerequisites configuration for SFC")
     logger.info("1.1 Creation of Auth-Token")
-    check(Sfc_obj.getToken, OK, "Creation of Token")
+    check(Sfc_obj.getToken, CREATED, "Creation of Token")
     logger.info("1.2 Creation of Network")
     check(Sfc_obj.createNetworks, CREATED, "Creation of network")
     logger.info("1.3 Creation of Subnetwork")
