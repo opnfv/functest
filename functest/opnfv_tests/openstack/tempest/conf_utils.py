@@ -28,12 +28,12 @@ GLANCE_IMAGE_PATH = os.path.join(
 TEMPEST_RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'),
                                    'tempest')
 TEMPEST_CUSTOM = pkg_resources.resource_filename(
-        'functest', 'opnfv_tests/openstack/tempest/custom_tests/test_list.txt')
+    'functest', 'opnfv_tests/openstack/tempest/custom_tests/test_list.txt')
 TEMPEST_BLACKLIST = pkg_resources.resource_filename(
-        'functest', 'opnfv_tests/openstack/tempest/custom_tests/blacklist.txt')
+    'functest', 'opnfv_tests/openstack/tempest/custom_tests/blacklist.txt')
 TEMPEST_DEFCORE = pkg_resources.resource_filename(
-        'functest',
-        'opnfv_tests/openstack/tempest/custom_tests/defcore_req.txt')
+    'functest',
+    'opnfv_tests/openstack/tempest/custom_tests/defcore_req.txt')
 TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
 REFSTACK_RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'),
@@ -243,6 +243,11 @@ def configure_tempest_defcore(deployment_dir, img_flavor_dict):
     logger.debug("Updating selected tempest.conf parameters for defcore...")
     config = ConfigParser.RawConfigParser()
     config.read(conf_file)
+    config.set('DEFAULT', 'log_file', '{}/tempest.log'.format(deployment_dir))
+    config.set('oslo_concurrency', 'lock_path',
+               '{}/lock_files'.format(deployment_dir))
+    config.set('scenario', 'img_dir', '{}'.format(deployment_dir))
+    config.set('scenario', 'img_file', 'tempest-image')
     config.set('compute', 'image_ref', img_flavor_dict.get("image_id"))
     config.set('compute', 'image_ref_alt',
                img_flavor_dict['image_id_alt'])
