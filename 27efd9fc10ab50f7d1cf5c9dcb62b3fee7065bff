@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_2d750398",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-17T13:59:17Z",
+      "side": 1,
+      "message": "please limit message to 80 chars",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 154
+      },
+      "revId": "27efd9fc10ab50f7d1cf5c9dcb62b3fee7065bff",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
