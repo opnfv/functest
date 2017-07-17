@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_7f764140",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-17T07:40:48Z",
+      "side": 1,
+      "message": "Nothing to do with this patch, I am just confused by the two params. Are they required by rally or not?  \n\nWe run rally via the cli \"rally task start --abort-on-sla-failure\n--task /home/opnfv/repos/functest/functest/opnfv_tests/openstack/rally/task.yaml\n--task-args ....\" (see [1])\n\nHere, tmpl_dir and sup_dir are passed as the value of task-args, but I\u0027ve no idea what they are for. Could you explain this a bit? Thanks. \n\n[1]: http://paste.openstack.org/raw/615280/",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 67
+      },
+      "revId": "b8535cdd14108255692143d042c0b59ebd350ff8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ffab1187",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-17T07:40:48Z",
+      "side": 1,
+      "message": "We do not have to make rally create new users each time, right? \nSo I am wondering if we can add one option of using existing users created beforehand, which have specific roles if the SUT requires that.",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 47
+      },
+      "revId": "b8535cdd14108255692143d042c0b59ebd350ff8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
