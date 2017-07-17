@@ -11,19 +11,20 @@
 
 import os
 import pkg_resources
+import sys
 
 import click
 
-import functest.ci.tier_builder as tb
+from functest.ci import run_tests
+from functest.ci import tier_builder
 from functest.utils.constants import CONST
-import functest.utils.functest_utils as ft_utils
-import functest.utils.functest_vacation as vacation
+from functest.utils import functest_vacation
 
 
 class CliTestcase(object):
 
     def __init__(self):
-        self.tiers = tb.TierBuilder(
+        self.tiers = tier_builder.TierBuilder(
             CONST.__getattribute__('INSTALLER_TYPE'),
             CONST.__getattribute__('DEPLOY_SCENARIO'),
             pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
@@ -45,20 +46,15 @@ class CliTestcase(object):
 
     @staticmethod
     def run(testname, noclean=False, report=False):
-
-        flags = ""
-        if noclean:
-            flags += "-n "
-        if report:
-            flags += "-r "
-
         if testname == 'vacation':
-            vacation.main()
+            functest_vacation.main()
         elif not os.path.isfile(CONST.__getattribute__('env_active')):
             click.echo("Functest environment is not ready. "
                        "Run first 'functest env prepare'")
         else:
             tests = testname.split(",")
             for test in tests:
-                cmd = "run_tests {}-t {}".format(flags, test)
-                ft_utils.execute_command(cmd)
+                sys.argv[3] = ['test', test,
+                               'report', report,
+                               'noclean', noclean]
+                run_tests.main()
