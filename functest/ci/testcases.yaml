@@ -367,7 +367,6 @@ tiers:
 
             -
                 case_name: onos_sfc
-                enabled: false
                 project_name: functest
                 criteria: 100
                 blocking: true
