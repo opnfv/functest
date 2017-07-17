@@ -22,6 +22,30 @@
       "revId": "818161ac24b2807c6931a1d7b563612b60fa5e1c",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c2543e56",
+        "filename": "docker/smoke/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-17T11:09:07Z",
+      "side": 1,
+      "message": "I don\u0027t think so. Tempest is locally cloned by rally (a classic cp shouldn\u0027t have raised the issue). Refstack is not cloned by any upper project.",
+      "parentUuid": "1aa4ed85_c26d1e34",
+      "range": {
+        "startLine": 16,
+        "startChar": 38,
+        "endLine": 16,
+        "endChar": 63
+      },
+      "revId": "818161ac24b2807c6931a1d7b563612b60fa5e1c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
