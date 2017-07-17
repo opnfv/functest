@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_3961c939",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-17T00:48:52Z",
+      "side": 1,
+      "message": "Yes, you are right.:)",
+      "parentUuid": "1aa4ed85_991d5dc0",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "a8a8b004be3d6caa63d2fb33db7660f59f2ea7f3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_79c42140",
         "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
         "patchSetId": 2
