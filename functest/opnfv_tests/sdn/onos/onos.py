@@ -17,6 +17,7 @@ import time
 import urlparse
 
 from functest.core import testcase
+from functest.opnfv_tests.sdn.onos.sfc import sfc
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as openstack_utils
@@ -221,12 +222,7 @@ class OnosSfc(OnosBase):
         self.update_sfc_onos_file("admin_floating_net", ext_net)
         self.logger.debug("SFC configuration is modified")
 
-    def sfc_test(self):
-        cmd = 'python {0}'.format(os.path.join(self.onos_sfc_path, 'sfc.py'))
-        ft_utils.execute_command_raise(cmd,
-                                       error_msg='Error with testing SFC')
-
     def _run(self):
         self.create_image()
         self.set_sfc_conf()
-        self.sfc_test()
+        sfc.main()

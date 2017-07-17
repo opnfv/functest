@@ -24,7 +24,8 @@ class SfcOnos(object):
         """Initialization of variables."""
         self.logger = logging.getLogger(__name__)
         self.osver = "v2.0"
-        self.token_id = 0
+        self.kver = "v3"
+        self.token_id = ""
         self.net_id = 0
         self.image_id = 0
         self.keystone_hostname = 'keystone_ip'
@@ -35,7 +36,7 @@ class SfcOnos(object):
         # Network variables #######
         self.netname = "test_nw"
         self.admin_state_up = True
-        self.tenant_id = 0
+        self.tenant_id = ""
         self.subnetId = 0
         # #########################
         # SubNet variables#########
@@ -58,7 +59,7 @@ class SfcOnos(object):
         self.container_format = "bare"
         self.disk_format = "qcow2"
         self.imagename = "TestSfcVm"
-        self.createImage = ("/home/root1/devstack/files/images/"
+        self.createImage = ("/home/opnfv/functest/images/"
                             "firewall_block_image.img")
 
         self.vm_name = "vm"
@@ -112,19 +113,21 @@ class SfcOnos(object):
 
     def getToken(self):
         """Get the keystone token value from Openstack ."""
-        url = 'http://%s:5000/%s/tokens' % (self.keystone_hostname,
-                                            self.osver)
-        data = ('{"auth": {"tenantName": "admin", "passwordCredentials":'
-                '{ "username": "admin", "password": "console"}}}')
+        url = 'http://%s:5000/%s/auth/tokens' % (self.keystone_hostname,
+                                                 self.kver)
+        data = ('{"auth": {"identity": {"methods": ["password"], "password": \
+                {"user": {"name": "admin", "domain": {"id": "default"}, \
+                "password": "console"}}}, "scope": {"project": {"name": \
+                "admin", "domain": {"id": "default"}}}}}')
         headers = {"Accept": "application/json"}
         response = requests.post(url, headers=headers, data=data)
-        if (response.status_code == OK):
+        if (response.status_code == CREATED):
             json1_data = json.loads(response.content)
             self.logger.debug(response.status_code)
             self.logger.debug(response.content)
             self.logger.debug(json1_data)
-            self.token_id = json1_data['access']['token']['id']
-            self.tenant_id = json1_data['access']['token']['tenant']['id']
+            self.token_id = response.headers['X-Subject-Token']
+            self.tenant_id = json1_data['token']['project']['id']
             return(response.status_code)
         else:
             return(response.status_code)
