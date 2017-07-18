@@ -66,8 +66,7 @@ class ODLResultVisitor(robot.api.ResultVisitor):
 class ODLTests(testcase.TestCase):
     """ODL test runner."""
 
-    odl_test_repo = os.path.join(
-        constants.CONST.__getattribute__('dir_repos'), 'odl_test')
+    odl_test_repo = constants.CONST.__getattribute__('dir_repo_odl_test')
     neutron_suite_dir = os.path.join(odl_test_repo,
                                      "csit/suites/openstack/neutron")
     basic_suite_dir = os.path.join(odl_test_repo,
