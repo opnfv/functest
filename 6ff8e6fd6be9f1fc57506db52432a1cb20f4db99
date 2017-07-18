@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_93aa166f",
+        "filename": "build.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2034
+      },
+      "writtenOn": "2017-07-18T17:28:35Z",
+      "side": 1,
+      "message": "Did someone create the functest-core, etc, targets in docker hub for you?  I got permission denied when I tried to do this.",
+      "revId": "6ff8e6fd6be9f1fc57506db52432a1cb20f4db99",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
