@@ -12,7 +12,8 @@ general:
         repo_doctor:        /home/opnfv/repos/doctor
         repo_copper:        /home/opnfv/repos/copper
         repo_domino:        /home/opnfv/repos/domino
-        repo_fds:           /home/opnfv/repos/fds
+        repo_odl_test:      /src/odl_test
+        repo_fds:           /src/fds
         repo_securityscan:  /home/opnfv/repos/securityscanning
         repo_vrouter:       /home/opnfv/repos/vnfs/vrouter
         functest:           /home/opnfv/functest
