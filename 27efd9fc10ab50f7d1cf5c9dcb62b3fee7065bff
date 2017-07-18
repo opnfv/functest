@@ -93,6 +93,30 @@
       "revId": "27efd9fc10ab50f7d1cf5c9dcb62b3fee7065bff",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_889c256b",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6883
+      },
+      "writtenOn": "2017-07-18T07:50:41Z",
+      "side": 1,
+      "message": "Because of MCP to Fuel migration, for now it never reads architecture aarch64. We will update it to read the aarm64 architecture too.",
+      "parentUuid": "1aa4ed85_c8cbfd70",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "27efd9fc10ab50f7d1cf5c9dcb62b3fee7065bff",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
