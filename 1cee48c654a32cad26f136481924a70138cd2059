@@ -16,6 +16,24 @@
       "revId": "1cee48c654a32cad26f136481924a70138cd2059",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c8653de2",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1641
+      },
+      "writtenOn": "2017-07-18T02:51:37Z",
+      "side": 1,
+      "message": "I agree with Ollivier, it\u0027s not neccessary to filter here.\nAdditionally, cirros-0.3.5-x86_64-disk.img or cirros-0.3.2-x86_64-disk.img, I noticed another patch has updated the version.",
+      "parentUuid": "1aa4ed85_62f46a5b",
+      "revId": "1cee48c654a32cad26f136481924a70138cd2059",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
