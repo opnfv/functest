@@ -22,6 +22,29 @@
       "revId": "7f740e00c0c07352b24c668ef17805b2ff209b15",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_6d58db56",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-18T01:22:19Z",
+      "side": 1,
+      "message": "There are three options for cacert:\n1) True for http\n2) the path of cacert file for SSL checking on https\n3) False for skipping SSL checking on https",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "7f740e00c0c07352b24c668ef17805b2ff209b15",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
