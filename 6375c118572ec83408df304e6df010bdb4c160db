@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_334ec270",
+        "filename": "functest/api/base.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "this is a constant and constants should be capital letters. Rename to LOGGER",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f357ca00",
+        "filename": "functest/api/base.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "Recommend to add a __init__.py method even if it\u0027s empty. \nOtherwise, pylint warns about it\n\nW: 20, 0: Class has no __init__ method (no-init)",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_9348d65c",
+        "filename": "functest/api/base.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "this class does not contain public methods",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_734bda59",
+        "filename": "functest/api/base.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "why do you need this private function if it is not used by the class?",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_135dc621",
+        "filename": "functest/api/base.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "if params is a string, does it have a get method?",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d33e4eb8",
+        "filename": "functest/api/base.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "why do you need this private function if it is not used by the class?",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_33756298",
+        "filename": "functest/api/resources/v1/envs.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "args is not used in the function",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_537a5e89",
+        "filename": "functest/api/server.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "LOGGER",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 6
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f36eeac8",
+        "filename": "functest/api/server.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "APP",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 3
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_1374e697",
+        "filename": "functest/api/server.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "API",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 3
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b36872bb",
+        "filename": "functest/api/server.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "I would use \"address\" or some other word, since ip violates pylint",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 6
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d365eee1",
+        "filename": "functest/api/utils/api_utils.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "LOGGER",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_7362fad9",
+        "filename": "functest/api/utils/api_utils.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "dirs is not used",
+      "range": {
+        "startLine": 67,
+        "startChar": 14,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_935f760e",
+        "filename": "functest/api/utils/api_utils.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-18T13:30:45Z",
+      "side": 1,
+      "message": "key, value",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 12
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
