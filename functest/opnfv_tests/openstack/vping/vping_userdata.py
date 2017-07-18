@@ -94,7 +94,7 @@ class VPingUserdata(vping_base.VPingBase):
 
         while True:
             time.sleep(1)
-            p_console = vm_creator.get_os_vm_server_obj().get_console_output()
+            p_console = vm_creator.get_console_output()
             if "vPing OK" in p_console:
                 self.logger.info("vPing detected!")
                 exit_code = TestCase.EX_OK

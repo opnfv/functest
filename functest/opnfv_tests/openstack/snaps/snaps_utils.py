@@ -16,4 +16,4 @@ def get_ext_net_name(os_creds):
     """
     neutron = neutron_utils.neutron_client(os_creds)
     ext_nets = neutron_utils.get_external_networks(neutron)
-    return ext_nets[0]['network']['name']
+    return ext_nets[0].name
