@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_53a1fef6",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-07-18T13:42:32Z",
+      "side": 1,
+      "message": "Should work just fine. By removing one of the duplicated blocks and it\u0027s header (\u0027glance_tests\u0027 or \u0027cirros\u0027) would work as well for all tests using cirros images.\n\nThere are 3 smoke tests when \u0027use_floating_ips\u0027 is True that would download single-part Ubuntu and Cirros images that could potentially cause problems for you that you may want to consider adding.",
+      "revId": "1084449e9b6bb8b8b4e40a28067a85c13d8ef9d8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
