@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_6ee77141",
+        "filename": "functest/api/base.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-19T02:39:51Z",
+      "side": 1,
+      "message": "It is called by \"action, args \u003d self._post_args()\" (see line 44 below)",
+      "parentUuid": "1aa4ed85_734bda59",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_135dc621",
         "filename": "functest/api/base.py",
         "patchSetId": 14
@@ -105,6 +129,30 @@
       "writtenOn": "2017-07-18T13:30:45Z",
       "side": 1,
       "message": "if params is a string, does it have a get method?",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_2ed17957",
+        "filename": "functest/api/base.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-19T02:39:51Z",
+      "side": 1,
+      "message": "1) The argument \u0027data\u0027 and the var \u0027params\u0027 are both dict.\n2) The main purpose of def translate_to_str is to transfer key and value in Unicode to that in string in the dict.\n3) I am not sure how to name the function more accurately.",
+      "parentUuid": "1aa4ed85_135dc621",
       "range": {
         "startLine": 25,
         "startChar": 17,
@@ -140,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_ce9305a2",
+        "filename": "functest/api/base.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-19T02:39:51Z",
+      "side": 1,
+      "message": "It will be called by the function in the subclass. It is better to add this method later when used.",
+      "parentUuid": "1aa4ed85_d33e4eb8",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_33756298",
         "filename": "functest/api/resources/v1/envs.py",
         "patchSetId": 14
@@ -151,6 +223,30 @@
       "writtenOn": "2017-07-18T13:30:45Z",
       "side": 1,
       "message": "args is not used in the function",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "6375c118572ec83408df304e6df010bdb4c160db",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8ee42d3c",
+        "filename": "functest/api/resources/v1/envs.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-19T02:39:51Z",
+      "side": 1,
+      "message": "Although args is not used here, it is essential cause the framework of this ( see getattr(self, action)(args) line 49 in base.py).\n\nMaybe I can add \"if... else\" branch according to the existence of args in base.py.",
+      "parentUuid": "1aa4ed85_33756298",
       "range": {
         "startLine": 23,
         "startChar": 22,
