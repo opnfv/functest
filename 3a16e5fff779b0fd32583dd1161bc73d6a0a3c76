@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_0eb6fdd9",
+        "filename": "functest/api/base.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-19T06:56:47Z",
+      "side": 1,
+      "message": "why Url() is a base class? where else it will be used except for server.py?",
+      "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_aea3299d",
+        "filename": "functest/api/server.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-19T06:56:47Z",
+      "side": 1,
+      "message": "in terms of this file, I would recommend to leverage an entry method like main() to hold all the procedures, rather than mingle variable definition, method definition and some processes all together",
+      "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ceff8533",
+        "filename": "functest/api/server.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-19T06:56:47Z",
+      "side": 1,
+      "message": "port is not used?",
+      "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
