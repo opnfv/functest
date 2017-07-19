@@ -1,4 +1,4 @@
 # This is an empty file to be filled up with the desired tempest test cases
 # Examples:
-#tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops
-#tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_network_basic_ops
+#tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops[compute,id-7fff3fb3-91d8-4fd0-bd7d-0204f1f180ba,network,smoke]
+#tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_network_basic_ops[compute,id-f323b3ba-82f8-4db7-8ea6-6a895869ec49,network,smoke]
