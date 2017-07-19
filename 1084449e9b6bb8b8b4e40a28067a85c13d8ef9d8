@@ -16,6 +16,24 @@
       "revId": "1084449e9b6bb8b8b4e40a28067a85c13d8ef9d8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ee44c175",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6883
+      },
+      "writtenOn": "2017-07-19T06:58:29Z",
+      "side": 1,
+      "message": "We will do another patch to choose aarm64 architecture automatically and we\u0027ll also do the changes mentioned in that patch.",
+      "parentUuid": "1aa4ed85_53a1fef6",
+      "revId": "1084449e9b6bb8b8b4e40a28067a85c13d8ef9d8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
