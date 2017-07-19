@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_c56a031a",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-19T20:10:11Z",
+      "side": 1,
+      "message": "what do you mean? remove what?",
+      "parentUuid": "1aa4ed85_45e373d9",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_e5e7ffe2",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-19T18:33:37Z",
       "side": 1,
       "message": "in this case it could return values expected by releng/modules",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_a56d8734",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-19T20:10:11Z",
+      "side": 1,
+      "message": "Ok, I just used the same as we have in run_tests",
+      "parentUuid": "1aa4ed85_e5e7ffe2",
       "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_0589fbea",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-19T20:10:11Z",
+      "side": 1,
+      "message": "why? I am not printing any table here.",
+      "parentUuid": "1aa4ed85_05ed7bc3",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_a5d107fd",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 2
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_457ff3e0",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-19T20:10:11Z",
+      "side": 1,
+      "message": "right, I would prefer by Dockerfile. We can remove this once it\u0027s included in the Dockerfiles.",
+      "parentUuid": "1aa4ed85_a5d107fd",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_c5ce835a",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 2
@@ -98,6 +170,24 @@
       "writtenOn": "2017-07-19T18:33:37Z",
       "side": 1,
       "message": "prepare_env shouldn\u0027t configure rally else it\u0027s required by functest-core (then by any container) even if rally is not used as testcase. Why not updated rally instead?",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_e5837fca",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-19T20:10:11Z",
+      "side": 1,
+      "message": "agree. But as the directories creation, I would prefer doing that logic change later. This patch just converts this script into a loadable module.",
+      "parentUuid": "1aa4ed85_c5ce835a",
       "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
