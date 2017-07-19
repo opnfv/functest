@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_65db0f1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-19T18:33:37Z",
+      "side": 1,
+      "message": "nad \u003d\u003e and",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_45e373d9",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-19T18:33:37Z",
+      "side": 1,
+      "message": "please remove as in this case",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_e5e7ffe2",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-19T18:33:37Z",
+      "side": 1,
+      "message": "in this case it could return values expected by releng/modules",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_05ed7bc3",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-19T18:33:37Z",
+      "side": 1,
+      "message": "please use PrettyTable instead",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_a5d107fd",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-19T18:33:37Z",
+      "side": 1,
+      "message": "We should decide if the directories must be created by prepare_env or Dockerfiles.",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c5ce835a",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-19T18:33:37Z",
+      "side": 1,
+      "message": "prepare_env shouldn\u0027t configure rally else it\u0027s required by functest-core (then by any container) even if rally is not used as testcase. Why not updated rally instead?",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
