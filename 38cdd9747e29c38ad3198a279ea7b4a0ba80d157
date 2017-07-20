@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_5bbef000",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-20T10:49:00Z",
+      "side": 1,
+      "message": "I simply prefer \u0027from functest.utils import functest_utils\u0027.\nIt\u0027s a matter of taste.",
+      "parentUuid": "1aa4ed85_c56a031a",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_e5e7ffe2",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 2
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "Ok, I just used the same as we have in run_tests",
       "parentUuid": "1aa4ed85_e5e7ffe2",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_7bbbac0e",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-20T10:49:00Z",
+      "side": 1,
+      "message": "You\u0027re right. Run_tests should have been updated too. There is already a open bug to partially rewrite run_tests.py",
+      "parentUuid": "1aa4ed85_a56d8734",
       "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -124,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_1b38789f",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-20T10:49:00Z",
+      "side": 1,
+      "message": "Yes but you could tranform them as table as we did for run_tests.py",
+      "parentUuid": "1aa4ed85_0589fbea",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_a5d107fd",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 2
@@ -159,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_3b3d3490",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-20T10:49:00Z",
+      "side": 1,
+      "message": "You can keep that from the time being. I will check what to add in Alpine containers right after my holidays (if required).",
+      "parentUuid": "1aa4ed85_457ff3e0",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_c5ce835a",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 2
@@ -188,6 +260,24 @@
       "side": 1,
       "message": "agree. But as the directories creation, I would prefer doing that logic change later. This patch just converts this script into a loadable module.",
       "parentUuid": "1aa4ed85_c5ce835a",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_db41800c",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-20T10:49:00Z",
+      "side": 1,
+      "message": "Yes my comments are about how to enhance it too. Prepare_env is quite useless in fact as it\u0027s in the middle of Docker build and testcases (eg rally deployment could be handled by the rally testcase).",
+      "parentUuid": "1aa4ed85_e5837fca",
       "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
