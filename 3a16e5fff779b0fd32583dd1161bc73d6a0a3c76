@@ -86,6 +86,24 @@
       "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_38669a52",
+        "filename": "functest/api/server.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-20T06:34:10Z",
+      "side": 1,
+      "message": "three problems introduced if doing so:\n1) a configuration is set in config_functest.yml, but will never be used? 2) 5000 is fixed, not allow to change?\n3) if the user is not familiar with flask, he/she should study and checkout which is the default port first?",
+      "parentUuid": "1aa4ed85_6e58d156",
+      "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
