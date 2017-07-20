@@ -104,6 +104,24 @@
       "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b874cacf",
+        "filename": "functest/api/server.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-20T07:44:44Z",
+      "side": 1,
+      "message": "1. The param api_port in config_functest.yaml is used to get_endpoint according to url.\n2. Here 5000 port is listened by default and not allowed to change.\n3. Why does the user have to know and study the port? \n3.1) When the cmd \"functest_api\" is added into Dockerfile and this port is exposed in future, the restapi service will be launched once the container gets started. The only thing the user will do is to run a functest container with a port mapping. The port is listened inside the container, so the user does not have to do any change to avoid port conflict or anything else.\n\n3.2) Moreover, a user will prefer userguide for sure when using restapi, rather than reading the code, even though an explicit port is shown there.",
+      "parentUuid": "1aa4ed85_38669a52",
+      "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
