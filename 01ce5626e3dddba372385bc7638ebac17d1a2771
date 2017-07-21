@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_f10edd33",
+        "filename": "functest/api/server.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-21T06:16:16Z",
+      "side": 1,
+      "message": "I would recommend to put APP/API also in main(), so it will be very obvious to figure out all the doings to start the server.\ndef main():\n    app \u003d Flask(__name__)\n    api \u003d Api(app)\n    add_resource(api)\n    app.run()",
+      "revId": "01ce5626e3dddba372385bc7638ebac17d1a2771",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
