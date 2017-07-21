@@ -122,6 +122,24 @@
       "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b6093b33",
+        "filename": "functest/api/server.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-21T06:16:16Z",
+      "side": 1,
+      "message": "Sorry, I am not very familiar with flask, I have a question here, now we have three type of port, internal port 5000 by default, api_port used to join url, and external exposed port. the relationship between internal and external port is easy to understand. What does endpoint  use for? after test it, I find no matter which value api_port is, http://ip:external_port is alway accessible, it seems like api_port is useless. And in the file https://stackoverflow.com/questions/19261833/what-is-an-endpoint-in-flask, it looks like endpoint is just a name, nothing related to url.",
+      "parentUuid": "1aa4ed85_b874cacf",
+      "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
