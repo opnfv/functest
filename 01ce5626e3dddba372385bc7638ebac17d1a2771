@@ -16,6 +16,23 @@
       "revId": "01ce5626e3dddba372385bc7638ebac17d1a2771",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_91968993",
+        "filename": "functest/cli/commands/cli_env.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-21T06:50:47Z",
+      "side": 1,
+      "message": "I wouldn\u0027t recommend to do like this, we should only return the content of env_show to both api and cli, with regards to how to show them, it depends on cli/api itself, we can not return different contents to cli/api in one method, and let them decide which one to use.\n\nsorry I will vote -1 for this kind of process",
+      "revId": "01ce5626e3dddba372385bc7638ebac17d1a2771",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
