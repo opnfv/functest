@@ -22,6 +22,30 @@
       "revId": "979e2557b7796e936a21786bd2fb947b1e1c82ae",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f146dd22",
+        "filename": "docker/Dockerfile.aarch64.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6883
+      },
+      "writtenOn": "2017-07-21T07:00:42Z",
+      "side": 1,
+      "message": "Fixed. Thank you!",
+      "parentUuid": "1aa4ed85_7b740cfd",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "979e2557b7796e936a21786bd2fb947b1e1c82ae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
