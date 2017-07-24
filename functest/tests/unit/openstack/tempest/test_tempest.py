@@ -15,10 +15,16 @@ from functest.opnfv_tests.openstack.tempest import tempest
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
 
+from snaps.openstack.os_credentials import OSCreds
+
 
 class OSTempestTesting(unittest.TestCase):
 
     def setUp(self):
+        os_creds = OSCreds(
+            username='user', password='pass',
+            auth_url='http://foo.com:5000/v3', project_name='bar')
+
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                         'conf_utils.get_verifier_id',
                         return_value='test_deploy_id'), \
@@ -30,7 +36,9 @@ class OSTempestTesting(unittest.TestCase):
                        return_value='test_verifier_repo_dir'), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'conf_utils.get_verifier_deployment_dir',
-                       return_value='test_verifier_deploy_dir'):
+                       return_value='test_verifier_deploy_dir'), \
+            mock.patch('snaps.openstack.tests.openstack_tests.get_credentials',
+                       return_value=os_creds):
             self.tempestcommon = tempest.TempestCommon()
             self.tempestsmoke_serial = tempest.TempestSmokeSerial()
             self.tempestsmoke_parallel = tempest.TempestSmokeParallel()
@@ -153,8 +161,8 @@ class OSTempestTesting(unittest.TestCase):
                 'os.path.exists', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'conf_utils.create_tempest_resources', side_effect=Exception)
-    def test_run_create_tempest_resources_ko(self, *args):
+                'TempestResourcesManager.create', side_effect=Exception)
+    def test_run_tempest_create_resources_ko(self, *args):
         self.assertEqual(self.tempestcommon.run(),
                          testcase.TestCase.EX_RUN_ERROR)
 
@@ -162,7 +170,7 @@ class OSTempestTesting(unittest.TestCase):
                 'os.path.exists', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'conf_utils.create_tempest_resources', return_value={})
+                'TempestResourcesManager.create', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'conf_utils.configure_tempest', side_effect=Exception)
     def test_run_configure_tempest_ko(self, *args):
@@ -173,7 +181,7 @@ class OSTempestTesting(unittest.TestCase):
                 'os.path.exists', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'conf_utils.create_tempest_resources', return_value={})
+                'TempestResourcesManager.create', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'conf_utils.configure_tempest')
     def _test_run(self, status, *args):
