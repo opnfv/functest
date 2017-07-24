@@ -140,6 +140,24 @@
       "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f1e25d02",
+        "filename": "functest/api/server.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-24T02:51:25Z",
+      "side": 1,
+      "message": "Yes, endpoint is a name used for the registered URL rule, that is URL--\u003eendpoint--\u003eviewfunction. We just need a unique name by joining url into it.\nHere the api_port does not have to be 5000.",
+      "parentUuid": "1aa4ed85_b6093b33",
+      "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
