@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_2e1c0f13",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-24T14:00:44Z",
+      "side": 1,
+      "message": "with this changes, it must inherit from testcase.Testcase as we are now cleaning the resources in the test case as such.",
+      "range": {
+        "startLine": 41,
+        "startChar": 20,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "100009fd10a8ce07ce4f46fd40aa6bc11532e1ee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ce1a1b17",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-24T14:00:44Z",
+      "side": 1,
+      "message": "inherit from object\n\n    class TempestResourcesManager(object):",
+      "revId": "100009fd10a8ce07ce4f46fd40aa6bc11532e1ee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ee1597e5",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-24T14:00:44Z",
+      "side": 1,
+      "message": "break these lines so that they are max 80 chars.",
+      "revId": "100009fd10a8ce07ce4f46fd40aa6bc11532e1ee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
