@@ -51,6 +51,24 @@
       "revId": "01ce5626e3dddba372385bc7638ebac17d1a2771",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_aed47f47",
+        "filename": "functest/cli/commands/cli_env.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-24T12:31:27Z",
+      "side": 1,
+      "message": "Ok, so what we are doing here is that CLI prints a table and API prints a dict, which makes sense to me. Maybe it\u0027s not so wrong as returning a table formatted string in the API wouldn\u0027t be a good solution. \nWhat do you suggest, Serena?",
+      "parentUuid": "1aa4ed85_0e97d391",
+      "revId": "01ce5626e3dddba372385bc7638ebac17d1a2771",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
