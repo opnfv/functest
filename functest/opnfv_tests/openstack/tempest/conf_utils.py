@@ -52,101 +52,9 @@ CI_INSTALLER_IP = CONST.__getattribute__('INSTALLER_IP')
 logger = logging.getLogger(__name__)
 
 
-def create_tempest_resources(use_custom_images=False,
-                             use_custom_flavors=False):
-
-    logger.debug("Creating private network for Tempest suite")
-    network_dic = os_utils.create_shared_network_full(
-        CONST.__getattribute__('tempest_private_net_name'),
-        CONST.__getattribute__('tempest_private_subnet_name'),
-        CONST.__getattribute__('tempest_router_name'),
-        CONST.__getattribute__('tempest_private_subnet_cidr'))
-    if network_dic is None:
-        raise Exception('Failed to create private network')
-
-    image_id = ""
-    image_id_alt = ""
-    flavor_id = ""
-    flavor_id_alt = ""
-
-    if (CONST.__getattribute__('tempest_use_custom_images') or
-       use_custom_images):
-        # adding alternative image should be trivial should we need it
-        logger.debug("Creating image for Tempest suite")
-        _, image_id = os_utils.get_or_create_image(
-            CONST.__getattribute__('openstack_image_name'),
-            GLANCE_IMAGE_PATH,
-            CONST.__getattribute__('openstack_image_disk_format'))
-        if image_id is None:
-            raise Exception('Failed to create image')
-
-    if use_custom_images:
-        logger.debug("Creating 2nd image for Tempest suite")
-        _, image_id_alt = os_utils.get_or_create_image(
-            CONST.__getattribute__('openstack_image_name_alt'),
-            GLANCE_IMAGE_PATH,
-            CONST.__getattribute__('openstack_image_disk_format'))
-        if image_id_alt is None:
-            raise Exception('Failed to create image')
-
-    if (CONST.__getattribute__('tempest_use_custom_flavors') or
-       use_custom_flavors):
-        # adding alternative flavor should be trivial should we need it
-        logger.debug("Creating flavor for Tempest suite")
-        _, flavor_id = os_utils.get_or_create_flavor(
-            CONST.__getattribute__('openstack_flavor_name'),
-            CONST.__getattribute__('openstack_flavor_ram'),
-            CONST.__getattribute__('openstack_flavor_disk'),
-            CONST.__getattribute__('openstack_flavor_vcpus'))
-        if flavor_id is None:
-            raise Exception('Failed to create flavor')
-
-    if use_custom_flavors:
-        logger.debug("Creating 2nd flavor for tempest_defcore")
-        _, flavor_id_alt = os_utils.get_or_create_flavor(
-            CONST.__getattribute__('openstack_flavor_name_alt'),
-            CONST.__getattribute__('openstack_flavor_ram'),
-            CONST.__getattribute__('openstack_flavor_disk'),
-            CONST.__getattribute__('openstack_flavor_vcpus'))
-        if flavor_id_alt is None:
-            raise Exception('Failed to create flavor')
-
-    img_flavor_dict = {}
-    img_flavor_dict['image_id'] = image_id
-    img_flavor_dict['image_id_alt'] = image_id_alt
-    img_flavor_dict['flavor_id'] = flavor_id
-    img_flavor_dict['flavor_id_alt'] = flavor_id_alt
-
-    return img_flavor_dict
-
-
-def create_tenant_user():
-    keystone_client = os_utils.get_keystone_client()
-
-    logger.debug("Creating tenant and user for Tempest suite")
-    tenant_id = os_utils.create_tenant(
-        keystone_client,
-        CONST.__getattribute__('tempest_identity_tenant_name'),
-        CONST.__getattribute__('tempest_identity_tenant_description'))
-    if not tenant_id:
-        logger.error("Failed to create %s tenant"
-                     % CONST.__getattribute__('tempest_identity_tenant_name'))
-
-    user_id = os_utils.create_user(
-        keystone_client,
-        CONST.__getattribute__('tempest_identity_user_name'),
-        CONST.__getattribute__('tempest_identity_user_password'),
-        None, tenant_id)
-    if not user_id:
-        logger.error("Failed to create %s user" %
-                     CONST.__getattribute__('tempest_identity_user_name'))
-
-    return tenant_id
-
-
 def get_verifier_id():
     """
-    Returns verifer id for current Tempest
+    Returns verifier id for current Tempest
     """
     cmd = ("rally verify list-verifiers | awk '/" +
            CONST.__getattribute__('tempest_deployment_name') +
@@ -180,7 +88,7 @@ def get_verifier_deployment_id():
 
 def get_verifier_repo_dir(verifier_id):
     """
-    Returns installed verfier repo directory for Tempest
+    Returns installed verifier repo directory for Tempest
     """
     if not verifier_id:
         verifier_id = get_verifier_id()
@@ -229,25 +137,23 @@ def backup_tempest_config(conf_file):
                     os.path.join(TEMPEST_RESULTS_DIR, 'tempest.conf'))
 
 
-def configure_tempest(deployment_dir, IMAGE_ID=None, FLAVOR_ID=None,
-                      MODE=None):
+def configure_tempest(deployment_dir, image_id=None, flavor_id=None,
+                      mode=None):
     """
     Calls rally verify and updates the generated tempest.conf with
     given parameters
     """
     conf_file = configure_verifier(deployment_dir)
-    configure_tempest_update_params(conf_file,
-                                    IMAGE_ID, FLAVOR_ID)
+    configure_tempest_update_params(conf_file, image_id, flavor_id)
 
 
-def configure_tempest_defcore(deployment_dir, img_flavor_dict):
+def configure_tempest_defcore(deployment_dir, image_id, flavor_id,
+                              image_id_alt, flavor_id_alt, tenant_id):
     """
     Add/update needed parameters into tempest.conf file
     """
     conf_file = configure_verifier(deployment_dir)
-    configure_tempest_update_params(conf_file,
-                                    img_flavor_dict.get("image_id"),
-                                    img_flavor_dict.get("flavor_id"))
+    configure_tempest_update_params(conf_file, image_id, flavor_id)
 
     logger.debug("Updating selected tempest.conf parameters for defcore...")
     config = ConfigParser.RawConfigParser()
@@ -255,16 +161,14 @@ def configure_tempest_defcore(deployment_dir, img_flavor_dict):
     config.set('DEFAULT', 'log_file', '{}/tempest.log'.format(deployment_dir))
     config.set('oslo_concurrency', 'lock_path',
                '{}/lock_files'.format(deployment_dir))
-    generate_test_accounts_file()
+    generate_test_accounts_file(tenant_id=tenant_id)
     config.set('auth', 'test_accounts_file', TEST_ACCOUNTS_FILE)
     config.set('scenario', 'img_dir', '{}'.format(deployment_dir))
     config.set('scenario', 'img_file', 'tempest-image')
-    config.set('compute', 'image_ref', img_flavor_dict.get("image_id"))
-    config.set('compute', 'image_ref_alt',
-               img_flavor_dict['image_id_alt'])
-    config.set('compute', 'flavor_ref', img_flavor_dict.get("flavor_id"))
-    config.set('compute', 'flavor_ref_alt',
-               img_flavor_dict['flavor_id_alt'])
+    config.set('compute', 'image_ref', image_id)
+    config.set('compute', 'image_ref_alt', image_id_alt)
+    config.set('compute', 'flavor_ref', flavor_id)
+    config.set('compute', 'flavor_ref_alt', flavor_id_alt)
 
     with open(conf_file, 'wb') as config_file:
         config.write(config_file)
@@ -275,13 +179,12 @@ def configure_tempest_defcore(deployment_dir, img_flavor_dict):
     shutil.copyfile(conf_file, confpath)
 
 
-def generate_test_accounts_file():
+def generate_test_accounts_file(tenant_id):
     """
     Add needed tenant and user params into test_accounts.yaml
     """
 
     logger.debug("Add needed params into test_accounts.yaml...")
-    tenant_id = create_tenant_user()
     accounts_list = [
         {
             'tenant_name':
@@ -298,7 +201,7 @@ def generate_test_accounts_file():
 
 
 def configure_tempest_update_params(tempest_conf_file,
-                                    IMAGE_ID=None, FLAVOR_ID=None):
+                                    image_id=None, flavor_id=None):
     """
     Add/update needed parameters into tempest.conf file
     """
@@ -312,13 +215,13 @@ def configure_tempest_update_params(tempest_conf_file,
     config.set('compute', 'volume_device_name',
                CONST.__getattribute__('tempest_volume_device_name'))
     if CONST.__getattribute__('tempest_use_custom_images'):
-        if IMAGE_ID is not None:
-            config.set('compute', 'image_ref', IMAGE_ID)
+        if image_id is not None:
+            config.set('compute', 'image_ref', image_id)
         if IMAGE_ID_ALT is not None:
             config.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
     if CONST.__getattribute__('tempest_use_custom_flavors'):
-        if FLAVOR_ID is not None:
-            config.set('compute', 'flavor_ref', FLAVOR_ID)
+        if flavor_id is not None:
+            config.set('compute', 'flavor_ref', flavor_id)
         if FLAVOR_ID_ALT is not None:
             config.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
     config.set('identity', 'region', 'RegionOne')
