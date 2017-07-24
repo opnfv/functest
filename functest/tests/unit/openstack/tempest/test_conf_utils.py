@@ -10,114 +10,83 @@ import unittest
 
 import mock
 
-from functest.opnfv_tests.openstack.tempest import conf_utils
+from functest.opnfv_tests.openstack.tempest import tempest, conf_utils
 from functest.utils.constants import CONST
+from snaps.openstack.os_credentials import OSCreds
 
 
 class OSTempestConfUtilsTesting(unittest.TestCase):
 
-    def test_create_tempest_resources_missing_network_dic(self):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                        'os_utils.create_shared_network_full',
-                        return_value=None), \
-                self.assertRaises(Exception) as context:
-            conf_utils.create_tempest_resources()
-            msg = 'Failed to create private network'
-            self.assertTrue(msg in context)
+    def setUp(self):
+        self.os_creds = OSCreds(
+            username='user', password='pass',
+            auth_url='http://foo.com:5000/v3', project_name='bar')
 
-    def test_create_tempest_resources_missing_image(self):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                        'os_utils.create_shared_network_full',
-                        return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.get_or_create_image',
-                       return_value=(mock.Mock(), None)), \
-                self.assertRaises(Exception) as context:
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_project',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_user',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_network',
+                return_value=None)
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
+                return_value=mock.Mock())
+    def test_create_tempest_resources_missing_network_dic(self, *mock_args):
+        tempest_resources = tempest.TempestResourcesManager(os_creds={})
+        with self.assertRaises(Exception) as context:
+            tempest_resources.create()
+        msg = 'Failed to create private network'
+        self.assertTrue(msg in context.exception)
 
-            CONST.__setattr__('tempest_use_custom_images', True)
-            conf_utils.create_tempest_resources()
-            msg = 'Failed to create image'
-            self.assertTrue(msg in context)
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_project',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_user',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_network',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
+                return_value=None)
+    def test_create_tempest_resources_missing_image(self, *mock_args):
+        tempest_resources = tempest.TempestResourcesManager(os_creds={})
 
-            CONST.__setattr__('tempest_use_custom_images', False)
-            conf_utils.create_tempest_resources(use_custom_images=True)
-            msg = 'Failed to create image'
-            self.assertTrue(msg in context)
+        CONST.__setattr__('tempest_use_custom_imagess', True)
+        with self.assertRaises(Exception) as context:
+            tempest_resources.create()
+        msg = 'Failed to create image'
+        self.assertTrue(msg in context.exception, msg=str(context.exception))
 
-    def test_create_tempest_resources_missing_flavor(self):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                        'os_utils.create_shared_network_full',
-                        return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.get_or_create_image',
-                       return_value=(mock.Mock(), 'image_id')), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.get_or_create_flavor',
-                       return_value=(mock.Mock(), None)), \
-                self.assertRaises(Exception) as context:
-            CONST.__setattr__('tempest_use_custom_images', True)
-            CONST.__setattr__('tempest_use_custom_flavors', True)
-            conf_utils.create_tempest_resources()
-            msg = 'Failed to create flavor'
-            self.assertTrue(msg in context)
+        CONST.__setattr__('tempest_use_custom_imagess', False)
+        with self.assertRaises(Exception) as context:
+            tempest_resources.create(use_custom_images=True)
+        msg = 'Failed to create image'
+        self.assertTrue(msg in context.exception, msg=str(context.exception))
 
-            CONST.__setattr__('tempest_use_custom_images', True)
-            CONST.__setattr__('tempest_use_custom_flavors', False)
-            conf_utils.create_tempest_resources(use_custom_flavors=False)
-            msg = 'Failed to create flavor'
-            self.assertTrue(msg in context)
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_project',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_user',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_network',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
+                return_value=None)
+    def test_create_tempest_resources_missing_flavor(self, *mock_args):
+        tempest_resources = tempest.TempestResourcesManager(
+            os_creds=self.os_creds)
 
-    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                'logger.error')
-    def create_tenant_user_and_tenant_ok(self, mock_logger_error):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                        'os_utils.get_keystone_client',
-                        return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.create_tenant',
-                       return_value='test_tenant_id'):
-            conf_utils.create_tenant_user()
-            mock_logger_error.assert_not_called()
+        CONST.__setattr__('tempest_use_custom_images', True)
+        CONST.__setattr__('tempest_use_custom_flavors', True)
+        with self.assertRaises(Exception) as context:
+            tempest_resources.create()
+        msg = 'Failed to create flavor'
+        self.assertTrue(msg in context.exception, msg=str(context.exception))
 
-    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                'logger.error')
-    def create_tenant_user_and_user_ok(self, mock_logger_error):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                        'os_utils.get_keystone_client',
-                        return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.create_user',
-                       return_value='test_user_id'):
-            conf_utils.create_tenant_user()
-            mock_logger_error.assert_not_called()
-
-    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                'logger.error')
-    def create_tenant_user_and_tenant_failed(self, mock_logger_error):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                        'os_utils.get_keystone_client',
-                        return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.create_tenant',
-                       return_value=None):
-            conf_utils.create_tenant_user()
-            msg = ("Failed to create %s tenant"
-                   % CONST.__getattribute__('tempest_identity_tenant_name'))
-            mock_logger_error.assert_any_call(msg)
-
-    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                'logger.error')
-    def create_tenant_user_and_user_failed(self, mock_logger_error):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                        'os_utils.get_keystone_client',
-                        return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.create_user',
-                       return_value=None):
-            conf_utils.create_tenant_user()
-            msg = ("Failed to create %s user"
-                   % CONST.__getattribute__('tempest_identity_user_name'))
-            mock_logger_error.assert_any_call(msg)
+        CONST.__setattr__('tempest_use_custom_images', True)
+        CONST.__setattr__('tempest_use_custom_flavors', False)
+        with self.assertRaises(Exception) as context:
+            tempest_resources.create(use_custom_flavors=True)
+        msg = 'Failed to create flavor'
+        self.assertTrue(msg in context.exception, msg=str(context.exception))
 
     def test_get_verifier_id_missing_verifier(self):
         CONST.__setattr__('tempest_deployment_name', 'test_deploy_name')
@@ -229,10 +198,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             self.assertTrue(m1.called)
 
     def test_configure_tempest_defcore_default(self):
-        img_flavor_dict = {'image_id': 'test_image_id',
-                           'flavor_id': 'test_flavor_id',
-                           'image_id_alt': 'test_image_alt_id',
-                           'flavor_id_alt': 'test_flavor_alt_id'}
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.configure_verifier',
                         return_value='test_conf_file'), \
@@ -252,8 +217,9 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                        'conf_utils.generate_test_accounts_file'), \
             mock.patch('functest.opnfv_tests.openstack.tempest.'
                        'conf_utils.shutil.copyfile'):
-            conf_utils.configure_tempest_defcore('test_dep_dir',
-                                                 img_flavor_dict)
+            conf_utils.configure_tempest_defcore(
+                'test_dep_dir', 'test_image_id', 'test_flavor_id',
+                'test_image_alt_id', 'test_flavor_alt_id', 'test_tenant_id')
             mset.assert_any_call('compute', 'image_ref', 'test_image_id')
             mset.assert_any_call('compute', 'image_ref_alt',
                                  'test_image_alt_id')
@@ -264,14 +230,10 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             self.assertTrue(mwrite.called)
 
     def test_generate_test_accounts_file_default(self):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                        'create_tenant_user',
-                        return_value='test_tenant_id') as mock_create, \
-            mock.patch("__builtin__.open", mock.mock_open()), \
+        with mock.patch("__builtin__.open", mock.mock_open()), \
             mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                        'yaml.dump') as mock_dump:
-            conf_utils.generate_test_accounts_file()
-            self.assertTrue(mock_create.called)
+            conf_utils.generate_test_accounts_file('test_tenant_id')
             self.assertTrue(mock_dump.called)
 
     def _test_missing_param(self, params, image_id, flavor_id):
@@ -292,8 +254,8 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             CONST.__setattr__('OS_ENDPOINT_TYPE', None)
             conf_utils.\
                 configure_tempest_update_params('test_conf_file',
-                                                IMAGE_ID=image_id,
-                                                FLAVOR_ID=flavor_id)
+                                                image_id=image_id,
+                                                flavor_id=flavor_id)
             mset.assert_any_call(params[0], params[1], params[2])
             self.assertTrue(mread.called)
             self.assertTrue(mwrite.called)
