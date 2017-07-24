@@ -125,6 +125,29 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_0bdee56d",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-24T06:26:18Z",
+      "side": 1,
+      "message": "How about delete __init__(), since nothing does here, and if it is added it needs to be tested, which are all meaningless works.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 12
+      },
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_05ed7bc3",
         "filename": "functest/ci/prepare_env.py",
         "patchSetId": 2
@@ -278,6 +301,29 @@
       "side": 1,
       "message": "Yes my comments are about how to enhance it too. Prepare_env is quite useless in fact as it\u0027s in the middle of Docker build and testcases (eg rally deployment could be handled by the rally testcase).",
       "parentUuid": "1aa4ed85_e5837fca",
+      "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_6b13d90d",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-24T06:26:18Z",
+      "side": 1,
+      "message": "seems \u0027self\u0027 is not used, how about make it a staticmethod, and call Environment.main() directly in main() function",
+      "range": {
+        "startLine": 301,
+        "startChar": 13,
+        "endLine": 301,
+        "endChar": 17
+      },
       "revId": "38cdd9747e29c38ad3198a279ea7b4a0ba80d157",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
