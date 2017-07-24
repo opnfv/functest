@@ -23,15 +23,26 @@ from functest.core import testcase
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as os_utils
+
+from snaps.openstack import create_flavor
+from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
+from snaps.openstack.create_project import ProjectSettings
+from snaps.openstack.create_network import NetworkSettings, SubnetSettings
+from snaps.openstack.create_user import UserSettings
+from snaps.openstack.tests import openstack_tests
+from snaps.openstack.utils import deploy_utils
+
 
 """ logging configuration """
 logger = logging.getLogger(__name__)
 
 
-class TempestCommon(testcase.OSGCTestCase):
+class TempestCommon(testcase.TestCase):
 
     def __init__(self, **kwargs):
         super(TempestCommon, self).__init__(**kwargs)
+        self.resources = TempestResourcesManager(**kwargs)
         self.MODE = ""
         self.OPTION = ""
         self.VERIFIER_ID = conf_utils.get_verifier_id()
@@ -219,12 +230,12 @@ class TempestCommon(testcase.OSGCTestCase):
         try:
             if not os.path.exists(conf_utils.TEMPEST_RESULTS_DIR):
                 os.makedirs(conf_utils.TEMPEST_RESULTS_DIR)
-            image_and_flavor = conf_utils.create_tempest_resources()
+            resources = self.resources.create()
             conf_utils.configure_tempest(
                 self.DEPLOYMENT_DIR,
-                IMAGE_ID=image_and_flavor.get("image_id"),
-                FLAVOR_ID=image_and_flavor.get("flavor_id"),
-                MODE=self.MODE)
+                image_id=resources.get("image_id"),
+                flavor_id=resources.get("flavor_id"),
+                mode=self.MODE)
             self.generate_test_list(self.VERIFIER_REPO_DIR)
             self.apply_tempest_blacklist()
             self.run_verifier_tests()
@@ -233,9 +244,45 @@ class TempestCommon(testcase.OSGCTestCase):
         except Exception as e:
             logger.error('Error with run: %s' % e)
             res = testcase.TestCase.EX_RUN_ERROR
+        finally:
+            self.resources.cleanup()
 
         self.stop_time = time.time()
         return res
+
+    def create_snapshot(self):
+        """
+        Run the Tempest cleanup utility to initialize OS state.
+
+        :return: TestCase.EX_OK
+        """
+        logger.info("Initializing the saved state of the OpenStack deployment")
+
+        # Make sure that the verifier is configured
+        conf_utils.configure_verifier(self.DEPLOYMENT_DIR)
+
+        os_utils.init_tempest_cleanup(
+            self.DEPLOYMENT_DIR, 'tempest.conf',
+            os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+                         "tempest-cleanup-init.log")
+        )
+
+        return super(TempestCommon, self).create_snapshot()
+
+    def clean(self):
+        """
+        Run the Tempest cleanup utility to delete and destroy OS resources
+        created by Tempest.
+        """
+        logger.info("Initializing the saved state of the OpenStack deployment")
+
+        os_utils.init_tempest_cleanup(
+            self.DEPLOYMENT_DIR, 'tempest.conf',
+            os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+                         "tempest-cleanup.log")
+        )
+
+        return super(TempestCommon, self).clean()
 
 
 class TempestSmokeSerial(TempestCommon):
@@ -285,3 +332,170 @@ class TempestDefcore(TempestCommon):
         TempestCommon.__init__(self, **kwargs)
         self.MODE = "defcore"
         self.OPTION = "--concurrency 1"
+
+
+class TempestResourcesManager(object):
+
+    def __init__(self, **kwargs):
+        self.os_creds = None
+        if 'os_creds' in kwargs:
+            self.os_creds = kwargs['os_creds']
+        else:
+            self.os_creds = openstack_tests.get_credentials(
+                os_env_file=CONST.__getattribute__('openstack_creds'))
+
+        self.creators = list()
+
+        if hasattr(CONST, 'snaps_images_cirros'):
+            self.cirros_image_config = CONST.__getattribute__(
+                'snaps_images_cirros')
+        else:
+            self.cirros_image_config = None
+
+    def create(self, use_custom_images=False, use_custom_flavors=False,
+               create_project=False):
+        if create_project:
+            logger.debug("Creating project (tenant) for Tempest suite")
+            project_name = CONST.__getattribute__(
+                'tempest_identity_tenant_name')
+            project_creator = deploy_utils.create_project(
+                self.os_creds, ProjectSettings(
+                    name=project_name,
+                    description=CONST.__getattribute__(
+                        'tempest_identity_tenant_description')))
+            if (project_creator is None or
+                    project_creator.get_project() is None):
+                raise Exception("Failed to create tenant")
+            project_id = project_creator.get_project().id
+            self.creators.append(project_creator)
+
+            logger.debug("Creating user for Tempest suite")
+            user_creator = deploy_utils.create_user(
+                self.os_creds, UserSettings(
+                    name=CONST.__getattribute__('tempest_identity_user_name'),
+                    password=CONST.__getattribute__(
+                        'tempest_identity_user_password'),
+                    project_name=project_name))
+            if user_creator is None or user_creator.get_user() is None:
+                raise Exception("Failed to create user")
+            user_id = user_creator.get_user().id
+            self.creators.append(user_creator)
+        else:
+            project_name = None
+            project_id = None
+            user_id = None
+
+        logger.debug("Creating private network for Tempest suite")
+        network_creator = deploy_utils.create_network(
+            self.os_creds, NetworkSettings(
+                name=CONST.__getattribute__('tempest_private_net_name'),
+                project_name=project_name,
+                subnet_settings=[SubnetSettings(
+                    name=CONST.__getattribute__('tempest_private_subnet_name'),
+                    cidr=CONST.__getattribute__('tempest_private_subnet_cidr'))
+                ]))
+        if network_creator is None or network_creator.get_network() is None:
+            raise Exception("Failed to create private network")
+        self.creators.append(network_creator)
+
+        image_id = None
+        image_id_alt = None
+        flavor_id = None
+        flavor_id_alt = None
+
+        if (CONST.__getattribute__('tempest_use_custom_images') or
+           use_custom_images):
+            logger.debug("Creating image for Tempest suite")
+            image_base_name = CONST.__getattribute__('openstack_image_name')
+            os_image_settings = openstack_tests.cirros_image_settings(
+                image_base_name, public=True,
+                image_metadata=self.cirros_image_config)
+            logger.debug("Creating image for Tempest suite")
+            image_creator = deploy_utils.create_image(
+                self.os_creds, os_image_settings)
+            if image_creator is None:
+                raise Exception('Failed to create image')
+            self.creators.append(image_creator)
+            image_id = image_creator.get_image().id
+
+        if use_custom_images:
+            logger.debug("Creating 2nd image for Tempest suite")
+            image_base_name_alt = CONST.__getattribute__(
+                'openstack_image_name_alt')
+            os_image_settings_alt = openstack_tests.cirros_image_settings(
+                image_base_name_alt, public=True,
+                image_metadata=self.cirros_image_config)
+            logger.debug("Creating 2nd image for Tempest suite")
+            image_creator_alt = deploy_utils.create_image(
+                self.os_creds, os_image_settings_alt)
+            if image_creator_alt is None:
+                raise Exception('Failed to create image')
+            self.creators.append(image_creator_alt)
+            image_id_alt = image_creator_alt.get_image().id
+
+        if (CONST.__getattribute__('tempest_use_custom_flavors') or
+           use_custom_flavors):
+            logger.info("Creating flavor for Tempest suite")
+            scenario = ft_utils.get_scenario()
+            flavor_metadata = None
+            if 'ovs' in scenario or 'fdio' in scenario:
+                flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
+            flavor_creator = OpenStackFlavor(
+                self.os_creds, FlavorSettings(
+                    name=CONST.__getattribute__('openstack_flavor_name'),
+                    ram=CONST.__getattribute__('openstack_flavor_ram'),
+                    disk=CONST.__getattribute__('openstack_flavor_disk'),
+                    vcpus=CONST.__getattribute__('openstack_flavor_vcpus'),
+                    metadata=flavor_metadata))
+            flavor = flavor_creator.create()
+            if flavor is None:
+                raise Exception('Failed to create flavor')
+            self.creators.append(flavor_creator)
+            flavor_id = flavor.id
+
+        if use_custom_flavors:
+            logger.info("Creating 2nd flavor for Tempest suite")
+            scenario = ft_utils.get_scenario()
+            flavor_metadata_alt = None
+            if 'ovs' in scenario or 'fdio' in scenario:
+                flavor_metadata_alt = create_flavor.MEM_PAGE_SIZE_LARGE
+            flavor_creator_alt = OpenStackFlavor(
+                self.os_creds, FlavorSettings(
+                    name=CONST.__getattribute__('openstack_flavor_name_alt'),
+                    ram=CONST.__getattribute__('openstack_flavor_ram'),
+                    disk=CONST.__getattribute__('openstack_flavor_disk'),
+                    vcpus=CONST.__getattribute__('openstack_flavor_vcpus'),
+                    metadata=flavor_metadata_alt))
+            flavor_alt = flavor_creator_alt.create()
+            if flavor_alt is None:
+                raise Exception('Failed to create flavor')
+            self.creators.append(flavor_creator_alt)
+            flavor_id_alt = flavor_alt.id
+
+        print("RESOURCES CREATE: image_id: %s, image_id_alt: %s, "
+              "flavor_id: %s, flavor_id_alt: %s" % (
+                  image_id, image_id_alt, flavor_id, flavor_id_alt,))
+
+        result = {
+            'image_id': image_id,
+            'image_id_alt': image_id_alt,
+            'flavor_id': flavor_id,
+            'flavor_id_alt': flavor_id_alt
+        }
+
+        if create_project:
+            result['project_id'] = project_id
+            result['tenant_id'] = project_id  # for compatibility
+            result['user_id'] = user_id
+
+        return result
+
+    def cleanup(self):
+        """
+        Cleanup all OpenStack objects. Should be called on completion.
+        """
+        for creator in reversed(self.creators):
+            try:
+                creator.clean()
+            except Exception as e:
+                logger.error('Unexpected error cleaning - %s', e)

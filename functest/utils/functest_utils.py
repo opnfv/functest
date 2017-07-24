@@ -267,14 +267,14 @@ def get_ci_envvars():
 
 
 def execute_command_raise(cmd, info=False, error_msg="",
-                          verbose=True, output_file=None):
-    ret = execute_command(cmd, info, error_msg, verbose, output_file)
+                          verbose=True, output_file=None, env=None):
+    ret = execute_command(cmd, info, error_msg, verbose, output_file, env)
     if ret != 0:
         raise Exception(error_msg)
 
 
 def execute_command(cmd, info=False, error_msg="",
-                    verbose=True, output_file=None):
+                    verbose=True, output_file=None, env=None):
     if not error_msg:
         error_msg = ("The command '%s' failed." % cmd)
     msg_exec = ("Executing command: '%s'" % cmd)
@@ -283,7 +283,7 @@ def execute_command(cmd, info=False, error_msg="",
             logger.info(msg_exec)
         else:
             logger.debug(msg_exec)
-    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
+    p = subprocess.Popen(cmd, env=env, shell=True, stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
     if output_file:
         f = open(output_file, "w")

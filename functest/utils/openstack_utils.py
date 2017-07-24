@@ -1561,3 +1561,62 @@ def get_resource(heat_client, stack_id, resource):
     except Exception as e:
         logger.error("Error [get_resource]: %s" % e)
         return None
+
+
+# *********************************************
+#   TEMPEST
+# *********************************************
+def init_tempest_cleanup(tempest_config_dir=None,
+                         tempest_config_filename='tempest.conf',
+                         output_file=None):
+    """
+    Initialize the Tempest Cleanup utility.
+    See  https://docs.openstack.org/tempest/latest/cleanup.html for docs.
+
+    :param tempest_config_dir: The directory where the Tempest config file is
+            located. If not specified, we let Tempest pick both the directory
+            and the filename (i.e. second parameter is ignored)
+    :param tempest_config_filename: The filename of the Tempest config file
+    :param output_file: Optional file where to save output
+    """
+    # The Tempest cleanup utility currently offers no cmd argument to specify
+    # the config file, therefore it has to be configured with env variables
+    env = None
+    if tempest_config_dir:
+        env = os.environ.copy()
+        env['TEMPEST_CONFIG_DIR'] = tempest_config_dir
+        env['TEMPEST_CONFIG'] = tempest_config_filename
+
+    # If this command fails, an exception must be raised to stop the script
+    # otherwise the later cleanup would destroy also other resources
+    cmd_line = "tempest cleanup --init-saved-state"
+    ft_utils.execute_command_raise(cmd_line, env=env, output_file=output_file,
+                                   error_msg="Tempest cleanup init failed")
+
+
+def perform_tempest_cleanup(tempest_config_dir=None,
+                            tempest_config_filename='tempest.conf',
+                            output_file=None):
+    """
+    Perform cleanup using the Tempest Cleanup utility.
+    See  https://docs.openstack.org/tempest/latest/cleanup.html for docs.
+
+    :param tempest_config_dir: The directory where the Tempest config file is
+            located. If not specified, we let Tempest pick both the directory
+            and the filename (i.e. second parameter is ignored)
+    :param tempest_config_filename: The filename of the Tempest config file
+    :param output_file: Optional file where to save output
+    """
+    # The Tempest cleanup utility currently offers no cmd argument to specify
+    # the config file, therefore it has to be configured with env variables
+    env = None
+    if tempest_config_dir:
+        env = os.environ.copy()
+        env['TEMPEST_CONFIG_DIR'] = tempest_config_dir
+        env['TEMPEST_CONFIG'] = tempest_config_filename
+
+    # If this command fails, an exception must be raised to stop the script
+    # otherwise the later cleanup would destroy also other resources
+    cmd_line = "tempest cleanup"
+    ft_utils.execute_command(cmd_line, env=env, output_file=output_file,
+                             error_msg="Tempest cleanup failed")
