@@ -6,6 +6,7 @@ git+https://gerrit.opnfv.org/gerrit/opera#egg=opera
 git+https://gerrit.opnfv.org/gerrit/securityscanning#egg=securityscanning
 git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
 -e git+https://github.com/openstack/refstack-client#egg=refstack-client
+git+https://gerrit.opnfv.org/gerrit/doctor#egg=doctor-test
 cloudify_rest_client===4.0
 iniparse===0.4
 openbaton-cli===2.2.1b7
