@@ -25,12 +25,15 @@ index 924da68..dd87e6c 100644
  # are made available under the terms of the Apache License, Version 2.0
 @@ -7,9 +7,9 @@
  # http://www.apache.org/licenses/LICENSE-2.0
+ #
+
 -FROM ubuntu:14.04
 -MAINTAINER Jose Lausuch <jose.lausuch@ericsson.com>
 -LABEL version="0.1" description="OPNFV Functest Docker container"
 +FROM aarch64/ubuntu:14.04
 +MAINTAINER Armband team <armband@enea.com>
 +LABEL version="0.1" description="OPNFV Functest Aarch64 Docker container"
+
  # Environment variables
  ARG BRANCH=master
 @@ -43,6 +43,7 @@ gcc \
@@ -49,10 +52,10 @@ index 924da68..dd87e6c 100644
      && cd ${REPOS_VNFS_DIR}/vims-test \
 +    && bundle config build.nokogiri --use-system-libraries \
      && bundle install"
+
 -RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -' \
 -    && sudo apt-get install -y nodejs \
 +RUN sh -c 'wget -qO- https://nodejs.org/dist/v4.7.2/node-v4.7.2-linux-arm64.tar.gz | \
 +    tar -xz -C /usr/local --exclude=CHANGELOG.md --exclude=LICENSE --exclude=README.md --strip-components 1 '\
      && cd ${REPOS_DIR}/promise && sudo npm -g install npm@latest \
      && cd ${REPOS_DIR}/promise/source && npm install
-
