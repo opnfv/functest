@@ -50,6 +50,7 @@ libzmq3-dev \
 python-dev \
 python-mock \
 python-pip \
+python3 \
 postgresql \
 ruby \
 ruby-dev \

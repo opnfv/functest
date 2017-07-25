@@ -24,6 +24,23 @@ tiers:
                         cmd: 'run_promise_tests.py'
 
             -
+                case_name: doctor-notification
+                enabled: false
+                project_name: doctor
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test suite from Doctor project.
+                dependencies:
+                    installer: '(apex)|(fuel)'
+                    scenario: '^((?!fdio).)*$'
+                run:
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: '(cd /src/doctor-test/tests && run.sh)'
+
+            -
                 case_name: bgpvpn
                 project_name: sdnvpn
                 criteria: 100
