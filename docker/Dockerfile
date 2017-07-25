@@ -86,7 +86,6 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
 # OPNFV repositories
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper ${REPOS_DIR}/copper
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino ${REPOS_DIR}/domino
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${REPOS_DIR}/doctor
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${REPOS_DIR}/promise
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/netready ${REPOS_DIR}/netready
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/fds ${REPOS_DIR}/fds

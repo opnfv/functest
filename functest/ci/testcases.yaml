@@ -281,7 +281,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /home/opnfv/repos/doctor/tests && ./run.sh'
+                        cmd: 'run.sh'
 
             -
                 case_name: bgpvpn
