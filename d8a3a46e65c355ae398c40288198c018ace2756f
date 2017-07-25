@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_f44486b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-25T09:20:21Z",
+      "side": 1,
+      "message": "I would put this in the description instead of the tittle.\nThe tittle can be more clear and simple: \"Fix dockerfile patch for aarch64\"  or similar.\n\nAdd a blank line after the tittle.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 60
+      },
+      "revId": "d8a3a46e65c355ae398c40288198c018ace2756f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
