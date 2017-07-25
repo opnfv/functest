@@ -87,6 +87,24 @@
       "revId": "01ce5626e3dddba372385bc7638ebac17d1a2771",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_11d29400",
+        "filename": "functest/cli/commands/cli_env.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-25T02:52:11Z",
+      "side": 1,
+      "message": "OK, got it. Thanks Serena :)",
+      "parentUuid": "1aa4ed85_b1d70023",
+      "revId": "01ce5626e3dddba372385bc7638ebac17d1a2771",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
