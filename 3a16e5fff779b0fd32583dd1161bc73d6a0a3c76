@@ -176,6 +176,24 @@
       "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_31cd505e",
+        "filename": "functest/api/server.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-25T02:52:11Z",
+      "side": 1,
+      "message": "Fine, thanks. I have updated this according to your suggestions.",
+      "parentUuid": "1aa4ed85_9190c444",
+      "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
