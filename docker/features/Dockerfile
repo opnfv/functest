@@ -4,7 +4,7 @@ ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/ocata
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
-RUN apk --no-cache add --update nodejs nodejs-npm && \
+RUN apk --no-cache add --update nodejs nodejs-npm python3 && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev git && \
