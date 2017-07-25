@@ -69,6 +69,24 @@
       "revId": "01ce5626e3dddba372385bc7638ebac17d1a2771",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b1d70023",
+        "filename": "functest/cli/commands/cli_env.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-25T02:19:08Z",
+      "side": 1,
+      "message": "When I say return the same content, it means return only one value which is \u0027env_show\u0027 here. So obviously, in ApiEnv return Env.show() directly, and in CliEnv, something responds to format would be like:\nclass CliEnv(object):\n    def show():\n        info \u003d Env.show()\n        msg \u003d prettytable.PrettyTable(\n            header_style\u003d\u0027upper\u0027, padding_width\u003d5,\n            field_names\u003d[\u0027Functest Environment\u0027, \u0027value\u0027])\n        for k, v in info.iteritems():\n            msg.add_row([k, v])\n        click.echo(msg)\nIn this way, it is well decoupled and structured. when something changes in showing env, we don\u0027t need to modify both two places.\n\nBTW, I would prefer env/env_info/info, rather than env_show, \u0027show\u0027 is how it will be used, wired to use it in the name.",
+      "parentUuid": "1aa4ed85_aed47f47",
+      "revId": "01ce5626e3dddba372385bc7638ebac17d1a2771",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
