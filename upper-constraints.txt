@@ -8,6 +8,7 @@ git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
 git+https://gerrit.opnfv.org/gerrit/promise#egg=promise&subdirectory=promise/test/functest
 git+https://gerrit.opnfv.org/gerrit/netready#egg=netready&subdirectory=test/functest
 -e git+https://github.com/openstack/refstack-client#egg=refstack-client
+git+https://gerrit.opnfv.org/gerrit/doctor#egg=doctor-test
 cloudify_rest_client===4.0
 iniparse===0.4
 openbaton-cli===2.2.1b7

@@ -8,7 +8,6 @@ general:
         repo_vims_test:     /home/opnfv/repos/vnfs/vims-test
         repo_onos:          /home/opnfv/repos/onos
         repo_barometer:     /home/opnfv/repos/barometer
-        repo_doctor:        /home/opnfv/repos/doctor
         repo_odl_test:      /src/odl_test
         repo_fds:           /src/fds
         repo_securityscan:  /home/opnfv/repos/securityscanning
