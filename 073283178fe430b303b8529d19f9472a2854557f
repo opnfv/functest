@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_b42feef5",
+        "filename": "docker/thirdparty-requirements.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-25T09:18:42Z",
+      "side": 1,
+      "message": "you can remove this line",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "073283178fe430b303b8529d19f9472a2854557f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_5436ba53",
+        "filename": "docker/thirdparty-requirements.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-25T09:18:42Z",
+      "side": 1,
+      "message": "probably we should move this to requirements.txt instead of 3rd party as it is generic.\nAnd it should be\n\npython-openstackclient\u003e\u003d3.3.0,!\u003d3.10.0  # Apache-2.0\n\nAccording to global requirements in openstack:\nhttps://github.com/openstack/requirements/blob/master/global-requirements.txt",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 42
+      },
+      "revId": "073283178fe430b303b8529d19f9472a2854557f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
