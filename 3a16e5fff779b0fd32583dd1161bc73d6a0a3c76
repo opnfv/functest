@@ -158,6 +158,24 @@
       "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_9190c444",
+        "filename": "functest/api/server.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-07-25T02:19:08Z",
+      "side": 1,
+      "message": "in this case, I wouldn\u0027t recommend adding api_port as configuration, one more configuration but almost meaningless, and people will get confused with the three ports. \nAs regards to endpoint, we can simply give it an obvious name like \u0027env-relevant-interfaces\u0027. and if you do want to use url as endpoint, I would recommend to equal api_port with either the internal port(5000 the default one) or the external port, which is consistent with the real in-use url.",
+      "parentUuid": "1aa4ed85_f1e25d02",
+      "revId": "3a16e5fff779b0fd32583dd1161bc73d6a0a3c76",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
