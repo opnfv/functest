@@ -11,6 +11,8 @@ Resources to handle openstack related requests
 """
 
 from flask import jsonify
+from flasgger.utils import swag_from
+import pkg_resources
 
 from functest.api.base import ApiResource
 from functest.api.actions.api_os import ApiOpenStack
@@ -21,6 +23,8 @@ from functest.utils.constants import CONST
 class V1Creds(ApiResource):
     """ V1Creds Resource class"""
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/creds.yaml'))
     def get(self):
         """ Get credentials """
         os_utils.source_credentials(CONST.__getattribute__('openstack_creds'))

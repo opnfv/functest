@@ -18,6 +18,7 @@ from urlparse import urljoin
 
 from flask import Flask
 from flask_restful import Api
+from flasgger import Swagger
 
 from functest.api.base import ApiResource
 from functest.api.urls import urlpatterns
@@ -60,6 +61,7 @@ def main():
         'functest', 'ci/logging.ini'))
     LOGGER.info('Starting Functest server')
     app = Flask(__name__)
+    Swagger(app)
     api = Api(app)
     api_add_resource(api)
     app.run(host='0.0.0.0', port=5000)
