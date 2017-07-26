@@ -1,0 +1,28 @@
+Show credentials
+
+This api offers the interface to show credentials
+The credentials dict will be returned
+---
+definitions:
+  Credentials:
+    type: object
+    properties:
+      creds_name:
+          $ref: '#/definitions/Name'
+  Name:
+    type: dict
+responses:
+  200:
+    description: Show credentials
+    schema:
+      $ref: '#/definitions/Credentials'
+    examples:
+      "OS_AUTH_URL": ""
+      "OS_IDENTITY_API_VERSION": ""
+      "OS_IMAGE_API_VERSION": ""
+      "OS_PASSWORD": ""
+      "OS_PROJECT_DOMAIN_NAME": ""
+      "OS_PROJECT_NAME": ""
+      "OS_TENANT_NAME": ""
+      "OS_USERNAME": ""
+      "OS_USER_DOMAIN_NAME": ""

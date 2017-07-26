@@ -1,0 +1,12 @@
+List all tiers
+
+This api offers the interface to list all tiers
+The tiers list will be returned
+---
+responses:
+  200:
+    description: List all tiers
+    schema:
+      id: TiersModel
+    examples:
+      "tiers": ""
