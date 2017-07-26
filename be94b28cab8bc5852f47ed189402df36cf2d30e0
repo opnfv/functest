@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_a05fa8e4",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-07-26T11:23:02Z",
+      "side": 1,
+      "message": "I wonder if we should request doctor team to change the name of this file, as \"run.sh\" is too generic and we could end up with other scripts with the same name.\nI would suggest doctor-functest.sh or similar",
+      "range": {
+        "startLine": 284,
+        "startChar": 30,
+        "endLine": 284,
+        "endChar": 36
+      },
+      "revId": "be94b28cab8bc5852f47ed189402df36cf2d30e0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
