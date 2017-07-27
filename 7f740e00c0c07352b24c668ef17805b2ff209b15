@@ -45,6 +45,29 @@
       "revId": "7f740e00c0c07352b24c668ef17805b2ff209b15",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_374c5b42",
+        "filename": "functest/opnfv_tests/openstack/snaps/snaps_test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-27T01:00:17Z",
+      "side": 1,
+      "message": "But in snaps repo, def get_credentials with param overrides has not been updated, right? Or it will fail complaining that \"unexpected keyword argument \u0027overrides\u0027\".",
+      "range": {
+        "startLine": 34,
+        "startChar": 74,
+        "endLine": 34,
+        "endChar": 75
+      },
+      "revId": "7f740e00c0c07352b24c668ef17805b2ff209b15",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
