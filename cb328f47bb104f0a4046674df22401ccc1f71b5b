@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_ad9c7cc1",
+        "filename": "functest/tests/unit/utils/test_openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-07-27T10:41:25Z",
+      "side": 0,
+      "message": "why should we remove that?",
+      "revId": "cb328f47bb104f0a4046674df22401ccc1f71b5b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
