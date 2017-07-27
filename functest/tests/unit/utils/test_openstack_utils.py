@@ -390,8 +390,6 @@ class OSUtilsTesting(unittest.TestCase):
         self._test_source_credentials('export OS_TENANT_NAME =admin')
         self._test_source_credentials('export OS_TENANT_NAME = admin')
         self._test_source_credentials('export OS_TENANT_NAME = "admin"')
-        self._test_source_credentials('OS_TENANT_NAME', value='')
-        self._test_source_credentials('export OS_TENANT_NAME', value='')
         # This test will fail as soon as rc_file is fixed
         self._test_source_credentials(
             'export "\'OS_TENANT_NAME\'" = "\'admin\'"')
