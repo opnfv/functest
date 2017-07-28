@@ -119,6 +119,8 @@ def get_deployment_handler():
 
     installer_params_yaml = pkg_resources.resource_filename(
             'functest', 'ci/installer_params.yaml')
+    if CONST.__getattribute__('INSTALLER_TYPE') != 'fuel':
+        return
     if (CONST.__getattribute__('INSTALLER_IP') and
         CONST.__getattribute__('INSTALLER_TYPE') and
             CONST.__getattribute__('INSTALLER_TYPE') in
@@ -336,6 +338,7 @@ def prepare_env(**kwargs):
             return -1
         elif kwargs['action'] == "start":
             logger.info("######### Preparing Functest environment #########\n")
+            get_deployment_handler()
             verify_deployment()
             check_env_variables()
             create_directories()
