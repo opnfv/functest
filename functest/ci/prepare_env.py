@@ -338,6 +338,8 @@ def prepare_env(**kwargs):
             logger.info("######### Preparing Functest environment #########\n")
             verify_deployment()
             check_env_variables()
+            if CONST.__getattribute__('INSTALLER_TYPE') and CONST.__getattribute__('INSTALLER_TYPE') == "fuel":
+                get_deployment_handler()
             create_directories()
             source_rc_file()
             update_config_file()
