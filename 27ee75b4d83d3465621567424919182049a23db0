@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_b9ea7a0d",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-07-29T08:00:30Z",
+      "side": 0,
+      "message": "This function is also called by refstack_defcore, please update it in tempest_conf.py: https://git.opnfv.org/functest/tree/functest/opnfv_tests/openstack/refstack_client/tempest_conf.py#n35\n\nWith that, I do not think it is better to move the function to tempest.py.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "27ee75b4d83d3465621567424919182049a23db0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
