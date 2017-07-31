@@ -12,8 +12,9 @@ Resources to handle environment related requests
 
 from flask import jsonify
 
-from functest.api.base import ApiResource
 from functest.api.actions.api_env import ApiEnv
+from functest.api.base import ApiResource
+from functest.api.common import api_utils
 import functest.utils.functest_utils as ft_utils
 
 
@@ -32,3 +33,5 @@ class V1Envs(ApiResource):
     def prepare(self, args):
         """ Prepare environment """
         ft_utils.execute_command("prepare_env start")
+        return api_utils.result_handler(
+            status=0, data="Env prepare successfully")
