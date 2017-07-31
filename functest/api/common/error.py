@@ -13,12 +13,3 @@ def notFoundError(message):
     response = jsonify({'message': message})
     response.status_code = 404
     return response
-
-
-def result_handler(status, data):
-    """ Return the json format of result in dict """
-    result = {
-        'status': status,
-        'result': data
-    }
-    return jsonify(result)
