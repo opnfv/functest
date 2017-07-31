@@ -59,8 +59,8 @@ validate the scenario for the release.
 |             |               | rally_sanity   | Run a subset of the OpenStack    |
 |             |               |                | Rally Test Suite in smoke mode   |
 |             |               +----------------+----------------------------------+
-|             |               | snaps_smoke    | Run a subset of the OpenStack    |
-|             |               |                | Rally Test Suite in smoke mode   |
+|             |               | snaps_smoke    | Run the SNAPS-OO integration     |
+|             |               |                | tests                            |
 |             |               +----------------+----------------------------------+
 |             |               | refstack       | Reference RefStack suite         |
 |             |               |   \_defcore    | tempest selection for NFV        |
