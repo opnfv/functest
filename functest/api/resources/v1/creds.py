@@ -10,6 +10,8 @@
 Resources to handle openstack related requests
 """
 
+import os
+
 from flask import jsonify
 
 from functest.api.base import ApiResource
@@ -23,6 +25,10 @@ class V1Creds(ApiResource):
 
     def get(self):
         """ Get credentials """
+        rc_file = CONST.__getattribute__('openstack_creds')
+        if not os.path.isfile(rc_file):
+            message = ("RC file %s does not exist..." % rc_file)
+            return jsonify(message)
         os_utils.source_credentials(CONST.__getattribute__('openstack_creds'))
         credentials_show = ApiOpenStack.show_credentials()
         return jsonify(credentials_show)

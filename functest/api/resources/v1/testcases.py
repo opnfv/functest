@@ -10,11 +10,18 @@
 Resources to handle testcase related requests
 """
 
+import uuid
+import logging
+
 from flask import jsonify
 
 from functest.api.actions.api_testcase import ApiTestcase
 from functest.api.base import ApiResource
-from functest.api.common import api_utils, error
+from functest.api.common import api_utils, error, thread
+from functest.api.database.v1.handlers import TasksHandler
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 class V1Testcases(ApiResource):
@@ -45,3 +52,27 @@ class V1Testcase(ApiResource):
         result.update(testcase_info)
         result.update({'dependency': dependency_dict})
         return jsonify(result)
+
+    def post(self):
+        """ Used to handle post request """
+        return self._dispatch_post()
+
+    def run_test_case(self, args):
+        """ Run a testcase """
+        try:
+            case_name = args['testcase']
+        except KeyError:
+            return api_utils.result_handler(
+                status=1, data='testcase name must be provided')
+
+        task_id = str(uuid.uuid4())
+
+        task_args = {'testcase': case_name, 'task_id': task_id}
+
+        task_args.update(args.get('opts', {}))
+
+        task_thread = thread.TaskThread(ApiTestcase.run, task_args, TasksHandler())
+        task_thread.start()
+
+        results = {'testcase': case_name, 'task_id': task_id}
+        return jsonify(results)
