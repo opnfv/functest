@@ -37,6 +37,11 @@ urlpatterns = [
     # => GET the info of one testcase
     Url('/api/v1/functest/testcases/<testcase_name>', 'v1_testcase'),
 
+    # POST /api/v1/functest/testcases/action
+    # {"action":"run_test_case", "args": {"opts": {}, "testcase": "vping_ssh"}}
+    # => Run a testcase
+    Url('/api/v1/functest/testcases/action', 'v1_testcase'),
+
     # GET /api/v1/functest/testcases => GET all tiers
     Url('/api/v1/functest/tiers', 'v1_tiers'),
 
@@ -46,5 +51,15 @@ urlpatterns = [
 
     # GET /api/v1/functest/tiers/<tier_name>/testcases
     # => GET all testcases within given tier
-    Url('/api/v1/functest/tiers/<tier_name>/testcases', 'v1_testcases_in_tier')
+    Url('/api/v1/functest/tiers/<tier_name>/testcases',
+        'v1_testcases_in_tier'),
+
+    # POST /api/v1/functest/tiers/action
+    # {"action":"run_tier", "args": {"opts": {}, "tier": "healthcheck"}}
+    # => Run a tier
+    Url('/api/v1/functest/tiers/action', 'v1_tier'),
+
+    # GET /api/v1/functest/tasks/<task_id>
+    # => GET the result of the task id
+    Url('/api/v1/functest/tasks/<task_id>', 'v1_tasks')
 ]
