@@ -11,6 +11,7 @@ Used to launch Functest RestApi
 
 """
 
+import inspect
 import logging
 import pkg_resources
 import socket
@@ -20,11 +21,27 @@ from flask import Flask
 from flask_restful import Api
 
 from functest.api.base import ApiResource
-from functest.api.urls import urlpatterns
 from functest.api.common import api_utils
+from functest.api.database.db import Base
+from functest.api.database.db import db_session
+from functest.api.database.db import engine
+from functest.api.database.v1 import models
+from functest.api.urls import urlpatterns
 
 
 LOGGER = logging.getLogger(__name__)
+
+APP = Flask(__name__)
+API = Api(APP)
+
+
+@APP.teardown_request
+def shutdown_session(exception=None):
+    """
+    To be called at the end of each request whether it is successful
+    or an exception is raised
+    """
+    db_session.remove()
 
 
 def get_resource(resource_name):
@@ -40,7 +57,7 @@ def get_endpoint(url):
     return urljoin('http://{}:5000'.format(address), url)
 
 
-def api_add_resource(api):
+def api_add_resource():
     """
     The resource has multiple URLs and you can pass multiple URLs to the
     add_resource() method on the Api object. Each one will be routed to
@@ -48,10 +65,24 @@ def api_add_resource(api):
     """
     for u in urlpatterns:
         try:
-            api.add_resource(
+            API.add_resource(
                 get_resource(u.target), u.url, endpoint=get_endpoint(u.url))
         except StopIteration:
             LOGGER.error('url resource not found: %s', u.url)
+
+
+def init_db():
+    def func(a):
+        try:
+            if issubclass(a[1], Base):
+                return True
+        except TypeError:
+            pass
+        return False
+
+    subclses = filter(func, inspect.getmembers(models, inspect.isclass))
+    LOGGER.debug('Import models: %s', [a[1] for a in subclses])
+    Base.metadata.create_all(bind=engine)
 
 
 def main():
@@ -59,10 +90,9 @@ def main():
     logging.config.fileConfig(pkg_resources.resource_filename(
         'functest', 'ci/logging.ini'))
     LOGGER.info('Starting Functest server')
-    app = Flask(__name__)
-    api = Api(app)
-    api_add_resource(api)
-    app.run(host='0.0.0.0', port=5000)
+    api_add_resource()
+    init_db()
+    APP.run(host='0.0.0.0', port=5000)
 
 
 if __name__ == '__main__':
