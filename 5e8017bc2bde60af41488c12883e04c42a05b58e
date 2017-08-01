@@ -22,6 +22,29 @@
       "revId": "5e8017bc2bde60af41488c12883e04c42a05b58e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_752bd030",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-01T03:45:14Z",
+      "side": 1,
+      "message": "wouldn\u0027t it raise an exception if INSTALLER_TYPE is not provided? I think hasattr(CONST, \u0027INSTALLER_TYPE\u0027) might be the right way to check",
+      "range": {
+        "startLine": 341,
+        "startChar": 16,
+        "endLine": 341,
+        "endChar": 56
+      },
+      "revId": "5e8017bc2bde60af41488c12883e04c42a05b58e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
