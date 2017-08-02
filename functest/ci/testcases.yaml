@@ -297,7 +297,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /usr/local/lib/python2.7/dist-packages/sdnvpn/test/functest && python ./run_tests.py'
+                        cmd: 'run_sdnvpn_tests.py'
 
             -
                 case_name: security_scan
@@ -363,7 +363,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /usr/local/lib/python2.7/dist-packages/sfc/tests/functest && python ./run_tests.py'
+                        cmd: 'run_sfc_tests.py'
 
             -
                 case_name: onos_sfc
