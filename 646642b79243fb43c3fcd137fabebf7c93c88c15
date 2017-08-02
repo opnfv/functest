@@ -57,6 +57,24 @@
       "revId": "646642b79243fb43c3fcd137fabebf7c93c88c15",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d6a2a299",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-02T08:10:36Z",
+      "side": 1,
+      "message": "Oh, got it!\n\nBut get_deployment_handler() is only used by print_deployment_info(), right? If print_deployment_info() will fail, what is get_deployment_handler() for?",
+      "parentUuid": "da33351e_56ba12e2",
+      "revId": "646642b79243fb43c3fcd137fabebf7c93c88c15",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
