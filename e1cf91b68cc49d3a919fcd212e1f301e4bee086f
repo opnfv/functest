@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_b6fefe36",
+        "filename": "functest/api/resources/v1/creds.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-02T10:48:59Z",
+      "side": 1,
+      "message": "Yes, all the classes inherited from ApiResource are all loaded dynamically via def import_modules_from_package, where the dir name v1/v2 is not recognized, and only class name is used as the unique name to obtain resource.",
+      "parentUuid": "da33351e_04b9782e",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_44e9c019",
         "filename": "functest/cli/commands/cli_testcase.py",
         "patchSetId": 24
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-02T09:47:23Z",
       "side": 1,
       "message": "I would suggest to put the refactored classes into a separate folder as it is not only used by CLI but also by API.\nIt does not make much sense to have it under \nfunctest.cli.commands\n\nThis applies to other refactored classes",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 14
+      },
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_36c14ee5",
+        "filename": "functest/cli/commands/cli_testcase.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-02T10:48:59Z",
+      "side": 1,
+      "message": "Thanks, Helen. You are right. We have already realized this matter.\nBut we all have come to an agreement that separating CLI and API totally in a later patch, which will avoid making the patch large.",
+      "parentUuid": "da33351e_44e9c019",
       "range": {
         "startLine": 23,
         "startChar": 6,
