@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_04b9782e",
+        "filename": "functest/api/resources/v1/creds.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-08-02T09:47:23Z",
+      "side": 1,
+      "message": "As the v1 is demonstrated in the module path, is the V1 string still needed in the class name?",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_44e9c019",
+        "filename": "functest/cli/commands/cli_testcase.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5959
+      },
+      "writtenOn": "2017-08-02T09:47:23Z",
+      "side": 1,
+      "message": "I would suggest to put the refactored classes into a separate folder as it is not only used by CLI but also by API.\nIt does not make much sense to have it under \nfunctest.cli.commands\n\nThis applies to other refactored classes",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 14
+      },
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
