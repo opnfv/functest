@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_56d05253",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-02T07:35:37Z",
+      "side": 1,
+      "message": "INSTALLER_TYPE  has been set as \u0027undefined\u0027 in the last step if it is not provided, see line 74 above.\n\nSo just checking CONST.__getattribute__(\u0027INSTALLER_TYPE\u0027) \u003d\u003d \"fuel\") is sufficient.",
+      "range": {
+        "startLine": 341,
+        "startChar": 15,
+        "endLine": 342,
+        "endChar": 67
+      },
+      "revId": "646642b79243fb43c3fcd137fabebf7c93c88c15",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_36d5ce43",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-02T07:35:37Z",
+      "side": 1,
+      "message": "I would also call the function to print deployment info after the line:\nprint_deployment_info()",
+      "revId": "646642b79243fb43c3fcd137fabebf7c93c88c15",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
