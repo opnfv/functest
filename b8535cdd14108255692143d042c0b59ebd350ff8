@@ -45,6 +45,29 @@
       "revId": "b8535cdd14108255692143d042c0b59ebd350ff8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_96f3fa09",
+        "filename": "functest/opnfv_tests/openstack/rally/scenario/sanity/opnfv-ceilometer.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-02T07:25:12Z",
+      "side": 1,
+      "message": "Does the test actually try to check the same function of openstack as cli \"ceilometer query-samples\"?\n\nAfter testing this patch in compass, all passed except only CeilometerQueries.create_and_query_samples failed, complaining that: \nHTTPException: HTTPException (HTTP 410) {u\u0027error_message\u0027: {u\u0027code\u0027: 410, u\u0027description\u0027: u\u0027This telemetry installation is configured to use Gnocchi. Please use the Gnocchi API available on the metric endpoint to retrieve data.\u0027, u\u0027title\u0027: u\u0027Gone\u0027}}\n\nAnd I also run the cli \"ceilometer query-samples\" in Apex, where indicated that \"Gone (HTTP 410)\"? \n\nSo since it is gone, is it possible to remove this test here?",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 45
+      },
+      "revId": "b8535cdd14108255692143d042c0b59ebd350ff8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
