@@ -64,7 +64,7 @@ class Connection(Foundation):
         """
         os.getenv only returns current user value
         GetEnvValue returns a environment value of
-            current handle
+        current handle
         eg: GetEnvValue(handle,'HOME')
         """
         envhandle = handle

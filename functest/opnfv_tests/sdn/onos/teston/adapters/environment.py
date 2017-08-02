@@ -1,11 +1,11 @@
 """
 Description:
-    This file is used to setup the running environment
-    Include Download code,setup environment variable
-            Set onos running config
-            Set user name/password
-            Onos-push-keys and so on
-    lanqinglong@huawei.com
+This file is used to setup the running environment
+Include Download code,setup environment variable
+Set onos running config
+Set user name/password
+Onos-push-keys and so on
+lanqinglong@huawei.com
 
 #
 # All rights reserved. This program and the accompanying materials
@@ -17,7 +17,7 @@ Description:
 
 import logging
 import pexpect
-import pxssh
+from pexpect import pxssh
 import re
 import os
 import sys
@@ -196,10 +196,10 @@ class Environment(Connection):
 
     def ChangeTestCasePara(self, testcase, user, password):
         """
-        When running test script, there's something need
-        to change in every test folder's *.param & *.topo files
-        user: onos&compute node user
-        password: onos&compute node password
+        When running test script, there\'s something need
+        to change in every test folder\'s \*.param & \*.topo files
+        user: onos\&compute node user
+        password: onos\&compute node password
         """
         self.logger.info("Now Changing " + testcase + " name&password")
         if self.masterusername == 'root':
