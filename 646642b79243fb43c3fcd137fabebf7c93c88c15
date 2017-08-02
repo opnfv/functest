@@ -39,6 +39,24 @@
       "revId": "646642b79243fb43c3fcd137fabebf7c93c88c15",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_56ba12e2",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 6883
+      },
+      "writtenOn": "2017-08-02T07:55:03Z",
+      "side": 1,
+      "message": "If I am to call print_deployment_info() it will fail because the old get_nodes() method from adapter module (releng project ) is no longer valid from MCP.",
+      "parentUuid": "da33351e_36d5ce43",
+      "revId": "646642b79243fb43c3fcd137fabebf7c93c88c15",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
