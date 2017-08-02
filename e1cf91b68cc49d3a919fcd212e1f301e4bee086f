@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "da33351e_5631720a",
+        "filename": "functest/api/common/error.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-02T11:15:01Z",
+      "side": 1,
+      "message": "I would suggest keeping all the exception models/processes the same.",
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_04b9782e",
         "filename": "functest/api/resources/v1/creds.py",
         "patchSetId": 24
@@ -43,6 +60,23 @@
         "endLine": 21,
         "endChar": 13
       },
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d62462c8",
+        "filename": "functest/api/resources/v1/testcases.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-02T11:15:01Z",
+      "side": 1,
+      "message": "with regards to exceptions, I would suggest utilizing \u0027abort()\u0027 function, in case of multi-nest functions. abort is integrated with flask and acts like raise, the whole process will exit and return to the client right away.",
       "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
