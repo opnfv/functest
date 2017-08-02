@@ -75,6 +75,24 @@
       "revId": "646642b79243fb43c3fcd137fabebf7c93c88c15",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_36e2eed5",
+        "filename": "functest/ci/prepare_env.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 6883
+      },
+      "writtenOn": "2017-08-02T08:23:16Z",
+      "side": 1,
+      "message": "get_deployment_handler() returns us the pod_arch, read from the compute node found on the installer (https://gerrit.opnfv.org/gerrit/#/c/38343/). \nprint_depoyment_info() will print deployment info, including node info ( name, id, IP, status, roles etc). Node info is returned by performing ssh on fuel and \"fuel node\".",
+      "parentUuid": "da33351e_d6a2a299",
+      "revId": "646642b79243fb43c3fcd137fabebf7c93c88c15",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
