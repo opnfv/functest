@@ -123,6 +123,29 @@
     },
     {
       "key": {
+        "uuid": "da33351e_ad6d0807",
+        "filename": "functest/api/common/error.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-03T06:47:25Z",
+      "side": 1,
+      "message": "I plan to remove def result_handler out of this file later, cause it is not only used as exception, but also return 0 when  \ntestcase/tier has been run successfully.",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_5631720a",
         "filename": "functest/api/common/error.py",
         "patchSetId": 24
@@ -198,6 +221,24 @@
       "writtenOn": "2017-08-02T11:15:01Z",
       "side": 1,
       "message": "with regards to exceptions, I would suggest utilizing \u0027abort()\u0027 function, in case of multi-nest functions. abort is integrated with flask and acts like raise, the whole process will exit and return to the client right away.",
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_cd732ce6",
+        "filename": "functest/api/resources/v1/testcases.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-03T06:47:25Z",
+      "side": 1,
+      "message": "I have tried \"abort\" locally, but it is not so user-friendly, cause if testcase_name is spelt wrong here, it will raise exception, but the detailed and accurate info can not be shown  within \"abort\". \nWith that, I prefer to give the message like this: \"The test case \u0027%s\u0027 does not exist or is not supported\", which is simple and obvious.",
+      "parentUuid": "da33351e_d62462c8",
       "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
