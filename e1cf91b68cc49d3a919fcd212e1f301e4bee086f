@@ -327,6 +327,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_0d7eb4ae",
+        "filename": "functest/cli/commands/cli_testcase.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-03T06:50:49Z",
+      "side": 1,
+      "message": "Helen, do you have any suggestions about naming a new dir to hold all the refectored classes?",
+      "parentUuid": "da33351e_44e9c019",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 14
+      },
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_ea53766a",
         "filename": "requirements.txt",
         "patchSetId": 24
