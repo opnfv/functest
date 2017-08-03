@@ -55,6 +55,38 @@ class OSRefstackClientTesting(unittest.TestCase):
             refstackclient.run_defcore(config, testlist)
             m.assert_any_call(cmd)
 
+    @mock.patch('functest.opnfv_tests.openstack.refstack_client.'
+                'refstack_client.LOGGER.info')
+    @mock.patch('__builtin__.open', side_effect=Exception)
+    def test_parse_refstack_result_missing_log_file(self, mock_open,
+                                                    mock_logger_info):
+        self.case_name = 'refstack_defcore'
+        self.result = 0
+        self.refstackclient.parse_refstack_result()
+        mock_logger_info.assert_called_once_with(
+            "Testcase %s success_rate is %s%%",
+            self.case_name, self.result)
+
+    def test_parse_refstack_result_default(self):
+        log_file = ('''
+                    {0} tempest.api.compute [18.464988s] ... ok
+                    {0} tempest.api.volume [0.230334s] ... FAILED
+                    {0} tempest.api.network [1.265828s] ... SKIPPED:
+                    Ran: 3 tests in 1259.0000 sec.
+                    - Passed: 1
+                    - Skipped: 1
+                    - Failed: 1
+                   ''')
+        self.details = {"tests": 3,
+                        "failures": 1,
+                        "success": [' tempest.api.compute [18.464988s]'],
+                        "errors": [' tempest.api.volume [0.230334s]'],
+                        "skipped": [' tempest.api.network [1.265828s]']}
+        with mock.patch('__builtin__.open',
+                        mock.mock_open(read_data=log_file)):
+            self.refstackclient.parse_refstack_result()
+            self.assertEqual(self.refstackclient.details, self.details)
+
     def _get_main_kwargs(self, key=None):
         kwargs = {'config': self._config,
                   'testlist': self._testlist}
