@@ -195,12 +195,12 @@ class TempestCommon(testcase.OSGCTestCase):
                                    "tempest.log"), 'r') as logfile:
                 output = logfile.read()
 
-            error_logs = ""
+            error_logs = []
             for match in re.findall('(.*?)[. ]*fail ', output):
-                error_logs += match
-            skipped_testcase = ""
+                error_logs.append(match)
+            skipped_testcase = []
             for match in re.findall('(.*?)[. ]*skip:', output):
-                skipped_testcase += match
+                skipped_testcase.append(match)
 
             self.details = {"tests": int(num_tests),
                             "failures": int(num_failures),
