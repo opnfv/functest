@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_0daa3470",
+        "filename": "functest/api/actions/api_env.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-03T03:10:01Z",
+      "side": 1,
+      "message": "Yes, now I think it is better to call the module cli_env directly, without inheriting from Env.\nBut I have to consider moving the superclasses in the dir cli/commands to another separate dir, then cli and api can import the module it them direatly, and also avoid mixing api and cli.",
+      "parentUuid": "da33351e_ea6c1639",
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_ca695227",
         "filename": "functest/api/actions/api_os.py",
         "patchSetId": 24
@@ -81,6 +99,24 @@
       "writtenOn": "2017-08-02T17:08:13Z",
       "side": 1,
       "message": "This is a \"private\" method. Does pylint warn about missing docstring here?",
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_4dbb9cc4",
+        "filename": "functest/api/base.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-03T03:10:01Z",
+      "side": 1,
+      "message": "Yes, it also warned that Missing method docstring (missing-docstring) without \"# pylint: disable\u003dmissing-docstring\"",
+      "parentUuid": "da33351e_6a600636",
       "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -179,6 +215,24 @@
       "writtenOn": "2017-08-02T17:08:13Z",
       "side": 1,
       "message": "5000 could be defined in config",
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_6db660de",
+        "filename": "functest/api/server.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-03T03:10:01Z",
+      "side": 1,
+      "message": "Actually here 5000 can be omitted, cause 5000 is listened by dafault. \nI am fine with it when it is set in config_functest.yaml.",
+      "parentUuid": "da33351e_8a5f4a72",
       "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
