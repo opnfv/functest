@@ -527,6 +527,20 @@ tiers:
                     class: 'CloudifyIms'
 
             -
+                case_name: cloudify_ims_perf
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case deploys an OpenSource vIMS solution from Clearwater
+                    using the Cloudify orchestrator. It also runs some signaling traffic.
+                dependencies:
+                    installer: ''
+                    scenario: 'os-nosdn-nofeature-ha'
+                run:
+                    module: 'functest.opnfv_tests.vnf.ims.cloudify_ims_perf'
+                    class: 'CloudifyImsPerf'
+            -
                 case_name: aaa
                 enabled: false
                 project_name: functest
