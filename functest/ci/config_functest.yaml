@@ -135,6 +135,10 @@ vnf:
         tenant_name: cloudify_ims
         tenant_description: vIMS
         config: cloudify_ims.yaml
+    cloudify_ims_perf:
+        tenant_name: cloudify_ims_perf
+        tenant_description: vIMS
+        config: cloudify_ims_perf.yaml
     orchestra_ims:
         tenant_name: orchestra_ims
         tenant_description: ims deployed with openbaton
