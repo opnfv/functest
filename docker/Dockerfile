@@ -52,7 +52,9 @@ python-dev \
 python-mock \
 python-pip \
 postgresql \
-ruby1.9.1-dev \
+ruby \
+ruby-dev \
+ruby-bundler \
 ssh \
 sshpass \
 wget \
@@ -90,12 +92,9 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/fds /src/fds
 
 # other repositories
 RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test
-RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test ${REPOS_VNFS_DIR}/vims-test
+RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test /src/vims-test
 RUN git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-functest-vrouter.git ${REPOS_VNFS_DIR}/vrouter
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
-
-RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-RUN curl -L https://get.rvm.io | bash -s stable
 
 # SFC integration
 RUN /bin/bash -c ". /usr/local/lib/python2.7/dist-packages/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
@@ -104,18 +103,7 @@ RUN /bin/bash -c ". /usr/local/lib/python2.7/dist-packages/sfc/tests/functest/se
 RUN ln -s /src/tempest /src/refstack-client/.tempest \
     && virtualenv --system-site-packages /src/tempest/.venv
 
-RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd ${REPOS_VNFS_DIR}/vims-test \
-    && rvm autolibs enable"
-RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd ${REPOS_VNFS_DIR}/vims-test \
-    && rvm install 1.9.3"
-RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd ${REPOS_VNFS_DIR}/vims-test \
-    && rvm use 1.9.3"
-RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-    && cd ${REPOS_VNFS_DIR}/vims-test \
-    && bundle install"
+RUN cd /src/vims-test && bundle install
 
 RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -' \
     && sudo apt-get install -y nodejs \
