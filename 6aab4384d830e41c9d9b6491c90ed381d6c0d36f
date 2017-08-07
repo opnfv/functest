@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_74ee298d",
+        "filename": "docker/features/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-08-07T21:45:43Z",
+      "side": 1,
+      "message": "looks like this is common class for all Projects that use Functest with bash scripts to test and hence if I look at sfc or opera both are similar to netready in matching entries. So should expect by that logic work for netready entries.",
+      "revId": "6aab4384d830e41c9d9b6491c90ed381d6c0d36f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
