@@ -22,8 +22,8 @@ class FeatureTestingBase(unittest.TestCase):
 
     _case_name = "foo"
     _project_name = "bar"
-    _repo = "dir_repo_copper"
-    _cmd = "cd /home/opnfv/repos/foo/tests && bash run.sh && cd -"
+    _repo = "dir_repo_bar"
+    _cmd = "cd /home/opnfv/repos/bar/tests && bash run.sh && cd -"
     _output_file = '/home/opnfv/functest/results/foo.log'
     feature = None
 

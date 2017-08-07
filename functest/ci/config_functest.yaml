@@ -10,8 +10,6 @@ general:
         repo_netready:      /home/opnfv/repos/netready
         repo_barometer:     /home/opnfv/repos/barometer
         repo_doctor:        /home/opnfv/repos/doctor
-        repo_copper:        /home/opnfv/repos/copper
-        repo_domino:        /home/opnfv/repos/domino
         repo_odl_test:      /src/odl_test
         repo_fds:           /src/fds
         repo_securityscan:  /home/opnfv/repos/securityscanning

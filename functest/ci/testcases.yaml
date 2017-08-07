@@ -331,7 +331,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /home/opnfv/repos/copper/tests && bash run.sh && cd -'
+                        cmd: 'cd /src/copper/tests && bash run.sh && cd -'
 
             -
                 case_name: multisite
@@ -411,7 +411,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /home/opnfv/repos/domino && ./tests/run_multinode.sh'
+                        cmd: 'cd /src/domino && ./tests/run_multinode.sh'
 
             -
                 case_name: gluon_vping
