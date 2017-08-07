@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_94b5adcf",
+        "filename": "docker/features/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6749
+      },
+      "writtenOn": "2017-08-07T18:34:59Z",
+      "side": 1,
+      "message": "- false\n+ true",
+      "range": {
+        "startLine": 62,
+        "startChar": 25,
+        "endLine": 62,
+        "endChar": 30
+      },
+      "revId": "9e1e91caba0f9c3a2b5c6874ea0277c86e756806",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_f4c9995b",
+        "filename": "docker/features/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6749
+      },
+      "writtenOn": "2017-08-07T18:34:59Z",
+      "side": 1,
+      "message": "- fuel\n+ apex",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 36
+      },
+      "revId": "9e1e91caba0f9c3a2b5c6874ea0277c86e756806",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d4c61549",
+        "filename": "docker/features/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6749
+      },
+      "writtenOn": "2017-08-07T18:34:59Z",
+      "side": 1,
+      "message": "- kvm_ovs_dpdk_bar\n+ os_nosdn_bar",
+      "revId": "9e1e91caba0f9c3a2b5c6874ea0277c86e756806",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
