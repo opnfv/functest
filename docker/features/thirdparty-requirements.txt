@@ -2,3 +2,4 @@ baro_tests
 sdnvpn
 securityscanning
 sfc
+netready

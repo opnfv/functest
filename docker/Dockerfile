@@ -88,7 +88,6 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/copper /src/c
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/domino /src/domino
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/doctor ${REPOS_DIR}/doctor
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/promise ${REPOS_DIR}/promise
-RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/netready ${REPOS_DIR}/netready
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/fds /src/fds
 
 # other repositories

@@ -428,7 +428,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /home/opnfv/repos/netready/test/functest && python ./gluon-test-suite.py'
+                        cmd: 'gluon-test-suite.py'
 
             -
                 case_name: barometercollectd
