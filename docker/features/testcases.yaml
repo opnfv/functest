@@ -92,6 +92,23 @@ tiers:
                         cmd: 'cd /src/domino && ./tests/run_multinode.sh'
 
             -
+                case_name: gluon_vping
+                enabled: false
+                project_name: netready
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test suite from Netready project.
+                dependencies:
+                    installer: 'apex'
+                    scenario: 'gluon'
+                run:
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'gluon-test-suite.py'
+
+            -
                 case_name: barometercollectd
                 enabled: false
                 project_name: barometer
