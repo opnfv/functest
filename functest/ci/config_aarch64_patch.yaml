@@ -8,18 +8,16 @@ os:
         images:
           glance_tests:
             disk_file: /home/opnfv/functest/images/cirros-d161201-aarch64-disk.img
-            kernel_file: /home/opnfv/functest/images/cirros-d161201-aarch64-kernel
-            ramdisk_file: /home/opnfv/functest/images/cirros-d161201-aarch64-initramfs
             extra_properties:
-              os_command_line: root=/dev/vdb1 rw rootwait console=tty0 console=ttyS0 console=ttyAMA0
-              hw_video_model: vga
+              hw_firmware_type: 'uefi'
+              short_id: 'ubuntu16.04'
+              hw_video_model: 'vga'
           cirros:
             disk_file: /home/opnfv/functest/images/cirros-d161201-aarch64-disk.img
-            kernel_file: /home/opnfv/functest/images/cirros-d161201-aarch64-kernel
-            ramdisk_file: /home/opnfv/functest/images/cirros-d161201-aarch64-initramfs
             extra_properties:
-              os_command_line: root=/dev/vdb1 rw rootwait console=tty0 console=ttyS0 console=ttyAMA0
-              hw_video_model: vga
+              hw_firmware_type: 'uefi'
+              short_id: 'ubuntu16.04'
+              hw_video_model: 'vga'
     vping:
         image_name: TestVM
 
