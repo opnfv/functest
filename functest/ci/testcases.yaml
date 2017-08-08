@@ -543,7 +543,7 @@ tiers:
 
             -
                 case_name: orchestra_ims
-                enabled: false
+                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -551,7 +551,7 @@ tiers:
                     VNF deployment with OpenBaton (Orchestra)
                 dependencies:
                     installer: ''
-                    scenario: ''
+                    scenario: 'os-nosdn-nofeature-ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.orchestra_ims'
                     class: 'ImsVnf'
