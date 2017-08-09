@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "da33351e_78a617c3",
+        "filename": "functest/opnfv_tests/openstack/rally/blacklist.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-09T13:44:00Z",
+      "side": 1,
+      "message": "Linda has tested on compass, but how about fuel and joid?",
+      "revId": "b8535cdd14108255692143d042c0b59ebd350ff8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_7f764140",
         "filename": "functest/opnfv_tests/openstack/rally/rally.py",
         "patchSetId": 1
@@ -13,6 +30,30 @@
       "writtenOn": "2017-07-17T07:40:48Z",
       "side": 1,
       "message": "Nothing to do with this patch, I am just confused by the two params. Are they required by rally or not?  \n\nWe run rally via the cli \"rally task start --abort-on-sla-failure\n--task /home/opnfv/repos/functest/functest/opnfv_tests/openstack/rally/task.yaml\n--task-args ....\" (see [1])\n\nHere, tmpl_dir and sup_dir are passed as the value of task-args, but I\u0027ve no idea what they are for. Could you explain this a bit? Thanks. \n\n[1]: http://paste.openstack.org/raw/615280/",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 67
+      },
+      "revId": "b8535cdd14108255692143d042c0b59ebd350ff8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_586cf39c",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-09T13:44:00Z",
+      "side": 1,
+      "message": "tmpl_dir defines the directory where the heat templates used by rally scenarios are stored.\n\nsup_dir is supplementary files, currently there\u0027s only one used by vmtasks scenario. Actually the vmtasks scenario has never been a part of rally_sanity/full but was used in some manual testing. In that sense this can be removed.",
+      "parentUuid": "1aa4ed85_7f764140",
       "range": {
         "startLine": 51,
         "startChar": 0,
@@ -48,6 +89,64 @@
     },
     {
       "key": {
+        "uuid": "da33351e_38000faa",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-09T13:44:00Z",
+      "side": 1,
+      "message": "It\u0027s possible to use existing users in rally. In that case the credentials of existing users must be defined in rally deployment configuration.",
+      "parentUuid": "1aa4ed85_ffab1187",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 47
+      },
+      "revId": "b8535cdd14108255692143d042c0b59ebd350ff8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_18954b40",
+        "filename": "functest/opnfv_tests/openstack/rally/scenario/full/opnfv-ceilometer.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-09T13:44:00Z",
+      "side": 1,
+      "message": "These comments are not needed.",
+      "revId": "b8535cdd14108255692143d042c0b59ebd350ff8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_18a38b9f",
+        "filename": "functest/opnfv_tests/openstack/rally/scenario/sanity/opnfv-ceilometer.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-09T13:44:00Z",
+      "side": 1,
+      "message": "These comments are not needed.",
+      "revId": "b8535cdd14108255692143d042c0b59ebd350ff8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_96f3fa09",
         "filename": "functest/opnfv_tests/openstack/rally/scenario/sanity/opnfv-ceilometer.yaml",
         "patchSetId": 1
@@ -59,6 +158,30 @@
       "writtenOn": "2017-08-02T07:25:12Z",
       "side": 1,
       "message": "Does the test actually try to check the same function of openstack as cli \"ceilometer query-samples\"?\n\nAfter testing this patch in compass, all passed except only CeilometerQueries.create_and_query_samples failed, complaining that: \nHTTPException: HTTPException (HTTP 410) {u\u0027error_message\u0027: {u\u0027code\u0027: 410, u\u0027description\u0027: u\u0027This telemetry installation is configured to use Gnocchi. Please use the Gnocchi API available on the metric endpoint to retrieve data.\u0027, u\u0027title\u0027: u\u0027Gone\u0027}}\n\nAnd I also run the cli \"ceilometer query-samples\" in Apex, where indicated that \"Gone (HTTP 410)\"? \n\nSo since it is gone, is it possible to remove this test here?",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 45
+      },
+      "revId": "b8535cdd14108255692143d042c0b59ebd350ff8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_18ceeb83",
+        "filename": "functest/opnfv_tests/openstack/rally/scenario/sanity/opnfv-ceilometer.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-09T13:44:00Z",
+      "side": 1,
+      "message": "At least in Apex \"gnocchi metric list\" works, so this should be blacklisted.",
+      "parentUuid": "da33351e_96f3fa09",
       "range": {
         "startLine": 112,
         "startChar": 0,
