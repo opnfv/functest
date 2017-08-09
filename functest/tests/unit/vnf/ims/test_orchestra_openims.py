@@ -5,7 +5,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-"""Test module for orchestra_ims"""
+"""Test module for orchestra_openims"""
 
 import logging
 import unittest
@@ -13,21 +13,21 @@ import unittest
 import mock
 
 from functest.core import vnf
-from functest.opnfv_tests.vnf.ims import orchestra_ims
+from functest.opnfv_tests.vnf.ims import orchestra_openims
 
 
-class OrchestraImsTesting(unittest.TestCase):
-    """Test class for orchestra_ims"""
+class OrchestraOpenImsTesting(unittest.TestCase):
+    """Test class for orchestra_openims"""
     def setUp(self):
 
-        self.tenant = 'orchestra_ims'
+        self.tenant = 'orchestra_openims'
         self.creds = {'username': 'mocked_username',
                       'password': 'mocked_password'}
         self.tenant_images = {
             'image1': 'mocked_image_url_1',
             'image2': 'mocked_image_url_2'
         }
-        self.orchestrator = {
+        self.mano = {
             'name': 'openbaton',
             'version': '3.2.0',
             'object': 'foo',
@@ -68,7 +68,7 @@ class OrchestraImsTesting(unittest.TestCase):
                     'vcpus': 2}
             }
         }
-        self.vIMS = {
+        self.openims = {
             'scscf': {
                 'ports': [3870, 6060]
             },
@@ -85,27 +85,27 @@ class OrchestraImsTesting(unittest.TestCase):
                 'ports': []
             }
         }
-        with mock.patch('functest.opnfv_tests.vnf.ims.orchestra_ims.'
+        with mock.patch('functest.opnfv_tests.vnf.ims.orchestra_openims.'
                         'os.makedirs'),\
-            mock.patch('functest.opnfv_tests.vnf.ims.orchestra_ims.'
+            mock.patch('functest.opnfv_tests.vnf.ims.orchestra_openims.'
                        'get_config', return_value={
-                           'orchestrator': self.orchestrator,
-                           'name': self.orchestrator['name'],
-                           'version': self.orchestrator['version'],
-                           'requirements': self.orchestrator['requirements'],
-                           'credentials': self.orchestrator['credentials'],
-                           'bootstrap': self.orchestrator['bootstrap'],
-                           'gvnfm': self.orchestrator['gvnfm'],
+                           'orchestrator': self.mano,
+                           'name': self.mano['name'],
+                           'version': self.mano['version'],
+                           'requirements': self.mano['requirements'],
+                           'credentials': self.mano['credentials'],
+                           'bootstrap': self.mano['bootstrap'],
+                           'gvnfm': self.mano['gvnfm'],
                            'os_image':
-                               self.orchestrator['requirements']['os_image'],
+                               self.mano['requirements']['os_image'],
                            'flavor':
-                               self.orchestrator['requirements']['flavor'],
-                           'url': self.orchestrator['bootstrap']['url'],
-                           'config': self.orchestrator['bootstrap']['config'],
+                               self.mano['requirements']['flavor'],
+                           'url': self.mano['bootstrap']['url'],
+                           'config': self.mano['bootstrap']['config'],
                            'tenant_images': self.tenant_images,
                            'vnf': self.vnf,
-                           'vIMS': self.vIMS}):
-            self.ims_vnf = orchestra_ims.ImsVnf()
+                           'orchestra_openims': self.openims}):
+            self.ims_vnf = orchestra_openims.OpenImsVnf()
 
         self.details = {'orchestrator': {'status': 'PASS', 'duration': 120},
                         'vnf': {},
@@ -205,16 +205,17 @@ class OrchestraImsTesting(unittest.TestCase):
             self.ims_vnf.prepare()
         args[0].assert_called_once_with()
 
-    # # @mock.patch('functest.opnfv_tests.vnf.ims.orchestra_ims.get_userdata')
+    # # @mock.patch('functest.opnfv_tests.
+        # vnf.ims.orchestra_openims.get_userdata')
     # def test_deploy_orchestrator(self, *args):
     #     floating_ip = FloatingIp
     #     floating_ip.ip = 'mocked_ip'
     #     details = {'fip':floating_ip,'flavor':{'name':'mocked_name'}}
-    #     self.orchestrator['details'] = details
-    #     with mock.patch.dict(self.orchestrator, {'details':
+    #     self.mano['details'] = details
+    #     with mock.patch.dict(self.mano, {'details':
     #     {'fip':floating_ip,'flavor':{'name':'mocked_name'}}}):
-    #     # with mock.patch.dict(self.orchestrator, details):
-    #         orchestra_ims.get_userdata(self.orchestrator)
+    #     # with mock.patch.dict(self.mano, details):
+    #         orchestra_openims.get_userdata(self.mano)
     #     self.assertIsNone(self.ims_vnf.deploy_orchestrator())
     #     args[4].assert_called_once_with()
 
