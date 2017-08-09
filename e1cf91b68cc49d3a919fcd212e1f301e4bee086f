@@ -245,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_f221a8b5",
+        "filename": "functest/api/resources/v1/testcases.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-09T01:58:38Z",
+      "side": 1,
+      "message": "Sorry i don\u0027t get your point, but does the following process meets your need?\ncode:\n    abort(404, error\u003d\"Test Case {} is not supported\".format(todo_id))\n\nerror_message, error is customized, and message is added by flask automatically.\n\n{\n    \"error\": \"Test Case functest is not supported\", \n    \"message\": \"You have requested this URI [/todos/functest] but did you mean /todos/\u003cstring:todo_id\u003e ?\"\n}",
+      "parentUuid": "da33351e_cd732ce6",
+      "revId": "e1cf91b68cc49d3a919fcd212e1f301e4bee086f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_8a5f4a72",
         "filename": "functest/api/server.py",
         "patchSetId": 24
