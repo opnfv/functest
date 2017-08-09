@@ -33,6 +33,24 @@
       "revId": "c32ce662e775dce114d9cce9605a8d29552311d5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_95bc866e",
+        "filename": "functest/energy/energy.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 6757
+      },
+      "writtenOn": "2017-08-09T07:52:15Z",
+      "side": 1,
+      "message": "For information, with this new version we are speacking about of one single line warning message per test when remote API is unavailble (not a normal situation).\nFailure on energy recording does not influence functest results, but I think it make sense to keep notification if pugged recording is not working. Using energy recording is not \"core business\" for functest, is the reason why it\u0027s warning and not error.\nIsn\u0027it to luxurious to define a new handler just for it?",
+      "parentUuid": "da33351e_8fd0f354",
+      "revId": "c32ce662e775dce114d9cce9605a8d29552311d5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
