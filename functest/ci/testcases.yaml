@@ -543,19 +543,32 @@ tiers:
                     class: 'AaaVnf'
 
             -
-                case_name: orchestra_ims
-                enabled: true
+                case_name: orchestra_openims
                 project_name: functest
                 criteria: 100
                 blocking: false
                 description: >-
-                    VNF deployment with OpenBaton (Orchestra)
+                    OpenIMS VNF deployment with Open Baton (Orchestra)
                 dependencies:
                     installer: ''
                     scenario: 'os-nosdn-nofeature-ha'
                 run:
-                    module: 'functest.opnfv_tests.vnf.ims.orchestra_ims'
-                    class: 'ImsVnf'
+                    module: 'functest.opnfv_tests.vnf.ims.orchestra_openims'
+                    class: 'OpenImsVnf'
+
+            -
+                case_name: orchestra_clearwaterims
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    ClearwaterIMS VNF deployment with Open Baton (Orchestra)
+                dependencies:
+                    installer: ''
+                    scenario: 'os-nosdn-nofeature-ha'
+                run:
+                    module: 'functest.opnfv_tests.vnf.ims.orchestra_clearwaterims'
+                    class: 'ClearwaterImsVnf'
 
             -
                 case_name: opera_vims
