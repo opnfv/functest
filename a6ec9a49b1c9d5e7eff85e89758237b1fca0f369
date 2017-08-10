@@ -22,6 +22,30 @@
       "revId": "a6ec9a49b1c9d5e7eff85e89758237b1fca0f369",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_4920a3f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-10T11:49:00Z",
+      "side": 1,
+      "message": "Well caught. I will update it in the next patchset.\nThank you",
+      "parentUuid": "da33351e_a9116fae",
+      "range": {
+        "startLine": 7,
+        "startChar": 26,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "a6ec9a49b1c9d5e7eff85e89758237b1fca0f369",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
