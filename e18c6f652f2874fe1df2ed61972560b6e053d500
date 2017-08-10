@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_29b6ff3d",
+        "filename": "functest/tests/unit/openstack/tempest/test_conf_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-10T08:36:47Z",
+      "side": 1,
+      "message": "this could be specified in mock_patch instead.",
+      "revId": "e18c6f652f2874fe1df2ed61972560b6e053d500",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
