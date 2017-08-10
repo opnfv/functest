@@ -106,15 +106,15 @@ class RefstackClient(testcase.OSGCTestCase):
             for match in re.findall(r"(- Failed: )(\d+)", output):
                 num_failures = match[1]
                 LOGGER.info("".join(match))
-            success_testcases = ""
+            success_testcases = []
             for match in re.findall(r"\{0\}(.*?)[. ]*ok", output):
-                success_testcases += match + ", "
-            failed_testcases = ""
+                success_testcases.append(match)
+            failed_testcases = []
             for match in re.findall(r"\{0\}(.*?)[. ]*FAILED", output):
-                failed_testcases += match + ", "
-            skipped_testcases = ""
+                failed_testcases.append(match)
+            skipped_testcases = []
             for match in re.findall(r"\{0\}(.*?)[. ]*SKIPPED:", output):
-                skipped_testcases += match + ", "
+                skipped_testcases.append(match)
 
             num_executed = int(num_tests) - int(num_skipped)
 
