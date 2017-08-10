@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_a9404f57",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-10T12:59:53Z",
+      "side": 1,
+      "message": "description could be changed a little bit (copy/paste) of cloudify_ims\n\nsuggestion\nthis testcase extends the cloudify_ims test case. The first part is similar but the testing part is different.\nThe testing part consists in automating a realistic signaling load on the vIMS using an Ixia loader (proprietary tools - You need to have access to an Ixia licence server defined in the configuraiton file)",
+      "revId": "ebde021262c7ce3dd3efcc46f89b75b3686907ad",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_0925fbc1",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims_perf.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-10T12:59:53Z",
+      "side": 1,
+      "message": "these 2 functions could be moved to functest_utils (duplication with cloudify_ims)",
+      "revId": "ebde021262c7ce3dd3efcc46f89b75b3686907ad",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_e921b7b5",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims_perf.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-10T12:59:53Z",
+      "side": 1,
+      "message": "open question\nshall we have 1 cloudify.yaml with a section dedicated to performance\n\norchestra chose to have 1 config file with different sections depending on the VNFs\n\nit is maybe cleaner, and easier to maintain especially when there are lots of duplicated parameter",
+      "revId": "ebde021262c7ce3dd3efcc46f89b75b3686907ad",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_492f03a2",
+        "filename": "functest/opnfv_tests/vnf/ims/ixia/files/REG_CALL_OPNFV_v13.rxf.template",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-10T12:59:53Z",
+      "side": 1,
+      "message": "v13",
+      "revId": "ebde021262c7ce3dd3efcc46f89b75b3686907ad",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
