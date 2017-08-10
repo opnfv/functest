@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_698da731",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 27
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-10T10:26:38Z",
+      "side": 1,
+      "message": "why it is added again, I think we have already discussed it in the weekly meeting. It is only useful to compose endpoint, which is trivial and almost useless in actual, with or without it(setting endpoint) functest-api will work fine. I highly recommend using a simple name as endpoint rather than some url, if you do want to add endpoint in.",
+      "revId": "55ae43e2cd619925d7d38143c09b89f06b4ec847",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
