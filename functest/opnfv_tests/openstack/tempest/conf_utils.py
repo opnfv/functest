@@ -15,6 +15,8 @@ import re
 import shutil
 import subprocess
 
+import yaml
+
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
@@ -38,6 +40,8 @@ TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
 REFSTACK_RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'),
                                     'refstack')
+TEMPEST_CONF_YAML = pkg_resources.resource_filename(
+    'functest', 'opnfv_tests/openstack/tempest/custom_tests/tempest_conf.yaml')
 
 CI_INSTALLER_TYPE = CONST.__getattribute__('INSTALLER_TYPE')
 CI_INSTALLER_IP = CONST.__getattribute__('INSTALLER_IP')
@@ -327,6 +331,18 @@ def configure_tempest_update_params(tempest_conf_file,
                 config.add_section(service)
             config.set(service, 'endpoint_type',
                        CONST.__getattribute__('OS_ENDPOINT_TYPE'))
+
+    logger.debug('Add/Update required params defined in tempest_conf.yaml '
+                 'into tempest.conf file')
+    with open(TEMPEST_CONF_YAML) as f:
+        conf_yaml = yaml.safe_load(f)
+    sections = config.sections()
+    for section in conf_yaml:
+        if section not in sections:
+            config.add_section(section)
+        sub_conf = conf_yaml.get(section)
+        for key, value in sub_conf.items():
+            config.set(section, key, value)
 
     with open(tempest_conf_file, 'wb') as config_file:
         config.write(config_file)
