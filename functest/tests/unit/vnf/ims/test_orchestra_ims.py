@@ -154,7 +154,7 @@ class OrchestraImsTesting(unittest.TestCase):
         """Testing prepare function with bad auth url"""
         with self.assertRaises(Exception):
             self.ims_vnf.prepare()
-        args[0].assert_not_called()
+            args[0].assert_not_called()
 
     def test_prepare_missing_param(self):
         """Testing prepare function with missing param"""

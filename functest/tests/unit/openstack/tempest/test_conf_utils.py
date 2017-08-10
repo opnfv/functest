@@ -261,8 +261,11 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                        'write') as mwrite, \
             mock.patch('__builtin__.open', mock.mock_open()), \
             mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.backup_tempest_config'):
+                       'conf_utils.backup_tempest_config'), \
+            mock.patch('functest.utils.functest_utils.yaml.safe_load') \
+                as mock_yaml:
             CONST.__setattr__('OS_ENDPOINT_TYPE', None)
+            mock_yaml.return_value = mock.Mock()
             conf_utils.\
                 configure_tempest_update_params('test_conf_file',
                                                 IMAGE_ID=image_id,
