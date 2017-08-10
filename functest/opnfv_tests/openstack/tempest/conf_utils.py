@@ -336,7 +336,7 @@ def configure_tempest_update_params(tempest_conf_file,
                  'into tempest.conf file')
     with open(TEMPEST_CONF_YAML) as f:
         conf_yaml = yaml.safe_load(f)
-    if not conf_yaml:
+    if conf_yaml:
         sections = config.sections()
         for section in conf_yaml:
             if section not in sections:
