@@ -1,0 +1,13 @@
+# This is an empty configuration file to be filled up with the desired options
+# to generate a custom tempest.conf
+# Examples:
+# network-feature-enabled:
+#     port_security: True
+
+# volume-feature-enabled:
+#     api_v1: False
+
+# validation:
+#     image_ssh_user: root
+#     ssh_timeout: 300
+

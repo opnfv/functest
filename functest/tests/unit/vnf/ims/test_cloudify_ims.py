@@ -13,6 +13,8 @@ import mock
 from functest.core import vnf
 from functest.opnfv_tests.vnf.ims import cloudify_ims
 
+from snaps.openstack.os_credentials import OSCreds
+
 
 class CloudifyImsTesting(unittest.TestCase):
 
@@ -79,8 +81,11 @@ class CloudifyImsTesting(unittest.TestCase):
     @mock.patch('snaps.openstack.create_image.OpenStackImage.create')
     def test_prepare_bad_auth_url(self, *args):
         with self.assertRaises(Exception):
-            self.ims_vnf.prepare()
-        args[0].assert_not_called()
+            self.ims_vnf.image_creator(
+                OSCreds(username='user', password='pass', auth_url='url',
+                        project_name='project', identity_api_version=3),
+                mock.Mock())
+            args[0].assert_not_called()
 
     def test_prepare_missing_param(self):
         with self.assertRaises(vnf.VnfPreparationException):
