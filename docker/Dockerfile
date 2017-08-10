@@ -120,7 +120,7 @@ RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
 
 RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -' \
     && sudo apt-get install -y nodejs \
-    && cd ${REPOS_DIR}/promise && sudo npm -g install npm@latest \
-    && cd ${REPOS_DIR}/promise/source && npm install
+    && cd /src/promise && sudo npm -g install npm@latest \
+    && cd /src/promise/source && npm install
 
 RUN echo ". ${FUNCTEST_DIR}/cli/functest-complete.sh" >> /root/.bashrc
