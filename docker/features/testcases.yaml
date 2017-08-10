@@ -1,0 +1,76 @@
+tiers:
+    -
+        name: features
+        order: 2
+        ci_loop: '(daily)|(weekly)'
+        description : >-
+            Test suites from feature projects
+            integrated in functest
+        testcases:
+            -
+                case_name: bgpvpn
+                project_name: sdnvpn
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test suite from SDNVPN project.
+                dependencies:
+                    installer: '(fuel)|(apex)|(netvirt)'
+                    scenario: 'bgpvpn'
+                run:
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'run_sdnvpn_tests.py'
+
+            -
+                case_name: security_scan
+                enabled: false
+                project_name: securityscanning
+                criteria: 100
+                blocking: false
+                description: >-
+                    Simple Security Scan
+                dependencies:
+                    installer: 'apex'
+                    scenario: '^((?!fdio).)*$'
+                run:
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: '. /home/opnfv/functest/conf/stackrc && security_scan --config /usr/local/etc/securityscanning/config.ini'
+
+            -
+                case_name: functest-odl-sfc
+                enabled: false
+                project_name: sfc
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test suite for odl-sfc to test two chains and two SFs
+                dependencies:
+                    installer: '(apex)|(fuel)'
+                    scenario: 'odl_l2-sfc'
+                run:
+                    module: 'functest.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'run_sfc_tests.py'
+
+            -
+                case_name: barometercollectd
+                enabled: false
+                project_name: barometer
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test suite for the Barometer project. Separate tests verify the
+                    proper configuration and functionality of the following
+                    collectd plugins Ceilometer, Hugepages, Memory RAS (mcelog),
+                    and OVS Events
+                dependencies:
+                    installer: 'fuel'
+                    scenario: 'kvm_ovs_dpdk_bar'
+                run:
+                     module: 'baro_tests.barometer'
+                     class: 'BarometerCollectd'
