@@ -5,6 +5,7 @@ git+https://gerrit.opnfv.org/gerrit/sdnvpn#egg=sdnvpn
 git+https://gerrit.opnfv.org/gerrit/opera#egg=opera
 git+https://gerrit.opnfv.org/gerrit/securityscanning#egg=securityscanning
 git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
+git+https://gerrit.opnfv.org/gerrit/promise#egg=promise&subdirectory=promise/test/functest
 -e git+https://github.com/openstack/refstack-client#egg=refstack-client
 cloudify_rest_client===4.0
 iniparse===0.4
