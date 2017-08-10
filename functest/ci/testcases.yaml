@@ -265,7 +265,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /home/opnfv/repos/promise/promise/test/functest && python ./run_tests.py'
+                        cmd: 'run_promise_tests.py'
 
             -
                 case_name: doctor-notification
