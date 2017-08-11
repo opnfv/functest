@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_dbd638c5",
+        "filename": "functest/energy/energy.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-11T09:28:28Z",
+      "side": 1,
+      "message": "Hi Benoit, I am wondering it is also recorded when I run refstack_defcore or other related tests in my local pod. Because I came across the error when I run refstack_defcore locally, please see [1].\nAnd the error is not raised each time.\n\n[1]: http://paste.openstack.org/raw/618147/",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 77
+      },
+      "revId": "babd8e011681084c055dd2e131faf1f5f4d9a646",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
