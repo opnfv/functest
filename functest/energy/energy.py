@@ -16,6 +16,7 @@ import urllib
 
 from functools import wraps
 import requests
+import urllib3
 
 import functest.utils.functest_utils as ft_utils
 
@@ -76,7 +77,7 @@ class EnergyRecorder(object):
     INITIAL_STEP = "running"
 
     # Default connection timeout
-    CONNECTION_TIMOUT = 1
+    CONNECTION_TIMOUT = urllib3.Timeout(connect=1, read=3)
 
     @staticmethod
     def load_config():
