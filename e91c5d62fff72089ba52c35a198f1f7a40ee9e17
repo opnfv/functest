@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_3b72c47c",
+        "filename": "upper-constraints.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-11T07:17:33Z",
+      "side": 1,
+      "message": "The param -e is used to keep promise repo unremoved after it is installed?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 2
+      },
+      "revId": "e91c5d62fff72089ba52c35a198f1f7a40ee9e17",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
