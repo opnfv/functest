@@ -16,6 +16,24 @@
       "revId": "55ae43e2cd619925d7d38143c09b89f06b4ec847",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_f826a267",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 27
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-11T03:21:14Z",
+      "side": 1,
+      "message": "Have you ever seen any endpoints in openstack or k8s are just simple names rather than url? It is url that highly recommended to be used in endpoint by upstream or other projects.",
+      "parentUuid": "da33351e_698da731",
+      "revId": "55ae43e2cd619925d7d38143c09b89f06b4ec847",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
