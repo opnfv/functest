@@ -34,6 +34,24 @@
       "revId": "55ae43e2cd619925d7d38143c09b89f06b4ec847",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_b8eeda89",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 27
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-11T06:01:54Z",
+      "side": 1,
+      "message": "ok, OpenStack/K8S master, please give me some examples in OpenStack/k8s, which are leveraging flask and adding a specific configuration(port) only used to compose the url? And please tell me where it is written that url is highly recommended?",
+      "parentUuid": "da33351e_f826a267",
+      "revId": "55ae43e2cd619925d7d38143c09b89f06b4ec847",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
