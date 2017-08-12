@@ -110,7 +110,6 @@ The external test cases are:
  * onos
  * fds
  * multisite
- * netready
  * orchestra_ims
  * parser
  * promise

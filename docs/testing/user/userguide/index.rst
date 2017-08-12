@@ -480,7 +480,6 @@ In Danube, Functest supports the integration of:
  * domino
  * fds
  * multisite
- * netready
  * odl-sfc
  * promise
  * security_scan
