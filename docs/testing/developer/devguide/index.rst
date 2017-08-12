@@ -359,8 +359,6 @@ Please note that currently token authorization is implemented but is not yet ena
    +---------------------+---------+---------+---------+---------+
    | parser              |         |         |    X    |         |
    +---------------------+---------+---------+---------+---------+
-   | copper              |    X    |         |         |    X    |
-   +---------------------+---------+---------+---------+---------+
    src: colorado (see release note for the last matrix version)
 
   All the testcases listed in the table are runnable on

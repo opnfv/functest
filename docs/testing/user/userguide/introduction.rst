@@ -249,7 +249,6 @@ section `Executing the functest suites`_ of this document.
 
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
-.. _`Copper User Guide`: http://artifacts.opnfv.org/copper/colorado/docs/userguide/index.html
 .. _`Doctor User Guide`: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
 .. _`Promise User Guide`: http://artifacts.opnfv.org/promise/colorado/docs/userguide/index.html
 .. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/colorado/userguide/index.html
