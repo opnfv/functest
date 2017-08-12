@@ -256,8 +256,8 @@ test [0-3]. The scoring method is described in https://wiki.opnfv.org/pages/view
 
  e.g.
  apex/odl_l2-nofeature-ha
- tests = vping_ssh+vping_userdata+tempest+rally+odl+doctor+copper
- Scoring = 21/21 = 7 * 3
+ tests = vping_ssh+vping_userdata+tempest+rally+odl+doctor
+ Scoring = 18/18 = 6 * 3
 
 By default, if not specified, the scenarios are HA.
 HA means OpenStack High Availability (main services). Note that not
