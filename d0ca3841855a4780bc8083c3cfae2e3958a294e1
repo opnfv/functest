@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_ec3b80e9",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-14T06:30:17Z",
+      "side": 1,
+      "message": "Should it be \"Default\"? Because the domain name in compass deployment is \"Default\", while \"default\" is the domain id.",
+      "range": {
+        "startLine": 1392,
+        "startChar": 55,
+        "endLine": 1392,
+        "endChar": 64
+      },
+      "revId": "d0ca3841855a4780bc8083c3cfae2e3958a294e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
