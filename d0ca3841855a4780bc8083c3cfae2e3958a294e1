@@ -93,6 +93,30 @@
       "revId": "d0ca3841855a4780bc8083c3cfae2e3958a294e1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_c781374c",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-14T07:59:46Z",
+      "side": 1,
+      "message": "Here domain_name can be obtained by os.getenv(\"OS_PROJECT_DOMAIN_NAME\").",
+      "parentUuid": "da33351e_e7a55b05",
+      "range": {
+        "startLine": 1392,
+        "startChar": 55,
+        "endLine": 1392,
+        "endChar": 64
+      },
+      "revId": "d0ca3841855a4780bc8083c3cfae2e3958a294e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
