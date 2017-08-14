@@ -149,7 +149,7 @@ tiers:
                 case_name: odl
                 project_name: functest
                 criteria: 100
-                blocking: true
+                blocking: false
                 description: >-
                     Test Suite for the OpenDaylight SDN Controller. It
                     integrates some test suites from upstream using
