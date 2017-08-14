@@ -45,6 +45,54 @@
       "revId": "d0ca3841855a4780bc8083c3cfae2e3958a294e1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_e7a55b05",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-14T07:45:45Z",
+      "side": 1,
+      "message": "In Joid the domain name is \"default\" and id seems to be an UUID.",
+      "parentUuid": "da33351e_0c2224b9",
+      "range": {
+        "startLine": 1392,
+        "startChar": 55,
+        "endLine": 1392,
+        "endChar": 64
+      },
+      "revId": "d0ca3841855a4780bc8083c3cfae2e3958a294e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_87a0cff5",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-14T07:45:45Z",
+      "side": 1,
+      "message": "Just checked Apex and you\u0027re right, there the name indeed is \"Default\" and default\" is the id. Is this naming/id specified somewhere and all installers should conform this?\n\nIn that case the problem is in Joid and no changes needed in functest.",
+      "parentUuid": "da33351e_ec3b80e9",
+      "range": {
+        "startLine": 1392,
+        "startChar": 55,
+        "endLine": 1392,
+        "endChar": 64
+      },
+      "revId": "d0ca3841855a4780bc8083c3cfae2e3958a294e1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
