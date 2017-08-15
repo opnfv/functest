@@ -382,6 +382,7 @@ tiers:
 
             -
                 case_name: parser-basics
+                enabled: false
                 project_name: parser
                 criteria: 100
                 blocking: false
