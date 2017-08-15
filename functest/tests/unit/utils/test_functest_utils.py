@@ -133,24 +133,20 @@ class FunctestUtilsTesting(unittest.TestCase):
             self.assertEqual(functest_utils.get_scenario(),
                              self.scenario)
 
-    @mock.patch('functest.utils.functest_utils.get_build_tag')
-    def test_get_version_daily_job(self, mock_get_build_tag):
-        mock_get_build_tag.return_value = self.build_tag
+    def test_get_version_daily_job(self):
+        CONST.__setattr__('BUILD_TAG', self.build_tag)
         self.assertEqual(functest_utils.get_version(), self.version)
 
-    @mock.patch('functest.utils.functest_utils.get_build_tag')
-    def test_get_version_weekly_job(self, mock_get_build_tag):
-        mock_get_build_tag.return_value = self.build_tag_week
+    def test_get_version_weekly_job(self):
+        CONST.__setattr__('BUILD_TAG', self.build_tag_week)
         self.assertEqual(functest_utils.get_version(), self.version)
 
-    @mock.patch('functest.utils.functest_utils.get_build_tag')
-    def test_get_version_with_dummy_build_tag(self, mock_get_build_tag):
-        mock_get_build_tag.return_value = 'whatever'
+    def test_get_version_with_dummy_build_tag(self):
+        CONST.__setattr__('BUILD_TAG', 'whatever')
         self.assertEqual(functest_utils.get_version(), 'unknown')
 
-    @mock.patch('functest.utils.functest_utils.get_build_tag')
-    def test_get_version_unknown(self, mock_get_build_tag):
-        mock_get_build_tag.return_value = "unknown_build_tag"
+    def test_get_version_unknown(self):
+        CONST.__setattr__('BUILD_TAG', 'unknown_build_tag')
         self.assertEqual(functest_utils.get_version(), "unknown")
 
     @mock.patch('functest.utils.functest_utils.logger.info')
@@ -173,33 +169,15 @@ class FunctestUtilsTesting(unittest.TestCase):
                              self.node_name)
 
     @mock.patch('functest.utils.functest_utils.logger.info')
-    def test_get_build_tag_failed(self, mock_logger_info):
-        with mock.patch.dict(os.environ,
-                             {},
-                             clear=True):
-            self.assertEqual(functest_utils.get_build_tag(),
-                             "none")
-            mock_logger_info.assert_called_once_with("Impossible to retrieve"
-                                                     " the build tag")
-
-    def test_get_build_tag_default(self):
-        with mock.patch.dict(os.environ,
-                             {'BUILD_TAG': self.build_tag},
-                             clear=True):
-            self.assertEqual(functest_utils.get_build_tag(),
-                             self.build_tag)
-
-    @mock.patch('functest.utils.functest_utils.logger.info')
     def test_logger_test_results(self, mock_logger_info):
         CONST.__setattr__('results_test_db_url', self.db_url)
+        CONST.__setattr__('BUILD_TAG', self.build_tag)
         with mock.patch('functest.utils.functest_utils.get_pod_name',
                         return_value=self.node_name), \
                 mock.patch('functest.utils.functest_utils.get_scenario',
                            return_value=self.scenario), \
                 mock.patch('functest.utils.functest_utils.get_version',
-                           return_value=self.version), \
-                mock.patch('functest.utils.functest_utils.get_build_tag',
-                           return_value=self.build_tag):
+                           return_value=self.version):
             functest_utils.logger_test_results(self.project, self.case_name,
                                                self.status, self.details)
             mock_logger_info.assert_called_once_with(
