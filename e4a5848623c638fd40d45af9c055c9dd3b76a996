@@ -16,6 +16,24 @@
       "revId": "e4a5848623c638fd40d45af9c055c9dd3b76a996",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_bdf36372",
+        "filename": "functest/utils/openstack_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-15T08:37:33Z",
+      "side": 1,
+      "message": "Basically only because currently other routines in this module use getenv instead of CONST. But yes, CONST could be utilized here.",
+      "parentUuid": "da33351e_bd5d24ec",
+      "revId": "e4a5848623c638fd40d45af9c055c9dd3b76a996",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
