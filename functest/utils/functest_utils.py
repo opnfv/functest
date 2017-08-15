@@ -107,7 +107,9 @@ def get_version():
     # jenkins-functest-fuel-baremetal-weekly-master-8
     # use regex to match branch info
     rule = "(dai|week)ly-(.+?)-[0-9]*"
-    build_tag = get_build_tag()
+    build_tag = CONST.__getattribute__('BUILD_TAG')
+    if not build_tag:
+        build_tag = 'none'
     m = re.search(rule, build_tag)
     if m:
         return m.group(2)
@@ -128,19 +130,6 @@ def get_pod_name():
         return "unknown-pod"
 
 
-def get_build_tag():
-    """
-    Get build tag of jenkins jobs
-    """
-    try:
-        build_tag = os.environ['BUILD_TAG']
-    except KeyError:
-        logger.info("Impossible to retrieve the build tag")
-        build_tag = "none"
-
-    return build_tag
-
-
 def logger_test_results(project, case_name, status, details):
     """
     Format test case results for the logger
@@ -148,7 +137,7 @@ def logger_test_results(project, case_name, status, details):
     pod_name = get_pod_name()
     scenario = get_scenario()
     version = get_version()
-    build_tag = get_build_tag()
+    build_tag = CONST.__getattribute__('BUILD_TAG')
     db_url = CONST.__getattribute__("results_test_db_url")
 
     logger.info(
@@ -170,7 +159,7 @@ def logger_test_results(project, case_name, status, details):
             'v': version,
             's': scenario,
             'c': status,
-            'b': build_tag,
+            'b': build_tag if build_tag else 'none',
             'd': details})
 
 
