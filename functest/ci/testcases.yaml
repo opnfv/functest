@@ -317,23 +317,6 @@ tiers:
                         cmd: '. /home/opnfv/functest/conf/stackrc && security_scan --config /usr/local/etc/securityscanning/config.ini'
 
             -
-                case_name: copper
-                enabled: false
-                project_name: copper
-                criteria: 100
-                blocking: false
-                description: >-
-                    Test suite for policy management based on OpenStack Congress
-                dependencies:
-                    installer: 'apex'
-                    scenario: '^((?!fdio).)*$'
-                run:
-                    module: 'functest.core.feature'
-                    class: 'BashFeature'
-                    args:
-                        cmd: 'cd /src/copper/tests && bash run.sh && cd -'
-
-            -
                 case_name: multisite
                 enabled: false
                 project_name: multisite

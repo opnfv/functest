@@ -301,7 +301,6 @@ should now be in place::
         |   `-- results
         `-- repos
             |-- bgpvpn
-            |-- copper
             |-- doctor
             |-- domino
             |-- functest

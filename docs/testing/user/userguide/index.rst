@@ -484,8 +484,6 @@ In Danube, Functest supports the integration of:
  * promise
  * security_scan
 
-Note: copper is not supported in Danube.
-
 Please refer to the dedicated feature user guides for details.
 
 
