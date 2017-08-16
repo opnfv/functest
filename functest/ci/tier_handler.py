@@ -1,14 +1,18 @@
 #!/usr/bin/env python
+
+# Copyright (c) 2016 Ericsson AB and others.
 #
-# jose.lausuch@ericsson.com
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
-#
 
 
 import re
+import textwrap
+
+import prettytable
+
 
 LINE_LENGTH = 72
 
@@ -32,6 +36,7 @@ class Tier(object):
 
     def __init__(self, name, order, ci_loop, description=""):
         self.tests_array = []
+        self.skipped_tests_array = []
         self.name = name
         self.order = order
         self.ci_loop = ci_loop
@@ -40,11 +45,17 @@ class Tier(object):
     def add_test(self, testcase):
         self.tests_array.append(testcase)
 
+    def skip_test(self, testcase):
+        self.skipped_tests_array.append(testcase)
+
     def get_tests(self):
         array_tests = []
         for test in self.tests_array:
             array_tests.append(test)
         return array_tests
+
+    def get_skipped_test(self):
+        return self.skipped_tests_array
 
     def get_test_names(self):
         array_tests = []
@@ -75,31 +86,16 @@ class Tier(object):
         return self.ci_loop
 
     def __str__(self):
-        lines = split_text(self.description, LINE_LENGTH - 6)
-
-        out = ""
-        out += ("+%s+\n" % ("=" * (LINE_LENGTH - 2)))
-        out += ("| Tier:  " + self.name.ljust(LINE_LENGTH - 10) + "|\n")
-        out += ("+%s+\n" % ("=" * (LINE_LENGTH - 2)))
-        out += ("| Order: " + str(self.order).ljust(LINE_LENGTH - 10) + "|\n")
-        out += ("| CI Loop: " + str(self.ci_loop).ljust(LINE_LENGTH - 12) +
-                "|\n")
-        out += ("| Description:".ljust(LINE_LENGTH - 1) + "|\n")
-        for line in lines:
-            out += ("|    " + line.ljust(LINE_LENGTH - 7) + " |\n")
-        out += ("| Test cases:".ljust(LINE_LENGTH - 1) + "|\n")
-        tests = self.get_test_names()
-        if len(tests) > 0:
-            for i in range(len(tests)):
-                out += ("|    - %s |\n" % tests[i].ljust(LINE_LENGTH - 9))
-        else:
-            out += ("|    (There are no supported test cases "
-                    .ljust(LINE_LENGTH - 1) + "|\n")
-            out += ("|    in this tier for the given scenario) "
-                    .ljust(LINE_LENGTH - 1) + "|\n")
-        out += ("|".ljust(LINE_LENGTH - 1) + "|\n")
-        out += ("+%s+\n" % ("-" * (LINE_LENGTH - 2)))
-        return out
+        msg = prettytable.PrettyTable(
+            header_style='upper', padding_width=5,
+            field_names=['tiers', 'order', 'CI Loop', 'description',
+                         'testcases'])
+        msg.add_row(
+            [self.name, self.order, self.ci_loop,
+             textwrap.fill(self.description, width=40),
+             textwrap.fill(' '.join([str(x.get_name(
+                 )) for x in self.get_tests()]), width=40)])
+        return msg.get_string()
 
 
 class TestCase(object):
@@ -109,13 +105,15 @@ class TestCase(object):
                  dependency,
                  criteria,
                  blocking,
-                 description=""):
+                 description="",
+                 project=""):
         self.name = name
         self.enabled = enabled
         self.dependency = dependency
         self.criteria = criteria
         self.blocking = blocking
         self.description = description
+        self.project = project
 
     @staticmethod
     def is_none(item):
@@ -147,26 +145,16 @@ class TestCase(object):
     def is_blocking(self):
         return self.blocking
 
-    def __str__(self):
-        lines = split_text(self.description, LINE_LENGTH - 6)
+    def get_project(self):
+        return self.project
 
-        out = ""
-        out += ("+%s+\n" % ("=" * (LINE_LENGTH - 2)))
-        out += ("| Testcase:  " + self.name.ljust(LINE_LENGTH - 14) + "|\n")
-        out += ("+%s+\n" % ("=" * (LINE_LENGTH - 2)))
-        out += ("| Description:".ljust(LINE_LENGTH - 1) + "|\n")
-        for line in lines:
-            out += ("|    " + line.ljust(LINE_LENGTH - 7) + " |\n")
-        out += ("| Criteria:  " +
-                str(self.criteria).ljust(LINE_LENGTH - 14) + "|\n")
-        out += ("| Dependencies:".ljust(LINE_LENGTH - 1) + "|\n")
-        installer = self.dependency.get_installer()
-        scenario = self.dependency.get_scenario()
-        out += ("|   - Installer:" + installer.ljust(LINE_LENGTH - 17) + "|\n")
-        out += ("|   - Scenario :" + scenario.ljust(LINE_LENGTH - 17) + "|\n")
-        out += ("|".ljust(LINE_LENGTH - 1) + "|\n")
-        out += ("+%s+\n" % ("-" * (LINE_LENGTH - 2)))
-        return out
+    def __str__(self):
+        msg = prettytable.PrettyTable(
+            header_style='upper', padding_width=5,
+            field_names=['test case', 'description', 'criteria', 'dependency'])
+        msg.add_row([self.name, textwrap.fill(self.description, width=40),
+                     self.criteria, self.dependency])
+        return msg.get_string()
 
 
 class Dependency(object):
@@ -182,6 +170,7 @@ class Dependency(object):
         return self.scenario
 
     def __str__(self):
-        return ("Dependency info:\n"
-                "        installer: " + self.installer + "\n"
-                "        scenario:  " + self.scenario + "\n")
+        delimitator = "\n" if self.get_installer(
+            ) and self.get_scenario() else ""
+        return "{}{}{}".format(self.get_installer(), delimitator,
+                               self.get_scenario())

@@ -24,7 +24,8 @@ class TierBuilderTesting(unittest.TestCase):
                          'case_name': 'test_name',
                          'criteria': 'test_criteria',
                          'blocking': 'test_blocking',
-                         'description': 'test_desc'}
+                         'description': 'test_desc',
+                         'project_name': 'project_name'}
 
         self.dic_tier = {'name': 'test_tier',
                          'order': 'test_order',
