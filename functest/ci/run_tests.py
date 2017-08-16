@@ -1,12 +1,11 @@
 #!/usr/bin/env python
-#
-# Author: Jose Lausuch (jose.lausuch@ericsson.com)
+
+# Copyright (c) 2016 Ericsson AB and others.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
-#
 
 import argparse
 import enum
@@ -17,6 +16,7 @@ import os
 import pkg_resources
 import re
 import sys
+import textwrap
 
 import prettytable
 
@@ -66,17 +66,14 @@ class RunTestsParser(object):
 class Runner(object):
 
     def __init__(self):
-        self.executed_test_cases = []
+        self.executed_test_cases = {}
         self.overall_result = Result.EX_OK
         self.clean_flag = True
         self.report_flag = False
-
-    @staticmethod
-    def print_separator(str, count=45):
-        line = ""
-        for i in range(0, count - 1):
-            line += str
-        logger.info("%s" % line)
+        self._tiers = tb.TierBuilder(
+            CONST.__getattribute__('INSTALLER_TYPE'),
+            CONST.__getattribute__('DEPLOY_SCENARIO'),
+            pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
 
     @staticmethod
     def source_rc_file():
@@ -109,21 +106,11 @@ class Runner(object):
             logger.exception("Cannot get {}'s config options".format(testname))
             return None
 
-    def run_test(self, test, tier_name, testcases=None):
+    def run_test(self, test):
         if not test.is_enabled():
             raise TestNotEnabled(
                 "The test case {} is not enabled".format(test.get_name()))
-        logger.info("\n")  # blank line
-        self.print_separator("=")
         logger.info("Running test case '%s'...", test.get_name())
-        self.print_separator("=")
-        logger.debug("\n%s" % test)
-        self.source_rc_file()
-
-        flags = " -t %s" % test.get_name()
-        if self.report_flag:
-            flags += " -r"
-
         result = testcase.TestCase.EX_RUN_ERROR
         run_dict = self.get_run_dict(test.get_name())
         if run_dict:
@@ -132,7 +119,7 @@ class Runner(object):
                 cls = getattr(module, run_dict['class'])
                 test_dict = ft_utils.get_dict_by_test(test.get_name())
                 test_case = cls(**test_dict)
-                self.executed_test_cases.append(test_case)
+                self.executed_test_cases[test.get_name()] = test_case
                 if self.clean_flag:
                     if test_case.create_snapshot() != test_case.EX_OK:
                         return result
@@ -156,7 +143,6 @@ class Runner(object):
                     run_dict['class']))
         else:
             raise Exception("Cannot import the class for the test case.")
-
         return result
 
     def run_tier(self, tier):
@@ -165,68 +151,60 @@ class Runner(object):
         if tests is None or len(tests) == 0:
             logger.info("There are no supported test cases in this tier "
                         "for the given scenario")
-            return 0
-        logger.info("\n\n")  # blank line
-        self.print_separator("#")
-        logger.info("Running tier '%s'" % tier_name)
-        self.print_separator("#")
-        logger.debug("\n%s" % tier)
-        for test in tests:
-            result = self.run_test(test, tier_name)
-            if result != testcase.TestCase.EX_OK:
-                logger.error("The test case '%s' failed.", test.get_name())
-                self.overall_result = Result.EX_ERROR
-                if test.is_blocking():
-                    raise BlockingTestFailed(
-                        "The test case {} failed and is blocking".format(
-                            test.get_name()))
+            self.overall_result = Result.EX_ERROR
+        else:
+            logger.info("Running tier '%s'" % tier_name)
+            for test in tests:
+                result = self.run_test(test)
+                if result != testcase.TestCase.EX_OK:
+                    logger.error("The test case '%s' failed.", test.get_name())
+                    self.overall_result = Result.EX_ERROR
+                    if test.is_blocking():
+                        raise BlockingTestFailed(
+                            "The test case {} failed and is blocking".format(
+                                test.get_name()))
+        return self.overall_result
 
-    def run_all(self, tiers):
-        summary = ""
+    def run_all(self):
         tiers_to_run = []
-
-        for tier in tiers.get_tiers():
+        msg = prettytable.PrettyTable(
+            header_style='upper', padding_width=5,
+            field_names=['tiers', 'order', 'CI Loop', 'description',
+                         'testcases'])
+        for tier in self._tiers.get_tiers():
             if (len(tier.get_tests()) != 0 and
                     re.search(CONST.__getattribute__('CI_LOOP'),
                               tier.get_ci_loop()) is not None):
                 tiers_to_run.append(tier)
-                summary += ("\n    - %s:\n\t   %s"
-                            % (tier.get_name(),
-                               tier.get_test_names()))
-
-        logger.info("Tests to be executed:%s" % summary)
+                msg.add_row([tier.get_name(), tier.get_order(),
+                             tier.get_ci_loop(),
+                             textwrap.fill(tier.description, width=40),
+                             textwrap.fill(' '.join([str(x.get_name(
+                                 )) for x in tier.get_tests()]), width=40)])
+        logger.info("TESTS TO BE EXECUTED:\n\n%s\n", msg)
         for tier in tiers_to_run:
             self.run_tier(tier)
 
     def main(self, **kwargs):
-        _tiers = tb.TierBuilder(
-            CONST.__getattribute__('INSTALLER_TYPE'),
-            CONST.__getattribute__('DEPLOY_SCENARIO'),
-            pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
-
         if kwargs['noclean']:
             self.clean_flag = False
-
         if kwargs['report']:
             self.report_flag = True
-
         try:
             if kwargs['test']:
                 self.source_rc_file()
                 logger.debug("Test args: %s", kwargs['test'])
-                if _tiers.get_tier(kwargs['test']):
-                    self.run_tier(_tiers.get_tier(kwargs['test']))
-                elif _tiers.get_test(kwargs['test']):
+                if self._tiers.get_tier(kwargs['test']):
+                    self.run_tier(self._tiers.get_tier(kwargs['test']))
+                elif self._tiers.get_test(kwargs['test']):
                     result = self.run_test(
-                        _tiers.get_test(kwargs['test']),
-                        _tiers.get_tier_name(kwargs['test']),
-                        kwargs['test'])
+                        self._tiers.get_test(kwargs['test']))
                     if result != testcase.TestCase.EX_OK:
                         logger.error("The test case '%s' failed.",
                                      kwargs['test'])
                         self.overall_result = Result.EX_ERROR
                 elif kwargs['test'] == "all":
-                    self.run_all(_tiers)
+                    self.run_all()
                 else:
                     logger.error("Unknown test case or tier '%s', "
                                  "or not supported by "
@@ -234,39 +212,45 @@ class Runner(object):
                                  % (kwargs['test'],
                                     CONST.__getattribute__('DEPLOY_SCENARIO')))
                     logger.debug("Available tiers are:\n\n%s",
-                                 _tiers)
+                                 self._tiers)
                     return Result.EX_ERROR
             else:
-                self.run_all(_tiers)
+                self.run_all()
         except BlockingTestFailed:
             pass
         except Exception:
             logger.exception("Failures when running testcase(s)")
             self.overall_result = Result.EX_ERROR
+        if not self._tiers.get_test(kwargs['test']):
+            self.summary(self._tiers.get_tier(kwargs['test']))
+        logger.info("Execution exit value: %s" % self.overall_result)
+        return self.overall_result
 
+    def summary(self, tier=None):
         msg = prettytable.PrettyTable(
             header_style='upper', padding_width=5,
             field_names=['env var', 'value'])
         for env_var in ['INSTALLER_TYPE', 'DEPLOY_SCENARIO', 'BUILD_TAG',
                         'CI_LOOP']:
             msg.add_row([env_var, CONST.__getattribute__(env_var)])
-        logger.info("Deployment description: \n\n%s\n", msg)
-
-        if len(self.executed_test_cases) > 1:
-            msg = prettytable.PrettyTable(
-                header_style='upper', padding_width=5,
-                field_names=['test case', 'project', 'tier',
-                             'duration', 'result'])
-            for test_case in self.executed_test_cases:
+        logger.info("Deployment description:\n\n%s\n", msg)
+        msg = prettytable.PrettyTable(
+            header_style='upper', padding_width=5,
+            field_names=['test case', 'project', 'tier',
+                         'duration', 'result'])
+        tiers = [tier] if tier else self._tiers.get_tiers()
+        for tier in tiers:
+            for test in tier.get_tests():
+                test_case = self.executed_test_cases[test.get_name()]
                 result = 'PASS' if(test_case.is_successful(
-                        ) == test_case.EX_OK) else 'FAIL'
+                    ) == test_case.EX_OK) else 'FAIL'
                 msg.add_row([test_case.case_name, test_case.project_name,
-                             _tiers.get_tier_name(test_case.case_name),
+                             self._tiers.get_tier_name(test_case.case_name),
                              test_case.get_duration(), result])
-            logger.info("FUNCTEST REPORT: \n\n%s\n", msg)
-
-        logger.info("Execution exit value: %s" % self.overall_result)
-        return self.overall_result
+            for test in tier.get_skipped_test():
+                msg.add_row([test.get_name(), test.get_project(),
+                             tier.get_name(), "00:00", "SKIP"])
+        logger.info("FUNCTEST REPORT:\n\n%s\n", msg)
 
 
 def main():
