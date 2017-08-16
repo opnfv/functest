@@ -20,8 +20,8 @@ Version history
 |            |          | Column Gaynor    |                                  |
 +------------+----------+------------------+----------------------------------+
 | 2017-01-23 | 1.0.1    | Morgan Richomme  | Adaptations for Danube           |
-|            |          |                  |                                  |
-|            |          |                  |                                  |
++------------+----------+------------------+----------------------------------+
+| 2017-08-16 | 1.0.2    | Morgan Richomme  | Adaptations for Euphrates        |
 +------------+----------+------------------+----------------------------------+
 
 
@@ -479,13 +479,8 @@ In Danube, Functest supports the integration of:
  * doctor
  * domino
  * fds
- * multisite
- * netready
  * odl-sfc
  * promise
- * security_scan
-
-Note: copper is not supported in Danube.
 
 Please refer to the dedicated feature user guides for details.
 
@@ -517,9 +512,14 @@ The Clearwater architecture is described as follows:
    :align: center
    :alt: vIMS architecture
 
-orchestra_ims
-^^^^^^^^^^^^^
+orchestra_openims
+^^^^^^^^^^^^^^^^^
 Orchestra test case deals with the deployment of OpenIMS with OpenBaton
+orchestrator.
+
+orchestra_clearwaterims
+^^^^^^^^^^^^^^^^^^^^^^^
+Orchestra test case deals with the deployment of Clearwater vIMS with OpenBaton
 orchestrator.
 
 parser
@@ -562,56 +562,47 @@ Manual testing
 In manual mode test results are displayed in the console and result files
 are put in /home/opnfv/functest/results.
 
+If you want additionnal logs, you may configure the logging.ini under <repo>/functest:functest/ci
+
 Automated testing
 --------------
 
 In automated mode, test results are displayed in jenkins logs, a summary is provided
 at the end of the job and can be described as follow::
 
- +==================================================================================================================================================+
- |                                                                FUNCTEST REPORT                                                                   |
- +==================================================================================================================================================+
- |                                                                                                                                                  |
- |  Deployment description:                                                                                                                         |
- |    INSTALLER: fuel                                                                                                                               |
- |    SCENARIO:  os-odl_l2-nofeature-ha                                                                                                             |
- |    BUILD TAG: jenkins-functest-fuel-baremetal-daily-master-324                                                                                   |
- |    CI LOOP:   daily                                                                                                                              |
- |                                                                                                                                                  |
- +=========================+===============+============+===============+===========================================================================+
- | TEST CASE               | TIER          | DURATION   | RESULT        | URL                                                                       |
- +=========================+===============+============+===============+===========================================================================+
- | connection_check        | healthcheck   | 00:02      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb62b34079ac000a42e3fe |
- +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | api_check               | healthcheck   | 01:15      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb62fe4079ac000a42e3ff |
- +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | snaps_health_check      | healthcheck   | 00:50      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb63314079ac000a42e400 |
- +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | vping_ssh               | smoke         | 01:10      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb63654079ac000a42e401 |
- +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | vping_userdata          | smoke         | 00:59      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb63a14079ac000a42e403 |
- +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | tempest_smoke_serial    | smoke         | 12:57      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb66bd4079ac000a42e408 |
- +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | rally_sanity            | smoke         | 10:22      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb692b4079ac000a42e40a |
- +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | refstack_defcore        | smoke         | 12:28      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb6c184079ac000a42e40c |
- +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | snaps_smoke             | smoke         | 12:04      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb6eec4079ac000a42e40e |
- +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
- | domino                  | features      | 00:29      | PASS          | http://testresults.opnfv.org/test/api/v1/results/58cb6f044079ac000a42e40f |
- +-------------------------+---------------+------------+---------------+---------------------------------------------------------------------------+
+ +-------------------------+----------------------------------------------------------+
+ |         ENV VAR         |                          VALUE                           |
+ +-------------------------+----------------------------------------------------------+
+ |      INSTALLER_TYPE     |                          daisy                           |
+ |     DEPLOY_SCENARIO     |                  os-nosdn-nofeature-ha                   |
+ |        BUILD_TAG        |     jenkins-functest-daisy-baremetal-daily-master-67     |
+ |         CI_LOOP         |                          daily                           |
+ +-------------------------+----------------------------------------------------------+
 
+ +------------------------------+------------------+---------------------+------------------+----------------+
+ |          TEST CASE           |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
+ +------------------------------+------------------+---------------------+------------------+----------------+
+ |       connection_check       |     functest     |     healthcheck     |      00:08       |      PASS      |
+ |          api_check           |     functest     |     healthcheck     |      04:22       |      PASS      |
+ |      snaps_health_check      |     functest     |     healthcheck     |      00:35       |      PASS      |
+ |          vping_ssh           |     functest     |        smoke        |      00:54       |      PASS      |
+ |        vping_userdata        |     functest     |        smoke        |      00:27       |      PASS      |
+ |     tempest_smoke_serial     |     functest     |        smoke        |      19:39       |      FAIL      |
+ |         rally_sanity         |     functest     |        smoke        |      15:16       |      PASS      |
+ |       refstack_defcore       |     functest     |        smoke        |      15:55       |      PASS      |
+ |         snaps_smoke          |     functest     |        smoke        |      26:45       |      FAIL      |
+ |         cloudify_ims         |     functest     |         vnf         |      83:33       |      FAIL      |
+ |        orchestra_ims         |     functest     |         vnf         |      11:32       |      FAIL      |
+ +------------------------------+------------------+---------------------+------------------+----------------+
 
 Results are automatically pushed to the test results database, some additional
 result files are pushed to OPNFV artifact web sites.
 
 Based on the results stored in the result database, a `Functest reporting`_
-portal is also automatically updated. This portal provides information on:
+portal is also automatically updated. This portal provides information on the
+overall status per scenario and per installer
 
- * The overall status per scenario and per installer
- * Tempest: Tempest test case including reported errors per scenario and installer
- * vIMS: vIMS details per scenario and installer
+ .. include:: ./reporting.rst
 
 .. figure:: ../../../images/functest-reporting-status.png
    :align: center
