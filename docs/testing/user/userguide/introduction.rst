@@ -136,9 +136,6 @@ validate the scenario for the release.
 |             |               |                | See `Multisite User Guide`_ for  |
 |             |               |                | details                          |
 |             |               +----------------+----------------------------------+
-|             |               | netready       | Testing from netready project    |
-|             |               |                | ping using gluon                 |
-|             |               +----------------+----------------------------------+
 |             |               | odl-sfc        | SFC testing for odl scenarios    |
 |             |               |                | See `SFC User Guide`_ for details|
 |             |               +----------------+----------------------------------+

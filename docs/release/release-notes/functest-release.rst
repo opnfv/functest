@@ -80,7 +80,6 @@ The OPNFV projects integrated into Functest framework for automation are:
  * domino
  * fds
  * multisite
- * netready
  * onos
  * odl-sfc
  * odl-netvirt
