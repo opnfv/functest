@@ -2,7 +2,7 @@ FROM opnfv/functest-core
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/ocata
-ARG ODL_TAG=release/beryllium-sr4
+ARG ODL_TAG=release/carbon
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --virtual .build-deps --update \
