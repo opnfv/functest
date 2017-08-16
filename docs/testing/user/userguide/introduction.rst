@@ -132,13 +132,6 @@ validate the scenario for the release.
 |             |               |                | See `Domino User Guide`_ for     |
 |             |               |                | details                          |
 |             |               +----------------+----------------------------------+
-|             |               | multisite      | Multisite                        |
-|             |               |                | See `Multisite User Guide`_ for  |
-|             |               |                | details                          |
-|             |               +----------------+----------------------------------+
-|             |               | netready       | Testing from netready project    |
-|             |               |                | ping using gluon                 |
-|             |               +----------------+----------------------------------+
 |             |               | odl-sfc        | SFC testing for odl scenarios    |
 |             |               |                | See `SFC User Guide`_ for details|
 |             |               +----------------+----------------------------------+
@@ -162,11 +155,6 @@ validate the scenario for the release.
 |             |               |                | storage.                         |
 |             |               |                | See `Promise User Guide`_ for    |
 |             |               |                | details.                         |
-|             |               +----------------+----------------------------------+
-|             |               | security_scan  | Implementation of a simple       |
-|             |               |                | security scan. (Currently        |
-|             |               |                | available only for the Apex      |
-|             |               |                | installer environment)           |
 +-------------+---------------+----------------+----------------------------------+
 | VNF         | vnf           | cloudify_ims   | Example of a real VNF deployment |
 |             |               |                | to show the NFV capabilities of  |
@@ -176,8 +164,11 @@ validate the scenario for the release.
 |             |               |                | It provides a fully functional   |
 |             |               |                | VoIP System                      |
 |             |               +----------------+----------------------------------+
-|             |               | orchestra_ims  | OpenIMS deployment using         |
-|             |               |                | Openbaton orchestrator           |
+|             |               | orchestra_\    | OpenIMS deployment using         |
+|             |               |   openims      | Openbaton orchestrator           |
+|             |               +----------------+----------------------------------+
+|             |               | orchestra_\    | Cleawater IMS deployment using   |
+|             |               |   cleawaterims | Openbaton orchestrator           |
 |             |               +----------------+----------------------------------+
 |             |               | vyos_vrouter   | vRouter testing                  |
 +-------------+---------------+----------------+----------------------------------+
@@ -233,7 +224,7 @@ Functest considers OPNFV as a black box. As of Danube release the OPNFV
 offers a lot of potential combinations:
 
   * 3 controllers (OpenDaylight, ONOS, OpenContrail)
-  * 4 installers (Apex, Compass, Fuel, Joid)
+  * 5 installers (Apex, Compass, Daisy, Fuel, Joid)
 
 Most of the tests are runnable by any combination, but some tests might have
 restrictions imposed by the utilized installers or due to the available
