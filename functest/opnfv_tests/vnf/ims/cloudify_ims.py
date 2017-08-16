@@ -39,6 +39,7 @@ from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
 from snaps.openstack.create_image import ImageSettings, OpenStackImage
 from snaps.openstack.create_keypairs import KeypairSettings, OpenStackKeypair
 from snaps.openstack.create_network import PortSettings
+from snaps.openstack.create_project import OpenStackProject, ProjectSettings
 
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
@@ -107,6 +108,20 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             auth_url=self.creds['auth_url'],
             project_name=self.creds['tenant'],
             identity_api_version=int(os_utils.get_keystone_client_version()))
+
+        project_ims = OpenStackProject(self.snaps_creds,
+                                       ProjectSettings(name="cloudify_ims"))
+        project_ims.create()
+        compute_quotas = project_ims.get_compute_quotas()
+        network_quotas = project_ims.get_network_quotas()
+
+        compute_quotas.update(
+            self.orchestrator['requirements']['compute_quotas'])
+        network_quotas.update(
+            self.orchestrator['requirements']['network_quotas'])
+
+        compute_quotas = project_ims.update_compute_quotas(compute_quotas)
+        network_quotas = project_ims.update_network_quotas(network_quotas)
 
         # needs some images
         self.__logger.info("Upload some OS images if it doesn't exist")
