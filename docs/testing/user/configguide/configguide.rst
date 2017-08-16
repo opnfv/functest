@@ -1,11 +1,16 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. SPDX-License-Identifier: CC-BY-4.0
 
+Installation and configuration (Ubuntu)
+=======================================
+
+The historical docker file is based on Ubuntu. It has been maintained for
+Euphrates.
 
 Pulling the Docker image
 ------------------------
 Pull the Functest Docker image ('opnfv/functest') from the public
-dockerhub registry under the OPNFV account: [dockerhub_], with the
+dockerhub registry under the OPNFV account: [̀`dockerhub`_], with the
 following docker command::
 
   docker pull opnfv/functest:<TagIdentifier>
@@ -39,6 +44,9 @@ The Functest docker container environment can -in principle- be also
 used with non-OPNFV official installers (e.g. 'devstack'), with the
 **disclaimer** that support for such environments is outside of the
 scope and responsibility of the OPNFV project.
+
+Please note that alpine dockers have been introduced in Euphrates. See alpine
+section for details.
 
 Accessing the Openstack credentials
 -----------------------------------
@@ -185,8 +193,11 @@ when performing manual test scenarios::
                       text can be sent to the test results file / log files
                       and also to the standard console output.
 
+Installer Tips
+--------------
+
 Apex Installer Tips
--------------------
+^^^^^^^^^^^^^^^^^^^
 Some specific tips are useful for the Apex Installer case. If not using
 Apex Installer; ignore this section.
 
@@ -232,7 +243,7 @@ illustration purposes::
   opnfv/functest /bin/bash
 
 Compass installer local development env usage Tips
---------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 In the compass-functest local test case check and development environment,
 in order to get openstack service inside the functest container, some
 parameters should be configured during container creation, which are
@@ -254,15 +265,22 @@ Tag omitted means the latest docker image::
 
 To make a file used for the environment, such as 'functest-docker-env'::
 
-    OS_AUTH_URL=http://172.16.1.222:35357/v2.0
+    CINDER_ENDPOINT_TYPE=publicURL
+    NOVA_ENDPOINT_TYPE=publicURL
+    OS_ENDPOINT_TYPE=publicURL
+    OS_INTERFACE=publicURL
     OS_USERNAME=admin
-    OS_PASSWORD=console
-    OS_TENANT_NAME=admin
-    OS_VOLUME_API_VERSION=2
+    OS_PASSWORD='990232e0885da343ac805523322d'
     OS_PROJECT_NAME=admin
-    INSTALLER_TYPE=compass
-    INSTALLER_IP=192.168.200.2
-    EXTERNAL_NETWORK=ext-net
+    OS_TENANT_NAME=admin
+    OS_AUTH_URL=https://192.16.1.222:5000/v3
+    OS_NO_CACHE=1
+    OS_USER_DOMAIN_NAME=Default
+    OS_PROJECT_DOMAIN_NAME=Default
+    OS_REGION_NAME=RegionOne
+    OS_IDENTITY_API_VERSION=3
+    OS_AUTH_VERSION=3
+
 
 Note: please adjust the content according to the environment, such as
 'TENANT_ID' maybe used for some special cases.
@@ -294,29 +312,21 @@ Inside the Functest docker container, the following directory structure
 should now be in place::
 
   `-- home
-      `-- opnfv
-        |-- functest
-        |   |-- conf
-        |   |-- data
-        |   `-- results
-        `-- repos
-            |-- bgpvpn
-            |-- doctor
-            |-- domino
-            |-- functest
-            |-- odl_test
-            |-- onos
-            |-- parser
-            |-- promise
-            |-- rally
-            |-- refstack-client
-            |-- releng
-            |-- sdnvpn
-            |-- securityscanning
-            |-- sfc
-            |-- tempest
-            |-- vims_test
-            `-- vnfs
+    |  `-- opnfv
+    |   |-- functest
+    |   |   |-- conf
+    |   |   |-- data
+    |   |   |-- images
+    |   |   `-- results
+    |   `-- repos
+    |       |-- onos
+    |       |-- doctor
+    |       `-- vnfs
+   -- src
+       |-- tempest
+       |-- vims-test
+       |-- odl_test
+       `-- fds
 
 Underneath the '/home/opnfv/' directory, the Functest docker container
 includes two main directories:
@@ -333,83 +343,132 @@ includes two main directories:
 The structure under the **functest** repository can be described as
 follows::
 
-  . |-- INFO
-    |-- LICENSE
-    |-- requirements.txt
-    |-- run_unit_tests.sh
-    |-- setup.py
-    |-- test-requirements.txt
-    |-- commons
-    |   |-- ims
-    |   |-- mobile
-    |   `--traffic-profile-guidelines.rst
-    |-- docker
-    |   |-- Dockerfile
-    |   |-- config_install_env.sh
-    |   `-- docker_remote_api
-    |-- docs
-    |   |-- com
-    |   |-- configguide
-    |   |-- devguide
-    |   |-- images
-    |   |-- internship
-    |   |-- release-notes
-    |   |-- results
-    |   `--userguide
-    |-- functest
-        |-- __init__.py
-        |-- ci
-        |   |-- __init__.py
-        |   |-- check_deployment.py
-        |   |-- config_functest.yaml
-        |   |-- config_patch.yaml
-        |   |-- generate_report.py
-        |   |-- prepare_env.py
-        |   |-- run_tests.py
-        |   |-- testcases.yaml
-        |   |-- tier_builder.py
-        |   `-- tier_handler.py
-        |-- cli
-        |   |-- __init__.py
-        |   |-- cli_base.py
-        |   |-- commands
-        |   |-- functest-complete.sh
-        |   `-- setup.py
-        |-- core
-        |   |-- __init__.py
-        |   |-- feature.py
-        |   |-- pytest_suite_runner.py
-        |   |-- testcase.py
-        |   |-- vnf_base.py
-        |-- opnfv_tests
-        |   |-- __init__.py
-        |   |-- features
-        |   |-- mano
-        |   |-- openstack
-        |   |-- sdn
-        |   |-- security_scan
-        |   `-- vnf
-        |-- tests
-        |   |-- __init__.py
-        |   `-- unit
-        `-- utils
-            |-- __init__.py
-            |-- config.py
-            |-- constants.py
-            |-- env.py
-            |-- functest_logger.py
-            |-- functest_utils.py
-            |-- openstack
-            |-- openstack_clean.py
-            |-- openstack_snapshot.py
-            |-- openstack_tacker.py
-            `-- openstack_utils.py
+  |-- INFO
+  |-- LICENSE
+  |-- api
+  |  `-- apidoc
+  |-- build.sh
+  |-- commons
+  |  |-- docker
+  |  |-- Dockerfile
+  |  |-- Dockerfile.aarch64.patch
+  |  |-- components
+  |  |-- config_install_env.sh
+  |  |-- core
+  |  |-- docker_remote_api
+  |  |-- features
+  |  |-- healthcheck
+  |  |-- smoke
+  |  |-- vnf
+  |  `-- thirdparty-requirements.txt
+  |-- docs
+  |  |-- com
+  |  |-- images
+  |  |-- release
+  |  |  `-- release-notes
+  |  |-- results
+  |  | testing
+  |  |  |-- developer
+  |  |    `-- user
+  |  |      |-- configguide
+  |  |      `-- userguide
+  `-- functest
+    |-- api
+    |  |-- base.py
+    |  |-- server.py
+    |  |-- urls.py
+    |  |-- common
+    |  |  |-- api_utils.py
+    |  |  `-- error.py
+    |  `-- resources
+    |     `-- v1
+    |        |-- creds.py
+    |        |-- envs.py
+    |        |-- testcases.py
+    |        `-- tiers.py
+    |-- ci
+    │   |-- check_deployment.py
+    │   |-- config_aarch64_patch.yaml
+    │   |-- config_functest.yaml
+    │   |-- config_patch.yaml
+    │   |-- download_images.sh
+    │   |-- installer_params.yaml
+    │   |-- logging.ini
+    │   |-- prepare_env.py
+    │   |-- rally_aarch64_patch.conf
+    │   |-- run_tests.py
+    │   |-- testcases.yaml
+    │   |-- tier_builder.py
+    │   `-- tier_handler.py
+    |-- cli
+    │   |-- cli_base.py
+    │   |-- commands
+    │   │   |-- cli_env.py
+    │   │   |-- cli_os.py
+    │   │   |-- cli_testcase.py
+    │   │   `-- cli_tier.py
+    │   |-- functest-complete.sh
+    |-- core
+    │   |-- feature.py
+    │   |-- testcase.py
+    │   |-- unit.py
+    │   `-- vnf.py
+    |-- energy
+    │   |-- energy.py
+    │   `-- energy.pyc
+    |-- opnfv_tests
+    │   |-- mano
+    │   │   |-- orchestra.py
+    │   |-- openstack
+    │   │   |-- rally
+    │   │   |-- refstack_client
+    │   │   |-- snaps
+    │   │   |-- tempest
+    │   │   `-- vping
+    │   |-- sdn
+    │   │   |-- odl
+    │   │   `-- onos
+    │   `-- vnf
+    │       |-- aaa
+    │       |-- ims
+    │       `-- router
+    |-- tests
+    │   `-- unit
+    │       |-- ci
+    │       |-- cli
+    │       |-- core
+    │       |-- energy
+    │       |-- features
+    │       |-- odl
+    │       |-- openstack
+    │       |-- opnfv_tests
+    │       |-- test_utils.py
+    │       |-- utils
+    │       `-- vnf
+    |-- utils
+    |    |-- config.py
+    |    |-- constants.py
+    |    |-- decorators.py
+    |    |-- env.py
+    |    |-- functest_utils.py
+    |    |-- functest_vacation.py
+    |    |-- openstack_clean.py
+    |    |-- openstack_snapshot.py
+    |    |-- openstack_tacker.py
+    |    `-- openstack_utils.py
+  |-- requirements.txt
+  |-- setup.cfg
+  |-- setup.py
+  |-- test-requirements.txt
+  |-- tox.ini
+  |-- upper-constraints.txt
 
+  (Note: All *.pyc files removed from above list for brevity...)
 
-    (Note: All *.pyc files removed from above list for brevity...)
+We may distinguish several directories, the first level has 5 directories:
 
-We may distinguish several directories, the first level has 4 directories:
-
+* **api**: This directory is dedicated for the internal Functest API and the API
+  (framework) documentations.
 * **commons**: This directory is dedicated for storage of traffic
   profile or any other test inputs that could be reused by any test
   project.
@@ -479,7 +538,7 @@ destroy it::
 
   docker rm -f <CONTAINER_ID>
 
-Check the Docker documentation dockerdocs_ for more information.
+Check the Docker documentation [`dockerdocs`_] for more information.
 
 Preparing the Functest environment
 ----------------------------------
@@ -489,7 +548,7 @@ CLI utility is available to perform the needed environment preparation
 action. Once the environment is prepared, the **functest** CLI utility
 can be used to run different functional tests. The usage of the
 **functest** CLI utility to run tests is described further in the
-Functest User Guide `OPNFV_FuncTestUserGuide`_
+`Functest User Guide`_
 
 Prior to commencing the Functest environment preparation, we can check
 the initial status of the environment. Issue the **functest env status**
@@ -781,9 +840,63 @@ and install the **docker-engine**. The instructions conclude with a
 "test pull" of a sample "Hello World" docker container. This should now
 work with the above pre-requisite actions.
 
-.. _dockerdocs: https://docs.docker.com/
-.. _dockerhub: https://hub.docker.com/r/opnfv/functest/
-.. _Proxy: https://docs.docker.com/engine/admin/systemd/#http-proxy
-.. _FunctestDockerTags: https://hub.docker.com/r/opnfv/functest/tags/
-.. _InstallDockerCentOS: https://docs.docker.com/engine/installation/linux/centos/
-.. _OPNFV_FuncTestUserGuide: http://artifacts.opnfv.org/functest/docs/userguide/index.html
+
+Installation and Configuration (Alpine)
+=======================================
+
+Introduction to Alpine
+----------------------
+Alpine container have been introduced in Euphrates and released as experimental.
+Alpine allows Functest testing in several very light container and thanks to
+the refactoring on dependency management shoudl allow the creation of light and
+fully customized docker files
+
+Functest Alpine
+---------------
+Docker files are available on the the dockerhub:
+
+  * opnfv/functest-core
+  * opnfv/functest-healthcheck
+  * opnfv/functest-smoke
+  * opnfv/functest-features
+  * opnfv/functest-components
+  * opnfv/functest-vnf
+
+
+Preparing your environment
+--------------------------
+
+cat env::
+
+  INSTALLER_TYPE=XXX
+  INSTALLER_IP=XXX
+  EXTERNAL_NETWORK=XXX
+
+cat openstack.creds::
+
+  export OS_AUTH_URL=XXX
+  export OS_USER_DOMAIN_NAME=XXX
+  export OS_PROJECT_DOMAIN_NAME=XXX
+  export OS_USERNAME=XXX
+  export OS_TENANT_NAME=XXX
+  export OS_PROJECT_NAME=XXX
+  export OS_PASSWORD=XXX
+  export OS_VOLUME_API_VERSION=XXX
+  export OS_IDENTITY_API_VERSION=XXX
+  export OS_IMAGE_API_VERSION=XXX
+
+md5sum images/*md5sum images/*::
+
+  c03e55c22b6fb2127e7de391b488d8d6  `images/CentOS-7-x86_64-GenericCloud.qcow2`_
+  f8ab98ff5e73ebab884d80c9dc9c7290  `images/cirros-0.3.5-x86_64-disk.img`_
+  845c9b0221469f9e0f4d7ea0039ab5f2  `images/ubuntu-14.04-server-cloudimg-amd64-disk1.img`_
+
+.. _`dockerdocs`: https://docs.docker.com/
+.. _`dockerhub`: https://hub.docker.com/r/opnfv/functest/
+.. _`Proxy`: https://docs.docker.com/engine/admin/systemd/#http-proxy
+.. _`FunctestDockerTags`: https://hub.docker.com/r/opnfv/functest/tags/
+.. _`InstallDockerCentOS`: https://docs.docker.com/engine/installation/linux/centos/
+.. _`Functest User Guide`: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/userguide/index.html
+:: _`images/CentOS-7-x86_64-GenericCloud.qcow2` http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+:: _`images/cirros-0.3.5-x86_64-disk.img` https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+:: _`images/ubuntu-14.04-server-cloudimg-amd64-disk1.img` https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
