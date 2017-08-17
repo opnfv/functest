@@ -34,6 +34,24 @@
       "revId": "161d40585a25291da548dfdade2838974e86ad58",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_46207f49",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-17T06:54:00Z",
+      "side": 1,
+      "message": "there used to be a discussion about this, env.py uses to read environment variables and config.py for config_functest.yaml, some people think both of them are constants, and they don\u0027t want other people to know where are the variables from, so constants.py is leveraged. Personally, I prefer to separate env and config, but I think we need to discuss it all together.",
+      "parentUuid": "da33351e_9173e84c",
+      "revId": "161d40585a25291da548dfdade2838974e86ad58",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
