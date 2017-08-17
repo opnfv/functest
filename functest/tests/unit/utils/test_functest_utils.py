@@ -150,32 +150,12 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.assertEqual(functest_utils.get_version(), "unknown")
 
     @mock.patch('functest.utils.functest_utils.logger.info')
-    def test_get_pod_name_failed(self, mock_logger_info):
-        with mock.patch.dict(os.environ,
-                             {},
-                             clear=True):
-            self.assertEqual(functest_utils.get_pod_name(),
-                             "unknown-pod")
-            mock_logger_info.assert_called_once_with("Unable to retrieve "
-                                                     "the POD name from "
-                                                     "environment. Using "
-                                                     "pod name 'unknown-pod'")
-
-    def test_get_pod_name_default(self):
-        with mock.patch.dict(os.environ,
-                             {'NODE_NAME': 'test_node_name'},
-                             clear=True):
-            self.assertEqual(functest_utils.get_pod_name(),
-                             self.node_name)
-
-    @mock.patch('functest.utils.functest_utils.logger.info')
     def test_logger_test_results(self, mock_logger_info):
         CONST.__setattr__('results_test_db_url', self.db_url)
         CONST.__setattr__('BUILD_TAG', self.build_tag)
-        with mock.patch('functest.utils.functest_utils.get_pod_name',
-                        return_value=self.node_name), \
-                mock.patch('functest.utils.functest_utils.get_scenario',
-                           return_value=self.scenario), \
+        CONST.__setattr__('NODE_NAME', self.node_name)
+        with mock.patch('functest.utils.functest_utils.get_scenario',
+                        return_value=self.scenario), \
                 mock.patch('functest.utils.functest_utils.get_version',
                            return_value=self.version):
             functest_utils.logger_test_results(self.project, self.case_name,
