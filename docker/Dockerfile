@@ -14,7 +14,7 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 # Environment variables
 ARG BRANCH=master
 ARG RALLY_TAG=0.8.1
-ARG ODL_TAG=release/beryllium-sr4
+ARG ODL_TAG=release/carbon
 ARG OPENSTACK_TAG=stable/ocata
 ARG KINGBIRD_TAG=1.1.0
 ARG VIMS_TAG=stable
