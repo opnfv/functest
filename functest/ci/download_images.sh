@@ -54,9 +54,14 @@ fi
 
 if [[ ${ARCH} == "arm" ]] || [[ ${ARCH} == "aarch64" ]]; then
     # ARM (aarch64 cirros images):
+    # Functest
     wget -nc ${CIRROS_REPO_URL}/daily/20${CIRROS_AARCH64_TAG}/cirros-d${CIRROS_AARCH64_TAG}-aarch64-disk.img -P ${IMAGES_FOLDER_DIR}
     wget -nc ${CIRROS_REPO_URL}/daily/20${CIRROS_AARCH64_TAG}/cirros-d${CIRROS_AARCH64_TAG}-aarch64-initramfs -P ${IMAGES_FOLDER_DIR}
     wget -nc ${CIRROS_REPO_URL}/daily/20${CIRROS_AARCH64_TAG}/cirros-d${CIRROS_AARCH64_TAG}-aarch64-kernel -P ${IMAGES_FOLDER_DIR}
+    # SNAPS
+    wget -nc http://uec-images.ubuntu.com/releases/trusty/14.04/ubuntu-14.04-server-cloudimg-arm64-disk1.img -P ${IMAGES_FOLDER_DIR}
+    wget -nc http://cloud.centos.org/altarch/7/images/aarch64/CentOS-7-aarch64-GenericCloud.qcow2.xz -P ${IMAGES_FOLDER_DIR}
+    xz --decompress ${IMAGES_FOLDER_DIR}/CentOS-7-aarch64-GenericCloud.qcow2.xz
 fi
 
 set +ex
