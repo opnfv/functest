@@ -69,6 +69,9 @@ vping:
     vm_name_2: opnfv-vping-2
     image_name: functest-vping
     private_net_name: vping-net
+    # network_type: vlan
+    # physical_network: physnet2
+    # segmentation_id: 2366
     private_subnet_name: vping-subnet
     private_subnet_cidr: 192.168.130.0/24
     router_name: vping-router
