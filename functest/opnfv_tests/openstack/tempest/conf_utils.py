@@ -52,25 +52,6 @@ logger = logging.getLogger(__name__)
 
 def create_tempest_resources(use_custom_images=False,
                              use_custom_flavors=False):
-    keystone_client = os_utils.get_keystone_client()
-
-    logger.debug("Creating tenant and user for Tempest suite")
-    tenant_id = os_utils.create_tenant(
-        keystone_client,
-        CONST.__getattribute__('tempest_identity_tenant_name'),
-        CONST.__getattribute__('tempest_identity_tenant_description'))
-    if not tenant_id:
-        logger.error("Failed to create %s tenant"
-                     % CONST.__getattribute__('tempest_identity_tenant_name'))
-
-    user_id = os_utils.create_user(
-        keystone_client,
-        CONST.__getattribute__('tempest_identity_user_name'),
-        CONST.__getattribute__('tempest_identity_user_password'),
-        None, tenant_id)
-    if not user_id:
-        logger.error("Failed to create %s user" %
-                     CONST.__getattribute__('tempest_identity_user_name'))
 
     logger.debug("Creating private network for Tempest suite")
     network_dic = os_utils.create_shared_network_full(
@@ -292,12 +273,6 @@ def configure_tempest_update_params(tempest_conf_file,
             config.set('compute', 'flavor_ref', FLAVOR_ID)
         if FLAVOR_ID_ALT is not None:
             config.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
-    config.set('identity', 'tenant_name',
-               CONST.__getattribute__('tempest_identity_tenant_name'))
-    config.set('identity', 'username',
-               CONST.__getattribute__('tempest_identity_user_name'))
-    config.set('identity', 'password',
-               CONST.__getattribute__('tempest_identity_user_password'))
     config.set('identity', 'region', 'RegionOne')
     if os_utils.is_keystone_v3():
         auth_version = 'v3'
