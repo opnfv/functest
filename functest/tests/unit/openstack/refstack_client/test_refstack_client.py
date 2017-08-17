@@ -79,9 +79,9 @@ class OSRefstackClientTesting(unittest.TestCase):
                    ''')
         self.details = {"tests": 3,
                         "failures": 1,
-                        "success": [' tempest.api.compute [18.464988s]'],
-                        "errors": [' tempest.api.volume [0.230334s]'],
-                        "skipped": [' tempest.api.network [1.265828s]']}
+                        "success": ['tempest.api.compute [18.464988s]'],
+                        "errors": ['tempest.api.volume [0.230334s]'],
+                        "skipped": ['tempest.api.network [1.265828s]']}
         with mock.patch('__builtin__.open',
                         mock.mock_open(read_data=log_file)):
             self.refstackclient.parse_refstack_result()
