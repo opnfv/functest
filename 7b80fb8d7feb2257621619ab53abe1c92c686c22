@@ -104,6 +104,23 @@
     },
     {
       "key": {
+        "uuid": "da33351e_12bcf668",
+        "filename": "functest/api/resources/v1/testcases.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:42:04Z",
+      "side": 1,
+      "message": "Could you please implement run too? (POST request)",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_32849ad3",
         "filename": "functest/api/server.py",
         "patchSetId": 30
