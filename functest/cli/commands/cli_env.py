@@ -16,7 +16,7 @@ from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 
 
-class CliEnv(object):
+class Env(object):
 
     def __init__(self):
         pass
@@ -56,17 +56,14 @@ class CliEnv(object):
         if self.status(verbose=False) == 0:
             STATUS = "ready"
 
-        msg = prettytable.PrettyTable(
-            header_style='upper', padding_width=5,
-            field_names=['Functest Environment', 'value'])
-        msg.add_row(['INSTALLER', installer_info])
-        msg.add_row(['SCENARIO', scenario])
-        msg.add_row(['POD', node])
-        if build_tag:
-            msg.add_row(['BUILD TAG', build_tag])
-        msg.add_row(['DEBUG FLAG', is_debug])
-        msg.add_row(['STATUS', STATUS])
-        click.echo(msg.get_string())
+        env_info = {'INSTALLER': installer_info,
+                    'SCENARIO': scenario,
+                    'POD': node,
+                    'DEBUG FLAG': is_debug,
+                    'BUILD_TAG': build_tag,
+                    'STATUS': STATUS}
+
+        return env_info
 
     def status(self, verbose=True):
         ret_val = 0
@@ -78,3 +75,19 @@ class CliEnv(object):
             click.echo("Functest environment ready to run tests.\n")
 
         return ret_val
+
+
+class CliEnv(Env):
+
+    def __init__(self):
+        super(CliEnv, self).__init__()
+
+    def show(self):
+        env_info = super(CliEnv, self).show()
+        msg = prettytable.PrettyTable(
+            header_style='upper', padding_width=5,
+            field_names=['Functest Environment', 'value'])
+        for key, value in env_info.iteritems():
+            if key is not None:
+                msg.add_row([key, value])
+        click.echo(msg.get_string())

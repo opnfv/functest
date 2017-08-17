@@ -18,7 +18,7 @@ import functest.utils.openstack_clean as os_clean
 import functest.utils.openstack_snapshot as os_snapshot
 
 
-class CliOpenStack(object):
+class OpenStack(object):
 
     def __init__(self):
         self.os_auth_url = CONST.__getattribute__('OS_AUTH_URL')
@@ -43,9 +43,11 @@ class CliOpenStack(object):
 
     @staticmethod
     def show_credentials():
+        dic_credentials = {}
         for key, value in os.environ.items():
             if key.startswith('OS_'):
-                click.echo("{}={}".format(key, value))
+                dic_credentials.update({key: value})
+        return dic_credentials
 
     def check(self):
         self.ping_endpoint()
@@ -88,3 +90,16 @@ class CliOpenStack(object):
                        "'functest openstack snapshot-create'")
             return
         os_clean.main()
+
+
+class CliOpenStack(OpenStack):
+
+    def __init__(self):
+        super(CliOpenStack, self).__init__()
+
+    @staticmethod
+    def show_credentials():
+        dic_credentials = OpenStack.show_credentials()
+        for key, value in dic_credentials.items():
+                if key.startswith('OS_'):
+                    click.echo("{}={}".format(key, value))
