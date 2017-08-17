@@ -22,6 +22,29 @@
       "revId": "9fa3bdc20803835bdd9fa881484f6ffa736f24a0",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_e90ec433",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T09:14:22Z",
+      "side": 1,
+      "message": "You should use hasattr(CONST, \u0027snaps_os_creds_override\u0027) to check its existence first.",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 76
+      },
+      "revId": "9fa3bdc20803835bdd9fa881484f6ffa736f24a0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
