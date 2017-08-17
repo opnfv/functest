@@ -16,6 +16,24 @@
       "revId": "161d40585a25291da548dfdade2838974e86ad58",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_66bb030f",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T06:29:56Z",
+      "side": 1,
+      "message": "Aha, then maybe we should reconsider the content of CONST,as it wrapped the vars from config_functest.yaml as well as envs.",
+      "parentUuid": "da33351e_9173e84c",
+      "revId": "161d40585a25291da548dfdade2838974e86ad58",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
