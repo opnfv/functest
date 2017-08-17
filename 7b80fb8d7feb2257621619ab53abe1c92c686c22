@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_c6d00f56",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 30
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T06:21:57Z",
+      "side": 1,
+      "message": "I would prefer to improve it in a future patch, as it is not so important.",
+      "parentUuid": "da33351e_12607631",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_f27992fd",
         "filename": "functest/api/base.py",
         "patchSetId": 30
