@@ -1,11 +1,11 @@
 #!/usr/bin/env python
+
+# Copyright (c) 2016 Ericsson AB and others.
 #
-# jose.lausuch@ericsson.com
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
-#
 
 import tier_handler as th
 import yaml
@@ -52,11 +52,14 @@ class TierBuilder(object):
                                        dependency=dep,
                                        criteria=dic_testcase['criteria'],
                                        blocking=dic_testcase['blocking'],
-                                       description=dic_testcase['description'])
+                                       description=dic_testcase['description'],
+                                       project=dic_testcase['project_name'])
                 if (testcase.is_compatible(self.ci_installer,
                                            self.ci_scenario) and
                         testcase.is_enabled()):
                     tier.add_test(testcase)
+                else:
+                    tier.skip_test(testcase)
 
             self.tier_objects.append(tier)
 

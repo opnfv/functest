@@ -54,11 +54,6 @@ class RunTestsTesting(unittest.TestCase):
 
         self.run_tests_parser = run_tests.RunTestsParser()
 
-    @mock.patch('functest.ci.run_tests.logger.info')
-    def test_print_separator(self, mock_logger_info):
-        self.runner.print_separator(self.sep)
-        mock_logger_info.assert_called_once_with(self.sep * 44)
-
     @mock.patch('functest.ci.run_tests.logger.error')
     def test_source_rc_file_missing_file(self, mock_logger_error):
         with mock.patch('functest.ci.run_tests.os.path.isfile',
@@ -120,8 +115,7 @@ class RunTestsTesting(unittest.TestCase):
         args = {'get_name.return_value': 'test_name',
                 'needs_clean.return_value': False}
         mock_test.configure_mock(**args)
-        with mock.patch('functest.ci.run_tests.Runner.print_separator'),\
-            mock.patch('functest.ci.run_tests.Runner.source_rc_file'), \
+        with mock.patch('functest.ci.run_tests.Runner.source_rc_file'), \
             mock.patch('functest.ci.run_tests.Runner.get_run_dict',
                        return_value=None), \
                 self.assertRaises(Exception) as context:
@@ -129,7 +123,6 @@ class RunTestsTesting(unittest.TestCase):
             msg = "Cannot import the class for the test case."
             self.assertTrue(msg in context)
 
-    @mock.patch('functest.ci.run_tests.Runner.print_separator')
     @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
     @mock.patch('importlib.import_module', name="module",
                 return_value=mock.Mock(test_class=mock.Mock(
@@ -145,123 +138,107 @@ class RunTestsTesting(unittest.TestCase):
         with mock.patch('functest.ci.run_tests.Runner.get_run_dict',
                         return_value=test_run_dict):
             self.runner.clean_flag = True
-            self.runner.run_test(mock_test, 'tier_name')
+            self.runner.run_test(mock_test)
         self.assertEqual(self.runner.overall_result,
                          run_tests.Result.EX_OK)
 
-    @mock.patch('functest.ci.run_tests.logger.info')
-    def test_run_tier_default(self, mock_logger_info):
-        with mock.patch('functest.ci.run_tests.Runner.print_separator'), \
-                mock.patch(
-                    'functest.ci.run_tests.Runner.run_test',
-                    return_value=TestCase.EX_OK) as mock_method:
-            self.runner.run_tier(self.tier)
-            mock_method.assert_any_call(mock.ANY, 'test_tier')
-            self.assertTrue(mock_logger_info.called)
+    @mock.patch('functest.ci.run_tests.Runner.run_test',
+                return_value=TestCase.EX_OK)
+    def test_run_tier_default(self, *mock_methods):
+        self.assertEqual(self.runner.run_tier(self.tier),
+                         run_tests.Result.EX_OK)
+        mock_methods[0].assert_called_with(mock.ANY)
 
     @mock.patch('functest.ci.run_tests.logger.info')
     def test_run_tier_missing_test(self, mock_logger_info):
-        with mock.patch('functest.ci.run_tests.Runner.print_separator'):
-            self.tier.get_tests.return_value = None
-            self.assertEqual(self.runner.run_tier(self.tier), 0)
-            self.assertTrue(mock_logger_info.called)
-
-    @mock.patch('functest.ci.run_tests.logger.info')
-    def test_run_all_default(self, mock_logger_info):
-        with mock.patch(
-                'functest.ci.run_tests.Runner.run_tier') as mock_method:
-            CONST.__setattr__('CI_LOOP', 'test_ci_loop')
-            self.runner.run_all(self.tiers)
-            mock_method.assert_any_call(self.tier)
-            self.assertTrue(mock_logger_info.called)
-
-    @mock.patch('functest.ci.run_tests.logger.info')
-    def test_run_all_missing_tier(self, mock_logger_info):
-        CONST.__setattr__('CI_LOOP', 'loop_re_not_available')
-        self.runner.run_all(self.tiers)
+        self.tier.get_tests.return_value = None
+        self.assertEqual(self.runner.run_tier(self.tier),
+                         run_tests.Result.EX_ERROR)
         self.assertTrue(mock_logger_info.called)
 
-    def test_main_failed(self):
+    @mock.patch('functest.ci.run_tests.logger.info')
+    @mock.patch('functest.ci.run_tests.Runner.run_tier')
+    @mock.patch('functest.ci.run_tests.Runner.summary')
+    def test_run_all_default(self, *mock_methods):
+        CONST.__setattr__('CI_LOOP', 'test_ci_loop')
+        self.runner.run_all()
+        mock_methods[1].assert_not_called()
+        self.assertTrue(mock_methods[2].called)
+
+    @mock.patch('functest.ci.run_tests.logger.info')
+    @mock.patch('functest.ci.run_tests.Runner.summary')
+    def test_run_all_missing_tier(self, *mock_methods):
+        CONST.__setattr__('CI_LOOP', 'loop_re_not_available')
+        self.runner.run_all()
+        self.assertTrue(mock_methods[1].called)
+
+    @mock.patch('functest.ci.run_tests.Runner.source_rc_file',
+                side_effect=Exception)
+    @mock.patch('functest.ci.run_tests.Runner.summary')
+    def test_main_failed(self, *mock_methods):
         kwargs = {'test': 'test_name', 'noclean': True, 'report': True}
-        mock_obj = mock.Mock()
         args = {'get_tier.return_value': False,
                 'get_test.return_value': False}
-        mock_obj.configure_mock(**args)
-        with mock.patch('functest.ci.run_tests.tb.TierBuilder'), \
-            mock.patch('functest.ci.run_tests.Runner.source_rc_file',
-                       side_effect=Exception):
-            self.assertEqual(self.runner.main(**kwargs),
-                             run_tests.Result.EX_ERROR)
-        with mock.patch('functest.ci.run_tests.tb.TierBuilder',
-                        return_value=mock_obj), \
-            mock.patch('functest.ci.run_tests.Runner.source_rc_file',
-                       side_effect=Exception):
-            self.assertEqual(self.runner.main(**kwargs),
-                             run_tests.Result.EX_ERROR)
+        self.runner._tiers = mock.Mock()
+        self.runner._tiers.configure_mock(**args)
+        self.assertEqual(self.runner.main(**kwargs),
+                         run_tests.Result.EX_ERROR)
+        mock_methods[1].assert_called_once_with()
 
-    def test_main_tier(self, *args):
+    @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
+    @mock.patch('functest.ci.run_tests.Runner.run_test',
+                return_value=TestCase.EX_OK)
+    @mock.patch('functest.ci.run_tests.Runner.summary')
+    def test_main_tier(self, *mock_methods):
         mock_tier = mock.Mock()
-        args = {'get_name.return_value': 'tier_name'}
+        args = {'get_name.return_value': 'tier_name',
+                'get_tests.return_value': ['test_name']}
         mock_tier.configure_mock(**args)
         kwargs = {'test': 'tier_name', 'noclean': True, 'report': True}
-        mock_obj = mock.Mock()
         args = {'get_tier.return_value': mock_tier,
                 'get_test.return_value': None}
-        mock_obj.configure_mock(**args)
-        with mock.patch('functest.ci.run_tests.tb.TierBuilder',
-                        return_value=mock_obj), \
-            mock.patch('functest.ci.run_tests.Runner.source_rc_file'), \
-                mock.patch('functest.ci.run_tests.Runner.run_tier') as m:
-            self.assertEqual(self.runner.main(**kwargs),
-                             run_tests.Result.EX_OK)
-            self.assertTrue(m.called)
+        self.runner._tiers = mock.Mock()
+        self.runner._tiers.configure_mock(**args)
+        self.assertEqual(self.runner.main(**kwargs),
+                         run_tests.Result.EX_OK)
+        mock_methods[1].assert_called_once_with('test_name')
 
-    def test_main_test(self, *args):
+    @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
+    @mock.patch('functest.ci.run_tests.Runner.run_test',
+                return_value=TestCase.EX_OK)
+    def test_main_test(self, *mock_methods):
         kwargs = {'test': 'test_name', 'noclean': True, 'report': True}
-        mock_test = mock.Mock()
-        args = {'get_name.return_value': 'test_name',
-                'needs_clean.return_value': True}
-        mock_test.configure_mock(**args)
-        mock_obj = mock.Mock()
         args = {'get_tier.return_value': None,
-                'get_test.return_value': mock_test}
-        mock_obj.configure_mock(**args)
-        with mock.patch('functest.ci.run_tests.tb.TierBuilder',
-                        return_value=mock_obj), \
-            mock.patch('functest.ci.run_tests.Runner.source_rc_file'), \
-                mock.patch('functest.ci.run_tests.Runner.run_test',
-                           return_value=TestCase.EX_OK) as m:
-            self.assertEqual(self.runner.main(**kwargs),
-                             run_tests.Result.EX_OK)
-            self.assertTrue(m.called)
+                'get_test.return_value': 'test_name'}
+        self.runner._tiers = mock.Mock()
+        self.runner._tiers.configure_mock(**args)
+        self.assertEqual(self.runner.main(**kwargs),
+                         run_tests.Result.EX_OK)
+        mock_methods[0].assert_called_once_with('test_name')
 
-    def test_main_all_tier(self, *args):
+    @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
+    @mock.patch('functest.ci.run_tests.Runner.run_all')
+    @mock.patch('functest.ci.run_tests.Runner.summary')
+    def test_main_all_tier(self, *mock_methods):
         kwargs = {'test': 'all', 'noclean': True, 'report': True}
-        mock_obj = mock.Mock()
         args = {'get_tier.return_value': None,
                 'get_test.return_value': None}
-        mock_obj.configure_mock(**args)
-        with mock.patch('functest.ci.run_tests.tb.TierBuilder',
-                        return_value=mock_obj), \
-            mock.patch('functest.ci.run_tests.Runner.source_rc_file'), \
-                mock.patch('functest.ci.run_tests.Runner.run_all') as m:
-            self.assertEqual(self.runner.main(**kwargs),
-                             run_tests.Result.EX_OK)
-            self.assertTrue(m.called)
+        self.runner._tiers = mock.Mock()
+        self.runner._tiers.configure_mock(**args)
+        self.assertEqual(self.runner.main(**kwargs),
+                         run_tests.Result.EX_OK)
+        mock_methods[1].assert_called_once_with()
 
-    def test_main_any_tier_test_ko(self, *args):
+    @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
+    @mock.patch('functest.ci.run_tests.Runner.summary')
+    def test_main_any_tier_test_ko(self, *mock_methods):
         kwargs = {'test': 'any', 'noclean': True, 'report': True}
-        mock_obj = mock.Mock()
         args = {'get_tier.return_value': None,
                 'get_test.return_value': None}
-        mock_obj.configure_mock(**args)
-        with mock.patch('functest.ci.run_tests.tb.TierBuilder',
-                        return_value=mock_obj), \
-            mock.patch('functest.ci.run_tests.Runner.source_rc_file'), \
-                mock.patch('functest.ci.run_tests.logger.debug') as m:
-            self.assertEqual(self.runner.main(**kwargs),
-                             run_tests.Result.EX_ERROR)
-            self.assertTrue(m.called)
+        self.runner._tiers = mock.Mock()
+        self.runner._tiers.configure_mock(**args)
+        self.assertEqual(self.runner.main(**kwargs),
+                         run_tests.Result.EX_ERROR)
 
 
 if __name__ == "__main__":
