@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_e640b358",
+        "filename": "functest/api/base.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-17T09:02:50Z",
+      "side": 1,
+      "message": "bad copy/paste from api_utils",
+      "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_46251fc1",
+        "filename": "functest/api/base.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-17T09:02:50Z",
+      "side": 1,
+      "message": "for documentation I would suggest to always use API to avoid to get api, Api, API",
+      "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_26229bb9",
+        "filename": "functest/api/base.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-17T09:02:50Z",
+      "side": 1,
+      "message": "Input args:\nor\nInput args are:",
+      "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_862f27a1",
+        "filename": "functest/api/common/error.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-17T09:02:50Z",
+      "side": 1,
+      "message": "the name of the class error.py sounds a bit strange regarding the content\nas far as I understand it is .. a result handler more than an error manager",
+      "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_c6180f87",
+        "filename": "functest/api/resources/v1/envs.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-17T09:02:50Z",
+      "side": 1,
+      "message": "not sure to understand what the post means here",
+      "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_a61d0b76",
+        "filename": "functest/api/server.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-17T09:02:50Z",
+      "side": 1,
+      "message": "port could be put in configuration file later",
+      "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_06131767",
+        "filename": "functest/cli/commands/cli_env.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-17T09:02:50Z",
+      "side": 1,
+      "message": "compared to previous patch you removed the Build_TAG?",
+      "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
