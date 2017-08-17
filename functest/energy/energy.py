@@ -16,6 +16,7 @@ import urllib
 
 from functools import wraps
 import requests
+import urllib3
 
 import functest.utils.functest_utils as ft_utils
 
@@ -76,7 +77,7 @@ class EnergyRecorder(object):
     INITIAL_STEP = "running"
 
     # Default connection timeout
-    CONNECTION_TIMOUT = 1
+    CONNECTION_TIMOUT = urllib3.Timeout(connect=1, read=3)
 
     @staticmethod
     def load_config():
@@ -104,13 +105,13 @@ class EnergyRecorder(object):
                 "API recorder at: " + energy_recorder_uri + uri_comp)
 
             # Creds
-            user = ft_utils.get_functest_config(
+            creds_usr = ft_utils.get_functest_config(
                 "energy_recorder.api_user")
-            password = ft_utils.get_functest_config(
+            creds_pass = ft_utils.get_functest_config(
                 "energy_recorder.api_password")
 
-            if user != "" and password != "":
-                energy_recorder_api_auth = (user, password)
+            if creds_usr != "" and creds_pass != "":
+                energy_recorder_api_auth = (creds_usr, creds_pass)
             else:
                 energy_recorder_api_auth = None
 
