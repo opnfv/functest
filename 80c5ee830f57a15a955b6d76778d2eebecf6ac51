@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_293eecb8",
+        "filename": "functest/api/common/error.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T11:07:30Z",
+      "side": 1,
+      "message": "Yes, you are right, Shall I delete the file in the next patch? As I plan to move def result_handler into api_utils.py",
+      "parentUuid": "da33351e_862f27a1",
+      "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_c6180f87",
         "filename": "functest/api/resources/v1/envs.py",
         "patchSetId": 33
@@ -81,6 +99,24 @@
       "writtenOn": "2017-08-17T09:02:50Z",
       "side": 1,
       "message": "not sure to understand what the post means here",
+      "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_a952fc10",
+        "filename": "functest/api/resources/v1/envs.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T11:07:30Z",
+      "side": 1,
+      "message": "This is the framework about flask, which is used to receive the post request.",
+      "parentUuid": "da33351e_c6180f87",
       "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -104,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_a9795c95",
+        "filename": "functest/api/server.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T11:07:30Z",
+      "side": 1,
+      "message": "Here port 5000 or any other ports work well, as it is only used to generate the endpoint. So it is no need to make it configurable.",
+      "parentUuid": "da33351e_a61d0b76",
+      "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_06131767",
         "filename": "functest/cli/commands/cli_env.py",
         "patchSetId": 33
@@ -115,6 +169,24 @@
       "writtenOn": "2017-08-17T09:02:50Z",
       "side": 1,
       "message": "compared to previous patch you removed the Build_TAG?",
+      "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_496890ba",
+        "filename": "functest/cli/commands/cli_env.py",
+        "patchSetId": 33
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T11:07:30Z",
+      "side": 1,
+      "message": "I forgot it, and I\u0027ll update it soon.",
+      "parentUuid": "da33351e_06131767",
       "revId": "80c5ee830f57a15a955b6d76778d2eebecf6ac51",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
