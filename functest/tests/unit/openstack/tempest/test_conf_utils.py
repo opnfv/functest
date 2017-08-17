@@ -21,12 +21,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                         'os_utils.get_keystone_client',
                         return_value=mock.Mock()), \
             mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.create_tenant',
-                       return_value='test_tenant_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.create_user',
-                       return_value='test_user_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                        'os_utils.create_shared_network_full',
                        return_value=None), \
                 self.assertRaises(Exception) as context:
@@ -38,12 +32,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                         'os_utils.get_keystone_client',
                         return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.create_tenant',
-                       return_value='test_tenant_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.create_user',
-                       return_value='test_user_id'), \
             mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                        'os_utils.create_shared_network_full',
                        return_value=mock.Mock()), \
@@ -66,12 +54,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         with mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                         'os_utils.get_keystone_client',
                         return_value=mock.Mock()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.create_tenant',
-                       return_value='test_tenant_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'os_utils.create_user',
-                       return_value='test_user_id'), \
             mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                        'os_utils.create_shared_network_full',
                        return_value=mock.Mock()), \
