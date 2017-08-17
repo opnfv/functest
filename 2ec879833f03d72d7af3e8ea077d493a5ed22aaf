@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_5ce4d03a",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-17T13:36:03Z",
+      "side": 1,
+      "message": "in cases there are several patch for the doc, it is not straight forward\nit is not a pure git history but for the reader, it is a summary",
+      "parentUuid": "da33351e_bc4d1c75",
+      "revId": "2ec879833f03d72d7af3e8ea077d493a5ed22aaf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_9c52d811",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 6
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_bcd07c54",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-17T13:36:03Z",
+      "side": 1,
+      "message": "agree\nit is only a first patch...",
+      "parentUuid": "da33351e_fc57a400",
+      "revId": "2ec879833f03d72d7af3e8ea077d493a5ed22aaf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_3c410c3a",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 6
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_9cd5b845",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-17T13:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_3c410c3a",
+      "revId": "2ec879833f03d72d7af3e8ea077d493a5ed22aaf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_fcf32408",
         "filename": "docs/testing/user/configguide/configguide.rst",
         "patchSetId": 6
@@ -81,6 +135,24 @@
       "writtenOn": "2017-08-17T13:14:29Z",
       "side": 1,
       "message": "Expiremental is quite subjective.\nFrom my point of view, Danube container was much more experimental if you list all fixes done when switching to Alpine.",
+      "revId": "2ec879833f03d72d7af3e8ea077d493a5ed22aaf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_fc41640c",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-17T13:36:03Z",
+      "side": 1,
+      "message": "agree\nI am not very fond of \"Experimental\"\n\nI try something else",
+      "parentUuid": "da33351e_fcf32408",
       "revId": "2ec879833f03d72d7af3e8ea077d493a5ed22aaf",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
