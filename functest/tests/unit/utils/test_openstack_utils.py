@@ -13,6 +13,7 @@ import unittest
 import mock
 
 from functest.utils import openstack_utils
+from functest.utils.constants import CONST
 
 
 class OSUtilsTesting(unittest.TestCase):
@@ -187,11 +188,18 @@ class OSUtilsTesting(unittest.TestCase):
         mock_obj.configure_mock(**attrs)
         self.role = mock_obj
 
+        mock_obj = mock.Mock()
+        attrs = {'id': 'domain_id',
+                 'name': 'test_domain'}
+        mock_obj.configure_mock(**attrs)
+        self.domain = mock_obj
+
         self.keystone_client = mock.Mock()
         attrs = {'projects.list.return_value': [self.tenant],
                  'tenants.list.return_value': [self.tenant],
                  'users.list.return_value': [self.user],
                  'roles.list.return_value': [self.role],
+                 'domains.list.return_value': [self.domain],
                  'projects.create.return_value': self.tenant,
                  'tenants.create.return_value': self.tenant,
                  'users.create.return_value': self.user,
@@ -1650,9 +1658,16 @@ class OSUtilsTesting(unittest.TestCase):
                                      'test_role'),
                          'role_id')
 
+    def test_get_domain_id_default(self):
+        self.assertEqual(openstack_utils.
+                         get_domain_id(self.keystone_client,
+                                       'test_domain'),
+                         'domain_id')
+
     def test_create_tenant_default(self):
         with mock.patch('functest.utils.openstack_utils.'
                         'is_keystone_v3', return_value=True):
+            CONST.__setattr__('OS_PROJECT_DOMAIN_NAME', 'Default')
             self.assertEqual(openstack_utils.
                              create_tenant(self.keystone_client,
                                            'test_tenant',

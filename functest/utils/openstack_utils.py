@@ -22,6 +22,7 @@ from heatclient import client as heatclient
 from novaclient import client as novaclient
 from keystoneclient import client as keystoneclient
 from neutronclient.neutron import client as neutronclient
+from functest.utils.constants import CONST
 
 import functest.utils.functest_utils as ft_utils
 
@@ -1376,13 +1377,25 @@ def get_role_id(keystone_client, role_name):
     return id
 
 
+def get_domain_id(keystone_client, domain_name):
+    domains = keystone_client.domains.list()
+    id = ''
+    for d in domains:
+        if d.name == domain_name:
+            id = d.id
+            break
+    return id
+
+
 def create_tenant(keystone_client, tenant_name, tenant_description):
     try:
         if is_keystone_v3():
+            domain_name = CONST.__getattribute__('OS_PROJECT_DOMAIN_NAME')
+            domain_id = get_domain_id(keystone_client, domain_name)
             tenant = keystone_client.projects.create(
                 name=tenant_name,
                 description=tenant_description,
-                domain="default",
+                domain=domain_id,
                 enabled=True)
         else:
             tenant = keystone_client.tenants.create(tenant_name,
