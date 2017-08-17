@@ -106,10 +106,14 @@ class VPingBase(testcase.TestCase):
             "Creating network with name: '%s'" % private_net_name)
         self.network_creator = deploy_utils.create_network(
             self.os_creds,
-            NetworkSettings(name=private_net_name,
-                            subnet_settings=[SubnetSettings(
-                                name=private_subnet_name,
-                                cidr=private_subnet_cidr)]))
+            NetworkSettings(
+                name=private_net_name,
+                network_type=CONST.__getattribute__('network_type'),
+                physical_network=CONST.__getattribute__('physical_network'),
+                segmentation_id=CONST.__getattribute__('segmentation_id'),
+                subnet_settings=[SubnetSettings(
+                    name=private_subnet_name,
+                    cidr=private_subnet_cidr)]))
         self.creators.append(self.network_creator)
 
         self.logger.info(
