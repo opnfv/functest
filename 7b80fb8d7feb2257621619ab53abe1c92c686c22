@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_12607631",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 30
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:26:48Z",
+      "side": 1,
+      "message": "I think 8 is equal to 7 (we may add filters instead to only print testcases in tiers data)",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_f27992fd",
+        "filename": "functest/api/base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:26:48Z",
+      "side": 1,
+      "message": "#!/usr/bin/env python\n\n# Copyright (c) 2017 Huawei Technologies Co.,Ltd and others.\n#\n# All rights reserved. This program and the accompanying materials\n# are made available under the terms of the Apache License, Version 2.0\n# which accompanies this distribution, and is available at\n# http://www.apache.org/licenses/LICENSE-2.0",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_32a01a43",
+        "filename": "functest/api/base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:26:48Z",
+      "side": 1,
+      "message": "useless",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_325bfa88",
+        "filename": "functest/api/base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:26:48Z",
+      "side": 1,
+      "message": "#pylint: disable\u003dno-self-use,maybe-no-member",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_72dbc2ed",
+        "filename": "functest/api/base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:26:48Z",
+      "side": 1,
+      "message": "I would prefer you to add the docsting as you have set them everywhere (Thank you).",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d29a8e13",
+        "filename": "functest/api/base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:26:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure here is the best place",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_32849ad3",
+        "filename": "functest/api/server.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:26:48Z",
+      "side": 1,
+      "message": "we may read the value in config instead.",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_128996eb",
+        "filename": "functest/api/server.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:26:48Z",
+      "side": 1,
+      "message": "I don\u0027t see the config value. Is it missing?",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d27e0ee4",
+        "filename": "functest/api/server.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:26:48Z",
+      "side": 1,
+      "message": "It can be safely removed as you define it correctly as console script",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_b2fc2a40",
+        "filename": "functest/api/urls.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:26:48Z",
+      "side": 1,
+      "message": "useless",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d2656e46",
+        "filename": "tox.ini",
+        "patchSetId": 30
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-17T04:26:48Z",
+      "side": 1,
+      "message": "Thank you. That\u0027s great to see new packages rated 10/10 by pylint.",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
