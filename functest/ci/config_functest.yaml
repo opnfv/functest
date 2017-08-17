@@ -133,10 +133,14 @@ vnf:
         tenant_name: cloudify_ims
         tenant_description: vIMS
         config: cloudify_ims.yaml
-    orchestra_ims:
-        tenant_name: orchestra_ims
-        tenant_description: ims deployed with openbaton
-        config: orchestra_ims.yaml
+    orchestra_openims:
+        tenant_name: orchestra_openims
+        tenant_description: OpenIMS deployed with Open Baton
+        config: orchestra.yaml
+    orchestra_clearwaterims:
+        tenant_name: orchestra_clearwaterims
+        tenant_description: Clearwater IMS deployed with Open Baton
+        config: orchestra.yaml
     opera_ims:
         tenant_name: opera_ims
         tenant_description: ims deployed with open-o
