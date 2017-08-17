@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_46723f7d",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 31
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-17T06:45:55Z",
+      "side": 1,
+      "message": "delete?",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 14
+      },
+      "revId": "15e22d014012f5f76faa348e43922494f10b8038",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
