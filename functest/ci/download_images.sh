@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cat << EOF  | wget -i - -P ${1:-/home/opnfv/functest/images}
 http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
 https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
@@ -12,6 +14,10 @@ http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-lxc.tar.gz
 http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-disk.img
 http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-initramfs
 http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-kernel
+http://uec-images.ubuntu.com/releases/trusty/14.04/ubuntu-14.04-server-cloudimg-arm64-disk1.img
+http://cloud.centos.org/altarch/7/images/aarch64/CentOS-7-aarch64-GenericCloud.qcow2.xz
 EOF
+
+xz --decompress ${1:-/home/opnfv/functest/images}/CentOS-7-aarch64-GenericCloud.qcow2.xz
 
 exit $?
