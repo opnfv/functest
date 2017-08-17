@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_922c86ad",
+        "filename": "functest/api/base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T05:23:29Z",
+      "side": 1,
+      "message": "But pylint warns about it if it is absent.\nW: 25, 0: Class has no __init__ method (no-init)",
+      "parentUuid": "da33351e_32a01a43",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_325bfa88",
         "filename": "functest/api/base.py",
         "patchSetId": 30
@@ -64,6 +82,24 @@
       "writtenOn": "2017-08-17T04:26:48Z",
       "side": 1,
       "message": "#pylint: disable\u003dno-self-use,maybe-no-member",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_f2187286",
+        "filename": "functest/api/base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T05:23:29Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "da33351e_325bfa88",
       "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_323c9ae2",
+        "filename": "functest/api/base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T05:23:29Z",
+      "side": 1,
+      "message": "ok.",
+      "parentUuid": "da33351e_72dbc2ed",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_d29a8e13",
         "filename": "functest/api/base.py",
         "patchSetId": 30
@@ -98,6 +152,24 @@
       "writtenOn": "2017-08-17T04:26:48Z",
       "side": 1,
       "message": "I\u0027m not sure here is the best place",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d2360e03",
+        "filename": "functest/api/base.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T05:23:29Z",
+      "side": 1,
+      "message": "It has to be put after class ApiResource, as def import_modules_from_package will try to retrieve and import all the modules from the packages \"functest.api.resources\", in which \"from functest.api.base import ApiResource\" is included in each module.",
+      "parentUuid": "da33351e_d29a8e13",
       "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_3213fa67",
+        "filename": "functest/api/resources/v1/testcases.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T05:23:29Z",
+      "side": 1,
+      "message": "It is implemented in the next patch: https://gerrit.opnfv.org/gerrit/#/c/38463/6/functest/api/resources/v1/testcases.py",
+      "parentUuid": "da33351e_12bcf668",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_32849ad3",
         "filename": "functest/api/server.py",
         "patchSetId": 30
@@ -132,6 +222,24 @@
       "writtenOn": "2017-08-17T04:26:48Z",
       "side": 1,
       "message": "we may read the value in config instead.",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_a604eb15",
+        "filename": "functest/api/server.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T05:23:29Z",
+      "side": 1,
+      "message": "Here 5000 or any other ports work well. Serena objected to add api_port in config_functest.yaml, as it is only used to generate the endpoint.",
+      "parentUuid": "da33351e_32849ad3",
       "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -155,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_12187680",
+        "filename": "functest/api/server.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T05:23:29Z",
+      "side": 1,
+      "message": "Port 5000 is listened by default.",
+      "parentUuid": "da33351e_128996eb",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_d27e0ee4",
         "filename": "functest/api/server.py",
         "patchSetId": 30
@@ -166,6 +292,24 @@
       "writtenOn": "2017-08-17T04:26:48Z",
       "side": 1,
       "message": "It can be safely removed as you define it correctly as console script",
+      "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_720c6243",
+        "filename": "functest/api/server.py",
+        "patchSetId": 30
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-17T05:23:29Z",
+      "side": 1,
+      "message": "I agree with you, but Jose suggested to add this.",
+      "parentUuid": "da33351e_d27e0ee4",
       "revId": "7b80fb8d7feb2257621619ab53abe1c92c686c22",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
