@@ -18,6 +18,7 @@ import os
 import sys
 from oslo_utils import importutils
 
+from flask import jsonify
 import six
 
 import functest
@@ -89,3 +90,12 @@ def change_obj_to_dict(obj):
     for key, value in vars(obj).items():
         dic.update({key: value})
     return dic
+
+
+def result_handler(status, data):
+    """ Return the json format of result in dict """
+    result = {
+        'status': status,
+        'result': data
+    }
+    return jsonify(result)
