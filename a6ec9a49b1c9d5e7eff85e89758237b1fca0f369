@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_b517efa2",
+        "filename": "docker/vnf/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-18T15:07:56Z",
+      "side": 1,
+      "message": "$ cat functest/ci/config_functest.yaml |grep repo_vims_test\n        repo_vims_test:     /src/vims-test\n\nI don\u0027t want to parse that file in Dockerfile.",
+      "parentUuid": "da33351e_09897bca",
+      "revId": "a6ec9a49b1c9d5e7eff85e89758237b1fca0f369",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_49e543a7",
         "filename": "docker/vnf/Dockerfile",
         "patchSetId": 1
@@ -77,6 +95,24 @@
       "writtenOn": "2017-08-18T14:43:10Z",
       "side": 1,
       "message": "don\u0027t you need to install rvm for the testing part?\ntests done yesterday showed that this was missing\n\nI installed it manually using curl -sSL https://get.rvm.io | bash -s stable --ruby\nbut needed to install curl and tar with apk first",
+      "revId": "a6ec9a49b1c9d5e7eff85e89758237b1fca0f369",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d51273b3",
+        "filename": "docker/vnf/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-18T15:07:56Z",
+      "side": 1,
+      "message": "curl and tar are only required when installing rvm as you did. Thank you to have reported procps",
+      "parentUuid": "da33351e_49e543a7",
       "revId": "a6ec9a49b1c9d5e7eff85e89758237b1fca0f369",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
