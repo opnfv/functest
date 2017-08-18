@@ -17,7 +17,7 @@ import logging
 from flask import request
 from flask_restful import Resource
 
-from functest.api.common import api_utils, error
+from functest.api.common import api_utils
 
 
 LOGGER = logging.getLogger(__name__)
@@ -58,7 +58,7 @@ class ApiResource(Resource):
         try:
             return getattr(self, action)(args)
         except AttributeError:
-            error.result_handler(status=1, data='No such action')
+            api_utils.result_handler(status=1, data='No such action')
 
 
 # Import modules from package "functest.api.resources"
