@@ -243,12 +243,18 @@ class Runner(object):
         tiers = [tier] if tier else self._tiers.get_tiers()
         for tier in tiers:
             for test in tier.get_tests():
-                test_case = self.executed_test_cases[test.get_name()]
-                result = 'PASS' if(test_case.is_successful(
-                    ) == test_case.EX_OK) else 'FAIL'
-                msg.add_row([test_case.case_name, test_case.project_name,
-                             self._tiers.get_tier_name(test_case.case_name),
-                             test_case.get_duration(), result])
+                try:
+                    test_case = self.executed_test_cases[test.get_name()]
+                except KeyError:
+                    msg.add_row([test.get_name(), test.get_project(),
+                                 tier.get_name(), "00:00", "SKIP"])
+                else:
+                    result = 'PASS' if(test_case.is_successful(
+                        ) == test_case.EX_OK) else 'FAIL'
+                    msg.add_row(
+                        [test_case.case_name, test_case.project_name,
+                         self._tiers.get_tier_name(test_case.case_name),
+                         test_case.get_duration(), result])
             for test in tier.get_skipped_test():
                 msg.add_row([test.get_name(), test.get_project(),
                              tier.get_name(), "00:00", "SKIP"])
