@@ -32,6 +32,10 @@ URLPATTERNS = [
     # GET /api/v1/functest/openstack/credentials => GET credentials
     Url('/api/v1/functest/openstack/credentials', 'v1_creds'),
 
+    # POST /api/v1/functest/openstack/action
+    # {"action":"update_openrc", "args": {"openrc": {}}} => Update openrc
+    Url('/api/v1/functest/openstack/action', 'v1_creds'),
+
     # GET /api/v1/functest/testcases => GET all testcases
     Url('/api/v1/functest/testcases', 'v1_test_cases'),
 
