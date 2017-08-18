@@ -92,18 +92,17 @@ tiers:
 
             -
                 case_name: barometercollectd
-                enabled: false
+                enabled: true
                 project_name: barometer
                 criteria: 100
                 blocking: false
                 description: >-
-                    Test suite for the Barometer project. Separate tests verify the
-                    proper configuration and functionality of the following
-                    collectd plugins Ceilometer, Hugepages, Memory RAS (mcelog),
-                    and OVS Events
+                    Test suite for the Barometer project. Separate tests verify
+                    the proper configuration and basic functionality of all the
+                    collectd plugins as described in the Project Release Plan
                 dependencies:
-                    installer: 'fuel'
-                    scenario: 'kvm_ovs_dpdk_bar'
+                    installer: 'apex'
+                    scenario: 'bar'
                 run:
                      module: 'baro_tests.barometer'
                      class: 'BarometerCollectd'
