@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_35a0ff8f",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-18T14:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_755287de",
+      "revId": "cbbd077ca8e78bb76f2f269f55ab39179c94598e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_b5636fb0",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-18T13:27:25Z",
       "side": 1,
       "message": "developed",
+      "revId": "cbbd077ca8e78bb76f2f269f55ab39179c94598e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_95ad8b8b",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-18T14:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_b5636fb0",
       "revId": "cbbd077ca8e78bb76f2f269f55ab39179c94598e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_75aa8771",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-18T14:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_956c6b9e",
+      "revId": "cbbd077ca8e78bb76f2f269f55ab39179c94598e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_95c8eb75",
         "filename": "docs/testing/user/userguide/test_details.rst",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-18T13:27:25Z",
       "side": 1,
       "message": "\"requests\" scenario has been removed (https://gerrit.opnfv.org/gerrit/#/c/36603/)",
+      "revId": "cbbd077ca8e78bb76f2f269f55ab39179c94598e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_55a3039e",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-18T14:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_95c8eb75",
       "revId": "cbbd077ca8e78bb76f2f269f55ab39179c94598e",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
