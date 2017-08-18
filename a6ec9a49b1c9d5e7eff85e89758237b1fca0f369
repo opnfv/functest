@@ -46,6 +46,40 @@
       "revId": "a6ec9a49b1c9d5e7eff85e89758237b1fca0f369",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_09897bca",
+        "filename": "docker/vnf/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-18T14:43:10Z",
+      "side": 1,
+      "message": "in the config I think it will lookk for such dir into  /home/opnfv/repos/vnfs/vims-test\n\nin clearwater_im_base.py\nself.test_dir \u003d CONST.__getattribute__(\u0027dir_repo_vims_test\u0027)\n\nthe param is defined in the conf file config_functest.yaml\nrepo_vims_test:     /home/opnfv/repos/vnfs/vims-test\n\nI think it shall be aligned",
+      "revId": "a6ec9a49b1c9d5e7eff85e89758237b1fca0f369",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_49e543a7",
+        "filename": "docker/vnf/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-18T14:43:10Z",
+      "side": 1,
+      "message": "don\u0027t you need to install rvm for the testing part?\ntests done yesterday showed that this was missing\n\nI installed it manually using curl -sSL https://get.rvm.io | bash -s stable --ruby\nbut needed to install curl and tar with apk first",
+      "revId": "a6ec9a49b1c9d5e7eff85e89758237b1fca0f369",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
