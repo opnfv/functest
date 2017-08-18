@@ -14,6 +14,7 @@ from flask import jsonify
 
 from functest.api.base import ApiResource
 from functest.cli.commands.cli_env import Env
+from functest.api.common import api_utils
 import functest.utils.functest_utils as ft_utils
 
 
@@ -31,4 +32,9 @@ class V1Envs(ApiResource):
 
     def prepare(self, args):  # pylint: disable=no-self-use, unused-argument
         """ Prepare environment """
-        ft_utils.execute_command("prepare_env start")
+        try:
+            ft_utils.execute_command("prepare_env start")
+        except Exception as err:
+            return api_utils.result_handler(status=1, data=str(err))
+        return api_utils.result_handler(
+            status=0, data="Prepare env successfully")
