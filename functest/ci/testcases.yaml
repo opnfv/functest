@@ -317,21 +317,6 @@ tiers:
                         cmd: '. /home/opnfv/functest/conf/stackrc && security_scan --config /usr/local/etc/securityscanning/config.ini'
 
             -
-                case_name: multisite
-                enabled: false
-                project_name: multisite
-                criteria: 100
-                blocking: false
-                description: >-
-                    Test suite from kingbird
-                dependencies:
-                    installer: '(fuel)|(compass)'
-                    scenario: 'multisite'
-                run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestMultisite'
-
-            -
                 case_name: functest-odl-sfc
                 enabled: false
                 project_name: sfc

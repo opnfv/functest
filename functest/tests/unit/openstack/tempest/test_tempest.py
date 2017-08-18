@@ -35,9 +35,6 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestsmoke_serial = tempest.TempestSmokeSerial()
             self.tempestsmoke_parallel = tempest.TempestSmokeParallel()
             self.tempestfull_parallel = tempest.TempestFullParallel()
-            with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                            'conf_utils.install_verifier_ext'):
-                self.tempestmultisite = tempest.TempestMultisite()
             self.tempestcustom = tempest.TempestCustom()
             self.tempestdefcore = tempest.TempestDefcore()
 
@@ -75,8 +72,6 @@ class OSTempestTesting(unittest.TestCase):
         self.tempestcommon.MODE = mode
         if self.tempestcommon.MODE == 'smoke':
             testr_mode = "smoke"
-        elif self.tempestcommon.MODE == 'feature_multisite':
-            testr_mode = "'[Kk]ingbird'"
         elif self.tempestcommon.MODE == 'full':
             testr_mode = ""
         else:
@@ -95,9 +90,6 @@ class OSTempestTesting(unittest.TestCase):
 
     def test_generate_test_list_smoke_mode(self):
         self._test_generate_test_list_mode_default('smoke')
-
-    def test_generate_test_list_feature_multisite_mode(self):
-        self._test_generate_test_list_mode_default('feature_multisite')
 
     def test_generate_test_list_full_mode(self):
         self._test_generate_test_list_mode_default('full')

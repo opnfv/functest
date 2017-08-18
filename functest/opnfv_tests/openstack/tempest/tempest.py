@@ -12,7 +12,6 @@ from __future__ import division
 
 import logging
 import os
-import pkg_resources
 import re
 import shutil
 import subprocess
@@ -63,8 +62,6 @@ class TempestCommon(testcase.OSGCTestCase):
         else:
             if self.MODE == 'smoke':
                 testr_mode = "smoke"
-            elif self.MODE == 'feature_multisite':
-                testr_mode = "'[Kk]ingbird'"
             elif self.MODE == 'full':
                 testr_mode = ""
             else:
@@ -268,18 +265,6 @@ class TempestFullParallel(TempestCommon):
             kwargs["case_name"] = 'tempest_full_parallel'
         TempestCommon.__init__(self, **kwargs)
         self.MODE = "full"
-
-
-class TempestMultisite(TempestCommon):
-
-    def __init__(self, **kwargs):
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'multisite'
-        TempestCommon.__init__(self, **kwargs)
-        self.MODE = "feature_multisite"
-        self.OPTION = "--concurrency 1"
-        conf_utils.install_verifier_ext(
-            pkg_resources.resource_filename('kingbird', '..'))
 
 
 class TempestCustom(TempestCommon):
