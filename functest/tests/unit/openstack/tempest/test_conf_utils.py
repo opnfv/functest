@@ -199,22 +199,9 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                         'conf_utils.configure_verifier',
                         return_value='test_conf_file'), \
             mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.configure_tempest_update_params') as m1, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.configure_tempest_multisite_params') as m2:
-            conf_utils.configure_tempest('test_dep_dir',
-                                         MODE='feature_multisite')
-            self.assertTrue(m1.called)
-            self.assertTrue(m2.called)
-
-        with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.configure_verifier',
-                        return_value='test_conf_file'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
                        'conf_utils.configure_tempest_update_params') as m1:
             conf_utils.configure_tempest('test_dep_dir')
             self.assertTrue(m1.called)
-            self.assertTrue(m2.called)
 
     def test_configure_tempest_defcore_default(self):
         img_flavor_dict = {'image_id': 'test_image_id',
@@ -322,50 +309,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             mexe.assert_any_call("rally verify configure-verifier "
                                  "--reconfigure")
 
-    def test_configure_tempest_multisite_params_without_fuel(self):
-        conf_utils.CI_INSTALLER_TYPE = 'not_fuel'
-        with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.os_utils.get_endpoint',
-                        return_value='kingbird_endpoint_url'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.ConfigParser.RawConfigParser.'
-                       'set') as mset, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.ConfigParser.RawConfigParser.'
-                       'read') as mread, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.ConfigParser.RawConfigParser.'
-                       'add_section') as msection, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.ConfigParser.RawConfigParser.'
-                       'write') as mwrite, \
-            mock.patch('__builtin__.open', mock.mock_open()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.backup_tempest_config'):
-
-            conf_utils.configure_tempest_multisite_params('test_conf_file')
-            msection.assert_any_call("kingbird")
-            mset.assert_any_call('service_available', 'kingbird', 'true')
-            mset.assert_any_call('kingbird', 'endpoint_type', 'publicURL')
-            mset.assert_any_call('kingbird', 'TIME_TO_SYNC', '120')
-            mset.assert_any_call('kingbird', 'endpoint_url',
-                                 'kingbird_endpoint_url')
-            self.assertTrue(mread.called)
-            self.assertTrue(mwrite.called)
-
-    def test_install_verifier_ext_default(self):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.get_repo_tag',
-                        return_value='test_tag'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.ft_utils.'
-                       'execute_command_raise') as mexe:
-            conf_utils.install_verifier_ext('test_path')
-            cmd = ("rally verify add-verifier-ext --source test_path "
-                   "--version test_tag")
-            error_msg = ("Problem while adding verifier extension from"
-                         " test_path")
-            mexe.assert_called_once_with(cmd, error_msg=error_msg)
 
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)

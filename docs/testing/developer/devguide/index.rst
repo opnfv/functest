@@ -109,7 +109,6 @@ The external test cases are:
  * odl-netvirt
  * onos
  * fds
- * multisite
  * orchestra_ims
  * parser
  * promise

@@ -132,10 +132,6 @@ validate the scenario for the release.
 |             |               |                | See `Domino User Guide`_ for     |
 |             |               |                | details                          |
 |             |               +----------------+----------------------------------+
-|             |               | multisite      | Multisite                        |
-|             |               |                | See `Multisite User Guide`_ for  |
-|             |               |                | details                          |
-|             |               +----------------+----------------------------------+
 |             |               | odl-sfc        | SFC testing for odl scenarios    |
 |             |               |                | See `SFC User Guide`_ for details|
 |             |               +----------------+----------------------------------+
@@ -257,4 +253,3 @@ section `Executing the functest suites`_ of this document.
 .. _`Parser User Guide`: http://artifacts.opnfv.org/parser/colorado/docs/userguide/index.html
 .. _`Functest Dashboard`: http://testresults.opnfv.org/kibana_dashboards/
 .. _`SFC User Guide`: http://artifacts.opnfv.org/sfc/colorado/userguide/index.html
-.. _`Multisite User Guide`: http://artifacts.opnfv.org/multisite/docs/userguide/index.html

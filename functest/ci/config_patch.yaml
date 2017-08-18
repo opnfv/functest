@@ -20,6 +20,3 @@ ovs:
         image_properties: {'hw_mem_page_size':'large'}
     tempest:
         use_custom_flavors: True
-multisite:
-    tempest:
-        use_custom_flavors: True

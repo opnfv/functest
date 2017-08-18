@@ -162,14 +162,6 @@ ONOS:
         installer_master: '10.20.0.2'
         installer_master_username: 'root'
         installer_master_password: 'r00tme'
-multisite:
-    fuel:
-        installer_username: 'root'
-        installer_password: 'r00tme'
-    compass:
-        installer_username: 'root'
-        installer_password: 'root'
-        multisite_controller_ip: '10.1.0.50'
 promise:
     tenant_name: promise
     tenant_description: promise Functionality Testing

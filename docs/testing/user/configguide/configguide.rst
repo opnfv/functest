@@ -304,7 +304,6 @@ should now be in place::
             |-- doctor
             |-- domino
             |-- functest
-            |-- kingbird
             |-- odl_test
             |-- onos
             |-- parser

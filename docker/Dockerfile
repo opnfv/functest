@@ -16,7 +16,6 @@ ARG BRANCH=master
 ARG RALLY_TAG=0.8.1
 ARG ODL_TAG=release/carbon
 ARG OPENSTACK_TAG=stable/ocata
-ARG KINGBIRD_TAG=1.1.0
 ARG VIMS_TAG=stable
 ARG VROUTER_TAG=stable
 ARG REPOS_DIR=/home/opnfv/repos
