@@ -1,6 +1,6 @@
 apex:
-    ip: ''
-    user: 'stack'
+    ip: '192.168.0.2'
+    user: 'root'
     pkey: '/root/.ssh/id_rsa'
 compass:
     ip: '192.168.200.2'
