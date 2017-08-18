@@ -92,6 +92,8 @@ class Runner(object):
                     CONST.__setattr__('OS_TENANT_NAME', value)
                 elif key == 'OS_PASSWORD':
                     CONST.__setattr__('OS_PASSWORD', value)
+                elif key == "OS_PROJECT_DOMAIN_NAME":
+                    CONST.__setattr__('OS_PROJECT_DOMAIN_NAME', value)
 
     @staticmethod
     def get_run_dict(testname):
