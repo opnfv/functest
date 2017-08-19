@@ -486,7 +486,7 @@ tiers:
                 criteria: 100
                 blocking: false
                 description: >-
-                   Test suite from Parser project.
+                    Simple VNF.
                 dependencies:
                     installer: ''
                     scenario: ''

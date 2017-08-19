@@ -20,3 +20,46 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
                     class: 'CloudifyIms'
+
+            -
+                case_name: aaa
+                enabled: false
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    Simple VNF.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.vnf.aaa.aaa'
+                    class: 'AaaVnf'
+
+            -
+                case_name: orchestra_openims
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    OpenIMS VNF deployment with Open Baton (Orchestra)
+                dependencies:
+                    installer: ''
+                    scenario: 'os-nosdn-nofeature-ha'
+                run:
+                    module: 'functest.opnfv_tests.vnf.ims.orchestra_openims'
+                    class: 'OpenImsVnf'
+
+            -
+                case_name: orchestra_clearwaterims
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    ClearwaterIMS VNF deployment with Open Baton (Orchestra)
+                dependencies:
+                    installer: ''
+                    scenario: 'os-nosdn-nofeature-ha'
+                run:
+                    module: 'functest.opnfv_tests.vnf.ims.orchestra_clearwaterims'
+                    class: 'ClearwaterImsVnf'
