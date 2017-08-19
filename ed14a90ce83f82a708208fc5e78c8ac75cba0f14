@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_2b925c57",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T02:04:19Z",
+      "side": 1,
+      "message": "It has been configured in: https://git.opnfv.org/functest/tree/functest/ci/config_functest.yaml#n61",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 95
+      },
+      "revId": "ed14a90ce83f82a708208fc5e78c8ac75cba0f14",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_4b95203f",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T02:04:19Z",
+      "side": 1,
+      "message": "See line 36 above, this image has been downloaded.",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 108
+      },
+      "revId": "ed14a90ce83f82a708208fc5e78c8ac75cba0f14",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
