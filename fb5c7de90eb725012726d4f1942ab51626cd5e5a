@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_2b79bc2f",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "Conflicts should be solved here.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 48
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_4b7c0021",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "Conflicts should be solved here.",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 48
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_eb87d40d",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "functest-odl-sfc",
+      "range": {
+        "startLine": 157,
+        "startChar": 3,
+        "endLine": 157,
+        "endChar": 10
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_0b831805",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "multisites will be removed, right?",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 13
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_cb8f7022",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "Functest is a framework.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 27
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_8b76083d",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "Is this tier still necessary?",
+      "range": {
+        "startLine": 193,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 15
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_6b73c44d",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "Is this tier still necessary?",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 10
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_ab94ac37",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "And also decorators.py",
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_eb9eb455",
+        "filename": "docs/testing/user/configguide/ci.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "The hyperlink should be:\nhttps://git.opnfv.org/releng/tree/jjb/functest/functest-daily-jobs.yml",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 83
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_4ba3609e",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "This openstack.creds file is obsolete for compass OSA, as https is supprted and os_cacert file is also required, see:\nhttp://paste.openstack.org/raw/618810/",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 28
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_6baaa471",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "Actually the api dir for functest internal API is locally in the sublevel path \"./functest\"",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 362,
+        "endChar": 24
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_8bad688b",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "It there a file named db_utils.py?",
+      "range": {
+        "startLine": 451,
+        "startChar": 13,
+        "endLine": 451,
+        "endChar": 24
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_cbb650dc",
+        "filename": "docs/testing/user/userguide/runfunctest.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "This param is not necessary in my local deployment based on compass, but I am not sure if it is needed for other installers.",
+      "range": {
+        "startLine": 347,
+        "startChar": 18,
+        "endLine": 347,
+        "endChar": 33
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_abbb0cc3",
+        "filename": "docs/testing/user/userguide/runfunctest.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "as follows",
+      "range": {
+        "startLine": 389,
+        "startChar": 26,
+        "endLine": 389,
+        "endChar": 32
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_0bb158e1",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "This ping.sh file has been updated, see: https://git.opnfv.org/functest/tree/functest/opnfv_tests/openstack/vping/ping.sh",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 8
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_ebb514ce",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-19T03:07:03Z",
+      "side": 1,
+      "message": "The step could be removed, as refstack-client is not installed in the virtual env now.",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 27
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
