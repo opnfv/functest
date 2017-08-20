@@ -32,7 +32,8 @@ class Environment(object):
             if k not in os.environ:
                 self.__setattr__(k, v)
         self._set_ci_run()
-        self._set_ci_loop()
+        if 'CI_LOOP' not in os.environ:
+            self._set_ci_loop()
 
     def _set_ci_run(self):
         if self.BUILD_TAG:
