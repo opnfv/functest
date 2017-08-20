@@ -117,7 +117,6 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         dns_file_bak = '/etc/resolv.conf.bak'
         shutil.copy(dns_file, dns_file_bak)
         script = ('echo -e "nameserver {0}{1}" > {2};'
-                  'source /etc/profile.d/rvm.sh;'
                   'cd {3};'
                   'rake test[{4}] SIGNUP_CODE={5}'
                   .format(dns_ip,

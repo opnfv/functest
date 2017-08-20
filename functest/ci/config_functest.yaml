@@ -5,7 +5,7 @@ general:
         dir_repo_rally:     /home/opnfv/repos/rally
         repo_tempest:       /src/tempest
         dir_repo_releng:    /home/opnfv/repos/releng
-        repo_vims_test:     /home/opnfv/repos/vnfs/vims-test
+        repo_vims_test:     /src/vims-test
         repo_onos:          /home/opnfv/repos/onos
         repo_barometer:     /home/opnfv/repos/barometer
         repo_doctor:        /home/opnfv/repos/doctor
