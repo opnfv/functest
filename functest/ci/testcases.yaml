@@ -460,7 +460,7 @@ tiers:
     -
         name: vnf
         order: 4
-        ci_loop: 'daily'
+        ci_loop: '(daily)|(weekly)'
         description : >-
             Collection of VNF test cases.
         testcases:
