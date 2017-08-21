@@ -116,10 +116,6 @@ rally:
     router_name: rally-router
 
 vnf:
-    aaa:
-        tenant_name: aaa
-        tenant_description: Freeradius server
-        tenant_images: {}
     juju_epc:
         tenant_name: epc
         tenant_description: OAI EPC deployed with Juju
