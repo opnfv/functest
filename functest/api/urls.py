@@ -25,8 +25,9 @@ URLPATTERNS = [
     # GET /api/v1/functest/envs => GET environment
     Url('/api/v1/functest/envs', 'v1_envs'),
 
-    # POST /api/v1/functest/envs/action , {"action":"prepare"}
-    # => Prepare environment
+    # POST /api/v1/functest/envs/action
+    # {"action":"prepare"} => Prepare environment
+    # {"action":"update_hosts", args: {}} => Update hosts info
     Url('/api/v1/functest/envs/action', 'v1_envs'),
 
     # GET /api/v1/functest/openstack/credentials => GET credentials
