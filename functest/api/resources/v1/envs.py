@@ -13,6 +13,7 @@ Resources to handle environment related requests
 from flask import jsonify
 
 from functest.api.base import ApiResource
+from functest.api.common import api_utils
 from functest.cli.commands.cli_env import Env
 import functest.utils.functest_utils as ft_utils
 
@@ -32,3 +33,29 @@ class V1Envs(ApiResource):
     def prepare(self, args):  # pylint: disable=no-self-use, unused-argument
         """ Prepare environment """
         ft_utils.execute_command("prepare_env start")
+
+    def update_hosts(self, hosts_info):  # pylint: disable=no-self-use
+        """ Update hosts info """
+
+        if not isinstance(hosts_info, dict):
+            return api_utils.result_handler(
+                status=1, data='Error, args should be a dict')
+        try:
+            functest_flag = "# SUT hosts info for Functest"
+            hosts_list = ('\n{} {} {}'.format(ip, host_name, functest_flag)
+                          for host_name, ip in hosts_info.items())
+
+            with open("/etc/hosts", 'r') as f:
+                origin_lines = [line for line in f
+                                if functest_flag not in line]
+
+            with open("/etc/hosts", 'w') as f:
+                f.writelines(origin_lines)
+                f.write(functest_flag)
+                f.writelines(hosts_list)
+        except Exception:  # pylint: disable=broad-except
+            return api_utils.result_handler(
+                status=1, data='Error when updating hosts info')
+        else:
+            return api_utils.result_handler(
+                status=0, data='Update hosts info successfully')
