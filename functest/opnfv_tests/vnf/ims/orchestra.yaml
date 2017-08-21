@@ -1,10 +1,10 @@
 tenant_images:
     orchestrator:
-        ubuntu-14.04-server-cloudimg-amd64-disk1: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+        ubuntu-14.04-server-cloudimg-amd64-disk1: /home/opnfv/functest/images/trusty-server-cloudimg-amd64-disk1.img
     orchestra_openims:
-        openims: http://marketplace.openbaton.org:8082/api/v1/images/52e2ccc0-1dce-4663-894d-28aab49323aa/img
+        openims: /home/opnfv/functest/images/openims.img
     orchestra_clearwaterims:
-        ubuntu-14.04-server-cloudimg-amd64-disk1: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+        ubuntu-14.04-server-cloudimg-amd64-disk1: /home/opnfv/functest/images/trusty-server-cloudimg-amd64-disk1.img
 mano:
     name: OpenBaton
     version: '3.2.0'
