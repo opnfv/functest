@@ -23,6 +23,7 @@ openbaton-cli
 cloudify_rest_client
 Flask!=0.11,<1.0,>=0.10 # BSD
 Flask-RESTful>=0.3.5 # BSD
+IPy
 mock>=2.0 # BSD
 iniparse==0.4
 PrettyTable<0.8,>=0.7.1 # BSD
