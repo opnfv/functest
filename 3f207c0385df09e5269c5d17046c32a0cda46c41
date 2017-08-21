@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_510f9230",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-21T08:46:59Z",
+      "side": 1,
+      "message": "I would prefer to export all OS_ env vars wthout any conditional check (or via another loop if you want double checking)",
+      "revId": "3f207c0385df09e5269c5d17046c32a0cda46c41",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
