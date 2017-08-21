@@ -10,11 +10,12 @@
 Resources to handle environment related requests
 """
 
+import IPy
 from flask import jsonify
 
 from functest.api.base import ApiResource
-from functest.cli.commands.cli_env import Env
 from functest.api.common import api_utils
+from functest.cli.commands.cli_env import Env
 import functest.utils.functest_utils as ft_utils
 
 
@@ -38,3 +39,41 @@ class V1Envs(ApiResource):
             return api_utils.result_handler(status=1, data=str(err))
         return api_utils.result_handler(
             status=0, data="Prepare env successfully")
+
+    def update_hosts(self, hosts_info):  # pylint: disable=no-self-use
+        """ Update hosts info """
+
+        if not isinstance(hosts_info, dict):
+            return api_utils.result_handler(
+                status=1, data='Error, args should be a dict')
+
+        for key, value in hosts_info.items():
+            if key:
+                try:
+                    IPy.IP(value)
+                except Exception:  # pylint: disable=broad-except
+                    return api_utils.result_handler(
+                        status=1, data='The IP %s is invalid' % value)
+            else:
+                return api_utils.result_handler(
+                    status=1, data='Domain name is absent')
+
+        try:
+            functest_flag = "# SUT hosts info for Functest"
+            hosts_list = ('\n{} {} {}'.format(ip, host_name, functest_flag)
+                          for host_name, ip in hosts_info.items())
+
+            with open("/etc/hosts", 'r') as file_hosts:
+                origin_lines = [line for line in file_hosts
+                                if functest_flag not in line]
+
+            with open("/etc/hosts", 'w') as file_hosts:
+                file_hosts.writelines(origin_lines)
+                file_hosts.write(functest_flag)
+                file_hosts.writelines(hosts_list)
+        except Exception:  # pylint: disable=broad-except
+            return api_utils.result_handler(
+                status=1, data='Error when updating hosts info')
+        else:
+            return api_utils.result_handler(
+                status=0, data='Update hosts info successfully')
