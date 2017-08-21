@@ -1,42 +1,28 @@
-From: Delia Popescu <delia.popescu@enea.com>
-Date: Thu, 20 Jul 2017 17:36:13 +0300
-Subject: [PATCH] Modified Dockerfile.aarch to a patch
-
-Docker image for functest on ARM was build using a different Dockerfile.
-Now the ARM Dockerfile is created with a patch,
-in order to avoid modifying both files.
-This Dockerfile.aarch64.patch is applied by opnfv-docker.sh from releng project.
-
-Signed-off-by: Delia Popescu <delia.popescu@enea.com>
----
- docker/Dockerfile | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
-
 diff --git a/docker/Dockerfile b/docker/Dockerfile
-index 924da68..dd87e6c 100644
+index 8c7e4b0f..f48e3162 100644
 --- a/docker/Dockerfile
 +++ b/docker/Dockerfile
 @@ -1,5 +1,5 @@
  ########################################
 -#   Docker container for FUNCTEST
-+#  Aarch64 Docker container for FUNCTEST
++#   Aarch64 Docker container for FUNCTEST
  ########################################
  # All rights reserved. This program and the accompanying materials
  # are made available under the terms of the Apache License, Version 2.0
 @@ -7,9 +7,9 @@
  # http://www.apache.org/licenses/LICENSE-2.0
  #
-
+ 
 -FROM ubuntu:14.04
 -MAINTAINER Jose Lausuch <jose.lausuch@ericsson.com>
 -LABEL version="0.1" description="OPNFV Functest Docker container"
 +FROM aarch64/ubuntu:14.04
 +MAINTAINER Armband team <armband@enea.com>
 +LABEL version="0.1" description="OPNFV Functest Aarch64 Docker container"
-
+ 
  # Environment variables
  ARG BRANCH=master
-@@ -43,6 +43,7 @@ gcc \
+@@ -42,6 +42,7 @@ gcc \
  git \
  libffi-dev \
  libgmp3-dev \
@@ -44,18 +30,18 @@ index 924da68..dd87e6c 100644
  libpq-dev \
  libssl-dev \
  libxml2-dev \
-@@ -117,11 +118,13 @@ RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-     && cd ${REPOS_VNFS_DIR}/vims-test \
-     && rvm use 1.9.3"
- RUN /bin/bash -c ". /etc/profile.d/rvm.sh \
-+    && gem install bundler \
-     && cd ${REPOS_VNFS_DIR}/vims-test \
-+    && bundle config build.nokogiri --use-system-libraries \
-     && bundle install"
-
+@@ -102,10 +103,11 @@ RUN /bin/bash -c ". /usr/local/lib/python2.7/dist-packages/sfc/tests/functest/se
+ RUN ln -s /src/tempest /src/refstack-client/.tempest \
+     && virtualenv --system-site-packages /src/tempest/.venv
+ 
+-RUN cd /src/vims-test && bundle install
++RUN cd /src/vims-test && gem install bundler && \
++    bundle config build.nokogiri --use-system-libraries && bundle install
+ 
 -RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -' \
 -    && sudo apt-get install -y nodejs \
 +RUN sh -c 'wget -qO- https://nodejs.org/dist/v4.7.2/node-v4.7.2-linux-arm64.tar.gz | \
 +    tar -xz -C /usr/local --exclude=CHANGELOG.md --exclude=LICENSE --exclude=README.md --strip-components 1 '\
-     && cd ${REPOS_DIR}/promise && sudo npm -g install npm@latest \
-     && cd ${REPOS_DIR}/promise/source && npm install
+     && cd /src/promise && sudo npm -g install npm@latest \
+     && cd /src/promise/source && npm install
+ 
