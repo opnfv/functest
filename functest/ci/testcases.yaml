@@ -523,21 +523,6 @@ tiers:
                     class: 'ClearwaterImsVnf'
 
             -
-                case_name: opera_vims
-                enabled: false
-                project_name: opera
-                criteria: 100
-                blocking: false
-                description: >-
-                    VNF deployment with OPEN-O
-                dependencies:
-                    installer: 'compass'
-                    scenario: 'os-nosdn-openo-ha'
-                run:
-                    module: 'functest.opnfv_tests.vnf.ims.opera_ims'
-                    class: 'OperaIms'
-
-            -
                 case_name: vyos_vrouter
                 enabled: false
                 project_name: functest
