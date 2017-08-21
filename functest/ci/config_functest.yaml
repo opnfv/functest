@@ -141,9 +141,6 @@ vnf:
         tenant_name: orchestra_clearwaterims
         tenant_description: Clearwater IMS deployed with Open Baton
         config: orchestra.yaml
-    opera_ims:
-        tenant_name: opera_ims
-        tenant_description: ims deployed with open-o
 
 ONOS:
     general:

@@ -2,7 +2,6 @@ git+https://gerrit.opnfv.org/gerrit/releng#egg=opnfv&subdirectory=modules
 git+https://gerrit.opnfv.org/gerrit/snaps#egg=snaps
 git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn#egg=sdnvpn
-git+https://gerrit.opnfv.org/gerrit/opera#egg=opera
 git+https://gerrit.opnfv.org/gerrit/securityscanning#egg=securityscanning
 git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
 -e git+https://gerrit.opnfv.org/gerrit/promise#egg=promise

@@ -1,6 +1,5 @@
 baro_tests
 sdnvpn
-opera
 securityscanning
 sfc
 promise
