@@ -20,22 +20,6 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
                     class: 'CloudifyIms'
-
-            -
-                case_name: aaa
-                enabled: false
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    Simple VNF.
-                dependencies:
-                    installer: ''
-                    scenario: ''
-                run:
-                    module: 'functest.opnfv_tests.vnf.aaa.aaa'
-                    class: 'AaaVnf'
-
             -
                 case_name: orchestra_openims
                 project_name: functest
