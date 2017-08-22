@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "da33351e_9aa3ef9d",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-22T06:29:04Z",
+      "side": 1,
+      "message": "snaps_smoke also in internal scope? see line 130",
+      "range": {
+        "startLine": 156,
+        "startChar": 3,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_eb87d40d",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 9
@@ -180,6 +203,92 @@
     },
     {
       "key": {
+        "uuid": "da33351e_7aa0ab90",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-22T06:29:04Z",
+      "side": 1,
+      "message": "I would prefer TestAPI, no space, TestAPI is a name for Python project",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 8
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_daad778a",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-22T06:29:04Z",
+      "side": 1,
+      "message": "TestAPI",
+      "range": {
+        "startLine": 286,
+        "startChar": 56,
+        "endLine": 286,
+        "endChar": 64
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_baaa336e",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-22T06:29:04Z",
+      "side": 1,
+      "message": "for the references, how about leveraging the same hyperlink type? Personally, I would recommend the new ones",
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_fabb1bc2",
+        "filename": "docs/testing/user/configguide/ci.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-22T06:29:04Z",
+      "side": 1,
+      "message": "why starts from [3]?",
+      "range": {
+        "startLine": 6,
+        "startChar": 45,
+        "endLine": 6,
+        "endChar": 48
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_eb9eb455",
         "filename": "docs/testing/user/configguide/ci.rst",
         "patchSetId": 9
@@ -219,6 +328,52 @@
         "startChar": 0,
         "endLine": 276,
         "endChar": 28
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_1adebf11",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-22T06:29:04Z",
+      "side": 1,
+      "message": "delete or substitute with the right directory /src or /usr/local/lib/python2.7/dist-packages?",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 330,
+        "endChar": 20
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_fae2fbd3",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-22T06:29:04Z",
+      "side": 1,
+      "message": "repos is gone?",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 342,
+        "endChar": 66
       },
       "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
@@ -311,6 +466,29 @@
         "startChar": 26,
         "endLine": 389,
         "endChar": 32
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_5ae847b4",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-22T06:29:04Z",
+      "side": 1,
+      "message": "a -\u003e an?",
+      "range": {
+        "startLine": 12,
+        "startChar": 69,
+        "endLine": 12,
+        "endChar": 70
       },
       "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
