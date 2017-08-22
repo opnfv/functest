@@ -109,18 +109,14 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
                                  bono_ip=None, ellis_ip=None,
                                  signup_code='secret'):
         self.logger.info('Run Clearwater live test')
-        nameservers = ft_utils.get_resolvconf_ns()
-        resolvconf = ['{0}{1}{2}'.format(os.linesep, 'nameserver ', ns)
-                      for ns in nameservers]
-        self.logger.debug('resolvconf: %s', resolvconf)
         dns_file = '/etc/resolv.conf'
         dns_file_bak = '/etc/resolv.conf.bak'
+        self.logger.debug('Backup %s -> %s', dns_file, dns_file_bak)
         shutil.copy(dns_file, dns_file_bak)
-        script = ('echo -e "nameserver {0}{1}" > {2};'
-                  'cd {3};'
-                  'rake test[{4}] SIGNUP_CODE={5}'
-                  .format(dns_ip,
-                          ''.join(resolvconf),
+        script = ('echo -e "nameserver {0}" > {1};'
+                  'cd {2};'
+                  'rake test[{3}] SIGNUP_CODE={4}'
+                  .format('127.0.0.1',
                           dns_file,
                           self.test_dir,
                           public_domain,
