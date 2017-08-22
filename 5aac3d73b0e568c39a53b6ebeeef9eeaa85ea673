@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_b42c07ad",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 334
+      },
+      "writtenOn": "2017-08-22T19:38:28Z",
+      "side": 1,
+      "message": "Note this is blocked in LF lab by firewall.  Can we host this on opnfv artifacts?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 92
+      },
+      "revId": "5aac3d73b0e568c39a53b6ebeeef9eeaa85ea673",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
