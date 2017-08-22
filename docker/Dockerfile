@@ -38,6 +38,7 @@ build-essential \
 bundler \
 crudini \
 curl \
+dnsmasq \
 gcc \
 git \
 libffi-dev \
