@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_80653ee3",
+        "filename": "functest/api/resources/v1/envs.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-22T13:29:39Z",
+      "side": 1,
+      "message": "How to check the content?",
+      "parentUuid": "da33351e_5ae9677f",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 43
+      },
+      "revId": "43ed63c1a8ffef888d3b33aecb7d1db7c244d335",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_fa9afb12",
         "filename": "functest/api/resources/v1/envs.py",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-22T07:32:56Z",
       "side": 1,
       "message": "you can leverage \u0027a\u0027 flag directly, no need to open read and write",
+      "revId": "43ed63c1a8ffef888d3b33aecb7d1db7c244d335",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_e0624ad7",
+        "filename": "functest/api/resources/v1/envs.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-22T13:29:39Z",
+      "side": 1,
+      "message": "But if \"a\" is used here, how could the updated hosts info written in the last time be cleaned when it is run twice or again?",
+      "parentUuid": "da33351e_fa9afb12",
       "revId": "43ed63c1a8ffef888d3b33aecb7d1db7c244d335",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
