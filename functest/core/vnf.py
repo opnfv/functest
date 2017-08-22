@@ -14,7 +14,9 @@ import time
 
 import functest.core.testcase as base
 from functest.utils.constants import CONST
-import functest.utils.openstack_utils as os_utils
+from snaps.openstack.create_user import UserSettings, OpenStackUser
+from snaps.openstack.create_project import ProjectSettings, OpenStackProject
+from snaps.openstack.tests import openstack_tests
 
 __author__ = ("Morgan Richomme <morgan.richomme@orange.com>, "
               "Valentin Boucher <valentin.boucher@orange.com>")
@@ -46,7 +48,8 @@ class VnfOnBoarding(base.TestCase):
         self.exist_obj = {'tenant': False, 'user': False}
         self.tenant_name = CONST.__getattribute__(
             'vnf_{}_tenant_name'.format(self.case_name))
-        self.creds = {}
+        self.snaps_creds = {}
+        self.created_object = []
 
     def run(self, **kwargs):
         """
@@ -100,20 +103,29 @@ class VnfOnBoarding(base.TestCase):
                 'vnf_{}_tenant_description'.format(self.case_name))
             self.__logger.info("Prepare VNF: %s, description: %s",
                                self.tenant_name, tenant_description)
-            keystone_client = os_utils.get_keystone_client()
-            self.exist_obj['tenant'] = (
-                not os_utils.get_or_create_tenant_for_vnf(
-                    keystone_client,
-                    self.tenant_name,
-                    tenant_description))
-            self.exist_obj['user'] = not os_utils.get_or_create_user_for_vnf(
-                keystone_client, self.tenant_name)
-            self.creds = {
-                "tenant": self.tenant_name,
-                "username": self.tenant_name,
-                "password": self.tenant_name,
-                "auth_url": os_utils.get_credentials()['auth_url']
-                }
+            snaps_creds = openstack_tests.get_credentials(
+                os_env_file=CONST.__getattribute__('openstack_creds'))
+
+            project_creator = OpenStackProject(snaps_creds,
+                                               ProjectSettings(
+                                                name=self.tenant_name,
+                                                description=tenant_description,
+                                               ))
+            project_creator.create()
+            self.created_object.append(project_creator)
+            self.project_ims = project_creator
+
+            user_creator = OpenStackUser(snaps_creds,
+                                         UserSettings(
+                                            name=self.tenant_name,
+                                            password=self.tenant_name))
+            user_creator.create()
+            self.created_object.append(user_creator)
+
+            project_creator.assoc_user(user_creator.user_settings)
+
+            self.snaps_creds = user_creator.get_os_creds(self.tenant_name)
+
             return base.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Exception raised during VNF preparation")
@@ -185,8 +197,9 @@ class VnfOnBoarding(base.TestCase):
             * the tenant
         """
         self.__logger.info("test cleaning")
-        keystone_client = os_utils.get_keystone_client()
-        if not self.exist_obj['tenant']:
-            os_utils.delete_tenant(keystone_client, self.tenant_name)
-        if not self.exist_obj['user']:
-            os_utils.delete_user(keystone_client, self.tenant_name)
+        self.__logger.info('Remove the cloudify manager OS object ..')
+        for creator in reversed(self.created_object):
+            try:
+                creator.clean()
+            except Exception as exc:
+                self.__logger.error('Unexpected error cleaning - %s', exc)
