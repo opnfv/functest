@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_3a04637a",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-22T06:31:21Z",
+      "side": 1,
+      "message": "I prefer keeping sections as it allows commenting region",
+      "parentUuid": "da33351e_9f0c8144",
+      "revId": "147c5c0aaf7d120dc1d3c83f6568d9cb8e26892e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_7f09bd30",
         "filename": "functest/ci/download_images.sh",
         "patchSetId": 3
@@ -117,6 +135,30 @@
       "writtenOn": "2017-08-22T01:42:53Z",
       "side": 1,
       "message": "(unrelated to current patch): any idea why we download both release and current trusty images? should we do the same for AArch64?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 84
+      },
+      "revId": "147c5c0aaf7d120dc1d3c83f6568d9cb8e26892e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_fa095b96",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-22T06:31:21Z",
+      "side": 1,
+      "message": "I haven\u0027t modified it but I fully agree we should check why we require two images (cloud ready image or not?)",
+      "parentUuid": "da33351e_7f09bd30",
       "range": {
         "startLine": 12,
         "startChar": 0,
@@ -163,6 +205,30 @@
       "writtenOn": "2017-08-22T01:42:53Z",
       "side": 1,
       "message": "this will now return the status of the `xz ...` command instead of wget.\nMaybe catch the return code of wget before xz in a var and return that?",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 7
+      },
+      "revId": "147c5c0aaf7d120dc1d3c83f6568d9cb8e26892e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_bad8731e",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-22T06:31:21Z",
+      "side": 1,
+      "message": "Please have a look to set -e",
+      "parentUuid": "da33351e_7f225dba",
       "range": {
         "startLine": 23,
         "startChar": 5,
