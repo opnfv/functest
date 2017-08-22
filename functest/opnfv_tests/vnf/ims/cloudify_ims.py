@@ -110,15 +110,15 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
         # needs some images
         self.__logger.info("Upload some OS images if it doesn't exist")
-        for image_name, image_url in self.images.iteritems():
-            self.__logger.info("image: %s, url: %s", image_name, image_url)
-            if image_url and image_name:
+        for image_name, image_file in self.images.iteritems():
+            self.__logger.info("image: %s, file: %s", image_name, image_file)
+            if image_file and image_name:
                 image_creator = OpenStackImage(
                     self.snaps_creds,
                     ImageSettings(name=image_name,
                                   image_user='cloud',
                                   img_format='qcow2',
-                                  url=image_url))
+                                  image_file=image_file))
                 image_creator.create()
                 # self.created_object.append(image_creator)
 

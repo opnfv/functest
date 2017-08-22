@@ -196,8 +196,7 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
             os.makedirs(self.data_dir)
 
         self.images = get_config(
-            "tenant_images.%s" %
-            self.case_name, config_file)
+            "tenant_images.orchestrator", config_file)
         self.images.update(
             get_config(
                 "tenant_images.%s" %
@@ -228,15 +227,16 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
     def prepare_images(self):
         """Upload images if they doen't exist yet"""
         self.logger.info("Upload images if they doen't exist yet")
-        for image_name, image_url in self.images.iteritems():
-            self.logger.info("image: %s, url: %s", image_name, image_url)
-            if image_url and image_name:
+        for image_name, image_file in self.images.iteritems():
+            self.logger.info("image: %s, file: %s", image_name, image_file)
+            print "image: {}, file: {}".format(image_name, image_file)
+            if image_file and image_name:
                 image = OpenStackImage(
                     self.snaps_creds,
                     ImageSettings(name=image_name,
                                   image_user='cloud',
                                   img_format='qcow2',
-                                  url=image_url))
+                                  image_file=image_file))
                 image.create()
                 # self.created_resources.append(image);
 
