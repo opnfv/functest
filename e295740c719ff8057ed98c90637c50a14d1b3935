@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_170695ce",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-08-22T21:56:17Z",
+      "side": 1,
+      "message": "Please note that encoding an invalid image_user value will cause problems when attempting to access the image via ssh. In this use case, it does not appear to be an issue; however, I would prescribe the best practice would be to configure the image settings with a proper image user name and leverage the exact same object when firing up a VM from that image.",
+      "revId": "e295740c719ff8057ed98c90637c50a14d1b3935",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
