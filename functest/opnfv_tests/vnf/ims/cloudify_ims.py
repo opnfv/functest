@@ -39,6 +39,7 @@ from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
 from snaps.openstack.create_image import ImageSettings, OpenStackImage
 from snaps.openstack.create_keypairs import KeypairSettings, OpenStackKeypair
 from snaps.openstack.create_network import PortSettings
+from snaps.openstack.create_project import OpenStackProject, ProjectSettings
 
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
@@ -63,7 +64,6 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             raise Exception("VNF config file not found")
 
         self.snaps_creds = ''
-        self.created_object = []
 
         config_file = os.path.join(self.case_dir, self.config)
         self.orchestrator = dict(
@@ -101,12 +101,19 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
         self.__logger.info("Additional pre-configuration steps")
 
-        self.snaps_creds = OSCreds(
-            username=self.creds['username'],
-            password=self.creds['password'],
-            auth_url=self.creds['auth_url'],
-            project_name=self.creds['tenant'],
-            identity_api_version=int(os_utils.get_keystone_client_version()))
+        compute_quotas = self.project_ims.get_compute_quotas()
+        network_quotas = self.project_ims.get_network_quotas()
+
+        for key, value in (
+                self.orchestrator['requirements']['compute_quotas'].items()):
+            setattr(compute_quotas, key, value)
+
+        for key, value in (
+                self.orchestrator['requirements']['network_quotas'].items()):
+            setattr(network_quotas, key, value)
+
+        compute_quotas = self.project_ims.update_compute_quotas(compute_quotas)
+        network_quotas = self.project_ims.update_network_quotas(network_quotas)
 
         # needs some images
         self.__logger.info("Upload some OS images if it doesn't exist")
@@ -392,12 +399,6 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             self.__logger.warn("Some issue during the undeployment ..")
             self.__logger.warn("Tenant clean continue ..")
 
-        self.__logger.info('Remove the cloudify manager OS object ..')
-        for creator in reversed(self.created_object):
-            try:
-                creator.clean()
-            except Exception as exc:
-                self.logger.error('Unexpected error cleaning - %s', exc)
         super(CloudifyIms, self).clean()
 
     @energy.enable_recording

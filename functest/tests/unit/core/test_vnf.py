@@ -102,53 +102,15 @@ class VnfBaseTesting(unittest.TestCase):
         with self.assertRaises(vnf.VnfTestException):
             self.test.test_vnf()
 
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.delete_user',
-                return_value=True)
-    def test_clean_user_already_exist(self, *args):
-        self.test.exist_obj['user'] = True
-        self.test.clean()
-        args[0].assert_not_called()
-        args[1].assert_called_once_with()
-
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.delete_user',
-                return_value=True)
-    def test_clean_user_created(self, *args):
-        self.test.exist_obj['user'] = False
-        self.test.clean()
-        args[0].assert_called_once_with(mock.ANY, self.tenant_name)
-        args[1].assert_called_once_with()
-
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.delete_tenant',
-                return_value=True)
-    def test_clean_tenant_already_exist(self, *args):
-        self.test.exist_obj['tenant'] = True
-        self.test.clean()
-        args[0].assert_not_called()
-        args[1].assert_called_once_with()
-
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.delete_tenant',
-                return_value=True)
-    def test_clean_tenant_created(self, *args):
-        self.test.exist_obj['tenant'] = False
-        self.test.clean()
-        args[0].assert_called_once_with(mock.ANY, self.tenant_name)
-        args[1].assert_called_once_with()
-
     def test_deploy_orch_unimplemented(self):
         self.assertTrue(self.test.deploy_orchestrator())
 
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
+    @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials',
                 return_value='test')
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
+    @mock.patch('snaps.openstack.create_project.OpenStackProject',
                 return_value=True)
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
+    @mock.patch('snaps.openstack.create_user.OpenStackUser',
                 return_value=True)
-    @mock.patch('functest.core.vnf.os_utils.get_credentials',
-                return_value={'auth_url': 'test'})
     def test_prepare(self, *args):
         self.assertEqual(self.test.prepare(),
                          testcase.TestCase.EX_OK)
@@ -158,15 +120,15 @@ class VnfBaseTesting(unittest.TestCase):
             'test', self.tenant_name, self.tenant_description)
         args[3].assert_called_once_with()
 
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
+    @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials',
                 side_effect=Exception)
     def test_prepare_keystone_client_ko(self, *args):
         with self.assertRaises(vnf.VnfPreparationException):
             self.test.prepare()
         args[0].assert_called_once_with()
 
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
+    @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials')
+    @mock.patch('snaps.openstack.create_project.OpenStackProject',
                 side_effect=Exception)
     def test_prepare_tenant_creation_ko(self, *args):
         with self.assertRaises(vnf.VnfPreparationException):
@@ -175,10 +137,10 @@ class VnfBaseTesting(unittest.TestCase):
             mock.ANY, self.tenant_name, self.tenant_description)
         args[1].assert_called_once_with()
 
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
+    @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials')
+    @mock.patch('snaps.openstack.create_project.OpenStackProject',
                 return_value=0)
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
+    @mock.patch('snaps.openstack.create_user.OpenStackUser',
                 side_effect=Exception)
     def test_prepare_user_creation_ko(self, *args):
         with self.assertRaises(vnf.VnfPreparationException):
