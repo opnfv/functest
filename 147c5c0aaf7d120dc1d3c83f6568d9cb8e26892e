@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_3aabc3d9",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-22T02:46:32Z",
+      "side": 1,
+      "message": "I do not think ubuntu 16.04 will work for snaps currently, we should check it with Steven before updating.",
+      "parentUuid": "da33351e_bf9065ed",
+      "range": {
+        "startLine": 22,
+        "startChar": 58,
+        "endLine": 22,
+        "endChar": 63
+      },
+      "revId": "147c5c0aaf7d120dc1d3c83f6568d9cb8e26892e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_ffc14de5",
         "filename": "functest/ci/config_aarch64_patch.yaml",
         "patchSetId": 3
