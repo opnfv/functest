@@ -184,9 +184,12 @@ class TempestCommon(testcase.OSGCTestCase):
             try:
                 self.result = 100 * int(num_success) / int(num_executed)
             except ZeroDivisionError:
-                logger.error("No test has been executed")
                 self.result = 0
-                return
+                if int(num_tests) > 0:
+                    logger.info("All tests have been skipped")
+                else:
+                    logger.error("No test has been executed")
+                    return
 
             with open(os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
                                    "tempest.log"), 'r') as logfile:
