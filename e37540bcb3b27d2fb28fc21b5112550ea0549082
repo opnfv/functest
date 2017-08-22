@@ -39,6 +39,24 @@
       "revId": "e37540bcb3b27d2fb28fc21b5112550ea0549082",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_dac45742",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-22T06:10:46Z",
+      "side": 1,
+      "message": "Yes, the three params would be set manually when needed.",
+      "parentUuid": "da33351e_7a79cb2e",
+      "revId": "e37540bcb3b27d2fb28fc21b5112550ea0549082",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
