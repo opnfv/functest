@@ -96,6 +96,11 @@ odl_sfc:
 
 tempest:
     deployment_name: opnfv-tempest
+    identity:
+        tenant_name: tempest
+        tenant_description: Tenant for Tempest test suite
+        user_name: tempest
+        user_password: Tempest123!
     validation:
         ssh_timeout: 130
     object_storage:
