@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_179cd5bf",
+        "filename": "docker/Dockerfile.aarch64.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-22T20:53:35Z",
+      "side": 1,
+      "message": "Removing the patch header breaks compatibility with `git am`.\nRight now we use `patch` to apply it, see [1], but in the future it would be best to switch to `git am -3` to solve any possible merge conflicts on the fly (where possible).\nI agree a better patch title/description could be added.\n\n[1] https://github.com/opnfv/releng/blob/master/jjb/releng/opnfv-docker.sh#L65",
+      "revId": "f562939f0033f903178ceadf23bf51f8c11aacca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_f7a051f6",
+        "filename": "docker/Dockerfile.aarch64.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-22T20:53:35Z",
+      "side": 1,
+      "message": "AArch64",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 12
+      },
+      "revId": "f562939f0033f903178ceadf23bf51f8c11aacca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_57a65d11",
+        "filename": "docker/Dockerfile.aarch64.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-22T20:53:35Z",
+      "side": 1,
+      "message": "trailing ws, please s/ $//g",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 1
+      },
+      "revId": "f562939f0033f903178ceadf23bf51f8c11aacca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_77ac41ee",
+        "filename": "docker/Dockerfile.aarch64.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-22T20:53:35Z",
+      "side": 1,
+      "message": "This docker hub repo will soon be obsoleted by a rename, see instead:\nhttps://hub.docker.com/u/arm64v8/",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "f562939f0033f903178ceadf23bf51f8c11aacca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
