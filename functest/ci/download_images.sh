@@ -1,62 +1,17 @@
 #!/bin/bash
 
-CIRROS_REPO_URL=http://download.cirros-cloud.net
-CIRROS_AARCH64_TAG=161201
-CIRROS_X86_64_TAG=0.3.5
+cat << EOF  | wget -i - -P ${1:-/home/opnfv/functest/images}
+http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+https://cloud-images.ubuntu.com/releases/16.04/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img
+http://repository.cloudifysource.org/cloudify/4.0.1/sp-release/cloudify-manager-premium-4.0.1.qcow2
+http://marketplace.openbaton.org:8082/api/v1/images/52e2ccc0-1dce-4663-894d-28aab49323aa/img
+http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-lxc.tar.gz
+http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-disk.img
+http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-initramfs
+http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-kernel
+EOF
 
-RED='\033[1;31m'
-NC='\033[0m' # No Color
-
-function usage(){
-    echo -e "${RED}USAGE: $script <destination_folder> <scenario_name> [arch]${NC}"
-    exit 0
-}
-
-script=`basename "$0"`
-IMAGES_FOLDER_DIR=$1
-SCENARIO=$2
-ARCH=$3
-
-if [[ -z $IMAGES_FOLDER_DIR ]]; then usage; fi;
-
-set -ex
-mkdir -p ${IMAGES_FOLDER_DIR}
-
-
-####################
-# MANDATORY IMAGES #
-####################
-# These images should be present in Functest for the tests to work
-
-# Functest:
-wget -nc ${CIRROS_REPO_URL}/${CIRROS_X86_64_TAG}/cirros-${CIRROS_X86_64_TAG}-x86_64-disk.img -P ${IMAGES_FOLDER_DIR}
-wget -nc ${CIRROS_REPO_URL}/${CIRROS_X86_64_TAG}/cirros-${CIRROS_X86_64_TAG}-x86_64-lxc.tar.gz -P ${IMAGES_FOLDER_DIR}
-
-# SNAPS:
-wget -nc http://uec-images.ubuntu.com/releases/trusty/14.04/ubuntu-14.04-server-cloudimg-amd64-disk1.img -P ${IMAGES_FOLDER_DIR}
-wget -nc http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2 -P ${IMAGES_FOLDER_DIR}
-
-
-###################
-# OPTIONAL IMAGES #
-###################
-# Optional images can be commented if they are not going to be used by the tests
-
-# SDNVPN (odl-bgpvpn scenarios):
-if [[ ${SCENARIO} == *"bgpvpn"* ]]; then
-    wget -nc http://artifacts.opnfv.org/sdnvpn/ubuntu-16.04-server-cloudimg-amd64-disk1.img -P ${IMAGES_FOLDER_DIR}
-fi
-
-# ONOS (onos-sfc scenarios):
-if [[ ${SCENARIO} == *"onos-sfc"* ]]; then
-    wget -nc http://artifacts.opnfv.org/onosfw/images/firewall_block_image.img -P ${IMAGES_FOLDER_DIR}
-fi
-
-if [[ ${ARCH} == "arm" ]] || [[ ${ARCH} == "aarch64" ]]; then
-    # ARM (aarch64 cirros images):
-    wget -nc ${CIRROS_REPO_URL}/daily/20${CIRROS_AARCH64_TAG}/cirros-d${CIRROS_AARCH64_TAG}-aarch64-disk.img -P ${IMAGES_FOLDER_DIR}
-    wget -nc ${CIRROS_REPO_URL}/daily/20${CIRROS_AARCH64_TAG}/cirros-d${CIRROS_AARCH64_TAG}-aarch64-initramfs -P ${IMAGES_FOLDER_DIR}
-    wget -nc ${CIRROS_REPO_URL}/daily/20${CIRROS_AARCH64_TAG}/cirros-d${CIRROS_AARCH64_TAG}-aarch64-kernel -P ${IMAGES_FOLDER_DIR}
-fi
-
-set +ex
+exit $?
