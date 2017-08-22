@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_85f6f0d5",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_2b79bc2f",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 48
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_4b7c0021",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-19T03:07:03Z",
       "side": 1,
       "message": "Conflicts should be solved here.",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 48
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_e5037cb6",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_4b7c0021",
       "range": {
         "startLine": 152,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_252d6447",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "I put snaps_smoke in external and adapt L130\nEven if healthcheck cases are also now based on snaps, they are relatively simple\nI consider snaps smoke as a test from SNAPS_OO",
+      "parentUuid": "da33351e_9aa3ef9d",
+      "range": {
+        "startLine": 156,
+        "startChar": 3,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_eb87d40d",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-19T03:07:03Z",
       "side": 1,
       "message": "functest-odl-sfc",
+      "range": {
+        "startLine": 157,
+        "startChar": 3,
+        "endLine": 157,
+        "endChar": 10
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_0532e0a6",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_eb87d40d",
       "range": {
         "startLine": 157,
         "startChar": 3,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_65276c65",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "it was for history, as indicated abov: integrated in previous versions but not released in Euphrates\nas multisites will never be released again, it may make sense to remove it...as it could be misleading",
+      "parentUuid": "da33351e_0b831805",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 13
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_cb8f7022",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 9
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-19T03:07:03Z",
       "side": 1,
       "message": "Functest is a framework.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 27
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_452ce847",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_cb8f7022",
       "range": {
         "startLine": 175,
         "startChar": 0,
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_851d5012",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "I added\nNote Functest deals with healthcheck, smoke, features, components and vnf tiers.\nPerformance and stress tiers are out of scope.",
+      "parentUuid": "da33351e_6b73c44d",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 10
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_ab94ac37",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 9
@@ -203,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_c51758ec",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_ab94ac37",
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_7aa0ab90",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 9
@@ -214,6 +400,30 @@
       "writtenOn": "2017-08-22T06:29:04Z",
       "side": 1,
       "message": "I would prefer TestAPI, no space, TestAPI is a name for Python project",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 8
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_25d4441f",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_7aa0ab90",
       "range": {
         "startLine": 284,
         "startChar": 0,
@@ -249,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_05d94057",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_daad778a",
+      "range": {
+        "startLine": 286,
+        "startChar": 56,
+        "endLine": 286,
+        "endChar": 64
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_baaa336e",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 9
@@ -266,6 +500,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_65de4c41",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "any reference? not sure to catch the reco",
+      "parentUuid": "da33351e_baaa336e",
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_fabb1bc2",
         "filename": "docs/testing/user/configguide/ci.rst",
         "patchSetId": 9
@@ -277,6 +529,30 @@
       "writtenOn": "2017-08-22T06:29:04Z",
       "side": 1,
       "message": "why starts from [3]?",
+      "range": {
+        "startLine": 6,
+        "startChar": 45,
+        "endLine": 6,
+        "endChar": 48
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_85e4300e",
+        "filename": "docs/testing/user/configguide/ci.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "because it is a subpart of a global document\nI just split a big one into different chapter and did not change the ref number\nin the overall document it should be the third reference",
+      "parentUuid": "da33351e_fabb1bc2",
       "range": {
         "startLine": 6,
         "startChar": 45,
@@ -312,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_e5f1bcce",
+        "filename": "docs/testing/user/configguide/ci.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_eb9eb455",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 83
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_4ba3609e",
         "filename": "docs/testing/user/configguide/configguide.rst",
         "patchSetId": 9
@@ -323,6 +623,30 @@
       "writtenOn": "2017-08-19T03:07:03Z",
       "side": 1,
       "message": "This openstack.creds file is obsolete for compass OSA, as https is supprted and os_cacert file is also required, see:\nhttp://paste.openstack.org/raw/618810/",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 28
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_45ba28df",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_4ba3609e",
       "range": {
         "startLine": 267,
         "startChar": 0,
@@ -358,6 +682,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_05f4a059",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_1adebf11",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 330,
+        "endChar": 20
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_fae2fbd3",
         "filename": "docs/testing/user/configguide/configguide.rst",
         "patchSetId": 9
@@ -381,6 +729,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_e5fc1c41",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "not all repos yet\nmaybe soon..\nremaining onos, doctor and vnfs",
+      "parentUuid": "da33351e_fae2fbd3",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 342,
+        "endChar": 66
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_6baaa471",
         "filename": "docs/testing/user/configguide/configguide.rst",
         "patchSetId": 9
@@ -392,6 +764,30 @@
       "writtenOn": "2017-08-19T03:07:03Z",
       "side": 1,
       "message": "Actually the api dir for functest internal API is locally in the sublevel path \"./functest\"",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 362,
+        "endChar": 24
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_45a50852",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_6baaa471",
       "range": {
         "startLine": 351,
         "startChar": 0,
@@ -450,6 +846,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_8586f0b7",
+        "filename": "docs/testing/user/userguide/runfunctest.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "I reuse Cedric\u0027s doc\nnot sure it is always needed",
+      "parentUuid": "da33351e_cbb650dc",
+      "range": {
+        "startLine": 347,
+        "startChar": 18,
+        "endLine": 347,
+        "endChar": 33
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_abbb0cc3",
         "filename": "docs/testing/user/userguide/runfunctest.rst",
         "patchSetId": 9
@@ -461,6 +881,30 @@
       "writtenOn": "2017-08-19T03:07:03Z",
       "side": 1,
       "message": "as follows",
+      "range": {
+        "startLine": 389,
+        "startChar": 26,
+        "endLine": 389,
+        "endChar": 32
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_e5937cf8",
+        "filename": "docs/testing/user/userguide/runfunctest.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_abbb0cc3",
       "range": {
         "startLine": 389,
         "startChar": 26,
@@ -496,6 +940,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_c590f8ee",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_5ae847b4",
+      "range": {
+        "startLine": 12,
+        "startChar": 69,
+        "endLine": 12,
+        "endChar": 70
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_0bb158e1",
         "filename": "docs/testing/user/userguide/test_details.rst",
         "patchSetId": 9
@@ -519,6 +987,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_05c2e0e8",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_0bb158e1",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 8
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_ebb514ce",
         "filename": "docs/testing/user/userguide/test_details.rst",
         "patchSetId": 9
@@ -530,6 +1022,30 @@
       "writtenOn": "2017-08-19T03:07:03Z",
       "side": 1,
       "message": "The step could be removed, as refstack-client is not installed in the virtual env now.",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 27
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_65b76c87",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-22T12:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_ebb514ce",
       "range": {
         "startLine": 274,
         "startChar": 0,
