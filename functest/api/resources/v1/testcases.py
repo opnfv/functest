@@ -68,22 +68,23 @@ class V1Testcase(ApiResource):
             return api_utils.result_handler(
                 status=1, data='testcase name must be provided')
 
-        task_id = str(uuid.uuid4())
+        self.task_id = str(uuid.uuid4())
 
-        task_args = {'testcase': case_name, 'task_id': task_id}
+        task_args = {'testcase': case_name, 'task_id': self.task_id}
 
         task_args.update(args.get('opts', {}))
 
         task_thread = thread.TaskThread(self._run, task_args, TasksHandler())
         task_thread.start()
 
-        results = {'testcase': case_name, 'task_id': task_id}
+        results = {'testcase': case_name, 'task_id': self.task_id}
         return jsonify(results)
 
     def _run(self, args):  # pylint: disable=no-self-use
         """ The built_in function to run a test case """
 
         case_name = args.get('testcase')
+        self._set_log()
 
         if not os.path.isfile(CONST.__getattribute__('env_active')):
             raise Exception("Functest environment is not ready.")
@@ -113,3 +114,16 @@ class V1Testcase(ApiResource):
             }
 
             return {'result': result}
+
+    def _set_log(self):
+        log_format = ('%(asctime)s %(name)s %(filename)s:'
+                      '%(lineno)d %(levelname)s %(message)s')
+        log_formatter = logging.Formatter(log_format)
+
+        log_path = os.path.join(CONST.__getattribute__('dir_results'),
+                                '{}.log'.format(self.task_id))
+        log_handler = logging.FileHandler(log_path)
+        log_handler.setFormatter(log_formatter)
+        log_handler.setLevel(logging.DEBUG)
+
+        logging.root.addHandler(log_handler)
