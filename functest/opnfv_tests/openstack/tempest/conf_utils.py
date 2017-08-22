@@ -41,6 +41,9 @@ REFSTACK_RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'),
                                     'refstack')
 TEMPEST_CONF_YAML = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/tempest_conf.yaml')
+TEST_ACCOUNTS_FILE = pkg_resources.resource_filename(
+    'functest',
+    'opnfv_tests/openstack/tempest/custom_tests/test_accounts.yaml')
 
 CI_INSTALLER_TYPE = CONST.__getattribute__('INSTALLER_TYPE')
 CI_INSTALLER_IP = CONST.__getattribute__('INSTALLER_IP')
@@ -115,6 +118,30 @@ def create_tempest_resources(use_custom_images=False,
     img_flavor_dict['flavor_id_alt'] = flavor_id_alt
 
     return img_flavor_dict
+
+
+def create_tenant_user():
+    keystone_client = os_utils.get_keystone_client()
+
+    logger.debug("Creating tenant and user for Tempest suite")
+    tenant_id = os_utils.create_tenant(
+        keystone_client,
+        CONST.__getattribute__('tempest_identity_tenant_name'),
+        CONST.__getattribute__('tempest_identity_tenant_description'))
+    if not tenant_id:
+        logger.error("Failed to create %s tenant"
+                     % CONST.__getattribute__('tempest_identity_tenant_name'))
+
+    user_id = os_utils.create_user(
+        keystone_client,
+        CONST.__getattribute__('tempest_identity_user_name'),
+        CONST.__getattribute__('tempest_identity_user_password'),
+        None, tenant_id)
+    if not user_id:
+        logger.error("Failed to create %s user" %
+                     CONST.__getattribute__('tempest_identity_user_name'))
+
+    return tenant_id
 
 
 def get_verifier_id():
@@ -228,6 +255,8 @@ def configure_tempest_defcore(deployment_dir, img_flavor_dict):
     config.set('DEFAULT', 'log_file', '{}/tempest.log'.format(deployment_dir))
     config.set('oslo_concurrency', 'lock_path',
                '{}/lock_files'.format(deployment_dir))
+    generate_test_accounts_file()
+    config.set('auth', 'test_accounts_file', TEST_ACCOUNTS_FILE)
     config.set('scenario', 'img_dir', '{}'.format(deployment_dir))
     config.set('scenario', 'img_file', 'tempest-image')
     config.set('compute', 'image_ref', img_flavor_dict.get("image_id"))
@@ -244,6 +273,28 @@ def configure_tempest_defcore(deployment_dir, img_flavor_dict):
         'functest',
         'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
     shutil.copyfile(conf_file, confpath)
+
+
+def generate_test_accounts_file():
+    """
+    Add needed tenant and user params into test_accounts.yaml
+    """
+
+    logger.debug("Add needed params into test_accounts.yaml...")
+    tenant_id = create_tenant_user()
+    accounts_list = [
+        {
+            'tenant_name':
+                CONST.__getattribute__('tempest_identity_tenant_name'),
+            'tenant_id': str(tenant_id),
+            'username': CONST.__getattribute__('tempest_identity_tenant_name'),
+            'password':
+                CONST.__getattribute__('tempest_identity_user_password')
+        }
+    ]
+
+    with open(TEST_ACCOUNTS_FILE, "w") as f:
+        yaml.dump(accounts_list, f, default_flow_style=False)
 
 
 def configure_tempest_update_params(tempest_conf_file,
