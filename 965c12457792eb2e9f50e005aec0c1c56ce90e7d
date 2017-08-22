@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_c5e2b89e",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 6875
+      },
+      "writtenOn": "2017-08-22T12:10:58Z",
+      "side": 1,
+      "message": "Should probably be \u0027tempest_identity_user_name\u0027",
+      "range": {
+        "startLine": 290,
+        "startChar": 48,
+        "endLine": 290,
+        "endChar": 76
+      },
+      "revId": "965c12457792eb2e9f50e005aec0c1c56ce90e7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
