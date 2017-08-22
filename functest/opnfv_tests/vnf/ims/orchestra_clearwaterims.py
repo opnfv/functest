@@ -31,7 +31,6 @@ from snaps.openstack.create_network import (
     SubnetSettings,
     PortSettings)
 from snaps.openstack.create_router import OpenStackRouter, RouterSettings
-from snaps.openstack.os_credentials import OSCreds
 from snaps.openstack.create_instance import (
     VmInstanceSettings,
     OpenStackVmInstance)
@@ -210,15 +209,13 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
         super(ClearwaterImsVnf, self).prepare()
 
         self.logger.info("Additional pre-configuration steps")
-        self.logger.info("creds %s", (self.creds))
 
-        self.snaps_creds = OSCreds(
-            username=self.creds['username'],
-            password=self.creds['password'],
-            auth_url=self.creds['auth_url'],
-            project_name=self.creds['tenant'],
-            identity_api_version=int(os_utils.get_keystone_client_version()))
-
+        self.creds = {
+                "tenant": self.tenant_name,
+                "username": self.tenant_name,
+                "password": self.tenant_name,
+                "auth_url": os_utils.get_credentials()['auth_url']
+                }
         self.prepare_images()
         self.prepare_flavor()
         self.prepare_security_groups()
