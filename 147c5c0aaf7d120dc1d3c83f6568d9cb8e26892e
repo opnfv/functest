@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_1f199188",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-22T01:42:53Z",
+      "side": 1,
+      "message": "How about:\nAArch64: SNAPS: CentOS, Ubuntu image config",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "147c5c0aaf7d120dc1d3c83f6568d9cb8e26892e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_bf9065ed",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-22T01:42:53Z",
+      "side": 1,
+      "message": "14.04 works fine on AArch64, but 16.04 has much better support / less known issues.\nI\u0027m not saying we should change it right now, but keep that in mind for the near future.",
+      "range": {
+        "startLine": 22,
+        "startChar": 58,
+        "endLine": 22,
+        "endChar": 63
+      },
+      "revId": "147c5c0aaf7d120dc1d3c83f6568d9cb8e26892e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_ffc14de5",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-22T01:42:53Z",
+      "side": 1,
+      "message": "I\u0027d add hw_video_model: \u0027vga\u0027, although we patch the default video model to VGA on Fuel/MCP, Apex or other installers might still default to cirrus.",
+      "revId": "147c5c0aaf7d120dc1d3c83f6568d9cb8e26892e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_9f0c8144",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-22T01:42:53Z",
+      "side": 1,
+      "message": "I\u0027d move the AArch64 Ubuntu/CentOS images here, each under its x86 equiv.",
+      "revId": "147c5c0aaf7d120dc1d3c83f6568d9cb8e26892e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_7f09bd30",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-22T01:42:53Z",
+      "side": 1,
+      "message": "(unrelated to current patch): any idea why we download both release and current trusty images? should we do the same for AArch64?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 84
+      },
+      "revId": "147c5c0aaf7d120dc1d3c83f6568d9cb8e26892e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_5f131966",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-22T01:42:53Z",
+      "side": 1,
+      "message": "https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-uefi1.img\n\nNotes:\n- AArch64 UEFI-enabled image has \"-uefi1\" suffix instead of disk1, which does not support UEFI;\n- different domain, now in sync with above images;\n- on x86 we also download 16.04, we should do the same for AArch64;",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 95
+      },
+      "revId": "147c5c0aaf7d120dc1d3c83f6568d9cb8e26892e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_7f225dba",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-22T01:42:53Z",
+      "side": 1,
+      "message": "this will now return the status of the `xz ...` command instead of wget.\nMaybe catch the return code of wget before xz in a var and return that?",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 7
+      },
+      "revId": "147c5c0aaf7d120dc1d3c83f6568d9cb8e26892e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
