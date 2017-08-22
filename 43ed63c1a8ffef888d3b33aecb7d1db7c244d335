@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_5ae9677f",
+        "filename": "functest/api/resources/v1/envs.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-22T07:32:56Z",
+      "side": 1,
+      "message": "I would prefer to check the content of hosts_info, rather than only check  if it is a dict",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 43
+      },
+      "revId": "43ed63c1a8ffef888d3b33aecb7d1db7c244d335",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_fa9afb12",
+        "filename": "functest/api/resources/v1/envs.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-22T07:32:56Z",
+      "side": 1,
+      "message": "you can leverage \u0027a\u0027 flag directly, no need to open read and write",
+      "revId": "43ed63c1a8ffef888d3b33aecb7d1db7c244d335",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
