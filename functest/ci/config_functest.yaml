@@ -69,9 +69,6 @@ vping:
     vm_name_2: opnfv-vping-2
     image_name: functest-vping
     private_net_name: vping-net
-    # network_type: vlan
-    # physical_network: physnet2
-    # segmentation_id: 2366
     private_subnet_name: vping-subnet
     private_subnet_cidr: 192.168.130.0/24
     router_name: vping-router
@@ -99,11 +96,6 @@ odl_sfc:
 
 tempest:
     deployment_name: opnfv-tempest
-    identity:
-        tenant_name: tempest
-        tenant_description: Tenant for Tempest test suite
-        user_name: tempest
-        user_password: Tempest123!
     validation:
         ssh_timeout: 130
     object_storage:
@@ -132,6 +124,10 @@ vnf:
         tenant_name: cloudify_ims
         tenant_description: vIMS
         config: cloudify_ims.yaml
+    cloudify_ims_perf:
+        tenant_name: cloudify_ims_perf
+        tenant_description: vIMS
+        config: cloudify_ims_perf.yaml
     orchestra_openims:
         tenant_name: orchestra_openims
         tenant_description: OpenIMS deployed with Open Baton
@@ -193,4 +189,3 @@ energy_recorder:
     api_url: http://energy.opnfv.fr/resources
     api_user: ""
     api_password: ""
-
