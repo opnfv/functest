@@ -355,13 +355,23 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             dns_ip=dns_ip,
             public_domain=self.vnf['inputs']["public_domain"])
         duration = time.time() - start_time
-        short_result = sig_test_format(vims_test_result)
+        short_result, nb_test = sig_test_format(vims_test_result)
         self.__logger.info(short_result)
-        self.details['test_vnf'].update(status='PASS',
-                                        result=short_result,
+        self.details['test_vnf'].update(result=short_result,
                                         full_result=vims_test_result,
                                         duration=duration)
-        return True
+        try:
+            rate = short_result['passed'] / nb_test
+        except:
+            self.details['test_vnf'].update(status='FAIL')
+            return False
+
+        if rate > 0.80:
+            self.details['test_vnf'].update(status='PASS')
+            return True
+        else:
+            self.details['test_vnf'].update(status='FAIL')
+            return False
 
     def clean(self):
         """Clean created objects/functions."""
@@ -507,11 +517,12 @@ def sig_test_format(sig_test):
             nb_failures += 1
         elif data_test['result'] == "Skipped":
             nb_skipped += 1
-    total_sig_test_result = {}
-    total_sig_test_result['passed'] = nb_passed
-    total_sig_test_result['failures'] = nb_failures
-    total_sig_test_result['skipped'] = nb_skipped
-    return total_sig_test_result
+    short_sig_test_result = {}
+    short_sig_test_result['passed'] = nb_passed
+    short_sig_test_result['failures'] = nb_failures
+    short_sig_test_result['skipped'] = nb_skipped
+    nb_test = nb_passed + nb_skipped
+    return (short_sig_test_result, nb_test)
 
 
 def run_blocking_ssh_command(ssh, cmd, error_msg="Unable to run this command"):
