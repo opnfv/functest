@@ -479,6 +479,23 @@ tiers:
                     module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
                     class: 'CloudifyIms'
             -
+                case_name: cloudify_ims_perf
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This testcase extends the cloudify_ims test case.
+                    The first part is similar but the testing part is different.
+                    The testing part consists in automating a realistic signaling load on the vIMS
+                    using an Ixia loader (proprietary tools - You need to have access to an Ixia licence server
+                    defined in the configuraiton file
+                dependencies:
+                    installer: ''
+                    scenario: 'os-nosdn-nofeature-ha'
+                run:
+                    module: 'functest.opnfv_tests.vnf.ims.cloudify_ims_perf'
+                    class: 'CloudifyImsPerf'
+            -
                 case_name: orchestra_openims
                 project_name: functest
                 criteria: 100
