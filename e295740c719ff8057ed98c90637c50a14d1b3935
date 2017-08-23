@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "da33351e_aa4bfcae",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_clearwaterims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-23T07:14:45Z",
+      "side": 1,
+      "message": "This import way \"from functest.opnfv_tests.openstack.snaps import snaps_utils\" is not reasonable for this module, why not \"from snaps.openstack.utils import neutron_utils\" directly? \n\nBy the way, there is no such def get_port_by_name in neutron_utils.py.",
+      "range": {
+        "startLine": 663,
+        "startChar": 19,
+        "endLine": 663,
+        "endChar": 61
+      },
+      "revId": "e295740c719ff8057ed98c90637c50a14d1b3935",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_cadbe019",
         "filename": "functest/opnfv_tests/vnf/ims/orchestra_openims.py",
         "patchSetId": 2
@@ -35,6 +58,29 @@
         "startChar": 0,
         "endLine": 200,
         "endChar": 67
+      },
+      "revId": "e295740c719ff8057ed98c90637c50a14d1b3935",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_ca4e40c1",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_openims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-23T07:14:45Z",
+      "side": 1,
+      "message": "This import way \"from functest.opnfv_tests.openstack.snaps import snaps_utils\" is not reasonable for this module, why not \"from snaps.openstack.utils import neutron_utils\" directly? \n\nBy the way, there is no such def get_port_by_name in neutron_utils.py.",
+      "range": {
+        "startLine": 699,
+        "startChar": 19,
+        "endLine": 699,
+        "endChar": 45
       },
       "revId": "e295740c719ff8057ed98c90637c50a14d1b3935",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
