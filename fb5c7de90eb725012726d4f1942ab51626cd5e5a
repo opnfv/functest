@@ -518,6 +518,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_8df9f2ca",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-23T08:58:02Z",
+      "side": 1,
+      "message": "I would recommend so, at least within the same file.\ntwo type of hyperlink involved looks strange\n\n    _`[1]`_ vs _`Functest framework overview`\n\nmaybe in next patch",
+      "parentUuid": "da33351e_65de4c41",
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_fabb1bc2",
         "filename": "docs/testing/user/configguide/ci.rst",
         "patchSetId": 9
@@ -553,6 +571,30 @@
       "side": 1,
       "message": "because it is a subpart of a global document\nI just split a big one into different chapter and did not change the ref number\nin the overall document it should be the third reference",
       "parentUuid": "da33351e_fabb1bc2",
+      "range": {
+        "startLine": 6,
+        "startChar": 45,
+        "endLine": 6,
+        "endChar": 48
+      },
+      "revId": "fb5c7de90eb725012726d4f1942ab51626cd5e5a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_6df62ed9",
+        "filename": "docs/testing/user/configguide/ci.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-23T08:58:02Z",
+      "side": 1,
+      "message": "Okey",
+      "parentUuid": "da33351e_85e4300e",
       "range": {
         "startLine": 6,
         "startChar": 45,
