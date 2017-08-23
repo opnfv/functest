@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_48b7d886",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-23T14:10:10Z",
+      "side": 1,
+      "message": "this is now superfluous since `set -e`",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "e4d5d1d8a97377c5f7c986c4eb1ab6589a0deac3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
