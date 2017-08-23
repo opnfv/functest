@@ -15,9 +15,13 @@ http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-lxc.tar.gz
 http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-disk.img
 http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-initramfs
 http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-kernel
+https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
+http://cloud.centos.org/altarch/7/images/aarch64/CentOS-7-aarch64-GenericCloud.qcow2.xz
 EOF
 
 # vnf requires also the next image which cannot be downloaded by jjobs
 # http://marketplace.openbaton.org:8082/api/v1/images/52e2ccc0-1dce-4663-894d-28aab49323aa/img
+
+xz --decompress ${1:-/home/opnfv/functest/images}/CentOS-7-aarch64-GenericCloud.qcow2.xz
 
 exit $?

@@ -18,6 +18,14 @@ os:
               hw_firmware_type: 'uefi'
               short_id: 'ubuntu16.04'
               hw_video_model: 'vga'
+          ubuntu:
+            disk_file: /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
+            extra_properties:
+              hw_firmware_type: 'uefi'
+              hw_video_model: 'vga'
+          centos:
+            disk_file: /home/opnfv/functest/images/CentOS-7-aarch64-GenericCloud.qcow2
+
     vping:
         image_name: TestVM
 
