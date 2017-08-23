@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_c8ada88a",
+        "filename": "docker/Dockerfile.aarch64.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-23T13:22:34Z",
+      "side": 1,
+      "message": "The benefit of using `git am -3 --ignore-whitespace` is not creating a new commit, but solving merge conflicts automatically - e.g. if one patch context line changes in the original Dockerfile, `patch` might fail to apply this patch, even with fuzz, while `git am -3` would try to resolve the conflict based on ancestor hash ...",
+      "parentUuid": "da33351e_cd201afa",
+      "revId": "f562939f0033f903178ceadf23bf51f8c11aacca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_f7a051f6",
         "filename": "docker/Dockerfile.aarch64.patch",
         "patchSetId": 5
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "I haven\u0027t updated that.",
       "parentUuid": "da33351e_f7a051f6",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 12
+      },
+      "revId": "f562939f0033f903178ceadf23bf51f8c11aacca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_08b790d9",
+        "filename": "docker/Dockerfile.aarch64.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-23T13:22:34Z",
+      "side": 1,
+      "message": "Ok, we\u0027ll change this in a separate patch later. It should have been \u0027AArch64\u0027 from the first push, but I missed it before.",
+      "parentUuid": "da33351e_ad1dd6bf",
       "range": {
         "startLine": 8,
         "startChar": 5,
