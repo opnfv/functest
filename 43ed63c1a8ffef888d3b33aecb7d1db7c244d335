@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_8d72927a",
+        "filename": "functest/api/resources/v1/envs.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-23T08:51:18Z",
+      "side": 1,
+      "message": "check items which must be provided and in correct syntax, such as host_name must not be empty/None, and ip must be in the right format(*.*.*.*) in your case",
+      "parentUuid": "da33351e_80653ee3",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 43
+      },
+      "revId": "43ed63c1a8ffef888d3b33aecb7d1db7c244d335",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_fa9afb12",
         "filename": "functest/api/resources/v1/envs.py",
         "patchSetId": 4
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "But if \"a\" is used here, how could the updated hosts info written in the last time be cleaned when it is run twice or again?",
       "parentUuid": "da33351e_fa9afb12",
+      "revId": "43ed63c1a8ffef888d3b33aecb7d1db7c244d335",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_6d6f4e93",
+        "filename": "functest/api/resources/v1/envs.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-23T08:51:18Z",
+      "side": 1,
+      "message": "okay, then concatenate to one list and write only once is recommended",
+      "parentUuid": "da33351e_e0624ad7",
       "revId": "43ed63c1a8ffef888d3b33aecb7d1db7c244d335",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
