@@ -57,6 +57,24 @@
       "revId": "e37540bcb3b27d2fb28fc21b5112550ea0549082",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_8d7c5222",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-23T09:13:55Z",
+      "side": 1,
+      "message": "then Functest can not be executed automatically, feel strange. how about getting the information automatically leveraging openstackclient?",
+      "parentUuid": "da33351e_dac45742",
+      "revId": "e37540bcb3b27d2fb28fc21b5112550ea0549082",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
