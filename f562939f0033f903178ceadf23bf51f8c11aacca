@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_a35fa70d",
+        "filename": "docker/Dockerfile.aarch64.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-23T15:01:08Z",
+      "side": 1,
+      "message": "Fully agree but it cannot occur since [1] was merged.\nJenkins will vote -1 on patchset which forbids applying your patch.\n\n[1] https://gerrit.opnfv.org/gerrit/#/c/39975/",
+      "parentUuid": "da33351e_c8ada88a",
+      "revId": "f562939f0033f903178ceadf23bf51f8c11aacca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_f7a051f6",
         "filename": "docker/Dockerfile.aarch64.patch",
         "patchSetId": 5
