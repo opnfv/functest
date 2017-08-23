@@ -16,6 +16,29 @@
       "revId": "e295740c719ff8057ed98c90637c50a14d1b3935",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_cadbe019",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_openims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-23T06:34:45Z",
+      "side": 1,
+      "message": "Here the image to be used is orchestra_openims, which is:\nhttps://github.com/opnfv/functest/blob/master/functest/opnfv_tests/vnf/ims/orchestra.yaml#L4-L5\nSo what does \"/home/opnfv/functest/images/img\" refer to?",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 67
+      },
+      "revId": "e295740c719ff8057ed98c90637c50a14d1b3935",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
