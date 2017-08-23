@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_f717b1a1",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5391
+      },
+      "writtenOn": "2017-08-23T01:55:54Z",
+      "side": 1,
+      "message": "do you modify the number of quotas to match your requirement?",
+      "range": {
+        "startLine": 105,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 47
+      },
+      "revId": "cd2321fccab1b9deaaabe04abc29d0f535db7b85",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
