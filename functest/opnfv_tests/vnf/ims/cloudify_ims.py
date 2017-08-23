@@ -281,6 +281,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             external_network_name=ext_net_name,
             network_name=network_settings.name
         ))
+        self.result = 1/3
         return True
 
     def deploy_vnf(self):
@@ -330,6 +331,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.__logger.info(execution)
         if execution.status == 'terminated':
             self.details['vnf'].update(status='PASS', duration=duration)
+            self.result = 2 / 3
             result = True
         else:
             self.details['vnf'].update(status='FAIL', duration=duration)
@@ -355,12 +357,20 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             dns_ip=dns_ip,
             public_domain=self.vnf['inputs']["public_domain"])
         duration = time.time() - start_time
-        short_result = sig_test_format(vims_test_result)
+        short_result, nb_test = sig_test_format(vims_test_result)
         self.__logger.info(short_result)
-        self.details['test_vnf'].update(status='PASS',
-                                        result=short_result,
+        self.details['test_vnf'].update(result=short_result,
                                         full_result=vims_test_result,
                                         duration=duration)
+        try:
+            vnf_test_rate = short_result['passed'] / nb_test
+            # orchestrator + vnf + test_vnf
+            self.result = (vnf_test_rate + 2) / 3 * 100
+        except ZeroDivisionError:
+            self.__logger.error("No test has been executed")
+            self.details['test_vnf'].update(status='FAIL')
+            return False
+
         return True
 
     def clean(self):
@@ -507,11 +517,12 @@ def sig_test_format(sig_test):
             nb_failures += 1
         elif data_test['result'] == "Skipped":
             nb_skipped += 1
-    total_sig_test_result = {}
-    total_sig_test_result['passed'] = nb_passed
-    total_sig_test_result['failures'] = nb_failures
-    total_sig_test_result['skipped'] = nb_skipped
-    return total_sig_test_result
+    short_sig_test_result = {}
+    short_sig_test_result['passed'] = nb_passed
+    short_sig_test_result['failures'] = nb_failures
+    short_sig_test_result['skipped'] = nb_skipped
+    nb_test = nb_passed + nb_skipped
+    return (short_sig_test_result, nb_test)
 
 
 def run_blocking_ssh_command(ssh, cmd, error_msg="Unable to run this command"):
