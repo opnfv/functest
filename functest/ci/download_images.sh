@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat << EOF  | wget -i - -P ${1:-/home/opnfv/functest/images}
+cat << EOF  | wget -nc -i - -P ${1:-/home/opnfv/functest/images}
 http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
 https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
 https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
