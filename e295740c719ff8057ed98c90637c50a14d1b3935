@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_ea36a402",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2017-08-23T08:00:03Z",
+      "side": 1,
+      "message": "Yes, I know steven. But this loop I used juste to upload the images. Not to start the VM with these objects intances. Thank you for this remark",
+      "parentUuid": "da33351e_170695ce",
+      "revId": "e295740c719ff8057ed98c90637c50a14d1b3935",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_aa4bfcae",
         "filename": "functest/opnfv_tests/vnf/ims/orchestra_clearwaterims.py",
         "patchSetId": 2
