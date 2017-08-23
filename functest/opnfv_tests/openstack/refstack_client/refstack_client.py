@@ -28,12 +28,13 @@ from functest.opnfv_tests.openstack.refstack_client.tempest_conf \
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
+import functest.utils.openstack_utils as os_utils
 
 # logging configuration """
 LOGGER = logging.getLogger(__name__)
 
 
-class RefstackClient(testcase.OSGCTestCase):
+class RefstackClient(testcase.TestCase):
     """RefstackClient testcase implementation class."""
 
     def __init__(self, **kwargs):
@@ -44,6 +45,7 @@ class RefstackClient(testcase.OSGCTestCase):
         self.conf_path = pkg_resources.resource_filename(
             'functest',
             'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
+        self.tempestconf = None
         self.functest_test = pkg_resources.resource_filename(
             'functest', 'opnfv_tests')
         self.defcore_list = 'openstack/refstack_client/defcore.txt'
@@ -148,14 +150,16 @@ class RefstackClient(testcase.OSGCTestCase):
             os.makedirs(conf_utils.REFSTACK_RESULTS_DIR)
 
         try:
-            tempestconf = TempestConf()
-            tempestconf.generate_tempestconf()
+            self.tempestconf = TempestConf()
+            self.tempestconf.generate_tempestconf()
             self.run_defcore_default()
             self.parse_refstack_result()
             res = testcase.TestCase.EX_OK
         except Exception:
             LOGGER.exception("Error with run")
             res = testcase.TestCase.EX_RUN_ERROR
+        finally:
+            self.tempestconf.clean()
 
         self.stop_time = time.time()
         return res
@@ -193,6 +197,41 @@ class RefstackClient(testcase.OSGCTestCase):
             res = testcase.TestCase.EX_RUN_ERROR
 
         return res
+
+    def create_snapshot(self):
+        """
+        Run the Tempest cleanup utility to initialize OS state.
+        For details, see https://docs.openstack.org/tempest/latest/cleanup.html
+
+        :return: TestCase.EX_OK
+        """
+        LOGGER.info("Initializing the saved state of the OpenStack deployment")
+
+        # Make sure that the verifier is configured
+        conf_utils.configure_verifier(self.tempestconf.DEPLOYMENT_DIR)
+
+        os_utils.init_tempest_cleanup(
+            self.tempestconf.DEPLOYMENT_DIR, 'tempest.conf',
+            os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+                         "tempest-cleanup-init.log")
+        )
+
+        return super(RefstackClient, self).create_snapshot()
+
+    def clean(self):
+        """
+        Run the Tempest cleanup utility to delete and destroy OS resources.
+        For details, see https://docs.openstack.org/tempest/latest/cleanup.html
+        """
+        LOGGER.info("Initializing the saved state of the OpenStack deployment")
+
+        os_utils.init_tempest_cleanup(
+            self.tempestconf.DEPLOYMENT_DIR, 'tempest.conf',
+            os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+                         "tempest-cleanup.log")
+        )
+
+        return super(RefstackClient, self).clean()
 
 
 class RefstackClientParser(object):  # pylint: disable=too-few-public-methods
