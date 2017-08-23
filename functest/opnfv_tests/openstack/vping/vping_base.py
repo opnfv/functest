@@ -102,14 +102,33 @@ class VPingBase(testcase.TestCase):
             'vping_private_subnet_name') + self.guid
         private_subnet_cidr = CONST.__getattribute__(
             'vping_private_subnet_cidr')
+
+        vping_network_type = None
+        vping_physical_network = None
+        vping_segmentation_id = None
+
+        if (hasattr(CONST, 'network_type')):
+            vping_network_type = CONST.__getattribute__(
+                'vping_network_type')
+        if (hasattr(CONST, 'physical_network')):
+            vping_physical_network = CONST.__getattribute__(
+                'vping_physical_network')
+        if (hasattr(CONST, 'segmentation_id')):
+            vping_segmentation_id = CONST.__getattribute__(
+                'vping_segmentation_id')
+
         self.logger.info(
             "Creating network with name: '%s'" % private_net_name)
         self.network_creator = deploy_utils.create_network(
             self.os_creds,
-            NetworkSettings(name=private_net_name,
-                            subnet_settings=[SubnetSettings(
-                                name=private_subnet_name,
-                                cidr=private_subnet_cidr)]))
+            NetworkSettings(
+                name=private_net_name,
+                network_type=vping_network_type,
+                physical_network=vping_physical_network,
+                segmentation_id=vping_segmentation_id,
+                subnet_settings=[SubnetSettings(
+                    name=private_subnet_name,
+                    cidr=private_subnet_cidr)]))
         self.creators.append(self.network_creator)
 
         self.logger.info(
