@@ -28,9 +28,14 @@ class SnapsTestRunner(unit.Suite):
         if 'os_creds' in kwargs:
             self.os_creds = kwargs['os_creds']
         else:
+            creds_override = None
+            if hasattr(CONST, 'snaps_os_creds_override'):
+                creds_override = CONST.__getattribute__(
+                    'snaps_os_creds_override')
             self.os_creds = openstack_tests.get_credentials(
                 os_env_file=CONST.__getattribute__('openstack_creds'),
-                proxy_settings_str=None, ssh_proxy_cmd=None)
+                proxy_settings_str=None, ssh_proxy_cmd=None,
+                overrides=creds_override)
 
         if 'ext_net_name' in kwargs:
             self.ext_net_name = kwargs['ext_net_name']
