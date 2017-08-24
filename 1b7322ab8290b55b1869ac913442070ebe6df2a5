@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_b94998d2",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-24T07:09:17Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be perform_tempest_cleanup?",
+      "range": {
+        "startLine": 228,
+        "startChar": 17,
+        "endLine": 228,
+        "endChar": 37
+      },
+      "revId": "1b7322ab8290b55b1869ac913442070ebe6df2a5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_994654be",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-24T07:09:17Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be perform_tempest_cleanup?",
+      "range": {
+        "startLine": 282,
+        "startChar": 17,
+        "endLine": 282,
+        "endChar": 37
+      },
+      "revId": "1b7322ab8290b55b1869ac913442070ebe6df2a5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_f91200b3",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-08-24T07:09:17Z",
+      "side": 1,
+      "message": "TEMPEST_RESULTS_DIR",
+      "range": {
+        "startLine": 284,
+        "startChar": 36,
+        "endLine": 284,
+        "endChar": 56
+      },
+      "revId": "1b7322ab8290b55b1869ac913442070ebe6df2a5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
