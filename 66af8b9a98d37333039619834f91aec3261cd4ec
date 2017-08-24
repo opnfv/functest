@@ -22,6 +22,23 @@
       "revId": "66af8b9a98d37333039619834f91aec3261cd4ec",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_7f4ecf70",
+        "filename": "functest/api/resources/v1/testcases.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-24T15:50:12Z",
+      "side": 1,
+      "message": "This pylint error shouldn\u0027t be disabled",
+      "revId": "66af8b9a98d37333039619834f91aec3261cd4ec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
