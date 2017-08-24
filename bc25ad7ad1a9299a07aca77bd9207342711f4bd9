@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_bce98582",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-24T15:07:49Z",
+      "side": 1,
+      "message": "I would go with\n[ -f ${1:-/home/opnfv/functest/images}/CentOS-7-aarch64-GenericCloud.qcow2.xz ] || xz ...\nto save some useless operations",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 96
+      },
+      "revId": "bc25ad7ad1a9299a07aca77bd9207342711f4bd9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_5cf2f96f",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-08-24T15:07:49Z",
+      "side": 1,
+      "message": "please remove this as it\u0027s useless with `set -e`",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 7
+      },
+      "revId": "bc25ad7ad1a9299a07aca77bd9207342711f4bd9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
