@@ -33,7 +33,7 @@ actions = ['start', 'check']
 logger = logging.getLogger('functest.ci.prepare_env')
 handler = None
 # set the architecture to default
-pod_arch = os.getenv("HOST_ARCH", None)
+pod_arch = os.getenv("POD_ARCH", None)
 arch_filter = ['aarch64']
 
 CONFIG_FUNCTEST_PATH = pkg_resources.resource_filename(
