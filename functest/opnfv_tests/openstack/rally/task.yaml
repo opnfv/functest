@@ -31,6 +31,10 @@
 {%- include "var/opnfv-neutron.yaml"-%}
 {% endif %}
 
+{% if "ceilometer" in service_list %}
+{%- include "var/opnfv-ceilometer.yaml"-%}
+{% endif %}
+
 {% if "quotas" in service_list %}
 {%- include "var/opnfv-quotas.yaml"-%}
 {% endif %}
