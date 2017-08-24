@@ -16,6 +16,24 @@
       "revId": "15e7704d9afb79fe09e19726a94ae34323b0b09d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_797710d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6875
+      },
+      "writtenOn": "2017-08-24T08:24:34Z",
+      "side": 1,
+      "message": "Thanks, I mistakenly remembered it\u0027s 50 first line and 79 rest.",
+      "parentUuid": "da33351e_79ca7050",
+      "revId": "15e7704d9afb79fe09e19726a94ae34323b0b09d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
