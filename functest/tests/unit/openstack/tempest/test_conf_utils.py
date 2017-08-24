@@ -170,15 +170,9 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
 
     def test_backup_tempest_config_default(self):
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.os.path.exists',
-                        return_value=False), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.os.makedirs') as m1, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.shutil.copyfile') as m2:
+                        'conf_utils.shutil.copyfile') as m1:
             conf_utils.backup_tempest_config('test_conf_file')
             self.assertTrue(m1.called)
-            self.assertTrue(m2.called)
 
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.os.path.exists',

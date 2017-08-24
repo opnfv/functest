@@ -261,6 +261,9 @@ class TempestCommon(testcase.TestCase):
         """
         logger.info("Initializing the saved state of the OpenStack deployment")
 
+        if not os.path.exists(conf_utils.TEMPEST_RESULTS_DIR):
+            os.makedirs(conf_utils.TEMPEST_RESULTS_DIR)
+
         # Make sure that the verifier is configured
         conf_utils.configure_verifier(self.DEPLOYMENT_DIR)
 
@@ -277,11 +280,11 @@ class TempestCommon(testcase.TestCase):
         Run the Tempest cleanup utility to delete and destroy OS resources
         created by Tempest.
         """
-        logger.info("Initializing the saved state of the OpenStack deployment")
+        logger.info("Destroying the resources created for refstack")
 
-        os_utils.init_tempest_cleanup(
+        os_utils.perform_tempest_cleanup(
             self.DEPLOYMENT_DIR, 'tempest.conf',
-            os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+            os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
                          "tempest-cleanup.log")
         )
 
