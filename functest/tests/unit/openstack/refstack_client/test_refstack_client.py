@@ -14,6 +14,8 @@ import unittest
 from functest.core import testcase
 from functest.opnfv_tests.openstack.refstack_client.refstack_client import \
     RefstackClient, RefstackClientParser
+from functest.opnfv_tests.openstack.refstack_client.tempest_conf import \
+    TempestConf
 from functest.utils.constants import CONST
 
 from snaps.openstack.os_credentials import OSCreds
@@ -36,7 +38,9 @@ class OSRefstackClientTesting(unittest.TestCase):
             username='user', password='pass',
             auth_url='http://foo.com:5000/v3', project_name='bar')
 
-    def _create_client(self):
+    @mock.patch('functest.opnfv_tests.openstack.refstack_client.tempest_conf.'
+                'TempestConf', return_value=mock.Mock())
+    def _create_client(self, mock_conf):
         with mock.patch('snaps.openstack.tests.openstack_tests.'
                         'get_credentials', return_value=self.os_creds):
             return RefstackClient()
