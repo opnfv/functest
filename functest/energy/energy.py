@@ -18,6 +18,7 @@ from functools import wraps
 import requests
 import urllib3
 
+from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 
 
@@ -91,7 +92,7 @@ class EnergyRecorder(object):
         # Singleton pattern for energy_recorder_api static member
         # Load only if not previouly done
         if EnergyRecorder.energy_recorder_api is None:
-            environment = ft_utils.get_pod_name()
+            environment = CONST.__getattribute__('NODE_NAME')
 
             # API URL
             energy_recorder_uri = ft_utils.get_functest_config(

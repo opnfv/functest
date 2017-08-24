@@ -117,24 +117,11 @@ def get_version():
         return "unknown"
 
 
-def get_pod_name():
-    """
-    Get PoD Name from env variable NODE_NAME
-    """
-    try:
-        return os.environ['NODE_NAME']
-    except KeyError:
-        logger.info(
-            "Unable to retrieve the POD name from environment. " +
-            "Using pod name 'unknown-pod'")
-        return "unknown-pod"
-
-
 def logger_test_results(project, case_name, status, details):
     """
     Format test case results for the logger
     """
-    pod_name = get_pod_name()
+    pod_name = CONST.__getattribute__('NODE_NAME')
     scenario = get_scenario()
     version = get_version()
     build_tag = CONST.__getattribute__('BUILD_TAG')
