@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_b9ad188b",
+        "filename": "docker/Dockerfile.aarch64.patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-24T06:17:27Z",
+      "side": 1,
+      "message": "trailing spaces are clearly marked in \u0027Red\u0027, and also the check results using \u0027grep\u0027:\n?  functest git:(review/cedric_ollivier/arm) grep -r -n \u0027[[:blank:]]$\u0027 docker/Dockerfile.aarch64.patch \ndocker/Dockerfile.aarch64.patch:15: \ndocker/Dockerfile.aarch64.patch:22: \ndocker/Dockerfile.aarch64.patch:36: \ndocker/Dockerfile.aarch64.patch:40: \ndocker/Dockerfile.aarch64.patch:62:",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 1
+      },
+      "revId": "2750fdc261941944526a4db7f540cc09480829c6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
