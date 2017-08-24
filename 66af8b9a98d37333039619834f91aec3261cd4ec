@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_99ef74b0",
+        "filename": "functest/api/resources/v1/tasks.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-24T06:48:39Z",
+      "side": 1,
+      "message": "IMP, these two checks won\u0027t be necessary, if log file exist return content else return not exist, that\u0027s enough",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "66af8b9a98d37333039619834f91aec3261cd4ec",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
