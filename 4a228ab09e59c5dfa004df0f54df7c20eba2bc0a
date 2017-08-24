@@ -69,6 +69,30 @@
       "revId": "4a228ab09e59c5dfa004df0f54df7c20eba2bc0a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d968dcf7",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6875
+      },
+      "writtenOn": "2017-08-24T08:28:26Z",
+      "side": 0,
+      "message": "Right, not sure why it didn\u0027t for me but I can see why it would do that.\nIn that case the call to `conf_utils.configure_verifier` must be moved - it\u0027s there to verify that it is ready. So instead, the call to `tempestconf.generate_tempestconf()` would need to happen, i.e. in the init or in create_snapshot.",
+      "parentUuid": "da33351e_99a7744f",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 44
+      },
+      "revId": "4a228ab09e59c5dfa004df0f54df7c20eba2bc0a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
