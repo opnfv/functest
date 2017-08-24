@@ -130,9 +130,6 @@ def backup_tempest_config(conf_file):
     """
     Copy config file to tempest results directory
     """
-    if not os.path.exists(TEMPEST_RESULTS_DIR):
-        os.makedirs(TEMPEST_RESULTS_DIR)
-
     shutil.copyfile(conf_file,
                     os.path.join(TEMPEST_RESULTS_DIR, 'tempest.conf'))
 

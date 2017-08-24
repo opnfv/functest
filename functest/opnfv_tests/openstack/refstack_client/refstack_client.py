@@ -42,10 +42,10 @@ class RefstackClient(testcase.TestCase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "refstack_defcore"
         super(RefstackClient, self).__init__(**kwargs)
+        self.tempestconf = None
         self.conf_path = pkg_resources.resource_filename(
             'functest',
             'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
-        self.tempestconf = None
         self.functest_test = pkg_resources.resource_filename(
             'functest', 'opnfv_tests')
         self.defcore_list = 'openstack/refstack_client/defcore.txt'
@@ -58,6 +58,13 @@ class RefstackClient(testcase.TestCase):
         if ('https' in CONST.__getattribute__('OS_AUTH_URL') and
                 CONST.__getattribute__('OS_INSECURE').lower() == 'true'):
             self.insecure = '-k'
+
+    def generate_conf(self):
+        if not os.path.exists(conf_utils.REFSTACK_RESULTS_DIR):
+            os.makedirs(conf_utils.REFSTACK_RESULTS_DIR)
+
+        self.tempestconf = TempestConf()
+        self.tempestconf.generate_tempestconf()
 
     def run_defcore(self, conf, testlist):
         """Run defcore sys command."""
@@ -89,7 +96,7 @@ class RefstackClient(testcase.TestCase):
                             stderr=subprocess.STDOUT)
 
     def parse_refstack_result(self):
-        """Parse Refstact results."""
+        """Parse Refstack results."""
         try:
             with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
                                    "refstack.log"), 'r') as logfile:
@@ -146,12 +153,10 @@ class RefstackClient(testcase.TestCase):
         """
         self.start_time = time.time()
 
-        if not os.path.exists(conf_utils.REFSTACK_RESULTS_DIR):
-            os.makedirs(conf_utils.REFSTACK_RESULTS_DIR)
-
         try:
-            self.tempestconf = TempestConf()
-            self.tempestconf.generate_tempestconf()
+            # Make sure that Tempest is configured
+            if not self.tempestconf:
+                self.generate_conf()
             self.run_defcore_default()
             self.parse_refstack_result()
             res = testcase.TestCase.EX_OK
@@ -207,8 +212,9 @@ class RefstackClient(testcase.TestCase):
         """
         LOGGER.info("Initializing the saved state of the OpenStack deployment")
 
-        # Make sure that the verifier is configured
-        conf_utils.configure_verifier(self.tempestconf.DEPLOYMENT_DIR)
+        # Make sure that Tempest is configured
+        if not self.tempestconf:
+            self.generate_conf()
 
         os_utils.init_tempest_cleanup(
             self.tempestconf.DEPLOYMENT_DIR, 'tempest.conf',
@@ -223,9 +229,9 @@ class RefstackClient(testcase.TestCase):
         Run the Tempest cleanup utility to delete and destroy OS resources.
         For details, see https://docs.openstack.org/tempest/latest/cleanup.html
         """
-        LOGGER.info("Initializing the saved state of the OpenStack deployment")
+        LOGGER.info("Destroying the resources created for tempest")
 
-        os_utils.init_tempest_cleanup(
+        os_utils.perform_tempest_cleanup(
             self.tempestconf.DEPLOYMENT_DIR, 'tempest.conf',
             os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
                          "tempest-cleanup.log")
