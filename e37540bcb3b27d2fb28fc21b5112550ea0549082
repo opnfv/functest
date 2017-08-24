@@ -93,6 +93,24 @@
       "revId": "e37540bcb3b27d2fb28fc21b5112550ea0549082",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_39b108e2",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-24T06:22:23Z",
+      "side": 1,
+      "message": "Because we have to set these three manually, how could it be called \u0027automatially\u0027 when manual work get involved?\n\nif they are not essential, then, why are they added here?",
+      "parentUuid": "da33351e_6d3c6e30",
+      "revId": "e37540bcb3b27d2fb28fc21b5112550ea0549082",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
