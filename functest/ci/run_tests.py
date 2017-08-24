@@ -188,12 +188,12 @@ class Runner(object):
             self.run_tier(tier)
 
     def main(self, **kwargs):
-        if kwargs['noclean']:
+        if 'noclean' in kwargs:
             self.clean_flag = False
-        if kwargs['report']:
+        if 'report' in kwargs:
             self.report_flag = True
         try:
-            if kwargs['test']:
+            if 'test' in kwargs:
                 self.source_rc_file()
                 logger.debug("Test args: %s", kwargs['test'])
                 if self._tiers.get_tier(kwargs['test']):
