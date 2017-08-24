@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_99c13431",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-24T06:38:20Z",
+      "side": 1,
+      "message": "how about configuring it in \u0027criteria: 100\u0027 field in testcases.yaml?",
+      "range": {
+        "startLine": 369,
+        "startChar": 11,
+        "endLine": 369,
+        "endChar": 22
+      },
+      "revId": "b58572fbb1b2c232d54ca7c4100cd05b95c34697",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
