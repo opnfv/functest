@@ -96,9 +96,6 @@ RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwat
 RUN git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-functest-vrouter.git ${REPOS_VNFS_DIR}/vrouter
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
 
-# SFC integration
-RUN /bin/bash -c ". /usr/local/lib/python2.7/dist-packages/sfc/tests/functest/setup_scripts/tacker_client_install.sh"
-
 # Install tempest venv and create symlink for running refstack-client
 RUN ln -s /src/tempest /src/refstack-client/.tempest \
     && virtualenv --system-site-packages /src/tempest/.venv
