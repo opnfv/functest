@@ -189,9 +189,9 @@ class Runner(object):
 
     def main(self, **kwargs):
         if 'noclean' in kwargs:
-            self.clean_flag = False
+            self.clean_flag = not kwargs['noclean']
         if 'report' in kwargs:
-            self.report_flag = True
+            self.report_flag = kwargs['report']
         try:
             if 'test' in kwargs:
                 self.source_rc_file()
