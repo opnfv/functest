@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_0dd2f9ff",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-25T02:16:37Z",
+      "side": 1,
+      "message": "Agree.",
+      "parentUuid": "da33351e_6d0905dd",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 96
+      },
+      "revId": "bc25ad7ad1a9299a07aca77bd9207342711f4bd9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_5cf2f96f",
         "filename": "functest/ci/download_images.sh",
         "patchSetId": 1
