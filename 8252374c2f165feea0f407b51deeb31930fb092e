@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_e8bfc3fa",
+        "filename": "functest/api/urls.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-25T06:11:06Z",
+      "side": 1,
+      "message": "how about using \u0027POST /api/v1/hosts\u0027 without action?\nRegarding executing test case because it is a command not actually create/delete a resource, using action may be an option, but hosts is actually a kind of resource, POST/PUT/DELETE directly would be better.\n\nAction does not conform with Restful, I wouldn\u0027t recommend to use it in every url.\n\nAnother suggestion, maybe in another patch, how about deleting \u0027functest\u0027 from url? These APIs is used as functest-api, don\u0027t see it necessary to repeat it again in the urls",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "8252374c2f165feea0f407b51deeb31930fb092e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
