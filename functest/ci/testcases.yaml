@@ -324,10 +324,10 @@ tiers:
                 criteria: 100
                 blocking: false
                 description: >-
-                    Test suite for odl-sfc to test two chains and two SFs
+                    Test suite for odl-sfc to test two chains with one SF and one chain with two SFs
                 dependencies:
-                    installer: '(apex)|(fuel)'
-                    scenario: 'odl_l2-sfc'
+                    installer: ''
+                    scenario: 'odl.*sfc'
                 run:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
