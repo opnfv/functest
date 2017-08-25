@@ -20,6 +20,4 @@ https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloud
 http://cloud.centos.org/altarch/7/images/aarch64/CentOS-7-aarch64-GenericCloud.qcow2.xz
 EOF
 
-xz --decompress --force ${1:-/home/opnfv/functest/images}/CentOS-7-aarch64-GenericCloud.qcow2.xz
-
-exit $?
+xz --decompress --force --keep ${1:-/home/opnfv/functest/images}/CentOS-7-aarch64-GenericCloud.qcow2.xz
