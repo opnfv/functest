@@ -1,0 +1,27 @@
+test_scenario_list:
+    -
+        test_type: 'function_test'
+        vnf_list:
+            -
+                vnf_name: 'target_vnf'
+                os_type: 'vyos'
+                image_name: 'vyos1.1.7'
+                flavor_name: 'm1.medium'
+            -
+                vnf_name: 'reference_vnf'
+                os_type: 'vyos'
+                image_name: 'vyos1.1.7'
+                flavor_name: 'm1.medium'
+        function_test_list:
+            -
+                target_vnf_name: 'target_vnf'
+                test_list:
+                    -
+                        test_kind: 'Interoperability'
+                        protocol: 'BGP'
+                        BGP:
+                            - 'Checking_the_peer_of_BGP'
+                            - 'Checking_the_status_of_BGP'
+                            - 'Checking_the_advertised_routes'
+                            - 'Checking_the_received_routes'
+                            - 'Checking_the_routing_table'

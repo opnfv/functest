@@ -47,3 +47,17 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.orchestra_clearwaterims'
                     class: 'ClearwaterImsVnf'
+
+            -
+                case_name: vyos_vrouter
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case is vRouter testing.
+                dependencies:
+                    installer: 'fuel'
+                    scenario: 'nosdn-nofeature'
+                run:
+                    module: 'functest.opnfv_tests.vnf.router.cloudify_vrouter'
+                    class: 'CloudifyVrouter'

@@ -17,7 +17,6 @@ ARG RALLY_TAG=0.8.1
 ARG ODL_TAG=release/carbon
 ARG OPENSTACK_TAG=stable/ocata
 ARG VIMS_TAG=stable
-ARG VROUTER_TAG=stable
 ARG REPOS_DIR=/home/opnfv/repos
 ARG FUNCTEST_BASE_DIR=/home/opnfv/functest
 ARG FUNCTEST_CONF_DIR=${FUNCTEST_BASE_DIR}/conf
@@ -93,7 +92,6 @@ RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/fds /src/fds
 # other repositories
 RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test /src/vims-test
-RUN git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-functest-vrouter.git ${REPOS_VNFS_DIR}/vrouter
 RUN git clone --depth 1 https://github.com/wuwenbin2/OnosSystemTest.git ${REPOS_DIR}/onos
 
 # SFC integration
