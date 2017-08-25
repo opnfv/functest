@@ -113,13 +113,13 @@ class VPingBase(testcase.TestCase):
         vping_physical_network = None
         vping_segmentation_id = None
 
-        if (hasattr(CONST, 'network_type')):
+        if (hasattr(CONST, 'vping_network_type')):
             vping_network_type = CONST.__getattribute__(
                 'vping_network_type')
-        if (hasattr(CONST, 'physical_network')):
+        if (hasattr(CONST, 'vping_physical_network')):
             vping_physical_network = CONST.__getattribute__(
                 'vping_physical_network')
-        if (hasattr(CONST, 'segmentation_id')):
+        if (hasattr(CONST, 'vping_segmentation_id')):
             vping_segmentation_id = CONST.__getattribute__(
                 'vping_segmentation_id')
 
