@@ -11,10 +11,12 @@
 Resources to handle testcase related requests
 """
 
-import os
 import logging
+import os
+import pkg_resources
 import uuid
 
+import ConfigParser
 from flask import abort, jsonify
 
 from functest.api.base import ApiResource
@@ -84,6 +86,7 @@ class V1Testcase(ApiResource):
         """ The built_in function to run a test case """
 
         case_name = args.get('testcase')
+        self._update_logging_ini(args.get('task_id'))
 
         if not os.path.isfile(CONST.__getattribute__('env_active')):
             raise Exception("Functest environment is not ready.")
@@ -113,3 +116,17 @@ class V1Testcase(ApiResource):
             }
 
             return {'result': result}
+
+    def _update_logging_ini(self, task_id):  # pylint: disable=no-self-use
+        """ Update the log file for each task"""
+        config = ConfigParser.RawConfigParser()
+        config.read(
+            pkg_resources.resource_filename('functest', 'ci/logging.ini'))
+        log_path = os.path.join(CONST.__getattribute__('dir_results'),
+                                '{}.log'.format(task_id))
+        config.set('handler_file', 'args', '("{}",)'.format(log_path))
+
+        with open(
+            pkg_resources.resource_filename(
+                'functest', 'ci/logging.ini'), 'wb') as configfile:
+            config.write(configfile)

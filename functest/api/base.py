@@ -45,6 +45,11 @@ class ApiResource(Resource):
 
         return action, args
 
+    def _get_args(self):  # pylint: disable=no-self-use
+        """ Convert the unicode to string for request.args """
+        args = api_utils.change_to_str_in_dict(request.args)
+        return args
+
     def _dispatch_post(self):
         """ Dispatch request """
         action, args = self._post_args()
