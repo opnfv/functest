@@ -6,7 +6,6 @@ general:
         repo_tempest:       /src/tempest
         dir_repo_releng:    /home/opnfv/repos/releng
         repo_vims_test:     /src/vims-test
-        repo_onos:          /home/opnfv/repos/onos
         repo_barometer:     /home/opnfv/repos/barometer
         repo_doctor:        /home/opnfv/repos/doctor
         repo_odl_test:      /src/odl_test
@@ -105,11 +104,6 @@ vping:
     cleanup_objects: True
     unique_names: True
 
-onos_sfc:
-    image_base_url: http://artifacts.opnfv.org/sfc/demo
-    image_name: TestSfcVm
-    image_file_name: firewall_block_image.img
-
 odl_sfc:
     image_base_url: "http://artifacts.opnfv.org/sfc/images"
     image_name: sfc_nsh_danube
@@ -160,23 +154,6 @@ vnf:
         tenant_description: Clearwater IMS deployed with Open Baton
         config: orchestra.yaml
 
-ONOS:
-    general:
-        onosbench_username: 'root'
-        onosbench_password: 'root'
-        onoscli_username: 'root'
-        onoscli_password: 'root'
-        runtimeout: 300
-    environment:
-        OCT: '10.20.0.1'
-        OC1: '10.20.0.7'
-        OC2: '10.20.0.7'
-        OC3: '10.20.0.7'
-        OCN: '10.20.0.4'
-        OCN2: '10.20.0.5'
-        installer_master: '10.20.0.2'
-        installer_master_username: 'root'
-        installer_master_password: 'r00tme'
 promise:
     tenant_name: promise
     tenant_description: promise Functionality Testing
