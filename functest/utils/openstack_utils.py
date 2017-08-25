@@ -21,6 +21,7 @@ from glanceclient import client as glanceclient
 from heatclient import client as heatclient
 from novaclient import client as novaclient
 from keystoneclient import client as keystoneclient
+from tackerclilent import client as tackerclient
 from neutronclient.neutron import client as neutronclient
 
 from functest.utils.constants import CONST
@@ -279,6 +280,19 @@ def get_heat_client_version():
 def get_heat_client(other_creds={}):
     sess = get_session(other_creds)
     return heatclient.Client(get_heat_client_version(), session=sess)
+
+
+def get_tacker_client_version():
+    api_version = os.getenv('OS_TACKER_API_VERSION')
+    if api_version is not None:
+        logger.info("OS_TACKER_API_VERSION is set in env as '%s'", api_version)
+        return api_version
+    return DEFAULT_API_VERSION
+
+
+def get_tacker_client(other_creds={}):
+    sess = get_session(other_creds)
+    return tackerclient.Client(get_tacker_client_version(), session=sess)
 
 
 def download_and_add_image_on_glance(glance, image_name, image_url, data_dir):
