@@ -507,7 +507,6 @@ tiers:
 
             -
                 case_name: vyos_vrouter
-                enabled: false
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -517,5 +516,5 @@ tiers:
                     installer: 'fuel'
                     scenario: 'nosdn-nofeature'
                 run:
-                    module: 'functest.opnfv_tests.vnf.router.vyos_vrouter'
-                    class: 'VrouterVnf'
+                    module: 'functest.opnfv_tests.vnf.router.cloudify_vrouter'
+                    class: 'CloudifyVrouter'

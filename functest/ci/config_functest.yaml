@@ -12,12 +12,12 @@ general:
         repo_odl_test:      /src/odl_test
         repo_fds:           /src/fds
         repo_securityscan:  /home/opnfv/repos/securityscanning
-        repo_vrouter:       /home/opnfv/repos/vnfs/vrouter
         functest:           /home/opnfv/functest
         results:            /home/opnfv/functest/results
         functest_conf:      /home/opnfv/functest/conf
         functest_data:      /home/opnfv/functest/data
         ims_data:           /home/opnfv/functest/data/ims/
+        router_data:        /home/opnfv/functest/data/router/
         functest_images:    /home/opnfv/functest/images
         rally_inst:         /root/.rally
 
@@ -159,6 +159,10 @@ vnf:
         tenant_name: orchestra_clearwaterims
         tenant_description: Clearwater IMS deployed with Open Baton
         config: orchestra.yaml
+    vyos_vrouter:
+        tenant_name: vrouter
+        tenant_description: vRouter
+        config: cloudify_vrouter.yaml
 
 ONOS:
     general:
