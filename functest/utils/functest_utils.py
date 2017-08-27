@@ -80,6 +80,16 @@ def get_installer_type():
 
     return installer
 
+def get_installer_ip():
+    """
+    Get installer IP from the environment 
+    """
+    try:
+        installer_ip = os.environ['INSTALLER_IP']
+    except KeyError:
+        logger.error("Impossible to retrieve installer IP")
+        installer_ip = None
+    return installer_ip
 
 def get_scenario():
     """
