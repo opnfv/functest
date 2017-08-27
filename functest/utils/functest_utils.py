@@ -81,6 +81,14 @@ def get_installer_type():
     return installer
 
 
+def get_installer_ip():
+    """
+    Get installer IP from the environment
+    """
+    installer_ip = CONST.__getattribute__('INSTALLER_IP')
+    return installer_ip
+
+
 def get_scenario():
     """
     Get scenario
