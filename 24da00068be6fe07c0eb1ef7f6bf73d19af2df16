@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_d1e1c7ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-08-28T13:09:35Z",
+      "side": 1,
+      "message": "Please add a more detailed description on what tests this patch is applied for and how it works",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "24da00068be6fe07c0eb1ef7f6bf73d19af2df16",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
