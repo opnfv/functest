@@ -97,23 +97,6 @@ class FunctestUtilsTesting(unittest.TestCase):
             m.assert_called_once_with(dest, 'wb')
             self.assertTrue(mock_sh.called)
 
-    @mock.patch('functest.utils.functest_utils.logger.error')
-    def test_get_installer_type_failed(self, mock_logger_error):
-        with mock.patch.dict(os.environ,
-                             {},
-                             clear=True):
-            self.assertEqual(functest_utils.get_installer_type(),
-                             "Unknown_installer")
-            mock_logger_error.assert_called_once_with("Impossible to retrieve"
-                                                      " the installer type")
-
-    def test_get_installer_type_default(self):
-        with mock.patch.dict(os.environ,
-                             {'INSTALLER_TYPE': 'test_installer'},
-                             clear=True):
-            self.assertEqual(functest_utils.get_installer_type(),
-                             self.installer)
-
     def test_get_version_daily_job(self):
         CONST.__setattr__('BUILD_TAG', self.build_tag)
         self.assertEqual(functest_utils.get_version(), self.version)
