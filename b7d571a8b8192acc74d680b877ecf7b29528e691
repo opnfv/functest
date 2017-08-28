@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_dba60610",
+        "filename": "functest/utils/functest_utils.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-08-28T02:00:49Z",
+      "side": 1,
+      "message": "You can use CONST.__getattribute__(\u0027INSTALLER_IP\u0027) instead.\nIf \u0027INSTALLER_IP\u0027 is not set as an env variable, it will get None.",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 20
+      },
+      "revId": "b7d571a8b8192acc74d680b877ecf7b29528e691",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
