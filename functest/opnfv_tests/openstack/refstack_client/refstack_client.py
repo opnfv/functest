@@ -100,6 +100,14 @@ class RefstackClient(testcase.TestCase):
         try:
             with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
                                    "refstack.log"), 'r') as logfile:
+                for line in logfile.readlines():
+                    if 'Tests' in line:
+                        break
+                    if re.search(r"\} tempest\.", line):
+                        LOGGER.info(line.replace('\n', ''))
+
+            with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+                                   "refstack.log"), 'r') as logfile:
                 output = logfile.read()
 
             for match in re.findall(r"Ran: (\d+) tests in (\d+\.\d{4}) sec.",
