@@ -114,25 +114,6 @@ class FunctestUtilsTesting(unittest.TestCase):
             self.assertEqual(functest_utils.get_installer_type(),
                              self.installer)
 
-    @mock.patch('functest.utils.functest_utils.logger.info')
-    def test_get_scenario_failed(self, mock_logger_info):
-        with mock.patch.dict(os.environ,
-                             {},
-                             clear=True):
-            self.assertEqual(functest_utils.get_scenario(),
-                             "os-nosdn-nofeature-noha")
-            mock_logger_info.assert_called_once_with("Impossible to retrieve "
-                                                     "the scenario.Use "
-                                                     "default "
-                                                     "os-nosdn-nofeature-noha")
-
-    def test_get_scenario_default(self):
-        with mock.patch.dict(os.environ,
-                             {'DEPLOY_SCENARIO': 'test_scenario'},
-                             clear=True):
-            self.assertEqual(functest_utils.get_scenario(),
-                             self.scenario)
-
     def test_get_version_daily_job(self):
         CONST.__setattr__('BUILD_TAG', self.build_tag)
         self.assertEqual(functest_utils.get_version(), self.version)
@@ -154,10 +135,9 @@ class FunctestUtilsTesting(unittest.TestCase):
         CONST.__setattr__('results_test_db_url', self.db_url)
         CONST.__setattr__('BUILD_TAG', self.build_tag)
         CONST.__setattr__('NODE_NAME', self.node_name)
-        with mock.patch('functest.utils.functest_utils.get_scenario',
-                        return_value=self.scenario), \
-                mock.patch('functest.utils.functest_utils.get_version',
-                           return_value=self.version):
+        CONST.__setattr__('DEPLOY_SCENARIO', self.scenario)
+        with mock.patch('functest.utils.functest_utils.get_version',
+                        return_value=self.version):
             functest_utils.logger_test_results(self.project, self.case_name,
                                                self.status, self.details)
             mock_logger_info.assert_called_once_with(

@@ -13,7 +13,6 @@ import time
 import uuid
 
 from functest.core import testcase
-from functest.utils import functest_utils
 from functest.utils.constants import CONST
 
 from snaps.openstack import create_flavor
@@ -139,7 +138,7 @@ class VPingBase(testcase.TestCase):
 
         self.logger.info(
             "Creating flavor with name: '%s'" % self.flavor_name)
-        scenario = functest_utils.get_scenario()
+        scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
         flavor_metadata = None
         if 'ovs' in scenario or 'fdio' in scenario:
             flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE

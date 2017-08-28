@@ -81,20 +81,6 @@ def get_installer_type():
     return installer
 
 
-def get_scenario():
-    """
-    Get scenario
-    """
-    try:
-        scenario = os.environ['DEPLOY_SCENARIO']
-    except KeyError:
-        logger.info("Impossible to retrieve the scenario."
-                    "Use default os-nosdn-nofeature-noha")
-        scenario = "os-nosdn-nofeature-noha"
-
-    return scenario
-
-
 def get_version():
     """
     Get version
@@ -122,7 +108,7 @@ def logger_test_results(project, case_name, status, details):
     Format test case results for the logger
     """
     pod_name = CONST.__getattribute__('NODE_NAME')
-    scenario = get_scenario()
+    scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
     version = get_version()
     build_tag = CONST.__getattribute__('BUILD_TAG')
     db_url = CONST.__getattribute__("results_test_db_url")
