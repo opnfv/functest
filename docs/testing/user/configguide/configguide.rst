@@ -120,7 +120,7 @@ recommended parameters for invoking docker container
        -e "DEPLOY_SCENARIO=os-<controller>-<nfv_feature>-<ha_mode>"
        where:
        os = OpenStack (No other VIM choices currently available)
-       controller is one of ( nosdn | odl_l2 | odl_l3 | onos | ocl)
+       controller is one of ( nosdn | odl_l2 | odl_l3 )
        nfv_feature is one or more of ( ovs | kvm | sfc | bgpvpn | nofeature )
                 If several features are pertinent then use the underscore
                 character '_' to separate each feature (e.g. ovs_kvm)
@@ -319,7 +319,6 @@ should now be in place::
     |   |   |-- images
     |   |   `-- results
     |   `-- repos
-    |       |-- onos
     |       |-- doctor
     |       `-- vnfs
    -- src
@@ -426,8 +425,7 @@ follows::
     │   │   |-- tempest
     │   │   `-- vping
     │   |-- sdn
-    │   │   |-- odl
-    │   │   `-- onos
+    │   │    `-- odl
     │   `-- vnf
     │       |-- aaa
     │       |-- ims

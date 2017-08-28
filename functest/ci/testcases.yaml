@@ -207,22 +207,6 @@ tiers:
                             -  /src/fds/testing/robot
 
             -
-                case_name: onos
-                project_name: functest
-                criteria: 100
-                blocking: true
-                description: >-
-                    Test Suite for the ONOS SDN Controller. It integrates
-                    some test suites from upstream using TestON as the test
-                    framework.
-                dependencies:
-                    installer: ''
-                    scenario: 'onos'
-                run:
-                    module: 'functest.opnfv_tests.sdn.onos.onos'
-                    class: 'Onos'
-
-            -
                 case_name: snaps_smoke
                 project_name: functest
                 criteria: 100
@@ -333,21 +317,6 @@ tiers:
                     class: 'BashFeature'
                     args:
                         cmd: 'run_sfc_tests.py'
-
-            -
-                case_name: onos_sfc
-                enabled: false
-                project_name: functest
-                criteria: 100
-                blocking: true
-                description: >-
-                    Test Suite for onos-sfc to test sfc function.
-                dependencies:
-                    installer: ''
-                    scenario: 'onos-sfc'
-                run:
-                    module: 'functest.opnfv_tests.sdn.onos.onos'
-                    class: 'OnosSfc'
 
             -
                 case_name: parser-basics

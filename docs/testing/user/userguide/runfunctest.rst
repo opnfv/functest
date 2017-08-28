@@ -256,7 +256,7 @@ variables:
  * Installer IP of the engine or VM running the actual deployment, stored in INSTALLER_IP
  * The scenario [controller]-[feature]-[mode], stored in DEPLOY_SCENARIO with
 
-   * controller = (odl|ocl|nosdn|onos)
+   * controller = (odl|ocl|nosdn)
    * feature = (ovs(dpdk)|kvm|sfc|bgpvpn|ovs_dpdk_bar)
    * mode = (ha|noha)
 

@@ -86,11 +86,6 @@ validate the scenario for the release.
 |             |               |                | upstream testcases. See below    |
 |             |               |                | for details                      |
 |             |               +----------------+----------------------------------+
-|             |               | onos           | Test suite of ONOS L2 and L3     |
-|             |               |                | functions.                       |
-|             |               |                | See `ONOSFW User Guide`_  for    |
-|             |               |                | details.                         |
-|             |               +----------------+----------------------------------+
 |             |               | odl_netvirt    | Test Suite for the OpenDaylight  |
 |             |               |                | SDN Controller when the NetVirt  |
 |             |               |                | features are installed. It       |
@@ -245,7 +240,6 @@ section `Executing the functest suites`_ of this document.
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`Doctor User Guide`: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
 .. _`Promise User Guide`: http://artifacts.opnfv.org/promise/colorado/docs/userguide/index.html
-.. _`ONOSFW User Guide`: http://artifacts.opnfv.org/onosfw/colorado/userguide/index.html
 .. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/colorado/docs/userguide/index.html
 .. _`Domino User Guide`: http://artifacts.opnfv.org/domino/docs/userguide-single/index.html
 .. _`Parser User Guide`: http://artifacts.opnfv.org/parser/colorado/docs/userguide/index.html

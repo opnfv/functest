@@ -376,51 +376,6 @@ Note: the checks in OpenDaylight are based on the returned HTTP status
 code returned by OpenDaylight.
 
 
-ONOS
-^^^^
-
-TestON Framework is used to test the ONOS SDN controller functions.
-The test cases deal with L2 and L3 functions.
-The ONOS test suite can be run on any ONOS compliant scenario.
-
-The test cases are described as follows:
-
- * onosfunctest: The main executable file contains the initialization of
-   the docker environment and functions called by FUNCvirNetNB and
-   FUNCvirNetNBL3
-
- * FUNCvirNetNB
-
-   * Create Network: Post Network data and check it in ONOS
-   * Update Network: Update the Network and compare it in ONOS
-   * Delete Network: Delete the Network and check if it's NULL in ONOS or
-     not
-   * Create Subnet: Post Subnet data and check it in ONOS
-   * Update Subnet: Update the Subnet and compare it in ONOS
-   * Delete Subnet: Delete the Subnet and check if it's NULL in ONOS or not
-   * Create Port: Post Port data and check it in ONOS
-   * Update Port: Update the Port and compare it in ONOS
-   * Delete Port: Delete the Port and check if it's NULL in ONOS or not
-
- * FUNCvirNetNBL3
-
-   * Create Router: Post data for create Router and check it in ONOS
-   * Update Router: Update the Router and compare it in ONOS
-   * Delete Router: Delete the Router data and check it in ONOS
-   * Create RouterInterface: Post Router Interface data to an existing Router
-     and check it in ONOS
-   * Delete RouterInterface: Delete the RouterInterface and check the Router
-   * Create FloatingIp: Post data for create FloatingIp and check it in ONOS
-   * Update FloatingIp: Update the FloatingIp and compare it in ONOS
-   * Delete FloatingIp: Delete the FloatingIp and check that it is 'NULL' in
-     ONOS
-   * Create External Gateway: Post data to create an External Gateway for an
-     existing Router and check it in ONOS
-   * Update External Gateway: Update the External Gateway and compare the change
-   * Delete External Gateway: Delete the External Gateway and check that it is
-     'NULL' in ONOS
-
-
 Features
 --------
 
