@@ -224,11 +224,14 @@ class RefstackClient(testcase.TestCase):
         if not self.tempestconf:
             self.generate_conf()
 
-        os_utils.init_tempest_cleanup(
-            self.tempestconf.DEPLOYMENT_DIR, 'tempest.conf',
-            os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
-                         "tempest-cleanup-init.log")
-        )
+        try:
+            os_utils.init_tempest_cleanup(
+                self.tempestconf.DEPLOYMENT_DIR, 'tempest.conf',
+                os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+                             "tempest-cleanup-init.log"))
+        except Exception as err:
+            LOGGER.error(str(err))
+            return -1
 
         return super(RefstackClient, self).create_snapshot()
 

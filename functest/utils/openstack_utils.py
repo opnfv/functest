@@ -1590,8 +1590,12 @@ def init_tempest_cleanup(tempest_config_dir=None,
     # If this command fails, an exception must be raised to stop the script
     # otherwise the later cleanup would destroy also other resources
     cmd_line = "tempest cleanup --init-saved-state"
-    ft_utils.execute_command_raise(cmd_line, env=env, output_file=output_file,
-                                   error_msg="Tempest cleanup init failed")
+    try:
+        ft_utils.execute_command_raise(cmd_line, env=env,
+                                       output_file=output_file,
+                                       error_msg="Tempest cleanup init failed")
+    except Exception:
+        raise
 
 
 def perform_tempest_cleanup(tempest_config_dir=None,
