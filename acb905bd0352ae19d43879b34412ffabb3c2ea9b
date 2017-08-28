@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_f63cc1e4",
+        "filename": "functest/opnfv_tests/vnf/router/cloudify_vrouter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4385
+      },
+      "writtenOn": "2017-08-28T10:50:56Z",
+      "side": 1,
+      "message": "I will change copyrights comments of all source codes to your suggestion format.",
+      "parentUuid": "da33351e_3bee12b5",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_5bdcb612",
         "filename": "functest/opnfv_tests/vnf/router/cloudify_vrouter.yaml",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-28T06:51:27Z",
       "side": 1,
       "message": "Could you please allow caching instead? see last modificiations on vnfs",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d63ffdd4",
+        "filename": "functest/opnfv_tests/vnf/router/cloudify_vrouter.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4385
+      },
+      "writtenOn": "2017-08-28T10:50:56Z",
+      "side": 1,
+      "message": "Last modificiations on vnfs is next commit?\nhttps://gerrit.opnfv.org/gerrit/#/c/39757/\n\nI will change it reference to above commit.",
+      "parentUuid": "da33351e_5bdcb612",
       "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_362629cf",
+        "filename": "functest/opnfv_tests/vnf/router/test_controller/function_test_exec.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4385
+      },
+      "writtenOn": "2017-08-28T10:50:56Z",
+      "side": 1,
+      "message": "I will delete \"# coding: utf8\" according to Functest policy.",
+      "parentUuid": "da33351e_3bd732ef",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_9b059e7c",
         "filename": "functest/opnfv_tests/vnf/router/utilvnf.py",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-28T06:51:27Z",
       "side": 1,
       "message": "PEP8 strongly recommends not to use \\ to wrap.",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_7630b101",
+        "filename": "functest/opnfv_tests/vnf/router/utilvnf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 4385
+      },
+      "writtenOn": "2017-08-28T10:50:56Z",
+      "side": 1,
+      "message": "I will change this line that it not use \"\\\". And, I will also change other similar lines.",
+      "parentUuid": "da33351e_9b059e7c",
       "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_d616dd54",
+        "filename": "functest/opnfv_tests/vnf/router/vnf_controller/checker.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4385
+      },
+      "writtenOn": "2017-08-28T10:50:56Z",
+      "side": 1,
+      "message": "I will consider change to PrettyTable.",
+      "parentUuid": "da33351e_7b089a91",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_dbff2666",
         "filename": "functest/opnfv_tests/vnf/router/vnf_controller/vnf_controller.py",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_b1008302",
+        "filename": "functest/opnfv_tests/vnf/router/vnf_controller/vnf_controller.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4385
+      },
+      "writtenOn": "2017-08-28T10:50:56Z",
+      "side": 1,
+      "message": "This method job is only output test result to log. Should I remove it?",
+      "parentUuid": "da33351e_dbff2666",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_bb02226d",
         "filename": "functest/tests/unit/vnf/router/test_cloudify_vrouter.py",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-28T06:51:27Z",
       "side": 1,
       "message": "I will simply remove them if not used.",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d10d4739",
+        "filename": "functest/tests/unit/vnf/router/test_cloudify_vrouter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 4385
+      },
+      "writtenOn": "2017-08-28T10:50:56Z",
+      "side": 1,
+      "message": "I will remove them.",
+      "parentUuid": "da33351e_bb02226d",
       "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
