@@ -42,6 +42,10 @@ class RallyBase(testcase.OSGCTestCase):
         CONST.__getattribute__('dir_functest_images'),
         GLANCE_IMAGE_FILENAME)
     GLANCE_IMAGE_FORMAT = CONST.__getattribute__('openstack_image_disk_format')
+    GLANCE_IMAGE_EXTRA_PROPERTIES = {}
+    if hasattr(CONST, 'openstack_extra_properties'):
+        GLANCE_IMAGE_EXTRA_PROPERTIES = CONST.__getattribute__(
+            'openstack_extra_properties')
     FLAVOR_NAME = "m1.tiny"
 
     RALLY_DIR = pkg_resources.resource_filename(
@@ -462,7 +466,8 @@ class RallyBase(testcase.OSGCTestCase):
         self.image_exists, self.image_id = os_utils.get_or_create_image(
             self.GLANCE_IMAGE_NAME,
             self.GLANCE_IMAGE_PATH,
-            self.GLANCE_IMAGE_FORMAT)
+            self.GLANCE_IMAGE_FORMAT,
+            self.GLANCE_IMAGE_EXTRA_PROPERTIES)
         if self.image_id is None:
             raise Exception("Failed to get or create image '%s'" %
                             self.GLANCE_IMAGE_NAME)
