@@ -22,6 +22,23 @@
       "revId": "24da00068be6fe07c0eb1ef7f6bf73d19af2df16",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_51a9377a",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-28T13:32:59Z",
+      "side": 1,
+      "message": "PEP8 recommends not to use \\ to wrap (only for long with statements)",
+      "revId": "24da00068be6fe07c0eb1ef7f6bf73d19af2df16",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
