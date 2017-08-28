@@ -442,7 +442,7 @@ class TempestResourcesManager(object):
         if (CONST.__getattribute__('tempest_use_custom_flavors') or
            use_custom_flavors):
             logger.info("Creating flavor for Tempest suite")
-            scenario = ft_utils.get_scenario()
+            scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
             flavor_metadata = None
             if 'ovs' in scenario or 'fdio' in scenario:
                 flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
@@ -461,7 +461,7 @@ class TempestResourcesManager(object):
 
         if use_custom_flavors:
             logger.info("Creating 2nd flavor for Tempest suite")
-            scenario = ft_utils.get_scenario()
+            scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
             flavor_metadata_alt = None
             if 'ovs' in scenario or 'fdio' in scenario:
                 flavor_metadata_alt = create_flavor.MEM_PAGE_SIZE_LARGE
