@@ -68,19 +68,6 @@ def download_url(url, dest_path):
 #               CI UTILS
 #
 # -----------------------------------------------------------
-def get_installer_type():
-    """
-    Get installer type (fuel, apex, joid, compass)
-    """
-    try:
-        installer = os.environ['INSTALLER_TYPE']
-    except KeyError:
-        logger.error("Impossible to retrieve the installer type")
-        installer = "Unknown_installer"
-
-    return installer
-
-
 def get_scenario():
     """
     Get scenario
