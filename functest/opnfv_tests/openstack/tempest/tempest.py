@@ -267,11 +267,14 @@ class TempestCommon(testcase.TestCase):
         # Make sure that the verifier is configured
         conf_utils.configure_verifier(self.DEPLOYMENT_DIR)
 
-        os_utils.init_tempest_cleanup(
-            self.DEPLOYMENT_DIR, 'tempest.conf',
-            os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
-                         "tempest-cleanup-init.log")
-        )
+        try:
+            os_utils.init_tempest_cleanup(
+                self.DEPLOYMENT_DIR, 'tempest.conf',
+                os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+                             "tempest-cleanup-init.log"))
+        except Exception as err:
+            logger.error(str(err))
+            return testcase.TestCase.EX_RUN_ERROR
 
         return super(TempestCommon, self).create_snapshot()
 
