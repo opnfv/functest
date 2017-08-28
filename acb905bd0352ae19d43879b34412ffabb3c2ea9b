@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_3bee12b5",
+        "filename": "functest/opnfv_tests/vnf/router/cloudify_vrouter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-28T06:51:27Z",
+      "side": 1,
+      "message": "Could you please conform with the next format:\n#!/usr/bin/env python\n\n# Copyright (c) 2017 Okinawa Open Laboratory and others.\n#\n# All rights reserved. This program and the accompanying materials\n# are made available under the terms of the Apache License, Version 2.0\n# which accompanies this distribution, and is available at\n# http://www.apache.org/licenses/LICENSE-2.0\n\n\"\"\"",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_5bdcb612",
+        "filename": "functest/opnfv_tests/vnf/router/cloudify_vrouter.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-28T06:51:27Z",
+      "side": 1,
+      "message": "Could you please allow caching instead? see last modificiations on vnfs",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_3bd732ef",
+        "filename": "functest/opnfv_tests/vnf/router/test_controller/function_test_exec.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-28T06:51:27Z",
+      "side": 1,
+      "message": "usually not set in Functest",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_9b059e7c",
+        "filename": "functest/opnfv_tests/vnf/router/utilvnf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-28T06:51:27Z",
+      "side": 1,
+      "message": "PEP8 strongly recommends not to use \\ to wrap.",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_7b089a91",
+        "filename": "functest/opnfv_tests/vnf/router/vnf_controller/checker.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-28T06:51:27Z",
+      "side": 1,
+      "message": "Coud you please switch to PrettyTable if possible?",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_dbff2666",
+        "filename": "functest/opnfv_tests/vnf/router/vnf_controller/vnf_controller.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-28T06:51:27Z",
+      "side": 1,
+      "message": "nit? check",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_bb02226d",
+        "filename": "functest/tests/unit/vnf/router/test_cloudify_vrouter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-28T06:51:27Z",
+      "side": 1,
+      "message": "I will simply remove them if not used.",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
