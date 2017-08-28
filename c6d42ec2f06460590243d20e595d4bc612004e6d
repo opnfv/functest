@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_967d75ea",
+        "filename": "functest/opnfv_tests/openstack/refstack_client/refstack_client.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-28T09:53:35Z",
+      "side": 1,
+      "message": "we do not have a return code a little bit more formalized than the -1?",
+      "revId": "c6d42ec2f06460590243d20e595d4bc612004e6d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
