@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_f1420b0f",
+        "filename": "functest/opnfv_tests/vnf/router/cloudify_vrouter.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-28T12:23:49Z",
+      "side": 1,
+      "message": "Yes. The images must be downloaded before running the testcase. Here we could simply load a local file.\nPlease see the snaps part too: https://gerrit.opnfv.org/gerrit/#/c/39915/",
+      "parentUuid": "da33351e_d63ffdd4",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_3bd732ef",
         "filename": "functest/opnfv_tests/vnf/router/test_controller/function_test_exec.py",
         "patchSetId": 3
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "I will consider change to PrettyTable.",
       "parentUuid": "da33351e_7b089a91",
+      "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d1454718",
+        "filename": "functest/opnfv_tests/vnf/router/vnf_controller/checker.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-28T12:23:49Z",
+      "side": 1,
+      "message": "Great. Thank you.\nhttps://git.opnfv.org/functest/tree/functest/core/testcase.py#n50",
+      "parentUuid": "da33351e_d616dd54",
       "revId": "acb905bd0352ae19d43879b34412ffabb3c2ea9b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
