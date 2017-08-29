@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_c7d104fd",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-08-29T08:39:42Z",
+      "side": 1,
+      "message": "what does 33/66 stand for?",
+      "range": {
+        "startLine": 335,
+        "startChar": 26,
+        "endLine": 335,
+        "endChar": 28
+      },
+      "revId": "feae6e232508b70ffdb9b26d3c9a0d1a36cf51a1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
