@@ -1,6 +1,7 @@
 #!/usr/bin/env python
+
 # Copyright (c) 2017 Huawei Technologies Co.,Ltd and others.
-# matthew.lijun@huawei.com wangwulin@huawei.com
+#
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
@@ -9,7 +10,6 @@
 """Refstack client testcase implemenation."""
 
 from __future__ import division
-
 
 import argparse
 import logging
@@ -28,6 +28,9 @@ from functest.opnfv_tests.openstack.refstack_client.tempest_conf \
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
+
+__author__ = ("Matthew Li <matthew.lijun@huawei.com>,"
+              "Linda Wang <wangwulin@huawei.com>")
 
 # logging configuration """
 LOGGER = logging.getLogger(__name__)
