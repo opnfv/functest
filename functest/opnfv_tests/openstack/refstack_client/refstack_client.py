@@ -77,7 +77,7 @@ class RefstackClient(testcase.TestCase):
         """Run default defcore sys command."""
         options = ["-v"] if not self.insecure else ["-v", self.insecure]
         cmd = (["refstack-client", "test", "-c", self.confpath] +
-               options + ["--test-list",  self.defcorelist])
+               options + ["--test-list", self.defcorelist])
         LOGGER.info("Starting Refstack_defcore test case: '%s'.", cmd)
 
         with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
