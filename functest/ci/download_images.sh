@@ -18,6 +18,7 @@ http://artifacts.opnfv.org/functest/images/cirros-d161201-aarch64-initramfs
 http://artifacts.opnfv.org/functest/images/cirros-d161201-aarch64-kernel
 https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
 http://cloud.centos.org/altarch/7/images/aarch64/CentOS-7-aarch64-GenericCloud.qcow2.xz
+https://sourceforge.net/projects/ool-opnfv/files/vyos-1.1.7.img
 EOF
 
 xz --decompress --force --keep ${1:-/home/opnfv/functest/images}/CentOS-7-aarch64-GenericCloud.qcow2.xz
