@@ -34,6 +34,24 @@
       "revId": "42ef35409f3eb9c5c90bfce7219c2a8204c26df0",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_876ffcc4",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-08-29T06:30:19Z",
+      "side": 1,
+      "message": "No pb. I simply updated your patch to allow a quick merge.",
+      "parentUuid": "da33351e_e7188877",
+      "revId": "42ef35409f3eb9c5c90bfce7219c2a8204c26df0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
