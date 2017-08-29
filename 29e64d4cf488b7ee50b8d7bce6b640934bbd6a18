@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_479694f1",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-29T10:10:12Z",
+      "side": 1,
+      "message": "self.result +\u003d 1/3",
+      "revId": "29e64d4cf488b7ee50b8d7bce6b640934bbd6a18",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_e7f7e857",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-08-29T10:10:12Z",
+      "side": 1,
+      "message": "self.result +\u003d vnf_test_rate/3*100\n\notherwise no need to set self.result in previous method, no?",
+      "revId": "29e64d4cf488b7ee50b8d7bce6b640934bbd6a18",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
