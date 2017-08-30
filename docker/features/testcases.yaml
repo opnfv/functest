@@ -54,7 +54,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: '. /home/opnfv/functest/conf/stackrc && security_scan --config /usr/local/etc/securityscanning/config.ini'
+                        cmd: '. /home/opnfv/functest/conf/stackrc && security_scan --config /usr/etc/securityscanning/config.ini'
 
             -
                 case_name: functest-odl-sfc
