@@ -19,6 +19,7 @@ import sys
 import textwrap
 
 import prettytable
+import requests.packages.urllib3
 
 import functest.ci.tier_builder as tb
 import functest.core.testcase as testcase
@@ -264,6 +265,7 @@ class Runner(object):
 def main():
     logging.config.fileConfig(pkg_resources.resource_filename(
         'functest', 'ci/logging.ini'))
+    requests.packages.urllib3.disable_warnings()
     parser = RunTestsParser()
     args = parser.parse_args(sys.argv[1:])
     runner = Runner()
