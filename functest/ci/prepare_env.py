@@ -37,14 +37,14 @@ pod_arch = os.getenv("POD_ARCH", None)
 arch_filter = ['aarch64']
 
 CONFIG_FUNCTEST_PATH = pkg_resources.resource_filename(
-            'functest', 'ci/config_functest.yaml')
+    'functest', 'ci/config_functest.yaml')
 CONFIG_PATCH_PATH = pkg_resources.resource_filename(
-            'functest', 'ci/config_patch.yaml')
+    'functest', 'ci/config_patch.yaml')
 CONFIG_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
-            'functest', 'ci/config_aarch64_patch.yaml')
+    'functest', 'ci/config_aarch64_patch.yaml')
 RALLY_CONF_PATH = "/etc/rally/rally.conf"
 RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
-            'functest', 'ci/rally_aarch64_patch.conf')
+    'functest', 'ci/rally_aarch64_patch.conf')
 
 
 class PrepareEnvParser(object):
@@ -358,6 +358,7 @@ def prepare_env(**kwargs):
 def main():
     logging.config.fileConfig(pkg_resources.resource_filename(
         'functest', 'ci/logging.ini'))
+    logging.captureWarnings(True)
     parser = PrepareEnvParser()
     args = parser.parse_args(sys.argv[1:])
     return prepare_env(**args)

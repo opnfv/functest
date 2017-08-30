@@ -159,5 +159,6 @@ def main():
     """Entry point"""
     logging.config.fileConfig(pkg_resources.resource_filename(
         'functest', 'ci/logging.ini'))
+    logging.captureWarnings(True)
     deployment = CheckDeployment()
     return deployment.check_all()
