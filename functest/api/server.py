@@ -97,6 +97,7 @@ def main():
     """Entry point"""
     logging.config.fileConfig(pkg_resources.resource_filename(
         'functest', 'ci/logging.ini'))
+    logging.captureWarnings(True)
     LOGGER.info('Starting Functest server')
     api_add_resource()
     init_db()
