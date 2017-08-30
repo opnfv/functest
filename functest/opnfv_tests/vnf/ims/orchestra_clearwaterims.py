@@ -234,7 +234,8 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
                     ImageSettings(name=image_name,
                                   image_user='cloud',
                                   img_format='qcow2',
-                                  image_file=image_file))
+                                  image_file=image_file,
+                                  public=True))
                 image.create()
                 # self.created_resources.append(image);
 
