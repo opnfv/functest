@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_30a0e39e",
+        "filename": "functest/opnfv_tests/openstack/rally/blacklist.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 602
+      },
+      "writtenOn": "2017-08-31T14:01:56Z",
+      "side": 1,
+      "message": "I am working on a patch in joid to use the recommendations in Ocata for ceilometer if successful then we can remove this exception for joid installer but will let you know soon.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "333ecb356503bad02913ee5fda2ffc0f548eac25",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
