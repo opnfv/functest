@@ -38,6 +38,16 @@ scenario:
             # Bug: https://bugs.launchpad.net/ubuntu/+bug/1704138
             # Fix: https://review.openstack.org/#/c/483402/
             - CeilometerEvents.create_user_and_list_event_types
+    -
+        scenarios:
+            - '^os-'  # all scenarios
+        installers:
+            - '.+'  # all installers
+        tests:
+            # Starting from ocata, following tests require the presence of
+            # panko in the deployment. This is not currently fulfilled
+            # Ref: https://docs.openstack.org/releasenotes/ceilometer/ocata.html
+            - 'CeilometerEvents..*'
 
 functionality:
     -
