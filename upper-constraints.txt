@@ -6,7 +6,7 @@ git+https://gerrit.opnfv.org/gerrit/securityscanning#egg=securityscanning
 git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
 -e git+https://gerrit.opnfv.org/gerrit/promise#egg=promise
 -e git+https://github.com/openstack/refstack-client#egg=refstack-client
-cloudify_rest_client===4.0
+cloudify-rest-client===4.0
 iniparse===0.4
 openbaton-cli===2.2.1b7
 robotframework===3.0.2
@@ -14,4 +14,4 @@ robotframework-httplibrary===0.4.2
 robotframework-requests===0.4.7
 robotframework-sshlibrary===2.1.3;python_version=='2.7'
 IPy===0.83
--e git+https://github.com/openstack/requirements@stable/ocata#egg=openstack_requirements
+-e git+https://github.com/openstack/requirements@stable/ocata#egg=openstack-requirements
