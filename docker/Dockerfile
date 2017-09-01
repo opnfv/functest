@@ -13,7 +13,7 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 
 # Environment variables
 ARG BRANCH=master
-ARG RALLY_TAG=0.8.1
+ARG RALLY_TAG=stable/0.9
 ARG ODL_TAG=release/carbon
 ARG OPENSTACK_TAG=stable/ocata
 ARG VIMS_TAG=stable
@@ -79,6 +79,10 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
         -rthirdparty-requirements.txt && \
+    git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
+    update-requirements -s --source /src/global-requirements /src/rally/ && \
+    pip install --no-cache-dir --src /src -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH /src/rally/ && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally-manage db create && \
