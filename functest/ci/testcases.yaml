@@ -303,7 +303,7 @@ tiers:
 
             -
                 case_name: functest-odl-sfc
-                enabled: false
+                enabled: true
                 project_name: sfc
                 criteria: 100
                 blocking: false
