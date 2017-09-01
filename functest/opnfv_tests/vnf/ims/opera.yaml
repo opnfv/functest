@@ -1,0 +1,59 @@
+tenant_images:
+    orchestrator:
+        ubuntu-14.04-server-cloudimg-amd64-disk1: /home/opnfv/functest/images/trusty-server-cloudimg-amd64-disk1.img
+    opera_clearwaterims:
+        ubuntu-14.04-server-cloudimg-amd64-disk1: /home/opnfv/functest/images/trusty-server-cloudimg-amd64-disk1.img
+mano:
+    name: Onap
+    version: 'amsterdam 1.0.0'
+    requirements:
+        flavor:
+          name: onap
+          ram_min: 4096
+          disk: 40
+          vcpus: 2
+        image: 'ubuntu-14.04-server-cloudimg-amd64-disk1'
+    bootstrap:
+        url: http://get.onap.org/bootstraps/bootstrap_3.2.0_opnfv/bootstrap
+        config:
+            url: http://get.onap.org/bootstraps/bootstrap_3.2.0_opnfv/bootstrap-config-file
+    gvnfm:
+        userdata:
+            url: https://raw.githubusercontent.com/onap/generic-vnfm/3.2.0/src/main/resources/user-data.sh
+    credentials:
+        username: admin
+        password: onap
+
+    test:
+        scscf:
+            ports: [3870, 6060]
+        pcscf:
+            ports: [4060]
+        icscf:
+            ports: [3869, 5060]
+        fhoss:
+            ports: [3868]
+        bind9:
+            ports: []
+
+opera_clearwaterims:
+    name: Clearwater IMS
+    descriptor:
+        url: http://artifacts.opnfv.org:8082/api/v1/nsds/fokus/ClearwaterIMS/3.2.0/json
+    requirements:
+        flavor:
+          name: m1.small
+          ram_min: 2048
+          disk: 20
+          vcpus: 1
+    test:
+       scscf:
+            ports: [3870, 6060]
+        pcscf:
+            ports: [4060]
+        icscf:
+            ports: [3869, 5060]
+        fhoss:
+            ports: [3868]
+        bind9:
+            ports: []
