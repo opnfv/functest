@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_29351ada",
+        "filename": "functest/core/vnf.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-01T07:22:26Z",
+      "side": 1,
+      "message": "you could wrap here.",
+      "revId": "9ae9fc4fb2010100124cffbe62648907de642ab6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_694e0271",
+        "filename": "functest/tests/unit/core/test_vnf.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-01T07:22:26Z",
+      "side": 1,
+      "message": "if useless, please remove it",
+      "range": {
+        "startLine": 22,
+        "startChar": 48,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "9ae9fc4fb2010100124cffbe62648907de642ab6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_49517e0d",
+        "filename": "functest/tests/unit/vnf/ims/test_cloudify_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-01T07:22:26Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "9ae9fc4fb2010100124cffbe62648907de642ab6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_a9580a33",
+        "filename": "functest/tests/unit/vnf/ims/test_orchestra_clearwaterims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-01T07:22:26Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "9ae9fc4fb2010100124cffbe62648907de642ab6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_895b862d",
+        "filename": "functest/tests/unit/vnf/ims/test_orchestra_openims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-01T07:22:26Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "9ae9fc4fb2010100124cffbe62648907de642ab6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
