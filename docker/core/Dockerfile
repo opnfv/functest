@@ -20,7 +20,7 @@ RUN apk --no-cache add --update \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH /src/rally/ && \
-    rm -r upper-constraints.txt /src/rally/.git /src/openstack-requirements/.git && \
+    rm -r upper-constraints.txt /src/rally/.git && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally-manage db create && \
