@@ -2,6 +2,7 @@ FROM alpine:3.6
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/ocata
+ARG RALLY_TAG=stable/0.9
 
 RUN apk --no-cache add --update \
         python libffi libssl1.0 libjpeg-turbo py-pip bash \
@@ -15,7 +16,11 @@ RUN apk --no-cache add --update \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest && \
-    rm upper-constraints.txt && \
+    git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
+    update-requirements -s --source /src/openstack-requirements /src/rally/ && \
+    pip install --no-cache-dir --src /src -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH /src/rally/ && \
+    rm -r upper-constraints.txt /src/rally/.git /src/openstack-requirements/.git && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally-manage db create && \
