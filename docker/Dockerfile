@@ -76,13 +76,15 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
         sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ \
         > upper-constraints.txt && \
     pip install --src /src -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH -e openstack_requirements && \
+    git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
+    update-requirements -s --source /src/openstack-requirements /src/rally/ && \
+    pip install --src /src -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH /src/rally/ && \
+    pip install --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
         -rthirdparty-requirements.txt && \
-    git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
-    update-requirements -s --source /src/openstack-requirements /src/rally/ && \
-    pip install --no-cache-dir --src /src -cupper-constraints.txt \
-        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH /src/rally/ && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally-manage db create && \
