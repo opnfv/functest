@@ -77,12 +77,15 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
         > upper-constraints.txt && \
     pip install --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
-        -rthirdparty-requirements.txt && \
+        -e git+https://github.com/openstack/requirements@stable/ocata#egg=openstack_requirements && \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
-    pip install --no-cache-dir --src /src -cupper-constraints.txt \
+    pip install --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH /src/rally/ && \
+    pip install --src /src -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
+        git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
+        -rthirdparty-requirements.txt && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally-manage db create && \

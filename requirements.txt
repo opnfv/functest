@@ -29,7 +29,7 @@ six>=1.9.0 # MIT
 opnfv
 snaps
 tempest>=12.1.0 # Apache-2.0
-openstack-requirements
+rally
 SQLAlchemy<1.1.0,>=1.0.10 # MIT
 paramiko>=2.0 # LGPLv2.1+
 Jinja2!=2.9.0,!=2.9.1,!=2.9.2,!=2.9.3,!=2.9.4,>=2.8 # BSD License (3 clause)
