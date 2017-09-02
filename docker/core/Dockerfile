@@ -13,6 +13,9 @@ RUN apk --no-cache add --update \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
         sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ \
         > upper-constraints.txt && \
+    pip install -U --no-cache-dir -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
+        git+https://github.com/pypa/pip.git && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         -e git+https://github.com/openstack/requirements@stable/ocata#egg=openstack_requirements && \
