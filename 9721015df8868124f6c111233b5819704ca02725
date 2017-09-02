@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_da3a6ecc",
+        "filename": "functest/opnfv_tests/vnf/ims/opera.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1593
+      },
+      "writtenOn": "2017-09-02T15:17:34Z",
+      "side": 1,
+      "message": "Why 14.04. Can this be 16.04 ? Since many projects are moving to 16.04.",
+      "revId": "9721015df8868124f6c111233b5819704ca02725",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
