@@ -697,8 +697,9 @@ class OpenImsVnf(vnf.VnfOnBoarding):
         try:
             neutron_client = os_utils.get_neutron_client(self.creds)
             self.logger.info("Deleting Open Baton Port...")
-            port = snaps_utils.neutron_utils.get_port_by_name(
-                neutron_client, '%s_port' % self.case_name)
+            port = snaps_utils.neutron_utils.get_port(
+                neutron_client,
+                port_name='%s_port' % self.case_name)
             snaps_utils.neutron_utils.delete_port(neutron_client, port)
             time.sleep(10)
         except Exception as exc:
