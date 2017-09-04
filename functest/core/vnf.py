@@ -187,6 +187,9 @@ class VnfOnBoarding(base.TestCase):
         self.__logger.info("test cleaning")
         keystone_client = os_utils.get_keystone_client()
         if not self.exist_obj['tenant']:
-            os_utils.delete_tenant(keystone_client, self.tenant_name)
+            tenant_id = os_utils.get_tenant_id(keystone_client,
+                                               self.tenant_name)
+            os_utils.delete_tenant(keystone_client, tenant_id)
         if not self.exist_obj['user']:
-            os_utils.delete_user(keystone_client, self.tenant_name)
+            user_id = os_utils.get_user_id(keystone_client, self.tenant_name)
+            os_utils.delete_user(keystone_client, user_id)
