@@ -115,17 +115,6 @@ def get_verifier_deployment_dir(verifier_id, deployment_id):
                         'for-deployment-{}'.format(deployment_id))
 
 
-def get_repo_tag(repo):
-    """
-    Returns last tag of current branch
-    """
-    cmd = ("git -C {0} describe --abbrev=0 HEAD".format(repo))
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-    tag = p.stdout.readline().rstrip()
-
-    return str(tag)
-
-
 def backup_tempest_config(conf_file):
     """
     Copy config file to tempest results directory
