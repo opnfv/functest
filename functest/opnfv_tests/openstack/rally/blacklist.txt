@@ -48,6 +48,7 @@ scenario:
             # panko in the deployment. This is not currently fulfilled
             # Ref: https://docs.openstack.org/releasenotes/ceilometer/ocata.html
             - 'CeilometerEvents..*'
+            - 'CeilometerTraits..*'
 
 functionality:
     -
