@@ -2,7 +2,6 @@ FROM opnfv/functest-core
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/ocata
-ARG DOMINO_TAG=master
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --update nodejs nodejs-npm && \
@@ -15,8 +14,7 @@ RUN apk --no-cache add --update nodejs nodejs-npm && \
         -rthirdparty-requirements.txt && \
     npm -g install npm@latest && \
     (cd /src/promise/source && npm install) && \
-    git clone --depth 1 -b $DOMINO_TAG https://gerrit.opnfv.org/gerrit/domino /src/domino && \
-    rm -r thirdparty-requirements.txt /src/domino/.git && \
+    rm -r thirdparty-requirements.txt && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
 CMD ["bash","-c","prepare_env start && run_tests -t all"]
