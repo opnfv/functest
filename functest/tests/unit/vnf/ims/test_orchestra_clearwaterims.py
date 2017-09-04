@@ -11,7 +11,6 @@ import logging
 import unittest
 
 import mock
-from snaps.openstack.os_credentials import OSCreds
 
 from functest.core import vnf
 from functest.opnfv_tests.vnf.ims import orchestra_clearwaterims
@@ -110,116 +109,10 @@ class OrchestraClearwaterImsTesting(unittest.TestCase):
                         'vnf': {},
                         'test_vnf': {}}
 
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
-                return_value='test')
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
-                return_value=True)
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
-                return_value=True)
-    @mock.patch('functest.core.vnf.os_utils.get_credentials',
-                return_value={'auth_url': 'test/v1'})
-    @mock.patch(
-        'functest.utils.openstack_utils.get_tenant_id',
-        return_value={'mocked_tenant_id'})
-    @mock.patch(
-        'functest.utils.openstack_utils.get_floating_ips',
-        return_value=[])
-    @mock.patch('snaps.openstack.create_image.OpenStackImage.create')
-    @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create')
-    @mock.patch(
-        'snaps.openstack.create_security_group.OpenStackSecurityGroup.create')
-    @mock.patch('snaps.openstack.create_network.OpenStackNetwork.create')
-    @mock.patch('snaps.openstack.create_router.OpenStackRouter.create')
-    @mock.patch(
-        'functest.opnfv_tests.openstack.snaps.snaps_utils.get_ext_net_name')
-    @mock.patch(
-        'functest.opnfv_tests.openstack.snaps.'
-        'snaps_utils.neutron_utils.create_floating_ip')
-    def test_prepare_default(self, *args):
-        """Testing prepare function without any exceptions expected"""
-        self.assertIsNone(self.ims_vnf.prepare())
-        args[4].assert_called_once_with()
-
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
-                return_value='test')
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
-                return_value=True)
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
-                return_value=True)
-    @mock.patch('functest.core.vnf.os_utils.get_credentials',
-                return_value={'auth_url': 'test/no_v'})
-    @mock.patch('snaps.openstack.create_image.OpenStackImage.create')
-    def test_prepare_bad_auth_url(self, *args):
-        """Testing prepare function with bad auth url"""
-        with self.assertRaises(Exception):
-            self.ims_vnf.image_creator(
-                OSCreds(username='user', password='pass', auth_url='url',
-                        project_name='project', identity_api_version=3),
-                mock.Mock())
-            args[0].assert_not_called()
-
     def test_prepare_missing_param(self):
         """Testing prepare function with missing param"""
         with self.assertRaises(vnf.VnfPreparationException):
             self.ims_vnf.prepare()
-
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
-                side_effect=Exception)
-    def test_prepare_keystone_exception(self, *args):
-        """Testing prepare function with keystone exception"""
-        with self.assertRaises(vnf.VnfPreparationException):
-            self.ims_vnf.prepare()
-        args[0].assert_called_once_with()
-
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
-                return_value='test')
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
-                side_effect=Exception)
-    def test_prepare_tenant_exception(self, *args):
-        """Testing prepare function with tenant exception"""
-        with self.assertRaises(vnf.VnfPreparationException):
-            self.ims_vnf.prepare()
-            args[1].assert_called_once_with()
-
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
-                return_value='test')
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
-                return_value=True)
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
-                side_effect=Exception)
-    def test_prepare_user_exception(self, *args):
-        """Testing prepare function with user exception"""
-        with self.assertRaises(vnf.VnfPreparationException):
-            self.ims_vnf.prepare()
-        args[2].assert_called_once_with()
-
-    @mock.patch('functest.core.vnf.os_utils.get_keystone_client',
-                return_value='test')
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_tenant_for_vnf',
-                return_value=True)
-    @mock.patch('functest.core.vnf.os_utils.get_or_create_user_for_vnf',
-                return_value=True)
-    @mock.patch('functest.core.vnf.os_utils.get_credentials',
-                side_effect=Exception)
-    def test_prepare_credentials_exception(self, *args):
-        """Testing prepare function with credentials exception"""
-        with self.assertRaises(vnf.VnfPreparationException):
-            self.ims_vnf.prepare()
-        args[0].assert_called_once_with()
-
-    # # @mock.patch('functest.opnfv_tests.vnf.
-        # ims.orchestra_clearwaterims.get_userdata')
-    # def test_deploy_orchestrator(self, *args):
-    #     floating_ip = FloatingIp
-    #     floating_ip.ip = 'mocked_ip'
-    #     details = {'fip':floating_ip,'flavor':{'name':'mocked_name'}}
-    #     self.mano['details'] = details
-    #     with mock.patch.dict(self.mano, {'details':
-    #     {'fip':floating_ip,'flavor':{'name':'mocked_name'}}}):
-    #     # with mock.patch.dict(self.mano, details):
-    #         orchestra_clearwaterims.get_userdata(self.mano)
-    #     self.assertIsNone(self.ims_vnf.deploy_orchestrator())
-    #     args[4].assert_called_once_with()
 
 
 if __name__ == "__main__":

@@ -21,6 +21,13 @@ vnf:
         flavor:
           name: m1.small
           ram_min: 2048
+        compute_quotas:
+          cores: 50
+          instances: 15
+        network_quotas:
+          security_group: 20
+          security_group_rule: 100
+          port: 50
     inputs:
         image_id: 'ubuntu_14.04'
         flavor_id: 'm1.small'
