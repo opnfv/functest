@@ -103,40 +103,52 @@ class VnfBaseTesting(unittest.TestCase):
             self.test.test_vnf()
 
     @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
+    @mock.patch('functest.core.vnf.os_utils.get_user_id',
+                return_value='test_user_id')
     @mock.patch('functest.core.vnf.os_utils.delete_user',
                 return_value=True)
     def test_clean_user_already_exist(self, *args):
         self.test.exist_obj['user'] = True
         self.test.clean()
         args[0].assert_not_called()
-        args[1].assert_called_once_with()
+        args[1].assert_not_called()
+        args[2].assert_called_once_with()
 
     @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
+    @mock.patch('functest.core.vnf.os_utils.get_user_id',
+                return_value='test_user_id')
     @mock.patch('functest.core.vnf.os_utils.delete_user',
                 return_value=True)
     def test_clean_user_created(self, *args):
         self.test.exist_obj['user'] = False
         self.test.clean()
-        args[0].assert_called_once_with(mock.ANY, self.tenant_name)
-        args[1].assert_called_once_with()
+        args[0].assert_called_once_with(mock.ANY, 'test_user_id')
+        args[1].assert_called_once_with(mock.ANY, self.tenant_name)
+        args[2].assert_called_once_with()
 
     @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
+    @mock.patch('functest.core.vnf.os_utils.get_tenant_id',
+                return_value='test_tenant_id')
     @mock.patch('functest.core.vnf.os_utils.delete_tenant',
                 return_value=True)
     def test_clean_tenant_already_exist(self, *args):
         self.test.exist_obj['tenant'] = True
         self.test.clean()
         args[0].assert_not_called()
-        args[1].assert_called_once_with()
+        args[1].assert_not_called()
+        args[2].assert_called_once_with()
 
     @mock.patch('functest.core.vnf.os_utils.get_keystone_client')
+    @mock.patch('functest.core.vnf.os_utils.get_tenant_id',
+                return_value='test_tenant_id')
     @mock.patch('functest.core.vnf.os_utils.delete_tenant',
                 return_value=True)
     def test_clean_tenant_created(self, *args):
         self.test.exist_obj['tenant'] = False
         self.test.clean()
-        args[0].assert_called_once_with(mock.ANY, self.tenant_name)
-        args[1].assert_called_once_with()
+        args[0].assert_called_once_with(mock.ANY, 'test_tenant_id')
+        args[1].assert_called_once_with(mock.ANY, self.tenant_name)
+        args[2].assert_called_once_with()
 
     def test_deploy_orch_unimplemented(self):
         self.assertTrue(self.test.deploy_orchestrator())
