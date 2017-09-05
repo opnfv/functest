@@ -17,7 +17,7 @@ import pkg_resources
 import uuid
 
 import ConfigParser
-from flask import abort, jsonify
+from flask import jsonify
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils, thread
@@ -46,8 +46,11 @@ class V1Testcase(ApiResource):
         """ GET the info of one testcase"""
         testcase = Testcase().show(testcase_name)
         if not testcase:
-            abort(404, "The test case '%s' does not exist or is not supported"
-                  % testcase_name)
+            return api_utils.result_handler(
+                status=1,
+                data="The test case '%s' does not exist or is not supported"
+                % testcase_name)
+
         testcase_info = api_utils.change_obj_to_dict(testcase)
         dependency_dict = api_utils.change_obj_to_dict(
             testcase_info.get('dependency'))
@@ -69,6 +72,13 @@ class V1Testcase(ApiResource):
         except KeyError:
             return api_utils.result_handler(
                 status=1, data='testcase name must be provided')
+
+        testcase = Testcase().show(case_name)
+        if not testcase:
+            return api_utils.result_handler(
+                status=1,
+                data="The test case '%s' does not exist or is not supported"
+                % case_name)
 
         task_id = str(uuid.uuid4())
 

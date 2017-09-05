@@ -13,9 +13,10 @@ Resources to handle tier related requests
 
 import re
 
-from flask import abort, jsonify
+from flask import jsonify
 
 from functest.api.base import ApiResource
+from functest.api.common import api_utils
 from functest.cli.commands.cli_tier import Tier
 
 
@@ -46,7 +47,9 @@ class V1Tier(ApiResource):
         """ GET the info of one tier """
         testcases = Tier().gettests(tier_name)
         if not testcases:
-            abort(404, "The tier with name '%s' does not exist." % tier_name)
+            return api_utils.result_handler(
+                status=1,
+                data="The tier with name '%s' does not exist." % tier_name)
         tier_info = Tier().show(tier_name)
         tier_info.__dict__.pop('name')
         tier_info.__dict__.pop('tests_array')
@@ -62,6 +65,8 @@ class V1TestcasesinTier(ApiResource):
         """ GET all testcases within given tier """
         testcases = Tier().gettests(tier_name)
         if not testcases:
-            abort(404, "The tier with name '%s' does not exist." % tier_name)
+            return api_utils.result_handler(
+                status=1,
+                data="The tier with name '%s' does not exist." % tier_name)
         result = {'tier': tier_name, 'testcases': testcases}
         return jsonify(result)

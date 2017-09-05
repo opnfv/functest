@@ -50,12 +50,15 @@ class V1Task(ApiResource):
         if status not in ['IN PROGRESS', 'FAIL', 'FINISHED']:
             return api_utils.result_handler(status=1,
                                             data='internal server error')
+
+        switcher = {'IN PROGRESS': 0, 'FAIL': 1, 'FINISHED': 2}
         if status == 'IN PROGRESS':
-            result = {'status': status, 'result': ''}
+            result = {'status': switcher.get(status), 'result': ''}
         elif status == 'FAIL':
-            result = {'status': status, 'error': task.error}
+            result = {'status': switcher.get(status), 'error': task.error}
         else:
-            result = {'status': status, 'result': json.loads(task.result)}
+            result = {'status': switcher.get(status),
+                      'result': json.loads(task.result)}
 
         return jsonify(result)
 
@@ -92,4 +95,7 @@ class V1TaskLog(ApiResource):
 
         return_data = {'data': data}
 
-        return api_utils.result_handler(status=task.status, data=return_data)
+        switcher = {'IN PROGRESS': 0, 'FAIL': 1, 'FINISHED': 2}
+
+        return api_utils.result_handler(status=switcher.get(task.status),
+                                        data=return_data)
