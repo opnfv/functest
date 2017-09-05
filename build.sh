@@ -9,7 +9,8 @@ docker/healthcheck \
 docker/smoke \
 docker/features \
 docker/components \
-docker/vnf"
+docker/vnf \
+docker/parser"
 
 (cd docker && docker build -t "${repo}/functest" .)
 docker push "${repo}/functest"
