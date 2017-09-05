@@ -7,7 +7,6 @@
 
 import re
 
-
 class RegexMatch(str):
     def __eq__(self, other):
         match = re.search(self, other)
