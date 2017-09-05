@@ -42,7 +42,7 @@ class V1Task(ApiResource):
         try:
             task = task_handler.get_task_by_taskid(task_id)
         except ValueError:
-            return api_utils.result_handler(status=1, data='No such task id')
+            return api_utils.result_handler(status=1, data='No such task')
 
         status = task.status
         LOGGER.debug('Task status is: %s', status)
