@@ -21,3 +21,4 @@ class SubstrMatch(str):
         if self in other:
             return True
         return False
+
