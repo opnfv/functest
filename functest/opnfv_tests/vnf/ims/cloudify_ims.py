@@ -103,15 +103,15 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         network_quotas = self.os_project.get_network_quotas()
 
         for key, value in (
-                self.orchestrator['requirements']['compute_quotas'].items()):
+                self.vnf['requirements']['compute_quotas'].items()):
             setattr(compute_quotas, key, value)
 
         for key, value in (
-                self.orchestrator['requirements']['network_quotas'].items()):
+                self.vnf['requirements']['network_quotas'].items()):
             setattr(network_quotas, key, value)
 
-        compute_quotas = self.project_ims.update_compute_quotas(compute_quotas)
-        network_quotas = self.project_ims.update_network_quotas(network_quotas)
+        compute_quotas = self.os_project.update_compute_quotas(compute_quotas)
+        network_quotas = self.os_project.update_network_quotas(network_quotas)
 
         # needs some images
         self.__logger.info("Upload some OS images if it doesn't exist")
