@@ -135,13 +135,14 @@ def backup_tempest_config(conf_file):
 
 
 def configure_tempest(deployment_dir, image_id=None, flavor_id=None,
-                      mode=None):
+                      compute_cnt=None):
     """
     Calls rally verify and updates the generated tempest.conf with
     given parameters
     """
     conf_file = configure_verifier(deployment_dir)
-    configure_tempest_update_params(conf_file, image_id, flavor_id)
+    configure_tempest_update_params(conf_file, image_id, flavor_id,
+                                    compute_cnt)
 
 
 def configure_tempest_defcore(deployment_dir, image_id, flavor_id,
@@ -197,8 +198,8 @@ def generate_test_accounts_file(tenant_id):
         yaml.dump(accounts_list, f, default_flow_style=False)
 
 
-def configure_tempest_update_params(tempest_conf_file,
-                                    image_id=None, flavor_id=None):
+def configure_tempest_update_params(tempest_conf_file, image_id=None,
+                                    flavor_id=None, compute_cnt=1):
     """
     Add/update needed parameters into tempest.conf file
     """
@@ -221,6 +222,10 @@ def configure_tempest_update_params(tempest_conf_file,
             config.set('compute', 'flavor_ref', flavor_id)
         if FLAVOR_ID_ALT is not None:
             config.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
+    if compute_cnt > 1:
+        # enable multinode tests
+        config.set('compute', 'min_compute_nodes', compute_cnt)
+
     config.set('identity', 'region', 'RegionOne')
     if os_utils.is_keystone_v3():
         auth_version = 'v3'

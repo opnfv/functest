@@ -20,6 +20,7 @@ import time
 import yaml
 
 from functest.core import testcase
+from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
@@ -234,11 +235,13 @@ class TempestCommon(testcase.TestCase):
             if not os.path.exists(conf_utils.TEMPEST_RESULTS_DIR):
                 os.makedirs(conf_utils.TEMPEST_RESULTS_DIR)
             resources = self.resources.create()
+            compute_cnt = snaps_utils.get_active_compute_cnt(
+                self.resources.os_creds)
             conf_utils.configure_tempest(
                 self.DEPLOYMENT_DIR,
                 image_id=resources.get("image_id"),
                 flavor_id=resources.get("flavor_id"),
-                mode=self.MODE)
+                compute_cnt=compute_cnt)
             self.generate_test_list(self.VERIFIER_REPO_DIR)
             self.apply_tempest_blacklist()
             self.run_verifier_tests()
