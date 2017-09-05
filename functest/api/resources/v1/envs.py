@@ -33,10 +33,11 @@ class V1Envs(ApiResource):
 
     def prepare(self, args):  # pylint: disable=no-self-use, unused-argument
         """ Prepare environment """
-        try:
-            ft_utils.execute_command("prepare_env start")
-        except Exception as err:  # pylint: disable=broad-except
-            return api_utils.result_handler(status=1, data=str(err))
+
+        result_env = ft_utils.execute_command("prepare_env start")
+        if not result_env == 0:
+            return api_utils.result_handler(
+                status=1, data="Failed to prepare env")
         return api_utils.result_handler(
             status=0, data="Prepare env successfully")
 

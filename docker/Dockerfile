@@ -110,3 +110,5 @@ RUN sh -c 'curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -' \
     && cd /src/promise/source && npm install
 
 RUN echo ". ${FUNCTEST_DIR}/cli/functest-complete.sh" >> /root/.bashrc
+
+CMD ["functest_restapi"]
