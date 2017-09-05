@@ -8,6 +8,12 @@ COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev git && \
+    git clone --depth 1 https://github.com/openstack/refstack-client.git /src/refstack-client && \
+    update-requirements -s --source /src/openstack-requirements /src/refstack-client/ && \
+    pip install --no-cache-dir --src /src \
+        -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
+        -e/src/refstack-client && \
     pip install --no-cache-dir --src /src \
         -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
