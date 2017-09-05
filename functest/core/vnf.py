@@ -120,10 +120,9 @@ class VnfOnBoarding(base.TestCase):
                                          UserSettings(
                                              name=self.tenant_name,
                                              password=self.tenant_name))
-            user_creator.create()
             self.created_object.append(user_creator)
 
-            project_creator.assoc_user(user_creator.user_settings)
+            project_creator.assoc_user(user_creator.create())
 
             self.snaps_creds = user_creator.get_os_creds(self.tenant_name)
 
