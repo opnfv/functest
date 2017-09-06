@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_a42668cc",
+        "filename": "docker/parser/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1641
+      },
+      "writtenOn": "2017-09-06T07:10:05Z",
+      "side": 1,
+      "message": "Thanks for you consideration.\nCould you please explain more about \"But I don\u0027t know if we switch or not.\", i don\u0027t get your meaning by saying this. In my opinion, container is a good solution for parser and other feature projects, and from parser side i\u0027ll spend more time on the integration in release E.",
+      "parentUuid": "da33351e_c4d72cec",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 29
+      },
+      "revId": "9a260caa6368193dfb2fcbd7d7ab8f5d7f60a314",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_a496684a",
         "filename": "docker/parser/Dockerfile",
         "patchSetId": 2
