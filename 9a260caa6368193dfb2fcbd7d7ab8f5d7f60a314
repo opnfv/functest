@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_a421484f",
+        "filename": "docker/parser/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1641
+      },
+      "writtenOn": "2017-09-06T02:47:49Z",
+      "side": 1,
+      "message": "Does this mean that parser doesn\u0027t need to downgrade to ocata?",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 29
+      },
+      "revId": "9a260caa6368193dfb2fcbd7d7ab8f5d7f60a314",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_a496684a",
+        "filename": "docker/parser/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1641
+      },
+      "writtenOn": "2017-09-06T02:47:49Z",
+      "side": 1,
+      "message": "It shoud be nfv-toscaparser, because parser project in OPNFV has published the package named nfv-toscaparser. And heat-translator in the next relase will be nfv-heattranslator.",
+      "range": {
+        "startLine": 20,
+        "startChar": 55,
+        "endLine": 20,
+        "endChar": 67
+      },
+      "revId": "9a260caa6368193dfb2fcbd7d7ab8f5d7f60a314",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
