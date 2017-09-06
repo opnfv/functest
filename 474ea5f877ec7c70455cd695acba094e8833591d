@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_cf4aa5ab",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2017-09-06T09:19:29Z",
+      "side": 1,
+      "message": "Are you sure you need to deploy a heat manager? It is not already pre-installed in the openstack platform?",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 163,
+        "endChar": 28
+      },
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
