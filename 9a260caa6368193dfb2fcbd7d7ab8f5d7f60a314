@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_c4d72cec",
+        "filename": "docker/parser/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-06T05:55:51Z",
+      "side": 1,
+      "message": "It could be quite complex for you to downgrade. It could raise many side effects if you simply downgrade your requirements.txt. That would have been the simpliest way from functest POV as we would have duplicated only the two libraries forked in a venv.\n\nI should note that parser in currently not included in the current full container tested by gate (docker dir). But I don\u0027t know if we switch or not.\n\nIn case of the new containers management, It\u0027s quite simple to create a dedicated one for pike.",
+      "parentUuid": "da33351e_a421484f",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 29
+      },
+      "revId": "9a260caa6368193dfb2fcbd7d7ab8f5d7f60a314",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_a496684a",
         "filename": "docker/parser/Dockerfile",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-06T02:47:49Z",
       "side": 1,
       "message": "It shoud be nfv-toscaparser, because parser project in OPNFV has published the package named nfv-toscaparser. And heat-translator in the next relase will be nfv-heattranslator.",
+      "range": {
+        "startLine": 20,
+        "startChar": 55,
+        "endLine": 20,
+        "endChar": 67
+      },
+      "revId": "9a260caa6368193dfb2fcbd7d7ab8f5d7f60a314",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_2406d886",
+        "filename": "docker/parser/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-06T05:55:51Z",
+      "side": 1,
+      "message": "True. Updating \nhttps://git.opnfv.org/parser/tree/tosca2heat/tosca-parser/setup.cfg#n2",
+      "parentUuid": "da33351e_a496684a",
       "range": {
         "startLine": 20,
         "startChar": 55,
