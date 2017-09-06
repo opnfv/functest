@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "da33351e_9eba9008",
+        "filename": "functest/opnfv_tests/vnf/ims/opera.yaml",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-09-06T16:31:48Z",
+      "side": 1,
+      "message": "There is not a file named clearwater-heat.yaml in the Metaswitch/clearwater-heat repository.",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_ca02930a",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-09-06T16:31:48Z",
+      "side": 1,
+      "message": "May want to init to None instead of empty string.",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_1e0e8034",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-09-06T16:31:48Z",
+      "side": 1,
+      "message": "You will probably want to grab the credentials with snaps.openstack.tests.openstack_tests.py.get_credentials(CONST.__getattribute__(\u0027openstack_creds\u0027) which is the file pointer to the RC file defined in config_functest.yaml.\nBTW, the member self.creds does not look like it had been initialized.\nPlease see vping_base.py as an example of how that one is retrieving the OSCreds object.",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_de51b80f",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-09-06T16:31:48Z",
+      "side": 1,
+      "message": "You will want to hold onto these objects for cleanup purposes or retrieval of the ImageSettings objects.",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_cf4aa5ab",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
@@ -19,6 +87,115 @@
         "endLine": 163,
         "endChar": 28
       },
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_3ef544ee",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-09-06T16:31:48Z",
+      "side": 1,
+      "message": "I am a bit confused here too. If you want to use SNAPS-OO for deploying a heat template, all you would have to do is create the image being used by the template and instantiate an OpenStackHeatStack() object and call create(). It also contains helper methods so your client can know when the stack has become active.",
+      "parentUuid": "da33351e_cf4aa5ab",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 163,
+        "endChar": 28
+      },
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_3e59c436",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-09-06T16:31:48Z",
+      "side": 1,
+      "message": "If you are using an existing private key file, you will need the public key file as well here; however, as the OpenStackKeypair#create() method will generate one, if the file does not exist, you would not have to configure that.",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_1e7320b2",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-09-06T16:31:48Z",
+      "side": 1,
+      "message": "I know this is just a test, but do you really want to allow traffic from all ports?",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_7e698cbd",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-09-06T16:31:48Z",
+      "side": 1,
+      "message": "same as above...",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_7edeac6e",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-09-06T16:31:48Z",
+      "side": 1,
+      "message": "Where can I find this class?",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_1ef840e4",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-09-06T16:31:48Z",
+      "side": 1,
+      "message": "Instead of hardcoding the location of the private key file, you will probably want to use the OpenStackKeypair() object and retrieve the data directly from there.",
       "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
