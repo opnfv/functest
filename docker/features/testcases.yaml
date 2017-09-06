@@ -88,7 +88,7 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /src/domino && ./tests/run_multinode.sh'
+                        cmd: 'run_multinode.sh'
 
             -
                 case_name: barometercollectd
