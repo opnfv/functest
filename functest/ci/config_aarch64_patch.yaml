@@ -34,7 +34,7 @@ os:
         image_name: TestVM
 
     tempest:
-        use_custom_images: False
+        use_custom_flavors: True
 
     odl_sfc:
         image_base_url: "http://artifacts.opnfv.org/sfc/demo"
