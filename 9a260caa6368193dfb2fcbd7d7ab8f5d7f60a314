@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_a40dc840",
+        "filename": "docker/parser/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-06T07:16:51Z",
+      "side": 1,
+      "message": "We currently support 2 types of containers for Functest\n  - opnfv/functest: monolythic, not optimized, obsolete\n  - opnfv/functest-xxx: slice, optimized, up-to-date\n\nI don\u0027t know if we officially switch to opnfv/functest-xxx.",
+      "parentUuid": "da33351e_a42668cc",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 29
+      },
+      "revId": "9a260caa6368193dfb2fcbd7d7ab8f5d7f60a314",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_a496684a",
         "filename": "docker/parser/Dockerfile",
         "patchSetId": 2
