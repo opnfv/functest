@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_cf1625f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-06T08:10:58Z",
+      "side": 1,
+      "message": "Updating ims testing for Heat Orchestration in mano\n\nJIRA: FUNCTEST-868",
+      "revId": "6d7dedd89dbc775ace99f729cdb407c18a4ca0b2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_2fd5111c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-06T08:10:58Z",
+      "side": 1,
+      "message": "It should be removed. Could you please vote Verify -1 instead.",
+      "revId": "6d7dedd89dbc775ace99f729cdb407c18a4ca0b2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
