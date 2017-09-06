@@ -116,13 +116,15 @@ class VnfOnBoarding(base.TestCase):
             self.created_object.append(project_creator)
             self.os_project = project_creator
 
-            user_creator = OpenStackUser(snaps_creds,
-                                         UserSettings(
-                                             name=self.tenant_name,
-                                             password=self.tenant_name))
-            self.created_object.append(user_creator)
+            user_creator = OpenStackUser(
+                snaps_creds,
+                UserSettings(
+                    name=self.tenant_name,
+                    password=self.tenant_name,
+                    roles={'admin': self.tenant_name}))
 
-            project_creator.assoc_user(user_creator.create())
+            user_creator.create()
+            self.created_object.append(user_creator)
 
             self.snaps_creds = user_creator.get_os_creds(self.tenant_name)
 
