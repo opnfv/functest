@@ -25,7 +25,6 @@ import functest.utils.openstack_utils as os_utils
 
 from git import Repo
 
-from snaps.openstack.os_credentials import OSCreds
 from snaps.openstack.create_network import (NetworkSettings, SubnetSettings,
                                             OpenStackNetwork)
 from snaps.openstack.create_security_group import (SecurityGroupSettings,
@@ -110,17 +109,10 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
 
         self.__logger.info("Additional pre-configuration steps")
 
-        self.snaps_creds = OSCreds(
-            username=self.creds['username'],
-            password=self.creds['password'],
-            auth_url=self.creds['auth_url'],
-            project_name=self.creds['tenant'],
-            identity_api_version=int(os_utils.get_keystone_client_version()))
-
-        self.util.set_credentials(self.creds["username"],
-                                  self.creds["password"],
-                                  self.creds["auth_url"],
-                                  self.creds["tenant"])
+        self.util.set_credentials(self.snaps_creds.username,
+                                  self.snaps_creds.password,
+                                  self.snaps_creds.auth_url,
+                                  self.snaps_creds.project_name)
 
         # needs some images
         self.__logger.info("Upload some OS images if it doesn't exist")
