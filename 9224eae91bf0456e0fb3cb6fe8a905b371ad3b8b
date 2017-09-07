@@ -46,6 +46,30 @@
       "revId": "9224eae91bf0456e0fb3cb6fe8a905b371ad3b8b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_14e2e102",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-09-07T05:49:16Z",
+      "side": 1,
+      "message": "I would recommend setting use_custom_images to True explicitly, in case the value in config_functest.yaml changed.",
+      "parentUuid": "da33351e_9419d17b",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "9224eae91bf0456e0fb3cb6fe8a905b371ad3b8b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
