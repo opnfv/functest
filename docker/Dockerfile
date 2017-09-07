@@ -14,7 +14,7 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 # Environment variables
 ARG BRANCH=master
 ARG RALLY_TAG=stable/0.9
-ARG ODL_TAG=release/carbon
+ARG ODL_TAG=27b7911a5c2315145f2cf06726303dadfe508940
 ARG OPENSTACK_TAG=stable/ocata
 ARG VIMS_TAG=stable
 ARG REPOS_DIR=/home/opnfv/repos
@@ -99,7 +99,8 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/fds /src/fds
 
 # other repositories
-RUN git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test
+RUN git clone --depth 1 https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
+        (cd src/odl_test && git checkout -b $ODL_TAG)
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test /src/vims-test
 
 # Install tempest venv and create symlink for running refstack-client
