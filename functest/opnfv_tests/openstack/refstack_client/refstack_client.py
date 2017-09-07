@@ -211,45 +211,6 @@ class RefstackClient(testcase.TestCase):
 
         return res
 
-    def create_snapshot(self):
-        """
-        Run the Tempest cleanup utility to initialize OS state.
-        For details, see https://docs.openstack.org/tempest/latest/cleanup.html
-
-        :return: TestCase.EX_OK
-        """
-        LOGGER.info("Initializing the saved state of the OpenStack deployment")
-
-        # Make sure that Tempest is configured
-        if not self.tempestconf:
-            self.generate_conf()
-
-        try:
-            os_utils.init_tempest_cleanup(
-                self.tempestconf.DEPLOYMENT_DIR, 'tempest.conf',
-                os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
-                             "tempest-cleanup-init.log"))
-        except Exception as err:
-            LOGGER.error(str(err))
-            return testcase.TestCase.EX_RUN_ERROR
-
-        return super(RefstackClient, self).create_snapshot()
-
-    def clean(self):
-        """
-        Run the Tempest cleanup utility to delete and destroy OS resources.
-        For details, see https://docs.openstack.org/tempest/latest/cleanup.html
-        """
-        LOGGER.info("Destroying the resources created for tempest")
-
-        os_utils.perform_tempest_cleanup(
-            self.tempestconf.DEPLOYMENT_DIR, 'tempest.conf',
-            os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
-                         "tempest-cleanup.log")
-        )
-
-        return super(RefstackClient, self).clean()
-
 
 class RefstackClientParser(object):  # pylint: disable=too-few-public-methods
     """Command line argument parser helper."""
