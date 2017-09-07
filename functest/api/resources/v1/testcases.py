@@ -89,8 +89,8 @@ class V1Testcase(ApiResource):
         task_thread = thread.TaskThread(self._run, task_args, TasksHandler())
         task_thread.start()
 
-        results = {'testcase': case_name, 'task_id': task_id}
-        return jsonify(results)
+        result = {'testcase': case_name, 'task_id': task_id}
+        return jsonify({'result': result})
 
     def _run(self, args):  # pylint: disable=no-self-use
         """ The built_in function to run a test case """
@@ -120,7 +120,7 @@ class V1Testcase(ApiResource):
             }
             result = {
                 'task_id': args.get('task_id'),
-                'case_name': case_name,
+                'testcase': case_name,
                 'env_info': env_info,
                 'result': result
             }
