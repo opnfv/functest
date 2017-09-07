@@ -28,7 +28,6 @@ from functest.opnfv_tests.openstack.refstack_client.tempest_conf \
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
-import functest.utils.openstack_utils as os_utils
 
 # logging configuration """
 LOGGER = logging.getLogger(__name__)
@@ -77,7 +76,7 @@ class RefstackClient(testcase.TestCase):
         """Run default defcore sys command."""
         options = ["-v"] if not self.insecure else ["-v", self.insecure]
         cmd = (["refstack-client", "test", "-c", self.confpath] +
-               options + ["--test-list",  self.defcorelist])
+               options + ["--test-list", self.defcorelist])
         LOGGER.info("Starting Refstack_defcore test case: '%s'.", cmd)
 
         with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
@@ -210,45 +209,6 @@ class RefstackClient(testcase.TestCase):
             res = testcase.TestCase.EX_RUN_ERROR
 
         return res
-
-    def create_snapshot(self):
-        """
-        Run the Tempest cleanup utility to initialize OS state.
-        For details, see https://docs.openstack.org/tempest/latest/cleanup.html
-
-        :return: TestCase.EX_OK
-        """
-        LOGGER.info("Initializing the saved state of the OpenStack deployment")
-
-        # Make sure that Tempest is configured
-        if not self.tempestconf:
-            self.generate_conf()
-
-        try:
-            os_utils.init_tempest_cleanup(
-                self.tempestconf.DEPLOYMENT_DIR, 'tempest.conf',
-                os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
-                             "tempest-cleanup-init.log"))
-        except Exception as err:
-            LOGGER.error(str(err))
-            return testcase.TestCase.EX_RUN_ERROR
-
-        return super(RefstackClient, self).create_snapshot()
-
-    def clean(self):
-        """
-        Run the Tempest cleanup utility to delete and destroy OS resources.
-        For details, see https://docs.openstack.org/tempest/latest/cleanup.html
-        """
-        LOGGER.info("Destroying the resources created for tempest")
-
-        os_utils.perform_tempest_cleanup(
-            self.tempestconf.DEPLOYMENT_DIR, 'tempest.conf',
-            os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
-                         "tempest-cleanup.log")
-        )
-
-        return super(RefstackClient, self).clean()
 
 
 class RefstackClientParser(object):  # pylint: disable=too-few-public-methods
