@@ -120,7 +120,7 @@ class V1Testcase(ApiResource):
             }
             result = {
                 'task_id': args.get('task_id'),
-                'case_name': case_name,
+                'testcase': case_name,
                 'env_info': env_info,
                 'result': result
             }
