@@ -3,6 +3,7 @@ FROM opnfv/functest-core
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/ocata
 ARG ODL_TAG=release/carbon
+ARG FDS_TAG=master
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --virtual .build-deps --update \
@@ -19,7 +20,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         -rthirdparty-requirements.txt && \
     git clone --depth 1 -b $ODL_TAG https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
-    git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/fds /src/fds && \
+    git clone --depth 1 -b $FDS_TAG https://gerrit.opnfv.org/gerrit/fds /src/fds && \
     ln -s /src/tempest /src/refstack-client/.tempest && \
     virtualenv --system-site-packages /src/tempest/.venv && \
     rm -r thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
