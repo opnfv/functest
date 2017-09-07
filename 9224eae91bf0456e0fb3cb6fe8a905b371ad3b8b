@@ -22,6 +22,30 @@
       "revId": "9224eae91bf0456e0fb3cb6fe8a905b371ad3b8b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_9419d17b",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-09-07T02:11:41Z",
+      "side": 1,
+      "message": "Yes, custom_images is True by default via [1].\nThis file is dict-merged to config_functest.yaml, so we end up with both use_custom_{images,flavors} as True.\n\n[1] https://github.com/opnfv/functest/blob/master/functest/ci/config_functest.yaml#L128",
+      "parentUuid": "da33351e_d403590b",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "9224eae91bf0456e0fb3cb6fe8a905b371ad3b8b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
