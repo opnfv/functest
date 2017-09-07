@@ -462,7 +462,8 @@ class ODLRunTesting(ODLTesting):
     def test_fuel(self):
         os.environ["INSTALLER_TYPE"] = "fuel"
         self._test_run(testcase.TestCase.EX_OK,
-                       odlip=self._neutron_ip, odlwebport='8282')
+                       odlip=self._neutron_ip, odlwebport='8181',
+                       odlrestconfport='8282')
 
     def test_apex_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
