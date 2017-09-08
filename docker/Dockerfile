@@ -17,6 +17,7 @@ ARG RALLY_TAG=stable/0.9
 ARG ODL_TAG=35e415b6873b39d72775c88a337e92dac26012e2
 ARG OPENSTACK_TAG=stable/ocata
 ARG VIMS_TAG=stable
+ARG REFSTACK_TAG=4e187b07672dd1c41cb7c94658f1c91edebf53a2
 ARG REPOS_DIR=/home/opnfv/repos
 ARG FUNCTEST_BASE_DIR=/home/opnfv/functest
 ARG FUNCTEST_CONF_DIR=${FUNCTEST_BASE_DIR}/conf
@@ -82,6 +83,7 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
     update-requirements -s --source /src/openstack-requirements /src/rally && \
     git clone --depth 1 https://github.com/openstack/refstack-client.git /src/refstack-client && \
+    (cd src/refstack-client && git checkout -b $REFSTACK_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/refstack-client && \
     pip install --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
