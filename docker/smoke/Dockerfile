@@ -2,7 +2,7 @@ FROM opnfv/functest-core
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/ocata
-ARG ODL_TAG=27b7911a5c2315145f2cf06726303dadfe508940
+ARG ODL_TAG=35e415b6873b39d72775c88a337e92dac26012e2
 ARG FDS_TAG=master
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt

@@ -69,7 +69,7 @@ class ODLTesting(unittest.TestCase):
     _keystone_ip = "127.0.0.1"
     _neutron_ip = "127.0.0.2"
     _sdn_controller_ip = "127.0.0.3"
-    _os_auth_url = "http://{}:5000/v2.0".format(_keystone_ip)
+    _os_auth_url = "http://{}:5000/v3".format(_keystone_ip)
     _os_tenantname = "admin"
     _os_username = "admin"
     _os_password = "admin"
@@ -77,6 +77,8 @@ class ODLTesting(unittest.TestCase):
     _odl_restconfport = "8181"
     _odl_username = "admin"
     _odl_password = "admin"
+    _os_userdomainname = 'Default'
+    _os_projectdomainname = 'Default'
 
     def setUp(self):
         for var in ("INSTALLER_TYPE", "SDN_CONTROLLER", "SDN_CONTROLLER_IP"):
@@ -84,15 +86,20 @@ class ODLTesting(unittest.TestCase):
                 del os.environ[var]
         os.environ["OS_AUTH_URL"] = self._os_auth_url
         os.environ["OS_USERNAME"] = self._os_username
+        os.environ["OS_USER_DOMAIN_NAME"] = self._os_userdomainname
         os.environ["OS_PASSWORD"] = self._os_password
         os.environ["OS_TENANT_NAME"] = self._os_tenantname
+        os.environ["OS_PROJECT_DOMAIN_NAME"] = self._os_projectdomainname
+        os.environ["OS_PASSWORD"] = self._os_password
         self.test = odl.ODLTests(case_name='odl', project_name='functest')
         self.defaultargs = {'odlusername': self._odl_username,
                             'odlpassword': self._odl_password,
                             'neutronip': self._keystone_ip,
                             'osauthurl': self._os_auth_url,
                             'osusername': self._os_username,
+                            'osuserdomainname': self._os_userdomainname,
                             'ostenantname': self._os_tenantname,
+                            'osprojectdomainname': self._os_projectdomainname,
                             'ospassword': self._os_password,
                             'odlip': self._keystone_ip,
                             'odlwebport': self._odl_webport,
@@ -211,7 +218,9 @@ class ODLMainTesting(ODLTesting):
                   'neutronip': self._neutron_ip,
                   'osauthurl': self._os_auth_url,
                   'osusername': self._os_username,
+                  'osuserdomainname': self._os_userdomainname,
                   'ostenantname': self._os_tenantname,
+                  'osprojectdomainname': self._os_projectdomainname,
                   'ospassword': self._os_password,
                   'odlip': self._sdn_controller_ip,
                   'odlwebport': self._odl_webport,
@@ -231,7 +240,11 @@ class ODLMainTesting(ODLTesting):
                         'NEUTRON:{}'.format(self._neutron_ip),
                         'OS_AUTH_URL:"{}"'.format(self._os_auth_url),
                         'OSUSERNAME:"{}"'.format(self._os_username),
+                        'OSUSERDOMAINNAME:"{}"'.format(
+                            self._os_userdomainname),
                         'OSTENANTNAME:"{}"'.format(self._os_tenantname),
+                        'OSPROJECTDOMAINNAME:"{}"'.format(
+                            self._os_projectdomainname),
                         'OSPASSWORD:"{}"'.format(self._os_password),
                         'ODL_SYSTEM_IP:{}'.format(self._sdn_controller_ip),
                         'PORT:{}'.format(self._odl_webport),
@@ -383,7 +396,9 @@ class ODLRunTesting(ODLTesting):
                 odlusername=self._odl_username, odlwebport=odlwebport,
                 osauthurl=self._os_auth_url,
                 ospassword=self._os_password, ostenantname=self._os_tenantname,
-                osusername=self._os_username)
+                osusername=self._os_username,
+                osprojectdomainname=self._os_projectdomainname,
+                osuserdomainname=self._os_userdomainname)
 
     def _test_multiple_suites(self, suites,
                               status=testcase.TestCase.EX_OK, **kwargs):
@@ -404,7 +419,9 @@ class ODLRunTesting(ODLTesting):
                 odlusername=self._odl_username, odlwebport=odlwebport,
                 osauthurl=self._os_auth_url,
                 ospassword=self._os_password, ostenantname=self._os_tenantname,
-                osusername=self._os_username)
+                osusername=self._os_username,
+                osprojectdomainname=self._os_projectdomainname,
+                osuserdomainname=self._os_userdomainname)
 
     def test_exc(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
@@ -579,8 +596,14 @@ class ODLArgParserTesting(ODLTesting):
     def test_osusername(self):
         self._test_arg('osusername', 'foo')
 
+    def test_osuserdomainname(self):
+        self._test_arg('osuserdomainname', 'domain')
+
     def test_ostenantname(self):
         self._test_arg('ostenantname', 'foo')
+
+    def test_osprojectdomainname(self):
+        self._test_arg('osprojectdomainname', 'domain')
 
     def test_ospassword(self):
         self._test_arg('ospassword', 'foo')
