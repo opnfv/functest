@@ -117,6 +117,23 @@
     },
     {
       "key": {
+        "uuid": "da33351e_c8abb61b",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-08T16:17:32Z",
+      "side": 1,
+      "message": "my understanding is that this section should be empty as you rely on heat which is already preinstalled by default on all the scenarios...",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_3e59c436",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
