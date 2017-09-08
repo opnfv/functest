@@ -157,7 +157,11 @@ class ODLTests(testcase.TestCase):
                          'NEUTRON:' + kwargs['neutronip'],
                          'OS_AUTH_URL:"' + osauthurl + '"',
                          'OSUSERNAME:"' + kwargs['osusername'] + '"',
+                         ('OSUSERDOMAINNAME:"' +
+                          kwargs['osuserdomainname'] + '"'),
                          'OSTENANTNAME:"' + kwargs['ostenantname'] + '"',
+                         ('OSPROJECTDOMAINNAME:"' +
+                          kwargs['osprojectdomainname'] + '"'),
                          'OSPASSWORD:"' + kwargs['ospassword'] + '"',
                          'ODL_SYSTEM_IP:' + kwargs['odlip'],
                          'PORT:' + kwargs['odlwebport'],
@@ -221,7 +225,11 @@ class ODLTests(testcase.TestCase):
             if 'INSTALLER_TYPE' in os.environ:
                 installer_type = os.environ['INSTALLER_TYPE']
             kwargs['osusername'] = os.environ['OS_USERNAME']
+            kwargs['osuserdomainname'] = os.environ.get(
+                'OS_USER_DOMAIN_NAME', 'Default')
             kwargs['ostenantname'] = os.environ['OS_TENANT_NAME']
+            kwargs['osprojectdomainname'] = os.environ.get(
+                'OS_PROJECT_DOMAIN_NAME', 'Default')
             kwargs['osauthurl'] = os.environ['OS_AUTH_URL']
             kwargs['ospassword'] = os.environ['OS_PASSWORD']
             if installer_type == 'fuel':
@@ -263,13 +271,20 @@ class ODLParser(object):  # pylint: disable=too-few-public-methods
             default='127.0.0.1')
         self.parser.add_argument(
             '-k', '--osauthurl', help='OS_AUTH_URL as defined by OpenStack',
-            default='http://127.0.0.1:5000/v2.0')
+            default='http://127.0.0.1:5000/v3')
         self.parser.add_argument(
             '-a', '--osusername', help='Username for OpenStack',
             default='admin')
         self.parser.add_argument(
+            '-f', '--osuserdomainname', help='User domain name for OpenStack',
+            default='Default')
+        self.parser.add_argument(
             '-b', '--ostenantname', help='Tenantname for OpenStack',
             default='admin')
+        self.parser.add_argument(
+            '-g', '--osprojectdomainname',
+            help='Project domain name for OpenStack',
+            default='Default')
         self.parser.add_argument(
             '-c', '--ospassword', help='Password for OpenStack',
             default='admin')
