@@ -319,23 +319,6 @@ tiers:
                         cmd: 'run_sfc_tests.py'
 
             -
-                case_name: parser-basics
-                enabled: false
-                project_name: parser
-                criteria: 100
-                blocking: false
-                description: >-
-                    Test suite from Parser project.
-                dependencies:
-                    installer: 'fuel'
-                    scenario: '^((?!bgpvpn|noha).)*$'
-                run:
-                    module: 'functest.core.feature'
-                    class: 'BashFeature'
-                    args:
-                        cmd: 'cd /home/opnfv/repos/parser/tests && ./functest_run.sh'
-
-            -
                 case_name: domino-multinode
                 enabled: false
                 project_name: domino
