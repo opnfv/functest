@@ -157,17 +157,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             self.assertTrue(m1.called)
             self.assertTrue(m2.called)
 
-    def test_get_repo_tag_default(self):
-        mock_popen = mock.Mock()
-        attrs = {'stdout.readline.return_value': 'test_tag'}
-        mock_popen.configure_mock(**attrs)
-
-        with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.subprocess.Popen',
-                        return_value=mock_popen):
-            self.assertEqual(conf_utils.get_repo_tag('test_repo'),
-                             'test_tag')
-
     def test_backup_tempest_config_default(self):
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.os.path.exists',
