@@ -216,6 +216,7 @@ def configure_tempest_update_params(tempest_conf_file, image_id=None,
     if compute_cnt > 1:
         # enable multinode tests
         config.set('compute', 'min_compute_nodes', compute_cnt)
+        config.set('compute-feature-enabled', 'live_migration', True)
 
     config.set('identity', 'region', 'RegionOne')
     if os_utils.is_keystone_v3():
