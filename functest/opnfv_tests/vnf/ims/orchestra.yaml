@@ -29,7 +29,7 @@ mano:
 orchestra_openims:
     name: OpenIMS
     descriptor:
-        url: http://marketplace.openbaton.org:8082/api/v1/nsds/fokus/OpenImsCore/3.2.0/json
+        url: http://marketplace.openbaton.org:8080/api/v1/nsds/fokus/OpenImsCore/3.2.0/json
     requirements:
         flavor:
           name: m1.small
@@ -51,7 +51,7 @@ orchestra_openims:
 orchestra_clearwaterims:
     name: Clearwater IMS
     descriptor:
-        url: http://marketplace.openbaton.org:8082/api/v1/nsds/fokus/ClearwaterIMS/3.2.0/json
+        url: http://marketplace.openbaton.org:8080/api/v1/nsds/fokus/ClearwaterIMS/3.2.0/json
     requirements:
         flavor:
           name: m1.small

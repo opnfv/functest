@@ -23,7 +23,6 @@ tiers:
             -
                 case_name: orchestra_openims
                 project_name: functest
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -38,7 +37,6 @@ tiers:
             -
                 case_name: orchestra_clearwaterims
                 project_name: functest
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
