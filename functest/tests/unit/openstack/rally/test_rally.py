@@ -22,15 +22,12 @@ class OSRallyTesting(unittest.TestCase):
                 'get_nova_client', return_value=mock.Mock())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
                 'get_neutron_client', return_value=mock.Mock())
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
-                'get_cinder_client', return_value=mock.Mock())
-    def setUp(self, mock_func1, mock_func2, mock_func3):
+    def setUp(self, mock_func1, mock_func2):
         self.rally_base = rally.RallyBase()
         self.rally_base.network_dict['net_id'] = 'test_net_id'
         self.polling_iter = 2
         mock_func1.assert_called()
         mock_func2.assert_called()
-        mock_func3.assert_called()
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
                 'get_external_net', return_value=None)
@@ -288,51 +285,26 @@ class OSRallyTesting(unittest.TestCase):
             self.rally_base._prepare_env()
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
-                'list_volume_types', return_value=None)
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
-                'create_volume_type', return_value=None)
-    def test_prepare_env_volume_creation_failed(self, mock_list, mock_create):
-        self.rally_base.TESTS = ['test1', 'test2']
-        self.rally_base.test_name = 'test1'
-        with self.assertRaises(Exception):
-            self.rally_base._prepare_env()
-        mock_list.assert_called()
-        mock_create.assert_called()
-
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
-                'list_volume_types', return_value=None)
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
-                'create_volume_type', return_value=mock.Mock())
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
                 'get_or_create_image', return_value=(True, None))
-    def test_prepare_env_image_missing(self, mock_get_img, mock_create_vt,
-                                       mock_list_vt):
+    def test_prepare_env_image_missing(self, mock_get_img):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
         with self.assertRaises(Exception):
             self.rally_base._prepare_env()
         mock_get_img.assert_called()
-        mock_create_vt.assert_called()
-        mock_list_vt.assert_called()
 
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
-                'list_volume_types', return_value=None)
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
-                'create_volume_type', return_value=mock.Mock())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
                 'get_or_create_image', return_value=(True, 'image_id'))
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
                 'create_shared_network_full', return_value=None)
     def test_prepare_env_image_shared_network_creation_failed(
-            self, mock_create_net, mock_get_img, mock_create_vt, mock_list_vt):
+            self, mock_create_net, mock_get_img):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
         with self.assertRaises(Exception):
             self.rally_base._prepare_env()
         mock_create_net.assert_called()
         mock_get_img.assert_called()
-        mock_create_vt.assert_called()
-        mock_list_vt.assert_called()
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_run_task', return_value=mock.Mock())
@@ -352,18 +324,13 @@ class OSRallyTesting(unittest.TestCase):
         mock_run_task.assert_any_call('test1')
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
-                'delete_volume_type')
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os_utils.'
                 'delete_glance_image')
-    def test_clean_up_default(self, mock_glance_method, mock_vol_method):
-        self.rally_base.volume_type = mock.Mock()
+    def test_clean_up_default(self, mock_glance_method):
         self.rally_base.cinder_client = mock.Mock()
         self.rally_base.image_exists = False
         self.rally_base.image_id = 1
         self.rally_base.nova_client = mock.Mock()
         self.rally_base._clean_up()
-        mock_vol_method.assert_any_call(self.rally_base.cinder_client,
-                                        self.rally_base.volume_type)
         mock_glance_method.assert_any_call(self.rally_base.nova_client,
                                            1)
 

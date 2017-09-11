@@ -66,7 +66,6 @@ class RallyBase(testcase.OSGCTestCase):
     BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.txt")
     TEMP_DIR = os.path.join(RALLY_DIR, "var")
 
-    CINDER_VOLUME_TYPE_NAME = "volume_test"
     RALLY_PRIVATE_NET_NAME = CONST.__getattribute__('rally_network_name')
     RALLY_PRIVATE_SUBNET_NAME = CONST.__getattribute__('rally_subnet_name')
     RALLY_PRIVATE_SUBNET_CIDR = CONST.__getattribute__('rally_subnet_cidr')
@@ -80,9 +79,7 @@ class RallyBase(testcase.OSGCTestCase):
         self.scenario_dir = ''
         self.nova_client = os_utils.get_nova_client()
         self.neutron_client = os_utils.get_neutron_client()
-        self.cinder_client = os_utils.get_cinder_client()
         self.network_dict = {}
-        self.volume_type = None
         self.smoke = None
         self.test_name = None
         self.image_exists = None
@@ -448,20 +445,6 @@ class RallyBase(testcase.OSGCTestCase):
         if self.test_name not in self.TESTS:
             raise Exception("Test name '%s' is invalid" % self.test_name)
 
-        volume_types = os_utils.list_volume_types(self.cinder_client,
-                                                  private=False)
-        if volume_types:
-            LOGGER.debug("Using existing volume type(s)...")
-        else:
-            LOGGER.debug('Creating volume type...')
-            self.volume_type = os_utils.create_volume_type(
-                self.cinder_client, self.CINDER_VOLUME_TYPE_NAME)
-            if self.volume_type is None:
-                raise Exception("Failed to create volume type '%s'" %
-                                self.CINDER_VOLUME_TYPE_NAME)
-            LOGGER.debug("Volume type '%s' is created succesfully.",
-                         self.CINDER_VOLUME_TYPE_NAME)
-
         LOGGER.debug('Getting or creating image...')
         self.image_exists, self.image_id = os_utils.get_or_create_image(
             self.GLANCE_IMAGE_NAME,
@@ -562,10 +545,6 @@ class RallyBase(testcase.OSGCTestCase):
                     self.case_name, success_rate)
 
     def _clean_up(self):
-        if self.volume_type:
-            LOGGER.debug("Deleting volume type '%s'...", self.volume_type)
-            os_utils.delete_volume_type(self.cinder_client, self.volume_type)
-
         if not self.image_exists:
             LOGGER.debug("Deleting image '%s' with ID '%s'...",
                          self.GLANCE_IMAGE_NAME, self.image_id)
