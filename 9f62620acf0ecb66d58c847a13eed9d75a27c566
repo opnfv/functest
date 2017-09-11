@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_46d796bf",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims_perf.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-11T08:33:21Z",
+      "side": 1,
+      "message": "Coud you please add \u0027\\\u0027 before SecuryGroup Settings ?",
+      "revId": "9f62620acf0ecb66d58c847a13eed9d75a27c566",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_a6e662b2",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims_perf.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-11T08:33:21Z",
+      "side": 1,
+      "message": "naming ?",
+      "revId": "9f62620acf0ecb66d58c847a13eed9d75a27c566",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
