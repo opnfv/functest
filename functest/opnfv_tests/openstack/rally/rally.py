@@ -28,6 +28,7 @@ from functest.energy import energy
 from functest.utils.constants import CONST
 import functest.utils.openstack_utils as os_utils
 
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -179,7 +180,7 @@ class RallyBase(testcase.OSGCTestCase):
 
     @staticmethod
     def live_migration_supported():
-        """Determine is live migration is supported."""
+        """Determine if live migration is supported."""
         config = iniparse.ConfigParser()
         if (config.read(RallyBase.TEMPEST_CONF_FILE) and
                 config.has_section('compute-feature-enabled') and
