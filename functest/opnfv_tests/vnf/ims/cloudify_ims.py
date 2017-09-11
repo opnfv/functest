@@ -412,7 +412,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
     @energy.enable_recording
     def run(self, **kwargs):
         """Execute CloudifyIms test case."""
-        super(CloudifyIms, self).run(**kwargs)
+        return super(CloudifyIms, self).run(**kwargs)
 
 
 # ----------------------------------------------------------
