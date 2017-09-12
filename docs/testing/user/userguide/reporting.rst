@@ -87,4 +87,4 @@ See `reporting page`_ for details. For the status, click on the version,
 Functest then the Status menu.
 
 
-_`reporting page`: http://testresults.opnfv.org/reporting/
+.. _`reporting page`: http://testresults.opnfv.org/reporting/
