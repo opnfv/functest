@@ -43,9 +43,9 @@ These test cases can be run inside the container, using new Functest CLI as foll
     $ functest testcase run vping_userdata
 
 The Functest CLI is designed to route a call to the corresponding internal
-python scripts, located in paths:
-*$REPOS_DIR/functest/functest/opnfv_tests/openstack/vping/vping_ssh.py* and
-*$REPOS_DIR/functest/functest/opnfv_tests/openstack/vping/vping_userdata.py*
+python scripts, located in paths
+/usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/vping/vping_ssh.py
+and /usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/vping/vping_userdata.py
 
 Notes:
 
@@ -122,9 +122,10 @@ This test case creates a floating IP on the external network and assigns it to
 the second instance **opnfv-vping-2**. The purpose of this is to establish
 a SSH connection to that instance and SCP a script that will ping the first
 instance. This script is located in the repository under
-*$REPOS_DIR/functest/functest/opnfv_tests/openstack/vping/ping.sh* and takes an IP as
-a parameter. When the SCP is completed, the test will do an SSH call to that script
-inside the second instance. Some problems can happen here::
+/usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/vping/ping.sh
+and takes an IP as a parameter. When the SCP is completed, the test will do a
+SSH call to that script inside the second instance. Some problems can happen
+here::
 
     vPing_ssh- ERROR - Cannot establish connection to IP xxx.xxx.xxx.xxx. Aborting
 
@@ -210,9 +211,6 @@ If this text or similar is shown::
 it means that the instance failed to read from the metadata service. Contact
 the Functest or installer teams for more information.
 
-NOTE: Cloud-init in not supported on scenarios dealing with ONOS and the tests
-have been excluded from CI in those scenarios.
-
 
 Tempest
 ^^^^^^^
@@ -266,12 +264,12 @@ Possible scenarios are:
  * keystone
  * neutron
  * nova
+ * ceilometer
  * quotas
- * requests
  * vm
 
 To know more about what those scenarios are doing, they are defined in directory:
-*$REPOS_DIR/functest/functest/opnfv_tests/openstack/rally/scenario*
+/usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/rally/scenario
 For more info about Rally scenario definition please refer to the Rally official
 documentation. `[3]`_
 
@@ -295,16 +293,11 @@ If any of the other test cases fails, check that Neutron and ODL have
 been correctly configured to work together. Check Neutron configuration
 files, accounts, IP addresses etc.).
 
-ONOS
-^^^^
-Please refer to the ONOS documentation. `ONOSFW User Guide`_ .
-
 
 Features
 --------
 
 Please refer to the dedicated feature user guides for details.
-
 
 
 VNF
@@ -342,6 +335,7 @@ described in the following table:
 | the VM                            | the vIMS VNF installation fails    |
 +-----------------------------------+------------------------------------+
 
-
+Please note that this test case requires resources (8 VM (2Go) + 1 VM (4Go)), it
+is there fore not recommended to run it on a light configuration.
 
 .. _`OPNFV Functest Developer Guide`:  http://artifacts.opnfv.org/functest/docs/devguide/#
