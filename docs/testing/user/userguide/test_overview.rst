@@ -4,14 +4,16 @@
 Overview of the Functest suites
 ===============================
 
-Functest is the OPNFV project primarily targeting function testing.
+Functest is the OPNFV project primarily targeting functional testing.
 In the Continuous Integration pipeline, it is launched after an OPNFV fresh
 installation to validate and verify the basic functions of the
 infrastructure.
 
-The current list of test suites can be distributed over 5 main domains: VIM
-(Virtualised Infrastructure Manager), Controllers (i.e. SDN Controllers),
-Features, VNF (Virtual Network Functions) and MANO stacks.
+The current list of test suites can be distributed over 4 main domains:
+  * VIM (Virtualised Infrastructure Manager)
+  * Controllers (i.e. SDN Controllers)
+  * Features
+  * VNF (Virtual Network Functions)
 
 Functest test suites are also distributed in the OPNFV testing categories:
 healthcheck, smoke, features, components, performance, VNF, Stress tests.
@@ -41,20 +43,20 @@ validate the scenario for the release.
 |             |               |                | VM and then executed via SSH.    |
 |             |               |                | The script will ping another     |
 |             |               |                | VM on a specified IP address over|
-|             |               |                | the SUT Private Tenant network.  |
+|             |               |                | the SUT Private Tenant network   |
 |             |               +----------------+----------------------------------+
 |             |               | vping_userdata | Uses Ping with given userdata    |
 |             |               |                | to test intra-VM connectivity    |
 |             |               |                | over the SUT Private Tenant      |
 |             |               |                | network. The correct operation   |
 |             |               |                | of the NOVA Metadata service is  |
-|             |               |                | also verified in this test.      |
+|             |               |                | also verified in this test       |
 |             |               +----------------+----------------------------------+
 |             |               | tempest_smoke  | Generate and run a relevant      |
 |             |               | \_serial       | Tempest Test Suite in smoke mode.|
 |             |               |                | The generated test set is        |
 |             |               |                | dependent on the OpenStack       |
-|             |               |                | deployment environment.          |
+|             |               |                | deployment environment           |
 |             |               +----------------+----------------------------------+
 |             |               | rally_sanity   | Run a subset of the OpenStack    |
 |             |               |                | Rally Test Suite in smoke mode   |
@@ -70,11 +72,11 @@ validate the scenario for the release.
 |             |               |                | See the OpenStack reference test |
 |             |               |                | suite `[2]`_. The generated      |
 |             |               |                | test set is dependent on the     |
-|             |               |                | OpenStack deployment environment.|
+|             |               |                | OpenStack deployment environment |
 |             |               +----------------+----------------------------------+
 |             |               | rally_full     | Run the OpenStack testing tool   |
 |             |               |                | benchmarking OpenStack modules   |
-|             |               |                | See the Rally documents `[3]`_.  |
+|             |               |                | See the Rally documents `[3]`_   |
 |             |               +----------------+----------------------------------+
 |             |               | tempest_custom | Allow to run a customized list   |
 |             |               |                | of Tempest cases                 |
@@ -149,7 +151,7 @@ validate the scenario for the release.
 |             |               |                | regarding compute, network and   |
 |             |               |                | storage.                         |
 |             |               |                | See `Promise User Guide`_ for    |
-|             |               |                | details.                         |
+|             |               |                | details                          |
 +-------------+---------------+----------------+----------------------------------+
 | VNF         | vnf           | cloudify_ims   | Example of a real VNF deployment |
 |             |               |                | to show the NFV capabilities of  |
@@ -166,6 +168,21 @@ validate the scenario for the release.
 |             |               |   cleawaterims | Openbaton orchestrator           |
 |             |               +----------------+----------------------------------+
 |             |               | vyos_vrouter   | vRouter testing                  |
+|             |               +----------------+----------------------------------+
+|             |               | cloudify_ims   | Based on cloudify_ims test case  |
+|             |               | perf           | cloudify_ims_perf substitutes    |
+|             |               |                | the signaling test suite by an   |
+|             |               |                | automatic deployment of an Ixia  |
+|             |               |                | loader and generic SIP stress    |
+[             |               |                | tests.                           |
+|             |               |                | This work has been initiated     |
+|             |               |                | during the plugfest and allows   |
+|             |               |                | realistic load tests on top of   |
+|             |               |                | cloudify_ims. Please note that   |
+|             |               |                | this test is available but not   |
+|             |               |                | declared in testcases.yaml as it |
+|             |               |                | requires access to proprietary   |
+|             |               |                | resources (Ixia loader)          |
 +-------------+---------------+----------------+----------------------------------+
 
 
@@ -199,7 +216,7 @@ NoSQL database. The goal is to populate the database with results from different
 sources and scenarios and to show them on a `Functest Dashboard`_. A screenshot
 of a live Functest Dashboard is shown below:
 
-.. figure:: ../../../images/FunctestDashboardDanube.png
+.. figure:: ../../../images/FunctestDashboardEuphrates.png
    :align: center
    :alt: Functest Dashboard
 
@@ -215,15 +232,15 @@ This parameters as well as possible tags can be used for the Test case catalog.
 vIMS test case was integrated to demonstrate the capability to deploy a
 relatively complex NFV scenario on top of the OPNFV infrastructure.
 
-Functest considers OPNFV as a black box. As of Danube release the OPNFV
-offers a lot of potential combinations:
+Functest considers OPNFV as a black box. OPNFV offers a lot of potential
+combinations (which may change from one version to another):
 
   * 3 controllers (OpenDaylight, ONOS, OpenContrail)
   * 5 installers (Apex, Compass, Daisy, Fuel, Joid)
 
 Most of the tests are runnable by any combination, but some tests might have
 restrictions imposed by the utilized installers or due to the available
-deployed features. The system uses the environment variables (INSTALLER_IP and
+deployed features. The system uses the environment variables (INSTALLER_TYPE and
 DEPLOY_SCENARIO) to automatically determine the valid test cases, for each given
 environment.
 
@@ -233,8 +250,8 @@ clean-up) and for executing tests.
 The Functest CLI organised the testcase into logical Tiers, which contain in
 turn one or more testcases. The CLI allows execution of a single specified
 testcase, all test cases in a specified Tier, or the special case of execution
-of **ALL** testcases. The Functest CLI is introduced in more detail in the
-section `Executing the functest suites`_ of this document.
+of **ALL** testcases. The Functest CLI is introduced in more details in next
+section.
 
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html

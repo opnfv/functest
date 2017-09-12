@@ -11,7 +11,12 @@ Several prerequisites are needed for Functest:
     #. A public/external network created on the SUT
     #. An admin/management network created on the SUT
     #. Connectivity from the Jumphost to the SUT public/external network
-    #. Connectivity from the Jumphost to the SUT admin/management network
+
+Some specific SNAPS tests may require a connectivity from the Jumphost to the
+SUT admin/management network but most of the test cases do not. This requirement
+can be overridden by overriding the 'interface' attribute (OS_INTERFACE) value
+to 'public'. Another means to circumvent this issue would be to change the
+'snaps.use_keystone' value from True to False.
 
 WARNING: Connectivity from Jumphost is essential and it is of paramount
 importance to make sure it is working before even considering to install
@@ -85,20 +90,11 @@ the public/external subnet is reachable from the Jumphost.
 
 *Hint:* For the given OPNFV Installer in use, the IP sub-net address
 used for the public/external network is usually a planning item and
-should thus be known. Consult the OPNFV Configuration guide `[4]`_, and
-ensure you can reach each node in the SUT, from the Jumphost using the
-'ping' command using the respective IP address on the public/external
-network for each node in the SUT. The details of how to determine the
-needed IP addresses for each node in the SUT may vary according to the
-used installer and are therefore ommitted here.
-
-Connectivity to Admin/Management network on SUT
------------------------------------------------
-Some of the Functest tools need to have access to the OpenStack
-admin/management network of the controllers `[1]`_.
-
-For this reason, check the connectivity from the Jumphost to all the
-controllers in cluster in the OpenStack admin/management network range.
+should thus be known. Ensure you can reach each node in the SUT, from the
+Jumphost using the 'ping' command using the respective IP address on the
+public/external network for each node in the SUT. The details of how to
+determine the needed IP addresses for each node in the SUT may vary according
+to the used installer and are therefore ommitted here.
 
 .. _`[1]`: https://ask.openstack.org/en/question/68144/keystone-unable-to-use-the-public-endpoint/
-.. _`[4]`: http://artifacts.opnfv.org/functest/danube/docs/configguide/index.html
+.. _`[4]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html
