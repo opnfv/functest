@@ -7,7 +7,8 @@ Manual testing
 In manual mode test results are displayed in the console and result files
 are put in /home/opnfv/functest/results.
 
-If you want additionnal logs, you may configure the logging.ini under <repo>/functest:functest/ci
+If you want additionnal logs, you may configure the logging.ini under
+/usr/lib/python2.7/site-packages/functest/ci.
 
 Automated testing
 --------------
@@ -47,4 +48,4 @@ Based on the results stored in the result database, a `Functest reporting`_
 portal is also automatically updated. This portal provides information on the
 overall status per scenario and per installer
 
-.. _`Functest reporting`: http://testresults.opnfv.org/reporting/functest/release/danube/index-status-fuel.html
+.. _`Functest reporting`: http://testresults.opnfv.org/reporting/master/functest/status-apex.html

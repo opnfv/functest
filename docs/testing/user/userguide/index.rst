@@ -29,12 +29,10 @@ Introduction
 ============
 
 The goal of this document is to describe the OPNFV Functest test cases and to
-provide a procedure to execute them. In the OPNFV Danube system release,
-a Functest CLI utility is introduced for an easier execution of test procedures.
+provide a procedure to execute them.
 
-**IMPORTANT**: It is assumed here that the Functest Docker container is already
-properly deployed and that all instructions described in this guide are to be
-performed from *inside* the deployed Functest Docker container.
+**IMPORTANT**: It is assumed here that Functest has been properly deployed
+following the installation guide procedure  _`[1]`.
 
 .. include:: ./test_overview.rst
 
@@ -86,6 +84,10 @@ References
 
 `[15]`_: Testing OpenStack Tempest part 1
 
+`[16]`_: Running Functest trhough internal REST API
+
+`[17]`_: OPNFV Test API
+
 `OPNFV main site`_: OPNFV official web site
 
 `Functest page`_: Functest wiki page
@@ -107,9 +109,11 @@ IRC support chan: #opnfv-functest
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 .. _`[15]`: https://aptira.com/testing-openstack-tempest-part-1/
+.. _`[16]`: https://wiki.opnfv.org/display/functest/Running+test+cases+via+new+Functest+REST+API
+.. _`[17]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
 .. _`OPNFV main site`: http://www.opnfv.org
 .. _`Functest page`: https://wiki.opnfv.org/functest
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
 .. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
 .. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/functest/ci/config_functest.yaml
-.. _`Functest reporting`: http://testresults.opnfv.org/reporting/functest/release/danube/index-status-fuel.html
+.. _`Functest reporting`: http://testresults.opnfv.org/reporting/master/functest/status-apex.html

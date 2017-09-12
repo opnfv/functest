@@ -1,174 +1,244 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. SPDX-License-Identifier: CC-BY-4.0
 
-Installation and configuration (Ubuntu)
-=======================================
+Installation and configuration
+==============================
 
-The historical docker file is based on Ubuntu. It has been maintained for
-Euphrates.
+Alpine containers have been introduced in Euphrates.
+Alpine allows Functest testing in several very light container and thanks to
+the refactoring on dependency management should allow the creation of light and
+fully customized docker files
 
-Pulling the Docker image
-------------------------
-Pull the Functest Docker image ('opnfv/functest') from the public
-dockerhub registry under the OPNFV account: [̀`dockerhub`_], with the
-following docker command::
+It is still possible to use the monolithic functest opnfv/functest especially
+for tests on Aarch64 architecture.
 
-  docker pull opnfv/functest:<TagIdentifier>
+Functest Dockers
+----------------
+Docker files are available on the the dockerhub:
 
-where <TagIdentifier> identifies a release of the Functest docker
-container image in the public Dockerhub registry. There are many tags
-created automatically by the CI mechanisms, and you must ensure you
-pull an image with the **correct tag** to match the OPNFV software
-release installed in your environment. All available tagged images can
-be seen from location [FunctestDockerTags_]. For example, when running
-on the first official release of the OPNFV Danube system platform,
-tag "danube.1.0" is needed. For the second and third releases, the tag
-"danube.2.0" and "danube.3.0" can be used respectively.
-Pulling other tags might cause some problems while running the tests.
-Docker images pulled without a tag specifier bear the implicitly
-assigned label "latest". If you need to specifically pull the latest
-Functest docker image, then omit the tag argument::
+  * opnfv/functest-core
+  * opnfv/functest-healthcheck
+  * opnfv/functest-smoke
+  * opnfv/functest-features
+  * opnfv/functest-components
+  * opnfv/functest-vnf
 
-  docker pull opnfv/functest
-
-After pulling the Docker image, check that it is available with the
-following docker command::
-
-  [functester@jumphost ~]$ docker images
-  REPOSITORY     TAG             IMAGE ID      CREATED       SIZE
-  opnfv/functest latest          8cd6683c32ae  2 weeks ago   1.321 GB
-  opnfv/functest danube.2.0      d2c174a91911  7 minutes ago 1.471 GB
-  opnfv/functest danube.1.0      13fa54a1b238  4 weeks ago   1.29 GB
+By default, we use the docker tag latest, but you may pull a tagged docker
+image.
 
 The Functest docker container environment can -in principle- be also
 used with non-OPNFV official installers (e.g. 'devstack'), with the
 **disclaimer** that support for such environments is outside of the
 scope and responsibility of the OPNFV project.
 
-Please note that alpine dockers have been introduced in Euphrates. See alpine
-section for details.
 
-Accessing the Openstack credentials
------------------------------------
-OpenStack credentials are mandatory and must be provided to Functest.
-When running the command "functest env prepare", the framework  will
-automatically look for the Openstack credentials file
-"/home/opnfv/functest/conf/openstack.creds" and will exit with
-error if it is not present or it is empty.
-
-There are 2 ways to provide that file:
-
-  * by using a Docker volume with -v option when creating the Docker container.
-    This is referred to in docker documentation as "Bind Mounting".
-    See the usage of this parameter in the following chapter.
-  * or creating manually the file '/home/opnfv/functest/conf/openstack.creds'
-    inside the running container and pasting the credentials in it. Consult
-    your installer guide for further details. This is however not
-    instructed in this document.
-
-There is a default environment variable in the Functest container **$creds**
-that points to the credentials absolute path to help the user with this task.
-
-In proxified environment you may need to change the credentials file.
-There are some tips in chapter: `Proxy support`_
-
-Functest Docker parameters
+Preparing your environment
 --------------------------
-This chapter explains how to run a container for executing functest
-test suites. Numbered list below explains some details of the
-recommended parameters for invoking docker container
 
-  #. It is a good practice to assign a precise container name through
-     the **--name** option.
+cat env::
 
-  #. Assign parameter for installer type::
+  INSTALLER_TYPE=XXX
+  INSTALLER_IP=XXX
+  EXTERNAL_NETWORK=XXX
+  DEPLOY_SCENARIO=XXX
 
-       -e "INSTALLER_TYPE=<type>"
-       # Use one of following apex, compass, fuel or joid
+See section on environment variables for details.
 
-  #. Functest needs to know the IP of some installers::
+cat openstack.creds::
 
-       -e "INSTALLER_IP=<Specific IP Address>"
+  export OS_AUTH_URL=XXX
+  export OS_USER_DOMAIN_NAME=XXX
+  export OS_PROJECT_DOMAIN_NAME=XXX
+  export OS_USERNAME=XXX
+  export OS_TENANT_NAME=XXX
+  export OS_PROJECT_NAME=XXX
+  export OS_PASSWORD=XXX
+  export OS_VOLUME_API_VERSION=XXX
+  export OS_IDENTITY_API_VERSION=XXX
+  export OS_IMAGE_API_VERSION=XXX
 
-       These two env variables are useful extract some information
-       from the deployment. However, for some test cases like
-       SFC or Barometer they are mandatory since the tests
-       need to access the installer node and the deployment.
+See section on OpenStack credentials for details.
 
-  #. Credentials for accessing the Openstack.
-     Most convenient way of passing them to container is by having a
-     local copy of the credentials file in Jumphost and then using the
-     **-v** option. In the example we have local file by the name of
-     "overcloudrc" and we are using that as an argument::
+Create a directory for the different images (incldued as volume)::
 
-       -v ~/overcloudrc:/home/opnfv/functest/conf/openstack.creds
+  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | bash -s -- images && ls -1 images/*
 
-       The credentials file needs to exist in the Docker container
-       under the path: '/home/opnfv/functest/conf/openstack.creds'.
-
-     **WARNING:** If you are using the Joid installer, you must pass the
-     credentials using the **-v** option:
-     -v /var/lib/jenkins/admin-openrc:/home/opnfv/functest/conf/openstack.creds.
-     See the section `Accessing the Openstack credentials`_ above.
-
-  #. Passing deployment scenario
-     When running Functest against any of the supported OPNFV scenarios,
-     it is recommended to include also the environment variable
-     **DEPLOY_SCENARIO**. The **DEPLOY_SCENARIO** environment variable
-     is passed with the format::
-
-       -e "DEPLOY_SCENARIO=os-<controller>-<nfv_feature>-<ha_mode>"
-       where:
-       os = OpenStack (No other VIM choices currently available)
-       controller is one of ( nosdn | odl_l2 | odl_l3 )
-       nfv_feature is one or more of ( ovs | kvm | sfc | bgpvpn | nofeature )
-                If several features are pertinent then use the underscore
-                character '_' to separate each feature (e.g. ovs_kvm)
-                'nofeature' indicates no NFV feature is deployed
-       ha_mode (high availability) is one of ( ha | noha )
-
-     **NOTE:** Not all possible combinations of "DEPLOY_SCENARIO" are
-     supported. The name passed in to the Functest Docker container
-     must match the scenario used when the actual OPNFV platform was
-     deployed. See release note to see the list of supported scenarios.
-
-     **NOTE:** The scenario name is mainly used to automatically detect
-     if a test suite is runnable or not (e.g. it will prevent ONOS test suite
-     to be run on ODL scenarios). If not set, Functest will try to run the
-     default test cases that might not include SDN controller or a specific
-     feature
-
-     **NOTE:** A HA scenario means that 3 OpenStack controller nodes are
-     deployed. It does not necessarily mean that the whole system is HA. See
-     installer release notes for details.
+  images/CentOS-7-aarch64-GenericCloud.qcow2
+  images/CentOS-7-aarch64-GenericCloud.qcow2.xz
+  images/CentOS-7-x86_64-GenericCloud.qcow2
+  images/cirros-0.3.5-x86_64-disk.img
+  images/cirros-0.3.5-x86_64-lxc.tar.gz
+  images/cirros-d161201-aarch64-disk.img
+  images/cirros-d161201-aarch64-initramfs
+  images/cirros-d161201-aarch64-kernel
+  images/cloudify-manager-premium-4.0.1.qcow2
+  images/img
+  images/trusty-server-cloudimg-amd64-disk1.img
+  images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+  images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
+  images/ubuntu-16.04-server-cloudimg-amd64-disk1.img
+  images/vyos-1.1.7.img
 
 
-Putting all above together, when using installer 'fuel' and an invented
-INSTALLER_IP of '10.20.0.2', the recommended command to create the
-Functest Docker container is as follows::
+Testing healthcheck suite
+--------------------------
 
-  docker run --name "FunctestContainer" -it \
-  -e "INSTALLER_IP=10.20.0.2" \
-  -e "INSTALLER_TYPE=fuel" \
-  -e "DEPLOY_SCENARIO=os-odl_l2-ovs_kvm-ha" \
-  -v ~/overcloudrc:/home/opnfv/functest/conf/openstack.creds \
-  opnfv/functest /bin/bash
+Run healthcheck suite::
 
-After the *run* command, a new prompt appears which means that we are inside
-the container and ready to move to the next step.
+  sudo docker run --env-file env \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+      -v $(pwd)/images:/home/opnfv/functest/images  \
+      opnfv/functest-healthcheck
 
-For tips on how to set up container with installer Apex, see chapter
-`Apex Installer Tips`_.
+Results shall be displayed as follows::
+
+  +----------------------------+------------------+---------------------+------------------+----------------+
+  |         TEST CASE          |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
+  +----------------------------+------------------+---------------------+------------------+----------------+
+  |      connection_check      |     functest     |     healthcheck     |      00:02       |      PASS      |
+  |         api_check          |     functest     |     healthcheck     |      04:57       |      PASS      |
+  |     snaps_health_check     |     functest     |     healthcheck     |      00:51       |      PASS      |
+  +----------------------------+------------------+---------------------+------------------+----------------+
+
+Testing smoke suite
+-------------------
+
+Run smoke suite::
+
+  sudo docker run --env-file env \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+      -v $(pwd)/images:/home/opnfv/functest/images  \
+      opnfv/functest-smoke
+
+Results shall be displayed as follows::
+
+  +------------------------------+------------------+---------------+------------------+----------------+
+  |          TEST CASE           |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
+  +------------------------------+------------------+---------------+------------------+----------------+
+  |          vping_ssh           |     functest     |     smoke     |      01:19       |      PASS      |
+  |        vping_userdata        |     functest     |     smoke     |      01:56       |      PASS      |
+  |     tempest_smoke_serial     |     functest     |     smoke     |      26:30       |      PASS      |
+  |         rally_sanity         |     functest     |     smoke     |      19:42       |      PASS      |
+  |       refstack_defcore       |     functest     |     smoke     |      22:00       |      PASS      |
+  |         snaps_smoke          |     functest     |     smoke     |      41:14       |      PASS      |
+  |             odl              |     functest     |     smoke     |      00:16       |      PASS      |
+  |         odl_netvirt          |     functest     |     smoke     |      00:00       |      SKIP      |
+  |             fds              |     functest     |     smoke     |      00:00       |      SKIP      |
+  +------------------------------+------------------+---------------+------------------+----------------+
+  Note: if the scenario does not support some tests, they are indicated as SKIP.
+  See User guide for details.
+
+Testing features suite
+----------------------
+
+Run features suite::
+
+  sudo docker run --env-file env \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+      -v $(pwd)/images:/home/opnfv/functest/images  \
+      opnfv/functest-features
+
+Results shall be displayed as follows::
+
+  +---------------------------+--------------------------+------------------+------------------+----------------+
+  |         TEST CASE         |         PROJECT          |       TIER       |     DURATION     |     RESULT     |
+  +---------------------------+--------------------------+------------------+------------------+----------------+
+  |          promise          |         promise          |     features     |      00:00       |      SKIP      |
+  |           bgpvpn          |          sdnvpn          |     features     |      00:00       |      SKIP      |
+  |       security_scan       |     securityscanning     |     features     |      00:00       |      SKIP      |
+  |      functest-odl-sfc     |           sfc            |     features     |      00:00       |      SKIP      |
+  |      domino-multinode     |          domino          |     features     |      00:00       |      SKIP      |
+  |     barometercollectd     |        barometer         |     features     |      00:00       |      SKIP      |
+  +---------------------------+--------------------------+------------------+------------------+----------------+
+  Note: if the scenario does not support some tests, they are indicated as SKIP.
+  See User guide for details.
+
+Testing components suite
+------------------------
+
+Run components suite::
+
+  sudo docker run --env-file env \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+      -v $(pwd)/images:/home/opnfv/functest/images  \
+      opnfv/functest-components
+
+Results shall be displayed as follows::
+
+  +-------------------------------+------------------+--------------------+------------------+----------------+
+  |           TEST CASE           |     PROJECT      |        TIER        |     DURATION     |     RESULT     |
+  +-------------------------------+------------------+--------------------+------------------+----------------+
+  |     tempest_full_parallel     |     functest     |     components     |      102:48      |      PASS      |
+  |           rally_full          |     functest     |     components     |      160:58      |      PASS      |
+  |         tempest_custom        |     functest     |     components     |      00:00       |      SKIP      |
+  +-------------------------------+------------------+--------------------+------------------+----------------+
+
+Testing vnf suite
+-----------------
+
+Run vnf suite::
+
+sudo docker run --env-file env \
+    -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+    -v $(pwd)/images:/home/opnfv/functest/images  \
+    opnfv/functest-vnf
+
+Results shall be displayed as follows::
+
+  +---------------------------------+------------------+--------------+------------------+----------------+
+  |            TEST CASE            |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
+  +---------------------------------+------------------+--------------+------------------+----------------+
+  |           cloudify_ims          |     functest     |     vnf      |      21:25       |      PASS      |
+  |        orchestra_openims        |     functest     |     vnf      |      11:02       |      FAIL      |
+  |     orchestra_clearwaterims     |     functest     |     vnf      |      09:13       |      FAIL      |
+  |           vyos_vrouter          |     functest     |     vnf      |      00:00       |      SKIP      |
+  +---------------------------------+------------------+--------------+------------------+----------------+
+
+
+Environment variables
+=====================
+
+Several environement variables may be specified:
+  * INSTALLER_TYPE=(apex|compass|daisy|fuel|joid|osa)
+  * INSTALLER_IP=<Specific IP Address>
+  * DEPLOY_SCENARIO=<vim>-<controller>-<nfv_feature>-<ha_mode>
+
+
+INSTALLER IP may be required by some test cases like SFC or Barometer in order
+to access the installer node and the deployment.
+
+The format for the DEPLOY_SCENARIO env variable can be described as follows:
+  * vim: (os|k8s) = OpenStack or Kubernetes
+  * controller is one of ( nosdn | odl )
+  * nfv_feature is one or more of ( ovs | kvm | sfc | bgpvpn | nofeature )
+  * ha_mode (high availability) is one of ( ha | noha )
+
+If several features are pertinent then use the underscore character '_' to
+separate each feature (e.g. ovs_kvm) 'nofeature' indicates no OPNFV feature is
+deployed
+
+The list of supported scenarios per release/installer is indicated in the
+release note.
+
+**NOTE:** The scenario name is mainly used to automatically detect
+if a test suite is runnable or not (e.g. it will prevent ONOS test suite to be
+run on ODL scenarios). If not set, Functest will try to run the default test
+cases that might not include SDN controller or a specific
+feature
+
+**NOTE:** A HA scenario means that 3 OpenStack controller nodes are
+deployed. It does not necessarily mean that the whole system is HA. See
+installer release notes for details.
 
 Finally, three additional environment variables can also be passed in
 to the Functest Docker Container, using the -e
-"<EnvironmentVariable>=<Value>" mechanism. The first two of these are
+"<EnvironmentVariable>=<Value>" mechanism. The first two parameters are
 only relevant to Jenkins CI invoked testing and **should not be used**
 when performing manual test scenarios::
 
-  -e "NODE_NAME=<Test POD Name>" \
-  -e "BUILD_TAG=<Jenkins Build Tag>" \
-  -e "CI_DEBUG=<DebugTraceValue>"
+  * NODE_NAME=<Test POD Name>
+  * BUILD_TAG=<Jenkins Build Tag>
+  * CI_DEBUG=<DebugTraceValue>
   where:
   <Test POD Name> = Symbolic name of the POD where the tests are run.
                     Visible in test results files, which are stored
@@ -193,154 +263,100 @@ when performing manual test scenarios::
                       text can be sent to the test results file / log files
                       and also to the standard console output.
 
-Installer Tips
---------------
 
-Apex Installer Tips
-^^^^^^^^^^^^^^^^^^^
-Some specific tips are useful for the Apex Installer case. If not using
-Apex Installer; ignore this section.
+Openstack credentials
+=====================
+OpenStack credentials are mandatory and must be provided to Functest.
+When running the command "functest env prepare", the framework  will
+automatically look for the Openstack credentials file
+"/home/opnfv/functest/conf/openstack.creds" and will exit with
+error if it is not present or is empty.
 
-In case of Triple-O based installer (like Apex) the docker container
-needs to connect to the installer VM, so it is then required that some
-known SSH keys are present in docker container. Since the Jumphost root
-SSH keys are already known, easiest way is to use those using the
-'Bind mount' method. See below for sample parameter::
+There are 2 ways to provide that file:
 
-  -v /root/.ssh/id_rsa:/root/.ssh/id_rsa
+  * by using a Docker volume with -v option when creating the Docker container.
+    This is referred to in docker documentation as "Bind Mounting".
+    See the usage of this parameter in the following chapter.
+  * or creating manually the file '/home/opnfv/functest/conf/openstack.creds'
+    inside the running container and pasting the credentials in it. Consult
+    your installer guide for further details. This is however not
+    instructed in this document.
 
-  NOTE: You need the "sudo" when creating the container to access root
-  users ssh credentials even the docker command itself might not
-  require that.
+There is a default environment variable in the Functest container **$creds**
+that points to the credentials absolute path to help the user with this task.
 
-HINT! In case of Triple-O installers you can find value for the
-INSTALLER_IP parameter by executing command and note the returned IP
-address::
+In proxified environment you may need to change the credentials file.
+There are some tips in chapter: `Proxy support`_
 
-  inst=$(sudo virsh list | grep -iEo "undercloud|instack")
-  sudo virsh domifaddr ${inst}
+SSL Support
+-----------
+If you need to connect to a server that is TLS-enabled (the auth URL
+begins with "https") and it uses a certificate from a private CA or a
+self-signed certificate, then you will need to specify the path to an
+appropriate CA certificate to use, to validate the server certificate
+with the environment variable OS_CACERT::
 
-  NOTE: In releases prior to Colorado, the name 'instack' was
-  used. Currently the name 'undercloud' is used.
+  echo $OS_CACERT
+  /etc/ssl/certs/ca.crt
 
-You can copy the credentials file from the "stack" users home directory
-in installer VM to Jumphost. Please check the correct IP from the
-command above. In the example below we are using invented IP address
-"192.168.122.89"::
+However, this certificate does not exist in the container by default.
+It has to be copied manually from the OpenStack deployment. This can be
+done in 2 ways:
 
-    scp stack@192.168.122.89:overcloudrc .
+  #. Create manually that file and copy the contents from the OpenStack
+     controller.
+  #. (Recommended) Add the file using a Docker volume when starting the
+     container::
 
-Here is an example of the full docker command invocation for an Apex
-installed system, using latest Functest docker container, for
-illustration purposes::
+       -v <path_to_your_cert_file>:/etc/ssl/certs/ca.cert
 
-  sudo docker run -it --name "ApexFuncTestODL" \
-  -e "INSTALLER_IP=192.168.122.89" \
-  -e "INSTALLER_TYPE=apex" \
-  -e "DEPLOY_SCENARIO=os-odl_l2-nofeature-ha" \
-  -v /root/.ssh/id_rsa:/root/.ssh/id_rsa \
-  -v ~/overcloudrc:/home/opnfv/functest/conf/openstack.creds \
-  opnfv/functest /bin/bash
+You might need to export OS_CACERT environment variable inside the
+container::
 
-Compass installer local development env usage Tips
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In the compass-functest local test case check and development environment,
-in order to get openstack service inside the functest container, some
-parameters should be configured during container creation, which are
-hard to guess for freshman. This section will provide the guideline, the
-parameters values are defaults here, which should be adjusted according
-to the settings, the complete steps are given here so as not to appear
-too abruptly.
+  export OS_CACERT=/etc/ssl/certs/ca.crt
 
-1, Pull Functest docker image from public dockerhub::
+Certificate verification can be turned off using OS_INSECURE=true. For
+example, Fuel uses self-signed cacerts by default, so an pre step would
+be::
 
-    docker pull opnfv/functest:<Tag>
-
-<Tag> here can be "brahmaputra.1.0", "colorado.1.0", etc.
-Tag omitted means the latest docker image::
-
-    docker pull opnfv/functest
-
-2, Functest Docker container creation
-
-To make a file used for the environment, such as 'functest-docker-env'::
-
-    CINDER_ENDPOINT_TYPE=publicURL
-    NOVA_ENDPOINT_TYPE=publicURL
-    OS_ENDPOINT_TYPE=publicURL
-    OS_INTERFACE=publicURL
-    OS_USERNAME=admin
-    OS_PASSWORD='990232e0885da343ac805523322d'
-    OS_PROJECT_NAME=admin
-    OS_TENANT_NAME=admin
-    OS_AUTH_URL=https://192.16.1.222:5000/v3
-    OS_NO_CACHE=1
-    OS_USER_DOMAIN_NAME=Default
-    OS_PROJECT_DOMAIN_NAME=Default
-    OS_REGION_NAME=RegionOne
-    OS_IDENTITY_API_VERSION=3
-    OS_AUTH_VERSION=3
-
-
-Note: please adjust the content according to the environment, such as
-'TENANT_ID' maybe used for some special cases.
-
-Then to create the Functest docker::
-
-    docker run --privileged=true --rm -t \
-    --env-file functest-docker-env \
-    --name <Functest_Container_Name> \
-    opnfv/functest:<Tag> /bin/bash
-
-3, To attach Functest container
-
-Before trying to attach the Functest container, the status can be checked by::
-
-   docker ps -a
-
-to attach the 'Up' status Functest container and start bash mode::
-
-   docker exec -it <Functest_Container_Name> bash
-
-4, Functest environment preparation and check
-
-To see the Section below `Preparing the Functest environment`_.
+  export OS_INSECURE=true
 
 Functest docker container directory structure
----------------------------------------------
+=============================================
 Inside the Functest docker container, the following directory structure
 should now be in place::
 
-  `-- home
-    |  `-- opnfv
-    |   |-- functest
-    |   |   |-- conf
-    |   |   |-- data
-    |   |   |-- images
-    |   |   `-- results
-    |   `-- repos
-    |       |-- doctor
+  `--
+    |- home
+    |   |-- opnfv
+    |   |     `- functest
+    |   |          |-- conf
+    |   |          `-- results
+    |    `-- repos
     |       `-- vnfs
-   -- src
-       |-- tempest
-       |-- vims-test
-       |-- odl_test
-       `-- fds
+    |- src
+    |   |-- tempest
+    |   |-- vims-test
+    |   |-- odl_test
+    |   `-- fds
+    `- usr
+        `- lib
+           `- python2.7
+              `- site-packages
+                 `- functest
+                      |-- ...
 
-Underneath the '/home/opnfv/' directory, the Functest docker container
+Underneath the '/home/opnfv/functest' directory, the Functest docker container
 includes two main directories:
 
-  * The **functest** directory stores configuration files (e.g. the
+  * The **conf** directory stores configuration files (e.g. the
     OpenStack creds are stored in path '/home/opnfv/functest/conf/openstack.creds'),
-    the **data** directory stores a 'cirros' test image used in some
-    functional tests and the **results** directory stores some temporary
-    result log files
-  * The **repos** directory holds various repositories. The directories
-    are used for the installation of the needed tooling (e.g. rally) or
-    for the retrieval of feature projects scenarios (e.g. promise)
+  * the **results** directory stores some temporary result log files
 
-The structure under the **functest** repository can be described as
-follows::
+src and repos directories are used to host third party code used for the tests.
+
+The functest code is under /usr/lib/python2.7/site-packages/functest
+The structure can be described as follows::
 
   |-- INFO
   |-- LICENSE
@@ -477,7 +493,7 @@ We may distinguish several directories, the first level has 5 directories:
 * **functest**: This directory contains all the code needed to run
   functest internal cases and OPNFV onboarded feature or VNF test cases.
 
-Functest directory has 6 directories:
+Functest directory has 6 sub-directories:
   * **ci**: This directory contains test structure definition files
     (e.g <filename>.yaml) and bash shell/python scripts used to
     configure and execute Functional tests. The test execution script
@@ -495,8 +511,31 @@ Functest directory has 6 directories:
     own test code. See for an example the Openstack helper utility:
     'openstack_utils.py'.
 
-Useful Docker commands
-----------------------
+
+Logs
+====
+By default all the logs are put un /home/opnfv/functest/results/functest.log.
+If you want to have more logs in console, you may edit the logging.ini file
+manually.
+Connect on the docker then edit the file located in
+/usr/lib/python2.7/site-packages/functest/ci/logging.ini
+
+Change wconsole to console in the desired module to get more traces.
+
+
+Configuration
+=============
+
+You may also directly modify the python code or the configuration file (e.g.
+testcases.yaml used to declare test constraints) under
+/usr/lib/python2.7/site-packages/functest
+
+
+Tips
+====
+
+Docker
+------
 When typing **exit** in the container prompt, this will cause exiting
 the container and probably stopping it. When stopping a running Docker
 container all the changes will be lost, there is a keyboard shortcut
@@ -538,116 +577,6 @@ destroy it::
 
 Check the Docker documentation [`dockerdocs`_] for more information.
 
-Preparing the Functest environment
-----------------------------------
-Once the Functest docker container is up and running, the required
-Functest environment needs to be prepared. A custom built **functest**
-CLI utility is available to perform the needed environment preparation
-action. Once the environment is prepared, the **functest** CLI utility
-can be used to run different functional tests. The usage of the
-**functest** CLI utility to run tests is described further in the
-`Functest User Guide`_
-
-Prior to commencing the Functest environment preparation, we can check
-the initial status of the environment. Issue the **functest env status**
-command at the prompt::
-
-  functest env status
-  Functest environment is not installed.
-
-  Note: When the Functest environment is prepared, the command will
-  return the status: "Functest environment ready to run tests."
-
-To prepare the Functest docker container for test case execution, issue
-the **functest env prepare** command at the prompt::
-
-  functest env prepare
-
-This script will make sure that the requirements to run the tests are
-met and will install the needed libraries and tools by all Functest
-test cases. It should be run only once every time the Functest docker
-container is started from scratch. If you try to run this command, on
-an already prepared environment, you will be prompted whether you really
-want to continue or not::
-
-  functest env prepare
-  It seems that the environment has been already prepared.
-  Do you want to do it again? [y|n]
-
-  (Type 'n' to abort the request, or 'y' to repeat the
-   environment preparation)
-
-
-To list some basic information about an already prepared Functest
-docker container environment, issue the **functest env show** at the
-prompt::
-
-  functest env show
-  +======================================================+
-  | Functest Environment info                            |
-  +======================================================+
-  |  INSTALLER: apex, 192.168.122.89                     |
-  |   SCENARIO: os-odl_l2-nofeature-ha                   |
-  |        POD: localhost                                |
-  | GIT BRANCH: master                                   |
-  |   GIT HASH: 5bf1647dec6860464eeb082b2875798f0759aa91 |
-  | DEBUG FLAG: false                                    |
-  +------------------------------------------------------+
-  |     STATUS: ready                                    |
-  +------------------------------------------------------+
-
-  Where:
-
-  INSTALLER:  Displays the INSTALLER_TYPE value
-              - here = "apex"
-              and the INSTALLER_IP value
-              - here = "192.168.122.89"
-  SCENARIO:   Displays the DEPLOY_SCENARIO value
-              - here = "os-odl_l2-nofeature-ha"
-  POD:        Displays the value passed in NODE_NAME
-              - here = "localhost"
-  GIT BRANCH: Displays the git branch of the OPNFV Functest
-              project repository included in the Functest
-              Docker Container.
-              - here = "master"
-                       (In first official colorado release
-                        would be "colorado.1.0")
-  GIT HASH:   Displays the git hash of the OPNFV Functest
-              project repository included in the Functest
-              Docker Container.
-              - here = "5bf1647dec6860464eeb082b2875798f0759aa91"
-  DEBUG FLAG: Displays the CI_DEBUG value
-              - here = "false"
-
-  NOTE: In Jenkins CI runs, an additional item "BUILD TAG"
-        would also be listed. The value is set by Jenkins CI.
-
-Finally, the **functest** CLI has a **--help** options:
-
-Some examples::
-
-  functest --help Usage: functest [OPTIONS] COMMAND [ARGS]...
-
-  Options:
-    --version  Show the version and exit.
-    -h, --help Show this message and exit.
-
-  Commands:
-    env
-    openstack
-    testcase
-    tier
-
-  functest env --help
-  Usage: functest env [OPTIONS] COMMAND [ARGS]...
-
-  Options:
-    -h, --help Show this message and exit.
-
-  Commands:
-    prepare  Prepares the Functest environment.
-    show     Shows information about the current...
-    status   Checks if the Functest environment is ready...
 
 Checking Openstack and credentials
 ----------------------------------
@@ -673,52 +602,23 @@ This command must show a set of environment variables starting with
 *OS_*, for example::
 
   OS_REGION_NAME=RegionOne
-  OS_DEFAULT_DOMAIN=default
+  OS_USER_DOMAIN_NAME=Default
   OS_PROJECT_NAME=admin
-  OS_PASSWORD=admin
-  OS_AUTH_STRATEGY=keystone
-  OS_AUTH_URL=http://172.30.10.3:5000/v2.0
+  OS_AUTH_VERSION=3
+  OS_IDENTITY_API_VERSION=3
+  OS_PASSWORD=da54c27ae0d10dfae5297e6f0d6be54ebdb9f58d0f9dfc
+  OS_AUTH_URL=http://10.1.0.9:5000/v3
   OS_USERNAME=admin
   OS_TENANT_NAME=admin
   OS_ENDPOINT_TYPE=internalURL
-  OS_NO_CACHE=true
+  OS_INTERFACE=internalURL
+  OS_NO_CACHE=1
+  OS_PROJECT_DOMAIN_NAME=Default
+
 
 If the OpenStack command still does not show anything or complains
 about connectivity issues, it could be due to an incorrect url given to
 the OS_AUTH_URL environment variable. Check the deployment settings.
-
-SSL Support
------------
-If you need to connect to a server that is TLS-enabled (the auth URL
-begins with "https") and it uses a certificate from a private CA or a
-self-signed certificate, then you will need to specify the path to an
-appropriate CA certificate to use, to validate the server certificate
-with the environment variable OS_CACERT::
-
-  echo $OS_CACERT
-  /etc/ssl/certs/ca.crt
-
-However, this certificate does not exist in the container by default.
-It has to be copied manually from the OpenStack deployment. This can be
-done in 2 ways:
-
-  #. Create manually that file and copy the contents from the OpenStack
-     controller.
-  #. (Recommended) Add the file using a Docker volume when starting the
-     container::
-
-       -v <path_to_your_cert_file>:/etc/ssl/certs/ca.cert
-
-You might need to export OS_CACERT environment variable inside the
-container::
-
-  export OS_CACERT=/etc/ssl/certs/ca.crt
-
-Certificate verification can be turned off using OS_INSECURE=true. For
-example, Fuel uses self-signed cacerts by default, so an pre step would
-be::
-
-  export OS_INSECURE=true
 
 Proxy support
 -------------
@@ -786,12 +686,14 @@ Note: In a Jumphost node based on the CentOS family OS, the **nc**
 commands might not work. You can use the **curl** command instead.
 
   curl http://www.opnfv.org:80
+
   <HTML><HEAD><meta http-equiv="content-type"
   .
   .
   </BODY></HTML>
 
   curl https://www.opnfv.org:443
+
   <HTML><HEAD><meta http-equiv="content-type"
   .
   .
@@ -833,68 +735,19 @@ should be followed **before** installing the docker engine::
      EnvironmentFile=/etc/sysconfig/docker (ignore_errors=yes)
      DropInPaths=/etc/systemd/system/docker.service.d/env.conf
 
-Now follow the instructions in [`InstallDockerCentOS`_] to download
+Now follow the instructions in [`Install Docker on CentOS`_] to download
 and install the **docker-engine**. The instructions conclude with a
 "test pull" of a sample "Hello World" docker container. This should now
 work with the above pre-requisite actions.
 
 
-Installation and Configuration (Alpine)
-=======================================
-
-Introduction to Alpine
-----------------------
-Alpine container have been introduced in Euphrates and released as experimental.
-Alpine allows Functest testing in several very light container and thanks to
-the refactoring on dependency management shoudl allow the creation of light and
-fully customized docker files
-
-Functest Alpine
----------------
-Docker files are available on the the dockerhub:
-
-  * opnfv/functest-core
-  * opnfv/functest-healthcheck
-  * opnfv/functest-smoke
-  * opnfv/functest-features
-  * opnfv/functest-components
-  * opnfv/functest-vnf
-
-
-Preparing your environment
---------------------------
-
-cat env::
-
-  INSTALLER_TYPE=XXX
-  INSTALLER_IP=XXX
-  EXTERNAL_NETWORK=XXX
-
-cat openstack.creds::
-
-  export OS_AUTH_URL=XXX
-  export OS_USER_DOMAIN_NAME=XXX
-  export OS_PROJECT_DOMAIN_NAME=XXX
-  export OS_USERNAME=XXX
-  export OS_TENANT_NAME=XXX
-  export OS_PROJECT_NAME=XXX
-  export OS_PASSWORD=XXX
-  export OS_VOLUME_API_VERSION=XXX
-  export OS_IDENTITY_API_VERSION=XXX
-  export OS_IMAGE_API_VERSION=XXX
-
-md5sum images/*md5sum images/*::
-
-  c03e55c22b6fb2127e7de391b488d8d6  `images/CentOS-7-x86_64-GenericCloud.qcow2`_
-  f8ab98ff5e73ebab884d80c9dc9c7290  `images/cirros-0.3.5-x86_64-disk.img`_
-  845c9b0221469f9e0f4d7ea0039ab5f2  `images/ubuntu-14.04-server-cloudimg-amd64-disk1.img`_
-
+.. _`[4]`: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/configguide/index.html
 .. _`dockerdocs`: https://docs.docker.com/
 .. _`dockerhub`: https://hub.docker.com/r/opnfv/functest/
 .. _`Proxy`: https://docs.docker.com/engine/admin/systemd/#http-proxy
 .. _`FunctestDockerTags`: https://hub.docker.com/r/opnfv/functest/tags/
-.. _`InstallDockerCentOS`: https://docs.docker.com/engine/installation/linux/centos/
+.. _`Install Docker on CentOS`: https://docs.docker.com/engine/installation/linux/centos/
 .. _`Functest User Guide`: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/userguide/index.html
-:: _`images/CentOS-7-x86_64-GenericCloud.qcow2` http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
-:: _`images/cirros-0.3.5-x86_64-disk.img` https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
-:: _`images/ubuntu-14.04-server-cloudimg-amd64-disk1.img` https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+.. _`images/CentOS-7-x86_64-GenericCloud.qcow2` http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+.. _`images/cirros-0.3.5-x86_64-disk.img` https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+.. _`images/ubuntu-14.04-server-cloudimg-amd64-disk1.img` https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2

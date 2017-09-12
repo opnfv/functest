@@ -266,8 +266,8 @@ Possible scenarios are:
  * keystone
  * neutron
  * nova
+ * ceilometer
  * quotas
- * requests
  * vm
 
 To know more about what those scenarios are doing, they are defined in directory:
@@ -295,16 +295,11 @@ If any of the other test cases fails, check that Neutron and ODL have
 been correctly configured to work together. Check Neutron configuration
 files, accounts, IP addresses etc.).
 
-ONOS
-^^^^
-Please refer to the ONOS documentation. `ONOSFW User Guide`_ .
-
 
 Features
 --------
 
 Please refer to the dedicated feature user guides for details.
-
 
 
 VNF
@@ -342,6 +337,7 @@ described in the following table:
 | the VM                            | the vIMS VNF installation fails    |
 +-----------------------------------+------------------------------------+
 
-
+Please note that this test case requires resources (8 VM (2Go) + 1 VM (4Go)), it
+is there fore not recommended to run it on a light configuration.
 
 .. _`OPNFV Functest Developer Guide`:  http://artifacts.opnfv.org/functest/docs/devguide/#
