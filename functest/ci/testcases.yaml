@@ -397,3 +397,18 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.vnf.router.cloudify_vrouter'
                     class: 'CloudifyVrouter'
+
+            -
+                case_name: juju_epc
+                enabled: true
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    vEPC validation with Juju as VNF manager and ABoT as test executor.
+                dependencies:
+                    installer: ''
+                    scenario: 'os-nosdn-nofeature-ha'
+                run:
+                    module: 'functest.opnfv_tests.vnf.epc.juju_epc'
+                    class: 'JujuEpc'
