@@ -141,9 +141,16 @@ rally:
 
 vnf:
     juju_epc:
-        tenant_name: epc
+        config: juju_epc.yaml
         tenant_description: OAI EPC deployed with Juju
-        tenant_images: {}
+        tenant_name: abotepc
+        private_net_name: abot-net
+        private_subnet_cidr: 172.16.0.0/24
+        private_subnet_name: abot-subnet
+        external_router: abot-router
+        external_network_name: ext-net
+        dns_nameserver: ['8.8.8.8']
+
     cloudify_ims:
         tenant_name: cloudify_ims
         tenant_description: vIMS

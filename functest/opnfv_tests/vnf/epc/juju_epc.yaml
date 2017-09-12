@@ -1,0 +1,32 @@
+---
+tenant_images:
+    trusty:
+        /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+    xenial:
+        /home/opnfv/functest/images/ubuntu-16.04-server-cloudimg-amd64-disk1.img
+
+orchestrator:
+    name: juju
+    version: '2.0'
+    requirements:
+        dep_package: 'software-properties-common'
+        flavor:
+            name: m1.small
+            ram_min: 2048
+        preserve_setup: false
+vnf:
+    name: juju_epc
+    version: '1'
+    descriptor:
+        name: abot-oai-epc
+        file_name:
+            /src/epc-requirements/abot_charm/functest-abot-epc-bundle/bundle.yaml
+        version: '1'
+    requirements:
+        flavor:
+            name: m1.medium
+            ram_min: 4096
+vnf_test_suite:
+    name: abot-epc-basic
+    version: "3.1.0"
+    tag_name: "TS_24_301"
