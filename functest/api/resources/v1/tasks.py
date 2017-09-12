@@ -15,9 +15,11 @@ import errno
 import json
 import logging
 import os
+import pkg_resources
 import uuid
 
 from flask import jsonify
+from flasgger.utils import swag_from
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils
@@ -31,6 +33,8 @@ LOGGER = logging.getLogger(__name__)
 class V1Task(ApiResource):
     """ V1Task Resource class"""
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/task.yaml'))
     def get(self, task_id):  # pylint: disable=no-self-use
         """ GET the result of the task id """
         try:
@@ -66,6 +70,8 @@ class V1Task(ApiResource):
 class V1TaskLog(ApiResource):
     """ V1TaskLog Resource class"""
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/task_log.yaml'))
     def get(self, task_id):  # pylint: disable=no-self-use
         """ GET the log of the task id """
         try:
