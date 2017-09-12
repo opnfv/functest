@@ -1,0 +1,23 @@
+From c04eba646d9b4cbeb4346a9657ff72b5d5c9859b Mon Sep 17 00:00:00 2001
+From: Delia Popescu <delia.popescu@enea.com>
+Date: Fri, 8 Sep 2017 16:47:33 +0300
+Subject: [PATCH] Create patch for functest-smoke Dockerfile for aarch64
+
+Signed-off-by: Delia Popescu <delia.popescu@enea.com>
+---
+ docker/smoke/Dockerfile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docker/smoke/Dockerfile b/docker/smoke/Dockerfile
+index abf1714..fcff390 100644
+--- a/docker/smoke/Dockerfile
++++ b/docker/smoke/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM opnfv/functest-core
++FROM opnfv/functest-core_aarch64
+ 
+ ARG BRANCH=master
+ ARG OPENSTACK_TAG=stable/ocata
+-- 
+2.9.4
+
