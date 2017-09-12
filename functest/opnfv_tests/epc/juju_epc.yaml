@@ -1,0 +1,33 @@
+tenant_images:
+    trusty: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+#    trusty: http://192.168.7.113/trusty-server-cloudimg-amd64-disk1.img
+    xenial: http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img 
+#    xenial: http://192.168.7.113/xenial-server-cloudimg-amd64-disk1.img
+
+orchestrator:
+    name: juju 
+    version: '2.0'
+    requirements:
+        dep_package: 'software-properties-common'
+        pip: 'python3-pip'
+        repo_link: 'ppa:juju/stable' 
+        flavor:
+          name: m1.small
+          ram_min: 2048 
+        pip3_packages: juju-wait
+        preserve_setup: False 
+vnf:
+    name: juju_epc 
+    version: '1'
+    descriptor:
+        name: abot-oai-epc 
+        file_name: /src/epc-test/abot_charm/functest-abot-epc-bundle/bundle.yaml
+        version: '1'
+    requirements:
+        flavor:
+          name: m.medium
+          ram_min: 4096 
+vnf_test_suite:
+    name: abot-epc-basic 
+    version: "3.1.0"
+    tag_name: "TS_24_301"
