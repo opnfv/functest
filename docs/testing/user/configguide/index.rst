@@ -27,9 +27,6 @@ Version history
 Introduction
 ============
 This document describes how to install and configure Functest in OPNFV.
-The Functest CLI is used during the Functest environment preparation
-phase. The given example commands should work in both virtual and bare
-metal cases alike.
 
 High level architecture
 -----------------------
@@ -44,14 +41,12 @@ follows::
  |     +----------------------------+        |       |        |       |       |
  |     |                            |        |       |        |       |       |
  +-----+       Jumphost             |        |       |        |       |       |
- |     |                            +--------+       |        |       |       |
  |     |                            |        |       |        |       |       |
  |     |   +--------------------+   |        |       |        |       |       |
  |     |   |                    |   |        |       |        |       |       |
  |     |   | Tools              |   +----------------+        |       |       |
  |     |   | - Rally            |   |        |       |        |       |       |
  |     |   | - Robot            |   |        |       |        |       |       |
- |     |   | - TestON           |   |        |       |        |       |       |
  |     |   | - RefStack         |   |        |       |        |       |       |
  |     |   |                    |   |-------------------------+       |       |
  |     |   | Testcases          |   |        |       |        |       |       |
@@ -93,9 +88,12 @@ follows::
  +                                           +       +        +       +       +
               SUT = System Under Test
 
-All the libraries and dependencies needed by all of the Functest tools
-are pre-installed into the Docker image. This allows running Functest
-on any platform on any Operating System.
+Note connectivity to management network is not needed for most of the testcases.
+But it may be needed for some specific snaps tests.
+
+All the libraries and dependencies needed by all of the Functest tools are
+pre-installed into the Docker images. This allows running Functest on any
+platform.
 
 The automated mechanisms inside the Functest Docker container will:
 
@@ -131,15 +129,15 @@ References
 
 `[4]`_ : Functest Configuration guide
 
-`OPNFV main site`_
+`[5]`_ : OPNFV main site
 
-`Functest page`_
+`[6]`_ : Functest wiki page
 
 IRC support channel: #opnfv-functest
 
 .. _`[1]`: https://ask.openstack.org/en/question/68144/keystone-unable-to-use-the-public-endpoint/
-.. _`[2]`: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/userguide/index.html
-.. _`[3]`: https://git.opnfv.org/cgit/releng/tree/jjb/functest/functest-ci-jobs.yml
+.. _`[2]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
+.. _`[3]`: https://git.opnfv.org/releng/tree/jjb/functest/functest-daily-jobs.yml
 .. _`[4]`: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/configguide/index.html
-.. _`OPNFV main site`: http://www.opnfv.org
-.. _`Functest page`: https://wiki.opnfv.org/functest
+.. _`[5]`: http://www.opnfv.org
+.. _`[6]`: https://wiki.opnfv.org/functest
