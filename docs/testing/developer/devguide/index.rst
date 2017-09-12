@@ -75,9 +75,12 @@ to the different tiers:
   * functest-core: https://hub.docker.com/r/opnfv/functest-core/
   * functest-healthcheck: https://hub.docker.com/r/opnfv/functest-healthcheck/
   * functest-smoke: https://hub.docker.com/r/opnfv/functest-smoke/
-  * functest-features: TODO
-  * functest-components: TODO
-  * functest-vnf: TODO
+  * functest-features: https://hub.docker.com/r/opnfv/functest-features/
+  * functest-components: https://hub.docker.com/r/opnfv/functest-components/
+  * functest-vnf: https://hub.docker.com/r/opnfv/functest-vnf/
+
+Standalone functest dockers are maintainted for Euphrates but Alpine containers
+are recommended.
 
 Functest can be described as follow::
 
@@ -101,8 +104,8 @@ The internal test cases in Euphrates are:
 
 
  * api_check
- * cloudify_ims
  * connection_check
+ * snaps_health_check
  * vping_ssh
  * vping_userdata
  * odl
@@ -110,9 +113,8 @@ The internal test cases in Euphrates are:
  * odl-fds
  * rally_full
  * rally_sanity
- * snaps_health_check
- * tempest_full_parallel
  * tempest_smoke_serial
+ * tempest_full_parallel
  * cloudify_ims
 
 By internal, we mean that this particular test cases have been developed and/or
@@ -145,13 +147,14 @@ The external test cases are:
  * doctor
  * domino
  * fds
- * orchestra_ims
  * parser
  * promise
  * refstack_defcore
  * snaps_smoke
  * functest-odl-sfc
- * vyos_vrouter
+ * orchestra_clearwaterims
+ * orchestra_openims
+ * cloudify_vrouter
 
 External test cases integrated in previous versions but not released in
 Euphrates:
@@ -252,7 +255,7 @@ VNF
    :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.vnf.html
 
 
-see `Functest framework overview`_ to get code samples
+see `[5]`_ to get code samples
 
 
 Functest util classes
@@ -283,7 +286,7 @@ project providing OpenStack utils.
 TestAPI
 =======
 Functest is using the Test collection framework and the TestAPI developed by
-the OPNFV community. See `OPNFV Test collection framework`_ for details.
+the OPNFV community. See `[6]`_ for details.
 
 
 Reporting
@@ -295,15 +298,15 @@ jinja2 templates `[3]`_.
 Dashboard
 =========
 
-Additional dashboarding is managed at the testing group level, see
-`OPNFV Testing dashboard`_
+Additional dashboarding is managed at the testing group level, see `[7]`_ for
+details.
 
 
 =======
 How TOs
 =======
 
-See `How to section`_ on Functest wiki
+See How to section on Functest wiki `[8]`_
 
 
 ==========
@@ -318,12 +321,12 @@ _`[3]`: https://git.opnfv.org/cgit/releng/tree/utils/test/reporting
 
 _`[4]`: https://git.opnfv.org/snaps/
 
-_`Functest framework overview` : http://testresults.opnfv.org/functest/framework/index.html
+_`[5]` : http://testresults.opnfv.org/functest/framework/index.html
 
-_`OPNFV Test collection framework`: TODO
+_`[6]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
 
-_`OPNFV Testing dashboard`: https://opnfv.biterg.io/goto/283dba93ca18e95964f852c63af1d1ba
+_`[7]`: https://opnfv.biterg.io/goto/283dba93ca18e95964f852c63af1d1ba
 
-_`How to section`: https://wiki.opnfv.org/pages/viewpage.action?pageId=7768932
+_`[8]`: https://wiki.opnfv.org/pages/viewpage.action?pageId=7768932
 
 IRC support chan: #opnfv-functest

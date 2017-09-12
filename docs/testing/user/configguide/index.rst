@@ -51,7 +51,6 @@ follows::
  |     |   | Tools              |   +----------------+        |       |       |
  |     |   | - Rally            |   |        |       |        |       |       |
  |     |   | - Robot            |   |        |       |        |       |       |
- |     |   | - TestON           |   |        |       |        |       |       |
  |     |   | - RefStack         |   |        |       |        |       |       |
  |     |   |                    |   |-------------------------+       |       |
  |     |   | Testcases          |   |        |       |        |       |       |
@@ -131,15 +130,15 @@ References
 
 `[4]`_ : Functest Configuration guide
 
-`OPNFV main site`_
+`[5]`_ : OPNFV main site
 
-`Functest page`_
+`[6]`_ : Functest wiki page
 
 IRC support channel: #opnfv-functest
 
 .. _`[1]`: https://ask.openstack.org/en/question/68144/keystone-unable-to-use-the-public-endpoint/
 .. _`[2]`: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/userguide/index.html
-.. _`[3]`: https://git.opnfv.org/cgit/releng/tree/jjb/functest/functest-ci-jobs.yml
+.. _`[3]`: https://git.opnfv.org/releng/tree/jjb/functest/functest-daily-jobs.yml
 .. _`[4]`: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/configguide/index.html
-.. _`OPNFV main site`: http://www.opnfv.org
-.. _`Functest page`: https://wiki.opnfv.org/functest
+.. _`[5]`: http://www.opnfv.org
+.. _`[6]`: https://wiki.opnfv.org/functest
