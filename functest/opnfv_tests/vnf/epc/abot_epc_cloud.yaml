@@ -1,0 +1,8 @@
+clouds:
+    abot-epc:
+      type: openstack
+      auth-types: [userpass]
+      endpoint: http://127.0.0.1:5000/v3
+      regions:
+        RegionOne:
+          endpoint: http://127.0.0.1:5000/v3
