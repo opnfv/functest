@@ -12,7 +12,7 @@ ARG VIMS_TAG=stable
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --update python3 sshpass \
         ruby ruby-bundler ruby-irb ruby-rdoc dnsmasq \
-        procps libxslt libxml2 zlib libffi && \
+        procps libxslt libxml2 zlib libffi go musl-dev && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev \
@@ -45,9 +45,14 @@ RUN apk --no-cache add --update python3 sshpass \
     git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test /src/vims-test && \
     ln -s /src/tempest /src/refstack-client/.tempest && \
     virtualenv --system-site-packages /src/tempest/.venv && \
+    git clone https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
+    python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
+        juju-wait && \
+    go get github.com/rogpeppe/godeps && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
     rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
-        /src/os-faults /src/rally /src/fds/.git /src/vims-test/.git && \
+        /src/os-faults /src/rally /src/fds/.git /src/vims-test/.git /src/epc-requirements/abot_charm/.git && \
     apk del .build-deps
 EXPOSE 5000
 CMD ["functest_restapi"]
