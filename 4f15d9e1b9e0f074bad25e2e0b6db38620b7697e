@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "da33351e_980457c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-09-12T12:34:18Z",
+      "side": 1,
+      "message": "Add JIRA nr",
+      "revId": "4f15d9e1b9e0f074bad25e2e0b6db38620b7697e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_7da6a554",
         "filename": "docker/components/Dockerfile.aarch64.patch",
         "patchSetId": 1
