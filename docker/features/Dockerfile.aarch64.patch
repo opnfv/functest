@@ -1,0 +1,19 @@
+From: Delia Popescu <delia.popescu@enea.com>
+Date: Fri, 8 Sep 2017 16:42:58 +0300
+Subject: [PATCH] Create patch for functest-features Dockerfile for aarch64
+
+Signed-off-by: Delia Popescu <delia.popescu@enea.com>
+---
+ docker/features/Dockerfile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docker/features/Dockerfile b/docker/features/Dockerfile
+index c3b1b04..4b2d040 100644
+--- a/docker/features/Dockerfile
++++ b/docker/features/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM opnfv/functest-core
++FROM opnfv/functest-core_aarch64
+ 
+ ARG BRANCH=master
+ ARG OPENSTACK_TAG=stable/ocata
