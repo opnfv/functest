@@ -18,6 +18,7 @@ import uuid
 
 import ConfigParser
 from flask import jsonify
+from flasgger.utils import swag_from
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils, thread
@@ -32,6 +33,8 @@ LOGGER = logging.getLogger(__name__)
 class V1Testcases(ApiResource):
     """ V1Testcases Resource class"""
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/testcases.yaml'))
     def get(self):  # pylint: disable=no-self-use
         """ GET all testcases """
         testcases_list = Testcase().list()
@@ -42,6 +45,10 @@ class V1Testcases(ApiResource):
 class V1Testcase(ApiResource):
     """ V1Testcase Resource class"""
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/testcase.yaml'),
+        endpoint='http://172.17.0.3:5000/api/v1/functest/testcases'
+                 '/<testcase_name>')
     def get(self, testcase_name):  # pylint: disable=no-self-use
         """ GET the info of one testcase"""
         testcase = Testcase().show(testcase_name)
@@ -61,6 +68,9 @@ class V1Testcase(ApiResource):
         result.update({'dependency': dependency_dict})
         return jsonify(result)
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/testcase_run.yaml'),
+        endpoint='http://172.17.0.3:5000/api/v1/functest/testcases/action')
     def post(self):
         """ Used to handle post request """
         return self._dispatch_post()
