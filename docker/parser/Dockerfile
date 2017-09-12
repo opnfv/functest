@@ -35,4 +35,4 @@ RUN apk --no-cache add --update \
     bash -c "mkdir -p /home/opnfv/functest{/conf,/data,/images,/results} /home/opnfv/repos/vnfs" && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
-CMD ["bash","-c","prepare_env start && run_tests -t all"]
+CMD ["bash","-c","prepare_env start && run_tests -r -t all"]

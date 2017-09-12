@@ -9,4 +9,4 @@ RUN apk --no-cache add --update \
     rm -r /src/vims-test/.git && \
     cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system
 COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
-CMD ["bash","-c","prepare_env start && run_tests -t all"]
+CMD ["bash","-c","prepare_env start && run_tests -r -t all"]
