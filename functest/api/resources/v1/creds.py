@@ -13,8 +13,10 @@ Resources to handle openstack related requests
 
 import collections
 import logging
+import pkg_resources
 
 from flask import jsonify
+from flasgger.utils import swag_from
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils
@@ -28,12 +30,16 @@ LOGGER = logging.getLogger(__name__)
 class V1Creds(ApiResource):
     """ V1Creds Resource class"""
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/creds.yaml'))
     def get(self):  # pylint: disable=no-self-use
         """ Get credentials """
         os_utils.source_credentials(CONST.__getattribute__('openstack_creds'))
         credentials_show = OpenStack.show_credentials()
         return jsonify(credentials_show)
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/creds_action.yaml'))
     def post(self):
         """ Used to handle post request """
         return self._dispatch_post()
