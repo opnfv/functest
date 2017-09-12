@@ -1,0 +1,84 @@
+From: Delia Popescu <delia.popescu@enea.com>
+Date: Tue, 12 Sep 2017 14:23:38 +0300
+Subject: [PATCH] Patch for functest Dockerfiles with alpine image
+
+Signed-off-by: Delia Popescu <delia.popescu@enea.com>
+---
+ docker/components/Dockerfile  | 2 +-
+ docker/core/Dockerfile        | 2 +-
+ docker/features/Dockerfile    | 2 +-
+ docker/healthcheck/Dockerfile | 2 +-
+ docker/parser/Dockerfile      | 2 +-
+ docker/smoke/Dockerfile       | 2 +-
+ docker/vnf/Dockerfile         | 2 +-
+ 7 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/docker/components/Dockerfile b/docker/components/Dockerfile
+index 8923e4c..f7e1535 100644
+--- a/docker/components/Dockerfile
++++ b/docker/components/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM opnfv/functest-core
++FROM opnfv/functest-core_aarch64
+
+ COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
+ CMD ["bash","-c","prepare_env start && run_tests -t all"]
+diff --git a/docker/core/Dockerfile b/docker/core/Dockerfile
+index c5766da..6fc91f6 100644
+--- a/docker/core/Dockerfile
++++ b/docker/core/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM alpine:3.6
++FROM multiarch/alpine:aarch64-latest-stable
+
+ ARG BRANCH=master
+ ARG OPENSTACK_TAG=stable/ocata
+diff --git a/docker/features/Dockerfile b/docker/features/Dockerfile
+index c3b1b04..4b2d040 100644
+--- a/docker/features/Dockerfile
++++ b/docker/features/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM opnfv/functest-core
++FROM opnfv/functest-core_aarch64
+
+ ARG BRANCH=master
+ ARG OPENSTACK_TAG=stable/ocata
+diff --git a/docker/healthcheck/Dockerfile b/docker/healthcheck/Dockerfile
+index 8923e4c..f7e1535 100644
+--- a/docker/healthcheck/Dockerfile
++++ b/docker/healthcheck/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM opnfv/functest-core
++FROM opnfv/functest-core_aarch64
+
+ COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
+ CMD ["bash","-c","prepare_env start && run_tests -t all"]
+diff --git a/docker/parser/Dockerfile b/docker/parser/Dockerfile
+index e0dc0d5..4571a37 100644
+--- a/docker/parser/Dockerfile
++++ b/docker/parser/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM alpine:3.6
++FROM multiarch/alpine:aarch64-latest-stable
+
+ ARG BRANCH=master
+ ARG OPENSTACK_TAG=stable/pike
+diff --git a/docker/smoke/Dockerfile b/docker/smoke/Dockerfile
+index abf1714..fcff390 100644
+--- a/docker/smoke/Dockerfile
++++ b/docker/smoke/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM opnfv/functest-core
++FROM opnfv/functest-core_aarch64
+
+ ARG BRANCH=master
+ ARG OPENSTACK_TAG=stable/ocata
+diff --git a/docker/vnf/Dockerfile b/docker/vnf/Dockerfile
+index d4f18c4..2ab8260 100644
+--- a/docker/vnf/Dockerfile
++++ b/docker/vnf/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM opnfv/functest-core
++FROM opnfv/functest-core_aarch64
+
+ ARG VIMS_TAG=stable
