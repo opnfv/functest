@@ -1,0 +1,19 @@
+From: Delia Popescu <delia.popescu@enea.com>
+Date: Mon, 11 Sep 2017 15:47:19 +0300
+Subject: [PATCH] Create patch for functest-parser Dockerfile for aarch64
+
+Signed-off-by: Delia Popescu <delia.popescu@enea.com>
+---
+ docker/parser/Dockerfile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docker/parser/Dockerfile b/docker/parser/Dockerfile
+index e0dc0d5..632c6c4 100644
+--- a/docker/parser/Dockerfile
++++ b/docker/parser/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM alpine:3.6
++FROM multiarch/alpine:aarch64-latest-stable 
+ 
+ ARG BRANCH=master
+ ARG OPENSTACK_TAG=stable/pike
