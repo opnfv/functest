@@ -31,7 +31,7 @@ class V1Tiers(ApiResource):
         data = [i.strip() for i in data if i != '']
         data_dict = dict()
         for i in range(len(data) / 2):
-            one_data = {data[i * 2]: data[i * 2 + 1]}
+            one_data = {data[i * 2].lstrip('- ').rstrip(':'): data[i * 2 + 1]}
             if i == 0:
                 data_dict = one_data
             else:
@@ -45,14 +45,15 @@ class V1Tier(ApiResource):
 
     def get(self, tier_name):  # pylint: disable=no-self-use
         """ GET the info of one tier """
-        testcases = Tier().gettests(tier_name)
-        if not testcases:
+        tier_info = Tier().show(tier_name)
+        if not tier_info:
             return api_utils.result_handler(
                 status=1,
                 data="The tier with name '%s' does not exist." % tier_name)
-        tier_info = Tier().show(tier_name)
         tier_info.__dict__.pop('name')
         tier_info.__dict__.pop('tests_array')
+        tier_info.__dict__.pop('skipped_tests_array')
+        testcases = Tier().gettests(tier_name)
         result = {'tier': tier_name, 'testcases': testcases}
         result.update(tier_info.__dict__)
         return jsonify(result)
@@ -63,10 +64,11 @@ class V1TestcasesinTier(ApiResource):
 
     def get(self, tier_name):  # pylint: disable=no-self-use
         """ GET all testcases within given tier """
-        testcases = Tier().gettests(tier_name)
-        if not testcases:
+        tier_info = Tier().show(tier_name)
+        if not tier_info:
             return api_utils.result_handler(
                 status=1,
                 data="The tier with name '%s' does not exist." % tier_name)
+        testcases = Tier().gettests(tier_name)
         result = {'tier': tier_name, 'testcases': testcases}
         return jsonify(result)
