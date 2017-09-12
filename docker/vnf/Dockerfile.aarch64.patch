@@ -1,0 +1,18 @@
+From: Delia Popescu <delia.popescu@enea.com>
+Date: Tue, 12 Sep 2017 11:49:06 +0300
+Subject: [PATCH] Create patch for functest-vnf Dockerfile for aarch64
+
+Signed-off-by: Delia Popescu <delia.popescu@enea.com>
+---
+ docker/vnf/Dockerfile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docker/vnf/Dockerfile b/docker/vnf/Dockerfile
+index d4f18c4..2ab8260 100644
+--- a/docker/vnf/Dockerfile
++++ b/docker/vnf/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM opnfv/functest-core
++FROM opnfv/functest-core_aarch64
+
+ ARG VIMS_TAG=stable

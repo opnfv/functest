@@ -1,0 +1,19 @@
+From: Delia Popescu <delia.popescu@enea.com>
+Date: Fri, 8 Sep 2017 16:32:45 +0300
+Subject: [PATCH] Create aarch64 patch for functest-components Dockerfile
+
+Signed-off-by: Delia Popescu <delia.popescu@enea.com>
+---
+ docker/components/Dockerfile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docker/components/Dockerfile b/docker/components/Dockerfile
+index 8923e4c..f7e1535 100644
+--- a/docker/components/Dockerfile
++++ b/docker/components/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM opnfv/functest-core
++FROM opnfv/functest-core_aarch64
+
+ COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
+ CMD ["bash","-c","prepare_env start && run_tests -t all"]

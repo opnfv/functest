@@ -1,0 +1,19 @@
+From: Delia Popescu <delia.popescu@enea.com>
+Date: Tue, 12 Sep 2017 16:32:28 +0300
+Subject: [PATCH] Create patch for functest-core Dockerfile
+
+Signed-off-by: Delia Popescu <delia.popescu@enea.com>
+---
+ docker/core/Dockerfile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docker/core/Dockerfile b/docker/core/Dockerfile
+index c5766da..3597b3b 100644
+--- a/docker/core/Dockerfile
++++ b/docker/core/Dockerfile
+@@ -1,4 +1,4 @@
+-FROM alpine:3.6
++FROM alpine:aarch64-latest-stable
+
+ ARG BRANCH=master
+ ARG OPENSTACK_TAG=stable/ocata
