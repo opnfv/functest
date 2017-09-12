@@ -9,7 +9,7 @@ VIM (Virtualized Infrastructure Manager)
 
 Healthcheck tests
 ^^^^^^^^^^^^^^^^^
-In Danube, healthcheck tests have been refactored and rely on SNAPS, an
+Since Danube, healthcheck tests have been refactored and rely on SNAPS, an
 OPNFV middleware project.
 
 SNAPS stands for "SDN/NFV Application development Platform and Stack".
@@ -195,6 +195,7 @@ The OPNFV Rally scenarios are based on the collection of the actual Rally scenar
  * neutron
  * nova
  * quotas
+ * ceilometer
 
 A basic SLA (stop test on errors) has been implemented.
 
@@ -207,34 +208,19 @@ NOTE: Test case 'rally_sanity' executes a limited number of Rally smoke test
 cases. Test case 'rally_full' executes the full defined set of Rally tests.
 
 
-Refstack-client to run Defcore testcases
------------------------------------------
+Refstack-client to run OpenStack interop testcases
+--------------------------------------------------
 
 Refstack-client `[8]`_ is a command line utility that allows you to
 execute Tempest test runs based on configurations you specify.
-It is the official tool to run Defcore `[9]`_ testcases,
-which focuses on testing interoperability between OpenStack clouds.
+It is the official tool to run Openstack Interop (previously known as Defcore)
+testcases `[9]`_, which focus on testing interoperability between OpenStack
+clouds.
 
 Refstack-client is integrated in Functest, consumed by Dovetail, which
 intends to define and provide a set of OPNFV related validation criteria
 that will provide input for the evaluation of the use of OPNFV trademarks.
 This progress is under the guideline of Compliance Verification Program(CVP).
-
-Defcore testcases
-^^^^^^^^^^^^^^^^^^
-
-*Danube Release*
-
-Set of DefCore tempest test cases not flagged and required.
-According to `[10]`_, some tests are still flagged due to outstanding bugs
-in the Tempest library, particularly tests that require SSH. Refstack developers
-are working on correcting these bugs upstream. Please note that although some tests
-are flagged because of bugs, there is still an expectation that the capabilities
-covered by the tests are available. It only contains Openstack core compute
-(no object storage). The approved guidelines (2016.08) are valid for Kilo,
-Liberty, Mitaka and Newton releases of OpenStack.
-The list can be generated using the Rest API from RefStack project:
-https://refstack.openstack.org/api/v1/guidelines/2016.08/tests?target=compute&type=required&alias=true&flag=false
 
 Running methods
 ^^^^^^^^^^^^^^^
@@ -314,20 +300,14 @@ snaps_smoke
 
 This test case contains tests that setup and destroy environments with VMs with
 and without Floating IPs with a newly created user and project. Set the config
-value snaps.use_floating_ips (True|False) to toggle this functionality. When
-the config value of snaps.use_keystone is True, Functest must have access
+value snaps.use_floating_ips (True|False) to toggle this functionality.
+Please note that When the configuration value of snaps.use_keystone is True, Functest must have access
 the cloud's private network.
 This suite consists in 38 tests (test duration < 10 minutes)
 
 
 SDN Controllers
 ---------------
-
-There are currently 3 available controllers:
-
- * OpenDaylight (ODL)
- * ONOS
- * OpenContrail (OCL)
 
 OpenDaylight
 ^^^^^^^^^^^^
@@ -397,7 +377,7 @@ Functest has been supporting several feature projects since Brahpamutra:
 +-----------------+---------+----------+--------+-----------+
 | fds             |         |          |    X   |     X     |
 +-----------------+---------+----------+--------+-----------+
-| moon            |         |    X     |        |     X     |
+| moon            |         |    X     |        |           |
 +-----------------+---------+----------+--------+-----------+
 | multisite       |         |    X     |    X   |           |
 +-----------------+---------+----------+--------+-----------+
@@ -409,7 +389,7 @@ Functest has been supporting several feature projects since Brahpamutra:
 +-----------------+---------+----------+--------+-----------+
 | orchestra       |         |          |    X   |     X     |
 +-----------------+---------+----------+--------+-----------+
-| parser          |         |          |    X   |           |
+| parser          |         |          |    X   |     X     |
 +-----------------+---------+----------+--------+-----------+
 | promise         |    X    |    X     |    X   |     X     |
 +-----------------+---------+----------+--------+-----------+
@@ -459,7 +439,7 @@ orchestrator.
 parser
 ^^^^^^
 
-See parser user guide for details: `[12]`_
+See parser user guide for details.
 
 
 vyos-vrouter
@@ -488,7 +468,7 @@ The vyos-vrouter architecture is described in `[14]`_
 .. _`[8]`: https://github.com/openstack/refstack-client
 .. _`[10]`: https://github.com/openstack/interop/blob/master/2016.08/procedure.rst
 .. _`[11]`: http://robotframework.org/
-.. _`[12]`: http://artifacts.opnfv.org/parser/colorado/docs/userguide/index.html
+.. _`[12]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 .. _`[15]`: https://aptira.com/testing-openstack-tempest-part-1/

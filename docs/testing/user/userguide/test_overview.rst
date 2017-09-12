@@ -4,14 +4,16 @@
 Overview of the Functest suites
 ===============================
 
-Functest is the OPNFV project primarily targeting function testing.
+Functest is the OPNFV project primarily targeting functional testing.
 In the Continuous Integration pipeline, it is launched after an OPNFV fresh
 installation to validate and verify the basic functions of the
 infrastructure.
 
-The current list of test suites can be distributed over 5 main domains: VIM
-(Virtualised Infrastructure Manager), Controllers (i.e. SDN Controllers),
-Features, VNF (Virtual Network Functions) and MANO stacks.
+The current list of test suites can be distributed over 4 main domains:
+  * VIM (Virtualised Infrastructure Manager)
+  * Controllers (i.e. SDN Controllers)
+  * Features
+  * VNF (Virtual Network Functions)
 
 Functest test suites are also distributed in the OPNFV testing categories:
 healthcheck, smoke, features, components, performance, VNF, Stress tests.
@@ -199,7 +201,7 @@ NoSQL database. The goal is to populate the database with results from different
 sources and scenarios and to show them on a `Functest Dashboard`_. A screenshot
 of a live Functest Dashboard is shown below:
 
-.. figure:: ../../../images/FunctestDashboardDanube.png
+.. figure:: ../../../images/FunctestDashboardEuphrates.png
    :align: center
    :alt: Functest Dashboard
 
@@ -215,15 +217,15 @@ This parameters as well as possible tags can be used for the Test case catalog.
 vIMS test case was integrated to demonstrate the capability to deploy a
 relatively complex NFV scenario on top of the OPNFV infrastructure.
 
-Functest considers OPNFV as a black box. As of Danube release the OPNFV
-offers a lot of potential combinations:
+Functest considers OPNFV as a black box. OPNFV offers a lot of potential
+combinations (which may change from one version to another):
 
   * 3 controllers (OpenDaylight, ONOS, OpenContrail)
   * 5 installers (Apex, Compass, Daisy, Fuel, Joid)
 
 Most of the tests are runnable by any combination, but some tests might have
 restrictions imposed by the utilized installers or due to the available
-deployed features. The system uses the environment variables (INSTALLER_IP and
+deployed features. The system uses the environment variables (INSTALLER_TYPE and
 DEPLOY_SCENARIO) to automatically determine the valid test cases, for each given
 environment.
 
@@ -233,8 +235,8 @@ clean-up) and for executing tests.
 The Functest CLI organised the testcase into logical Tiers, which contain in
 turn one or more testcases. The CLI allows execution of a single specified
 testcase, all test cases in a specified Tier, or the special case of execution
-of **ALL** testcases. The Functest CLI is introduced in more detail in the
-section `Executing the functest suites`_ of this document.
+of **ALL** testcases. The Functest CLI is introduced in more details in next
+section.
 
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
