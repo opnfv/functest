@@ -1,0 +1,37 @@
+Prepare environment or Update hosts info
+
+This api offers the interface to prepare environment or update hosts info.
+
+action: prepare
+action: update_hosts
+---
+tags:
+  - Envs
+parameters:
+  - in: body
+    name: body
+    description: this is the input json dict
+    schema:
+      required:
+        - action
+      properties:
+        action:
+          type: string
+          description: this is action for envs
+          default: prepare
+definitions:
+  Environment:
+    type: object
+    properties:
+      creds_name:
+          $ref: '#/definitions/Name'
+  Name:
+    type: dict
+responses:
+  200:
+    description: Prepare environment
+    schema:
+      $ref: '#/definitions/Environment'
+    examples:
+      'status': 0
+      'result': 'Prapare env successfully'

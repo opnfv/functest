@@ -10,8 +10,11 @@
 Resources to handle environment related requests
 """
 
+import pkg_resources
+
 import IPy
 from flask import jsonify
+from flasgger.utils import swag_from
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils
@@ -22,11 +25,17 @@ import functest.utils.functest_utils as ft_utils
 class V1Envs(ApiResource):
     """ V1Envs Resource class"""
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/envs.yaml'),
+        endpoint='http://172.17.0.3:5000/api/v1/functest/envs')
     def get(self):  # pylint: disable=no-self-use
         """ Get environment """
         environment_show = Env().show()
         return jsonify(environment_show)
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/envs_action.yaml'),
+        endpoint='http://172.17.0.3:5000/api/v1/functest/envs/action')
     def post(self):
         """ Used to handle post request """
         return self._dispatch_post()
