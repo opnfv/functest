@@ -130,6 +130,8 @@ def get_userdata(orchestrator=dict):
         orchestrator['gvnfm']['userdata']['url'])
     userdata += "sed -i '113i"'\ \ \ \ '"sleep 60' " \
                 "/etc/openbaton/openbaton-vnfm-generic-user-data.sh\n"
+    userdata += ("sed -i s/nfvo.marketplace.port=8082/nfvo.marketplace."
+                 "port=8080/g /etc/openbaton/openbaton-nfvo.properties\n")
     userdata += "echo \"Starting NFVO\"\n"
     userdata += "service openbaton-nfvo restart\n"
     userdata += "echo \"Starting Generic VNFM\"\n"
@@ -141,13 +143,13 @@ def get_userdata(orchestrator=dict):
 class ClearwaterImsVnf(vnf.VnfOnBoarding):
     """Clearwater IMS VNF deployed with openBaton orchestrator"""
 
-    logger = logging.getLogger(__name__)
+    # logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "orchestra_clearwaterims"
         super(ClearwaterImsVnf, self).__init__(**kwargs)
-        # self.logger = logging.getLogger("functest.ci.run_tests.orchestra")
+        self.logger = logging.getLogger("functest.ci.run_tests.orchestra")
         self.logger.info("kwargs %s", (kwargs))
 
         self.case_dir = pkg_resources.resource_filename(
