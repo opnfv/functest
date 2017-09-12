@@ -11,9 +11,11 @@
 Resources to handle tier related requests
 """
 
+import pkg_resources
 import re
 
 from flask import jsonify
+from flasgger.utils import swag_from
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils
@@ -23,6 +25,8 @@ from functest.cli.commands.cli_tier import Tier
 class V1Tiers(ApiResource):
     """ V1Tiers Resource class """
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/tiers.yaml'))
     def get(self):
         # pylint: disable=no-self-use
         """ GET all tiers """
@@ -43,6 +47,8 @@ class V1Tiers(ApiResource):
 class V1Tier(ApiResource):
     """ V1Tier Resource class """
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/tier.yaml'))
     def get(self, tier_name):  # pylint: disable=no-self-use
         """ GET the info of one tier """
         tier_info = Tier().show(tier_name)
@@ -62,6 +68,8 @@ class V1Tier(ApiResource):
 class V1TestcasesinTier(ApiResource):
     """ V1TestcasesinTier Resource class """
 
+    @swag_from(pkg_resources.resource_filename(
+        'functest', 'api/swagger/testcases_in_tier.yaml'))
     def get(self, tier_name):  # pylint: disable=no-self-use
         """ GET all testcases within given tier """
         tier_info = Tier().show(tier_name)
