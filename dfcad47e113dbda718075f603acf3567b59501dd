@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_e2804d48",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-13T03:18:18Z",
+      "side": 1,
+      "message": "https://docs.python.org/2/library/logging.html#logging.captureWarnings",
+      "revId": "dfcad47e113dbda718075f603acf3567b59501dd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
