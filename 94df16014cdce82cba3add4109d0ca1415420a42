@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_62471d4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-13T02:20:23Z",
+      "side": 1,
+      "message": "\u003c 50 chars",
+      "revId": "94df16014cdce82cba3add4109d0ca1415420a42",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_4242d93e",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims_perf.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-13T02:20:23Z",
+      "side": 1,
+      "message": "Could you please remove it?",
+      "revId": "94df16014cdce82cba3add4109d0ca1415420a42",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_223d15bc",
+        "filename": "functest/opnfv_tests/vnf/ims/ixia/utils/IxChassisUtils.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-13T02:20:23Z",
+      "side": 1,
+      "message": "\\n\\n ?",
+      "revId": "94df16014cdce82cba3add4109d0ca1415420a42",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_824ce171",
+        "filename": "functest/opnfv_tests/vnf/ims/ixia/utils/IxChassisUtils.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-13T02:20:23Z",
+      "side": 1,
+      "message": "this blank line can be safely removed",
+      "revId": "94df16014cdce82cba3add4109d0ca1415420a42",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
