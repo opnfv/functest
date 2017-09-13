@@ -8,7 +8,7 @@ ARG REFSTACK_TAG=4e187b07672dd1c41cb7c94658f1c91edebf53a2
 ARG VIMS_TAG=stable
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
-RUN apk --no-cache add --update nodejs nodejs-npm python3 \
+RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
         ruby ruby-dev ruby-bundler ruby-irb ruby-rdoc dnsmasq \
         procps git g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev && \
     apk --no-cache add --virtual .build-deps --update \
