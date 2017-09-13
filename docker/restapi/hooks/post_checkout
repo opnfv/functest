@@ -1,0 +1,6 @@
+#!/bin/bash
+
+from="${DOCKER_REPO%/*}/functest-core"
+sed -i "s|^FROM.*$|FROM ${from}|" Dockerfile
+
+exit $?
