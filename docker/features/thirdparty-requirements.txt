@@ -3,4 +3,5 @@ sdnvpn
 securityscanning
 sfc
 promise
+doctor-tests;python_version>='3.0'
 domino
