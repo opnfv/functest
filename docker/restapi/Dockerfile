@@ -22,6 +22,10 @@ RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
         -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         -e/src/refstack-client -rthirdparty-requirements.txt && \
+    python3 -m pip install --no-cache-dir --src /src \
+        -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
+        doctor-tests && \
     git clone --depth 1 https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
     (cd src/odl_test && git checkout -b $ODL_TAG) && \
     git clone --depth 1 -b $FDS_TAG https://gerrit.opnfv.org/gerrit/fds /src/fds && \
