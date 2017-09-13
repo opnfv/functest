@@ -5,7 +5,7 @@ git+https://gerrit.opnfv.org/gerrit/sdnvpn#egg=sdnvpn
 git+https://gerrit.opnfv.org/gerrit/securityscanning#egg=securityscanning
 git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
 -e git+https://gerrit.opnfv.org/gerrit/promise#egg=promise
--e git+https://gerrit.opnfv.org/gerrit/doctor#egg=doctor-test
+-e git+https://gerrit.opnfv.org/gerrit/doctor#egg=doctor-tests
 git+https://gerrit.opnfv.org/gerrit/domino#egg=domino
 cloudify-rest-client===4.0
 iniparse===0.4
