@@ -92,6 +92,10 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
         -rthirdparty-requirements.txt && \
+    python3 -m pip install --no-cache-dir --src /src \
+        -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
+        doctor-tests && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally-manage db create && \
