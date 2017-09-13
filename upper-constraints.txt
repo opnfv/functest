@@ -4,7 +4,7 @@ git+https://gerrit.opnfv.org/gerrit/barometer@stable/euphrates#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn@stable/euphrates#egg=sdnvpn
 git+https://gerrit.opnfv.org/gerrit/sfc@stable/euphrates#egg=sfc
 -e git+https://gerrit.opnfv.org/gerrit/promise@stable/euphrates#egg=promise
--e git+https://gerrit.opnfv.org/gerrit/doctor@stable/euphrates#egg=doctor-test
+-e git+https://gerrit.opnfv.org/gerrit/doctor@stable/euphrates#egg=doctor-tests
 git+https://gerrit.opnfv.org/gerrit/domino@stable/euphrates#egg=domino
 cloudify-rest-client===4.0
 iniparse===0.4
