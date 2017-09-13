@@ -80,11 +80,14 @@ class V1TaskLog(ApiResource):
             return api_utils.result_handler(status=1, data='No such task id')
 
         task_log_dir = CONST.__getattribute__('dir_results')
+        index = int(self._get_args().get('index', 0))
 
         try:
             with open(os.path.join(task_log_dir,
                                    '{}.log'.format(task_id)), 'r') as log_file:
+                log_file.seek(index)
                 data = log_file.readlines()
+                index = log_file.tell()
         except OSError as err:
             if err.errno == errno.ENOENT:
                 return api_utils.result_handler(
@@ -93,7 +96,7 @@ class V1TaskLog(ApiResource):
             return api_utils.result_handler(
                 status=1, data='Error with log file')
 
-        return_data = {'data': data}
+        return_data = {'data': data, 'index': index}
 
         switcher = {'IN PROGRESS': 0, 'FAIL': 1, 'FINISHED': 2}
 
