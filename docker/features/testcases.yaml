@@ -25,20 +25,20 @@ tiers:
 
             -
                 case_name: doctor-notification
-                enabled: false
+                enabled: true
                 project_name: doctor
                 criteria: 100
                 blocking: false
                 description: >-
                     Test suite from Doctor project.
                 dependencies:
-                    installer: '(apex)|(fuel)'
+                    installer: 'apex'
                     scenario: '^((?!fdio).)*$'
                 run:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: '(cd /src/doctor-test/tests && run.sh)'
+                        cmd: 'doctor-test'
 
             -
                 case_name: bgpvpn
