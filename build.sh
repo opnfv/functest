@@ -10,7 +10,8 @@ docker/smoke \
 docker/features \
 docker/components \
 docker/vnf \
-docker/parser"
+docker/parser \
+docker/restapi"
 
 (cd docker && docker build -t "${repo}/functest" .)
 docker push "${repo}/functest"
