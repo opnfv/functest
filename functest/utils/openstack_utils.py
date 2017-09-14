@@ -984,6 +984,24 @@ def create_shared_network_full(net_name, subnt_name, router_name, subnet_cidr):
     return network_dic
 
 
+def get_port_id(neutron_client, fixed_ip=None):
+    if fixed_ip is None:
+        logger.error('IP is not provided')
+    else:
+        try:
+            port_list = neutron_client.list_ports()['ports']
+            if not port_list:
+                return None
+            else:
+                for i in range(len(port_list)):
+                    if port_list[i]['fixed_ips'][0]['ip_address'] == fixed_ip:
+                        return port_list[i]['id']
+        except Exception as e:
+            logger.error("Error [get_port_id(neutron_client, fixed_ip)]: %s"
+                         % e)
+    return None
+
+
 # *********************************************
 #   SEC GROUPS
 # *********************************************
