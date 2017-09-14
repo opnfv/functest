@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "da33351e_56473b4b",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-09-14T06:19:40Z",
+      "side": 1,
+      "message": "functest-parser missing? the link https://hub.docker.com/r/opnfv/functest-parser/",
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_b675e799",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-09-14T06:19:40Z",
+      "side": 1,
+      "message": "maintained?",
+      "range": {
+        "startLine": 84,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 43
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_05145b4c",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 5
@@ -48,6 +88,29 @@
       "side": 1,
       "message": "For opnfv/functest-parser, we must first receive feedbacks. Otherwise we can harldy list it as another offical Docker image.\n\nAgree for functest-restapi.",
       "parentUuid": "da33351e_fb5bd884",
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_9678a390",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-09-14T06:19:40Z",
+      "side": 1,
+      "message": "included?",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 53
+      },
       "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
