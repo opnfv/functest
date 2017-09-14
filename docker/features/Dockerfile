@@ -7,7 +7,7 @@ COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev git && \
+        openssl-dev libjpeg-turbo-dev && \
     pip install --no-cache-dir --src /src \
         -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \

@@ -9,11 +9,12 @@ ARG VIMS_TAG=stable
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
-        ruby ruby-dev ruby-bundler ruby-irb ruby-rdoc dnsmasq \
-        procps git g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev && \
+        ruby ruby-bundler ruby-irb ruby-rdoc dnsmasq \
+        procps libxslt libxml2 zlib libffi && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev git && \
+        openssl-dev libjpeg-turbo-dev \
+        ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev && \
     git clone --depth 1 https://github.com/openstack/refstack-client.git /src/refstack-client && \
     (cd src/refstack-client && git checkout -b $REFSTACK_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/refstack-client/ && \
