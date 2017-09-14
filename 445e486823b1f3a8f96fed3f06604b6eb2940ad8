@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_546732b7",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims_perf.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-14T21:05:01Z",
+      "side": 1,
+      "message": "These comments could have been removed",
+      "revId": "445e486823b1f3a8f96fed3f06604b6eb2940ad8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_b4079ec9",
+        "filename": "requirements.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-14T21:05:01Z",
+      "side": 1,
+      "message": "httplib2\u003e\u003d0.7.5 # MIT",
+      "revId": "445e486823b1f3a8f96fed3f06604b6eb2940ad8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
