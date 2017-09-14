@@ -34,6 +34,24 @@
       "revId": "0d95b22ced9b46d8ec828bee2079644987fc3e0a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_761ebf64",
+        "filename": "functest/api/resources/v1/tasks.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-14T04:47:48Z",
+      "side": 1,
+      "message": "OK but self._get_args() is not right too.",
+      "parentUuid": "da33351e_dbb894e7",
+      "revId": "0d95b22ced9b46d8ec828bee2079644987fc3e0a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
