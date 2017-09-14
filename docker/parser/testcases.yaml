@@ -9,14 +9,14 @@ tiers:
         testcases:
             -
                 case_name: parser-basics
-                enabled: false
+                enabled: true
                 project_name: parser
                 criteria: 100
                 blocking: false
                 description: >-
                     Test suite from Parser project.
                 dependencies:
-                    installer: 'fuel'
+                    installer: '(fuel)|(daisy)|(apex)'
                     scenario: '^((?!bgpvpn|noha).)*$'
                 run:
                     module: 'functest.core.feature'
