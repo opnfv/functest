@@ -129,6 +129,7 @@ tempest:
     volume_device_name: vdc
 
 rally:
+    unique_names: True
     deployment_name: opnfv-rally
     network_name: rally-net
     subnet_name: rally-subnet
