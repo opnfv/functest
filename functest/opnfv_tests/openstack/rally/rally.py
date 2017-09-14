@@ -25,8 +25,14 @@ import yaml
 
 from functest.core import testcase
 from functest.energy import energy
+from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils.constants import CONST
-import functest.utils.openstack_utils as os_utils
+
+from snaps.openstack.create_image import ImageSettings
+from snaps.openstack.create_network import NetworkSettings, SubnetSettings
+from snaps.openstack.create_router import RouterSettings
+from snaps.openstack.tests import openstack_tests
+from snaps.openstack.utils import deploy_utils
 
 LOGGER = logging.getLogger(__name__)
 
@@ -42,6 +48,7 @@ class RallyBase(testcase.OSGCTestCase):
         CONST.__getattribute__('dir_functest_images'),
         GLANCE_IMAGE_FILENAME)
     GLANCE_IMAGE_FORMAT = CONST.__getattribute__('openstack_image_disk_format')
+    GLANCE_IMAGE_USERNAME = CONST.__getattribute__('openstack_image_username')
     GLANCE_IMAGE_EXTRA_PROPERTIES = {}
     if hasattr(CONST, 'openstack_extra_properties'):
         GLANCE_IMAGE_EXTRA_PROPERTIES = CONST.__getattribute__(
@@ -74,16 +81,20 @@ class RallyBase(testcase.OSGCTestCase):
     def __init__(self, **kwargs):
         """Initialize RallyBase object."""
         super(RallyBase, self).__init__(**kwargs)
+        if 'os_creds' in kwargs:
+            self.os_creds = kwargs['os_creds']
+        else:
+            self.os_creds = openstack_tests.get_credentials(
+                os_env_file=CONST.__getattribute__('openstack_creds'))
+
+        self.creators = []
         self.mode = ''
         self.summary = []
         self.scenario_dir = ''
-        self.nova_client = os_utils.get_nova_client()
-        self.neutron_client = os_utils.get_neutron_client()
-        self.network_dict = {}
+        self.ext_net_name = None
+        self.priv_net_id = None
         self.smoke = None
         self.test_name = None
-        self.image_exists = None
-        self.image_id = None
         self.start_time = None
         self.result = None
         self.details = None
@@ -103,13 +114,13 @@ class RallyBase(testcase.OSGCTestCase):
         task_args['concurrency'] = self.CONCURRENCY
         task_args['smoke'] = self.smoke
 
-        ext_net = os_utils.get_external_net(self.neutron_client)
+        ext_net = self.ext_net_name
         if ext_net:
             task_args['floating_network'] = str(ext_net)
         else:
             task_args['floating_network'] = ''
 
-        net_id = self.network_dict['net_id']
+        net_id = self.priv_net_id
         if net_id:
             task_args['netid'] = str(net_id)
         else:
@@ -445,25 +456,45 @@ class RallyBase(testcase.OSGCTestCase):
         if self.test_name not in self.TESTS:
             raise Exception("Test name '%s' is invalid" % self.test_name)
 
+        self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
+
         LOGGER.debug('Getting or creating image...')
-        self.image_exists, self.image_id = os_utils.get_or_create_image(
-            self.GLANCE_IMAGE_NAME,
-            self.GLANCE_IMAGE_PATH,
-            self.GLANCE_IMAGE_FORMAT,
-            self.GLANCE_IMAGE_EXTRA_PROPERTIES)
-        if self.image_id is None:
+        image_creator = deploy_utils.create_image(
+            self.os_creds, ImageSettings(
+                name=self.GLANCE_IMAGE_NAME,
+                image_file=self.GLANCE_IMAGE_PATH,
+                img_format=self.GLANCE_IMAGE_FORMAT,
+                image_user=self.GLANCE_IMAGE_USERNAME,
+                public=True,
+                extra_properties=self.GLANCE_IMAGE_EXTRA_PROPERTIES))
+        if image_creator is None:
             raise Exception("Failed to get or create image '%s'" %
                             self.GLANCE_IMAGE_NAME)
+        self.creators.append(image_creator)
 
         LOGGER.debug("Creating network '%s'...", self.RALLY_PRIVATE_NET_NAME)
-        self.network_dict = os_utils.create_shared_network_full(
-            self.RALLY_PRIVATE_NET_NAME,
-            self.RALLY_PRIVATE_SUBNET_NAME,
-            self.RALLY_ROUTER_NAME,
-            self.RALLY_PRIVATE_SUBNET_CIDR)
-        if self.network_dict is None:
-            raise Exception("Failed to create shared network '%s'" %
-                            self.RALLY_PRIVATE_NET_NAME)
+        network_creator = deploy_utils.create_network(
+            self.os_creds, NetworkSettings(
+                name=self.RALLY_PRIVATE_NET_NAME,
+                shared=True,
+                subnet_settings=[SubnetSettings(
+                    name=self.RALLY_PRIVATE_SUBNET_NAME,
+                    cidr=self.RALLY_PRIVATE_SUBNET_CIDR)
+                ]))
+        if network_creator is None:
+            raise Exception("Failed to create private network")
+        self.priv_net_id = network_creator.get_network().id
+        self.creators.append(network_creator)
+
+        LOGGER.debug("Creating router '%s'...", self.RALLY_ROUTER_NAME)
+        router_creator = deploy_utils.create_router(
+            self.os_creds, RouterSettings(
+                name=self.RALLY_ROUTER_NAME,
+                external_gateway=self.ext_net_name,
+                internal_subnets=[self.RALLY_PRIVATE_SUBNET_NAME]))
+        if router_creator is None:
+            raise Exception("Failed to create router")
+        self.creators.append(router_creator)
 
     def _run_tests(self):
         if self.test_name == 'all':
@@ -545,12 +576,11 @@ class RallyBase(testcase.OSGCTestCase):
                     self.case_name, success_rate)
 
     def _clean_up(self):
-        if not self.image_exists:
-            LOGGER.debug("Deleting image '%s' with ID '%s'...",
-                         self.GLANCE_IMAGE_NAME, self.image_id)
-            if not os_utils.delete_glance_image(self.nova_client,
-                                                self.image_id):
-                LOGGER.error("Error deleting the glance image")
+        for creator in reversed(self.creators):
+            try:
+                creator.clean()
+            except Exception as e:
+                LOGGER.error('Unexpected error cleaning - %s', e)
 
     @energy.enable_recording
     def run(self, **kwargs):
@@ -560,11 +590,12 @@ class RallyBase(testcase.OSGCTestCase):
             self._prepare_env()
             self._run_tests()
             self._generate_report()
-            self._clean_up()
             res = testcase.TestCase.EX_OK
         except Exception as exc:   # pylint: disable=broad-except
             LOGGER.error('Error with run: %s', exc)
             res = testcase.TestCase.EX_RUN_ERROR
+        finally:
+            self._clean_up()
 
         self.stop_time = time.time()
         return res
