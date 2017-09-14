@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_b6ea070d",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_56473b4b",
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_b675e799",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_96ed4328",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_b675e799",
+      "range": {
+        "startLine": 84,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 43
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_05145b4c",
         "filename": "docs/testing/developer/devguide/index.rst",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-13T15:28:16Z",
       "side": 1,
       "message": "you may want to say \"the SNAPS-OO library for deploying OpenStack instances\" instead of \"SNAPS utils\"",
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d6f7cbf3",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_05145b4c",
       "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -94,6 +154,42 @@
     },
     {
       "key": {
+        "uuid": "da33351e_76e87f10",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_fb5bd884",
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_56e3bb32",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "OK I added it, I could remove...later but as it is available on the docker hub..",
+      "parentUuid": "da33351e_363b97d2",
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_9678a390",
         "filename": "docs/testing/user/configguide/configguide.rst",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-14T06:19:40Z",
       "side": 1,
       "message": "included?",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 53
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_b6d16759",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_9678a390",
       "range": {
         "startLine": 62,
         "startChar": 45,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_96d42348",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "I think the path is correct\nat least on the container I just pulled\nthe path is /usr/lib/python2.7/dist-packages/functest\nnot /usr/local/lib/...",
+      "parentUuid": "da33351e_1bd79cc0",
+      "range": {
+        "startLine": 344,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 28
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_3bdc20e4",
         "filename": "docs/testing/user/configguide/configguide.rst",
         "patchSetId": 5
@@ -151,6 +295,30 @@
       "writtenOn": "2017-09-14T03:03:52Z",
       "side": 1,
       "message": "/usr/local/lib/python2.7/dist-packages",
+      "range": {
+        "startLine": 360,
+        "startChar": 27,
+        "endLine": 360,
+        "endChar": 59
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_f6cbefa2",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "same previous comment",
+      "parentUuid": "da33351e_3bdc20e4",
       "range": {
         "startLine": 360,
         "startChar": 27,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_d6ceabb3",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_dbd534ba",
+      "range": {
+        "startLine": 486,
+        "startChar": 43,
+        "endLine": 486,
+        "endChar": 68
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_9bcbac1d",
         "filename": "docs/testing/user/configguide/configguide.rst",
         "patchSetId": 5
@@ -203,6 +395,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_36c5578e",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_9bcbac1d",
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_5b4ac4ac",
         "filename": "docs/testing/user/configguide/configguide.rst",
         "patchSetId": 5
@@ -214,6 +424,30 @@
       "writtenOn": "2017-09-14T03:03:52Z",
       "side": 1,
       "message": "This is for alpine container, it is /usr/local/lib/python2.7/dist-packages for ubuntu based container.",
+      "range": {
+        "startLine": 523,
+        "startChar": 0,
+        "endLine": 523,
+        "endChar": 32
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_16c0137b",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "you are sure\ntest done in healthcheck alpine container\n\nbash-4.3# ls /usr/lib/python2.7/site-packages/functest\n__init__.py   __init__.pyc  api           ci            cli           core          energy        opnfv_tests   tests         utils\nbash-4.3# ls /usr/local/lib/python2.7\nls: /usr/local/lib/python2.7: No such file or directory",
+      "parentUuid": "da33351e_5b4ac4ac",
       "range": {
         "startLine": 523,
         "startChar": 0,
@@ -272,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_76bfdffb",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_db5ed475",
+      "range": {
+        "startLine": 637,
+        "startChar": 0,
+        "endLine": 641,
+        "endChar": 26
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_3b554050",
         "filename": "docs/testing/user/configguide/configguide.rst",
         "patchSetId": 5
@@ -295,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_56ba9b0a",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_3b554050",
+      "range": {
+        "startLine": 674,
+        "startChar": 0,
+        "endLine": 676,
+        "endChar": 17
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_40149143",
         "filename": "docs/testing/user/configguide/prerequisites.rst",
         "patchSetId": 5
@@ -306,6 +588,24 @@
       "writtenOn": "2017-09-13T15:28:16Z",
       "side": 1,
       "message": "This requirement can be overridden by overriding the \u0027interface\u0027 attribute (OS_INTERFACE) value to \u0027public\u0027. Another means to circumvent this issue would be to change the \u0027snaps.use_keystone\u0027 value from True to False.",
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_b63847a1",
+        "filename": "docs/testing/user/configguide/prerequisites.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-09-14T06:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_40149143",
       "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
