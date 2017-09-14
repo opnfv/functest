@@ -11,18 +11,17 @@ RUN apk --no-cache add --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
-        sed /^heat-translator=/d | sed /^tosca-parser=/d \
+        sed /^heat-translator=/d | sed /^tosca-parser=/d | \
+        sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ \
         > upper-constraints.txt && \
-    pip install --src /src -cupper-constraints.txt \
+    pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        -e git+https://github.com/openstack/requirements@stable/ocata#egg=openstack_requirements && \
+        -e git+https://github.com/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
-    update-requirements -s --source /src/openstack-requirements /src/rally && \
-    pip install --src /src -cupper-constraints.txt \
-        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        /src/rally && \
-    pip install --no-cache-dir --src /src \
-        -cupper-constraints.txt \
+    update-requirements -s --source /src/openstack-requirements /src/rally/ && \
+    pip install --no-cache-dir --src /src -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH /src/rally && \
+    pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
         git+https://gerrit.opnfv.org/gerrit/parser#egg=heat-translator\&subdirectory=tosca2heat/heat-translator \
