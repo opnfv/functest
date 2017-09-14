@@ -19,6 +19,201 @@
     },
     {
       "key": {
+        "uuid": "da33351e_fb5bd884",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "And opnfv/functest-parser\n    opnfv/functest-restapi",
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_1bd79cc0",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "Could you update it? /usr/local/lib/python2.7/dist-packages",
+      "range": {
+        "startLine": 344,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 28
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_3bdc20e4",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "/usr/local/lib/python2.7/dist-packages",
+      "range": {
+        "startLine": 360,
+        "startChar": 27,
+        "endLine": 360,
+        "endChar": 59
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_dbd534ba",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "The dir for internal Functest API is located in the sub-dir.",
+      "range": {
+        "startLine": 486,
+        "startChar": 43,
+        "endLine": 486,
+        "endChar": 68
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_9bcbac1d",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "Could you add api dir?",
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_5b4ac4ac",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "This is for alpine container, it is /usr/local/lib/python2.7/dist-packages for ubuntu based container.",
+      "range": {
+        "startLine": 523,
+        "startChar": 0,
+        "endLine": 523,
+        "endChar": 32
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_bbc83023",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 533,
+        "startChar": 0,
+        "endLine": 533,
+        "endChar": 32
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_db5ed475",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "Since offline has been supported already, we could remove this.",
+      "range": {
+        "startLine": 637,
+        "startChar": 0,
+        "endLine": 641,
+        "endChar": 26
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_3b554050",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "It should also be removed.",
+      "range": {
+        "startLine": 674,
+        "startChar": 0,
+        "endLine": 676,
+        "endChar": 17
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_40149143",
         "filename": "docs/testing/user/configguide/prerequisites.rst",
         "patchSetId": 5
@@ -30,6 +225,121 @@
       "writtenOn": "2017-09-13T15:28:16Z",
       "side": 1,
       "message": "This requirement can be overridden by overriding the \u0027interface\u0027 attribute (OS_INTERFACE) value to \u0027public\u0027. Another means to circumvent this issue would be to change the \u0027snaps.use_keystone\u0027 value from True to False.",
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_9be1ecd2",
+        "filename": "docs/testing/user/userguide/test_results.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "It should be /usr/local/lib/python2.7/dist-packages/",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_5bd764ed",
+        "filename": "docs/testing/user/userguide/troubleshooting.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "/usr/local/lib/python2.7/dist-packages",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_1b695c25",
+        "filename": "docs/testing/user/userguide/troubleshooting.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 36
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_7b7868f2",
+        "filename": "docs/testing/user/userguide/troubleshooting.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 32
+      },
+      "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_5b73e414",
+        "filename": "docs/testing/user/userguide/troubleshooting.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-14T03:03:52Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 32
+      },
       "revId": "c5bbfb0e3c7b798405e64324ef10125c69dbd2c5",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
