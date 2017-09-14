@@ -15,7 +15,7 @@ RUN apk --no-cache add --update \
         > upper-constraints.txt && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        -e git+https://github.com/openstack/requirements@stable/ocata#egg=openstack_requirements && \
+        -e git+https://github.com/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \

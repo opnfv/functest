@@ -79,7 +79,7 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
         > upper-constraints.txt && \
     pip install --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        -e git+https://github.com/openstack/requirements@stable/ocata#egg=openstack_requirements && \
+        -e git+https://github.com/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
     update-requirements -s --source /src/openstack-requirements /src/rally && \
     git clone --depth 1 https://github.com/openstack/refstack-client.git /src/refstack-client && \
