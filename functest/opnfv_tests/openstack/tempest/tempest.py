@@ -16,6 +16,7 @@ import re
 import shutil
 import subprocess
 import time
+import uuid
 
 import yaml
 
@@ -315,6 +316,10 @@ class TempestResourcesManager(object):
             self.os_creds = openstack_tests.get_credentials(
                 os_env_file=CONST.__getattribute__('openstack_creds'))
 
+        self.guid = ''
+        if CONST.__getattribute__('tempest_unique_names'):
+            self.guid = '-' + str(uuid.uuid4())
+
         self.creators = list()
 
         if hasattr(CONST, 'snaps_images_cirros'):
@@ -328,7 +333,7 @@ class TempestResourcesManager(object):
         if create_project:
             logger.debug("Creating project (tenant) for Tempest suite")
             project_name = CONST.__getattribute__(
-                'tempest_identity_tenant_name')
+                'tempest_identity_tenant_name') + self.guid
             project_creator = deploy_utils.create_project(
                 self.os_creds, ProjectSettings(
                     name=project_name,
@@ -343,7 +348,8 @@ class TempestResourcesManager(object):
             logger.debug("Creating user for Tempest suite")
             user_creator = deploy_utils.create_user(
                 self.os_creds, UserSettings(
-                    name=CONST.__getattribute__('tempest_identity_user_name'),
+                    name=CONST.__getattribute__(
+                        'tempest_identity_user_name') + self.guid,
                     password=CONST.__getattribute__(
                         'tempest_identity_user_password'),
                     project_name=project_name))
@@ -359,10 +365,12 @@ class TempestResourcesManager(object):
         logger.debug("Creating private network for Tempest suite")
         network_creator = deploy_utils.create_network(
             self.os_creds, NetworkSettings(
-                name=CONST.__getattribute__('tempest_private_net_name'),
+                name=CONST.__getattribute__(
+                    'tempest_private_net_name') + self.guid,
                 project_name=project_name,
                 subnet_settings=[SubnetSettings(
-                    name=CONST.__getattribute__('tempest_private_subnet_name'),
+                    name=CONST.__getattribute__(
+                        'tempest_private_subnet_name') + self.guid,
                     cidr=CONST.__getattribute__('tempest_private_subnet_cidr'))
                 ]))
         if network_creator is None or network_creator.get_network() is None:
@@ -377,7 +385,8 @@ class TempestResourcesManager(object):
         if (CONST.__getattribute__('tempest_use_custom_images') or
            use_custom_images):
             logger.debug("Creating image for Tempest suite")
-            image_base_name = CONST.__getattribute__('openstack_image_name')
+            image_base_name = CONST.__getattribute__(
+                'openstack_image_name') + self.guid
             os_image_settings = openstack_tests.cirros_image_settings(
                 image_base_name, public=True,
                 image_metadata=self.cirros_image_config)
@@ -392,7 +401,7 @@ class TempestResourcesManager(object):
         if use_custom_images:
             logger.debug("Creating 2nd image for Tempest suite")
             image_base_name_alt = CONST.__getattribute__(
-                'openstack_image_name_alt')
+                'openstack_image_name_alt') + self.guid
             os_image_settings_alt = openstack_tests.cirros_image_settings(
                 image_base_name_alt, public=True,
                 image_metadata=self.cirros_image_config)
@@ -413,7 +422,8 @@ class TempestResourcesManager(object):
                 flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
             flavor_creator = OpenStackFlavor(
                 self.os_creds, FlavorSettings(
-                    name=CONST.__getattribute__('openstack_flavor_name'),
+                    name=CONST.__getattribute__(
+                        'openstack_flavor_name') + self.guid,
                     ram=CONST.__getattribute__('openstack_flavor_ram'),
                     disk=CONST.__getattribute__('openstack_flavor_disk'),
                     vcpus=CONST.__getattribute__('openstack_flavor_vcpus'),
@@ -432,7 +442,8 @@ class TempestResourcesManager(object):
                 flavor_metadata_alt = create_flavor.MEM_PAGE_SIZE_LARGE
             flavor_creator_alt = OpenStackFlavor(
                 self.os_creds, FlavorSettings(
-                    name=CONST.__getattribute__('openstack_flavor_name_alt'),
+                    name=CONST.__getattribute__(
+                        'openstack_flavor_name_alt') + self.guid,
                     ram=CONST.__getattribute__('openstack_flavor_ram'),
                     disk=CONST.__getattribute__('openstack_flavor_disk'),
                     vcpus=CONST.__getattribute__('openstack_flavor_vcpus'),
