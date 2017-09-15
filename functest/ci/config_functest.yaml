@@ -110,6 +110,7 @@ odl_sfc:
     image_format: qcow2
 
 tempest:
+    unique_names: True
     deployment_name: opnfv-tempest
     identity:
         tenant_name: tempest
