@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_97d7fc4a",
+        "filename": "functest/opnfv_tests/epc/abot_epc_credential.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-15T05:12:51Z",
+      "side": 1,
+      "message": "Please remove blank chars",
+      "revId": "862a02e28ae8de87fe1e316c8b66d830b594235b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_f7c808aa",
+        "filename": "functest/opnfv_tests/epc/featureFiles/Attach_Procedure_AttachWithIMSI_Wrong_MCC.feature",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-15T05:12:51Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "862a02e28ae8de87fe1e316c8b66d830b594235b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d7cd04b9",
+        "filename": "functest/opnfv_tests/epc/juju_epc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-15T05:12:51Z",
+      "side": 1,
+      "message": "I would prefer one line per import instead of using \\",
+      "revId": "862a02e28ae8de87fe1e316c8b66d830b594235b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_17c3ec89",
+        "filename": "functest/opnfv_tests/epc/juju_epc.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-15T05:12:51Z",
+      "side": 1,
+      "message": "please remove comments",
+      "revId": "862a02e28ae8de87fe1e316c8b66d830b594235b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_57b9f413",
+        "filename": "functest/tests/unit/vnf/epc/test_juju_epc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-15T05:12:51Z",
+      "side": 1,
+      "message": "please remove old comments",
+      "revId": "862a02e28ae8de87fe1e316c8b66d830b594235b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
