@@ -681,3 +681,7 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
             except Exception as exc:
                 self.logger.error('Unexpected error cleaning - %s', exc)
         super(ClearwaterImsVnf, self).clean()
+
+    def run(self, **kwargs):
+        """Execute ClearwaterImsVnf test case."""
+        return super(ClearwaterImsVnf, self).run(**kwargs)

@@ -715,3 +715,7 @@ class OpenImsVnf(vnf.VnfOnBoarding):
             except Exception as exc:
                 self.logger.error('Unexpected error cleaning - %s', exc)
         super(OpenImsVnf, self).clean()
+
+    def run(self, **kwargs):
+        """Execute OpenImsVnf test case."""
+        return super(OpenImsVnf, self).run(**kwargs)
