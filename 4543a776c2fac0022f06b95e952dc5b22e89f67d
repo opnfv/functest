@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_1af7918c",
+        "filename": "docker/features/testcases.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-09-15T11:01:27Z",
+      "side": 1,
+      "message": "remove this line, it will be enabled by default",
+      "range": {
+        "startLine": 28,
+        "startChar": 16,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "4543a776c2fac0022f06b95e952dc5b22e89f67d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
