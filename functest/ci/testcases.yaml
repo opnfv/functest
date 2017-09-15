@@ -37,8 +37,8 @@ tiers:
                     snaps.use_keystone is True, functest must have access to
                     the cloud's private network.
                 dependencies:
-                    installer: '^((?!netvirt|lxd).)*$'
-                    scenario: ''
+                    installer: '^((?!netvirt).)*$'
+                    scenario: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.api_check'
                     class: 'ApiCheck'
