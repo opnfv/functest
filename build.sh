@@ -14,11 +14,11 @@ docker/parser \
 docker/restapi"
 
 (cd docker && docker build -t "${repo}/functest" .)
-docker push "${repo}/functest"
+docker push "${repo}/functest:euphrates"
 
 for dir in ${dirs}; do
     (cd ${dir} && docker build -t "${repo}/functest-${dir##**/}" .)
-    docker push "${repo}/functest-${dir##**/}"
+    docker push "${repo}/functest-${dir##**/}:euphrates"
 done
 
 exit $?
