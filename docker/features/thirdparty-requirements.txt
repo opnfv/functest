@@ -1,6 +1,5 @@
 baro_tests
 sdnvpn
-securityscanning
 sfc
 promise
 domino

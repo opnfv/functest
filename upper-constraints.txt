@@ -2,7 +2,6 @@ git+https://gerrit.opnfv.org/gerrit/releng@1fc5d49f8aa9eb44e615afdd597827be48cf5
 git+https://gerrit.opnfv.org/gerrit/snaps@stable/euphrates#egg=snaps
 git+https://gerrit.opnfv.org/gerrit/barometer@stable/euphrates#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn@stable/euphrates#egg=sdnvpn
-git+https://gerrit.opnfv.org/gerrit/securityscanning@d09a8eb8b28056e2ec02ed627d337a7c7f86e23e#egg=securityscanning
 git+https://gerrit.opnfv.org/gerrit/sfc@stable/euphrates#egg=sfc
 -e git+https://gerrit.opnfv.org/gerrit/promise@stable/euphrates#egg=promise
 -e git+https://gerrit.opnfv.org/gerrit/doctor@stable/euphrates#egg=doctor-test
