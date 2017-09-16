@@ -12,7 +12,7 @@ MAINTAINER Jose Lausuch <jose.lausuch@ericsson.com>
 LABEL version="0.1" description="OPNFV Functest Docker container"
 
 # Environment variables
-ARG BRANCH=master
+ARG BRANCH=stable/euphrates
 ARG RALLY_TAG=stable/0.9
 ARG ODL_TAG=35e415b6873b39d72775c88a337e92dac26012e2
 ARG OPENSTACK_TAG=stable/ocata
