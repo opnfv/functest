@@ -53,6 +53,52 @@
     },
     {
       "key": {
+        "uuid": "da33351e_0b8101fb",
+        "filename": "functest/opnfv_tests/epc/juju_epc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2017-09-16T12:10:21Z",
+      "side": 1,
+      "message": "It\u0027s better to install these package directly during the build of the docker image (functest-vnf)",
+      "range": {
+        "startLine": 150,
+        "startChar": 19,
+        "endLine": 150,
+        "endChar": 38
+      },
+      "revId": "862a02e28ae8de87fe1e316c8b66d830b594235b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_eb85bd07",
+        "filename": "functest/opnfv_tests/epc/juju_epc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2017-09-16T12:10:21Z",
+      "side": 1,
+      "message": "Same for this line (better  directly during the build of the docker image) or create a dedicated vm for juju vnfm (and use juju-client in python)",
+      "range": {
+        "startLine": 227,
+        "startChar": 19,
+        "endLine": 227,
+        "endChar": 37
+      },
+      "revId": "862a02e28ae8de87fe1e316c8b66d830b594235b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_17c3ec89",
         "filename": "functest/opnfv_tests/epc/juju_epc.yaml",
         "patchSetId": 1
