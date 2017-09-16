@@ -9,7 +9,7 @@ docker/healthcheck \
 docker/smoke \
 docker/features \
 docker/components \
-docker/vnf \
+docker/vnf \
 docker/parser \
 docker/restapi"
 
