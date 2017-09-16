@@ -1,9 +1,9 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:euphrates
 
-ARG BRANCH=master
+ARG BRANCH=stable/euphrates
 ARG OPENSTACK_TAG=stable/ocata
 ARG ODL_TAG=35e415b6873b39d72775c88a337e92dac26012e2
-ARG FDS_TAG=master
+ARG FDS_TAG=stable/euphrates
 ARG REFSTACK_TAG=4e187b07672dd1c41cb7c94658f1c91edebf53a2
 
 RUN apk --no-cache add --virtual .build-deps --update \
