@@ -1,6 +1,6 @@
 FROM alpine:3.6
 
-ARG BRANCH=master
+ARG BRANCH=stable/euphrates
 ARG OPENSTACK_TAG=stable/ocata
 ARG RALLY_TAG=stable/0.9
 
