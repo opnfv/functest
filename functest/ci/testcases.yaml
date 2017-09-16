@@ -302,7 +302,6 @@ tiers:
 
             -
                 case_name: domino-multinode
-                enabled: false
                 project_name: domino
                 criteria: 100
                 blocking: false
