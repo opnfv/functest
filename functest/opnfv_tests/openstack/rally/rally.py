@@ -102,6 +102,7 @@ class RallyBase(testcase.TestCase):
         self.mode = ''
         self.summary = []
         self.scenario_dir = ''
+        self.image_name = None
         self.ext_net_name = None
         self.priv_net_id = None
         self.smoke = None
@@ -112,7 +113,7 @@ class RallyBase(testcase.TestCase):
 
     def _build_task_args(self, test_file_name):
         task_args = {'service_list': [test_file_name]}
-        task_args['image_name'] = self.GLANCE_IMAGE_NAME
+        task_args['image_name'] = self.image_name
         task_args['flavor_name'] = self.FLAVOR_NAME
         task_args['glance_image_location'] = self.GLANCE_IMAGE_PATH
         task_args['glance_image_format'] = self.GLANCE_IMAGE_FORMAT
@@ -467,24 +468,23 @@ class RallyBase(testcase.TestCase):
         if self.test_name not in self.TESTS:
             raise Exception("Test name '%s' is invalid" % self.test_name)
 
-        image_name = self.GLANCE_IMAGE_NAME + self.guid
         network_name = self.RALLY_PRIVATE_NET_NAME + self.guid
         subnet_name = self.RALLY_PRIVATE_SUBNET_NAME + self.guid
         router_name = self.RALLY_ROUTER_NAME + self.guid
+        self.image_name = self.GLANCE_IMAGE_NAME + self.guid
         self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
 
-        LOGGER.debug('Getting or creating image...')
+        LOGGER.debug("Creating image '%s'...", self.image_name)
         image_creator = deploy_utils.create_image(
             self.os_creds, ImageSettings(
-                name=image_name,
+                name=self.image_name,
                 image_file=self.GLANCE_IMAGE_PATH,
                 img_format=self.GLANCE_IMAGE_FORMAT,
                 image_user=self.GLANCE_IMAGE_USERNAME,
                 public=True,
                 extra_properties=self.GLANCE_IMAGE_EXTRA_PROPERTIES))
         if image_creator is None:
-            raise Exception("Failed to get or create image '%s'" %
-                            image_name)
+            raise Exception("Failed to create image")
         self.creators.append(image_creator)
 
         LOGGER.debug("Creating network '%s'...", network_name)
