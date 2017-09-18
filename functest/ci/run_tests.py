@@ -124,16 +124,18 @@ class Runner(object):
                 self.executed_test_cases[test.get_name()] = test_case
                 if self.clean_flag:
                     if test_case.create_snapshot() != test_case.EX_OK:
-                        return result
+                        return testcase.TestCase.EX_RUN_ERROR
                 try:
                     kwargs = run_dict['args']
-                    result = test_case.run(**kwargs)
+                    test_case.run(**kwargs)
                 except KeyError:
-                    result = test_case.run()
-                if result == testcase.TestCase.EX_OK:
-                    if self.report_flag:
-                        test_case.push_to_db()
+                    test_case.run()
+                if self.report_flag:
+                    test_case.push_to_db()
+                if test.get_project() == "functest":
                     result = test_case.is_successful()
+                else:
+                    result = testcase.TestCase.EX_OK
                 logger.info("Test result:\n\n%s\n", test_case)
                 if self.clean_flag:
                     test_case.clean()
@@ -157,9 +159,11 @@ class Runner(object):
         else:
             logger.info("Running tier '%s'" % tier_name)
             for test in tests:
-                result = self.run_test(test)
-                if result != testcase.TestCase.EX_OK:
+                self.run_test(test)
+                test_case = self.executed_test_cases[test.get_name()]
+                if test_case.is_successful() != testcase.TestCase.EX_OK:
                     logger.error("The test case '%s' failed.", test.get_name())
+                    if test.get_project() == "functest":
                     self.overall_result = Result.EX_ERROR
                     if test.is_blocking():
                         raise BlockingTestFailed(
