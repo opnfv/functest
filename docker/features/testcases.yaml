@@ -57,23 +57,6 @@ tiers:
                         cmd: 'run_sdnvpn_tests.py'
 
             -
-                case_name: security_scan
-                enabled: false
-                project_name: securityscanning
-                criteria: 100
-                blocking: false
-                description: >-
-                    Simple Security Scan
-                dependencies:
-                    installer: 'apex'
-                    scenario: '^((?!fdio).)*$'
-                run:
-                    module: 'functest.core.feature'
-                    class: 'BashFeature'
-                    args:
-                        cmd: '. /home/opnfv/functest/conf/stackrc && security_scan --config /usr/etc/securityscanning/config.ini'
-
-            -
                 case_name: functest-odl-sfc
                 project_name: sfc
                 criteria: 100
