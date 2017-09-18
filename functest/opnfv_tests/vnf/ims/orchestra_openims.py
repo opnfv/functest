@@ -488,18 +488,18 @@ class OpenImsVnf(vnf.VnfOnBoarding):
 
         self.logger.info("Waiting for Open Baton NFVO to be up and running...")
         timeout = 0
-        while timeout < 200:
+        while timeout < 45:
             if servertest(
                     self.mano['details']['fip'].ip,
                     "8080"):
                 break
             else:
                 self.logger.info("Open Baton NFVO is not started yet (%ss)",
-                                 (timeout * 5))
-                time.sleep(5)
+                                 (timeout * 60))
+                time.sleep(60)
                 timeout += 1
 
-        if timeout >= 200:
+        if timeout >= 45:
             duration = time.time() - start_time
             self.details["orchestrator"].update(
                 status='FAIL', duration=duration)
@@ -592,13 +592,13 @@ class OpenImsVnf(vnf.VnfOnBoarding):
         while self.mano['details']['nsr'].get("status") != 'ACTIVE' \
                 and self.mano['details']['nsr'].get("status") != 'ERROR':
             timeout += 1
-            self.logger.info("NSR is not yet ACTIVE... (%ss)", 5 * timeout)
-            if timeout == 300:
-                self.logger.error("INACTIVE NSR after %s sec..", 5 * timeout)
+            self.logger.info("NSR is not yet ACTIVE... (%ss)", 60 * timeout)
+            if timeout == 30:
+                self.logger.error("INACTIVE NSR after %s sec..", 60 * timeout)
                 duration = time.time() - start_time
                 self.details["vnf"].update(status='FAIL', duration=duration)
                 return False
-            time.sleep(5)
+            time.sleep(60)
             self.mano['details']['nsr'] = json.loads(
                 nsr_agent.find(self.mano['details']['nsr'].get('id')))
 
