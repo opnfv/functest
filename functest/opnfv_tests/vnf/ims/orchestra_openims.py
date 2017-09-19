@@ -17,7 +17,7 @@ import time
 import pkg_resources
 import yaml
 
-
+from functest.energy import energy
 from snaps.openstack.create_image import OpenStackImage, ImageSettings
 from snaps.openstack.create_flavor import OpenStackFlavor, FlavorSettings
 from snaps.openstack.create_security_group import (
@@ -715,3 +715,8 @@ class OpenImsVnf(vnf.VnfOnBoarding):
             except Exception as exc:
                 self.logger.error('Unexpected error cleaning - %s', exc)
         super(OpenImsVnf, self).clean()
+
+    @energy.enable_recording
+    def run(self, **kwargs):
+        """Execute Orchestra OpenIMS test case."""
+        return super(OpenImsVnf, self).run(**kwargs)
