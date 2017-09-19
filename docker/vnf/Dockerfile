@@ -1,4 +1,4 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:euphrates
 
 ARG VIMS_TAG=stable
 

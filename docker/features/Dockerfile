@@ -1,6 +1,6 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:euphrates
 
-ARG BRANCH=master
+ARG BRANCH=stable/euphrates
 ARG OPENSTACK_TAG=stable/ocata
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
