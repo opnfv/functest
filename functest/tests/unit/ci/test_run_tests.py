@@ -31,6 +31,10 @@ class RunTestsTesting(unittest.TestCase):
 
     def setUp(self):
         self.runner = run_tests.Runner()
+        mock_test_case = mock.Mock()
+        mock_test_case.is_successful.return_value = TestCase.EX_OK
+        self.runner.executed_test_cases['test1'] = mock_test_case
+        self.runner.executed_test_cases['test2'] = mock_test_case
         self.sep = 'test_sep'
         self.creds = {'OS_AUTH_URL': 'http://test_ip:test_port/v2.0',
                       'OS_USERNAME': 'test_os_username',
@@ -191,8 +195,10 @@ class RunTestsTesting(unittest.TestCase):
     @mock.patch('functest.ci.run_tests.Runner.summary')
     def test_main_tier(self, *mock_methods):
         mock_tier = mock.Mock()
+        test_mock = mock.Mock()
+        test_mock.get_name.return_value = 'test1'
         args = {'get_name.return_value': 'tier_name',
-                'get_tests.return_value': ['test_name']}
+                'get_tests.return_value': [test_mock]}
         mock_tier.configure_mock(**args)
         kwargs = {'test': 'tier_name', 'noclean': True, 'report': True}
         args = {'get_tier.return_value': mock_tier,
@@ -201,7 +207,7 @@ class RunTestsTesting(unittest.TestCase):
         self.runner._tiers.configure_mock(**args)
         self.assertEqual(self.runner.main(**kwargs),
                          run_tests.Result.EX_OK)
-        mock_methods[1].assert_called_once_with('test_name')
+        mock_methods[1].assert_called()
 
     @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
     @mock.patch('functest.ci.run_tests.Runner.run_test',
