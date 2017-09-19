@@ -1,6 +1,6 @@
 #!/bin/bash
 
-from="${DOCKER_REPO%/*}/functest-core"
+from="${DOCKER_REPO%/*}/functest-core:euphrates"
 sed -i "s|^FROM.*$|FROM ${from}|" Dockerfile
 
 exit $?
