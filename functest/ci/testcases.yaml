@@ -303,7 +303,6 @@ tiers:
 
             -
                 case_name: functest-odl-sfc
-                enabled: true
                 project_name: sfc
                 criteria: 100
                 blocking: false
@@ -337,7 +336,6 @@ tiers:
 
             -
                 case_name: barometercollectd
-                enabled: true
                 project_name: barometer
                 criteria: 100
                 blocking: false
