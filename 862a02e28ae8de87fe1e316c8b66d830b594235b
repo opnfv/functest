@@ -53,6 +53,29 @@
     },
     {
       "key": {
+        "uuid": "da33351e_5f673de9",
+        "filename": "functest/opnfv_tests/epc/juju_epc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-20T01:15:33Z",
+      "side": 1,
+      "message": "You could use parentheses instead, just like that in cloudify_ims: https://git.opnfv.org/functest/tree/functest/opnfv_tests/vnf/ims/cloudify_ims.py#n27",
+      "range": {
+        "startLine": 28,
+        "startChar": 49,
+        "endLine": 28,
+        "endChar": 74
+      },
+      "revId": "862a02e28ae8de87fe1e316c8b66d830b594235b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_0b8101fb",
         "filename": "functest/opnfv_tests/epc/juju_epc.py",
         "patchSetId": 1
