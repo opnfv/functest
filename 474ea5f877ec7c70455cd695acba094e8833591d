@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "da33351e_5ffbbec0",
+        "filename": "functest/opnfv_tests/vnf/ims/opera.yaml",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-09-20T14:59:41Z",
+      "side": 1,
+      "message": "https://github.com/Metaswitch/clearwater-heat/clearwater.yaml\nYou are right that\u0027s the folder name and will fix that",
+      "parentUuid": "da33351e_9eba9008",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_9f56e628",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-09-20T14:59:41Z",
+      "side": 1,
+      "message": "We need this for using functest as well CONST to save for cleanup as suggested by Steven.\n\nfrom functest.core import testcase\nfrom functest.utils.constants import CONST\n\n\nfrom snaps.openstack import create_flavor\nfrom snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor\nfrom snaps.openstack.create_network import NetworkSettings, SubnetSettings\nfrom snaps.openstack.tests import openstack_tests\nfrom snaps.openstack.utils import deploy_utils\n\nverify below that the required ones are included in import below.",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_ca02930a",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
@@ -30,6 +65,24 @@
       "writtenOn": "2017-09-06T16:31:48Z",
       "side": 1,
       "message": "May want to init to None instead of empty string.",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_3f0b5a2b",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-09-20T14:59:41Z",
+      "side": 1,
+      "message": "Sounds correct, lets init with None here",
+      "parentUuid": "da33351e_ca02930a",
       "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_1fb5b67d",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-09-20T14:59:41Z",
+      "side": 1,
+      "message": "use like \nfrom snaps.openstack.os_credentials import OSCreds\n  \nos_creds \u003d OSCreds(username\u003d\u0027admin\u0027, password\u003d\u0027admin\u0027, auth_url\u003d\u0027http://localhost:5000/v3, project_name\u003d\u0027admin\u0027,\n                   identity_api_version\u003d3)\n\nor\n\nvping_base.py does have retrieve OSCreds object and we will need to init the object and according agree to  fixing this part of code.\n # This line is here simply for pep8 as the \u0027os\u0027 package import appears\n        # to be required for mock and the unit tests will fail without it\n        os.environ\n\n        self.logger \u003d logging.getLogger(__name__)\n\n        if \u0027os_creds\u0027 in kwargs:\n            self.os_creds \u003d kwargs[\u0027os_creds\u0027]\n        else:\n            creds_override \u003d None\n            if hasattr(CONST, \u0027snaps_os_creds_override\u0027):\n                creds_override \u003d CONST.__getattribute__(\n                    \u0027snaps_os_creds_override\u0027)\n\n            self.os_creds \u003d openstack_tests.get_credentials(\n                os_env_file\u003dCONST.__getattribute__(\u0027openstack_creds\u0027),\n                overrides\u003dcreds_override)\n\n        self.creators \u003d list()\n        self.image_creator \u003d None\n        self.network_creator \u003d None\n        self.vm1_creator \u003d None\n        self.vm2_creator \u003d None",
+      "parentUuid": "da33351e_1e0e8034",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_de51b80f",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
@@ -64,6 +135,24 @@
       "writtenOn": "2017-09-06T16:31:48Z",
       "side": 1,
       "message": "You will want to hold onto these objects for cleanup purposes or retrieval of the ImageSettings objects.",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_df1a2e7c",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-09-20T14:59:41Z",
+      "side": 1,
+      "message": "let\u0027s  use CONST like in vping_base.py referred above to save for cleanup",
+      "parentUuid": "da33351e_de51b80f",
       "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -104,6 +193,30 @@
       "writtenOn": "2017-09-06T16:31:48Z",
       "side": 1,
       "message": "I am a bit confused here too. If you want to use SNAPS-OO for deploying a heat template, all you would have to do is create the image being used by the template and instantiate an OpenStackHeatStack() object and call create(). It also contains helper methods so your client can know when the stack has become active.",
+      "parentUuid": "da33351e_cf4aa5ab",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 163,
+        "endChar": 28
+      },
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_aa5f4f40",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-09-20T14:59:41Z",
+      "side": 1,
+      "message": "Good catch. May be not.  But need to verify that Stack is created and let me check with Stevens as what is available in snaps to do that and just focus on testing the vnf vims stack testing.",
       "parentUuid": "da33351e_cf4aa5ab",
       "range": {
         "startLine": 163,
@@ -168,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_3f887ac4",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-09-20T14:59:41Z",
+      "side": 1,
+      "message": "No should limit to limited SIP ports say 5060-5069 for testing max say 10 seeesions for both tcp and udp\nport_range_min\u003d5060\nport_range_max\u003d5069",
+      "parentUuid": "da33351e_1e7320b2",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_7e698cbd",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
@@ -179,6 +310,24 @@
       "writtenOn": "2017-09-06T16:31:48Z",
       "side": 1,
       "message": "same as above...",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_9f91c6f3",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-09-20T14:59:41Z",
+      "side": 1,
+      "message": "No should limit to limited SIP ports say 5060-5069 for testing max say 10 seeesions for both tcp and udp\nport_range_min\u003d5060\nport_range_max\u003d5069",
+      "parentUuid": "da33351e_7e698cbd",
       "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -202,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_bfc3eaeb",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-09-20T14:59:41Z",
+      "side": 1,
+      "message": "Sure HeatClient is what I want to import from snaps it has one. Refer to line 37-40\nfrom heat_rest_client import HeatClient\n# should we replace HeatCleint by some python client for heat from [1] below?\n# from heatclient.client import Client\nfrom heat_rest_client.executions import Execution\n# should we replace with from [1] any launch calls?\n\n[1] https://git.opnfv.org/snaps/tree/snaps/openstack/utils/heat_utils.py",
+      "parentUuid": "da33351e_7edeac6e",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_1ef840e4",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
@@ -213,6 +380,24 @@
       "writtenOn": "2017-09-06T16:31:48Z",
       "side": 1,
       "message": "Instead of hardcoding the location of the private key file, you will probably want to use the OpenStackKeypair() object and retrieve the data directly from there.",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_3f56b906",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 847
+      },
+      "writtenOn": "2017-09-20T14:59:41Z",
+      "side": 1,
+      "message": "Yes  OpenStackKeypair()  call in snaps and we can use that.\nfrom snaps.openstack.create_keypair import KeypairSettings, OpenStackKeypair\n  \nkeypair_settings \u003d KeypairSettings(name\u003d\u0027keypair-name\u0027, private_filepath\u003d\u0027/tmp/priv-kp\u0027)\nkeypair_creator \u003d OpenStackKeypair(os_creds, keypair_settings)\nkeypair_creator.create()\n  \n# Perform application-specific logic\n...\n# Cleanup\nkeypair_creator.clean()\n\nFor details refer to\nhttps://wiki.opnfv.org/display/SNAP/SNAPS-OO+Library+Usage",
+      "parentUuid": "da33351e_1ef840e4",
       "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
