@@ -125,7 +125,7 @@ class ODLTests(testcase.TestCase):
            * odlusername,
            * odlpassword,
            * osauthurl,
-           * neutronip,
+           * neutronurl,
            * osusername,
            * ostenantname,
            * ospassword,
@@ -152,9 +152,11 @@ class ODLTests(testcase.TestCase):
             odlusername = kwargs['odlusername']
             odlpassword = kwargs['odlpassword']
             osauthurl = kwargs['osauthurl']
-            keystoneip = urllib.parse.urlparse(osauthurl).hostname
-            variables = ['KEYSTONE:' + keystoneip,
-                         'NEUTRON:' + kwargs['neutronip'],
+            keystoneurl = "{}://{}".format(
+                urllib.parse.urlparse(osauthurl).scheme,
+                urllib.parse.urlparse(osauthurl).netloc)
+            variables = ['KEYSTONEURL:' + keystoneurl,
+                         'NEUTRONURL:' + kwargs['neutronurl'],
                          'OS_AUTH_URL:"' + osauthurl + '"',
                          'OSUSERNAME:"' + kwargs['osusername'] + '"',
                          ('OSUSERDOMAINNAME:"' +
@@ -214,9 +216,10 @@ class ODLTests(testcase.TestCase):
                 suites = kwargs["suites"]
             except KeyError:
                 pass
-            neutron_url = op_utils.get_endpoint(service_type='network')
-            kwargs = {'neutronip': urllib.parse.urlparse(neutron_url).hostname}
-            kwargs['odlip'] = kwargs['neutronip']
+            kwargs = {'neutronurl': op_utils.get_endpoint(
+                service_type='network')}
+            kwargs['odlip'] = urllib.parse.urlparse(
+                kwargs['neutronurl']).hostname
             kwargs['odlwebport'] = '8080'
             kwargs['odlrestconfport'] = '8181'
             kwargs['odlusername'] = 'admin'
@@ -267,8 +270,8 @@ class ODLParser(object):  # pylint: disable=too-few-public-methods
     def __init__(self):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument(
-            '-n', '--neutronip', help='Neutron IP',
-            default='127.0.0.1')
+            '-n', '--neutronurl', help='Neutron Endpoint',
+            default='http://127.0.0.1:9696')
         self.parser.add_argument(
             '-k', '--osauthurl', help='OS_AUTH_URL as defined by OpenStack',
             default='http://127.0.0.1:5000/v3')
