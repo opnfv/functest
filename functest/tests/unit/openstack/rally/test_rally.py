@@ -328,6 +328,52 @@ class OSRallyTesting(unittest.TestCase):
         mock_get_net.assert_called()
         mock_create_router.assert_called()
 
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
+                'get_ext_net_name', return_value='test_net_name')
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_network',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_router',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
+                return_value=None)
+    def test_prepare_env_flavor_creation_failed(
+            self, mock_create_flavor, mock_create_router, mock_create_net,
+            mock_get_img, mock_get_net):
+        self.rally_base.TESTS = ['test1', 'test2']
+        self.rally_base.test_name = 'test1'
+        with self.assertRaises(Exception):
+            self.rally_base._prepare_env()
+        mock_create_net.assert_called()
+        mock_get_img.assert_called()
+        mock_get_net.assert_called()
+        mock_create_router.assert_called()
+        mock_create_flavor.assert_called_once()
+
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
+                'get_ext_net_name', return_value='test_net_name')
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_network',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_router',
+                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
+                side_effect=[mock.Mock, None])
+    def test_prepare_env_flavor_alt_creation_failed(
+            self, mock_create_flavor, mock_create_router, mock_create_net,
+            mock_get_img, mock_get_net):
+        self.rally_base.TESTS = ['test1', 'test2']
+        self.rally_base.test_name = 'test1'
+        with self.assertRaises(Exception):
+            self.rally_base._prepare_env()
+        mock_create_net.assert_called()
+        mock_get_img.assert_called()
+        mock_get_net.assert_called()
+        mock_create_router.assert_called()
+        self.assertEqual(mock_create_flavor.call_count, 2)
+
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_run_task', return_value=mock.Mock())
     def test_run_tests_all(self, mock_run_task):
