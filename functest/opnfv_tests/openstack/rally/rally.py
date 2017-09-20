@@ -29,6 +29,7 @@ from functest.energy import energy
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils.constants import CONST
 
+from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
 from snaps.openstack.create_image import ImageSettings
 from snaps.openstack.create_network import NetworkSettings, SubnetSettings
 from snaps.openstack.create_router import RouterSettings
@@ -54,7 +55,11 @@ class RallyBase(testcase.TestCase):
     if hasattr(CONST, 'openstack_extra_properties'):
         GLANCE_IMAGE_EXTRA_PROPERTIES = CONST.__getattribute__(
             'openstack_extra_properties')
-    FLAVOR_NAME = "m1.tiny"
+    FLAVOR_NAME = CONST.__getattribute__('rally_flavor_name')
+    FLAVOR_ALT_NAME = CONST.__getattribute__('rally_flavor_alt_name')
+    FLAVOR_EXTRA_SPECS = None
+    if hasattr(CONST, 'flavor_extra_specs'):
+        FLAVOR_EXTRA_SPECS = CONST.__getattribute__('flavor_extra_specs')
 
     RALLY_DIR = pkg_resources.resource_filename(
         'functest', 'opnfv_tests/openstack/rally')
@@ -105,6 +110,8 @@ class RallyBase(testcase.TestCase):
         self.image_name = None
         self.ext_net_name = None
         self.priv_net_id = None
+        self.flavor_name = None
+        self.flavor_alt_name = None
         self.smoke = None
         self.test_name = None
         self.start_time = None
@@ -114,7 +121,8 @@ class RallyBase(testcase.TestCase):
     def _build_task_args(self, test_file_name):
         task_args = {'service_list': [test_file_name]}
         task_args['image_name'] = self.image_name
-        task_args['flavor_name'] = self.FLAVOR_NAME
+        task_args['flavor_name'] = self.flavor_name
+        task_args['flavor_alt_name'] = self.flavor_alt_name
         task_args['glance_image_location'] = self.GLANCE_IMAGE_PATH
         task_args['glance_image_format'] = self.GLANCE_IMAGE_FORMAT
         task_args['tmpl_dir'] = self.TEMPLATE_DIR
@@ -472,6 +480,8 @@ class RallyBase(testcase.TestCase):
         subnet_name = self.RALLY_PRIVATE_SUBNET_NAME + self.guid
         router_name = self.RALLY_ROUTER_NAME + self.guid
         self.image_name = self.GLANCE_IMAGE_NAME + self.guid
+        self.flavor_name = self.FLAVOR_NAME + self.guid
+        self.flavor_alt_name = self.FLAVOR_ALT_NAME + self.guid
         self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
 
         LOGGER.debug("Creating image '%s'...", self.image_name)
@@ -510,6 +520,24 @@ class RallyBase(testcase.TestCase):
         if router_creator is None:
             raise Exception("Failed to create router")
         self.creators.append(router_creator)
+
+        LOGGER.debug("Creating flavor '%s'...", self.flavor_name)
+        flavor_creator = OpenStackFlavor(
+            self.os_creds, FlavorSettings(
+                name=self.flavor_name, ram=512, disk=1, vcpus=1,
+                metadata=self.FLAVOR_EXTRA_SPECS))
+        if flavor_creator is None or flavor_creator.create() is None:
+            raise Exception("Failed to create flavor")
+        self.creators.append(flavor_creator)
+
+        LOGGER.debug("Creating flavor '%s'...", self.flavor_alt_name)
+        flavor_alt_creator = OpenStackFlavor(
+            self.os_creds, FlavorSettings(
+                name=self.flavor_alt_name, ram=1024, disk=1, vcpus=1,
+                metadata=self.FLAVOR_EXTRA_SPECS))
+        if flavor_alt_creator is None or flavor_alt_creator.create() is None:
+            raise Exception("Failed to create flavor")
+        self.creators.append(flavor_alt_creator)
 
     def _run_tests(self):
         if self.test_name == 'all':

@@ -215,7 +215,7 @@
       args:
         {{ vm_params(image_name, flavor_name) }}
         to_flavor:
-          name: "m1.small"
+          name: {{ flavor_alt_name }}
         confirm: true
         force_delete: false
         nics:
