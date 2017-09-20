@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_6201c637",
+        "filename": "functest/tests/unit/openstack/rally/test_rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-09-20T11:12:18Z",
+      "side": 1,
+      "message": "I think you\u0027re not obliged to specify a return value here.",
+      "revId": "3b98874f010329198b8c3a13a4711c17a593b9cc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
