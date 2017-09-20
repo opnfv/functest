@@ -16,6 +16,24 @@
       "revId": "3b98874f010329198b8c3a13a4711c17a593b9cc",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_02bf1a62",
+        "filename": "functest/tests/unit/openstack/rally/test_rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-09-20T11:30:52Z",
+      "side": 1,
+      "message": "You\u0027re right. Same thing in several places in this file. I\u0027ll change these in a separate patch.",
+      "parentUuid": "da33351e_6201c637",
+      "revId": "3b98874f010329198b8c3a13a4711c17a593b9cc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
