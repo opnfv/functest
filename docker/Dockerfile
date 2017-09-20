@@ -52,6 +52,8 @@ python-dev \
 python-mock \
 python-pip \
 python3 \
+python3-dev \
+python3-pip \
 postgresql \
 ruby \
 ruby-dev \
@@ -62,6 +64,7 @@ wget \
 --no-install-recommends
 
 RUN pip install --upgrade pip && easy_install -U setuptools==30.0.0
+RUN python3 -m pip install --upgrade pip setuptools==30.0.0
 
 RUN mkdir -p ${REPOS_VNFS_DIR} \
     && mkdir -p ${FUNCTEST_BASE_DIR}/results \
@@ -92,7 +95,7 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
         -rthirdparty-requirements.txt && \
-    python3 -m pip install --no-cache-dir --src /src \
+    python3 -m pip install --src /src \
         -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         doctor-tests && \
