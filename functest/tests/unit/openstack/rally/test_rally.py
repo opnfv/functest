@@ -66,7 +66,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                'apply_blacklist', return_value=mock.Mock())
+                'apply_blacklist')
     def test_prepare_test_list_missing_temp_dir(
             self, mock_method, mock_os_makedirs, mock_path_exists):
         mock_path_exists.side_effect = self.check_temp_dir
@@ -182,8 +182,7 @@ class OSRallyTesting(unittest.TestCase):
         self.assertEqual(self.rally_base.excl_func(), [])
         mock_open.assert_called()
 
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.stat',
-                return_value=mock.Mock())
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.stat')
     def test_file_is_empty_default(self, mock_os_stat):
         attrs = {'st_size': 10}
         mock_os_stat.return_value.configure_mock(**attrs)
@@ -228,7 +227,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_build_task_args', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_get_output', return_value=mock.Mock())
+                '_get_output')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_task_id', return_value=None)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -250,7 +249,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_build_task_args', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_get_output', return_value=mock.Mock())
+                '_get_output')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_task_id', return_value='1')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -261,8 +260,7 @@ class OSRallyTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.subprocess.Popen')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.makedirs')
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.popen',
-                return_value=mock.Mock())
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.popen')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.info')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.error')
     def test_run_task_default(self, mock_logger_error, mock_logger_info,
@@ -294,8 +292,7 @@ class OSRallyTesting(unittest.TestCase):
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_ext_net_name', return_value='test_net_name')
-    @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
-                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_image')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_network',
                 return_value=None)
     def test_prepare_env_network_creation_failed(
@@ -310,10 +307,8 @@ class OSRallyTesting(unittest.TestCase):
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_ext_net_name', return_value='test_net_name')
-    @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
-                return_value=mock.Mock())
-    @mock.patch('snaps.openstack.utils.deploy_utils.create_network',
-                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_image')
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_network')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_router',
                 return_value=None)
     def test_prepare_env_router_creation_failed(
@@ -330,12 +325,9 @@ class OSRallyTesting(unittest.TestCase):
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_ext_net_name', return_value='test_net_name')
-    @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
-                return_value=mock.Mock())
-    @mock.patch('snaps.openstack.utils.deploy_utils.create_network',
-                return_value=mock.Mock())
-    @mock.patch('snaps.openstack.utils.deploy_utils.create_router',
-                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_image')
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_network')
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_router')
     @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
                 return_value=None)
     def test_prepare_env_flavor_creation_failed(
@@ -353,12 +345,9 @@ class OSRallyTesting(unittest.TestCase):
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_ext_net_name', return_value='test_net_name')
-    @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
-                return_value=mock.Mock())
-    @mock.patch('snaps.openstack.utils.deploy_utils.create_network',
-                return_value=mock.Mock())
-    @mock.patch('snaps.openstack.utils.deploy_utils.create_router',
-                return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_image')
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_network')
+    @mock.patch('snaps.openstack.utils.deploy_utils.create_router')
     @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
                 side_effect=[mock.Mock, None])
     def test_prepare_env_flavor_alt_creation_failed(
@@ -375,7 +364,7 @@ class OSRallyTesting(unittest.TestCase):
         self.assertEqual(mock_create_flavor.call_count, 2)
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_run_task', return_value=mock.Mock())
+                '_run_task')
     def test_run_tests_all(self, mock_run_task):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'all'
@@ -384,7 +373,7 @@ class OSRallyTesting(unittest.TestCase):
         mock_run_task.assert_any_call('test2')
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_run_task', return_value=mock.Mock())
+                '_run_task')
     def test_run_tests_default(self, mock_run_task):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
