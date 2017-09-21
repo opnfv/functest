@@ -13,6 +13,7 @@ Resources to handle testcase related requests
 
 import logging
 import os
+import re
 import pkg_resources
 import socket
 import uuid
@@ -43,7 +44,7 @@ class V1Testcases(ApiResource):
     def get(self):  # pylint: disable=no-self-use
         """ GET all testcases """
         testcases_list = Testcase().list()
-        result = {'testcases': testcases_list.split('\n')[:-1]}
+        result = {'testcases': re.split(' |\n ', testcases_list)[1:]}
         return jsonify(result)
 
 
