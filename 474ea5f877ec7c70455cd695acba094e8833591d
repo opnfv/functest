@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_4e5dc946",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-09-21T14:47:24Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "da33351e_9f56e628",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_ca02930a",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "Sounds correct, lets init with None here",
       "parentUuid": "da33351e_ca02930a",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_6e608d01",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-09-21T14:47:24Z",
+      "side": 1,
+      "message": "sure",
+      "parentUuid": "da33351e_3f0b5a2b",
       "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -124,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_0e48e185",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-09-21T14:47:24Z",
+      "side": 1,
+      "message": "okay",
+      "parentUuid": "da33351e_1fb5b67d",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_de51b80f",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
@@ -153,6 +207,24 @@
       "side": 1,
       "message": "let\u0027s  use CONST like in vping_base.py referred above to save for cleanup",
       "parentUuid": "da33351e_de51b80f",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_2e43256d",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-09-21T14:47:24Z",
+      "side": 1,
+      "message": "okay",
+      "parentUuid": "da33351e_df1a2e7c",
       "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -230,6 +302,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_ee33fd11",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-09-21T14:47:24Z",
+      "side": 1,
+      "message": "I\u0027m kind of agree with Morgan Richomme comment, maybe need to dig more to conclude.",
+      "parentUuid": "da33351e_aa5f4f40",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 163,
+        "endChar": 28
+      },
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_c8abb61b",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
@@ -247,6 +343,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_6e27edca",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-09-21T14:47:24Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "da33351e_c8abb61b",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_3e59c436",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
@@ -258,6 +372,24 @@
       "writtenOn": "2017-09-06T16:31:48Z",
       "side": 1,
       "message": "If you are using an existing private key file, you will need the public key file as well here; however, as the OpenStackKeypair#create() method will generate one, if the file does not exist, you would not have to configure that.",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_0e3f41d7",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-09-21T14:47:24Z",
+      "side": 1,
+      "message": "okay",
+      "parentUuid": "da33351e_3e59c436",
       "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -299,6 +431,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_4e24a9c4",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-09-21T14:47:24Z",
+      "side": 1,
+      "message": "okay",
+      "parentUuid": "da33351e_3f887ac4",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_7e698cbd",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
@@ -328,6 +478,24 @@
       "side": 1,
       "message": "No should limit to limited SIP ports say 5060-5069 for testing max say 10 seeesions for both tcp and udp\nport_range_min\u003d5060\nport_range_max\u003d5069",
       "parentUuid": "da33351e_7e698cbd",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_ae2d75aa",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-09-21T14:47:24Z",
+      "side": 1,
+      "message": "okay",
+      "parentUuid": "da33351e_9f91c6f3",
       "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -398,6 +566,24 @@
       "side": 1,
       "message": "Yes  OpenStackKeypair()  call in snaps and we can use that.\nfrom snaps.openstack.create_keypair import KeypairSettings, OpenStackKeypair\n  \nkeypair_settings \u003d KeypairSettings(name\u003d\u0027keypair-name\u0027, private_filepath\u003d\u0027/tmp/priv-kp\u0027)\nkeypair_creator \u003d OpenStackKeypair(os_creds, keypair_settings)\nkeypair_creator.create()\n  \n# Perform application-specific logic\n...\n# Cleanup\nkeypair_creator.clean()\n\nFor details refer to\nhttps://wiki.opnfv.org/display/SNAP/SNAPS-OO+Library+Usage",
       "parentUuid": "da33351e_1ef840e4",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_8e2a318e",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-09-21T14:47:24Z",
+      "side": 1,
+      "message": "agree",
+      "parentUuid": "da33351e_3f56b906",
       "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
