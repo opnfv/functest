@@ -20,6 +20,7 @@ from robot.errors import DataError, RobotError
 from robot.result import model
 from robot.utils.robottime import timestamp_to_secs
 import six
+from six.moves import urllib
 
 from functest.core import testcase
 from functest.opnfv_tests.sdn.odl import odl
@@ -67,7 +68,7 @@ class ODLTesting(unittest.TestCase):
     logging.disable(logging.CRITICAL)
 
     _keystone_ip = "127.0.0.1"
-    _neutron_ip = "127.0.0.2"
+    _neutron_url = "http://127.0.0.2:9696"
     _sdn_controller_ip = "127.0.0.3"
     _os_auth_url = "http://{}:5000/v3".format(_keystone_ip)
     _os_tenantname = "admin"
@@ -94,7 +95,8 @@ class ODLTesting(unittest.TestCase):
         self.test = odl.ODLTests(case_name='odl', project_name='functest')
         self.defaultargs = {'odlusername': self._odl_username,
                             'odlpassword': self._odl_password,
-                            'neutronip': self._keystone_ip,
+                            'neutronurl': "http://{}:9696".format(
+                                self._keystone_ip),
                             'osauthurl': self._os_auth_url,
                             'osusername': self._os_username,
                             'osuserdomainname': self._os_userdomainname,
@@ -167,14 +169,14 @@ class ODLRobotTesting(ODLTesting):
         self.assertFalse(self.test.set_robotframework_vars())
         mock_method.assert_called_once_with(
             os.path.join(odl.ODLTests.odl_test_repo,
-                         'csit/variables/Variables.py'), inplace=True)
+                         'csit/variables/Variables.robot'), inplace=True)
 
     @mock.patch('fileinput.input', return_value=[])
     def test_set_vars_empty(self, mock_method):
         self.assertTrue(self.test.set_robotframework_vars())
         mock_method.assert_called_once_with(
             os.path.join(odl.ODLTests.odl_test_repo,
-                         'csit/variables/Variables.py'), inplace=True)
+                         'csit/variables/Variables.robot'), inplace=True)
 
     @mock.patch('sys.stdout', new_callable=six.StringIO)
     def _test_set_vars(self, msg1, msg2, *args):
@@ -184,27 +186,31 @@ class ODLRobotTesting(ODLTesting):
             self.assertTrue(self.test.set_robotframework_vars())
             mock_method.assert_called_once_with(
                 os.path.join(odl.ODLTests.odl_test_repo,
-                             'csit/variables/Variables.py'), inplace=True)
+                             'csit/variables/Variables.robot'), inplace=True)
             self.assertEqual(args[0].getvalue(), "{}\n".format(msg2))
 
     def test_set_vars_auth_default(self):
-        self._test_set_vars("AUTH = []",
-                            "AUTH = [u'admin', u'admin']")
+        self._test_set_vars(
+            "@{AUTH} ",
+            "@{AUTH}           admin    admin")
 
     def test_set_vars_auth1(self):
-        self._test_set_vars("AUTH1 = []", "AUTH1 = []")
+        self._test_set_vars(
+            "@{AUTH1}           foo    bar",
+            "@{AUTH1}           foo    bar")
 
     @mock.patch('sys.stdout', new_callable=six.StringIO)
     def test_set_vars_auth_foo(self, *args):
         line = mock.MagicMock()
-        line.__iter__.return_value = ["AUTH = []"]
+        line.__iter__.return_value = ["@{AUTH} "]
         with mock.patch('fileinput.input', return_value=line) as mock_method:
             self.assertTrue(self.test.set_robotframework_vars('foo', 'bar'))
             mock_method.assert_called_once_with(
                 os.path.join(odl.ODLTests.odl_test_repo,
-                             'csit/variables/Variables.py'), inplace=True)
-            self.assertEqual(args[0].getvalue(),
-                             "AUTH = [u'{}', u'{}']\n".format('foo', 'bar'))
+                             'csit/variables/Variables.robot'), inplace=True)
+            self.assertEqual(
+                args[0].getvalue(),
+                "@{AUTH}           foo    bar\n")
 
 
 class ODLMainTesting(ODLTesting):
@@ -215,7 +221,7 @@ class ODLMainTesting(ODLTesting):
     def _get_run_suites_kwargs(self, key=None):
         kwargs = {'odlusername': self._odl_username,
                   'odlpassword': self._odl_password,
-                  'neutronip': self._neutron_ip,
+                  'neutronurl': self._neutron_url,
                   'osauthurl': self._os_auth_url,
                   'osusername': self._os_username,
                   'osuserdomainname': self._os_userdomainname,
@@ -236,19 +242,20 @@ class ODLMainTesting(ODLTesting):
             args[0].assert_called_once_with(
                 odl.ODLTests.res_dir)
         if len(args) > 1:
-            variable = ['KEYSTONE:{}'.format(self._keystone_ip),
-                        'NEUTRON:{}'.format(self._neutron_ip),
-                        'OS_AUTH_URL:"{}"'.format(self._os_auth_url),
-                        'OSUSERNAME:"{}"'.format(self._os_username),
-                        'OSUSERDOMAINNAME:"{}"'.format(
-                            self._os_userdomainname),
-                        'OSTENANTNAME:"{}"'.format(self._os_tenantname),
-                        'OSPROJECTDOMAINNAME:"{}"'.format(
-                            self._os_projectdomainname),
-                        'OSPASSWORD:"{}"'.format(self._os_password),
-                        'ODL_SYSTEM_IP:{}'.format(self._sdn_controller_ip),
-                        'PORT:{}'.format(self._odl_webport),
-                        'RESTCONFPORT:{}'.format(self._odl_restconfport)]
+            variable = [
+                'KEYSTONEURL:{}://{}'.format(
+                    urllib.parse.urlparse(self._os_auth_url).scheme,
+                    urllib.parse.urlparse(self._os_auth_url).netloc),
+                'NEUTRONURL:{}'.format(self._neutron_url),
+                'OS_AUTH_URL:"{}"'.format(self._os_auth_url),
+                'OSUSERNAME:"{}"'.format(self._os_username),
+                'OSUSERDOMAINNAME:"{}"'.format(self._os_userdomainname),
+                'OSTENANTNAME:"{}"'.format(self._os_tenantname),
+                'OSPROJECTDOMAINNAME:"{}"'.format(self._os_projectdomainname),
+                'OSPASSWORD:"{}"'.format(self._os_password),
+                'ODL_SYSTEM_IP:{}'.format(self._sdn_controller_ip),
+                'PORT:{}'.format(self._odl_webport),
+                'RESTCONFPORT:{}'.format(self._odl_restconfport)]
             args[1].assert_called_once_with(
                 odl.ODLTests.basic_suite_dir,
                 odl.ODLTests.neutron_suite_dir,
@@ -272,8 +279,8 @@ class ODLMainTesting(ODLTesting):
     def test_no_odlpassword(self):
         self._test_no_keyword('odlpassword')
 
-    def test_no_neutronip(self):
-        self._test_no_keyword('neutronip')
+    def test_no_neutronurl(self):
+        self._test_no_keyword('neutronurl')
 
     def test_no_osauthurl(self):
         self._test_no_keyword('osauthurl')
@@ -367,8 +374,7 @@ class ODLRunTesting(ODLTesting):
 
     def _test_no_env_var(self, var):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        return_value="http://{}:9696".format(
-                            ODLTesting._neutron_ip)):
+                        return_value=ODLTesting._neutron_url):
             del os.environ[var]
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
@@ -381,8 +387,7 @@ class ODLRunTesting(ODLTesting):
                            if 'odlrestconfport' in kwargs else '8181')
 
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        return_value="http://{}:9696".format(
-                            ODLTesting._neutron_ip)):
+                        return_value=ODLTesting._neutron_url):
             if exception:
                 self.test.run_suites = mock.Mock(side_effect=exception)
             else:
@@ -390,7 +395,7 @@ class ODLRunTesting(ODLTesting):
             self.assertEqual(self.test.run(), status)
             self.test.run_suites.assert_called_once_with(
                 odl.ODLTests.default_suites,
-                neutronip=self._neutron_ip,
+                neutronurl=self._neutron_url,
                 odlip=odlip, odlpassword=self._odl_password,
                 odlrestconfport=odlrestconfport,
                 odlusername=self._odl_username, odlwebport=odlwebport,
@@ -407,13 +412,12 @@ class ODLRunTesting(ODLTesting):
         odlrestconfport = (kwargs['odlrestconfport']
                            if 'odlrestconfport' in kwargs else '8181')
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        return_value="http://{}:9696".format(
-                            ODLTesting._neutron_ip)):
+                        return_value=ODLTesting._neutron_url):
             self.test.run_suites = mock.Mock(return_value=status)
             self.assertEqual(self.test.run(suites=suites), status)
             self.test.run_suites.assert_called_once_with(
                 suites,
-                neutronip=self._neutron_ip,
+                neutronurl=self._neutron_url,
                 odlip=odlip, odlpassword=self._odl_password,
                 odlrestconfport=odlrestconfport,
                 odlusername=self._odl_username, odlwebport=odlwebport,
@@ -457,8 +461,7 @@ class ODLRunTesting(ODLTesting):
 
     def test_no_sdn_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        return_value="http://{}:9696".format(
-                            ODLTesting._neutron_ip)):
+                        return_value=ODLTesting._neutron_url):
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
 
@@ -479,13 +482,13 @@ class ODLRunTesting(ODLTesting):
     def test_fuel(self):
         os.environ["INSTALLER_TYPE"] = "fuel"
         self._test_run(testcase.TestCase.EX_OK,
-                       odlip=self._neutron_ip, odlwebport='8181',
+                       odlip=urllib.parse.urlparse(self._neutron_url).hostname,
+                       odlwebport='8181',
                        odlrestconfport='8282')
 
     def test_apex_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        return_value="http://{}:9696".format(
-                            ODLTesting._neutron_ip)):
+                        return_value=ODLTesting._neutron_url):
             os.environ["INSTALLER_TYPE"] = "apex"
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
@@ -499,8 +502,7 @@ class ODLRunTesting(ODLTesting):
 
     def test_netvirt_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        return_value="http://{}:9696".format(
-                            ODLTesting._neutron_ip)):
+                        return_value=ODLTesting._neutron_url):
             os.environ["INSTALLER_TYPE"] = "netvirt"
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
@@ -514,8 +516,7 @@ class ODLRunTesting(ODLTesting):
 
     def test_joid_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        return_value="http://{}:9696".format(
-                            ODLTesting._neutron_ip)):
+                        return_value=ODLTesting._neutron_url):
             os.environ["INSTALLER_TYPE"] = "joid"
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
@@ -529,12 +530,12 @@ class ODLRunTesting(ODLTesting):
     def test_compass(self):
         os.environ["INSTALLER_TYPE"] = "compass"
         self._test_run(testcase.TestCase.EX_OK,
-                       odlip=self._neutron_ip, odlrestconfport='8080')
+                       odlip=urllib.parse.urlparse(self._neutron_url).hostname,
+                       odlrestconfport='8080')
 
     def test_daisy_no_controller_ip(self):
         with mock.patch('functest.utils.openstack_utils.get_endpoint',
-                        return_value="http://{}:9696".format(
-                            ODLTesting._neutron_ip)):
+                        return_value=ODLTesting._neutron_url):
             os.environ["INSTALLER_TYPE"] = "daisy"
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
@@ -560,11 +561,11 @@ class ODLArgParserTesting(ODLTesting):
         self.assertEqual(self.parser.parse_args(), self.defaultargs)
 
     def test_basic(self):
-        self.defaultargs['neutronip'] = self._neutron_ip
+        self.defaultargs['neutronurl'] = self._neutron_url
         self.defaultargs['odlip'] = self._sdn_controller_ip
         self.assertEqual(
             self.parser.parse_args(
-                ["--neutronip={}".format(self._neutron_ip),
+                ["--neutronurl={}".format(self._neutron_url),
                  "--odlip={}".format(self._sdn_controller_ip)]),
             self.defaultargs)
 
@@ -590,8 +591,8 @@ class ODLArgParserTesting(ODLTesting):
     def test_osauthurl(self):
         self._test_arg('osauthurl', 'http://127.0.0.4:5000/v2')
 
-    def test_neutronip(self):
-        self._test_arg('neutronip', '127.0.0.4')
+    def test_neutronurl(self):
+        self._test_arg('neutronurl', 'http://127.0.0.4:9696')
 
     def test_osusername(self):
         self._test_arg('osusername', 'foo')
@@ -623,11 +624,11 @@ class ODLArgParserTesting(ODLTesting):
                          self.defaultargs)
 
     def test_multiple_args(self):
-        self.defaultargs['neutronip'] = self._neutron_ip
+        self.defaultargs['neutronurl'] = self._neutron_url
         self.defaultargs['odlip'] = self._sdn_controller_ip
         self.assertEqual(
             self.parser.parse_args(
-                ["--neutronip={}".format(self._neutron_ip),
+                ["--neutronurl={}".format(self._neutron_url),
                  "--odlip={}".format(self._sdn_controller_ip)]),
             self.defaultargs)
 
