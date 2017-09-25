@@ -365,10 +365,10 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
 
     def test_vnf(self):
         cfy_client = self.orchestrator['object']
-        credentials = {"username": self.creds["username"],
-                       "password": self.creds["password"],
-                       "auth_url": self.creds["auth_url"],
-                       "tenant_name": self.creds["tenant"],
+        credentials = {"username": self.snaps_creds.username,
+                       "password": self.snaps_creds.password,
+                       "auth_url": self.snaps_creds.auth_url,
+                       "tenant_name": self.snaps_creds.project_name,
                        "region_name": os.environ['OS_REGION_NAME']}
 
         self.util_info = {"credentials": credentials,
