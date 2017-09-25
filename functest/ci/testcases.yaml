@@ -243,8 +243,8 @@ tiers:
                 description: >-
                     Test suite from Promise project.
                 dependencies:
-                    installer: '(fuel)|(joid)'
-                    scenario: ''
+                    installer: 'joid'
+                    scenario: 'ocl-nofeature'
                 run:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
