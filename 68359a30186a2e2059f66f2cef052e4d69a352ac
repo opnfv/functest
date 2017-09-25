@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_92288fe3",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 346
+      },
+      "writtenOn": "2017-09-25T15:05:37Z",
+      "side": 1,
+      "message": "Please limit to os-ocl-nofeature-noha/ha scenarios (Still supporting Keystone V2)",
+      "range": {
+        "startLine": 247,
+        "startChar": 30,
+        "endLine": 247,
+        "endChar": 32
+      },
+      "revId": "68359a30186a2e2059f66f2cef052e4d69a352ac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
