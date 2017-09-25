@@ -243,7 +243,7 @@ tiers:
                 description: >-
                     Test suite from Promise project.
                 dependencies:
-                    installer: '(fuel)|(joid)'
+                    installer: 'joid'
                     scenario: ''
                 run:
                     module: 'functest.core.feature'
