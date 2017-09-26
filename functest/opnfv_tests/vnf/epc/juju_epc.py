@@ -10,39 +10,25 @@
 import logging
 import os
 import time
-import yaml
-from scp import SCPClient
 import json
 import sys
 from copy import deepcopy
-from novaclient import client as novaclient
+import yaml
 
 from functest.utils.constants import CONST
-from functest.utils.functest_utils import download_url
 import functest.utils.openstack_utils as os_utils
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 
 from snaps.openstack.os_credentials import OSCreds
-from snaps.openstack.create_network import NetworkSettings, SubnetSettings, \
-                                            OpenStackNetwork
-from snaps.openstack.create_security_group import SecurityGroupSettings, \
-                                                    SecurityGroupRuleSettings,\
-                                                    Direction, Protocol, \
-                                                    OpenStackSecurityGroup
+from snaps.openstack.create_network import NetworkSettings, SubnetSettings
+from snaps.openstack.create_network import OpenStackNetwork
 from snaps.openstack.create_router import RouterSettings, OpenStackRouter
-from snaps.openstack.create_instance import VmInstanceSettings, \
-                                                FloatingIpSettings, \
-                                                OpenStackVmInstance
 from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
 from snaps.openstack.create_image import ImageSettings, OpenStackImage
-#from snaps.openstack.create_keypairs import KeypairSettings, OpenStackKeypair
-from snaps.openstack.create_network import PortSettings
 import pkg_resources
 from snaps.openstack.tests import openstack_tests
-from snaps.openstack.utils import deploy_utils
 
 import functest.core.vnf as vnf
-
 
 __author__ = "Amarendra Meher <amarendra@rebaca.com>"
 
@@ -65,7 +51,6 @@ class JujuEpc(vnf.VnfOnBoarding):
                 'vnf_{}_config'.format(self.case_name))
         except Exception:
             raise Exception("VNF config file not found")
-       
         config_file = os.path.join(self.case_dir, self.config)
         self.orchestrator = dict(
             requirements=get_config("orchestrator.requirements", config_file),
@@ -75,7 +60,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.snaps_creds = ''
 
         self.os_creds = openstack_tests.get_credentials(
-                os_env_file=CONST.__getattribute__('openstack_creds'))
+            os_env_file=CONST.__getattribute__('openstack_creds'))
 
         self.details['orchestrator'] = dict(
             name=get_config("orchestrator.name", config_file),
@@ -106,19 +91,18 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.glance_client = os_utils.get_glance_client()
         self.neutron_client = os_utils.get_neutron_client()
         self.nova_client = os_utils.get_nova_client()
-    
+
     def prepare(self):
         """Prepare testcase (Additional pre-configuration steps)."""
-        start_time = time.time()
         self.__logger.debug("OS Credentials: %s", os_utils.get_credentials())
 
         if os_utils.get_credentials()['project_name'] == self.tenant_name:
-           self.creds = {
+            self.creds = {
                 "tenant": self.tenant_name,
                 "username": os_utils.get_credentials()['username'],
                 "password": os_utils.get_credentials()['password'],
                 "auth_url": os_utils.get_credentials()['auth_url']
-                }
+            }
         else:
             super(JujuEpc, self).prepare()
 
@@ -126,32 +110,30 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("Additional pre-configuration steps")
 
         self.snaps_creds = OSCreds(
-           username=self.creds['username'],
-           password=self.creds['password'],
-           auth_url=self.creds['auth_url'],
-           project_name=self.creds['tenant'],
-           identity_api_version=int(os_utils.get_keystone_client_version()))
+            username=self.creds['username'],
+            password=self.creds['password'],
+            auth_url=self.creds['auth_url'],
+            project_name=self.creds['tenant'],
+            identity_api_version=int(os_utils.get_keystone_client_version()))
 
         cmd = "sed -i 's#endpoint:.*#endpoint: {}#g' {}/abot_epc_\
 cloud.yaml".format(self.creds['auth_url'], self.case_dir)
         os.system(cmd)
-     
         if self.snaps_creds.identity_api_version == 3:
-            cmd = "sed -i '/username/a\      user-domain-name: {}' {}/abot_\
-epc_credential.yaml".format(os_utils.get_credentials()['user_domain_name'],
-                            self.case_dir)
+            cmd = "sed -i '/username/a\      user-domain-name: {}' {}/abot_" \
+                  "epc_credential.yaml".format(os_utils.get_credentials()
+                                               ['user_domain_name'],
+                                               self.case_dir)
             os.system(cmd)
-            cmd = "sed -i '/username/a\      project-domain-name: {}' {}/\
-abot_epc_credential.yaml".format(os_utils.get_credentials()\
-                                 ['project_domain_name'],
-                                 self.case_dir)
+            cmd = "sed -i '/username/a\      project-domain-name: {}' {}" \
+                  "/abot_epc_credential.yaml".format(os_utils.get_credentials()
+                                                     ['project_domain_name'],
+                                                     self.case_dir)
             os.system(cmd)
-        #self.creds['auth_url']
         os.system('apt-get -y install \
                    {}'.format(self.orchestrator['requirements']['pip']))
-        os.system('pip3 install {}'.format(self.orchestrator['requirements']\
-                                           ['pip3_packages']))
-        
+        os.system('pip3 install {}'.format(self.orchestrator
+                                           ['requirements']['pip3_packages']))
         self.__logger.info("Upload some OS images if it doesn't exist")
         for image_name, image_url in self.images.iteritems():
             self.__logger.info("image: %s, url: %s", image_name, image_url)
@@ -164,23 +146,21 @@ abot_epc_credential.yaml".format(os_utils.get_credentials()\
                                   url=image_url))
                 image_creator.create()
                 self.created_object.append(image_creator)
-        duration = time.time() - start_time
 
     def deploy_orchestrator(self):
         self.__logger.info("Deployed Orchestrator")
-        start_time = time.time()
         private_net_name = CONST.__getattribute__(
-                'vnf_{}_private_net_name'.format(self.case_name))
+            'vnf_{}_private_net_name'.format(self.case_name))
         private_subnet_name = CONST.__getattribute__(
-                'vnf_{}_private_subnet_name'.format(self.case_name))
+            'vnf_{}_private_subnet_name'.format(self.case_name))
         private_subnet_cidr = CONST.__getattribute__(
-                'vnf_{}_private_subnet_cidr'.format(self.case_name))
+            'vnf_{}_private_subnet_cidr'.format(self.case_name))
         abot_router = CONST.__getattribute__(
-                'vnf_{}_external_router'.format(self.case_name))
-        dns_nameserver =  CONST.__getattribute__(
-                'vnf_{}_dns_nameserver'.format(self.case_name))
-        ext_net_name =  CONST.__getattribute__(
-                'vnf_{}_external_network_name'.format(self.case_name))
+            'vnf_{}_external_router'.format(self.case_name))
+        dns_nameserver = CONST.__getattribute__(
+            'vnf_{}_dns_nameserver'.format(self.case_name))
+        ext_net_name = CONST.__getattribute__(
+            'vnf_{}_external_network_name'.format(self.case_name))
 
         self.__logger.info("Creating full network ...")
         subnet_settings = SubnetSettings(name=private_subnet_name,
@@ -193,9 +173,9 @@ abot_epc_credential.yaml".format(os_utils.get_credentials()\
         self.created_object.append(network_creator)
 
         if ext_net_name:
-           self.__logger.info("External network name %s", ext_net_name)
+            self.__logger.info("External network name %s", ext_net_name)
         else:
-           ext_net_name = snaps_utils.get_ext_net_name(self.snaps_creds)
+            ext_net_name = snaps_utils.get_ext_net_name(self.snaps_creds)
 
         self.__logger.info("Creating network Router ....")
         router_creator = OpenStackRouter(
@@ -206,7 +186,6 @@ abot_epc_credential.yaml".format(os_utils.get_credentials()\
                 internal_subnets=[subnet_settings.name]))
         router_creator.create()
         self.created_object.append(router_creator)
-        #instances = os_utils.get_instances(self.nova_client)
         self.__logger.info("Creating Flavor ....")
         flavor_settings = FlavorSettings(
             name=self.orchestrator['requirements']['flavor']['name'],
@@ -218,42 +197,43 @@ abot_epc_credential.yaml".format(os_utils.get_credentials()\
         flavor_creator.create()
         self.created_object.append(flavor_creator)
         self.__logger.info("Installing Dependency Packages .......")
-        os.system('apt-get -y install \
-                   {}'.format(self.orchestrator['requirements']\
-                              ['dep_package']))
-        os.system('add-apt-repository -y {}'.\
-                   format(self.orchestrator['requirements']['repo_link']))
+        os.system('apt-get -y install {}'.format(self.orchestrator
+                                                 ['requirements']
+                                                 ['dep_package']))
+        os.system('add-apt-repository -y {}'.format(self.orchestrator
+                                                    ['requirements']
+                                                    ['repo_link']))
         os.system('apt-get -y update')
-        os.system('apt-get -y install {}'.format(self.details['orchestrator']\
-                                                      ['name']))
+        os.system('apt-get -y install {}'.format(self.details
+                                                 ['orchestrator']
+                                                 ['name']))
         self.__logger.info("Creating Cloud for Abot-epc .....")
-        os.system('juju add-cloud abot-epc -f {}/abot_epc_cloud.yaml'\
-                  .format(self.case_dir))
-        os.system('juju add-credential abot-epc -f {}/abot_epc_credential.yaml'\
-                  .format(self.case_dir))
+        os.system('juju add-cloud abot-epc -f {}/abot_'
+                  'epc_cloud.yaml'.format(self.case_dir))
+        os.system('juju add-credential abot-epc -f {}/abot'
+                  '_epc_credential.yaml'.format(self.
+                                                case_dir))
         for image_name, image_url in self.images.iteritems():
             self.__logger.info("Generating Metadata for %s", image_name)
             image_id = os_utils.get_image_id(self.glance_client, image_name)
-            os.system('juju metadata generate-image -d ~ -i {} -s {} -r \
-                       RegionOne -u {}'.format(image_id, image_name,
+            os.system('juju metadata generate-image -d ~ -i {} -s {} -r '
+                      'RegionOne -u {}'.format(image_id,
+                                               image_name,
                                                self.creds['auth_url']))
-         
         net_id = os_utils.get_network_id(self.neutron_client, private_net_name)
         self.__logger.info("Credential information  : %s", net_id)
-        juju_bootstrap_command = 'juju bootstrap abot-epc abot-controller --config \
-                   network={} --metadata-source ~  --constraints mem=2G \
-                   --bootstrap-series trusty --config use-floating-ip=true'.\
-                   format(net_id)
+        juju_bootstrap_command = 'juju bootstrap abot-epc abot-controller ' \
+                                 '--config network={} --metadata-source ~  ' \
+                                 '--constraints mem=2G --bootstrap-series trusty ' \
+                                 '--config use-floating-ip=true'. \
+            format(net_id)
         os.system(juju_bootstrap_command)
         return True
-        duration = time.time() - start_time
 
     def deploy_vnf(self):
         """Deploy ABOT-OAI-EPC."""
-        start_time = time.time()
         self.__logger.info("Upload VNFD")
         descriptor = self.vnf['descriptor']
-        #download_url(descriptor.get('url'), self.case_dir)
         self.__logger.info("Get or create flavor for all Abot-EPC")
         flavor_settings = FlavorSettings(
             name=self.vnf['requirements']['flavor']['name'],
@@ -263,58 +243,57 @@ abot_epc_credential.yaml".format(os_utils.get_credentials()\
         flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
         flavor_creator.create()
         self.created_object.append(flavor_creator)
-        self.__logger.info("Deploying Abot-epc bundle file ...") 
-        os.system('juju deploy {}'.format('/' + 
-                                          descriptor.get('file_name')))
+        self.__logger.info("Deploying Abot-epc bundle file ...")
+        os.system('juju deploy {}'.format('/' + descriptor.get('file_name')))
         self.__logger.info("Waiting for instances .....")
         status = os.system('juju-wait')
         self.__logger.info("juju wait completed: %s", status)
         self.__logger.info("Deployed Abot-epc on Openstack")
         if status == 0:
-            instances =  self.nova_client.servers.list()
+            instances = self.nova_client.servers.list()
             for items in instances:
-                #self.__logger.info("Getting information from Instances %s", items)
                 metadata = get_instance_metadata(self.nova_client, items)
                 if metadata.has_key('juju-units-deployed'):
                     sec_group = 'juju-' + metadata['juju-controller-uuid'] + \
-                        '-' + metadata['juju-model-uuid']
+                                '-' + metadata['juju-model-uuid']
                     self.sec_group_id = os_utils.get_security_group_id(
-                                        self.neutron_client, sec_group)
+                        self.neutron_client, sec_group)
                     break
             self.__logger.info("Adding Security group rule....")
             os_utils.create_secgroup_rule(self.neutron_client,
                                           self.sec_group_id, 'ingress', 132)
-            self.__logger.info("Copying the feature files to Abot_node ") 
-            os.system('juju scp -- -r {}/featureFiles abot-epc-basic/0:~/'.format(self.case_dir))
+            self.__logger.info("Copying the feature files to Abot_node ")
+            os.system('juju scp -- -r {}/featureFiles abot-'
+                      'epc-basic/0:~/'.format(self.case_dir))
             self.__logger.info("Copying the feature files in Abot_node ")
-            os.system("juju ssh abot-epc-basic/0 'sudo rsync -azvv ~/featureFiles /etc/rebaca-test-suite/featureFiles'")
+            os.system("juju ssh abot-epc-basic/0 'sudo rsync -azvv "
+                      "~/featureFiles "
+                      "/etc/rebaca-test-suite/featureFiles'")
             count = 0
             while count < 10:
-                epcstatus = os.system('juju status oai-epc | grep OAI\ EPC\ is\ running')
+                epcstatus = os.system('juju status oai-epc | '
+                                      'grep OAI\ EPC\ is\ running')
                 if epcstatus == 0:
-                   break
+                    break
                 else:
-                   time.sleep(60)
-                   count = count + 1
-            #os.system('juju run-action abot-epc-basic/0 run \
-            #           tagnames={}'.format('Attach_Procedure_AttachWithIMSI'))
+                    time.sleep(60)
+                    count = count + 1
             os.system('juju-wait')
             return True
         else:
             return False
-        
-        duration = time.time() - start_time
 
     def test_vnf(self):
         start_time = time.time()
         self.__logger.info("Running VNF Test cases....")
-        os.system('juju run-action abot-epc-basic/0 run \
-                   tagnames={}'.format(self.details['test_vnf']['tag_name']))
+        os.system('juju run-action abot-epc-basic/0 run '
+                  'tagnames={}'.format(self.details['test_vnf']['tag_name']))
         os.system('juju-wait')
         duration = time.time() - start_time
         self.__logger.info("Getting results from Abot node....")
-        os.system('juju scp abot-epc-basic/0:/var/lib/abot-epc-basic/artifacts/TestResults.json {}/.'.\
-                   format(self.case_dir))
+        os.system('juju scp abot-epc-basic/0:/var/lib/abot-'
+                  'epc-basic/artifacts/TestResults.json {}/.'
+                  .format(self.case_dir))
         self.__logger.info("Parsing the Test results...")
         res = process_abot_test_result('{}/TestResults.\
 json'.format(self.case_dir))
@@ -327,42 +306,43 @@ json'.format(self.case_dir))
 
         self.__logger.info("Test VNF result: Passed: %d, Failed:\
 %d, Skipped: %d", short_result['passed'],
-                            short_result['failures'], short_result['skipped'])
-        return True 
-
+                           short_result['failures'], short_result['skipped'])
+        return True
 
     def clean(self):
         try:
             if not self.orchestrator['requirements']['preserve_setup']:
-
                 descriptor = self.vnf['descriptor']
                 self.__logger.info("Removing deployment files...")
                 os.system('rm {}'.format(self.case_dir + '/' +
                                          descriptor.get('file_name')))
-                os.system('rm {}'.format(self.case_dir + '/' + 
-                                            'TestResults.json'))
-                os.system("sed -i '/project-domain-name/Q' {}/abot_epc_credential.yaml".\
-                          format(self.case_dir))  
+                os.system('rm {}'.format(self.case_dir + '/' +
+                                         'TestResults.json'))
+                os.system("sed -i '/project-domain-name/Q' {}/abot_epc"
+                          "credential.yaml".format(self.case_dir))
                 self.__logger.info("Destroying Orchestrator...")
-                os.system('juju destroy-controller -y abot-controller --destroy-all-models')
+                os.system('juju destroy-controller -y abot-controller '
+                          '--destroy-all-models')
                 self.__logger.info("Uninstalling dependency packages...")
                 os.system('dpkg --configure -a')
-                os.system('apt-get -y remove {}'.\
-                           format(self.details['orchestrator']['name']))
-                os.system('apt-get -y remove {}'.\
-                           format(self.orchestrator['requirements']['dep_package']))
-                os.system('pip3 uninstall -y {}'.\
-                           format(self.orchestrator['requirements']\
-                                  ['pip3_packages']))
-                os.system('apt-get -y remove {}'.\
-                           format(self.orchestrator['requirements']['pip']))
+                os.system('apt-get -y remove {}'.format(self.details
+                                                        ['orchestrator']
+                                                        ['name']))
+                os.system('apt-get -y remove {}'.format(self.orchestrator
+                                                        ['requirements']
+                                                        ['dep_package']))
+                os.system('pip3 uninstall -y {}'.format(self.orchestrator
+                                                        ['requirements']
+                                                        ['pip3_packages']))
+                os.system('apt-get -y remove {}'.format(self.orchestrator
+                                                        ['requirements']
+                                                        ['pip']))
                 os.system('apt-get -y autoremove')
-                
         except:
             self.__logger.warn("Some issue during the undeployment ..")
             self.__logger.warn("Tenant clean continue ..")
 
-        if not self.orchestrator['requirements']['preserve_setup']:       
+        if not self.orchestrator['requirements']['preserve_setup']:
             self.__logger.info('Remove the Abot_epc OS object ..')
             for creator in reversed(self.created_object):
                 try:
@@ -371,20 +351,25 @@ json'.format(self.case_dir))
                     self.logger.error('Unexpected error cleaning - %s', exc)
 
             self.__logger.info("Releasing all the floating IPs")
-            user_id = os_utils.get_user_id(self.keystone_client, self.tenant_name)
+            user_id = os_utils.get_user_id(self.keystone_client,
+                                           self.tenant_name)
             floating_ips = os_utils.get_floating_ips(self.neutron_client)
-            tenant_id =  os_utils.get_tenant_id(self.keystone_client, self.tenant_name)
+            tenant_id = os_utils.get_tenant_id(self.keystone_client,
+                                               self.tenant_name)
             for item in floating_ips:
                 if item['tenant_id'] == tenant_id:
-                    os_utils.delete_floating_ip(self.neutron_client, item['id'])
-            
+                    os_utils.delete_floating_ip(self.neutron_client,
+                                                item['id'])
             self.__logger.info("Cleaning Projects and Users")
             if not self.exist_obj['tenant']:
-                os_utils.delete_tenant(self.keystone_client, tenant_id)
+                os_utils.delete_tenant(self.keystone_client,
+                                       tenant_id)
             if not self.exist_obj['user']:
-                os_utils.delete_user(self.keystone_client, user_id)
+                os_utils.delete_user(self.keystone_client,
+                                     user_id)
 
         return True
+
 
 # ----------------------------------------------------------
 #
@@ -429,24 +414,24 @@ def sig_test_format(sig_test):
     total_sig_test_result['skipped'] = nb_skipped
     return total_sig_test_result
 
+
 def process_abot_test_result(file_path):
     with open(file_path) as test_result:
         data = json.load(test_result)
-        res = [] 
-
+        res = []
         for tests in data:
             tests = update_data(tests)
             try:
                 flatten_steps = tests['elements'][0].pop('flatten_steps')
                 for steps in flatten_steps:
-                   steps['result'] = steps['step_status'] 
-                   res.append(steps) 
-
+                    steps['result'] = steps['step_status']
+                    res.append(steps)
             except:
                 raise
-                logging.error("Could not post data to ElasticSearch host " )
+                logging.error("Could not post data to ElasticSearch host")
         return res
- 
+
+
 def update_data(obj):
     try:
         obj['feature_file'] = os.path.splitext(os.path.basename(obj['uri']))[0]
@@ -466,7 +451,7 @@ def update_data(obj):
                 temp_dict['step_name'] = step['name']
                 temp_dict['step_status'] = step['result']['status']
                 temp_dict['step_duration'] = step['result'].get('duration', 0)
-                temp_dict['step_'+step['result']['status']] = 1
+                temp_dict['step_' + step['result']['status']] = 1
                 element['flatten_steps'].append(deepcopy(temp_dict))
 
             # Need to put the tag in OBJ and not ELEMENT
@@ -479,10 +464,11 @@ def update_data(obj):
                     element[tag['name']] = 1
 
     except:
-        logging.error("Error in updating data, %s" %(sys.exc_info()[0]))
+        logging.error("Error in updating data, %s" % (sys.exc_info()[0]))
         raise
 
     return obj
+
 
 def get_instance_metadata(nova_client, instance):
     try:

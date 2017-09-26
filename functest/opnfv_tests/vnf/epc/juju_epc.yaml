@@ -1,8 +1,6 @@
 tenant_images:
     trusty: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
-#    trusty: http://192.168.7.113/trusty-server-cloudimg-amd64-disk1.img
     xenial: http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img 
-#    xenial: http://192.168.7.113/xenial-server-cloudimg-amd64-disk1.img
 
 orchestrator:
     name: juju 
@@ -15,7 +13,7 @@ orchestrator:
           name: m1.small
           ram_min: 2048 
         pip3_packages: juju-wait
-        preserve_setup: False 
+        preserve_setup: true 
 vnf:
     name: juju_epc 
     version: '1'
@@ -25,7 +23,7 @@ vnf:
         version: '1'
     requirements:
         flavor:
-          name: m.medium
+          name: m1.medium
           ram_min: 4096 
 vnf_test_suite:
     name: abot-epc-basic 
