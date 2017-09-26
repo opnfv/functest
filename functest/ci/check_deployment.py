@@ -20,7 +20,6 @@ import logging.config
 import os
 import pkg_resources
 import socket
-import time
 from urlparse import urlparse
 
 from snaps.openstack.utils import glance_utils
@@ -34,20 +33,16 @@ __author__ = "Jose Lausuch <jose.lausuch@ericsson.com>"
 LOGGER = logging.getLogger(__name__)
 
 
-def verify_connectivity(adress, port, timeout=10):
+def verify_connectivity(adress, port):
     """ Returns true if an ip/port is reachable"""
     connection = socket.socket()
-    count = 0
-    while count < timeout:
-        try:
-            connection.connect((adress, port))
-            LOGGER.debug('%s:%s is reachable!', adress, port)
-            return True
-        except socket.error:
-            count += 1
-            time.sleep(1)
-            continue
-    LOGGER.error('%s:%s is not reachable.', adress, port)
+    connection.settimeout(10)
+    try:
+        connection.connect((adress, port))
+        LOGGER.debug('%s:%s is reachable!', adress, port)
+        return True
+    except socket.error:
+        LOGGER.error('%s:%s is not reachable.', adress, port)
     return False
 
 
