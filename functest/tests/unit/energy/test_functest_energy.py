@@ -99,7 +99,7 @@ class EnergyRecorderTest(unittest.TestCase):
             auth=EnergyRecorder.energy_recorder_api["auth"],
             data=mock.ANY,
             headers=self.request_headers,
-            timeout=EnergyRecorder.CONNECTION_TIMOUT
+            timeout=EnergyRecorder.CONNECTION_TIMEOUT
         )
 
     @mock.patch('functest.energy.energy.requests.post',
@@ -113,7 +113,7 @@ class EnergyRecorderTest(unittest.TestCase):
             auth=EnergyRecorder.energy_recorder_api["auth"],
             data=mock.ANY,
             headers=self.request_headers,
-            timeout=EnergyRecorder.CONNECTION_TIMOUT
+            timeout=EnergyRecorder.CONNECTION_TIMEOUT
         )
 
     @mock.patch('functest.energy.energy.requests.post',
@@ -127,7 +127,7 @@ class EnergyRecorderTest(unittest.TestCase):
             auth=EnergyRecorder.energy_recorder_api["auth"],
             data=mock.ANY,
             headers=self.request_headers,
-            timeout=EnergyRecorder.CONNECTION_TIMOUT
+            timeout=EnergyRecorder.CONNECTION_TIMEOUT
         )
 
     @mock.patch('functest.energy.energy.requests.post',
@@ -141,7 +141,7 @@ class EnergyRecorderTest(unittest.TestCase):
             auth=EnergyRecorder.energy_recorder_api["auth"],
             data=mock.ANY,
             headers=self.request_headers,
-            timeout=EnergyRecorder.CONNECTION_TIMOUT
+            timeout=EnergyRecorder.CONNECTION_TIMEOUT
         )
 
     @mock.patch('functest.energy.energy.requests.post',
@@ -155,7 +155,7 @@ class EnergyRecorderTest(unittest.TestCase):
             auth=EnergyRecorder.energy_recorder_api["auth"],
             data=mock.ANY,
             headers=self.request_headers,
-            timeout=EnergyRecorder.CONNECTION_TIMOUT
+            timeout=EnergyRecorder.CONNECTION_TIMEOUT
         )
 
     @mock.patch('functest.energy.energy.requests.post',
@@ -169,7 +169,7 @@ class EnergyRecorderTest(unittest.TestCase):
             auth=EnergyRecorder.energy_recorder_api["auth"],
             data=mock.ANY,
             headers=self.request_headers,
-            timeout=EnergyRecorder.CONNECTION_TIMOUT
+            timeout=EnergyRecorder.CONNECTION_TIMEOUT
         )
 
     @mock.patch('functest.energy.energy.requests.delete',
@@ -182,7 +182,7 @@ class EnergyRecorderTest(unittest.TestCase):
             EnergyRecorder.energy_recorder_api["uri"],
             auth=EnergyRecorder.energy_recorder_api["auth"],
             headers=self.request_headers,
-            timeout=EnergyRecorder.CONNECTION_TIMOUT
+            timeout=EnergyRecorder.CONNECTION_TIMEOUT
         )
 
     @mock.patch('functest.energy.energy.requests.delete',
@@ -195,7 +195,7 @@ class EnergyRecorderTest(unittest.TestCase):
             EnergyRecorder.energy_recorder_api["uri"],
             auth=EnergyRecorder.energy_recorder_api["auth"],
             headers=self.request_headers,
-            timeout=EnergyRecorder.CONNECTION_TIMOUT
+            timeout=EnergyRecorder.CONNECTION_TIMEOUT
         )
 
     @mock.patch('functest.energy.energy.requests.delete',
@@ -208,7 +208,7 @@ class EnergyRecorderTest(unittest.TestCase):
             EnergyRecorder.energy_recorder_api["uri"],
             auth=EnergyRecorder.energy_recorder_api["auth"],
             headers=self.request_headers,
-            timeout=EnergyRecorder.CONNECTION_TIMOUT
+            timeout=EnergyRecorder.CONNECTION_TIMEOUT
         )
 
     @energy.enable_recording
