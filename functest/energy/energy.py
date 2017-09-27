@@ -78,7 +78,7 @@ class EnergyRecorder(object):
     INITIAL_STEP = "running"
 
     # Default connection timeout
-    CONNECTION_TIMOUT = urllib3.Timeout(connect=1, read=3)
+    CONNECTION_TIMEOUT = urllib3.Timeout(connect=1, read=3)
 
     @staticmethod
     def load_config():
@@ -122,11 +122,12 @@ class EnergyRecorder(object):
                                     headers={
                                         'content-type': 'application/json'
                                     },
-                                    timeout=EnergyRecorder.CONNECTION_TIMOUT)
+                                    timeout=EnergyRecorder.CONNECTION_TIMEOUT)
                 api_available = json.loads(resp.text)["status"] == "OK"
-            except Exception:  # pylint: disable=broad-except
-                EnergyRecorder.logger.error(
-                    "Energy recorder API is not available")
+            except Exception as exc:  # pylint: disable=broad-except
+                EnergyRecorder.logger.exception(
+                    "Energy recorder API is not available, cause=%s",
+                    exc.message)
                 api_available = False
             # Final config
             EnergyRecorder.energy_recorder_api = {
@@ -165,7 +166,7 @@ class EnergyRecorder(object):
                     headers={
                         'content-type': 'application/json'
                     },
-                    timeout=EnergyRecorder.CONNECTION_TIMOUT
+                    timeout=EnergyRecorder.CONNECTION_TIMEOUT
                 )
                 if response.status_code != 200:
                     EnergyRecorder.logger.error(
@@ -227,7 +228,7 @@ class EnergyRecorder(object):
                     headers={
                         'content-type': 'application/json'
                     },
-                    timeout=EnergyRecorder.CONNECTION_TIMOUT
+                    timeout=EnergyRecorder.CONNECTION_TIMEOUT
                 )
                 if response.status_code != 200:
                     EnergyRecorder.logger.error(
@@ -269,7 +270,7 @@ class EnergyRecorder(object):
                     headers={
                         'content-type': 'application/json'
                     },
-                    timeout=EnergyRecorder.CONNECTION_TIMOUT
+                    timeout=EnergyRecorder.CONNECTION_TIMEOUT
                 )
                 if response.status_code != 200:
                     EnergyRecorder.logger.error(
@@ -302,7 +303,7 @@ class EnergyRecorder(object):
                 response = requests.get(
                     EnergyRecorder.energy_recorder_api["uri"],
                     auth=EnergyRecorder.energy_recorder_api["auth"],
-                    timeout=EnergyRecorder.CONNECTION_TIMOUT
+                    timeout=EnergyRecorder.CONNECTION_TIMEOUT
                 )
                 if response.status_code == 200:
                     return_value = json.loads(response.text)
