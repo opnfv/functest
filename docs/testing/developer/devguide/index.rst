@@ -1,9 +1,9 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. SPDX-License-Identifier: CC-BY-4.0
 
-******************************
-OPNFV FUNCTEST developer guide
-******************************
+************************
+Functest Developer Guide
+************************
 
 .. toctree::
    :numbered:
@@ -32,7 +32,7 @@ Introduction
 ============
 
 Functest is a project dealing with functional testing.
-Functest produces its own internal test cases but can also be considered
+The project produces its own internal test cases but can also be considered
 as a framework to support feature and VNF onboarding project testing.
 
 Therefore there are many ways to contribute to Functest. You can:
@@ -44,8 +44,10 @@ Therefore there are many ways to contribute to Functest. You can:
 Additional tasks involving Functest but addressing all the test projects
 may also be mentioned:
 
-  * Develop the API / Test collection framework
-  * Develop dashboards or automatic reporting portals
+  * The API / Test collection framework
+  * The dashboards
+  * The automatic reporting portals
+  * The testcase catalog
 
 This document describes how, as a developer, you may interact with the
 Functest project. The first section details the main working areas of
@@ -69,17 +71,22 @@ Until Danube, Functest produced 2 docker files based on Ubuntu 14.04:
   * aarch64 Functest: https://hub.docker.com/r/opnfv/functest_aarch64/
 
 In Euphrates Alpine containers have been introduced in order to lighten the
-container and manage testing slicing, the new containers are created according
+container and manage testing slicing. The new containers are created according
 to the different tiers:
 
   * functest-core: https://hub.docker.com/r/opnfv/functest-core/
   * functest-healthcheck: https://hub.docker.com/r/opnfv/functest-healthcheck/
   * functest-smoke: https://hub.docker.com/r/opnfv/functest-smoke/
-  * functest-features: TODO
-  * functest-components: TODO
-  * functest-vnf: TODO
+  * functest-features: https://hub.docker.com/r/opnfv/functest-features/
+  * functest-components: https://hub.docker.com/r/opnfv/functest-components/
+  * functest-vnf: https://hub.docker.com/r/opnfv/functest-vnf/
+  * functest-parser: https://hub.docker.com/r/opnfv/functest-parser/
+  * functest-restapi: https://hub.docker.com/r/opnfv/functest-restapi/
 
-Functest can be described as follow::
+Standalone functest dockers are maintained for Euphrates but Alpine containers
+are recommended.
+
+Functest can be described as follow:
 
  +----------------------+
  |                      |
@@ -87,8 +94,8 @@ Functest can be described as follow::
  |   |              |   |    Public        |                   |
  |   | Tools        |   +------------------+      OPNFV        |
  |   | Scripts      |   |                  | System Under Test |
- |   | Scenarios    |   +------------------+                   |
- |   |              |   |    Management    |                   |
+ |   | Scenarios    |   |                  |                   |
+ |   |              |   |                  |                   |
  |   +--------------+   |                  +-------------------+
  |                      |
  |    Functest Docker   |
@@ -101,8 +108,8 @@ The internal test cases in Euphrates are:
 
 
  * api_check
- * cloudify_ims
  * connection_check
+ * snaps_health_check
  * vping_ssh
  * vping_userdata
  * odl
@@ -110,9 +117,8 @@ The internal test cases in Euphrates are:
  * odl-fds
  * rally_full
  * rally_sanity
- * snaps_health_check
- * tempest_full_parallel
  * tempest_smoke_serial
+ * tempest_full_parallel
  * cloudify_ims
 
 By internal, we mean that this particular test cases have been developed and/or
@@ -124,7 +130,7 @@ just integrated in Functest).
 
 The structure of this repository is detailed in `[1]`_.
 The main internal test cases are in the opnfv_tests subfolder of the
-repository, the internal test cases are:
+repository, the internal test cases can be grouped by domain:
 
  * sdn: odl, odl_netvirt, odl_fds
  * openstack: api_check, connection_check, snaps_health_check, vping_ssh, vping_userdata, tempest_*, rally_*
@@ -145,23 +151,29 @@ The external test cases are:
  * doctor
  * domino
  * fds
- * orchestra_ims
  * parser
  * promise
  * refstack_defcore
  * snaps_smoke
  * functest-odl-sfc
- * vyos_vrouter
+ * orchestra_clearwaterims
+ * orchestra_openims
+ * cloudify_vrouter
+ * juju_vepc
 
 External test cases integrated in previous versions but not released in
 Euphrates:
 
  * copper
+ * moon
  * netready
  * security_scan
 
 
 The code to run these test cases is hosted in the repository of the project.
+Please note that orchestra test cases are hosted in Functest repository and not
+in orchestra repository. Cloudify_vrouter and juju_vepc code is also hosted in
+functest as there are no dedicated projects.
 
 
 Functest framework
@@ -174,7 +186,7 @@ a CLI to prepare the environment and run tests.
 It simplifies the integration of external test suites in CI pipeline and provide
 commodity tools to collect and display results.
 
-Since Colorado, test categories also known as tiers have been created to
+Since Colorado, test categories also known as **tiers** have been created to
 group similar tests, provide consistent sub-lists and at the end optimize
 test duration for CI (see How To section).
 
@@ -205,7 +217,7 @@ introduced:
 
 The goal is to unify the way to run tests in Functest.
 
-Feature, unit and vnf_base inherit from testcase::
+Feature, unit and vnf_base inherit from testcase:
 
               +-----------------------------------------+
               |                                         |
@@ -232,34 +244,34 @@ Feature, unit and vnf_base inherit from testcase::
 
 
 Testcase
-========
+--------
 .. raw:: html
    :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.testcase.html
 
 Feature
-=======
+-------
 .. raw:: html
    :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.feature.html
 
 Unit
-====
+----
 .. raw:: html
    :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.unit.html
 
 VNF
-===
+---
 .. raw:: html
    :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.vnf.html
 
 
-see `Functest framework overview`_ to get code samples
+see `[5]`_ to get code samples
 
 
 Functest util classes
 =====================
 
 In order to simplify the creation of test cases, Functest develops also some
-functions that can be used by any feature or internal test cases.
+functions that are used by internal test cases.
 Several features are supported such as logger, configuration management and
 Openstack capabilities (snapshot, clean, tacker,..).
 These functions can be found under <repo>/functest/utils and can be described as
@@ -276,14 +288,14 @@ follows::
  |-- openstack_tacker.py
  `-- openstack_utils.py
 
-Please note that it is possible to use snaps utils. SNAPS `[4]`_ is an OPNFV
-project providing OpenStack utils.
+It is recommended to use the SNAPS-OO library for deploying OpenStack instances.
+SNAPS `[4]`_ is an OPNFV project providing OpenStack utils.
 
 
 TestAPI
 =======
 Functest is using the Test collection framework and the TestAPI developed by
-the OPNFV community. See `OPNFV Test collection framework`_ for details.
+the OPNFV community. See `[6]`_ for details.
 
 
 Reporting
@@ -295,15 +307,15 @@ jinja2 templates `[3]`_.
 Dashboard
 =========
 
-Additional dashboarding is managed at the testing group level, see
-`OPNFV Testing dashboard`_
+Additional dashboarding is managed at the testing group level, see `[7]`_ for
+details.
 
 
 =======
 How TOs
 =======
 
-See `How to section`_ on Functest wiki
+See How to section on Functest wiki `[8]`_
 
 
 ==========
@@ -318,12 +330,12 @@ _`[3]`: https://git.opnfv.org/cgit/releng/tree/utils/test/reporting
 
 _`[4]`: https://git.opnfv.org/snaps/
 
-_`Functest framework overview` : http://testresults.opnfv.org/functest/framework/index.html
+_`[5]` : http://testresults.opnfv.org/functest/framework/index.html
 
-_`OPNFV Test collection framework`: TODO
+_`[6]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
 
-_`OPNFV Testing dashboard`: https://opnfv.biterg.io/goto/283dba93ca18e95964f852c63af1d1ba
+_`[7]`: https://opnfv.biterg.io/goto/283dba93ca18e95964f852c63af1d1ba
 
-_`How to section`: https://wiki.opnfv.org/pages/viewpage.action?pageId=7768932
+_`[8]`: https://wiki.opnfv.org/pages/viewpage.action?pageId=7768932
 
 IRC support chan: #opnfv-functest
