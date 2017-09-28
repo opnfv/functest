@@ -16,7 +16,6 @@ import urllib
 
 from functools import wraps
 import requests
-import urllib3
 
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
@@ -27,6 +26,9 @@ def finish_session(current_scenario):
     if current_scenario is None:
         EnergyRecorder.stop()
     else:
+        EnergyRecorder.logger.debug("Restoring previous scenario (%s/%s)",
+                                    current_scenario["scenario"],
+                                    current_scenario["step"])
         EnergyRecorder.submit_scenario(
             current_scenario["scenario"],
             current_scenario["step"]
@@ -78,7 +80,7 @@ class EnergyRecorder(object):
     INITIAL_STEP = "running"
 
     # Default connection timeout
-    CONNECTION_TIMEOUT = urllib3.Timeout(connect=1, read=3)
+    CONNECTION_TIMEOUT = 4
 
     @staticmethod
     def load_config():
@@ -102,8 +104,6 @@ class EnergyRecorder(object):
 
             uri_comp = "/recorders/environment/"
             uri_comp += urllib.quote_plus(environment)
-            EnergyRecorder.logger.debug(
-                "API recorder at: " + energy_recorder_uri + uri_comp)
 
             # Creds
             creds_usr = ft_utils.get_functest_config(
@@ -124,6 +124,9 @@ class EnergyRecorder(object):
                                     },
                                     timeout=EnergyRecorder.CONNECTION_TIMEOUT)
                 api_available = json.loads(resp.text)["status"] == "OK"
+                EnergyRecorder.logger.info(
+                    "API recorder available at : %s",
+                    energy_recorder_uri + uri_comp)
             except Exception as exc:  # pylint: disable=broad-except
                 EnergyRecorder.logger.info(
                     "Energy recorder API is not available, cause=%s",
@@ -151,7 +154,8 @@ class EnergyRecorder(object):
             return_status = True
             # Ensure that connectyvity settings are loaded
             if EnergyRecorder.load_config():
-                EnergyRecorder.logger.debug("Submitting scenario")
+                EnergyRecorder.logger.debug("Submitting scenario (%s/%s)",
+                                            scenario, step)
 
                 # Create API payload
                 payload = {
