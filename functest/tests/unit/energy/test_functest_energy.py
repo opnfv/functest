@@ -249,7 +249,7 @@ class EnergyRecorderTest(unittest.TestCase):
         calls = [mock.call.start(self.case_name),
                  mock.call.submit_scenario(PREVIOUS_SCENARIO,
                                            PREVIOUS_STEP)]
-        recorder_mock.assert_has_calls(calls)
+        recorder_mock.assert_has_calls(calls, True)
 
     def test_decorator_preserve_return(self):
         """Test that decorator preserve method returned value."""
