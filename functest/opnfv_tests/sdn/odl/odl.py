@@ -127,7 +127,7 @@ class ODLTests(testcase.TestCase):
            * osauthurl,
            * neutronurl,
            * osusername,
-           * ostenantname,
+           * osprojectname,
            * ospassword,
            * odlip,
            * odlwebport,
@@ -161,7 +161,7 @@ class ODLTests(testcase.TestCase):
                          'OSUSERNAME:"' + kwargs['osusername'] + '"',
                          ('OSUSERDOMAINNAME:"' +
                           kwargs['osuserdomainname'] + '"'),
-                         'OSTENANTNAME:"' + kwargs['ostenantname'] + '"',
+                         'OSTENANTNAME:"' + kwargs['osprojectname'] + '"',
                          ('OSPROJECTDOMAINNAME:"' +
                           kwargs['osprojectdomainname'] + '"'),
                          'OSPASSWORD:"' + kwargs['ospassword'] + '"',
@@ -229,7 +229,7 @@ class ODLTests(testcase.TestCase):
             kwargs['osusername'] = os.environ['OS_USERNAME']
             kwargs['osuserdomainname'] = os.environ.get(
                 'OS_USER_DOMAIN_NAME', 'Default')
-            kwargs['ostenantname'] = os.environ['OS_TENANT_NAME']
+            kwargs['osprojectname'] = os.environ['OS_PROJECT_NAME']
             kwargs['osprojectdomainname'] = os.environ.get(
                 'OS_PROJECT_DOMAIN_NAME', 'Default')
             kwargs['osauthurl'] = os.environ['OS_AUTH_URL']
@@ -281,7 +281,7 @@ class ODLParser(object):  # pylint: disable=too-few-public-methods
             '-f', '--osuserdomainname', help='User domain name for OpenStack',
             default='Default')
         self.parser.add_argument(
-            '-b', '--ostenantname', help='Tenantname for OpenStack',
+            '-b', '--osprojectname', help='Projet name for OpenStack',
             default='admin')
         self.parser.add_argument(
             '-g', '--osprojectdomainname',
