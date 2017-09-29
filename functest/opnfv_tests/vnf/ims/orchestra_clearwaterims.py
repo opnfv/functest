@@ -271,31 +271,6 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
                 protocol=Protocol.udp,
                 port_range_min=1,
                 port_range_max=65535))
-        sg_rules.append(
-            SecurityGroupRuleSettings(
-                sec_grp_name="orchestra-sec-group-allowall",
-                direction=Direction.ingress,
-                protocol=Protocol.icmp))
-        sg_rules.append(
-            SecurityGroupRuleSettings(
-                sec_grp_name="orchestra-sec-group-allowall",
-                direction=Direction.egress,
-                protocol=Protocol.icmp))
-        # sg_rules.append(
-        #     SecurityGroupRuleSettings(
-        #         sec_grp_name="orchestra-sec-group-allowall",
-        #         direction=Direction.ingress,
-        #         protocol=Protocol.icmp,
-        #         port_range_min=-1,
-        #         port_range_max=-1))
-        # sg_rules.append(
-        #     SecurityGroupRuleSettings(
-        #         sec_grp_name="orchestra-sec-group-allowall",
-        #         direction=Direction.egress,
-        #         protocol=Protocol.icmp,
-        #         port_range_min=-1,
-        #         port_range_max=-1))
-
         security_group = OpenStackSecurityGroup(
             self.snaps_creds,
             SecurityGroupSettings(
