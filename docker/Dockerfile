@@ -114,7 +114,10 @@ RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwat
 
 # Install tempest venv and create symlink for running refstack-client
 RUN ln -s /src/tempest /src/refstack-client/.tempest \
-    && virtualenv --system-site-packages /src/tempest/.venv
+    && virtualenv /src/tempest/.venv \
+    && /src/tempest/.venv/bin/python -m pip install \
+        -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
+        -r/src/tempest/requirements.txt
 
 RUN cd /src/vims-test && bundle install
 
