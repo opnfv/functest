@@ -88,7 +88,7 @@ class VPingUserdata(vping_base.VPingBase):
         Override from super
         """
         self.logger.info("Waiting for ping...")
-        exit_code = -1
+        exit_code = TestCase.EX_TESTCASE_FAILED
         sec = 0
         tries = 0
 
@@ -100,7 +100,7 @@ class VPingUserdata(vping_base.VPingBase):
                 exit_code = TestCase.EX_OK
                 break
             elif "failed to read iid from metadata" in p_console or tries > 5:
-                exit_code = TestCase.EX_TESTCASE_FAILED
+                self.logger.info("Failed to read iid from metadata")
                 break
             elif sec == self.ping_timeout:
                 self.logger.info("Timeout reached.")
@@ -137,5 +137,5 @@ def _get_userdata(test_ip):
                 "  echo 'vPing KO'\n"
                 " fi\n"
                 " sleep 1\n"
-                "done\n" % test_ip)
+                "done\n" % str(test_ip))
     return None
