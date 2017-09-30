@@ -22,6 +22,30 @@
       "revId": "f36d607e1b8f7660bbcb4c06d589d4eeb76158e3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_0453866b",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_userdata.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-30T08:42:38Z",
+      "side": 0,
+      "message": "Is the logic different from that in vping_ssh? only ping once in vping.sh, and the outer loop controls the timeout for ping.\nhttps://gerrit.opnfv.org/gerrit/#/c/38375/",
+      "parentUuid": "da33351e_24fa0a75",
+      "range": {
+        "startLine": 130,
+        "startChar": 16,
+        "endLine": 130,
+        "endChar": 34
+      },
+      "revId": "f36d607e1b8f7660bbcb4c06d589d4eeb76158e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
