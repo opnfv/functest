@@ -70,6 +70,30 @@
       "revId": "f36d607e1b8f7660bbcb4c06d589d4eeb76158e3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_045d4647",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_userdata.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-09-30T09:13:14Z",
+      "side": 0,
+      "message": "If I remember correctly, this script is executed just when the VM boots, even if the network is not ready. It could happen that it returns OK, but it might not be always the case. In vping_ssh we SCP the script when the network is ready. I think for safety, I would keep the while-loop",
+      "parentUuid": "da33351e_64e372a4",
+      "range": {
+        "startLine": 130,
+        "startChar": 16,
+        "endLine": 130,
+        "endChar": 34
+      },
+      "revId": "f36d607e1b8f7660bbcb4c06d589d4eeb76158e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
