@@ -94,6 +94,30 @@
       "revId": "f36d607e1b8f7660bbcb4c06d589d4eeb76158e3",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_4f8e477a",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_userdata.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-09-30T10:42:13Z",
+      "side": 0,
+      "message": "Agree, as far as I remember different from vping_ssh, which controls the loop in our code, vping_userdata leverages the loop to execute ping periodically, in our code only get the console output is executed, so it would be better to keep the loop before test it.",
+      "parentUuid": "da33351e_045d4647",
+      "range": {
+        "startLine": 130,
+        "startChar": 16,
+        "endLine": 130,
+        "endChar": 34
+      },
+      "revId": "f36d607e1b8f7660bbcb4c06d589d4eeb76158e3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
