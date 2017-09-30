@@ -16,6 +16,24 @@
       "revId": "5a24cb4a7db33e693a063f5c2a66406283aa5cfb",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_cfc897aa",
+        "filename": "functest/opnfv_tests/vnf/ims/orchestra_clearwaterims.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-09-30T10:59:53Z",
+      "side": 1,
+      "message": "It is Unicode, not str.",
+      "parentUuid": "da33351e_0f98bfbe",
+      "revId": "5a24cb4a7db33e693a063f5c2a66406283aa5cfb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
