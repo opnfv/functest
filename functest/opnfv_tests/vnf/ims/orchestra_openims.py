@@ -460,7 +460,7 @@ class OpenImsVnf(vnf.VnfOnBoarding):
             flavor=self.mano['details']['flavor']['name'],
             port_settings=[port_settings],
             security_group_names=[self.mano['details']['sec_group']],
-            userdata=userdata)
+            userdata=str(userdata))
         orchestra_vm = OpenStackVmInstance(self.snaps_creds,
                                            orchestra_settings,
                                            image_settings)
