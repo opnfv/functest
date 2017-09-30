@@ -160,7 +160,7 @@ class VPingSSH(vping_base.VPingBase):
                 return TestCase.EX_RUN_ERROR
             return self._do_vping_ssh(ssh, test_ip)
         else:
-            return -1
+            return TestCase.EX_RUN_ERROR
 
     def _transfer_ping_script(self, ssh):
         """
