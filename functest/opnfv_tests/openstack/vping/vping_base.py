@@ -13,11 +13,13 @@ import time
 import uuid
 
 from functest.core import testcase
+from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils.constants import CONST
 
 from snaps.openstack import create_flavor
 from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
 from snaps.openstack.create_network import NetworkSettings, SubnetSettings
+from snaps.openstack.create_router import RouterSettings
 from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import deploy_utils
 
@@ -62,6 +64,8 @@ class VPingBase(testcase.TestCase):
         if CONST.__getattribute__('vping_unique_names'):
             self.guid = '-' + str(uuid.uuid4())
 
+        self.router_name = CONST.__getattribute__(
+            'vping_router_name') + self.guid
         self.vm1_name = CONST.__getattribute__('vping_vm_name_1') + self.guid
         self.vm2_name = CONST.__getattribute__('vping_vm_name_2') + self.guid
 
@@ -135,6 +139,18 @@ class VPingBase(testcase.TestCase):
                     name=private_subnet_name,
                     cidr=private_subnet_cidr)]))
         self.creators.append(self.network_creator)
+
+        # Creating router to external network
+        log = "Creating router with name: '%s'" % self.router_name
+        self.logger.info(log)
+        ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
+        self.router_creator = deploy_utils.create_router(
+            self.os_creds,
+            RouterSettings(
+                name=self.router_name,
+                external_gateway=ext_net_name,
+                internal_subnets=[private_subnet_name]))
+        self.creators.append(self.router_creator)
 
         self.logger.info(
             "Creating flavor with name: '%s'" % self.flavor_name)
