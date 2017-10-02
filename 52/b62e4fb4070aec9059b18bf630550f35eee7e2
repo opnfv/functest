@@ -1,0 +1,9 @@
+Code-Review+2: Juha Kosonen <juha.kosonen@nokia.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Gerald Kunzmann <kunzmann@docomolab-euro.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Mon, 02 Oct 2017 08:45:08 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/43821
+Project: functest
+Branch: refs/heads/stable/euphrates
