@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_b015b44a",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-02T15:22:17Z",
+      "side": 1,
+      "message": "would this make sense?\n\n    if result !\u003d testcase.TestCase.EX_OK:\n        ....",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 64
+      },
+      "revId": "bfd88a09cf5b3a923385693e15bc57bd6b4da621",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
