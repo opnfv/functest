@@ -7,14 +7,14 @@ Installation and configuration
 Alpine containers have been introduced in Euphrates.
 Alpine allows Functest testing in several very light containers and thanks to
 the refactoring on dependency management should allow the creation of light and
-fully customized docker files.
+fully customized docker images.
 
-It is still possible to use the monolithic functest opnfv/functest especially
+It is still possible to use the monolithic Ubuntu image opnfv/functest especially
 for tests on Aarch64 architecture.
 
 Functest Dockers
 ----------------
-Docker files are available on the dockerhub:
+Docker images are available on the dockerhub:
 
   * opnfv/functest-core
   * opnfv/functest-healthcheck
@@ -25,8 +25,8 @@ Docker files are available on the dockerhub:
   * opnfv/functest-parser
   * opnfv/functest-restapi
 
-By default, we use the docker tag latest, but you may pull a tagged docker
-image.
+The tag "opnfv-5.0.0" is the official release image in Euphrates, but you can also pull "euphrates"
+tag as it is being maintained by Functest team and might include bugfixes.
 
 The Functest docker container environment can -in principle- be also
 used with non-OPNFV official installers (e.g. 'devstack'), with the
@@ -61,9 +61,9 @@ cat openstack.creds::
 
 See section on OpenStack credentials for details.
 
-Create a directory for the different images (included as volume)::
+Create a directory for the different images (attached as a Docker volume)::
 
-  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | bash -s -- images && ls -1 images/*
+  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=stable/euphrates | bash -s -- images && ls -1 images/*
 
   images/CentOS-7-aarch64-GenericCloud.qcow2
   images/CentOS-7-aarch64-GenericCloud.qcow2.xz
@@ -101,6 +101,7 @@ Results shall be displayed as follows::
   |         api_check          |     functest     |     healthcheck     |      04:57       |      PASS      |
   |     snaps_health_check     |     functest     |     healthcheck     |      00:51       |      PASS      |
   +----------------------------+------------------+---------------------+------------------+----------------+
+  NOTE: the duration is a reference and it might vary depending on your SUT.
 
 Testing smoke suite
 -------------------
@@ -172,7 +173,6 @@ Results shall be displayed as follows::
   +-------------------------------+------------------+--------------------+------------------+----------------+
   |     tempest_full_parallel     |     functest     |     components     |      102:48      |      PASS      |
   |           rally_full          |     functest     |     components     |      160:58      |      PASS      |
-  |         tempest_custom        |     functest     |     components     |      00:00       |      SKIP      |
   +-------------------------------+------------------+--------------------+------------------+----------------+
 
 Testing vnf suite
@@ -193,7 +193,6 @@ Results shall be displayed as follows::
   |           cloudify_ims          |     functest     |     vnf      |      21:25       |      PASS      |
   |        orchestra_openims        |     functest     |     vnf      |      11:02       |      FAIL      |
   |     orchestra_clearwaterims     |     functest     |     vnf      |      09:13       |      FAIL      |
-  |           vyos_vrouter          |     functest     |     vnf      |      00:00       |      SKIP      |
   +---------------------------------+------------------+--------------+------------------+----------------+
 
 
@@ -201,7 +200,7 @@ Environment variables
 =====================
 
 Several environement variables may be specified:
-  * INSTALLER_TYPE=(apex|compass|daisy|fuel|joid|osa)
+  * INSTALLER_TYPE=(apex|compass|daisy|fuel|joid)
   * INSTALLER_IP=<Specific IP Address>
   * DEPLOY_SCENARIO=<vim>-<controller>-<nfv_feature>-<ha_mode>
 
@@ -216,19 +215,18 @@ The format for the DEPLOY_SCENARIO env variable can be described as follows:
   * ha_mode (high availability) is one of ( ha | noha )
 
 If several features are pertinent then use the underscore character '_' to
-separate each feature (e.g. ovs_kvm) 'nofeature' indicates no OPNFV feature is
-deployed
+separate each feature (e.g. ovs_kvm). 'nofeature' indicates that no OPNFV
+feature is deployed.
 
 The list of supported scenarios per release/installer is indicated in the
 release note.
 
 **NOTE:** The scenario name is mainly used to automatically detect
-if a test suite is runnable or not (e.g. it will prevent ONOS test suite to be
-run on ODL scenarios). If not set, Functest will try to run the default test
-cases that might not include SDN controller or a specific
-feature
+if a test suite is runnable or not (e.g. it will prevent ODL test suite to be
+run on 'nosdn' scenarios). If not set, Functest will try to run the default test
+cases that might not include SDN controller or a specific feature
 
-**NOTE:** A HA scenario means that 3 OpenStack controller nodes are
+**NOTE:** An HA scenario means that 3 OpenStack controller nodes are
 deployed. It does not necessarily mean that the whole system is HA. See
 installer release notes for details.
 
@@ -257,8 +255,7 @@ where:
                          to the database. This option is only set when
                          tests are activated under Jenkins CI control.
                          It enables the correlation of test results,
-                         which
-                         are independently pushed to the results database
+                         which are independently pushed to the results database
                          from different Jenkins jobs.
                          DO NOT USE THIS OPTION IN MANUAL TEST SCENARIOS.
   * <DebugTraceValue> = "true" or "false"
@@ -286,9 +283,6 @@ There are 2 ways to provide that file:
     your installer guide for further details. This is however not
     instructed in this document.
 
-There is a default environment variable in the Functest container **$creds**
-that points to the credentials absolute path to help the user with this task.
-
 In proxified environment you may need to change the credentials file.
 There are some tips in chapter: `Proxy support`_
 
@@ -315,7 +309,7 @@ done in 2 ways:
        -v <path_to_your_cert_file>:/etc/ssl/certs/ca.cert
 
 You might need to export OS_CACERT environment variable inside the
-container::
+credentials file::
 
   export OS_CACERT=/etc/ssl/certs/ca.crt
 
