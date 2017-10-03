@@ -20,7 +20,6 @@ import pkg_resources
 
 from functest.core.testcase import TestCase
 from functest.energy import energy
-from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.vping import vping_base
 from functest.utils.constants import CONST
 from snaps.openstack.create_instance import FloatingIpSettings, \
@@ -28,7 +27,6 @@ from snaps.openstack.create_instance import FloatingIpSettings, \
 
 from snaps.openstack.create_keypairs import KeypairSettings
 from snaps.openstack.create_network import PortSettings
-from snaps.openstack.create_router import RouterSettings
 from snaps.openstack.create_security_group import Direction, Protocol, \
     SecurityGroupSettings, SecurityGroupRuleSettings
 from snaps.openstack.utils import deploy_utils
@@ -51,8 +49,6 @@ class VPingSSH(vping_base.VPingBase):
         self.kp_name = CONST.__getattribute__('vping_keypair_name') + self.guid
         self.kp_priv_file = CONST.__getattribute__('vping_keypair_priv_file')
         self.kp_pub_file = CONST.__getattribute__('vping_keypair_pub_file')
-        self.router_name = CONST.__getattribute__(
-            'vping_router_name') + self.guid
         self.sg_name = CONST.__getattribute__('vping_sg_name') + self.guid
         self.sg_desc = CONST.__getattribute__('vping_sg_desc')
 
@@ -76,20 +72,6 @@ class VPingSSH(vping_base.VPingBase):
                                 private_filepath=self.kp_priv_file,
                                 public_filepath=self.kp_pub_file))
             self.creators.append(kp_creator)
-
-            # Creating router to external network
-            log = "Creating router with name: '%s'" % self.router_name
-            self.logger.info(log)
-            net_set = self.network_creator.network_settings
-            sub_set = [net_set.subnet_settings[0].name]
-            ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
-            router_creator = deploy_utils.create_router(
-                self.os_creds,
-                RouterSettings(
-                    name=self.router_name,
-                    external_gateway=ext_net_name,
-                    internal_subnets=sub_set))
-            self.creators.append(router_creator)
 
             # Creating Instance 1
             port1_settings = PortSettings(
@@ -129,7 +111,7 @@ class VPingSSH(vping_base.VPingBase):
                 floating_ip_settings=[FloatingIpSettings(
                     name=self.vm2_name + '-FIPName',
                     port_name=port2_settings.name,
-                    router_name=router_creator.router_settings.name)])
+                    router_name=self.router_creator.router_settings.name)])
 
             log = ("Creating VM 2 instance with name: '%s'"
                    % instance2_settings.name)
