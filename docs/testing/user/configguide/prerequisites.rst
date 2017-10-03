@@ -14,9 +14,9 @@ Several prerequisites are needed for Functest:
 
 Some specific SNAPS tests may require a connectivity from the Jumphost to the
 SUT admin/management network but most of the test cases do not. This requirement
-can be overridden by overriding the 'interface' attribute (OS_INTERFACE) value
-to 'public'. Another means to circumvent this issue would be to change the
-'snaps.use_keystone' value from True to False.
+can be changed by overriding the 'interface' attribute (OS_INTERFACE) value
+to 'public' in the credentials file. Another means to circumvent this issue
+would be to change the 'snaps.use_keystone' value from True to False.
 
 WARNING: Connectivity from Jumphost is essential and it is of paramount
 importance to make sure it is working before even considering to install
@@ -25,7 +25,8 @@ designed to work.
 
 NOTE: **Jumphost** refers to any server which meets the previous
 requirements. Normally it is the same server from where the OPNFV
-deployment has been triggered previously.
+deployment has been triggered previously, but it could be any server
+with proper connectivity to the SUT.
 
 NOTE: If your Jumphost is operating behind a company http proxy and/or
 firewall, please consult first the section `Proxy Support`_, towards
@@ -84,9 +85,10 @@ succeed. This is needed, for example, to create floating IPs to access
 VM instances through the public/external network (i.e. from the Docker
 container).
 
-By default, the four OPNFV installers provide a fresh installation with
+By default, the five OPNFV installers provide a fresh installation with
 a public/external network created along with a router. Make sure that
-the public/external subnet is reachable from the Jumphost.
+the public/external subnet is reachable from the Jumphost and an external
+router exists.
 
 *Hint:* For the given OPNFV Installer in use, the IP sub-net address
 used for the public/external network is usually a planning item and
