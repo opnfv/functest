@@ -9,22 +9,6 @@ Functest Installation Guide
    :numbered:
    :maxdepth: 2
 
-Version history
-===============
-
-+------------+----------+------------------+----------------------------------+
-| **Date**   | **Ver.** | **Author**       | **Comment**                      |
-|            |          |                  |                                  |
-+------------+----------+------------------+----------------------------------+
-| 2016-08-17 | 1.0.0    | Juha Haapavirta  | Colorado release                 |
-|            |          | Column Gaynor    |                                  |
-+------------+----------+------------------+----------------------------------+
-| 2017-01-19 | 1.0.1    | Morgan Richomme  | Adaptations for Danube           |
-|            |          |                  | * update testcase list           |
-|            |          |                  | * update docker command          |
-+------------+----------+------------------+----------------------------------+
-| 2017-08-16 | 1.0.2    | Morgan Richomme  | Adaptations for Euphrates        |
-+------------+----------+------------------+----------------------------------+
 
 Introduction
 ============
@@ -97,17 +81,18 @@ All the libraries and dependencies needed by all of the Functest tools are
 pre-installed into the Docker images. This allows running Functest on any
 platform.
 
-The automated mechanisms inside the Functest Docker container will:
+The automated mechanisms inside the Functest Docker containers will:
 
-  * Retrieve OpenStack credentials
   * Prepare the environment according to the System Under Test (SUT)
   * Perform the appropriate functional tests
-  * Push the test results into the OPNFV test result database
+  * Push the test results into the OPNFV test result database (optional)
 
-This Docker image can be integrated into CI or deployed independently.
+The OpenStack credentials file must be provided to the container.
 
-Please note that the Functest Docker container has been designed for OPNFV,
-however, it would be possible to adapt it to any OpenStack based VIM +
+These Docker images can be integrated into CI or deployed independently.
+
+Please note that the Functest Docker images have been designed for OPNFV,
+however, it would be possible to adapt them to any OpenStack based VIM +
 controller environment, since most of the test cases are integrated from
 upstream communities.
 
