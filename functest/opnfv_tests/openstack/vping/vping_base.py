@@ -181,10 +181,12 @@ class VPingBase(testcase.TestCase):
         else:
             raise Exception('VMs never became active')
 
+        self.stop_time = time.time()
+
         if result != testcase.TestCase.EX_OK:
+            self.result = 0
             return testcase.TestCase.EX_RUN_ERROR
 
-        self.stop_time = time.time()
         self.result = 100
         return testcase.TestCase.EX_OK
 
