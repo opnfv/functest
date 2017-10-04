@@ -1,0 +1,46 @@
+tenant_images:
+    ubuntu_14.04: /home/opnfv/functest/images/trusty-server-cloudimg-amd64-disk1.img
+orchestrator:
+    name: heat
+    version: 'ocata'
+    requirements:
+        flavor:
+          name: m1.medium
+          ram_min: 4096
+        os_image: 'ubuntu_14.04'
+vnf:
+    name: clearwater-heat`
+    version: '60'
+    descriptor:
+        file_name: clearwater.yaml
+        name: clearwater-heat-opnfv
+        url: https://github.com/Metaswitch/clearwater-heat
+        version: 'heat_template_version: 2013-05-23'
+    requirements:
+        flavor:
+          name: m1.small
+          ram_min: 2048
+        compute_quotas:
+          cores: 50
+          instances: 15
+        network_quotas:
+          security_group: 20
+          security_group_rule: 100
+          port: 50
+    inputs:
+        image_id: 'ubuntu_14.04'
+        flavor_id: 'm1.small'
+        agent_user: ubuntu
+        key_pair_name: heat_ims_kp
+        private_key_path: '/etc/heat/heat_ims.pem'
+        external_network_name: ''
+        public_domain: clearwater-heat.opnfv
+        release: repo-opnfv-opera
+        bono_cluster_size: 1
+        sprout_cluster_size: 1
+        vellum_cluster_size: 1
+        dime_cluster_size: 1
+        homer_cluster_size: 1
+vnf_test_suite:
+    name: clearwater-live-test
+    version: "1.0"
