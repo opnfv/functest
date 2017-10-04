@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_2cb023dc",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-04T23:00:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure we can automatically build them as it seems all parents are triggered for tags. I think we should set euphrates in all cases as it integrates fixes much quicker. It\u0027s suitable regarding tests.",
+      "revId": "e7e6514e8860a3a642337853673afefe49d10354",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
