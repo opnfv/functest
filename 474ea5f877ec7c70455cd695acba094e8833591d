@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "da33351e_4e33e0aa",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-10-04T06:16:52Z",
+      "side": 1,
+      "message": "will address this on next patch",
+      "parentUuid": "da33351e_2e43256d",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_cf4aa5ab",
         "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
         "patchSetId": 11
@@ -584,6 +602,24 @@
       "side": 1,
       "message": "agree",
       "parentUuid": "da33351e_3f56b906",
+      "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_2e181c1d",
+        "filename": "functest/opnfv_tests/vnf/ims/opera_ims.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 3461
+      },
+      "writtenOn": "2017-10-04T06:16:52Z",
+      "side": 1,
+      "message": "@Steven, if It\u0027s handy could you point me any existing implementation. IMU Inside vm is it possible to call openstack APIs (maybe absurd question)",
+      "parentUuid": "da33351e_8e2a318e",
       "revId": "474ea5f877ec7c70455cd695acba094e8833591d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
