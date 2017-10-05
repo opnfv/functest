@@ -66,7 +66,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                'apply_blacklist')
+                '_apply_blacklist')
     def test_prepare_test_list_missing_temp_dir(
             self, mock_method, mock_os_makedirs, mock_path_exists):
         mock_path_exists.side_effect = self.check_temp_dir
@@ -169,7 +169,7 @@ class OSRallyTesting(unittest.TestCase):
                 return_value={'functionality': [
                     {'functions': ['no_live_migration'], 'tests': ['test']}]})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                'live_migration_supported', return_value=False)
+                '_live_migration_supported', return_value=False)
     def test_excl_func_default(self, mock_func, mock_yaml_load):
         CONST.__setattr__('INSTALLER_TYPE', 'test_installer')
         CONST.__setattr__('DEPLOY_SCENARIO', 'test_scenario')
@@ -279,24 +279,31 @@ class OSRallyTesting(unittest.TestCase):
             self.rally_base._prepare_env()
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
+                'get_active_compute_cnt')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_ext_net_name', return_value='test_net_name')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
                 return_value=None)
-    def test_prepare_env_image_missing(self, mock_get_img, mock_get_net):
+    def test_prepare_env_image_missing(
+            self, mock_get_img, mock_get_net, mock_get_comp_cnt):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
         with self.assertRaises(Exception):
             self.rally_base._prepare_env()
         mock_get_img.assert_called()
         mock_get_net.assert_called()
+        mock_get_comp_cnt.assert_called()
 
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
+                'get_active_compute_cnt')
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_ext_net_name', return_value='test_net_name')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_image')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_network',
                 return_value=None)
     def test_prepare_env_network_creation_failed(
-            self, mock_create_net, mock_get_img, mock_get_net):
+            self, mock_create_net, mock_get_img, mock_get_net,
+            mock_get_comp_cnt):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
         with self.assertRaises(Exception):
@@ -304,7 +311,10 @@ class OSRallyTesting(unittest.TestCase):
         mock_create_net.assert_called()
         mock_get_img.assert_called()
         mock_get_net.assert_called()
+        mock_get_comp_cnt.assert_called()
 
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
+                'get_active_compute_cnt')
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_ext_net_name', return_value='test_net_name')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_image')
@@ -313,7 +323,7 @@ class OSRallyTesting(unittest.TestCase):
                 return_value=None)
     def test_prepare_env_router_creation_failed(
             self, mock_create_router, mock_create_net, mock_get_img,
-            mock_get_net):
+            mock_get_net, mock_get_comp_cnt):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
         with self.assertRaises(Exception):
@@ -322,7 +332,10 @@ class OSRallyTesting(unittest.TestCase):
         mock_get_img.assert_called()
         mock_get_net.assert_called()
         mock_create_router.assert_called()
+        mock_get_comp_cnt.assert_called()
 
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
+                'get_active_compute_cnt')
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_ext_net_name', return_value='test_net_name')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_image')
@@ -332,7 +345,7 @@ class OSRallyTesting(unittest.TestCase):
                 return_value=None)
     def test_prepare_env_flavor_creation_failed(
             self, mock_create_flavor, mock_create_router, mock_create_net,
-            mock_get_img, mock_get_net):
+            mock_get_img, mock_get_net, mock_get_comp_cnt):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
         with self.assertRaises(Exception):
@@ -341,8 +354,11 @@ class OSRallyTesting(unittest.TestCase):
         mock_get_img.assert_called()
         mock_get_net.assert_called()
         mock_create_router.assert_called()
+        mock_get_comp_cnt.assert_called()
         mock_create_flavor.assert_called_once()
 
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
+                'get_active_compute_cnt')
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_ext_net_name', return_value='test_net_name')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_image')
@@ -352,7 +368,7 @@ class OSRallyTesting(unittest.TestCase):
                 side_effect=[mock.Mock, None])
     def test_prepare_env_flavor_alt_creation_failed(
             self, mock_create_flavor, mock_create_router, mock_create_net,
-            mock_get_img, mock_get_net):
+            mock_get_img, mock_get_net, mock_get_comp_cnt):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
         with self.assertRaises(Exception):
@@ -361,6 +377,7 @@ class OSRallyTesting(unittest.TestCase):
         mock_get_img.assert_called()
         mock_get_net.assert_called()
         mock_create_router.assert_called()
+        mock_get_comp_cnt.assert_called()
         self.assertEqual(mock_create_flavor.call_count, 2)
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
