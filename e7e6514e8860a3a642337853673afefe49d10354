@@ -52,6 +52,24 @@
       "revId": "e7e6514e8860a3a642337853673afefe49d10354",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_0f155148",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5807
+      },
+      "writtenOn": "2017-10-05T13:46:15Z",
+      "side": 1,
+      "message": "I don\u0027t think every project doc should tell exactly how to pull the right image version from docker hub as this should be an overall OPNFV release document describing how the release packaging is done.\n\nE.g if there is a maintenance version of functest for euphrates are you going to change the doc as well?\nConversely we can\u0027t use \"latest\" (as in the original version of this doc) because \"latest\" tag will definitely not reflect euphrates release (it will more likely reflect a dev latest version).\n\nIMHO there should be a separate and well identified release document that describes what the packaging of the release looks like (e.g. list all artifcats: ISOs, doc, dockerhub container images) and provide a global explanation on how to pick the right version of artifact.",
+      "parentUuid": "da33351e_8fb84112",
+      "revId": "e7e6514e8860a3a642337853673afefe49d10354",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
