@@ -16,6 +16,24 @@
       "revId": "e7e6514e8860a3a642337853673afefe49d10354",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_afb8a52a",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-05T07:04:12Z",
+      "side": 1,
+      "message": "This is not an invention of mine. All the projects will release this tag, it comes from a TSC decision.\n\nI am working with the lab owner of ericsson build servers to fix the problem we had, so it should be possible to build it automatically soon in opnfv. Anyway, that\u0027s not a reason not to release this tag, it\u0027s just a problem to be solved.",
+      "parentUuid": "da33351e_2cb023dc",
+      "revId": "e7e6514e8860a3a642337853673afefe49d10354",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
