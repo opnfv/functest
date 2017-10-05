@@ -34,6 +34,24 @@
       "revId": "e7e6514e8860a3a642337853673afefe49d10354",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_8fb84112",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-05T07:59:17Z",
+      "side": 1,
+      "message": "I know you\u0027re following the rules and we will create the official tag as requested and I will handle it by hand if it\u0027s not triggered in the automated rules. All the settings required has already been done.\n\nBy I think our user doc should encourage to use the stable/euphrate branch because it\u0027s suitable for functional tests.",
+      "parentUuid": "da33351e_afb8a52a",
+      "revId": "e7e6514e8860a3a642337853673afefe49d10354",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
