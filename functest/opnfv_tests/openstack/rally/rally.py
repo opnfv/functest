@@ -20,7 +20,6 @@ import subprocess
 import time
 import uuid
 
-import iniparse
 import pkg_resources
 import yaml
 
@@ -74,8 +73,6 @@ class RallyBase(testcase.TestCase):
     ITERATIONS_AMOUNT = 10
     CONCURRENCY = 4
     RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'), 'rally')
-    TEMPEST_CONF_FILE = os.path.join(CONST.__getattribute__('dir_results'),
-                                     'tempest/tempest.conf')
     BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.txt")
     TEMP_DIR = os.path.join(RALLY_DIR, "var")
 
@@ -117,6 +114,7 @@ class RallyBase(testcase.TestCase):
         self.start_time = None
         self.result = None
         self.details = None
+        self.compute_cnt = 0
 
     def _build_task_args(self, test_file_name):
         task_args = {'service_list': [test_file_name]}
@@ -167,7 +165,7 @@ class RallyBase(testcase.TestCase):
         if not os.path.exists(self.TEMP_DIR):
             os.makedirs(self.TEMP_DIR)
 
-        self.apply_blacklist(scenario_file_name, test_file_name)
+        self._apply_blacklist(scenario_file_name, test_file_name)
         return test_file_name
 
     @staticmethod
@@ -205,16 +203,10 @@ class RallyBase(testcase.TestCase):
 
         return True
 
-    @staticmethod
-    def live_migration_supported():
+    def _live_migration_supported(self):
         """Determine if live migration is supported."""
-        config = iniparse.ConfigParser()
-        if (config.read(RallyBase.TEMPEST_CONF_FILE) and
-                config.has_section('compute-feature-enabled') and
-                config.has_option('compute-feature-enabled',
-                                  'live_migration')):
-            return config.getboolean('compute-feature-enabled',
-                                     'live_migration')
+        if self.compute_cnt > 1:
+            return True
 
         return False
 
@@ -273,8 +265,7 @@ class RallyBase(testcase.TestCase):
         else:
             return False
 
-    @staticmethod
-    def excl_func():
+    def excl_func(self):
         """Exclude functionalities."""
         black_tests = []
         func_list = []
@@ -283,7 +274,7 @@ class RallyBase(testcase.TestCase):
             with open(RallyBase.BLACKLIST_FILE, 'r') as black_list_file:
                 black_list_yaml = yaml.safe_load(black_list_file)
 
-            if not RallyBase.live_migration_supported():
+            if not self._live_migration_supported():
                 func_list.append("no_live_migration")
 
             if 'functionality' in black_list_yaml.keys():
@@ -298,15 +289,14 @@ class RallyBase(testcase.TestCase):
 
         return black_tests
 
-    @staticmethod
-    def apply_blacklist(case_file_name, result_file_name):
+    def _apply_blacklist(self, case_file_name, result_file_name):
         """Apply blacklist."""
         LOGGER.debug("Applying blacklist...")
         cases_file = open(case_file_name, 'r')
         result_file = open(result_file_name, 'w')
 
-        black_tests = list(set(RallyBase.excl_func() +
-                               RallyBase.excl_scenario()))
+        black_tests = list(set(self.excl_func() +
+                               self.excl_scenario()))
 
         if black_tests:
             LOGGER.debug("Blacklisted tests: " + str(black_tests))
@@ -483,6 +473,7 @@ class RallyBase(testcase.TestCase):
         self.flavor_name = self.FLAVOR_NAME + self.guid
         self.flavor_alt_name = self.FLAVOR_ALT_NAME + self.guid
         self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
+        self.compute_cnt = snaps_utils.get_active_compute_cnt(self.os_creds)
 
         LOGGER.debug("Creating image '%s'...", self.image_name)
         image_creator = deploy_utils.create_image(
