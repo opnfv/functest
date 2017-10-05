@@ -88,6 +88,23 @@
       "revId": "e7e6514e8860a3a642337853673afefe49d10354",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_d2531215",
+        "filename": "docs/testing/user/configguide/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2409
+      },
+      "writtenOn": "2017-10-05T14:11:21Z",
+      "side": 1,
+      "message": "Version history is not needed in the final document",
+      "revId": "e7e6514e8860a3a642337853673afefe49d10354",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
