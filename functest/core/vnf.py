@@ -152,10 +152,8 @@ class VnfOnBoarding(base.TestCase):
         The details section MAY be updated in the vnf test cases.
 
         The deployment can be executed via a specific orchestrator
-        or using nuild-in orchestrators such as:
-
-            * heat, openbaton, cloudify (available on all scenario),
-            * open-o (on open-o scenarios)
+        or using build-in orchestrators such as heat, OpenBaton, cloudify,
+        juju, onap, ...
 
         Returns:
             True if the VNF is properly deployed

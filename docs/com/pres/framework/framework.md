@@ -306,15 +306,94 @@ run:
 
 
 
-## Euphrates
+## class VNF
+bases: TestCase
+
+base model for VNF onboarding testing
 
 
-### Next actions
+### methods
 
-- __to finish VNF abstraction (coverage + pylint)__
-- to publish doc API
+| Method                | Purpose                                           |
+|-----------------------|---------------------------------------------------|
+| prepare()             | Prepare VNF env (user, tenant, security group,..) |
+| run(**kwargs)         | Run VNF test case                                 |
+| deploy_orchestrator() | Deploy cloudify, ONAP, OpenBaton,... (optional)   |
+| deploy_vnf()          | Deploy the VNF                                    |
+| test_vnf()            | Run tests on the VNF                              |
 
-Please see [Functest Euphrates page](https://wiki.opnfv.org/display/functest/Functest+Euphrates+page) for more details
+
+### run(**kwargs)
+
+- Deploy an orchestrator if needed (e.g. heat, OpenBaton, Cloudify, ONAP, Juju)
+- Deploy the VNF
+- Perform tests on the VNF
+
+
+### prepare()
+
+- Creation of a user
+- Creation of a Tenant/Project
+- Allocation admin role to the user on this tenant
+
+
+### deploy_orchestrator()
+
+- Deploy an orchestrator (optional)
+- If function overwritten raise orchestratorDeploymentException if error during orchestrator deployment
+
+
+### deploy_vnf()
+
+- *MUST be implemented* by vnf test cases. The details section MAY be updated in the vnf test cases.
+- The deployment can be executed via a specific orchestrator or using build-in orchestrators such as heat, openbaton, cloudify, juju, ONAP, ...
+- Returns:
+ True if the VNF is properly deployed False if the VNF is not deployed
+- Raise VnfDeploymentException if error during VNF deployment
+
+
+
+## Your fifth test case
+
+
+### fifth.py
+
+```python
+#!/usr/bin/env python
+
+from functest.core import vnf
+
+class Vnf(vnf.VnfOnBoarding):
+
+    def deploy_orchestrator(self):
+        # do nothing or deploy your orchestrator
+
+    def deploy_vnf(self):
+        print "Deploy your VNF here"
+        return 0
+
+    def deploy_vnf(self):
+        print "Test your VNF here"        
+        return 0
+```
+
+
+### functest/ci/testcases.yaml
+
+```yaml
+case_name: fifth
+project_name: functest
+criteria: 100
+blocking: true
+description: ''
+dependencies:
+    installer: ''
+    scenario: ''
+run:
+    module: 'fifth'
+    class: 'Vnf'
+```
+
 
 
 
