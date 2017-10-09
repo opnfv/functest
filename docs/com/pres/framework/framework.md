@@ -306,15 +306,102 @@ run:
 
 
 
-## Euphrates
+## class VNF
+bases: TestCase
+
+base model for VNF onboarding testing
 
 
-### Next actions
+### methods
 
-- __to finish VNF abstraction (coverage + pylint)__
-- to publish doc API
+| Method                | Purpose                                           |
+|-----------------------|---------------------------------------------------|
+| prepare()             | prepare VNF env (user, tenant, security group,..) |
+| run(**kwargs)         | run VNF test case                                 |
+| deploy_orchestrator() | deploy cloudify, ONAP, OpenBaton,... (optional)   |
+| deploy_vnf()          | deploy the VNF                                    |
+| test_vnf()            | run tests on the VNF                              |
 
-Please see [Functest Euphrates page](https://wiki.opnfv.org/display/functest/Functest+Euphrates+page) for more details
+
+### run(**kwargs)
+
+- deploys an orchestrator if needed (e.g. heat, OpenBaton, Cloudify, ONAP, Juju)
+- deploys the VNF
+- performs tests on the VNF
+
+
+### prepare()
+
+- creates a user
+- creates a Tenant/Project
+- allocates admin role to the user on this tenant
+
+
+### deploy_orchestrator()
+
+- deploys an orchestrator (optional)
+- if this function is overridden then raise orchestratorDeploymentException if error during orchestrator deployment
+
+
+### deploy_vnf()
+
+- **MUST be implemented** by vnf test cases. The details section MAY be updated in the vnf test cases.
+- The deployment can be executed via a specific orchestrator or using build-in orchestrators such as heat, openbaton, cloudify, juju, ONAP, ...
+- returns:
+  True if the VNF is properly deployed
+  False if the VNF is not deployed
+- raise VnfDeploymentException if error during VNF deployment
+
+
+### test_vnf()
+
+- **MUST be implemented** by vnf test cases. The details section MAY be updated in the vnf test cases.
+- Once a VNF is deployed, it is assumed that specific test suite can be run to validate the VNF.
+- returns:
+  True if VNF tests are PASS
+  False if test suite is FAIL
+- raise VnfTestException if error during VNF tests
+
+
+
+## Your fifth test case
+
+
+### fifth.py
+
+```python
+#!/usr/bin/env python
+
+from functest.core import vnf
+
+class Vnf(vnf.VnfOnBoarding):
+
+    def deploy_vnf(self):
+        print "Deploy your VNF here"
+        print "Feed orchestrator with VNF descriptor"
+        return 0
+
+    def test_vnf(self):
+        print "Test your VNF here"
+        return 0
+```
+
+
+### functest/ci/testcases.yaml
+
+```yaml
+case_name: fifth
+project_name: functest
+criteria: 100
+blocking: true
+description: ''
+dependencies:
+    installer: ''
+    scenario: ''
+run:
+    module: 'fifth'
+    class: 'Vnf'
+```
 
 
 
