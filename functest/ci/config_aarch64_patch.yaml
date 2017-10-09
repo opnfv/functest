@@ -29,6 +29,9 @@ os:
               hw_video_model: 'vga'
           centos:
             disk_file: /home/opnfv/functest/images/CentOS-7-aarch64-GenericCloud.qcow2
+            extra_properties:
+              hw_firmware_type: 'uefi'
+              hw_video_model: 'vga'
 
     vping:
         image_name: TestVM
