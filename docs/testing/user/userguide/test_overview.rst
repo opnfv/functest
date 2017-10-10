@@ -77,9 +77,6 @@ validate the scenario for the release.
 |             |               | rally_full     | Run the OpenStack testing tool   |
 |             |               |                | benchmarking OpenStack modules   |
 |             |               |                | See the Rally documents `[3]`_   |
-|             |               +----------------+----------------------------------+
-|             |               | tempest_custom | Allow to run a customized list   |
-|             |               |                | of Tempest cases                 |
 +-------------+---------------+----------------+----------------------------------+
 | Controllers | smoke         | odl            | Opendaylight Test suite          |
 |             |               |                | Limited test suite to check the  |
