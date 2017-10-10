@@ -197,9 +197,7 @@ The tiers are:
   * smoke
   * features
   * components
-  * performance
   * vnf
-  * stress
 
 Note Functest deals with healthcheck, smoke, features, components and vnf tiers.
 Performance and stress tiers are out of scope.
@@ -229,8 +227,8 @@ Feature, unit and vnf_base inherit from testcase:
               |         - check_criteria()              |
               |                                         |
               +-----------------------------------------+
-                 |               |
-                 V               V
+                 |               |                    |
+                 V               V                    V
   +--------------------+   +--------------+   +--------------------------+
   |                    |   |              |   |                          |
   |    feature         |   |    unit      |   |      vnf                 |
