@@ -24,7 +24,7 @@ RUN apk --no-cache add --update \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
-        git+https://gerrit.opnfv.org/gerrit/parser#egg=heat-translator\&subdirectory=tosca2heat/heat-translator \
+        git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-heattranslator\&subdirectory=tosca2heat/heat-translator \
         git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-toscaparser\&subdirectory=tosca2heat/tosca-parser \
         -e git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-parser && \
     rm -r upper-constraints.txt /src/rally/.git && \
