@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_73aac8d5",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-10T13:02:20Z",
+      "side": 1,
+      "message": "this could also be remove, duplication with bullets above (it say the same thing, no?",
+      "revId": "abe46ceade9dd981fb2ea9129b470072a97a7e05",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
