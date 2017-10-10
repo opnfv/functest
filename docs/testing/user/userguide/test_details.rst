@@ -426,28 +426,29 @@ The Clearwater architecture is described as follows:
    :align: center
    :alt: vIMS architecture
 
- cloudify_ims_perf
- ^^^^^^^^^^^^
- This testcase extends the cloudify_ims test case.
- The first part is similar but the testing part is different.
- The testing part consists in automating a realistic signaling load on the vIMS
- using an Ixia loader (proprietary tools)
-  - You need to have access to an Ixia licence server
- defined in the configuration file.
 
- To start this test you need to have access to an Ixia licence server and have ixia image locally
-   -
-       case_name: cloudify_ims_perf
-       project_name: functest
-       criteria: 100
-       blocking: false
-       description: ''
-       dependencies:
-           installer: ''
-           scenario: 'o'
-       run:
-           module: 'functest.opnfv_tests.vnf.ims.cloudify_ims_perf'
-           class: 'CloudifyImsPerf'
+cloudify_ims_perf
+^^^^^^^^^^^^^^^^^
+This testcase extends the cloudify_ims test case.
+The first part is similar but the testing part is different.
+The testing part consists in automating a realistic signaling load on the vIMS
+using an Ixia loader (proprietary tools)
+ - You need to have access to an Ixia licence server defined in the configuration
+ file.
+
+To start this test you need to have access to an Ixia licence server and have ixia image locally
+  -
+      case_name: cloudify_ims_perf
+      project_name: functest
+      criteria: 100
+      blocking: false
+      description: ''
+      dependencies:
+          installer: ''
+          scenario: ''
+      run:
+          module: 'functest.opnfv_tests.vnf.ims.cloudify_ims_perf'
+          class: 'CloudifyImsPerf'
 
 orchestra_openims
 ^^^^^^^^^^^^^^^^^
