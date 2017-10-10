@@ -368,8 +368,7 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         credentials = {"username": self.snaps_creds.username,
                        "password": self.snaps_creds.password,
                        "auth_url": self.snaps_creds.auth_url,
-                       "tenant_name": self.snaps_creds.project_name,
-                       "region_name": os.environ['OS_REGION_NAME']}
+                       "tenant_name": self.snaps_creds.project_name}
 
         self.util_info = {"credentials": credentials,
                           "cfy": cfy_client,
