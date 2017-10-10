@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_f39b7870",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-10-10T13:25:01Z",
+      "side": 1,
+      "message": "It still does not work: \nhttp://artifacts.opnfv.org/functest/review/44645/testing_user_userguide/index.html#cloudify-ims",
+      "range": {
+        "startLine": 423,
+        "startChar": 0,
+        "endLine": 427,
+        "endChar": 26
+      },
+      "revId": "01f37199340c43e42ad5904feee12e79a8e164e5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
