@@ -19,8 +19,8 @@ import yaml
 from functest.utils.constants import CONST
 from git import Repo
 from novaclient import client as novaclient
+from keystoneauth1.identity import v3
 from keystoneauth1 import session
-from keystoneauth1 import loading
 from requests.auth import HTTPBasicAuth
 
 RESULT_SPRIT_INDEX = {
@@ -57,7 +57,6 @@ class Utilvnf(object):
         self.password = ""
         self.auth_url = ""
         self.tenant_name = ""
-        self.region_name = ""
 
         data_dir = data_dir = CONST.__getattribute__('dir_router_data')
 
@@ -116,20 +115,22 @@ class Utilvnf(object):
 
     def get_nova_client(self):
         creds = self.get_nova_credentials()
-        loader = loading.get_plugin_loader('password')
-        auth = loader.load_from_options(**creds)
+        auth = v3.Password(auth_url=creds['auth_url'],
+                           username=creds['username'],
+                           password=creds['password'],
+                           project_name=creds['tenant_name'],
+                           user_domain_id='default',
+                           project_domain_id='default')
         sess = session.Session(auth=auth)
         nova_client = novaclient.Client(NOVA_CLIENT_API_VERSION, session=sess)
 
         return nova_client
 
-    def set_credentials(self, username, password, auth_url,
-                        tenant_name, region_name="RegionOne"):
+    def set_credentials(self, username, password, auth_url, tenant_name):
         self.username = username
         self.password = password
         self.auth_url = auth_url
         self.tenant_name = tenant_name
-        self.region_name = region_name
 
     def get_nova_credentials(self):
         creds = {}
