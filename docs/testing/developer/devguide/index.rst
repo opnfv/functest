@@ -197,9 +197,7 @@ The tiers are:
   * smoke
   * features
   * components
-  * performance
   * vnf
-  * stress
 
 Note Functest deals with healthcheck, smoke, features, components and vnf tiers.
 Performance and stress tiers are out of scope.
@@ -217,7 +215,7 @@ introduced:
 
 The goal is to unify the way to run tests in Functest.
 
-Feature, unit and vnf_base inherit from testcase:
+Feature, unit and vnf_base inherit from testcase::
 
               +-----------------------------------------+
               |                                         |
@@ -225,12 +223,12 @@ Feature, unit and vnf_base inherit from testcase:
               |                                         |
               |         - init()                        |
               |         - run()                         |
-              |         - publish_report()              |
-              |         - check_criteria()              |
+              |         - push_to_db()                  |
+              |         - is_successful()               |
               |                                         |
               +-----------------------------------------+
-                 |               |
-                 V               V
+                 |               |                   |
+                 V               V                   V
   +--------------------+   +--------------+   +--------------------------+
   |                    |   |              |   |                          |
   |    feature         |   |    unit      |   |      vnf                 |
@@ -280,7 +278,7 @@ follows::
  functest/utils/
  |-- config.py
  |-- constants.py
- |-- decoratos.py
+ |-- decorators.py
  |-- env.py
  |-- functest_utils.py
  |-- openstack_clean.py
