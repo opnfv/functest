@@ -22,6 +22,30 @@
       "revId": "c8a82f8ef13a0049934ca3dadce6a5a28a02442b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_73400857",
+        "filename": "docs/testing/user/userguide/troubleshooting.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-10T15:14:32Z",
+      "side": 1,
+      "message": "why not? I will remove -r from this example. Also, the vars that you say are covered in the --env-file",
+      "parentUuid": "9a3d3df0_534a2484",
+      "range": {
+        "startLine": 282,
+        "startChar": 32,
+        "endLine": 282,
+        "endChar": 83
+      },
+      "revId": "c8a82f8ef13a0049934ca3dadce6a5a28a02442b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
