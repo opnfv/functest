@@ -55,16 +55,16 @@ class VnfOnBoarding(base.TestCase):
         """
         Run of the VNF test case:
 
-            * Deploy an orchestrator if needed (e.g. heat, cloudify, ONAP),
+            * Deploy an orchestrator if needed (e.g. heat, cloudify, ONAP,...),
             * Deploy the VNF,
             * Perform tests on the VNF
 
           A VNF test case is successfull when the 3 steps are PASS
           If one of the step is FAIL, the test case is FAIL
 
-          Returns:
-            TestCase.EX_OK if result is 'PASS'.
-            TestCase.EX_TESTCASE_FAILED otherwise.
+        Returns:
+          TestCase.EX_OK if result is 'PASS'.
+          TestCase.EX_TESTCASE_FAILED otherwise.
         """
         self.start_time = time.time()
 
@@ -137,9 +137,8 @@ class VnfOnBoarding(base.TestCase):
         """
         Deploy an orchestrator (optional).
 
-        If function overwritten
-        raise orchestratorDeploymentException if error during orchestrator
-        deployment
+        If this method is overriden then raise orchestratorDeploymentException
+        if error during orchestrator deployment
         """
         self.__logger.info("Deploy orchestrator (if necessary)")
         return True
@@ -152,10 +151,8 @@ class VnfOnBoarding(base.TestCase):
         The details section MAY be updated in the vnf test cases.
 
         The deployment can be executed via a specific orchestrator
-        or using nuild-in orchestrators such as:
-
-            * heat, openbaton, cloudify (available on all scenario),
-            * open-o (on open-o scenarios)
+        or using build-in orchestrators such as heat, OpenBaton, cloudify,
+        juju, onap, ...
 
         Returns:
             True if the VNF is properly deployed
