@@ -249,6 +249,37 @@ related REST API requests/responses are output to the console. More detailed deb
 information can be found from tempest.log file stored into related Rally deployment
 folder.
 
+Functest offers a possibility to test a customized list of Tempest test cases.
+To enable that, add a new entry in docker/components/testcases.yaml on the "components" container
+with the following content:
+            -
+                case_name: tempest_custom
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    The test case allows running a customized list of tempest
+                    test cases
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
+                    class: 'TempestCustom'
+
+Also, a list of the Tempest test cases must be provided to the container or modify
+the existing one in
+/usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt
+
+This is an example of running a customized list of Tempest tests in Functest:
+
+  sudo docker run --env-file env \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+      -v $(pwd)/images:/home/opnfv/functest/images  \
+      -v $(pwd)/my-custom-testcases.yaml:/usr/lib/python2.7/site-packages/functest/ci/testcases.yaml  \
+      -v $(pwd)/my-custom-tempest-tests.txt:/usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt  \
+      opnfv/functest-components prepare_env start && run_tests -r -t tempest_custom
+
 
 Rally
 ^^^^^
