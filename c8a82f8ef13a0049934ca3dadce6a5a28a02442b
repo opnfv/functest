@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_534a2484",
+        "filename": "docs/testing/user/userguide/troubleshooting.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-10-10T15:13:19Z",
+      "side": 1,
+      "message": "I do not think tempest_custom could be run via this command. Moreover, results will be pushed to db successfully only when the vars DEPLOY_SCENARIO, NODE_NAME and BUILD_TAG are all set.",
+      "range": {
+        "startLine": 282,
+        "startChar": 32,
+        "endLine": 282,
+        "endChar": 83
+      },
+      "revId": "c8a82f8ef13a0049934ca3dadce6a5a28a02442b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
