@@ -46,6 +46,30 @@
       "revId": "c8a82f8ef13a0049934ca3dadce6a5a28a02442b",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b321f0b6",
+        "filename": "docs/testing/user/userguide/troubleshooting.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-10-10T15:18:08Z",
+      "side": 1,
+      "message": "1. Have you tried this command locally?\n2. From the example of env file in https://wiki.opnfv.org/display/functest/Run+Alpine+Functest+containers, NODE_NAME and BUILD_TAG are not included yet.",
+      "parentUuid": "9a3d3df0_73400857",
+      "range": {
+        "startLine": 282,
+        "startChar": 32,
+        "endLine": 282,
+        "endChar": 83
+      },
+      "revId": "c8a82f8ef13a0049934ca3dadce6a5a28a02442b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
