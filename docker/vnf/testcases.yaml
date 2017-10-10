@@ -51,14 +51,13 @@ tiers:
             -
                 case_name: vyos_vrouter
                 project_name: functest
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
                     This test case is vRouter testing.
                 dependencies:
                     installer: ''
-                    scenario: 'nosdn-nofeature'
+                    scenario: 'os-nosdn-nofeature-ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.router.cloudify_vrouter'
                     class: 'CloudifyVrouter'
