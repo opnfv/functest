@@ -353,16 +353,14 @@ includes two main directories:
 
 src and repos directories are used to host third party code used for the tests.
 
-The functest code is under /usr/lib/python2.7/site-packages/functest
-The structure can be described as follows::
+The structure of functest repo can be described as follows::
 
   |-- INFO
   |-- LICENSE
   |-- api
   |  `-- apidoc
   |-- build.sh
-  |-- commons
-  |  |-- docker
+  |-- docker
   |  |-- Dockerfile
   |  |-- Dockerfile.aarch64.patch
   |  |-- components
@@ -373,7 +371,9 @@ The structure can be described as follows::
   |  |-- healthcheck
   |  |-- smoke
   |  |-- vnf
-  |  `-- thirdparty-requirements.txt
+  |  |-- parser
+  |  |-- restapi
+  |  |-- thirdparty-requirements.txt
   |-- docs
   |  |-- com
   |  |-- images
@@ -392,13 +392,20 @@ The structure can be described as follows::
     |  |-- urls.py
     |  |-- common
     |  |  |-- api_utils.py
-    |  |  `-- error.py
+    |  |  |-- thread.py
     |  `-- resources
     |     `-- v1
     |        |-- creds.py
     |        |-- envs.py
     |        |-- testcases.py
-    |        `-- tiers.py
+    |        |-- tiers.py
+    |        |-- tasks.py
+    |  `-- database
+    |     |-- db.py
+    |     `-- v1
+    |        |-- handlers.py
+    |        |-- models.py
+    |  `-- swagger
     |-- ci
     │   |-- check_deployment.py
     │   |-- config_aarch64_patch.yaml
@@ -412,36 +419,32 @@ The structure can be described as follows::
     │   |-- run_tests.py
     │   |-- testcases.yaml
     │   |-- tier_builder.py
-    │   `-- tier_handler.py
+    │   |-- tier_handler.py
     |-- cli
     │   |-- cli_base.py
     │   |-- commands
     │   │   |-- cli_env.py
     │   │   |-- cli_os.py
     │   │   |-- cli_testcase.py
-    │   │   `-- cli_tier.py
+    │   │   |-- cli_tier.py
     │   |-- functest-complete.sh
     |-- core
     │   |-- feature.py
     │   |-- testcase.py
     │   |-- unit.py
-    │   `-- vnf.py
+    │   |-- vnf.py
     |-- energy
     │   |-- energy.py
-    │   `-- energy.pyc
     |-- opnfv_tests
-    │   |-- mano
-    │   │   |-- orchestra.py
-    │   |-- openstack
-    │   │   |-- rally
-    │   │   |-- refstack_client
-    │   │   |-- snaps
-    │   │   |-- tempest
-    │   │   `-- vping
-    │   |-- sdn
+    │   `-- openstack
+    │       |-- rally
+    │       |-- refstack_client
+    │       |-- snaps
+    │       |-- tempest
+    │       |-- vping
+    │   `-- sdn
     │   │    `-- odl
     │   `-- vnf
-    │       |-- aaa
     │       |-- ims
     │       `-- router
     |-- tests
@@ -490,7 +493,8 @@ We may distinguish several directories, the first level has 5 directories:
 * **functest**: This directory contains all the code needed to run
   functest internal cases and OPNFV onboarded feature or VNF test cases.
 
-Functest directory has 7 sub-directories:
+Functest directory has 7 sub-directories, which is located under
+/usr/lib/python2.7/site-packages/functest:
   * **api**: This directory is dedicated for the internal Functest API and the
     API (framework) documentations.
   * **ci**: This directory contains test structure definition files

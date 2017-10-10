@@ -427,7 +427,7 @@ The Clearwater architecture is described as follows:
    :alt: vIMS architecture
 
  cloudify_ims_perf
- ^^^^^^^^^^^^
+ ^^^^^^^^^^^^^^^^^
  This testcase extends the cloudify_ims test case.
  The first part is similar but the testing part is different.
  The testing part consists in automating a realistic signaling load on the vIMS
