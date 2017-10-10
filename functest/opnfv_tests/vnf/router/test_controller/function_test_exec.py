@@ -40,8 +40,7 @@ class FunctionTestExec(object):
         self.util.set_credentials(credentials["username"],
                                   credentials["password"],
                                   credentials["auth_url"],
-                                  credentials["tenant_name"],
-                                  credentials["region_name"])
+                                  credentials["tenant_name"])
 
         with open(self.util.test_env_config_yaml) as file_fd:
             test_env_config_yaml = yaml.safe_load(file_fd)

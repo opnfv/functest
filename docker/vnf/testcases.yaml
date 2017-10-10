@@ -51,7 +51,6 @@ tiers:
             -
                 case_name: vyos_vrouter
                 project_name: functest
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
