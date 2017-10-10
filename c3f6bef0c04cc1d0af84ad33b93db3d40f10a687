@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a3d3df0_c8120358",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-10T08:17:02Z",
+      "side": 1,
+      "message": "All others descriptions start with lower case: prepare VNF env",
+      "revId": "c3f6bef0c04cc1d0af84ad33b93db3d40f10a687",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_8820fb9c",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-10T08:17:02Z",
+      "side": 1,
+      "message": "idem (lower case)",
+      "revId": "c3f6bef0c04cc1d0af84ad33b93db3d40f10a687",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_081d0b67",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-10T08:17:02Z",
+      "side": 1,
+      "message": "Could we remove deploy_orchestror in this example to avoid scrolling?",
+      "revId": "c3f6bef0c04cc1d0af84ad33b93db3d40f10a687",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_4826f3bb",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-10T08:17:02Z",
+      "side": 1,
+      "message": "2 deploy_vnf()? test_vnf() instead?",
+      "revId": "c3f6bef0c04cc1d0af84ad33b93db3d40f10a687",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_a2f40088",
         "filename": "docs/com/pres/framework/framework.md",
         "patchSetId": 1
@@ -13,6 +81,30 @@
       "writtenOn": "2017-10-09T16:10:43Z",
       "side": 1,
       "message": "whitespaces",
+      "range": {
+        "startLine": 376,
+        "startChar": 34,
+        "endLine": 376,
+        "endChar": 42
+      },
+      "revId": "c3f6bef0c04cc1d0af84ad33b93db3d40f10a687",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e819c77a",
+        "filename": "docs/com/pres/framework/framework.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-10T08:17:02Z",
+      "side": 1,
+      "message": "agree",
+      "parentUuid": "9a3d3df0_a2f40088",
       "range": {
         "startLine": 376,
         "startChar": 34,
