@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_39e2dfd5",
+        "filename": "docs/testing/user/userguide/troubleshooting.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-10-11T02:13:05Z",
+      "side": 1,
+      "message": "I would prefer to put this content in userguide/test_details.rst, just like the specification of cloudify_ims_perf: https://git.opnfv.org/functest/tree/docs/testing/user/userguide/test_details.rst#n430",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 252,
+        "endChar": 78
+      },
+      "revId": "832bb86db4fba9f65aebf09c058592d28e418134",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
