@@ -18,7 +18,11 @@ from functest.opnfv_tests.vnf.router import cloudify_vrouter
 
 class CloudifyVrouterTesting(unittest.TestCase):
 
-    def setUp(self):
+    @mock.patch('functest.opnfv_tests.vnf.router.cloudify_vrouter.Utilvnf')
+    @mock.patch('functest.opnfv_tests.vnf.router.cloudify_vrouter.vrouter_base'
+                '.Utilvnf')
+    @mock.patch('os.makedirs')
+    def setUp(self, *args):
 
         self.tenant = 'cloudify_vrouter'
         self.creds = {'username': 'user',
@@ -41,14 +45,12 @@ class CloudifyVrouterTesting(unittest.TestCase):
                                                      'ram_min': 2048}}}}
 
         with mock.patch('functest.opnfv_tests.vnf.router.cloudify_vrouter.'
-                        'os.makedirs'), \
-            mock.patch('functest.opnfv_tests.vnf.router.cloudify_vrouter.'
-                       'get_config', return_value={
-                           'tenant_images': 'foo',
-                           'orchestrator': self.orchestrator,
-                           'vnf': self.vnf,
-                           'vnf_test_suite': '',
-                           'version': 'whatever'}):
+                        'get_config', return_value={
+                            'tenant_images': 'foo',
+                            'orchestrator': self.orchestrator,
+                            'vnf': self.vnf,
+                            'vnf_test_suite': '',
+                            'version': 'whatever'}):
 
             self.router_vnf = cloudify_vrouter.CloudifyVrouter()
 
