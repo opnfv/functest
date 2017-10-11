@@ -174,6 +174,43 @@ The goal of the Tempest test suite is to check the basic functionalities of the
 different OpenStack components on an OPNFV fresh installation, using the
 corresponding REST API interfaces.
 
+Functest offers a possibility to test a customized list of Tempest test cases.
+To enable that, add a new entry in docker/components/testcases.yaml on the "components" container
+with the following content::
+
+    -
+        case_name: tempest_custom
+        project_name: functest
+        criteria: 100
+        blocking: false
+        description: >-
+            The test case allows running a customized list of tempest
+            test cases
+        dependencies:
+            installer: ''
+            scenario: ''
+        run:
+            module: 'functest.opnfv_tests.openstack.tempest.tempest'
+            class: 'TempestCustom'
+
+Also, a list of the Tempest test cases must be provided to the container or modify
+the existing one in
+/usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt
+
+Example of custom list of tests 'my-custom-tempest-tests.txt'::
+
+    tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops[compute,id-7fff3fb3-91d8-4fd0-bd7d-0204f1f180ba,network,smoke]
+    tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_network_basic_ops[compute,id-f323b3ba-82f8-4db7-8ea6-6a895869ec49,network,smoke]
+
+This is an example of running a customized list of Tempest tests in Functest::
+
+  sudo docker run --env-file env \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds \
+      -v $(pwd)/images:/home/opnfv/functest/images \
+      -v $(pwd)/my-custom-testcases.yaml:/usr/lib/python2.7/site-packages/functest/ci/testcases.yaml \
+      -v $(pwd)/my-custom-tempest-tests.txt:/usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt \
+      opnfv/functest-components /bin/bash -c "prepare_env start && run_tests -t tempest_custom"
+
 
 Rally bench test suites
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -434,18 +471,23 @@ The first part is similar but the testing part is different.
 The testing part consists in automating a realistic signaling load on the vIMS
 using an Ixia loader (proprietary tools)
  - You need to have access to an Ixia licence server defined in the configuration
- file.
+    file and have ixia image locally.
 
-To start this test you need to have access to an Ixia licence server and have ixia image locally
+This test case is available but not declared in testcases.yaml. The declaration
+of the testcase is simple, connect to your functest-vnf docker, add the following
+section in /usr/lib/python2.7/site-packacges/functest/ci/testcases.yaml::
+
   -
       case_name: cloudify_ims_perf
       project_name: functest
-      criteria: 100
+      criteria: 80
       blocking: false
-      description: ''
+      description: >-
+          Stress tests based on Cloudify. Ixia loader images and access to Ixia
+          server license.
       dependencies:
           installer: ''
-          scenario: ''
+          scenario: 'os-nosdn-nofeature-ha'
       run:
           module: 'functest.opnfv_tests.vnf.ims.cloudify_ims_perf'
           class: 'CloudifyImsPerf'
@@ -460,15 +502,8 @@ orchestra_clearwaterims
 Orchestra test case deals with the deployment of Clearwater vIMS with OpenBaton
 orchestrator.
 
-parser
-^^^^^^
-
-See parser user guide for details.
-
-
 vyos-vrouter
 ^^^^^^^^^^^^
-
 This test case deals with the deployment and the test of vyos vrouter with
 Cloudify orchestrator. The test case can do testing for interchangeability of
 BGP Protocol using vyos.
@@ -485,30 +520,6 @@ The Workflow is as follows:
     Output of report based on result using JSON format.
 
 The vyos-vrouter architecture is described in `[14]`_
-
-cloudify_ims_perf
-^^^^^^^^^^^^^^^^^
-
-This test case is available but not declared in testcases.yaml. If you want to
-run it you need to get the Ixia loader images and have access to an Ixia license
-server.
-
-The declaration of the testcase is simple, connect to your functest-vnf docker,
-add the following section in /usr/lib/python2.7/site-packacges/functest/ci/testcases.yaml::
-
-  case_name: cloudify_ims_perf
-  project_name: functest
-  criteria: 80
-  blocking: false
-  description: >-
-      Stress tests based on Cloudify. Ixia loader images and access to Ixia
-      server license.
-  dependencies:
-      installer: ''
-      scenario: 'os-nosdn-nofeature-ha'
-  run:
-      module: 'functest.opnfv_tests.vnf.ims.cloudify_ims_perf'
-      class: 'CloudifyImsPerf'
 
 
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
