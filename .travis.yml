@@ -1,0 +1,133 @@
+sudo: required
+language: bash
+services: docker
+language: generic
+
+before_script:
+  - sudo apt-get -y install qemu-user-static
+  - sudo -E docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+  - (cd .. && git clone https://github.com/estesp/manifest-tool)
+  - (cd ../manifest-tool && sudo -E make && sudo -E make install)
+
+jobs:
+  include:
+    - stage: build functest-core images
+      script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs=""
+        - aarch64_dirs="docker/core"
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs="docker/core"
+        - aarch64_dirs=""
+    - stage: publish functest-core manifests
+      script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64,linux/arm64 \
+          --template ${DOCKER_USERNAME}/functest-core:x86_64-euphrates \
+          --template ${DOCKER_USERNAME}/functest-core:aarch64-euphrates \
+          --target ${DOCKER_USERNAME}/functest-core:euphrates
+    - stage: build all functest images
+      script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs=""
+        - aarch64_dirs="docker/healthcheck"
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs=""
+        - aarch64_dirs="docker/smoke"
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs=""
+        - aarch64_dirs="docker/features"
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs=""
+        - aarch64_dirs="docker/components"
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs="docker/healthcheck"
+        - aarch64_dirs=""
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs="docker/smoke"
+        - aarch64_dirs=""
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs="docker/features"
+        - aarch64_dirs=""
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs="docker/components"
+        - aarch64_dirs=""
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs="docker/vnf"
+        - aarch64_dirs=""
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs="docker/restapi"
+        - aarch64_dirs=""
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - x86_64_dirs="docker/parser"
+        - aarch64_dirs=""
+    - stage: publish all manifests
+      script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64,linux/arm64 \
+          --template ${DOCKER_USERNAME}/functest-healthcheck:x86_64-euphrates \
+          --template ${DOCKER_USERNAME}/functest-healthcheck:aarch64-euphrates \
+          --target ${DOCKER_USERNAME}/functest-healthcheck:euphrates
+    - script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64,linux/arm64 \
+          --template ${DOCKER_USERNAME}/functest-healthcheck:x86_64-euphrates \
+          --template ${DOCKER_USERNAME}/functest-healthcheck:aarch64-euphrates \
+          --target ${DOCKER_USERNAME}/functest-healthcheck:euphrates
+    - script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64,linux/arm64 \
+          --template ${DOCKER_USERNAME}/functest-smoke:x86_64-euphrates \
+          --template ${DOCKER_USERNAME}/functest-smoke:aarch64-euphrates \
+          --target ${DOCKER_USERNAME}/functest-smoke:euphrates
+    - script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64,linux/arm64 \
+          --template ${DOCKER_USERNAME}/functest-features:x86_64-euphrates \
+          --template ${DOCKER_USERNAME}/functest-features:aarch64-euphrates \
+          --target ${DOCKER_USERNAME}/functest-features:euphrates
+    - script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64,linux/arm64 \
+          --template ${DOCKER_USERNAME}/functest-components:x86_64-euphrates \
+          --template ${DOCKER_USERNAME}/functest-components:aarch64-euphrates \
+          --target ${DOCKER_USERNAME}/functest-components:euphrates
+    - script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64 \
+          --template ${DOCKER_USERNAME}/functest-vnf:x86_64-euphrates \
+          --target ${DOCKER_USERNAME}/functest-vnf:euphrates
+    - script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64 \
+          --template ${DOCKER_USERNAME}/functest-restapi:x86_64-euphrates \
+          --target ${DOCKER_USERNAME}/functest-restapi:euphrates
+    - script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64 \
+          --template ${DOCKER_USERNAME}/functest-parser:x86_64-euphrates \
+          --target ${DOCKER_USERNAME}/functest-parser:euphrates
