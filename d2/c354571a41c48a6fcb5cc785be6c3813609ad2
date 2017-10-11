@@ -1,0 +1,8 @@
+Code-Review+2: Jose Lausuch <jalausuch@suse.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Wed, 11 Oct 2017 15:11:31 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/44803
+Project: functest
+Branch: refs/heads/stable/euphrates
