@@ -34,6 +34,24 @@
       "revId": "2067b4f825e8d1dca3738f9bce0fb2049c2e1317",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_14f1a2cd",
+        "filename": "docker/vnf/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4385
+      },
+      "writtenOn": "2017-10-11T07:49:52Z",
+      "side": 1,
+      "message": "vyos_vrouter is no depend to noha scenario. I will change to os-nosdn-nofeature-ha like other VNF cases.",
+      "parentUuid": "9a3d3df0_f4199e7a",
+      "revId": "2067b4f825e8d1dca3738f9bce0fb2049c2e1317",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
