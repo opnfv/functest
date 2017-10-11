@@ -434,18 +434,23 @@ The first part is similar but the testing part is different.
 The testing part consists in automating a realistic signaling load on the vIMS
 using an Ixia loader (proprietary tools)
  - You need to have access to an Ixia licence server defined in the configuration
- file.
+ file and have ixia image locally
 
-To start this test you need to have access to an Ixia licence server and have ixia image locally
+This test case is available but not declared in testcases.yaml. The declaration
+of the testcase is simple, connect to your functest-vnf docker, add the following
+section in /usr/lib/python2.7/site-packacges/functest/ci/testcases.yaml::
+
   -
       case_name: cloudify_ims_perf
       project_name: functest
-      criteria: 100
+      criteria: 80
       blocking: false
-      description: ''
+      description: >-
+          Stress tests based on Cloudify. Ixia loader images and access to Ixia
+          server license.
       dependencies:
           installer: ''
-          scenario: ''
+          scenario: 'os-nosdn-nofeature-ha'
       run:
           module: 'functest.opnfv_tests.vnf.ims.cloudify_ims_perf'
           class: 'CloudifyImsPerf'
@@ -459,12 +464,6 @@ orchestra_clearwaterims
 ^^^^^^^^^^^^^^^^^^^^^^^
 Orchestra test case deals with the deployment of Clearwater vIMS with OpenBaton
 orchestrator.
-
-parser
-^^^^^^
-
-See parser user guide for details.
-
 
 vyos-vrouter
 ^^^^^^^^^^^^
@@ -485,30 +484,6 @@ The Workflow is as follows:
     Output of report based on result using JSON format.
 
 The vyos-vrouter architecture is described in `[14]`_
-
-cloudify_ims_perf
-^^^^^^^^^^^^^^^^^
-
-This test case is available but not declared in testcases.yaml. If you want to
-run it you need to get the Ixia loader images and have access to an Ixia license
-server.
-
-The declaration of the testcase is simple, connect to your functest-vnf docker,
-add the following section in /usr/lib/python2.7/site-packacges/functest/ci/testcases.yaml::
-
-  case_name: cloudify_ims_perf
-  project_name: functest
-  criteria: 80
-  blocking: false
-  description: >-
-      Stress tests based on Cloudify. Ixia loader images and access to Ixia
-      server license.
-  dependencies:
-      installer: ''
-      scenario: 'os-nosdn-nofeature-ha'
-  run:
-      module: 'functest.opnfv_tests.vnf.ims.cloudify_ims_perf'
-      class: 'CloudifyImsPerf'
 
 
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
