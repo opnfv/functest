@@ -360,6 +360,7 @@ The structure of functest repo can be described as follows::
   |-- api
   |  `-- apidoc
   |-- build.sh
+  |-- commons
   |-- docker
   |  |-- Dockerfile
   |  |-- Dockerfile.aarch64.patch
@@ -483,11 +484,10 @@ The structure of functest repo can be described as follows::
 We may distinguish several directories, the first level has 5 directories:
 
 * **api**: This directory is dedicated to the API (framework) documentations.
-* **commons**: This directory is dedicated for storage of traffic
-  profile or any other test inputs that could be reused by any test
-  project.
+* **commons**: This directory is dedicated for storage of traffic profile or
+  any other test inputs that could be reused by any test project.
 * **docker**: This directory includes the needed files and tools to
-  build the Functest Docker image.
+  build the Functest Docker images.
 * **docs**: This directory includes documentation: Release Notes,
   User Guide, Configuration Guide and Developer Guide.
 * **functest**: This directory contains all the code needed to run
@@ -495,8 +495,7 @@ We may distinguish several directories, the first level has 5 directories:
 
 Functest directory has 7 sub-directories, which is located under
 /usr/lib/python2.7/site-packages/functest:
-  * **api**: This directory is dedicated for the internal Functest API and the
-    API (framework) documentations.
+  * **api**: This directory is dedicated for the internal Functest API.
   * **ci**: This directory contains test structure definition files
     (e.g <filename>.yaml) and bash shell/python scripts used to
     configure and execute Functional tests. The test execution script
@@ -508,7 +507,7 @@ Functest directory has 7 sub-directories, which is located under
       the integration of internal, feature or vnf cases.
   * **opnfv_tests**: This directory includes the scripts required by
     Functest internal test cases and other feature projects test cases.
-  * **tests**: This directory includes the functest unit tests
+  * **tests**: This directory includes the functest unit tests.
   * **utils**: this directory holds Python source code for some general
     purpose helper utilities, which testers can also re-use in their
     own test code. See for an example the Openstack helper utility:

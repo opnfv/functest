@@ -37,8 +37,10 @@ at the end of the job and can be described as follow::
  |         rally_sanity         |     functest     |        smoke        |      15:16       |      PASS      |
  |       refstack_defcore       |     functest     |        smoke        |      15:55       |      PASS      |
  |         snaps_smoke          |     functest     |        smoke        |      26:45       |      FAIL      |
- |         cloudify_ims         |     functest     |         vnf         |      83:33       |      FAIL      |
- |        orchestra_ims         |     functest     |         vnf         |      11:32       |      FAIL      |
+ |           cloudify_ims       |     functest     |         vnf         |      23:56       |      PASS      |
+ |        orchestra_openims     |     orchestra    |         vnf         |      15:07       |      PASS      |
+ |     orchestra_clearwaterims  |     orchestra    |         vnf         |      19:10       |      PASS      |
+ |           vyos_vrouter       |     functest     |         vnf         |      00:00       |      SKIP      |
  +------------------------------+------------------+---------------------+------------------+----------------+
 
 Results are automatically pushed to the test results database, some additional
