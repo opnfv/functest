@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_b436f6e5",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-11T06:37:32Z",
+      "side": 1,
+      "message": "maybe indicate \n\nBeijing summit\nJune 2017\ncedric.ollivier@orange.com\n\nit explains some changes and the fact that pending patch indicated here have been merged for a while...\n\nyou may discard the following comments if you want to keep the original version shared in Beijing",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_9420129d",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-11T06:37:32Z",
+      "side": 1,
+      "message": "dependencies build cannot be removed to ...\n\n\"we\" sound strange",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_342b0684",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-11T06:37:32Z",
+      "side": 1,
+      "message": "as none?  - assuming that none",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_74258eaa",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-11T06:37:32Z",
+      "side": 1,
+      "message": "can you elaborate? incorrect or untrustable?",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d439fad9",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-11T06:37:32Z",
+      "side": 1,
+      "message": "I assume upper-constraints\nbut the slides correspond to what was in place for the summit..so it shall be considered retrospectively",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_544dea71",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-11T06:37:32Z",
+      "side": 1,
+      "message": "at the end, most of the issues have been overcome...",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
