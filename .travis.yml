@@ -1,0 +1,19 @@
+sudo: required
+language: bash
+services: docker
+
+before_script:
+  - sudo apt-get -y install qemu-user-static
+  - sudo -E docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+
+env: repo="${DOCKER_USERNAME}"
+
+jobs:
+  include:
+    - stage: build functest-core images
+      script: x86_64_dirs="" aarch64_dirs="docker/core" sudo -E bash build.sh
+    - stage: build all functest images
+      script: x86_64_dirs="" aarch64_dirs="docker/healthcheck" sudo -E bash build.sh
+    - script: x86_64_dirs="" aarch64_dirs="docker/smoke" sudo -E bash build.sh
+    - script: x86_64_dirs="" aarch64_dirs="docker/features" sudo -E bash build.sh
+    - script: x86_64_dirs="" aarch64_dirs="docker/components" sudo -E bash build.sh
