@@ -16,6 +16,24 @@
       "revId": "2067b4f825e8d1dca3738f9bce0fb2049c2e1317",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_94ddb245",
+        "filename": "docker/vnf/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-11T07:41:58Z",
+      "side": 1,
+      "message": "+1, please add \"-ha\"",
+      "parentUuid": "9a3d3df0_f4199e7a",
+      "revId": "2067b4f825e8d1dca3738f9bce0fb2049c2e1317",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
