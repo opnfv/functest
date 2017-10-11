@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_945812fc",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-11T07:31:13Z",
+      "side": 1,
+      "message": "agree.",
+      "parentUuid": "9a3d3df0_b436f6e5",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_9420129d",
         "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T06:37:32Z",
       "side": 1,
       "message": "dependencies build cannot be removed to ...\n\n\"we\" sound strange",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_745d8ee9",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-11T07:31:13Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a3d3df0_9420129d",
       "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_b46ef694",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-11T07:31:13Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a3d3df0_342b0684",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_74258eaa",
         "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-11T06:37:32Z",
       "side": 1,
       "message": "can you elaborate? incorrect or untrustable?",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d471fa78",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-11T07:31:13Z",
+      "side": 1,
+      "message": "wrong value.",
+      "parentUuid": "9a3d3df0_74258eaa",
       "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_146c029c",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-11T07:31:13Z",
+      "side": 1,
+      "message": "It will be updated in another change. It\u0027s true anyway.",
+      "parentUuid": "9a3d3df0_d439fad9",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_544dea71",
         "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-11T06:37:32Z",
       "side": 1,
       "message": "at the end, most of the issues have been overcome...",
+      "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f4687e89",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-11T07:31:13Z",
+      "side": 1,
+      "message": "Yes. It will be updated. I wrote it to warm everyone and I was hoping some help.",
+      "parentUuid": "9a3d3df0_544dea71",
       "revId": "72699f0d00a1d54e4dcacd7ff101ae1803dea859",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
