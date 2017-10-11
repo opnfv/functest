@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_68bc926d",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-11T13:43:00Z",
+      "side": 1,
+      "message": "the description could be improved, this doesn\u0027t add any extra info.",
+      "range": {
+        "startLine": 481,
+        "startChar": 20,
+        "endLine": 481,
+        "endChar": 55
+      },
+      "revId": "91b8e9d26411f51de883849306f441059b2f9104",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a8b69a88",
+        "filename": "functest/opnfv_tests/vnf/epc/featureFiles/Attach_Procedure_AttachWithIMSI_Wrong_MNC.feature",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-11T13:43:00Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 5,
+        "startChar": 49,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "91b8e9d26411f51de883849306f441059b2f9104",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_48c1cee3",
+        "filename": "functest/opnfv_tests/vnf/epc/featureFiles/Attach_Procedure_AttachWithIMSI_Wrong_MNC.feature",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-11T13:43:00Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 16,
+        "startChar": 64,
+        "endLine": 16,
+        "endChar": 68
+      },
+      "revId": "91b8e9d26411f51de883849306f441059b2f9104",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_88bbd671",
+        "filename": "functest/opnfv_tests/vnf/epc/featureFiles/Attach_Procedure_AttachWithIMSI_Wrong_TAC.feature",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-11T13:43:00Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 16,
+        "startChar": 64,
+        "endLine": 16,
+        "endChar": 68
+      },
+      "revId": "91b8e9d26411f51de883849306f441059b2f9104",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e8af022a",
+        "filename": "functest/opnfv_tests/vnf/epc/featureFiles/Attach_Procedure_Attach_With_GUTI.feature",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-11T13:43:00Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 15,
+        "startChar": 64,
+        "endLine": 15,
+        "endChar": 68
+      },
+      "revId": "91b8e9d26411f51de883849306f441059b2f9104",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c8acbe38",
+        "filename": "functest/opnfv_tests/vnf/epc/featureFiles/Attach_Procedure_Attach_With_GUTI.feature",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-11T13:43:00Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 25,
+        "startChar": 64,
+        "endLine": 25,
+        "endChar": 65
+      },
+      "revId": "91b8e9d26411f51de883849306f441059b2f9104",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_28aa8a19",
+        "filename": "functest/opnfv_tests/vnf/epc/featureFiles/Attach_Procedure_With_DNS_Server_Addr_Request.feature",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-11T13:43:00Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 5,
+        "startChar": 76,
+        "endLine": 5,
+        "endChar": 77
+      },
+      "revId": "91b8e9d26411f51de883849306f441059b2f9104",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_08a7c650",
+        "filename": "functest/opnfv_tests/vnf/epc/featureFiles/Attach_Procedure_With_DNS_Server_Addr_Request.feature",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-11T13:43:00Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 8,
+        "startChar": 70,
+        "endLine": 8,
+        "endChar": 71
+      },
+      "revId": "91b8e9d26411f51de883849306f441059b2f9104",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_6863f21a",
+        "filename": "functest/opnfv_tests/vnf/epc/featureFiles/Attach_Procedure_With_DSMIPv6_HN_Prefix_Request.feature",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-11T13:43:00Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 8,
+        "startChar": 79,
+        "endLine": 8,
+        "endChar": 80
+      },
+      "revId": "91b8e9d26411f51de883849306f441059b2f9104",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
