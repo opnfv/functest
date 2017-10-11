@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_8b81104d",
+        "filename": "build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-10-11T14:59:46Z",
+      "side": 1,
+      "message": "This patch will make 2 functest-core images. We need to push 1 image with 2 different tags. \ndocker push \"${repo}/functest-${dir##**/}:stable_x86_64/master_x86_64\"",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "314358464c8efa3752d21efb4d96b37bc5281982",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
