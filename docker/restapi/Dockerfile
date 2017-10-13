@@ -15,15 +15,17 @@ RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
         python-dev python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev \
         ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev && \
+    wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
+        sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ | \
+        sed s/^requests===.*$/requests===2.13.0/ \
+        > upper-constraints.txt && \
     git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
     (cd src/refstack-client && git checkout $REFSTACK_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/refstack-client/ && \
-    pip install --no-cache-dir --src /src \
-        -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
+    pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         -e/src/refstack-client -rthirdparty-requirements.txt && \
-    python3 -m pip install --no-cache-dir --src /src \
-        -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
+    python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         doctor-tests && \
     git clone https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
@@ -35,7 +37,7 @@ RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
     (cd /src/promise/source && npm install) && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
     npm -g install npm@latest && \
-    rm -r thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
+    rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
         /src/fds/.git /src/vims-test/.git && \
     apk del .build-deps
 EXPOSE 5000
