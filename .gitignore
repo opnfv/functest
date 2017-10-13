@@ -17,3 +17,4 @@ functest.egg-info
 *venv
 .tox
 *.out
+*.pdf
