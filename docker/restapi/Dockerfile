@@ -15,8 +15,8 @@ RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
         python-dev python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev \
         ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev && \
-    git clone --depth 1 https://github.com/openstack/refstack-client.git /src/refstack-client && \
-    (cd src/refstack-client && git checkout -b $REFSTACK_TAG) && \
+    git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
+    (cd src/refstack-client && git checkout $REFSTACK_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/refstack-client/ && \
     pip install --no-cache-dir --src /src \
         -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
@@ -26,8 +26,8 @@ RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
         -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         doctor-tests && \
-    git clone --depth 1 https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
-    (cd src/odl_test && git checkout -b $ODL_TAG) && \
+    git clone https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
+    (cd src/odl_test && git checkout $ODL_TAG) && \
     git clone --depth 1 -b $FDS_TAG https://gerrit.opnfv.org/gerrit/fds /src/fds && \
     git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test /src/vims-test && \
     ln -s /src/tempest /src/refstack-client/.tempest && \
