@@ -3,7 +3,7 @@
 set -e
 
 repo=${repo:-opnfv}
-amd64_dirs=${x86_64_dirs-"\
+amd64_dirs=${amd64_dirs-"\
 docker/core \
 docker/healthcheck \
 docker/smoke \
@@ -12,7 +12,7 @@ docker/components \
 docker/vnf \
 docker/parser \
 docker/restapi"}
-arm64_dirs=${aarch64_dirs-$(echo "${amd64_dirs}" | sed -e "s|docker/vnf||" \
+arm64_dirs=${arm64_dirs-$(echo "${amd64_dirs}" | sed -e "s|docker/vnf||" \
     -e "s|docker/restapi||")}
 
 find . -name Dockerfile -exec sed -i -e "s|opnfv/functest-core|${repo}/functest-core:amd64-latest|g" {} +
