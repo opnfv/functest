@@ -128,7 +128,7 @@ tiers:
 
             -
                 case_name: fds
-                project_name: functest
+                project_name: fastdatastacks
                 criteria: 100
                 blocking: false
                 description: >-
