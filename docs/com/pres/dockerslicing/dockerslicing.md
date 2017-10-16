@@ -2,22 +2,13 @@
 
 [Cédric Ollivier](mailto:cedric.ollivier@orange.com)
 
-OPNVF Summit 2017 (Beijing)
+2017/10/16
 
 
-
-## Current issues
-
-
-### Dockerfile
-
-- it copies all the files hosted by the third-party projects (eg docs, .git...)
-- several requirements are downgraded/upgraded when building the container as they are managed one after the other
-- it could download packages from [PyPI](https://pypi.python.org/pypi) (e.g. [rally](https://pypi.python.org/pypi/rally/)...) instead of cloning git repository
-- build dependencies can't be removed to save space as it creates multiple layers (>70)
+## Danube issues
 
 
-### setup.py
+### OPNFV projects' setup.py
 
 - no requirement is installed when calling *python setup.py install* as none of the next keys are set:
     - install_requires
@@ -26,145 +17,98 @@ OPNVF Summit 2017 (Beijing)
 - shell scripts are not installed neither in $PATH nor in dist-packages
 
 
-### setup.py
+### Functest's Dockerfile
 
-- master is considered as an incorrect version
-- empty package_data seems useless
-- zip_safe flag could be set as False as \__file__ would prevent functest from working in a zipfile
-- py_modules should not list cli_base as it was moved into functest package
-
-
-
-## Proposals
+- it copies all the files hosted by the third-party projects (e.g. docs, .git...)
+- several requirements are downgraded/upgraded when building the container as they are managed one after the other
+- it could download packages from [PyPI](https://pypi.python.org/pypi) (e.g. [networking-bgpvpn](https://pypi.python.org/pypi/networking-bgpvpn)...) instead of cloning git repository
+- build dependencies can't be removed to save space as it creates multiple layers (>70)
 
 
-### why not relying on [pbr](https://docs.openstack.org/developer/pbr/)?
+
+## Management of the requirements
+
+
+### Rely on [pbr](https://docs.openstack.org/developer/pbr/)
 
 - pbr injects requirements into the install_requires, tests_require and/or dependency_links arguments to setup
-- it supports conditional dependencies which can be added to the requirements (e.g. subprocess32; python_version=='2.7')
+- it supports conditional dependencies which can be added to the requirements (e.g. dnspython>=1.14.0;python_version=='2.7')
 
 
-### setup.py
+### Split requirements into 3 files
 
-```python
-#!/usr/bin/env python
+- **requirements.txt** which should list all abstract (i.e. [not associated with any particular index](https://packaging.python.org/requirements/)) dependencies of the OPNFV packages
+- **test-requirements.txt** which could list all abstract dependencies required for testing the OPNFV packages
+- **upper-constraints.txt** which should list all concrete dependencies required by Functest Docker container or the testing virtual environments
 
-from setuptools import setup
 
-setup(
-    setup_requires=['pbr>=1.9', 'setuptools>=17.1'],
-    pbr=True,
-)
+### Follow [OpenStack requirements management](https://specs.openstack.org/openstack/openstack-specs/specs/requirements-management.html)
+
+- OPNFV (test-)requirements.txt have been updated according to stable/ocata global-requirements.txt.
+- Functest simply use (and complete) stable/ocata upper-constraints.txt in Docker files and tox configuration (testing virtual environments).
+
+
+### On the road
+
+- we have fixed lots of hardcoded paths hidden by the previous design
+- some files were outside the python packages
+- lots of (console) scripts added in OPNFV packages to ease the maintenance of Functest testcases.yaml
+
+
+
+## Docker slicing
+
+
+### 8 Functest containers
+
+```bash
+$ sudo docker search opnfv |grep functest-
+opnfv/functest-core         OPNFV Functest core image
+opnfv/functest-restapi      OPNFV Functest restapi image
+opnfv/functest-features     OPNFV Functest vnf image
+opnfv/functest-healthcheck  OPNFV Functest healthcheck image
+opnfv/functest-smoke        OPNFV Functest smoke image
+opnfv/functest-vnf          OPNFV Functest vnf image
+opnfv/functest-components   OPNFV Functest components image
+opnfv/functest-parser       OPNFV Functest parser image
 ```
 
 
-### setup.cfg
+### 8 Functest containers
 
-```ini
-[metadata]
-name = functest
-version = 5
-home-page = https://wiki.opnfv.org/display/functest
+- Alpine 3.6 is now used as base image
+- one container per test suite has been published (5). All of them are built on top of functest-core.
+- Parser is hosted in its own containers (it requires librairies released for OpenStack Pike)
+- a full container is dedicated to our REST API.
 
-[files]
-packages = functest
-scripts =
-    docker/docker_remote_api/enable_remote_api.sh
-    docker/add_images.sh
-    docker/config_install_env.sh
-
-[entry_points]
-console_scripts =
-    functest = functest.cli.cli_base:cli
-```
-
-
-### Split requirements into (at least) 3 files
-
-- **requirements.txt** which could list all abstract (i.e. [not associated with any particular index](https://packaging.python.org/requirements/)) dependencies of the functest package
-- **test-requirements.txt** which could list all abstract dependencies required for testing the functest package
-- **thirdparty-requirements.txt** which could list all abstract and concrete dependencies required by the full functest docker container
-
-
-### tox.ini
-
-```ini
-[testenv]
-usedevelop = True
-deps =
-  -r{toxinidir}/requirements.txt
-  -r{toxinidir}/test-requirements.txt
-  git+https://gerrit.opnfv.org/gerrit/releng#egg=opnfv&subdirectory=modules
-  git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
-  git+https://gerrit.opnfv.org/gerrit/snaps#egg=snaps
-
-```
-
-
-### Dockerfile
-
-```
-RUN pip install \
-  git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
-  git+https://gerrit.opnfv.org/gerrit/releng@$BRANCH#egg=opnfv\&subdirectory=modules \
-  git+https://gerrit.opnfv.org/gerrit/barometer@$BRANCH#egg=baro_tests \
-  git+https://gerrit.opnfv.org/gerrit/snaps@$BRANCH#egg=snaps
-```
-
-
-### Switch to Alpine
-
-```
-FROM alpine:3.5
-
-RUN apk --no-cache add --update \
-        python libffi libssl1.0 libjpeg-turbo py-pip && \
-    apk --no-cache add --virtual .build-deps --update \
-        python-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev git && \
-    pip install git+https://gerrit.opnfv.org/gerrit/releng#egg=opnfv\&subdirectory=modules \
-        git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests \
-        git+https://gerrit.opnfv.org/gerrit/snaps#egg=snaps \
-        git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest && \
-    apk del .build-deps
-```
-
-
-### Status
-
- - the change [**"leveraging on pbr"**](https://gerrit.opnfv.org/gerrit/#/c/35813/) can be merged
- - docker containers have been published (any test is welcome):
-    - [ollivier/functest-pbr](https://hub.docker.com/r/ollivier/functest-pbr/)
-    - [ollivier/functest-alpine](https://hub.docker.com/r/ollivier/functest-alpine/)
- - the Dockerfile switching to Alpine can be published too
+Please see [Run Alpine Functest containers](https://wiki.opnfv.org/display/functest/Run+Alpine+Functest+containers)
 
 
 
 ## Next steps
 
 
-### docker slicing
+### Functest and XCI
 
-the previous alpine example could be the base image and we could simply create other images from it (see [FROM](https://docs.docker.com/engine/reference/builder/#from)) by installing all third party python packages
-
-
-### PyPI
-
-functest could be published to the [Python Package Index](https://pypi.python.org/pypi) and then we would stop listing urls
+- the purpose is simply to allow any OPNFV project integrated by Functest to build their own containers on top of opnfv/functest-core
+- it will allow testing one specific change of these OPNFV projects before merging it in tree
+- it induces that all requirements are synchronized between the different OPNFV projects
 
 
+### F-release
 
-## on the road
-
-
-### We could be faced with issues
-
-- several test cases can fail if their requirements are incomplete in setup.py (we should help them to fix it)
-- all conditions for requirements may not be compatible (OpenStack requirements as a guideline?)
-- we should fix lots of hardcoded paths hidden by the previous design
-- some files could be outside the python package (e.g. functest ci scripts)
+- to allow building opnfv/functest-core from a gerrit change (see https://gerrit.opnfv.org/gerrit/#/c/40909/)
+- to split Functest core/ci and the Functest testcases in two separated Python packages
+- to unlink prepare_env.py and tempest/rally
 
 
+### F-release
 
-## Thank You!
+- to add python3 support for Functest ci scripts (Functest core already supports both versions)
+- to unlink functest-core from others OPNFV projects (mainly releng and snaps)
+- to write a generic Dockerfile using a set of python packages as input
+
+
+
+## Thank you!
 
