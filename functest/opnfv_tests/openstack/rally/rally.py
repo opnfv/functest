@@ -203,8 +203,8 @@ class RallyBase(testcase.TestCase):
 
         return True
 
-    def _live_migration_supported(self):
-        """Determine if live migration is supported."""
+    def _migration_supported(self):
+        """Determine if migration is supported."""
         if self.compute_cnt > 1:
             return True
 
@@ -274,8 +274,8 @@ class RallyBase(testcase.TestCase):
             with open(RallyBase.BLACKLIST_FILE, 'r') as black_list_file:
                 black_list_yaml = yaml.safe_load(black_list_file)
 
-            if not self._live_migration_supported():
-                func_list.append("no_live_migration")
+            if not self._migration_supported():
+                func_list.append("no_migration")
 
             if 'functionality' in black_list_yaml.keys():
                 for item in black_list_yaml['functionality']:

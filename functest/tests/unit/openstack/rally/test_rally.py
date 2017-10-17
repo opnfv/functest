@@ -167,9 +167,9 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('__builtin__.open', mock.mock_open())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.yaml.safe_load',
                 return_value={'functionality': [
-                    {'functions': ['no_live_migration'], 'tests': ['test']}]})
+                    {'functions': ['no_migration'], 'tests': ['test']}]})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_live_migration_supported', return_value=False)
+                '_migration_supported', return_value=False)
     def test_excl_func_default(self, mock_func, mock_yaml_load):
         CONST.__setattr__('INSTALLER_TYPE', 'test_installer')
         CONST.__setattr__('DEPLOY_SCENARIO', 'test_scenario')
