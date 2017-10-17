@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_cbfe6b6b",
+        "filename": "functest/tests/unit/vnf/router/test_cloudify_vrouter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-17T07:44:33Z",
+      "side": 0,
+      "message": "It requires to mock lots of instructions\nPlease see functest/functest/opnfv_tests/vnf/router/utilvnf.py\n\nI think it also highlights several conception issues. Too many operations are applied when allocating objects.",
+      "revId": "66608fe7feb3b6707f34fd2f578aee46aa327619",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
