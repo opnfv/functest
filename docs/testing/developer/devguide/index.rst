@@ -9,24 +9,6 @@ Functest Developer Guide
    :numbered:
    :maxdepth: 2
 
-Version history
-===============
-+------------+----------+------------------+----------------------------------+
-| **Date**   | **Ver.** | **Author**       | **Comment**                      |
-|            |          |                  |                                  |
-+------------+----------+------------------+----------------------------------+
-| 2017-01-23 | 1.0.0    | Morgan Richomme  | Creation for Danube              |
-+------------+----------+------------------+----------------------------------+
-| 2017-08-16 | 1.0.1    | Morgan Richomme  | Adaptations for Euphrates        |
-|            |          |                  | - move generic part to Testing   |
-|            |          |                  | developer guide                  |
-|            |          |                  | - move reporting part to functest|
-|            |          |                  | user guide                       |
-|            |          |                  | - update test case list          |
-|            |          |                  | - include auto generated core    |
-|            |          |                  | documentation                    |
-+------------+----------+------------------+----------------------------------+
-
 ============
 Introduction
 ============
