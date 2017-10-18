@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_b35ef9e7",
+        "filename": "docs/testing/developer/devguide/index.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-18T07:26:51Z",
+      "side": 1,
+      "message": "can you also remove this as Sofia suggested? or another patch?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 79
+      },
+      "revId": "3c68fd4cee69b5b858bea8665a129ff6ce16bd44",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
