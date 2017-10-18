@@ -22,6 +22,29 @@
       "revId": "077f6f97212a7bf055ade5f03c7358448cb9f637",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f35881fc",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-10-18T07:36:12Z",
+      "side": 1,
+      "message": "created",
+      "range": {
+        "startLine": 26,
+        "startChar": 60,
+        "endLine": 26,
+        "endChar": 67
+      },
+      "revId": "077f6f97212a7bf055ade5f03c7358448cb9f637",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
