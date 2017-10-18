@@ -2,7 +2,8 @@
 
 [Cédric Ollivier](mailto:cedric.ollivier@orange.com)
 
-2017/10/16
+2017/10/18
+
 
 
 ## Danube issues
@@ -10,19 +11,20 @@
 
 ### OPNFV projects' setup.py
 
-- no requirement is installed when calling *python setup.py install* as none of the next keys are set:
+- no requirement were installed when calling *python setup.py install* as none of the next keys were set:
     - install_requires
     - tests_require
     - dependency_links
-- shell scripts are not installed neither in $PATH nor in dist-packages
+- shell scripts were not installed neither in $PATH nor in dist-packages
+- all requirements were not synchronized over the OPNFV projects
 
 
 ### Functest's Dockerfile
 
-- it copies all the files hosted by the third-party projects (e.g. docs, .git...)
-- several requirements are downgraded/upgraded when building the container as they are managed one after the other
+- it copied all the files hosted by the third-party projects (e.g. docs, .git...)
+- several requirements were downgraded/upgraded when building the container as they were managed one after the other
 - it could download packages from [PyPI](https://pypi.python.org/pypi) (e.g. [networking-bgpvpn](https://pypi.python.org/pypi/networking-bgpvpn)...) instead of cloning git repository
-- build dependencies can't be removed to save space as it creates multiple layers (>70)
+- build dependencies couldn't be removed to save space as it created multiple layers (>70)
 
 
 
@@ -107,6 +109,14 @@ Please see [Run Alpine Functest containers](https://wiki.opnfv.org/display/funct
 - to add python3 support for Functest ci scripts (Functest core already supports both versions)
 - to unlink functest-core from others OPNFV projects (mainly releng and snaps)
 - to write a generic Dockerfile using a set of python packages as input
+
+
+### 2 OPNFV project proposals
+
+- requirements, the counterpart of [OpenStack requirements](https://wiki.openstack.org/wiki/Requirements),
+focused on additional OPNFV project needs
+- xtesting which would be declined from Functest (core and ci parts) as proposed in
+[Functional testing gating](https://wiki.opnfv.org/display/functest/Functional+testing+gating)
 
 
 
