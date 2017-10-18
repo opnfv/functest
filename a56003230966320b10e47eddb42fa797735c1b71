@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_1309a531",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-18T09:23:24Z",
+      "side": 1,
+      "message": "requirements",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 16
+      },
+      "revId": "a56003230966320b10e47eddb42fa797735c1b71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0eacdcec",
+        "filename": "docs/com/pres/dockerslicing/dockerslicing.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-10-18T09:23:24Z",
+      "side": 1,
+      "message": "I would say project/repositories",
+      "range": {
+        "startLine": 114,
+        "startChar": 12,
+        "endLine": 114,
+        "endChar": 19
+      },
+      "revId": "a56003230966320b10e47eddb42fa797735c1b71",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
