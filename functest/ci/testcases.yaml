@@ -278,10 +278,8 @@ tiers:
                     installer: '(fuel)|(apex)|(netvirt)'
                     scenario: 'bgpvpn'
                 run:
-                    module: 'functest.core.feature'
-                    class: 'BashFeature'
-                    args:
-                        cmd: 'run_sdnvpn_tests.py'
+                    module: 'sdnvpn.test.functest.run_sdnvpn_tests'
+                    class: 'SdnvpnFunctest'
 
             -
                 case_name: functest-odl-sfc
