@@ -5,56 +5,28 @@
 License
 =======
 
-OPNFV Danube release note for Functest Docs
-(c) by Jose Lausuch (Ericsson)
-
-OPNFV Danube release note for Functest Docs
+OPNFV Euphrates release note for Functest Docs
 are licensed under a Creative Commons Attribution 4.0 International License.
 You should have received a copy of the license along with this.
 If not, see <http://creativecommons.org/licenses/by/4.0/>.
 
-===========================================
-OPNFV Danube2.0 release note for Functest
-===========================================
+=============================================
+OPNFV Euphrates 5.0 release note for Functest
+=============================================
 
 Abstract
 ========
 
-This document describes the release note of Functest project.
+This document contains the release notes of the Functest project.
 
 
-Version history
-===============
-
-+------------+----------+------------------+------------------------+
-| **Date**   | **Ver.** | **Author**       | **Comment**            |
-|            |          |                  |                        |
-+------------+----------+------------------+------------------------+
-| 2016-08-17 | 1.0.0    | Morgan Richomme  | Functest for           |
-|            |          | (Orange)         | Colorado.1.0 release   |
-+------------+----------+------------------+------------------------+
-| 2016-10-24 | 2.0.0    | Morgan Richomme  | Functest for           |
-|            |          | (Orange)         | Colorado.2.0 release   |
-+------------+----------+------------------+------------------------+
-| 2016-08-17 | 3.0.0    | Morgan Richomme  | Functest for           |
-|            |          | (Orange)         | Colorado.3.0 release   |
-+------------+----------+------------------+------------------------+
-| 2017-03-29 | 4.0.0    | Jose Lausuch     | Functest for           |
-|            |          | (Ericsson)       | Danube.1.0 release     |
-+------------+----------+------------------+------------------------+
-| 2017-05-04 | 5.0.0    | Jose Lausuch     | Functest for           |
-|            |          | (Ericsson)       | Danube.2.0 release     |
-+------------+----------+------------------+------------------------+
-| 2017-07-12 | 6.0.0    | Jose Lausuch     | Functest for           |
-|            |          | (Ericsson)       | Danube.3.0 release     |
-+------------+----------+------------------+------------------------+
-
-OPNFV Danube Release
+OPNFV Euphrates Release
 ======================
 
 Functest deals with functional testing of the OPNFV solution.
-It includes test cases developed within the project and test cases developed in
-other OPNFV projects and other upstream communities.
+It includes test cases developed within the project, test cases developed in
+other OPNFV projects and it also intgrates test cases from other upstream
+communities.
 
 The internal test cases are:
 
@@ -71,6 +43,7 @@ The internal test cases are:
  * tempest_full_parallel
  * rally_full
  * cloudify_ims
+ * vyos_vrouter
 
 The OPNFV projects integrated into Functest framework for automation are:
 
@@ -79,22 +52,13 @@ The OPNFV projects integrated into Functest framework for automation are:
  * doctor
  * domino
  * fds
- * multisite
- * onos
  * odl-sfc
  * odl-netvirt
  * parser
  * promise
- * security scan
- * orchestra_ims
- * vyos_vrouter
+ * orchestra_openims
+ * orchestra_clearwaterims
 
-The validation of a scenario requires a subset of these tests depending
-on the installer and the scenario.
-
-The test cases from vnf (cloudify_ims, orchestra_ims, vyos_vrouter) and
-component categories (tempest full parallel, Rally full) are not considered for
-scenario validation.
 
 Release Data
 ============
@@ -103,16 +67,16 @@ Release Data
 | **Project**                          | functest                             |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Repo/tag**                         | danube.3.0                           |
+| **Repo/tag**                         | opnfv-5.0.0                          |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release designation**              | Danube service release               |
+| **Release designation**              | Euphrates initial release            |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release date**                     | July 14th 2017                       |
+| **Release date**                     | October 20th 2017                    |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Purpose of the delivery**          | Danube third release                 |
+| **Purpose of the delivery**          | Euphrates first release              |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
 
@@ -122,307 +86,102 @@ Deliverables
 Software
 --------
 
- - The Functest Docker image: https://hub.docker.com/r/opnfv/functest (tag: danube.3.0)
+ Functest Docker images:
 
- - The TestAPI Docker image: https://hub.docker.com/r/opnfv/testapi (tag:danube.3.0)
+ * https://hub.docker.com/r/opnfv/functest
+ * https://hub.docker.com/r/opnfv/functest-healthcheck
+ * https://hub.docker.com/r/opnfv/functest-smoke
+ * https://hub.docker.com/r/opnfv/functest-features
+ * https://hub.docker.com/r/opnfv/functest-components
+ * https://hub.docker.com/r/opnfv/functest-vnf
+ * https://hub.docker.com/r/opnfv/functest-parser
+ * https://hub.docker.com/r/opnfv/functest-restapi
 
+ TestAPI Docker image:
+
+ * https://hub.docker.com/r/opnfv/testapi
+
+Docker tag to be pulled: opnfv-5.0.0
 
 Documents
 ---------
 
- - Installation/configuration guide: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/configguide/index.html
+ - Installation/configuration guide: http://docs.opnfv.org/en/stable-euphrates/submodules/functest/docs/testing/user/configguide/index.html
 
- - User Guide: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/userguide/index.html
+ - User Guide: http://docs.opnfv.org/en/stable-euphrates/submodules/functest/docs/testing/user/userguide/index.html
 
- - Developer Guide: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/developer/devguide/index.html
+ - Developer Guide: http://docs.opnfv.org/en/stable-euphrates/submodules/functest/docs/testing/developer/devguide/index.html
+
+ - API Docs: http://artifacts.opnfv.org/functest/docs/index.html
+
+ - Functest Framework presentation: http://testresults.opnfv.org/functest/framework/index.html
 
 
 Version change
 ==============
 
+Functest now delivers light-weigth Docker images based on Alpine 3.6. The test cases are grouped into several categories
+or tiers and must be run from the corresponding container. For example, to run the test case healthcheck, the image
+opnfv/functest-healthcheck shall be used. The tiers and the tests within them are explained in detail in the User Guide.
 
-- Bugfixes in refstack client
+For ARM (aarch64), the former Ubuntu image opnfv/functest shall be used since there are not any Alpine images built
+for this architecture yet. It will probably be supported for Euphrates 5.1.
 
-- Fixed vIMS onboarding and ims deployment
+The Parser test case has its own dedicated Docker image since it requires libraries released for OpenStack Pike and
+Euphrates is based on Ocata.
 
-- Increased timeout of OpenBaton installation
+The Docker images do not contain OS images (Cirros, Ubuntu, Centos, ..) anymore. A script has been created under the
+ci directory (download_images.sh) which contains all the needed images for all the tests. This file can be modified by
+the user since not all the images might be used. It must be executed before starting Functest and attach the needed
+images as a Docker volume. See Configuration Guide for more information.
 
-- Switched to mitaka-eol in openstack repositories, as stable/mitake is not longer existing
+The requirements have been split into 3 files:
+ * requirements.txt : lists all abstract dependencies of the OPNFV packages
+ * test-requirements.txt : lists all abstract dependencies required by Functest Unit Tests
+ * upper-constraints.txt : lists all concrete upstream dependencies required by Functest Docker container
 
-- Minor fixes in logging and test cases
+OPNFV (test-)requirements.txt have been updated according to stable/ocata global-requirements.txt.
+Functest uses (and completes) stable/ocata upper-constraints.txt in Dockerfiles and tox configuration.
+The project relies on pbr, which injects requirements into the install_requires, tests_require and/or dependency_links
+arguments to setup. It also supports conditional dependencies which can be added to the requirements (e.g. dnspython>=1.14.0;python_version=='2.7')
 
-- 3 scenarios have been successfully executed on aarch64 architectures on Fuel deployments (nosdn, odl_l2 and odl_l3)
+The way to manage logging has been centralized to a configuration file (logging.ini) which might be modified by the user.
+By default, the output of executing the test cases is redirected to log files and is not displayed on the console, only result
+messages and summary tables are displayed.
 
+The framework has been refactored and all the test cases inherit from a core class TestCase. For Feature projects who develop
+test cases, 2 sub-classes have been created:
+ - Feature: it implements all the needed functions and the developer must only overwrite the method "execute" (e.g. Barometer)
+ - BashFeature: it is used if the third party test case is a shell script. This way, the execution command must be specified in
+ testcases.yaml as the argument (e.g. Domino, Doctor)
 
-Scenario Matrix
-===============
-
-For Danube 3.0, Functest was tested on the following HA scenarios (new
-dabube scenarios in bold):
-
-+---------------------+---------+---------+---------+---------+
-|    Scenario         |  Apex   | Compass |  Fuel   |   Joid  |
-+=====================+=========+=========+=========+=========+
-|   nosdn             |    X    |    X    |    X    |    X    |
-+---------------------+---------+---------+---------+---------+
-| **fdio**            |    X    |         |         |         |
-+---------------------+---------+---------+---------+---------+
-|   kvm               |    X    |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-| **kvm_ovs_dpdk**    |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-| **kvm_ovs_dpdk-bar**|         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-|   lxd               |         |         |         |    X    |
-+---------------------+---------+---------+---------+---------+
-| **ovs**             |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-| **openo**           |         |    X    |         |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l2            |         |    X    |   X     |    X    |
-+---------------------+---------+---------+---------+---------+
-|   odl-bgpvpn        |   X     |         |         |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l2-bgpvpn     |         |         |   X     |         |
-+---------------------+---------+---------+---------+---------+
-| **odl_l2-fdio**     |    X    |         |         |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l2-sfc        |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l3            |    X    |    X    |    X    |         |
-+---------------------+---------+---------+---------+---------+
-| **ocl**             |         |   X     |         |         |
-+---------------------+---------+---------+---------+---------+
-|   onos              |         |   X     |         |         |
-+---------------------+---------+---------+---------+---------+
-|   multisite         |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-
-Non HA scenarios:
-
-+---------------------+---------+---------+---------+---------+
-|    Scenario         |  Apex   | Compass |  Fuel   |   Joid  |
-+=====================+=========+=========+=========+=========+
-|   nosdn             |         |         |    X    |    X    |
-+---------------------+---------+---------+---------+---------+
-|   kvm               |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-| **kvm_ovs_dpdk**    |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-| **kvm_ovs_dpdk-bar**|         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-|   lxd               |         |         |         |    X    |
-+---------------------+---------+---------+---------+---------+
-|   ovs               |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l2            |         |         |   X     |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l2-bgpvpn     |         |         |   X     |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l2-fdio       |    X    |         |         |         |
-+---------------------+---------+---------+---------+---------+
-| **odl_l3-fdio**     |    X    |         |         |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l2-sfc        |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-|   odl_l3            |         |         |    X    |         |
-+---------------------+---------+---------+---------+---------+
-| **odl_gluon**       |    X    |         |         |         |
-+---------------------+---------+---------+---------+---------+
-
-Colorado deprecated scenarios:
-
- * odl_l2-moon
- * onos-sfc
- * onos-noha
- * onos-sfc-noha
-
-For the scenario validation, we consider only the healthcheck, smoke and
-features categories. These tests are run systematically in the CI daily loops.
-
-Success criterias have been defined for these test cases, they can be
-PASS/FAIL or a success rate may be declared (100%, > 90%).
-All the criteria, as well as the test dependencies are declared in the
-testcases.yaml file located in the ci directory of the repository.
-
-The scoring for the Danube release per installer can be described as
-follows.
-
-The scoring is an indicator showing how many feature project test suites
-have been integrated in the scenario.
-
-The scoring equals the number of tests * successful iteration of each
-test [0-3]. The scoring method is described in https://wiki.opnfv.org/pages/viewpage.action?pageId=6828617
-
- e.g.
- apex/odl_l2-nofeature-ha
- tests = vping_ssh+vping_userdata+tempest+rally+odl+doctor
- Scoring = 18/18 = 6 * 3
-
-By default, if not specified, the scenarios are HA.
-HA means OpenStack High Availability (main services). Note that not
-all VIM (e.g. OpenStack) services are deployed in HA mode, as that
-depends upon support of the specific service for HA deployment.
-For example, in the Danube release, the Congress service
-is deployed in non-HA mode even for HA OPNFV scenarios, as explicit
-support for HA operation has not yet been verified.
-See the release notes of the installers for more details.
+An internal REST API has been introduced in Euphrates. The goal is to trigger Functest operations through an API in addition of the CLI.
+This could be considered as a first step towards a pseudo micro services approach where the different test projects could expose and
+consume APIs to the other test projects.
 
 
-Apex
-----
+Euphrates known restrictions/issues
+===================================
++--------------+-----------+----------------------------------------------+
+| Installer    | Scenario  |  Issue                                       |
++==============+===========+==============================================+
+| fuel@aarch64 |    any    |  Alpine containers not supported yet for ARM |
+|              |           |  The former Ubuntu Docker image shall be     |
+|              |           |  still used for this architecture.           |
++--------------+-----------+----------------------------------------------+
+| fuel@aarch64 |    any    |  VNF tier not supported yet.                 |
++--------------+-----------+----------------------------------------------+
+|              |           |  The test cases belonging to the VNF tier    |
+|     any      |    any    |  have been only tested on os-nosdn-nofeature |
+|              |           |  scenarios and baremetal deployments.        |
++--------------+-----------+----------------------------------------------+
+|     any      |    any    |  The migration and live migration tests in   |
+|              |           |  Rally have been disabled for NOHA scenarios |
++--------------+-----------+----------------------------------------------+
+|     Joid     |    k8     |  Functest does not offer test suites for     |
+|    Compass   |           |  Kubernetes scenarios yet.                   |
++--------------+-----------+----------------------------------------------+
 
-+------------------+---------+---------+-----------------+
-|  Scenario        | Scoring | Success |    Results      |
-|                  |         | rate    |                 |
-+==================+=========+=========+=================+
-| nosdn            |  20/30  |    67%  | `apex-res-1`_   |
-+------------------+---------+---------+-----------------+
-| odl_l3           |  16/30  |    53%  | `apex-res-2`_   |
-+------------------+---------+---------+-----------------+
-| odl-bgpvpn       |  18/33  |    56%  | `apex-res-3`_   |
-+------------------+---------+---------+-----------------+
-| odl-gluon        |  20/33  |    61%  | `apex-res-4`_   |
-+------------------+---------+---------+-----------------+
-| kvm              |  20/30  |    67%  | `apex-res-5`_   |
-+------------------+---------+---------+-----------------+
-| odl_l2-fdio      |  25/33  |    76%  | `apex-res-6`_   |
-+------------------+---------+---------+-----------------+
-| odl_l2-fdio-noha |  24/33  |    73%  |   local push    |
-+------------------+---------+---------+-----------------+
-| odl_l3-fdio-noha |  18/30  |    60%  |   local push    |
-+------------------+---------+---------+-----------------+
-| fdio             |  25/27  |    93%  |   local push    |
-+------------------+---------+---------+-----------------+
-
-Compass
--------
-
-+------------------+---------+---------+------------------+
-|  Scenario        | Scoring | Success |  Results         |
-|                  |         | rate    |                  |
-+==================+=========+=========+==================+
-| nosdn            |  29/30  |    97%  | `compass-res-1`_ |
-+------------------+---------+---------+------------------+
-| odl_l2           |  29/33  |    88%  | `compass-res-2`_ |
-+------------------+---------+---------+------------------+
-| odl_l3           |  23/30  |    77%  | `compass-res-3`_ |
-+------------------+---------+---------+------------------+
-| onos             |  29/30  |    97%  | `compass-res-4`_ |
-+------------------+---------+---------+------------------+
-| onos-sfc         |  20/36  |    56%  | `compass-res-5`_ |
-+------------------+---------+---------+------------------+
-
-Note: all the Compass tests for Danube have been executed on virtual
-environment. Bare metal resources were used for Master branch.
-
-
-Fuel
-----
-
-+----------------------+---------+---------+----------------+
-|  Scenario            | Scoring | Success |  Results       |
-|                      |         | rate    |                |
-+======================+=========+=========+================+
-| nosdn                |  39/39  |  100%   | `fuel-res-1`_  |
-+----------------------+---------+---------+----------------+
-| nosdn-noha           |  36/36  |  100%   | `fuel-res-2`_  |
-+----------------------+---------+---------+----------------+
-| nosdn-kvm            |  39/39  |  100%   | `fuel-res-3`_  |
-+----------------------+---------+---------+----------------+
-| nosdn-kvm-noha       |  36/36  |  100%   | `fuel-res-4`_  |
-+----------------------+---------+---------+----------------+
-| nosdn-ovs            |  39/39  |  100%   | `fuel-res-5`_  |
-+----------------------+---------+---------+----------------+
-| nosdn-ovs-noha       |  36/36  |  100%   | `fuel-res-6`_  |
-+----------------------+---------+---------+----------------+
-| odl_l2               |  42/42  |  100%   | `fuel-res-7`_  |
-+----------------------+---------+---------+----------------+
-| odl_l2-noha          |  39/39  |  100%   | `fuel-res-8`_  |
-+----------------------+---------+---------+----------------+
-| odl_l2-sfc           |  45/45  |  100%   | `fuel-res-9`_  |
-+----------------------+---------+---------+----------------+
-| odl_l2-sfc-noha      |  35/42  |   83%   | `fuel-res-10`_ |
-+----------------------+---------+---------+----------------+
-| odl_l3               |  36/39  |   92%   | `fuel-res-11`_ |
-+----------------------+---------+---------+----------------+
-| odl_l3-noha          |  36/36  |  100%   | `fuel-res-12`_ |
-+----------------------+---------+---------+----------------+
-| kvm_ovs_dpdk         |  39/39  |  100%   | `fuel-res-13`_ |
-+----------------------+---------+---------+----------------+
-| kvm_ovs_dpdk_noha    |  35/36  |   97%   | `fuel-res-14`_ |
-+----------------------+---------+---------+----------------+
-| kvm_ovs_dpdk_bar     |  42/42  |  100%   | `fuel-res-15`_ |
-+----------------------+---------+---------+----------------+
-| kvm_ovs_dpdk_bar_noha|  36/39  |   92%   | `fuel-res-16`_ |
-+----------------------+---------+---------+----------------+
-
-
-
-
-Joid
-----
-
-+---------------------+---------+---------+---------------+
-|  Scenario           | Scoring | Success |  Results      |
-|                     |         | rate    |               |
-+=====================+=========+=========+===============+
-| nosdn               |  30/30  |  100%   | `joid-res-1`_ |
-+---------------------+---------+---------+---------------+
-| nosdn-noha          |  10/30  |   33%   | `joid-res-2`_ |
-+---------------------+---------+---------+---------------+
-| nosdn-lxd           |  19/21  |   90%   | `joid-res-3`_ |
-+---------------------+---------+---------+---------------+
-| nosdn-lxd-noha      |  15/21  |   71%   | `joid-res-4`_ |
-+---------------------+---------+---------+---------------+
-| odl_l2              |   6/33  |   18%   | `joid-res-5`_ |
-+---------------------+---------+---------+---------------+
-
-It is highly recommended to install a json viewer in your browser
-(e.g. https://addons.mozilla.org/fr/firefox/addon/jsonview/)
-
-You can get additional details through test logs on http://artifacts.opnfv.org/.
-As no search engine is available on the OPNFV artifact web site you must
-retrieve the pod identifier on which the tests have been executed (see
-field pod in any of the results) then click on the selected POD and look
-for the date of the test you are interested in.
-
-The reporting pages can be found at:
-
- * apex: http://testresults.opnfv.org/reporting/functest/release/danube/index-status-apex.html
- * compass: http://testresults.opnfv.org/reporting/functest/release/danube/index-status-compass.html
- * fuel: http://testresults.opnfv.org/reporting/functest/release/danube/index-status-fuel.html
- * joid: http://testresults.opnfv.org/reporting/functest/release/danube/index-status-joid.html
-
-Danube known restrictions/issues
-==================================
-
-************* TODO *****************************************
-
-+-----------+-----------+----------------------------------------------+
-| Installer | Scenario  |  Issue                                       |
-+===========+===========+==============================================+
-| fuel      | odl_-*    | Tempest test case "TestServerBasicOps"       |
-|           |           | disabled due to bug `tempest-bug`_           |
-+-----------+-----------+----------------------------------------------+
-| apex/fuel | *-bgpvpn  | Due to some instabilities in the bgpvpn      |
-|           |           | test case, the scenario has been postponed   |
-|           |           | to Danube 2.0                                |
-+-----------+-----------+----------------------------------------------+
-| apex      | *-gluon   | vPing_ssh disabled due to floating ips       |
-|           |           | not working 100% of the times.               |
-|           |           | Tempest test "test_reboot_server_hard"       |
-|           |           | disabled due to bug `gluon-bug`_             |
-+-----------+-----------+----------------------------------------------+
-| joid      | any       | Tempest cases related to object storage      |
-|           |           | excluded                                     |
-+-----------+-----------+----------------------------------------------+
-| any       | any       | The VNF tier has not been fully tested       |
-|           |           | since it has not been run in daily loops     |
-|           |           | in CI. Weekly jobs have been activated       |
-|           |           | a bit late in the process and have not been  |
-|           |           | used to validate the scenarios.              |
-+-----------+-----------+----------------------------------------------+
 
 Test and installer/scenario dependencies
 ========================================
@@ -437,7 +196,7 @@ Test results
 
 Test results are available in:
 
- - test results document: http://artifacts.opnfv.org/functest
+ - test results logs from CI: http://artifacts.opnfv.org (within different directories 'logs_functest_X')
 
  - jenkins logs on CI: https://build.opnfv.org/ci/view/functest/
 
@@ -458,16 +217,13 @@ Open JIRA tickets
 All the tickets that are not blocking have been fixed or postponed
 the next release.
 
-Functest Danube 2.0 is released without known bugs.
-
-
 
 Useful links
 ============
 
  - wiki project page: https://wiki.opnfv.org/opnfv_functional_testing
 
- - wiki Functest Danube page: https://wiki.opnfv.org/display/functest/Functest+Danube
+ - wiki Functest Euphrates page: https://wiki.opnfv.org/display/functest/5.+Euphrates
 
  - Functest repo: https://git.opnfv.org/cgit/functest
 
@@ -477,78 +233,6 @@ Useful links
 
  - Functest IRC chan: #opnfv-functest
 
- - Reporting page: http://testresults.opnfv.org/reporting/danube.html
+ - Reporting page: http://testresults.opnfv.org/reporting/euphrates.html
 
- - Functest test configuration: https://git.opnfv.org/cgit/functest/tree/functest/ci/testcases.yaml
-
-.. _`tempest-bug`: https://bugs.launchpad.net/tempest/+bug/1577632
-
-.. _`gluon-bug`: https://bugs.opendaylight.org/show_bug.cgi?id=5586
-
-
-.. _`apex-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-baremetal-daily-danube-455
-
-.. _`apex-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-baremetal-daily-danube-466
-
-.. _`apex-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-baremetal-daily-danube-449
-
-.. _`apex-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-baremetal-daily-danube-450
-
-.. _`apex-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-baremetal-daily-danube-461
-
-.. _`apex-res-6`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-apex-baremetal-daily-danube-485
-
-
-.. _`compass-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-484
-
-.. _`compass-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-454
-
-.. _`compass-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-baremetal-daily-danube-482
-
-.. _`compass-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-virtual-daily-danube-481
-
-.. _`compass-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-compass-baremetal-daily-danube-453
-
-
-.. _`fuel-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-54
-
-.. _`fuel-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-937
-
-.. _`fuel-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-873
-
-.. _`fuel-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-935
-
-.. _`fuel-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-875
-
-.. _`fuel-res-6`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-936
-
-.. _`fuel-res-7`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-867
-
-.. _`fuel-res-8`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-939
-
-.. _`fuel-res-9`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-870
-
-.. _`fuel-res-10`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-933
-
-.. _`fuel-res-11`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-868
-
-.. _`fuel-res-12`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-940
-
-.. _`fuel-res-13`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-871
-
-.. _`fuel-res-14`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-938
-
-.. _`fuel-res-15`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-baremetal-daily-danube-869
-
-.. _`fuel-res-16`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-fuel-virtual-daily-danube-941
-
-
-.. _`joid-res-1`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-298
-
-.. _`joid-res-2`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-260
-
-.. _`joid-res-3`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-281
-
-.. _`joid-res-4`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-301
-
-.. _`joid-res-5`: http://testresults.opnfv.org/test/api/v1/results?build_tag=jenkins-functest-joid-baremetal-daily-danube-291
+ - Functest test configuration: https://git.opnfv.org/functest/tree/functest/ci/testcases.yaml?h=stable/euphrates
