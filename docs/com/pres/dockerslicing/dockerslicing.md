@@ -11,7 +11,7 @@
 
 ### OPNFV projects' setup.py
 
-- no requirements were installed when calling *python setup.py install* as none of the next keys were set:
+- no requirements were installed when calling *python setup.py install* as none of the next keys was set:
     - install_requires
     - tests_require
     - dependency_links
