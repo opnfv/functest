@@ -45,6 +45,121 @@
       "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_7e46f1c0",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4007
+      },
+      "writtenOn": "2017-10-19T02:08:32Z",
+      "side": 1,
+      "message": "contains",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_7eef11b1",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4007
+      },
+      "writtenOn": "2017-10-19T02:08:32Z",
+      "side": 1,
+      "message": "typo - should be \"also\"",
+      "range": {
+        "startLine": 31,
+        "startChar": 28,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_de2bbde9",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 4007
+      },
+      "writtenOn": "2017-10-19T02:08:32Z",
+      "side": 1,
+      "message": "initial",
+      "range": {
+        "startLine": 79,
+        "startChar": 51,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_1e36c552",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4007
+      },
+      "writtenOn": "2017-10-19T02:08:32Z",
+      "side": 1,
+      "message": "\"now delivers light-weight\"",
+      "range": {
+        "startLine": 127,
+        "startChar": 9,
+        "endLine": 127,
+        "endChar": 34
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_5e3fad25",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 4007
+      },
+      "writtenOn": "2017-10-19T02:08:32Z",
+      "side": 1,
+      "message": "healthcheck",
+      "range": {
+        "startLine": 128,
+        "startChar": 93,
+        "endLine": 128,
+        "endChar": 103
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
