@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_c1948239",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-19T06:27:22Z",
+      "side": 1,
+      "message": "I prefer to avoid naming if not mandatory.\nIt lists the work of a community.",
+      "parentUuid": "9a3d3df0_1b21b79f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_5b3a1fce",
         "filename": "docs/release/release-notes/functest-release.rst",
         "patchSetId": 4
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_019f8a53",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-19T06:27:22Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "9a3d3df0_deee1d8b",
+      "range": {
+        "startLine": 57,
+        "startChar": 3,
+        "endLine": 58,
+        "endChar": 7
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_bef35972",
         "filename": "docs/release/release-notes/functest-release.rst",
         "patchSetId": 4
@@ -128,6 +176,30 @@
       "writtenOn": "2017-10-19T02:59:36Z",
       "side": 1,
       "message": "And remove security scan?",
+      "range": {
+        "startLine": 63,
+        "startChar": 3,
+        "endLine": 63,
+        "endChar": 16
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_61a3f69e",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-19T06:27:22Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "9a3d3df0_bef35972",
       "range": {
         "startLine": 63,
         "startChar": 3,
@@ -255,6 +327,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_41a07290",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-19T06:27:22Z",
+      "side": 1,
+      "message": "Yes the HTTP server has been modified.",
+      "parentUuid": "9a3d3df0_1ea08542",
+      "range": {
+        "startLine": 119,
+        "startChar": 13,
+        "endLine": 119,
+        "endChar": 78
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_be9a3912",
         "filename": "docs/release/release-notes/functest-release.rst",
         "patchSetId": 4
@@ -266,6 +362,30 @@
       "writtenOn": "2017-10-19T02:59:36Z",
       "side": 1,
       "message": "The page is \"404 Not Found\"",
+      "range": {
+        "startLine": 121,
+        "startChar": 36,
+        "endLine": 121,
+        "endChar": 94
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a1adfe8a",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-19T06:27:22Z",
+      "side": 1,
+      "message": "idem",
+      "parentUuid": "9a3d3df0_be9a3912",
       "range": {
         "startLine": 121,
         "startChar": 36,
@@ -381,6 +501,30 @@
       "writtenOn": "2017-10-19T02:59:36Z",
       "side": 1,
       "message": "replicated",
+      "range": {
+        "startLine": 149,
+        "startChar": 33,
+        "endLine": 149,
+        "endChar": 48
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_21b1eee1",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-10-19T06:27:22Z",
+      "side": 1,
+      "message": "I checked that the orig pres\u0027 doesn\u0027t contain this mistake.\nhttps://git.opnfv.org/functest/tree/docs/com/pres/dockerslicing/dockerslicing.md",
+      "parentUuid": "9a3d3df0_3e8629ba",
       "range": {
         "startLine": 149,
         "startChar": 33,
