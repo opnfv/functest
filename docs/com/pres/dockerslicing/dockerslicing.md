@@ -2,7 +2,7 @@
 
 [Cédric Ollivier](mailto:cedric.ollivier@orange.com)
 
-2017/10/18
+2017/10/19
 
 
 
@@ -115,7 +115,7 @@ Please see [Run Alpine Functest containers](https://wiki.opnfv.org/display/funct
 
 - requirements, the counterpart of [OpenStack requirements](https://wiki.openstack.org/wiki/Requirements),
 focused on additional OPNFV project needs
-- xtesting which would be declined from Functest (core and ci parts) as proposed in
+- xtesting which would be derived from Functest (core and ci parts) as proposed in
 [Functional testing gating](https://wiki.opnfv.org/display/functest/Functional+testing+gating)
 
 
