@@ -15,6 +15,6 @@ Functest Release Notes
 
 Revision: _sha1_
 
-:Author: Jose Lausuch (jose.lausuch@ericsson.com)
+:Author: Jose Lausuch (jalausuch@suse.com)
 
 Build date: |today|
