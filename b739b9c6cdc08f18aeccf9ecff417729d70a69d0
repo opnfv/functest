@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_24361c53",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-10-19T08:36:27Z",
+      "side": 1,
+      "message": "It is wrong, as we blacklist migration and live migration tests in rally according to the number of compute nodes.\nAs far as I know, The noha deployments of Apex, Fuel and Joid all have more than 1 compute node, so the tests are not blacklisted. While the noha of Compass has only 1 compute node, so these tests are blacklisted.",
+      "range": {
+        "startLine": 179,
+        "startChar": 59,
+        "endLine": 179,
+        "endChar": 73
+      },
+      "revId": "b739b9c6cdc08f18aeccf9ecff417729d70a69d0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
