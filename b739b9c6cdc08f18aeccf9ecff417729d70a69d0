@@ -22,6 +22,52 @@
       "revId": "b739b9c6cdc08f18aeccf9ecff417729d70a69d0",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0412f8b0",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-10-19T08:47:37Z",
+      "side": 1,
+      "message": "Where is the table?",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 19
+      },
+      "revId": "b739b9c6cdc08f18aeccf9ecff417729d70a69d0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e41274b3",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-10-19T08:47:37Z",
+      "side": 1,
+      "message": "The link is wrong: Path not found\nIt should be: https://git.opnfv.org/functest/tree/functest/ci/testcases.yaml?h\u003dstable%2Feuphrates",
+      "range": {
+        "startLine": 192,
+        "startChar": 3,
+        "endLine": 192,
+        "endChar": 61
+      },
+      "revId": "b739b9c6cdc08f18aeccf9ecff417729d70a69d0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
