@@ -118,6 +118,23 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_01602a31",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "shall we highlight what is new in Euphrates, the delata with Danube?",
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_deee1d8b",
         "filename": "docs/release/release-notes/functest-release.rst",
         "patchSetId": 4
@@ -152,6 +169,30 @@
       "writtenOn": "2017-10-19T06:27:22Z",
       "side": 1,
       "message": "Yes",
+      "parentUuid": "9a3d3df0_deee1d8b",
+      "range": {
+        "startLine": 57,
+        "startChar": 3,
+        "endLine": 58,
+        "endChar": 7
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c1092297",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "+1",
       "parentUuid": "9a3d3df0_deee1d8b",
       "range": {
         "startLine": 57,
@@ -212,6 +253,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_21ff2e69",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "9a3d3df0_bef35972",
+      "range": {
+        "startLine": 63,
+        "startChar": 3,
+        "endLine": 63,
+        "endChar": 16
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_1ee9a580",
         "filename": "docs/release/release-notes/functest-release.rst",
         "patchSetId": 4
@@ -229,6 +294,23 @@
         "endLine": 64,
         "endChar": 16
       },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_41f51282",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "vyos_vrouter should be in internal cases as cloudify_ims...no dedicated project",
       "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -351,6 +433,23 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_e12b86e9",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "I would suggest to use the artifact link\nhttp://artifacts.opnfv.org/functest/docs/index.html\n\nit is automatically updated after api changes",
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_be9a3912",
         "filename": "docs/release/release-notes/functest-release.rst",
         "patchSetId": 4
@@ -385,6 +484,30 @@
       "writtenOn": "2017-10-19T06:27:22Z",
       "side": 1,
       "message": "idem",
+      "parentUuid": "9a3d3df0_be9a3912",
+      "range": {
+        "startLine": 121,
+        "startChar": 36,
+        "endLine": 121,
+        "endChar": 94
+      },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c1300259",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "should be ok now",
       "parentUuid": "9a3d3df0_be9a3912",
       "range": {
         "startLine": 121,
@@ -490,6 +613,74 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_a1497ed2",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "anymore",
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_8146fabd",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "tests",
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_41235205",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "I think test-requirements is more related to our unit tests",
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a1205ef8",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "upstream",
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_3e8629ba",
         "filename": "docs/release/release-notes/functest-release.rst",
         "patchSetId": 4
@@ -560,6 +751,23 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_215bae88",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "a sentence on the introduction of internal test API?",
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_bec199e6",
         "filename": "docs/release/release-notes/functest-release.rst",
         "patchSetId": 4
@@ -577,6 +785,57 @@
         "endLine": 172,
         "endChar": 37
       },
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_416a321b",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "maybe precise Ceilometer not supported with Compass\n\nfor joid I am a bit puzzled of what we can say...\n\nvnf tier not supported by fuel@aarch64",
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e160a637",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "not only logs are there, it is maybe a bit generic..",
+      "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_61549654",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-10-19T06:57:49Z",
+      "side": 1,
+      "message": "to be completed",
       "revId": "21d5427e6f3ac51774f0bb3da6540a09733e8905",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
