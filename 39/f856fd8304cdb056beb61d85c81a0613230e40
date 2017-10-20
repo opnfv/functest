@@ -1,0 +1,7 @@
+Code-Review+2: Jose Lausuch <jalausuch@suse.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Fri, 20 Oct 2017 13:37:03 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/46027
+Project: functest
+Branch: refs/heads/master
