@@ -68,21 +68,21 @@ to the different tiers:
 Standalone functest dockers are maintained for Euphrates but Alpine containers
 are recommended.
 
-Functest can be described as follow:
+Functest can be described as follow::
 
- +----------------------+
- |                      |
- |   +--------------+   |                  +-------------------+
- |   |              |   |    Public        |                   |
- |   | Tools        |   +------------------+      OPNFV        |
- |   | Scripts      |   |                  | System Under Test |
- |   | Scenarios    |   |                  |                   |
- |   |              |   |                  |                   |
- |   +--------------+   |                  +-------------------+
- |                      |
- |    Functest Docker   |
- |                      |
- +----------------------+
+  +----------------------+
+  |                      |
+  |   +--------------+   |                  +-------------------+
+  |   |              |   |    Public        |                   |
+  |   | Tools        |   +------------------+      OPNFV        |
+  |   | Scripts      |   |                  | System Under Test |
+  |   | Scenarios    |   |                  |                   |
+  |   |              |   |                  |                   |
+  |   +--------------+   |                  +-------------------+
+  |                      |
+  |    Functest Docker   |
+  |                      |
+  +----------------------+
 
 Functest internal test cases
 ============================
