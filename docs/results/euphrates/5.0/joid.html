@@ -1,0 +1,576 @@
+ <html>
+  <head>
+    <meta charset="utf-8">
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../js/default.css" rel="stylesheet">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://d3js.org/d3.v2.min.js"></script>
+    <script type="text/javascript" src="../../js/gauge.js"></script>
+    <script type="text/javascript" src="../../js/trend.js"></script>
+    <script>
+    function onDocumentReady() {
+    	// Gauge management
+        var gaugeScenario1 = gauge('#gaugeScenario1');var gaugeScenario2 = gauge('#gaugeScenario2');var gaugeScenario3 = gauge('#gaugeScenario3');var gaugeScenario4 = gauge('#gaugeScenario4');var gaugeScenario5 = gauge('#gaugeScenario5');var gaugeScenario6 = gauge('#gaugeScenario6');var gaugeScenario7 = gauge('#gaugeScenario7');
+
+    	// assign success rate to the gauge
+    	function updateReadings() {
+    	    gaugeScenario1.update(11.1111111111);gaugeScenario2.update(11.1111111111);gaugeScenario3.update(55.5555555556);gaugeScenario4.update(27.7777777778);gaugeScenario5.update(13.3333333333);gaugeScenario6.update(20.0);gaugeScenario7.update(55.5555555556);
+    	}
+    	updateReadings();
+        }
+
+        // trend line management
+        d3.csv("./scenario_history.txt", function(data) {
+       // ***************************************
+       // Create the trend line
+      // for scenario os-ocl-nofeature-noha
+       // Filter results
+        var trend1 = data.filter(function(row) {
+    	     return row["scenario"]=="os-ocl-nofeature-noha" && row["installer"]=="joid";
+    	})
+       // Parse the date
+        trend1.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg1",trend1)
+        // ****************************************// for scenario os-ocl-nofeature-ha
+       // Filter results
+        var trend2 = data.filter(function(row) {
+    	     return row["scenario"]=="os-ocl-nofeature-ha" && row["installer"]=="joid";
+    	})
+       // Parse the date
+        trend2.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg2",trend2)
+        // ****************************************// for scenario os-nosdn-nofeature-noha
+       // Filter results
+        var trend3 = data.filter(function(row) {
+    	     return row["scenario"]=="os-nosdn-nofeature-noha" && row["installer"]=="joid";
+    	})
+       // Parse the date
+        trend3.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg3",trend3)
+        // ****************************************// for scenario os-nosdn-openbaton-ha
+       // Filter results
+        var trend4 = data.filter(function(row) {
+    	     return row["scenario"]=="os-nosdn-openbaton-ha" && row["installer"]=="joid";
+    	})
+       // Parse the date
+        trend4.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg4",trend4)
+        // ****************************************// for scenario os-nosdn-lxd-ha
+       // Filter results
+        var trend5 = data.filter(function(row) {
+    	     return row["scenario"]=="os-nosdn-lxd-ha" && row["installer"]=="joid";
+    	})
+       // Parse the date
+        trend5.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg5",trend5)
+        // ****************************************// for scenario os-nosdn-lxd-noha
+       // Filter results
+        var trend6 = data.filter(function(row) {
+    	     return row["scenario"]=="os-nosdn-lxd-noha" && row["installer"]=="joid";
+    	})
+       // Parse the date
+        trend6.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg6",trend6)
+        // ****************************************// for scenario os-nosdn-nofeature-ha
+       // Filter results
+        var trend7 = data.filter(function(row) {
+    	     return row["scenario"]=="os-nosdn-nofeature-ha" && row["installer"]=="joid";
+    	})
+       // Parse the date
+        trend7.forEach(function(d) {
+    	    d.date = parseDate(d.date);
+    	    d.score = +d.score
+        });
+        // Draw the trend line
+        var mytrend = trend("#trend_svg7",trend7)
+        // ****************************************
+    });
+    if ( !window.isLoaded ) {
+        window.addEventListener("load", function() {
+    			onDocumentReady();
+        }, false);
+    } else {
+    	onDocumentReady();
+    }
+</script>
+<script type="text/javascript">
+$(document).ready(function (){
+    $(".btn-more").click(function() {
+    	$(this).hide();
+    	$(this).parent().find(".panel-default").show();
+    });
+})
+</script>
+
+  </head>
+    <body>
+    <div class="container">
+      <div class="masthead">
+        <h3 class="text-muted">Functest status page (euphrates, 2017-10-20 08:41)</h3>
+        <nav>
+          <ul class="nav nav-justified">
+            <li class="active"><a href="http://testresults.opnfv.org/reporting/index.html">Home</a></li>
+            <li><a href="./apex.html">Apex</a></li>
+            <li><a href="./compass.html">Compass</a></li>
+            <li><a href="./daisy.html">Daisy</a></li>
+            <li><a href="./fuel@x86.html">Fuel@x86</a></li>
+            <li><a href="./fuel@aarch64.html">Fuel@aarch64</a></li>
+            <li><a href="./joid.html">Joid</a></li>
+          </ul>
+        </nav>
+      </div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="page-header">
+            <h2>joid</h2>
+        </div>
+
+        <div class="scenario-overview">
+            <div class="panel-heading"><h4><b>List of last scenarios (euphrates) run over the last 10 days </b></h4></div>
+                <table class="table">
+                    <tr>
+                        <th width="40%">HA Scenario</th>
+                        <th width="20%">Status</th>
+                        <th width="20%">Trend</th>
+                        <th width="10%">Score</th>
+                        <th width="10%">Iteration</th>
+                    </tr>
+                        <tr class="tr-ok">
+                            
+                            </tr><tr class="tr-ok">
+                            <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-joid-baremetal-daily-euphrates/84/console>os-ocl-nofeature-ha</a></td>
+                                <td><div id="gaugeScenario2"></div></td>
+                                <td><div id="trend_svg2"></div></td>
+                                <td>3/27</td>
+                                <td>10</td>
+                            </tr><tr class="tr-ok">
+                            
+                            </tr><tr class="tr-ok">
+                            <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-joid-baremetal-daily-euphrates/67/console>os-nosdn-openbaton-ha</a></td>
+                                <td><div id="gaugeScenario4"></div></td>
+                                <td><div id="trend_svg4"></div></td>
+                                <td>5/18</td>
+                                <td>2</td>
+                            </tr><tr class="tr-ok">
+                            <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-joid-baremetal-daily-euphrates/56/console>os-nosdn-lxd-ha</a></td>
+                                <td><div id="gaugeScenario5"></div></td>
+                                <td><div id="trend_svg5"></div></td>
+                                <td>2/15</td>
+                                <td>4</td>
+                            </tr><tr class="tr-ok">
+                            
+                            </tr><tr class="tr-ok">
+                            <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-joid-baremetal-daily-euphrates/81/console>os-nosdn-nofeature-ha</a></td>
+                                <td><div id="gaugeScenario7"></div></td>
+                                <td><div id="trend_svg7"></div></td>
+                                <td>10/18</td>
+                                <td>3</td>
+                            </tr>
+                            <br>
+                </table>
+                <br>
+               <table class="table">
+                    <tr>
+                        <th width="40%">NOHA Scenario</th>
+                        <th width="20%">Status</th>
+                        <th width="20%">Trend</th>
+                        <th width="10%">Score</th>
+                        <th width="10%">Iteration</th>
+                    </tr>
+                        <tr class="tr-ok">
+                            <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-joid-baremetal-daily-euphrates/85/console>os-ocl-nofeature-noha</a></td>
+                                <td><div id="gaugeScenario1"></div></td>
+                                <td><div id="trend_svg1"></div></td>
+                                <td>3/27</td>
+                                <td>9</td>
+                            </tr><tr class="tr-ok">
+                            
+                            </tr><tr class="tr-ok">
+                            <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-joid-baremetal-daily-euphrates/90/console>os-nosdn-nofeature-noha</a></td>
+                                <td><div id="gaugeScenario3"></div></td>
+                                <td><div id="trend_svg3"></div></td>
+                                <td>15/27</td>
+                                <td>9</td>
+                            </tr><tr class="tr-ok">
+                            
+                            </tr><tr class="tr-ok">
+                            
+                            </tr><tr class="tr-ok">
+                            <td><a href=https://build.opnfv.org/ci/view/functest/job/functest-joid-baremetal-daily-euphrates/88/console>os-nosdn-lxd-noha</a></td>
+                                <td><div id="gaugeScenario6"></div></td>
+                                <td><div id="trend_svg6"></div></td>
+                                <td>3/15</td>
+                                <td>9</td>
+                            </tr><tr class="tr-ok">
+                            
+                            </tr>
+                </table>
+
+        </div>
+
+
+        <div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-ocl-nofeature-noha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+                            
+                             </th><th>
+                            Health (api)
+                            
+                             </th><th>
+                            Health (dhcp)
+                            
+                             </th><th>
+                            vPing (ssh)
+                            
+                             </th><th>
+                            vPing (userdata)
+                            
+                             </th><th>
+                            Tempest (smoke)
+                            
+                             </th><th>
+                            Rally (smoke)
+                            
+                             </th><th>
+                            Refstack
+                            
+                             </th><th>
+                            SNAPS
+                            
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-ocl-nofeature-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+                            
+                             </th><th>
+                            Health (api)
+                            
+                             </th><th>
+                            Health (dhcp)
+                            
+                             </th><th>
+                            vPing (ssh)
+                            
+                             </th><th>
+                            vPing (userdata)
+                            
+                             </th><th>
+                            Tempest (smoke)
+                            
+                             </th><th>
+                            Rally (smoke)
+                            
+                             </th><th>
+                            Refstack
+                            
+                             </th><th>
+                            SNAPS
+                            
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-nosdn-nofeature-noha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+                            
+                             </th><th>
+                            Health (api)
+                            
+                             </th><th>
+                            Health (dhcp)
+                            
+                             </th><th>
+                            vPing (ssh)
+                            
+                             </th><th>
+                            vPing (userdata)
+                            
+                             </th><th>
+                            Tempest (smoke)
+                            
+                             </th><th>
+                            Rally (smoke)
+                            
+                             </th><th>
+                            Refstack
+                            
+                             </th><th>
+                            SNAPS
+                            
+                             </th><th>
+                            Promise
+                            *
+                             </th><th>
+                            Domino
+                            *
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-clear.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-nosdn-openbaton-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+                            
+                             </th><th>
+                            Health (api)
+                            
+                             </th><th>
+                            Health (dhcp)
+                            
+                             </th><th>
+                            vPing (ssh)
+                            
+                             </th><th>
+                            vPing (userdata)
+                            
+                             </th><th>
+                            Tempest (smoke)
+                            
+                             </th><th>
+                            Rally (smoke)
+                            
+                             </th><th>
+                            Refstack
+                            
+                             </th><th>
+                            SNAPS
+                            
+                             </th><th>
+                            Promise
+                            *
+                             </th><th>
+                            Domino
+                            *
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-overcast.png"></td><td><img src="../../img/weather-overcast.png"></td><td><img src="../../img/weather-overcast.png"></td><td><img src="../../img/weather-overcast.png"></td><td><img src="../../img/weather-overcast.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-overcast.png"></td><td><img src="../../img/weather-overcast.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-nosdn-lxd-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+                            
+                             </th><th>
+                            vPing (ssh)
+                            
+                             </th><th>
+                            Tempest (smoke)
+                            
+                             </th><th>
+                            Rally (smoke)
+                            
+                             </th><th>
+                            Refstack
+                            
+                             </th><th>
+                            Promise
+                            *
+                             </th><th>
+                            Domino
+                            *
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-nosdn-lxd-noha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+                            
+                             </th><th>
+                            vPing (ssh)
+                            
+                             </th><th>
+                            Tempest (smoke)
+                            
+                             </th><th>
+                            Rally (smoke)
+                            
+                             </th><th>
+                            Refstack
+                            
+                             </th><th>
+                            Promise
+                            *
+                             </th><th>
+                            Domino
+                            *
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-clear.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-clear.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div><div class="scenario-part">
+            <div class="page-header">
+                <h3><span class="glyphicon glyphicon-chevron-right"> <b>os-nosdn-nofeature-ha</b></h3>
+            </div>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-header-item">
+                        </span>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                            Health (connection)
+                            
+                             </th><th>
+                            Health (api)
+                            
+                             </th><th>
+                            Health (dhcp)
+                            
+                             </th><th>
+                            vPing (ssh)
+                            
+                             </th><th>
+                            vPing (userdata)
+                            
+                             </th><th>
+                            Tempest (smoke)
+                            
+                             </th><th>
+                            Rally (smoke)
+                            
+                             </th><th>
+                            Refstack
+                            
+                             </th><th>
+                            SNAPS
+                            
+                             </th><th>
+                            Promise
+                            *
+                             </th><th>
+                            Domino
+                            *
+                             </th><th>
+                            vIMS (Cloudify)
+                            *
+                             </th><th>
+                            OpenIMS (OpenBaton)
+                            *
+                             </th><th>
+                            vIMS (OpenBaton)
+                            *
+                             </th>
+                        </tr>
+                        <tr class="tr-weather-weather">
+                            <td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-few-clouds.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td><td><img src="../../img/weather-storm.png"></td>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+    see <a href="https://wiki.opnfv.org/pages/viewpage.action?pageId=6828617">Functest scoring wiki page</a> for details on scenario scoring
+     <div> <br>
+    <a href="./status-joid.pdf" class="myButtonPdf">Export to PDF</a>   <a href="./scenario_history_joid.txt" class="myButtonCSV">Export to CSV</a>
+    </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
