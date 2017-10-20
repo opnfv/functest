@@ -86,8 +86,8 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
         -e git+https://github.com/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
     update-requirements -s --source /src/openstack-requirements /src/rally && \
-    git clone --depth 1 https://github.com/openstack/refstack-client.git /src/refstack-client && \
-    (cd src/refstack-client && git checkout -b $REFSTACK_TAG) && \
+    git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
+    (cd src/refstack-client && git checkout $REFSTACK_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/refstack-client && \
     pip install --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
@@ -109,8 +109,8 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
 RUN git clone --depth 1 -b $BRANCH https://gerrit.opnfv.org/gerrit/fds /src/fds
 
 # other repositories
-RUN git clone --depth 1 https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
-        (cd src/odl_test && git checkout -b $ODL_TAG)
+RUN git clone https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
+        (cd src/odl_test && git checkout $ODL_TAG)
 RUN git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test /src/vims-test
 
 # Install tempest venv and create symlink for running refstack-client
