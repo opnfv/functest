@@ -2,8 +2,8 @@ Project: Base System Functionality Testing Project (functest)
 Project Creation Date: January 20, 2015
 Project Category: Integration & Testing
 Lifecycle State: Incubation
-Primary Contact: Jose Lausuch (jose.lausuch@ericsson.com)
-Project Lead: Jose lausuch (jose.lausuch@ericsson.com)
+Primary Contact: Jose Lausuch (jalausuch@suse.com)
+Project Lead: Jose Lausuch (jalausuch@suse.com)
 Jira Project Name: Base System Functionality Testing Project
 Jira Project Prefix: FUNCTEST
 Mailing list tag: [functest]
@@ -12,9 +12,9 @@ Repository: functest
 
 Committers:
 Morgan Richomme <morgan.richomme@orange.com>
-Jose Lausuch <jose.lausuch@ericsson.com>
+Jose Lausuch <jalausuch@suse.com>
 Cedric Ollivier <cedric.ollivier@orange.com>
-Helen Yao <yaohelan@huawei.com>
+Helen Yao <helanyao@gmail.com>
 Serena Feng <feng.xiaowei@zte.com.cn>
 Juha Kosonen <juha.kosonen@nokia.com>
 Valentin Boucher <valentin.boucher@orange.com>
@@ -27,7 +27,6 @@ Georgios Paraskevopoulos <georgepar.91@gmail.com>
 Romanos Skiadas <rom.skiad@gmail.com>
 Michael Polenchuk <mpolenchuk@mirantis.com>
 Cristina Pauna <cristina.pauna@enea.com>
-Matthew Li <matthew.lijun@huawei.com>
 Steven Pisarski <s.pisarski@cablelabs.com>
 
 Link to TSC approval of the project: http://meetbot.opnfv.org/meetings/opnfv-meeting/2015/opnfv-meeting.2015-01-20-14.57.html
