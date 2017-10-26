@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Juha Kosonen <juha.kosonen@nokia.com>
+Code-Review+1: Ray Paik <rpaik@linuxfoundation.org>
+Code-Review+1: Bin Hu <bh526r@att.com>
+Submitted-by: Helen Yao <yaohelan@huawei.com>
+Submitted-at: Thu, 26 Oct 2017 01:13:04 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/46199
+Project: functest
+Branch: refs/heads/master
