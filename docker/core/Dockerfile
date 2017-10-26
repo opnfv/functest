@@ -2,7 +2,7 @@ FROM alpine:3.6
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/ocata
-ARG RALLY_TAG=stable/0.9
+ARG RALLY_TAG=0.9.2
 
 RUN apk --no-cache add --update \
         python libffi libssl1.0 libjpeg-turbo py-pip bash \
