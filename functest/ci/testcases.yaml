@@ -188,25 +188,6 @@ tiers:
                             -  /src/odl_test/csit/suites/openstack/connectivity
 
             -
-                case_name: fds
-                project_name: fastdatastacks
-                criteria: 100
-                blocking: false
-                description: >-
-                    Test Suite for the OpenDaylight SDN Controller when GBP features are
-                    installed. It integrates some test suites from upstream using
-                    Robot as the test framework.
-                dependencies:
-                    installer: 'apex'
-                    scenario: 'odl.*-fdio'
-                run:
-                    module: 'functest.opnfv_tests.sdn.odl.odl'
-                    class: 'ODLTests'
-                    args:
-                        suites:
-                            -  /src/fds/testing/robot
-
-            -
                 case_name: snaps_smoke
                 project_name: functest
                 criteria: 100
@@ -328,6 +309,25 @@ tiers:
                 run:
                      module: 'baro_tests.barometer'
                      class: 'BarometerCollectd'
+
+            -
+                case_name: fds
+                project_name: fastdatastacks
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test Suite for the OpenDaylight SDN Controller when GBP features are
+                    installed. It integrates some test suites from upstream using
+                    Robot as the test framework.
+                dependencies:
+                    installer: 'apex'
+                    scenario: 'odl.*-fdio'
+                run:
+                    module: 'functest.opnfv_tests.sdn.odl.odl'
+                    class: 'ODLTests'
+                    args:
+                        suites:
+                            -  /src/fds/testing/robot
 
     -
         name: components
