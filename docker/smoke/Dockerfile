@@ -3,7 +3,6 @@ FROM opnfv/functest-core
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/ocata
 ARG ODL_TAG=e12ba90cd27577c4c6c70ee54f7d599b5f6777ba
-ARG FDS_TAG=master
 ARG REFSTACK_TAG=4e187b07672dd1c41cb7c94658f1c91edebf53a2
 
 RUN apk --no-cache add --virtual .build-deps --update \
@@ -21,10 +20,9 @@ RUN apk --no-cache add --virtual .build-deps --update \
         -e/src/refstack-client && \
     git clone https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
     (cd src/odl_test && git checkout $ODL_TAG) && \
-    git clone --depth 1 -b $FDS_TAG https://gerrit.opnfv.org/gerrit/fds /src/fds && \
     ln -s /src/tempest /src/refstack-client/.tempest && \
     virtualenv --system-site-packages /src/tempest/.venv && \
-    rm -r upper-constraints.txt /src/refstack-client/.git /src/odl_test/.git /src/fds/.git && \
+    rm -r upper-constraints.txt /src/refstack-client/.git /src/odl_test/.git && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
 CMD ["bash","-c","prepare_env start && run_tests -t all"]
