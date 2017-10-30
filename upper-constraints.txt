@@ -14,6 +14,5 @@ robotframework-httplibrary===0.4.2
 robotframework-requests===0.4.7
 robotframework-sshlibrary===2.1.3;python_version=='2.7'
 IPy===0.83
-os-faults===0.1.15
 ansible===2.3.2.0
 flasgger===0.6.6

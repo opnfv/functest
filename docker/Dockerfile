@@ -13,7 +13,8 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 
 # Environment variables
 ARG BRANCH=master
-ARG RALLY_TAG=stable/0.9
+ARG RALLY_TAG=stable/0.10
+ARG OS_FAULTS_TAG=0.1.16
 ARG ODL_TAG=e12ba90cd27577c4c6c70ee54f7d599b5f6777ba
 ARG OPENSTACK_TAG=stable/ocata
 ARG VIMS_TAG=stable
@@ -84,6 +85,8 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
     pip install --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         -e git+https://github.com/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
+    git clone --depth 1 https://github.com/openstack/os-faults.git -b $OS_FAULTS_TAG /src/os-faults && \
+    update-requirements -s --source /src/openstack-requirements /src/os-faults/ && \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
     update-requirements -s --source /src/openstack-requirements /src/rally && \
     git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
@@ -91,7 +94,7 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
     update-requirements -s --source /src/openstack-requirements /src/refstack-client && \
     pip install --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        /src/rally -e/src/refstack-client && \
+        /src/os-faults /src/rally -e/src/refstack-client && \
     pip install --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
