@@ -13,7 +13,7 @@ LABEL version="0.1" description="OPNFV Functest Docker container"
 
 # Environment variables
 ARG BRANCH=stable/euphrates
-ARG RALLY_TAG=stable/0.9
+ARG RALLY_TAG=0.9.1
 ARG ODL_TAG=e12ba90cd27577c4c6c70ee54f7d599b5f6777ba
 ARG OPENSTACK_TAG=stable/ocata
 ARG VIMS_TAG=stable
