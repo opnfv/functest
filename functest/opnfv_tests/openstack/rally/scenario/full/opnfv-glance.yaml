@@ -1,0 +1,92 @@
+  GlanceImages.create_and_delete_image:
+    -
+      args:
+        {{ glance_args(location=glance_image_location, type=glance_image_format) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GlanceImages.create_and_list_image:
+    -
+      args:
+        {{ glance_args(location=glance_image_location, type=glance_image_format) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GlanceImages.list_images:
+    -
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GlanceImages.create_image_and_boot_instances:
+    -
+      args:
+        {{ glance_args(location=glance_image_location, type=glance_image_format) }}
+        flavor:
+            name: {{ flavor_name }}
+        number_instances: 2
+        nics:
+          - net-id: {{ netid }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        quotas:
+          {{ unlimited_nova() }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GlanceImages.create_and_deactivate_image:
+    -
+      args:
+        {{ glance_args(location=glance_image_location, type=glance_image_format) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GlanceImages.create_and_download_image:
+    -
+      args:
+        {{ glance_args(location=glance_image_location, type=glance_image_format) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GlanceImages.create_and_get_image:
+    -
+      args:
+        {{ glance_args(location=glance_image_location, type=glance_image_format) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GlanceImages.create_and_update_image:
+    -
+      args:
+        {{ glance_args(location=glance_image_location, type=glance_image_format) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}

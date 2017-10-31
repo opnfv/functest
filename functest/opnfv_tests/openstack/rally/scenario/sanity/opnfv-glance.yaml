@@ -46,4 +46,3 @@
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
-
