@@ -106,27 +106,6 @@
       sla:
         {{ no_failures_sla() }}
 
-  NovaSecGroup.boot_and_delete_server_with_secgroups:
-    -
-      args:
-        {{ vm_params(image_name, flavor_name) }}
-        security_group_count: 10
-        rules_per_security_group: 10
-        nics:
-          - net-id: {{ netid }}
-      context:
-        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network:
-          start_cidr: "100.1.0.0/25"
-        quotas:
-          {{ unlimited_nova() }}
-          {{ unlimited_neutron(secgroups=true) }}
-        {% endcall %}
-      runner:
-        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
-      sla:
-        {{ no_failures_sla() }}
-
   NovaServers.boot_and_migrate_server:
     - args:
         {{ vm_params(image_name, flavor_name) }}
