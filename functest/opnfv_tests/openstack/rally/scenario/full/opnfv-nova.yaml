@@ -316,3 +316,101 @@
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
+
+  NovaServers.boot_server_and_list_interfaces:
+    -
+      args:
+        {{ vm_params(image_name, flavor_name) }}
+        auto_assign_nic: true
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        network: {}
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NovaServers.boot_and_get_console_url:
+    -
+      args:
+        {{ vm_params(image_name, flavor_name) }}
+        console_type: "novnc"
+        auto_assign_nic: true
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        network: {}
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NovaServers.boot_server_and_attach_interface:
+    -
+      args:
+        {{ vm_params(image_name, flavor_name) }}
+        network_create_args: {}
+        subnet_create_args: {}
+        boot_server_args:
+          auto_assign_nic: true
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        network: {}
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NovaServers.boot_server_attach_volume_and_list_attachments:
+    -
+      args:
+        {{ vm_params(image_name, flavor_name) }}
+        volume_size: 1
+        volume_num: 1
+        create_volume_kwargs: {}
+        boot_server_kwargs:
+          auto_assign_nic: true
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        network: {}
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NovaServerGroups.create_and_delete_server_group:
+    -
+      args:
+        policies: ["affinity"]
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NovaServerGroups.create_and_get_server_group:
+    -
+      args:
+        policies: ["affinity"]
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NovaServerGroups.create_and_list_server_groups:
+    -
+      args:
+        policies: ["affinity"]
+        all_projects: false
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
