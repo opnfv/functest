@@ -132,7 +132,7 @@ def source_credentials(rc_file):
 def get_credentials_for_rally():
     creds = get_credentials()
     env_cred_dict = get_env_cred_dict()
-    rally_conf = {"type": "ExistingCloud", "admin": {}}
+    rally_conf = {"admin": {}}
     for key in creds:
         if key == 'auth_url':
             rally_conf[key] = creds[key]
@@ -159,6 +159,7 @@ def get_credentials_for_rally():
 
     insecure_key = env_cred_dict.get('OS_INSECURE')
     rally_conf[insecure_key] = os.getenv('OS_INSECURE', '').lower() == 'true'
+    rally_conf = {"openstack": rally_conf}
 
     return rally_conf
 
