@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_2fe37e08",
+        "filename": "functest/opnfv_tests/vnf/epc/juju_epc.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-11-02T10:12:49Z",
+      "side": 1,
+      "message": "please remove all the trailing whitespaces",
+      "range": {
+        "startLine": 6,
+        "startChar": 14,
+        "endLine": 6,
+        "endChar": 15
+      },
+      "revId": "5263cc86dafa2c28047420a27008bbd807ee8882",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
