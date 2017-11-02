@@ -237,3 +237,126 @@
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
+
+  NeutronSecurityGroup.create_and_delete_security_groups:
+    -
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        quotas:
+          neutron:
+            security_group: -1
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NeutronSecurityGroup.create_and_delete_security_group_rule:
+    -
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        quotas:
+          neutron:
+            security_group: -1
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NeutronSecurityGroup.create_and_list_security_group_rules:
+    -
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        quotas:
+          neutron:
+            security_group: -1
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NeutronSecurityGroup.create_and_show_security_group:
+    -
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        quotas:
+          neutron:
+            security_group: -1
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NeutronNetworks.set_and_clear_router_gateway:
+    -
+      args:
+        network_create_args:
+          router:external: True
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        quotas:
+          neutron:
+            network: -1
+            router: -1
+        roles:
+          - "admin"
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NeutronNetworks.create_and_show_ports:
+    -
+      args:
+        ports_per_network: 2
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        network: {}
+        quotas:
+          neutron:
+            network: -1
+            router: -1
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NeutronNetworks.create_and_show_routers:
+    -
+      args:
+        subnets_per_network: 2
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        network: {}
+        quotas:
+          neutron:
+            network: -1
+            subnet: -1
+            router: -1
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NeutronNetworks.create_and_show_subnets:
+    -
+      args:
+        subnets_per_network: 2
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        network: {}
+        quotas:
+          neutron:
+            network: -1
+            subnet: -1
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
