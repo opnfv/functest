@@ -121,9 +121,6 @@ class TestCase(object):
 
     def is_compatible(self, ci_installer, ci_scenario):
         try:
-            if (self.is_none(ci_installer) and not
-                    self.is_none(self.dependency.get_installer())):
-                return False
             if not self.is_none(ci_installer):
                 if re.search(self.dependency.get_installer(),
                              ci_installer) is None:
