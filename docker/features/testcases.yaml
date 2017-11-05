@@ -10,6 +10,7 @@ tiers:
             -
                 case_name: promise
                 project_name: promise
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -26,6 +27,7 @@ tiers:
             -
                 case_name: doctor-notification
                 project_name: doctor
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -42,6 +44,7 @@ tiers:
             -
                 case_name: bgpvpn
                 project_name: sdnvpn
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -56,6 +59,7 @@ tiers:
             -
                 case_name: functest-odl-sfc
                 project_name: sfc
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -72,6 +76,7 @@ tiers:
             -
                 case_name: domino-multinode
                 project_name: domino
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -88,6 +93,7 @@ tiers:
             -
                 case_name: barometercollectd
                 project_name: barometer
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-

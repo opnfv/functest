@@ -1,17 +1,16 @@
 FROM opnfv/functest-core
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=stable/ocata
-ARG ODL_TAG=e12ba90cd27577c4c6c70ee54f7d599b5f6777ba
+ARG OPENSTACK_TAG=stable/pike
+ARG ODL_TAG=master
 ARG FDS_TAG=master
-ARG REFSTACK_TAG=4e187b07672dd1c41cb7c94658f1c91edebf53a2
+ARG REFSTACK_TAG=master
 
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev git && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
         sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ | \
-        sed s/^requests===.*$/requests===2.13.0/ \
         > upper-constraints.txt && \
     git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
     (cd src/refstack-client && git checkout $REFSTACK_TAG) && \
