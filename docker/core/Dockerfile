@@ -14,6 +14,8 @@ RUN apk --no-cache add --update \
         sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ | \
         sed s/^requests===.*$/requests===2.13.0/ \
         > upper-constraints.txt && \
+    git clone https://gerrit.opnfv.org/gerrit/functest /src/functest && \
+    (cd /src/functest && git fetch origin $BRANCH && git checkout FETCH_HEAD) && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         -e git+https://github.com/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
@@ -23,8 +25,8 @@ RUN apk --no-cache add --update \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH /src/rally && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest && \
-    rm -r upper-constraints.txt /src/rally/.git && \
+        /src/functest && \
+    rm -r upper-constraints.txt /src/functest /src/rally/.git && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally-manage db create && \
