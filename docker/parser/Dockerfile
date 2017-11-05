@@ -4,6 +4,7 @@ ARG BRANCH=stable/euphrates
 ARG OPENSTACK_TAG=stable/pike
 ARG RALLY_TAG=0.9.1
 
+COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --update \
         python libffi libssl1.0 libjpeg-turbo py-pip bash \
         grep sed wget ca-certificates git openssh-client && \
@@ -25,10 +26,8 @@ RUN apk --no-cache add --update \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         git+https://gerrit.opnfv.org/gerrit/functest@$BRANCH#egg=functest \
-        git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-heattranslator\&subdirectory=tosca2heat/heat-translator \
-        git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-toscaparser\&subdirectory=tosca2heat/tosca-parser \
-        -e git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-parser && \
-    rm -r upper-constraints.txt /src/rally/.git && \
+        -rthirdparty-requirements.txt && \
+    rm -r upper-constraints.txt thirdparty-requirements.txt /src/rally/.git && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally-manage db create && \
