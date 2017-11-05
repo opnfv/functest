@@ -235,3 +235,105 @@
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
         {{ no_failures_sla() }}
+
+  CinderQos.create_and_get_qos:
+    -
+      args:
+        consumer: "both"
+        write_iops_sec: "10"
+        read_iops_sec: "1000"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  CinderQos.create_and_list_qos:
+    -
+      args:
+        consumer: "both"
+        write_iops_sec: "10"
+        read_iops_sec: "1000"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  CinderQos.create_and_set_qos:
+    -
+      args:
+        consumer: "back-end"
+        write_iops_sec: "10"
+        read_iops_sec: "1000"
+        set_consumer: "both"
+        set_write_iops_sec: "11"
+        set_read_iops_sec: "1001"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  CinderVolumeTypes.create_and_get_volume_type:
+    -
+      args:
+        description: "rally tests creating types"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  CinderVolumeTypes.create_and_list_volume_types:
+    -
+      args:
+        description: "rally tests creating types"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  CinderVolumeTypes.create_and_update_volume_type:
+    -
+      args:
+        description: "test"
+        update_description: "test update"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  CinderVolumeTypes.create_volume_type_and_encryption_type:
+    -
+      args:
+        description: "rally tests creating types"
+        provider: "LuksEncryptor"
+        cipher: "aes-xts-plain64"
+        key_size: 512
+        control_location: "front-end"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  CinderVolumeTypes.create_volume_type_add_and_list_type_access:
+    -
+      args:
+        description: "rally tests creating types"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
