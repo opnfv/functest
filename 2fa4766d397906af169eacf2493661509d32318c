@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_daaa89d1",
+        "filename": "functest/opnfv_tests/vnf/epc/juju_epc.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-06T14:21:02Z",
+      "side": 1,
+      "message": "I don\u0027t think the copyright owner is right",
+      "revId": "2fa4766d397906af169eacf2493661509d32318c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
