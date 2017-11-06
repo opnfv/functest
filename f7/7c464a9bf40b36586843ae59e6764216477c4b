@@ -1,0 +1,11 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Juha Kosonen <juha.kosonen@nokia.com>
+Code-Review+2: Jose Lausuch <jalausuch@suse.com>
+Code-Review+2: Linda Wang <wangwulin@huawei.com>
+Code-Review+1: Viktor Tikkanen <viktor.tikkanen@nokia.com>
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Mon, 06 Nov 2017 14:02:57 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/46723
+Project: functest
+Branch: refs/heads/master
