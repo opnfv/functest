@@ -16,7 +16,7 @@ def get_ext_net_name(os_creds):
     """
     neutron = neutron_utils.neutron_client(os_creds)
     ext_nets = neutron_utils.get_external_networks(neutron)
-    return ext_nets[0].name
+    return ext_nets[0].name if ext_nets else ""
 
 
 def get_active_compute_cnt(os_creds):
