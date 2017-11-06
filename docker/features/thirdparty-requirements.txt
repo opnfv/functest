@@ -1,6 +1,6 @@
-baro_tests
-sdnvpn
-sfc
-promise
-doctor-tests;python_version>='3.0'
-domino
+# baro_tests
+# sdnvpn
+# sfc
+# promise
+# doctor-tests;python_version>='3.0'
+# domino

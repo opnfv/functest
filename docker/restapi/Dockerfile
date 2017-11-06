@@ -1,10 +1,10 @@
 FROM opnfv/functest-core
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=stable/ocata
-ARG ODL_TAG=e12ba90cd27577c4c6c70ee54f7d599b5f6777ba
+ARG OPENSTACK_TAG=stable/pike
+ARG ODL_TAG=master
 ARG FDS_TAG=master
-ARG REFSTACK_TAG=4e187b07672dd1c41cb7c94658f1c91edebf53a2
+ARG REFSTACK_TAG=master
 ARG VIMS_TAG=stable
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
@@ -17,7 +17,6 @@ RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
         ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
         sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ | \
-        sed s/^requests===.*$/requests===2.13.0/ \
         > upper-constraints.txt && \
     git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
     (cd src/refstack-client && git checkout $REFSTACK_TAG) && \
@@ -34,7 +33,8 @@ RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
     git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test /src/vims-test && \
     ln -s /src/tempest /src/refstack-client/.tempest && \
     virtualenv --system-site-packages /src/tempest/.venv && \
-    (cd /src/promise/source && npm install) && \
+    # the next line must be uncommented as soon as promise is synced with pike
+    # (cd /src/promise/source && npm install) && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
     npm -g install npm@latest && \
     rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
