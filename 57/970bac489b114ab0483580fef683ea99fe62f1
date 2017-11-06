@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Jose Lausuch <jalausuch@suse.com>
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Code-Review+2: Linda Wang <wangwulin@huawei.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Mon, 06 Nov 2017 13:58:55 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/46719
+Project: functest
+Branch: refs/heads/master
