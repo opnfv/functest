@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_5d8cb335",
+        "filename": "docker/core/hooks/post_checkout",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-11-07T14:09:37Z",
+      "side": 1,
+      "message": "no need for \u003d~, you could just\nif [ \"${arch}\" \u003d \u0027aarch64\u0027 ]; then",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 35
+      },
+      "revId": "8de55f93351211dc1093e178d36ec48324c1249e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_7d89b725",
+        "filename": "docker/core/hooks/post_checkout",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-11-07T14:09:37Z",
+      "side": 1,
+      "message": "won\u0027t this pull from stable for master builds too?",
+      "range": {
+        "startLine": 5,
+        "startChar": 27,
+        "endLine": 5,
+        "endChar": 46
+      },
+      "revId": "8de55f93351211dc1093e178d36ec48324c1249e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_3da0cf9e",
+        "filename": "docker/core/hooks/post_checkout",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-11-07T14:09:37Z",
+      "side": 1,
+      "message": "ws",
+      "range": {
+        "startLine": 7,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 3
+      },
+      "revId": "8de55f93351211dc1093e178d36ec48324c1249e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_1d9b4b73",
+        "filename": "docker/core/hooks/post_checkout",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-11-07T14:09:37Z",
+      "side": 1,
+      "message": "how about dropping this in favor of `#!/bin/bash -e`?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 7
+      },
+      "revId": "8de55f93351211dc1093e178d36ec48324c1249e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
