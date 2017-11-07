@@ -16,7 +16,7 @@ RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
         openssl-dev libjpeg-turbo-dev \
         ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
-        sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ | \
+        sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ \
         > upper-constraints.txt && \
     git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
     (cd src/refstack-client && git checkout $REFSTACK_TAG) && \
