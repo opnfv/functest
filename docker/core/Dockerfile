@@ -4,6 +4,7 @@ ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/pike
 ARG RALLY_TAG=stable/0.10
 ARG OS_FAULTS_TAG=0.1.16
+ARG TEMPEST_TAG=17.0.0
 
 RUN apk --no-cache add --update \
         python libffi libssl1.0 libjpeg-turbo py-pip bash \
@@ -12,7 +13,7 @@ RUN apk --no-cache add --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
-        sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ | \
+        sed -E s/^tempest===.*$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@$TEMPEST_RAG#egg=tempest/ \
         > upper-constraints.txt && \
     git clone https://gerrit.opnfv.org/gerrit/functest /src/functest && \
     (cd /src/functest && git fetch origin $BRANCH && git checkout FETCH_HEAD) && \
