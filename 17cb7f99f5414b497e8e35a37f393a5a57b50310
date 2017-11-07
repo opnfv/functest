@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_fd54a755",
+        "filename": "docker/core/Dockerfile.aarch64.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-11-07T15:43:15Z",
+      "side": 1,
+      "message": "not really useful, could be removed",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 29
+      },
+      "revId": "17cb7f99f5414b497e8e35a37f393a5a57b50310",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_dd4f23bd",
+        "filename": "docker/core/Dockerfile.aarch64.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2017-11-07T15:43:15Z",
+      "side": 1,
+      "message": "extra line",
+      "revId": "17cb7f99f5414b497e8e35a37f393a5a57b50310",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
