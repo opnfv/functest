@@ -1,0 +1,9 @@
+#!/bin/bash
+
+arch=$(uname -m)
+if [[ ${arch} =~ 'aarch64' ]]; then
+    from="multiarch/alpine:arm64-latest-stable"
+    sed -i "s|^FROM.*$|FROM ${from}|" Dockerfile
+fi 
+
+exit $?
