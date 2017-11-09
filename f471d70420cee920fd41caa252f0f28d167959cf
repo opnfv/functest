@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_c6275463",
+        "filename": "functest/opnfv_tests/vnf/epc/abot_epc_cloud.yaml",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-09T06:41:30Z",
+      "side": 1,
+      "message": "It\u0027s cloud specific, isn\u0027t?\nCould you please confirm it would be broken for other PODs (Linux Fundation, Huawei...)?",
+      "revId": "f471d70420cee920fd41caa252f0f28d167959cf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a62a102a",
+        "filename": "functest/opnfv_tests/vnf/epc/abot_epc_cloud.yaml",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-09T06:41:30Z",
+      "side": 1,
+      "message": "idem",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 18
+      },
+      "revId": "f471d70420cee920fd41caa252f0f28d167959cf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
