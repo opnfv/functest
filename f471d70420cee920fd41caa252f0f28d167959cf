@@ -39,6 +39,69 @@
       "revId": "f471d70420cee920fd41caa252f0f28d167959cf",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c6de343f",
+        "filename": "functest/opnfv_tests/vnf/epc/juju_epc.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-09T07:10:39Z",
+      "side": 1,
+      "message": "Could you please remove the \u0027\\\u0027 to wrap long lines. It\u0027s only allowed by PEP8 to wrap with instructions.",
+      "revId": "f471d70420cee920fd41caa252f0f28d167959cf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a6e17000",
+        "filename": "functest/opnfv_tests/vnf/epc/juju_epc.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-09T07:10:39Z",
+      "side": 1,
+      "message": "I think we can modify the files in a python way what will avoid useless forks.",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 78
+      },
+      "revId": "f471d70420cee920fd41caa252f0f28d167959cf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_06e81ce1",
+        "filename": "functest/opnfv_tests/vnf/epc/juju_epc.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-09T07:10:39Z",
+      "side": 1,
+      "message": "idem",
+      "range": {
+        "startLine": 128,
+        "startChar": 19,
+        "endLine": 128,
+        "endChar": 22
+      },
+      "revId": "f471d70420cee920fd41caa252f0f28d167959cf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
