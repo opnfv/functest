@@ -8,8 +8,7 @@
 
 import unittest
 
-from snaps import test_suite_builder
-
+from functest.opnfv_tests.openstack.snaps import snaps_suite_builder
 from functest.opnfv_tests.openstack.snaps.snaps_test_runner import \
     SnapsTestRunner
 
@@ -33,7 +32,7 @@ class ConnectionCheck(SnapsTestRunner):
         :param kwargs: the arguments to pass on
         :return:
         """
-        test_suite_builder.add_openstack_client_tests(
+        snaps_suite_builder.add_openstack_client_tests(
             suite=self.suite,
             os_creds=self.os_creds,
             ext_net_name=self.ext_net_name,
