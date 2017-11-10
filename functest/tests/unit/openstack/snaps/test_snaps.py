@@ -31,7 +31,8 @@ class ConnectionCheckTesting(unittest.TestCase):
         self.connection_check = connection_check.ConnectionCheck(
             os_creds=self.os_creds, ext_net_name='foo')
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_client_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_client_tests')
     def test_run_success(self, add_os_client_tests):
         result = mock.MagicMock(name='unittest.TextTestResult')
         result.testsRun = 100
@@ -42,7 +43,8 @@ class ConnectionCheckTesting(unittest.TestCase):
             self.assertEquals(TestCase.EX_OK,
                               self.connection_check.is_successful())
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_client_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_client_tests')
     def test_run_1_of_100_failures(self, add_os_client_tests):
         result = mock.MagicMock(name='unittest.TextTestResult')
         result.testsRun = 100
@@ -53,7 +55,8 @@ class ConnectionCheckTesting(unittest.TestCase):
             self.assertEquals(TestCase.EX_TESTCASE_FAILED,
                               self.connection_check.is_successful())
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_client_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_client_tests')
     def test_run_1_of_100_failures_within_criteria(self, add_os_client_tests):
         self.connection_check.criteria = 90
         result = mock.MagicMock(name='unittest.TextTestResult')
@@ -80,7 +83,8 @@ class APICheckTesting(unittest.TestCase):
         self.api_check = api_check.ApiCheck(
             os_creds=self.os_creds, ext_net_name='foo')
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_api_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_api_tests')
     def test_run_success(self, add_tests):
         result = mock.MagicMock(name='unittest.TextTestResult')
         result.testsRun = 100
@@ -91,7 +95,8 @@ class APICheckTesting(unittest.TestCase):
             self.assertEquals(TestCase.EX_OK,
                               self.api_check.is_successful())
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_api_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_api_tests')
     def test_run_1_of_100_failures(self, add_tests):
         result = mock.MagicMock(name='unittest.TextTestResult')
         result.testsRun = 100
@@ -102,7 +107,8 @@ class APICheckTesting(unittest.TestCase):
             self.assertEquals(TestCase.EX_TESTCASE_FAILED,
                               self.api_check.is_successful())
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_api_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_api_tests')
     def test_run_1_of_100_failures_within_criteria(self, add_tests):
         self.api_check.criteria = 90
         result = mock.MagicMock(name='unittest.TextTestResult')
@@ -129,7 +135,8 @@ class HealthCheckTesting(unittest.TestCase):
         self.health_check = health_check.HealthCheck(
             os_creds=self.os_creds, ext_net_name='foo')
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_client_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_client_tests')
     def test_run_success(self, add_tests):
         result = mock.MagicMock(name='unittest.TextTestResult')
         result.testsRun = 100
@@ -140,7 +147,8 @@ class HealthCheckTesting(unittest.TestCase):
             self.assertEquals(TestCase.EX_OK,
                               self.health_check.is_successful())
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_client_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_client_tests')
     def test_run_1_of_100_failures(self, add_tests):
         result = mock.MagicMock(name='unittest.TextTestResult')
         result.testsRun = 100
@@ -151,7 +159,8 @@ class HealthCheckTesting(unittest.TestCase):
             self.assertEquals(TestCase.EX_TESTCASE_FAILED,
                               self.health_check.is_successful())
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_client_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_client_tests')
     def test_run_1_of_100_failures_within_criteria(self, add_tests):
         self.health_check.criteria = 90
         result = mock.MagicMock(name='unittest.TextTestResult')
@@ -178,7 +187,8 @@ class SmokeTesting(unittest.TestCase):
         self.smoke = smoke.SnapsSmoke(
             os_creds=self.os_creds, ext_net_name='foo')
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_integration_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_integration_tests')
     @mock.patch('os.path.join', return_value=os.getcwd())
     def test_run_success(self, add_tests, cwd):
         result = mock.MagicMock(name='unittest.TextTestResult')
@@ -190,7 +200,8 @@ class SmokeTesting(unittest.TestCase):
             self.assertEquals(TestCase.EX_OK,
                               self.smoke.is_successful())
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_integration_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_integration_tests')
     @mock.patch('os.path.join', return_value=os.getcwd())
     def test_run_1_of_100_failures(self, add_tests, cwd):
         result = mock.MagicMock(name='unittest.TextTestResult')
@@ -202,7 +213,8 @@ class SmokeTesting(unittest.TestCase):
             self.assertEquals(TestCase.EX_TESTCASE_FAILED,
                               self.smoke.is_successful())
 
-    @mock.patch('snaps.test_suite_builder.add_openstack_integration_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_integration_tests')
     @mock.patch('os.path.join', return_value=os.getcwd())
     def test_run_1_of_100_failures_within_criteria(self, add_tests, cwd):
         self.smoke.criteria = 90
