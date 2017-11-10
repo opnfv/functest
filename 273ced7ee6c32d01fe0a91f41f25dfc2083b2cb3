@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_4c308301",
+        "filename": "functest/opnfv_tests/openstack/snaps/connection_check.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-10T09:36:32Z",
+      "side": 1,
+      "message": "Why not renaming it to add_connection_check_tests instead?",
+      "revId": "273ced7ee6c32d01fe0a91f41f25dfc2083b2cb3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_2c2b7f95",
+        "filename": "functest/opnfv_tests/openstack/snaps/smoke.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-10T09:36:32Z",
+      "side": 1,
+      "message": "Why not add_snaps_smoke_tests?",
+      "revId": "273ced7ee6c32d01fe0a91f41f25dfc2083b2cb3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
