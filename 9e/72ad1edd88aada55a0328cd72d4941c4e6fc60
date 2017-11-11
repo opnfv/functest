@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Alexandru Avadanii <Alexandru.Avadanii@enea.com>
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Sat, 11 Nov 2017 11:08:08 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/47067
+Project: functest
+Branch: refs/heads/master
