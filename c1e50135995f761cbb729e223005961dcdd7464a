@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_8330999f",
+        "filename": "functest/opnfv_tests/openstack/snaps/snaps_suite_builder.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-11-11T06:30:12Z",
+      "side": 1,
+      "message": "violate the import rule?",
+      "revId": "c1e50135995f761cbb729e223005961dcdd7464a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
