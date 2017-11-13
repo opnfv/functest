@@ -88,8 +88,57 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         msg = 'Failed to create flavor'
         self.assertTrue(msg in context.exception, msg=str(context.exception))
 
-    def test_get_verifier_id_missing_verifier(self):
-        CONST.__setattr__('tempest_deployment_name', 'test_deploy_name')
+    @mock.patch('functest.ci.prepare_env.os_utils.get_credentials_for_rally')
+    @mock.patch('functest.ci.prepare_env.logger.info')
+    @mock.patch('functest.ci.prepare_env.ft_utils.execute_command_raise')
+    @mock.patch('functest.ci.prepare_env.ft_utils.execute_command')
+    def test_install_rally(self, mock_exec, mock_exec_raise, mock_logger_info,
+                           mock_os_utils):
+
+        mock_os_utils.return_value = self._get_rally_creds()
+
+        conf_utils.create_rally_deployment()
+
+        cmd = "rally deployment destroy opnfv-rally"
+        error_msg = "Deployment %s does not exist." % \
+                    CONST.__getattribute__('rally_deployment_name')
+        mock_logger_info.assert_any_call("Creating Rally environment...")
+        mock_exec.assert_any_call(cmd, error_msg=error_msg, verbose=False)
+
+        cmd = "rally deployment create --file=rally_conf.json --name="
+        cmd += CONST.__getattribute__('rally_deployment_name')
+        error_msg = "Problem while creating Rally deployment"
+        mock_exec_raise.assert_any_call(cmd, error_msg=error_msg)
+
+        cmd = "rally deployment check"
+        error_msg = ("OpenStack not responding or "
+                     "faulty Rally deployment.")
+        mock_exec_raise.assert_any_call(cmd, error_msg=error_msg)
+
+    @mock.patch('functest.ci.prepare_env.logger.debug')
+    def test_create_verifier(self, mock_logger_debug):
+        mock_popen = mock.Mock()
+        attrs = {'poll.return_value': None,
+                 'stdout.readline.return_value': '0'}
+        mock_popen.configure_mock(**attrs)
+
+        CONST.__setattr__('tempest_verifier_name', 'test_veifier_name')
+        with mock.patch('functest.ci.prepare_env.'
+                        'ft_utils.execute_command_raise',
+                        side_effect=Exception), \
+            mock.patch('functest.ci.prepare_env.subprocess.Popen',
+                       return_value=mock_popen), \
+                self.assertRaises(Exception):
+            conf_utils.create_verifier()
+            mock_logger_debug.assert_any_call("Tempest test_veifier_name"
+                                              " does not exist")
+
+    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                'create_verifier', return_value=mock.Mock())
+    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                'create_rally_deployment', return_value=mock.Mock())
+    def test_get_verifier_id_missing_verifier(self, mock_rally, mock_tempest):
+        CONST.__setattr__('tempest_verifier_name', 'test_verifier_name')
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.subprocess.Popen') as mock_popen, \
                 self.assertRaises(Exception):
@@ -97,10 +146,14 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             attrs = {'stdout.readline.return_value': ''}
             mock_stdout.configure_mock(**attrs)
             mock_popen.return_value = mock_stdout
-            conf_utils.get_verifier_id(),
+            conf_utils.get_verifier_id()
 
-    def test_get_verifier_id_default(self):
-        CONST.__setattr__('tempest_deployment_name', 'test_deploy_name')
+    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                'create_verifier', return_value=mock.Mock())
+    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                'create_rally_deployment', return_value=mock.Mock())
+    def test_get_verifier_id_default(self, mock_rally, mock_tempest):
+        CONST.__setattr__('tempest_verifier_name', 'test_verifier_name')
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.subprocess.Popen') as mock_popen:
             mock_stdout = mock.Mock()
@@ -112,7 +165,7 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                              'test_deploy_id')
 
     def test_get_verifier_deployment_id_missing_rally(self):
-        CONST.__setattr__('tempest_deployment_name', 'test_deploy_name')
+        CONST.__setattr__('tempest_verifier_name', 'test_deploy_name')
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.subprocess.Popen') as mock_popen, \
                 self.assertRaises(Exception):
@@ -123,7 +176,7 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             conf_utils.get_verifier_deployment_id(),
 
     def test_get_verifier_deployment_id_default(self):
-        CONST.__setattr__('tempest_deployment_name', 'test_deploy_name')
+        CONST.__setattr__('tempest_verifier_name', 'test_deploy_name')
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.subprocess.Popen') as mock_popen:
             mock_stdout = mock.Mock()

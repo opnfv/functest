@@ -328,61 +328,6 @@ class PrepareEnvTesting(unittest.TestCase):
                           "password": 'test_password',
                           "tenant": 'test_tenant'}}
 
-    @mock.patch('functest.ci.prepare_env.os_utils.get_credentials_for_rally')
-    @mock.patch('functest.ci.prepare_env.logger.info')
-    @mock.patch('functest.ci.prepare_env.ft_utils.execute_command_raise')
-    @mock.patch('functest.ci.prepare_env.ft_utils.execute_command')
-    def test_install_rally(self, mock_exec, mock_exec_raise, mock_logger_info,
-                           mock_os_utils):
-
-        mock_os_utils.return_value = self._get_rally_creds()
-
-        prepare_env.install_rally()
-
-        cmd = "rally deployment destroy opnfv-rally"
-        error_msg = "Deployment %s does not exist." % \
-                    CONST.__getattribute__('rally_deployment_name')
-        mock_logger_info.assert_any_call("Creating Rally environment...")
-        mock_exec.assert_any_call(cmd, error_msg=error_msg, verbose=False)
-
-        cmd = "rally deployment create --file=rally_conf.json --name="
-        cmd += CONST.__getattribute__('rally_deployment_name')
-        error_msg = "Problem while creating Rally deployment"
-        mock_exec_raise.assert_any_call(cmd, error_msg=error_msg)
-
-        cmd = "rally deployment check"
-        error_msg = ("OpenStack not responding or "
-                     "faulty Rally deployment.")
-        mock_exec_raise.assert_any_call(cmd, error_msg=error_msg)
-
-        cmd = "rally deployment list"
-        error_msg = ("Problem while listing "
-                     "Rally deployment.")
-        mock_exec.assert_any_call(cmd, error_msg=error_msg)
-
-        cmd = "rally plugin list | head -5"
-        error_msg = ("Problem while showing "
-                     "Rally plugins.")
-        mock_exec.assert_any_call(cmd, error_msg=error_msg)
-
-    @mock.patch('functest.ci.prepare_env.logger.debug')
-    def test_install_tempest(self, mock_logger_debug):
-        mock_popen = mock.Mock()
-        attrs = {'poll.return_value': None,
-                 'stdout.readline.return_value': '0'}
-        mock_popen.configure_mock(**attrs)
-
-        CONST.__setattr__('tempest_deployment_name', 'test_dep_name')
-        with mock.patch('functest.ci.prepare_env.'
-                        'ft_utils.execute_command_raise',
-                        side_effect=Exception), \
-            mock.patch('functest.ci.prepare_env.subprocess.Popen',
-                       return_value=mock_popen), \
-                self.assertRaises(Exception):
-            prepare_env.install_tempest()
-            mock_logger_debug.assert_any_call("Tempest test_dep_name"
-                                              " does not exist")
-
     def test_create_flavor(self):
         with mock.patch('functest.ci.prepare_env.'
                         'os_utils.get_or_create_flavor',

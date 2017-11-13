@@ -26,6 +26,7 @@ import yaml
 from functest.core import testcase
 from functest.energy import energy
 from functest.opnfv_tests.openstack.snaps import snaps_utils
+from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
 
 from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
@@ -621,6 +622,7 @@ class RallyBase(testcase.TestCase):
         """Run testcase."""
         self.start_time = time.time()
         try:
+            conf_utils.create_rally_deployment()
             self._prepare_env()
             self._run_tests()
             self._generate_report()
