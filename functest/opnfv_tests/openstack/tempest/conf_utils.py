@@ -8,7 +8,9 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 import ConfigParser
+import json
 import logging
+import fileinput
 import os
 import pkg_resources
 import shutil
@@ -23,6 +25,9 @@ import functest.utils.openstack_utils as os_utils
 
 IMAGE_ID_ALT = None
 FLAVOR_ID_ALT = None
+RALLY_CONF_PATH = "/etc/rally/rally.conf"
+RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
+    'functest', 'ci/rally_aarch64_patch.conf')
 GLANCE_IMAGE_PATH = os.path.join(
     CONST.__getattribute__('dir_functest_images'),
     CONST.__getattribute__('openstack_image_file_name'))
@@ -52,12 +57,67 @@ CI_INSTALLER_IP = CONST.__getattribute__('INSTALLER_IP')
 logger = logging.getLogger(__name__)
 
 
+def create_rally_deployment():
+    # set the architecture to default
+    pod_arch = os.getenv("POD_ARCH", None)
+    arch_filter = ['aarch64']
+
+    if pod_arch and pod_arch in arch_filter:
+        logger.info("Apply aarch64 specific to rally config...")
+        with open(RALLY_AARCH64_PATCH_PATH, "r") as f:
+            rally_patch_conf = f.read()
+
+        for line in fileinput.input(RALLY_CONF_PATH, inplace=1):
+            print line,
+            if "cirros|testvm" in line:
+                print rally_patch_conf
+
+    logger.info("Creating Rally environment...")
+
+    cmd = "rally deployment destroy opnfv-rally"
+    ft_utils.execute_command(cmd, error_msg=(
+        "Deployment %s does not exist."
+        % CONST.__getattribute__('rally_deployment_name')),
+        verbose=False)
+
+    rally_conf = os_utils.get_credentials_for_rally()
+    with open('rally_conf.json', 'w') as fp:
+        json.dump(rally_conf, fp)
+    cmd = ("rally deployment create "
+           "--file=rally_conf.json --name={0}"
+           .format(CONST.__getattribute__('rally_deployment_name')))
+    error_msg = "Problem while creating Rally deployment"
+    ft_utils.execute_command_raise(cmd, error_msg=error_msg)
+
+    cmd = "rally deployment check"
+    error_msg = "OpenStack not responding or faulty Rally deployment."
+    ft_utils.execute_command_raise(cmd, error_msg=error_msg)
+
+
+def create_verifier():
+    logger.info("Create verifier from existing repo...")
+    cmd = ("rally verify delete-verifier --id '{0}' --force").format(
+        CONST.__getattribute__('tempest_verifier_name'))
+    ft_utils.execute_command(cmd, error_msg=(
+        "Verifier %s does not exist."
+        % CONST.__getattribute__('tempest_verifier_name')),
+        verbose=False)
+    cmd = ("rally verify create-verifier --source {0} "
+           "--name {1} --type tempest --system-wide"
+           .format(CONST.__getattribute__('dir_repo_tempest'),
+                   CONST.__getattribute__('tempest_verifier_name')))
+    ft_utils.execute_command_raise(cmd,
+                                   error_msg='Problem while creating verifier')
+
+
 def get_verifier_id():
     """
     Returns verifier id for current Tempest
     """
+    create_rally_deployment()
+    create_verifier()
     cmd = ("rally verify list-verifiers | awk '/" +
-           CONST.__getattribute__('tempest_deployment_name') +
+           CONST.__getattribute__('tempest_verifier_name') +
            "/ {print $2}'")
     p = subprocess.Popen(cmd, shell=True,
                          stdout=subprocess.PIPE,
