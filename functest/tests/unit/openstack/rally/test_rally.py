@@ -405,6 +405,8 @@ class OSRallyTesting(unittest.TestCase):
         self.assertTrue(creator1.clean.called)
         self.assertTrue(creator2.clean.called)
 
+    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                'create_rally_deployment')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_prepare_env')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -417,9 +419,18 @@ class OSRallyTesting(unittest.TestCase):
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_OK)
         map(lambda m: m.assert_called(), args)
 
+    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                'create_rally_deployment', side_effect=Exception)
+    def test_run_exception_create_rally_dep(self, mock_create_rally_dep):
+        self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_RUN_ERROR)
+        mock_create_rally_dep.assert_called()
+
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_prepare_env', side_effect=Exception)
-    def test_run_exception(self, mock_prep_env):
+    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+                'create_rally_deployment', return_value=mock.Mock())
+    def test_run_exception_prepare_env(self, mock_create_rally_dep,
+                                       mock_prep_env):
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_RUN_ERROR)
         mock_prep_env.assert_called()
 

@@ -7,15 +7,12 @@
 #
 
 import argparse
-import json
 import logging
 import logging.config
 import os
 import pkg_resources
 import re
-import subprocess
 import sys
-import fileinput
 
 import yaml
 
@@ -42,9 +39,6 @@ CONFIG_PATCH_PATH = pkg_resources.resource_filename(
     'functest', 'ci/config_patch.yaml')
 CONFIG_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
     'functest', 'ci/config_aarch64_patch.yaml')
-RALLY_CONF_PATH = "/etc/rally/rally.conf"
-RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
-    'functest', 'ci/rally_aarch64_patch.conf')
 
 
 class PrepareEnvParser(object):
@@ -118,7 +112,7 @@ def get_deployment_handler():
     global pod_arch
 
     installer_params_yaml = pkg_resources.resource_filename(
-            'functest', 'ci/installer_params.yaml')
+        'functest', 'ci/installer_params.yaml')
     if (CONST.__getattribute__('INSTALLER_IP') and
         CONST.__getattribute__('INSTALLER_TYPE') and
             CONST.__getattribute__('INSTALLER_TYPE') in
@@ -236,70 +230,6 @@ def verify_deployment():
     deployment.check_all()
 
 
-def install_rally():
-    print_separator()
-
-    if pod_arch and pod_arch in arch_filter:
-        logger.info("Apply aarch64 specific to rally config...")
-        with open(RALLY_AARCH64_PATCH_PATH, "r") as f:
-            rally_patch_conf = f.read()
-
-        for line in fileinput.input(RALLY_CONF_PATH, inplace=1):
-            print line,
-            if "cirros|testvm" in line:
-                print rally_patch_conf
-
-    logger.info("Creating Rally environment...")
-
-    cmd = "rally deployment destroy opnfv-rally"
-    ft_utils.execute_command(cmd, error_msg=(
-        "Deployment %s does not exist."
-        % CONST.__getattribute__('rally_deployment_name')),
-        verbose=False)
-
-    rally_conf = os_utils.get_credentials_for_rally()
-    with open('rally_conf.json', 'w') as fp:
-        json.dump(rally_conf, fp)
-    cmd = ("rally deployment create "
-           "--file=rally_conf.json --name={0}"
-           .format(CONST.__getattribute__('rally_deployment_name')))
-    error_msg = "Problem while creating Rally deployment"
-    ft_utils.execute_command_raise(cmd, error_msg=error_msg)
-
-    cmd = "rally deployment check"
-    error_msg = "OpenStack not responding or faulty Rally deployment."
-    ft_utils.execute_command_raise(cmd, error_msg=error_msg)
-
-    cmd = "rally deployment list"
-    ft_utils.execute_command(cmd,
-                             error_msg=("Problem while listing "
-                                        "Rally deployment."))
-
-    cmd = "rally plugin list | head -5"
-    ft_utils.execute_command(cmd,
-                             error_msg=("Problem while showing "
-                                        "Rally plugins."))
-
-
-def install_tempest():
-    logger.info("Installing tempest from existing repo...")
-    cmd = ("rally verify list-verifiers | "
-           "grep '{0}' | wc -l".format(
-               CONST.__getattribute__('tempest_deployment_name')))
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-    while p.poll() is None:
-        line = p.stdout.readline().rstrip()
-        if str(line) == '0':
-            logger.debug("Tempest %s does not exist" %
-                         CONST.__getattribute__('tempest_deployment_name'))
-            cmd = ("rally verify create-verifier --source {0} "
-                   "--name {1} --type tempest --system-wide"
-                   .format(CONST.__getattribute__('dir_repo_tempest'),
-                           CONST.__getattribute__('tempest_deployment_name')))
-            error_msg = "Problem while installing Tempest."
-            ft_utils.execute_command_raise(cmd, error_msg=error_msg)
-
-
 def create_flavor():
     _, flavor_id = os_utils.get_or_create_flavor('m1.tiny',
                                                  '512',
@@ -341,8 +271,6 @@ def prepare_env(**kwargs):
             create_directories()
             source_rc_file()
             update_config_file()
-            install_rally()
-            install_tempest()
             create_flavor()
             with open(CONST.__getattribute__('env_active'), "w") as env_file:
                 env_file.write("1")

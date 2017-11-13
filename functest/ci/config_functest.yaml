@@ -111,7 +111,7 @@ odl_sfc:
 
 tempest:
     unique_names: True
-    deployment_name: opnfv-tempest
+    verifier_name: opnfv-tempest
     identity:
         tenant_name: tempest
         tenant_description: Tenant for Tempest test suite
