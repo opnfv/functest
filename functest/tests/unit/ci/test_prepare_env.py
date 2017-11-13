@@ -259,27 +259,6 @@ class PrepareEnvTesting(unittest.TestCase):
             opnfv_constants.INSTALLERS = []
             prepare_env.source_rc_file()
 
-    def test_source_rc_missing_os_credfile_ci_inst(self):
-        with mock.patch('functest.ci.prepare_env.os.path.isfile',
-                        return_value=False), \
-                mock.patch('functest.ci.prepare_env.os.path.getsize'), \
-                mock.patch('functest.ci.prepare_env.os.path.join'), \
-                mock.patch('functest.ci.prepare_env.subprocess.Popen') \
-                as mock_subproc_popen, \
-                self.assertRaises(Exception):
-            CONST.__setattr__('openstack_creds', None)
-            CONST.__setattr__('INSTALLER_IP', 'test_ip')
-            CONST.__setattr__('INSTALLER_TYPE', 'test_type')
-            opnfv_constants.INSTALLERS = ['test_type']
-
-            process_mock = mock.Mock()
-            attrs = {'communicate.return_value': ('output', 'error'),
-                     'return_code': 1}
-            process_mock.configure_mock(**attrs)
-            mock_subproc_popen.return_value = process_mock
-
-            prepare_env.source_rc_file()
-
     @mock.patch('functest.ci.prepare_env.logger.debug')
     def test_patch_file(self, mock_logger_debug):
         with mock.patch("__builtin__.open", mock.mock_open()), \
@@ -328,61 +307,6 @@ class PrepareEnvTesting(unittest.TestCase):
                           "password": 'test_password',
                           "tenant": 'test_tenant'}}
 
-    @mock.patch('functest.ci.prepare_env.os_utils.get_credentials_for_rally')
-    @mock.patch('functest.ci.prepare_env.logger.info')
-    @mock.patch('functest.ci.prepare_env.ft_utils.execute_command_raise')
-    @mock.patch('functest.ci.prepare_env.ft_utils.execute_command')
-    def test_install_rally(self, mock_exec, mock_exec_raise, mock_logger_info,
-                           mock_os_utils):
-
-        mock_os_utils.return_value = self._get_rally_creds()
-
-        prepare_env.install_rally()
-
-        cmd = "rally deployment destroy opnfv-rally"
-        error_msg = "Deployment %s does not exist." % \
-                    CONST.__getattribute__('rally_deployment_name')
-        mock_logger_info.assert_any_call("Creating Rally environment...")
-        mock_exec.assert_any_call(cmd, error_msg=error_msg, verbose=False)
-
-        cmd = "rally deployment create --file=rally_conf.json --name="
-        cmd += CONST.__getattribute__('rally_deployment_name')
-        error_msg = "Problem while creating Rally deployment"
-        mock_exec_raise.assert_any_call(cmd, error_msg=error_msg)
-
-        cmd = "rally deployment check"
-        error_msg = ("OpenStack not responding or "
-                     "faulty Rally deployment.")
-        mock_exec_raise.assert_any_call(cmd, error_msg=error_msg)
-
-        cmd = "rally deployment list"
-        error_msg = ("Problem while listing "
-                     "Rally deployment.")
-        mock_exec.assert_any_call(cmd, error_msg=error_msg)
-
-        cmd = "rally plugin list | head -5"
-        error_msg = ("Problem while showing "
-                     "Rally plugins.")
-        mock_exec.assert_any_call(cmd, error_msg=error_msg)
-
-    @mock.patch('functest.ci.prepare_env.logger.debug')
-    def test_install_tempest(self, mock_logger_debug):
-        mock_popen = mock.Mock()
-        attrs = {'poll.return_value': None,
-                 'stdout.readline.return_value': '0'}
-        mock_popen.configure_mock(**attrs)
-
-        CONST.__setattr__('tempest_deployment_name', 'test_dep_name')
-        with mock.patch('functest.ci.prepare_env.'
-                        'ft_utils.execute_command_raise',
-                        side_effect=Exception), \
-            mock.patch('functest.ci.prepare_env.subprocess.Popen',
-                       return_value=mock_popen), \
-                self.assertRaises(Exception):
-            prepare_env.install_tempest()
-            mock_logger_debug.assert_any_call("Tempest test_dep_name"
-                                              " does not exist")
-
     def test_create_flavor(self):
         with mock.patch('functest.ci.prepare_env.'
                         'os_utils.get_or_create_flavor',
@@ -422,8 +346,6 @@ class PrepareEnvTesting(unittest.TestCase):
 
     @mock.patch('functest.ci.prepare_env.check_environment')
     @mock.patch('functest.ci.prepare_env.create_flavor')
-    @mock.patch('functest.ci.prepare_env.install_tempest')
-    @mock.patch('functest.ci.prepare_env.install_rally')
     @mock.patch('functest.ci.prepare_env.verify_deployment')
     @mock.patch('functest.ci.prepare_env.update_config_file')
     @mock.patch('functest.ci.prepare_env.source_rc_file')
@@ -432,8 +354,7 @@ class PrepareEnvTesting(unittest.TestCase):
     @mock.patch('functest.ci.prepare_env.logger.info')
     def test_main_start(self, mock_logger_info, mock_env_var,
                         mock_create_dir, mock_source_rc, mock_update_config,
-                        mock_verify_depl, mock_install_rally,
-                        mock_install_temp, mock_create_flavor,
+                        mock_verify_depl, mock_create_flavor,
                         mock_check_env):
         with mock.patch("__builtin__.open", mock.mock_open()) as m:
             args = {'action': 'start'}
@@ -445,8 +366,6 @@ class PrepareEnvTesting(unittest.TestCase):
             self.assertTrue(mock_source_rc.called)
             self.assertTrue(mock_update_config.called)
             self.assertTrue(mock_verify_depl.called)
-            self.assertTrue(mock_install_rally.called)
-            self.assertTrue(mock_install_temp.called)
             self.assertTrue(mock_create_flavor.called)
             m.assert_called_once_with(
                 CONST.__getattribute__('env_active'), "w")
