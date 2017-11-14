@@ -2,8 +2,8 @@ Project: Base System Functionality Testing Project (functest)
 Project Creation Date: January 20, 2015
 Project Category: Integration & Testing
 Lifecycle State: Incubation
-Primary Contact: Jose Lausuch (jalausuch@suse.com)
-Project Lead: Jose Lausuch (jalausuch@suse.com)
+Primary Contact: Cedric Ollivier (cedric.ollivier@orange.com)
+Project Lead: Cedric Ollivier (cedric.ollivier@orange.com)
 Jira Project Name: Base System Functionality Testing Project
 Jira Project Prefix: FUNCTEST
 Mailing list tag: [functest]
