@@ -53,40 +53,6 @@ commands::
 
   $ source /home/opnfv/functest/conf/openstack.creds
 
-Prepare environment
--------------------
-Prior to commencing the Functest environment preparation, we can check
-the initial status of the environment. Issue the **functest env status**
-command at the prompt::
-
-  # functest env status
-  # Functest environment is not installed.
-
-To prepare the Functest docker container for test case execution, type::
-
-  # functest env prepare
-  # ...
-  # Functest environment ready to run tests.
-
-you may also type prepare_env instead of functest env prepare.
-
-To list some basic information about an already prepared Functest
-docker container environment, issue the **functest env show** at the
-prompt::
-  bash-4.3# functest env show
-  +------------------------------+---------------------------------+
-  |     FUNCTEST ENVIRONMENT     |              VALUE              |
-  +------------------------------+---------------------------------+
-  |            STATUS            |              ready              |
-  |           SCENARIO           |     os-nosdn-nofeature-noha     |
-  |          DEBUG FLAG          |              false              |
-  |          BUILD_TAG           |               None              |
-  |          INSTALLER           |              compass            |
-  |             POD              |           huawei-pod1           |
-  +------------------------------+---------------------------------+
-
-See configuration guide for details on Functest environnement variables.
-
 Tier
 ----
 Each Alpine container provided on the docker hub matches with a tier.

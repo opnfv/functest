@@ -20,7 +20,6 @@ from flasgger.utils import swag_from
 from functest.api.base import ApiResource
 from functest.api.common import api_utils
 from functest.cli.commands.cli_env import Env
-import functest.utils.functest_utils as ft_utils
 
 ADDRESS = socket.gethostbyname(socket.gethostname())
 ENDPOINT_ENVS = ('http://{}:5000/api/v1/functest/envs'.format(ADDRESS))
@@ -44,16 +43,6 @@ class V1Envs(ApiResource):
     def post(self):
         """ Used to handle post request """
         return self._dispatch_post()
-
-    def prepare(self, args):  # pylint: disable=no-self-use, unused-argument
-        """ Prepare environment """
-
-        result_env = ft_utils.execute_command("prepare_env start")
-        if not result_env == 0:
-            return api_utils.result_handler(
-                status=1, data="Failed to prepare env")
-        return api_utils.result_handler(
-            status=0, data="Prepare env successfully")
 
     def update_hosts(self, hosts_info):  # pylint: disable=no-self-use
         """ Update hosts info """

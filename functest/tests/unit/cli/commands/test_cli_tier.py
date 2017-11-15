@@ -75,14 +75,6 @@ class CliTierTesting(unittest.TestCase):
                                                               'tiernames'))
 
     @mock.patch('functest.cli.commands.cli_tier.os.path.isfile',
-                return_value=False)
-    @mock.patch('functest.cli.commands.cli_tier.click.echo')
-    def test_run_missing_env_file(self, mock_click_echo, mock_os):
-        self.cli_tier.run(self.tiername)
-        mock_click_echo.assert_called_with("Functest environment is not ready."
-                                           " Run first 'functest env prepare'")
-
-    @mock.patch('functest.cli.commands.cli_tier.os.path.isfile',
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_default(self, mock_ft_utils, mock_os):
