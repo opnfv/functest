@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_2adeba6d",
+        "filename": "docs/com/pres/euphrates_functest_evolution/euphrates_functest_evolution.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-15T01:33:17Z",
+      "side": 1,
+      "message": "We could list that we also finish the Functest Framework (eg VNF). I think the Framework was ready for first milestones even if it seems old after all the work done on the other topics (eg Docker Slicing)",
+      "revId": "f17c1e9d3d90a0435292507ceb24b3e4d3876ac1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0ad93683",
+        "filename": "docs/com/pres/euphrates_functest_evolution/euphrates_functest_evolution.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-15T01:33:17Z",
+      "side": 1,
+      "message": "I think that\u0027s the compressed size. Else It\u0027s more than 1G.",
+      "revId": "f17c1e9d3d90a0435292507ceb24b3e4d3876ac1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_caf74ef4",
+        "filename": "docs/com/pres/euphrates_functest_evolution/euphrates_functest_evolution.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-15T01:33:17Z",
+      "side": 1,
+      "message": "It will be ready for Euphrates 5.(0.)1. It remains several minor tasks but we are already producing the containers\nhttps://build.opnfv.org/ci/view/functest/job/functest-docker-master/\nhttps://build.opnfv.org/ci/view/functest/job/functest-docker-euphrates/",
+      "revId": "f17c1e9d3d90a0435292507ceb24b3e4d3876ac1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_6ae8c210",
+        "filename": "docs/com/pres/euphrates_functest_evolution/euphrates_functest_evolution.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-15T01:33:17Z",
+      "side": 1,
+      "message": "upper-constraints.txt",
+      "revId": "f17c1e9d3d90a0435292507ceb24b3e4d3876ac1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
