@@ -18,4 +18,4 @@ RUN apk --no-cache add --virtual .build-deps --update \
     rm upper-constraints.txt thirdparty-requirements.txt && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
-CMD ["bash","-c","prepare_env start && run_tests -t all"]
+CMD ["bash","-c","run_tests -t all"]
