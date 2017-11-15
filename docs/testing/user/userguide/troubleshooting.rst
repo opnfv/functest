@@ -284,7 +284,7 @@ This is an example of running a customized list of Tempest tests in Functest::
       -v $(pwd)/images:/home/opnfv/functest/images \
       -v $(pwd)/my-custom-testcases.yaml:/usr/lib/python2.7/site-packages/functest/ci/testcases.yaml \
       -v $(pwd)/my-custom-tempest-tests.txt:/usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt \
-      opnfv/functest-components /bin/bash -c "prepare_env start && run_tests -t tempest_custom"
+      opnfv/functest-components "run_tests -t tempest_custom"
 
 
 Rally

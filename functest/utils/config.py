@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import os
 import yaml
 
 import six
@@ -29,9 +28,6 @@ class Config(object):
     def _get_attr_further(self, attr_now, next):
         return attr_now if next == 'general' else (
             '{}_{}'.format(attr_now, next) if attr_now else next)
-
-    def _set_others(self):
-        self.env_active = os.path.join(self.dir_functest_conf, "env_active")
 
 
 CONF = Config()
