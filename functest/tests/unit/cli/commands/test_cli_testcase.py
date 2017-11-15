@@ -27,14 +27,6 @@ class CliTestCasesTesting(unittest.TestCase):
         self.assertTrue(mock_method.called)
 
     @mock.patch('functest.cli.commands.cli_testcase.os.path.isfile',
-                return_value=False)
-    @mock.patch('functest.cli.commands.cli_testcase.click.echo')
-    def test_run_missing_env_file(self, mock_click_echo, mock_os):
-        self.cli_tests.run(self.testname)
-        mock_click_echo.assert_called_with("Functest environment is not ready."
-                                           " Run first 'functest env prepare'")
-
-    @mock.patch('functest.cli.commands.cli_testcase.os.path.isfile',
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
     def test_run_default(self, mock_ft_utils, mock_os):
