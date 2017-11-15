@@ -7,35 +7,16 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-import os
-
 import click
 import prettytable
 
 from functest.utils.constants import CONST
-import functest.utils.functest_utils as ft_utils
 
 
 class Env(object):
 
     def __init__(self):
         pass
-
-    def prepare(self):
-        if self.status(verbose=False) == 0:
-            answer = raw_input("It seems that the environment has been "
-                               "already prepared. Do you want to do "
-                               "it again? [y|n]\n")
-            while True:
-                if answer.lower() in ["y", "yes"]:
-                    os.remove(CONST.__getattribute__('env_active'))
-                    break
-                elif answer.lower() in ["n", "no"]:
-                    return
-                else:
-                    answer = raw_input("Invalid answer. Please type [y|n]\n")
-
-        ft_utils.execute_command("prepare_env start")
 
     def show(self):
         def _get_value(attr, default='Unknown'):
@@ -52,29 +33,13 @@ class Env(object):
             build_tag = build_tag.lstrip(
                 "jenkins-").lstrip("functest").lstrip("-")
 
-        STATUS = "not ready"
-        if self.status(verbose=False) == 0:
-            STATUS = "ready"
-
         env_info = {'INSTALLER': installer_info,
                     'SCENARIO': scenario,
                     'POD': node,
                     'DEBUG FLAG': is_debug,
-                    'BUILD_TAG': build_tag,
-                    'STATUS': STATUS}
+                    'BUILD_TAG': build_tag}
 
         return env_info
-
-    def status(self, verbose=True):
-        ret_val = 0
-        if not os.path.isfile(CONST.__getattribute__('env_active')):
-            if verbose:
-                click.echo("Functest environment is not installed.\n")
-            ret_val = 1
-        elif verbose:
-            click.echo("Functest environment ready to run tests.\n")
-
-        return ret_val
 
 
 class CliEnv(Env):

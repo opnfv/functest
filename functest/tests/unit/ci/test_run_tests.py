@@ -7,6 +7,7 @@
 
 import logging
 import unittest
+import os
 
 import mock
 
@@ -57,6 +58,15 @@ class RunTestsTesting(unittest.TestCase):
         self.tiers.configure_mock(**attrs)
 
         self.run_tests_parser = run_tests.RunTestsParser()
+
+    @mock.patch('functest.ci.run_tests.Runner.patch_file')
+    @mock.patch('functest.ci.run_tests.Runner.update_db_url')
+    @mock.patch.dict(os.environ, {'POD_ARCH': 'aarch64'})
+    @mock.patch.dict(os.environ, {'TEST_DB_URL': 'somevalue'})
+    def test_update_config_file_default(self, *mock_methods):
+        self.runner.update_config_file()
+        self.assertTrue(mock_methods[0].called)
+        self.assertTrue(mock_methods[1].called)
 
     @mock.patch('functest.ci.run_tests.logger.error')
     def test_source_rc_file_missing_file(self, mock_logger_error):
