@@ -26,42 +26,26 @@ class CliTestCasesTesting(unittest.TestCase):
         self.cli_tests.run('vacation')
         self.assertTrue(mock_method.called)
 
-    @mock.patch('functest.cli.commands.cli_testcase.os.path.isfile',
-                return_value=False)
-    @mock.patch('functest.cli.commands.cli_testcase.click.echo')
-    def test_run_missing_env_file(self, mock_click_echo, mock_os):
-        self.cli_tests.run(self.testname)
-        mock_click_echo.assert_called_with("Functest environment is not ready."
-                                           " Run first 'functest env prepare'")
-
-    @mock.patch('functest.cli.commands.cli_testcase.os.path.isfile',
-                return_value=True)
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
-    def test_run_default(self, mock_ft_utils, mock_os):
+    def test_run_default(self, mock_ft_utils):
         cmd = "run_tests -n -r -t {}".format(self.testname)
         self.cli_tests.run(self.testname, noclean=True, report=True)
         mock_ft_utils.assert_called_with(cmd)
 
-    @mock.patch('functest.cli.commands.cli_testcase.os.path.isfile',
-                return_value=True)
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
-    def test_run_noclean_missing_report(self, mock_ft_utils, mock_os):
+    def test_run_noclean_missing_report(self, mock_ft_utils):
         cmd = "run_tests -n -t {}".format(self.testname)
         self.cli_tests.run(self.testname, noclean=True, report=False)
         mock_ft_utils.assert_called_with(cmd)
 
-    @mock.patch('functest.cli.commands.cli_testcase.os.path.isfile',
-                return_value=True)
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
-    def test_run_report_missing_noclean(self, mock_ft_utils, mock_os):
+    def test_run_report_missing_noclean(self, mock_ft_utils):
         cmd = "run_tests -r -t {}".format(self.testname)
         self.cli_tests.run(self.testname, noclean=False, report=True)
         mock_ft_utils.assert_called_with(cmd)
 
-    @mock.patch('functest.cli.commands.cli_testcase.os.path.isfile',
-                return_value=True)
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
-    def test_run_missing_noclean_report(self, mock_ft_utils, mock_os):
+    def test_run_missing_noclean_report(self, mock_ft_utils):
         cmd = "run_tests -t {}".format(self.testname)
         self.cli_tests.run(self.testname, noclean=False, report=False)
         mock_ft_utils.assert_called_with(cmd)
