@@ -9,7 +9,6 @@
 
 """ global variables """
 
-import os
 import pkg_resources
 
 import click
@@ -54,19 +53,14 @@ class Tier(object):
 
     @staticmethod
     def run(tiername, noclean=False, report=False):
-
         flags = ""
         if noclean:
             flags += "-n "
         if report:
             flags += "-r "
 
-        if not os.path.isfile(CONST.__getattribute__('env_active')):
-            click.echo("Functest environment is not ready. "
-                       "Run first 'functest env prepare'")
-        else:
-            cmd = "run_tests {}-t {}".format(flags, tiername)
-            ft_utils.execute_command(cmd)
+        cmd = "run_tests {}-t {}".format(flags, tiername)
+        ft_utils.execute_command(cmd)
 
 
 class CliTier(Tier):

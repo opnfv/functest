@@ -408,7 +408,6 @@ The structure of functest repo can be described as follows::
     │   |-- config_patch.yaml
     │   |-- download_images.sh
     │   |-- logging.ini
-    │   |-- prepare_env.py
     │   |-- rally_aarch64_patch.conf
     │   |-- run_tests.py
     │   |-- testcases.yaml
