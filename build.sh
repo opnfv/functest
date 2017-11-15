@@ -17,7 +17,7 @@ arm64_dirs=${arm64_dirs-$(echo "${amd64_dirs}" | sed -e "s|docker/vnf||" \
 
 find . -name Dockerfile -exec sed -i -e "s|opnfv/functest-core:euphrates|${repo}/functest-core:amd64-euphrates|g" {} +
 for dir in ${amd64_dirs}; do
-    (cd "${dir}" && docker build -t "${repo}/functest-${dir##**/}:amd64-euphrates" .)
+    (cd "${dir}" && docker build --no-cache -t "${repo}/functest-${dir##**/}:amd64-euphrates" .)
     docker push "${repo}/functest-${dir##**/}:amd64-euphrates"
 done
 find . -name Dockerfile -exec git checkout {} +
@@ -25,7 +25,7 @@ find . -name Dockerfile -exec git checkout {} +
 find . -name Dockerfile -exec sed -i -e "s|alpine:3.6|multiarch/alpine:arm64-v3.6|g" {} +
 find . -name Dockerfile -exec sed -i -e "s|opnfv/functest-core:euphrates|${repo}/functest-core:arm64-euphrates|g" {} +
 for dir in ${arm64_dirs}; do
-    (cd "${dir}" && docker build -t "${repo}/functest-${dir##**/}:arm64-euphrates" .)
+    (cd "${dir}" && docker build --no-cache -t "${repo}/functest-${dir##**/}:arm64-euphrates" .)
     docker push "${repo}/functest-${dir##**/}:arm64-euphrates"
 done
 find . -name Dockerfile -exec git checkout {} +
