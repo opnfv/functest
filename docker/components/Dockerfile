@@ -30,4 +30,4 @@ RUN apk --no-cache add --virtual .build-deps --update \
     mkdir -p /var/lib/rally/database && rally-manage db create && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
-CMD ["bash","-c","prepare_env start && run_tests -t all"]
+CMD ["run_tests", "-t", "all"]

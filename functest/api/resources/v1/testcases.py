@@ -115,34 +115,31 @@ class V1Testcase(ApiResource):
         case_name = args.get('testcase')
         self._update_logging_ini(args.get('task_id'))
 
-        if not os.path.isfile(CONST.__getattribute__('env_active')):
-            raise Exception("Functest environment is not ready.")
+        try:
+            cmd = "run_tests -t {}".format(case_name)
+            runner = ft_utils.execute_command(cmd)
+        except Exception:  # pylint: disable=broad-except
+            result = 'FAIL'
+            LOGGER.exception("Running test case %s failed!", case_name)
+        if runner == os.EX_OK:
+            result = 'PASS'
         else:
-            try:
-                cmd = "run_tests -t {}".format(case_name)
-                runner = ft_utils.execute_command(cmd)
-            except Exception:  # pylint: disable=broad-except
-                result = 'FAIL'
-                LOGGER.exception("Running test case %s failed!", case_name)
-            if runner == os.EX_OK:
-                result = 'PASS'
-            else:
-                result = 'FAIL'
+            result = 'FAIL'
 
-            env_info = {
-                'installer': CONST.__getattribute__('INSTALLER_TYPE'),
-                'scenario': CONST.__getattribute__('DEPLOY_SCENARIO'),
-                'build_tag': CONST.__getattribute__('BUILD_TAG'),
-                'ci_loop': CONST.__getattribute__('CI_LOOP')
-            }
-            result = {
-                'task_id': args.get('task_id'),
-                'testcase': case_name,
-                'env_info': env_info,
-                'result': result
-            }
+        env_info = {
+            'installer': CONST.__getattribute__('INSTALLER_TYPE'),
+            'scenario': CONST.__getattribute__('DEPLOY_SCENARIO'),
+            'build_tag': CONST.__getattribute__('BUILD_TAG'),
+            'ci_loop': CONST.__getattribute__('CI_LOOP')
+        }
+        result = {
+            'task_id': args.get('task_id'),
+            'testcase': case_name,
+            'env_info': env_info,
+            'result': result
+        }
 
-            return {'result': result}
+        return {'result': result}
 
     def _update_logging_ini(self, task_id):  # pylint: disable=no-self-use
         """ Update the log file for each task"""
