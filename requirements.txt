@@ -1,13 +1,16 @@
+# The order of packages is significant, because pip processes them in the order
+# of appearance. Changing the order has an impact on the overall integration
+# process, which may cause wedges in the gate later.
 pbr!=2.1.0,>=2.0.0 # Apache-2.0
-PyYAML>=3.10.0 # MIT
+PyYAML>=3.10 # MIT
 GitPython>=1.0.1 # BSD License (3 clause)
-keystoneauth1>=3.1.0 # Apache-2.0
-python-cinderclient>=3.1.0 # Apache-2.0
+keystoneauth1>=3.2.0 # Apache-2.0
+python-cinderclient>=3.2.0 # Apache-2.0
 python-glanceclient>=2.8.0 # Apache-2.0
-python-heatclient>=1.6.1 # Apache-2.0
+python-heatclient>=1.10.0 # Apache-2.0
 python-keystoneclient>=3.8.0 # Apache-2.0
 python-neutronclient>=6.3.0 # Apache-2.0
-python-novaclient>=9.0.0 # Apache-2.0
+python-novaclient>=9.1.0 # Apache-2.0
 requests>=2.14.2 # Apache-2.0
 robotframework>=3.0
 robotframework-httplibrary
@@ -23,15 +26,15 @@ Flask!=0.11,<1.0,>=0.10 # BSD
 Flask-RESTful>=0.3.5 # BSD
 IPy
 flasgger # MIT
-mock>=2.0 # BSD
+mock>=2.0.0 # BSD
 iniparse==0.4
 PrettyTable<0.8,>=0.7.1 # BSD
 six>=1.9.0 # MIT
 snaps
 SQLAlchemy!=1.1.5,!=1.1.6,!=1.1.7,!=1.1.8,>=1.0.10 # MIT
-paramiko>=2.0 # LGPLv2.1+
+paramiko>=2.0.0 # LGPLv2.1+
 Jinja2!=2.9.0,!=2.9.1,!=2.9.2,!=2.9.3,!=2.9.4,>=2.8 # BSD License (3 clause)
 urllib3>=1.21.1 # MIT
-httplib2>=0.7.5 # MIT
-oslo.serialization!=2.19.1,>=1.10.0 # Apache-2.0
-oslo.utils>=3.20.0 # Apache-2.0
+httplib2>=0.9.1 # MIT
+oslo.serialization!=2.19.1,>=2.18.0 # Apache-2.0
+oslo.utils>=3.28.0 # Apache-2.0
