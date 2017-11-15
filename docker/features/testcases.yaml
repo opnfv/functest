@@ -8,23 +8,6 @@ tiers:
             integrated in functest
         testcases:
             -
-                case_name: promise
-                project_name: promise
-                enabled: false
-                criteria: 100
-                blocking: false
-                description: >-
-                    Test suite from Promise project.
-                dependencies:
-                    installer: '(fuel)|(joid)'
-                    scenario: ''
-                run:
-                    module: 'functest.core.feature'
-                    class: 'BashFeature'
-                    args:
-                        cmd: 'run_promise_tests.py'
-
-            -
                 case_name: doctor-notification
                 project_name: doctor
                 enabled: false
@@ -72,23 +55,6 @@ tiers:
                     class: 'BashFeature'
                     args:
                         cmd: 'run_sfc_tests.py'
-
-            -
-                case_name: domino-multinode
-                project_name: domino
-                enabled: false
-                criteria: 100
-                blocking: false
-                description: >-
-                    Test suite from Domino project.
-                dependencies:
-                    installer: ''
-                    scenario: ''
-                run:
-                    module: 'functest.core.feature'
-                    class: 'BashFeature'
-                    args:
-                        cmd: 'run_multinode.sh'
 
             -
                 case_name: barometercollectd

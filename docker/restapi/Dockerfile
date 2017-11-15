@@ -10,7 +10,7 @@ ARG FDS_TAG=master
 ARG VIMS_TAG=stable
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
-RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
+RUN apk --no-cache add --update python3 sshpass \
         ruby ruby-bundler ruby-irb ruby-rdoc dnsmasq \
         procps libxslt libxml2 zlib libffi && \
     apk --no-cache add --virtual .build-deps --update \
@@ -45,10 +45,7 @@ RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
     git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test /src/vims-test && \
     ln -s /src/tempest /src/refstack-client/.tempest && \
     virtualenv --system-site-packages /src/tempest/.venv && \
-    # the next line must be uncommented as soon as promise is synced with pike
-    # (cd /src/promise/source && npm install) && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
-    npm -g install npm@latest && \
     rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
         /src/os-faults /src/rally /src/fds/.git /src/vims-test/.git && \
     apk del .build-deps
