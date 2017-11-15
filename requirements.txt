@@ -27,7 +27,6 @@ mock>=2.0 # BSD
 iniparse==0.4
 PrettyTable<0.8,>=0.7.1 # BSD
 six>=1.9.0 # MIT
-opnfv
 snaps
 SQLAlchemy!=1.1.5,!=1.1.6,!=1.1.7,!=1.1.8,>=1.0.10 # MIT
 paramiko>=2.0 # LGPLv2.1+
