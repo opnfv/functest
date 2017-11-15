@@ -126,13 +126,13 @@ class RefstackClient(testcase.TestCase):
                 num_failures = match[1]
                 LOGGER.info("".join(match))
             success_testcases = []
-            for match in re.findall(r"\{0\} (.*?)[. ]*ok", output):
+            for match in re.findall(r"\{0\} (.*?) \.{3} ok", output):
                 success_testcases.append(match)
             failed_testcases = []
-            for match in re.findall(r"\{0\} (.*?)[. ]*FAILED", output):
+            for match in re.findall(r"\{0\} (.*?) \.{3} FAILED", output):
                 failed_testcases.append(match)
             skipped_testcases = []
-            for match in re.findall(r"\{0\} (.*?)[. ]*SKIPPED:", output):
+            for match in re.findall(r"\{0\} (.*?) \.{3} SKIPPED:", output):
                 skipped_testcases.append(match)
 
             num_executed = int(num_tests) - int(num_skipped)
