@@ -21,9 +21,6 @@ import functest.utils.functest_utils as ft_utils
 import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
-from opnfv.utils import constants as opnfv_constants
-from opnfv.deployment import factory
-
 actions = ['start', 'check']
 
 """ logging configuration """
@@ -57,116 +54,6 @@ class PrepareEnvParser(object):
 
 def print_separator():
     logger.info("==============================================")
-
-
-def check_env_variables():
-    print_separator()
-    logger.info("Checking environment variables...")
-
-    if CONST.__getattribute__('INSTALLER_TYPE') is None:
-        logger.warning("The env variable 'INSTALLER_TYPE' is not defined.")
-        CONST.__setattr__('INSTALLER_TYPE', 'undefined')
-    else:
-        if (CONST.__getattribute__('INSTALLER_TYPE') not in
-                opnfv_constants.INSTALLERS):
-            logger.warning("INSTALLER_TYPE=%s is not a valid OPNFV installer. "
-                           "Available OPNFV Installers are : %s. "
-                           "Setting INSTALLER_TYPE=undefined."
-                           % (CONST.__getattribute__('INSTALLER_TYPE'),
-                              opnfv_constants.INSTALLERS))
-            CONST.__setattr__('INSTALLER_TYPE', 'undefined')
-        else:
-            logger.info("    INSTALLER_TYPE=%s"
-                        % CONST.__getattribute__('INSTALLER_TYPE'))
-
-    if CONST.__getattribute__('INSTALLER_IP') is None:
-        logger.warning(
-            "The env variable 'INSTALLER_IP' is not defined. It is recommended"
-            " to extract some information from the deployment")
-    else:
-        logger.info("    INSTALLER_IP=%s" %
-                    CONST.__getattribute__('INSTALLER_IP'))
-
-    if CONST.__getattribute__('DEPLOY_SCENARIO') is None:
-        logger.warning("The env variable 'DEPLOY_SCENARIO' is not defined. "
-                       "Setting CI_SCENARIO=undefined.")
-        CONST.__setattr__('DEPLOY_SCENARIO', 'undefined')
-    else:
-        logger.info("    DEPLOY_SCENARIO=%s"
-                    % CONST.__getattribute__('DEPLOY_SCENARIO'))
-    if CONST.__getattribute__('CI_DEBUG'):
-        logger.info("    CI_DEBUG=%s" % CONST.__getattribute__('CI_DEBUG'))
-
-    if CONST.__getattribute__('NODE_NAME'):
-        logger.info("    NODE_NAME=%s" % CONST.__getattribute__('NODE_NAME'))
-
-    if CONST.__getattribute__('BUILD_TAG'):
-        logger.info("    BUILD_TAG=%s" % CONST.__getattribute__('BUILD_TAG'))
-
-    if CONST.__getattribute__('IS_CI_RUN'):
-        logger.info("    IS_CI_RUN=%s" % CONST.__getattribute__('IS_CI_RUN'))
-
-
-def get_deployment_handler():
-    global handler
-    global pod_arch
-
-    installer_params_yaml = pkg_resources.resource_filename(
-        'functest', 'ci/installer_params.yaml')
-    if (CONST.__getattribute__('INSTALLER_IP') and
-        CONST.__getattribute__('INSTALLER_TYPE') and
-            CONST.__getattribute__('INSTALLER_TYPE') in
-            opnfv_constants.INSTALLERS):
-        try:
-            installer_params = ft_utils.get_parameter_from_yaml(
-                CONST.__getattribute__('INSTALLER_TYPE'),
-                installer_params_yaml)
-        except ValueError as e:
-            logger.debug('Printing deployment info is not supported for %s' %
-                         CONST.__getattribute__('INSTALLER_TYPE'))
-            logger.debug(e)
-        else:
-            user = installer_params.get('user', None)
-            password = installer_params.get('password', None)
-            pkey = installer_params.get('pkey', None)
-            try:
-                handler = factory.Factory.get_handler(
-                    installer=CONST.__getattribute__('INSTALLER_TYPE'),
-                    installer_ip=CONST.__getattribute__('INSTALLER_IP'),
-                    installer_user=user,
-                    installer_pwd=password,
-                    pkey_file=pkey)
-                if handler:
-                    pod_arch = handler.get_arch()
-            except Exception as e:
-                logger.debug("Cannot get deployment information. %s" % e)
-
-
-def create_directories():
-    print_separator()
-    logger.info("Creating needed directories...")
-    if not os.path.exists(CONST.__getattribute__('dir_functest_conf')):
-        os.makedirs(CONST.__getattribute__('dir_functest_conf'))
-        logger.info("    %s created." %
-                    CONST.__getattribute__('dir_functest_conf'))
-    else:
-        logger.debug("   %s already exists." %
-                     CONST.__getattribute__('dir_functest_conf'))
-
-    if not os.path.exists(CONST.__getattribute__('dir_functest_data')):
-        os.makedirs(CONST.__getattribute__('dir_functest_data'))
-        logger.info("    %s created." %
-                    CONST.__getattribute__('dir_functest_data'))
-    else:
-        logger.debug("   %s already exists." %
-                     CONST.__getattribute__('dir_functest_data'))
-    if not os.path.exists(CONST.__getattribute__('dir_functest_images')):
-        os.makedirs(CONST.__getattribute__('dir_functest_images'))
-        logger.info("    %s created." %
-                    CONST.__getattribute__('dir_functest_images'))
-    else:
-        logger.debug("   %s already exists." %
-                     CONST.__getattribute__('dir_functest_images'))
 
 
 def source_rc_file():
@@ -253,12 +140,6 @@ def check_environment():
     logger.info("Functest environment is installed.")
 
 
-def print_deployment_info():
-    if handler:
-        logger.info('\n\nDeployment information:\n%s' %
-                    handler.get_deployment_info())
-
-
 def prepare_env(**kwargs):
     try:
         if not (kwargs['action'] in actions):
@@ -267,8 +148,6 @@ def prepare_env(**kwargs):
         elif kwargs['action'] == "start":
             logger.info("######### Preparing Functest environment #########\n")
             verify_deployment()
-            check_env_variables()
-            create_directories()
             source_rc_file()
             update_config_file()
             create_flavor()
