@@ -62,21 +62,9 @@ class CliBaseTesting(unittest.TestCase):
             self.assertEqual(result.exit_code, 0)
             self.assertTrue(mock_method.called)
 
-    def test_env_prepare(self):
-        with mock.patch.object(self._env, 'prepare') as mock_method:
-            result = self.runner.invoke(cli_base.env_prepare)
-            self.assertEqual(result.exit_code, 0)
-            self.assertTrue(mock_method.called)
-
     def test_env_show(self):
         with mock.patch.object(self._env, 'show') as mock_method:
             result = self.runner.invoke(cli_base.env_show)
-            self.assertEqual(result.exit_code, 0)
-            self.assertTrue(mock_method.called)
-
-    def test_env_status(self):
-        with mock.patch.object(self._env, 'status') as mock_method:
-            result = self.runner.invoke(cli_base.env_status)
             self.assertEqual(result.exit_code, 0)
             self.assertTrue(mock_method.called)
 

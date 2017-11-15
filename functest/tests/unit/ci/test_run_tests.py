@@ -58,6 +58,13 @@ class RunTestsTesting(unittest.TestCase):
 
         self.run_tests_parser = run_tests.RunTestsParser()
 
+    @mock.patch('functest.ci.run_tests.Runner.patch_file')
+    @mock.patch('functest.ci.run_tests.Runner.update_db_url')
+    def test_update_config_file_default(self, *mock_methods):
+        self.runner.update_config_file()
+        self.assertTrue(mock_methods[0].called)
+        self.assertTrue(mock_methods[0].called)
+
     @mock.patch('functest.ci.run_tests.logger.error')
     def test_source_rc_file_missing_file(self, mock_logger_error):
         with mock.patch('functest.ci.run_tests.os.path.isfile',

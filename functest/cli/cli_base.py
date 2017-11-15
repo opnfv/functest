@@ -87,21 +87,9 @@ def os_show_credentials():
     _openstack.show_credentials()
 
 
-@env.command('prepare', help="Prepares the Functest environment. This step is "
-             "needed run the tests.")
-def env_prepare():
-    _env.prepare()
-
-
 @env.command('show', help="Shows information about the current environment.")
 def env_show():
     _env.show()
-
-
-@env.command('status', help="Checks if the Functest environment is ready to "
-             "run the tests.")
-def env_status():
-    _env.status()
 
 
 @testcase.command('list', help="Lists the available testcases.")
