@@ -74,40 +74,24 @@ class CliTierTesting(unittest.TestCase):
                                                ":\n  %s\n" % (self.tiername,
                                                               'tiernames'))
 
-    @mock.patch('functest.cli.commands.cli_tier.os.path.isfile',
-                return_value=False)
-    @mock.patch('functest.cli.commands.cli_tier.click.echo')
-    def test_run_missing_env_file(self, mock_click_echo, mock_os):
-        self.cli_tier.run(self.tiername)
-        mock_click_echo.assert_called_with("Functest environment is not ready."
-                                           " Run first 'functest env prepare'")
-
-    @mock.patch('functest.cli.commands.cli_tier.os.path.isfile',
-                return_value=True)
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_default(self, mock_ft_utils, mock_os):
         cmd = "run_tests -n -r -t {}".format(self.tiername)
         self.cli_tier.run(self.tiername, noclean=True, report=True)
         mock_ft_utils.assert_called_with(cmd)
 
-    @mock.patch('functest.cli.commands.cli_tier.os.path.isfile',
-                return_value=True)
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_report_missing_noclean(self, mock_ft_utils, mock_os):
         cmd = "run_tests -r -t {}".format(self.tiername)
         self.cli_tier.run(self.tiername, noclean=False, report=True)
         mock_ft_utils.assert_called_with(cmd)
 
-    @mock.patch('functest.cli.commands.cli_tier.os.path.isfile',
-                return_value=True)
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_noclean_missing_report(self, mock_ft_utils, mock_os):
         cmd = "run_tests -n -t {}".format(self.tiername)
         self.cli_tier.run(self.tiername, noclean=True, report=False)
         mock_ft_utils.assert_called_with(cmd)
 
-    @mock.patch('functest.cli.commands.cli_tier.os.path.isfile',
-                return_value=True)
     @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
     def test_run_missing_noclean_report(self, mock_ft_utils, mock_os):
         cmd = "run_tests -t {}".format(self.tiername)

@@ -14,11 +14,18 @@ parameters:
     schema:
       required:
         - action
+        - args
       properties:
         action:
           type: string
           description: this is action for envs
-          default: prepare
+          default: update_hosts
+        args:
+          type: string
+          description: Hosts info to be updated
+          default:
+            "identity.ac.dz.com": "8.20.11.22"
+            "image.ac.dz.com": "8.20.11.22"
 definitions:
   Environment:
     type: object
@@ -29,9 +36,9 @@ definitions:
     type: dict
 responses:
   200:
-    description: Prepare environment
+    description: Update hosts info
     schema:
       $ref: '#/definitions/Environment'
     examples:
       'status': 0
-      'result': 'Prapare env successfully'
+      'result': 'Update hosts info successfully'

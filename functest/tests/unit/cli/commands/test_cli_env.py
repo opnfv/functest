@@ -20,27 +20,6 @@ class CliEnvTesting(unittest.TestCase):
     def setUp(self):
         self.cli_environ = cli_env.CliEnv()
 
-    @mock.patch('functest.cli.commands.cli_testcase.os.path.isfile',
-                return_value=False)
-    @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
-    def test_prepare_default(self, mock_ft_utils, mock_os):
-        cmd = "prepare_env start"
-        self.cli_environ.prepare()
-        mock_ft_utils.assert_called_with(cmd)
-
-    @mock.patch('functest.cli.commands.cli_testcase.os.path.isfile',
-                return_value=True)
-    @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
-    def test_prepare_missing_status(self, mock_ft_utils, mock_os):
-        with mock.patch('__builtin__.raw_input', return_value="y"), \
-                mock.patch('functest.cli.commands.cli_testcase.os.remove') \
-                as mock_os_remove:
-            cmd = "prepare_env start"
-            self.cli_environ.prepare()
-            mock_os_remove.assert_called_once_with(
-                CONST.__getattribute__('env_active'))
-            mock_ft_utils.assert_called_with(cmd)
-
     def _test_show_missing_env_var(self, var, *args):
         if var == 'INSTALLER_TYPE':
             CONST.__setattr__('INSTALLER_TYPE', None)
@@ -60,8 +39,6 @@ class CliEnvTesting(unittest.TestCase):
         elif var == 'DEBUG':
             CONST.__setattr__('CI_DEBUG', None)
             reg_string = "| DEBUG FLAG: false\s*|"
-        elif var == 'STATUS':
-            reg_string = "|     STATUS: not ready\s*|"
 
         with mock.patch('functest.cli.commands.cli_env.click.echo') \
                 as mock_click_echo:
@@ -86,27 +63,6 @@ class CliEnvTesting(unittest.TestCase):
 
     def test_show_missing_ci_debug(self, *args):
         self._test_show_missing_env_var('DEBUG', *args)
-
-    @mock.patch('functest.cli.commands.cli_env.os.path.isfile',
-                return_value=False)
-    def test_show_missing_environment(self, *args):
-        self._test_show_missing_env_var('STATUS', *args)
-
-    @mock.patch('functest.cli.commands.cli_env.click.echo')
-    @mock.patch('functest.cli.commands.cli_env.os.path.isfile',
-                return_value=True)
-    def test_status_environment_present(self, mock_path, mock_click_echo):
-        self.assertEqual(self.cli_environ.status(), 0)
-        mock_click_echo.assert_called_with("Functest environment"
-                                           " ready to run tests.\n")
-
-    @mock.patch('functest.cli.commands.cli_env.click.echo')
-    @mock.patch('functest.cli.commands.cli_env.os.path.isfile',
-                return_value=False)
-    def test_status_environment_absent(self, mock_path, mock_click_echo):
-        self.assertEqual(self.cli_environ.status(), 1)
-        mock_click_echo.assert_called_with("Functest environment"
-                                           " is not installed.\n")
 
 
 if __name__ == "__main__":
