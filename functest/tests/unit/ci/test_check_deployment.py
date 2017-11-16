@@ -170,6 +170,23 @@ class CheckDeploymentTesting(unittest.TestCase):
             self.assertRaises(Exception)
             self.assertTrue(m.called)
 
+    @mock.patch('functest.ci.check_deployment.LOGGER.info')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
+                'get_ext_net_name', return_value='ext-net')
+    def test_check_extnet(self, mock_getext, mock_loginfo):
+        self.deployment.check_ext_net()
+        self.assertTrue(mock_getext.called)
+        mock_loginfo.assert_called_once_with("External network found: ext-net")
+
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
+                'get_ext_net_name', return_value='')
+    def test_check_extnet_None(self, mock_getext):
+        with self.assertRaises(Exception) as context:
+            self.deployment.check_ext_net()
+            self.assertTrue(mock_getext.called)
+            msg = 'ERROR: No external networks in the deployment.'
+            self.assertTrue(msg in context)
+
 
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
