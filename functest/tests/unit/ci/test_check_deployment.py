@@ -170,6 +170,29 @@ class CheckDeploymentTesting(unittest.TestCase):
             self.assertRaises(Exception)
             self.assertTrue(m.called)
 
+    @mock.patch('functest.ci.check_deployment.LOGGER.info')
+    @mock.patch('functest.ci.check_deployment.neutron_utils.'
+                'get_external_networks', return_value="ext-net")
+    @mock.patch('functest.ci.check_deployment.neutron_utils.'
+                'neutron_client', return_value=mock.Mock())
+    def test_check_extnet(self, mock_client, mock_getext, mock_loginfo):
+        self.deployment.check_ext_net()
+        self.assertTrue(mock_client.called)
+        self.assertTrue(mock_getext.called)
+        ext_name = "test_ext"
+        mock_loginfo.assert_called_once_with("External network found: %s"
+                                             % ext_name)
+
+    @mock.patch('functest.ci.check_deployment.neutron_utils.'
+                'get_external_networks', return_value="")
+    @mock.patch('functest.ci.check_deployment.neutron_utils.'
+                'neutron_client', return_value=mock.Mock())
+    def test_check_extnet_None(self, mock_client, mock_getext):
+        self.deployment.check_ext_net()
+        self.assertRaises(Exception)
+        self.assertTrue(mock_client.called)
+        self.assertTrue(mock_getext.called)
+
 
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
