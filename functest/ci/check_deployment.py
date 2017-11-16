@@ -22,6 +22,8 @@ import pkg_resources
 import socket
 from urlparse import urlparse
 
+from functest.opnfv_tests.openstack.snaps import snaps_utils
+
 from snaps.openstack.utils import glance_utils
 from snaps.openstack.utils import keystone_utils
 from snaps.openstack.utils import neutron_utils
@@ -125,6 +127,14 @@ class CheckDeployment(object):
             LOGGER.error("Glance service ...FAILED")
             raise error
 
+    def check_ext_net(self):
+        """ checks if external network exists """
+        ext_net = snaps_utils.get_ext_net_name(self.os_creds)
+        if ext_net:
+            LOGGER.info("External network found: %s" % ext_net)
+        else:
+            raise Exception("ERROR: No external networks in the deployment.")
+
     def check_all(self):
         """
         Calls all the class functions and returns 0 if all of them succeed.
@@ -147,6 +157,7 @@ class CheckDeployment(object):
         self.check_nova()
         self.check_neutron()
         self.check_glance()
+        self.check_ext_net()
         return 0
 
 
