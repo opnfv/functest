@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_09ab031e",
+        "filename": "setup.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-11-16T01:09:45Z",
+      "side": 1,
+      "message": "why \u0027Hewlett-Packard Development Company, L.P.\u0027 company? I think no one among us from that company",
+      "range": {
+        "startLine": 1,
+        "startChar": 21,
+        "endLine": 1,
+        "endChar": 61
+      },
+      "revId": "f8e15124e147d6e5ac7848fcf08f0f5ce5f48b7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
