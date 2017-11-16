@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_2ff2476f",
+        "filename": "docker/components/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-16T20:36:25Z",
+      "side": 1,
+      "message": "CMD [\"run_tests\", \"-t\", \"all\"]",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_8fe9d382",
+        "filename": "docker/features/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-16T20:36:25Z",
+      "side": 1,
+      "message": "CMD [\"run_tests\", \"-t\", \"all\"]",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_cf02bb3d",
+        "filename": "docker/healthcheck/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-16T20:36:25Z",
+      "side": 1,
+      "message": "CMD [\"run_tests\", \"-t\", \"all\"]",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_affdb73d",
+        "filename": "docker/parser/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-16T20:36:25Z",
+      "side": 1,
+      "message": "CMD [\"run_tests\", \"-t\", \"all\"]",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0ffdc33a",
+        "filename": "docker/smoke/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-16T20:36:25Z",
+      "side": 1,
+      "message": "CMD [\"run_tests\", \"-t\", \"all\"]",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_eff7bf57",
+        "filename": "docker/vnf/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-16T20:36:25Z",
+      "side": 1,
+      "message": "CMD [\"run_tests\", \"-t\", \"all\"]",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_4f96abf1",
+        "filename": "docs/testing/user/userguide/troubleshooting.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-16T20:36:25Z",
+      "side": 1,
+      "message": "opnfv/functest-components run_tests -t tempest_custom",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_2f99a71f",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-16T20:36:25Z",
+      "side": 1,
+      "message": "Could we stop dumping the file? Maybe we can simply use new_functest_yaml in the right place.",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
