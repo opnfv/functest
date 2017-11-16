@@ -1,0 +1,12 @@
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Code-Review+1: Ulas Kozat <ulas.kozat@huawei.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Jose Lausuch <jalausuch@suse.com>
+Code-Review+1: Bertrand Souville <souville@docomolab-euro.com>
+Code-Review+2: Serena Feng <feng.xiaowei@zte.com.cn>
+Code-Review+2: Linda Wang <wangwulin@huawei.com>
+Submitted-by: Linda Wang <wangwulin@huawei.com>
+Submitted-at: Thu, 16 Nov 2017 02:48:10 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/47287
+Project: functest
+Branch: refs/heads/master
