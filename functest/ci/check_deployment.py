@@ -125,6 +125,15 @@ class CheckDeployment(object):
             LOGGER.error("Glance service ...FAILED")
             raise error
 
+    def check_ext_net(self):
+        """ checks if external network exists """
+        client = neutron_utils.neutron_client(self.os_creds)
+        ext_nets = neutron_utils.get_external_networks(client)
+        if ext_nets:
+            LOGGER.info("External network found: %s" % ext_nets[0].name)
+        else:
+            raise Exception("ERROR: No external networks in the deployment.")
+
     def check_all(self):
         """
         Calls all the class functions and returns 0 if all of them succeed.
@@ -147,6 +156,7 @@ class CheckDeployment(object):
         self.check_nova()
         self.check_neutron()
         self.check_glance()
+        self.check_ext_net()
         return 0
 
 
