@@ -5,15 +5,20 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+from functest.utils.constants import CONST
+
 from snaps.openstack.utils import neutron_utils, nova_utils
 
 
 def get_ext_net_name(os_creds):
     """
-    Returns the first external network name
+    Returns the configured external network name or
+    the first retrieved external network name
     :param: os_creds: an instance of snaps OSCreds object
     :return:
     """
+    if (hasattr(CONST, 'EXTERNAL_NETWORK')):
+        return CONST.__getattribute__('EXTERNAL_NETWORK')
     neutron = neutron_utils.neutron_client(os_creds)
     ext_nets = neutron_utils.get_external_networks(neutron)
     return ext_nets[0].name if ext_nets else ""
