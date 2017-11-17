@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_7d36c553",
+        "filename": "functest/opnfv_tests/openstack/snaps/snaps_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1421
+      },
+      "writtenOn": "2017-11-17T14:06:04Z",
+      "side": 1,
+      "message": "\"by user\" is confusing. I would probably say something like \"the configured external network name\"\n\nShould specify \"external network name\".",
+      "revId": "2793e059a1a9bafbb02e9b32f6d34da3ac44aa0c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
