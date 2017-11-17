@@ -91,13 +91,6 @@ validate the scenario for the release.
 |             |               |                | integrates some test suites from |
 |             |               |                | upstream using Robot as the test |
 |             |               |                | framework                        |
-|             |               +----------------+----------------------------------+
-|             |               | fds            | Test Suite for the OpenDaylight  |
-|             |               |                | SDN Controller when the GBP      |
-|             |               |                | features are installed. It       |
-|             |               |                | integrates some test suites from |
-|             |               |                | upstream using Robot as the test |
-|             |               |                | framework                        |
 +-------------+---------------+----------------+----------------------------------+
 | Features    | features      | bgpvpn         | Implementation of the OpenStack  |
 |             |               |                | bgpvpn API from the SDNVPN       |
@@ -117,15 +110,6 @@ validate the scenario for the release.
 |             |               |                | See `Doctor User Guide`_ for     |
 |             |               |                | details                          |
 |             |               +----------------+----------------------------------+
-|             |               | domino         | Domino provides TOSCA template   |
-|             |               |                | distribution service for network |
-|             |               |                | service and VNF descriptors      |
-|             |               |                | among MANO components e.g.,      |
-|             |               |                | NFVO, VNFM, VIM, SDN-C, etc.,    |
-|             |               |                | as well as OSS/BSS functions.    |
-|             |               |                | See `Domino User Guide`_ for     |
-|             |               |                | details                          |
-|             |               +----------------+----------------------------------+
 |             |               | odl-sfc        | SFC testing for odl scenarios    |
 |             |               |                | See `SFC User Guide`_ for details|
 |             |               +----------------+----------------------------------+
@@ -139,16 +123,12 @@ validate the scenario for the release.
 |             |               |                | See `Parser User Guide`_ for     |
 |             |               |                | details                          |
 |             |               +----------------+----------------------------------+
-|             |               | promise        | Resource reservation and         |
-|             |               |                | management project to identify   |
-|             |               |                | NFV related requirements and     |
-|             |               |                | realize resource reservation for |
-|             |               |                | future usage by capacity         |
-|             |               |                | management of resource pools     |
-|             |               |                | regarding compute, network and   |
-|             |               |                | storage.                         |
-|             |               |                | See `Promise User Guide`_ for    |
-|             |               |                | details                          |
+|             |               | fds            | Test Suite for the OpenDaylight  |
+|             |               |                | SDN Controller when the GBP      |
+|             |               |                | features are installed. It       |
+|             |               |                | integrates some test suites from |
+|             |               |                | upstream using Robot as the test |
+|             |               |                | framework                        |
 +-------------+---------------+----------------+----------------------------------+
 | VNF         | vnf           | cloudify_ims   | Example of a real VNF deployment |
 |             |               |                | to show the NFV capabilities of  |
@@ -253,9 +233,7 @@ section.
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`Doctor User Guide`: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
-.. _`Promise User Guide`: http://artifacts.opnfv.org/promise/colorado/docs/userguide/index.html
 .. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/colorado/docs/userguide/index.html
-.. _`Domino User Guide`: http://artifacts.opnfv.org/domino/docs/userguide-single/index.html
 .. _`Parser User Guide`: http://artifacts.opnfv.org/parser/colorado/docs/userguide/index.html
 .. _`Functest Dashboard`: http://testresults.opnfv.org/kibana_dashboards/
 .. _`SFC User Guide`: http://artifacts.opnfv.org/sfc/colorado/userguide/index.html
