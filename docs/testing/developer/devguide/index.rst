@@ -47,11 +47,6 @@ Functest High level architecture
 
 Functest is a project delivering test containers dedicated to OPNFV.
 It includes the tools, the scripts and the test scenarios.
-Until Danube, Functest produced 2 docker files based on Ubuntu 14.04:
-
-  * x86 Functest: https://hub.docker.com/r/opnfv/functest/
-  * aarch64 Functest: https://hub.docker.com/r/opnfv/functest_aarch64/
-
 In Euphrates Alpine containers have been introduced in order to lighten the
 container and manage testing slicing. The new containers are created according
 to the different tiers:
@@ -95,8 +90,7 @@ The internal test cases in Euphrates are:
  * vping_ssh
  * vping_userdata
  * odl
- * odl-netvirt
- * odl-fds
+ * odl_netvirt
  * rally_full
  * rally_sanity
  * tempest_smoke_serial

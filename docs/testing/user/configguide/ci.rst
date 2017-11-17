@@ -5,7 +5,6 @@ container from Jenkins.
 
 4 steps have been defined::
   * functest-cleanup: clean existing functest dockers on the jumphost
-  * set-functest-env-alpine: prepare en environement files
   * functest-daily: run dockers opnfv/functest-* (healthcheck, smoke, features, vnf)
   * functest-store-results: push logs to artifacts
 

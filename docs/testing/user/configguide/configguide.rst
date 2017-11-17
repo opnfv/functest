@@ -9,8 +9,6 @@ Alpine allows Functest testing in several very light containers and thanks to
 the refactoring on dependency management should allow the creation of light and
 fully customized docker images.
 
-It is still possible to use the monolithic Ubuntu image opnfv/functest especially
-for tests on Aarch64 architecture.
 
 Functest Dockers
 ----------------
@@ -362,12 +360,8 @@ The structure of functest repo can be described as follows::
   |-- build.sh
   |-- commons
   |-- docker
-  |  |-- Dockerfile
-  |  |-- Dockerfile.aarch64.patch
   |  |-- components
-  |  |-- config_install_env.sh
   |  |-- core
-  |  |-- docker_remote_api
   |  |-- features
   |  |-- healthcheck
   |  |-- smoke
@@ -413,7 +407,6 @@ The structure of functest repo can be described as follows::
     │   |-- config_functest.yaml
     │   |-- config_patch.yaml
     │   |-- download_images.sh
-    │   |-- installer_params.yaml
     │   |-- logging.ini
     │   |-- prepare_env.py
     │   |-- rally_aarch64_patch.conf
@@ -735,9 +728,7 @@ work with the above pre-requisite actions.
 
 .. _`[4]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html
 .. _`dockerdocs`: https://docs.docker.com/
-.. _`dockerhub`: https://hub.docker.com/r/opnfv/functest/
 .. _`Proxy`: https://docs.docker.com/engine/admin/systemd/#http-proxy
-.. _`FunctestDockerTags`: https://hub.docker.com/r/opnfv/functest/tags/
 .. _`Install Docker on CentOS`: https://docs.docker.com/engine/installation/linux/centos/
 .. _`Functest User Guide`: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/userguide/index.html
 .. _`images/CentOS-7-x86_64-GenericCloud.qcow2` http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
