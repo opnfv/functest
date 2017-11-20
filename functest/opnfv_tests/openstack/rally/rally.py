@@ -382,13 +382,15 @@ class RallyBase(testcase.TestCase):
                                                           report_html_dir)
 
         LOGGER.debug('running command line: %s', cmd_line)
-        os.popen(cmd_line)
+        subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT, shell=True)
 
         # get and save rally operation JSON result
         cmd_line = "rally task results %s" % task_id
         LOGGER.debug('running command line: %s', cmd_line)
-        cmd = os.popen(cmd_line)
-        json_results = cmd.read()
+        proc = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT, shell=True)
+        json_results = self.get_cmd_output(proc)
         report_json_name = 'opnfv-{}.json'.format(test_name)
         report_json_dir = os.path.join(self.RESULTS_DIR, report_json_name)
         with open(report_json_dir, 'w') as r_file:
