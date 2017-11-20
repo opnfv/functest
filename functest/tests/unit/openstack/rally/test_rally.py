@@ -260,13 +260,10 @@ class OSRallyTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.subprocess.Popen')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.makedirs')
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.popen')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.info')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.error')
     def test_run_task_default(self, mock_logger_error, mock_logger_info,
-                              mock_popen, *args):
-        attrs = {'read.return_value': 'json_result'}
-        mock_popen.return_value.configure_mock(**attrs)
+                              *args):
         self.rally_base._run_task('test_name')
         text = 'Test scenario: "test_name" OK.\n'
         mock_logger_info.assert_any_call(text)

@@ -16,6 +16,7 @@ import json
 import logging
 import os
 import re
+import shlex
 import subprocess
 import time
 import uuid
@@ -350,8 +351,8 @@ class RallyBase(testcase.TestCase):
                     .format(task_file, self._build_task_args(test_name)))
         LOGGER.debug('running command line: %s', cmd_line)
 
-        proc = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT, shell=True)
+        proc = subprocess.Popen(shlex.split(cmd_line), stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT)
         output = self._get_output(proc, test_name)
         task_id = self.get_task_id(output)
         LOGGER.debug('task_id : %s', task_id)
@@ -363,8 +364,9 @@ class RallyBase(testcase.TestCase):
                         "--task-args \"{1}\""
                         .format(task_file, self._build_task_args(test_name)))
             LOGGER.debug('running command line: %s', cmd_line)
-            proc = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
-                                    stderr=subprocess.STDOUT, shell=True)
+            proc = subprocess.Popen(shlex.split(cmd_line),
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.STDOUT)
             output = self.get_cmd_output(proc)
             LOGGER.error("Task validation result:" + "\n" + output)
             return
@@ -382,13 +384,15 @@ class RallyBase(testcase.TestCase):
                                                           report_html_dir)
 
         LOGGER.debug('running command line: %s', cmd_line)
-        os.popen(cmd_line)
+        subprocess.Popen(shlex.split(cmd_line), stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
 
         # get and save rally operation JSON result
         cmd_line = "rally task results %s" % task_id
         LOGGER.debug('running command line: %s', cmd_line)
-        cmd = os.popen(cmd_line)
-        json_results = cmd.read()
+        proc = subprocess.Popen(shlex.split(cmd_line), stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT)
+        json_results = self.get_cmd_output(proc)
         report_json_name = 'opnfv-{}.json'.format(test_name)
         report_json_dir = os.path.join(self.RESULTS_DIR, report_json_name)
         with open(report_json_dir, 'w') as r_file:
