@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_d50ec531",
+        "filename": "docker/components/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-11-20T21:30:42Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9a3d3df0_2ff2476f",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_8fe9d382",
         "filename": "docker/features/Dockerfile",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-16T20:36:25Z",
       "side": 1,
       "message": "CMD [\"run_tests\", \"-t\", \"all\"]",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_351e1164",
+        "filename": "docker/features/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-11-20T21:30:42Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9a3d3df0_8fe9d382",
       "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_15194d79",
+        "filename": "docker/healthcheck/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-11-20T21:30:42Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9a3d3df0_cf02bb3d",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_affdb73d",
         "filename": "docker/parser/Dockerfile",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-16T20:36:25Z",
       "side": 1,
       "message": "CMD [\"run_tests\", \"-t\", \"all\"]",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_7527f9b6",
+        "filename": "docker/parser/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-11-20T21:30:42Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9a3d3df0_affdb73d",
       "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_552ab57e",
+        "filename": "docker/smoke/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-11-20T21:30:42Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9a3d3df0_0ffdc33a",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_eff7bf57",
         "filename": "docker/vnf/Dockerfile",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-16T20:36:25Z",
       "side": 1,
       "message": "CMD [\"run_tests\", \"-t\", \"all\"]",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b52181a1",
+        "filename": "docker/vnf/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-11-20T21:30:42Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9a3d3df0_eff7bf57",
       "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
@@ -144,6 +252,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_32f2a7d2",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-11-20T21:30:42Z",
+      "side": 1,
+      "message": "1) os_utils will have to be moved to some other place, it is only used by source_rc_file() function. The other 2 are not so dangerous for core and they are needed for the yaml patch for arm.\n\n2) I would say that utils belongs to core, as it is not openstack related stuff\n\n3) this question has nothing to do with this patch, can be answered off-line, but we have to decouple openstack things from functest-core, then it will be similar to xtesting. Remember xtesting is VIM agnostic.",
+      "parentUuid": "9a3d3df0_728714d8",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_2f99a71f",
         "filename": "functest/ci/run_tests.py",
         "patchSetId": 2
@@ -155,6 +287,24 @@
       "writtenOn": "2017-11-16T20:36:25Z",
       "side": 1,
       "message": "Could we stop dumping the file? Maybe we can simply use new_functest_yaml in the right place.",
+      "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f513095a",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-11-20T21:30:42Z",
+      "side": 1,
+      "message": "What do you mean? I just moved things around. Maybe that can be improved in another patch",
+      "parentUuid": "9a3d3df0_2f99a71f",
       "revId": "a3c4fe250b8bdfcf6ef2d01049456f5fa3f260b7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
