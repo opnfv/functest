@@ -27,7 +27,6 @@ tiers:
             -
                 case_name: bgpvpn
                 project_name: sdnvpn
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
