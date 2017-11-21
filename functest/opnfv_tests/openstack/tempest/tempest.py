@@ -26,11 +26,13 @@ from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 
+from snaps.config.flavor import FlavorConfig
+from snaps.config.network import NetworkConfig, SubnetConfig
+from snaps.config.project import ProjectConfig
+from snaps.config.user import UserConfig
+
 from snaps.openstack import create_flavor
-from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
-from snaps.openstack.create_project import ProjectSettings
-from snaps.openstack.create_network import NetworkSettings, SubnetSettings
-from snaps.openstack.create_user import UserSettings
+from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import deploy_utils
 
@@ -335,7 +337,7 @@ class TempestResourcesManager(object):
             project_name = CONST.__getattribute__(
                 'tempest_identity_tenant_name') + self.guid
             project_creator = deploy_utils.create_project(
-                self.os_creds, ProjectSettings(
+                self.os_creds, ProjectConfig(
                     name=project_name,
                     description=CONST.__getattribute__(
                         'tempest_identity_tenant_description')))
@@ -347,7 +349,7 @@ class TempestResourcesManager(object):
 
             logger.debug("Creating user for Tempest suite")
             user_creator = deploy_utils.create_user(
-                self.os_creds, UserSettings(
+                self.os_creds, UserConfig(
                     name=CONST.__getattribute__(
                         'tempest_identity_user_name') + self.guid,
                     password=CONST.__getattribute__(
@@ -364,11 +366,11 @@ class TempestResourcesManager(object):
 
         logger.debug("Creating private network for Tempest suite")
         network_creator = deploy_utils.create_network(
-            self.os_creds, NetworkSettings(
+            self.os_creds, NetworkConfig(
                 name=CONST.__getattribute__(
                     'tempest_private_net_name') + self.guid,
                 project_name=project_name,
-                subnet_settings=[SubnetSettings(
+                subnet_settings=[SubnetConfig(
                     name=CONST.__getattribute__(
                         'tempest_private_subnet_name') + self.guid,
                     cidr=CONST.__getattribute__('tempest_private_subnet_cidr'))
@@ -421,7 +423,7 @@ class TempestResourcesManager(object):
             if 'ovs' in scenario or 'fdio' in scenario:
                 flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
             flavor_creator = OpenStackFlavor(
-                self.os_creds, FlavorSettings(
+                self.os_creds, FlavorConfig(
                     name=CONST.__getattribute__(
                         'openstack_flavor_name') + self.guid,
                     ram=CONST.__getattribute__('openstack_flavor_ram'),
@@ -441,7 +443,7 @@ class TempestResourcesManager(object):
             if 'ovs' in scenario or 'fdio' in scenario:
                 flavor_metadata_alt = create_flavor.MEM_PAGE_SIZE_LARGE
             flavor_creator_alt = OpenStackFlavor(
-                self.os_creds, FlavorSettings(
+                self.os_creds, FlavorConfig(
                     name=CONST.__getattribute__(
                         'openstack_flavor_name_alt') + self.guid,
                     ram=CONST.__getattribute__('openstack_flavor_ram'),
