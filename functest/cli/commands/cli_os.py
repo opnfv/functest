@@ -9,6 +9,7 @@
 
 
 import os
+from urlparse import urlparse
 
 import click
 
@@ -27,8 +28,8 @@ class OpenStack(object):
         self.openstack_creds = CONST.__getattribute__('openstack_creds')
         self.snapshot_file = CONST.__getattribute__('openstack_snapshot_file')
         if self.os_auth_url:
-            self.endpoint_ip = self.os_auth_url.rsplit("/")[2].rsplit(":")[0]
-            self.endpoint_port = self.os_auth_url.rsplit("/")[2].rsplit(":")[1]
+            self.endpoint_ip = urlparse(self.os_auth_url).hostname
+            self.endpoint_port = urlparse(self.os_auth_url).port
 
     def ping_endpoint(self):
         if self.os_auth_url is None:

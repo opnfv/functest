@@ -35,16 +35,20 @@ __author__ = "Jose Lausuch <jose.lausuch@ericsson.com>"
 LOGGER = logging.getLogger(__name__)
 
 
-def verify_connectivity(adress, port):
+def verify_connectivity(endpoint):
     """ Returns true if an ip/port is reachable"""
     connection = socket.socket()
     connection.settimeout(10)
+    ip = urlparse(endpoint).hostname
+    port = urlparse(endpoint).port
+    if not port:
+        port = 443 if urlparse(endpoint).scheme == "https" else 80
     try:
-        connection.connect((adress, port))
-        LOGGER.debug('%s:%s is reachable!', adress, port)
+        connection.connect((ip, port))
+        LOGGER.debug('%s:%s is reachable!', ip, port)
         return True
     except socket.error:
-        LOGGER.error('%s:%s is not reachable.', adress, port)
+        LOGGER.error('%s:%s is not reachable.', ip, port)
     return False
 
 
@@ -67,8 +71,7 @@ class CheckDeployment(object):
     def check_auth_endpoint(self):
         """ Verifies connectivity to the OS_AUTH_URL given in the RC file """
         rc_endpoint = self.os_creds.auth_url
-        if not (verify_connectivity(urlparse(rc_endpoint).hostname,
-                                    urlparse(rc_endpoint).port)):
+        if not (verify_connectivity(rc_endpoint)):
             raise Exception("OS_AUTH_URL {} is not reachable.".
                             format(rc_endpoint))
         LOGGER.info("Connectivity to OS_AUTH_URL %s ...OK", rc_endpoint)
@@ -78,8 +81,7 @@ class CheckDeployment(object):
         public_endpoint = keystone_utils.get_endpoint(self.os_creds,
                                                       'identity',
                                                       interface='public')
-        if not (verify_connectivity(urlparse(public_endpoint).hostname,
-                                    urlparse(public_endpoint).port)):
+        if not (verify_connectivity(public_endpoint)):
             raise Exception("Public endpoint {} is not reachable.".
                             format(public_endpoint))
         LOGGER.info("Connectivity to the public endpoint %s ...OK",
@@ -90,8 +92,7 @@ class CheckDeployment(object):
         endpoint = keystone_utils.get_endpoint(self.os_creds,
                                                service,
                                                interface='public')
-        if not (verify_connectivity(urlparse(endpoint).hostname,
-                                    urlparse(endpoint).port)):
+        if not (verify_connectivity(endpoint)):
             raise Exception("{} endpoint {} is not reachable.".
                             format(service, endpoint))
         LOGGER.info("Connectivity to endpoint '%s' %s ...OK",
