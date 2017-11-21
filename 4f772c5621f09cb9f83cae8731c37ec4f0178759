@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_355611d3",
+        "filename": "functest/api/swagger/envs_action.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-11-21T01:45:52Z",
+      "side": 1,
+      "message": "I would suggest you copy this file directly: http://paste.openstack.org/raw/626578/",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 19
+      },
+      "revId": "4f772c5621f09cb9f83cae8731c37ec4f0178759",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_15514dd8",
+        "filename": "functest/api/swagger/envs_action.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-11-21T01:45:52Z",
+      "side": 1,
+      "message": "To be removed.",
+      "range": {
+        "startLine": 3,
+        "startChar": 33,
+        "endLine": 3,
+        "endChar": 53
+      },
+      "revId": "4f772c5621f09cb9f83cae8731c37ec4f0178759",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_755ff9e5",
+        "filename": "functest/api/swagger/envs_action.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-11-21T01:45:52Z",
+      "side": 1,
+      "message": "To be removed.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 15
+      },
+      "revId": "4f772c5621f09cb9f83cae8731c37ec4f0178759",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
