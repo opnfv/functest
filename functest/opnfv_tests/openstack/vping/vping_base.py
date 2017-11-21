@@ -16,10 +16,11 @@ from functest.core import testcase
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils.constants import CONST
 
+from snaps.config.flavor import FlavorConfig
+from snaps.config.network import NetworkConfig, SubnetConfig
+from snaps.config.router import RouterConfig
 from snaps.openstack import create_flavor
-from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
-from snaps.openstack.create_network import NetworkSettings, SubnetSettings
-from snaps.openstack.create_router import RouterSettings
+from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import deploy_utils
 
@@ -130,12 +131,12 @@ class VPingBase(testcase.TestCase):
             "Creating network with name: '%s'" % private_net_name)
         self.network_creator = deploy_utils.create_network(
             self.os_creds,
-            NetworkSettings(
+            NetworkConfig(
                 name=private_net_name,
                 network_type=vping_network_type,
                 physical_network=vping_physical_network,
                 segmentation_id=vping_segmentation_id,
-                subnet_settings=[SubnetSettings(
+                subnet_settings=[SubnetConfig(
                     name=private_subnet_name,
                     cidr=private_subnet_cidr)]))
         self.creators.append(self.network_creator)
@@ -146,7 +147,7 @@ class VPingBase(testcase.TestCase):
         ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
         self.router_creator = deploy_utils.create_router(
             self.os_creds,
-            RouterSettings(
+            RouterConfig(
                 name=self.router_name,
                 external_gateway=ext_net_name,
                 internal_subnets=[private_subnet_name]))
@@ -160,7 +161,7 @@ class VPingBase(testcase.TestCase):
             flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
         flavor_creator = OpenStackFlavor(
             self.os_creds,
-            FlavorSettings(name=self.flavor_name, ram=512, disk=1, vcpus=1,
+            FlavorConfig(name=self.flavor_name, ram=512, disk=1, vcpus=1,
                            metadata=flavor_metadata))
         flavor_creator.create()
         self.creators.append(flavor_creator)
