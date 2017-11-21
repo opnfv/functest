@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_68756097",
+        "filename": "docker/restapi/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-21T07:08:56Z",
+      "side": 1,
+      "message": "Please use --python\u003dpython2.7.\nElse the result differs from the classic installation:\n(python2.7 -\u003e python2 instead of python2 -\u003e python2.7)",
+      "revId": "7a145af9ff327b6eecb66bac30995607b96e0ad0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
