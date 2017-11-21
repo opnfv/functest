@@ -344,27 +344,24 @@ class RallyBase(testcase.TestCase):
             LOGGER.info('No tests for scenario "%s"', test_name)
             return
 
-        cmd_line = ("rally task start --abort-on-sla-failure "
-                    "--task {0} "
-                    "--task-args \"{1}\""
-                    .format(task_file, self._build_task_args(test_name)))
-        LOGGER.debug('running command line: %s', cmd_line)
+        cmd = (["rally", "task", "start", "--abort-on-sla-failure", "--task",
+                task_file, "--task-args",
+                str(self._build_task_args(test_name))])
+        LOGGER.debug('running command: %s', cmd)
 
-        proc = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT, shell=True)
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT)
         output = self._get_output(proc, test_name)
         task_id = self.get_task_id(output)
         LOGGER.debug('task_id : %s', task_id)
 
         if task_id is None:
             LOGGER.error('Failed to retrieve task_id, validating task...')
-            cmd_line = ("rally task validate "
-                        "--task {0} "
-                        "--task-args \"{1}\""
-                        .format(task_file, self._build_task_args(test_name)))
-            LOGGER.debug('running command line: %s', cmd_line)
-            proc = subprocess.Popen(cmd_line, stdout=subprocess.PIPE,
-                                    stderr=subprocess.STDOUT, shell=True)
+            cmd = (["rally", "task", "validate", "--task", task_file,
+                    "--task-args", str(self._build_task_args(test_name))])
+            LOGGER.debug('running command: %s', cmd)
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                                    stderr=subprocess.STDOUT)
             output = self.get_cmd_output(proc)
             LOGGER.error("Task validation result:" + "\n" + output)
             return
@@ -378,17 +375,18 @@ class RallyBase(testcase.TestCase):
         # write html report file
         report_html_name = 'opnfv-{}.html'.format(test_name)
         report_html_dir = os.path.join(self.RESULTS_DIR, report_html_name)
-        cmd_line = "rally task report {} --out {}".format(task_id,
-                                                          report_html_dir)
+        cmd = (["rally", "task", "report", task_id, "--out", report_html_dir])
 
-        LOGGER.debug('running command line: %s', cmd_line)
-        os.popen(cmd_line)
+        LOGGER.debug('running command: %s', cmd)
+        subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
 
         # get and save rally operation JSON result
-        cmd_line = "rally task results %s" % task_id
-        LOGGER.debug('running command line: %s', cmd_line)
-        cmd = os.popen(cmd_line)
-        json_results = cmd.read()
+        cmd = (["rally", "task", "results", task_id])
+        LOGGER.debug('running command: %s', cmd)
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT)
+        json_results = self.get_cmd_output(proc)
         report_json_name = 'opnfv-{}.json'.format(test_name)
         report_json_dir = os.path.join(self.RESULTS_DIR, report_json_name)
         with open(report_json_dir, 'w') as r_file:
