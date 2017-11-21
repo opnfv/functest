@@ -36,7 +36,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
     rm -r upper-constraints.txt /src/refstack-client/.git /src/odl_test/.git /src/os-faults /src/rally && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
-    mkdir -p /var/lib/rally/database && rally-manage db create && \
+    mkdir -p /var/lib/rally/database && rally db create && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
 CMD ["bash","-c","prepare_env start && run_tests -t all"]
