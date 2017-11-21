@@ -25,18 +25,19 @@ from functest.opnfv_tests.openstack.snaps import snaps_utils
 import functest.opnfv_tests.vnf.ims.cloudify_ims as cloudify_ims
 from functest.utils.constants import CONST
 
-from snaps.openstack.create_network import (NetworkSettings, SubnetSettings,
-                                            OpenStackNetwork, PortSettings)
-from snaps.openstack.create_security_group import (SecurityGroupSettings,
-                                                   SecurityGroupRuleSettings,
-                                                   Direction, Protocol,
-                                                   OpenStackSecurityGroup)
-from snaps.openstack.create_router import RouterSettings, OpenStackRouter
-from snaps.openstack.create_instance import (VmInstanceSettings,
-                                             FloatingIpSettings,
-                                             OpenStackVmInstance)
-from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
-from snaps.openstack.create_image import ImageSettings
+from snaps.config.flavor import FlavorConfig
+from snaps.config.image import ImageConfig
+from snaps.config.network import NetworkConfig, PortConfig, SubnetConfig
+from snaps.config.router import RouterConfig
+from snaps.config.security_group import (
+    Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
+from snaps.config.vm_inst import FloatingIpConfig, VmInstanceConfig
+
+from snaps.openstack.create_flavor import OpenStackFlavor
+from snaps.openstack.create_instance import OpenStackVmInstance
+from snaps.openstack.create_network import OpenStackNetwork
+from snaps.openstack.create_router import OpenStackRouter
+from snaps.openstack.create_security_group import OpenStackSecurityGroup
 
 from ixia.utils.IxChassisUtils import ChassisRestAPI
 import ixia.utils.IxLoadUtils as IxLoadUtils
@@ -115,17 +116,17 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         ellis_ip = outputs['ellis_ip']
 
         self.__logger.info("Creating full IXIA network ...")
-        subnet_settings = SubnetSettings(name='ixia_management_subnet',
-                                         cidr='10.10.10.0/24')
-        network_settings = NetworkSettings(name='ixia_management_network',
-                                           subnet_settings=[subnet_settings])
+        subnet_settings = SubnetConfig(name='ixia_management_subnet',
+                                       cidr='10.10.10.0/24')
+        network_settings = NetworkConfig(name='ixia_management_network',
+                                         subnet_settings=[subnet_settings])
         network_creator = OpenStackNetwork(self.snaps_creds, network_settings)
         network_creator.create()
         self.created_object.append(network_creator)
         ext_net_name = snaps_utils.get_ext_net_name(self.snaps_creds)
         router_creator = OpenStackRouter(
             self.snaps_creds,
-            RouterSettings(
+            RouterConfig(
                 name='ixia_management_router',
                 external_gateway=ext_net_name,
                 internal_subnets=[subnet_settings.name]))
@@ -136,21 +137,21 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         self.__logger.info("Creating security groups for IXIA VMs")
         sg_rules = list()
         sg_rules.append(
-            SecurityGroupRuleSettings(sec_grp_name="ixia_management",
-                                      direction=Direction.ingress,
-                                      protocol=Protocol.tcp, port_range_min=1,
-                                      port_range_max=65535))
+            SecurityGroupRuleConfig(sec_grp_name="ixia_management",
+                                    direction=Direction.ingress,
+                                    protocol=Protocol.tcp, port_range_min=1,
+                                    port_range_max=65535))
         sg_rules.append(
-            SecurityGroupRuleSettings(sec_grp_name="ixia_management",
-                                      direction=Direction.ingress,
-                                      protocol=Protocol.udp, port_range_min=1,
-                                      port_range_max=65535))
+            SecurityGroupRuleConfig(sec_grp_name="ixia_management",
+                                    direction=Direction.ingress,
+                                    protocol=Protocol.udp, port_range_min=1,
+                                    port_range_max=65535))
         sg_rules.append(
-            SecurityGroupRuleSettings(sec_grp_name="ixia_management",
-                                      direction=Direction.ingress,
-                                      protocol=Protocol.icmp))
+            SecurityGroupRuleConfig(sec_grp_name="ixia_management",
+                                    direction=Direction.ingress,
+                                    protocol=Protocol.icmp))
 
-        ixia_managment_sg_settings = SecurityGroupSettings(
+        ixia_managment_sg_settings = SecurityGroupConfig(
                                         name="ixia_management",
                                         rule_settings=sg_rules)
         securit_group_creator = OpenStackSecurityGroup(
@@ -162,12 +163,12 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
 
         sg_rules = list()
         sg_rules.append(
-            SecurityGroupRuleSettings(sec_grp_name="ixia_ssh_http",
-                                      direction=Direction.ingress,
-                                      protocol=Protocol.tcp, port_range_min=1,
-                                      port_range_max=65535))
+            SecurityGroupRuleConfig(sec_grp_name="ixia_ssh_http",
+                                    direction=Direction.ingress,
+                                    protocol=Protocol.tcp, port_range_min=1,
+                                    port_range_max=65535))
 
-        ixia_ssh_http_sg_settings = SecurityGroupSettings(
+        ixia_ssh_http_sg_settings = SecurityGroupConfig(
                                         name="ixia_ssh_http",
                                         rule_settings=sg_rules)
         securit_group_creator = OpenStackSecurityGroup(
@@ -177,7 +178,7 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         securit_group_creator.create()
         self.created_object.append(securit_group_creator)
 
-        chassis_flavor_settings = FlavorSettings(
+        chassis_flavor_settings = FlavorConfig(
             name="ixia_vChassis",
             ram=4096,
             disk=40,
@@ -187,7 +188,7 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         flavor_creator.create()
         self.created_object.append(flavor_creator)
 
-        card_flavor_settings = FlavorSettings(
+        card_flavor_settings = FlavorConfig(
             name="ixia_vCard",
             ram=4096,
             disk=4,
@@ -197,7 +198,7 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         flavor_creator.create()
         self.created_object.append(flavor_creator)
 
-        load_flavor_settings = FlavorSettings(
+        load_flavor_settings = FlavorConfig(
             name="ixia_vLoad",
             ram=8192,
             disk=100,
@@ -207,52 +208,52 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         flavor_creator.create()
         self.created_object.append(flavor_creator)
 
-        chassis_image_settings = ImageSettings(
+        chassis_image_settings = ImageConfig(
             name=self.test['requirements']['chassis']['image'],
             image_user='admin',
             exists=True)
 
-        card_image_settings = ImageSettings(
+        card_image_settings = ImageConfig(
             name=self.test['requirements']['card']['image'],
             image_user='admin',
             exists=True)
 
-        load_image_settings = ImageSettings(
+        load_image_settings = ImageConfig(
             name=self.test['requirements']['load']['image'],
             image_user='admin',
             exists=True)
 
-        chassis_port_settings = PortSettings(
+        chassis_port_settings = PortConfig(
                                      name='ixia_chassis_port',
                                      network_name=network_settings.name)
 
-        card1_port1_settings = PortSettings(
+        card1_port1_settings = PortConfig(
                                      name='ixia_card1_port1',
                                      network_name=network_settings.name)
 
-        card2_port1_settings = PortSettings(
+        card2_port1_settings = PortConfig(
                                      name='ixia_card2_port1',
                                      network_name=network_settings.name)
 
-        card1_port2_settings = PortSettings(
+        card1_port2_settings = PortConfig(
                                      name='ixia_card1_port2',
                                      network_name="cloudify_ims_network")
 
-        card2_port2_settings = PortSettings(
+        card2_port2_settings = PortConfig(
                                      name='ixia_card2_port2',
                                      network_name="cloudify_ims_network")
 
-        load_port_settings = PortSettings(
+        load_port_settings = PortConfig(
                                      name='ixia_load_port',
                                      network_name=network_settings.name)
 
-        chassis_settings = VmInstanceSettings(
+        chassis_settings = VmInstanceConfig(
             name='ixia_vChassis',
             flavor=chassis_flavor_settings.name,
             port_settings=[chassis_port_settings],
             security_group_names=[ixia_ssh_http_sg_settings.name,
                                   ixia_managment_sg_settings.name],
-            floating_ip_settings=[FloatingIpSettings(
+            floating_ip_settings=[FloatingIpConfig(
                 name='ixia_vChassis_fip',
                 port_name=chassis_port_settings.name,
                 router_name=router_creator.router_settings.name)])
@@ -266,7 +267,7 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         fip_chassis = vm_creator.get_floating_ip().ip
         self.created_object.append(vm_creator)
 
-        card1_settings = VmInstanceSettings(
+        card1_settings = VmInstanceConfig(
             name='ixia_vCard1',
             flavor=card_flavor_settings.name,
             port_settings=[card1_port1_settings, card1_port2_settings],
@@ -284,7 +285,7 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         vcard_ips_p2.append(vm_creator.get_port_ip('ixia_card1_port2'))
         self.created_object.append(vm_creator)
 
-        card2_settings = VmInstanceSettings(
+        card2_settings = VmInstanceConfig(
             name='ixia_vCard2',
             flavor=card_flavor_settings.name,
             port_settings=[card2_port1_settings, card2_port2_settings],
@@ -300,13 +301,13 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         vcard_ips_p2.append(vm_creator.get_port_ip('ixia_card2_port2'))
         self.created_object.append(vm_creator)
 
-        load_settings = VmInstanceSettings(
+        load_settings = VmInstanceConfig(
             name='ixia_vLoad',
             flavor=load_flavor_settings.name,
             port_settings=[load_port_settings],
             security_group_names=[ixia_ssh_http_sg_settings.name,
                                   ixia_managment_sg_settings.name],
-            floating_ip_settings=[FloatingIpSettings(
+            floating_ip_settings=[FloatingIpConfig(
                 name='ixia_vLoad_fip',
                 port_name=load_port_settings.name,
                 router_name=router_creator.router_settings.name)])

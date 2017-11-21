@@ -17,23 +17,21 @@ import time
 import pkg_resources
 import yaml
 
-from snaps.openstack.create_image import OpenStackImage, ImageSettings
-from snaps.openstack.create_flavor import OpenStackFlavor, FlavorSettings
-from snaps.openstack.create_security_group import (
-    OpenStackSecurityGroup,
-    SecurityGroupSettings,
-    SecurityGroupRuleSettings,
-    Direction,
-    Protocol)
-from snaps.openstack.create_network import (
-    OpenStackNetwork,
-    NetworkSettings,
-    SubnetSettings,
-    PortSettings)
-from snaps.openstack.create_router import OpenStackRouter, RouterSettings
-from snaps.openstack.create_instance import (
-    VmInstanceSettings,
-    OpenStackVmInstance)
+from snaps.config.flavor import FlavorConfig
+from snaps.config.image import ImageConfig
+from snaps.config.network import NetworkConfig, PortConfig, SubnetConfig
+from snaps.config.router import RouterConfig
+from snaps.config.security_group import (
+    Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
+from snaps.config.vm_inst import VmInstanceConfig
+
+from snaps.openstack.create_flavor import OpenStackFlavor
+from snaps.openstack.create_image import OpenStackImage
+from snaps.openstack.create_instance import OpenStackVmInstance
+from snaps.openstack.create_network import OpenStackNetwork
+from snaps.openstack.create_router import OpenStackRouter
+from snaps.openstack.create_security_group import OpenStackSecurityGroup
+
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 
 import functest.core.vnf as vnf
@@ -164,6 +162,7 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
                 'vnf_{}_config'.format(self.case_name))
         except BaseException:
             raise Exception("Orchestra VNF config file not found")
+
         config_file = self.case_dir + self.config
 
         self.mano = dict(
@@ -230,11 +229,11 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
             if image_file and image_name:
                 image = OpenStackImage(
                     self.snaps_creds,
-                    ImageSettings(name=image_name,
-                                  image_user='cloud',
-                                  img_format='qcow2',
-                                  image_file=image_file,
-                                  public=True))
+                    ImageConfig(name=image_name,
+                                image_user='cloud',
+                                img_format='qcow2',
+                                image_file=image_file,
+                                public=True))
                 image.create()
                 # self.created_resources.append(image);
 
@@ -244,46 +243,46 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
             "Creating security group for Open Baton if not yet existing...")
         sg_rules = list()
         sg_rules.append(
-            SecurityGroupRuleSettings(
+            SecurityGroupRuleConfig(
                 sec_grp_name="orchestra-sec-group-allowall",
                 direction=Direction.ingress,
                 protocol=Protocol.tcp,
                 port_range_min=1,
                 port_range_max=65535))
         sg_rules.append(
-            SecurityGroupRuleSettings(
+            SecurityGroupRuleConfig(
                 sec_grp_name="orchestra-sec-group-allowall",
                 direction=Direction.egress,
                 protocol=Protocol.tcp,
                 port_range_min=1,
                 port_range_max=65535))
         sg_rules.append(
-            SecurityGroupRuleSettings(
+            SecurityGroupRuleConfig(
                 sec_grp_name="orchestra-sec-group-allowall",
                 direction=Direction.ingress,
                 protocol=Protocol.udp,
                 port_range_min=1,
                 port_range_max=65535))
         sg_rules.append(
-            SecurityGroupRuleSettings(
+            SecurityGroupRuleConfig(
                 sec_grp_name="orchestra-sec-group-allowall",
                 direction=Direction.egress,
                 protocol=Protocol.udp,
                 port_range_min=1,
                 port_range_max=65535))
         sg_rules.append(
-            SecurityGroupRuleSettings(
+            SecurityGroupRuleConfig(
                 sec_grp_name="orchestra-sec-group-allowall",
                 direction=Direction.ingress,
                 protocol=Protocol.icmp))
         sg_rules.append(
-            SecurityGroupRuleSettings(
+            SecurityGroupRuleConfig(
                 sec_grp_name="orchestra-sec-group-allowall",
                 direction=Direction.egress,
                 protocol=Protocol.icmp))
         security_group = OpenStackSecurityGroup(
             self.snaps_creds,
-            SecurityGroupSettings(
+            SecurityGroupConfig(
                 name="orchestra-sec-group-allowall",
                 rule_settings=sg_rules))
 
@@ -298,7 +297,7 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
         self.logger.info(
             "Create Flavor for Open Baton NFVO if not yet existing")
 
-        flavor_settings = FlavorSettings(
+        flavor_settings = FlavorConfig(
             name=self.mano['requirements']['flavor']['name'],
             ram=self.mano['requirements']['flavor']['ram_min'],
             disk=self.mano['requirements']['flavor']['disk'],
@@ -314,11 +313,11 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
         """Create network/subnet/router if they doen't exist yet"""
         self.logger.info(
             "Creating network/subnet/router if they doen't exist yet...")
-        subnet_settings = SubnetSettings(
+        subnet_settings = SubnetConfig(
             name='%s_subnet' %
             self.case_name,
             cidr="192.168.100.0/24")
-        network_settings = NetworkSettings(
+        network_settings = NetworkConfig(
             name='%s_net' %
             self.case_name,
             subnet_settings=[subnet_settings])
@@ -333,7 +332,7 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
         self.created_resources.append(orchestra_network)
         orchestra_router = OpenStackRouter(
             self.snaps_creds,
-            RouterSettings(
+            RouterConfig(
                 name='%s_router' %
                 self.case_name,
                 external_gateway=self.mano['details']['external_net_name'],
@@ -437,16 +436,16 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
                          self.mano['details']['network']['id'])
         self.logger.debug("userdata: %s\n", userdata)
         # setting up image
-        image_settings = ImageSettings(
+        image_settings = ImageConfig(
             name=self.mano['requirements']['image'],
             image_user='ubuntu',
             exists=True)
         # setting up port
-        port_settings = PortSettings(
+        port_settings = PortConfig(
             name='%s_port' % self.case_name,
             network_name=self.mano['details']['network']['name'])
         # build configuration of vm
-        orchestra_settings = VmInstanceSettings(
+        orchestra_settings = VmInstanceConfig(
             name=self.case_name,
             flavor=self.mano['details']['flavor']['name'],
             port_settings=[port_settings],
@@ -519,7 +518,7 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
 
         self.logger.info(
             "Create %s Flavor if not existing", self.vnf['name'])
-        flavor_settings = FlavorSettings(
+        flavor_settings = FlavorConfig(
             name=self.vnf['requirements']['flavor']['name'],
             ram=self.vnf['requirements']['flavor']['ram_min'],
             disk=self.vnf['requirements']['flavor']['disk'],
