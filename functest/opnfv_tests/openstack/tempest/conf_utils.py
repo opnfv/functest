@@ -20,7 +20,6 @@ import yaml
 
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
-import functest.utils.openstack_utils as os_utils
 
 
 IMAGE_ID_ALT = None
@@ -80,11 +79,7 @@ def create_rally_deployment():
         % CONST.__getattribute__('rally_deployment_name')),
         verbose=False)
 
-    rally_conf = os_utils.get_credentials_for_rally()
-    with open('rally_conf.json', 'w') as fp:
-        json.dump(rally_conf, fp)
-    cmd = ("rally deployment create "
-           "--file=rally_conf.json --name={0}"
+    cmd = ("rally deployment create --fromenv --name={0}"
            .format(CONST.__getattribute__('rally_deployment_name')))
     error_msg = "Problem while creating Rally deployment"
     ft_utils.execute_command_raise(cmd, error_msg=error_msg)
@@ -279,7 +274,9 @@ def configure_tempest_update_params(tempest_conf_file, image_id=None,
         config.set('compute-feature-enabled', 'live_migration', True)
 
     config.set('identity', 'region', 'RegionOne')
-    if os_utils.is_keystone_v3():
+    identity_api_version = os.getenv(
+        "OS_IDENTITY_API_VERSION", os.getenv("IDENTITY_API_VERSION"))
+    if (identity_api_version == '3'):
         auth_version = 'v3'
     else:
         auth_version = 'v2'
@@ -292,7 +289,7 @@ def configure_tempest_update_params(tempest_conf_file, image_id=None,
 
     if CONST.__getattribute__('OS_ENDPOINT_TYPE') is not None:
         sections = config.sections()
-        if os_utils.is_keystone_v3():
+        if (identity_api_version == '3'):
             config.set('identity', 'v3_endpoint_type',
                        CONST.__getattribute__('OS_ENDPOINT_TYPE'))
             if 'identity-feature-enabled' not in sections:
