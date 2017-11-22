@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_a6d2f9cf",
+        "filename": "functest/api/swagger/envs_action.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-11-22T08:41:40Z",
+      "side": 1,
+      "message": "Should be removed.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 15
+      },
+      "revId": "eead0be72644c7909f2327f8937a6a6fc0f68fe6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
