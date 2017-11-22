@@ -129,49 +129,6 @@ def source_credentials(rc_file):
                 os.environ[key] = value
 
 
-def get_credentials_for_rally():
-    creds = get_credentials()
-    env_cred_dict = get_env_cred_dict()
-    rally_conf = {"admin": {}}
-    for key in creds:
-        if key == 'auth_url':
-            rally_conf[key] = creds[key]
-        else:
-            rally_conf['admin'][key] = creds[key]
-
-    endpoint_types = [('internalURL', 'internal'),
-                      ('publicURL', 'public'), ('adminURL', 'admin')]
-
-    endpoint_type = get_endpoint_type_from_env()
-    if endpoint_type is not None:
-        cred_key = env_cred_dict.get('OS_ENDPOINT_TYPE')
-        for k, v in endpoint_types:
-            if endpoint_type == v:
-                rally_conf[cred_key] = v
-
-    region_name = os.getenv('OS_REGION_NAME')
-    if region_name is not None:
-        cred_key = env_cred_dict.get('OS_REGION_NAME')
-        rally_conf[cred_key] = region_name
-
-    cred_key = env_cred_dict.get('OS_CACERT')
-    rally_conf[cred_key] = os.getenv('OS_CACERT', '')
-
-    insecure_key = env_cred_dict.get('OS_INSECURE')
-    rally_conf[insecure_key] = os.getenv('OS_INSECURE', '').lower() == 'true'
-    rally_conf = {"openstack": rally_conf}
-
-    return rally_conf
-
-
-def get_endpoint_type_from_env():
-    endpoint_type = os.environ.get("OS_ENDPOINT_TYPE",
-                                   os.environ.get("OS_INTERFACE"))
-    if endpoint_type and "URL" in endpoint_type:
-        endpoint_type = endpoint_type.replace("URL", "")
-    return endpoint_type
-
-
 def get_session_auth(other_creds={}):
     loader = loading.get_plugin_loader('password')
     creds = get_credentials(other_creds)
