@@ -9,9 +9,9 @@
 
 import time
 
+from snaps.config.network import PortConfig
+from snaps.config.vm_inst import VmInstanceConfig
 from snaps.openstack.utils import deploy_utils
-from snaps.openstack.create_instance import VmInstanceSettings
-from snaps.openstack.create_network import PortSettings
 
 from functest.core.testcase import TestCase
 from functest.opnfv_tests.openstack.vping import vping_base
@@ -37,10 +37,10 @@ class VPingUserdata(vping_base.VPingBase):
             super(VPingUserdata, self).run()
 
             # Creating Instance 1
-            port1_settings = PortSettings(
+            port1_settings = PortConfig(
                 name=self.vm1_name + '-vPingPort',
                 network_name=self.network_creator.network_settings.name)
-            instance1_settings = VmInstanceSettings(
+            instance1_settings = VmInstanceConfig(
                 name=self.vm1_name,
                 flavor=self.flavor_name,
                 vm_boot_timeout=self.vm_boot_timeout,
@@ -58,10 +58,10 @@ class VPingUserdata(vping_base.VPingBase):
                 self.vm1_creator.get_port_ip(port1_settings.name))
             if userdata:
                 # Creating Instance 2
-                port2_settings = PortSettings(
+                port2_settings = PortConfig(
                     name=self.vm2_name + '-vPingPort',
                     network_name=self.network_creator.network_settings.name)
-                instance2_settings = VmInstanceSettings(
+                instance2_settings = VmInstanceConfig(
                     name=self.vm2_name,
                     flavor=self.flavor_name,
                     vm_boot_timeout=self.vm_boot_timeout,

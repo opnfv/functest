@@ -10,15 +10,19 @@ import unittest
 
 import mock
 
+from snaps.config.keypair import KeypairConfig
+from snaps.config.network import NetworkConfig, PortConfig, SubnetConfig
+from snaps.config.router import RouterConfig
+from snaps.config.security_group import SecurityGroupConfig
+from snaps.config.vm_inst import VmInstanceConfig
+
 from snaps.openstack.create_image import OpenStackImage
-from snaps.openstack.create_instance import OpenStackVmInstance, \
-    VmInstanceSettings
-from snaps.openstack.create_keypairs import OpenStackKeypair, KeypairSettings
-from snaps.openstack.create_network import OpenStackNetwork, NetworkSettings, \
-    SubnetSettings, PortSettings
-from snaps.openstack.create_router import OpenStackRouter, RouterSettings
-from snaps.openstack.create_security_group import OpenStackSecurityGroup, \
-    SecurityGroupSettings
+from snaps.openstack.create_instance import OpenStackVmInstance
+from snaps.openstack.create_keypairs import OpenStackKeypair
+from snaps.openstack.create_network import OpenStackNetwork
+from snaps.openstack.create_router import OpenStackRouter
+from snaps.openstack.create_security_group import OpenStackSecurityGroup
+
 from snaps.openstack.os_credentials import OSCreds
 
 from functest.core.testcase import TestCase
@@ -54,14 +58,14 @@ class VPingUserdataTesting(unittest.TestCase):
                         return_value=OpenStackImage(self.os_creds, None)), \
                 mock.patch('snaps.openstack.utils.deploy_utils.create_network',
                            return_value=OpenStackNetwork(
-                               self.os_creds, NetworkSettings(name='foo'))), \
+                               self.os_creds, NetworkConfig(name='foo'))), \
                 mock.patch('snaps.openstack.utils.deploy_utils.'
                            'create_vm_instance',
                            return_value=OpenStackVmInstance(
                                self.os_creds,
-                               VmInstanceSettings(
+                               VmInstanceConfig(
                                    name='foo', flavor='bar',
-                                   port_settings=[PortSettings(
+                                   port_settings=[PortConfig(
                                        name='foo', network_name='bar')]),
                                None)), \
                 mock.patch('snaps.openstack.create_instance.'
@@ -120,32 +124,32 @@ class VPingSSHTesting(unittest.TestCase):
                 mock.patch('snaps.openstack.utils.deploy_utils.create_network',
                            return_value=OpenStackNetwork(
                                self.os_creds,
-                               NetworkSettings(
+                               NetworkConfig(
                                    name='foo',
                                    subnet_settings=[
-                                       SubnetSettings(
+                                       SubnetConfig(
                                            name='bar',
                                            cidr='10.0.0.1/24')]))), \
                 mock.patch('snaps.openstack.utils.deploy_utils.'
                            'create_vm_instance',
                            return_value=OpenStackVmInstance(
                                self.os_creds,
-                               VmInstanceSettings(
+                               VmInstanceConfig(
                                    name='foo', flavor='bar',
-                                   port_settings=[PortSettings(
+                                   port_settings=[PortConfig(
                                        name='foo', network_name='bar')]),
                                None)), \
                 mock.patch('snaps.openstack.utils.deploy_utils.create_keypair',
                            return_value=OpenStackKeypair(
-                               self.os_creds, KeypairSettings(name='foo'))), \
+                               self.os_creds, KeypairConfig(name='foo'))), \
                 mock.patch('snaps.openstack.utils.deploy_utils.create_router',
                            return_value=OpenStackRouter(
-                               self.os_creds, RouterSettings(name='foo'))), \
+                               self.os_creds, RouterConfig(name='foo'))), \
                 mock.patch('snaps.openstack.utils.deploy_utils.'
                            'create_security_group',
                            return_value=OpenStackSecurityGroup(
                                self.os_creds,
-                               SecurityGroupSettings(name='foo'))), \
+                               SecurityGroupConfig(name='foo'))), \
                 mock.patch('snaps.openstack.create_instance.'
                            'OpenStackVmInstance.'
                            'get_vm_inst', return_value=os_vm_inst), \

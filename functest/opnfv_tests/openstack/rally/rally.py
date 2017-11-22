@@ -29,10 +29,12 @@ from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
 
-from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
-from snaps.openstack.create_image import ImageSettings
-from snaps.openstack.create_network import NetworkSettings, SubnetSettings
-from snaps.openstack.create_router import RouterSettings
+from snaps.config.flavor import FlavorConfig
+from snaps.config.image import ImageConfig
+from snaps.config.network import NetworkConfig, SubnetConfig
+from snaps.config.router import RouterConfig
+
+from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import deploy_utils
 
@@ -476,7 +478,7 @@ class RallyBase(testcase.TestCase):
 
         LOGGER.debug("Creating image '%s'...", self.image_name)
         image_creator = deploy_utils.create_image(
-            self.os_creds, ImageSettings(
+            self.os_creds, ImageConfig(
                 name=self.image_name,
                 image_file=self.GLANCE_IMAGE_PATH,
                 img_format=self.GLANCE_IMAGE_FORMAT,
@@ -489,10 +491,10 @@ class RallyBase(testcase.TestCase):
 
         LOGGER.debug("Creating network '%s'...", network_name)
         network_creator = deploy_utils.create_network(
-            self.os_creds, NetworkSettings(
+            self.os_creds, NetworkConfig(
                 name=network_name,
                 shared=True,
-                subnet_settings=[SubnetSettings(
+                subnet_settings=[SubnetConfig(
                     name=subnet_name,
                     cidr=self.RALLY_PRIVATE_SUBNET_CIDR)
                 ]))
@@ -503,7 +505,7 @@ class RallyBase(testcase.TestCase):
 
         LOGGER.debug("Creating router '%s'...", router_name)
         router_creator = deploy_utils.create_router(
-            self.os_creds, RouterSettings(
+            self.os_creds, RouterConfig(
                 name=router_name,
                 external_gateway=self.ext_net_name,
                 internal_subnets=[subnet_name]))
@@ -513,7 +515,7 @@ class RallyBase(testcase.TestCase):
 
         LOGGER.debug("Creating flavor '%s'...", self.flavor_name)
         flavor_creator = OpenStackFlavor(
-            self.os_creds, FlavorSettings(
+            self.os_creds, FlavorConfig(
                 name=self.flavor_name, ram=512, disk=1, vcpus=1,
                 metadata=self.FLAVOR_EXTRA_SPECS))
         if flavor_creator is None or flavor_creator.create() is None:
@@ -522,7 +524,7 @@ class RallyBase(testcase.TestCase):
 
         LOGGER.debug("Creating flavor '%s'...", self.flavor_alt_name)
         flavor_alt_creator = OpenStackFlavor(
-            self.os_creds, FlavorSettings(
+            self.os_creds, FlavorConfig(
                 name=self.flavor_alt_name, ram=1024, disk=1, vcpus=1,
                 metadata=self.FLAVOR_EXTRA_SPECS))
         if flavor_alt_creator is None or flavor_alt_creator.create() is None:

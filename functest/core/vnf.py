@@ -14,8 +14,10 @@ import time
 
 import functest.core.testcase as base
 from functest.utils.constants import CONST
-from snaps.openstack.create_user import UserSettings, OpenStackUser
-from snaps.openstack.create_project import ProjectSettings, OpenStackProject
+from snaps.config.user import UserConfig
+from snaps.config.project import ProjectConfig
+from snaps.openstack.create_user import OpenStackUser
+from snaps.openstack.create_project import OpenStackProject
 from snaps.openstack.tests import openstack_tests
 
 __author__ = ("Morgan Richomme <morgan.richomme@orange.com>, "
@@ -108,7 +110,7 @@ class VnfOnBoarding(base.TestCase):
 
             project_creator = OpenStackProject(
                 snaps_creds,
-                ProjectSettings(
+                ProjectConfig(
                     name=self.tenant_name,
                     description=tenant_description
                 ))
@@ -118,7 +120,7 @@ class VnfOnBoarding(base.TestCase):
 
             user_creator = OpenStackUser(
                 snaps_creds,
-                UserSettings(
+                UserConfig(
                     name=self.tenant_name,
                     password=self.tenant_name,
                     roles={'admin': self.tenant_name}))

@@ -22,13 +22,13 @@ from functest.core.testcase import TestCase
 from functest.energy import energy
 from functest.opnfv_tests.openstack.vping import vping_base
 from functest.utils.constants import CONST
-from snaps.openstack.create_instance import FloatingIpSettings, \
-    VmInstanceSettings
 
-from snaps.openstack.create_keypairs import KeypairSettings
-from snaps.openstack.create_network import PortSettings
-from snaps.openstack.create_security_group import Direction, Protocol, \
-    SecurityGroupSettings, SecurityGroupRuleSettings
+from snaps.config.keypair import KeypairConfig
+from snaps.config.network import PortConfig
+from snaps.config.security_group import (
+    Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
+from snaps.config.vm_inst import FloatingIpConfig, VmInstanceConfig
+
 from snaps.openstack.utils import deploy_utils
 
 
@@ -68,16 +68,16 @@ class VPingSSH(vping_base.VPingBase):
             self.logger.info(log)
             kp_creator = deploy_utils.create_keypair(
                 self.os_creds,
-                KeypairSettings(name=self.kp_name,
-                                private_filepath=self.kp_priv_file,
-                                public_filepath=self.kp_pub_file))
+                KeypairConfig(
+                    name=self.kp_name, private_filepath=self.kp_priv_file,
+                    public_filepath=self.kp_pub_file))
             self.creators.append(kp_creator)
 
             # Creating Instance 1
-            port1_settings = PortSettings(
+            port1_settings = PortConfig(
                 name=self.vm1_name + '-vPingPort',
                 network_name=self.network_creator.network_settings.name)
-            instance1_settings = VmInstanceSettings(
+            instance1_settings = VmInstanceConfig(
                 name=self.vm1_name, flavor=self.flavor_name,
                 vm_boot_timeout=self.vm_boot_timeout,
                 vm_delete_timeout=self.vm_delete_timeout,
@@ -98,17 +98,17 @@ class VPingSSH(vping_base.VPingBase):
             sg_creator = self.__create_security_group()
             self.creators.append(sg_creator)
 
-            port2_settings = PortSettings(
+            port2_settings = PortConfig(
                 name=self.vm2_name + '-vPingPort',
                 network_name=self.network_creator.network_settings.name)
-            instance2_settings = VmInstanceSettings(
+            instance2_settings = VmInstanceConfig(
                 name=self.vm2_name, flavor=self.flavor_name,
                 vm_boot_timeout=self.vm_boot_timeout,
                 vm_delete_timeout=self.vm_delete_timeout,
                 ssh_connect_timeout=self.vm_ssh_connect_timeout,
                 port_settings=[port2_settings],
                 security_group_names=[sg_creator.sec_grp_settings.name],
-                floating_ip_settings=[FloatingIpSettings(
+                floating_ip_settings=[FloatingIpConfig(
                     name=self.vm2_name + '-FIPName',
                     port_name=port2_settings.name,
                     router_name=self.router_creator.router_settings.name)])
@@ -218,24 +218,22 @@ class VPingSSH(vping_base.VPingBase):
         """
         sg_rules = list()
         sg_rules.append(
-            SecurityGroupRuleSettings(sec_grp_name=self.sg_name,
-                                      direction=Direction.ingress,
-                                      protocol=Protocol.icmp))
+            SecurityGroupRuleConfig(
+                sec_grp_name=self.sg_name, direction=Direction.ingress,
+                protocol=Protocol.icmp))
         sg_rules.append(
-            SecurityGroupRuleSettings(sec_grp_name=self.sg_name,
-                                      direction=Direction.ingress,
-                                      protocol=Protocol.tcp, port_range_min=22,
-                                      port_range_max=22))
+            SecurityGroupRuleConfig(
+                sec_grp_name=self.sg_name, direction=Direction.ingress,
+                protocol=Protocol.tcp, port_range_min=22, port_range_max=22))
         sg_rules.append(
-            SecurityGroupRuleSettings(sec_grp_name=self.sg_name,
-                                      direction=Direction.egress,
-                                      protocol=Protocol.tcp, port_range_min=22,
-                                      port_range_max=22))
+            SecurityGroupRuleConfig(
+                sec_grp_name=self.sg_name, direction=Direction.egress,
+                protocol=Protocol.tcp, port_range_min=22, port_range_max=22))
 
         log = "Security group with name: '%s'" % self.sg_name
         self.logger.info(log)
         return deploy_utils.create_security_group(self.os_creds,
-                                                  SecurityGroupSettings(
+                                                  SecurityGroupConfig(
                                                       name=self.sg_name,
                                                       description=self.sg_desc,
                                                       rule_settings=sg_rules))

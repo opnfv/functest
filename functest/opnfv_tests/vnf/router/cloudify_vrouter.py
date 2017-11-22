@@ -25,20 +25,23 @@ import functest.utils.openstack_utils as os_utils
 
 from git import Repo
 
-from snaps.openstack.create_network import (NetworkSettings, SubnetSettings,
-                                            OpenStackNetwork)
-from snaps.openstack.create_security_group import (SecurityGroupSettings,
-                                                   SecurityGroupRuleSettings,
-                                                   Direction, Protocol,
-                                                   OpenStackSecurityGroup)
-from snaps.openstack.create_router import RouterSettings, OpenStackRouter
-from snaps.openstack.create_instance import (VmInstanceSettings,
-                                             FloatingIpSettings,
-                                             OpenStackVmInstance)
-from snaps.openstack.create_flavor import FlavorSettings, OpenStackFlavor
-from snaps.openstack.create_image import ImageSettings, OpenStackImage
-from snaps.openstack.create_keypairs import KeypairSettings, OpenStackKeypair
-from snaps.openstack.create_network import PortSettings
+from snaps.config.flavor import FlavorConfig
+from snaps.config.image import ImageConfig
+from snaps.config.keypair import KeypairConfig
+from snaps.config.network import NetworkConfig, PortConfig, SubnetConfig
+from snaps.config.router import RouterConfig
+from snaps.config.security_group import (
+    Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
+from snaps.config.vm_inst import FloatingIpConfig, VmInstanceConfig
+
+from snaps.openstack.create_flavor import OpenStackFlavor
+from snaps.openstack.create_image import OpenStackImage
+from snaps.openstack.create_instance import OpenStackVmInstance
+from snaps.openstack.create_keypairs import OpenStackKeypair
+from snaps.openstack.create_network import OpenStackNetwork
+from snaps.openstack.create_security_group import OpenStackSecurityGroup
+from snaps.openstack.create_router import OpenStackRouter
+
 import snaps.openstack.utils.glance_utils as glance_utils
 
 from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
@@ -121,10 +124,10 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             if image_file and image_name:
                 image_creator = OpenStackImage(
                     self.snaps_creds,
-                    ImageSettings(name=image_name,
-                                  image_user='cloud',
-                                  img_format='qcow2',
-                                  image_file=image_file))
+                    ImageConfig(name=image_name,
+                                image_user='cloud',
+                                img_format='qcow2',
+                                image_file=image_file))
                 image_creator.create()
                 self.created_object.append(image_creator)
 
@@ -138,24 +141,24 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         start_time = time.time()
         self.__logger.info("Creating keypair ...")
         kp_file = os.path.join(self.data_dir, "cloudify_vrouter.pem")
-        keypair_settings = KeypairSettings(name='cloudify_vrouter_kp',
-                                           private_filepath=kp_file)
+        keypair_settings = KeypairConfig(name='cloudify_vrouter_kp',
+                                         private_filepath=kp_file)
         keypair_creator = OpenStackKeypair(self.snaps_creds, keypair_settings)
         keypair_creator.create()
         self.created_object.append(keypair_creator)
 
         self.__logger.info("Creating full network ...")
-        subnet_settings = SubnetSettings(name='cloudify_vrouter_subnet',
-                                         cidr='10.67.79.0/24')
-        network_settings = NetworkSettings(name='cloudify_vrouter_network',
-                                           subnet_settings=[subnet_settings])
+        subnet_settings = SubnetConfig(name='cloudify_vrouter_subnet',
+                                       cidr='10.67.79.0/24')
+        network_settings = NetworkConfig(name='cloudify_vrouter_network',
+                                         subnet_settings=[subnet_settings])
         network_creator = OpenStackNetwork(self.snaps_creds, network_settings)
         network_creator.create()
         self.created_object.append(network_creator)
         ext_net_name = snaps_utils.get_ext_net_name(self.snaps_creds)
         router_creator = OpenStackRouter(
             self.snaps_creds,
-            RouterSettings(
+            RouterConfig(
                 name='cloudify_vrouter_router',
                 external_gateway=ext_net_name,
                 internal_subnets=[subnet_settings.name]))
@@ -166,19 +169,19 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         self.__logger.info("Creating security group for cloudify manager vm")
         sg_rules = list()
         sg_rules.append(
-            SecurityGroupRuleSettings(sec_grp_name="sg-cloudify-manager",
-                                      direction=Direction.ingress,
-                                      protocol=Protocol.tcp, port_range_min=1,
-                                      port_range_max=65535))
+            SecurityGroupRuleConfig(sec_grp_name="sg-cloudify-manager",
+                                    direction=Direction.ingress,
+                                    protocol=Protocol.tcp, port_range_min=1,
+                                    port_range_max=65535))
         sg_rules.append(
-            SecurityGroupRuleSettings(sec_grp_name="sg-cloudify-manager",
-                                      direction=Direction.ingress,
-                                      protocol=Protocol.udp, port_range_min=1,
-                                      port_range_max=65535))
+            SecurityGroupRuleConfig(sec_grp_name="sg-cloudify-manager",
+                                    direction=Direction.ingress,
+                                    protocol=Protocol.udp, port_range_min=1,
+                                    port_range_max=65535))
 
         security_group_creator = OpenStackSecurityGroup(
             self.snaps_creds,
-            SecurityGroupSettings(
+            SecurityGroupConfig(
                 name="sg-cloudify-manager",
                 rule_settings=sg_rules))
 
@@ -188,7 +191,7 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         # orchestrator VM flavor
         self.__logger.info("Get or create flavor for cloudify manager vm ...")
 
-        flavor_settings = FlavorSettings(
+        flavor_settings = FlavorConfig(
             name=self.orchestrator['requirements']['flavor']['name'],
             ram=self.orchestrator['requirements']['flavor']['ram_min'],
             disk=50,
@@ -196,21 +199,21 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
         flavor_creator.create()
         self.created_object.append(flavor_creator)
-        image_settings = ImageSettings(
+        image_settings = ImageConfig(
             name=self.orchestrator['requirements']['os_image'],
             image_user='centos',
             exists=True)
 
-        port_settings = PortSettings(name='cloudify_manager_port',
-                                     network_name=network_settings.name)
+        port_settings = PortConfig(name='cloudify_manager_port',
+                                   network_name=network_settings.name)
 
-        manager_settings = VmInstanceSettings(
+        manager_settings = VmInstanceConfig(
             name='cloudify_manager',
             flavor=flavor_settings.name,
             port_settings=[port_settings],
             security_group_names=[
                 security_group_creator.sec_grp_settings.name],
-            floating_ip_settings=[FloatingIpSettings(
+            floating_ip_settings=[FloatingIpConfig(
                 name='cloudify_manager_fip',
                 port_name=port_settings.name,
                 router_name=router_creator.router_settings.name)])
@@ -309,7 +312,7 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
                                      descriptor.get('name'))
 
         self.__logger.info("Get or create flavor for vrouter")
-        flavor_settings = FlavorSettings(
+        flavor_settings = FlavorConfig(
             name=self.vnf['requirements']['flavor']['name'],
             ram=self.vnf['requirements']['flavor']['ram_min'],
             disk=25,
