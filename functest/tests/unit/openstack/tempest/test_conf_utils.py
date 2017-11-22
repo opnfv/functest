@@ -89,12 +89,11 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         self.assertTrue(msg in context.exception, msg=str(context.exception))
 
     def _get_rally_creds(self):
-        return {"type": "ExistingCloud",
-                "admin": {"username": 'test_user_name',
+        return {"admin": {"username": 'test_user_name',
                           "password": 'test_password',
                           "tenant": 'test_tenant'}}
 
-    @mock.patch('functest.utils.openstack_utils.get_credentials_for_rally')
+    @mock.patch('rally.cli.envutils.get_creds_from_env_vars')
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils'
                 '.logger.info')
     @mock.patch('functest.utils.functest_utils.execute_command_raise')
