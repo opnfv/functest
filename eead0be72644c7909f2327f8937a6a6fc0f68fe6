@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a3d3df0_c1c5673e",
+        "filename": "docs/testing/user/userguide/troubleshooting.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-22T15:35:03Z",
+      "side": 1,
+      "message": "I think both \" are useless here",
+      "range": {
+        "startLine": 287,
+        "startChar": 32,
+        "endLine": 287,
+        "endChar": 33
+      },
+      "revId": "eead0be72644c7909f2327f8937a6a6fc0f68fe6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_a6d2f9cf",
         "filename": "functest/api/swagger/envs_action.yaml",
         "patchSetId": 10
@@ -19,6 +42,23 @@
         "endLine": 5,
         "endChar": 15
       },
+      "revId": "eead0be72644c7909f2327f8937a6a6fc0f68fe6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_61de1b13",
+        "filename": "functest/tests/unit/cli/commands/test_cli_env.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-11-22T15:35:03Z",
+      "side": 1,
+      "message": "BYW we could use PrettyTable here (another patch is useful)",
       "revId": "eead0be72644c7909f2327f8937a6a6fc0f68fe6",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
