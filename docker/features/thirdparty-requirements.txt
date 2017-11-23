@@ -1,4 +1,4 @@
-# baro_tests
+baro_tests
 sdnvpn
 sfc
 # doctor-tests;python_version>='3.0'

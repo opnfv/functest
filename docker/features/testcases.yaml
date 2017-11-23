@@ -57,7 +57,6 @@ tiers:
             -
                 case_name: barometercollectd
                 project_name: barometer
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
