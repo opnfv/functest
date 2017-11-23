@@ -9,7 +9,6 @@
 
 """ global variables """
 
-import os
 import pkg_resources
 
 import click
@@ -50,9 +49,6 @@ class Testcase(object):
 
         if testname == 'vacation':
             vacation.main()
-        elif not os.path.isfile(CONST.__getattribute__('env_active')):
-            click.echo("Functest environment is not ready. "
-                       "Run first 'functest env prepare'")
         else:
             tests = testname.split(",")
             for test in tests:

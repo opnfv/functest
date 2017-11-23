@@ -139,7 +139,7 @@ class CheckDeployment(object):
     def check_all(self):
         """
         Calls all the class functions and returns 0 if all of them succeed.
-        This is the method called by prepare_env or CLI
+        This is the method called by CLI
         """
         self.check_rc()
         try:
