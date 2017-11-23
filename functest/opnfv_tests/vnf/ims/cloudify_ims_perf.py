@@ -19,10 +19,12 @@ import paramiko
 import dns.resolver
 from jinja2 import Environment, FileSystemLoader
 
-
 from functest.energy import energy
 from functest.opnfv_tests.openstack.snaps import snaps_utils
-import functest.opnfv_tests.vnf.ims.cloudify_ims as cloudify_ims
+from functest.opnfv_tests.vnf.ims import cloudify_ims
+from functest.opnfv_tests.vnf.ims.ixia.utils import IxChassisUtils
+from functest.opnfv_tests.vnf.ims.ixia.utils import IxLoadUtils
+from functest.opnfv_tests.vnf.ims.ixia.utils import IxRestUtils
 from functest.utils.constants import CONST
 
 from snaps.config.flavor import FlavorConfig
@@ -32,16 +34,12 @@ from snaps.config.router import RouterConfig
 from snaps.config.security_group import (
     Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
 from snaps.config.vm_inst import FloatingIpConfig, VmInstanceConfig
-
 from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.create_instance import OpenStackVmInstance
 from snaps.openstack.create_network import OpenStackNetwork
 from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.create_security_group import OpenStackSecurityGroup
 
-from ixia.utils.IxChassisUtils import ChassisRestAPI
-import ixia.utils.IxLoadUtils as IxLoadUtils
-import ixia.utils.IxRestUtils as IxRestUtils
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
 
@@ -152,8 +150,7 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
                                     protocol=Protocol.icmp))
 
         ixia_managment_sg_settings = SecurityGroupConfig(
-                                        name="ixia_management",
-                                        rule_settings=sg_rules)
+            name="ixia_management", rule_settings=sg_rules)
         securit_group_creator = OpenStackSecurityGroup(
             self.snaps_creds,
             ixia_managment_sg_settings)
@@ -169,8 +166,7 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
                                     port_range_max=65535))
 
         ixia_ssh_http_sg_settings = SecurityGroupConfig(
-                                        name="ixia_ssh_http",
-                                        rule_settings=sg_rules)
+            name="ixia_ssh_http", rule_settings=sg_rules)
         securit_group_creator = OpenStackSecurityGroup(
             self.snaps_creds,
             ixia_ssh_http_sg_settings)
@@ -224,28 +220,22 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
             exists=True)
 
         chassis_port_settings = PortConfig(
-                                     name='ixia_chassis_port',
-                                     network_name=network_settings.name)
+            name='ixia_chassis_port', network_name=network_settings.name)
 
         card1_port1_settings = PortConfig(
-                                     name='ixia_card1_port1',
-                                     network_name=network_settings.name)
+            name='ixia_card1_port1', network_name=network_settings.name)
 
         card2_port1_settings = PortConfig(
-                                     name='ixia_card2_port1',
-                                     network_name=network_settings.name)
+            name='ixia_card2_port1', network_name=network_settings.name)
 
         card1_port2_settings = PortConfig(
-                                     name='ixia_card1_port2',
-                                     network_name="cloudify_ims_network")
+            name='ixia_card1_port2', network_name="cloudify_ims_network")
 
         card2_port2_settings = PortConfig(
-                                     name='ixia_card2_port2',
-                                     network_name="cloudify_ims_network")
+            name='ixia_card2_port2', network_name="cloudify_ims_network")
 
         load_port_settings = PortConfig(
-                                     name='ixia_load_port',
-                                     network_name=network_settings.name)
+            name='ixia_load_port', network_name=network_settings.name)
 
         chassis_settings = VmInstanceConfig(
             name='ixia_vChassis',
@@ -329,19 +319,18 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
                               "password": "admin",
                               "rememberMe": "false"})
         api_key = json.loads((
-            ChassisRestAPI.postWithPayload(login_url, payload)))["apiKey"]
+            IxChassisUtils.ChassisRestAPI.postWithPayload(login_url, payload)))["apiKey"]
 
         self.__logger.info("Adding 2 card back inside the ixia chassis...")
 
         for ip in vcard_ips:
             payload = {"ipAddress": str(ip)}
-            response = json.loads(ChassisRestAPI.postOperation(cards_url,
-                                                               api_key,
-                                                               payload))
+            response = json.loads(IxChassisUtils.ChassisRestAPI.postOperation(
+                cards_url, api_key, payload))
             count = 0
             while (int(
-                 ChassisRestAPI.getWithHeaders(response['url'],
-                                               api_key)['progress']) != 100):
+                    IxChassisUtils.ChassisRestAPI.getWithHeaders(
+                        response['url'], api_key)['progress']) != 100):
                 self.__logger.debug("Operation did not finish yet. \
                                     Waiting for 1 more second..")
                 time.sleep(1)
@@ -406,10 +395,8 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         j2_env = Environment(loader=FileSystemLoader(files_dir),
                              trim_blocks=True)
         self.test['inputs'].update(dict(
-                                    ipchassis=fip_chassis,
-                                    ipcard1=vcard_ips_p2[0],
-                                    ipcard2=vcard_ips_p2[1],
-                                    iplistims=iplistims
+            ipchassis=fip_chassis, ipcard1=vcard_ips_p2[0],
+            ipcard2=vcard_ips_p2[1], iplistims=iplistims
         ))
 
         target_file.write(

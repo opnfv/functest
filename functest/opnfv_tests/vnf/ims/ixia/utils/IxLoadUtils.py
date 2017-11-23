@@ -11,7 +11,9 @@ import requests
 import sys
 import time
 import logging
-from IxRestUtils import formatDictToJSONPayload
+
+from functest.opnfv_tests.vnf.ims.ixia.utils import IxRestUtils
+
 
 kActionStateFinished = 'finished'
 kActionStatusSuccessful = 'Successful'
@@ -80,7 +82,7 @@ def performGenericOperation(connection, url, payloadDict):
     it will wait for it to finish.
     """
 
-    data = formatDictToJSONPayload(payloadDict)
+    data = IxRestUtils.formatDictToJSONPayload(payloadDict)
     reply = connection.httpPost(url=url, data=data)
 
     waitForActionToFinish(connection, reply, url)
@@ -307,12 +309,11 @@ def pollStats(connection, sessionUrl, watchedStatsDict, pollingInterval=4):
             for timestamp in newTimestamps:
                 timeStampStr = str(timestamp)
 
-                collectedTimestamps.setdefault(statSource, []).append(
-                                                                  timeStampStr)
+                collectedTimestamps.setdefault(
+                    statSource, []).append(timeStampStr)
 
-                timestampDict = statsDict.setdefault(statSource,
-                                                     {}).setdefault(
-                                                                timestamp, {})
+                timestampDict = statsDict.setdefault(
+                    statSource, {}).setdefault(timestamp, {})
 
                 # save the values for the current timestamp,
                 # and later print them
