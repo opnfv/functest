@@ -15,7 +15,6 @@ class Config(object):
                 self._parse(None, self.functest_yaml)
         except Exception as error:
             raise Exception('Parse config failed: {}'.format(str(error)))
-        self._set_others()
 
     def _parse(self, attr_now, left_parametes):
         for param_n, param_v in six.iteritems(left_parametes):
@@ -29,7 +28,5 @@ class Config(object):
         return attr_now if next == 'general' else (
             '{}_{}'.format(attr_now, next) if attr_now else next)
 
-    def _set_others(self):
-        pass
 
 CONF = Config()
