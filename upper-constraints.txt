@@ -10,7 +10,6 @@ git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-heattranslator&subdirectory=t
 git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-toscaparser&subdirectory=tosca2heat/tosca-parser
 -e git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-parser
 cloudify-rest-client===4.0
-iniparse===0.4
 openbaton-cli===2.2.1b7
 robotframework===3.0.2
 robotframework-httplibrary===0.4.2

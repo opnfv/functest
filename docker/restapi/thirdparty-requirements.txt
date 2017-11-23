@@ -1,3 +1,6 @@
+robotframework-httplibrary
+robotframework-requests
+robotframework-sshlibrary;python_version=='2.7'
 # baro_tests
 sdnvpn
 sfc
