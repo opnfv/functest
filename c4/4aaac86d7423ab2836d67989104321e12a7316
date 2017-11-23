@@ -1,0 +1,10 @@
+Code-Review+2: Jose Lausuch <jalausuch@suse.com>
+Code-Review+2: Serena Feng <feng.xiaowei@zte.com.cn>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Linda Wang <wangwulin@huawei.com>
+Submitted-by: Linda Wang <wangwulin@huawei.com>
+Submitted-at: Thu, 23 Nov 2017 11:04:27 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/47705
+Project: functest
+Branch: refs/heads/master
