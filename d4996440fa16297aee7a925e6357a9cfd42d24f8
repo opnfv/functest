@@ -46,6 +46,30 @@
       "revId": "d4996440fa16297aee7a925e6357a9cfd42d24f8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_bc59665d",
+        "filename": "functest/utils/config.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-11-23T09:16:50Z",
+      "side": 1,
+      "message": "because it is called in __init__() ling 18, suggest deleting the call as well.",
+      "parentUuid": "9a3d3df0_bc2166fe",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "d4996440fa16297aee7a925e6357a9cfd42d24f8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
