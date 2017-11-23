@@ -88,21 +88,12 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         msg = 'Failed to create flavor'
         self.assertTrue(msg in context.exception, msg=str(context.exception))
 
-    def _get_rally_creds(self):
-        return {"type": "ExistingCloud",
-                "admin": {"username": 'test_user_name',
-                          "password": 'test_password',
-                          "tenant": 'test_tenant'}}
-
-    @mock.patch('functest.utils.openstack_utils.get_credentials_for_rally')
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils'
                 '.logger.info')
     @mock.patch('functest.utils.functest_utils.execute_command_raise')
     @mock.patch('functest.utils.functest_utils.execute_command')
     def test_create_rally_deployment(self, mock_exec, mock_exec_raise,
-                                     mock_logger_info, mock_os_utils):
-
-        mock_os_utils.return_value = self._get_rally_creds()
+                                     mock_logger_info):
 
         conf_utils.create_rally_deployment()
 
@@ -112,7 +103,7 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         mock_logger_info.assert_any_call("Creating Rally environment...")
         mock_exec.assert_any_call(cmd, error_msg=error_msg, verbose=False)
 
-        cmd = "rally deployment create --file=rally_conf.json --name="
+        cmd = "rally deployment create --fromenv --name="
         cmd += CONST.__getattribute__('rally_deployment_name')
         error_msg = "Problem while creating Rally deployment"
         mock_exec_raise.assert_any_call(cmd, error_msg=error_msg)
