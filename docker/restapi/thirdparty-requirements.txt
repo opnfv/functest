@@ -1,7 +1,7 @@
 robotframework-httplibrary
 robotframework-requests
 robotframework-sshlibrary;python_version=='2.7'
-# baro_tests
+baro_tests
 sdnvpn
 sfc
 # doctor-tests;python_version>='3.0'
