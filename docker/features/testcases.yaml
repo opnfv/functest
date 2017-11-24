@@ -9,7 +9,6 @@ tiers:
         testcases:
             -
                 case_name: doctor-notification
-                project_name: doctor
                 enabled: false
                 criteria: 100
                 blocking: false
