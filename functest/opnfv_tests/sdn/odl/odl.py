@@ -35,7 +35,10 @@ from six.moves import urllib
 
 from functest.core import testcase
 from functest.utils import constants
-import functest.utils.openstack_utils as op_utils
+
+from snaps.openstack.tests import openstack_tests
+from snaps.openstack.utils import keystone_utils
+
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
@@ -215,8 +218,11 @@ class ODLTests(testcase.TestCase):
                 suites = kwargs["suites"]
             except KeyError:
                 pass
-            kwargs = {'neutronurl': op_utils.get_endpoint(
-                service_type='network')}
+            os_creds = openstack_tests.get_credentials(
+                os_env_file=constants.CONST.__getattribute__(
+                    'openstack_creds'))
+            kwargs = {'neutronurl': keystone_utils.get_endpoint(
+                os_creds, 'network')}
             kwargs['odlip'] = urllib.parse.urlparse(
                 kwargs['neutronurl']).hostname
             kwargs['odlwebport'] = '8080'
