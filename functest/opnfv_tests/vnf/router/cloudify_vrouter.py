@@ -20,8 +20,8 @@ import yaml
 
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 import functest.opnfv_tests.vnf.router.vrouter_base as vrouter_base
+from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
 from functest.utils.constants import CONST
-import functest.utils.openstack_utils as os_utils
 
 from git import Repo
 
@@ -43,8 +43,8 @@ from snaps.openstack.create_security_group import OpenStackSecurityGroup
 from snaps.openstack.create_router import OpenStackRouter
 
 import snaps.openstack.utils.glance_utils as glance_utils
+from snaps.openstack.utils import keystone_utils
 
-from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
 
 __author__ = "Shuya Nakama <shuya.nakama@okinawaopenlabs.org>"
 
@@ -227,7 +227,8 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         manager_creator.create()
         self.created_object.append(manager_creator)
 
-        public_auth_url = os_utils.get_endpoint('identity')
+        public_auth_url = keystone_utils.get_endpoint(
+            self.snaps_creds, 'identity')
 
         self.__logger.info("Set creds for cloudify manager")
         cfy_creds = dict(keystone_username=self.tenant_name,
@@ -336,7 +337,8 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         self.vnf['inputs'].update(dict(keystone_password=self.tenant_name))
         self.vnf['inputs'].update(dict(keystone_tenant_name=self.tenant_name))
         self.vnf['inputs'].update(
-            dict(keystone_url=os_utils.get_endpoint('identity')))
+            dict(keystone_url=keystone_utils.get_endpoint(
+                self.snaps_creds, 'identity')))
 
         self.__logger.info("Create VNF Instance")
         cfy_client.deployments.create(descriptor.get('name'),

@@ -22,7 +22,6 @@ from functest.energy import energy
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
 from functest.utils.constants import CONST
-import functest.utils.openstack_utils as os_utils
 
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
@@ -40,6 +39,7 @@ from snaps.openstack.create_keypairs import OpenStackKeypair
 from snaps.openstack.create_network import OpenStackNetwork
 from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.create_security_group import OpenStackSecurityGroup
+from snaps.openstack.utils import keystone_utils
 
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
@@ -224,7 +224,8 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         manager_creator.create()
         self.created_object.append(manager_creator)
 
-        public_auth_url = os_utils.get_endpoint('identity')
+        public_auth_url = keystone_utils.get_endpoint(
+            self.snaps_creds, 'identity')
 
         self.__logger.info("Set creds for cloudify manager")
         cfy_creds = dict(keystone_username=self.tenant_name,
