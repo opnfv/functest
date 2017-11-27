@@ -107,21 +107,6 @@ class VnfBaseTesting(unittest.TestCase):
     def test_deploy_orch_unimplemented(self):
         self.assertTrue(self.test.deploy_orchestrator())
 
-#    @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials',
-#                return_value='test')
-#    @mock.patch('snaps.openstack.create_project.OpenStackProject',
-#                return_value=True)
-#    @mock.patch('snaps.openstack.create_user.OpenStackUser',
-#                return_value=True)
-#    def test_prepare(self, *args):
-#        self.assertEqual(self.test.prepare(),
-#                         testcase.TestCase.EX_OK)
-#        args[0].assert_called_once_with()
-#        args[1].assert_called_once_with('test', self.tenant_name)
-#        args[2].assert_called_once_with(
-#            'test', self.tenant_name, self.tenant_description)
-#        args[3].assert_called_once_with()
-
     @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials',
                 return_value=OSCreds(
                     username='user', password='pass',
@@ -132,34 +117,18 @@ class VnfBaseTesting(unittest.TestCase):
             self.test.prepare()
         args[0].assert_called_once()
 
-#    @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials',
-#                return_value=OS_CREDS)
-#    @mock.patch('snaps.openstack.create_project.OpenStackProject')
-#    @mock.patch('snaps.openstack.create_project.OpenStackProject.create',
-#                side_effect=Exception)
-#    def test_prepare_tenant_creation_ko(self, *args):
-#        with self.assertRaises(vnf.VnfPreparationException):
-#            self.test.prepare()
-#        args[2].assert_called_once()
-#        args[1].assert_called_once_with(OS_CREDS,
-#                                        ProjectSettings(
-#                                           name=self.tenant_name,
-#                                           description=self.tenant_description,
-#                                        ))
-#        args[0].assert_called_once()
+    def test_vnf_clean_exc(self):
+        obj = mock.Mock()
+        obj.clean.side_effect = Exception
+        self.test.created_object = [obj]
+        self.test.clean()
+        obj.clean.assert_called_with()
 
-#    @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials')
-#    @mock.patch('snaps.openstack.create_project.OpenStackProject',
-#                return_value=0)
-#    @mock.patch('snaps.openstack.create_user.OpenStackUser',
-#                side_effect=Exception)
-#    def test_prepare_user_creation_ko(self, *args):
-#        with self.assertRaises(vnf.VnfPreparationException):
-#            self.test.prepare()
-#        args[0].assert_called_once_with(mock.ANY, self.tenant_name)
-#        args[1].assert_called_once_with(
-#            mock.ANY, self.tenant_name, self.tenant_description)
-#        args[2].assert_called_once_with()
+    def test_vnf_clean(self):
+        obj = mock.Mock()
+        self.test.created_object = [obj]
+        self.test.clean()
+        obj.clean.assert_called_with()
 
 
 if __name__ == "__main__":
