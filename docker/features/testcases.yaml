@@ -86,4 +86,4 @@ tiers:
                     class: 'ODLTests'
                     args:
                         suites:
-                            -  /src/fds/testing/robot
+                            - /src/fds/testing/robot
