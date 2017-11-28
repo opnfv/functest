@@ -36,8 +36,8 @@ Neutron and Nova and may perform some simple queries. When the config value of
 snaps.use_keystone is True, functest must have access to the cloud's private
 network. This suite consists in 49 tests (test duration < 2 minutes).
 
-snaps_health_check creates instance, allocate floating IP, connect to the VM.
-This test replaced the previous Colorado healthcheck test.
+Snaps_health_check creates a VM with a single port with an IPv4 address that
+is assigned by DHCP and then validates the expected IP with the actual.
 
 Self-obviously, successful completion of the 'healthcheck' testcase is a
 necessary pre-requisite for the execution of all other test Tiers.
