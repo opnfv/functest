@@ -1,0 +1,9 @@
+Code-Review+2: Jose Lausuch <jalausuch@suse.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Steven Pisarski <s.pisarski@cablelabs.com>
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Tue, 28 Nov 2017 19:48:06 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/47937
+Project: functest
+Branch: refs/heads/stable/euphrates
