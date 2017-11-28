@@ -162,8 +162,8 @@ tiers:
                     class: 'ODLTests'
                     args:
                         suites:
-                            -  /src/odl_test/csit/suites/integration/basic
-                            -  /src/odl_test/csit/suites/openstack/neutron
+                            - /src/odl_test/csit/suites/integration/basic
+                            - /src/odl_test/csit/suites/openstack/neutron
 
             -
                 case_name: odl_netvirt
@@ -183,9 +183,9 @@ tiers:
                     class: 'ODLTests'
                     args:
                         suites:
-                            -  /src/odl_test/csit/suites/integration/basic
-                            -  /src/odl_test/csit/suites/openstack/neutron
-                            -  /src/odl_test/csit/suites/openstack/connectivity
+                            - /src/odl_test/csit/suites/integration/basic
+                            - /src/odl_test/csit/suites/openstack/neutron
+                            - /src/odl_test/csit/suites/openstack/connectivity
 
             -
                 case_name: snaps_smoke

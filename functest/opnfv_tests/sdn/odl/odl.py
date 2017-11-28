@@ -19,51 +19,22 @@ Example:
 from __future__ import division
 
 import argparse
-import errno
 import fileinput
 import logging
 import os
 import re
 import sys
 
-import robot.api
-from robot.errors import RobotError
-import robot.run
-from robot.utils.robottime import timestamp_to_secs
-from six import StringIO
 from six.moves import urllib
 
-from functest.core import testcase
+from functest.core import robotframework
 from functest.utils import constants
 import functest.utils.openstack_utils as op_utils
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
 
-class ODLResultVisitor(robot.api.ResultVisitor):
-    """Visitor to get result details."""
-
-    def __init__(self):
-        self._data = []
-
-    def visit_test(self, test):
-        output = {}
-        output['name'] = test.name
-        output['parent'] = test.parent.name
-        output['status'] = test.status
-        output['starttime'] = test.starttime
-        output['endtime'] = test.endtime
-        output['critical'] = test.critical
-        output['text'] = test.message
-        output['elapsedtime'] = test.elapsedtime
-        self._data.append(output)
-
-    def get_data(self):
-        """Get the details of the result."""
-        return self._data
-
-
-class ODLTests(testcase.TestCase):
+class ODLTests(robotframework.RobotFramework):
     """ODL test runner."""
 
     odl_test_repo = constants.CONST.__getattribute__('dir_repo_odl_test')
@@ -72,9 +43,13 @@ class ODLTests(testcase.TestCase):
     basic_suite_dir = os.path.join(odl_test_repo,
                                    "csit/suites/integration/basic")
     default_suites = [basic_suite_dir, neutron_suite_dir]
-    res_dir = os.path.join(
-        constants.CONST.__getattribute__('dir_results'), 'odl')
     __logger = logging.getLogger(__name__)
+
+    def __init__(self, **kwargs):
+        super(ODLTests, self).__init__(**kwargs)
+        self.res_dir = os.path.join(
+            constants.CONST.__getattribute__('dir_results'), 'odl')
+        self.xml_file = os.path.join(self.res_dir, 'output.xml')
 
     @classmethod
     def set_robotframework_vars(cls, odlusername="admin", odlpassword="admin"):
@@ -97,24 +72,6 @@ class ODLTests(testcase.TestCase):
         except Exception as ex:  # pylint: disable=broad-except
             cls.__logger.error("Cannot set ODL creds: %s", str(ex))
             return False
-
-    def parse_results(self):
-        """Parse output.xml and get the details in it."""
-        xml_file = os.path.join(self.res_dir, 'output.xml')
-        result = robot.api.ExecutionResult(xml_file)
-        visitor = ODLResultVisitor()
-        result.visit(visitor)
-        try:
-            self.result = 100 * (
-                result.suite.statistics.critical.passed /
-                result.suite.statistics.critical.total)
-        except ZeroDivisionError:
-            self.__logger.error("No test has been run")
-        self.start_time = timestamp_to_secs(result.suite.starttime)
-        self.stop_time = timestamp_to_secs(result.suite.endtime)
-        self.details = {}
-        self.details['description'] = result.suite.name
-        self.details['tests'] = visitor.get_data()
 
     def run_suites(self, suites=None, **kwargs):
         """Run the test suites
@@ -155,44 +112,24 @@ class ODLTests(testcase.TestCase):
             keystoneurl = "{}://{}".format(
                 urllib.parse.urlparse(osauthurl).scheme,
                 urllib.parse.urlparse(osauthurl).netloc)
-            variables = ['KEYSTONEURL:' + keystoneurl,
-                         'NEUTRONURL:' + kwargs['neutronurl'],
-                         'OS_AUTH_URL:"' + osauthurl + '"',
-                         'OSUSERNAME:"' + kwargs['osusername'] + '"',
-                         ('OSUSERDOMAINNAME:"' +
-                          kwargs['osuserdomainname'] + '"'),
-                         'OSTENANTNAME:"' + kwargs['osprojectname'] + '"',
-                         ('OSPROJECTDOMAINNAME:"' +
-                          kwargs['osprojectdomainname'] + '"'),
-                         'OSPASSWORD:"' + kwargs['ospassword'] + '"',
-                         'ODL_SYSTEM_IP:' + kwargs['odlip'],
-                         'PORT:' + kwargs['odlwebport'],
-                         'RESTCONFPORT:' + kwargs['odlrestconfport']]
-        except KeyError as ex:
+            variable = ['KEYSTONEURL:' + keystoneurl,
+                        'NEUTRONURL:' + kwargs['neutronurl'],
+                        'OS_AUTH_URL:"' + osauthurl + '"',
+                        'OSUSERNAME:"' + kwargs['osusername'] + '"',
+                        ('OSUSERDOMAINNAME:"' +
+                         kwargs['osuserdomainname'] + '"'),
+                        'OSTENANTNAME:"' + kwargs['osprojectname'] + '"',
+                        ('OSPROJECTDOMAINNAME:"' +
+                         kwargs['osprojectdomainname'] + '"'),
+                        'OSPASSWORD:"' + kwargs['ospassword'] + '"',
+                        'ODL_SYSTEM_IP:' + kwargs['odlip'],
+                        'PORT:' + kwargs['odlwebport'],
+                        'RESTCONFPORT:' + kwargs['odlrestconfport']]
+        except KeyError:
             self.__logger.exception("Cannot run ODL testcases. Please check")
             return self.EX_RUN_ERROR
         if self.set_robotframework_vars(odlusername, odlpassword):
-            try:
-                os.makedirs(self.res_dir)
-            except OSError as ex:
-                if ex.errno != errno.EEXIST:
-                    self.__logger.exception(
-                        "Cannot create %s", self.res_dir)
-                    return self.EX_RUN_ERROR
-            output_dir = os.path.join(self.res_dir, 'output.xml')
-            stream = StringIO()
-            robot.run(*suites, variable=variables, output=output_dir,
-                      log='NONE', report='NONE', stdout=stream)
-            self.__logger.info("\n" + stream.getvalue())
-            self.__logger.info("ODL results were successfully generated")
-            try:
-                self.parse_results()
-                self.__logger.info("ODL results were successfully parsed")
-            except RobotError as ex:
-                self.__logger.error("Run tests before publishing: %s",
-                                    ex.message)
-                return self.EX_RUN_ERROR
-            return self.EX_OK
+            return super(ODLTests, self).run(variable=variable, suites=suites)
         else:
             return self.EX_RUN_ERROR
 
@@ -330,11 +267,11 @@ def main():
     args = parser.parse_args(sys.argv[1:])
     try:
         result = odl.run_suites(ODLTests.default_suites, **args)
-        if result != testcase.TestCase.EX_OK:
+        if result != robotframework.RobotFramework.EX_OK:
             return result
         if args['pushtodb']:
             return odl.push_to_db()
         else:
             return result
     except Exception:  # pylint: disable=broad-except
-        return testcase.TestCase.EX_RUN_ERROR
+        return robotframework.RobotFramework.EX_RUN_ERROR

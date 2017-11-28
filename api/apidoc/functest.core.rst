@@ -12,6 +12,7 @@ Submodules
 .. toctree::
 
    functest.core.feature
+   functest.core.robotframework
    functest.core.testcase
    functest.core.vnf
    functest.core.unit

@@ -9,16 +9,13 @@
 
 """Define the classes required to fully cover odl."""
 
-import errno
 import logging
 import os
 import unittest
 
 from keystoneauth1.exceptions import auth_plugins
 import mock
-from robot.errors import DataError, RobotError
-from robot.result import model
-from robot.utils.robottime import timestamp_to_secs
+from robot.errors import RobotError
 import six
 from six.moves import urllib
 
@@ -26,38 +23,6 @@ from functest.core import testcase
 from functest.opnfv_tests.sdn.odl import odl
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
-
-
-class ODLVisitorTesting(unittest.TestCase):
-
-    """The class testing ODLResultVisitor."""
-    # pylint: disable=missing-docstring
-
-    def setUp(self):
-        self.visitor = odl.ODLResultVisitor()
-
-    def test_empty(self):
-        self.assertFalse(self.visitor.get_data())
-
-    def test_ok(self):
-        data = {'name': 'foo',
-                'parent': 'bar',
-                'status': 'PASS',
-                'starttime': "20161216 16:00:00.000",
-                'endtime': "20161216 16:00:01.000",
-                'elapsedtime': 1000,
-                'text': 'Hello, World!',
-                'critical': True}
-        test = model.TestCase(
-            name=data['name'], status=data['status'], message=data['text'],
-            starttime=data['starttime'], endtime=data['endtime'])
-        test.parent = mock.Mock()
-        config = {'name': data['parent'],
-                  'criticality.test_is_critical.return_value': data[
-                      'critical']}
-        test.parent.configure_mock(**config)
-        self.visitor.visit_test(test)
-        self.assertEqual(self.visitor.get_data(), [data])
 
 
 class ODLTesting(unittest.TestCase):
@@ -107,56 +72,6 @@ class ODLTesting(unittest.TestCase):
                             'odlwebport': self._odl_webport,
                             'odlrestconfport': self._odl_restconfport,
                             'pushtodb': False}
-
-
-class ODLParseResultTesting(ODLTesting):
-
-    """The class testing ODLTests.parse_results()."""
-    # pylint: disable=missing-docstring
-
-    _config = {'name': 'dummy', 'starttime': '20161216 16:00:00.000',
-               'endtime': '20161216 16:00:01.000'}
-
-    @mock.patch('robot.api.ExecutionResult', side_effect=DataError)
-    def test_raises_exc(self, mock_method):
-        with self.assertRaises(DataError):
-            self.test.parse_results()
-        mock_method.assert_called_once_with(
-            os.path.join(odl.ODLTests.res_dir, 'output.xml'))
-
-    def _test_result(self, config, result):
-        suite = mock.Mock()
-        suite.configure_mock(**config)
-        with mock.patch('robot.api.ExecutionResult',
-                        return_value=mock.Mock(suite=suite)):
-            self.test.parse_results()
-            self.assertEqual(self.test.result, result)
-            self.assertEqual(self.test.start_time,
-                             timestamp_to_secs(config['starttime']))
-            self.assertEqual(self.test.stop_time,
-                             timestamp_to_secs(config['endtime']))
-            self.assertEqual(self.test.details,
-                             {'description': config['name'], 'tests': []})
-
-    def test_null_passed(self):
-        self._config.update({'statistics.critical.passed': 0,
-                             'statistics.critical.total': 20})
-        self._test_result(self._config, 0)
-
-    def test_no_test(self):
-        self._config.update({'statistics.critical.passed': 20,
-                             'statistics.critical.total': 0})
-        self._test_result(self._config, 0)
-
-    def test_half_success(self):
-        self._config.update({'statistics.critical.passed': 10,
-                             'statistics.critical.total': 20})
-        self._test_result(self._config, 50)
-
-    def test_success(self):
-        self._config.update({'statistics.critical.passed': 20,
-                             'statistics.critical.total': 20})
-        self._test_result(self._config, 100)
 
 
 class ODLRobotTesting(ODLTesting):
@@ -239,8 +154,7 @@ class ODLMainTesting(ODLTesting):
         kwargs = self._get_run_suites_kwargs()
         self.assertEqual(self.test.run_suites(**kwargs), status)
         if len(args) > 0:
-            args[0].assert_called_once_with(
-                odl.ODLTests.res_dir)
+            args[0].assert_called_once_with(self.test.res_dir)
         if len(args) > 1:
             variable = [
                 'KEYSTONEURL:{}://{}'.format(
@@ -260,13 +174,13 @@ class ODLMainTesting(ODLTesting):
                 odl.ODLTests.basic_suite_dir,
                 odl.ODLTests.neutron_suite_dir,
                 log='NONE',
-                output=os.path.join(odl.ODLTests.res_dir, 'output.xml'),
+                output=os.path.join(self.test.res_dir, 'output.xml'),
                 report='NONE',
                 stdout=mock.ANY,
                 variable=variable)
         if len(args) > 2:
             args[2].assert_called_with(
-                os.path.join(odl.ODLTests.res_dir, 'stdout.txt'))
+                os.path.join(self.test.res_dir, 'stdout.txt'))
 
     def _test_no_keyword(self, key):
         kwargs = self._get_run_suites_kwargs(key)
@@ -310,21 +224,6 @@ class ODLMainTesting(ODLTesting):
             mock_object.assert_called_once_with(
                 self._odl_username, self._odl_password)
 
-    @mock.patch('os.makedirs', side_effect=Exception)
-    def test_makedirs_exc(self, mock_method):
-        with mock.patch.object(self.test, 'set_robotframework_vars',
-                               return_value=True), \
-                self.assertRaises(Exception):
-            self._test_run_suites(testcase.TestCase.EX_RUN_ERROR,
-                                  mock_method)
-
-    @mock.patch('os.makedirs', side_effect=OSError)
-    def test_makedirs_oserror(self, mock_method):
-        with mock.patch.object(self.test, 'set_robotframework_vars',
-                               return_value=True):
-            self._test_run_suites(testcase.TestCase.EX_RUN_ERROR,
-                                  mock_method)
-
     @mock.patch('robot.run', side_effect=RobotError)
     @mock.patch('os.makedirs')
     def test_run_ko(self, *args):
@@ -345,14 +244,6 @@ class ODLMainTesting(ODLTesting):
     @mock.patch('robot.run')
     @mock.patch('os.makedirs')
     def test_ok(self, *args):
-        with mock.patch.object(self.test, 'set_robotframework_vars',
-                               return_value=True), \
-                mock.patch.object(self.test, 'parse_results'):
-            self._test_run_suites(testcase.TestCase.EX_OK, *args)
-
-    @mock.patch('robot.run')
-    @mock.patch('os.makedirs', side_effect=OSError(errno.EEXIST, ''))
-    def test_makedirs_oserror17(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results'):
