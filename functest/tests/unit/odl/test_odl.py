@@ -9,6 +9,7 @@
 
 """Define the classes required to fully cover odl."""
 
+import errno
 import logging
 import os
 import unittest
@@ -78,6 +79,20 @@ class ODLRobotTesting(ODLTesting):
 
     """The class testing ODLTests.set_robotframework_vars()."""
     # pylint: disable=missing-docstring
+
+    @mock.patch('fileinput.input', side_effect=OSError(errno.EPERM))
+    def test_set_vars_eperm(self, mock_method):
+        self.assertFalse(self.test.set_robotframework_vars())
+        mock_method.assert_called_once_with(
+            os.path.join(odl.ODLTests.odl_test_repo,
+                         'csit/variables/Variables.robot'), inplace=True)
+
+    @mock.patch('fileinput.input', side_effect=OSError(errno.ENOENT))
+    def test_set_vars_enoent(self, mock_method):
+        self.assertFalse(self.test.set_robotframework_vars())
+        mock_method.assert_called_once_with(
+            os.path.join(odl.ODLTests.odl_test_repo,
+                         'csit/variables/Variables.robot'), inplace=True)
 
     @mock.patch('fileinput.input', side_effect=Exception())
     def test_set_vars_ko(self, mock_method):
