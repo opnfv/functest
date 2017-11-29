@@ -19,6 +19,7 @@ Example:
 from __future__ import division
 
 import argparse
+import errno
 import fileinput
 import logging
 import os
@@ -69,8 +70,16 @@ class ODLTests(robotframework.RobotFramework):
                                  odlusername, odlpassword),
                              line.rstrip()))
             return True
+        except OSError as ex:
+            if ex.errno == errno.ENOENT:
+                cls.__logger.info(
+                    "Skip writting ODL creds in %s", odl_variables_files)
+                return True
+            else:
+                cls.__logger.exception("Cannot set ODL creds:")
+                return False
         except Exception as ex:  # pylint: disable=broad-except
-            cls.__logger.error("Cannot set ODL creds: %s", str(ex))
+            cls.__logger.exception("Cannot set ODL creds:")
             return False
 
     def run_suites(self, suites=None, **kwargs):
