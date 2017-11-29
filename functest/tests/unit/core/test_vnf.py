@@ -34,24 +34,38 @@ class VnfBaseTesting(unittest.TestCase):
             "vnf_foo_tenant_description", self.tenant_description)
         self.test = vnf.VnfOnBoarding(project='functest', case_name='foo')
 
+    def test_run_deploy_orch_exc(self):
+        with mock.patch.object(self.test, 'prepare'), \
+                mock.patch.object(self.test, 'deploy_orchestrator',
+                                  side_effect=Exception) as mock_method, \
+                mock.patch.object(self.test, 'deploy_vnf',
+                                  return_value=True), \
+                mock.patch.object(self.test, 'test_vnf',
+                                  return_value=True):
+            self.assertEqual(self.test.run(),
+                             testcase.TestCase.EX_TESTCASE_FAILED)
+            mock_method.assert_called_with()
+
     def test_run_deploy_vnf_exc(self):
         with mock.patch.object(self.test, 'prepare'),\
             mock.patch.object(self.test, 'deploy_orchestrator',
-                              return_value=None), \
+                              return_value=True), \
             mock.patch.object(self.test, 'deploy_vnf',
-                              side_effect=Exception):
+                              side_effect=Exception) as mock_method:
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_TESTCASE_FAILED)
+            mock_method.assert_called_with()
 
     def test_run_test_vnf_exc(self):
         with mock.patch.object(self.test, 'prepare'),\
             mock.patch.object(self.test, 'deploy_orchestrator',
-                              return_value=None), \
-            mock.patch.object(self.test, 'deploy_vnf'), \
+                              return_value=True), \
+            mock.patch.object(self.test, 'deploy_vnf', return_value=True), \
             mock.patch.object(self.test, 'test_vnf',
-                              side_effect=Exception):
+                              side_effect=Exception) as mock_method:
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_TESTCASE_FAILED)
+            mock_method.assert_called_with()
 
     def test_run_deploy_orch_ko(self):
         with mock.patch.object(self.test, 'prepare'),\
@@ -95,6 +109,50 @@ class VnfBaseTesting(unittest.TestCase):
                 mock.patch.object(self.test, 'test_vnf',
                                   return_value=True):
             self.assertEqual(self.test.run(), testcase.TestCase.EX_OK)
+
+    @mock.patch('functest.core.vnf.OpenStackUser')
+    @mock.patch('functest.core.vnf.OpenStackProject')
+    @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials',
+                side_effect=Exception)
+    def test_prepare_exc1(self, *args):
+        with self.assertRaises(Exception):
+            self.test.prepare()
+        args[0].assert_called_with(
+            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+        args[1].assert_not_called()
+        args[2].assert_not_called()
+
+    @mock.patch('functest.core.vnf.OpenStackUser')
+    @mock.patch('functest.core.vnf.OpenStackProject', side_effect=Exception)
+    @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials')
+    def test_prepare_exc2(self, *args):
+        with self.assertRaises(Exception):
+            self.test.prepare()
+        args[0].assert_called_with(
+            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+        args[1].assert_called_with(mock.ANY, mock.ANY)
+        args[2].assert_not_called()
+
+    @mock.patch('functest.core.vnf.OpenStackUser', side_effect=Exception)
+    @mock.patch('functest.core.vnf.OpenStackProject')
+    @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials')
+    def test_prepare_exc3(self, *args):
+        with self.assertRaises(Exception):
+            self.test.prepare()
+        args[0].assert_called_with(
+            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+        args[1].assert_called_with(mock.ANY, mock.ANY)
+        args[2].assert_called_with(mock.ANY, mock.ANY)
+
+    @mock.patch('functest.core.vnf.OpenStackUser')
+    @mock.patch('functest.core.vnf.OpenStackProject')
+    @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials')
+    def test_prepare_default(self, *args):
+        self.assertEqual(self.test.prepare(), testcase.TestCase.EX_OK)
+        args[0].assert_called_with(
+            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+        args[1].assert_called_with(mock.ANY, mock.ANY)
+        args[2].assert_called_with(mock.ANY, mock.ANY)
 
     def test_deploy_vnf_unimplemented(self):
         with self.assertRaises(vnf.VnfDeploymentException):
