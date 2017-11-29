@@ -178,9 +178,6 @@ class ODLMainTesting(ODLTesting):
                 report='NONE',
                 stdout=mock.ANY,
                 variable=variable)
-        if len(args) > 2:
-            args[2].assert_called_with(
-                os.path.join(self.test.res_dir, 'stdout.txt'))
 
     def _test_no_keyword(self, key):
         kwargs = self._get_run_suites_kwargs(key)
