@@ -375,4 +375,4 @@ described in the following table:
 Please note that this test case requires resources (8 VM (2Go) + 1 VM (4Go)), it
 is there fore not recommended to run it on a light configuration.
 
-.. _`OPNFV Functest Developer Guide`:  http://artifacts.opnfv.org/functest/docs/devguide/#
+.. _`OPNFV Functest Developer Guide`:  http://artifacts.opnfv.org/functest/docs/testing_developer_devguide/index.html#
