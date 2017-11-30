@@ -323,7 +323,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                            _get_deployment_environment_creation_execution(
                                cfy_client, descriptor.get('name')),
                            self.__logger,
-                           timeout=600)
+                           timeout=300)
 
         self.__logger.info("Start the VNF Instance deployment")
         execution = cfy_client.executions.start(descriptor.get('name'),
@@ -440,7 +440,7 @@ def get_config(parameter, file_path):
     return value
 
 
-def wait_for_execution(client, execution, logger, timeout=2400, ):
+def wait_for_execution(client, execution, logger, timeout=1500, ):
     """Wait for a workflow execution on Cloudify Manager."""
     # if execution already ended - return without waiting
     if execution.status in Execution.END_STATES:
