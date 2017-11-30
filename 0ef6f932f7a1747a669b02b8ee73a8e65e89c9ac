@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_12aaf1d3",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2017-11-30T13:42:56Z",
+      "side": 1,
+      "message": "Fine for this timeout",
+      "range": {
+        "startLine": 328,
+        "startChar": 35,
+        "endLine": 328,
+        "endChar": 38
+      },
+      "revId": "0ef6f932f7a1747a669b02b8ee73a8e65e89c9ac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b2ba2521",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2017-11-30T13:42:56Z",
+      "side": 1,
+      "message": "I prefer 1500 for this timeout",
+      "range": {
+        "startLine": 445,
+        "startChar": 58,
+        "endLine": 445,
+        "endChar": 62
+      },
+      "revId": "0ef6f932f7a1747a669b02b8ee73a8e65e89c9ac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
