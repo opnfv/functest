@@ -130,7 +130,10 @@ def push_results_to_db(project, case_name,
     POST results to the Result target DB
     """
     # Retrieve params from CI and conf
-    url = CONST.__getattribute__("results_test_db_url")
+    if (hasattr(CONST, 'TEST_DB_URL')):
+        url = CONST.__getattribute__('TEST_DB_URL')
+    else:
+        url = CONST.__getattribute__("results_test_db_url")
 
     try:
         installer = os.environ['INSTALLER_TYPE']

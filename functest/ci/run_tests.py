@@ -93,9 +93,6 @@ class Runner(object):
         if pod_arch and pod_arch in arch_filter:
             Runner.patch_file(CONFIG_AARCH64_PATCH_PATH)
 
-        if "TEST_DB_URL" in os.environ:
-            Runner.update_db_url()
-
     @staticmethod
     def patch_file(patch_file_path):
         logger.debug('Updating file: %s', patch_file_path)
@@ -113,16 +110,6 @@ class Runner(object):
             os.remove(CONFIG_FUNCTEST_PATH)
             with open(CONFIG_FUNCTEST_PATH, "w") as f:
                 f.write(yaml.dump(new_functest_yaml, default_style='"'))
-
-    @staticmethod
-    def update_db_url():
-        with open(CONFIG_FUNCTEST_PATH) as f:
-            functest_yaml = yaml.safe_load(f)
-
-        with open(CONFIG_FUNCTEST_PATH, "w") as f:
-            functest_yaml["results"]["test_db_url"] = os.environ.get(
-                'TEST_DB_URL')
-            f.write(yaml.dump(functest_yaml, default_style='"'))
 
     @staticmethod
     def source_rc_file():
