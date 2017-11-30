@@ -120,8 +120,9 @@ class Runner(object):
             functest_yaml = yaml.safe_load(f)
 
         with open(CONFIG_FUNCTEST_PATH, "w") as f:
-            functest_yaml["results"]["test_db_url"] = os.environ.get(
-                'TEST_DB_URL')
+            functest_yaml["results"]["test_db_url"] = os.getenv('TEST_DB_URL')
+            CONST.__setattr__("results_test_db_url",
+                              functest_yaml["results"]["test_db_url"])
             f.write(yaml.dump(functest_yaml, default_style='"'))
 
     @staticmethod
