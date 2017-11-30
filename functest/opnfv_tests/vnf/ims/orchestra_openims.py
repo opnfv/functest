@@ -461,7 +461,7 @@ class OpenImsVnf(vnf.VnfOnBoarding):
 
         self.logger.info("Waiting for Open Baton NFVO to be up and running...")
         timeout = 0
-        while timeout < 45:
+        while timeout < 20:
             if servertest(
                     self.mano['details']['fip'].ip,
                     "8080"):
@@ -472,7 +472,7 @@ class OpenImsVnf(vnf.VnfOnBoarding):
                 time.sleep(60)
                 timeout += 1
 
-        if timeout >= 45:
+        if timeout >= 20:
             duration = time.time() - start_time
             self.details["orchestrator"].update(
                 status='FAIL', duration=duration)
