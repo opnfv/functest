@@ -72,19 +72,9 @@ class RunTestsTesting(unittest.TestCase):
                     'openstack': {'image_name': 'test_image_name_3'}}}}
 
     @mock.patch('functest.ci.run_tests.Runner.patch_file')
-    @mock.patch('functest.ci.run_tests.Runner.update_db_url')
-    def test_update_config_file_default(self, *mock_methods):
+    def test_update_config_file_default(self, mock_patch):
         self.runner.update_config_file()
-        mock_methods[1].assert_called()
-        mock_methods[0].assert_not_called()
-
-    @mock.patch('functest.ci.run_tests.Runner.patch_file')
-    @mock.patch('functest.ci.run_tests.Runner.update_db_url')
-    @mock.patch.dict(os.environ, {'TEST_DB_URL': 'somevalue'})
-    def test_update_config_file_update_db(self, *mock_methods):
-        self.runner.update_config_file()
-        mock_methods[1].assert_called()
-        mock_methods[0].assert_called()
+        mock_patch.assert_called()
 
     def test_patch_file_missing_file(self):
         patch_file_path = "unexisting_file"
@@ -118,25 +108,6 @@ class RunTestsTesting(unittest.TestCase):
             self.runner.patch_file(yaml2)
             mock_methods[1].assert_called()
             mock_methods[0].assert_called()
-
-    def test_update_db_url_missing_file(self):
-        run_tests.CONFIG_FUNCTEST_PATH = "unexisting_file"
-        with self.assertRaises(IOError):
-            self.runner.update_db_url()
-
-    @mock.patch('functest.ci.run_tests.yaml.safe_load')
-    @mock.patch('functest.ci.run_tests.ft_utils.get_functest_yaml')
-    @mock.patch.dict(os.environ, {'TEST_DB_URL': 'url2'})
-    def test_update_db_url_default(self, *mock_methods):
-        with mock.patch(
-               'six.moves.builtins.open', mock.mock_open()), mock.patch(
-               'functest.ci.run_tests.yaml.safe_load') as yaml1:
-            yaml1.return_value = self.config_file_yaml
-            self.runner.update_db_url()
-            self.assertEqual(
-                yaml1.return_value['results']['test_db_url'], 'url2')
-            mock_methods[0].assert_not_called()
-            mock_methods[1].assert_not_called()
 
     @mock.patch('functest.ci.run_tests.logger.error')
     def test_source_rc_file_missing_file(self, mock_logger_error):
