@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Linda Wang <wangwulin@huawei.com>
+Code-Review+1: Michael Polenchuk <mpolenchuk@mirantis.com>
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Thu, 30 Nov 2017 13:54:52 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/48067
+Project: functest
+Branch: refs/heads/stable/euphrates
