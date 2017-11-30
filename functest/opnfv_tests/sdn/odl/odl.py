@@ -38,11 +38,13 @@ class ODLTests(robotframework.RobotFramework):
     """ODL test runner."""
 
     odl_test_repo = constants.CONST.__getattribute__('dir_repo_odl_test')
-    neutron_suite_dir = os.path.join(odl_test_repo,
-                                     "csit/suites/openstack/neutron")
-    basic_suite_dir = os.path.join(odl_test_repo,
-                                   "csit/suites/integration/basic")
+    neutron_suite_dir = os.path.join(
+        odl_test_repo, "csit/suites/openstack/neutron")
+    basic_suite_dir = os.path.join(
+        odl_test_repo, "csit/suites/integration/basic")
     default_suites = [basic_suite_dir, neutron_suite_dir]
+    odl_variables_file = os.path.join(
+        odl_test_repo, 'csit/variables/Variables.robot')
     __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
@@ -59,18 +61,17 @@ class ODLTests(robotframework.RobotFramework):
             True if credentials are set.
             False otherwise.
         """
-        odl_variables_files = os.path.join(cls.odl_test_repo,
-                                           'csit/variables/Variables.robot')
+
         try:
-            for line in fileinput.input(odl_variables_files,
+            for line in fileinput.input(cls.odl_variables_file,
                                         inplace=True):
                 print(re.sub("@{AUTH}.*",
                              "@{{AUTH}}           {}    {}".format(
                                  odlusername, odlpassword),
                              line.rstrip()))
             return True
-        except Exception as ex:  # pylint: disable=broad-except
-            cls.__logger.error("Cannot set ODL creds: %s", str(ex))
+        except Exception:  # pylint: disable=broad-except
+            cls.__logger.exception("Cannot set ODL creds:")
             return False
 
     def run_suites(self, suites=None, **kwargs):
@@ -128,10 +129,12 @@ class ODLTests(robotframework.RobotFramework):
         except KeyError:
             self.__logger.exception("Cannot run ODL testcases. Please check")
             return self.EX_RUN_ERROR
-        if self.set_robotframework_vars(odlusername, odlpassword):
-            return super(ODLTests, self).run(variable=variable, suites=suites)
+        if not os.path.isfile(self.odl_variables_file):
+            self.__logger.info("Skip writting ODL creds")
         else:
-            return self.EX_RUN_ERROR
+            if not self.set_robotframework_vars(odlusername, odlpassword):
+                return self.EX_RUN_ERROR
+        return super(ODLTests, self).run(variable=variable, suites=suites)
 
     def run(self, **kwargs):
         """Run suites in OPNFV environment

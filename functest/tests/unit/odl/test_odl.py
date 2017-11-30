@@ -154,7 +154,7 @@ class ODLMainTesting(ODLTesting):
         kwargs = self._get_run_suites_kwargs()
         self.assertEqual(self.test.run_suites(**kwargs), status)
         if len(args) > 0:
-            args[0].assert_called_once_with(self.test.res_dir)
+            args[0].assert_called_once_with(self.test.odl_variables_file)
         if len(args) > 1:
             variable = [
                 'KEYSTONEURL:{}://{}'.format(
@@ -214,15 +214,17 @@ class ODLMainTesting(ODLTesting):
     def test_no_odlrestconfport(self):
         self._test_no_keyword('odlrestconfport')
 
-    def test_set_vars_ko(self):
+    @mock.patch('os.path.isfile', return_value=True)
+    def test_set_vars_ko(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=False) as mock_object:
             self._test_run_suites(testcase.TestCase.EX_RUN_ERROR)
             mock_object.assert_called_once_with(
                 self._odl_username, self._odl_password)
+        args[0].assert_called_once_with(self.test.odl_variables_file)
 
     @mock.patch('robot.run', side_effect=RobotError)
-    @mock.patch('os.makedirs')
+    @mock.patch('os.path.isfile', return_value=True)
     def test_run_ko(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
@@ -230,7 +232,7 @@ class ODLMainTesting(ODLTesting):
             self._test_run_suites(testcase.TestCase.EX_RUN_ERROR, *args)
 
     @mock.patch('robot.run')
-    @mock.patch('os.makedirs')
+    @mock.patch('os.path.isfile', return_value=True)
     def test_parse_results_ko(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
@@ -239,15 +241,24 @@ class ODLMainTesting(ODLTesting):
             self._test_run_suites(testcase.TestCase.EX_RUN_ERROR, *args)
 
     @mock.patch('robot.run')
-    @mock.patch('os.makedirs')
+    @mock.patch('os.path.isfile', return_value=True)
     def test_ok(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
                 mock.patch.object(self.test, 'parse_results'):
             self._test_run_suites(testcase.TestCase.EX_OK, *args)
 
+    @mock.patch('robot.run')
+    @mock.patch('os.path.isfile', return_value=False)
+    def test_ok_no_creds(self, *args):
+        with mock.patch.object(self.test, 'set_robotframework_vars',
+                               return_value=True) as mock_method, \
+                mock.patch.object(self.test, 'parse_results'):
+            self._test_run_suites(testcase.TestCase.EX_OK, *args)
+            mock_method.assert_not_called()
+
     @mock.patch('robot.run', return_value=1)
-    @mock.patch('os.makedirs')
+    @mock.patch('os.path.isfile', return_value=True)
     def test_testcases_in_failure(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
