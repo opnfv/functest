@@ -423,6 +423,7 @@ The structure of functest repo can be described as follows::
     │   |-- functest-complete.sh
     |-- core
     │   |-- feature.py
+    │   |-- robotframework.py
     │   |-- testcase.py
     │   |-- unit.py
     │   |-- vnf.py

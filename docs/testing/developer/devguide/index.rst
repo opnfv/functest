@@ -134,7 +134,7 @@ The external test cases are:
  * functest-odl-sfc
  * orchestra_clearwaterims
  * orchestra_openims
- * cloudify_vrouter
+ * vyos_vrouter
  * juju_vepc
 
 External test cases integrated in previous versions but not released in
@@ -148,7 +148,7 @@ Euphrates:
 
 The code to run these test cases is hosted in the repository of the project.
 Please note that orchestra test cases are hosted in Functest repository and not
-in orchestra repository. Cloudify_vrouter and juju_vepc code is also hosted in
+in orchestra repository. Vyos_vrouter and juju_vepc code is also hosted in
 functest as there are no dedicated projects.
 
 
@@ -190,28 +190,28 @@ The goal is to unify the way to run tests in Functest.
 
 Feature, unit and vnf_base inherit from testcase::
 
-              +-----------------------------------------+
-              |                                         |
-              |         TestCase                        |
-              |                                         |
-              |         - init()                        |
-              |         - run()                         |
-              |         - push_to_db()                  |
-              |         - is_successful()               |
-              |                                         |
-              +-----------------------------------------+
-                 |               |                   |
-                 V               V                   V
-  +--------------------+   +--------------+   +--------------------------+
-  |                    |   |              |   |                          |
-  |    feature         |   |    unit      |   |      vnf                 |
-  |                    |   |              |   |                          |
-  |                    |   |              |   |  - prepare()             |
-  |  - execute()       |   |              |   |  - deploy_orchestrator() |
-  | BashFeature class  |   |              |   |  - deploy_vnf()          |
-  |                    |   |              |   |  - test_vnf()            |
-  |                    |   |              |   |  - clean()               |
-  +--------------------+   +--------------+   +--------------------------+
+              +----------------------------------------------------------------+
+              |                                                                |
+              |                   TestCase                                     |
+              |                                                                |
+              |                   - init()                                     |
+              |                   - run()                                      |
+              |                   - push_to_db()                               |
+              |                   - is_successful()                            |
+              |                                                                |
+              +----------------------------------------------------------------+
+                 |             |                 |                           |
+                 V             V                 V                           V
+  +--------------------+   +---------+   +------------------------+   +-----------------+
+  |                    |   |         |   |                        |   |                 |
+  |    feature         |   |  unit   |   |    vnf                 |   | robotframework  |
+  |                    |   |         |   |                        |   |                 |
+  |                    |   |         |   |- prepare()             |   |                 |
+  |  - execute()       |   |         |   |- deploy_orchestrator() |   |                 |
+  | BashFeature class  |   |         |   |- deploy_vnf()          |   |                 |
+  |                    |   |         |   |- test_vnf()            |   |                 |
+  |                    |   |         |   |- clean()               |   |                 |
+  +--------------------+   +---------+   +------------------------+   +-----------------+
 
 
 Testcase
@@ -233,6 +233,11 @@ VNF
 ---
 .. raw:: html
    :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.vnf.html
+
+Robotframework
+--------------
+.. raw:: html
+   :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.robotframework.html
 
 
 see `[5]`_ to get code samples
