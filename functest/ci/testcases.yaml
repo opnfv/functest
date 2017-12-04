@@ -3,7 +3,7 @@ tiers:
         name: healthcheck
         order: 0
         ci_loop: '(daily)|(weekly)'
-        description : >-
+        description: >-
             First tier to be executed to verify the basic
             operations in the VIM.
         testcases:
@@ -64,7 +64,7 @@ tiers:
         name: smoke
         order: 1
         ci_loop: '(daily)|(weekly)'
-        description : >-
+        description: >-
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
             -
@@ -73,9 +73,9 @@ tiers:
                 criteria: 100
                 blocking: true
                 description: >-
-                    This test case verifies: 1) SSH to an instance using floating
-                    IPs over the public network. 2) Connectivity between 2 instances
-                    over a private network.
+                    This test case verifies: 1) SSH to an instance using
+                    floating IPs over the public network. 2) Connectivity
+                    between 2 instances over a private network.
                 dependencies:
                     installer: ''
                     scenario: '^((?!odl_l3|odl-bgpvpn|gluon).)*$'
@@ -212,7 +212,7 @@ tiers:
         name: features
         order: 2
         ci_loop: '(daily)|(weekly)'
-        description : >-
+        description: >-
             Test suites from feature projects
             integrated in functest
         testcases:
@@ -252,7 +252,8 @@ tiers:
                 criteria: 100
                 blocking: false
                 description: >-
-                    Test suite for odl-sfc to test two chains with one SF and one chain with two SFs
+                    Test suite for odl-sfc to test two chains with one SF and
+                    one chain with two SFs
                 dependencies:
                     installer: ''
                     scenario: 'odl.*sfc'
@@ -275,8 +276,8 @@ tiers:
                     installer: 'apex'
                     scenario: 'bar'
                 run:
-                     module: 'baro_tests.barometer'
-                     class: 'BarometerCollectd'
+                    module: 'baro_tests.barometer'
+                    class: 'BarometerCollectd'
 
             -
                 case_name: fds
@@ -284,9 +285,9 @@ tiers:
                 criteria: 100
                 blocking: false
                 description: >-
-                    Test Suite for the OpenDaylight SDN Controller when GBP features are
-                    installed. It integrates some test suites from upstream using
-                    Robot as the test framework.
+                    Test Suite for the OpenDaylight SDN Controller when GBP
+                    features are installed. It integrates some test suites
+                    from upstream using Robot as the test framework.
                 dependencies:
                     installer: 'apex'
                     scenario: 'odl.*-fdio'
@@ -295,13 +296,13 @@ tiers:
                     class: 'ODLTests'
                     args:
                         suites:
-                            -  /src/fds/testing/robot
+                            - /src/fds/testing/robot
 
     -
         name: components
         order: 3
         ci_loop: 'weekly'
-        description : >-
+        description: >-
             Extensive testing of OpenStack API.
         testcases:
             -
@@ -339,7 +340,7 @@ tiers:
         name: vnf
         order: 4
         ci_loop: '(daily)|(weekly)'
-        description : >-
+        description: >-
             Collection of VNF test cases.
         testcases:
             -

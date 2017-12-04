@@ -1,23 +1,23 @@
 general:
     dir:
-        home:               /home/opnfv
-        repos:              /home/opnfv/repos
-        dir_repo_rally:     /home/opnfv/repos/rally
-        repo_tempest:       /src/tempest
-        dir_repo_releng:    /home/opnfv/repos/releng
-        repo_vims_test:     /src/vims-test
-        repo_barometer:     /home/opnfv/repos/barometer
-        repo_odl_test:      /src/odl_test
-        repo_fds:           /src/fds
-        repo_securityscan:  /home/opnfv/repos/securityscanning
-        functest:           /home/opnfv/functest
-        results:            /home/opnfv/functest/results
-        functest_conf:      /home/opnfv/functest/conf
-        functest_data:      /home/opnfv/functest/data
-        ims_data:           /home/opnfv/functest/data/ims/
-        router_data:        /home/opnfv/functest/data/router/
-        functest_images:    /home/opnfv/functest/images
-        rally_inst:         /root/.rally
+        home: /home/opnfv
+        repos: /home/opnfv/repos
+        dir_repo_rally: /home/opnfv/repos/rally
+        repo_tempest: /src/tempest
+        dir_repo_releng: /home/opnfv/repos/releng
+        repo_vims_test: /src/vims-test
+        repo_barometer: /home/opnfv/repos/barometer
+        repo_odl_test: /src/odl_test
+        repo_fds: /src/fds
+        repo_securityscan: /home/opnfv/repos/securityscanning
+        functest: /home/opnfv/functest
+        results: /home/opnfv/functest/results
+        functest_conf: /home/opnfv/functest/conf
+        functest_data: /home/opnfv/functest/data
+        ims_data: /home/opnfv/functest/data/ims/
+        router_data: /home/opnfv/functest/data/router/
+        functest_images: /home/opnfv/functest/images
+        rally_inst: /root/.rally
 
     openstack:
         creds: /home/opnfv/functest/conf/openstack.creds
@@ -25,12 +25,12 @@ general:
 
         image_name: Cirros-0.3.5
         image_name_alt: Cirros-0.3.5-1
-        image_file_name:  cirros-0.3.5-x86_64-disk.img
+        image_file_name: cirros-0.3.5-x86_64-disk.img
         image_url: http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
         image_user: cirros
-        image_disk_format:  qcow2
-        image_username:  cirros
-        image_password:  cubswin:)
+        image_disk_format: qcow2
+        image_username: cirros
+        image_password: cubswin:)
 
         flavor_name: opnfv_flavor
         flavor_name_alt: opnfv_flavor_1
@@ -51,16 +51,16 @@ snaps:
     use_keystone: True
     use_floating_ips: True
     images:
-      glance_tests:
-        disk_file: /home/opnfv/functest/images/cirros-0.3.5-x86_64-disk.img
-      cirros:
-        disk_file: /home/opnfv/functest/images/cirros-0.3.5-x86_64-disk.img
-      ubuntu:
-        disk_file: /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
-      centos:
-        disk_file: /home/opnfv/functest/images/CentOS-7-x86_64-GenericCloud.qcow2
-      # All of these values are optional and will override the values retrieved
-      # by the RC file
+        glance_tests:
+            disk_file: /home/opnfv/functest/images/cirros-0.3.5-x86_64-disk.img
+        cirros:
+            disk_file: /home/opnfv/functest/images/cirros-0.3.5-x86_64-disk.img
+        ubuntu:
+            disk_file: /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+        centos:
+            disk_file: /home/opnfv/functest/images/CentOS-7-x86_64-GenericCloud.qcow2
+# All of these values are optional and will override the values retrieved
+# by the RC file
 #    os_creds_override:
 #      username: {user}
 #      password: {password}
@@ -80,8 +80,8 @@ snaps:
 #        ssh_proxy_cmd: {OpenSSH -o ProxyCommand value}
 
 vping:
-    ping_timeout:   200
-    vm_flavor: m1.tiny # adapt to your environment
+    ping_timeout: 200
+    vm_flavor: m1.tiny   # adapt to your environment
     vm_name_1: opnfv-vping-1
     vm_name_2: opnfv-vping-2
     image_name: functest-vping
@@ -192,7 +192,8 @@ example:
     sg_desc: Example Security group
 
 results:
-    # you can also set a file (e.g. /home/opnfv/functest/results/dump.txt) to dump results
+    # you can also set a file (e.g. /home/opnfv/functest/results/dump.txt)
+    # to dump results
     # test_db_url: file:///home/opnfv/functest/results/dump.txt
     test_db_url: http://testresults.opnfv.org/test/api/v1/results
 

@@ -2,12 +2,12 @@ os:
     general:
         openstack:
             image_name: TestVM
-            image_file_name:  cirros-d161201-aarch64-disk.img
-            image_password:  gocubsgo
+            image_file_name: cirros-d161201-aarch64-disk.img
+            image_password: gocubsgo
             extra_properties:
-              hw_firmware_type: 'uefi'
-              hw_video_model: 'vga'
-              short_id: 'ubuntu16.04'
+                hw_firmware_type: 'uefi'
+                hw_video_model: 'vga'
+                short_id: 'ubuntu16.04'
     snaps:
         images:
           glance_tests:
