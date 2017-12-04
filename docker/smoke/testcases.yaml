@@ -1,9 +1,10 @@
+---
 tiers:
     -
         name: smoke
         order: 1
         ci_loop: '(daily)|(weekly)'
-        description : >-
+        description: >-
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
             -
@@ -12,9 +13,9 @@ tiers:
                 criteria: 100
                 blocking: true
                 description: >-
-                    This test case verifies: 1) SSH to an instance using floating
-                    IPs over the public network. 2) Connectivity between 2 instances
-                    over a private network.
+                    This test case verifies: 1) SSH to an instance using
+                    floating IPs over the public network. 2) Connectivity
+                    between 2 instances over a private network.
                 dependencies:
                     installer: ''
                     scenario: '^((?!odl_l3|odl-bgpvpn|gluon).)*$'
@@ -34,7 +35,8 @@ tiers:
                     installer: ''
                     scenario: '^((?!lxd).)*$'
                 run:
-                    module: 'functest.opnfv_tests.openstack.vping.vping_userdata'
+                    module:
+                        'functest.opnfv_tests.openstack.vping.vping_userdata'
                     class: 'VPingUserdata'
 
             -
@@ -81,7 +83,8 @@ tiers:
                     installer: ''
                     scenario: ''
                 run:
-                    module: 'functest.opnfv_tests.openstack.refstack_client.refstack_client'
+                    module:
+                        'functest.opnfv_tests.openstack.refstack_client.refstack_client'
                     class: 'RefstackClient'
 
             -

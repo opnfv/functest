@@ -1,9 +1,10 @@
+---
 tiers:
     -
         name: features
         order: 2
         ci_loop: '(daily)|(weekly)'
-        description : >-
+        description: >-
             Test suites from feature projects
             integrated in functest
         testcases:
@@ -43,7 +44,8 @@ tiers:
                 criteria: 100
                 blocking: false
                 description: >-
-                    Test suite for odl-sfc to test two chains with one SF and one chain with two SFs
+                    Test suite for odl-sfc to test two chains with one SF and
+                    one chain with two SFs
                 dependencies:
                     installer: ''
                     scenario: 'odl.*sfc'
@@ -66,8 +68,8 @@ tiers:
                     installer: 'apex'
                     scenario: 'bar'
                 run:
-                     module: 'baro_tests.barometer'
-                     class: 'BarometerCollectd'
+                    module: 'baro_tests.barometer'
+                    class: 'BarometerCollectd'
 
             -
                 case_name: fds
@@ -75,9 +77,9 @@ tiers:
                 criteria: 100
                 blocking: false
                 description: >-
-                    Test Suite for the OpenDaylight SDN Controller when GBP features are
-                    installed. It integrates some test suites from upstream using
-                    Robot as the test framework.
+                    Test Suite for the OpenDaylight SDN Controller when GBP
+                    features are installed. It integrates some test suites from
+                    upstream using Robot as the test framework.
                 dependencies:
                     installer: 'apex'
                     scenario: 'odl.*-fdio'

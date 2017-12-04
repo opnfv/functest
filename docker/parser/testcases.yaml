@@ -1,9 +1,10 @@
+---
 tiers:
     -
         name: features
         order: 2
         ci_loop: '(daily)|(weekly)'
-        description : >-
+        description: >-
             Test suites from feature projects
             integrated in functest
         testcases:

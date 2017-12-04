@@ -1,9 +1,10 @@
+---
 tiers:
     -
         name: healthcheck
         order: 0
         ci_loop: '(daily)|(weekly)'
-        description : >-
+        description: >-
             First tier to be executed to verify the basic
             operations in the VIM.
         testcases:
@@ -22,7 +23,8 @@ tiers:
                     installer: '^((?!netvirt).)*$'
                     scenario: ''
                 run:
-                    module: 'functest.opnfv_tests.openstack.snaps.connection_check'
+                    module:
+                        'functest.opnfv_tests.openstack.snaps.connection_check'
                     class: 'ConnectionCheck'
 
             -

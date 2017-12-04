@@ -1,9 +1,10 @@
+---
 tiers:
     -
         name: vnf
         order: 4
         ci_loop: '(daily)|(weekly)'
-        description : >-
+        description: >-
             Collection of VNF test cases.
         testcases:
             -
@@ -12,8 +13,9 @@ tiers:
                 criteria: 80
                 blocking: false
                 description: >-
-                    This test case deploys an OpenSource vIMS solution from Clearwater
-                    using the Cloudify orchestrator. It also runs some signaling traffic.
+                    This test case deploys an OpenSource vIMS solution from
+                    Clearwater using the Cloudify orchestrator. It also runs
+                    some signaling traffic.
                 dependencies:
                     installer: ''
                     scenario: 'os-nosdn-nofeature-ha'
@@ -60,5 +62,6 @@ tiers:
                     installer: ''
                     scenario: 'os-nosdn-nofeature-ha'
                 run:
-                    module: 'functest.opnfv_tests.vnf.ims.orchestra_clearwaterims'
+                    module:
+                        'functest.opnfv_tests.vnf.ims.orchestra_clearwaterims'
                     class: 'ClearwaterImsVnf'

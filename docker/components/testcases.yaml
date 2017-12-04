@@ -1,9 +1,10 @@
+---
 tiers:
     -
         name: components
         order: 3
         ci_loop: 'weekly'
-        description : >-
+        description: >-
             Extensive testing of OpenStack API.
         testcases:
             -
@@ -28,8 +29,8 @@ tiers:
                 criteria: 90
                 blocking: false
                 description: >-
-                    This test case runs the full suite of scenarios of the OpenStack
-                    Rally suite using several threads and iterations.
+                    This test case runs the full suite of scenarios of the
+                    OpenStack Rally suite using several threads and iterations.
                 dependencies:
                     installer: '^((?!netvirt).)*$'
                     scenario: ''
