@@ -172,11 +172,14 @@ class CheckDeploymentTesting(unittest.TestCase):
 
     @mock.patch('functest.ci.check_deployment.LOGGER.info')
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
-                'get_ext_net_name', return_value='ext-net')
+                'get_ext_net_name')
     def test_check_extnet(self, mock_getext, mock_loginfo):
+        test_network = 'ext-net'
+        mock_getext.return_value = test_network
         self.deployment.check_ext_net()
         self.assertTrue(mock_getext.called)
-        mock_loginfo.assert_called_once_with("External network found: ext-net")
+        mock_loginfo.assert_called_once_with(
+            "External network found: %s" % test_network)
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_ext_net_name', return_value='')
