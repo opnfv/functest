@@ -99,9 +99,7 @@ class RallyBase(testcase.TestCase):
                 os_env_file=CONST.__getattribute__('openstack_creds'),
                 overrides=creds_override)
 
-        self.guid = ''
-        if CONST.__getattribute__('rally_unique_names'):
-            self.guid = '-' + str(uuid.uuid4())
+        self.guid = '-' + str(uuid.uuid4())
 
         self.creators = []
         self.mode = ''

@@ -48,15 +48,8 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
     def test_create_tempest_resources_missing_image(self, *mock_args):
         tempest_resources = tempest.TempestResourcesManager(os_creds={})
 
-        CONST.__setattr__('tempest_use_custom_imagess', True)
         with self.assertRaises(Exception) as context:
             tempest_resources.create()
-        msg = 'Failed to create image'
-        self.assertTrue(msg in context.exception, msg=str(context.exception))
-
-        CONST.__setattr__('tempest_use_custom_imagess', False)
-        with self.assertRaises(Exception) as context:
-            tempest_resources.create(use_custom_images=True)
         msg = 'Failed to create image'
         self.assertTrue(msg in context.exception, msg=str(context.exception))
 
@@ -74,15 +67,13 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         tempest_resources = tempest.TempestResourcesManager(
             os_creds=self.os_creds)
 
-        CONST.__setattr__('tempest_use_custom_images', True)
-        CONST.__setattr__('tempest_use_custom_flavors', True)
+        CONST.__setattr__('tempest_use_custom_flavors', 'True')
         with self.assertRaises(Exception) as context:
             tempest_resources.create()
         msg = 'Failed to create flavor'
         self.assertTrue(msg in context.exception, msg=str(context.exception))
 
-        CONST.__setattr__('tempest_use_custom_images', True)
-        CONST.__setattr__('tempest_use_custom_flavors', False)
+        CONST.__setattr__('tempest_use_custom_flavors', 'False')
         with self.assertRaises(Exception) as context:
             tempest_resources.create(use_custom_flavors=True)
         msg = 'Failed to create flavor'
@@ -290,34 +281,30 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             mock.patch('functest.utils.functest_utils.yaml.safe_load',
                        return_value={'validation': {'ssh_timeout': 300}}):
             CONST.__setattr__('OS_ENDPOINT_TYPE', None)
-            conf_utils.\
-                configure_tempest_update_params('test_conf_file',
-                                                image_id=image_id,
-                                                flavor_id=flavor_id)
+            conf_utils.configure_tempest_update_params(
+                'test_conf_file', image_id=image_id, flavor_id=flavor_id)
             mset.assert_any_call(params[0], params[1], params[2])
             self.assertTrue(mread.called)
             self.assertTrue(mwrite.called)
 
     def test_configure_tempest_update_params_missing_image_id(self):
-            CONST.__setattr__('tempest_use_custom_images', True)
             self._test_missing_param(('compute', 'image_ref',
                                       'test_image_id'), 'test_image_id',
                                      None)
 
     def test_configure_tempest_update_params_missing_image_id_alt(self):
-            CONST.__setattr__('tempest_use_custom_images', True)
             conf_utils.IMAGE_ID_ALT = 'test_image_id_alt'
             self._test_missing_param(('compute', 'image_ref_alt',
                                       'test_image_id_alt'), None, None)
 
     def test_configure_tempest_update_params_missing_flavor_id(self):
-            CONST.__setattr__('tempest_use_custom_flavors', True)
+            CONST.__setattr__('tempest_use_custom_flavors', 'True')
             self._test_missing_param(('compute', 'flavor_ref',
                                       'test_flavor_id'), None,
                                      'test_flavor_id')
 
     def test_configure_tempest_update_params_missing_flavor_id_alt(self):
-            CONST.__setattr__('tempest_use_custom_flavors', True)
+            CONST.__setattr__('tempest_use_custom_flavors', 'True')
             conf_utils.FLAVOR_ID_ALT = 'test_flavor_id_alt'
             self._test_missing_param(('compute', 'flavor_ref_alt',
                                       'test_flavor_id_alt'), None,
