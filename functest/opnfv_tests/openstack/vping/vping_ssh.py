@@ -158,7 +158,7 @@ class VPingSSH(vping_base.VPingBase):
             'functest.opnfv_tests.openstack.vping', 'ping.sh')
         try:
             scp.put(ping_script, "~/")
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             self.logger.error("Cannot SCP the file '%s'", ping_script)
             return False
 

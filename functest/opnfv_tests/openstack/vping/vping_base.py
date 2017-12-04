@@ -6,6 +6,8 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+"""Define the parent class of vping_ssh and vping_userdata testcases."""
+
 from datetime import datetime
 import logging
 import os
@@ -32,13 +34,14 @@ class VPingBase(testcase.TestCase):
     internal network.
     This class is responsible for creating the image, internal network.
     """
+    # pylint: disable=too-many-instance-attributes
 
     def __init__(self, **kwargs):
         super(VPingBase, self).__init__(**kwargs)
 
         # This line is here simply for pep8 as the 'os' package import appears
         # to be required for mock and the unit tests will fail without it
-        os.environ
+        os.environ  # pylint: disable=pointless-statement
 
         self.logger = logging.getLogger(__name__)
 
@@ -59,6 +62,7 @@ class VPingBase(testcase.TestCase):
         self.network_creator = None
         self.vm1_creator = None
         self.vm2_creator = None
+        self.router_creator = None
 
         # Shared metadata
         self.guid = ''
@@ -73,7 +77,8 @@ class VPingBase(testcase.TestCase):
         self.vm_boot_timeout = CONST.__getattribute__('vping_vm_boot_timeout')
         self.vm_delete_timeout = CONST.__getattribute__(
             'vping_vm_delete_timeout')
-        self.vm_ssh_connect_timeout = CONST.vping_vm_ssh_connect_timeout
+        self.vm_ssh_connect_timeout = CONST.__getattribute__(
+            'vping_vm_ssh_connect_timeout')
         self.ping_timeout = CONST.__getattribute__('vping_ping_timeout')
         self.flavor_name = 'vping-flavor' + self.guid
 
@@ -91,16 +96,17 @@ class VPingBase(testcase.TestCase):
         self.logger.info('Begin virtual environment setup')
 
         self.start_time = time.time()
-        self.logger.info("vPing Start Time:'%s'" % (
+        self.logger.info(
+            "vPing Start Time:'%s'",
             datetime.fromtimestamp(self.start_time).strftime(
-                '%Y-%m-%d %H:%M:%S')))
+                '%Y-%m-%d %H:%M:%S'))
 
         image_base_name = '{}-{}'.format(
             CONST.__getattribute__('vping_image_name'),
             str(self.guid))
         os_image_settings = openstack_tests.cirros_image_settings(
             image_base_name, image_metadata=self.cirros_image_config)
-        self.logger.info("Creating image with name: '%s'" % image_base_name)
+        self.logger.info("Creating image with name: '%s'", image_base_name)
 
         self.image_creator = deploy_utils.create_image(
             self.os_creds, os_image_settings)
@@ -117,18 +123,18 @@ class VPingBase(testcase.TestCase):
         vping_physical_network = None
         vping_segmentation_id = None
 
-        if (hasattr(CONST, 'vping_network_type')):
+        if hasattr(CONST, 'vping_network_type'):
             vping_network_type = CONST.__getattribute__(
                 'vping_network_type')
-        if (hasattr(CONST, 'vping_physical_network')):
+        if hasattr(CONST, 'vping_physical_network'):
             vping_physical_network = CONST.__getattribute__(
                 'vping_physical_network')
-        if (hasattr(CONST, 'vping_segmentation_id')):
+        if hasattr(CONST, 'vping_segmentation_id'):
             vping_segmentation_id = CONST.__getattribute__(
                 'vping_segmentation_id')
 
         self.logger.info(
-            "Creating network with name: '%s'" % private_net_name)
+            "Creating network with name: '%s'", private_net_name)
         self.network_creator = deploy_utils.create_network(
             self.os_creds,
             NetworkConfig(
@@ -154,7 +160,7 @@ class VPingBase(testcase.TestCase):
         self.creators.append(self.router_creator)
 
         self.logger.info(
-            "Creating flavor with name: '%s'" % self.flavor_name)
+            "Creating flavor with name: '%s'", self.flavor_name)
         scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
         flavor_metadata = None
         if 'ovs' in scenario or 'fdio' in scenario:
@@ -200,8 +206,8 @@ class VPingBase(testcase.TestCase):
             for creator in reversed(self.creators):
                 try:
                     creator.clean()
-                except Exception as e:
-                    self.logger.error('Unexpected error cleaning - %s', e)
+                except Exception as error:  # pylint: disable=broad-except
+                    self.logger.error('Unexpected error cleaning - %s', error)
 
     def _do_vping(self, vm_creator, test_ip):
         """
