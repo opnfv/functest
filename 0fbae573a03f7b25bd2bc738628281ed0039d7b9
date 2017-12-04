@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_41a14546",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-12-04T19:42:17Z",
+      "side": 1,
+      "message": "I think we should simply remove os.environ instead and check the related unit tests.",
+      "revId": "0fbae573a03f7b25bd2bc738628281ed0039d7b9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
