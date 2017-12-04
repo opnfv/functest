@@ -41,8 +41,10 @@ class SnapsTestRunner(unit.Suite):
         else:
             self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
 
-        self.use_fip = CONST.__getattribute__('snaps_use_floating_ips')
-        self.use_keystone = CONST.__getattribute__('snaps_use_keystone')
+        self.use_fip = (
+            CONST.__getattribute__('snaps_use_floating_ips') == 'True')
+        self.use_keystone = (
+            CONST.__getattribute__('snaps_use_keystone') == 'True')
         scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
 
         self.flavor_metadata = None

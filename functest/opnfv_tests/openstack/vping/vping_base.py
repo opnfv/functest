@@ -61,9 +61,7 @@ class VPingBase(testcase.TestCase):
         self.vm2_creator = None
 
         # Shared metadata
-        self.guid = ''
-        if CONST.__getattribute__('vping_unique_names'):
-            self.guid = '-' + str(uuid.uuid4())
+        self.guid = '-' + str(uuid.uuid4())
 
         self.router_name = CONST.__getattribute__(
             'vping_router_name') + self.guid
@@ -196,7 +194,7 @@ class VPingBase(testcase.TestCase):
         Cleanup all OpenStack objects. Should be called on completion
         :return:
         """
-        if CONST.__getattribute__('vping_cleanup_objects'):
+        if CONST.__getattribute__('vping_cleanup_objects') == 'True':
             for creator in reversed(self.creators):
                 try:
                     creator.clean()
