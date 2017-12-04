@@ -108,14 +108,14 @@ class RunTestsTesting(unittest.TestCase):
             mock_methods[1].assert_called()
             mock_methods[0].assert_called()
 
-    @mock.patch('functest.ci.run_tests.logger.error')
+    @mock.patch('functest.ci.run_tests.LOGGER.error')
     def test_source_rc_file_missing_file(self, mock_logger_error):
         with mock.patch('functest.ci.run_tests.os.path.isfile',
                         return_value=False), \
                 self.assertRaises(Exception):
             self.runner.source_rc_file()
 
-    @mock.patch('functest.ci.run_tests.logger.debug')
+    @mock.patch('functest.ci.run_tests.LOGGER.debug')
     @mock.patch('functest.ci.run_tests.os.path.isfile',
                 return_value=True)
     def test_source_rc_file_default(self, *args):
@@ -131,7 +131,7 @@ class RunTestsTesting(unittest.TestCase):
             self.assertEqual(self.runner.get_run_dict('test_name'),
                              mock_obj)
 
-    @mock.patch('functest.ci.run_tests.logger.error')
+    @mock.patch('functest.ci.run_tests.LOGGER.error')
     def test_get_run_dict_if_defined_missing_config_option(self,
                                                            mock_logger_error):
         with mock.patch('functest.ci.run_tests.'
@@ -140,9 +140,8 @@ class RunTestsTesting(unittest.TestCase):
             testname = 'test_name'
             self.assertEqual(self.runner.get_run_dict(testname),
                              None)
-            mock_logger_error.assert_called_once_with("Cannot get {}'s config "
-                                                      "options"
-                                                      .format(testname))
+            mock_logger_error.assert_called_once_with(
+                "Cannot get %s's config options", testname)
 
         with mock.patch('functest.ci.run_tests.'
                         'ft_utils.get_dict_by_test',
@@ -151,7 +150,7 @@ class RunTestsTesting(unittest.TestCase):
             self.assertEqual(self.runner.get_run_dict(testname),
                              None)
 
-    @mock.patch('functest.ci.run_tests.logger.exception')
+    @mock.patch('functest.ci.run_tests.LOGGER.exception')
     def test_get_run_dict_if_defined_exception(self,
                                                mock_logger_except):
         with mock.patch('functest.ci.run_tests.'
@@ -160,9 +159,8 @@ class RunTestsTesting(unittest.TestCase):
             testname = 'test_name'
             self.assertEqual(self.runner.get_run_dict(testname),
                              None)
-            mock_logger_except.assert_called_once_with("Cannot get {}'s config"
-                                                       " options"
-                                                       .format(testname))
+            mock_logger_except.assert_called_once_with(
+                "Cannot get %s's config options", testname)
 
     def test_run_tests_import_test_class_exception(self):
         mock_test = mock.Mock()
@@ -203,14 +201,14 @@ class RunTestsTesting(unittest.TestCase):
                          run_tests.Result.EX_OK)
         mock_methods[0].assert_called_with(mock.ANY)
 
-    @mock.patch('functest.ci.run_tests.logger.info')
+    @mock.patch('functest.ci.run_tests.LOGGER.info')
     def test_run_tier_missing_test(self, mock_logger_info):
         self.tier.get_tests.return_value = None
         self.assertEqual(self.runner.run_tier(self.tier),
                          run_tests.Result.EX_ERROR)
         self.assertTrue(mock_logger_info.called)
 
-    @mock.patch('functest.ci.run_tests.logger.info')
+    @mock.patch('functest.ci.run_tests.LOGGER.info')
     @mock.patch('functest.ci.run_tests.Runner.run_tier')
     @mock.patch('functest.ci.run_tests.Runner.summary')
     def test_run_all_default(self, *mock_methods):
@@ -219,7 +217,7 @@ class RunTestsTesting(unittest.TestCase):
         mock_methods[1].assert_not_called()
         self.assertTrue(mock_methods[2].called)
 
-    @mock.patch('functest.ci.run_tests.logger.info')
+    @mock.patch('functest.ci.run_tests.LOGGER.info')
     @mock.patch('functest.ci.run_tests.Runner.summary')
     def test_run_all_missing_tier(self, *mock_methods):
         CONST.__setattr__('CI_LOOP', 'loop_re_not_available')
