@@ -36,19 +36,19 @@ LOGGER = logging.getLogger(__name__)
 
 
 def verify_connectivity(endpoint):
-    """ Returns true if an ip/port is reachable"""
+    """ Returns true if an hostname/port is reachable"""
     connection = socket.socket()
     connection.settimeout(10)
-    ip = urlparse(endpoint).hostname
+    hostname = urlparse(endpoint).hostname
     port = urlparse(endpoint).port
     if not port:
         port = 443 if urlparse(endpoint).scheme == "https" else 80
     try:
-        connection.connect((ip, port))
-        LOGGER.debug('%s:%s is reachable!', ip, port)
+        connection.connect((hostname, port))
+        LOGGER.debug('%s:%s is reachable!', hostname, port)
         return True
     except socket.error:
-        LOGGER.exception('%s:%s is not reachable.', ip, port)
+        LOGGER.exception('%s:%s is not reachable.', hostname, port)
     return False
 
 
@@ -71,7 +71,7 @@ class CheckDeployment(object):
     def check_auth_endpoint(self):
         """ Verifies connectivity to the OS_AUTH_URL given in the RC file """
         rc_endpoint = self.os_creds.auth_url
-        if not (verify_connectivity(rc_endpoint)):
+        if not verify_connectivity(rc_endpoint):
             raise Exception("OS_AUTH_URL {} is not reachable.".
                             format(rc_endpoint))
         LOGGER.info("Connectivity to OS_AUTH_URL %s ...OK", rc_endpoint)
@@ -81,7 +81,7 @@ class CheckDeployment(object):
         public_endpoint = keystone_utils.get_endpoint(self.os_creds,
                                                       'identity',
                                                       interface='public')
-        if not (verify_connectivity(public_endpoint)):
+        if not verify_connectivity(public_endpoint):
             raise Exception("Public endpoint {} is not reachable.".
                             format(public_endpoint))
         LOGGER.info("Connectivity to the public endpoint %s ...OK",
@@ -92,7 +92,7 @@ class CheckDeployment(object):
         endpoint = keystone_utils.get_endpoint(self.os_creds,
                                                service,
                                                interface='public')
-        if not (verify_connectivity(endpoint)):
+        if not verify_connectivity(endpoint):
             raise Exception("{} endpoint {} is not reachable.".
                             format(service, endpoint))
         LOGGER.info("Connectivity to endpoint '%s' %s ...OK",
@@ -132,7 +132,7 @@ class CheckDeployment(object):
         """ checks if external network exists """
         ext_net = snaps_utils.get_ext_net_name(self.os_creds)
         if ext_net:
-            LOGGER.info("External network found: %s" % ext_net)
+            LOGGER.info("External network found: %s", ext_net)
         else:
             raise Exception("ERROR: No external networks in the deployment.")
 
