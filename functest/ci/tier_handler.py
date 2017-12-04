@@ -7,6 +7,8 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+"""Tier and TestCase classes to wrap the testcases config file"""
+# pylint: disable=missing-docstring
 
 import re
 import textwrap
@@ -100,13 +102,9 @@ class Tier(object):
 
 class TestCase(object):
 
-    def __init__(self, name,
-                 enabled,
-                 dependency,
-                 criteria,
-                 blocking,
-                 description="",
-                 project=""):
+    def __init__(self, name, enabled, dependency, criteria, blocking,
+                 description="", project=""):
+        # pylint: disable=too-many-arguments
         self.name = name
         self.enabled = enabled
         self.dependency = dependency
@@ -117,7 +115,7 @@ class TestCase(object):
 
     @staticmethod
     def is_none(item):
-        return item is None or item is ""
+        return item is None or item == ""
 
     def is_compatible(self, ci_installer, ci_scenario):
         try:
