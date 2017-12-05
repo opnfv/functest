@@ -20,7 +20,6 @@ import textwrap
 
 import prettytable
 import six
-import yaml
 
 import functest.ci.tier_builder as tb
 import functest.core.testcase as testcase
@@ -33,13 +32,6 @@ logger = logging.getLogger('functest.ci.run_tests')
 
 CONFIG_FUNCTEST_PATH = pkg_resources.resource_filename(
     'functest', 'ci/config_functest.yaml')
-CONFIG_PATCH_PATH = pkg_resources.resource_filename(
-    'functest', 'ci/config_patch.yaml')
-CONFIG_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
-    'functest', 'ci/config_aarch64_patch.yaml')
-# set the architecture to default
-pod_arch = os.getenv("POD_ARCH", None)
-arch_filter = ['aarch64']
 
 
 class Result(enum.Enum):
@@ -86,31 +78,6 @@ class Runner(object):
             CONST.__getattribute__('INSTALLER_TYPE'),
             CONST.__getattribute__('DEPLOY_SCENARIO'),
             pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
-
-    @staticmethod
-    def update_config_file():
-        Runner.patch_file(CONFIG_PATCH_PATH)
-
-        if pod_arch and pod_arch in arch_filter:
-            Runner.patch_file(CONFIG_AARCH64_PATCH_PATH)
-
-    @staticmethod
-    def patch_file(patch_file_path):
-        logger.debug('Updating file: %s', patch_file_path)
-        with open(patch_file_path) as f:
-            patch_file = yaml.safe_load(f)
-
-        updated = False
-        for key in patch_file:
-            if key in CONST.__getattribute__('DEPLOY_SCENARIO'):
-                new_functest_yaml = dict(ft_utils.merge_dicts(
-                    ft_utils.get_functest_yaml(), patch_file[key]))
-                updated = True
-
-        if updated:
-            os.remove(CONFIG_FUNCTEST_PATH)
-            with open(CONFIG_FUNCTEST_PATH, "w") as f:
-                f.write(yaml.dump(new_functest_yaml, default_style='"'))
 
     @staticmethod
     def source_rc_file():
@@ -229,8 +196,6 @@ class Runner(object):
             self.run_tier(tier)
 
     def main(self, **kwargs):
-        Runner.update_config_file()
-
         if 'noclean' in kwargs:
             self.clean_flag = not kwargs['noclean']
         if 'report' in kwargs:
