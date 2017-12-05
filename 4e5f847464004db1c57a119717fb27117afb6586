@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_289b4168",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2017-12-05T14:13:36Z",
+      "side": 1,
+      "message": "Could you please add jira link to ARMBAND-334 in the message description?",
+      "revId": "4e5f847464004db1c57a119717fb27117afb6586",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
