@@ -1,20 +1,44 @@
 #!/usr/bin/env python
 
+# pylint: disable=missing-docstring
+
+import os
+import pkg_resources
 import yaml
 
 import six
-
-from functest.utils import env
 
 
 class Config(object):
     def __init__(self):
         try:
-            with open(env.ENV.CONFIG_FUNCTEST_YAML) as f:
-                self.functest_yaml = yaml.safe_load(f)
-                self._parse(None, self.functest_yaml)
+            with open(pkg_resources.resource_filename(
+                    'functest', 'ci/config_functest.yaml')) as yfile:
+                self.functest_yaml = yaml.safe_load(yfile)
         except Exception as error:
             raise Exception('Parse config failed: {}'.format(str(error)))
+
+    @staticmethod
+    def _merge_dicts(dict1, dict2):
+        for k in set(dict1.keys()).union(dict2.keys()):
+            if k in dict1 and k in dict2:
+                if isinstance(dict1[k], dict) and isinstance(dict2[k], dict):
+                    yield (k, dict(Config._merge_dicts(dict1[k], dict2[k])))
+                else:
+                    yield (k, dict2[k])
+            elif k in dict1:
+                yield (k, dict1[k])
+            else:
+                yield (k, dict2[k])
+
+    def patch_file(self, patch_file_path):
+        with open(patch_file_path) as yfile:
+            patch_file = yaml.safe_load(yfile)
+
+        for key in patch_file:
+            if key in os.environ.get('DEPLOY_SCENARIO', ""):
+                self.functest_yaml = dict(Config._merge_dicts(
+                    self.functest_yaml, patch_file[key]))
 
     def _parse(self, attr_now, left_parametes):
         for param_n, param_v in six.iteritems(left_parametes):
@@ -24,9 +48,22 @@ class Config(object):
             if isinstance(param_v, dict):
                 self._parse(attr_further, param_v)
 
-    def _get_attr_further(self, attr_now, next):
+    @staticmethod
+    def _get_attr_further(attr_now, next):  # pylint: disable=redefined-builtin
         return attr_now if next == 'general' else (
             '{}_{}'.format(attr_now, next) if attr_now else next)
 
+    def fill(self):
+        try:
+            self._parse(None, self.functest_yaml)
+        except Exception as error:
+            raise Exception('Parse config failed: {}'.format(str(error)))
+
 
 CONF = Config()
+CONF.patch_file(pkg_resources.resource_filename(
+    'functest', 'ci/config_patch.yaml'))
+if os.getenv("POD_ARCH", None) and os.getenv("POD_ARCH", None) in ['aarch64']:
+    CONF.patch_file(pkg_resources.resource_filename(
+        'functest', 'ci/config_aarch64_patch.yaml'))
+CONF.fill()

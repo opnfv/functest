@@ -58,56 +58,6 @@ class RunTestsTesting(unittest.TestCase):
 
         self.run_tests_parser = run_tests.RunTestsParser()
 
-        self.config_file_yaml = {'general': {
-                                     'openstack': {
-                                         'image_name': 'test_image_name'}},
-                                 'results': {
-                                     'test_db_url': 'url1'}}
-        self.config_file_patch_yaml = {'fdio': {'general': {
-                                       'openstack': {
-                                           'image_name':
-                                           'test_image_name_2'}}}}
-        self.config_file_aarcg64_patch_yaml = {'os': {'general': {
-                    'openstack': {'image_name': 'test_image_name_3'}}}}
-
-    @mock.patch('functest.ci.run_tests.Runner.patch_file')
-    def test_update_config_file_default(self, mock_patch):
-        self.runner.update_config_file()
-        mock_patch.assert_called()
-
-    def test_patch_file_missing_file(self):
-        patch_file_path = "unexisting_file"
-        with self.assertRaises(IOError):
-            self.runner.patch_file(patch_file_path)
-
-    @mock.patch('functest.ci.run_tests.ft_utils.merge_dicts')
-    @mock.patch('functest.ci.run_tests.ft_utils.get_functest_yaml')
-    def test_patch_file_default(self, *mock_methods):
-        CONST.__setattr__('DEPLOY_SCENARIO', 'os-nosdn-nofeature-noha')
-        with mock.patch(
-               'six.moves.builtins.open', mock.mock_open()), mock.patch(
-               'functest.ci.run_tests.yaml.safe_load') as yaml1, mock.patch(
-               'functest.ci.run_tests.ft_utils.get_functest_yaml') as yaml2:
-            yaml1.return_value = self.config_file_patch_yaml
-            yaml2.return_value = self.config_file_yaml
-            self.runner.patch_file(yaml1)
-            mock_methods[1].assert_not_called()
-            mock_methods[0].assert_not_called()
-
-    @mock.patch('functest.ci.run_tests.ft_utils.merge_dicts')
-    @mock.patch('functest.ci.run_tests.os.remove')
-    def test_patch_file_match_scenario(self, *mock_methods):
-        CONST.__setattr__('DEPLOY_SCENARIO', 'os-nosdn-fdio-noha')
-        with mock.patch(
-               'six.moves.builtins.open', mock.mock_open()), mock.patch(
-               'functest.ci.run_tests.yaml.safe_load') as yaml1, mock.patch(
-               'functest.ci.run_tests.ft_utils.get_functest_yaml') as yaml2:
-            yaml1.return_value = self.config_file_patch_yaml
-            yaml2.return_value = self.config_file_yaml
-            self.runner.patch_file(yaml2)
-            mock_methods[1].assert_called()
-            mock_methods[0].assert_called()
-
     @mock.patch('functest.ci.run_tests.logger.error')
     def test_source_rc_file_missing_file(self, mock_logger_error):
         with mock.patch('functest.ci.run_tests.os.path.isfile',
