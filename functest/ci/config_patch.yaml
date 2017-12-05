@@ -6,9 +6,6 @@ lxd:
             image_file_name: cirros-0.3.5-x86_64-lxc.tar.gz
             image_disk_format: raw
 
-    healthcheck:
-        disk_image: /home/opnfv/functest/data/cirros-0.3.5-x86_64-lxc.tar.gz
-        disk_format: raw
 fdio:
     general:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
