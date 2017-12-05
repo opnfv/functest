@@ -16,7 +16,7 @@ import mock
 
 from functest.core import vnf
 from functest.core import testcase
-from functest.utils import constants
+from functest.utils.constants import CONST
 
 from snaps.openstack.os_credentials import OSCreds
 
@@ -29,8 +29,8 @@ class VnfBaseTesting(unittest.TestCase):
     tenant_description = 'description'
 
     def setUp(self):
-        constants.CONST.__setattr__("vnf_foo_tenant_name", self.tenant_name)
-        constants.CONST.__setattr__(
+        CONST.__setattr__("vnf_foo_tenant_name", self.tenant_name)
+        CONST.__setattr__(
             "vnf_foo_tenant_description", self.tenant_description)
         self.test = vnf.VnfOnBoarding(project='functest', case_name='foo')
 
@@ -118,7 +118,7 @@ class VnfBaseTesting(unittest.TestCase):
         with self.assertRaises(Exception):
             self.test.prepare()
         args[0].assert_called_with(
-            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+            os_env_file=CONST.__getattribute__('openstack_creds'))
         args[1].assert_not_called()
         args[2].assert_not_called()
 
@@ -129,7 +129,7 @@ class VnfBaseTesting(unittest.TestCase):
         with self.assertRaises(Exception):
             self.test.prepare()
         args[0].assert_called_with(
-            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+            os_env_file=CONST.__getattribute__('openstack_creds'))
         args[1].assert_called_with(mock.ANY, mock.ANY)
         args[2].assert_not_called()
 
@@ -140,7 +140,7 @@ class VnfBaseTesting(unittest.TestCase):
         with self.assertRaises(Exception):
             self.test.prepare()
         args[0].assert_called_with(
-            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+            os_env_file=CONST.__getattribute__('openstack_creds'))
         args[1].assert_called_with(mock.ANY, mock.ANY)
         args[2].assert_called_with(mock.ANY, mock.ANY)
 
@@ -150,7 +150,7 @@ class VnfBaseTesting(unittest.TestCase):
     def test_prepare_default(self, *args):
         self.assertEqual(self.test.prepare(), testcase.TestCase.EX_OK)
         args[0].assert_called_with(
-            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+            os_env_file=CONST.__getattribute__('openstack_creds'))
         args[1].assert_called_with(mock.ANY, mock.ANY)
         args[2].assert_called_with(mock.ANY, mock.ANY)
 

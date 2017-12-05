@@ -21,6 +21,7 @@ import textwrap
 import prettytable
 import yaml
 
+import functest
 import functest.ci.tier_builder as tb
 import functest.core.testcase as testcase
 import functest.utils.functest_utils as ft_utils
@@ -92,6 +93,11 @@ class Runner(object):
 
         if pod_arch and pod_arch in arch_filter:
             Runner.patch_file(CONFIG_AARCH64_PATCH_PATH)
+
+        reload(functest.utils.config)
+        reload(functest.utils.constants)
+        from functest.utils.constants import CONST
+        logger.debug("Reload %s successfully!", CONST)
 
     @staticmethod
     def patch_file(patch_file_path):
