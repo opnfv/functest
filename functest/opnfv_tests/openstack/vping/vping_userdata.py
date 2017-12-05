@@ -7,6 +7,8 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+"""vping_userdata testcase."""
+
 import time
 
 from snaps.config.network import PortConfig
@@ -47,8 +49,8 @@ class VPingUserdata(vping_base.VPingBase):
                 port_settings=[port1_settings])
 
             self.logger.info(
-                "Creating VM 1 instance with name: '%s'"
-                % instance1_settings.name)
+                "Creating VM 1 instance with name: '%s'",
+                instance1_settings.name)
             self.vm1_creator = deploy_utils.create_vm_instance(
                 self.os_creds, instance1_settings,
                 self.image_creator.image_settings)
@@ -69,8 +71,8 @@ class VPingUserdata(vping_base.VPingBase):
                     userdata=userdata)
 
                 self.logger.info(
-                    "Creating VM 2 instance with name: '%s'"
-                    % instance2_settings.name)
+                    "Creating VM 2 instance with name: '%s'",
+                    instance2_settings.name)
                 self.vm2_creator = deploy_utils.create_vm_instance(
                     self.os_creds, instance2_settings,
                     self.image_creator.image_settings)
@@ -113,7 +115,7 @@ class VPingUserdata(vping_base.VPingBase):
                     tries += 1
                 else:
                     self.logger.debug(
-                        "Pinging %s. Waiting for response..." % test_ip)
+                        "Pinging %s. Waiting for response...", test_ip)
             sec += 1
 
         return exit_code
