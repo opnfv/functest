@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_c51600a7",
+        "filename": "tox.ini",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2017-12-05T01:08:21Z",
+      "side": 1,
+      "message": "instead of specifying each yaml file, how about scan the repo, and figure out the yaml file by yaml/yml automatically?",
+      "revId": "90b8e7922a42defb3e571a0a8e81306e9abc0fe3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
