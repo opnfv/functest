@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a3d3df0_656e1431",
+        "filename": "tox.ini",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-12-05T01:28:32Z",
+      "side": 1,
+      "message": "How about this:\ndirs\u003d\n  docker\n  functest/ci/testcases.yaml",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "90b8e7922a42defb3e571a0a8e81306e9abc0fe3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_c51600a7",
         "filename": "tox.ini",
         "patchSetId": 1
