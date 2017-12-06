@@ -4,6 +4,8 @@
         template_path: "{{ tmpl_dir }}/default.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -17,6 +19,8 @@
           flavor: {{ flavor_name }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -30,6 +34,8 @@
           network_id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -41,6 +47,8 @@
         template_path: "{{ tmpl_dir }}/default.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -53,6 +61,8 @@
         updated_template_path: "{{ tmpl_dir }}/updated_random_strings_add.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -63,6 +73,8 @@
         updated_template_path: "{{ tmpl_dir }}/updated_random_strings_delete.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -73,6 +85,8 @@
         updated_template_path: "{{ tmpl_dir }}/updated_resource_group_increase.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -83,6 +97,8 @@
         updated_template_path: "{{ tmpl_dir }}/updated_autoscaling_policy_inplace.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -93,6 +109,8 @@
         updated_template_path: "{{ tmpl_dir }}/updated_resource_group_reduce.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -103,6 +121,8 @@
         updated_template_path: "{{ tmpl_dir }}/updated_random_strings_replace.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -114,6 +134,8 @@
         template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -125,6 +147,8 @@
         template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -134,6 +158,8 @@
     -
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:

@@ -5,6 +5,8 @@
         updated_template_path: "{{ tmpl_dir }}/updated_autoscaling_policy_inplace.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -16,6 +18,8 @@
         template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -27,6 +31,8 @@
         template_path: "{{ tmpl_dir }}/random_strings.yaml.template"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -36,6 +42,8 @@
     -
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "heat_stack_owner"
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
