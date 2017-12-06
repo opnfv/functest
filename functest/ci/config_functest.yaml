@@ -165,21 +165,6 @@ vnf:
         tenant_description: vRouter
         config: cloudify_vrouter.yaml
 
-promise:
-    tenant_name: promise
-    tenant_description: promise Functionality Testing
-    user_name: promiser
-    user_pwd: test
-    image_name: promise-img
-    flavor_name: promise-flavor
-    flavor_vcpus: 1
-    flavor_ram: 128
-    flavor_disk: 0
-    network_name: promise-net
-    subnet_name: promise-subnet
-    subnet_cidr: 192.168.121.0/24
-    router_name: promise-router
-
 example:
     vm_name: example-vm
     flavor: m1.small
