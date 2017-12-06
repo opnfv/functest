@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_2b9b3b68",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-12-06T01:26:27Z",
+      "side": 1,
+      "message": "Either is fine.",
+      "parentUuid": "9a3d3df0_48220502",
+      "revId": "284958569b5f85fd28dcbae5761cf892bf1d38dc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_c8cbb51c",
         "filename": "functest/ci/config_functest.yaml",
         "patchSetId": 4
