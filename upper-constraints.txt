@@ -1,4 +1,4 @@
-git+https://gerrit.opnfv.org/gerrit/releng@ec0b6245f856d34845b36d0b1b5c2cd63c86b03b#egg=opnfv&subdirectory=modules
+git+https://gerrit.opnfv.org/gerrit/releng@15d0c604dddaeb6471e3f1f4529b60e32b479582#egg=opnfv&subdirectory=modules
 git+https://gerrit.opnfv.org/gerrit/snaps@stable/euphrates#egg=snaps
 git+https://gerrit.opnfv.org/gerrit/barometer@stable/euphrates#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn@stable/euphrates#egg=sdnvpn
