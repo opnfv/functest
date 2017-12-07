@@ -34,7 +34,7 @@ general:
 
         flavor_name: opnfv_flavor
         flavor_name_alt: opnfv_flavor_1
-        flavor_ram: 512
+        flavor_ram: 1024
         flavor_disk: 1
         flavor_vcpus: 1
 

@@ -162,7 +162,7 @@ class VPingBase(testcase.TestCase):
             flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
         flavor_creator = OpenStackFlavor(
             self.os_creds,
-            FlavorConfig(name=self.flavor_name, ram=512, disk=1, vcpus=1,
+            FlavorConfig(name=self.flavor_name, ram=1024, disk=1, vcpus=1,
                          metadata=flavor_metadata))
         flavor_creator.create()
         self.creators.append(flavor_creator)

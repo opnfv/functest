@@ -516,7 +516,7 @@ class RallyBase(testcase.TestCase):
         LOGGER.debug("Creating flavor '%s'...", self.flavor_name)
         flavor_creator = OpenStackFlavor(
             self.os_creds, FlavorConfig(
-                name=self.flavor_name, ram=512, disk=1, vcpus=1,
+                name=self.flavor_name, ram=1024, disk=1, vcpus=1,
                 metadata=self.FLAVOR_EXTRA_SPECS))
         if flavor_creator is None or flavor_creator.create() is None:
             raise Exception("Failed to create flavor")
