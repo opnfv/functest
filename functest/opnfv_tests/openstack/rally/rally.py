@@ -60,8 +60,10 @@ class RallyBase(testcase.TestCase):
     FLAVOR_NAME = CONST.__getattribute__('rally_flavor_name')
     FLAVOR_ALT_NAME = CONST.__getattribute__('rally_flavor_alt_name')
     FLAVOR_EXTRA_SPECS = None
+    FLAVOR_RAM = 512
     if hasattr(CONST, 'flavor_extra_specs'):
         FLAVOR_EXTRA_SPECS = CONST.__getattribute__('flavor_extra_specs')
+        FLAVOR_RAM = 1024
 
     RALLY_DIR = pkg_resources.resource_filename(
         'functest', 'opnfv_tests/openstack/rally')
@@ -514,7 +516,7 @@ class RallyBase(testcase.TestCase):
         LOGGER.debug("Creating flavor '%s'...", self.flavor_name)
         flavor_creator = OpenStackFlavor(
             self.os_creds, FlavorConfig(
-                name=self.flavor_name, ram=512, disk=1, vcpus=1,
+                name=self.flavor_name, ram=self.FLAVOR_RAM, disk=1, vcpus=1,
                 metadata=self.FLAVOR_EXTRA_SPECS))
         if flavor_creator is None or flavor_creator.create() is None:
             raise Exception("Failed to create flavor")
@@ -523,8 +525,8 @@ class RallyBase(testcase.TestCase):
         LOGGER.debug("Creating flavor '%s'...", self.flavor_alt_name)
         flavor_alt_creator = OpenStackFlavor(
             self.os_creds, FlavorConfig(
-                name=self.flavor_alt_name, ram=1024, disk=1, vcpus=1,
-                metadata=self.FLAVOR_EXTRA_SPECS))
+                name=self.flavor_alt_name, ram=self.FLAVOR_RAM, disk=1,
+                vcpus=1, metadata=self.FLAVOR_EXTRA_SPECS))
         if flavor_alt_creator is None or flavor_alt_creator.create() is None:
             raise Exception("Failed to create flavor")
         self.creators.append(flavor_alt_creator)
