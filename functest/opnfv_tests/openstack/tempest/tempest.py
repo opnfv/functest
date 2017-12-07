@@ -318,9 +318,7 @@ class TempestResourcesManager(object):
             self.os_creds = openstack_tests.get_credentials(
                 os_env_file=CONST.__getattribute__('openstack_creds'))
 
-        self.guid = ''
-        if CONST.__getattribute__('tempest_unique_names'):
-            self.guid = '-' + str(uuid.uuid4())
+        self.guid = '-' + str(uuid.uuid4())
 
         self.creators = list()
 
@@ -384,21 +382,19 @@ class TempestResourcesManager(object):
         flavor_id = None
         flavor_id_alt = None
 
-        if (CONST.__getattribute__('tempest_use_custom_images') or
-           use_custom_images):
-            logger.debug("Creating image for Tempest suite")
-            image_base_name = CONST.__getattribute__(
-                'openstack_image_name') + self.guid
-            os_image_settings = openstack_tests.cirros_image_settings(
-                image_base_name, public=True,
-                image_metadata=self.cirros_image_config)
-            logger.debug("Creating image for Tempest suite")
-            image_creator = deploy_utils.create_image(
-                self.os_creds, os_image_settings)
-            if image_creator is None:
-                raise Exception('Failed to create image')
-            self.creators.append(image_creator)
-            image_id = image_creator.get_image().id
+        logger.debug("Creating image for Tempest suite")
+        image_base_name = CONST.__getattribute__(
+            'openstack_image_name') + self.guid
+        os_image_settings = openstack_tests.cirros_image_settings(
+            image_base_name, public=True,
+            image_metadata=self.cirros_image_config)
+        logger.debug("Creating image for Tempest suite")
+        image_creator = deploy_utils.create_image(
+            self.os_creds, os_image_settings)
+        if image_creator is None:
+            raise Exception('Failed to create image')
+        self.creators.append(image_creator)
+        image_id = image_creator.get_image().id
 
         if use_custom_images:
             logger.debug("Creating 2nd image for Tempest suite")
@@ -415,7 +411,7 @@ class TempestResourcesManager(object):
             self.creators.append(image_creator_alt)
             image_id_alt = image_creator_alt.get_image().id
 
-        if (CONST.__getattribute__('tempest_use_custom_flavors') or
+        if (CONST.__getattribute__('tempest_use_custom_flavors') == 'True' or
            use_custom_flavors):
             logger.info("Creating flavor for Tempest suite")
             scenario = CONST.__getattribute__('DEPLOY_SCENARIO')

@@ -257,11 +257,11 @@ def configure_tempest_update_params(tempest_conf_file, image_id=None,
         CONST.__getattribute__('tempest_private_net_name'))
     config.set('compute', 'volume_device_name',
                CONST.__getattribute__('tempest_volume_device_name'))
-    if CONST.__getattribute__('tempest_use_custom_images'):
-        if image_id is not None:
-            config.set('compute', 'image_ref', image_id)
-        if IMAGE_ID_ALT is not None:
-            config.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
+
+    if image_id is not None:
+        config.set('compute', 'image_ref', image_id)
+    if IMAGE_ID_ALT is not None:
+        config.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
     if CONST.__getattribute__('tempest_use_custom_flavors'):
         if flavor_id is not None:
             config.set('compute', 'flavor_ref', flavor_id)
