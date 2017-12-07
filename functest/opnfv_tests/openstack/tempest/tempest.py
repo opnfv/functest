@@ -438,6 +438,7 @@ class TempestResourcesManager(object):
             flavor_metadata_alt = None
             if 'ovs' in scenario or 'fdio' in scenario:
                 flavor_metadata_alt = create_flavor.MEM_PAGE_SIZE_LARGE
+                CONST.__setattr__('openstack_flavor_ram', 1024)
             flavor_creator_alt = OpenStackFlavor(
                 self.os_creds, FlavorConfig(
                     name=CONST.__getattribute__(
