@@ -1,3 +1,4 @@
+---
 test_scenario_list:
     -
         test_type: 'function_test'

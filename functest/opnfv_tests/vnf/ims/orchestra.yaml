@@ -1,27 +1,32 @@
+---
 tenant_images:
     orchestrator:
-        ubuntu-14.04-server-cloudimg-amd64-disk1: /home/opnfv/functest/images/trusty-server-cloudimg-amd64-disk1.img
+        ubuntu-14.04-server-cloudimg-amd64-disk1:
+            /home/opnfv/functest/images/trusty-server-cloudimg-amd64-disk1.img
     orchestra_openims:
         openims: /home/opnfv/functest/images/img
     orchestra_clearwaterims:
-        ubuntu-14.04-server-cloudimg-amd64-disk1: /home/opnfv/functest/images/trusty-server-cloudimg-amd64-disk1.img
+        ubuntu-14.04-server-cloudimg-amd64-disk1:
+            /home/opnfv/functest/images/trusty-server-cloudimg-amd64-disk1.img
 mano:
     name: OpenBaton
     version: '3.2.0'
     requirements:
         flavor:
-          name: openbaton
-          ram_min: 4096
-          disk: 5
-          vcpus: 2
+            name: openbaton
+            ram_min: 4096
+            disk: 5
+            vcpus: 2
         image: 'ubuntu-14.04-server-cloudimg-amd64-disk1'
     bootstrap:
         url: http://get.openbaton.org/bootstraps/bootstrap_3.2.0_opnfv/bootstrap
         config:
-            url: http://get.openbaton.org/bootstraps/bootstrap_3.2.0_opnfv/bootstrap-config-file
+            url:
+                http://get.openbaton.org/bootstraps/bootstrap_3.2.0_opnfv/bootstrap-config-file
     gvnfm:
         userdata:
-            url: https://raw.githubusercontent.com/openbaton/generic-vnfm/3.2.0/src/main/resources/user-data.sh
+            url:
+                https://raw.githubusercontent.com/openbaton/generic-vnfm/3.2.0/src/main/resources/user-data.sh
     credentials:
         username: admin
         password: openbaton
@@ -29,13 +34,14 @@ mano:
 orchestra_openims:
     name: OpenIMS
     descriptor:
-        url: http://marketplace.openbaton.org:8080/api/v1/nsds/fokus/OpenImsCore/3.2.0/json
+        url:
+            http://marketplace.openbaton.org:8080/api/v1/nsds/fokus/OpenImsCore/3.2.0/json
     requirements:
         flavor:
-          name: m1.small
-          ram_min: 2048
-          disk: 5
-          vcpus: 2
+            name: m1.small
+            ram_min: 2048
+            disk: 5
+            vcpus: 2
     test:
         scscf:
             ports: [3870, 6060]
@@ -51,11 +57,12 @@ orchestra_openims:
 orchestra_clearwaterims:
     name: Clearwater IMS
     descriptor:
-        url: http://marketplace.openbaton.org:8080/api/v1/nsds/fokus/ClearwaterIMS/3.2.0/json
+        url:
+            http://marketplace.openbaton.org:8080/api/v1/nsds/fokus/ClearwaterIMS/3.2.0/json
     requirements:
         flavor:
-          name: m1.small
-          ram_min: 2048
-          disk: 5
-          vcpus: 2
+            name: m1.small
+            ram_min: 2048
+            disk: 5
+            vcpus: 2
     test:
