@@ -1,5 +1,7 @@
+---
 tenant_images:
-    cloudify_manager_4.0: /home/opnfv/functest/images/cloudify-manager-premium-4.0.1.qcow2
+    cloudify_manager_4.0:
+        /home/opnfv/functest/images/cloudify-manager-premium-4.0.1.qcow2
     vyos1.1.7: /home/opnfv/functest/images/vyos-1.1.7.img
 test_data:
     url: 'https://github.com/oolorg/opnfv-vnf-data.git'
@@ -9,8 +11,8 @@ orchestrator:
     version: '4.0'
     requirements:
         flavor:
-          name: m1.medium
-          ram_min: 4096
+            name: m1.medium
+            ram_min: 4096
         os_image: 'cloudify_manager_4.0'
 vnf:
     name: vyos1.1.7
@@ -21,8 +23,8 @@ vnf:
         version: 'master'
     requirements:
         flavor:
-          name: m1.medium
-          ram_min: 2048
+            name: m1.medium
+            ram_min: 2048
     inputs:
         external_network_name: admin_floating_net
         region: RegionOne

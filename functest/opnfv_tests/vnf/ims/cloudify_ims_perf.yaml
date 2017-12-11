@@ -1,16 +1,22 @@
+---
 tenant_images:
-    ubuntu_14.04: http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
-    cloudify_manager_4.0: http://repository.cloudifysource.org/cloudify/4.0.1/sp-release/cloudify-manager-premium-4.0.1.qcow2
-    IXIA_CHASSIS: # PATH of the virtual chassis image. Ex: Ixia_Virtual_Chassis_8.30_EA_KVM.qcow2
-    IXIA_CARD: # PATH of the virtual card image. Ex: Ixia_Virtual_Load_Module_8.30_EA_KVM.qcow2
-    IXIA_LOAD: # PATH of the virtual loader image. Ex: Ixia_Virtual_Loader_8.30_EA_KVM.qcow2
+    ubuntu_14.04:
+        http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+    cloudify_manager_4.0:
+        http://repository.cloudifysource.org/cloudify/4.0.1/sp-release/cloudify-manager-premium-4.0.1.qcow2
+    # PATH of the virtual chassis image.
+    IXIA_CHASSIS:  # Ixia_Virtual_Chassis_8.30_EA_KVM.qcow2
+    # PATH of the virtual card image.
+    IXIA_CARD:  # Ixia_Virtual_Load_Module_8.30_EA_KVM.qcow2
+    # PATH of the virtual loader image.
+    IXIA_LOAD:  # Ixia_Virtual_Loader_8.30_EA_KVM.qcow2
 orchestrator:
     name: cloudify
     version: '4.0'
     requirements:
         flavor:
-          name: m1.medium
-          ram_min: 4096
+            name: m1.medium
+            ram_min: 4096
         os_image: 'cloudify_manager_4.0'
 vnf:
     name: clearwater
@@ -18,20 +24,21 @@ vnf:
     descriptor:
         file_name: openstack-blueprint-with-numbers.yaml
         name: clearwater-opnfv
-        url: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/archive/master.zip
+        url:
+            https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/archive/master.zip
         version: '122'
     requirements:
         flavor:
-          name: m1.small
-          ram_min: 2048
+            name: m1.small
+            ram_min: 2048
         compute_quotas:
-          cores: 150
-          instances: 100
-          ram: 256000
+            cores: 150
+            instances: 100
+            ram: 256000
         network_quotas:
-          security_group: 25
-          security_group_rule: 100
-          port: 150
+            security_group: 25
+            security_group_rule: 100
+            port: 150
     inputs:
         image_id: 'ubuntu_14.04'
         flavor_id: 'm1.small'
@@ -51,34 +58,34 @@ vnf_test_suite:
     name: ixia
     version: "8.30.0.161"
     requirements:
-      chassis:
-        image: IXIA_CHASSIS
-      card:
-        image: IXIA_CARD
-      load:
-        image: IXIA_LOAD
+        chassis:
+            image: IXIA_CHASSIS
+        card:
+            image: IXIA_CARD
+        load:
+            image: IXIA_LOAD
     inputs:
-      ipgw: '10.67.79.1'
-      pnregistering: '201001[0000-]'
-      pncalling: '201000[0000-]'
-      pncalled: '201000[5000-]'
-      sipportregistering: '[5060-]'
-      sipportcalling: '[5061-]'
-      sipportcalled: '[5062-]'
-      domainname: 'clearwater.opnfv'
-      authpassword: 'toto'
-      registeringtotalcalls: '1000'
-      registeringduration: '180'
-      activecalls: '1000'
-      testduration: '360'
-      test_filname: 'REG_CALL_OPNFV_v13.rxf'
-      licenseServer: '' # IP of YOUR IXIA LICENSE SERVER
-      stats:
-        'Signaling(VoIPSip)':
-          - 'Successful Registrations'
-          - 'Failed Registrations'
-          - 'Active Calls'
-          - 'Attempted Calls'
-          - 'Received Calls'
-          - 'Failed Attempted Calls'
-          - 'Failed Received Calls'
+        ipgw: '10.67.79.1'
+        pnregistering: '201001[0000-]'
+        pncalling: '201000[0000-]'
+        pncalled: '201000[5000-]'
+        sipportregistering: '[5060-]'
+        sipportcalling: '[5061-]'
+        sipportcalled: '[5062-]'
+        domainname: 'clearwater.opnfv'
+        authpassword: 'toto'
+        registeringtotalcalls: '1000'
+        registeringduration: '180'
+        activecalls: '1000'
+        testduration: '360'
+        test_filname: 'REG_CALL_OPNFV_v13.rxf'
+        licenseServer: ''  # IP of YOUR IXIA LICENSE SERVER
+        stats:
+            'Signaling(VoIPSip)':
+                - 'Successful Registrations'
+                - 'Failed Registrations'
+                - 'Active Calls'
+                - 'Attempted Calls'
+                - 'Received Calls'
+                - 'Failed Attempted Calls'
+                - 'Failed Received Calls'
