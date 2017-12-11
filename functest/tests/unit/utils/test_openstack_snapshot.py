@@ -222,7 +222,7 @@ class OSSnapshotTesting(unittest.TestCase):
                        return_value=self.update_list), \
             mock.patch('functest.utils.openstack_snapshot.get_tenants',
                        return_value=self.update_list), \
-                mock.patch('__builtin__.open', mock.mock_open()) as m:
+                mock.patch('six.moves.builtins.open', mock.mock_open()) as m:
             openstack_snapshot.main()
             mock_logger_info.assert_called_once_with("Generating OpenStack "
                                                      "snapshot...")
