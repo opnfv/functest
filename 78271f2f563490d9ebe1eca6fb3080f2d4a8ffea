@@ -16,6 +16,24 @@
       "revId": "78271f2f563490d9ebe1eca6fb3080f2d4a8ffea",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_eeaf9c92",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-12-11T09:15:02Z",
+      "side": 1,
+      "message": "OK, I agree, even though I think two flavors with different ids and the same memory size still work when it comes to resize.",
+      "parentUuid": "9a3d3df0_2e47c41e",
+      "revId": "78271f2f563490d9ebe1eca6fb3080f2d4a8ffea",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
