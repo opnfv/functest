@@ -46,8 +46,8 @@ def main():
     finally:
         endwin()
 
-    print '\nSnake.PY-26lines by Kris Cieslak (defaultset.blogspot.com).'
-    print 'OPNFV adaptation by Functest dream team.'
+    print('\nSnake.PY-26ines by Kris Cieslak (defaultset.blogspot.com).')
+    print('OPNFV adaptation by Functest dream team.')
     score = str(len(snake) - len(body) - 1)
     print ('Thanks for playing, your score: %s.' % score)
-    print 'Find and fix more bugs in your real OPNFV setup!\n'
+    print('Find and fix more bugs in your real OPNFV setup!\n')

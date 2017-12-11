@@ -711,7 +711,7 @@ class OSCleanTesting(unittest.TestCase):
             as mock_remove_tenants, \
             mock.patch('functest.utils.openstack_clean.yaml.safe_load',
                        return_value=mock.Mock()), \
-                mock.patch('__builtin__.open', mock.mock_open()) as m:
+                mock.patch('six.moves.builtins.open', mock.mock_open()) as m:
             openstack_clean.main()
             self.assertTrue(mock_remove_instances)
             self.assertTrue(mock_remove_images)
