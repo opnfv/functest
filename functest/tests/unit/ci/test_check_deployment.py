@@ -41,7 +41,7 @@ class CheckDeploymentTesting(unittest.TestCase):
     def test_check_rc(self):
         with mock.patch('functest.ci.check_deployment.os.path.isfile',
                         returns=True) as m, \
-                mock.patch('__builtin__.open',
+                mock.patch('six.moves.builtins.open',
                            mock.mock_open(read_data='OS_AUTH_URL')):
             self.deployment.check_rc()
             self.assertTrue(m.called)
@@ -55,7 +55,7 @@ class CheckDeploymentTesting(unittest.TestCase):
             self.assertTrue(msg in context)
 
     def test_check_rc_missing_os_auth(self):
-        with mock.patch('__builtin__.open',
+        with mock.patch('six.moves.builtins.open',
                         mock.mock_open(read_data='test')), \
                 self.assertRaises(Exception) as context:
             msg = 'OS_AUTH_URL not defined in {}.'.format(self.rc_file)

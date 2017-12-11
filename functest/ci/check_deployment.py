@@ -19,16 +19,16 @@ import logging
 import logging.config
 import os
 import pkg_resources
+from six.moves.urllib.parse import urlparse
 import socket
-from urlparse import urlparse
 
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 
+from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import glance_utils
 from snaps.openstack.utils import keystone_utils
 from snaps.openstack.utils import neutron_utils
 from snaps.openstack.utils import nova_utils
-from snaps.openstack.tests import openstack_tests
 
 __author__ = "Jose Lausuch <jose.lausuch@ericsson.com>"
 

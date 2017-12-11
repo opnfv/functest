@@ -19,6 +19,7 @@ import sys
 import textwrap
 
 import prettytable
+import six
 import yaml
 
 import functest.ci.tier_builder as tb
@@ -118,7 +119,7 @@ class Runner(object):
             raise Exception("RC file %s does not exist..." % rc_file)
         logger.debug("Sourcing the OpenStack RC file...")
         os_utils.source_credentials(rc_file)
-        for key, value in os.environ.iteritems():
+        for key, value in six.iteritems(os.environ):
             if re.search("OS_", key):
                 if key == 'OS_AUTH_URL':
                     CONST.__setattr__('OS_AUTH_URL', value)

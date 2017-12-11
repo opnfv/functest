@@ -39,7 +39,7 @@ class TierBuilderTesting(unittest.TestCase):
 
         with mock.patch('functest.ci.tier_builder.yaml.safe_load',
                         return_value=self.mock_yaml), \
-                mock.patch('__builtin__.open', mock.mock_open()):
+                mock.patch('six.moves.builtins.open', mock.mock_open()):
             self.tierbuilder = tier_builder.TierBuilder('test_installer',
                                                         'test_scenario',
                                                         'testcases_file')
