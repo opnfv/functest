@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_2e47c41e",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2017-12-11T07:30:25Z",
+      "side": 1,
+      "message": "The idea is to create two flavors with different memory size. Resize_server test uses the first flavor to boot an instance and the second one to resize the booted instance.",
+      "revId": "78271f2f563490d9ebe1eca6fb3080f2d4a8ffea",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
