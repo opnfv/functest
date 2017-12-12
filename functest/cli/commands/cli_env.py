@@ -12,6 +12,8 @@ import prettytable
 
 from functest.utils.constants import CONST
 
+import six
+
 
 class Env(object):
 
@@ -52,7 +54,7 @@ class CliEnv(Env):
         msg = prettytable.PrettyTable(
             header_style='upper', padding_width=5,
             field_names=['Functest Environment', 'value'])
-        for key, value in env_info.iteritems():
+        for key, value in six.iteritems(env_info):
             if key is not None:
                 msg.add_row([key, value])
         click.echo(msg.get_string())
