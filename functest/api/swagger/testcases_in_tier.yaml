@@ -1,3 +1,4 @@
+---
 List all testcases within given tier
 
 This api offers the interface to list all testcases within given tier.
@@ -16,7 +17,7 @@ definitions:
     type: object
     properties:
       creds_name:
-          $ref: '#/definitions/Tests'
+        $ref: '#/definitions/Tests'
   Tests:
     type: dict
 responses:
@@ -25,5 +26,5 @@ responses:
     schema:
       $ref: '#/definitions/Testcases'
     examples:
-        "tier": ""
-        "testcases": []
+      "tier": ""
+      "testcases": []

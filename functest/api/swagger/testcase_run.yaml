@@ -1,8 +1,8 @@
+---
 Run a test case
 
 This api offers the interface to run a test case
 
-action: run_test_case
 ---
 tags:
   - Testcases
@@ -34,7 +34,7 @@ definitions:
     type: object
     properties:
       creds_name:
-          $ref: '#/definitions/Tests'
+        $ref: '#/definitions/Tests'
   Tests:
     type: dict
 responses:

@@ -1,3 +1,4 @@
+---
 Get the result of the specified task
 
 This api offers the interface to get the result of the specified task.
@@ -16,7 +17,7 @@ definitions:
     type: object
     properties:
       creds_name:
-          $ref: '#/definitions/Result'
+        $ref: '#/definitions/Result'
   Result:
     type: dict
 responses:
@@ -28,11 +29,10 @@ responses:
       "result": {
         "case_name": "vping_ssh",
         "env_info": {
-            "build_tag": null,
-            "ci_loop": "weekly",
-            "installer": "compass",
-            "scenario": "os-nosdn-nofeature-noha" },
+          "build_tag": null,
+          "ci_loop": "weekly",
+          "installer": "compass",
+          "scenario": "os-nosdn-nofeature-noha"},
         "result": "PASS",
         "task_id": "1a9f3c5d-ce0b-4354-862e-dd08b26fc484"}
       "status": 2
-

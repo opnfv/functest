@@ -1,3 +1,4 @@
+---
 Show environment
 
 This api offers the interface to show environment.
@@ -10,7 +11,7 @@ definitions:
     type: object
     properties:
       creds_name:
-          $ref: '#/definitions/Name'
+        $ref: '#/definitions/Name'
   Name:
     type: dict
 responses:
