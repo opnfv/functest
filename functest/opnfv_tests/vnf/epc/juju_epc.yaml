@@ -11,7 +11,7 @@ orchestrator:
     requirements:
         dep_package: 'software-properties-common'
         flavor:
-            name: m1.small
+            name: m1.small.juju
             ram_min: 2048
         preserve_setup: false
 vnf:
@@ -24,7 +24,7 @@ vnf:
         version: '1'
     requirements:
         flavor:
-            name: m1.medium
+            name: m1.medium.juju
             ram_min: 4096
 vnf_test_suite:
     name: abot-epc-basic

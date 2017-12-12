@@ -39,12 +39,13 @@ __author__ = "Soumaya K Nayek <soumaya.nayek@rebaca.com>"
 class JujuEpc(vnf.VnfOnBoarding):
     """Abot EPC deployed with JUJU Orchestrator Case"""
 
-    __logger = logging.getLogger(__name__)
+    # __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "juju_epc"
         super(JujuEpc, self).__init__(**kwargs)
+        self.logger = logging.getLogger("functest.ci.run_tests.juju_epc")
 
         # Retrieve the configuration
         self.case_dir = pkg_resources.resource_filename(
@@ -81,7 +82,7 @@ class JujuEpc(vnf.VnfOnBoarding):
             name=get_config("vnf.name", config_file),
             version=get_config("vnf.version", config_file),
         )
-        self.__logger.debug("VNF configuration: %s", self.vnf)
+        self.logger.debug("VNF configuration: %s", self.vnf)
 
         self.details['test_vnf'] = dict(
             name=get_config("vnf_test_suite.name", config_file),
@@ -89,7 +90,7 @@ class JujuEpc(vnf.VnfOnBoarding):
             tag_name=get_config("vnf_test_suite.tag_name", config_file)
         )
         self.images = get_config("tenant_images", config_file)
-        self.__logger.info("Images needed for vEPC: %s", self.images)
+        self.logger.info("Images needed for vEPC: %s", self.images)
         self.keystone_client = os_utils.get_keystone_client()
         self.glance_client = os_utils.get_glance_client()
         self.neutron_client = os_utils.get_neutron_client()
@@ -97,11 +98,11 @@ class JujuEpc(vnf.VnfOnBoarding):
 
     def prepare(self):
         """Prepare testcase (Additional pre-configuration steps)."""
-        self.__logger.debug("OS Credentials: %s", os_utils.get_credentials())
+        self.logger.debug("OS Credentials: %s", os_utils.get_credentials())
 
         super(JujuEpc, self).prepare()
 
-        self.__logger.info("Additional pre-configuration steps")
+        self.logger.info("Additional pre-configuration steps")
         self.public_auth_url = keystone_utils.get_endpoint(
             self.snaps_creds, 'identity')
 
@@ -125,9 +126,9 @@ class JujuEpc(vnf.VnfOnBoarding):
             'tenant_n': self.tenant_name,
             'user_n': self.tenant_name
         }
-        self.__logger.info("Cloud DATA:  %s", cloud_data)
+        self.logger.info("Cloud DATA:  %s", cloud_data)
         self.filename = os.path.join(self.case_dir, 'abot-epc.yaml')
-        self.__logger.info("Cretae  %s to add cloud info", self.filename)
+        self.logger.info("Cretae  %s to add cloud info", self.filename)
         write_config(self.filename, CLOUD_TEMPLATE, **cloud_data)
 
         if self.snaps_creds.identity_api_version == 3:
@@ -136,9 +137,9 @@ class JujuEpc(vnf.VnfOnBoarding):
                           '{}'.format(os_utils.get_credentials()
                                       ['user_domain_name']))
 
-        self.__logger.info("Upload some OS images if it doesn't exist")
+        self.logger.info("Upload some OS images if it doesn't exist")
         for image_name, image_file in self.images.iteritems():
-            self.__logger.info("image: %s, file: %s", image_name, image_file)
+            self.logger.info("image: %s, file: %s", image_name, image_file)
             if image_file and image_name:
                 image_creator = OpenStackImage(
                     self.snaps_creds,
@@ -150,7 +151,12 @@ class JujuEpc(vnf.VnfOnBoarding):
                 self.created_object.append(image_creator)
 
     def deploy_orchestrator(self):
-        self.__logger.info("Deployed Orchestrator")
+        """
+        Create network, subnet, router
+
+        Bootstrap juju
+        """
+        self.logger.info("Deployed Orchestrator")
         private_net_name = CONST.__getattribute__(
             'vnf_{}_private_net_name'.format(self.case_name))
         private_subnet_name = CONST.__getattribute__(
@@ -164,7 +170,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         ext_net_name = CONST.__getattribute__(
             'vnf_{}_external_network_name'.format(self.case_name))
 
-        self.__logger.info("Creating full network ...")
+        self.logger.info("Creating full network ...")
         subnet_settings = SubnetSettings(name=private_subnet_name,
                                          cidr=private_subnet_cidr,
                                          dns_nameservers=dns_nameserver)
@@ -175,7 +181,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.created_object.append(network_creator)
 
         ext_net_name = snaps_utils.get_ext_net_name(self.snaps_creds)
-        self.__logger.info("Creating network Router ....")
+        self.logger.info("Creating network Router ....")
         router_creator = OpenStackRouter(
             self.snaps_creds,
             RouterSettings(
@@ -184,17 +190,17 @@ class JujuEpc(vnf.VnfOnBoarding):
                 internal_subnets=[subnet_settings.name]))
         router_creator.create()
         self.created_object.append(router_creator)
-        self.__logger.info("Creating Flavor ....")
+        self.logger.info("Creating Flavor ....")
         flavor_settings = FlavorSettings(
             name=self.orchestrator['requirements']['flavor']['name'],
             ram=self.orchestrator['requirements']['flavor']['ram_min'],
             disk=10,
             vcpus=1)
         flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
-        self.__logger.info("Juju Bootstrap: Skip creation of flavors")
+        self.logger.info("Juju Bootstrap: Skip creation of flavors")
         flavor_creator.create()
         self.created_object.append(flavor_creator)
-        self.__logger.info("Installing Dependency Packages .......")
+        self.logger.info("Installing Dependency Packages .......")
         source_dir = "/src/epc-requirements/juju_bin_build"
         if os.path.exists(source_dir):
             shutil.rmtree(source_dir)
@@ -210,20 +216,21 @@ class JujuEpc(vnf.VnfOnBoarding):
         os.system('go get github.com/rogpeppe/godeps')
         os.system('godeps -u dependencies.tsv')
         os.system('go install -v github.com/juju/juju/...')
-        self.__logger.info("Creating Cloud for Abot-epc .....")
+        self.logger.info("Creating Cloud for Abot-epc .....")
         os.system('juju add-cloud abot-epc -f {}'.format(self.filename))
         os.system('juju add-credential abot-epc -f {}'.format(self.filename))
         for image_name in self.images.keys():
-            self.__logger.info("Generating Metadata for %s", image_name)
+            self.logger.info("Generating Metadata for %s", image_name)
             image_id = os_utils.get_image_id(self.glance_client, image_name)
             os.system('juju metadata generate-image -d ~ -i {} -s {} -r '
                       'RegionOne -u {}'.format(image_id,
                                                image_name,
                                                self.public_auth_url))
         net_id = os_utils.get_network_id(self.neutron_client, private_net_name)
-        self.__logger.info("Credential information  : %s", net_id)
+        self.logger.info("Credential information  : %s", net_id)
         juju_bootstrap_command = ('juju bootstrap abot-epc abot-controller '
                                   '--config network={} --metadata-source ~  '
+                                  '--config ssl-hostname-verification=false '
                                   '--constraints mem=2G --bootstrap-series '
                                   'trusty '
                                   '--config use-floating-ip=true --debug'.
@@ -233,9 +240,9 @@ class JujuEpc(vnf.VnfOnBoarding):
 
     def deploy_vnf(self):
         """Deploy ABOT-OAI-EPC."""
-        self.__logger.info("Upload VNFD")
+        self.logger.info("Upload VNFD")
         descriptor = self.vnf['descriptor']
-        self.__logger.info("Get or create flavor for all Abot-EPC")
+        self.logger.info("Get or create flavor for all Abot-EPC")
         flavor_settings = FlavorSettings(
             name=self.vnf['requirements']['flavor']['name'],
             ram=self.vnf['requirements']['flavor']['ram_min'],
@@ -244,12 +251,12 @@ class JujuEpc(vnf.VnfOnBoarding):
         flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
         flavor_creator.create()
         self.created_object.append(flavor_creator)
-        self.__logger.info("Deploying Abot-epc bundle file ...")
+        self.logger.info("Deploying Abot-epc bundle file ...")
         os.system('juju deploy {}'.format('/' + descriptor.get('file_name')))
-        self.__logger.info("Waiting for instances .....")
+        self.logger.info("Waiting for instances .....")
         status = os.system('juju-wait')
-        self.__logger.info("juju wait completed: %s", status)
-        self.__logger.info("Deployed Abot-epc on Openstack")
+        self.logger.info("juju wait completed: %s", status)
+        self.logger.info("Deployed Abot-epc on Openstack")
         if status == 0:
             instances = os_utils.get_instances(self.nova_client)
             for items in instances:
@@ -260,13 +267,13 @@ class JujuEpc(vnf.VnfOnBoarding):
                     self.sec_group_id = os_utils.get_security_group_id(
                         self.neutron_client, sec_group)
                     break
-            self.__logger.info("Adding Security group rule....")
+            self.logger.info("Adding Security group rule....")
             os_utils.create_secgroup_rule(self.neutron_client,
                                           self.sec_group_id, 'ingress', 132)
-            self.__logger.info("Copying the feature files to Abot_node ")
+            self.logger.info("Copying the feature files to Abot_node ")
             os.system('juju scp -- -r {}/featureFiles abot-'
                       'epc-basic/0:~/'.format(self.case_dir))
-            self.__logger.info("Copying the feature files in Abot_node ")
+            self.logger.info("Copying the feature files in Abot_node ")
             os.system("juju ssh abot-epc-basic/0 'sudo rsync -azvv "
                       "~/featureFiles /etc/rebaca-test-suite"
                       "/featureFiles'")
@@ -286,73 +293,75 @@ class JujuEpc(vnf.VnfOnBoarding):
             return False
 
     def test_vnf(self):
+        """Run test on ABoT."""
         start_time = time.time()
-        self.__logger.info("Running VNF Test cases....")
+        self.logger.info("Running VNF Test cases....")
         os.system('juju run-action abot-epc-basic/0 run '
                   'tagnames={}'.format(self.details['test_vnf']['tag_name']))
         os.system('juju-wait')
         duration = time.time() - start_time
-        self.__logger.info("Getting results from Abot node....")
+        self.logger.info("Getting results from Abot node....")
         os.system('juju scp abot-epc-basic/0:/var/lib/abot-'
                   'epc-basic/artifacts/TestResults.json {}/.'
                   .format(self.case_dir))
-        self.__logger.info("Parsing the Test results...")
+        self.logger.info("Parsing the Test results...")
         res = (process_abot_test_result('{}/TestResults.'
                                         'json'.format(self.case_dir)))
         short_result = sig_test_format(res)
-        self.__logger.info(short_result)
+        self.logger.info(short_result)
         self.details['test_vnf'].update(status='PASS',
                                         result=short_result,
                                         full_result=res,
                                         duration=duration)
 
-        self.__logger.info("Test VNF result: Passed: %d, Failed:"
-                           "%d, Skipped: %d", short_result['passed'],
-                           short_result['failures'], short_result['skipped'])
+        self.logger.info("Test VNF result: Passed: %d, Failed:"
+                         "%d, Skipped: %d", short_result['passed'],
+                         short_result['failures'], short_result['skipped'])
         return True
 
     def clean(self):
+        """Clean created objects/functions."""
         try:
             if not self.orchestrator['requirements']['preserve_setup']:
-                self.__logger.info("Removing deployment files...")
+                self.logger.info("Removing deployment files...")
                 testresult = os.path.join(self.case_dir, 'TestResults.json')
                 if os.path.exists(testresult):
                     os.remove(testresult)
-                self.__logger.info("Removing %s file ", self.filename)
+                self.logger.info("Removing %s file ", self.filename)
                 if os.path.exists(self.filename):
                     os.remove(self.filename)
-                self.__logger.info("Destroying Orchestrator...")
+                self.logger.info("Destroying Orchestrator...")
                 os.system('juju destroy-controller -y abot-controller '
                           '--destroy-all-models')
         except:
-            self.__logger.warn("Some issue during the undeployment ..")
-            self.__logger.warn("Tenant clean continue ..")
+            self.logger.warn("Some issue during the undeployment ..")
+            self.logger.warn("Tenant clean continue ..")
 
         if not self.orchestrator['requirements']['preserve_setup']:
-            self.__logger.info('Remove the Abot_epc OS object ..')
+            self.logger.info('Remove the Abot_epc OS object ..')
             for creator in reversed(self.created_object):
                 try:
                     creator.clean()
                 except Exception as exc:
-                    self.__logger.error('Unexpected error cleaning - %s', exc)
+                    self.logger.error('Unexpected error cleaning - %s', exc)
 
-            self.__logger.info("Releasing all the floating IPs")
+            self.logger.info("Releasing all the floating IPs")
             # user_id = os_utils.get_user_id(self.keystone_client,
             #                               self.tenant_name)
             floating_ips = os_utils.get_floating_ips(self.neutron_client)
             tenant_id = os_utils.get_tenant_id(self.keystone_client,
                                                self.tenant_name)
-            self.__logger.info("TENANT ID : %s", tenant_id)
+            self.logger.info("TENANT ID : %s", tenant_id)
             for item in floating_ips:
                 if item['tenant_id'] == tenant_id:
                     os_utils.delete_floating_ip(self.neutron_client,
                                                 item['id'])
-            self.__logger.info("Cleaning Projects and Users")
+            self.logger.info("Cleaning Projects and Users")
             for creator in reversed(self.created_object):
                 try:
                     creator.clean()
                 except Exception as exc:  # pylint: disable=broad-except
-                    self.__logger.error('Unexpected error cleaning - %s', exc)
+                    self.logger.error('Unexpected error cleaning - %s', exc)
         return True
 
 
