@@ -73,8 +73,9 @@ class OSCleanTesting(unittest.TestCase):
                                                   "-----------------"
                                                   "---------")
 
+    @mock.patch('time.sleep')
     @mock.patch('functest.utils.openstack_clean.logger.debug')
-    def test_remove_instances(self, mock_logger_debug):
+    def test_remove_instances(self, mock_logger_debug, *args):
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_instances', return_value=self.test_list):
             openstack_clean.remove_instances(self.client, self.update_list)
@@ -83,16 +84,18 @@ class OSCleanTesting(unittest.TestCase):
                                               "instance and will "
                                               "NOT be deleted.")
 
+    @mock.patch('time.sleep')
     @mock.patch('functest.utils.openstack_clean.logger.debug')
-    def test_remove_instances_missing_instances(self, mock_logger_debug):
+    def test_remove_instances_missing_instances(self, mock_logger_debug, *args):
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_instances', return_value=[]):
             openstack_clean.remove_instances(self.client, self.update_list)
             mock_logger_debug.assert_any_call("Removing Nova instances...")
             mock_logger_debug.assert_any_call("No instances found.")
 
+    @mock.patch('time.sleep')
     @mock.patch('functest.utils.openstack_clean.logger.debug')
-    def test_remove_instances_delete_success(self, mock_logger_debug):
+    def test_remove_instances_delete_success(self, mock_logger_debug, *args):
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_instances', return_value=self.test_list), \
                 mock.patch('functest.utils.openstack_clean.os_utils'
@@ -105,8 +108,10 @@ class OSCleanTesting(unittest.TestCase):
                                                                     " '\s*\S+'"
                                                                     " ..."))
 
+    @mock.patch('time.sleep')
     @mock.patch('functest.utils.openstack_clean.logger.debug')
-    def test_remove_instances_pending_delete_success(self, mock_logger_debug):
+    def test_remove_instances_pending_delete_success(self, mock_logger_debug,
+                                                     *args):
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_instances', return_value=self.deleted_list), \
                 mock.patch('functest.utils.openstack_clean.os_utils'
@@ -118,8 +123,10 @@ class OSCleanTesting(unittest.TestCase):
                                                     " '\s*\S+'"
                                                     " ...").assert_not_called()
 
+    @mock.patch('time.sleep')
     @mock.patch('functest.utils.openstack_clean.logger.debug')
-    def test_remove_instances_other_delete_success(self, mock_logger_debug):
+    def test_remove_instances_other_delete_success(self, mock_logger_debug,
+                                                   *args):
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_instances', return_value=self.other_list), \
                 mock.patch('functest.utils.openstack_clean.os_utils'
@@ -132,10 +139,11 @@ class OSCleanTesting(unittest.TestCase):
                                                                     " '\s*\S+'"
                                                                     " ..."))
 
+    @mock.patch('time.sleep')
     @mock.patch('functest.utils.openstack_clean.logger.error')
     @mock.patch('functest.utils.openstack_clean.logger.debug')
     def test_remove_instances_delete_failed(self, mock_logger_debug,
-                                            mock_logger_error):
+                                            mock_logger_error, *args):
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_instances', return_value=self.test_list), \
                 mock.patch('functest.utils.openstack_clean.os_utils'
@@ -276,7 +284,7 @@ class OSCleanTesting(unittest.TestCase):
     def test_remove_floatingips_delete_success(self, mock_logger_debug):
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_floating_ips',
-                        return_value=self.floatingips_list), \
+                        side_effect=[self.floatingips_list, None]), \
                 mock.patch('functest.utils.openstack_clean.os_utils'
                            '.delete_floating_ip', return_value=True):
             openstack_clean.remove_floatingips(self.client, self.remove_list)
@@ -306,12 +314,13 @@ class OSCleanTesting(unittest.TestCase):
                                               RegexMatch("Removing floating "
                                                          "IP \s*\S+ ..."))
 
+    @mock.patch('time.sleep')
     @mock.patch('functest.utils.openstack_clean.remove_routers')
     @mock.patch('functest.utils.openstack_clean.remove_ports')
     @mock.patch('functest.utils.openstack_clean.logger.debug')
     def test_remove_networks(self, mock_logger_debug,
                              mock_remove_ports,
-                             mock_remove_routers):
+                             mock_remove_routers, *args):
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_network_list',
                         return_value=self.test_dict_list), \
@@ -331,12 +340,13 @@ class OSCleanTesting(unittest.TestCase):
                                                         self.routers,
                                                         self.update_list)
 
+    @mock.patch('time.sleep')
     @mock.patch('functest.utils.openstack_clean.remove_routers')
     @mock.patch('functest.utils.openstack_clean.remove_ports')
     @mock.patch('functest.utils.openstack_clean.logger.debug')
     def test_remove_networks_missing_networks(self, mock_logger_debug,
                                               mock_remove_ports,
-                                              mock_remove_routers):
+                                              mock_remove_routers, *args):
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_network_list', return_value=None), \
                 mock.patch('functest.utils.openstack_clean.os_utils'
@@ -354,12 +364,13 @@ class OSCleanTesting(unittest.TestCase):
                                                         self.routers,
                                                         self.update_list)
 
+    @mock.patch('time.sleep')
     @mock.patch('functest.utils.openstack_clean.remove_routers')
     @mock.patch('functest.utils.openstack_clean.remove_ports')
     @mock.patch('functest.utils.openstack_clean.logger.debug')
     def test_remove_networks_delete_success(self, mock_logger_debug,
                                             mock_remove_ports,
-                                            mock_remove_routers):
+                                            mock_remove_routers, *args):
 
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_network_list',
@@ -385,6 +396,7 @@ class OSCleanTesting(unittest.TestCase):
                                                         self.routers,
                                                         self.remove_list)
 
+    @mock.patch('time.sleep')
     @mock.patch('functest.utils.openstack_clean.remove_routers')
     @mock.patch('functest.utils.openstack_clean.remove_ports')
     @mock.patch('functest.utils.openstack_clean.logger.error')
@@ -392,7 +404,7 @@ class OSCleanTesting(unittest.TestCase):
     def test_remove_networks_delete_failed(self, mock_logger_debug,
                                            mock_logger_error,
                                            mock_remove_ports,
-                                           mock_remove_routers):
+                                           mock_remove_routers, *args):
         with mock.patch('functest.utils.openstack_clean.os_utils'
                         '.get_network_list',
                         return_value=self.test_dict_list), \
