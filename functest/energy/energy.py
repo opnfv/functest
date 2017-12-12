@@ -12,10 +12,10 @@
 
 import json
 import logging
-import urllib
 
 from functools import wraps
 import requests
+from six.moves import urllib
 
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
@@ -103,7 +103,7 @@ class EnergyRecorder(object):
             assert environment
 
             uri_comp = "/recorders/environment/"
-            uri_comp += urllib.quote_plus(environment)
+            uri_comp += urllib.parse.quote_plus(environment)
 
             # Creds
             creds_usr = ft_utils.get_functest_config(
@@ -130,7 +130,7 @@ class EnergyRecorder(object):
             except Exception as exc:  # pylint: disable=broad-except
                 EnergyRecorder.logger.info(
                     "Energy recorder API is not available, cause=%s",
-                    exc.message)
+                    str(exc))
                 api_available = False
             # Final config
             EnergyRecorder.energy_recorder_api = {
