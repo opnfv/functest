@@ -11,7 +11,7 @@ You should have received a copy of the license along with this.
 If not, see <http://creativecommons.org/licenses/by/4.0/>.
 
 =============================================
-OPNFV Euphrates 5.0 release note for Functest
+OPNFV Euphrates 5.1 release note for Functest
 =============================================
 
 Abstract
@@ -67,16 +67,16 @@ Release Data
 | **Project**                          | functest                             |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Repo/tag**                         | opnfv-5.0.0                          |
+| **Repo/tag**                         | opnfv-5.1.0                          |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release designation**              | Euphrates initial release            |
+| **Release designation**              | Euphrates 5.1 release                |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release date**                     | October 20th 2017                    |
+| **Release date**                     | December 15th 2017                   |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Purpose of the delivery**          | Euphrates first release              |
+| **Purpose of the delivery**          | Euphrates second release             |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
 
@@ -88,7 +88,6 @@ Software
 
  Functest Docker images:
 
- * https://hub.docker.com/r/opnfv/functest
  * https://hub.docker.com/r/opnfv/functest-healthcheck
  * https://hub.docker.com/r/opnfv/functest-smoke
  * https://hub.docker.com/r/opnfv/functest-features
@@ -101,7 +100,9 @@ Software
 
  * https://hub.docker.com/r/opnfv/testapi
 
-Docker tag to be pulled: opnfv-5.0.0
+Docker tag to be pulled:
+ * amd64: and64-opnfv-5.1.0
+ * arm64: arm64-opnfv-5.1.0
 
 Documents
 ---------
@@ -124,8 +125,7 @@ Functest now delivers light-weigth Docker images based on Alpine 3.6. The test c
 or tiers and must be run from the corresponding container. For example, to run the test case healthcheck, the image
 opnfv/functest-healthcheck shall be used. The tiers and the tests within them are explained in detail in the User Guide.
 
-For ARM (aarch64), the former Ubuntu image opnfv/functest shall be used since there are not any Alpine images built
-for this architecture yet. It will probably be supported for Euphrates 5.1.
+The former Ubuntu image is not longer maintained.
 
 The Parser test case has its own dedicated Docker image since it requires libraries released for OpenStack Pike and
 Euphrates is based on Ocata.
@@ -159,16 +159,23 @@ An internal REST API has been introduced in Euphrates. The goal is to trigger Fu
 This could be considered as a first step towards a pseudo micro services approach where the different test projects could expose and
 consume APIs to the other test projects.
 
+Euphrates 5.1 improvements
+==========================
 
-Euphrates known restrictions/issues
-===================================
+* Alpine images are now supported for ARM (aarch64).
+* Added Vyos_router test case.
+* Updated of Rally 0.9.1 and fixed some bugs in cinder scenarios.
+* Patch to allow building containers from a gerrit change.
+* Selection of a subset of SNAPS test cases.
+* Reorder VNF test cases and adjust timeouts in VNFs.
+
+
+
+Euphrates 5.1 known restrictions/issues
+=======================================
 +--------------+-----------+----------------------------------------------+
 | Installer    | Scenario  |  Issue                                       |
 +==============+===========+==============================================+
-| fuel@aarch64 |    any    |  Alpine containers not supported yet for ARM |
-|              |           |  The former Ubuntu Docker image shall be     |
-|              |           |  still used for this architecture.           |
-+--------------+-----------+----------------------------------------------+
 | fuel@aarch64 |    any    |  VNF tier not supported yet.                 |
 +--------------+-----------+----------------------------------------------+
 |              |           |  The test cases belonging to the VNF tier    |
@@ -198,7 +205,7 @@ in the different testcases.yaml for each tier:
 Test results
 ============
 
-The Functest scenario status on October 20, 2017 can be seen on
+The Functest scenario status on December 15, 2017 can be seen on
 http://testresults.opnfv.org/functest/euphrates/
 
 Test logs are available in:
