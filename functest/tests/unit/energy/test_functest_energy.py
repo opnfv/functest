@@ -266,7 +266,7 @@ class EnergyRecorderTest(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             self.__decorated_method_with_ex()
         self.assertTrue(
-            self.exception_message_to_preserve in context.exception
+            self.exception_message_to_preserve in str(context.exception)
         )
         self.assertTrue(finish_mock.called)
 
