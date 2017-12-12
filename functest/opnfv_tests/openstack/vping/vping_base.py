@@ -156,12 +156,14 @@ class VPingBase(testcase.TestCase):
             "Creating flavor with name: '%s'", self.flavor_name)
         scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
         flavor_metadata = None
+        flavor_ram = 512
         if 'ovs' in scenario or 'fdio' in scenario:
             flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
+            flavor_ram = 1024
         flavor_creator = OpenStackFlavor(
             self.os_creds,
-            FlavorConfig(name=self.flavor_name, ram=512, disk=1, vcpus=1,
-                         metadata=flavor_metadata))
+            FlavorConfig(name=self.flavor_name, ram=flavor_ram, disk=1,
+                         vcpus=1, metadata=flavor_metadata))
         flavor_creator.create()
         self.creators.append(flavor_creator)
 
