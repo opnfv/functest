@@ -9,9 +9,10 @@
 
 
 import os
-from urlparse import urlparse
 
 import click
+import six
+from six.moves.urllib.parse import urlparse
 
 from functest.ci import check_deployment
 from functest.utils.constants import CONST
@@ -58,16 +59,18 @@ class OpenStack(object):
     def snapshot_create(self):
         self.ping_endpoint()
         if os.path.isfile(self.snapshot_file):
-            answer = raw_input("It seems there is already an OpenStack "
-                               "snapshot. Do you want to overwrite it with "
-                               "the current OpenStack status? [y|n]\n")
+            answer = six.moves.input(
+                "It seems there is already an OpenStack "
+                "snapshot. Do you want to overwrite it with "
+                "the current OpenStack status? [y|n]\n")
             while True:
                 if answer.lower() in ["y", "yes"]:
                     break
                 elif answer.lower() in ["n", "no"]:
                     return
                 else:
-                    answer = raw_input("Invalid answer. Please type [y|n]\n")
+                    answer = six.moves.input(
+                        "Invalid answer. Please type [y|n]\n")
 
         click.echo("Generating Openstack snapshot...")
         os_snapshot.main()

@@ -82,7 +82,7 @@ class CliOpenStackTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_os.click.echo')
     def test_snapshot_create_overwrite(self, mock_click_echo, mock_os_path):
-        with mock.patch('__builtin__.raw_input', return_value="y") \
+        with mock.patch('six.moves.input', return_value="y") \
                 as mock_raw_input, \
                 mock.patch.object(self.cli_os, 'ping_endpoint'), \
                 mock.patch('functest.cli.commands.cli_os.os_snapshot.main') \
@@ -111,7 +111,8 @@ class CliOpenStackTesting(unittest.TestCase):
                 return_value=True)
     @mock.patch('functest.cli.commands.cli_os.click.echo')
     def test_snapshot_show_default(self, mock_click_echo, mock_os_path):
-        with mock.patch('__builtin__.open', mock.mock_open(read_data='0')) \
+        with mock.patch('six.moves.builtins.open',
+                        mock.mock_open(read_data='0')) \
                 as m:
             self.cli_os.snapshot_file = self.snapshot_file
             self.cli_os.snapshot_show()
