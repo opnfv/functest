@@ -1,57 +1,56 @@
+---
 Update openrc
 
 This api offers the interface to Update openstack.creds.
-
-action: update_openrc
 ---
 tags:
-  - Creds
+    - Creds
 parameters:
-  - in: body
-    name: body
-    description: this is the input json dict
-    schema:
-      required:
-        - action
-        - args
-      properties:
-        action:
-          type: string
-          description: this is action for creds
-          default: update_openrc
-        args:
-          schema:
-            required:
-              - openrc
-            properties:
-              openrc:
-                type: string
-                description: this is the test case name
-                default:
-                  "OS_AUTH_URL": "http://192.16.1.222:5000/v3"
-                  "OS_ENDPOINT_TYPE": "publicURL"
-                  "OS_IDENTITY_API_VERSION": "3"
-                  "OS_INTERFACE": "publicURL"
-                  "OS_PASSWORD": "admn"
-                  "OS_PROJECT_DOMAIN_NAME": "Default"
-                  "OS_PROJECT_NAME": "admin"
-                  "OS_REGION_NAME": "RegionOne"
-                  "OS_TENANT_NAME": "admin"
-                  "OS_USERNAME": "admin"
-                  "OS_USER_DOMAIN_NAME": "Default"
+    - in: body
+      name: body
+      description: this is the input json dict
+      schema:
+          required:
+              - action
+              - args
+          properties:
+              action:
+                  type: string
+                  description: this is action for creds
+                  default: update_openrc
+              args:
+                  schema:
+                      required:
+                          - openrc
+                      properties:
+                          openrc:
+                              type: string
+                              description: this is the test case name
+                              default:
+                                  "OS_AUTH_URL": "http://192.16.1.222:5000/v3"
+                                  "OS_ENDPOINT_TYPE": "publicURL"
+                                  "OS_IDENTITY_API_VERSION": "3"
+                                  "OS_INTERFACE": "publicURL"
+                                  "OS_PASSWORD": "admn"
+                                  "OS_PROJECT_DOMAIN_NAME": "Default"
+                                  "OS_PROJECT_NAME": "admin"
+                                  "OS_REGION_NAME": "RegionOne"
+                                  "OS_TENANT_NAME": "admin"
+                                  "OS_USERNAME": "admin"
+                                  "OS_USER_DOMAIN_NAME": "Default"
 definitions:
-  Credentials:
-    type: object
-    properties:
-      creds_name:
-          $ref: '#/definitions/Name'
-  Name:
-    type: dict
+    Credentials:
+        type: object
+        properties:
+            creds_name:
+                $ref: '#/definitions/Name'
+    Name:
+        type: dict
 responses:
-  200:
-    description: Update openrc
-    schema:
-      $ref: '#/definitions/Credentials'
-    examples:
-      'status': 0
-      'result': 'Update openrc successfully'
+    200:
+        description: Update openrc
+        schema:
+            $ref: '#/definitions/Credentials'
+        examples:
+            'status': 0
+            'result': 'Update openrc successfully'

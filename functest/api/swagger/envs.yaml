@@ -1,26 +1,27 @@
+---
 Show environment
 
 This api offers the interface to show environment.
 The environment dict will be returned.
 ---
 tags:
-  - Envs
+    - Envs
 definitions:
-  Environment:
-    type: object
-    properties:
-      creds_name:
-          $ref: '#/definitions/Name'
-  Name:
-    type: dict
+    Environment:
+        type: object
+        properties:
+            creds_name:
+                $ref: '#/definitions/Name'
+    Name:
+        type: dict
 responses:
-  200:
-    description: Show environment
-    schema:
-      $ref: '#/definitions/Environment'
-    examples:
-      "DEBUG FLAG": "false"
-      "INSTALLER": "compass, 192.168.200.2"
-      "POD": "unknown_pod"
-      "SCENARIO": "os-nosdn-nofeature-noha"
-      "STATUS": "ready"
+    200:
+        description: Show environment
+        schema:
+            $ref: '#/definitions/Environment'
+        examples:
+            "DEBUG FLAG": "false"
+            "INSTALLER": "compass, 192.168.200.2"
+            "POD": "unknown_pod"
+            "SCENARIO": "os-nosdn-nofeature-noha"
+            "STATUS": "ready"

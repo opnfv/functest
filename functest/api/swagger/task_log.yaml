@@ -1,35 +1,37 @@
+---
 Get the log of the specified task
 
 This api offers the interface to get the log of the specified task.
-
 ---
 tags:
-  - Tasks
+    - Tasks
 parameters:
-  - name: task_id
-    description: task id
-    in: path
-    type: string
-    required: true
+    - name: task_id
+      description: task id
+      in: path
+      type: string
+      required: true
 definitions:
-  Task:
-    type: object
-    properties:
-      creds_name:
-          $ref: '#/definitions/Result'
-  Result:
-    type: dict
+    Task:
+        type: object
+        properties:
+            creds_name:
+                $ref: '#/definitions/Result'
+    Result:
+        type: dict
 responses:
-  200:
-    description: Get the log of the specified task
-    schema:
-      $ref: '#/definitions/Task'
-    examples:
-      "result": {
-        "data": [
-        "2017-09-14 06:46:26,106 - functest.ci.run_tests - DEBUG - Sourcing the OpenStack RC file... ",
-        "2017-09-14 06:46:26,107 - functest.ci.run_tests - DEBUG - Test args: connection_check ",
-        "2017-09-14 06:46:26,107 - functest.ci.run_tests - INFO - Running test case 'connection_check'... ",
-        "..."]}
-      "status": 2
-
+    200:
+        description: Get the log of the specified task
+        schema:
+            $ref: '#/definitions/Task'
+        examples:
+            "result": {
+                "data": [
+                    "2017-09-14 06:46:26,106 - functest.ci.run_tests - DEBUG ",
+                    "- Sourcing the OpenStack RC file... ",
+                    "2017-09-14 06:46:26,107 - functest.ci.run_tests - DEBUG ",
+                    "- Test args: connection_check ",
+                    "2017-09-14 06:46:26,107 - functest.ci.run_tests - INFO ",
+                    "- Running test case 'connection_check'... ",
+                    "..."]}
+            "status": 2

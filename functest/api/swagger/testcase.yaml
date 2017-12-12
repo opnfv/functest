@@ -1,36 +1,36 @@
+---
 Show the info of one testcase
 
 This api offers the interface to show the detailed info of one testcase.
 The info of one testcase will be returned.
 ---
 tags:
-  - Testcases
+    - Testcases
 parameters:
-  - name: testcase_name
-    description: testcase name
-    in: path
-    type: string
-    required: true
+    - name: testcase_name
+      description: testcase name
+      in: path
+      type: string
+      required: true
 definitions:
-  Testcases:
-    type: object
-    properties:
-      case_name:
-          $ref: '#/definitions/Tests'
-  Tests:
-    type: dict
+    Testcases:
+        type: object
+        properties:
+            case_name:
+                $ref: '#/definitions/Tests'
+    Tests:
+        type: dict
 responses:
-  200:
-    description: Show the detailed info of one testcase
-    schema:
-      $ref: '#/definitions/Testcases'
-    examples:
-        "testcase": ""
-        "blocking":
-        "criteria":
-        "dependency": {
-            "installer": "",
-            "scenario": ""
-        }
-        "description": ""
-        "enabled":
+    200:
+        description: Show the detailed info of one testcase
+        schema:
+            $ref: '#/definitions/Testcases'
+        examples:
+            "testcase": ""
+            "blocking":
+            "criteria":
+            "dependency": {
+                "installer": "",
+                "scenario": ""}
+            "description": ""
+            "enabled":

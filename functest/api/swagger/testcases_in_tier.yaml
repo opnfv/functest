@@ -1,29 +1,30 @@
+---
 List all testcases within given tier
 
 This api offers the interface to list all testcases within given tier.
 All testcases within given tier will be returned.
 ---
 tags:
-  - Tiers
+    - Tiers
 parameters:
-  - name: tier_name
-    description: tier name
-    in: path
-    type: string
-    required: true
+    - name: tier_name
+      description: tier name
+      in: path
+      type: string
+      required: true
 definitions:
-  Testcases:
-    type: object
-    properties:
-      creds_name:
-          $ref: '#/definitions/Tests'
-  Tests:
-    type: dict
+    Testcases:
+        type: object
+        properties:
+            creds_name:
+                $ref: '#/definitions/Tests'
+    Tests:
+        type: dict
 responses:
-  200:
-    description: List all testcases within given tier
-    schema:
-      $ref: '#/definitions/Testcases'
-    examples:
-        "tier": ""
-        "testcases": []
+    200:
+        description: List all testcases within given tier
+        schema:
+            $ref: '#/definitions/Testcases'
+        examples:
+            "tier": ""
+            "testcases": []

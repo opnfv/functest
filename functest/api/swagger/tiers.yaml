@@ -1,22 +1,23 @@
+---
 List all tiers
 
 This api offers the interface to list all tiers.
 The tiers list will be returned.
 ---
 tags:
-  - Tiers
+    - Tiers
 definitions:
-  Tiers:
-    type: object
-    properties:
-      creds_name:
-          $ref: '#/definitions/Tier'
-  Tier:
-    type: dict
+    Tiers:
+        type: object
+        properties:
+            creds_name:
+                $ref: '#/definitions/Tier'
+    Tier:
+        type: dict
 responses:
-  200:
-      description: List all tiers
-      schema:
-          $ref: '#/definitions/Tiers'
-      examples:
-          "tiers": ""
+    200:
+        description: List all tiers
+        schema:
+            $ref: '#/definitions/Tiers'
+        examples:
+            "tiers": ""

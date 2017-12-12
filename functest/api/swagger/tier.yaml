@@ -1,32 +1,33 @@
+---
 Show the info of one tier
 
 This api offers the interface to show the detailed info of one tier.
 The info of one tier will be returned.
 ---
 tags:
-  - Tiers
+    - Tiers
 parameters:
-  - name: tier_name
-    description: tier name
-    in: path
-    type: string
-    required: true
+    - name: tier_name
+      description: tier name
+      in: path
+      type: string
+      required: true
 definitions:
-  Tiers:
-    type: object
-    properties:
-      creds_name:
-          $ref: '#/definitions/Name'
-  Name:
-    type: string
+    Tiers:
+        type: object
+        properties:
+            creds_name:
+                $ref: '#/definitions/Name'
+    Name:
+        type: string
 responses:
-  200:
-    description: Show the detailed info of one tier
-    schema:
-      $ref: '#/definitions/Tiers'
-    examples:
-        "tier": ""
-        "ci_loop": ""
-        "description": ""
-        "order":
-        "testcases": []
+    200:
+        description: Show the detailed info of one tier
+        schema:
+            $ref: '#/definitions/Tiers'
+        examples:
+            "tier": ""
+            "ci_loop": ""
+            "description": ""
+            "order":
+            "testcases": []

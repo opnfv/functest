@@ -1,35 +1,36 @@
+---
 Show credentials
 
 This api offers the interface to show credentials.
 The credentials dict will be returned.
 ---
 tags:
-  - Creds
+    - Creds
 definitions:
-  Credentials:
-    type: object
-    properties:
-      creds_name:
-          $ref: '#/definitions/Name'
-  Name:
-    type: dict
+    Credentials:
+        type: object
+        properties:
+            creds_name:
+                $ref: '#/definitions/Name'
+    Name:
+        type: dict
 responses:
-  200:
-    description: Show credentials
-    schema:
-      $ref: '#/definitions/Credentials'
-    examples:
-      "OS_AUTH_URL": "https://192.16.1.222:5000/v3"
-      "OS_AUTH_VERSION": "3"
-      "OS_CACERT": "/home/opnfv/functest/conf/os_cacert"
-      "OS_ENDPOINT_TYPE": "publicURL"
-      "OS_IDENTITY_API_VERSION": "3"
-      "OS_INTERFACE": "publicURL"
-      "OS_NO_CACHE": "1"
-      "OS_PASSWORD": "990232e0885da343ac805528522d"
-      "OS_PROJECT_DOMAIN_NAME": "Default"
-      "OS_PROJECT_NAME": "admin"
-      "OS_REGION_NAME": "RegionOne"
-      "OS_TENANT_NAME": "admin"
-      "OS_USERNAME": "admin"
-      "OS_USER_DOMAIN_NAME": "Default"
+    200:
+        description: Show credentials
+        schema:
+            $ref: '#/definitions/Credentials'
+        examples:
+            "OS_AUTH_URL": "https://192.16.1.222:5000/v3"
+            "OS_AUTH_VERSION": "3"
+            "OS_CACERT": "/home/opnfv/functest/conf/os_cacert"
+            "OS_ENDPOINT_TYPE": "publicURL"
+            "OS_IDENTITY_API_VERSION": "3"
+            "OS_INTERFACE": "publicURL"
+            "OS_NO_CACHE": "1"
+            "OS_PASSWORD": "990232e0885da343ac805528522d"
+            "OS_PROJECT_DOMAIN_NAME": "Default"
+            "OS_PROJECT_NAME": "admin"
+            "OS_REGION_NAME": "RegionOne"
+            "OS_TENANT_NAME": "admin"
+            "OS_USERNAME": "admin"
+            "OS_USER_DOMAIN_NAME": "Default"

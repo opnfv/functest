@@ -1,47 +1,46 @@
+---
 Run a test case
 
 This api offers the interface to run a test case
-
-action: run_test_case
 ---
 tags:
-  - Testcases
+    - Testcases
 parameters:
-  - in: body
-    name: body
-    description: this is the input json dict
-    schema:
-      required:
-        - action
-        - args
-      properties:
-        action:
-          type: string
-          description: this is action for creds
-          default: run_test_case
-        args:
-          schema:
-            required:
-              - testcase
-            properties:
-              testcase:
-                type: string
-                description: this is the test case name
-                default:
-                  vping_ssh
+    - in: body
+      name: body
+      description: this is the input json dict
+      schema:
+          required:
+              - action
+              - args
+          properties:
+              action:
+                  type: string
+                  description: this is action for creds
+                  default: run_test_case
+              args:
+                  schema:
+                      required:
+                          - testcase
+                      properties:
+                          testcase:
+                              type: string
+                              description: this is the test case name
+                              default:
+                                  vping_ssh
 definitions:
-  Testcases:
-    type: object
-    properties:
-      creds_name:
-          $ref: '#/definitions/Tests'
-  Tests:
-    type: dict
+    Testcases:
+        type: object
+        properties:
+            creds_name:
+                $ref: '#/definitions/Tests'
+    Tests:
+        type: dict
 responses:
-  200:
-    description: Run a test case
-    schema:
-      $ref: '#/definitions/Testcases'
-    examples:
-      'task_id': '94c8ec94-d873-466f-a205-bf592f31ff5b'
-      'testcase': 'vping_ssh'
+    200:
+        description: Run a test case
+        schema:
+            $ref: '#/definitions/Testcases'
+        examples:
+            'task_id': '94c8ec94-d873-466f-a205-bf592f31ff5b'
+            'testcase': 'vping_ssh'
