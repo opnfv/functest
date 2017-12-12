@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_a2080592",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6883
+      },
+      "writtenOn": "2017-12-12T15:08:09Z",
+      "side": 1,
+      "message": "you need only to import :\nfunctest.utils.config",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 15
+      },
+      "revId": "44eb9f1021c7dbf2053fe93fe331ac1cd28f51bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_df752599",
         "filename": "functest/ci/run_tests.py",
         "patchSetId": 2
@@ -30,6 +53,29 @@
       "writtenOn": "2017-12-07T23:31:54Z",
       "side": 1,
       "message": "why it is imported again?",
+      "revId": "44eb9f1021c7dbf2053fe93fe331ac1cd28f51bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c205497b",
+        "filename": "functest/ci/run_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 6883
+      },
+      "writtenOn": "2017-12-12T15:08:09Z",
+      "side": 1,
+      "message": "This can be replaced with:\nif pod_arch and pod_arch in arch_filter:\n            try:\n                Runner.patch_file(CONFIG_AARCH64_PATCH_PATH)\n                reload(functest.utils.config)\n                reload(functest.utils.constants)\n                from functest.utils.constants import CONST\n            except Exception:\n                logger.error(\"Error applying patch or updating CONST for %s\", pod_arch)",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 17
+      },
       "revId": "44eb9f1021c7dbf2053fe93fe331ac1cd28f51bb",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
