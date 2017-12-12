@@ -1,8 +1,8 @@
+---
 Update openrc
 
 This api offers the interface to Update openstack.creds.
 
-action: update_openrc
 ---
 tags:
   - Creds
@@ -44,7 +44,7 @@ definitions:
     type: object
     properties:
       creds_name:
-          $ref: '#/definitions/Name'
+        $ref: '#/definitions/Name'
   Name:
     type: dict
 responses:

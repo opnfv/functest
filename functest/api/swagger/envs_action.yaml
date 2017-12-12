@@ -1,8 +1,8 @@
+---
 Update hosts info
 
 This api offers the interface to update hosts info.
 
-action: update_hosts
 ---
 tags:
   - Envs
@@ -30,7 +30,7 @@ definitions:
     type: object
     properties:
       creds_name:
-          $ref: '#/definitions/Name'
+        $ref: '#/definitions/Name'
   Name:
     type: dict
 responses:
