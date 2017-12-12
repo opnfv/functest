@@ -8,16 +8,22 @@
 import re
 
 
-class RegexMatch(str):
+class RegexMatch(object):
+    def __init__(self, msg):
+        self.msg = msg
+
     def __eq__(self, other):
-        match = re.search(self, other)
+        match = re.search(self.msg, other)
         if match:
             return True
         return False
 
 
-class SubstrMatch(str):
+class SubstrMatch(object):
+    def __init__(self, msg):
+        self.msg = msg
+
     def __eq__(self, other):
-        if self in other:
+        if self.msg in other:
             return True
         return False

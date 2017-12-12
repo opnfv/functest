@@ -365,7 +365,8 @@ class OSUtilsTesting(unittest.TestCase):
         except:
             pass
         f = 'rc_file'
-        with mock.patch('__builtin__.open', mock.mock_open(read_data=msg),
+        with mock.patch('six.moves.builtins.open',
+                        mock.mock_open(read_data=msg),
                         create=True) as m:
             m.return_value.__iter__ = lambda self: iter(self.readline, '')
             openstack_utils.source_credentials(f)
@@ -1460,7 +1461,7 @@ class OSUtilsTesting(unittest.TestCase):
                         return_value=True), \
             mock.patch('functest.utils.openstack_utils.get_image_id',
                        return_value=''), \
-            mock.patch('__builtin__.open',
+            mock.patch('six.moves.builtins.open',
                        mock.mock_open(read_data='1')) as m:
                 self.assertEqual(openstack_utils.
                                  create_glance_image(self.glance_client,
