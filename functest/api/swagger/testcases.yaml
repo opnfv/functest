@@ -1,3 +1,4 @@
+---
 List all test cases
 
 This api offers the interface to list all test cases
@@ -10,7 +11,7 @@ definitions:
     type: object
     properties:
       creds_name:
-          $ref: '#/definitions/Tests'
+        $ref: '#/definitions/Tests'
   Tests:
     type: dict
 responses:

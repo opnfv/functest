@@ -1,3 +1,4 @@
+---
 List all tiers
 
 This api offers the interface to list all tiers.
@@ -10,13 +11,13 @@ definitions:
     type: object
     properties:
       creds_name:
-          $ref: '#/definitions/Tier'
+        $ref: '#/definitions/Tier'
   Tier:
     type: dict
 responses:
   200:
-      description: List all tiers
-      schema:
-          $ref: '#/definitions/Tiers'
-      examples:
-          "tiers": ""
+    description: List all tiers
+    schema:
+      $ref: '#/definitions/Tiers'
+    examples:
+      "tiers": ""
