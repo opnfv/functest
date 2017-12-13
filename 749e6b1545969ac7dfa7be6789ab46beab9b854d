@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_62e39d33",
+        "filename": "functest/opnfv_tests/vnf/epc/juju_epc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-12-13T19:33:52Z",
+      "side": 1,
+      "message": "the logger is already good.",
+      "revId": "749e6b1545969ac7dfa7be6789ab46beab9b854d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
