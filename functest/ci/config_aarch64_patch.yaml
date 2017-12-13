@@ -12,8 +12,8 @@ os:
     snaps:
         images:
             glance_tests:
-                disk_file: /
-                    home/opnfv/functest/images/cirros-d161201-aarch64-disk.img
+                disk_file:
+                    /home/opnfv/functest/images/cirros-d161201-aarch64-disk.img
                 extra_properties:
                     hw_firmware_type: 'uefi'
                     short_id: 'ubuntu16.04'
