@@ -2,6 +2,27 @@
 
 set -e
 
+function cleanup {
+    container_ids=($(docker ps -a|grep -v CONTAINER|grep functest|awk '{print $1}'))
+    if [ ${#container_ids[@]} -gt 0 ]; then
+        echo "Removing containers..."
+        docker rm -f $container_ids
+    fi
+
+    image_ids=($(docker images -a|grep -v REPOSITORY|grep -v none|awk '{print $3}'))
+    if [ ${#image_ids[@]} -gt 0 ]; then
+        echo "Removing images..."
+        docker rmi -f $image_ids
+    fi
+
+    none_ids=($(docker images -a|grep -v REPOSITORY|grep none|awk '{print $3}'))
+    if [ ${#none_ids[@]} -gt 0 ]; then
+        echo "Removing left overs..."
+        docker rmi -f $none_ids
+    fi
+}
+
+
 repo=${repo:-opnfv}
 amd64_dirs=${amd64_dirs-"\
 docker/core \
@@ -35,5 +56,7 @@ for dir in ${arm64_dirs}; do
     docker push "${repo}/functest-${dir##**/}:arm64-latest"
 done
 find . -name Dockerfile -exec git checkout {} +
+
+cleanup
 
 exit $?
