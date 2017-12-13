@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_4f44bdb6",
+        "filename": "build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-12-13T17:11:32Z",
+      "side": 1,
+      "message": "the docker rm command gets a string which is a list of IDs, no need for loops.",
+      "parentUuid": "9a3d3df0_8fd7e54a",
+      "revId": "6c989c3d8de193636e0cebbd33cb1d9063ad97c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_afd2a959",
         "filename": "build.sh",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-13T15:46:59Z",
       "side": 1,
       "message": "this is dangerous and I would prefer avoiding that.",
+      "revId": "6c989c3d8de193636e0cebbd33cb1d9063ad97c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0f3e3528",
+        "filename": "build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 459
+      },
+      "writtenOn": "2017-12-13T17:11:32Z",
+      "side": 1,
+      "message": "why is it dangerous?",
+      "parentUuid": "9a3d3df0_afd2a959",
       "revId": "6c989c3d8de193636e0cebbd33cb1d9063ad97c1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
