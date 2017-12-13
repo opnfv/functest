@@ -1,43 +1,42 @@
+---
 Update hosts info
 
 This api offers the interface to update hosts info.
-
-action: update_hosts
 ---
 tags:
-  - Envs
+    - Envs
 parameters:
-  - in: body
-    name: body
-    description: this is the input json dict
-    schema:
-      required:
-        - action
-        - args
-      properties:
-        action:
-          type: string
-          description: this is action for envs
-          default: update_hosts
-        args:
-          type: string
-          description: Hosts info to be updated
-          default:
-            "identity.ac.dz.com": "8.20.11.22"
-            "image.ac.dz.com": "8.20.11.22"
+    - in: body
+      name: body
+      description: this is the input json dict
+      schema:
+          required:
+              - action
+              - args
+          properties:
+              action:
+                  type: string
+                  description: this is action for envs
+                  default: update_hosts
+              args:
+                  type: string
+                  description: Hosts info to be updated
+                  default:
+                      "identity.ac.dz.com": "8.20.11.22"
+                      "image.ac.dz.com": "8.20.11.22"
 definitions:
-  Environment:
-    type: object
-    properties:
-      creds_name:
-          $ref: '#/definitions/Name'
-  Name:
-    type: dict
+    Environment:
+        type: object
+        properties:
+            creds_name:
+                $ref: '#/definitions/Name'
+    Name:
+        type: dict
 responses:
-  200:
-    description: Update hosts info
-    schema:
-      $ref: '#/definitions/Environment'
-    examples:
-      'status': 0
-      'result': 'Update hosts info successfully'
+    200:
+        description: Update hosts info
+        schema:
+            $ref: '#/definitions/Environment'
+        examples:
+            'status': 0
+            'result': 'Update hosts info successfully'

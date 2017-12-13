@@ -1,22 +1,23 @@
+---
 List all test cases
 
 This api offers the interface to list all test cases
 The testcases list will be returned
 ---
 tags:
-  - Testcases
+    - Testcases
 definitions:
-  Testcases:
-    type: object
-    properties:
-      creds_name:
-          $ref: '#/definitions/Tests'
-  Tests:
-    type: dict
+    Testcases:
+        type: object
+        properties:
+            creds_name:
+                $ref: '#/definitions/Tests'
+    Tests:
+        type: dict
 responses:
-  200:
-    description: List all test cases
-    schema:
-      $ref: '#/definitions/Testcases'
-    examples:
-      "testcases": []
+    200:
+        description: List all test cases
+        schema:
+            $ref: '#/definitions/Testcases'
+        examples:
+            "testcases": []

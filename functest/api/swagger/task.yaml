@@ -1,38 +1,37 @@
+---
 Get the result of the specified task
 
 This api offers the interface to get the result of the specified task.
-
 ---
 tags:
-  - Tasks
+    - Tasks
 parameters:
-  - name: task_id
-    description: task id
-    in: path
-    type: string
-    required: true
+    - name: task_id
+      description: task id
+      in: path
+      type: string
+      required: true
 definitions:
-  Task:
-    type: object
-    properties:
-      creds_name:
-          $ref: '#/definitions/Result'
-  Result:
-    type: dict
+    Task:
+        type: object
+        properties:
+            creds_name:
+                $ref: '#/definitions/Result'
+    Result:
+        type: dict
 responses:
-  200:
-    description: Get the result of the specified task
-    schema:
-      $ref: '#/definitions/Task'
-    examples:
-      "result": {
-        "case_name": "vping_ssh",
-        "env_info": {
-            "build_tag": null,
-            "ci_loop": "weekly",
-            "installer": "compass",
-            "scenario": "os-nosdn-nofeature-noha" },
-        "result": "PASS",
-        "task_id": "1a9f3c5d-ce0b-4354-862e-dd08b26fc484"}
-      "status": 2
-
+    200:
+        description: Get the result of the specified task
+        schema:
+            $ref: '#/definitions/Task'
+        examples:
+            "result": {
+                "case_name": "vping_ssh",
+                "env_info": {
+                    "build_tag": null,
+                    "ci_loop": "weekly",
+                    "installer": "compass",
+                    "scenario": "os-nosdn-nofeature-noha"},
+                "result": "PASS",
+                "task_id": "1a9f3c5d-ce0b-4354-862e-dd08b26fc484"}
+            "status": 2
