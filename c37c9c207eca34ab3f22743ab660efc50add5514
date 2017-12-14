@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_f5f12002",
+        "filename": "tox.ini",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-12-14T06:54:33Z",
+      "side": 1,
+      "message": "I would prefer to fix test_check_deployments and test_run_tests later, which are a bit tricky.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 42
+      },
+      "revId": "c37c9c207eca34ab3f22743ab660efc50add5514",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
