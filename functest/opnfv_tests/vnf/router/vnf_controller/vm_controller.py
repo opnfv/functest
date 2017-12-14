@@ -32,10 +32,7 @@ class VmController(object):
         credentials = util_info["credentials"]
 
         self.util = Utilvnf()
-        self.util.set_credentials(credentials["username"],
-                                  credentials["password"],
-                                  credentials["auth_url"],
-                                  credentials["tenant_name"])
+        self.util.set_credentials(credentials["snaps_creds"])
 
         with open(self.util.test_env_config_yaml) as file_fd:
             test_env_config_yaml = yaml.safe_load(file_fd)

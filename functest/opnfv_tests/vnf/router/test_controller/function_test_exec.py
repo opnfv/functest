@@ -37,10 +37,7 @@ class FunctionTestExec(object):
         self.test_cmd_map_yaml = yaml.safe_load(test_cmd_map_file)
         test_cmd_map_file.close()
 
-        self.util.set_credentials(credentials["username"],
-                                  credentials["password"],
-                                  credentials["auth_url"],
-                                  credentials["tenant_name"])
+        self.util.set_credentials(credentials["snaps_creds"])
 
         with open(self.util.test_env_config_yaml) as file_fd:
             test_env_config_yaml = yaml.safe_load(file_fd)
