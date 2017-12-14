@@ -150,6 +150,11 @@ class JujuEpc(vnf.VnfOnBoarding):
                 self.created_object.append(image_creator)
 
     def deploy_orchestrator(self):
+        """
+        Create network, subnet, router
+
+        Bootstrap juju
+        """
         self.__logger.info("Deployed Orchestrator")
         private_net_name = CONST.__getattribute__(
             'vnf_{}_private_net_name'.format(self.case_name))
@@ -224,6 +229,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("Credential information  : %s", net_id)
         juju_bootstrap_command = ('juju bootstrap abot-epc abot-controller '
                                   '--config network={} --metadata-source ~  '
+                                  '--config ssl-hostname-verification=false '
                                   '--constraints mem=2G --bootstrap-series '
                                   'trusty '
                                   '--config use-floating-ip=true --debug'.
@@ -286,6 +292,7 @@ class JujuEpc(vnf.VnfOnBoarding):
             return False
 
     def test_vnf(self):
+        """Run test on ABoT."""
         start_time = time.time()
         self.__logger.info("Running VNF Test cases....")
         os.system('juju run-action abot-epc-basic/0 run '
@@ -312,6 +319,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         return True
 
     def clean(self):
+        """Clean created objects/functions."""
         try:
             if not self.orchestrator['requirements']['preserve_setup']:
                 self.__logger.info("Removing deployment files...")
@@ -324,7 +332,7 @@ class JujuEpc(vnf.VnfOnBoarding):
                 self.__logger.info("Destroying Orchestrator...")
                 os.system('juju destroy-controller -y abot-controller '
                           '--destroy-all-models')
-        except:
+        except Exception:  # pylint: disable=broad-except
             self.__logger.warn("Some issue during the undeployment ..")
             self.__logger.warn("Tenant clean continue ..")
 
@@ -333,12 +341,10 @@ class JujuEpc(vnf.VnfOnBoarding):
             for creator in reversed(self.created_object):
                 try:
                     creator.clean()
-                except Exception as exc:
+                except Exception as exc:  # pylint: disable=broad-except
                     self.__logger.error('Unexpected error cleaning - %s', exc)
 
             self.__logger.info("Releasing all the floating IPs")
-            # user_id = os_utils.get_user_id(self.keystone_client,
-            #                               self.tenant_name)
             floating_ips = os_utils.get_floating_ips(self.neutron_client)
             tenant_id = os_utils.get_tenant_id(self.keystone_client,
                                                self.tenant_name)
