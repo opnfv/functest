@@ -55,6 +55,88 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_52ed82b6",
+        "filename": "build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-12-14T02:17:41Z",
+      "side": 1,
+      "message": "Why can several containers built in on run? I thought only one image would be built instead.",
+      "parentUuid": "9a3d3df0_8fd7e54a",
+      "revId": "6c989c3d8de193636e0cebbd33cb1d9063ad97c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_72f08691",
+        "filename": "build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-12-14T02:17:41Z",
+      "side": 1,
+      "message": "1. This script build.sh is executed for each subjob, for example, this current job is named \"functest-healthcheck-build-amd64-master\", only one image will be built. So we do not have to add loops. \n2. However when running the cleanup function for the first time, it is expected to cleanup all the functest images built before. Then it is necessary to put functest-core cleanup the last order.\n3. So it makes sense to add the container as input or execute function cleanup according to different container names.",
+      "parentUuid": "9a3d3df0_ef58318c",
+      "revId": "6c989c3d8de193636e0cebbd33cb1d9063ad97c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b2dfae0c",
+        "filename": "build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-12-14T02:17:41Z",
+      "side": 1,
+      "message": "This is redundant.",
+      "range": {
+        "startLine": 6,
+        "startChar": 33,
+        "endLine": 6,
+        "endChar": 51
+      },
+      "revId": "6c989c3d8de193636e0cebbd33cb1d9063ad97c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_92e42ae2",
+        "filename": "build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-12-14T02:17:41Z",
+      "side": 1,
+      "message": "redundant",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "6c989c3d8de193636e0cebbd33cb1d9063ad97c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_afd2a959",
         "filename": "build.sh",
         "patchSetId": 2
@@ -102,6 +184,52 @@
       "side": 1,
       "message": "Because it deletes also images not related to functest. This script can be ran locally too.",
       "parentUuid": "9a3d3df0_0f3e3528",
+      "revId": "6c989c3d8de193636e0cebbd33cb1d9063ad97c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f2e5b6dc",
+        "filename": "build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-12-14T02:17:41Z",
+      "side": 1,
+      "message": "This is redundant, and yes, it should add functest as filter.",
+      "range": {
+        "startLine": 18,
+        "startChar": 32,
+        "endLine": 18,
+        "endChar": 51
+      },
+      "revId": "6c989c3d8de193636e0cebbd33cb1d9063ad97c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_52d622f2",
+        "filename": "build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2017-12-14T02:17:41Z",
+      "side": 1,
+      "message": "Could all the newly built images be cleaned before running the manifest jobs (functest-{image}-manifest-{stream})?",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 7
+      },
       "revId": "6c989c3d8de193636e0cebbd33cb1d9063ad97c1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
