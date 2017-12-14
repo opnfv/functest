@@ -18,10 +18,9 @@ import yaml
 
 from functest.utils.constants import CONST
 from git import Repo
-from novaclient import client as novaclient
-from keystoneauth1.identity import v3
-from keystoneauth1 import session
 from requests.auth import HTTPBasicAuth
+from snaps.openstack.utils import nova_utils
+
 
 RESULT_SPRIT_INDEX = {
     "transfer": 8,
@@ -53,10 +52,7 @@ class Utilvnf(object):
     logger = logging.getLogger(__name__)
 
     def __init__(self):
-        self.username = ""
-        self.password = ""
-        self.auth_url = ""
-        self.tenant_name = ""
+        self.snaps_creds = ""
 
         data_dir = data_dir = CONST.__getattribute__('dir_router_data')
 
@@ -114,31 +110,12 @@ class Utilvnf(object):
             self.logger.debug("removed %s" % self.test_result_json_file)
 
     def get_nova_client(self):
-        creds = self.get_nova_credentials()
-        auth = v3.Password(auth_url=creds['auth_url'],
-                           username=creds['username'],
-                           password=creds['password'],
-                           project_name=creds['tenant_name'],
-                           user_domain_id='default',
-                           project_domain_id='default')
-        sess = session.Session(auth=auth)
-        nova_client = novaclient.Client(NOVA_CLIENT_API_VERSION, session=sess)
+        nova_client = nova_utils.nova_client(self.snaps_creds)
 
         return nova_client
 
-    def set_credentials(self, username, password, auth_url, tenant_name):
-        self.username = username
-        self.password = password
-        self.auth_url = auth_url
-        self.tenant_name = tenant_name
-
-    def get_nova_credentials(self):
-        creds = {}
-        creds['username'] = self.username
-        creds['password'] = self.password
-        creds['auth_url'] = self.auth_url
-        creds['tenant_name'] = self.tenant_name
-        return creds
+    def set_credentials(self, snaps_creds):
+        self.snaps_creds = snaps_creds
 
     def get_address(self, server_name, network_name):
         nova_client = self.get_nova_client()

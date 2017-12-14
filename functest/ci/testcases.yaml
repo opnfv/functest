@@ -397,7 +397,7 @@ tiers:
                 description: >-
                     This test case is vRouter testing.
                 dependencies:
-                    installer: '^((?!compass|fuel).)*$'
+                    installer: ''
                     scenario: 'os-nosdn-nofeature-ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.router.cloudify_vrouter'

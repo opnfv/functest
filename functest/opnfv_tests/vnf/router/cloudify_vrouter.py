@@ -109,10 +109,7 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
 
         self.__logger.info("Additional pre-configuration steps")
 
-        self.util.set_credentials(self.snaps_creds.username,
-                                  self.snaps_creds.password,
-                                  self.snaps_creds.auth_url,
-                                  self.snaps_creds.project_name)
+        self.util.set_credentials(self.snaps_creds)
 
         # needs some images
         self.__logger.info("Upload some OS images if it doesn't exist")
@@ -365,7 +362,8 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
 
     def test_vnf(self):
         cfy_client = self.orchestrator['object']
-        credentials = {"username": self.snaps_creds.username,
+        credentials = {"snaps_creds": self.snaps_creds,
+                       "username": self.snaps_creds.username,
                        "password": self.snaps_creds.password,
                        "auth_url": self.snaps_creds.auth_url,
                        "tenant_name": self.snaps_creds.project_name}
