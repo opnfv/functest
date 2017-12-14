@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_f233f65f",
+        "filename": "build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-12-14T02:23:32Z",
+      "side": 1,
+      "message": "The script is also used by travis-ci or can be called in a dev env. By default, the script builds all containers (see amd64_dirs) one after the other. We run them in // when jjobs or travis-ci to leverage on the multiple slaves.",
+      "parentUuid": "9a3d3df0_72f08691",
+      "revId": "6c989c3d8de193636e0cebbd33cb1d9063ad97c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_b2dfae0c",
         "filename": "build.sh",
         "patchSetId": 2
