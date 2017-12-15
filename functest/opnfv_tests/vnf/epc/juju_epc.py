@@ -60,10 +60,6 @@ class JujuEpc(vnf.VnfOnBoarding):
         )
 
         self.created_object = []
-        self.snaps_creds = ''
-
-        self.os_creds = openstack_tests.get_credentials(
-            os_env_file=CONST.__getattribute__('openstack_creds'))
 
         self.details['orchestrator'] = dict(
             name=get_config("orchestrator.name", config_file),
@@ -104,20 +100,6 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("Additional pre-configuration steps")
         self.public_auth_url = keystone_utils.get_endpoint(
             self.snaps_creds, 'identity')
-
-        self.creds = {
-            "tenant": self.tenant_name,
-            "username": self.tenant_name,
-            "password": self.tenant_name,
-            "auth_url": os_utils.get_credentials()['auth_url']
-            }
-
-        self.snaps_creds = OSCreds(
-            username=self.creds['username'],
-            password=self.creds['password'],
-            auth_url=self.creds['auth_url'],
-            project_name=self.creds['tenant'],
-            identity_api_version=int(os_utils.get_keystone_client_version()))
 
         cloud_data = {
             'url': self.public_auth_url,
