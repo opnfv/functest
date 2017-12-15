@@ -127,6 +127,7 @@ def source_credentials(rc_file):
                 key = re.sub(r'^["\' ]*|[ \'"]*$', '', var[0])
                 value = re.sub(r'^["\' ]*|[ \'"]*$', '', "".join(var[1:]))
                 os.environ[key] = value
+                CONST.__setattr__(key, value)
 
 
 def get_session_auth(other_creds={}):
