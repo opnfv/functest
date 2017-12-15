@@ -16,6 +16,24 @@
       "revId": "fc0d8c601ce627d5f7b8c5e3eef73bd01c6db7d4",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_3ecc056a",
+        "filename": "functest/opnfv_tests/vnf/router/cloudify_vrouter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 4385
+      },
+      "writtenOn": "2017-12-15T04:47:28Z",
+      "side": 1,
+      "message": "Thank you for your comment. I thought that I used these in other parts. I confirmed that I did not use them in other parts. So I will fix it at next gerrit.",
+      "parentUuid": "9a3d3df0_e3d4cabe",
+      "revId": "fc0d8c601ce627d5f7b8c5e3eef73bd01c6db7d4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
