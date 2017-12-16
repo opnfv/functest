@@ -15,14 +15,14 @@ import time
 import json
 import sys
 from copy import deepcopy
-import yaml
-import functest.utils.openstack_utils as os_utils
-import functest.core.vnf as vnf
-import pkg_resources
+from urlparse import urljoin
 
+import functest.core.vnf as vnf
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils.constants import CONST
+import functest.utils.openstack_utils as os_utils
 
+import pkg_resources
 from snaps.openstack.os_credentials import OSCreds
 from snaps.openstack.create_network import (NetworkSettings,
                                             SubnetSettings, OpenStackNetwork)
@@ -31,12 +31,14 @@ from snaps.openstack.create_flavor import (FlavorSettings, OpenStackFlavor)
 from snaps.openstack.create_image import (ImageSettings, OpenStackImage)
 from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import keystone_utils
+import yaml
 
 __author__ = "Amarendra Meher <amarendra@rebaca.com>"
 __author__ = "Soumaya K Nayek <soumaya.nayek@rebaca.com>"
 
 
 class JujuEpc(vnf.VnfOnBoarding):
+    # pylint:disable=too-many-instance-attributes
     """Abot EPC deployed with JUJU Orchestrator Case"""
 
     __logger = logging.getLogger(__name__)
@@ -94,6 +96,10 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.glance_client = os_utils.get_glance_client()
         self.neutron_client = os_utils.get_neutron_client()
         self.nova_client = os_utils.get_nova_client()
+        self.sec_group_id = None
+        self.public_auth_url = None
+        self.creds = None
+        self.filename = None
 
     def prepare(self):
         """Prepare testcase (Additional pre-configuration steps)."""
@@ -104,6 +110,10 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("Additional pre-configuration steps")
         self.public_auth_url = keystone_utils.get_endpoint(
             self.snaps_creds, 'identity')
+        # it enforces a versioned public identity endpoint as juju simply
+        # adds /auth/tokens wich fails vs an unversioned endpoint.
+        if not self.public_auth_url.endswith(('v3', 'v3/', 'v2.0', 'v2.0/')):
+            self.public_auth_url = urljoin(self.public_auth_url, 'v3')
 
         self.creds = {
             "tenant": self.tenant_name,
@@ -127,7 +137,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         }
         self.__logger.info("Cloud DATA:  %s", cloud_data)
         self.filename = os.path.join(self.case_dir, 'abot-epc.yaml')
-        self.__logger.info("Cretae  %s to add cloud info", self.filename)
+        self.__logger.info("Create  %s to add cloud info", self.filename)
         write_config(self.filename, CLOUD_TEMPLATE, **cloud_data)
 
         if self.snaps_creds.identity_api_version == 3:
@@ -149,7 +159,7 @@ class JujuEpc(vnf.VnfOnBoarding):
                 image_creator.create()
                 self.created_object.append(image_creator)
 
-    def deploy_orchestrator(self):
+    def deploy_orchestrator(self):  # pylint: disable=too-many-locals
         """
         Create network, subnet, router
 
@@ -288,8 +298,7 @@ class JujuEpc(vnf.VnfOnBoarding):
                     count = count + 1
             os.system('juju-wait')
             return True
-        else:
-            return False
+        return False
 
     def test_vnf(self):
         """Run test on ABoT."""
@@ -455,8 +464,8 @@ def update_data(obj):
                 for tag in element['tags']:
                     element[tag['name']] = 1
 
-    except:
-        logging.error("Error in updating data, %s" % (sys.exc_info()[0]))
+    except Exception:  # pylint: disable=broad-except
+        logging.error("Error in updating data, %s", sys.exc_info()[0])
         raise
 
     return obj
@@ -467,8 +476,8 @@ def get_instance_metadata(nova_client, instance):
     try:
         instance = nova_client.servers.get(instance.id)
         return instance.metadata
-    except Exception as e:
-        logging.error("Error [get_instance_status(nova_client)]: %s" % e)
+    except Exception as exc:  # pylint: disable=broad-except
+        logging.error("Error [get_instance_status(nova_client)]: %s", exc)
         return None
 
 
