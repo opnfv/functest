@@ -7,12 +7,15 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+"""TierBuilder class to parse testcases config file"""
+
 import yaml
 
 import functest.ci.tier_handler as th
 
 
 class TierBuilder(object):
+    # pylint: disable=missing-docstring
 
     def __init__(self, ci_installer, ci_scenario, testcases_file):
         self.ci_installer = ci_installer
@@ -24,8 +27,8 @@ class TierBuilder(object):
         self.generate_tiers()
 
     def read_test_yaml(self):
-        with open(self.testcases_file) as f:
-            self.testcases_yaml = yaml.safe_load(f)
+        with open(self.testcases_file) as tc_file:
+            self.testcases_yaml = yaml.safe_load(tc_file)
 
         self.dic_tier_array = []
         for tier in self.testcases_yaml.get("tiers"):

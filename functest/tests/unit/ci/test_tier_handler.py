@@ -5,6 +5,8 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+# pylint: disable=missing-docstring
+
 import logging
 import unittest
 
@@ -89,11 +91,11 @@ class TierHandlerTesting(unittest.TestCase):
         self.assertEqual(self.tier.get_ci_loop(),
                          'test_ci_loop')
 
-    def test_testcase_is_none_present_item(self):
+    def test_testcase_is_none_in_item(self):
         self.assertEqual(tier_handler.TestCase.is_none("item"),
                          False)
 
-    def test_testcase_is_none_missing_item(self):
+    def test_testcase_is_none_no_item(self):
         self.assertEqual(tier_handler.TestCase.is_none(None),
                          True)
 
@@ -102,7 +104,7 @@ class TierHandlerTesting(unittest.TestCase):
                                                      'test_scenario'),
                          True)
 
-    def test_testcase_is_compatible_missing_installer_scenario(self):
+    def test_testcase_is_compatible_2(self):
         self.assertEqual(self.testcase.is_compatible('missing_installer',
                                                      'test_scenario'),
                          False)
