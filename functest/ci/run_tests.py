@@ -25,7 +25,6 @@ import textwrap
 import pkg_resources
 
 import prettytable
-import six
 
 import functest.ci.tier_builder as tb
 import functest.core.testcase as testcase
@@ -108,18 +107,6 @@ class Runner(object):
             raise Exception("RC file %s does not exist..." % rc_file)
         LOGGER.debug("Sourcing the OpenStack RC file...")
         os_utils.source_credentials(rc_file)
-        for key, value in six.iteritems(os.environ):
-            if re.search("OS_", key):
-                if key == 'OS_AUTH_URL':
-                    CONST.__setattr__('OS_AUTH_URL', value)
-                elif key == 'OS_USERNAME':
-                    CONST.__setattr__('OS_USERNAME', value)
-                elif key == 'OS_TENANT_NAME':
-                    CONST.__setattr__('OS_TENANT_NAME', value)
-                elif key == 'OS_PASSWORD':
-                    CONST.__setattr__('OS_PASSWORD', value)
-                elif key == "OS_PROJECT_DOMAIN_NAME":
-                    CONST.__setattr__('OS_PROJECT_DOMAIN_NAME', value)
 
     @staticmethod
     def get_run_dict(testname):
