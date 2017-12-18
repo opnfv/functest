@@ -210,11 +210,14 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
 
         self.logger.info("Additional pre-configuration steps")
 
+        public_auth_url = keystone_utils.get_endpoint(
+            self.snaps_creds, 'identity')
+
         self.creds = {
                 "tenant": self.tenant_name,
                 "username": self.tenant_name,
                 "password": self.tenant_name,
-                "auth_url": os_utils.get_credentials()['auth_url']
+                "auth_url": public_auth_url
                 }
         self.prepare_images()
         self.prepare_flavor()
@@ -357,7 +360,6 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
         my_floating_ips = []
         # Filter Floating IPs with tenant id
         for floating_ip in floating_ips:
-            # self.logger.info("Floating IP: %s", floating_ip)
             if floating_ip.get('tenant_id') == tenant_id:
                 my_floating_ips.append(floating_ip.get('floating_ip_address'))
         # Select if Floating IP exist else create new one
@@ -650,19 +652,19 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
                 port_name='%s_port' % self.case_name)
             snaps_utils.neutron_utils.delete_port(neutron_client, port)
             time.sleep(10)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-except
             self.logger.error('Unexpected error cleaning - %s', exc)
         try:
             self.logger.info("Deleting Open Baton Floating IP...")
             snaps_utils.neutron_utils.delete_floating_ip(
                 neutron_client, self.mano['details']['fip'])
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-except
             self.logger.error('Unexpected error cleaning - %s', exc)
 
         for resource in reversed(self.created_resources):
             try:
                 self.logger.info("Cleaning %s", str(resource))
                 resource.clean()
-            except Exception as exc:
+            except Exception as exc:  # pylint: disable=broad-except
                 self.logger.error('Unexpected error cleaning - %s', exc)
         super(ClearwaterImsVnf, self).clean()
