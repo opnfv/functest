@@ -196,33 +196,3 @@ class TestCase(object):
         It can be overriden if resources must be deleted after
         running the test case.
         """
-
-
-class OSGCTestCase(TestCase):
-    """Model for single test case which requires an OpenStack Garbage
-    Collector."""
-
-    __logger = logging.getLogger(__name__)
-
-    def create_snapshot(self):
-        """Create a snapshot listing the OpenStack resources.
-
-        Returns:
-            TestCase.EX_OK if os_snapshot.main() returns 0.
-            TestCase.EX_RUN_ERROR otherwise.
-        """
-        try:
-            assert os_snapshot.main() == 0
-            self.__logger.info("OpenStack resources snapshot created")
-            return TestCase.EX_OK
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Cannot create the snapshot")
-            return TestCase.EX_RUN_ERROR
-
-    def clean(self):
-        """Clean the OpenStack resources."""
-        try:
-            assert os_clean.main() == 0
-            self.__logger.info("OpenStack resources cleaned")
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Cannot clean the OpenStack resources")

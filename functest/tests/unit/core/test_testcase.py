@@ -229,48 +229,6 @@ class TestCaseTesting(unittest.TestCase):
         self.assertEqual(self.test.clean(), None)
 
 
-class OSGCTestCaseTesting(unittest.TestCase):
-    """The class testing OSGCTestCase."""
-    # pylint: disable=missing-docstring
-
-    def setUp(self):
-        self.test = testcase.OSGCTestCase()
-
-    @mock.patch('functest.utils.openstack_snapshot.main',
-                side_effect=Exception)
-    def test_create_snapshot_exc(self, mock_method=None):
-        self.assertEqual(self.test.create_snapshot(),
-                         testcase.TestCase.EX_RUN_ERROR)
-        mock_method.assert_called_once_with()
-
-    @mock.patch('functest.utils.openstack_snapshot.main', return_value=-1)
-    def test_create_snapshot_ko(self, mock_method=None):
-        self.assertEqual(self.test.create_snapshot(),
-                         testcase.TestCase.EX_RUN_ERROR)
-        mock_method.assert_called_once_with()
-
-    @mock.patch('functest.utils.openstack_snapshot.main', return_value=0)
-    def test_create_snapshot_env(self, mock_method=None):
-        self.assertEqual(self.test.create_snapshot(),
-                         testcase.TestCase.EX_OK)
-        mock_method.assert_called_once_with()
-
-    @mock.patch('functest.utils.openstack_clean.main', side_effect=Exception)
-    def test_clean_exc(self, mock_method=None):
-        self.assertEqual(self.test.clean(), None)
-        mock_method.assert_called_once_with()
-
-    @mock.patch('functest.utils.openstack_clean.main', return_value=-1)
-    def test_clean_ko(self, mock_method=None):
-        self.assertEqual(self.test.clean(), None)
-        mock_method.assert_called_once_with()
-
-    @mock.patch('functest.utils.openstack_clean.main', return_value=0)
-    def test_clean(self, mock_method=None):
-        self.assertEqual(self.test.clean(), None)
-        mock_method.assert_called_once_with()
-
-
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)
