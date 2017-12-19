@@ -462,7 +462,6 @@ The structure of functest repo can be described as follows::
     |    |-- functest_utils.py
     |    |-- functest_vacation.py
     |    |-- openstack_clean.py
-    |    |-- openstack_snapshot.py
     |    |-- openstack_tacker.py
     |    `-- openstack_utils.py
   |-- requirements.txt

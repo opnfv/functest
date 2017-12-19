@@ -249,7 +249,7 @@ Functest util classes
 In order to simplify the creation of test cases, Functest develops also some
 functions that are used by internal test cases.
 Several features are supported such as logger, configuration management and
-Openstack capabilities (snapshot, clean, tacker,..).
+Openstack capabilities (tacker,..).
 These functions can be found under <repo>/functest/utils and can be described as
 follows::
 
@@ -259,8 +259,6 @@ follows::
  |-- decorators.py
  |-- env.py
  |-- functest_utils.py
- |-- openstack_clean.py
- |-- openstack_snapshot.py
  |-- openstack_tacker.py
  `-- openstack_utils.py
 
