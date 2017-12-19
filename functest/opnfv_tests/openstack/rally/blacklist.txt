@@ -49,6 +49,16 @@ scenario:
             # Ref: https://docs.openstack.org/releasenotes/ceilometer/ocata.html
             - 'CeilometerEvents..*'
             - 'CeilometerTraits..*'
+    -
+        scenarios:
+            - '^os-'  # all scenarios
+        installers:
+            - '.+'  # all installers
+        tests:
+            # Rally is still utilizing Ceilometer API which is deprecated
+            # in Pike.
+            # Ref: https://docs.openstack.org/releasenotes/ceilometer/pike.html
+            - 'Ceilometer..*'
 
 functionality:
     -
