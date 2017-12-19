@@ -17,6 +17,12 @@ import time
 import pkg_resources
 import yaml
 
+import functest.core.vnf as vnf
+import functest.utils.openstack_utils as os_utils
+from functest.utils.constants import CONST
+
+from org.openbaton.cli.errors.errors import NfvoException
+from org.openbaton.cli.agents.agents import MainAgent
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
 from snaps.config.network import NetworkConfig, PortConfig, SubnetConfig
@@ -24,7 +30,7 @@ from snaps.config.router import RouterConfig
 from snaps.config.security_group import (
     Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
 from snaps.config.vm_inst import VmInstanceConfig
-
+from snaps.openstack.utils import keystone_utils
 from snaps.openstack.create_image import OpenStackImage
 from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.create_security_group import OpenStackSecurityGroup
@@ -33,13 +39,6 @@ from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.create_instance import OpenStackVmInstance
 
 from functest.opnfv_tests.openstack.snaps import snaps_utils
-
-import functest.core.vnf as vnf
-import functest.utils.openstack_utils as os_utils
-from functest.utils.constants import CONST
-
-from org.openbaton.cli.errors.errors import NfvoException
-from org.openbaton.cli.agents.agents import MainAgent
 
 
 __author__ = "Pauls, Michael <michael.pauls@fokus.fraunhofer.de>"
@@ -202,12 +201,15 @@ class OpenImsVnf(vnf.VnfOnBoarding):
         """Prepare testscase (Additional pre-configuration steps)."""
         super(OpenImsVnf, self).prepare()
 
+        public_auth_url = keystone_utils.get_endpoint(
+            self.snaps_creds, 'identity')
+
         self.logger.info("Additional pre-configuration steps")
         self.creds = {
                 "tenant": self.tenant_name,
                 "username": self.tenant_name,
                 "password": self.tenant_name,
-                "auth_url": os_utils.get_credentials()['auth_url']
+                "auth_url": public_auth_url
                 }
         self.prepare_images()
         self.prepare_flavor()
@@ -659,8 +661,6 @@ class OpenImsVnf(vnf.VnfOnBoarding):
                 time.sleep(60)
             else:
                 self.logger.info("No need to terminate the VNF...")
-            # os_utils.delete_instance(nova_client=os_utils.get_nova_client(),
-            #                          instance_id=self.mano_instance_id)
         except (NfvoException, KeyError) as exc:
             self.logger.error('Unexpected error cleaning - %s', exc)
 
@@ -672,13 +672,13 @@ class OpenImsVnf(vnf.VnfOnBoarding):
                 port_name='%s_port' % self.case_name)
             snaps_utils.neutron_utils.delete_port(neutron_client, port)
             time.sleep(10)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-except
             self.logger.error('Unexpected error cleaning - %s', exc)
         try:
             self.logger.info("Deleting Open Baton Floating IP...")
             snaps_utils.neutron_utils.delete_floating_ip(
                 neutron_client, self.mano['details']['fip'])
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-except
             self.logger.error('Unexpected error cleaning - %s', exc)
 
         for resource in reversed(self.created_resources):

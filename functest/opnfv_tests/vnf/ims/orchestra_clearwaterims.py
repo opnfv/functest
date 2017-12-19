@@ -17,6 +17,13 @@ import time
 import pkg_resources
 import yaml
 
+import functest.core.vnf as vnf
+import functest.utils.openstack_utils as os_utils
+from functest.opnfv_tests.openstack.snaps import snaps_utils
+from functest.utils.constants import CONST
+
+from org.openbaton.cli.errors.errors import NfvoException
+from org.openbaton.cli.agents.agents import MainAgent
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
 from snaps.config.network import NetworkConfig, PortConfig, SubnetConfig
@@ -24,22 +31,13 @@ from snaps.config.router import RouterConfig
 from snaps.config.security_group import (
     Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
 from snaps.config.vm_inst import VmInstanceConfig
-
+from snaps.openstack.utils import keystone_utils
 from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.create_image import OpenStackImage
 from snaps.openstack.create_instance import OpenStackVmInstance
 from snaps.openstack.create_network import OpenStackNetwork
 from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.create_security_group import OpenStackSecurityGroup
-
-from functest.opnfv_tests.openstack.snaps import snaps_utils
-
-import functest.core.vnf as vnf
-import functest.utils.openstack_utils as os_utils
-from functest.utils.constants import CONST
-
-from org.openbaton.cli.errors.errors import NfvoException
-from org.openbaton.cli.agents.agents import MainAgent
 
 
 __author__ = "Pauls, Michael <michael.pauls@fokus.fraunhofer.de>"
@@ -209,11 +207,14 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
 
         self.logger.info("Additional pre-configuration steps")
 
+        public_auth_url = keystone_utils.get_endpoint(
+            self.snaps_creds, 'identity')
+
         self.creds = {
                 "tenant": self.tenant_name,
                 "username": self.tenant_name,
                 "password": self.tenant_name,
-                "auth_url": os_utils.get_credentials()['auth_url']
+                "auth_url": public_auth_url
                 }
         self.prepare_images()
         self.prepare_flavor()
@@ -356,7 +357,6 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
         my_floating_ips = []
         # Filter Floating IPs with tenant id
         for floating_ip in floating_ips:
-            # self.logger.info("Floating IP: %s", floating_ip)
             if floating_ip.get('tenant_id') == tenant_id:
                 my_floating_ips.append(floating_ip.get('floating_ip_address'))
         # Select if Floating IP exist else create new one
@@ -649,19 +649,19 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
                 port_name='%s_port' % self.case_name)
             snaps_utils.neutron_utils.delete_port(neutron_client, port)
             time.sleep(10)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-except
             self.logger.error('Unexpected error cleaning - %s', exc)
         try:
             self.logger.info("Deleting Open Baton Floating IP...")
             snaps_utils.neutron_utils.delete_floating_ip(
                 neutron_client, self.mano['details']['fip'])
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-except
             self.logger.error('Unexpected error cleaning - %s', exc)
 
         for resource in reversed(self.created_resources):
             try:
                 self.logger.info("Cleaning %s", str(resource))
                 resource.clean()
-            except Exception as exc:
+            except Exception as exc:  # pylint: disable=broad-except
                 self.logger.error('Unexpected error cleaning - %s', exc)
         super(ClearwaterImsVnf, self).clean()
