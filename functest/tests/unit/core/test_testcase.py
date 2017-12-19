@@ -223,10 +223,6 @@ class TestCaseTesting(unittest.TestCase):
         self.assertIn(duration, message)
         self.assertIn('FAIL', message)
 
-    def test_create_snapshot(self):
-        self.assertEqual(self.test.create_snapshot(),
-                         testcase.TestCase.EX_OK)
-
     def test_clean(self):
         self.assertEqual(self.test.clean(), None)
 

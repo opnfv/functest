@@ -178,17 +178,6 @@ class TestCase(object):
             self.__logger.exception("The results cannot be pushed to DB")
             return TestCase.EX_PUSH_TO_DB_ERROR
 
-    def create_snapshot(self):  # pylint: disable=no-self-use
-        """Save the testing environment before running test.
-
-        It can be overriden if resources must be listed running the
-        test case.
-
-        Returns:
-            TestCase.EX_OK
-        """
-        return TestCase.EX_OK
-
     def clean(self):
         """Clean the resources.
 
