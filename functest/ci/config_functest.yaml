@@ -22,7 +22,6 @@ general:
 
     openstack:
         creds: /home/opnfv/functest/conf/openstack.creds
-        snapshot_file: /home/opnfv/functest/conf/openstack_snapshot.yaml
 
         image_name: Cirros-0.3.5
         image_name_alt: Cirros-0.3.5-1

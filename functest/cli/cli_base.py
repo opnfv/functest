@@ -64,23 +64,6 @@ def os_check():
     _openstack.check()
 
 
-@openstack.command('snapshot-create', help="Generates a snapshot of the "
-                   "current OpenStack resources.")
-def os_snapshot_create():
-    _openstack.snapshot_create()
-
-
-@openstack.command('snapshot-show', help="Prints the OpenStack snapshot.")
-def os_snapshot_show():
-    _openstack.snapshot_show()
-
-
-@openstack.command('clean',
-                   help="Cleans the OpenStack resources except the snapshot.")
-def os_clean():
-    _openstack.clean()
-
-
 @openstack.command('show-credentials',
                    help="Prints the OpenStack credentials.")
 def os_show_credentials():
