@@ -113,38 +113,6 @@ class FunctestUtilsTesting(unittest.TestCase):
         CONST.__setattr__('BUILD_TAG', 'unknown_build_tag')
         self.assertEqual(functest_utils.get_version(), "unknown")
 
-    @mock.patch('functest.utils.functest_utils.logger.info')
-    def test_logger_test_results(self, mock_logger_info):
-        CONST.__setattr__('results_test_db_url', self.db_url)
-        CONST.__setattr__('BUILD_TAG', self.build_tag)
-        CONST.__setattr__('NODE_NAME', self.node_name)
-        CONST.__setattr__('DEPLOY_SCENARIO', self.scenario)
-        with mock.patch('functest.utils.functest_utils.get_version',
-                        return_value=self.version):
-            functest_utils.logger_test_results(self.project, self.case_name,
-                                               self.status, self.details)
-            mock_logger_info.assert_called_once_with(
-                "\n"
-                "****************************************\n"
-                "\t %(p)s/%(n)s results \n\n"
-                "****************************************\n"
-                "DB:\t%(db)s\n"
-                "pod:\t%(pod)s\n"
-                "version:\t%(v)s\n"
-                "scenario:\t%(s)s\n"
-                "status:\t%(c)s\n"
-                "build tag:\t%(b)s\n"
-                "details:\t%(d)s\n"
-                % {'p': self.project,
-                    'n': self.case_name,
-                    'db': CONST.__getattribute__('results_test_db_url'),
-                    'pod': self.node_name,
-                    'v': self.version,
-                    's': self.scenario,
-                    'c': self.status,
-                    'b': self.build_tag,
-                    'd': self.details})
-
     def _get_env_dict(self, var):
         dic = {'INSTALLER_TYPE': self.installer,
                'DEPLOY_SCENARIO': self.scenario,

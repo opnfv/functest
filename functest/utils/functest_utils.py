@@ -90,39 +90,6 @@ def get_version():
         return "unknown"
 
 
-def logger_test_results(project, case_name, status, details):
-    """
-    Format test case results for the logger
-    """
-    pod_name = CONST.__getattribute__('NODE_NAME')
-    scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
-    version = get_version()
-    build_tag = CONST.__getattribute__('BUILD_TAG')
-    db_url = CONST.__getattribute__("results_test_db_url")
-
-    logger.info(
-        "\n"
-        "****************************************\n"
-        "\t %(p)s/%(n)s results \n\n"
-        "****************************************\n"
-        "DB:\t%(db)s\n"
-        "pod:\t%(pod)s\n"
-        "version:\t%(v)s\n"
-        "scenario:\t%(s)s\n"
-        "status:\t%(c)s\n"
-        "build tag:\t%(b)s\n"
-        "details:\t%(d)s\n"
-        % {'p': project,
-            'n': case_name,
-            'db': db_url,
-            'pod': pod_name,
-            'v': version,
-            's': scenario,
-            'c': status,
-            'b': build_tag,
-            'd': details})
-
-
 @decorators.can_dump_request_to_file
 def push_results_to_db(project, case_name,
                        start_date, stop_date, result, details):
