@@ -110,28 +110,28 @@ As vPing_ssh, it checks that 2 instances can talk to
 each other on a Private Tenant network::
 
  vPing_userdata test case
- +-------------+                    +-------------+
- |             |                    |             |
- |             | Boot VM1 with IP1  |             |
- |             +------------------->|             |
- |             |                    |             |
- |             | Boot VM2 with      |             |
- |             | ping.sh as userdata|             |
- |             | with IP1 as $1.    |             |
- |             +------------------->|             |
- |   Tester    |                    |   System    |
- |             | VM2 exeutes ping.sh|    Under    |
- |             | (ping IP1)         |     Test    |
- |             +------------------->|             |
- |             |                    |             |
- |             | Monitor nova       |             |
- |             |  console-log VM 2  |             |
- |             |    If ping:        |             |
- |             |      exit OK       |             |
- |             |    else (timeout)  |             |
- |             |      exit Failed   |             |
- |             |                    |             |
- +-------------+                    +-------------+
+ +-------------+                     +-------------+
+ |             |                     |             |
+ |             | Boot VM1 with IP1   |             |
+ |             +-------------------->|             |
+ |             |                     |             |
+ |             | Boot VM2 with       |             |
+ |             | ping.sh as userdata |             |
+ |             | with IP1 as $1.     |             |
+ |             +-------------------->|             |
+ |   Tester    |                     |   System    |
+ |             | VM2 executes ping.sh|    Under    |
+ |             | (ping IP1)          |     Test    |
+ |             +-------------------->|             |
+ |             |                     |             |
+ |             | Monitor nova        |             |
+ |             |  console-log VM 2   |             |
+ |             |    If ping:         |             |
+ |             |      exit OK        |             |
+ |             |    else (timeout)   |             |
+ |             |      exit Failed    |             |
+ |             |                     |             |
+ +-------------+                     +-------------+
 
 When the second VM boots it will execute the script passed as userdata
 automatically. The ping will be detected by periodically capturing the output
