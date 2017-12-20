@@ -100,9 +100,7 @@ Software
 
  * https://hub.docker.com/r/opnfv/testapi
 
-Docker tag to be pulled:
- * amd64: amd64-opnfv-5.1.0
- * arm64: arm64-opnfv-5.1.0
+Docker tag to be pulled: opnfv-5.1.0
 
 Documents
 ---------
