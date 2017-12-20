@@ -11,7 +11,7 @@ You should have received a copy of the license along with this.
 If not, see <http://creativecommons.org/licenses/by/4.0/>.
 
 =============================================
-OPNFV Euphrates 5.0 release note for Functest
+OPNFV Euphrates 5.1 release note for Functest
 =============================================
 
 Abstract
@@ -67,16 +67,16 @@ Release Data
 | **Project**                          | functest                             |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Repo/tag**                         | opnfv-5.0.0                          |
+| **Repo/tag**                         | opnfv-5.1.0                          |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release designation**              | Euphrates initial release            |
+| **Release designation**              | Euphrates release                    |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Release date**                     | October 20th 2017                    |
+| **Release date**                     | December 15th 2017                   |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Purpose of the delivery**          | Euphrates first release              |
+| **Purpose of the delivery**          | Euphrates release                    |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
 
@@ -101,7 +101,7 @@ Software
 
  * https://hub.docker.com/r/opnfv/testapi
 
-Docker tag to be pulled: opnfv-5.0.0
+Docker tag to be pulled: opnfv-5.1.0
 
 Documents
 ---------
