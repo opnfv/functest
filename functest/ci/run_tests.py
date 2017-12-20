@@ -137,9 +137,6 @@ class Runner(object):
                 test_dict = ft_utils.get_dict_by_test(test.get_name())
                 test_case = cls(**test_dict)
                 self.executed_test_cases[test.get_name()] = test_case
-                if self.clean_flag:
-                    if test_case.create_snapshot() != test_case.EX_OK:
-                        return testcase.TestCase.EX_RUN_ERROR
                 try:
                     kwargs = run_dict['args']
                     test_case.run(**kwargs)
