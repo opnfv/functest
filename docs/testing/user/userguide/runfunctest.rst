@@ -14,7 +14,7 @@ simply run the tiers by typing (e.g. with functest-healthcheck)::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
       -v $(pwd)/images:/home/opnfv/functest/images  \
-      opnfv/functest-healthcheck
+      opnfv/functest-healthcheck:euphrates
 
 You should get::
 
@@ -46,7 +46,7 @@ Considering the healthcheck example, running functest manaully means::
   sudo docker run -ti --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
     -v $(pwd)/images:/home/opnfv/functest/images  \
-    opnfv/functest-healthcheck /bin/bash
+    opnfv/functest-healthcheck:euphrates /bin/bash
 
 The docker prompt shall be returned. Then within the docker run the following
 commands::
