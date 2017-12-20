@@ -63,9 +63,12 @@ class CheckDeploymentTesting(unittest.TestCase):
 
     def test_check_auth_endpoint(self):
         with mock.patch('functest.ci.check_deployment.verify_connectivity',
-                        return_value=True) as m:
+                        return_value=True) as m,\
+                mock.patch('functest.ci.check_deployment.get_auth_token',
+                           return_value='gAAAAABaOhXGS') as mock_token:
             self.deployment.check_auth_endpoint()
             self.assertTrue(m.called)
+            self.assertTrue(mock_token.called)
 
     def test_check_auth_endpoint_not_reachable(self):
         with mock.patch('functest.ci.check_deployment.verify_connectivity',
