@@ -88,7 +88,7 @@ Run healthcheck suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
       -v $(pwd)/images:/home/opnfv/functest/images  \
-      opnfv/functest-healthcheck
+      opnfv/functest-healthcheck:euphrates
 
 Results shall be displayed as follows::
 
@@ -109,7 +109,7 @@ Run smoke suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
       -v $(pwd)/images:/home/opnfv/functest/images  \
-      opnfv/functest-smoke
+      opnfv/functest-smoke:euphrates
 
 Results shall be displayed as follows::
 
@@ -137,7 +137,7 @@ Run features suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
       -v $(pwd)/images:/home/opnfv/functest/images  \
-      opnfv/functest-features
+      opnfv/functest-features:euphrates
 
 Results shall be displayed as follows::
 
@@ -162,7 +162,7 @@ Run components suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
       -v $(pwd)/images:/home/opnfv/functest/images  \
-      opnfv/functest-components
+      opnfv/functest-components:euphrates
 
 Results shall be displayed as follows::
 
@@ -181,7 +181,7 @@ Run vnf suite::
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
     -v $(pwd)/images:/home/opnfv/functest/images  \
-    opnfv/functest-vnf
+    opnfv/functest-vnf:euphrates
 
 Results shall be displayed as follows::
 
