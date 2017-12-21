@@ -1,0 +1,8 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Code-Review+2: Juha Kosonen <juha.kosonen@nokia.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Thu, 21 Dec 2017 09:16:59 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/49429
+Project: functest
+Branch: refs/heads/stable/euphrates
