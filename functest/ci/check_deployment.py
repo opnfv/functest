@@ -52,6 +52,16 @@ def verify_connectivity(endpoint):
     return False
 
 
+def get_auth_token(os_creds):
+    """ Get auth token """
+    sess = keystone_utils.keystone_session(os_creds)
+    try:
+        return sess.get_token()
+    except Exception as error:
+        LOGGER.error("Got token ...FAILED")
+        raise error
+
+
 class CheckDeployment(object):
     """ Check deployment class."""
 
@@ -69,12 +79,15 @@ class CheckDeployment(object):
                               format(self.rc_file))
 
     def check_auth_endpoint(self):
-        """ Verifies connectivity to the OS_AUTH_URL given in the RC file """
+        """ Verifies connectivity to the OS_AUTH_URL given in the RC file
+        and get auth token"""
         rc_endpoint = self.os_creds.auth_url
         if not verify_connectivity(rc_endpoint):
             raise Exception("OS_AUTH_URL {} is not reachable.".
                             format(rc_endpoint))
         LOGGER.info("Connectivity to OS_AUTH_URL %s ...OK", rc_endpoint)
+        if get_auth_token(self.os_creds):
+            LOGGER.info("Got token ...OK")
 
     def check_public_endpoint(self):
         """ Gets the public endpoint and verifies connectivity to it """
