@@ -98,9 +98,6 @@ class Feature(base.TestCase):
             if self.execute(**kwargs) == 0:
                 exit_code = base.TestCase.EX_OK
                 self.result = 100
-            ft_utils.logger_test_results(
-                self.project_name, self.case_name,
-                self.result, self.details)
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("%s FAILED", self.project_name)
         self.__logger.info("Test result is stored in '%s'", self.result_file)
