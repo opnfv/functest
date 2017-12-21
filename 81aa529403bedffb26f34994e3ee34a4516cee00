@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_bd0bf28c",
+        "filename": "functest/ci/check_deployment.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2017-12-21T07:22:20Z",
+      "side": 1,
+      "message": "dsdjfkhgdsjfhgsdjh",
+      "revId": "81aa529403bedffb26f34994e3ee34a4516cee00",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
