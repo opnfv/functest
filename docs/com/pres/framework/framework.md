@@ -65,7 +65,6 @@ base model for single test case
 | is_successful()   | interpret the results        |
 | get_duration()    | return the duration          |
 | push_to_db()      | push the results to the DB   |
-| create_snapshot() | save the testing environment |
 | clean()           | clean the resources          |
 
 

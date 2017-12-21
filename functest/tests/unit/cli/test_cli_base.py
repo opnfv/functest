@@ -35,26 +35,6 @@ class CliBaseTesting(unittest.TestCase):
             self.assertEqual(result.exit_code, 0)
             self.assertTrue(mock_method.called)
 
-    def test_os_snapshot_create(self):
-        with mock.patch.object(self._openstack, 'snapshot_create') \
-                as mock_method:
-            result = self.runner.invoke(cli_base.os_snapshot_create)
-            self.assertEqual(result.exit_code, 0)
-            self.assertTrue(mock_method.called)
-
-    def test_os_snapshot_show(self):
-        with mock.patch.object(self._openstack, 'snapshot_show') \
-                as mock_method:
-            result = self.runner.invoke(cli_base.os_snapshot_show)
-            self.assertEqual(result.exit_code, 0)
-            self.assertTrue(mock_method.called)
-
-    def test_os_clean(self):
-        with mock.patch.object(self._openstack, 'clean') as mock_method:
-            result = self.runner.invoke(cli_base.os_clean)
-            self.assertEqual(result.exit_code, 0)
-            self.assertTrue(mock_method.called)
-
     def test_os_show_credentials(self):
         with mock.patch.object(self._openstack, 'show_credentials') \
                 as mock_method:
