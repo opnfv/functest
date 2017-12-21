@@ -23,15 +23,15 @@ general:
     openstack:
         creds: /home/opnfv/functest/conf/openstack.creds
 
-        image_name: Cirros-0.3.5
-        image_name_alt: Cirros-0.3.5-1
-        image_file_name: cirros-0.3.5-x86_64-disk.img
+        image_name: Cirros-0.4.0
+        image_name_alt: Cirros-0.4.0-1
+        image_file_name: cirros-0.4.0-x86_64-disk.img
         image_url:
-            http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+            http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img
         image_user: cirros
         image_disk_format: qcow2
         image_username: cirros
-        image_password: cubswin:)
+        image_password: gocubsgo
 
         flavor_name: opnfv_flavor
         flavor_name_alt: opnfv_flavor_1
@@ -53,9 +53,9 @@ snaps:
     use_floating_ips: 'True'
     images:
         glance_tests:
-            disk_file: /home/opnfv/functest/images/cirros-0.3.5-x86_64-disk.img
+            disk_file: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img
         cirros:
-            disk_file: /home/opnfv/functest/images/cirros-0.3.5-x86_64-disk.img
+            disk_file: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img
         ubuntu:
             disk_file:
                 /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.img

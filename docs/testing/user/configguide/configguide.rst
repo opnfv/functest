@@ -66,8 +66,8 @@ Create a directory for the different images (attached as a Docker volume)::
   images/CentOS-7-aarch64-GenericCloud.qcow2
   images/CentOS-7-aarch64-GenericCloud.qcow2.xz
   images/CentOS-7-x86_64-GenericCloud.qcow2
-  images/cirros-0.3.5-x86_64-disk.img
-  images/cirros-0.3.5-x86_64-lxc.tar.gz
+  images/cirros-0.4.0-x86_64-disk.img
+  images/cirros-0.4.0-x86_64-lxc.tar.gz
   images/cirros-d161201-aarch64-disk.img
   images/cirros-d161201-aarch64-initramfs
   images/cirros-d161201-aarch64-kernel
@@ -730,6 +730,6 @@ work with the above pre-requisite actions.
 .. _`Proxy`: https://docs.docker.com/engine/admin/systemd/#http-proxy
 .. _`Install Docker on CentOS`: https://docs.docker.com/engine/installation/linux/centos/
 .. _`Functest User Guide`: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/userguide/index.html
-.. _`images/CentOS-7-x86_64-GenericCloud.qcow2` http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
-.. _`images/cirros-0.3.5-x86_64-disk.img` https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+.. _`images/CentOS-7-x86_64-GenericCloud.qcow2` http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img
+.. _`images/cirros-0.4.0-x86_64-disk.img` https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
 .. _`images/ubuntu-14.04-server-cloudimg-amd64-disk1.img` https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
