@@ -33,7 +33,7 @@ RUN apk --no-cache add --update nodejs nodejs-npm python3 sshpass \
     git clone --depth 1 -b $FDS_TAG https://gerrit.opnfv.org/gerrit/fds /src/fds && \
     git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test /src/vims-test && \
     ln -s /src/tempest /src/refstack-client/.tempest && \
-    virtualenv --system-site-packages /src/tempest/.venv && \
+    virtualenv --system-site-packages /src/tempest/.venv --python=python2.7 && \
     (cd /src/promise/source && npm install) && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
     npm -g install npm@latest && \
