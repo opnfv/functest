@@ -65,7 +65,7 @@ validate the scenario for the release.
 |             |               |                | tests                            |
 |             |               +----------------+----------------------------------+
 |             |               | refstack       | Reference RefStack suite         |
-|             |               |   \_defcore    | tempest selection for NFV        |
+|             |               | \_defcore      | tempest selection for NFV        |
 |             +---------------+----------------+----------------------------------+
 |             | components    | tempest_full   | Generate and run a full set of   |
 |             |               | \_parallel     | the OpenStack Tempest Test Suite.|
@@ -159,10 +159,10 @@ validate the scenario for the release.
 |             |               |                | VoIP System                      |
 |             |               +----------------+----------------------------------+
 |             |               | orchestra      | OpenIMS deployment using         |
-|             |               |   openims      | Openbaton orchestrator           |
+|             |               | \_openims      | Openbaton orchestrator           |
 |             |               +----------------+----------------------------------+
 |             |               | orchestra      | Cleawater IMS deployment using   |
-|             |               |   cleawaterims | Openbaton orchestrator           |
+|             |               | \_cleawaterims | Openbaton orchestrator           |
 |             |               +----------------+----------------------------------+
 |             |               | vyos_vrouter   | vRouter testing                  |
 |             |               +----------------+----------------------------------+
