@@ -43,7 +43,7 @@ tiers:
                 description: >-
                     OpenIMS VNF deployment with Open Baton (Orchestra)
                 dependencies:
-                    installer: '^((?!compass|fuel).)*$'
+                    installer: 'daisy'
                     scenario: 'os-nosdn-nofeature-ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.orchestra_openims'
@@ -57,7 +57,7 @@ tiers:
                 description: >-
                     ClearwaterIMS VNF deployment with Open Baton (Orchestra)
                 dependencies:
-                    installer: '^((?!compass|fuel).)*$'
+                    installer: 'daisy'
                     scenario: 'os-nosdn-nofeature-ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.orchestra_clearwaterims'
