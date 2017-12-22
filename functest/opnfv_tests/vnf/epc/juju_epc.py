@@ -43,6 +43,8 @@ class JujuEpc(vnf.VnfOnBoarding):
 
     __logger = logging.getLogger(__name__)
 
+    default_region_name = "RegionOne"
+
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "juju_epc"
@@ -133,7 +135,9 @@ class JujuEpc(vnf.VnfOnBoarding):
             'url': self.public_auth_url,
             'pass': self.tenant_name,
             'tenant_n': self.tenant_name,
-            'user_n': self.tenant_name
+            'user_n': self.tenant_name,
+            'region': os.environ.get(
+                "OS_REGION_NAME", self.default_region_name)
         }
         self.__logger.info("Cloud DATA:  %s", cloud_data)
         self.filename = os.path.join(self.case_dir, 'abot-epc.yaml')
@@ -143,8 +147,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         if self.snaps_creds.identity_api_version == 3:
             append_config(self.filename, '{}'.format(
                 os_utils.get_credentials()['project_domain_name']),
-                          '{}'.format(os_utils.get_credentials()
-                                      ['user_domain_name']))
+                '{}'.format(os_utils.get_credentials()['user_domain_name']))
 
         self.__logger.info("Upload some OS images if it doesn't exist")
         for image_name, image_file in self.images.iteritems():
@@ -231,17 +234,19 @@ class JujuEpc(vnf.VnfOnBoarding):
         for image_name in self.images.keys():
             self.__logger.info("Generating Metadata for %s", image_name)
             image_id = os_utils.get_image_id(self.glance_client, image_name)
-            os.system('juju metadata generate-image -d ~ -i {} -s {} -r '
-                      'RegionOne -u {}'.format(image_id,
-                                               image_name,
-                                               self.public_auth_url))
+            os.system(
+                'juju metadata generate-image -d ~ -i {} -s {} -r '
+                '{} -u {}'.format(
+                    image_id, image_name,
+                    os.environ.get("OS_REGION_NAME", self.default_region_name),
+                    self.public_auth_url))
         net_id = os_utils.get_network_id(self.neutron_client, private_net_name)
         self.__logger.info("Credential information  : %s", net_id)
         juju_bootstrap_command = ('juju bootstrap abot-epc abot-controller '
                                   '--config network={} --metadata-source ~  '
                                   '--config ssl-hostname-verification=false '
                                   '--constraints mem=2G --bootstrap-series '
-                                  'trusty '
+                                  'xenial '
                                   '--config use-floating-ip=true --debug'.
                                   format(net_id))
         os.system(juju_bootstrap_command)
@@ -487,7 +492,7 @@ CLOUD_TEMPLATE = """clouds:
       auth-types: [userpass]
       endpoint: {url}
       regions:
-        RegionOne:
+        {region}:
           endpoint: {url}
 credentials:
   abot-epc:
