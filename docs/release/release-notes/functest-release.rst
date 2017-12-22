@@ -100,7 +100,8 @@ Software
 
  * https://hub.docker.com/r/opnfv/testapi
 
-Docker tag to be pulled: opnfv-5.1.0
+Docker tag for Euphrates 5.1 release: opnfv-5.1.0
+Docker tag for Euphrates with latest bugfixes: euphrates
 
 Documents
 ---------
