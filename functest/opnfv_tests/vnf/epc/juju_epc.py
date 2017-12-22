@@ -133,7 +133,8 @@ class JujuEpc(vnf.VnfOnBoarding):
             'url': self.public_auth_url,
             'pass': self.tenant_name,
             'tenant_n': self.tenant_name,
-            'user_n': self.tenant_name
+            'user_n': self.tenant_name,
+            'region': os.environ["OS_REGION_NAME"]
         }
         self.__logger.info("Cloud DATA:  %s", cloud_data)
         self.filename = os.path.join(self.case_dir, 'abot-epc.yaml')
@@ -232,16 +233,17 @@ class JujuEpc(vnf.VnfOnBoarding):
             self.__logger.info("Generating Metadata for %s", image_name)
             image_id = os_utils.get_image_id(self.glance_client, image_name)
             os.system('juju metadata generate-image -d ~ -i {} -s {} -r '
-                      'RegionOne -u {}'.format(image_id,
-                                               image_name,
-                                               self.public_auth_url))
+                      '{} -u {}'.format(image_id,
+                                        image_name,
+                                        os.environ["OS_REGION_NAME"],
+                                        self.public_auth_url))
         net_id = os_utils.get_network_id(self.neutron_client, private_net_name)
         self.__logger.info("Credential information  : %s", net_id)
         juju_bootstrap_command = ('juju bootstrap abot-epc abot-controller '
                                   '--config network={} --metadata-source ~  '
                                   '--config ssl-hostname-verification=false '
                                   '--constraints mem=2G --bootstrap-series '
-                                  'trusty '
+                                  'xenial '
                                   '--config use-floating-ip=true --debug'.
                                   format(net_id))
         os.system(juju_bootstrap_command)
@@ -487,7 +489,7 @@ CLOUD_TEMPLATE = """clouds:
       auth-types: [userpass]
       endpoint: {url}
       regions:
-        RegionOne:
+        {region}:
           endpoint: {url}
 credentials:
   abot-epc:
