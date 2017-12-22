@@ -133,7 +133,8 @@ class JujuEpc(vnf.VnfOnBoarding):
             'url': self.public_auth_url,
             'pass': self.tenant_name,
             'tenant_n': self.tenant_name,
-            'user_n': self.tenant_name
+            'user_n': self.tenant_name,
+            'region': os.environ["OS_REGION_NAME"]
         }
         self.__logger.info("Cloud DATA:  %s", cloud_data)
         self.filename = os.path.join(self.case_dir, 'abot-epc.yaml')
@@ -241,7 +242,7 @@ class JujuEpc(vnf.VnfOnBoarding):
                                   '--config network={} --metadata-source ~  '
                                   '--config ssl-hostname-verification=false '
                                   '--constraints mem=2G --bootstrap-series '
-                                  'trusty '
+                                  'xenial '
                                   '--config use-floating-ip=true --debug'.
                                   format(net_id))
         os.system(juju_bootstrap_command)
@@ -487,7 +488,7 @@ CLOUD_TEMPLATE = """clouds:
       auth-types: [userpass]
       endpoint: {url}
       regions:
-        RegionOne:
+        {region}:
           endpoint: {url}
 credentials:
   abot-epc:
