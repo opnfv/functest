@@ -20,9 +20,9 @@ find . -name Dockerfile -exec sed -i -e "s|opnfv/functest-core|${repo}/functest-
 for dir in ${amd64_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" -t "${repo}/functest-${dir##**/}:amd64-latest" .)
     docker push "${repo}/functest-${dir##**/}:amd64-latest"
-    [ "${dir}" != "docker/core" ] && docker rmi "${repo}/functest-${dir##**/}:amd64-latest" || true
+    [ "${dir}" != "docker/core" ] && (docker rmi "${repo}/functest-${dir##**/}:amd64-latest" || true)
 done
-docker rmi "${repo}/functest-core:amd64-latest" alpine:3.6 || true
+[ ! -z "${amd64_dirs}" ] && (docker rmi "${repo}/functest-core:amd64-latest" alpine:3.6 || true)
 find . -name Dockerfile -exec git checkout {} +
 
 find . -name Dockerfile -exec sed -i -e "s|alpine:3.6|multiarch/alpine:arm64-v3.6|g" {} +
@@ -30,9 +30,9 @@ find . -name Dockerfile -exec sed -i -e "s|opnfv/functest-core|${repo}/functest-
 for dir in ${arm64_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" -t "${repo}/functest-${dir##**/}:arm64-latest" .)
     docker push "${repo}/functest-${dir##**/}:arm64-latest"
-    [ "${dir}" != "docker/core" ] && docker rmi "${repo}/functest-${dir##**/}:arm64-latest" || true
+    [ "${dir}" != "docker/core" ] && (docker rmi "${repo}/functest-${dir##**/}:arm64-latest" || true)
 done
-docker rmi "${repo}/functest-core:arm64-latest" multiarch/alpine:arm64-v3.6 || true
+[ ! -z "${arm64_dirs}" ] && (docker rmi "${repo}/functest-core:arm64-latest" multiarch/alpine:arm64-v3.6 || true)
 find . -name Dockerfile -exec git checkout {} +
 
 exit $?
