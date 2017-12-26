@@ -38,6 +38,7 @@ class HealthCheck(SnapsTestRunner):
             OSIntegrationTestCase.parameterize(
                 SimpleHealthCheck, os_creds=self.os_creds,
                 ext_net_name=self.ext_net_name,
+                network_config=self.network_config,
                 use_keystone=self.use_keystone,
                 flavor_metadata=self.flavor_metadata,
                 image_metadata=self.image_metadata))
