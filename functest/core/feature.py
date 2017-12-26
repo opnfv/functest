@@ -14,10 +14,10 @@ helpers to run any python method or any bash command.
 """
 
 import logging
+import subprocess
 import time
 
 import functest.core.testcase as base
-import functest.utils.functest_utils as ft_utils
 from functest.utils.constants import CONST
 
 __author__ = ("Serena Feng <feng.xiaowei@zte.com.cn>, "
@@ -123,9 +123,12 @@ class BashFeature(Feature):
         ret = -1
         try:
             cmd = kwargs["cmd"]
-            ret = ft_utils.execute_command(cmd, output_file=self.result_file)
+            with open(self.result_file, 'w+') as f_stdout:
+                proc = subprocess.Popen(cmd.split(), stdout=f_stdout,
+                                        stderr=subprocess.STDOUT)
+            ret = proc.wait()
+            if ret != 0:
+                self.__logger.error("Execute command: %s failed", cmd)
         except KeyError:
             self.__logger.error("Please give cmd as arg. kwargs: %s", kwargs)
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Execute cmd: %s failed", cmd)
         return ret

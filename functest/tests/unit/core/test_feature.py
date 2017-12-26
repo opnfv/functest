@@ -23,7 +23,7 @@ class FeatureTestingBase(unittest.TestCase):
     _case_name = "foo"
     _project_name = "bar"
     _repo = "dir_repo_bar"
-    _cmd = "cd /home/opnfv/repos/bar/tests && bash run.sh && cd -"
+    _cmd = "run_bar_tests.py"
     _output_file = '/home/opnfv/functest/results/foo.log'
     feature = None
 
@@ -78,31 +78,33 @@ class BashFeatureTesting(FeatureTestingBase):
             self.feature = feature.BashFeature(
                 project_name=self._project_name, case_name=self._case_name)
 
-    @mock.patch("functest.utils.functest_utils.execute_command")
-    def test_run_no_cmd(self, mock_method=None):
-        self.assertEqual(self.feature.run(), testcase.TestCase.EX_RUN_ERROR)
-        mock_method.assert_not_called()
+    @mock.patch('subprocess.Popen')
+    def test_run_no_cmd(self, mock_subproc):
+        self.assertEqual(
+            self.feature.run(), testcase.TestCase.EX_RUN_ERROR)
+        mock_subproc.assert_not_called()
 
-    @mock.patch("functest.utils.functest_utils.execute_command",
-                return_value=1)
-    def test_run_ko(self, mock_method=None):
-        self._test_run(testcase.TestCase.EX_RUN_ERROR)
-        mock_method.assert_called_once_with(
-            self._cmd, output_file=self._output_file)
+    @mock.patch('subprocess.Popen')
+    def test_run_ko(self, mock_subproc):
+        with mock.patch('six.moves.builtins.open', mock.mock_open()) as mopen:
+            mock_obj = mock.Mock()
+            attrs = {'wait.return_value': 1}
+            mock_obj.configure_mock(**attrs)
 
-    @mock.patch("functest.utils.functest_utils.execute_command",
-                side_effect=Exception)
-    def test_run_exc(self, mock_method=None):
-        self._test_run(testcase.TestCase.EX_RUN_ERROR)
-        mock_method.assert_called_once_with(
-            self._cmd, output_file=self._output_file)
+            mock_subproc.return_value = mock_obj
+            self._test_run(testcase.TestCase.EX_RUN_ERROR)
+            mopen.assert_called_once_with(self._output_file, "w+")
 
-    @mock.patch("functest.utils.functest_utils.execute_command",
-                return_value=0)
-    def test_run(self, mock_method):
-        self._test_run(testcase.TestCase.EX_OK)
-        mock_method.assert_called_once_with(
-            self._cmd, output_file=self._output_file)
+    @mock.patch('subprocess.Popen')
+    def test_run(self, mock_subproc):
+        with mock.patch('six.moves.builtins.open', mock.mock_open()) as mopen:
+            mock_obj = mock.Mock()
+            attrs = {'wait.return_value': 0}
+            mock_obj.configure_mock(**attrs)
+
+            mock_subproc.return_value = mock_obj
+            self._test_run(testcase.TestCase.EX_OK)
+            mopen.assert_called_once_with(self._output_file, "w+")
 
 
 if __name__ == "__main__":
