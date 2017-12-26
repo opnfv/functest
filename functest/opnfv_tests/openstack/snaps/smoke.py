@@ -39,5 +39,6 @@ class SnapsSmoke(SnapsTestRunner):
             use_keystone=self.use_keystone,
             flavor_metadata=self.flavor_metadata,
             image_metadata=self.image_metadata,
-            use_floating_ips=self.use_fip)
+            use_floating_ips=self.use_fip,
+            netconf_override=self.netconf_override)
         return super(self.__class__, self).run()

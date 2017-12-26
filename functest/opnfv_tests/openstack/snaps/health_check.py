@@ -40,5 +40,6 @@ class HealthCheck(SnapsTestRunner):
                 ext_net_name=self.ext_net_name,
                 use_keystone=self.use_keystone,
                 flavor_metadata=self.flavor_metadata,
-                image_metadata=self.image_metadata))
+                image_metadata=self.image_metadata,
+                netconf_override=self.netconf_override))
         return super(self.__class__, self).run()
