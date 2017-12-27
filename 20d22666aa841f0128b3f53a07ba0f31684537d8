@@ -22,6 +22,24 @@
       "revId": "20d22666aa841f0128b3f53a07ba0f31684537d8",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_aab28091",
+        "filename": "build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-12-27T12:18:19Z",
+      "side": 1,
+      "message": "Yes. in releng or travis-ci we build arch containers in different jobs to leverage on multiprocessing.",
+      "parentUuid": "9a3d3df0_4a9db458",
+      "revId": "20d22666aa841f0128b3f53a07ba0f31684537d8",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
