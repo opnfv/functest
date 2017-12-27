@@ -363,11 +363,29 @@ class TempestResourcesManager(object):
             user_id = None
 
         logger.debug("Creating private network for Tempest suite")
+
+        tempest_network_type = None
+        tempest_physical_network = None
+        tempest_segmentation_id = None
+
+        if hasattr(CONST, 'tempest_network_type'):
+            tempest_network_type = CONST.__getattribute__(
+                'tempest_network_type')
+        if hasattr(CONST, 'tempest_physical_network'):
+            tempest_physical_network = CONST.__getattribute__(
+                'tempest_physical_network')
+        if hasattr(CONST, 'tempest_segmentation_id'):
+            tempest_segmentation_id = CONST.__getattribute__(
+                'tempest_segmentation_id')
+
         network_creator = deploy_utils.create_network(
             self.os_creds, NetworkConfig(
                 name=CONST.__getattribute__(
                     'tempest_private_net_name') + self.guid,
                 project_name=project_name,
+                network_type=tempest_network_type,
+                physical_network=tempest_physical_network,
+                segmentation_id=tempest_segmentation_id,
                 subnet_settings=[SubnetConfig(
                     name=CONST.__getattribute__(
                         'tempest_private_subnet_name') + self.guid,
