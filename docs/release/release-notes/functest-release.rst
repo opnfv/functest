@@ -120,7 +120,7 @@ Documents
 Version change
 ==============
 
-Functest now delivers light-weigth Docker images based on Alpine 3.6. The test cases are grouped into several categories
+Functest now delivers light-weigth Docker images based on Alpine 3.7. The test cases are grouped into several categories
 or tiers and must be run from the corresponding container. For example, to run the test case healthcheck, the image
 opnfv/functest-healthcheck shall be used. The tiers and the tests within them are explained in detail in the User Guide.
 
