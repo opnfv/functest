@@ -291,10 +291,8 @@ def configure_tempest_update_params(tempest_conf_file, image_id=None,
         if (identity_api_version == '3'):
             config.set('identity', 'v3_endpoint_type',
                        CONST.__getattribute__('OS_ENDPOINT_TYPE'))
-            if 'identity-feature-enabled' not in sections:
-                config.add_section('identity-feature-enabled')
-                config.set('identity-feature-enabled', 'api_v2', False)
-                config.set('identity-feature-enabled', 'api_v2_admin', False)
+            config.set('identity-feature-enabled', 'api_v2', False)
+            config.set('identity-feature-enabled', 'api_v2_admin', False)
         services_list = ['compute',
                          'volume',
                          'image',
