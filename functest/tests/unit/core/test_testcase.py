@@ -41,7 +41,7 @@ class TestCaseTesting(unittest.TestCase):
         self.assertEqual(self.test.run(),
                          testcase.TestCase.EX_RUN_ERROR)
 
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
+    @mock.patch('functest.core.testcase.TestCase.push_results_to_db',
                 return_value=False)
     def _test_missing_attribute(self, mock_function=None):
         self.assertEqual(self.test.push_to_db(),
@@ -64,7 +64,7 @@ class TestCaseTesting(unittest.TestCase):
         self.test.stop_time = None
         self._test_missing_attribute()
 
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
+    @mock.patch('functest.core.testcase.TestCase.push_results_to_db',
                 return_value=True)
     def test_missing_details(self, mock_function=None):
         self.test.details = None
@@ -74,7 +74,7 @@ class TestCaseTesting(unittest.TestCase):
             self._project_name, self._case_name, self.test.start_time,
             self.test.stop_time, self._published_result, self.test.details)
 
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
+    @mock.patch('functest.core.testcase.TestCase.push_results_to_db',
                 return_value=False)
     def test_push_to_db_failed(self, mock_function=None):
         self.assertEqual(self.test.push_to_db(),
@@ -83,7 +83,7 @@ class TestCaseTesting(unittest.TestCase):
             self._project_name, self._case_name, self.test.start_time,
             self.test.stop_time, self._published_result, self.test.details)
 
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
+    @mock.patch('functest.core.testcase.TestCase.push_results_to_db',
                 return_value=True)
     def test_push_to_db(self, mock_function=None):
         self.assertEqual(self.test.push_to_db(),
@@ -92,7 +92,7 @@ class TestCaseTesting(unittest.TestCase):
             self._project_name, self._case_name, self.test.start_time,
             self.test.stop_time, self._published_result, self.test.details)
 
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
+    @mock.patch('functest.core.testcase.TestCase.push_results_to_db',
                 return_value=True)
     def test_push_to_db_res_ko(self, mock_function=None):
         self.test.result = 0
@@ -102,7 +102,7 @@ class TestCaseTesting(unittest.TestCase):
             self._project_name, self._case_name, self.test.start_time,
             self.test.stop_time, 'FAIL', self.test.details)
 
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
+    @mock.patch('functest.core.testcase.TestCase.push_results_to_db',
                 return_value=True)
     def test_push_to_db_both_ko(self, mock_function=None):
         self.test.result = 0
