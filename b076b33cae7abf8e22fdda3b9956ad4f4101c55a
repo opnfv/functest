@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_83d047f7",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-12-30T22:08:24Z",
+      "side": 1,
+      "message": "Could you please order imports (core, internal, thirdparty)?",
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e3d95323",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-12-30T22:08:24Z",
+      "side": 1,
+      "message": "static is not the best way now. I would define it as method then we can safely remove useless args.",
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c3d6cff0",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-12-30T22:08:24Z",
+      "side": 1,
+      "message": "we may consider removing that in another patch.",
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_2307bb83",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2017-12-30T22:08:24Z",
+      "side": 1,
+      "message": "error is not printed? Else it\u0027s useless.\nI would have simply printed the exception.",
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
