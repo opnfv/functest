@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_5ee612e9",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2018-01-02T01:24:37Z",
+      "side": 1,
+      "message": "agree, then the only arg is \u0027self\u0027, all the variables can be obtained by self.xxx",
+      "parentUuid": "9a3d3df0_e3d95323",
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_c3d6cff0",
         "filename": "functest/core/testcase.py",
         "patchSetId": 1
@@ -64,6 +82,137 @@
       "writtenOn": "2017-12-30T22:08:24Z",
       "side": 1,
       "message": "error is not printed? Else it\u0027s useless.\nI would have simply printed the exception.",
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_3eeb4eb1",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2018-01-02T01:24:37Z",
+      "side": 1,
+      "message": "Since now they are in the same class, how about leveraging self.push_results_to_db()?",
+      "range": {
+        "startLine": 267,
+        "startChar": 15,
+        "endLine": 267,
+        "endChar": 23
+      },
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_9ed37a03",
+        "filename": "functest/tests/unit/core/test_testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2018-01-02T01:24:37Z",
+      "side": 1,
+      "message": "how about using testcase.TestCase.push_results_to_db() for short?",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 67
+      },
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_7ed036f6",
+        "filename": "functest/tests/unit/core/test_testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2018-01-02T01:24:37Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_ded98223",
+        "filename": "functest/tests/unit/core/test_testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2018-01-02T01:24:37Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_bed63eef",
+        "filename": "functest/tests/unit/core/test_testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2018-01-02T01:24:37Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_1e076a83",
+        "filename": "functest/tests/unit/core/test_testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2018-01-02T01:24:37Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_fe0ba68b",
+        "filename": "functest/tests/unit/core/test_testcase.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2018-01-02T01:24:37Z",
+      "side": 1,
+      "message": "ditto",
       "revId": "b076b33cae7abf8e22fdda3b9956ad4f4101c55a",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
