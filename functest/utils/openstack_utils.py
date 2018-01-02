@@ -127,6 +127,7 @@ def source_credentials(rc_file):
                 key = re.sub(r'^["\' ]*|[ \'"]*$', '', var[0])
                 value = re.sub(r'^["\' ]*|[ \'"]*$', '', "".join(var[1:]))
                 os.environ[key] = value
+                setattr(CONST, key, value)
 
 
 def get_credentials_for_rally():
