@@ -22,4 +22,4 @@ tiers:
                     module: 'functest.core.feature'
                     class: 'BashFeature'
                     args:
-                        cmd: 'cd /src/nfv-parser/tests && ./functest_run.sh'
+                        cmd: '/src/nfv-parser/tests/functest_run.sh'
