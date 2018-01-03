@@ -3,14 +3,9 @@ general:
     dir:
         home: /home/opnfv
         repos: /home/opnfv/repos
-        dir_repo_rally: /home/opnfv/repos/rally
         repo_tempest: /src/tempest
-        dir_repo_releng: /home/opnfv/repos/releng
         repo_vims_test: /src/vims-test
-        repo_barometer: /home/opnfv/repos/barometer
         repo_odl_test: /src/odl_test
-        repo_fds: /src/fds
-        repo_securityscan: /home/opnfv/repos/securityscanning
         functest: /home/opnfv/functest
         results: /home/opnfv/functest/results
         functest_conf: /home/opnfv/functest/conf
