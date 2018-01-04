@@ -230,6 +230,7 @@ def add_openstack_api_tests(suite, os_creds, ext_net_name, use_keystone=True,
 def add_openstack_integration_tests(suite, os_creds, ext_net_name,
                                     use_keystone=True, flavor_metadata=None,
                                     image_metadata=None, use_floating_ips=True,
+                                    netconf_override=None,
                                     log_level=logging.INFO):
     """
     Adds tests written to exercise all long-running OpenStack integration tests
@@ -251,6 +252,8 @@ def add_openstack_integration_tests(suite, os_creds, ext_net_name,
                             (i.e. {'hw:mem_page_size': 'large'})
     :param use_floating_ips: when true, all tests requiring Floating IPs will
                              be added to the suite
+    :param netconf_override: dict() containing the reconfigured network_type,
+                             physical_network and segmentation_id
     :param log_level: the logging level
     :return: None as the tests will be adding to the 'suite' parameter object
     """
@@ -355,32 +358,32 @@ def add_openstack_integration_tests(suite, os_creds, ext_net_name,
         CreateInstanceSimpleTests, os_creds=os_creds,
         ext_net_name=ext_net_name, use_keystone=use_keystone,
         flavor_metadata=flavor_metadata, image_metadata=image_metadata,
-        log_level=log_level))
+        netconf_override=netconf_override, log_level=log_level))
     suite.addTest(OSIntegrationTestCase.parameterize(
         CreateInstancePortManipulationTests, os_creds=os_creds,
         ext_net_name=ext_net_name, use_keystone=use_keystone,
         flavor_metadata=flavor_metadata, image_metadata=image_metadata,
-        log_level=log_level))
+        netconf_override=netconf_override, log_level=log_level))
     suite.addTest(OSIntegrationTestCase.parameterize(
         InstanceSecurityGroupTests, os_creds=os_creds,
         ext_net_name=ext_net_name, use_keystone=use_keystone,
         flavor_metadata=flavor_metadata, image_metadata=image_metadata,
-        log_level=log_level))
+        netconf_override=netconf_override, log_level=log_level))
     suite.addTest(OSIntegrationTestCase.parameterize(
         CreateInstanceOnComputeHost, os_creds=os_creds,
         ext_net_name=ext_net_name, use_keystone=use_keystone,
         flavor_metadata=flavor_metadata, image_metadata=image_metadata,
-        log_level=log_level))
+        netconf_override=netconf_override, log_level=log_level))
     suite.addTest(OSIntegrationTestCase.parameterize(
         CreateInstanceFromThreePartImage, os_creds=os_creds,
         ext_net_name=ext_net_name, use_keystone=use_keystone,
         flavor_metadata=flavor_metadata, image_metadata=image_metadata,
-        log_level=log_level))
+        netconf_override=netconf_override, log_level=log_level))
     suite.addTest(OSIntegrationTestCase.parameterize(
         CreateInstanceVolumeTests, os_creds=os_creds,
         ext_net_name=ext_net_name, use_keystone=use_keystone,
         flavor_metadata=flavor_metadata, image_metadata=image_metadata,
-        log_level=log_level))
+        netconf_override=netconf_override, log_level=log_level))
     suite.addTest(OSIntegrationTestCase.parameterize(
         CreateStackSuccessTests, os_creds=os_creds, ext_net_name=ext_net_name,
         use_keystone=use_keystone,

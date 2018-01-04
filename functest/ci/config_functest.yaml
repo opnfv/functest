@@ -57,6 +57,11 @@ snaps:
         centos:
             disk_file:
                 /home/opnfv/functest/images/CentOS-7-x86_64-GenericCloud.qcow2
+    # netconf_override:
+    #     network_type: vlan
+    #     physical_network: physnet2
+    #     segmentation_id: 2366
+
 # All of these values are optional and will override the values retrieved
 # by the RC file
 #    os_creds_override:

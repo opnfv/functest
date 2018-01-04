@@ -41,6 +41,11 @@ class SnapsTestRunner(unit.Suite):
         else:
             self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
 
+        self.netconf_override = None
+        if hasattr(CONST, 'snaps_network_config'):
+            self.netconf_override = CONST.__getattribute__(
+                'snaps_network_config')
+
         self.use_fip = (
             CONST.__getattribute__('snaps_use_floating_ips') == 'True')
         self.use_keystone = (
