@@ -492,10 +492,28 @@ class RallyBase(testcase.TestCase):
         self.creators.append(image_creator)
 
         LOGGER.debug("Creating network '%s'...", network_name)
+
+        rally_network_type = None
+        rally_physical_network = None
+        rally_segmentation_id = None
+
+        if hasattr(CONST, 'rally_network_type'):
+            rally_network_type = CONST.__getattribute__(
+                'rally_network_type')
+        if hasattr(CONST, 'rally_physical_network'):
+            rally_physical_network = CONST.__getattribute__(
+                'rally_physical_network')
+        if hasattr(CONST, 'rally_segmentation_id'):
+            rally_segmentation_id = CONST.__getattribute__(
+                'rally_segmentation_id')
+
         network_creator = deploy_utils.create_network(
             self.os_creds, NetworkConfig(
                 name=network_name,
                 shared=True,
+                network_type=rally_network_type,
+                physical_network=rally_physical_network,
+                segmentation_id=rally_segmentation_id,
                 subnet_settings=[SubnetConfig(
                     name=subnet_name,
                     cidr=self.RALLY_PRIVATE_SUBNET_CIDR)
