@@ -12,9 +12,9 @@ docker/components \
 docker/vnf \
 docker/parser \
 docker/restapi"}
-arm64_dirs=${arm64_dirs-$(echo "${amd64_dirs}" | sed -e "s|docker/vnf||" \
-    -e "s|docker/restapi||")}
+arm64_dirs=${arm64_dirs-$(echo "${amd64_dirs}")}
 build_opts=(--pull=true --no-cache --force-rm=true)
+unf_ext="sed -i 's\/unf_ext (0.0.6)\/unf_ext (0.0.7.4)\/' Gemfile.lock \&\&"
 
 find . -name Dockerfile -exec sed -i -e "s|opnfv/functest-core|${repo}/functest-core:amd64-latest|g" {} +
 for dir in ${amd64_dirs}; do
@@ -27,6 +27,7 @@ find . -name Dockerfile -exec git checkout {} +
 
 find . -name Dockerfile -exec sed -i -e "s|alpine:3.7|multiarch/alpine:arm64-v3.7|g" {} +
 find . -name Dockerfile -exec sed -i -e "s|opnfv/functest-core|${repo}/functest-core:arm64-latest|g" {} +
+find . -name Dockerfile -exec sed -i -e "s|bundle install|'"${unf_ext}"' bundle install|" {} +
 for dir in ${arm64_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" -t "${repo}/functest-${dir##**/}:arm64-latest" .)
     docker push "${repo}/functest-${dir##**/}:arm64-latest"
