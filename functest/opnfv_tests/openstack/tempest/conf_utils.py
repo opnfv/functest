@@ -286,13 +286,14 @@ def configure_tempest_update_params(tempest_conf_file, image_id=None,
     config.set('object-storage', 'operator_role',
                CONST.__getattribute__('tempest_object_storage_operator_role'))
 
+    if (identity_api_version == '3'):
+        config.set('identity', 'v3_endpoint_type',
+                   CONST.__getattribute__('OS_ENDPOINT_TYPE'))
+        config.set('identity-feature-enabled', 'api_v2', False)
+        config.set('identity-feature-enabled', 'api_v2_admin', False)
+
     if CONST.__getattribute__('OS_ENDPOINT_TYPE') is not None:
         sections = config.sections()
-        if (identity_api_version == '3'):
-            config.set('identity', 'v3_endpoint_type',
-                       CONST.__getattribute__('OS_ENDPOINT_TYPE'))
-            config.set('identity-feature-enabled', 'api_v2', False)
-            config.set('identity-feature-enabled', 'api_v2_admin', False)
         services_list = ['compute',
                          'volume',
                          'image',
