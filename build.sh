@@ -12,8 +12,7 @@ docker/components \
 docker/vnf \
 docker/parser \
 docker/restapi"}
-arm64_dirs=${arm64_dirs-$(echo "${amd64_dirs}" | sed -e "s|docker/vnf||" \
-    -e "s|docker/restapi||")}
+arm64_dirs=${arm64_dirs-${amd64_dirs}}
 build_opts=(--pull=true --no-cache --force-rm=true)
 
 find . -name Dockerfile -exec sed -i -e "s|opnfv/functest-core:euphrates|${repo}/functest-core:amd64-euphrates|g" {} +
