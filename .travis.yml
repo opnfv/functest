@@ -52,6 +52,21 @@ jobs:
     - script: sudo -E bash build.sh
       env:
         - repo="${DOCKER_USERNAME}"
+        - amd64_dirs=""
+        - arm64_dirs="docker/vnf"
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - amd64_dirs=""
+        - arm64_dirs="docker/restapi"
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
+        - amd64_dirs=""
+        - arm64_dirs="docker/parser"
+    - script: sudo -E bash build.sh
+      env:
+        - repo="${DOCKER_USERNAME}"
         - amd64_dirs="docker/healthcheck"
         - arm64_dirs=""
     - script: sudo -E bash build.sh
@@ -112,16 +127,16 @@ jobs:
           --target ${DOCKER_USERNAME}/functest-components:latest
     - script: >
         sudo manifest-tool push from-args \
-          --platforms linux/amd64 \
+          --platforms linux/amd64,linux/arm64 \
           --template ${DOCKER_USERNAME}/functest-vnf:ARCH-latest \
           --target ${DOCKER_USERNAME}/functest-vnf:latest
     - script: >
         sudo manifest-tool push from-args \
-          --platforms linux/amd64 \
+          --platforms linux/amd64,linux/arm64 \
           --template ${DOCKER_USERNAME}/functest-restapi:ARCH-latest \
           --target ${DOCKER_USERNAME}/functest-restapi:latest
     - script: >
         sudo manifest-tool push from-args \
-          --platforms linux/amd64 \
+          --platforms linux/amd64,linux/arm64 \
           --template ${DOCKER_USERNAME}/functest-parser:ARCH-latest \
           --target ${DOCKER_USERNAME}/functest-parser:latest
