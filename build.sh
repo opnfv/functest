@@ -31,7 +31,7 @@ for dir in ${arm64_dirs}; do
     docker push "${repo}/functest-${dir##**/}:arm64-latest"
     [ "${dir}" != "docker/core" ] && (docker rmi "${repo}/functest-${dir##**/}:arm64-latest" || true)
 done
-[ ! -z "${arm64_dirs}" ] && (docker rmi "${repo}/functest-core:arm64-latest" multiarch/alpine:arm64-v3.6 || true)
+[ ! -z "${arm64_dirs}" ] && (docker rmi "${repo}/functest-core:arm64-latest" multiarch/alpine:arm64-v3.7 || true)
 find . -name Dockerfile -exec git checkout {} +
 
 exit $?
