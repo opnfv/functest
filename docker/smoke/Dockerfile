@@ -14,13 +14,13 @@ RUN apk --no-cache add --virtual .build-deps --update \
         sed s/^requests===.*$/requests===2.13.0/ \
         > upper-constraints.txt && \
     git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
-    (cd src/refstack-client && git checkout $REFSTACK_TAG) && \
+    (cd /src/refstack-client && git checkout $REFSTACK_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/refstack-client/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         -e/src/refstack-client && \
     git clone https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
-    (cd src/odl_test && git checkout $ODL_TAG) && \
+    (cd /src/odl_test && git checkout $ODL_TAG) && \
     git clone --depth 1 -b $FDS_TAG https://gerrit.opnfv.org/gerrit/fds /src/fds && \
     ln -s /src/tempest /src/refstack-client/.tempest && \
     virtualenv --system-site-packages /src/tempest/.venv && \
