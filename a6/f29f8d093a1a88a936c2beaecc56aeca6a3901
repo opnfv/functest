@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Linda Wang <wangwulin@huawei.com>
+Code-Review+2: Jose Lausuch <jalausuch@suse.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Fri, 12 Jan 2018 12:43:03 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/50469
+Project: functest
+Branch: refs/heads/stable/euphrates
