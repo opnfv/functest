@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_26b21294",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-01-12T14:52:22Z",
+      "side": 1,
+      "message": "That\u0027s internal and should be imported before third-parties(2nd section).",
+      "revId": "c75e780f7bcbcd55cf2a97b1be10dcda13c1265b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c6b9a67a",
+        "filename": "functest/core/testcase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-01-12T14:52:22Z",
+      "side": 1,
+      "message": "Could you please move push_to_db() after get_duration() as before. Else the diff is not right.",
+      "revId": "c75e780f7bcbcd55cf2a97b1be10dcda13c1265b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
