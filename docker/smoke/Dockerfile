@@ -22,7 +22,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
     git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
-    (cd src/refstack-client && git checkout $REFSTACK_TAG) && \
+    (cd /src/refstack-client && git checkout $REFSTACK_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/refstack-client/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
@@ -31,7 +31,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         -e/src/refstack-client /src/rally -rthirdparty-requirements.txt && \
     git clone https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
-    (cd src/odl_test && git checkout $ODL_TAG) && \
+    (cd /src/odl_test && git checkout $ODL_TAG) && \
     ln -s /src/tempest /src/refstack-client/.tempest && \
     virtualenv --system-site-packages /src/tempest/.venv && \
     rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
