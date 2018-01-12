@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-
-docker tag "${IMAGE_NAME}" "${DOCKER_REPO}:stable"
-docker push "${DOCKER_REPO}:stable"
-
-exit $?
