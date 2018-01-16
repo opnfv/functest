@@ -19,7 +19,8 @@ default_envs = {
     'OS_AUTH_URL': None,
     'CONFIG_FUNCTEST_YAML': pkg_resources.resource_filename(
         'functest', 'ci/config_functest.yaml'),
-    'OS_INSECURE': ''
+    'OS_INSECURE': '',
+    'OS_REGION_NAME': 'RegionOne'
 }
 
 

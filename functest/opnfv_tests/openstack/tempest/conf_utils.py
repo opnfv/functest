@@ -272,7 +272,8 @@ def configure_tempest_update_params(tempest_conf_file, image_id=None,
         config.set('compute', 'min_compute_nodes', compute_cnt)
         config.set('compute-feature-enabled', 'live_migration', True)
 
-    config.set('identity', 'region', 'RegionOne')
+    config.set('identity', 'region',
+               CONST.__getattribute__('OS_REGION_NAME'))
     identity_api_version = os.getenv(
         "OS_IDENTITY_API_VERSION", os.getenv("IDENTITY_API_VERSION"))
     if (identity_api_version == '3'):
