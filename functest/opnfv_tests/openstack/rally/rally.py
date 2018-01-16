@@ -219,8 +219,7 @@ class RallyBase(testcase.TestCase):
     def get_cmd_output(proc):
         """Get command stdout."""
         result = ""
-        while proc.poll() is None:
-            line = proc.stdout.readline()
+        for line in proc.stdout:
             result += line
         return result
 
@@ -410,8 +409,7 @@ class RallyBase(testcase.TestCase):
         success = 0.0
         nb_totals = 0
 
-        while proc.poll() is None:
-            line = proc.stdout.readline()
+        for line in proc.stdout:
             if ("Load duration" in line or
                     "started" in line or
                     "finished" in line or
