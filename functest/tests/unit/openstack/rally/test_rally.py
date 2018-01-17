@@ -27,7 +27,6 @@ class OSRallyTesting(unittest.TestCase):
         with mock.patch('snaps.openstack.tests.openstack_tests.'
                         'get_credentials', return_value=os_creds) as m:
             self.rally_base = rally.RallyBase()
-            self.polling_iter = 2
         self.assertTrue(m.called)
 
     def test_build_task_args_missing_floating_network(self):
@@ -102,19 +101,11 @@ class OSRallyTesting(unittest.TestCase):
         self.assertEqual(self.rally_base.task_succeed(json_raw),
                          True)
 
-    def polling(self):
-        if self.polling_iter == 0:
-            return "something"
-        self.polling_iter -= 1
-        return None
-
     def test_get_cmd_output(self):
         proc = mock.Mock()
-        attrs = {'poll.side_effect': self.polling,
-                 'stdout.readline.return_value': 'line'}
-        proc.configure_mock(**attrs)
+        proc.stdout.__iter__ = mock.Mock(return_value=iter(['line1', 'line2']))
         self.assertEqual(self.rally_base.get_cmd_output(proc),
-                         'lineline')
+                         'line1line2')
 
     @mock.patch('__builtin__.open', mock.mock_open())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.yaml.safe_load',
