@@ -57,10 +57,10 @@ snaps:
         centos:
             disk_file:
                 /home/opnfv/functest/images/CentOS-7-x86_64-GenericCloud.qcow2
-    # netconf_override:
-    #     network_type: vlan
-    #     physical_network: physnet2
-    #     segmentation_id: 2366
+#   netconf_override:
+#       network_type: vlan
+#       physical_network: physnet2
+#       segmentation_id: 2366
 
 # All of these values are optional and will override the values retrieved
 # by the RC file
@@ -149,6 +149,8 @@ vnf:
         config: juju_epc.yaml
         tenant_description: OAI EPC deployed with Juju
         tenant_name: abotepc
+        user_name: abotepc
+        user_password: Abotepc12!
         private_net_name: abot-net
         private_subnet_cidr: 172.16.0.0/24
         private_subnet_name: abot-subnet
@@ -159,22 +161,32 @@ vnf:
     cloudify_ims:
         tenant_name: cloudify_ims
         tenant_description: vIMS
+        user_name: cloudify_ims
+        user_password: Cloudify12!
         config: cloudify_ims.yaml
     cloudify_ims_perf:
         tenant_name: cloudify_ims_perf
         tenant_description: vIMS
+        user_name: cloudify_ims_perf
+        user_password: Cloudifyperf12!
         config: cloudify_ims_perf.yaml
     orchestra_openims:
         tenant_name: orchestra_openims
         tenant_description: OpenIMS deployed with Open Baton
+        user_name: orchestra_openims
+        user_password: Orchopenims12!
         config: orchestra.yaml
     orchestra_clearwaterims:
         tenant_name: orchestra_clearwaterims
         tenant_description: Clearwater IMS deployed with Open Baton
+        user_name: orchestra_clearwaterims
+        user_password: Orchopenims12!
         config: orchestra.yaml
     vyos_vrouter:
         tenant_name: vrouter
         tenant_description: vRouter
+        user_name: vrouter
+        user_password: Vrouter12!
         config: cloudify_vrouter.yaml
 
 example:

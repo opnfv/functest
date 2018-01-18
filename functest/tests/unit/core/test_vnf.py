@@ -27,11 +27,16 @@ class VnfBaseTesting(unittest.TestCase):
 
     tenant_name = 'test_tenant_name'
     tenant_description = 'description'
+    user_name = "test_user_name"
+    user_password = "test_password"
 
     def setUp(self):
         constants.CONST.__setattr__("vnf_foo_tenant_name", self.tenant_name)
         constants.CONST.__setattr__(
             "vnf_foo_tenant_description", self.tenant_description)
+        constants.CONST.__setattr__("vnf_foo_user_name", self.user_name)
+        constants.CONST.__setattr__(
+            "vnf_foo_user_password", self.user_password)
         self.test = vnf.VnfOnBoarding(project='functest', case_name='foo')
 
     def test_run_deploy_orch_exc(self):
