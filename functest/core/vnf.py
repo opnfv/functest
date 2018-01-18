@@ -11,6 +11,7 @@
 
 import logging
 import time
+import uuid
 
 import functest.core.testcase as base
 from functest.utils.constants import CONST
@@ -122,7 +123,7 @@ class VnfOnBoarding(base.TestCase):
                 snaps_creds,
                 UserConfig(
                     name=self.tenant_name,
-                    password=self.tenant_name,
+                    password=str(uuid.uuid4()),
                     roles={'admin': self.tenant_name}))
 
             user_creator.create()
