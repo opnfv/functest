@@ -211,9 +211,9 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
             self.snaps_creds, 'identity')
 
         self.creds = {
-                "tenant": self.tenant_name,
-                "username": self.tenant_name,
-                "password": self.tenant_name,
+                "tenant": self.snaps_creds.project_name,
+                "username": self.snaps_creds.username,
+                "password": self.snaps_creds.password,
                 "auth_url": public_auth_url
                 }
         self.prepare_images()
