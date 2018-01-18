@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_553891ee",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 2651
+      },
+      "writtenOn": "2018-01-18T09:07:58Z",
+      "side": 1,
+      "message": "obviously hardcoded password violate Anteater rule, please see the jenkins log https://build.opnfv.org/ci/job/opnfv-security-audit-verify-master/10383/console and https://wiki.opnfv.org/pages/viewpage.action?pageId\u003d11700198\n\ncurrently, -1 is not given by jenkins-ci, but it will later",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 21
+      },
+      "revId": "8cb5130d5dfbe334994bfcb7a4a0c6657b7edc79",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
