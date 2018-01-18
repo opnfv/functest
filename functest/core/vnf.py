@@ -49,6 +49,10 @@ class VnfOnBoarding(base.TestCase):
         super(VnfOnBoarding, self).__init__(**kwargs)
         self.tenant_name = CONST.__getattribute__(
             'vnf_{}_tenant_name'.format(self.case_name))
+        self.user_name = CONST.__getattribute__(
+            'vnf_{}_user_name'.format(self.case_name))
+        self.user_password = CONST.__getattribute__(
+            'vnf_{}_user_password'.format(self.case_name))
         self.snaps_creds = {}
         self.created_object = []
         self.os_project = None
@@ -121,8 +125,8 @@ class VnfOnBoarding(base.TestCase):
             user_creator = OpenStackUser(
                 snaps_creds,
                 UserConfig(
-                    name=self.tenant_name,
-                    password=self.tenant_name,
+                    name=self.user_name,
+                    password=self.user_password,
                     roles={'admin': self.tenant_name}))
 
             user_creator.create()
