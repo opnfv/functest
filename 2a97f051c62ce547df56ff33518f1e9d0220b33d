@@ -16,6 +16,24 @@
       "revId": "2a97f051c62ce547df56ff33518f1e9d0220b33d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_cad6bb4e",
+        "filename": "functest/ci/config_functest.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-01-19T14:09:27Z",
+      "side": 1,
+      "message": "Cedric, this is to fix yamllint error:\nfunctest/ci/config_functest.yaml\n  60:5      warning  comment not indented like content  (comments-indentation)\nSee: https://build.opnfv.org/ci/job/functest-verify-unit-tests-and-docs-master/606/console",
+      "parentUuid": "9a3d3df0_67cd2a66",
+      "revId": "2a97f051c62ce547df56ff33518f1e9d0220b33d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
