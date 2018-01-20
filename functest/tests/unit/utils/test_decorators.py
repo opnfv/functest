@@ -18,13 +18,11 @@ import unittest
 
 import mock
 
+from functest.core import testcase
 from functest.utils import decorators
-from functest.utils import functest_utils
-from functest.utils.constants import CONST
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
-VERSION = 'master'
 DIR = '/dev'
 FILE = '{}/null'.format(DIR)
 URL = 'file://{}'.format(FILE)
@@ -38,7 +36,8 @@ class DecoratorsTesting(unittest.TestCase):
     _start_time = 1.0
     _stop_time = 2.0
     _result = 'PASS'
-    _build_tag = VERSION
+    _version = 'unknown'
+    _build_tag = 'none'
     _node_name = 'bar'
     _deploy_scenario = 'foo'
     _installer_type = 'debian'
@@ -50,8 +49,8 @@ class DecoratorsTesting(unittest.TestCase):
         os.environ['BUILD_TAG'] = self._build_tag
 
     def test_wraps(self):
-        self.assertEqual(functest_utils.push_results_to_db.__name__,
-                         "push_results_to_db")
+        self.assertEqual(testcase.TestCase.push_to_db.__name__,
+                         "push_to_db")
 
     def _get_json(self):
         stop_time = datetime.fromtimestamp(self._stop_time).strftime(
@@ -62,44 +61,45 @@ class DecoratorsTesting(unittest.TestCase):
                 'stop_date': stop_time, 'start_date': start_time,
                 'case_name': self._case_name, 'build_tag': self._build_tag,
                 'pod_name': self._node_name, 'installer': self._installer_type,
-                'scenario': self._deploy_scenario, 'version': VERSION,
+                'scenario': self._deploy_scenario, 'version': self._version,
                 'details': {}, 'criteria': self._result}
         return json.dumps(data, sort_keys=True)
 
-    @mock.patch('{}.get_version'.format(functest_utils.__name__),
-                return_value=VERSION)
+    def _get_testcase(self):
+        test = testcase.TestCase(
+            project_name=self._project_name, case_name=self._case_name)
+        test.start_time = self._start_time
+        test.stop_time = self._stop_time
+        test.result = 100
+        test.details = {}
+        return test
+
     @mock.patch('requests.post')
     def test_http_shema(self, *args):
-        CONST.__setattr__('results_test_db_url', 'http://127.0.0.1')
-        self.assertTrue(functest_utils.push_results_to_db(
-            self._project_name, self._case_name, self._start_time,
-            self._stop_time, self._result, {}))
-        args[1].assert_called_once_with()
+        os.environ['TEST_DB_URL'] = 'http://127.0.0.1'
+        test = self._get_testcase()
+        self.assertEqual(test.push_to_db(), testcase.TestCase.EX_OK)
         args[0].assert_called_once_with(
             'http://127.0.0.1', data=self._get_json(),
             headers={'Content-Type': 'application/json'})
 
     def test_wrong_shema(self):
-        CONST.__setattr__('results_test_db_url', '/dev/null')
-        self.assertFalse(functest_utils.push_results_to_db(
-            self._project_name, self._case_name, self._start_time,
-            self._stop_time, self._result, {}))
+        os.environ['TEST_DB_URL'] = '/dev/null'
+        test = self._get_testcase()
+        self.assertEqual(
+            test.push_to_db(), testcase.TestCase.EX_PUSH_TO_DB_ERROR)
 
-    @mock.patch('{}.get_version'.format(functest_utils.__name__),
-                return_value=VERSION)
-    def _test_dump(self, *args):
-        CONST.__setattr__('results_test_db_url', URL)
+    def _test_dump(self):
+        os.environ['TEST_DB_URL'] = URL
         with mock.patch.object(decorators, 'open', mock.mock_open(),
                                create=True) as mock_open:
-            self.assertTrue(functest_utils.push_results_to_db(
-                self._project_name, self._case_name, self._start_time,
-                self._stop_time, self._result, {}))
+            test = self._get_testcase()
+            self.assertEqual(test.push_to_db(), testcase.TestCase.EX_OK)
         mock_open.assert_called_once_with(FILE, 'a')
         handle = mock_open()
         call_args, _ = handle.write.call_args
         self.assertIn('POST', call_args[0])
         self.assertIn(self._get_json(), call_args[0])
-        args[0].assert_called_once_with()
 
     @mock.patch('os.makedirs')
     def test_default_dump(self, mock_method=None):
@@ -113,11 +113,10 @@ class DecoratorsTesting(unittest.TestCase):
 
     @mock.patch('os.makedirs', side_effect=OSError)
     def test_makedirs_exc(self, *args):
-        CONST.__setattr__('results_test_db_url', URL)
-        self.assertFalse(
-            functest_utils.push_results_to_db(
-                self._project_name, self._case_name, self._start_time,
-                self._stop_time, self._result, {}))
+        os.environ['TEST_DB_URL'] = URL
+        test = self._get_testcase()
+        self.assertEqual(
+            test.push_to_db(), testcase.TestCase.EX_PUSH_TO_DB_ERROR)
         args[0].assert_called_once_with(DIR)
 
 

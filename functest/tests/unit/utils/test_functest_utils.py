@@ -14,15 +14,15 @@ import time
 import unittest
 
 import mock
-import requests
 from six.moves import urllib
 
-from functest.tests.unit import test_utils
 from functest.utils import functest_utils
-from functest.utils.constants import CONST
 
 
 class FunctestUtilsTesting(unittest.TestCase):
+
+    readline = 0
+    test_ip = ['10.1.23.4', '10.1.14.15', '10.1.16.15']
 
     def setUp(self):
         self.url = 'http://www.opnfv.org/'
@@ -97,22 +97,6 @@ class FunctestUtilsTesting(unittest.TestCase):
             m.assert_called_once_with(dest, 'wb')
             self.assertTrue(mock_sh.called)
 
-    def test_get_version_daily_job(self):
-        CONST.__setattr__('BUILD_TAG', self.build_tag)
-        self.assertEqual(functest_utils.get_version(), self.version)
-
-    def test_get_version_weekly_job(self):
-        CONST.__setattr__('BUILD_TAG', self.build_tag_week)
-        self.assertEqual(functest_utils.get_version(), self.version)
-
-    def test_get_version_with_dummy_build_tag(self):
-        CONST.__setattr__('BUILD_TAG', 'whatever')
-        self.assertEqual(functest_utils.get_version(), 'unknown')
-
-    def test_get_version_unknown(self):
-        CONST.__setattr__('BUILD_TAG', 'unknown_build_tag')
-        self.assertEqual(functest_utils.get_version(), "unknown")
-
     def _get_env_dict(self, var):
         dic = {'INSTALLER_TYPE': self.installer,
                'DEPLOY_SCENARIO': self.scenario,
@@ -120,87 +104,6 @@ class FunctestUtilsTesting(unittest.TestCase):
                'BUILD_TAG': self.build_tag}
         dic.pop(var, None)
         return dic
-
-    def _test_push_results_to_db_missing_env(self, env_var):
-        dic = self._get_env_dict(env_var)
-        CONST.__setattr__('results_test_db_url', self.db_url)
-        with mock.patch.dict(os.environ,
-                             dic,
-                             clear=True), \
-                mock.patch('functest.utils.functest_utils.logger.error') \
-                as mock_logger_error:
-            functest_utils.push_results_to_db(self.project, self.case_name,
-                                              self.start_date, self.stop_date,
-                                              self.result, self.details)
-            mock_logger_error.assert_called_once_with("Please set env var: " +
-                                                      str("\'" + env_var +
-                                                          "\'"))
-
-    def test_push_results_to_db_missing_installer(self):
-        self._test_push_results_to_db_missing_env('INSTALLER_TYPE')
-
-    def test_push_results_to_db_missing_scenario(self):
-        self._test_push_results_to_db_missing_env('DEPLOY_SCENARIO')
-
-    def test_push_results_to_db_missing_nodename(self):
-        self._test_push_results_to_db_missing_env('NODE_NAME')
-
-    def test_push_results_to_db_missing_buildtag(self):
-        self._test_push_results_to_db_missing_env('BUILD_TAG')
-
-    def test_push_results_to_db_request_post_failed(self):
-        dic = self._get_env_dict(None)
-        CONST.__setattr__('results_test_db_url', self.db_url)
-        with mock.patch.dict(os.environ,
-                             dic,
-                             clear=True), \
-                mock.patch('functest.utils.functest_utils.logger.error') \
-                as mock_logger_error, \
-                mock.patch('functest.utils.functest_utils.requests.post',
-                           side_effect=requests.RequestException):
-            self.assertFalse(functest_utils.
-                             push_results_to_db(self.project, self.case_name,
-                                                self.start_date,
-                                                self.stop_date,
-                                                self.result, self.details))
-            mock_logger_error.assert_called_once_with(test_utils.
-                                                      RegexMatch("Pushing "
-                                                                 "Result to"
-                                                                 " DB"
-                                                                 "(\S+\s*) "
-                                                                 "failed:"))
-
-    def test_push_results_to_db_request_post_exception(self):
-        dic = self._get_env_dict(None)
-        CONST.__setattr__('results_test_db_url', self.db_url)
-        with mock.patch.dict(os.environ,
-                             dic,
-                             clear=True), \
-                mock.patch('functest.utils.functest_utils.logger.error') \
-                as mock_logger_error, \
-                mock.patch('functest.utils.functest_utils.requests.post',
-                           side_effect=Exception):
-            self.assertFalse(functest_utils.
-                             push_results_to_db(self.project, self.case_name,
-                                                self.start_date,
-                                                self.stop_date,
-                                                self.result, self.details))
-            self.assertTrue(mock_logger_error.called)
-
-    def test_push_results_to_db_default(self):
-        dic = self._get_env_dict(None)
-        CONST.__setattr__('results_test_db_url', self.db_url)
-        with mock.patch.dict(os.environ,
-                             dic,
-                             clear=True), \
-                mock.patch('functest.utils.functest_utils.requests.post'):
-            self.assertTrue(functest_utils.
-                            push_results_to_db(self.project, self.case_name,
-                                               self.start_date,
-                                               self.stop_date,
-                                               self.result, self.details))
-    readline = 0
-    test_ip = ['10.1.23.4', '10.1.14.15', '10.1.16.15']
 
     @staticmethod
     def readline_side():
