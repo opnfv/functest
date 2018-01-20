@@ -9,12 +9,16 @@
 
 """Define the class required to fully cover testcase."""
 
+from datetime import datetime
+import json
 import logging
+import os
 import unittest
 
 from functest.core import testcase
 
 import mock
+import requests
 
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
@@ -28,90 +32,131 @@ class TestCaseTesting(unittest.TestCase):
     _case_name = "base"
     _project_name = "functest"
     _published_result = "PASS"
+    _test_db_url = "http://testresults.opnfv.org/test/api/v1/results"
+    _headers = {'Content-Type': 'application/json'}
 
     def setUp(self):
         self.test = testcase.TestCase(case_name=self._case_name,
                                       project_name=self._project_name)
-        self.test.start_time = "1"
-        self.test.stop_time = "2"
+        self.test.start_time = 1
+        self.test.stop_time = 2
         self.test.result = 100
         self.test.details = {"Hello": "World"}
+        os.environ['TEST_DB_URL'] = TestCaseTesting._test_db_url
+        os.environ['INSTALLER_TYPE'] = "installer_type"
+        os.environ['DEPLOY_SCENARIO'] = "scenario"
+        os.environ['NODE_NAME'] = "node_name"
+        os.environ['BUILD_TAG'] = "foo-daily-master-bar"
 
     def test_run_unimplemented(self):
         self.assertEqual(self.test.run(),
                          testcase.TestCase.EX_RUN_ERROR)
 
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
-                return_value=False)
-    def _test_missing_attribute(self, mock_function=None):
+    def _test_pushdb_missing_attribute(self):
         self.assertEqual(self.test.push_to_db(),
                          testcase.TestCase.EX_PUSH_TO_DB_ERROR)
+
+    def test_pushdb_no_project_name(self):
+        self.test.project_name = None
+        self._test_pushdb_missing_attribute()
+
+    def test_pushdb_no_case_name(self):
+        self.test.case_name = None
+        self._test_pushdb_missing_attribute()
+
+    def test_pushdb_no_start_time(self):
+        self.test.start_time = None
+        self._test_pushdb_missing_attribute()
+
+    def test_pushdb_no_stop_time(self):
+        self.test.stop_time = None
+        self._test_pushdb_missing_attribute()
+
+    def _test_pushdb_missing_env(self, var):
+        del os.environ[var]
+        self.assertEqual(self.test.push_to_db(),
+                         testcase.TestCase.EX_PUSH_TO_DB_ERROR)
+
+    def test_pushdb_no_db_url(self):
+        self._test_pushdb_missing_env('TEST_DB_URL')
+
+    def test_pushdb_no_installer_type(self):
+        self._test_pushdb_missing_env('INSTALLER_TYPE')
+
+    def test_pushdb_no_deploy_scenario(self):
+        self._test_pushdb_missing_env('DEPLOY_SCENARIO')
+
+    def test_pushdb_no_node_name(self):
+        self._test_pushdb_missing_env('NODE_NAME')
+
+    def test_pushdb_no_build_tag(self):
+        self._test_pushdb_missing_env('BUILD_TAG')
+
+    @mock.patch('requests.post')
+    def test_pushdb_bad_start_time(self, mock_function=None):
+        self.test.start_time = "1"
+        self.assertEqual(
+            self.test.push_to_db(),
+            testcase.TestCase.EX_PUSH_TO_DB_ERROR)
         mock_function.assert_not_called()
 
-    def test_missing_project_name(self):
-        self.test.project_name = None
-        self._test_missing_attribute()
+    @mock.patch('requests.post')
+    def test_pushdb_bad_end_time(self, mock_function=None):
+        self.test.stop_time = "2"
+        self.assertEqual(
+            self.test.push_to_db(),
+            testcase.TestCase.EX_PUSH_TO_DB_ERROR)
+        mock_function.assert_not_called()
 
-    def test_missing_case_name(self):
-        self.test.case_name = None
-        self._test_missing_attribute()
+    def _get_data(self):
+        return {
+            "build_tag": os.environ['BUILD_TAG'],
+            "case_name": self._case_name,
+            "criteria": 'PASS' if self.test.is_successful(
+                ) == self.test.EX_OK else 'FAIL',
+            "details": self.test.details,
+            "installer": os.environ['INSTALLER_TYPE'],
+            "pod_name": os.environ['NODE_NAME'],
+            "project_name": self.test.project_name,
+            "scenario": os.environ['DEPLOY_SCENARIO'],
+            "start_date": datetime.fromtimestamp(
+                self.test.start_time).strftime('%Y-%m-%d %H:%M:%S'),
+            "stop_date": datetime.fromtimestamp(
+                self.test.stop_time).strftime('%Y-%m-%d %H:%M:%S'),
+            "version": "master"}
 
-    def test_missing_start_time(self):
-        self.test.start_time = None
-        self._test_missing_attribute()
-
-    def test_missing_stop_time(self):
-        self.test.stop_time = None
-        self._test_missing_attribute()
-
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
-                return_value=True)
-    def test_missing_details(self, mock_function=None):
-        self.test.details = None
-        self.assertEqual(self.test.push_to_db(),
-                         testcase.TestCase.EX_OK)
+    @mock.patch('requests.post')
+    def _test_pushdb_version(self, mock_function=None, **kwargs):
+        payload = self._get_data()
+        payload["version"] = kwargs.get("version", "unknown")
+        self.assertEqual(self.test.push_to_db(), testcase.TestCase.EX_OK)
         mock_function.assert_called_once_with(
-            self._project_name, self._case_name, self.test.start_time,
-            self.test.stop_time, self._published_result, self.test.details)
+            os.environ['TEST_DB_URL'],
+            data=json.dumps(payload, sort_keys=True),
+            headers=self._headers)
 
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
-                return_value=False)
-    def test_push_to_db_failed(self, mock_function=None):
-        self.assertEqual(self.test.push_to_db(),
-                         testcase.TestCase.EX_PUSH_TO_DB_ERROR)
-        mock_function.assert_called_once_with(
-            self._project_name, self._case_name, self.test.start_time,
-            self.test.stop_time, self._published_result, self.test.details)
+    def test_pushdb_daily_job(self):
+        self._test_pushdb_version(version="master")
 
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
-                return_value=True)
-    def test_push_to_db(self, mock_function=None):
-        self.assertEqual(self.test.push_to_db(),
-                         testcase.TestCase.EX_OK)
-        mock_function.assert_called_once_with(
-            self._project_name, self._case_name, self.test.start_time,
-            self.test.stop_time, self._published_result, self.test.details)
+    def test_pushdb_weekly_job(self):
+        os.environ['BUILD_TAG'] = 'foo-weekly-master-bar'
+        self._test_pushdb_version(version="master")
 
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
-                return_value=True)
-    def test_push_to_db_res_ko(self, mock_function=None):
-        self.test.result = 0
-        self.assertEqual(self.test.push_to_db(),
-                         testcase.TestCase.EX_OK)
-        mock_function.assert_called_once_with(
-            self._project_name, self._case_name, self.test.start_time,
-            self.test.stop_time, 'FAIL', self.test.details)
+    def test_pushdb_random_build_tag(self):
+        os.environ['BUILD_TAG'] = 'whatever'
+        self._test_pushdb_version(version="unknown")
 
-    @mock.patch('functest.utils.functest_utils.push_results_to_db',
-                return_value=True)
-    def test_push_to_db_both_ko(self, mock_function=None):
-        self.test.result = 0
-        self.test.criteria = 0
-        self.assertEqual(self.test.push_to_db(),
-                         testcase.TestCase.EX_OK)
+    @mock.patch('requests.post', return_value=mock.Mock(
+        raise_for_status=mock.Mock(
+            side_effect=requests.exceptions.HTTPError)))
+    def test_pushdb_http_errors(self, mock_function=None):
+        self.assertEqual(
+            self.test.push_to_db(),
+            testcase.TestCase.EX_PUSH_TO_DB_ERROR)
         mock_function.assert_called_once_with(
-            self._project_name, self._case_name, self.test.start_time,
-            self.test.stop_time, 'FAIL', self.test.details)
+            os.environ['TEST_DB_URL'],
+            data=json.dumps(self._get_data(), sort_keys=True),
+            headers=self._headers)
 
     def test_check_criteria_missing(self):
         self.test.criteria = None

@@ -188,12 +188,6 @@ example:
     sg_name: example-sg
     sg_desc: Example Security group
 
-results:
-    # you can also set a file (e.g. /home/opnfv/functest/results/dump.txt)
-    # to dump results
-    # test_db_url: file:///home/opnfv/functest/results/dump.txt
-    test_db_url: http://testresults.opnfv.org/test/api/v1/results
-
 energy_recorder:
     api_url: http://energy.opnfv.fr/resources
     api_user: ""
