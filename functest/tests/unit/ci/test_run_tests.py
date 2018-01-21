@@ -5,6 +5,8 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+# pylint: disable=missing-docstring
+
 import logging
 import unittest
 
@@ -17,7 +19,7 @@ from functest.core.testcase import TestCase
 
 class FakeModule(TestCase):
 
-    def run(self):
+    def run(self, **kwargs):
         return TestCase.EX_OK
 
 
@@ -52,74 +54,65 @@ class RunTestsTesting(unittest.TestCase):
 
         self.run_tests_parser = run_tests.RunTestsParser()
 
-    @mock.patch('functest.ci.run_tests.LOGGER.error')
-    def test_source_rc_file_missing_file(self, mock_logger_error):
-        with mock.patch('functest.ci.run_tests.os.path.isfile',
-                        return_value=False), \
-                self.assertRaises(Exception):
+    @mock.patch('functest.ci.run_tests.os.path.isfile', return_value=False)
+    def test_source_rc_file_ko(self, *args):
+        with self.assertRaises(Exception):
             self.runner.source_rc_file()
+        args[0].assert_called_once_with(
+            '/home/opnfv/functest/conf/openstack.creds')
 
-    @mock.patch('functest.ci.run_tests.LOGGER.debug')
     @mock.patch('functest.ci.run_tests.os.path.isfile',
                 return_value=True)
     def test_source_rc_file_default(self, *args):
         with mock.patch('functest.ci.run_tests.os_utils.source_credentials',
                         return_value=self.creds):
             self.runner.source_rc_file()
+        args[0].assert_called_once_with(
+            '/home/opnfv/functest/conf/openstack.creds')
 
-    def test_get_run_dict_if_defined_default(self):
-        mock_obj = mock.Mock()
-        with mock.patch('functest.ci.run_tests.'
-                        'ft_utils.get_dict_by_test',
-                        return_value={'run': mock_obj}):
-            self.assertEqual(self.runner.get_run_dict('test_name'),
-                             mock_obj)
+    @mock.patch('functest.ci.run_tests.ft_utils.get_dict_by_test')
+    def test_get_run_dict(self, *args):
+        retval = {'run': mock.Mock()}
+        args[0].return_value = retval
+        self.assertEqual(self.runner.get_run_dict('test_name'), retval['run'])
+        args[0].assert_called_once_with('test_name')
 
     @mock.patch('functest.ci.run_tests.LOGGER.error')
-    def test_get_run_dict_if_defined_missing_config_option(self,
-                                                           mock_logger_error):
-        with mock.patch('functest.ci.run_tests.'
-                        'ft_utils.get_dict_by_test',
-                        return_value=None):
-            testname = 'test_name'
-            self.assertEqual(self.runner.get_run_dict(testname),
-                             None)
-            mock_logger_error.assert_called_once_with(
-                "Cannot get %s's config options", testname)
-
-        with mock.patch('functest.ci.run_tests.'
-                        'ft_utils.get_dict_by_test',
-                        return_value={}):
-            testname = 'test_name'
-            self.assertEqual(self.runner.get_run_dict(testname),
-                             None)
+    @mock.patch('functest.ci.run_tests.ft_utils.get_dict_by_test',
+                return_value=None)
+    def test_get_run_dict_config_ko(self, *args):
+        testname = 'test_name'
+        self.assertEqual(self.runner.get_run_dict(testname), None)
+        args[0].return_value = {}
+        self.assertEqual(self.runner.get_run_dict(testname), None)
+        calls = [mock.call(testname), mock.call(testname)]
+        args[0].assert_has_calls(calls)
+        calls = [mock.call("Cannot get %s's config options", testname),
+                 mock.call("Cannot get %s's config options", testname)]
+        args[1].assert_has_calls(calls)
 
     @mock.patch('functest.ci.run_tests.LOGGER.exception')
-    def test_get_run_dict_if_defined_exception(self,
-                                               mock_logger_except):
-        with mock.patch('functest.ci.run_tests.'
-                        'ft_utils.get_dict_by_test',
-                        side_effect=Exception):
-            testname = 'test_name'
-            self.assertEqual(self.runner.get_run_dict(testname),
-                             None)
-            mock_logger_except.assert_called_once_with(
-                "Cannot get %s's config options", testname)
+    @mock.patch('functest.ci.run_tests.ft_utils.get_dict_by_test',
+                side_effect=Exception)
+    def test_get_run_dict_exception(self, *args):
+        testname = 'test_name'
+        self.assertEqual(self.runner.get_run_dict(testname), None)
+        args[1].assert_called_once_with(
+            "Cannot get %s's config options", testname)
 
-    def test_run_tests_import_test_class_exception(self):
+    @mock.patch('functest.ci.run_tests.Runner.get_run_dict',
+                return_value=None)
+    def test_run_tests_import_exception(self, *args):
         mock_test = mock.Mock()
-        args = {'get_name.return_value': 'test_name',
-                'needs_clean.return_value': False}
-        mock_test.configure_mock(**args)
-        with mock.patch('functest.ci.run_tests.Runner.source_rc_file'), \
-            mock.patch('functest.ci.run_tests.Runner.get_run_dict',
-                       return_value=None), \
-                self.assertRaises(Exception) as context:
+        kwargs = {'get_name.return_value': 'test_name',
+                  'needs_clean.return_value': False}
+        mock_test.configure_mock(**kwargs)
+        with self.assertRaises(Exception) as context:
             self.runner.run_test(mock_test)
+        args[0].assert_called_with('test_name')
         msg = "Cannot import the class for the test case."
         self.assertTrue(msg in str(context.exception))
 
-    @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
     @mock.patch('importlib.import_module', name="module",
                 return_value=mock.Mock(test_class=mock.Mock(
                     side_effect=FakeModule)))
@@ -135,6 +128,8 @@ class RunTestsTesting(unittest.TestCase):
                         return_value=test_run_dict):
             self.runner.clean_flag = True
             self.runner.run_test(mock_test)
+        args[0].assert_called_with('test_name')
+        args[1].assert_called_with('test_module')
         self.assertEqual(self.runner.overall_result,
                          run_tests.Result.EX_OK)
 
@@ -175,8 +170,8 @@ class RunTestsTesting(unittest.TestCase):
         kwargs = {'test': 'test_name', 'noclean': True, 'report': True}
         args = {'get_tier.return_value': False,
                 'get_test.return_value': False}
-        self.runner._tiers = mock.Mock()
-        self.runner._tiers.configure_mock(**args)
+        self.runner.tiers = mock.Mock()
+        self.runner.tiers.configure_mock(**args)
         self.assertEqual(self.runner.main(**kwargs),
                          run_tests.Result.EX_ERROR)
         mock_methods[1].assert_called_once_with()
@@ -195,8 +190,8 @@ class RunTestsTesting(unittest.TestCase):
         kwargs = {'test': 'tier_name', 'noclean': True, 'report': True}
         args = {'get_tier.return_value': mock_tier,
                 'get_test.return_value': None}
-        self.runner._tiers = mock.Mock()
-        self.runner._tiers.configure_mock(**args)
+        self.runner.tiers = mock.Mock()
+        self.runner.tiers.configure_mock(**args)
         self.assertEqual(self.runner.main(**kwargs),
                          run_tests.Result.EX_OK)
         mock_methods[1].assert_called()
@@ -208,8 +203,8 @@ class RunTestsTesting(unittest.TestCase):
         kwargs = {'test': 'test_name', 'noclean': True, 'report': True}
         args = {'get_tier.return_value': None,
                 'get_test.return_value': 'test_name'}
-        self.runner._tiers = mock.Mock()
-        self.runner._tiers.configure_mock(**args)
+        self.runner.tiers = mock.Mock()
+        self.runner.tiers.configure_mock(**args)
         self.assertEqual(self.runner.main(**kwargs),
                          run_tests.Result.EX_OK)
         mock_methods[0].assert_called_once_with('test_name')
@@ -217,26 +212,28 @@ class RunTestsTesting(unittest.TestCase):
     @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
     @mock.patch('functest.ci.run_tests.Runner.run_all')
     @mock.patch('functest.ci.run_tests.Runner.summary')
-    def test_main_all_tier(self, *mock_methods):
-        kwargs = {'test': 'all', 'noclean': True, 'report': True}
-        args = {'get_tier.return_value': None,
-                'get_test.return_value': None}
-        self.runner._tiers = mock.Mock()
-        self.runner._tiers.configure_mock(**args)
-        self.assertEqual(self.runner.main(**kwargs),
-                         run_tests.Result.EX_OK)
-        mock_methods[1].assert_called_once_with()
+    def test_main_all_tier(self, *args):
+        kwargs = {'get_tier.return_value': None,
+                  'get_test.return_value': None}
+        self.runner.tiers = mock.Mock()
+        self.runner.tiers.configure_mock(**kwargs)
+        self.assertEqual(
+            self.runner.main(test='all', noclean=True, report=True),
+            run_tests.Result.EX_OK)
+        args[0].assert_called_once_with(None)
+        args[1].assert_called_once_with()
+        args[2].assert_called_once_with()
 
     @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
-    @mock.patch('functest.ci.run_tests.Runner.summary')
-    def test_main_any_tier_test_ko(self, *mock_methods):
-        kwargs = {'test': 'any', 'noclean': True, 'report': True}
-        args = {'get_tier.return_value': None,
-                'get_test.return_value': None}
-        self.runner._tiers = mock.Mock()
-        self.runner._tiers.configure_mock(**args)
-        self.assertEqual(self.runner.main(**kwargs),
-                         run_tests.Result.EX_ERROR)
+    def test_main_any_tier_test_ko(self, *args):
+        kwargs = {'get_tier.return_value': None,
+                  'get_test.return_value': None}
+        self.runner.tiers = mock.Mock()
+        self.runner.tiers.configure_mock(**kwargs)
+        self.assertEqual(
+            self.runner.main(test='any', noclean=True, report=True),
+            run_tests.Result.EX_ERROR)
+        args[0].assert_called_once_with()
 
 
 if __name__ == "__main__":

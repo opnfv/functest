@@ -14,7 +14,6 @@
 """
 
 import argparse
-import enum
 import importlib
 import logging
 import logging.config
@@ -24,6 +23,7 @@ import sys
 import textwrap
 import pkg_resources
 
+import enum
 import prettytable
 
 import functest.ci.tier_builder as tb
@@ -93,7 +93,7 @@ class Runner(object):
         self.overall_result = Result.EX_OK
         self.clean_flag = True
         self.report_flag = False
-        self._tiers = tb.TierBuilder(
+        self.tiers = tb.TierBuilder(
             CONST.__getattribute__('INSTALLER_TYPE'),
             CONST.__getattribute__('DEPLOY_SCENARIO'),
             pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
@@ -110,7 +110,7 @@ class Runner(object):
 
     @staticmethod
     def get_run_dict(testname):
-        """Obtain the the 'run' block of the testcase from testcases.yaml"""
+        """Obtain the 'run' block of the testcase from testcases.yaml"""
         try:
             dic_testcase = ft_utils.get_dict_by_test(testname)
             if not dic_testcase:
@@ -189,7 +189,7 @@ class Runner(object):
             header_style='upper', padding_width=5,
             field_names=['tiers', 'order', 'CI Loop', 'description',
                          'testcases'])
-        for tier in self._tiers.get_tiers():
+        for tier in self.tiers.get_tiers():
             if (tier.get_tests() and
                     re.search(CONST.__getattribute__('CI_LOOP'),
                               tier.get_ci_loop()) is not None):
@@ -213,11 +213,11 @@ class Runner(object):
             if 'test' in kwargs:
                 self.source_rc_file()
                 LOGGER.debug("Test args: %s", kwargs['test'])
-                if self._tiers.get_tier(kwargs['test']):
-                    self.run_tier(self._tiers.get_tier(kwargs['test']))
-                elif self._tiers.get_test(kwargs['test']):
+                if self.tiers.get_tier(kwargs['test']):
+                    self.run_tier(self.tiers.get_tier(kwargs['test']))
+                elif self.tiers.get_test(kwargs['test']):
                     result = self.run_test(
-                        self._tiers.get_test(kwargs['test']))
+                        self.tiers.get_test(kwargs['test']))
                     if result != testcase.TestCase.EX_OK:
                         LOGGER.error("The test case '%s' failed.",
                                      kwargs['test'])
@@ -230,7 +230,7 @@ class Runner(object):
                                  kwargs['test'],
                                  CONST.__getattribute__('DEPLOY_SCENARIO'))
                     LOGGER.debug("Available tiers are:\n\n%s",
-                                 self._tiers)
+                                 self.tiers)
                     return Result.EX_ERROR
             else:
                 self.run_all()
@@ -239,8 +239,8 @@ class Runner(object):
         except Exception:  # pylint: disable=broad-except
             LOGGER.exception("Failures when running testcase(s)")
             self.overall_result = Result.EX_ERROR
-        if not self._tiers.get_test(kwargs['test']):
-            self.summary(self._tiers.get_tier(kwargs['test']))
+        if not self.tiers.get_test(kwargs['test']):
+            self.summary(self.tiers.get_tier(kwargs['test']))
         LOGGER.info("Execution exit value: %s", self.overall_result)
         return self.overall_result
 
@@ -257,7 +257,7 @@ class Runner(object):
             header_style='upper', padding_width=5,
             field_names=['test case', 'project', 'tier',
                          'duration', 'result'])
-        tiers = [tier] if tier else self._tiers.get_tiers()
+        tiers = [tier] if tier else self.tiers.get_tiers()
         for each_tier in tiers:
             for test in each_tier.get_tests():
                 try:
@@ -270,7 +270,7 @@ class Runner(object):
                         ) == test_case.EX_OK) else 'FAIL'
                     msg.add_row(
                         [test_case.case_name, test_case.project_name,
-                         self._tiers.get_tier_name(test_case.case_name),
+                         self.tiers.get_tier_name(test_case.case_name),
                          test_case.get_duration(), result])
             for test in each_tier.get_skipped_test():
                 msg.add_row([test.get_name(), test.get_project(),
