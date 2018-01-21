@@ -18,17 +18,17 @@ Verifies that:
 import logging
 import logging.config
 import os
-import pkg_resources
-from six.moves import urllib
 import socket
 
-from functest.opnfv_tests.openstack.snaps import snaps_utils
-
+import pkg_resources
+from six.moves import urllib
 from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import glance_utils
 from snaps.openstack.utils import keystone_utils
 from snaps.openstack.utils import neutron_utils
 from snaps.openstack.utils import nova_utils
+
+from functest.opnfv_tests.openstack.snaps import snaps_utils
 
 __author__ = "Jose Lausuch <jose.lausuch@ericsson.com>"
 
@@ -37,18 +37,21 @@ LOGGER = logging.getLogger(__name__)
 
 def verify_connectivity(endpoint):
     """ Returns true if an hostname/port is reachable"""
-    connection = socket.socket()
-    connection.settimeout(10)
-    hostname = urllib.parse.urlparse(endpoint).hostname
-    port = urllib.parse.urlparse(endpoint).port
-    if not port:
-        port = 443 if urllib.parse.urlparse(endpoint).scheme == "https" else 80
     try:
-        connection.connect((hostname, port))
-        LOGGER.debug('%s:%s is reachable!', hostname, port)
+        connection = socket.socket()
+        connection.settimeout(10)
+        url = urllib.parse.urlparse(endpoint)
+        port = url.port
+        if not port:
+            port = 443 if url.scheme == "https" else 80
+        connection.connect(url.hostname, port)
+        LOGGER.debug('%s:%s is reachable!', url.hostname, port)
         return True
     except socket.error:
-        LOGGER.exception('%s:%s is not reachable.', hostname, port)
+        LOGGER.error('%s:%s is not reachable.', url.hostname, port)
+    except Exception:  # pylint: disable=broad-except
+        LOGGER.exception(
+            'Errors when verifying connectivity to %s:%s', url.hostname, port)
     return False
 
 
