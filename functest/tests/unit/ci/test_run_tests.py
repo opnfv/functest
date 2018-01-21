@@ -20,12 +20,6 @@ class FakeModule(TestCase):
     def run(self):
         return TestCase.EX_OK
 
-    def push_to_db(self):
-        return TestCase.EX_OK
-
-    def is_successful(self):
-        return TestCase.EX_OK
-
 
 class RunTestsTesting(unittest.TestCase):
 
@@ -121,9 +115,9 @@ class RunTestsTesting(unittest.TestCase):
             mock.patch('functest.ci.run_tests.Runner.get_run_dict',
                        return_value=None), \
                 self.assertRaises(Exception) as context:
-            self.runner(mock_test, 'tier_name')
-            msg = "Cannot import the class for the test case."
-            self.assertTrue(msg in context)
+            self.runner.run_test(mock_test)
+        msg = "Cannot import the class for the test case."
+        self.assertTrue(msg in str(context.exception))
 
     @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
     @mock.patch('importlib.import_module', name="module",

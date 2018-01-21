@@ -18,23 +18,17 @@ from functest.ci import tier_builder
 class TierBuilderTesting(unittest.TestCase):
 
     def setUp(self):
-        self.dependency = {'installer': 'test_installer',
-                           'scenario': 'test_scenario'}
-
-        self.testcase = {'dependencies': self.dependency,
-                         'enabled': 'true',
-                         'case_name': 'test_name',
-                         'criteria': 'test_criteria',
-                         'blocking': 'test_blocking',
-                         'description': 'test_desc',
-                         'project_name': 'project_name'}
-
-        self.dic_tier = {'name': 'test_tier',
-                         'order': 'test_order',
-                         'ci_loop': 'test_ci_loop',
-                         'description': 'test_desc',
-                         'testcases': [self.testcase]}
-
+        self.dependency = {
+            'installer': 'test_installer', 'scenario': 'test_scenario'}
+        self.testcase = {
+            'dependencies': self.dependency, 'enabled': 'true',
+            'case_name': 'test_name', 'criteria': 'test_criteria',
+            'blocking': 'test_blocking', 'description': 'test_desc',
+            'project_name': 'project_name'}
+        self.dic_tier = {
+            'name': 'test_tier', 'order': 'test_order',
+            'ci_loop': 'test_ci_loop', 'description': 'test_desc',
+            'testcases': [self.testcase]}
         self.mock_yaml = mock.Mock()
         attrs = {'get.return_value': [self.dic_tier]}
         self.mock_yaml.configure_mock(**attrs)
@@ -42,9 +36,8 @@ class TierBuilderTesting(unittest.TestCase):
         with mock.patch('functest.ci.tier_builder.yaml.safe_load',
                         return_value=self.mock_yaml), \
                 mock.patch('six.moves.builtins.open', mock.mock_open()):
-            self.tierbuilder = tier_builder.TierBuilder('test_installer',
-                                                        'test_scenario',
-                                                        'testcases_file')
+            self.tierbuilder = tier_builder.TierBuilder(
+                'test_installer', 'test_scenario', 'testcases_file')
         self.tier_obj = self.tierbuilder.tier_objects[0]
 
     def test_get_tiers(self):
@@ -85,6 +78,14 @@ class TierBuilderTesting(unittest.TestCase):
 
     def test_get_tier_name_ko(self):
         self.assertEqual(self.tierbuilder.get_tier_name('test_name2'), None)
+
+    def test_str(self):
+        message = str(self.tierbuilder)
+        self.assertTrue('test_tier' in message)
+        self.assertTrue('test_order' in message)
+        self.assertTrue('test_ci_loop' in message)
+        self.assertTrue('test_desc' in message)
+        self.assertTrue('test_name' in message)
 
 
 if __name__ == "__main__":
