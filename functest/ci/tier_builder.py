@@ -40,24 +40,23 @@ class TierBuilder(object):
 
         del self.tier_objects[:]
         for dic_tier in self.dic_tier_array:
-            tier = th.Tier(name=dic_tier['name'],
-                           order=dic_tier['order'],
-                           ci_loop=dic_tier['ci_loop'],
-                           description=dic_tier['description'])
+            tier = th.Tier(
+                name=dic_tier['name'], order=dic_tier['order'],
+                ci_loop=dic_tier['ci_loop'],
+                description=dic_tier['description'])
 
             for dic_testcase in dic_tier['testcases']:
                 installer = dic_testcase['dependencies']['installer']
                 scenario = dic_testcase['dependencies']['scenario']
                 dep = th.Dependency(installer, scenario)
 
-                testcase = th.TestCase(name=dic_testcase['case_name'],
-                                       enabled=dic_testcase.get(
-                                           'enabled', True),
-                                       dependency=dep,
-                                       criteria=dic_testcase['criteria'],
-                                       blocking=dic_testcase['blocking'],
-                                       description=dic_testcase['description'],
-                                       project=dic_testcase['project_name'])
+                testcase = th.TestCase(
+                    name=dic_testcase['case_name'],
+                    enabled=dic_testcase.get('enabled', True),
+                    dependency=dep, criteria=dic_testcase['criteria'],
+                    blocking=dic_testcase['blocking'],
+                    description=dic_testcase['description'],
+                    project=dic_testcase['project_name'])
                 if (testcase.is_compatible(self.ci_installer,
                                            self.ci_scenario) and
                         testcase.is_enabled()):
