@@ -6,6 +6,8 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+# pylint: disable=missing-docstring
+
 import mock
 import os
 import unittest

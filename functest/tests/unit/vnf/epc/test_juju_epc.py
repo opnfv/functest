@@ -18,7 +18,7 @@ from functest.opnfv_tests.vnf.epc import juju_epc
 
 
 class JujuEpcTesting(unittest.TestCase):
-
+    # pylint: disable=missing-docstring
     """Unittest for ABoT EPC with juju orchestrator"""
 
     def setUp(self):
