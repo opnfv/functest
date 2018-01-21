@@ -20,12 +20,6 @@ class FakeModule(TestCase):
     def run(self):
         return TestCase.EX_OK
 
-    def push_to_db(self):
-        return TestCase.EX_OK
-
-    def is_successful(self):
-        return TestCase.EX_OK
-
 
 class RunTestsTesting(unittest.TestCase):
 
