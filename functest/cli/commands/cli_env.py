@@ -5,7 +5,8 @@
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
-#
+
+# pylint: disable=missing-docstring
 
 import click
 import prettytable
@@ -15,12 +16,10 @@ from functest.utils.constants import CONST
 import six
 
 
-class Env(object):
+class Env(object):  # pylint: disable=too-few-public-methods
 
-    def __init__(self):
-        pass
-
-    def show(self):
+    @staticmethod
+    def show():
         def _get_value(attr, default='Unknown'):
             return attr if attr else default
 
@@ -44,13 +43,11 @@ class Env(object):
         return env_info
 
 
-class CliEnv(Env):
+class CliEnv(object):  # pylint: disable=too-few-public-methods
 
-    def __init__(self):
-        super(CliEnv, self).__init__()
-
-    def show(self):
-        env_info = super(CliEnv, self).show()
+    @staticmethod
+    def show():
+        env_info = Env.show()
         msg = prettytable.PrettyTable(
             header_style='upper', padding_width=5,
             field_names=['Functest Environment', 'value'])

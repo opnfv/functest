@@ -37,27 +37,24 @@ class CliOpenStackTesting(unittest.TestCase):
 
     @mock.patch('functest.cli.commands.cli_os.exit', side_effect=Exception)
     @mock.patch('functest.cli.commands.cli_os.click.echo')
-    def test_ping_endpoint_missing_auth_url(self, mock_click_echo,
-                                            mock_exit):
+    def test_ping_endpoint_auth_url_ko(self, mock_click_echo, mock_exit):
         with self.assertRaises(Exception):
             self.cli_os.os_auth_url = None
             self.cli_os.ping_endpoint()
-            mock_click_echo.assert_called_once_with("Source the OpenStack "
-                                                    "credentials first '. "
-                                                    "$creds'")
+        mock_click_echo.assert_called_once_with(
+            "Source the OpenStack credentials first '. $creds'")
+        mock_exit.assert_called_once_with(0)
 
     @mock.patch('functest.cli.commands.cli_os.exit')
     @mock.patch('functest.cli.commands.cli_os.click.echo')
-    def test_ping_endpoint_os_system_fails(self, mock_click_echo,
-                                           mock_exit):
+    def test_ping_endpoint_system_fails(self, mock_click_echo, mock_exit):
         self.cli_os.os_auth_url = self.os_auth_url
         self.cli_os.endpoint_ip = self.endpoint_ip
         with mock.patch('functest.cli.commands.cli_os.os.system',
                         return_value=1):
             self.cli_os.ping_endpoint()
-            mock_click_echo.assert_called_once_with("Cannot talk to the "
-                                                    "endpoint %s\n" %
-                                                    self.endpoint_ip)
+            mock_click_echo.assert_called_once_with(
+                "Cannot talk to the endpoint %s\n" % self.endpoint_ip)
             mock_exit.assert_called_once_with(0)
 
     def test_check(self):
