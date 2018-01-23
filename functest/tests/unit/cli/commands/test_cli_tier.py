@@ -20,7 +20,7 @@ class CliTierTesting(unittest.TestCase):
     def setUp(self):
         self.tiername = 'tiername'
         self.testnames = 'testnames'
-        with mock.patch('functest.cli.commands.cli_tier.tb'):
+        with mock.patch('functest.ci.tier_builder'):
             self.cli_tier = cli_tier.CliTier()
 
     @mock.patch('functest.cli.commands.cli_tier.click.echo')
@@ -58,10 +58,9 @@ class CliTierTesting(unittest.TestCase):
         with mock.patch.object(self.cli_tier.tiers, 'get_tier',
                                return_value=mock_obj):
             self.cli_tier.gettests(self.tiername)
-            mock_click_echo.assert_called_with("Test cases in tier "
-                                               "'%s':\n %s\n" % (self.tiername,
-                                                                 self.testnames
-                                                                 ))
+            mock_click_echo.assert_called_with(
+                "Test cases in tier '%s':\n %s\n" % (
+                    self.tiername, self.testnames))
 
     @mock.patch('functest.cli.commands.cli_tier.click.echo')
     def test_gettests_missing_tier(self, mock_click_echo):
@@ -75,25 +74,25 @@ class CliTierTesting(unittest.TestCase):
                                                ":\n  %s\n" % (self.tiername,
                                                               'tiernames'))
 
-    @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
+    @mock.patch('functest.utils.functest_utils.execute_command')
     def test_run_default(self, mock_ft_utils):
         cmd = "run_tests -n -r -t {}".format(self.tiername)
         self.cli_tier.run(self.tiername, noclean=True, report=True)
         mock_ft_utils.assert_called_with(cmd)
 
-    @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
+    @mock.patch('functest.utils.functest_utils.execute_command')
     def test_run_report_missing_noclean(self, mock_ft_utils):
         cmd = "run_tests -r -t {}".format(self.tiername)
         self.cli_tier.run(self.tiername, noclean=False, report=True)
         mock_ft_utils.assert_called_with(cmd)
 
-    @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
+    @mock.patch('functest.utils.functest_utils.execute_command')
     def test_run_noclean_missing_report(self, mock_ft_utils):
         cmd = "run_tests -n -t {}".format(self.tiername)
         self.cli_tier.run(self.tiername, noclean=True, report=False)
         mock_ft_utils.assert_called_with(cmd)
 
-    @mock.patch('functest.cli.commands.cli_tier.ft_utils.execute_command')
+    @mock.patch('functest.utils.functest_utils.execute_command')
     def test_run_missing_noclean_report(self, mock_ft_utils):
         cmd = "run_tests -t {}".format(self.tiername)
         self.cli_tier.run(self.tiername, noclean=False, report=False)

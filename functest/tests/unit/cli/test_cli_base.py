@@ -26,10 +26,10 @@ class CliBaseTesting(unittest.TestCase):
 
     def setUp(self):
         self.runner = CliRunner()
-        self._openstack = cli_base._openstack
-        self._env = cli_base._env
-        self._testcase = cli_base._testcase
-        self._tier = cli_base._tier
+        self._openstack = cli_base.OPENSTACK
+        self._env = cli_base.ENV
+        self._testcase = cli_base.TESTCASE
+        self._tier = cli_base.TIER
 
     def test_os_check(self):
         with mock.patch.object(self._openstack, 'check') as mock_method:

@@ -5,11 +5,13 @@
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
-#
 
-import click
+# pylint: disable=missing-docstring
+
 import logging.config
 import pkg_resources
+
+import click
 
 from functest.cli.commands.cli_env import CliEnv
 from functest.cli.commands.cli_os import CliOpenStack
@@ -28,62 +30,62 @@ def cli():
     logging.captureWarnings(True)
 
 
-_env = CliEnv()
-_openstack = CliOpenStack()
-_testcase = CliTestcase()
-_tier = CliTier()
+ENV = CliEnv()
+OPENSTACK = CliOpenStack()
+TESTCASE = CliTestcase()
+TIER = CliTier()
 
 
 @cli.group()
 @click.pass_context
-def env(ctx):
+def env(ctx):  # pylint: disable=unused-argument
     pass
 
 
 @cli.group()
 @click.pass_context
-def openstack(ctx):
+def openstack(ctx):  # pylint: disable=unused-argument
     pass
 
 
 @cli.group()
 @click.pass_context
-def testcase(ctx):
+def testcase(ctx):  # pylint: disable=unused-argument
     pass
 
 
 @cli.group()
 @click.pass_context
-def tier(ctx):
+def tier(ctx):  # pylint: disable=unused-argument
     pass
 
 
 @openstack.command('check', help="Checks connectivity and status "
                    "to the OpenStack deployment.")
 def os_check():
-    _openstack.check()
+    OPENSTACK.check()
 
 
 @openstack.command('show-credentials',
                    help="Prints the OpenStack credentials.")
 def os_show_credentials():
-    _openstack.show_credentials()
+    OPENSTACK.show_credentials()
 
 
 @env.command('show', help="Shows information about the current environment.")
 def env_show():
-    _env.show()
+    ENV.show()
 
 
 @testcase.command('list', help="Lists the available testcases.")
 def testcase_list():
-    _testcase.list()
+    TESTCASE.list()
 
 
 @testcase.command('show', help="Shows information about a test case.")
 @click.argument('testname', type=click.STRING, required=True)
 def testcase_show(testname):
-    _testcase.show(testname)
+    TESTCASE.show(testname)
 
 
 @testcase.command('run', help="Executes a test case.")
@@ -95,24 +97,24 @@ def testcase_show(testname):
               help='Push results to the results DataBase. Only CI Pods'
               'have rights to do that.')
 def testcase_run(testname, noclean, report):
-    _testcase.run(testname, noclean, report)
+    TESTCASE.run(testname, noclean, report)
 
 
 @tier.command('list', help="Lists the available tiers.")
 def tier_list():
-    _tier.list()
+    TIER.list()
 
 
 @tier.command('show', help="Shows information about a tier.")
 @click.argument('tiername', type=click.STRING, required=True)
 def tier_show(tiername):
-    _tier.show(tiername)
+    TIER.show(tiername)
 
 
 @tier.command('get-tests', help="Prints the tests in a tier.")
 @click.argument('tiername', type=click.STRING, required=True)
 def tier_gettests(tiername):
-    _tier.gettests(tiername)
+    TIER.gettests(tiername)
 
 
 @tier.command('run', help="Executes all the tests within a tier.")
@@ -124,4 +126,4 @@ def tier_gettests(tiername):
               help='Push results to the results DataBase. Only CI Pods'
               'have rights to do that.')
 def tier_run(tiername, noclean, report):
-    _tier.run(tiername, noclean, report)
+    TIER.run(tiername, noclean, report)
