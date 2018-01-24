@@ -8,13 +8,24 @@
 # pylint: disable=missing-docstring
 
 import logging
+import re
 import unittest
 
 import mock
 
 from functest.cli.commands import cli_env
 from functest.utils.constants import CONST
-from functest.tests.unit import test_utils
+
+
+class RegexMatch(object):
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __eq__(self, other):
+        match = re.search(self.msg, other)
+        if match:
+            return True
+        return False
 
 
 class CliEnvTesting(unittest.TestCase):
@@ -45,8 +56,7 @@ class CliEnvTesting(unittest.TestCase):
         with mock.patch('functest.cli.commands.cli_env.click.echo') \
                 as mock_click_echo:
             self.cli_environ.show()
-            mock_click_echo.assert_called_with(test_utils.
-                                               RegexMatch(reg_string))
+            mock_click_echo.assert_called_with(RegexMatch(reg_string))
 
     def test_show_missing_ci_installer_type(self, *args):
         self._test_show_missing_env_var('INSTALLER_TYPE', *args)
