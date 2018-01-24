@@ -22,11 +22,6 @@ class CliTestCasesTesting(unittest.TestCase):
         with mock.patch('functest.cli.commands.cli_testcase.tb'):
             self.cli_tests = cli_testcase.CliTestcase()
 
-    @mock.patch('functest.cli.commands.cli_testcase.vacation.main')
-    def test_run_vacation(self, mock_method):
-        self.cli_tests.run('vacation')
-        self.assertTrue(mock_method.called)
-
     @mock.patch('functest.cli.commands.cli_testcase.ft_utils.execute_command')
     def test_run_default(self, mock_ft_utils):
         cmd = "run_tests -n -r -t {}".format(self.testname)

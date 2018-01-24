@@ -16,7 +16,6 @@ import click
 import functest.ci.tier_builder as tb
 from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
-import functest.utils.functest_vacation as vacation
 
 
 class Testcase(object):
@@ -47,13 +46,10 @@ class Testcase(object):
         if report:
             flags += "-r "
 
-        if testname == 'vacation':
-            vacation.main()
-        else:
-            tests = testname.split(",")
-            for test in tests:
-                cmd = "run_tests {}-t {}".format(flags, test)
-                ft_utils.execute_command(cmd)
+        tests = testname.split(",")
+        for test in tests:
+            cmd = "run_tests {}-t {}".format(flags, test)
+            ft_utils.execute_command(cmd)
 
 
 class CliTestcase(Testcase):
