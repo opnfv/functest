@@ -1,0 +1,20 @@
+---
+tiers:
+    -
+        name: "TO BE FILLED"
+        order: 1
+        ci_loop: '(daily)|(weekly)'
+        description: "?"
+        testcases:
+            -
+                case_name: browbeat
+                project_name: functest
+                criteria: 100
+                blocking: true
+                description: "TO BE FILLED"
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: ''
+                    class: ''
