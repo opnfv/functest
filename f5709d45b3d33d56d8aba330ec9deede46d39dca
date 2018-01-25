@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_64123b63",
+        "filename": "docker/browbeat/Dockerfile",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-01-25T19:49:58Z",
+      "side": 1,
+      "message": "I think it\u0027s useless.\nPlease see https://git.opnfv.org/functest/tree/docker/smoke/Dockerfile\n\nI don\u0027t see why virtualenv is used here but I think you will add it later.",
+      "revId": "f5709d45b3d33d56d8aba330ec9deede46d39dca",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
