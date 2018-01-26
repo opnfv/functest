@@ -21,6 +21,7 @@ import time
 import uuid
 
 import pkg_resources
+import prettytable
 import yaml
 
 from functest.core import testcase
@@ -354,8 +355,9 @@ class RallyBase(testcase.TestCase):
 
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
-        output = self._get_output(proc, test_name)
+        output = self.get_cmd_output(proc)
         task_id = self.get_task_id(output)
+
         LOGGER.debug('task_id : %s', task_id)
 
         if task_id is None:
@@ -375,26 +377,33 @@ class RallyBase(testcase.TestCase):
                          self.RESULTS_DIR)
             os.makedirs(self.RESULTS_DIR)
 
-        # write html report file
-        report_html_name = 'opnfv-{}.html'.format(test_name)
-        report_html_dir = os.path.join(self.RESULTS_DIR, report_html_name)
-        cmd = (["rally", "task", "report", task_id, "--out", report_html_dir])
-
-        LOGGER.debug('running command: %s', cmd)
-        subprocess.Popen(cmd, stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT)
-
         # get and save rally operation JSON result
+        cmd = (["rally", "task", "detailed", task_id])
+        LOGGER.debug('running command: %s', cmd)
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT)
+        json_detailed = self.get_cmd_output(proc)
+        LOGGER.info('%s', json_detailed)
+
         cmd = (["rally", "task", "results", task_id])
         LOGGER.debug('running command: %s', cmd)
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
         json_results = self.get_cmd_output(proc)
+        self._append_summary(json_results, test_name)
         report_json_name = 'opnfv-{}.json'.format(test_name)
         report_json_dir = os.path.join(self.RESULTS_DIR, report_json_name)
         with open(report_json_dir, 'w') as r_file:
             LOGGER.debug('saving json file')
             r_file.write(json_results)
+
+        # write html report file
+        report_html_name = 'opnfv-{}.html'.format(test_name)
+        report_html_dir = os.path.join(self.RESULTS_DIR, report_html_name)
+        cmd = (["rally", "task", "report", task_id, "--out", report_html_dir])
+        LOGGER.debug('running command: %s', cmd)
+        subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
 
         # parse JSON operation result
         if self.task_succeed(json_results):
@@ -402,65 +411,27 @@ class RallyBase(testcase.TestCase):
         else:
             LOGGER.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
 
-    def _get_output(self, proc, test_name):
-        result = ""
+    def _append_summary(self, json_raw, test_name):
         nb_tests = 0
+        nb_success = 0
         overall_duration = 0.0
-        success = 0.0
-        nb_totals = 0
 
-        for line in proc.stdout:
-            if ("Load duration" in line or
-                    "started" in line or
-                    "finished" in line or
-                    " Preparing" in line or
-                    "+-" in line or
-                    "|" in line):
-                result += line
-            elif "test scenario" in line:
-                result += "\n" + line
-            elif "Full duration" in line:
-                result += line + "\n\n"
+        rally_report = json.loads(json_raw)
+        for report in rally_report:
+            if report.get('full_duration'):
+                overall_duration += report.get('full_duration')
 
-            # parse output for summary report
-            if ("| " in line and
-                    "| action" not in line and
-                    "| Starting" not in line and
-                    "| Completed" not in line and
-                    "| ITER" not in line and
-                    "|   " not in line and
-                    "| total" not in line):
-                nb_tests += 1
-            elif "| total" in line:
-                percentage = ((line.split('|')[8]).strip(' ')).strip('%')
-                try:
-                    success += float(percentage)
-                except ValueError:
-                    LOGGER.info('Percentage error: %s, %s',
-                                percentage, line)
-                nb_totals += 1
-            elif "Full duration" in line:
-                duration = line.split(': ')[1]
-                try:
-                    overall_duration += float(duration)
-                except ValueError:
-                    LOGGER.info('Duration error: %s, %s', duration, line)
-
-        overall_duration = "{:10.2f}".format(overall_duration)
-        if nb_totals == 0:
-            success_avg = 0
-        else:
-            success_avg = "{:0.2f}".format(success / nb_totals)
+            if report.get('result'):
+                for result in report.get('result'):
+                    nb_tests += 1
+                    if not result.get('error'):
+                        nb_success += 1
 
         scenario_summary = {'test_name': test_name,
                             'overall_duration': overall_duration,
                             'nb_tests': nb_tests,
-                            'success': success_avg}
+                            'nb_success': nb_success}
         self.summary.append(scenario_summary)
-
-        LOGGER.debug("\n" + result)
-
-        return result
 
     def _prepare_env(self):
         LOGGER.debug('Validating the test name...')
@@ -559,74 +530,56 @@ class RallyBase(testcase.TestCase):
             self._run_task(self.test_name)
 
     def _generate_report(self):
-        report = (
-            "\n"
-            "                                                              "
-            "\n"
-            "                     Rally Summary Report\n"
-            "\n"
-            "+===================+============+===============+===========+"
-            "\n"
-            "| Module            | Duration   | nb. Test Run  | Success   |"
-            "\n"
-            "+===================+============+===============+===========+"
-            "\n")
-        payload = []
-
-        # for each scenario we draw a row for the table
         total_duration = 0.0
         total_nb_tests = 0
-        total_success = 0.0
+        total_nb_success = 0
+        payload = []
+
+        res_table = prettytable.PrettyTable(
+            padding_width=2,
+            field_names=['Module', 'Duration', 'nb. Test Run', 'Success'])
+        res_table.align['Module'] = "l"
+        res_table.align['Duration'] = "r"
+        res_table.align['Success'] = "r"
+
+        # for each scenario we draw a row for the table
         for item in self.summary:
-            name = "{0:<17}".format(item['test_name'])
-            duration = float(item['overall_duration'])
-            total_duration += duration
-            duration = time.strftime("%M:%S", time.gmtime(duration))
-            duration = "{0:<10}".format(duration)
-            nb_tests = "{0:<13}".format(item['nb_tests'])
-            total_nb_tests += int(item['nb_tests'])
-            success = "{0:<10}".format(str(item['success']) + '%')
-            total_success += float(item['success'])
-            report += ("" +
-                       "| " + name + " | " + duration + " | " +
-                       nb_tests + " | " + success + "|\n" +
-                       "+-------------------+------------"
-                       "+---------------+-----------+\n")
-            payload.append({'module': name,
+            total_duration += item['overall_duration']
+            total_nb_tests += item['nb_tests']
+            total_nb_success += item['nb_success']
+            try:
+                success_avg = 100 * item['nb_success'] / item['nb_tests']
+            except ZeroDivisionError:
+                success_avg = 0
+            success_str = str("{:0.2f}".format(success_avg)) + '%'
+            duration_str = time.strftime("%M:%S",
+                                         time.gmtime(item['overall_duration']))
+            res_table.add_row([item['test_name'], duration_str,
+                               item['nb_tests'], success_str])
+            payload.append({'module': item['test_name'],
                             'details': {'duration': item['overall_duration'],
                                         'nb tests': item['nb_tests'],
-                                        'success': item['success']}})
+                                        'success': success_str}})
 
         total_duration_str = time.strftime("%H:%M:%S",
                                            time.gmtime(total_duration))
-        total_duration_str2 = "{0:<10}".format(total_duration_str)
-        total_nb_tests_str = "{0:<13}".format(total_nb_tests)
-
         try:
-            self.result = total_success / len(self.summary)
+            self.result = 100 * total_nb_success / total_nb_tests
         except ZeroDivisionError:
             self.result = 100
-
         success_rate = "{:0.2f}".format(self.result)
-        success_rate_str = "{0:<10}".format(str(success_rate) + '%')
-        report += ("+===================+============"
-                   "+===============+===========+")
-        report += "\n"
-        report += ("| TOTAL:            | " + total_duration_str2 + " | " +
-                   total_nb_tests_str + " | " + success_rate_str + "|\n")
-        report += ("+===================+============"
-                   "+===============+===========+")
-        report += "\n"
+        success_rate_str = str(success_rate) + '%'
+        res_table.add_row(["", "", "", ""])
+        res_table.add_row(["TOTAL:", total_duration_str, total_nb_tests,
+                           success_rate_str])
 
-        LOGGER.info("\n" + report)
+        LOGGER.info("Rally Summary Report:\n\n%s\n", res_table.get_string())
+        LOGGER.info("Rally '%s' success_rate is %s%%",
+                    self.case_name, success_rate)
         payload.append({'summary': {'duration': total_duration,
                                     'nb tests': total_nb_tests,
                                     'nb success': success_rate}})
-
         self.details = payload
-
-        LOGGER.info("Rally '%s' success_rate is %s%%",
-                    self.case_name, success_rate)
 
     def _clean_up(self):
         for creator in reversed(self.creators):
