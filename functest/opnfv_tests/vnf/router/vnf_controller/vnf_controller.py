@@ -7,13 +7,16 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+# pylint: disable=missing-docstring
+
 """vrouter controll module"""
 
 import logging
 import os
-import prettytable
 import time
 import yaml
+
+import prettytable
 
 from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
 from functest.opnfv_tests.vnf.router.vnf_controller.checker import Checker
@@ -45,6 +48,7 @@ class VnfController(object):
 
     def config_vnf(self, source_vnf, destination_vnf, test_cmd_file_path,
                    parameter_file_path, prompt_file_path):
+        # pylint: disable=too-many-arguments
         parameter_file = open(parameter_file_path,
                               'r')
         cmd_input_param = yaml.safe_load(parameter_file)
@@ -63,6 +67,7 @@ class VnfController(object):
     def result_check(self, target_vnf, reference_vnf,
                      check_rule_file_path_list, parameter_file_path,
                      prompt_file_path):
+        # pylint: disable=too-many-arguments,too-many-locals
 
         res_dict_data_list = []
 
@@ -93,8 +98,8 @@ class VnfController(object):
         checker = Checker()
 
         res_table = prettytable.PrettyTable(
-                        header_style='upper', padding_width=5,
-                        field_names=['test item', 'result'])
+            header_style='upper', padding_width=5,
+            field_names=['test item', 'result'])
 
         status = True
         res_data_list = []

@@ -7,6 +7,8 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+# pylint: disable=missing-docstring
+
 """vrouter testcase implementation."""
 
 import logging
@@ -50,6 +52,7 @@ __author__ = "Shuya Nakama <shuya.nakama@okinawaopenlabs.org>"
 
 
 class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
+    # pylint: disable=too-many-instance-attributes
     """vrouter testcase deployed with Cloudify Orchestrator."""
 
     __logger = logging.getLogger(__name__)
@@ -129,6 +132,7 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
                 self.created_object.append(image_creator)
 
     def deploy_orchestrator(self):
+        # pylint: disable=too-many-locals,too-many-statements
         """
         Deploy Cloudify Manager.
         network, security group, fip, VM creation
@@ -408,7 +412,7 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
                     try:
                         cfy_client.executions.cancel(execution['id'],
                                                      force=True)
-                    except:  # pylint: disable=broad-except
+                    except Exception:  # pylint: disable=broad-except
                         self.__logger.warn("Can't cancel the current exec")
 
             execution = cfy_client.executions.start(
@@ -419,27 +423,14 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             wait_for_execution(cfy_client, execution, self.__logger)
             cfy_client.deployments.delete(self.vnf['descriptor'].get('name'))
             cfy_client.blueprints.delete(self.vnf['descriptor'].get('name'))
-        except:  # pylint: disable=broad-except
+        except Exception:  # pylint: disable=broad-except
             self.__logger.warn("Some issue during the undeployment ..")
             self.__logger.warn("Tenant clean continue ..")
-
-        self.__logger.info('Remove the cloudify manager OS object ..')
-        for creator in reversed(self.created_object):
-            try:
-                creator.clean()
-            except Exception as exc:
-                self.logger.error('Unexpected error cleaning - %s', exc)
-
         super(CloudifyVrouter, self).clean()
 
-    def run(self, **kwargs):
-        """Execute CloudifyVrouter test case."""
-        return super(CloudifyVrouter, self).run(**kwargs)
-
     def get_vnf_info_list(self, target_vnf_name):
-        return self.util.get_vnf_info_list(self.cfy_manager_ip,
-                                           self.deployment_name,
-                                           target_vnf_name)
+        return self.util.get_vnf_info_list(
+            self.cfy_manager_ip, self.deployment_name, target_vnf_name)
 
 
 # ----------------------------------------------------------
