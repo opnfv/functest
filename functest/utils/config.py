@@ -12,6 +12,7 @@ import six
 class Config(object):
     def __init__(self):
         try:
+            # pylint: disable=bad-continuation
             with open(pkg_resources.resource_filename(
                     'functest', 'ci/config_functest.yaml')) as yfile:
                 self.functest_yaml = yaml.safe_load(yfile)
