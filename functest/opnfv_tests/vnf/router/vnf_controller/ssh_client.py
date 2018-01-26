@@ -10,9 +10,10 @@
 """ssh client module for vrouter testing"""
 
 import logging
-import paramiko
 import time
 import yaml
+
+import paramiko
 
 from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
 
@@ -23,7 +24,7 @@ DEFAULT_CONNECT_RETRY_COUNT = 10
 DEFAULT_SEND_TIMEOUT = 10
 
 
-class SshClient(object):
+class SshClient(object):  # pylint: disable=too-many-instance-attributes
     """ssh client class for vrouter testing"""
 
     logger = logging.getLogger(__name__)
@@ -51,6 +52,7 @@ class SshClient(object):
 
     def connect(self, time_out=DEFAULT_CONNECT_TIMEOUT,
                 retrycount=DEFAULT_CONNECT_RETRY_COUNT):
+        # pylint: disable=missing-docstring
         while retrycount > 0:
             try:
                 self.logger.info("SSH connect to %s.", self.ip_address)
@@ -72,7 +74,7 @@ class SshClient(object):
 
                 self.shell.recv(self.ssh_revieve_buff)
                 break
-            except:  # pylint: disable=broad-except
+            except Exception:  # pylint: disable=broad-except
                 self.logger.info("SSH timeout for %s...", self.ip_address)
                 time.sleep(time_out)
                 retrycount -= 1
@@ -88,13 +90,14 @@ class SshClient(object):
         return self.connected
 
     def send(self, cmd, prompt, timeout=DEFAULT_SEND_TIMEOUT):
+        # pylint: disable=missing-docstring
         if self.connected is True:
             self.shell.settimeout(timeout)
             self.logger.debug("Commandset : '%s'", cmd)
 
             try:
                 self.shell.send(cmd + '\n')
-            except:  # pylint: disable=broad-except
+            except Exception:  # pylint: disable=broad-except
                 self.logger.error("ssh send timeout : Command : '%s'", cmd)
                 return None
 
@@ -103,7 +106,7 @@ class SshClient(object):
                 time.sleep(RECEIVE_ROOP_WAIT)
                 try:
                     res = self.shell.recv(self.ssh_revieve_buff)
-                except:  # pylint: disable=broad-except
+                except Exception:  # pylint: disable=broad-except
                     self.logger.error("ssh receive timeout : Command : '%s'",
                                       cmd)
                     break
@@ -112,18 +115,19 @@ class SshClient(object):
 
             self.logger.debug("Response : '%s'", res_buff)
             return res_buff
-        else:
-            self.logger.error("Cannot connected to IP '%s'.", self.ip_address)
-            return None
+        self.logger.error("Cannot connected to IP '%s'.", self.ip_address)
+        return None
 
     def close(self):
+        # pylint: disable=missing-docstring
         if self.connected is True:
             self.ssh.close()
 
-    def error_check(response, err_strs=["error",
-                                        "warn",
-                                        "unknown command",
-                                        "already exist"]):
+    @staticmethod
+    def error_check(response, err_strs=None):
+        # pylint: disable=missing-docstring
+        if err_strs is None:
+            err_strs = ["error", "warn", "unknown command", "already exist"]
         for err in err_strs:
             if err in response:
                 return False

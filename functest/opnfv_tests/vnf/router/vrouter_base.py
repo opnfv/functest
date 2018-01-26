@@ -7,14 +7,17 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+# pylint: disable=missing-docstring
+
 """vrouter testing base class module"""
 
 import datetime
 import json
 import logging
 import os
-import pkg_resources
 import time
+
+import pkg_resources
 
 import functest.core.vnf as vnf
 from functest.utils.constants import CONST
@@ -66,8 +69,7 @@ class VrouterOnBoardingBase(vnf.VnfOnBoarding):
                                          test_info["test_kind"] +
                                          " test.")
                         (result, result_data) = self.function_test_vrouter(
-                                                    target_vnf_name,
-                                                    test_info)
+                            target_vnf_name, test_info)
                         test_result_data_list.append(result_data)
                         if not result:
                             break
@@ -115,5 +117,6 @@ class VrouterOnBoardingBase(vnf.VnfOnBoarding):
         return result, test_result_data
 
     def get_vnf_info_list(self, target_vnf_name):
+        # pylint: disable=unused-argument,no-self-use
         vnf_info_list = []
         return vnf_info_list

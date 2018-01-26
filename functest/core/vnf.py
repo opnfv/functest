@@ -198,8 +198,7 @@ class VnfOnBoarding(base.TestCase):
             * the user,
             * the tenant
         """
-        self.__logger.info("test cleaning")
-        self.__logger.info('Remove the cloudify manager OS object ..')
+        self.__logger.info('Removing the VNF resources ..')
         for creator in reversed(self.created_object):
             try:
                 creator.clean()
