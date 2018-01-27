@@ -220,7 +220,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_build_task_args', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_get_output')
+                '_append_summary')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_task_id', return_value=None)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -242,7 +242,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_build_task_args', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_get_output')
+                '_append_summary')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_task_id', return_value='1')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -423,6 +423,16 @@ class OSRallyTesting(unittest.TestCase):
                                        mock_prep_env):
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_RUN_ERROR)
         mock_prep_env.assert_called()
+
+    def test_append_summary(self):
+        text = '[{"result":[{"error":[]},{"error":["err"]}],' \
+               '"full_duration": 17.312026}]'
+        self.rally_base._append_summary(text, "foo_test")
+        self.assertEqual(self.rally_base.summary[0]['test_name'], "foo_test")
+        self.assertEqual(self.rally_base.summary[0]['overall_duration'],
+                         17.312026)
+        self.assertEqual(self.rally_base.summary[0]['nb_tests'], 2)
+        self.assertEqual(self.rally_base.summary[0]['nb_success'], 1)
 
 
 if __name__ == "__main__":
