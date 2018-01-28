@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#
+
 # Copyright (c) 2015 All rights reserved
 # This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
@@ -29,7 +29,7 @@ class VPingUserdata(vping_base.VPingBase):
             kwargs["case_name"] = "vping_userdata"
         super(VPingUserdata, self).__init__(**kwargs)
 
-    def run(self):
+    def run(self, **kwargs):
         """
         Sets up the OpenStack VM instance objects then executes the ping and
         validates.

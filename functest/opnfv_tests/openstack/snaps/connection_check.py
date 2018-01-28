@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Copyright (c) 2017 Cable Television Laboratories, Inc. and others.
 #
 # This program and the accompanying materials
@@ -5,6 +7,8 @@
 # which accompanies this distribution, and is available at
 #
 # http://www.apache.org/licenses/LICENSE-2.0
+
+# pylint: disable=missing-docstring
 
 import unittest
 
@@ -37,4 +41,4 @@ class ConnectionCheck(SnapsTestRunner):
             os_creds=self.os_creds,
             ext_net_name=self.ext_net_name,
             use_keystone=self.use_keystone)
-        return super(self.__class__, self).run()
+        return super(ConnectionCheck, self).run()

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Copyright (c) 2017 Cable Television Laboratories, Inc. and others.
 #
 # This program and the accompanying materials
@@ -5,6 +7,8 @@
 # which accompanies this distribution, and is available at
 #
 # http://www.apache.org/licenses/LICENSE-2.0
+
+# pylint: disable=missing-docstring
 
 import unittest
 
@@ -38,4 +42,4 @@ class ApiCheck(SnapsTestRunner):
             ext_net_name=self.ext_net_name,
             use_keystone=self.use_keystone,
             image_metadata=self.image_metadata)
-        return super(self.__class__, self).run()
+        return super(ApiCheck, self).run()

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Copyright (c) 2017 Cable Television Laboratories, Inc. and others.
 #
 # This program and the accompanying materials
@@ -5,6 +7,8 @@
 # which accompanies this distribution, and is available at
 #
 # http://www.apache.org/licenses/LICENSE-2.0
+
+# pylint: disable=missing-docstring
 
 import logging
 
@@ -17,13 +21,14 @@ from snaps.openstack.tests import openstack_tests
 
 
 class SnapsTestRunner(unit.Suite):
+    # pylint: disable=too-many-instance-attributes
     """
     This test executes the SNAPS Python Tests
     """
+
     def __init__(self, **kwargs):
         super(SnapsTestRunner, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
-
         if 'os_creds' in kwargs:
             self.os_creds = kwargs['os_creds']
         else:
