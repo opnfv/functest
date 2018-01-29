@@ -49,8 +49,7 @@ class CloudifyVrouterTesting(unittest.TestCase):
                            'cloudify_vrouter.vrouter_base.Utilvnf'), \
                 mock.patch('os.makedirs'), \
                 mock.patch(
-                    'functest.opnfv_tests.vnf.router.cloudify_vrouter.'
-                    'get_config',
+                    'functest.utils.functest_utils.get_parameter_from_yaml',
                     return_value={
                         'tenant_images': 'foo',
                         'orchestrator': self.orchestrator,
