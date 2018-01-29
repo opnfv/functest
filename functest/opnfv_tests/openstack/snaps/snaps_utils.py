@@ -55,7 +55,7 @@ def get_credentials(proxy_settings_str=None, ssh_proxy_cmd=None):
         creds_override = CONST.__getattribute__(
             'snaps_os_creds_override')
     os_creds = openstack_tests.get_credentials(
-        os_env_file=CONST.__getattribute__('openstack_creds'),
+        os_env_file=CONST.__getattribute__('env_file'),
         proxy_settings_str=proxy_settings_str, ssh_proxy_cmd=ssh_proxy_cmd,
         overrides=creds_override)
     return os_creds

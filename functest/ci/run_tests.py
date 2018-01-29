@@ -99,16 +99,6 @@ class Runner(object):
             pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
 
     @staticmethod
-    def source_rc_file():
-        """Set the environmental vars from openstack.creds"""
-
-        rc_file = CONST.__getattribute__('openstack_creds')
-        if not os.path.isfile(rc_file):
-            raise Exception("RC file %s does not exist..." % rc_file)
-        LOGGER.debug("Sourcing the OpenStack RC file...")
-        os_utils.source_credentials(rc_file)
-
-    @staticmethod
     def get_run_dict(testname):
         """Obtain the 'run' block of the testcase from testcases.yaml"""
         try:
@@ -211,7 +201,9 @@ class Runner(object):
             self.report_flag = kwargs['report']
         try:
             if 'test' in kwargs:
-                self.source_rc_file()
+                LOGGER.debug("Sourcing the credential file...")
+                os_utils.source_credentials(CONST.__getattribute__('env_file'))
+
                 LOGGER.debug("Test args: %s", kwargs['test'])
                 if self.tiers.get_tier(kwargs['test']):
                     self.run_tier(self.tiers.get_tier(kwargs['test']))
