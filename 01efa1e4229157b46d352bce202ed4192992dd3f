@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_c285f25a",
+        "filename": "functest/opnfv_tests/vnf/router/vnf_controller/command_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-01-29T13:31:14Z",
+      "side": 1,
+      "message": "Defined already on module level",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "01efa1e4229157b46d352bce202ed4192992dd3f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a288ae71",
+        "filename": "functest/opnfv_tests/vnf/router/vnf_controller/command_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-01-29T13:31:14Z",
+      "side": 1,
+      "message": "Defined already on module level",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "01efa1e4229157b46d352bce202ed4192992dd3f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
