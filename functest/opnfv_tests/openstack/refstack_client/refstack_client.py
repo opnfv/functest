@@ -38,6 +38,7 @@ LOGGER = logging.getLogger(__name__)
 
 class RefstackClient(testcase.TestCase):
     """RefstackClient testcase implementation class."""
+    # pylint: disable=too-many-instance-attributes
 
     def __init__(self, **kwargs):
         """Initialize RefstackClient testcase object."""
@@ -62,6 +63,7 @@ class RefstackClient(testcase.TestCase):
             self.insecure = '-k'
 
     def generate_conf(self):
+        """ Generate tempest.conf file to run tempest"""
         if not os.path.exists(conf_utils.REFSTACK_RESULTS_DIR):
             os.makedirs(conf_utils.REFSTACK_RESULTS_DIR)
 
@@ -86,11 +88,11 @@ class RefstackClient(testcase.TestCase):
                                "environment.log"), 'w+') as f_env:
             f_env.write(
                 ("Refstack environment:\n"
-                 "  SUT: {}\n  Scenario: {}\n  Node: {}\n  Date: {}\n").format(
-                    CONST.__getattribute__('INSTALLER_TYPE'),
-                    CONST.__getattribute__('DEPLOY_SCENARIO'),
-                    CONST.__getattribute__('NODE_NAME'),
-                    time.strftime("%a %b %d %H:%M:%S %Z %Y")))
+                 "  SUT: {}\n  Scenario: {}\n  Node: {}\n  Date: {}\n")
+                .format(CONST.__getattribute__('INSTALLER_TYPE'),
+                        CONST.__getattribute__('DEPLOY_SCENARIO'),
+                        CONST.__getattribute__('NODE_NAME'),
+                        time.strftime("%a %b %d %H:%M:%S %Z %Y")))
 
         with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
                                "refstack.log"), 'w+') as f_stdout:
@@ -147,7 +149,7 @@ class RefstackClient(testcase.TestCase):
                             "success": success_testcases,
                             "errors": failed_testcases,
                             "skipped": skipped_testcases}
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             self.result = 0
 
         LOGGER.info("Testcase %s success_rate is %s%%",
@@ -170,7 +172,7 @@ class RefstackClient(testcase.TestCase):
             self.run_defcore_default()
             self.parse_refstack_result()
             res = testcase.TestCase.EX_OK
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             LOGGER.exception("Error with run")
             res = testcase.TestCase.EX_RUN_ERROR
         finally:
@@ -207,7 +209,7 @@ class RefstackClient(testcase.TestCase):
             self._prep_test()
             self.run_defcore(self.confpath, self.testlist)
             res = testcase.TestCase.EX_OK
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-except
             LOGGER.error('Error with run: %s', exc)
             res = testcase.TestCase.EX_RUN_ERROR
 
@@ -257,5 +259,5 @@ def main():
         result = refstackclient.main(**args)
         if result != testcase.TestCase.EX_OK:
             return result
-    except Exception:
+    except Exception:  # pylint: disable=broad-except
         return testcase.TestCase.EX_RUN_ERROR
