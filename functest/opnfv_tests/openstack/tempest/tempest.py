@@ -371,6 +371,7 @@ class TempestResourcesManager(object):
                 subnet_settings=[SubnetSettings(
                     name=CONST.__getattribute__(
                         'tempest_private_subnet_name') + self.guid,
+                    project_name=project_name,
                     cidr=CONST.__getattribute__('tempest_private_subnet_cidr'))
                 ]))
         if network_creator is None or network_creator.get_network() is None:
