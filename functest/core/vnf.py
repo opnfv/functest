@@ -107,7 +107,7 @@ class VnfOnBoarding(base.TestCase):
             self.__logger.info("Prepare VNF: %s, description: %s",
                                self.tenant_name, tenant_description)
             snaps_creds = openstack_tests.get_credentials(
-                os_env_file=CONST.__getattribute__('openstack_creds'))
+                os_env_file=CONST.__getattribute__('creds'))
 
             project_creator = OpenStackProject(
                 snaps_creds,

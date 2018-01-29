@@ -23,7 +23,7 @@ class OpenStack(object):
         self.os_auth_url = CONST.__getattribute__('OS_AUTH_URL')
         self.endpoint_ip = None
         self.endpoint_port = None
-        self.openstack_creds = CONST.__getattribute__('openstack_creds')
+        self.openstack_creds = CONST.__getattribute__('creds')
         if self.os_auth_url:
             self.endpoint_ip = urllib.parse.urlparse(self.os_auth_url).hostname
             self.endpoint_port = urllib.parse.urlparse(self.os_auth_url).port

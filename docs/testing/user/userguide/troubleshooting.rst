@@ -15,7 +15,7 @@ credentials::
 
 or::
 
-    source /home/opnfv/functest/conf/openstack.creds
+    source /home/opnfv/functest/conf/creds
 
 VIM
 ---
@@ -280,7 +280,7 @@ Example of custom list of tests 'my-custom-tempest-tests.txt'::
 This is an example of running a customized list of Tempest tests in Functest::
 
   sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/creds \
       -v $(pwd)/images:/home/opnfv/functest/images \
       -v $(pwd)/my-custom-testcases.yaml:/usr/lib/python2.7/site-packages/functest/ci/testcases.yaml \
       -v $(pwd)/my-custom-tempest-tests.txt:/usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt \

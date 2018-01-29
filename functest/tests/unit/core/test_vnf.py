@@ -118,7 +118,7 @@ class VnfBaseTesting(unittest.TestCase):
         with self.assertRaises(Exception):
             self.test.prepare()
         args[0].assert_called_with(
-            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+            os_env_file=constants.CONST.__getattribute__('creds'))
         args[1].assert_not_called()
         args[2].assert_not_called()
 
@@ -129,7 +129,7 @@ class VnfBaseTesting(unittest.TestCase):
         with self.assertRaises(Exception):
             self.test.prepare()
         args[0].assert_called_with(
-            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+            os_env_file=constants.CONST.__getattribute__('creds'))
         args[1].assert_called_with(mock.ANY, mock.ANY)
         args[2].assert_not_called()
 
@@ -140,7 +140,7 @@ class VnfBaseTesting(unittest.TestCase):
         with self.assertRaises(Exception):
             self.test.prepare()
         args[0].assert_called_with(
-            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+            os_env_file=constants.CONST.__getattribute__('creds'))
         args[1].assert_called_with(mock.ANY, mock.ANY)
         args[2].assert_called_with(mock.ANY, mock.ANY)
 
@@ -150,7 +150,7 @@ class VnfBaseTesting(unittest.TestCase):
     def test_prepare_default(self, *args):
         self.assertEqual(self.test.prepare(), testcase.TestCase.EX_OK)
         args[0].assert_called_with(
-            os_env_file=constants.CONST.__getattribute__('openstack_creds'))
+            os_env_file=constants.CONST.__getattribute__('creds'))
         args[1].assert_called_with(mock.ANY, mock.ANY)
         args[2].assert_called_with(mock.ANY, mock.ANY)
 

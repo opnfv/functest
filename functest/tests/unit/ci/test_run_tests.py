@@ -59,7 +59,7 @@ class RunTestsTesting(unittest.TestCase):
         with self.assertRaises(Exception):
             self.runner.source_rc_file()
         args[0].assert_called_once_with(
-            '/home/opnfv/functest/conf/openstack.creds')
+            '/home/opnfv/functest/conf/creds')
 
     @mock.patch('functest.ci.run_tests.os.path.isfile',
                 return_value=True)
@@ -68,7 +68,7 @@ class RunTestsTesting(unittest.TestCase):
                         return_value=self.creds):
             self.runner.source_rc_file()
         args[0].assert_called_once_with(
-            '/home/opnfv/functest/conf/openstack.creds')
+            '/home/opnfv/functest/conf/creds')
 
     @mock.patch('functest.ci.run_tests.ft_utils.get_dict_by_test')
     def test_get_run_dict(self, *args):

@@ -15,9 +15,9 @@ general:
         functest_images: /home/opnfv/functest/images
         rally_inst: /root/.rally
 
-    openstack:
-        creds: /home/opnfv/functest/conf/openstack.creds
+    creds: /home/opnfv/functest/conf/creds
 
+    openstack:
         image_name: Cirros-0.4.0
         image_name_alt: Cirros-0.4.0-1
         image_file_name: cirros-0.4.0-x86_64-disk.img

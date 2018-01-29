@@ -39,7 +39,7 @@ class V1Creds(ApiResource):
         endpoint='{0}/credentials'.format(ENDPOINT_CREDS))
     def get(self):  # pylint: disable=no-self-use
         """ Get credentials """
-        os_utils.source_credentials(CONST.__getattribute__('openstack_creds'))
+        os_utils.source_credentials(CONST.__getattribute__('creds'))
         credentials_show = OpenStack.show_credentials()
         return jsonify(credentials_show)
 
@@ -65,7 +65,7 @@ class V1Creds(ApiResource):
 
         lines = ['export {}={}\n'.format(k, v) for k, v in openrc_vars.items()]
 
-        rc_file = CONST.__getattribute__('openstack_creds')
+        rc_file = CONST.__getattribute__('creds')
         with open(rc_file, 'w') as creds_file:
             creds_file.writelines(lines)
 

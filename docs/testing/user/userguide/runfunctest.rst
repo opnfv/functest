@@ -12,7 +12,7 @@ Assuming that you pulled the container and your environement is ready, you can
 simply run the tiers by typing (e.g. with functest-healthcheck)::
 
   sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/creds  \
       -v $(pwd)/images:/home/opnfv/functest/images  \
       opnfv/functest-healthcheck
 
@@ -44,14 +44,14 @@ different commands within the docker.
 Considering the healthcheck example, running functest manaully means::
 
   sudo docker run -ti --env-file env \
-    -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+    -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/creds  \
     -v $(pwd)/images:/home/opnfv/functest/images  \
     opnfv/functest-healthcheck /bin/bash
 
 The docker prompt shall be returned. Then within the docker run the following
 commands::
 
-  $ source /home/opnfv/functest/conf/openstack.creds
+  $ source /home/opnfv/functest/conf/creds
 
 Tier
 ----

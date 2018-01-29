@@ -44,7 +44,7 @@ cat env::
 
 See section on environment variables for details.
 
-cat openstack.creds::
+cat creds::
 
   export OS_AUTH_URL=XXX
   export OS_USER_DOMAIN_NAME=XXX
@@ -86,7 +86,7 @@ Testing healthcheck suite
 Run healthcheck suite::
 
   sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/creds  \
       -v $(pwd)/images:/home/opnfv/functest/images  \
       opnfv/functest-healthcheck
 
@@ -107,7 +107,7 @@ Testing smoke suite
 Run smoke suite::
 
   sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/creds  \
       -v $(pwd)/images:/home/opnfv/functest/images  \
       opnfv/functest-smoke
 
@@ -135,7 +135,7 @@ Testing features suite
 Run features suite::
 
   sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/creds  \
       -v $(pwd)/images:/home/opnfv/functest/images  \
       opnfv/functest-features
 
@@ -160,7 +160,7 @@ Testing components suite
 Run components suite::
 
   sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/creds  \
       -v $(pwd)/images:/home/opnfv/functest/images  \
       opnfv/functest-components
 
@@ -179,7 +179,7 @@ Testing vnf suite
 Run vnf suite::
 
 sudo docker run --env-file env \
-    -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
+    -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/creds  \
     -v $(pwd)/images:/home/opnfv/functest/images  \
     opnfv/functest-vnf
 
@@ -268,7 +268,7 @@ Openstack credentials
 OpenStack credentials are mandatory and must be provided to Functest.
 When running the command "functest env prepare", the framework  will
 automatically look for the Openstack credentials file
-"/home/opnfv/functest/conf/openstack.creds" and will exit with
+"/home/opnfv/functest/conf/creds" and will exit with
 error if it is not present or is empty.
 
 There are 2 ways to provide that file:
@@ -276,7 +276,7 @@ There are 2 ways to provide that file:
   * by using a Docker volume with -v option when creating the Docker container.
     This is referred to in docker documentation as "Bind Mounting".
     See the usage of this parameter in the following chapter.
-  * or creating manually the file '/home/opnfv/functest/conf/openstack.creds'
+  * or creating manually the file '/home/opnfv/functest/conf/creds'
     inside the running container and pasting the credentials in it. Consult
     your installer guide for further details. This is however not
     instructed in this document.
@@ -346,7 +346,7 @@ Underneath the '/home/opnfv/functest' directory, the Functest docker container
 includes two main directories:
 
   * The **conf** directory stores configuration files (e.g. the
-    OpenStack creds are stored in path '/home/opnfv/functest/conf/openstack.creds'),
+    OpenStack creds are stored in path '/home/opnfv/functest/conf/creds'),
   * the **results** directory stores some temporary result log files
 
 src and repos directories are used to host third party code used for the tests.
@@ -580,7 +580,7 @@ and credentials are working as expected.
 Once the credentials are there inside the container, they should be
 sourced before running any Openstack commands::
 
-  source /home/opnfv/functest/conf/openstack.creds
+  source /home/opnfv/functest/conf/creds
 
 After this, try to run any OpenStack command to see if you get any
 output, for instance::
@@ -631,14 +631,14 @@ http_proxy and https_proxy environment variables, as well as the
 'no_proxy' environment variable are set correctly::
 
   # Make double sure that the 'no_proxy=...' line in the
-  # 'openstack.creds' file is commented out first. Otherwise, the
+  # 'creds' file is commented out first. Otherwise, the
   # values set into the 'no_proxy' environment variable below will
   # be ovewrwritten, each time the command
-  # 'source ~/functest/conf/openstack.creds' is issued.
+  # 'source ~/functest/conf/creds' is issued.
 
   cd ~/functest/conf/
-  sed -i 's/export no_proxy/#export no_proxy/' openstack.creds
-  source ./openstack.creds
+  sed -i 's/export no_proxy/#export no_proxy/' creds
+  source ./creds
 
   # Next calculate some IP addresses for which http_proxy
   # usage should be excluded:
