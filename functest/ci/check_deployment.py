@@ -44,7 +44,7 @@ def verify_connectivity(endpoint):
         port = url.port
         if not port:
             port = 443 if url.scheme == "https" else 80
-        connection.connect(url.hostname, port)
+        connection.connect((url.hostname, port))
         LOGGER.debug('%s:%s is reachable!', url.hostname, port)
         return True
     except socket.error:
