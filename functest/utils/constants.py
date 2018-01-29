@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
+# pylint: disable=missing-docstring
+
 import six
 
 from functest.utils import config
 from functest.utils import env
 
 
-class Constants(object):
+class Constants(object):  # pylint: disable=too-few-public-methods
+
     def __init__(self):
         for attr_n, attr_v in six.iteritems(config.CONF.__dict__):
             self.__setattr__(attr_n, attr_v)

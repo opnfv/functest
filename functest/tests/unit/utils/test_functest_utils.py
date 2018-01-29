@@ -10,12 +10,12 @@
 # pylint: disable=missing-docstring
 
 import logging
-import pkg_resources
 import os
 import time
 import unittest
 
 import mock
+import pkg_resources
 from six.moves import urllib
 
 from functest.utils import functest_utils
@@ -147,8 +147,8 @@ class FunctestUtilsTesting(unittest.TestCase):
     def cmd_readline(self):
         return 'test_value\n'
 
-    @mock.patch('functest.utils.functest_utils.logger.error')
-    @mock.patch('functest.utils.functest_utils.logger.info')
+    @mock.patch('functest.utils.functest_utils.LOGGER.error')
+    @mock.patch('functest.utils.functest_utils.LOGGER.info')
     def test_execute_command_args_present_with_error(self, mock_logger_info,
                                                      mock_logger_error):
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
@@ -178,7 +178,7 @@ class FunctestUtilsTesting(unittest.TestCase):
             mopen.assert_called_once_with(self.output_file, "w")
             mock_logger_error.assert_called_once_with(self.error_msg)
 
-    @mock.patch('functest.utils.functest_utils.logger.info')
+    @mock.patch('functest.utils.functest_utils.LOGGER.info')
     def test_execute_command_args_present_with_success(self, mock_logger_info,
                                                        ):
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
@@ -255,7 +255,7 @@ class FunctestUtilsTesting(unittest.TestCase):
     def _get_functest_config(self, var):
         return var
 
-    @mock.patch('functest.utils.functest_utils.logger.error')
+    @mock.patch('functest.utils.functest_utils.LOGGER.error')
     def test_get_dict_by_test(self, mock_logger_error):
         with mock.patch('six.moves.builtins.open', mock.mock_open()), \
                 mock.patch('functest.utils.functest_utils.yaml.safe_load') \
@@ -321,7 +321,7 @@ class FunctestUtilsTesting(unittest.TestCase):
             resp = functest_utils.get_functest_yaml()
             self.assertEqual(resp, self.file_yaml)
 
-    @mock.patch('functest.utils.functest_utils.logger.info')
+    @mock.patch('functest.utils.functest_utils.LOGGER.info')
     def test_print_separator(self, mock_logger_info):
         functest_utils.print_separator()
         mock_logger_info.assert_called_once_with("======================="
