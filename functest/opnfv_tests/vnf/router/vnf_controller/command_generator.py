@@ -7,6 +7,8 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+# pylint: disable=missing-docstring
+
 """command generator module for vrouter testing"""
 
 import logging
@@ -21,12 +23,16 @@ class CommandGenerator(object):
     def __init__(self):
         self.logger.debug("init command generator")
 
-    def load_template(self, template_dir, template):
+    @staticmethod
+    def load_template(template_dir, template):
+        # pylint disable=missing-docstring
         loader = FileSystemLoader(template_dir,
                                   encoding='utf8')
         env = Environment(loader=loader)
         return env.get_template(template)
 
-    def command_create(self, template, parameter):
+    @staticmethod
+    def command_create(template, parameter):
+        # pylint disable=missing-docstring
         commands = template.render(parameter)
         return commands.split('\n')

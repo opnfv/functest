@@ -7,6 +7,8 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+# pylint: disable=missing-docstring
+
 """vrouter test result check module"""
 
 import json
@@ -24,7 +26,8 @@ class Checker(object):
     def __init__(self):
         self.logger.debug("init checker")
 
-    def load_check_rule(self, rule_file_dir, rule_file_name, parameter):
+    @staticmethod
+    def load_check_rule(rule_file_dir, rule_file_name, parameter):
         loader = FileSystemLoader(rule_file_dir,
                                   encoding='utf8')
         env = Environment(loader=loader)
@@ -33,7 +36,8 @@ class Checker(object):
         check_rule_data = json.loads(check_rule)
         return check_rule_data
 
-    def regexp_information(self, response, rules):
+    @staticmethod
+    def regexp_information(response, rules):
         status = False
         result_data = {}
 

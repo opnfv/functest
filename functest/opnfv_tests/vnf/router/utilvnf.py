@@ -7,6 +7,8 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
+# pylint: disable=missing-docstring
+
 """ Utility module of vrouter testcase """
 
 import json
@@ -46,7 +48,7 @@ NUMBER_OF_DIGITS_FOR_AVG_JITTER = 3
 NUMBER_OF_DIGITS_FOR_AVG_PKT_LOSS = 1
 
 
-class Utilvnf(object):
+class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
     """ Utility class of vrouter testcase """
 
     logger = logging.getLogger(__name__)
@@ -107,7 +109,7 @@ class Utilvnf(object):
         self.test_result_json_file = "test_result.json"
         if os.path.isfile(self.test_result_json_file):
             os.remove(self.test_result_json_file)
-            self.logger.debug("removed %s" % self.test_result_json_file)
+            self.logger.debug("removed %s", self.test_result_json_file)
 
     def get_nova_client(self):
         nova_client = nova_utils.nova_client(self.snaps_creds)
@@ -127,7 +129,7 @@ class Utilvnf(object):
                 break
 
         address = server.addresses[
-                      network_name][NOVA_CILENT_NETWORK_INFO_INDEX]["addr"]
+            network_name][NOVA_CILENT_NETWORK_INFO_INDEX]["addr"]
 
         return address
 
@@ -141,8 +143,7 @@ class Utilvnf(object):
                 break
 
         mac_address = server.addresses[network_name][
-                          NOVA_CILENT_NETWORK_INFO_INDEX][
-                          "OS-EXT-IPS-MAC:mac_addr"]
+            NOVA_CILENT_NETWORK_INFO_INDEX]["OS-EXT-IPS-MAC:mac_addr"]
 
         return mac_address
 
@@ -226,10 +227,7 @@ class Utilvnf(object):
             vnf["user"] = self.image["user"]
             vnf["pass"] = self.image["pass"]
 
-            if vnf_name == target_vnf_name:
-                vnf["target_vnf_flag"] = True
-            else:
-                vnf["target_vnf_flag"] = False
+            vnf["target_vnf_flag"] = bool(vnf_name == target_vnf_name)
 
             self.logger.debug("vnf name : " + vnf_name)
             self.logger.debug(vnf_name + " floating ip address : " +
@@ -251,14 +249,16 @@ class Utilvnf(object):
 
         return vnf_info_list
 
-    def get_target_vnf(self, vnf_info_list):
+    @staticmethod
+    def get_target_vnf(vnf_info_list):
         for vnf in vnf_info_list:
             if vnf["target_vnf_flag"]:
                 return vnf
 
         return None
 
-    def get_reference_vnf_list(self, vnf_info_list):
+    @staticmethod
+    def get_reference_vnf_list(vnf_info_list):
         reference_vnf_list = []
         for vnf in vnf_info_list:
             if not vnf["target_vnf_flag"]:
@@ -266,14 +266,16 @@ class Utilvnf(object):
 
         return reference_vnf_list
 
-    def get_vnf_info(self, vnf_info_list, vnf_name):
+    @staticmethod
+    def get_vnf_info(vnf_info_list, vnf_name):
         for vnf in vnf_info_list:
             if vnf["vnf_name"] == vnf_name:
                 return vnf
 
         return None
 
-    def convert_functional_test_result(self, result_data_list):
+    @staticmethod
+    def convert_functional_test_result(result_data_list):
         result = {}
         for result_data in result_data_list:
             test_kind = result_data["test_kind"]
@@ -311,11 +313,12 @@ class Utilvnf(object):
             output_json_data = json.dumps(test_result,
                                           sort_keys=True,
                                           indent=4)
-            self.logger.debug("test_result %s" % output_json_data)
+            self.logger.debug("test_result %s", output_json_data)
         else:
-            self.logger.debug("Not found %s" % self.test_result_json_file)
+            self.logger.debug("Not found %s", self.test_result_json_file)
 
-    def get_test_scenario(self, file_path):
+    @staticmethod
+    def get_test_scenario(file_path):
         test_scenario_file = open(file_path,
                                   'r')
         test_scenario_yaml = yaml.safe_load(test_scenario_file)
