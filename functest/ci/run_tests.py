@@ -100,9 +100,12 @@ class Runner(object):
 
     @staticmethod
     def source_rc_file():
-        """Set the environmental vars from openstack.creds"""
+        """Set the environmental vars from openstack.creds or k8s.creds"""
 
-        rc_file = CONST.__getattribute__('openstack_creds')
+        if 'k8' in CONST.__getattribute__("DEPLOY_SCENARIO"):
+            rc_file = CONST.__getattribute__('k8_creds')
+        else:
+            rc_file = CONST.__getattribute__('openstack_creds')
         if not os.path.isfile(rc_file):
             raise Exception("RC file %s does not exist..." % rc_file)
         LOGGER.debug("Sourcing the OpenStack RC file...")

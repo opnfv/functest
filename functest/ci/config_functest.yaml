@@ -15,6 +15,9 @@ general:
         functest_images: /home/opnfv/functest/images
         rally_inst: /root/.rally
 
+    k8:
+        creds: /home/opnfv/functest/conf/k8s.creds
+
     openstack:
         creds: /home/opnfv/functest/conf/openstack.creds
 
