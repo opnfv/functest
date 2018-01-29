@@ -100,12 +100,10 @@ class Runner(object):
 
     @staticmethod
     def source_rc_file():
-        """Set the environmental vars from openstack.creds"""
+        """Set the environmental vars from env_file"""
 
-        rc_file = CONST.__getattribute__('openstack_creds')
-        if not os.path.isfile(rc_file):
-            raise Exception("RC file %s does not exist..." % rc_file)
-        LOGGER.debug("Sourcing the OpenStack RC file...")
+        rc_file = CONST.__getattribute__('env_file')
+        LOGGER.debug("Sourcing the credential file...")
         os_utils.source_credentials(rc_file)
 
     @staticmethod

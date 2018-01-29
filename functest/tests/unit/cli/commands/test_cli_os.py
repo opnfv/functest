@@ -24,7 +24,7 @@ class CliOpenStackTesting(unittest.TestCase):
         self.os_auth_url = 'http://test_ip:test_port/v2.0'
         self.installer_type = 'test_installer_type'
         self.installer_ip = 'test_installer_ip'
-        self.openstack_creds = 'test_openstack_creds'
+        self.openstack_creds = 'test_env_file'
         self.snapshot_file = 'test_snapshot_file'
         self.cli_os = cli_os.CliOpenStack()
 
