@@ -10,9 +10,10 @@
 # pylint: disable=missing-docstring
 
 import logging
+import unittest
+
 import mock
 import pkg_resources
-import unittest
 
 from functest.core import testcase
 from functest.opnfv_tests.openstack.refstack_client.refstack_client import \
@@ -51,9 +52,7 @@ class OSRefstackClientTesting(unittest.TestCase):
                         "errors": ['tempest.api.volume [0.230334s]'],
                         "skipped": ['tempest.api.network [1.265828s]']}
 
-    @mock.patch('functest.opnfv_tests.openstack.refstack_client.tempest_conf.'
-                'TempestConf', return_value=mock.Mock())
-    def _create_client(self, *args):
+    def _create_client(self):
         with mock.patch('snaps.openstack.tests.openstack_tests.'
                         'get_credentials', return_value=self.os_creds):
             return RefstackClient()
@@ -145,8 +144,7 @@ class OSRefstackClientTesting(unittest.TestCase):
         parser = RefstackClientParser()
         self.assertEqual(parser.parse_args(
             ["--config={}".format(self._config),
-             "--testlist={}".format(self._testlist)
-             ]), self.default_args)
+             "--testlist={}".format(self._testlist)]), self.default_args)
 
 
 if __name__ == "__main__":
