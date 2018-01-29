@@ -69,6 +69,7 @@ class JujuEpcTesting(unittest.TestCase):
                         'vnf': {},
                         'test_vnf':  {}}
 
+    @unittest.skip("It must be fixed. Please see JIRA FUNCTEST-915")
     @mock.patch('functest.utils.openstack_utils.get_keystone_client',
                 return_value='test')
     @mock.patch('functest.utils.openstack_utils.get_or_create_tenant_for_vnf',

@@ -145,8 +145,9 @@ class JujuEpc(vnf.VnfOnBoarding):
         write_config(self.filename, CLOUD_TEMPLATE, **cloud_data)
 
         if self.snaps_creds.identity_api_version == 3:
-            append_config(self.filename, '{}'.format(
-                os_utils.get_credentials()['project_domain_name']),
+            append_config(
+                self.filename, '{}'.format(
+                    os_utils.get_credentials()['project_domain_name']),
                 '{}'.format(os_utils.get_credentials()['user_domain_name']))
 
         self.__logger.info("Upload some OS images if it doesn't exist")
