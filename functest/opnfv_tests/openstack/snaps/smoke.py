@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Copyright (c) 2017 Cable Television Laboratories, Inc. and others.
 #
 # This program and the accompanying materials
@@ -5,6 +7,8 @@
 # which accompanies this distribution, and is available at
 #
 # http://www.apache.org/licenses/LICENSE-2.0
+
+# pylint: disable=missing-docstring
 
 import unittest
 
@@ -41,4 +45,4 @@ class SnapsSmoke(SnapsTestRunner):
             image_metadata=self.image_metadata,
             use_floating_ips=self.use_fip,
             netconf_override=self.netconf_override)
-        return super(self.__class__, self).run()
+        return super(SnapsSmoke, self).run()

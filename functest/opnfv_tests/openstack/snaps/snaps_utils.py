@@ -1,9 +1,13 @@
+#!/usr/bin/env python
+
 # Copyright (c) 2015 All rights reserved
 # This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
 # which accompanies this distribution, and is available at
 #
 # http://www.apache.org/licenses/LICENSE-2.0
+
+# pylint: disable=missing-docstring
 
 from functest.utils.constants import CONST
 
@@ -19,7 +23,7 @@ def get_ext_net_name(os_creds):
     """
     neutron = neutron_utils.neutron_client(os_creds)
     ext_nets = neutron_utils.get_external_networks(neutron)
-    if (hasattr(CONST, 'EXTERNAL_NETWORK')):
+    if hasattr(CONST, 'EXTERNAL_NETWORK'):
         extnet_config = CONST.__getattribute__('EXTERNAL_NETWORK')
         for ext_net in ext_nets:
             if ext_net.name == extnet_config:

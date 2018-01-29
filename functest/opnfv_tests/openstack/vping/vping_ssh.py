@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#
+
 # Copyright (c) 2015 All rights reserved
 # This program and the accompanying materials
 # are made available under the terms of the Apache License, Version 2.0
@@ -7,12 +7,8 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-
 """vPingSSH testcase."""
 
-# This 1st import is here simply for pep8 as the 'os' package import appears
-# to be required for mock and the unit tests will fail without it
-import os  # noqa # pylint: disable=unused-import
 import time
 
 from scp import SCPClient
@@ -53,7 +49,7 @@ class VPingSSH(vping_base.VPingBase):
         self.sg_desc = CONST.__getattribute__('vping_sg_desc')
 
     @energy.enable_recording
-    def run(self):
+    def run(self, **kwargs):
         """
         Excecute VPingSSH testcase.
 

@@ -8,6 +8,8 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
+# pylint: disable=missing-docstring
+
 import logging
 
 from snaps.openstack.tests.create_flavor_tests import (
@@ -119,6 +121,7 @@ def add_openstack_client_tests(suite, os_creds, ext_net_name,
 
 def add_openstack_api_tests(suite, os_creds, ext_net_name, use_keystone=True,
                             image_metadata=None, log_level=logging.INFO):
+    # pylint: disable=too-many-arguments
     """
     Adds tests written to exercise all existing OpenStack APIs
     :param suite: the unittest.TestSuite object to which to add the tests
@@ -232,6 +235,7 @@ def add_openstack_integration_tests(suite, os_creds, ext_net_name,
                                     image_metadata=None, use_floating_ips=True,
                                     netconf_override=None,
                                     log_level=logging.INFO):
+    # pylint: disable=too-many-arguments
     """
     Adds tests written to exercise all long-running OpenStack integration tests
     meaning they will be creating VM instances and potentially performing some

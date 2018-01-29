@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Copyright (c) 2017 Cable Television Laboratories, Inc. and others.
 #
 # This program and the accompanying materials
@@ -37,19 +39,15 @@ class VPingBase(testcase.TestCase):
 
     def __init__(self, **kwargs):
         super(VPingBase, self).__init__(**kwargs)
-
         self.logger = logging.getLogger(__name__)
-
         if 'os_creds' in kwargs:
             self.os_creds = kwargs['os_creds']
         else:
-            creds_override = None
-            if hasattr(CONST, 'snaps_os_creds_override'):
-                creds_override = CONST.__getattribute__(
-                    'snaps_os_creds_override')
-
+            creds_override = getattr(
+                CONST, 'snaps_os_creds_override') if hasattr(
+                    CONST, 'snaps_os_creds_override') else None
             self.os_creds = openstack_tests.get_credentials(
-                os_env_file=CONST.__getattribute__('openstack_creds'),
+                os_env_file=getattr(CONST, 'openstack_creds'),
                 overrides=creds_override)
 
         self.creators = list()
@@ -62,27 +60,24 @@ class VPingBase(testcase.TestCase):
         # Shared metadata
         self.guid = '-' + str(uuid.uuid4())
 
-        self.router_name = CONST.__getattribute__(
-            'vping_router_name') + self.guid
-        self.vm1_name = CONST.__getattribute__('vping_vm_name_1') + self.guid
-        self.vm2_name = CONST.__getattribute__('vping_vm_name_2') + self.guid
+        self.router_name = getattr(CONST, 'vping_router_name') + self.guid
+        self.vm1_name = getattr(CONST, 'vping_vm_name_1') + self.guid
+        self.vm2_name = getattr(CONST, 'vping_vm_name_2') + self.guid
 
-        self.vm_boot_timeout = CONST.__getattribute__('vping_vm_boot_timeout')
-        self.vm_delete_timeout = CONST.__getattribute__(
-            'vping_vm_delete_timeout')
-        self.vm_ssh_connect_timeout = CONST.__getattribute__(
-            'vping_vm_ssh_connect_timeout')
-        self.ping_timeout = CONST.__getattribute__('vping_ping_timeout')
+        self.vm_boot_timeout = getattr(CONST, 'vping_vm_boot_timeout')
+        self.vm_delete_timeout = getattr(CONST, 'vping_vm_delete_timeout')
+        self.vm_ssh_connect_timeout = getattr(
+            CONST, 'vping_vm_ssh_connect_timeout')
+        self.ping_timeout = getattr(CONST, 'vping_ping_timeout')
         self.flavor_name = 'vping-flavor' + self.guid
 
         # Move this configuration option up for all tests to leverage
         if hasattr(CONST, 'snaps_images_cirros'):
-            self.cirros_image_config = CONST.__getattribute__(
-                'snaps_images_cirros')
+            self.cirros_image_config = getattr(CONST, 'snaps_images_cirros')
         else:
             self.cirros_image_config = None
 
-    def run(self):
+    def run(self, **kwargs):  # pylint: disable=too-many-locals
         """
         Begins the test execution which should originate from the subclass
         """
@@ -95,7 +90,7 @@ class VPingBase(testcase.TestCase):
                 '%Y-%m-%d %H:%M:%S'))
 
         image_base_name = '{}-{}'.format(
-            CONST.__getattribute__('vping_image_name'),
+            getattr(CONST, 'vping_image_name'),
             str(self.guid))
         os_image_settings = openstack_tests.cirros_image_settings(
             image_base_name, image_metadata=self.cirros_image_config)
@@ -105,26 +100,21 @@ class VPingBase(testcase.TestCase):
             self.os_creds, os_image_settings)
         self.creators.append(self.image_creator)
 
-        private_net_name = CONST.__getattribute__(
-            'vping_private_net_name') + self.guid
-        private_subnet_name = CONST.__getattribute__(
-            'vping_private_subnet_name') + self.guid
-        private_subnet_cidr = CONST.__getattribute__(
-            'vping_private_subnet_cidr')
+        private_net_name = getattr(CONST, 'vping_private_net_name') + self.guid
+        private_subnet_name = getattr(
+            CONST, 'vping_private_subnet_name') + self.guid
+        private_subnet_cidr = getattr(CONST, 'vping_private_subnet_cidr')
 
         vping_network_type = None
         vping_physical_network = None
         vping_segmentation_id = None
 
         if hasattr(CONST, 'vping_network_type'):
-            vping_network_type = CONST.__getattribute__(
-                'vping_network_type')
+            vping_network_type = getattr(CONST, 'vping_network_type')
         if hasattr(CONST, 'vping_physical_network'):
-            vping_physical_network = CONST.__getattribute__(
-                'vping_physical_network')
+            vping_physical_network = getattr(CONST, 'vping_physical_network')
         if hasattr(CONST, 'vping_segmentation_id'):
-            vping_segmentation_id = CONST.__getattribute__(
-                'vping_segmentation_id')
+            vping_segmentation_id = getattr(CONST, 'vping_segmentation_id')
 
         self.logger.info(
             "Creating network with name: '%s'", private_net_name)
@@ -154,7 +144,7 @@ class VPingBase(testcase.TestCase):
 
         self.logger.info(
             "Creating flavor with name: '%s'", self.flavor_name)
-        scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
+        scenario = getattr(CONST, 'DEPLOY_SCENARIO')
         flavor_metadata = None
         flavor_ram = 512
         if 'ovs' in scenario or 'fdio' in scenario:
@@ -197,7 +187,7 @@ class VPingBase(testcase.TestCase):
         Cleanup all OpenStack objects. Should be called on completion
         :return:
         """
-        if CONST.__getattribute__('vping_cleanup_objects') == 'True':
+        if getattr(CONST, 'vping_cleanup_objects') == 'True':
             for creator in reversed(self.creators):
                 try:
                     creator.clean()
