@@ -45,25 +45,25 @@ class CheckDeploymentTesting(unittest.TestCase):
     @mock.patch('socket.socket.connect', side_effect=TypeError)
     def test_verify_connectivity_ko1(self, *args):
         self.assertFalse(check_deployment.verify_connectivity("127.0.0.1"))
-        args[0].assert_called_once_with(None, 80)
+        args[0].assert_called_once_with((None, 80))
 
     @mock.patch('socket.socket.connect', side_effect=socket.error)
     def test_verify_connectivity_ko2(self, *args):
         self.assertFalse(
             check_deployment.verify_connectivity("http://127.0.0.1"))
-        args[0].assert_called_once_with("127.0.0.1", 80)
+        args[0].assert_called_once_with(("127.0.0.1", 80))
 
     @mock.patch('socket.socket.connect', side_effect=socket.error)
     def test_verify_connectivity_ko3(self, *args):
         self.assertFalse(
             check_deployment.verify_connectivity("https://127.0.0.1"))
-        args[0].assert_called_once_with("127.0.0.1", 443)
+        args[0].assert_called_once_with(("127.0.0.1", 443))
 
     @mock.patch('socket.socket.connect')
     def test_verify_connectivity(self, *args):
         self.assertTrue(
             check_deployment.verify_connectivity("https://127.0.0.1"))
-        args[0].assert_called_once_with("127.0.0.1", 443)
+        args[0].assert_called_once_with(("127.0.0.1", 443))
 
     @mock.patch('snaps.openstack.utils.keystone_utils.keystone_session',
                 return_value=mock.Mock(
