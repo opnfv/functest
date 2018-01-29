@@ -44,6 +44,7 @@ LOGGER = logging.getLogger(__name__)
 class RallyBase(testcase.TestCase):
     """Base class form Rally testcases implementation."""
 
+    # pylint: disable=too-many-instance-attributes
     TESTS = ['authenticate', 'glance', 'ceilometer', 'cinder', 'heat',
              'keystone', 'neutron', 'nova', 'quotas', 'vm', 'all']
     GLANCE_IMAGE_NAME = CONST.__getattribute__('openstack_image_name')
@@ -110,6 +111,7 @@ class RallyBase(testcase.TestCase):
         self.compute_cnt = 0
 
     def _build_task_args(self, test_file_name):
+        """Build arguments for the Rally task."""
         task_args = {'service_list': [test_file_name]}
         task_args['image_name'] = self.image_name
         task_args['flavor_name'] = self.flavor_name
@@ -140,6 +142,7 @@ class RallyBase(testcase.TestCase):
         return task_args
 
     def _prepare_test_list(self, test_name):
+        """Build the list of test cases to be executed."""
         test_yaml_file_name = 'opnfv-{}.yaml'.format(test_name)
         scenario_file_name = os.path.join(self.RALLY_SCENARIO_DIR,
                                           test_yaml_file_name)
@@ -231,7 +234,7 @@ class RallyBase(testcase.TestCase):
                             in_it(installer_type, installers)):
                         tests = item['tests']
                         black_tests.extend(tests)
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             LOGGER.debug("Scenario exclusion not applied.")
 
         return black_tests
@@ -254,8 +257,8 @@ class RallyBase(testcase.TestCase):
             # match if regex pattern is set and found in the needle
             if pattern and re.search(pattern, needle) is not None:
                 return True
-        else:
-            return False
+
+        return False
 
     def excl_func(self):
         """Exclude functionalities."""
@@ -399,6 +402,7 @@ class RallyBase(testcase.TestCase):
             LOGGER.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
 
     def _append_summary(self, json_raw, test_name):
+        """Update statistics summary info."""
         nb_tests = 0
         nb_success = 0
         overall_duration = 0.0
@@ -421,6 +425,7 @@ class RallyBase(testcase.TestCase):
         self.summary.append(scenario_summary)
 
     def _prepare_env(self):
+        """Create resources needed by test scenarios."""
         LOGGER.debug('Validating the test name...')
         if self.test_name not in self.TESTS:
             raise Exception("Test name '%s' is invalid" % self.test_name)
@@ -472,8 +477,7 @@ class RallyBase(testcase.TestCase):
                 segmentation_id=rally_segmentation_id,
                 subnet_settings=[SubnetConfig(
                     name=subnet_name,
-                    cidr=self.RALLY_PRIVATE_SUBNET_CIDR)
-                ]))
+                    cidr=self.RALLY_PRIVATE_SUBNET_CIDR)]))
         if network_creator is None:
             raise Exception("Failed to create private network")
         self.priv_net_id = network_creator.get_network().id
@@ -508,6 +512,7 @@ class RallyBase(testcase.TestCase):
         self.creators.append(flavor_alt_creator)
 
     def _run_tests(self):
+        """Execute tests."""
         if self.test_name == 'all':
             for test in self.TESTS:
                 if test == 'all' or test == 'vm':
@@ -517,6 +522,7 @@ class RallyBase(testcase.TestCase):
             self._run_task(self.test_name)
 
     def _generate_report(self):
+        """Generate test execution summary report."""
         total_duration = 0.0
         total_nb_tests = 0
         total_nb_success = 0
@@ -569,11 +575,12 @@ class RallyBase(testcase.TestCase):
         self.details = payload
 
     def _clean_up(self):
+        """Cleanup all OpenStack objects. Should be called on completion."""
         for creator in reversed(self.creators):
             try:
                 creator.clean()
-            except Exception as e:
-                LOGGER.error('Unexpected error cleaning - %s', e)
+            except Exception as exc:  # pylint: disable=broad-except
+                LOGGER.error('Unexpected error cleaning - %s', exc)
 
     @energy.enable_recording
     def run(self, **kwargs):
