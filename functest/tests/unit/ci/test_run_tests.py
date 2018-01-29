@@ -54,22 +54,6 @@ class RunTestsTesting(unittest.TestCase):
 
         self.run_tests_parser = run_tests.RunTestsParser()
 
-    @mock.patch('functest.ci.run_tests.os.path.isfile', return_value=False)
-    def test_source_rc_file_ko(self, *args):
-        with self.assertRaises(Exception):
-            self.runner.source_rc_file()
-        args[0].assert_called_once_with(
-            '/home/opnfv/functest/conf/openstack.creds')
-
-    @mock.patch('functest.ci.run_tests.os.path.isfile',
-                return_value=True)
-    def test_source_rc_file_default(self, *args):
-        with mock.patch('functest.ci.run_tests.os_utils.source_credentials',
-                        return_value=self.creds):
-            self.runner.source_rc_file()
-        args[0].assert_called_once_with(
-            '/home/opnfv/functest/conf/openstack.creds')
-
     @mock.patch('functest.ci.run_tests.ft_utils.get_dict_by_test')
     def test_get_run_dict(self, *args):
         retval = {'run': mock.Mock()}
@@ -163,7 +147,7 @@ class RunTestsTesting(unittest.TestCase):
         self.runner.run_all()
         self.assertTrue(mock_methods[1].called)
 
-    @mock.patch('functest.ci.run_tests.Runner.source_rc_file',
+    @mock.patch('functest.utils.openstack_utils.source_credentials',
                 side_effect=Exception)
     @mock.patch('functest.ci.run_tests.Runner.summary')
     def test_main_failed(self, *mock_methods):
@@ -174,9 +158,10 @@ class RunTestsTesting(unittest.TestCase):
         self.runner.tiers.configure_mock(**args)
         self.assertEqual(self.runner.main(**kwargs),
                          run_tests.Result.EX_ERROR)
-        mock_methods[1].assert_called_once_with()
+        mock_methods[1].assert_called_once_with(
+            '/home/opnfv/functest/conf/env_file')
 
-    @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
+    @mock.patch('functest.utils.openstack_utils.source_credentials')
     @mock.patch('functest.ci.run_tests.Runner.run_test',
                 return_value=TestCase.EX_OK)
     @mock.patch('functest.ci.run_tests.Runner.summary')
@@ -196,7 +181,7 @@ class RunTestsTesting(unittest.TestCase):
                          run_tests.Result.EX_OK)
         mock_methods[1].assert_called()
 
-    @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
+    @mock.patch('functest.utils.openstack_utils.source_credentials')
     @mock.patch('functest.ci.run_tests.Runner.run_test',
                 return_value=TestCase.EX_OK)
     def test_main_test(self, *mock_methods):
@@ -204,12 +189,13 @@ class RunTestsTesting(unittest.TestCase):
         args = {'get_tier.return_value': None,
                 'get_test.return_value': 'test_name'}
         self.runner.tiers = mock.Mock()
+        mock_methods[1].return_value = self.creds
         self.runner.tiers.configure_mock(**args)
         self.assertEqual(self.runner.main(**kwargs),
                          run_tests.Result.EX_OK)
         mock_methods[0].assert_called_once_with('test_name')
 
-    @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
+    @mock.patch('functest.utils.openstack_utils.source_credentials')
     @mock.patch('functest.ci.run_tests.Runner.run_all')
     @mock.patch('functest.ci.run_tests.Runner.summary')
     def test_main_all_tier(self, *args):
@@ -222,9 +208,9 @@ class RunTestsTesting(unittest.TestCase):
             run_tests.Result.EX_OK)
         args[0].assert_called_once_with(None)
         args[1].assert_called_once_with()
-        args[2].assert_called_once_with()
+        args[2].assert_called_once_with('/home/opnfv/functest/conf/env_file')
 
-    @mock.patch('functest.ci.run_tests.Runner.source_rc_file')
+    @mock.patch('functest.utils.openstack_utils.source_credentials')
     def test_main_any_tier_test_ko(self, *args):
         kwargs = {'get_tier.return_value': None,
                   'get_test.return_value': None}
@@ -233,7 +219,7 @@ class RunTestsTesting(unittest.TestCase):
         self.assertEqual(
             self.runner.main(test='any', noclean=True, report=True),
             run_tests.Result.EX_ERROR)
-        args[0].assert_called_once_with()
+        args[0].assert_called_once_with('/home/opnfv/functest/conf/env_file')
 
 
 if __name__ == "__main__":

@@ -23,14 +23,14 @@ class OpenStack(object):
         self.os_auth_url = CONST.__getattribute__('OS_AUTH_URL')
         self.endpoint_ip = None
         self.endpoint_port = None
-        self.openstack_creds = CONST.__getattribute__('openstack_creds')
+        self.openstack_creds = CONST.__getattribute__('env_file')
         if self.os_auth_url:
             self.endpoint_ip = urllib.parse.urlparse(self.os_auth_url).hostname
             self.endpoint_port = urllib.parse.urlparse(self.os_auth_url).port
 
     def ping_endpoint(self):
         if self.os_auth_url is None:
-            click.echo("Source the OpenStack credentials first '. $creds'")
+            click.echo("Source the OpenStack credentials first")
             exit(0)
         response = os.system("ping -c 1 " + self.endpoint_ip + ">/dev/null")
         if response == 0:
