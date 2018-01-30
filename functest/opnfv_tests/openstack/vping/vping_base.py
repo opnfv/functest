@@ -40,16 +40,7 @@ class VPingBase(testcase.TestCase):
     def __init__(self, **kwargs):
         super(VPingBase, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
-        if 'os_creds' in kwargs:
-            self.os_creds = kwargs['os_creds']
-        else:
-            creds_override = getattr(
-                CONST, 'snaps_os_creds_override') if hasattr(
-                    CONST, 'snaps_os_creds_override') else None
-            self.os_creds = openstack_tests.get_credentials(
-                os_env_file=getattr(CONST, 'openstack_creds'),
-                overrides=creds_override)
-
+        self.os_creds = kwargs.get('os_creds') or snaps_utils.get_credentials()
         self.creators = list()
         self.image_creator = None
         self.network_creator = None

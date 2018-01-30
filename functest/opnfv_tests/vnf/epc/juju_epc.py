@@ -29,7 +29,6 @@ from snaps.openstack.create_network import (NetworkSettings,
 from snaps.openstack.create_router import (RouterSettings, OpenStackRouter)
 from snaps.openstack.create_flavor import (FlavorSettings, OpenStackFlavor)
 from snaps.openstack.create_image import (ImageSettings, OpenStackImage)
-from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import keystone_utils
 import yaml
 
@@ -66,9 +65,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.created_object = []
         self.snaps_creds = ''
 
-        self.os_creds = openstack_tests.get_credentials(
-            os_env_file=CONST.__getattribute__('openstack_creds'))
-
+        self.os_creds = snaps_utils.get_credentials()
         self.details['orchestrator'] = dict(
             name=get_config("orchestrator.name", config_file),
             version=get_config("orchestrator.version", config_file),
