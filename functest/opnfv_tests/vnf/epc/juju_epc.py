@@ -23,12 +23,14 @@ from functest.utils.constants import CONST
 import functest.utils.openstack_utils as os_utils
 
 import pkg_resources
-from snaps.openstack.os_credentials import OSCreds
-from snaps.openstack.create_network import (NetworkSettings,
-                                            SubnetSettings, OpenStackNetwork)
-from snaps.openstack.create_router import (RouterSettings, OpenStackRouter)
-from snaps.openstack.create_flavor import (FlavorSettings, OpenStackFlavor)
-from snaps.openstack.create_image import (ImageSettings, OpenStackImage)
+from snaps.config.flavor import FlavorConfig
+from snaps.config.image import ImageConfig
+from snaps.config.network import NetworkConfig, SubnetConfig
+from snaps.config.router import RouterConfig
+from snaps.openstack.create_flavor import OpenStackFlavor
+from snaps.openstack.create_image import OpenStackImage
+from snaps.openstack.create_network import OpenStackNetwork
+from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import keystone_utils
 import yaml
@@ -124,12 +126,8 @@ class JujuEpc(vnf.VnfOnBoarding):
             "auth_url": os_utils.get_credentials()['auth_url']
             }
 
-        self.snaps_creds = OSCreds(
-            username=self.creds['username'],
-            password=self.creds['password'],
-            auth_url=self.creds['auth_url'],
-            project_name=self.creds['tenant'],
-            identity_api_version=int(os_utils.get_keystone_client_version()))
+        self.snaps_creds = openstack_tests.get_credentials(
+            os_env_file=CONST.__getattribute__('openstack_creds'))
 
         cloud_data = {
             'url': self.public_auth_url,
@@ -156,10 +154,10 @@ class JujuEpc(vnf.VnfOnBoarding):
             if image_file and image_name:
                 image_creator = OpenStackImage(
                     self.snaps_creds,
-                    ImageSettings(name=image_name,
-                                  image_user='cloud',
-                                  img_format='qcow2',
-                                  image_file=image_file))
+                    ImageConfig(name=image_name,
+                                image_user='cloud',
+                                img_format='qcow2',
+                                image_file=image_file))
                 image_creator.create()
                 self.created_object.append(image_creator)
 
@@ -184,11 +182,11 @@ class JujuEpc(vnf.VnfOnBoarding):
             'vnf_{}_external_network_name'.format(self.case_name))
 
         self.__logger.info("Creating full network ...")
-        subnet_settings = SubnetSettings(name=private_subnet_name,
-                                         cidr=private_subnet_cidr,
-                                         dns_nameservers=dns_nameserver)
-        network_settings = NetworkSettings(name=private_net_name,
-                                           subnet_settings=[subnet_settings])
+        subnet_settings = SubnetConfig(name=private_subnet_name,
+                                       cidr=private_subnet_cidr,
+                                       dns_nameservers=dns_nameserver)
+        network_settings = NetworkConfig(name=private_net_name,
+                                         subnet_settings=[subnet_settings])
         network_creator = OpenStackNetwork(self.snaps_creds, network_settings)
         network_creator.create()
         self.created_object.append(network_creator)
@@ -197,14 +195,14 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("Creating network Router ....")
         router_creator = OpenStackRouter(
             self.snaps_creds,
-            RouterSettings(
+            RouterConfig(
                 name=abot_router,
                 external_gateway=ext_net_name,
                 internal_subnets=[subnet_settings.name]))
         router_creator.create()
         self.created_object.append(router_creator)
         self.__logger.info("Creating Flavor ....")
-        flavor_settings = FlavorSettings(
+        flavor_settings = FlavorConfig(
             name=self.orchestrator['requirements']['flavor']['name'],
             ram=self.orchestrator['requirements']['flavor']['ram_min'],
             disk=10,
@@ -258,7 +256,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("Upload VNFD")
         descriptor = self.vnf['descriptor']
         self.__logger.info("Get or create flavor for all Abot-EPC")
-        flavor_settings = FlavorSettings(
+        flavor_settings = FlavorConfig(
             name=self.vnf['requirements']['flavor']['name'],
             ram=self.vnf['requirements']['flavor']['ram_min'],
             disk=10,
