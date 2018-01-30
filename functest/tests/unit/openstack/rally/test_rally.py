@@ -26,7 +26,7 @@ class OSRallyTesting(unittest.TestCase):
         os_creds = OSCreds(
             username='user', password='pass',
             auth_url='http://foo.com:5000/v3', project_name='bar')
-        with mock.patch('snaps.openstack.tests.openstack_tests.'
+        with mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                         'get_credentials', return_value=os_creds) as m:
             self.rally_base = rally.RallyBase()
         self.assertTrue(m.called)

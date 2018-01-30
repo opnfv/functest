@@ -11,6 +11,7 @@
 
 from functest.utils.constants import CONST
 
+from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import neutron_utils, nova_utils
 
 
@@ -40,3 +41,21 @@ def get_active_compute_cnt(os_creds):
     nova = nova_utils.nova_client(os_creds)
     computes = nova_utils.get_availability_zone_hosts(nova, zone_name='nova')
     return len(computes)
+
+
+def get_credentials(proxy_settings_str=None, ssh_proxy_cmd=None):
+    """
+    Returns snaps OSCreds object instance
+    :param: proxy_settings_str: proxy settings string <host>:<port>
+    :param: ssh_proxy_cmd: the SSH proxy command for the environment
+    :return: an instance of snaps OSCreds object
+    """
+    creds_override = None
+    if hasattr(CONST, 'snaps_os_creds_override'):
+        creds_override = CONST.__getattribute__(
+            'snaps_os_creds_override')
+    os_creds = openstack_tests.get_credentials(
+        os_env_file=CONST.__getattribute__('openstack_creds'),
+        proxy_settings_str=proxy_settings_str, ssh_proxy_cmd=ssh_proxy_cmd,
+        overrides=creds_override)
+    return os_creds

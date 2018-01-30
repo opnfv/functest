@@ -36,7 +36,6 @@ from snaps.config.network import NetworkConfig, SubnetConfig
 from snaps.config.router import RouterConfig
 
 from snaps.openstack.create_flavor import OpenStackFlavor
-from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import deploy_utils
 
 LOGGER = logging.getLogger(__name__)
@@ -92,20 +91,8 @@ class RallyBase(testcase.TestCase):
     def __init__(self, **kwargs):
         """Initialize RallyBase object."""
         super(RallyBase, self).__init__(**kwargs)
-        if 'os_creds' in kwargs:
-            self.os_creds = kwargs['os_creds']
-        else:
-            creds_override = None
-            if hasattr(CONST, 'snaps_os_creds_override'):
-                creds_override = CONST.__getattribute__(
-                    'snaps_os_creds_override')
-
-            self.os_creds = openstack_tests.get_credentials(
-                os_env_file=CONST.__getattribute__('openstack_creds'),
-                overrides=creds_override)
-
+        self.os_creds = kwargs.get('os_creds') or snaps_utils.get_credentials()
         self.guid = '-' + str(uuid.uuid4())
-
         self.creators = []
         self.mode = ''
         self.summary = []
