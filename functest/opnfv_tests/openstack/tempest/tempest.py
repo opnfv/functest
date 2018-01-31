@@ -311,15 +311,8 @@ class TempestDefcore(TempestCommon):
 class TempestResourcesManager(object):
 
     def __init__(self, **kwargs):
-        self.os_creds = None
-        if 'os_creds' in kwargs:
-            self.os_creds = kwargs['os_creds']
-        else:
-            self.os_creds = openstack_tests.get_credentials(
-                os_env_file=CONST.__getattribute__('openstack_creds'))
-
+        self.os_creds = kwargs.get('os_creds') or snaps_utils.get_credentials()
         self.guid = '-' + str(uuid.uuid4())
-
         self.creators = list()
 
         if hasattr(CONST, 'snaps_images_cirros'):

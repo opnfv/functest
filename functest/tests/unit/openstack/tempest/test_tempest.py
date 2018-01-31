@@ -39,7 +39,8 @@ class OSTempestTesting(unittest.TestCase):
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'conf_utils.get_verifier_deployment_dir',
                        return_value='test_verifier_deploy_dir'), \
-            mock.patch('snaps.openstack.tests.openstack_tests.get_credentials',
+            mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
+                       'get_credentials',
                        return_value=os_creds):
             self.tempestcommon = tempest.TempestCommon()
             self.tempestsmoke_serial = tempest.TempestSmokeSerial()

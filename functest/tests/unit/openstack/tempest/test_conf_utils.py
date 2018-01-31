@@ -33,7 +33,8 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
     @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
                 return_value=mock.Mock())
     def test_create_tempest_resources_missing_network_dic(self, *mock_args):
-        tempest_resources = tempest.TempestResourcesManager(os_creds={})
+        tempest_resources = tempest.TempestResourcesManager(
+            os_creds=self.os_creds)
         with self.assertRaises(Exception) as context:
             tempest_resources.create()
         msg = 'Failed to create private network'
@@ -48,7 +49,8 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
     @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
                 return_value=None)
     def test_create_tempest_resources_missing_image(self, *mock_args):
-        tempest_resources = tempest.TempestResourcesManager(os_creds={})
+        tempest_resources = tempest.TempestResourcesManager(
+            os_creds=self.os_creds)
 
         with self.assertRaises(Exception) as context:
             tempest_resources.create()
