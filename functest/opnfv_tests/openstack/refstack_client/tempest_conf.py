@@ -42,6 +42,7 @@ class TempestConf(object):
                                               use_custom_flavors=True)
             conf_utils.configure_tempest_defcore(
                 self.deployment_dir,
+                network_name=resources.get("network_name"),
                 image_id=resources.get("image_id"),
                 flavor_id=resources.get("flavor_id"),
                 image_id_alt=resources.get("image_id_alt"),
